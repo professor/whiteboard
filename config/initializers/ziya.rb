@@ -1,6 +1,6 @@
 
 # Pull in the ZiYa gem framework
-gem "ziya", "~> 2.1.7"
+gem "ziya", "~> 2.0.5"
 require 'ziya'
 
 # Initializes the ZiYa Framework
