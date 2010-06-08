@@ -1,5 +1,5 @@
 
-AMAZON_S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[RAILS_ENV]
+#AMAZON_S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[RAILS_ENV]
 #SYSTEMS_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/systems.yml")
 
 GOOGLE_APPS_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/google_apps.yml")[RAILS_ENV]
