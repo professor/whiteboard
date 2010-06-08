@@ -29,6 +29,7 @@ Students should
 1. rake db:migrate  (to load just some data)
 1. goto http://localhost:3000/users/new to create an account.
 1. with MySQL query browser, alter your is_student, etc fields.
+1. create a  ~/.bashrc with the following values OR modify these files: config/initializers/s3.rb
 
 
 My system configuration

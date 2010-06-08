@@ -1,3 +1,6 @@
+
+
+
 How to move production database onto local machine
 (I did this once, but for some reason there wasn't an exact row match!)
 
@@ -70,6 +73,10 @@ mkdir TeamTeams; cd TeamTeams;
 MAGIC LINE
 
 9. Use schema.rb (not migrations) to generate tables. Use a single migration (maybe) to populate tables.
+
+
+
+
 
 
 
