@@ -67,7 +67,7 @@ ActionController::Routing::Routes.draw do |map|
 
   
   map.load_chart '/load_chart', :controller => 'effort_reports', :action => 'load_chart' 
-  map.load_google_chart '/load_google_chart', :controller => 'effort_reports', :action => 'load_google_chart'
+#  map.load_google_chart '/load_google_chart', :controller => 'effort_reports', :action => 'load_google_chart'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
