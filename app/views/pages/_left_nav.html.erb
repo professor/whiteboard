@@ -1,0 +1,16 @@
+<% content_for :left_nav do %>
+
+<% unless @page.course.blank? %>
+<div class="SecondaryNav">
+  <%= link_to @page.course.name, @page.course.pages[0], :class=>"SecondaryNav_Link" %>
+</div>
+
+<% for page in @page.course.pages %>
+  <div class="SecondaryNav">
+  <%= link_to page.label, page, :class=>"SecondaryNav_Link" %>
+  </div>
+<% end %>
+
+<% end %>
+
+<% end %>

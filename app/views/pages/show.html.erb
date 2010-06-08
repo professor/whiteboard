@@ -1,0 +1,95 @@
+<% content_for :title, @page.course.name + " - " + @page.label %>
+
+<%= render :partial => "left_nav" %>
+
+<h1 name="course"><%=h @page.course.name %></h1>
+<h2 name="page">  <%=h @page.label %></h2>
+
+<div id="lvl_topnav">
+
+<a href="<%= page_path(@page) %>/email" onclick="showEmail();return false;">Project requirements</a>
+<img width="10" height="1" border="0" src="/cmu_sv/spacer.gif?1250032486" alt=""/>
+|
+<img width="10" height="1" border="0" src="/cmu_sv/spacer.gif?1250032486" alt=""/>
+<a href="<%= page_path(@page) %>/help" onclick="showHelp();return false;">Getting help</a>
+<img width="10" height="1" border="0" src="/cmu_sv/spacer.gif?1250032486" alt=""/>
+|
+<img width="10" height="1" border="0" src="/cmu_sv/spacer.gif?1250032486" alt=""/>
+<a href="<%= page_path(@page) %>/submit" onclick="showSubmit();return false;">Submitting your work</a>
+<img width="10" height="1" border="0" src="/cmu_sv/spacer.gif?1250032486" alt=""/>
+  
+</div>
+
+<script type="text/javascript">
+        //<![CDATA[
+$(document).ready(function(){
+
+
+    var url = location.pathname;
+
+    if (url.indexOf("email") != -1) {
+      showEmail()
+      return
+    }
+
+    if (url.indexOf("help") != -1) {
+      showHelp()
+      return
+    }
+    if (url.indexOf("submit") != -1) {
+      showSubmit()
+      return
+    }
+
+    showEmail()
+});
+
+function showEmail()
+{
+      $("#email").show();
+      $("#help").hide();
+      $("#submit").hide();
+//      location.hash = "#email";
+}
+function showHelp()
+{
+      $("#email").hide();
+      $("#help").show();
+      $("#submit").hide();
+      location.hash = "#help";
+}
+function showSubmit()
+{
+      $("#email").hide();
+      $("#help").hide();
+      $("#submit").show();
+      location.hash = "#submit";
+}
+
+//]]>
+</script>
+
+<div class="task_tab" id="email">
+  <div id="email_from"><%=h @page.tab_one_email_from %></div>
+  <div id="email_subject"><%=h @page.tab_one_email_subject %></div>
+  <div id="email_details"><%=h @page.tab_one_contents %></div>
+</div>
+
+<div class="task_tab" id="help">
+  <%=h @page.tab_two_contents %>
+</div>
+
+<div class="task_tab" id="submit">
+  <%=h @page.tab_three_contents %>  
+</div>
+
+<h3>debug stuff</h3>
+<p>
+  <b>Sequence number:</b>
+  <%=h @page.position %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>

@@ -1,0 +1,14 @@
+<% content_for :title, 'Curriculum Comment Type' %>
+<p>
+  <b>Name:</b>
+  <%=h @curriculum_comment_type.name %>
+</p>
+
+<p>
+  <b>Background color:</b>
+  <%=h @curriculum_comment_type.background_color %>
+</p>
+
+
+<%= link_to 'Edit', edit_curriculum_comment_type_path(@curriculum_comment_type) %> |
+<%= link_to 'Back', curriculum_comment_types_path %>

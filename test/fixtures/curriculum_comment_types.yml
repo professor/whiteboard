@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Comment
+  background_color: #FFF499
+
+two:
+  name: Tip
+  background_color: #E0EBEB

@@ -1,0 +1,1585 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: GAppsProvisioning::ProvisioningApi</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">GAppsProvisioning::ProvisioningApi</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/provisioningapi_rb.html">
+                provisioningapi.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Administrative object for accessing your domain</h1>
+<p>
+Examples
+</p>
+<pre>
+     adminuser = &quot;root@mydomain.com&quot;
+     password  = &quot;PaSsWo4d!&quot;
+     myapps = ProvisioningApi.new(adminuser,password)
+     (see examples in  ProvisioningApi.new documentation for handling proxies)
+
+     new_user = myapps.create_user(&quot;jsmith&quot;, &quot;john&quot;, &quot;smith&quot;, &quot;secret&quot;, nil, &quot;2048&quot;)
+     puts new_user.family_name
+     puts new_user.given_name
+</pre>
+<p>
+Want to update a user ?
+</p>
+<pre>
+     user = myapps.retrieve_user('jsmith')
+     user_updated = myapps.update_user(user.username, user.given_name, user.family_name, nil, nil, &quot;true&quot;)
+</pre>
+<p>
+Want to add an alias or nickname ?
+</p>
+<pre>
+     new_nickname = myapps.create_nickname(&quot;jsmith&quot;, &quot;john.smith&quot;)
+</pre>
+<p>
+Want to manage groups ? (i.e. mailing lists)
+</p>
+<pre>
+     new_group = myapps.create_group(&quot;sales-dep&quot;, ['Sales Departement'])
+     new_member1 = myapps.add_member_to_group(&quot;john.doe@somedomain.com&quot;, &quot;sales-dep&quot;)
+     new_member2 = myapps.add_member_to_group(&quot;jsmith&quot;, &quot;sales-dep&quot;)
+     new_owner = myapps.add_owner_to_group(&quot;jsmith&quot;, &quot;sales-dep&quot;)
+              (ATTENTION: an owner is added only if it's already member of the group!)
+</pre>
+<p>
+Want to handle errors ?
+</p>
+<pre>
+     begin
+             user = myapps.retrieve_user('noone')
+             puts &quot;givenName : &quot;+user.given_name, &quot;familyName : &quot;+user.family_name, &quot;username : &quot;+user.username&quot;
+             puts &quot;admin ? : &quot;+user.admin
+     rescue GDataError =&gt; e
+             puts &quot;errorcode = &quot; +e.code, &quot;input : &quot;+e.input, &quot;reason : &quot;+e.reason
+     end
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000062">addMemberToGroup</a>&nbsp;&nbsp;
+      <a href="#M000066">addOwnerToGroup</a>&nbsp;&nbsp;
+      <a href="#M000024">add_address_to_email_list</a>&nbsp;&nbsp;
+      <a href="#M000031">add_member_to_group</a>&nbsp;&nbsp;
+      <a href="#M000035">add_owner_to_group</a>&nbsp;&nbsp;
+      <a href="#M000057">createGroup</a>&nbsp;&nbsp;
+      <a href="#M000048">createNickname</a>&nbsp;&nbsp;
+      <a href="#M000039">createUser</a>&nbsp;&nbsp;
+      <a href="#M000020">create_email_list</a>&nbsp;&nbsp;
+      <a href="#M000026">create_group</a>&nbsp;&nbsp;
+      <a href="#M000014">create_nickname</a>&nbsp;&nbsp;
+      <a href="#M000005">create_user</a>&nbsp;&nbsp;
+      <a href="#M000059">deleteGroup</a>&nbsp;&nbsp;
+      <a href="#M000053">deleteNickname</a>&nbsp;&nbsp;
+      <a href="#M000047">deleteUser</a>&nbsp;&nbsp;
+      <a href="#M000021">delete_email_list</a>&nbsp;&nbsp;
+      <a href="#M000028">delete_group</a>&nbsp;&nbsp;
+      <a href="#M000015">delete_nickname</a>&nbsp;&nbsp;
+      <a href="#M000010">delete_user</a>&nbsp;&nbsp;
+      <a href="#M000064">isMember</a>&nbsp;&nbsp;
+      <a href="#M000068">isOwner</a>&nbsp;&nbsp;
+      <a href="#M000033">is_member</a>&nbsp;&nbsp;
+      <a href="#M000037">is_owner</a>&nbsp;&nbsp;
+      <a href="#M000001">new</a>&nbsp;&nbsp;
+      <a href="#M000063">removeMemberFromGroup</a>&nbsp;&nbsp;
+      <a href="#M000067">removeOwnerFromGroup</a>&nbsp;&nbsp;
+      <a href="#M000056">removeRecipientFromEmailList</a>&nbsp;&nbsp;
+      <a href="#M000025">remove_address_from_email_list</a>&nbsp;&nbsp;
+      <a href="#M000032">remove_member_from_group</a>&nbsp;&nbsp;
+      <a href="#M000036">remove_owner_from_group</a>&nbsp;&nbsp;
+      <a href="#M000044">renameUser</a>&nbsp;&nbsp;
+      <a href="#M000007">rename_user</a>&nbsp;&nbsp;
+      <a href="#M000046">restoreUser</a>&nbsp;&nbsp;
+      <a href="#M000009">restore_user</a>&nbsp;&nbsp;
+      <a href="#M000061">retrieveAllGroups</a>&nbsp;&nbsp;
+      <a href="#M000065">retrieveAllMembers</a>&nbsp;&nbsp;
+      <a href="#M000051">retrieveAllNicknames</a>&nbsp;&nbsp;
+      <a href="#M000069">retrieveAllOwners</a>&nbsp;&nbsp;
+      <a href="#M000054">retrieveAllRecipients</a>&nbsp;&nbsp;
+      <a href="#M000041">retrieveAllUsers</a>&nbsp;&nbsp;
+      <a href="#M000060">retrieveGroups</a>&nbsp;&nbsp;
+      <a href="#M000049">retrieveNickname</a>&nbsp;&nbsp;
+      <a href="#M000050">retrieveNicknames</a>&nbsp;&nbsp;
+      <a href="#M000052">retrievePageOfNicknames</a>&nbsp;&nbsp;
+      <a href="#M000055">retrievePageOfRecipients</a>&nbsp;&nbsp;
+      <a href="#M000042">retrievePageOfUsers</a>&nbsp;&nbsp;
+      <a href="#M000040">retrieveUser</a>&nbsp;&nbsp;
+      <a href="#M000018">retrieve_all_email_lists</a>&nbsp;&nbsp;
+      <a href="#M000030">retrieve_all_groups</a>&nbsp;&nbsp;
+      <a href="#M000034">retrieve_all_members</a>&nbsp;&nbsp;
+      <a href="#M000013">retrieve_all_nicknames</a>&nbsp;&nbsp;
+      <a href="#M000038">retrieve_all_owners</a>&nbsp;&nbsp;
+      <a href="#M000022">retrieve_all_recipients</a>&nbsp;&nbsp;
+      <a href="#M000003">retrieve_all_users</a>&nbsp;&nbsp;
+      <a href="#M000017">retrieve_email_lists</a>&nbsp;&nbsp;
+      <a href="#M000029">retrieve_groups</a>&nbsp;&nbsp;
+      <a href="#M000011">retrieve_nickname</a>&nbsp;&nbsp;
+      <a href="#M000012">retrieve_nicknames</a>&nbsp;&nbsp;
+      <a href="#M000019">retrieve_page_of_email_lists</a>&nbsp;&nbsp;
+      <a href="#M000016">retrieve_page_of_nicknames</a>&nbsp;&nbsp;
+      <a href="#M000023">retrieve_page_of_recipients</a>&nbsp;&nbsp;
+      <a href="#M000004">retrieve_page_of_users</a>&nbsp;&nbsp;
+      <a href="#M000002">retrieve_user</a>&nbsp;&nbsp;
+      <a href="#M000045">suspendUser</a>&nbsp;&nbsp;
+      <a href="#M000008">suspend_user</a>&nbsp;&nbsp;
+      <a href="#M000058">updateGroup</a>&nbsp;&nbsp;
+      <a href="#M000043">updateUser</a>&nbsp;&nbsp;
+      <a href="#M000027">update_group</a>&nbsp;&nbsp;
+      <a href="#M000006">update_user</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">token</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+authentication token, valid up to 24 hours after the last connection
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000001.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(mail, passwd, proxy=nil, proxy_port=nil, proxy_user=nil, proxy_passwd=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a <a href="ProvisioningApi.html#M000001">new</a> <a
+href="ProvisioningApi.html">ProvisioningApi</a> object
+</p>
+<pre>
+     mail : Google Apps domain administrator e-mail (string)
+     passwd : Google Apps domain administrator password (string)
+     proxy : (optional) host name, or IP, of the proxy (string)
+     proxy_port : (optional) proxy port number (numeric)
+     proxy_user : (optional) login for authenticated proxy only (string)
+     proxy_passwd : (optional) password for authenticated proxy only (string)
+</pre>
+<p>
+The domain name is extracted from the mail param value.
+</p>
+<p>
+Examples :
+</p>
+<pre>
+     standard : no proxy
+     myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+     proxy :
+     myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd','domain.proxy.com',8080)
+     authenticated proxy :
+     myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd','domain.proxy.com',8080,'foo','bAr')
+</pre>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <span class="method-name">addMemberToGroup</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000031">add_member_to_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <span class="method-name">addOwnerToGroup</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000035">add_owner_to_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000024.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000024.html');return false;">
+          <span class="method-name">add_address_to_email_list</span><span class="method-args">(email_list,address)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000031.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000031.html');return false;">
+          <span class="method-name">add_member_to_group</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds an email address (user or group) to a mailing list in your domain and
+returns a <a href="MemberEntry.html">MemberEntry</a> instance. You can add
+addresses from other domains to your mailing list. Omit
+&quot;@mydomain.com&quot; in the group name.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            new_member = myapps.add_member_to_group('example@otherdomain.com', 'mygroup')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000035.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000035.html');return false;">
+          <span class="method-name">add_owner_to_group</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds a owner (user or group) to a mailing list in your domain and returns a
+<a href="OwnerEntry.html">OwnerEntry</a> instance. You can add addresses
+from other domains to your mailing list. Omit &quot;@mydomain.com&quot; in
+the group name. ATTENTION: a owner is added only if it&#8216;s already
+member of the group, otherwise no action is done!
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            new_member = myapps.add_owner_to_group('example@otherdomain.com', 'mygroup')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <span class="method-name">createGroup</span><span class="method-args">(group_id, properties)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000026">create_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <span class="method-name">createNickname</span><span class="method-args">(username,nickname)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000014">create_nickname</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <span class="method-name">createUser</span><span class="method-args">(username, given_name, family_name, password, passwd_hash_function=nil, quota=nil)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000005">create_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000020.html');return false;">
+          <span class="method-name">create_email_list</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000026.html');return false;">
+          <span class="method-name">create_group</span><span class="method-args">(group_id, properties)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a group in your domain and returns a <a
+href="GroupEntry.html">GroupEntry</a> (ATTENTION: the group name is
+necessary!).
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            group= myapps.create_group(&quot;mygroup&quot;, [&quot;My Group name&quot;, &quot;My Group description&quot;, &quot;&lt;emailPermission&gt;&quot;])
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000014.html');return false;">
+          <span class="method-name">create_nickname</span><span class="method-args">(username,nickname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a nickname for the username in your domain and returns a <a
+href="NicknameEntry.html">NicknameEntry</a> instance
+</p>
+<pre>
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            mynewnick = myapps.create_nickname('jsmith', 'john.smith')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000005.html');return false;">
+          <span class="method-name">create_user</span><span class="method-args">(username, given_name, family_name, password, passwd_hash_function=nil, quota=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates an account in your domain, returns a <a
+href="UserEntry.html">UserEntry</a> instance
+</p>
+<pre>
+    params :
+                    username, given_name, family_name and password are required
+                    passwd_hash_function (optional) : nil (default) or &quot;SHA-1&quot;
+                    quota (optional) : nil (default) or integer for limit in MB
+    ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.create('jsmith', 'John', 'Smith', 'p455wD')
+</pre>
+<p>
+By default, a <a href="ProvisioningApi.html#M000001">new</a> user must
+change his password at first login. Please use <a
+href="ProvisioningApi.html#M000006">update_user</a> if you want to change
+this just after the creation.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <span class="method-name">deleteGroup</span><span class="method-args">(group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000028">delete_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <span class="method-name">deleteNickname</span><span class="method-args">(nickname)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000015">delete_nickname</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <span class="method-name">deleteUser</span><span class="method-args">(username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000010">delete_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000021.html');return false;">
+          <span class="method-name">delete_email_list</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000028.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000028.html');return false;">
+          <span class="method-name">delete_group</span><span class="method-args">(group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes a group in your domain.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            myapps.delete_group(&quot;mygroup&quot;)
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000015.html');return false;">
+          <span class="method-name">delete_nickname</span><span class="method-args">(nickname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes the nickname in your domain
+</p>
+<pre>
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            myapps.delete_nickname('john.smith')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000010.html');return false;">
+          <span class="method-name">delete_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes an account in your domain
+</p>
+<pre>
+            ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    myapps.delete('jsmith')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <span class="method-name">isMember</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000033">is_member</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <span class="method-name">isOwner</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000037">is_owner</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000033.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000033.html');return false;">
+          <span class="method-name">is_member</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the email address (user or group) is member of the group,
+false otherwise.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            boolean = myapps.is_member('example@otherdomain.com', 'mylist')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000037.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000037.html');return false;">
+          <span class="method-name">is_owner</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the email address (user or group) is owner of the group,
+false otherwise.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            boolean = myapps.is_owner('example@otherdomain.com', 'mylist')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <span class="method-name">removeMemberFromGroup</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000032">remove_member_from_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <span class="method-name">removeOwnerFromGroup</span><span class="method-args">(email_address, group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000036">remove_owner_from_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <span class="method-name">removeRecipientFromEmailList</span><span class="method-args">(address,email_list)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000025">remove_address_from_email_list</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000025.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000025.html');return false;">
+          <span class="method-name">remove_address_from_email_list</span><span class="method-args">(address,email_list)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000032.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000032.html');return false;">
+          <span class="method-name">remove_member_from_group</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes an email address (user or group) from a mailing list. Omit
+&quot;@mydomain.com&quot; in the group name.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            myapps.remove_member_from_group('example@otherdomain.com', 'mygroup')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000036.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000036.html');return false;">
+          <span class="method-name">remove_owner_from_group</span><span class="method-args">(email_address, group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes an owner from a mailing list. Omit &quot;@mydomain.com&quot; in the
+group name. ATTENTION: when a owner is removed, it loses the privileges but
+still remains member of the group!
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            myapps.remove_owner_from_group('example@otherdomain.com', 'mygroup')
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <span class="method-name">renameUser</span><span class="method-args">(username, new_username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000007">rename_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000007.html');return false;">
+          <span class="method-name">rename_user</span><span class="method-args">(username, new_username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renames a user, returns a <a href="UserEntry.html">UserEntry</a> instance
+</p>
+<pre>
+            ex :
+
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.rename_user('jsmith','jdoe')
+
+            It is recommended to log out rhe user from all browser sessions and service before renaming.
+             Once renamed, the old username becomes a nickname of the new username.
+            Note from Google: Google Talk will lose all remembered chat invitations after renaming.
+            The user must request permission to chat with friends again.
+            Also, when a user is renamed, the old username is retained as a nickname to ensure continuous mail delivery in the case of email forwarding settings.
+            To remove the nickname, you should issue an HTTP DELETE to the nicknames feed after renaming.
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <span class="method-name">restoreUser</span><span class="method-args">(username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000009">restore_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000009.html');return false;">
+          <span class="method-name">restore_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Restores a suspended account in your domain, returns a <a
+href="UserEntry.html">UserEntry</a> instance
+</p>
+<pre>
+            ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.restore('jsmith')
+                    puts user.suspended               =&gt; &quot;false&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllGroups</span><span class="method-args">()</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000030">retrieve_all_groups</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllMembers</span><span class="method-args">(group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000034">retrieve_all_members</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllNicknames</span><span class="method-args">()</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000013">retrieve_all_nicknames</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllOwners</span><span class="method-args">(group_id)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000038">retrieve_all_owners</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllRecipients</span><span class="method-args">(email_list)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000022">retrieve_all_recipients</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveAllUsers</span><span class="method-args">()</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000003">retrieve_all_users</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveGroups</span><span class="method-args">(user)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000029">retrieve_groups</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveNickname</span><span class="method-args">(nickname)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000011">retrieve_nickname</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveNicknames</span><span class="method-args">(username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000012">retrieve_nicknames</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrievePageOfNicknames</span><span class="method-args">(start_nickname)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000016">retrieve_page_of_nicknames</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrievePageOfRecipients</span><span class="method-args">(email_list, start_recipient)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a
+href="ProvisioningApi.html#M000023">retrieve_page_of_recipients</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrievePageOfUsers</span><span class="method-args">(start_username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000004">retrieve_page_of_users</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <span class="method-name">retrieveUser</span><span class="method-args">(username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000002">retrieve_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000018.html');return false;">
+          <span class="method-name">retrieve_all_email_lists</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000030.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000030.html');return false;">
+          <span class="method-name">retrieve_all_groups</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="GroupEntry.html">GroupEntry</a> array for the whole
+domain.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            all_lists = myapps.retrieve_all_groups
+            all_lists.each {|list| puts list.group_id }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000034.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000034.html');return false;">
+          <span class="method-name">retrieve_all_members</span><span class="method-args">(group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="MemberEntry.html">MemberEntry</a> array with the members
+of a group.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            list = myapps.retrieve_all_members('mygroup')
+            lists.each {|list| puts list.member_id }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000013.html');return false;">
+          <span class="method-name">retrieve_all_nicknames</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="NicknameEntry.html">NicknameEntry</a> array for the
+whole domain. May take a while depending on the number of users in your
+domain.
+</p>
+<pre>
+    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+    allnicks = myapps.retrieve_all_nicknames
+    allnicks.each {|nick| puts nick.nickname }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000038.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000038.html');return false;">
+          <span class="method-name">retrieve_all_owners</span><span class="method-args">(group_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="OwnerEntry.html">OwnerEntry</a> array with the owners of
+a group.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            list = myapps.retrieve_all_owners('mygroup')
+            lists.each {|list| puts list.owner_id }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000022.html');return false;">
+          <span class="method-name">retrieve_all_recipients</span><span class="method-args">(email_list)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000003.html');return false;">
+          <span class="method-name">retrieve_all_users</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="UserEntry.html">UserEntry</a> array populated with all
+the users in the domain. May take a while depending on the number of users
+in your domain.
+</p>
+<pre>
+    ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    list= myapps.retrieve_all_users
+                    list.each{ |user| puts user.username}
+                    puts 'nb users : ',list.size
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000017.html');return false;">
+          <span class="method-name">retrieve_email_lists</span><span class="method-args">(email_adress)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000029.html');return false;">
+          <span class="method-name">retrieve_groups</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="GroupEntry.html">GroupEntry</a> array for a particular
+member of the domain (ATTENTION: it doesn&#8216;t work for members of other
+domains!). The user parameter can be a complete email address or can be
+written without &quot;@mydomain.com&quot;.
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            mylists = myapps.retrieve_groups('jsmith')   # you can search for 'jsmith@mydomain.com' too
+            mylists.each {|list| puts list.group_id }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000011.html');return false;">
+          <span class="method-name">retrieve_nickname</span><span class="method-args">(nickname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="NicknameEntry.html">NicknameEntry</a> instance from a
+nickname
+</p>
+<pre>
+    ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    nickname = myapps.retrieve_nickname('jsmith')
+                    puts &quot;login : &quot;+nickname.login
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000012.html');return false;">
+          <span class="method-name">retrieve_nicknames</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="NicknameEntry.html">NicknameEntry</a> array from a
+username
+</p>
+<pre>
+    ex : lists jsmith's nicknames
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            mynicks = myapps.retrieve('jsmith')
+            mynicks.each {|nick| puts nick.nickname }
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000019.html');return false;">
+          <span class="method-name">retrieve_page_of_email_lists</span><span class="method-args">(start_listname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000016.html');return false;">
+          <span class="method-name">retrieve_page_of_nicknames</span><span class="method-args">(start_nickname)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="NicknameEntry.html">NicknameEntry</a> array populated
+with 100 nicknames, starting from a nickname
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            list= myapps.retrieve_page_of_nicknames(&quot;joe&quot;)
+            list.each{ |nick| puts nick.login}
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000023.html');return false;">
+          <span class="method-name">retrieve_page_of_recipients</span><span class="method-args">(email_list, start_recipient)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deprecated. Please use Group management instead.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000004.html');return false;">
+          <span class="method-name">retrieve_page_of_users</span><span class="method-args">(start_username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="UserEntry.html">UserEntry</a> array populated with 100
+users, starting from a username
+</p>
+<pre>
+    ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    list= myapps.retrieve_page_of_users(&quot;jsmtih&quot;)
+            list.each{ |user| puts user.username}
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000002.html');return false;">
+          <span class="method-name">retrieve_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a <a href="UserEntry.html">UserEntry</a> instance from a username
+</p>
+<pre>
+    ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.retrieve_user('jsmith')
+                    puts &quot;givenName : &quot;+user.given_name
+                    puts &quot;familyName : &quot;+user.family_name
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <span class="method-name">suspendUser</span><span class="method-args">(username)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000008">suspend_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000008.html');return false;">
+          <span class="method-name">suspend_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Suspends an account in your domain, returns a <a
+href="UserEntry.html">UserEntry</a> instance
+</p>
+<pre>
+            ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.suspend('jsmith')
+                    puts user.suspended               =&gt; &quot;true&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <span class="method-name">updateGroup</span><span class="method-args">(group_id, properties)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000027">update_group</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <span class="method-name">updateUser</span><span class="method-args">(username, given_name, family_name, password=nil, passwd_hash_function=nil, admin=nil, suspended=nil, changepasswd=nil, quota=nil)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ProvisioningApi.html#M000006">update_user</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000027.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000027.html');return false;">
+          <span class="method-name">update_group</span><span class="method-args">(group_id, properties)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Updates a group in your domain and returns a <a
+href="GroupEntry.html">GroupEntry</a> (ATTENTION: the group name is
+necessary!).
+</p>
+<pre>
+    ex :
+            myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+            group= myapps.update_group(&quot;mygroup&quot;, [&quot;My Group name&quot;, &quot;My Group description&quot;, &quot;&lt;emailPermission&gt;&quot;])
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="ProvisioningApi.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('ProvisioningApi.src/M000006.html');return false;">
+          <span class="method-name">update_user</span><span class="method-args">(username, given_name, family_name, password=nil, passwd_hash_function=nil, admin=nil, suspended=nil, changepasswd=nil, quota=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Updates an account in your domain, returns a <a
+href="UserEntry.html">UserEntry</a> instance
+</p>
+<pre>
+    params :
+                    username is required and can't be updated.
+                    given_name and family_name are required, may be updated.
+                    if set to nil, every other parameter won't update the attribute.
+                            passwd_hash_function :  string &quot;SHA-1&quot;, &quot;MD5&quot; or nil (default)
+                            admin :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false).
+                            suspended :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false)
+                            change_passwd :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false)
+                            quota : limit en MB, ex :  string &quot;2048&quot;
+            ex :
+                    myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')
+                    user = myapps.update('jsmith', 'John', 'Smith', nil, nil, &quot;true&quot;, nil, &quot;true&quot;, nil)
+                    puts user.admin           =&gt; &quot;true&quot;
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

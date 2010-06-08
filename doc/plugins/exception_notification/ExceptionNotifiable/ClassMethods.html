@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: ExceptionNotifiable::ClassMethods</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../vendor/plugins/exception_notification/lib/exception_notifiable.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/exception_notification/lib/exception_notifiable.rb">vendor/plugins/exception_notification/lib/exception_notifiable.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#consider_local">consider_local</a></li>
+					
+					<li><a href="#exception_data">exception_data</a></li>
+					
+					<li><a href="#exceptions_to_treat_as_404">exceptions_to_treat_as_404</a></li>
+					
+					<li><a href="#local_addresses">local_addresses</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../ExceptionNotifiable.html">ExceptionNotifiable</a></li>
+				
+				
+					<li><a href="../ExceptionNotifiable/ClassMethods.html">ExceptionNotifiable::ClassMethods</a></li>
+				
+				
+					<li><a href="../ExceptionNotifier.html">ExceptionNotifier</a></li>
+				
+				
+					<li><a href="../ExceptionNotifierHelper.html">ExceptionNotifierHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">ExceptionNotifiable::ClassMethods</h1>
+		
+
+		<div id="description">
+			
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="consider-local-method" class="method-detail">
+			
+				<a name="consider_local"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">consider_local</span><span 
+						class="method-args">(*args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="consider-local-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/exception_notification/lib/exception_notifiable.rb, line 29</span>
+29:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">consider_local</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+30:       <span class="ruby-identifier">local_addresses</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-constant">IPAddr</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">a</span>) })
+31:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="exception-data-method" class="method-detail">
+			
+				<a name="exception_data"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">exception_data</span><span 
+						class="method-args">(deliverer=self)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="exception-data-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/exception_notification/lib/exception_notifiable.rb, line 42</span>
+42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exception_data</span>(<span class="ruby-identifier">deliverer</span>=<span class="ruby-keyword kw">self</span>)
+43:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">deliverer</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>
+44:         <span class="ruby-identifier">read_inheritable_attribute</span>(<span class="ruby-identifier">:exception_data</span>)
+45:       <span class="ruby-keyword kw">else</span>
+46:         <span class="ruby-identifier">write_inheritable_attribute</span>(<span class="ruby-identifier">:exception_data</span>, <span class="ruby-identifier">deliverer</span>)
+47:       <span class="ruby-keyword kw">end</span>
+48:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="exceptions-to-treat-as--method" class="method-detail">
+			
+				<a name="exceptions_to_treat_as_404"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">exceptions_to_treat_as_404</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="exceptions-to-treat-as--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/exception_notification/lib/exception_notifiable.rb, line 50</span>
+50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exceptions_to_treat_as_404</span>
+51:       <span class="ruby-identifier">exceptions</span> = [<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>,
+52:                     <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownController</span>,
+53:                     <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownAction</span>]
+54:       <span class="ruby-identifier">exceptions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RoutingError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ActionController</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">:RoutingError</span>)
+55:       <span class="ruby-identifier">exceptions</span>
+56:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="local-addresses-method" class="method-detail">
+			
+				<a name="local_addresses"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">local_addresses</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="local-addresses-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/exception_notification/lib/exception_notifiable.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">local_addresses</span>
+34:       <span class="ruby-identifier">addresses</span> = <span class="ruby-identifier">read_inheritable_attribute</span>(<span class="ruby-identifier">:local_addresses</span>)
+35:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">addresses</span>
+36:         <span class="ruby-identifier">addresses</span> = [<span class="ruby-constant">IPAddr</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;127.0.0.1&quot;</span>)]
+37:         <span class="ruby-identifier">write_inheritable_attribute</span>(<span class="ruby-identifier">:local_addresses</span>, <span class="ruby-identifier">addresses</span>)
+38:       <span class="ruby-keyword kw">end</span>
+39:       <span class="ruby-identifier">addresses</span>
+40:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

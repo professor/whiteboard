@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: ActiveRecord::Acts::List::InstanceMethods</title>
+
+	<link rel="stylesheet" href="../../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../../vendor/plugins/acts_as_list/lib/active_record/acts/list.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/acts_as_list/lib/active_record/acts/list.rb">vendor/plugins/acts_as_list/lib/active_record/acts/list.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#decrement_position">decrement_position</a></li>
+					
+					<li><a href="#first?">first?</a></li>
+					
+					<li><a href="#higher_item">higher_item</a></li>
+					
+					<li><a href="#in_list?">in_list?</a></li>
+					
+					<li><a href="#increment_position">increment_position</a></li>
+					
+					<li><a href="#insert_at">insert_at</a></li>
+					
+					<li><a href="#last?">last?</a></li>
+					
+					<li><a href="#lower_item">lower_item</a></li>
+					
+					<li><a href="#move_higher">move_higher</a></li>
+					
+					<li><a href="#move_lower">move_lower</a></li>
+					
+					<li><a href="#move_to_bottom">move_to_bottom</a></li>
+					
+					<li><a href="#move_to_top">move_to_top</a></li>
+					
+					<li><a href="#remove_from_list">remove_from_list</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../ActiveRecord.html">ActiveRecord</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts.html">ActiveRecord::Acts</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List.html">ActiveRecord::Acts::List</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/ClassMethods.html">ActiveRecord::Acts::List::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/InstanceMethods.html">ActiveRecord::Acts::List::InstanceMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">ActiveRecord::Acts::List::InstanceMethods</h1>
+		
+
+		<div id="description">
+			<p>
+All the methods available to a record that has had <tt>acts_as_list</tt>
+specified. Each method works by assuming the object to be the item in the
+list, so <tt>chapter.move_lower</tt> would move that chapter lower in the
+list of all chapters. Likewise, <tt>chapter.first?</tt> would return
+<tt>true</tt> if that chapter is the first in the list of all chapters.
+</p>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="decrement-position-method" class="method-detail">
+			
+				<a name="decrement_position"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">decrement_position</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Decrease the position of this item without adjusting the rest of the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="decrement-position-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 138</span>
+138:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decrement_position</span>
+139:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+140:           <span class="ruby-identifier">update_attribute</span> <span class="ruby-identifier">position_column</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">position_column</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+141:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="first--method" class="method-detail">
+			
+				<a name="first?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">first?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Return <tt>true</tt> if this object is the first in the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="first--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 144</span>
+144:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">first?</span>
+145:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+146:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">position_column</span>) <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+147:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="higher-item-method" class="method-detail">
+			
+				<a name="higher_item"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">higher_item</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Return the next higher item in the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="higher-item-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 156</span>
+156:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">higher_item</span>
+157:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+158:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span>
+159:             <span class="ruby-node">&quot;#{scope_condition} AND #{position_column} = #{(send(position_column).to_i - 1).to_s}&quot;</span>
+160:           )
+161:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="in-list--method" class="method-detail">
+			
+				<a name="in_list?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">in_list?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Test if this record is in a list
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="in-list--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 172</span>
+172:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_list?</span>
+173:           <span class="ruby-operator">!</span><span class="ruby-identifier">send</span>(<span class="ruby-identifier">position_column</span>).<span class="ruby-identifier">nil?</span>
+174:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="increment-position-method" class="method-detail">
+			
+				<a name="increment_position"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">increment_position</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Increase the position of this item without adjusting the rest of the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="increment-position-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 132</span>
+132:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">increment_position</span>
+133:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+134:           <span class="ruby-identifier">update_attribute</span> <span class="ruby-identifier">position_column</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">position_column</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+135:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="insert-at-method" class="method-detail">
+			
+				<a name="insert_at"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">insert_at</span><span 
+						class="method-args">(position = 1)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Insert the item at the given position (defaults to the top position of 1).
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="insert-at-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 79</span>
+79:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_at</span>(<span class="ruby-identifier">position</span> = <span class="ruby-value">1</span>)
+80:           <span class="ruby-identifier">insert_at_position</span>(<span class="ruby-identifier">position</span>)
+81:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="last--method" class="method-detail">
+			
+				<a name="last?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">last?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Return <tt>true</tt> if this object is the last in the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="last--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 150</span>
+150:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last?</span>
+151:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+152:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">position_column</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">bottom_position_in_list</span>
+153:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="lower-item-method" class="method-detail">
+			
+				<a name="lower_item"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">lower_item</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Return the next lower item in the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="lower-item-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 164</span>
+164:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lower_item</span>
+165:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+166:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span>
+167:             <span class="ruby-node">&quot;#{scope_condition} AND #{position_column} = #{(send(position_column).to_i + 1).to_s}&quot;</span>
+168:           )
+169:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="move-higher-method" class="method-detail">
+			
+				<a name="move_higher"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">move_higher</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Swap positions with the next higher item, if one exists.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="move-higher-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 94</span>
+ 94:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_higher</span>
+ 95:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">higher_item</span>
+ 96: 
+ 97:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+ 98:             <span class="ruby-identifier">higher_item</span>.<span class="ruby-identifier">increment_position</span>
+ 99:             <span class="ruby-identifier">decrement_position</span>
+100:           <span class="ruby-keyword kw">end</span>
+101:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="move-lower-method" class="method-detail">
+			
+				<a name="move_lower"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">move_lower</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Swap positions with the next lower item, if one exists.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="move-lower-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 84</span>
+84:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_lower</span>
+85:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">lower_item</span>
+86: 
+87:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+88:             <span class="ruby-identifier">lower_item</span>.<span class="ruby-identifier">decrement_position</span>
+89:             <span class="ruby-identifier">increment_position</span>
+90:           <span class="ruby-keyword kw">end</span>
+91:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="move-to-bottom-method" class="method-detail">
+			
+				<a name="move_to_bottom"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">move_to_bottom</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Move to the bottom of the list. If the item is already in the list, the
+items below it have their position adjusted accordingly.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="move-to-bottom-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 105</span>
+105:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_bottom</span>
+106:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+107:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+108:             <span class="ruby-identifier">decrement_positions_on_lower_items</span>
+109:             <span class="ruby-identifier">assume_bottom_position</span>
+110:           <span class="ruby-keyword kw">end</span>
+111:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="move-to-top-method" class="method-detail">
+			
+				<a name="move_to_top"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">move_to_top</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Move to the top of the list. If the item is already in the list, the items
+above it have their position adjusted accordingly.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="move-to-top-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 115</span>
+115:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_top</span>
+116:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">in_list?</span>
+117:           <span class="ruby-identifier">acts_as_list_class</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+118:             <span class="ruby-identifier">increment_positions_on_higher_items</span>
+119:             <span class="ruby-identifier">assume_top_position</span>
+120:           <span class="ruby-keyword kw">end</span>
+121:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="remove-from-list-method" class="method-detail">
+			
+				<a name="remove_from_list"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">remove_from_list</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Removes the item from the list.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="remove-from-list-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 124</span>
+124:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_from_list</span>
+125:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">in_list?</span>
+126:             <span class="ruby-identifier">decrement_positions_on_lower_items</span>
+127:             <span class="ruby-identifier">update_attribute</span> <span class="ruby-identifier">position_column</span>, <span class="ruby-keyword kw">nil</span>
+128:           <span class="ruby-keyword kw">end</span>
+129:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

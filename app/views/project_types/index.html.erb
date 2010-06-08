@@ -1,0 +1,24 @@
+<% content_for :title, 'Project Types' %>
+<h1>Listing project_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+<% for project_type in @project_types %>
+  <tr>
+    <td><%=h project_type.name %></td>
+    <td><%=h project_type.description %></td>
+    <td><%= link_to 'Show', project_type %></td>
+    <td><%= link_to 'Edit', edit_project_type_path(project_type) %></td>
+    <td><%= link_to 'Destroy', project_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<p>
+<%= link_to 'New project_type', new_project_type_path %>
+</p>

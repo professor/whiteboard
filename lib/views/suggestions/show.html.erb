@@ -1,0 +1,26 @@
+<% content_for :title, 'Show Suggestion' %>
+
+<table><tr><td>Comment: </td><td><%=h @suggestion.comment %></td></tr>
+<% if !@suggestion.page.nil? %>
+<tr><td>Page:</td><td><%= link_to @suggestion.page, @suggestion.page%> </td></tr>
+<% end %>
+<tr><td>Created:</td><td><%=h @suggestion.created_at.to_s(:long)  %></td></tr>
+<tr><td>Updated:</td><td><%=h @suggestion.updated_at.to_s(:long)  %></td></tr>
+
+<% if !@suggestion.user_id.nil? %>
+<tr><td>User Id:</td><td><%=h @suggestion.user_id %></td></tr>
+<tr><td>User Name:</td><td><%=h User.find(@suggestion.user_id).email %></td></tr>
+<% end %>
+
+<% if !@suggestion.email.nil? %>
+<tr><td>Email:</td><td><%=h @suggestion.email %></td></tr>
+<% end %>
+</table>
+
+
+<p>
+<% if @suggestion.editable(current_user) %>
+    <%= link_to 'Edit', edit_suggestion_path(@suggestion) %> |
+<% end %>
+<%= link_to 'Back', suggestions_path %>
+</p>

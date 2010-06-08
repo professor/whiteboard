@@ -1,0 +1,48 @@
+<% form_for(@page) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :course_id %><br />
+    <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :label %><br />
+    <%= f.text_field :label %>
+  </p>
+  <p>
+    <%= f.label :indentation_level %><br />
+    <%= f.text_field :indentation_level %>
+  </p>
+  <p>
+    <%= f.label :is_task %><br />
+    <%= f.check_box :is_task %>
+  </p>
+  <p>
+    <%= f.label :tab_one_email_from %><br />
+    <%= f.text_field :tab_one_email_from %>
+  </p>
+  <p>
+    <%= f.label :tab_one_email_subject %><br />
+    <%= f.text_field :tab_one_email_subject %>
+  </p>
+  <p>
+    <%= f.label :tab_one_contents %><br />
+    <%= f.text_area :tab_one_contents %>
+  </p>
+  <p>
+    <%= f.label :tab_two_contents %><br />
+    <%= f.text_area :tab_two_contents %>
+  </p>
+  <p>
+    <%= f.label :tab_three_contents %><br />
+    <%= f.text_area :tab_three_contents %>
+  </p>
+  <p>
+    <%= f.label :task_duration %><br />
+    <%= f.text_field :task_duration %>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>
+

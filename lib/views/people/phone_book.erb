@@ -1,0 +1,118 @@
+<% content_for :title, 'Phone book' %>
+<% content_for :tablesorter do %>
+  <%= javascript_include_tag 'tablesorter' %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+<script type="text/javascript">
+$(document).ready(function() 
+    {
+       if ($("#filterBoxOne").attr("disabled") == true)
+       {
+         $('#filterBoxOne').val('');
+         $('#filterBoxOne').removeAttr("disabled");
+         $('#filterBoxOne').focus();
+        }
+        $("#people_table").tablesorter({widgets: ['zebra'],         
+                                        headers: {2: {sorter: false}  },
+                                        sortList: [[0,0], [1,0]]})
+            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                filterClearContainer: $("#filterClearOne"),
+                filterColumns: [0, 1, 5, 6, 7],
+                filterCaseSensitive: false
+            });
+        //scroll the message box to the top offset of browser's scrool bar
+        $(window).scroll(function()
+        {
+          $('#image_box').animate({top:$(window).scrollTop()+"px" },{queue: false, duration: 350});
+        });
+        //when the close button at right corner of the message box is clicked
+        $('#close_image_box').click(function()
+        {
+          //the messagebox gets scrool down with top property and gets hidden with zero opacity
+          $('#image_box').animate({ top:"+=15px",opacity:0 }, "slow");
+        });
+
+        //hoving over a line selects it
+        $("tr").hover(
+        function () {
+          $(this).addClass("hover");
+        },
+        function () {
+          $(this).removeClass("hover");
+        });
+    
+    } 
+);
+
+function toggleStudents()
+{
+  /* we don't use .toggle since the state may be inaccurate from a page reload */
+  if ($('#student_checkbox').is(':checked')) {
+    $(".student").show();
+  } else {
+    $(".student").hide();
+  }
+  $("#filterBoxOne").trigger("keyup");
+}
+
+function toggleStaff()
+{
+  if ($('#staff_checkbox').is(':checked')) {
+    $(".staff").show();
+  } else {
+    $(".staff").hide();
+  }
+  $("#filterBoxOne").trigger("keyup");
+}
+
+function updateImage(uri,label)
+{
+ $('#image_box_image').attr("src", uri);
+
+ $('#image_box_label').text(label);
+}
+
+
+</script>
+<% end %>
+
+<h1>Phone book</h1>
+<div class="right_link" ><%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %><br/>
+<%= link_to 'See photo book', :action=>'photo_book' %></div>
+
+
+<div style="float:none"><%= render :partial => "tablesorter_filter_box" %><label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked" />
+  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" />
+</div>
+
+<!-- conference room url
+http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
+-->
+
+<div id="image_box">
+  <img id="image_box_image" src="/images/students/mascot.jpg?1250032485"><%= image_tag("/images/tablesorter/cross.png", :width=>"16", :height=>"16", :alt=>"Close Me", :style=>"float:right;cursor:pointer", :id=>"close_image_box") %>
+  <div id='image_box_label'></div>
+</div>
+
+<table id="people_table" class="tablesorter">
+  <thead>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Phone</th>
+  </tr>
+</thead>
+<tbody>
+<% for person in @people %>
+   <tr class="tablesorter <%if person.is_student %>student<% end %> <% if person.is_staff %>staff<%end%>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+    <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
+    <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>
+    <td><% person.telephones.each { |phone| %><%=h phone %><br/><% } %></td>
+    <td><%= link_to 'Show', person %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New person', new_person_path %>

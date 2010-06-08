@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Paperclip::CallbackCompatability</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../vendor/plugins/paperclip/lib/paperclip/callback_compatability.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/paperclip/lib/paperclip/callback_compatability.rb">vendor/plugins/paperclip/lib/paperclip/callback_compatability.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+			<div id="namespace-list-section" class="section">
+				<h3 class="section-header">Namespace</h3>
+				<ul class="link-list">
+					
+					<li><span class="type">Module</span> <a href="CallbackCompatability/ClassMethods.html" class="link">Paperclip::CallbackCompatability::ClassMethods</a><br />
+</li>
+					
+					<li><span class="type">Module</span> <a href="CallbackCompatability/InstanceMethods.html" class="link">Paperclip::CallbackCompatability::InstanceMethods</a><br />
+</li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#included">included</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../Paperclip.html">Paperclip</a></li>
+				
+				
+					<li><a href="../Paperclip/Attachment.html">Paperclip::Attachment</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability.html">Paperclip::CallbackCompatability</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/ClassMethods.html">Paperclip::CallbackCompatability::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/InstanceMethods.html">Paperclip::CallbackCompatability::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/ClassMethods.html">Paperclip::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Geometry.html">Paperclip::Geometry</a></li>
+				
+				
+					<li><a href="../Paperclip/InfiniteInterpolationError.html">Paperclip::InfiniteInterpolationError</a></li>
+				
+				
+					<li><a href="../Paperclip/InstanceMethods.html">Paperclip::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Interpolations.html">Paperclip::Interpolations</a></li>
+				
+				
+					<li><a href="../Paperclip/NotIdentifiedByImageMagickError.html">Paperclip::NotIdentifiedByImageMagickError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipCommandLineError.html">Paperclip::PaperclipCommandLineError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipError.html">Paperclip::PaperclipError</a></li>
+				
+				
+					<li><a href="../Paperclip/Processor.html">Paperclip::Processor</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda.html">Paperclip::Shoulda</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers.html">Paperclip::Shoulda::Matchers</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/HaveAttachedFileMatcher.html">Paperclip::Shoulda::Matchers::HaveAttachedFileMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentContentTypeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentContentTypeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentPresenceMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentPresenceMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentSizeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentSizeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage.html">Paperclip::Storage</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/Filesystem.html">Paperclip::Storage::Filesystem</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/S3.html">Paperclip::Storage::S3</a></li>
+				
+				
+					<li><a href="../Paperclip/Style.html">Paperclip::Style</a></li>
+				
+				
+					<li><a href="../Paperclip/Tempfile.html">Paperclip::Tempfile</a></li>
+				
+				
+					<li><a href="../Paperclip/Thumbnail.html">Paperclip::Thumbnail</a></li>
+				
+				
+					<li><a href="../Paperclip/Upfile.html">Paperclip::Upfile</a></li>
+				
+				
+					<li><a href="../File.html">File</a></li>
+				
+				
+					<li><a href="../IO.html">IO</a></li>
+				
+				
+					<li><a href="../IOStream.html">IOStream</a></li>
+				
+				
+					<li><a href="../StringIO.html">StringIO</a></li>
+				
+				
+					<li><a href="../Tempfile.html">Tempfile</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">Paperclip::CallbackCompatability</h1>
+		
+
+		<div id="description">
+			<p>
+This module is intended as a compatability shim for the differences in
+callbacks between Rails 2.0 and Rails 2.1.
+</p>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+
+		
+			
+			<div id="included-method" class="method-detail">
+			
+				<a name="included"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">included</span><span 
+						class="method-args">(base)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="included-source">
+<pre>
+   <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/callback_compatability.rb, line 5</span>
+5:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+6:       <span class="ruby-identifier">base</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">ClassMethods</span>)
+7:       <span class="ruby-identifier">base</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-constant">InstanceMethods</span>)
+8:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Authorization::StatefulRoles::StatefulRolesInstanceMethods</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb">vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#do_activate">do_activate</a></li>
+					
+					<li><a href="#do_delete">do_delete</a></li>
+					
+					<li><a href="#recently_activated?">recently_activated?</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../CHANGELOG.html">CHANGELOG</a></li>
+				
+					<li class="file"><a href="../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../Authentication.html">Authentication</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieToken.html">Authentication::ByCookieToken</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieToken/ModelClassMethods.html">Authentication::ByCookieToken::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieToken/ModelInstanceMethods.html">Authentication::ByCookieToken::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieTokenController.html">Authentication::ByCookieTokenController</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieTokenController/ControllerClassMethods.html">Authentication::ByCookieTokenController::ControllerClassMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ByCookieTokenController/ControllerInstanceMethods.html">Authentication::ByCookieTokenController::ControllerInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ByPassword.html">Authentication::ByPassword</a></li>
+				
+				
+					<li><a href="../../Authentication/ByPassword/ModelClassMethods.html">Authentication::ByPassword::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ByPassword/ModelInstanceMethods.html">Authentication::ByPassword::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ModelClassMethods.html">Authentication::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../Authentication/ModelInstanceMethods.html">Authentication::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authorization.html">Authorization</a></li>
+				
+				
+					<li><a href="../../Authorization/AasmRoles.html">Authorization::AasmRoles</a></li>
+				
+				
+					<li><a href="../../Authorization/AasmRoles/StatefulRolesClassMethods.html">Authorization::AasmRoles::StatefulRolesClassMethods</a></li>
+				
+				
+					<li><a href="../../Authorization/AasmRoles/StatefulRolesInstanceMethods.html">Authorization::AasmRoles::StatefulRolesInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authorization/ModelClassMethods.html">Authorization::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../Authorization/ModelInstanceMethods.html">Authorization::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Authorization/StatefulRoles.html">Authorization::StatefulRoles</a></li>
+				
+				
+					<li><a href="../../Authorization/StatefulRoles/StatefulRolesClassMethods.html">Authorization::StatefulRoles::StatefulRolesClassMethods</a></li>
+				
+				
+					<li><a href="../../Authorization/StatefulRoles/StatefulRolesInstanceMethods.html">Authorization::StatefulRoles::StatefulRolesInstanceMethods</a></li>
+				
+				
+					<li><a href="../../Trustification.html">Trustification</a></li>
+				
+				
+					<li><a href="../../Trustification/EmailValidation.html">Trustification::EmailValidation</a></li>
+				
+				
+					<li><a href="../../Trustification/EmailValidation/ClassMethods.html">Trustification::EmailValidation::ClassMethods</a></li>
+				
+				
+					<li><a href="../../Trustification/EmailValidation/InstanceMethods.html">Trustification::EmailValidation::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../Trustification/ModelClassMethods.html">Trustification::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../Trustification/ModelInstanceMethods.html">Trustification::ModelInstanceMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">Authorization::StatefulRoles::StatefulRolesInstanceMethods</h1>
+		
+
+		<div id="description">
+			
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="do-activate-method" class="method-detail">
+			
+				<a name="do_activate"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">do_activate</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="do-activate-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb, line 56</span>
+56:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_activate</span>
+57:         <span class="ruby-ivar">@activated</span> = <span class="ruby-keyword kw">true</span>
+58:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">activated_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">utc</span>
+59:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">deleted_at</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">activation_code</span> = <span class="ruby-keyword kw">nil</span>
+60:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="do-delete-method" class="method-detail">
+			
+				<a name="do_delete"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">do_delete</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="do-delete-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_delete</span>
+53:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">deleted_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">utc</span>
+54:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="recently-activated--method" class="method-detail">
+			
+				<a name="recently_activated?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">recently_activated?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns true if the user has just been activated.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="recently-activated--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/restful-authentication/lib/authorization/stateful_roles.rb, line 49</span>
+49:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recently_activated?</span>
+50:         <span class="ruby-ivar">@activated</span>
+51:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

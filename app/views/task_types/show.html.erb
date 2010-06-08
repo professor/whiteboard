@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%=h @task_type.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @task_type.description %>
+</p>
+
+<p>
+  <b>Is staff:</b>
+  <%=h @task_type.is_staff %>
+</p>
+
+<p>
+  <b>Is student:</b>
+  <%=h @task_type.is_student %>
+</p>
+
+
+<p><%= link_to 'Edit', edit_task_type_path(@task_type) %> |
+<%= link_to 'Back', task_types_path %></p>

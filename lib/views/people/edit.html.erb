@@ -1,0 +1,256 @@
+<h1>Editing <%=h @person.human_name %> </h1>
+
+This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
+
+<% form_for(@person) do |f| %>
+  <%= f.error_messages %>
+
+
+<!--  
+<h1><%= f.text_field :first_name %> <%= f.text_field :last_name %></h1>
+
+<div class="user_photo"><img src="<%=h @person.image_uri %>" /></div>
+<table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="twikiTable">
+<tr class="twikiTableOdd"><td>Organization:</td>
+    <td><b> <%= f.text_field :organization_name %></b></td>
+    <td>Location:</td>
+    <td><b><%= f.text_field :work_city %>, <%= f.text_field :work_state %> <%= f.text_field :work_country %></b></td></tr>
+<tr class="twikiTableEven"><td>Telephone:</td>
+    <td><b>  <p>
+    <%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
+    <%= f.text_field :telephone1 %>
+  </p>
+  <p>
+    <%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
+    <%= f.text_field :telephone2 %>
+  </p>
+  <p>
+    <%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
+    <%= f.text_field :telephone3 %>
+  </p>
+  <p>
+    <%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
+    <%= f.text_field :telephone4 %>
+  </p>
+</b></td>
+    <td>E-mail:</td>
+    <td><b><%=h @person.email %></b></td></tr>
+
+</table>
+
+ -->
+
+
+
+  <div class="rounded student">
+  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
+  <span class="instructions">These fields can be edited by anyone.</span>
+
+  <fieldset>
+    <legend>Your information</legend>
+  <div class="formItem">
+    <%= f.label "Preferred first name" %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="formItem">
+    <%= f.label :legal_first_name %>
+    <%= f.text_field :legal_first_name %><br />
+    <span class="help_text">Ok to leave blank</span>
+  </div>
+  <div class="formItem">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="formItem">
+    <%= f.label :pronunciation %>
+    <%= f.text_field :pronunciation %>
+  </div>
+  <div class="formItem">
+  Telephones
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+    <%= f.text_field :telephone1 %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+    <%= f.text_field :telephone2 %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+    <%= f.text_field :telephone3 %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+    <%= f.text_field :telephone4 %>
+  </div>
+  <div class="formItem">
+    <%= f.label :local_near_remote %>
+    <%= f.select :local_near_remote, %w{ Unknown Local Near Remote }  %><br />
+    <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br />
+    <span class="help_text">Near - I live near Silicon Valley. I can drive in for final presentations or weekend events. </span><br />
+    <span class="help_text">Remote - I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation. </span>
+  </div>
+  <div class="formItem">
+    <%= f.label :skype %>
+    <%= f.text_field :skype %>
+  </div>
+  <div class="formItem">
+    <%= f.label :tigris %>
+    <%= f.text_field :tigris %>
+  </div>
+  <div class="formItem">
+    <%= f.label :personal_email %>
+    <%= f.text_field :personal_email %>
+  </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your work information</legend>
+  <div class="formItem">
+    <%= f.label :organization_name %>
+    <%= f.text_field :organization_name %>
+  </div>
+  <div class="formItem">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_city %>
+    <%= f.text_field :work_city %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_state %>
+    <%= f.text_field :work_state %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_country %>
+    <%= f.text_field :work_country %>
+  </div>
+  </fieldset>
+  <div class="formItem">
+    <%= f.label :biography %>
+    <%= f.text_area :biography, :size=>"80x30", :class=>"tinymce"  %>
+  </div>
+  <div class="formItem">
+    <%= f.label :user_text %>
+    <%= f.text_area :user_text, :size=>"80x30", :class=>"tinymce" %>
+  </div>
+  </div>
+
+  <div class="rounded staff">
+<%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+  <span class="instructions">These fields can be edited by faculty.</span>
+
+  <% if !(current_user.is_admin? || current_user.is_staff?)  %>
+  <%= render :partial => 'show_faculty_fields', :locals=>{:f => f} %>
+  <% else %>
+  <fieldset>
+    <legend>Student information</legend>
+  <div class="formItem">
+    <%= f.label :graduation_year, "Graduation year (or class identifier)" %>
+    <%= f.text_field :graduation_year %><br/>
+    <span class="help_text">ie 2020, MSIT-28</span>
+  </div>
+  <div class="formItem">
+    <%= f.label :masters_program, "Graduate program" %>
+    <%= f.text_field :masters_program %>
+  </div>
+  <div class="formItem">
+    <%= f.label :masters_track, "Graduate track" %>
+    <%= f.text_field :masters_track %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_part_time, "Is part time student?" %>
+    <%= f.check_box :is_part_time %>
+  </div>
+  </fieldset>
+  <fieldset>
+    <legend>Faculty information</legend>
+  <div class="formItem">
+    <%= f.label :office, "Office number" %>
+    <%= f.text_field :office %>
+  </div>
+  <div class="formItem">
+    <%= f.label :office_hours %>
+    <%= f.text_field :office_hours %>
+  </div>
+  </fieldset>
+<% end %>
+
+  </div>
+  <div class="rounded admin">
+  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <span class="instructions">These fields can be edited by admin.</span>
+  <% if !(current_user.is_admin?)  %>
+  <%= render :partial => 'show_admin_fields', :locals=>{:f => f} %>
+  <% else %>
+
+  <fieldset>
+    <legend>User Roles</legend>
+  <div class="formItem">
+    <%= f.label :is_student %>
+    <%= f.check_box :is_student %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_alumnus %>
+    <%= f.check_box :is_alumnus %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_staff %>
+    <%= f.check_box :is_staff %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_teacher %>
+    <%= f.check_box :is_teacher %><br />
+    <span class="help_text">If checked, user will show up on the team page's drop down box of instructors.</span>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_active %>
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_admin %><%= f.check_box :is_active, :disabled=>'disabled' %><br />
+    <span class="help_text">Admin accounts can only be granted through SQL</span>
+  </div>
+  </fieldset>
+  <fieldset>
+    <legend>Account information</legend>
+  <div class="formItem">
+    <%= f.label :is_adobe_connect_host %>
+    <%= f.check_box :is_adobe_connect_host %>
+  </div>
+  <div class="formItem">
+    <%= f.label :image_uri %>
+    <%= f.text_field :image_uri %>
+  </div>
+  <div class="formItem">
+    <%= f.label :email, "CMU-SV email address" %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="formItem">
+    <%= f.label :webiso_account %>
+    <%= f.text_field :webiso_account %>
+  </div>
+  <div class="formItem">
+    <%= f.label :twiki_name, "TWiki name" %>
+    <%= f.text_field :twiki_name %>
+  </div>
+  <div class="formItem">
+    <%= f.label "Display name" %>
+    <%= f.text_field :human_name, :disabled=>'disabled' %>
+  </div>
+  </fieldset>
+  <% end %>
+  </div>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+
+
+<% end %>
+
+<%= link_to 'Show', @person %> |
+<%= link_to 'Back', people_path %>
+
+<!-- Checkbox can be done with this html character code: &#x2714; -->

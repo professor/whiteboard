@@ -1,0 +1,23 @@
+<div>
+  <a href="<%=url_for :action=>"show", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
+</div>
+
+<table>
+<tr>
+<% @report_header.each do |column| %>
+    <th><%= column %></th>
+<% end  %>
+  </tr>
+
+
+<% @report_lines.each do |item| %>
+<tr>
+  <td><%= item[:team_name] %></td>
+  <td><%= item[:person_name] %></td>
+  
+  <% item[:effort].each do |column| %>
+    <td align="right"><%= column %></td>
+    <% end %>
+  </tr>
+<% end  %>
+</table>

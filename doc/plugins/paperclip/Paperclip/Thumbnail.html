@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Paperclip::Thumbnail</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../vendor/plugins/paperclip/lib/paperclip/thumbnail.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/paperclip/lib/paperclip/thumbnail.rb">vendor/plugins/paperclip/lib/paperclip/thumbnail.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link"><a href="Processor.html">Paperclip::Processor</a></p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#convert_options?">convert_options?</a></li>
+					
+					<li><a href="#crop?">crop?</a></li>
+					
+					<li><a href="#make">make</a></li>
+					
+					<li><a href="#new">new</a></li>
+					
+					<li><a href="#transformation_command">transformation_command</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../Paperclip.html">Paperclip</a></li>
+				
+				
+					<li><a href="../Paperclip/Attachment.html">Paperclip::Attachment</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability.html">Paperclip::CallbackCompatability</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/ClassMethods.html">Paperclip::CallbackCompatability::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/InstanceMethods.html">Paperclip::CallbackCompatability::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/ClassMethods.html">Paperclip::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Geometry.html">Paperclip::Geometry</a></li>
+				
+				
+					<li><a href="../Paperclip/InfiniteInterpolationError.html">Paperclip::InfiniteInterpolationError</a></li>
+				
+				
+					<li><a href="../Paperclip/InstanceMethods.html">Paperclip::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Interpolations.html">Paperclip::Interpolations</a></li>
+				
+				
+					<li><a href="../Paperclip/NotIdentifiedByImageMagickError.html">Paperclip::NotIdentifiedByImageMagickError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipCommandLineError.html">Paperclip::PaperclipCommandLineError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipError.html">Paperclip::PaperclipError</a></li>
+				
+				
+					<li><a href="../Paperclip/Processor.html">Paperclip::Processor</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda.html">Paperclip::Shoulda</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers.html">Paperclip::Shoulda::Matchers</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/HaveAttachedFileMatcher.html">Paperclip::Shoulda::Matchers::HaveAttachedFileMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentContentTypeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentContentTypeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentPresenceMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentPresenceMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentSizeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentSizeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage.html">Paperclip::Storage</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/Filesystem.html">Paperclip::Storage::Filesystem</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/S3.html">Paperclip::Storage::S3</a></li>
+				
+				
+					<li><a href="../Paperclip/Style.html">Paperclip::Style</a></li>
+				
+				
+					<li><a href="../Paperclip/Tempfile.html">Paperclip::Tempfile</a></li>
+				
+				
+					<li><a href="../Paperclip/Thumbnail.html">Paperclip::Thumbnail</a></li>
+				
+				
+					<li><a href="../Paperclip/Upfile.html">Paperclip::Upfile</a></li>
+				
+				
+					<li><a href="../File.html">File</a></li>
+				
+				
+					<li><a href="../IO.html">IO</a></li>
+				
+				
+					<li><a href="../IOStream.html">IOStream</a></li>
+				
+				
+					<li><a href="../StringIO.html">StringIO</a></li>
+				
+				
+					<li><a href="../Tempfile.html">Tempfile</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="class">Paperclip::Thumbnail</h1>
+		
+
+		<div id="description">
+			<p>
+Handles thumbnailing images that are uploaded.
+</p>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="convert-options-attribute-method" class="method-detail">
+				<a name="convert_options"></a>
+				
+				<a name="convert_options="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">convert_options</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="current-geometry-attribute-method" class="method-detail">
+				<a name="current_geometry"></a>
+				
+				<a name="current_geometry="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">current_geometry</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="format-attribute-method" class="method-detail">
+				<a name="format"></a>
+				
+				<a name="format="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">format</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="source-file-options-attribute-method" class="method-detail">
+				<a name="source_file_options"></a>
+				
+				<a name="source_file_options="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">source_file_options</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="target-geometry-attribute-method" class="method-detail">
+				<a name="target_geometry"></a>
+				
+				<a name="target_geometry="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">target_geometry</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="whiny-attribute-method" class="method-detail">
+				<a name="whiny"></a>
+				
+				<a name="whiny="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">whiny</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+
+		
+			
+			<div id="new-method" class="method-detail">
+			
+				<a name="new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span 
+						class="method-args">(file, options = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a <a href="Thumbnail.html">Thumbnail</a> object set to work on the
+<tt>file</tt> given. It will attempt to transform the image into one
+defined by <tt>target_geometry</tt> which is a &#8220;WxH&#8221;-style
+string. <tt>format</tt> will be inferred from the <tt>file</tt> unless
+specified. <a href="Thumbnail.html">Thumbnail</a> creation will raise no
+errors unless <tt>whiny</tt> is true (which it is, by default. If
+<tt>convert_options</tt> is set, the options will be appended to the
+convert command upon image conversion
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/thumbnail.rb, line 13</span>
+13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">file</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">attachment</span> = <span class="ruby-keyword kw">nil</span>
+14:       <span class="ruby-keyword kw">super</span>
+15:       
+16:       <span class="ruby-identifier">geometry</span>             = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:geometry</span>]
+17:       <span class="ruby-ivar">@file</span>                = <span class="ruby-identifier">file</span>
+18:       <span class="ruby-ivar">@crop</span>                = <span class="ruby-identifier">geometry</span>[<span class="ruby-value">-1</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'#'</span>
+19:       <span class="ruby-ivar">@target_geometry</span>     = <span class="ruby-constant">Geometry</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">geometry</span>
+20:       <span class="ruby-ivar">@current_geometry</span>    = <span class="ruby-constant">Geometry</span>.<span class="ruby-identifier">from_file</span> <span class="ruby-ivar">@file</span>
+21:       <span class="ruby-ivar">@source_file_options</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:source_file_options</span>]
+22:       <span class="ruby-ivar">@convert_options</span>     = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:convert_options</span>]
+23:       <span class="ruby-ivar">@whiny</span>               = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:whiny</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:whiny</span>]
+24:       <span class="ruby-ivar">@format</span>              = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:format</span>]
+25: 
+26:       <span class="ruby-ivar">@current_format</span>      = <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-ivar">@file</span>.<span class="ruby-identifier">path</span>)
+27:       <span class="ruby-ivar">@basename</span>            = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-ivar">@file</span>.<span class="ruby-identifier">path</span>, <span class="ruby-ivar">@current_format</span>)
+28:       
+29:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="convert-options--method" class="method-detail">
+			
+				<a name="convert_options?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">convert_options?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns true if the image is meant to make use of additional convert
+options.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="convert-options--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/thumbnail.rb, line 37</span>
+37:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_options?</span>
+38:       <span class="ruby-operator">!</span><span class="ruby-ivar">@convert_options</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@convert_options</span>.<span class="ruby-identifier">empty?</span>
+39:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="crop--method" class="method-detail">
+			
+				<a name="crop?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">crop?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns true if the <tt>target_geometry</tt> is meant to crop.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="crop--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/thumbnail.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">crop?</span>
+33:       <span class="ruby-ivar">@crop</span>
+34:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="make-method" class="method-detail">
+			
+				<a name="make"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">make</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Performs the conversion of the <tt>file</tt> into a thumbnail. Returns the
+<a href="Tempfile.html">Tempfile</a> that contains the new image.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="make-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/thumbnail.rb, line 43</span>
+43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make</span>
+44:       <span class="ruby-identifier">src</span> = <span class="ruby-ivar">@file</span>
+45:       <span class="ruby-identifier">dst</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span>([<span class="ruby-ivar">@basename</span>, <span class="ruby-ivar">@format</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;.&quot;</span>))
+46:       <span class="ruby-identifier">dst</span>.<span class="ruby-identifier">binmode</span>
+47: 
+48:       <span class="ruby-identifier">command</span> = <span class="ruby-value str">&quot;\#{ source_file_options }\n\&quot;\#{ File.expand_path(src.path) }[0]\&quot;\n\#{ transformation_command }\n\&quot;\#{ File.expand_path(dst.path) }\&quot;\n&quot;</span>
+49: 
+50:       <span class="ruby-keyword kw">begin</span>
+51:         <span class="ruby-identifier">success</span> = <span class="ruby-constant">Paperclip</span>.<span class="ruby-identifier">run</span>(<span class="ruby-value str">&quot;convert&quot;</span>, <span class="ruby-identifier">command</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\s+/</span>, <span class="ruby-value str">&quot; &quot;</span>))
+52:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">PaperclipCommandLineError</span>
+53:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">PaperclipError</span>, <span class="ruby-node">&quot;There was an error processing the thumbnail for #{@basename}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@whiny</span>
+54:       <span class="ruby-keyword kw">end</span>
+55: 
+56:       <span class="ruby-identifier">dst</span>
+57:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="transformation-command-method" class="method-detail">
+			
+				<a name="transformation_command"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">transformation_command</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the command ImageMagick&#8217;s <tt>convert</tt> needs to transform
+the image into the thumbnail.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="transformation-command-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/thumbnail.rb, line 67</span>
+67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transformation_command</span>
+68:       <span class="ruby-identifier">scale</span>, <span class="ruby-identifier">crop</span> = <span class="ruby-ivar">@current_geometry</span>.<span class="ruby-identifier">transformation_to</span>(<span class="ruby-ivar">@target_geometry</span>, <span class="ruby-identifier">crop?</span>)
+69:       <span class="ruby-identifier">trans</span> = <span class="ruby-value str">&quot;&quot;</span>
+70:       <span class="ruby-identifier">trans</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; -resize \&quot;#{scale}\&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">scale</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">scale</span>.<span class="ruby-identifier">empty?</span>
+71:       <span class="ruby-identifier">trans</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; -crop \&quot;#{crop}\&quot; +repage&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">crop</span>
+72:       <span class="ruby-identifier">trans</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; #{convert_options}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">convert_options?</span>
+73:       <span class="ruby-identifier">trans</span>
+74:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

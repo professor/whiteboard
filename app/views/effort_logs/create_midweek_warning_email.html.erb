@@ -1,0 +1,19 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+
+ There were <%=  @people_without_effort.size %> without effort.<br/>
+
+
+<% @people_without_effort.each do |person| %>
+   <%= person %><br/>
+<% end %>
+<br/>
+ There were <%=  @people_with_effort.size %> with effort.<br/>
+
+
+<% @people_with_effort.each do |person| %>
+   <%= person %><br/>
+<% end %>

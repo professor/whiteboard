@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: ActiveRecord::Acts::List::ClassMethods</title>
+
+	<link rel="stylesheet" href="../../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../../vendor/plugins/acts_as_list/lib/active_record/acts/list.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/acts_as_list/lib/active_record/acts/list.rb">vendor/plugins/acts_as_list/lib/active_record/acts/list.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#acts_as_list">acts_as_list</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../ActiveRecord.html">ActiveRecord</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts.html">ActiveRecord::Acts</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List.html">ActiveRecord::Acts::List</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/ClassMethods.html">ActiveRecord::Acts::List::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/InstanceMethods.html">ActiveRecord::Acts::List::InstanceMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">ActiveRecord::Acts::List::ClassMethods</h1>
+		
+
+		<div id="description">
+			<p>
+This <tt>acts_as</tt> extension provides the capabilities for sorting and
+reordering a number of objects in a list. The class that has this specified
+needs to have a <tt>position</tt> column defined as an integer on the
+mapped database table.
+</p>
+<p>
+Todo list example:
+</p>
+<pre>
+  class TodoList &lt; ActiveRecord::Base
+    has_many :todo_items, :order =&gt; &quot;position&quot;
+  end
+
+  class TodoItem &lt; ActiveRecord::Base
+    belongs_to :todo_list
+    acts_as_list :scope =&gt; :todo_list
+  end
+
+  todo_list.first.move_to_bottom
+  todo_list.last.move_higher
+</pre>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="acts-as-list-method" class="method-detail">
+			
+				<a name="acts_as_list"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">acts_as_list</span><span 
+						class="method-args">(options = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Configuration options are:
+</p>
+<ul>
+<li><tt>column</tt> - specifies the column name to use for keeping the position
+integer (default: <tt>position</tt>)
+
+</li>
+<li><tt>scope</tt> - restricts what is to be considered a list. Given a symbol,
+it&#8217;ll attach <tt>_id</tt> (if it hasn&#8217;t already been added) and
+use that as the foreign key restriction. It&#8217;s also possible to give
+it an entire string that is interpolated if you need a tighter scope than
+just a foreign key. Example: <tt><a
+href="ClassMethods.html#M000001">acts_as_list</a> :scope =&gt;
+'todo_list_id = #{todo_list_id} AND completed = 0'</tt>
+
+</li>
+</ul>
+					
+					
+					
+					<div class="method-source-code" 
+						id="acts-as-list-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/acts_as_list/lib/active_record/acts/list.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">acts_as_list</span>(<span class="ruby-identifier">options</span> = {})
+34:           <span class="ruby-identifier">configuration</span> = { <span class="ruby-identifier">:column</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;position&quot;</span>, <span class="ruby-identifier">:scope</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;1 = 1&quot;</span> }
+35:           <span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+36: 
+37:           <span class="ruby-identifier">configuration</span>[<span class="ruby-identifier">:scope</span>] = <span class="ruby-node">&quot;#{configuration[:scope]}_id&quot;</span>.<span class="ruby-identifier">intern</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">configuration</span>[<span class="ruby-identifier">:scope</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">configuration</span>[<span class="ruby-identifier">:scope</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/_id$/</span>
+38: 
+39:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">configuration</span>[<span class="ruby-identifier">:scope</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+40:             <span class="ruby-identifier">scope_condition_method</span> = <span class="ruby-node">%(
+41:               def scope_condition
+42:                 if #{configuration[:scope].to_s}.nil?
+43:                   &quot;#{configuration[:scope].to_s} IS NULL&quot;
+44:                 else
+45:                   &quot;#{configuration[:scope].to_s} = \#{#{configuration[:scope].to_s}}&quot;
+46:                 end
+47:               end
+48:             )</span>
+49:           <span class="ruby-keyword kw">else</span>
+50:             <span class="ruby-identifier">scope_condition_method</span> = <span class="ruby-node">&quot;def scope_condition() \&quot;#{configuration[:scope]}\&quot; end&quot;</span>
+51:           <span class="ruby-keyword kw">end</span>
+52: 
+53:           <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;include ActiveRecord::Acts::List::InstanceMethods\n\ndef acts_as_list_class\n::\#{self.name}\nend\n\ndef position_column\n'\#{configuration[:column]}'\nend\n\n\#{scope_condition_method}\n\nbefore_destroy :remove_from_list\nbefore_create  :add_to_list_bottom\n&quot;</span>
+54:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

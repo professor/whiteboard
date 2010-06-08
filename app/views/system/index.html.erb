@@ -1,0 +1,25 @@
+<table>
+        <tr>
+                <th>key
+</th><th>
+                value
+</th></tr>
+
+<% for item in request.env %>
+<tr><td> <%= item[0] %>
+</td><td>
+<%= item[1] %>
+
+</td></tr>
+
+<% end %>
+<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+<% if current_user %>
+<tr><td>current_user</td><td><%= current_user.human_name %></td></tr>
+<tr><td>is_admin</td><td><%= current_user.is_admin? %></td></tr>
+<tr><td>is_teacher</td><td><%= current_user.is_faculty? %></td></tr>
+<tr><td>is_staff</td><td><%= current_user.is_staff? %></td></tr>
+<tr><td>is_student</td><td><%= current_user.is_student? %></td></tr>
+<% end %>
+</table>
+

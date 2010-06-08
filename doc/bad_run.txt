@@ -1,0 +1,1540 @@
+[info] Connection to child 1 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae57f8 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae57f8 [mem: b8b12fab] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 6d 9b 8e 92 1e-05 cf 98 33 6b f6 10 e0  H..m.......3k... |
+[debug] ssl_engine_io.c(1662): | 0010: 17 e4 1b 3b 3e e9 3e 54-cc 60 2c 22 85 e4 08 68  ...;>.>T.`,"...h |
+[debug] ssl_engine_io.c(1662): | 0020: 20 96 c5 d4 df 45 66 c6-02 6d f7 1d 57 b5 2c 22   ....Ef..m..W.," |
+[debug] ssl_engine_io.c(1662): | 0030: 66 2e 76 04 8a aa 50 5d-7b 8e 5b 45 24 8f c1 7c  f.v...P]{.[E$..| |
+[debug] ssl_engine_io.c(1662): | 0040: 37 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  7.$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=150, masked index=22
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1003): will be expiring 1 sessions
+[debug] ssl_scache_shmcb.c(1028): we now have 0 sessions
+[debug] ssl_scache_shmcb.c(1252): no matching sessions were found
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(428): shmcb_retrieve had a miss
+[info] Client requested a 'session-resume' but we have no such session.
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=MISSED id=96C5D4DF4566C6026DF71D57B52C22662E76048AAA505D7B8E5B45248FC17C37 (session renewal)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write certificate A
+[debug] ssl_engine_kernel.c(1119): handing out temporary 1024 bit DH key
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write key exchange A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server done A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae57f8 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 86                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 134/134 bytes from BIO#b8ae57f8 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 10 00 00 82 00 80 23 04-ab 5e 7c b0 3d 4c 48 34  ......#..^|.=LH4 |
+[debug] ssl_engine_io.c(1662): | 0010: 19 83 02 c4 23 6a 47 a9-43 e6 2a 6d ed 2a 35 e8  ....#jG.C.*m.*5. |
+[debug] ssl_engine_io.c(1662): | 0020: 79 e7 4d b7 2b b3 59 3a-8e a6 95 57 af a9 1b 7a  y.M.+.Y:...W...z |
+[debug] ssl_engine_io.c(1662): | 0030: ff 61 15 a7 00 07 75 de-ba 1f 09 13 27 e3 1b 81  .a....u.....'... |
+[debug] ssl_engine_io.c(1662): | 0040: 3e b8 60 74 d2 8f ab 20-a0 be ca 45 7b 13 34 83  >.`t... ...E{.4. |
+[debug] ssl_engine_io.c(1662): | 0050: ad f3 1d fb 79 9a 01 35-4c 07 91 1c 4c 65 e1 8f  ....y..5L...Le.. |
+[debug] ssl_engine_io.c(1662): | 0060: 24 68 6a ea 47 e8 ce 88-69 24 66 0e 5a 75 22 b1  $hj.G...i$f.Zu". |
+[debug] ssl_engine_io.c(1662): | 0070: 60 99 da 30 8a 33 b8 c6-ea 76 e4 e6 27 c9 1d 30  `..0.3...v..'..0 |
+[debug] ssl_engine_io.c(1662): | 0080: 65 9b 8c 40 6b ec                                e..@k.           |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client key exchange A
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae57f8 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae57f8 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae57f8 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae57f8 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: a2 6b 8a 2b 8e 9d 3a 65-9a bc 1a 34 90 ce 45 ed  .k.+..:e...4..E. |
+[debug] ssl_engine_io.c(1662): | 0010: 84 dc 6d ea c7 6c 83 d0-3d be 92 e8 5d e1 c4 b3  ..m..l..=...]... |
+[debug] ssl_engine_io.c(1662): | 0020: 31 23 1e 4f b9 0e c2 5d-65 de 08 5e 52 f9 3f de  1#.O...]e..^R.?. |
+[debug] ssl_engine_io.c(1662): | 0030: 69 78 6e 98 5f 50 71 07-7d 30 4d b7 9c ff 74 50  ixn._Pq.}0M...tP |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_scache_shmcb.c(666): inside shmcb_store_session
+[debug] ssl_scache_shmcb.c(672): session_id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1055): entering shmcb_insert_encoded_session, *queue->pos_count = 0
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1111): we have 14386 bytes and 133 indexes free - enough
+[debug] ssl_scache_shmcb.c(1140): storing in index 0, at offset 0
+[debug] ssl_scache_shmcb.c(1155): session_id[0]=101, idx->s_id2=19
+[debug] ssl_scache_shmcb.c(1166): leaving now with 148 bytes in the cache and 1 indexes
+[debug] ssl_scache_shmcb.c(1170): leaving shmcb_insert_encoded_session
+[debug] ssl_scache_shmcb.c(700): leaving shmcb_store successfully
+[debug] ssl_scache_shmcb.c(408): shmcb_store successful
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=SET status=OK id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 timeout=300s (session caching)
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae57f8 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 03 d0                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 976/976 bytes from BIO#b8ae57f8 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 87 9d 9a 35 63 25 79 b4-fb 6b 8d 85 31 0b c7 1b  ...5c%y..k..1... |
+[debug] ssl_engine_io.c(1662): | 0010: c9 7b e9 66 e7 ea 34 e7-42 60 4f 24 81 32 bf 12  .{.f..4.B`O$.2.. |
+[debug] ssl_engine_io.c(1662): | 0020: c0 5e cf 89 fc 84 2b d5-c3 0a b0 e9 83 8d cc 73  .^....+........s |
+[debug] ssl_engine_io.c(1662): | 0030: 9d 14 e1 65 e4 f1 e1 b7-3d ee 46 b9 95 4a 99 ba  ...e....=.F..J.. |
+[debug] ssl_engine_io.c(1662): | 0040: 37 22 45 6f c2 ae 93 54-db 95 6f d1 9b 80 e7 fb  7"Eo...T..o..... |
+[debug] ssl_engine_io.c(1662): | 0050: 64 d1 61 9a 48 50 cb b0-9e a9 86 d3 9a 4c 2f c8  d.a.HP.......L/. |
+[debug] ssl_engine_io.c(1662): | 0060: 05 b4 9b fd f5 1b d9 db-3f 70 cd b8 f6 04 31 03  ........?p....1. |
+[debug] ssl_engine_io.c(1662): | 0070: ef b7 63 71 2a b0 00 ad-8b 7b 33 41 63 9b 8e 71  ..cq*....{3Ac..q |
+[debug] ssl_engine_io.c(1662): | 0080: 47 48 a8 e3 25 c3 d6 65-96 bf ab ad c0 c9 cc b7  GH..%..e........ |
+[debug] ssl_engine_io.c(1662): | 0090: 6b 1e 94 26 27 31 7c 3b-e8 4a ec 4f 14 7b cb 5a  k..&'1|;.J.O.{.Z |
+[debug] ssl_engine_io.c(1662): | 00a0: 46 fb d0 e9 5f 25 2e 0a-33 16 60 4a d4 84 e8 e0  F..._%..3.`J.... |
+[debug] ssl_engine_io.c(1662): | 00b0: 9c 49 8b f2 0c 6c cf b3-81 0b a6 77 6e d8 87 16  .I...l.....wn... |
+[debug] ssl_engine_io.c(1662): | 00c0: 42 73 b7 89 df fa 7b e5-3c 9c 6e 43 4d 72 8c d8  Bs....{.<.nCMr.. |
+[debug] ssl_engine_io.c(1662): | 00d0: bb 19 f1 b7 09 b3 7e 0e-d0 a2 7c 66 25 ac ee 94  ......~...|f%... |
+[debug] ssl_engine_io.c(1662): | 00e0: cd da 60 5d f5 9f e2 1f-24 ee 59 9c 3b 66 18 f7  ..`]....$.Y.;f.. |
+[debug] ssl_engine_io.c(1662): | 00f0: 0e 2a ea 2c b4 fa 90 b7-e8 7b 45 70 cc 4a af 81  .*.,.....{Ep.J.. |
+[debug] ssl_engine_io.c(1662): | 0100: 10 f5 26 71 3f 64 ee b2-26 8e d2 88 ee ca d6 2f  ..&q?d..&....../ |
+[debug] ssl_engine_io.c(1662): | 0110: b9 00 39 cd 13 70 a9 79-76 e7 cc 7e 23 90 e5 de  ..9..p.yv..~#... |
+[debug] ssl_engine_io.c(1662): | 0120: 3c da 04 67 c0 c7 80 bf-b1 72 e0 79 6d 8e 4b 41  <..g.....r.ym.KA |
+[debug] ssl_engine_io.c(1662): | 0130: d5 c7 52 51 54 a5 2a 13-b8 4c df d3 4f 82 4d 4c  ..RQT.*..L..O.ML |
+[debug] ssl_engine_io.c(1662): | 0140: 15 1f e5 e7 41 da f2 80-a5 9c 72 87 28 4d 15 07  ....A.....r.(M.. |
+[debug] ssl_engine_io.c(1662): | 0150: 90 e6 86 f3 10 04 08 9c-a0 95 5a 79 7e f1 51 99  ..........Zy~.Q. |
+[debug] ssl_engine_io.c(1662): | 0160: 6f fd 0e 95 66 fe 43 15-99 02 fa 31 5d cb fb db  o...f.C....1]... |
+[debug] ssl_engine_io.c(1662): | 0170: c4 2f ac f2 62 00 0e 4f-dc 45 62 e8 08 ef 6b 71  ./..b..O.Eb...kq |
+[debug] ssl_engine_io.c(1662): | 0180: 21 5e 70 e1 f4 aa 2d 72-3c 0f a8 c3 3f b1 bb 86  !^p...-r<...?... |
+[debug] ssl_engine_io.c(1662): | 0190: 29 81 29 99 f3 ae 7a 86-dd ff 91 8c 37 49 5e 13  ).)...z.....7I^. |
+[debug] ssl_engine_io.c(1662): | 01a0: 96 d8 a1 f7 f8 3c cf 87-70 48 9e 48 3e 0d 97 55  .....<..pH.H>..U |
+[debug] ssl_engine_io.c(1662): | 01b0: 19 d4 78 5c a1 fd d6 3b-c7 bb 56 3b 47 63 30 06  ..x\\...;..V;Gc0. |
+[debug] ssl_engine_io.c(1662): | 01c0: 6b 46 f7 05 e5 ff 8f 9d-f5 67 c7 2d ea f1 70 de  kF.......g.-..p. |
+[debug] ssl_engine_io.c(1662): | 01d0: 6d 75 d3 90 17 8b 06 5d-ed e5 26 cf a4 79 c6 f0  mu.....]..&..y.. |
+[debug] ssl_engine_io.c(1662): | 01e0: 7f 82 0f 67 2f 41 4d bb-e6 c0 44 13 a9 50 a5 80  ...g/AM...D..P.. |
+[debug] ssl_engine_io.c(1662): | 01f0: 4e f8 8d 28 e0 27 5f 0a-20 3d a6 ad fd 43 ba fe  N..(.'_. =...C.. |
+[debug] ssl_engine_io.c(1662): | 0200: e1 72 49 40 03 63 5a 22-0d 17 7c 37 fc 0a bb 14  .rI@.cZ"..|7.... |
+[debug] ssl_engine_io.c(1662): | 0210: a2 cd fe 49 94 f9 21 2a-af ec 1e 75 32 b8 c8 11  ...I..!*...u2... |
+[debug] ssl_engine_io.c(1662): | 0220: dd 94 72 15 02 cb 94 f2-a6 f6 df ae cc 94 95 6e  ..r............n |
+[debug] ssl_engine_io.c(1662): | 0230: 71 57 4a 20 a5 97 ae f3-38 90 07 cf 9b 24 ab dc  qWJ ....8....$.. |
+[debug] ssl_engine_io.c(1662): | 0240: e6 c8 02 b1 09 9d 4b 1b-cd 9d d3 4a f9 18 0e ee  ......K....J.... |
+[debug] ssl_engine_io.c(1662): | 0250: cf c0 4c 6a 6f 43 4e d6-d4 1e 64 f7 16 af 2a c0  ..LjoCN...d...*. |
+[debug] ssl_engine_io.c(1662): | 0260: fb d2 ac 5a 36 34 65 df-c5 81 70 f9 bd 52 51 c1  ...Z64e...p..RQ. |
+[debug] ssl_engine_io.c(1662): | 0270: c0 66 35 fc 4e 85 09 09-93 62 64 f9 8d f6 aa 80  .f5.N....bd..... |
+[debug] ssl_engine_io.c(1662): | 0280: ad 3c 14 74 8e f4 73 6a-91 29 3b a3 e5 57 4e 13  .<.t..sj.);..WN. |
+[debug] ssl_engine_io.c(1662): | 0290: e0 c9 d7 a3 58 6f ec 00-56 f4 7d a5 37 b3 7d b0  ....Xo..V.}.7.}. |
+[debug] ssl_engine_io.c(1662): | 02a0: 69 62 9f c3 73 dc 1b 2d-93 f2 f3 ea 59 e9 96 33  ib..s..-....Y..3 |
+[debug] ssl_engine_io.c(1662): | 02b0: 8b fc 30 78 6f 0c b4 27-31 12 76 bf 9a 87 01 d6  ..0xo..'1.v..... |
+[debug] ssl_engine_io.c(1662): | 02c0: 8d 19 df 84 5a 38 80 5e-c9 f7 d9 31 93 09 9b e1  ....Z8.^...1.... |
+[debug] ssl_engine_io.c(1662): | 02d0: 46 67 e8 1a 26 38 36 2a-bf 83 f0 7c a3 9b b4 04  Fg..&86*...|.... |
+[debug] ssl_engine_io.c(1662): | 02e0: 83 04 4b cf 46 44 a6 ad-33 82 dc f2 1c e8 6f 9f  ..K.FD..3.....o. |
+[debug] ssl_engine_io.c(1662): | 02f0: 84 f2 d1 fa 4e 34 e4 68-ac c6 0f c3 36 03 85 e0  ....N4.h....6... |
+[debug] ssl_engine_io.c(1662): | 0300: 32 40 c2 d2 54 c5 54 c5-7f 77 bf 43 07 60 28 1e  2@..T.T..w.C.`(. |
+[debug] ssl_engine_io.c(1662): | 0310: d7 10 93 37 78 1d 21 9a-2c aa e0 8f b8 20 19 66  ...7x.!.,.... .f |
+[debug] ssl_engine_io.c(1662): | 0320: 37 13 ff b9 a3 12 cb e1-28 5a a0 c4 58 9d 1f 16  7.......(Z..X... |
+[debug] ssl_engine_io.c(1662): | 0330: de 7d be 07 22 79 06 83-b0 eb 97 24 a0 b1 c4 5e  .}.."y.....$...^ |
+[debug] ssl_engine_io.c(1662): | 0340: 29 e1 fd f7 e6 e3 a7 65-9a 91 ca 45 fc 2b ed 93  )......e...E.+.. |
+[debug] ssl_engine_io.c(1662): | 0350: 56 fd bd d1 85 72 dd cf-6d e5 c8 72 4a fd d1 51  V....r..m..rJ..Q |
+[debug] ssl_engine_io.c(1662): | 0360: 76 c1 a3 8c 01 62 cf 10-ed 65 4f 17 51 46 c1 80  v....b...eO.QF.. |
+[debug] ssl_engine_io.c(1662): | 0370: ef b3 a2 67 ed 5d 61 28-78 1a 2c a6 34 ce 8d 63  ...g.]a(x.,.4..c |
+[debug] ssl_engine_io.c(1662): | 0380: 0a 87 5d 21 49 fe 66 a8-7d 8d 18 15 6e e7 d8 6c  ..]!I.f.}...n..l |
+[debug] ssl_engine_io.c(1662): | 0390: d6 f3 e3 cc 83 54 bd 32-06 e7 8d 76 e4 d6 b6 02  .....T.2...v.... |
+[debug] ssl_engine_io.c(1662): | 03a0: 51 be 45 6d d3 1a a9 a6-9a 58 7c ec d7 f4 84 df  Q.Em.....X|..... |
+[debug] ssl_engine_io.c(1662): | 03b0: 25 25 f2 c6 63 09 f4 21-15 45 f3 72 3e ce 34 84  %%..c..!.E.r>.4. |
+[debug] ssl_engine_io.c(1662): | 03c0: 8a f4 ff 6c be f4 ec 9a-18 dc 39 6d c8 09 5d b9  ...l......9m..]. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 1 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1655): [client 204.16.157.225] pubcookie_user_hook: uri: /secure/index.html auth_type: WebISO, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1778): [client 204.16.157.225] pubcookie_user: going to check uri: /secure/index.html creds: 1, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(177): [client 204.16.157.225] dump_server_rec:\n\t\tdirdepth: 0\n\t\tnoblank: 0\n\t\tlogin: https://webiso.andrew.cmu.edu/\n\t\tappsrvid: rails.west.cmu.edu\n\t\tauthtype_names: WebISO\n\t\tuse_post: 1\n        no_clean_creds: 0\n, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(190): [client 204.16.157.225] dump_dir_rec:\n\t\tinact_exp: 400\n                hard_exp: 3700\n                non_ssl_ok: 0\n\t\tappid: svrails\n                end_session: \n                session_reauth: -1\n                noprompt: 0, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1799): [client 204.16.157.225] pubcookie_user: have ssl_var: on, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1825): [client 204.16.157.225] pubcookie_user: about to look for some cookies; current uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (0), referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1273): [client 204.16.157.225]  .. return: vyq+B/xEd/Zd6t4ph8MDCEPJpd2arJIWUECoe1AK/Yq6m1avQ7lKJpG7zruft1d3CK9bGBiLTozSUXrhEwGnbzq9+QhSJjufD5lQ++Bt/D8WhLPaSDbqFjsoDaWhX4ux9wajjZjJFfziA3T6FTg11Fya/5M3VfRYHGxQ5TrF3z1nPGTBYRPb8sB/MDqWkspbLH12OCp7sSFmUZFeLUYgqqqIjVjsm6vX9tusU5jXIwV5LGDeJLsTe5gICJpiUJR8Vxdo4B1lUSZmUSbTvc+zYVBpSetM3IjiWya2wiIiwUttMRtWEVio/KzhnQcz6WscYo+FHVZxOpBTdabydPj7WiClj1WfTuy9cs/Uf8DkH7P91VrTvVT0JIwA9hmDqCAVJO+HYfPVp/97QIOBE7h7pHwvbCGBEd+vy6CfIDrl1eJZFiZX4D0SI09vJSFXfnkO+EoN/fxxThgK/wt/pWw6W0iUW9e37w==, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_unbundle_cookie: hello\n, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: hello\n, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] get_crypt_key: myname=rails.west.cmu.edu, peer=rails.west.cmu.edu\n, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: hello, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] Verifying signature with granting certificate, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: goodbye, r: 0, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: goodbye\n, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(697): [client 204.16.157.225] clear_granting_cookie: setting cookie: pubcookie_g=; path=/; expires=Fri, 11-Jan-1990 00:00:01 GMT; secure, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1998): [client 204.16.157.225] pubcookie_user: has granting; current uri is: /secure/index.html, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(2051): [client 204.16.157.225] pubcookie_user: set type (WebISO) and user (at33@ANDREW.CMU.EDU), referer: https://webiso.andrew.cmu.edu/login.cgi
+[info] [client 204.16.157.225] pubcookie_user: G cookie expired by 754; user: at33@ANDREW.CMU.EDU create: 1217465663 uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1703): [client 204.16.157.225]  .. user_hook: user failed, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(913): [client 204.16.157.225] auth_failed_handler: hello, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(367): [client 204.16.157.225] get_pre_s_token: token is 132140930, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(993): [client 204.16.157.225] Post URI before encoding length 18, string: /secure/index.html, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(996): [client 204.16.157.225] Post URI after encoding length 24, string: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1042): [client 204.16.157.225] g_req before encoding length 249, string: one=rails.west.cmu.edu&two=svrails&three=1&four=a5&five=GET&six=rails.west.cmu.edu&seven=L3NlY3VyZS9pbmRleC5odG1s&eight=&hostname=rails.west.cmu.edu&nine=7&file=&referer=https://webiso.andrew.cmu.edu/login.cgi&sess_re=0&pre_sess_tok=132140930&flag=0, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(300): [client 204.16.157.225] pubcookie flush headers: merging 4 output headers, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(1178): [client 204.16.157.225] auth_failed_handler: redirect sent. uri: /secure/index.html reason: 7, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/login.cgi
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 1 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 4 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae5c68 [mem: b8b05e3b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 6f d1 ac 79 2b-03 2a 78 56 cb 15 fa 8c  H..o..y+.*xV.... |
+[debug] ssl_engine_io.c(1662): | 0010: 2b 64 b7 7b 6e 86 93 bc-11 26 ac 34 17 db b0 16  +d.{n....&.4.... |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 61 05 18 19 f3 e0 71 3a-ea 5b 60 78 b3 0d c2 3b  a.....q:.[`x...; |
+[debug] ssl_engine_io.c(1662): | 0010: f3 88 11 dd a0 bc 1f 85-71 57 5d 36 ad 50 61 e3  ........qW]6.Pa. |
+[debug] ssl_engine_io.c(1662): | 0020: a6 51 56 56 c7 47 a4 8e-15 0e 78 b3 25 27 57 16  .QVV.G....x.%'W. |
+[debug] ssl_engine_io.c(1662): | 0030: 5b 1e 6e a5 2c 63 97 88-06 12 ae eb 7a 33 3a e7  [.n.,c......z3:. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 04 90                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1168/1168 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 82 bb 73 65 de 87 46 87-9a 19 d4 87 40 4c bc e8  ..se..F.....@L.. |
+[debug] ssl_engine_io.c(1662): | 0010: c4 ee 4a a4 05 e2 61 0a-d7 16 c8 96 b4 18 2a 1f  ..J...a.......*. |
+[debug] ssl_engine_io.c(1662): | 0020: 65 9d e8 d5 30 e6 f4 69-54 b4 45 e5 30 39 d4 44  e...0..iT.E.09.D |
+[debug] ssl_engine_io.c(1662): | 0030: ef 30 f5 1a 99 24 82 00-bd 8e 4d 4c 49 8c 14 d1  .0...$....MLI... |
+[debug] ssl_engine_io.c(1662): | 0040: a5 29 72 85 d4 fd 22 2c-3b a5 3d 20 2c a0 48 f7  .)r...",;.= ,.H. |
+[debug] ssl_engine_io.c(1662): | 0050: ce 93 75 38 1f 8e b7 92-fc 90 c4 34 a4 22 d1 a6  ..u8.......4.".. |
+[debug] ssl_engine_io.c(1662): | 0060: 21 7a e9 6f 8f 55 0a 5b-b9 0d 91 b8 b0 e3 04 a0  !z.o.U.[........ |
+[debug] ssl_engine_io.c(1662): | 0070: a6 6e 0a 7f c2 f6 93 ce-6b 45 e7 e0 3c 23 8c af  .n......kE..<#.. |
+[debug] ssl_engine_io.c(1662): | 0080: 29 49 c4 3c 36 fc f2 20-8d 05 b3 5d de e9 ca 2d  )I.<6.. ...]...- |
+[debug] ssl_engine_io.c(1662): | 0090: 59 c7 fd 7e 8d 43 a2 18-8e ce d3 24 8a 66 e9 fd  Y..~.C.....$.f.. |
+[debug] ssl_engine_io.c(1662): | 00a0: 91 77 c6 12 9a e5 ef 48-99 e8 90 31 67 37 4b 1b  .w.....H...1g7K. |
+[debug] ssl_engine_io.c(1662): | 00b0: 7d df 09 62 51 d8 83 ec-52 06 f4 8f 9c 71 0f b8  }..bQ...R....q.. |
+[debug] ssl_engine_io.c(1662): | 00c0: 6d 51 4a 36 c6 52 c7 04-c6 e4 cb 2c a8 25 c6 3d  mQJ6.R.....,.%.= |
+[debug] ssl_engine_io.c(1662): | 00d0: de 6f 46 25 30 de be c3-c8 88 0f fb 7e 75 7b 64  .oF%0.......~u{d |
+[debug] ssl_engine_io.c(1662): | 00e0: 44 16 60 e3 d3 3e 23 17-fe 51 e0 b1 6f ee 10 cd  D.`..>#..Q..o... |
+[debug] ssl_engine_io.c(1662): | 00f0: be 63 a3 91 50 c8 ed 5d-5e 88 67 f1 d2 c2 6f 3b  .c..P..]^.g...o; |
+[debug] ssl_engine_io.c(1662): | 0100: d8 5a f3 5a 65 40 d6 6f-9e fc 64 3a c2 54 1b c0  .Z.Ze@.o..d:.T.. |
+[debug] ssl_engine_io.c(1662): | 0110: 21 13 73 cf 7b 41 16 68-93 10 c5 14 63 43 f8 01  !.s.{A.h....cC.. |
+[debug] ssl_engine_io.c(1662): | 0120: 13 ad 2a d0 01 43 68 af-9d a0 91 ed eb f3 e3 aa  ..*..Ch......... |
+[debug] ssl_engine_io.c(1662): | 0130: 79 0c f1 e3 82 d4 1a 8f-fe b5 00 ba ab 84 6b 75  y.............ku |
+[debug] ssl_engine_io.c(1662): | 0140: 5b e7 ee 2b 50 04 d5 95-93 7f f2 54 88 f0 35 f4  [..+P......T..5. |
+[debug] ssl_engine_io.c(1662): | 0150: cc 47 70 73 e3 f7 2e 15-49 6a 0b 23 9a 7a 36 84  .Gps....Ij.#.z6. |
+[debug] ssl_engine_io.c(1662): | 0160: ad 41 51 08 ac 2c ae 3d-f5 3d c7 de bf 77 86 3d  .AQ..,.=.=...w.= |
+[debug] ssl_engine_io.c(1662): | 0170: b6 a8 a1 cc 28 9a bc 8f-f8 70 ba 3f 22 42 b1 a7  ....(....p.?"B.. |
+[debug] ssl_engine_io.c(1662): | 0180: e5 be 74 52 15 1e 16 33-52 08 28 fa 5d 4e 4b cc  ..tR...3R.(.]NK. |
+[debug] ssl_engine_io.c(1662): | 0190: 21 fe 88 27 f1 23 79 fa-00 9e 29 61 72 99 dd 2d  !..'.#y...)ar..- |
+[debug] ssl_engine_io.c(1662): | 01a0: a2 5a b3 cf 30 05 09 95-ef 63 35 fb 06 a3 32 56  .Z..0....c5...2V |
+[debug] ssl_engine_io.c(1662): | 01b0: fc 83 69 9e e4 0e 43 bc-95 e1 5d 81 93 53 25 00  ..i...C...]..S%. |
+[debug] ssl_engine_io.c(1662): | 01c0: c2 56 69 27 1f 0c b8 a4-e4 e2 01 35 e2 5c 59 d8  .Vi'.......5.\\Y. |
+[debug] ssl_engine_io.c(1662): | 01d0: e8 55 3a 42 e9 b1 1b f8-e6 27 1d 27 75 33 cb ee  .U:B.....'.'u3.. |
+[debug] ssl_engine_io.c(1662): | 01e0: 1c cf 30 9e 77 b6 55 52-b8 7e d8 b9 f5 b8 96 58  ..0.w.UR.~.....X |
+[debug] ssl_engine_io.c(1662): | 01f0: 0d bb 2b 02 c1 76 56 d3-7e 0f 97 25 e0 40 3f 9b  ..+..vV.~..%.@?. |
+[debug] ssl_engine_io.c(1662): | 0200: 79 8c 28 46 04 dc 4a fd-6e 26 b8 6e 5e 73 f5 30  y.(F..J.n&.n^s.0 |
+[debug] ssl_engine_io.c(1662): | 0210: dd f1 8b 35 b1 61 0c 82-77 4e 44 87 de 73 11 01  ...5.a..wND..s.. |
+[debug] ssl_engine_io.c(1662): | 0220: 4a 6d 1e df da 59 98 f4-72 99 36 37 6c 15 e7 91  Jm...Y..r.67l... |
+[debug] ssl_engine_io.c(1662): | 0230: 06 d1 e6 59 0b 52 20 30-47 13 76 83 dd 0c a0 9d  ...Y.R 0G.v..... |
+[debug] ssl_engine_io.c(1662): | 0240: 79 cf 60 09 54 5f e9 4b-f8 7b 84 04 e0 c9 82 4e  y.`.T_.K.{.....N |
+[debug] ssl_engine_io.c(1662): | 0250: 37 7c a1 da 58 5a 99 03-bd 83 b9 9f d4 b8 9a 59  7|..XZ.........Y |
+[debug] ssl_engine_io.c(1662): | 0260: b7 f8 68 a2 35 11 00 67-06 7c 10 8b 9e b0 91 e2  ..h.5..g.|...... |
+[debug] ssl_engine_io.c(1662): | 0270: 7f ef 3d 65 d0 bd 8d 35-23 04 c6 28 75 46 ac e0  ..=e...5#..(uF.. |
+[debug] ssl_engine_io.c(1662): | 0280: 17 e3 ad 72 14 59 24 92-c1 9a dc d3 46 a4 7d c7  ...r.Y$.....F.}. |
+[debug] ssl_engine_io.c(1662): | 0290: 40 3c 8d ce ab 36 68 0b-cb 18 0a c6 b5 0a bb 9d  @<...6h......... |
+[debug] ssl_engine_io.c(1662): | 02a0: c3 b6 c1 7b 1e 98 c0 31-fb 3b 50 40 cd 94 10 31  ...{...1.;P@...1 |
+[debug] ssl_engine_io.c(1662): | 02b0: cc 2e 67 ec 2c e1 75 6a-d2 a9 df de 52 be b3 f3  ..g.,.uj....R... |
+[debug] ssl_engine_io.c(1662): | 02c0: 6c 6a 25 52 3c 1d cc 34-11 d3 9f 23 06 29 4f d6  lj%R<..4...#.)O. |
+[debug] ssl_engine_io.c(1662): | 02d0: d5 4b d5 68 98 c3 8a 58-7a 6e 87 b5 1a bc 70 50  .K.h...Xzn....pP |
+[debug] ssl_engine_io.c(1662): | 02e0: 22 b4 d2 68 81 e7 4e 96-60 63 41 c2 82 ed 01 d5  "..h..N.`cA..... |
+[debug] ssl_engine_io.c(1662): | 02f0: 8e f8 77 73 d0 cf 83 7b-8e e2 c3 07 e6 ec c2 70  ..ws...{.......p |
+[debug] ssl_engine_io.c(1662): | 0300: a2 06 21 3f 00 2b 06 61-5f 56 2d f3 d4 35 8f bd  ..!?.+.a_V-..5.. |
+[debug] ssl_engine_io.c(1662): | 0310: 5f 6d 45 c7 00 ba e6 bb-fc b0 72 56 c1 38 e9 90  _mE.......rV.8.. |
+[debug] ssl_engine_io.c(1662): | 0320: 2a 18 23 cf fa ed 97 cb-b5 5d 59 ee 8b e2 55 c4  *.#......]Y...U. |
+[debug] ssl_engine_io.c(1662): | 0330: fe 80 5a 52 16 2a 91 82-c9 de 53 ab 86 f9 03 1a  ..ZR.*....S..... |
+[debug] ssl_engine_io.c(1662): | 0340: dc 94 a8 83 69 e0 3e c9-00 37 10 1a 75 29 02 bf  ....i.>..7..u).. |
+[debug] ssl_engine_io.c(1662): | 0350: 99 4f 69 48 98 c5 85 9a-87 b9 97 e6 f0 a1 ec a9  .OiH............ |
+[debug] ssl_engine_io.c(1662): | 0360: f9 4a 2a a1 11 1e 2e b1-f3 2e cf dc 97 33 7a 87  .J*..........3z. |
+[debug] ssl_engine_io.c(1662): | 0370: 73 aa c1 21 29 4a 8c cb-bb 85 bc 0c 2e 64 8f e4  s..!)J.......d.. |
+[debug] ssl_engine_io.c(1662): | 0380: 7f 23 fe ca b3 36 1b 4c-19 37 32 a3 14 fd 44 27  .#...6.L.72...D' |
+[debug] ssl_engine_io.c(1662): | 0390: e3 28 aa 93 60 a7 50 51-0c 42 28 b5 9a 99 82 45  .(..`.PQ.B(....E |
+[debug] ssl_engine_io.c(1662): | 03a0: 0f ae c8 b7 bb 42 ad a7-a5 a3 75 c3 0f e9 c4 2d  .....B....u....- |
+[debug] ssl_engine_io.c(1662): | 03b0: 21 fe 78 19 d7 b9 38 b8-f1 1f a2 40 6e 20 d7 a6  !.x...8....@n .. |
+[debug] ssl_engine_io.c(1662): | 03c0: c5 c9 c8 43 57 34 4a f7-16 31 fb d1 61 19 22 88  ...CW4J..1..a.". |
+[debug] ssl_engine_io.c(1662): | 03d0: ac 96 c8 4e 8f 3b c9 ca-78 8f 2a 36 81 68 af 79  ...N.;..x.*6.h.y |
+[debug] ssl_engine_io.c(1662): | 03e0: 4e d2 9f d6 6c 58 b9 df-7e 65 6d 27 2f 65 57 34  N...lX..~em'/eW4 |
+[debug] ssl_engine_io.c(1662): | 03f0: 35 f8 a4 c4 1a 88 d4 cd-44 d8 40 07 4a 39 da 07  5.......D.@.J9.. |
+[debug] ssl_engine_io.c(1662): | 0400: 1c ef fd ca 4d e7 0e 94-15 ca fc 05 3d 0b 1d 17  ....M.......=... |
+[debug] ssl_engine_io.c(1662): | 0410: 1b da d9 12 12 8d 6c b8-0e 04 5a 48 c3 d6 69 f8  ......l...ZH..i. |
+[debug] ssl_engine_io.c(1662): | 0420: 41 93 c7 20 5f 53 d2 fb-ad 77 9c d2 28 00 18 c2  A.. _S...w..(... |
+[debug] ssl_engine_io.c(1662): | 0430: 80 43 d0 c1 7c 4b 4e 1f-03 3b 29 d1 dc 9a 13 e8  .C..|KN..;)..... |
+[debug] ssl_engine_io.c(1662): | 0440: 25 2b 2f d6 ef 29 53 24-d4 ba fd 29 0d de 0e 98  %+/..)S$...).... |
+[debug] ssl_engine_io.c(1662): | 0450: 62 ec 3d 08 7f 25 23 e2-38 a8 f6 22 a8 56 45 67  b.=..%#.8..".VEg |
+[debug] ssl_engine_io.c(1662): | 0460: 40 df 50 cd c4 f8 ad 90-20 b0 ca 15 8c 87 15 dd  @.P..... ....... |
+[debug] ssl_engine_io.c(1662): | 0470: 3a 66 9e 53 5b c5 bd dd-ad 50 4d 0b f7 7e 33 43  :f.S[....PM..~3C |
+[debug] ssl_engine_io.c(1662): | 0480: cf e3 ea 5f e8 bd 76 fc-04 83 ec 7f 76 8f 63 1d  ..._..v.....v.c. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 4 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3436): [client 204.16.157.225] pubcookie adding output filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3796): [client 204.16.157.225] login_reply_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3665): [client 204.16.157.225] verify-url in: https://rails.west.cmu.edu/L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3691): [client 204.16.157.225] verify-url decoding: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3699): [client 204.16.157.225] verify-url path is: secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3445): [client 204.16.157.225] pubcookie adding error filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3480): [client 204.16.157.225] error_filter: merging 5 error headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Location, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 4 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 3 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae5c68 [mem: b8b05e3b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 6f 61 cd e9 a2-e3 06 9f 86 7d 4b 4e cd  H..oa.......}KN. |
+[debug] ssl_engine_io.c(1662): | 0010: 28 ed bc b4 de 34 0e 26-14 fe 92 95 cc de 2d 93  (....4.&......-. |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: cd d3 17 4a a9 1a eb 2b-9f 62 84 80 76 95 ba 8a  ...J...+.b..v... |
+[debug] ssl_engine_io.c(1662): | 0010: 74 9d 25 19 da 5f d3 65-af f9 7a 1c db 08 a0 16  t.%.._.e..z..... |
+[debug] ssl_engine_io.c(1662): | 0020: 44 1b a8 44 5c 14 b1 90-a8 fd a4 93 95 de 77 8d  D..D\\.........w. |
+[debug] ssl_engine_io.c(1662): | 0030: 98 39 8e f1 eb 7c 7e 47-f0 77 c2 69 ca a5 e6 a1  .9...|~G.w.i.... |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 03 d0                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 976/976 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 42 e6 b0 52 e9 0f 94 58-32 e5 b4 0e ea 8e e8 9f  B..R...X2....... |
+[debug] ssl_engine_io.c(1662): | 0010: a1 b8 93 7d ea f9 b4 fa-a2 53 87 8c c1 f1 da af  ...}.....S...... |
+[debug] ssl_engine_io.c(1662): | 0020: 17 f6 8c fb 53 bc 10 c4-81 05 cc d2 cd 1f 9e 35  ....S..........5 |
+[debug] ssl_engine_io.c(1662): | 0030: 9d e1 89 f6 73 5e bd 4f-a4 db a6 aa 77 48 26 f3  ....s^.O....wH&. |
+[debug] ssl_engine_io.c(1662): | 0040: c8 60 7f 89 82 69 07 49-8b 27 18 66 16 0f 6d 62  .`...i.I.'.f..mb |
+[debug] ssl_engine_io.c(1662): | 0050: 04 12 21 c7 ec 67 4e df-6b 68 9a a9 1a ab 4f 4d  ..!..gN.kh....OM |
+[debug] ssl_engine_io.c(1662): | 0060: d9 82 dd ae 6d 9c f0 98-a8 ea d4 2c 28 ea 0d cb  ....m......,(... |
+[debug] ssl_engine_io.c(1662): | 0070: 47 91 8b 43 51 ff 48 d7-0c 22 af f3 24 bb 14 e0  G..CQ.H.."..$... |
+[debug] ssl_engine_io.c(1662): | 0080: 97 b9 e5 ed 22 96 bf a7-9a 18 93 22 69 da 19 e7  ...."......"i... |
+[debug] ssl_engine_io.c(1662): | 0090: 2d 70 f6 77 5d 29 be 78-0e 29 0f 13 c8 cb 3d a6  -p.w]).x.)....=. |
+[debug] ssl_engine_io.c(1662): | 00a0: 84 cc 3a 47 e0 16 4b 6a-cb 1f af ca e3 c1 8d ac  ..:G..Kj........ |
+[debug] ssl_engine_io.c(1662): | 00b0: 6e 49 c4 af 9c 6a 7b 27-20 3d 1e 89 85 8a 97 eb  nI...j{' =...... |
+[debug] ssl_engine_io.c(1662): | 00c0: fe 38 c1 01 df 12 9e e8-26 18 29 f6 90 7e 04 24  .8......&.)..~.$ |
+[debug] ssl_engine_io.c(1662): | 00d0: 76 00 f9 7c 9c 6b 2f 9d-76 78 92 e8 9c cc 0e 1e  v..|.k/.vx...... |
+[debug] ssl_engine_io.c(1662): | 00e0: bc 47 b7 35 a9 b3 17 5d-6a 07 0e 0a e4 ce 6f c1  .G.5...]j.....o. |
+[debug] ssl_engine_io.c(1662): | 00f0: 63 6c b5 0c 8c 17 22 d1-36 06 ae 08 7a 6d fe 5e  cl....".6...zm.^ |
+[debug] ssl_engine_io.c(1662): | 0100: 61 77 a1 2d a9 da 07 1a-fd d8 ac 00 9a 6d 67 33  aw.-.........mg3 |
+[debug] ssl_engine_io.c(1662): | 0110: 46 6a fd fc 91 d3 f3 48-73 7b 99 ce be 9f 2c 71  Fj.....Hs{....,q |
+[debug] ssl_engine_io.c(1662): | 0120: 34 69 31 e9 36 d9 cf fe-65 33 c9 49 b2 92 71 e7  4i1.6...e3.I..q. |
+[debug] ssl_engine_io.c(1662): | 0130: 7e 20 f0 44 1b 37 de 58-d7 fc 41 61 54 e5 b2 a7  ~ .D.7.X..AaT... |
+[debug] ssl_engine_io.c(1662): | 0140: b2 13 c7 ac 9e be ba 2e-ba 48 60 03 03 ee 65 12  .........H`...e. |
+[debug] ssl_engine_io.c(1662): | 0150: cd 87 fe e7 ce bc fc c2-3e 10 dd 3e 9e 25 c3 32  ........>..>.%.2 |
+[debug] ssl_engine_io.c(1662): | 0160: 71 47 19 8f 83 6e 94 01-ca 8c 23 97 68 15 fb 91  qG...n....#.h... |
+[debug] ssl_engine_io.c(1662): | 0170: c7 12 eb f9 b3 6d bf 9a-1f 56 0e 0a 65 b4 32 17  .....m...V..e.2. |
+[debug] ssl_engine_io.c(1662): | 0180: ac 31 50 11 71 7e 70 c4-da 5a 8e f5 9c 05 dd 64  .1P.q~p..Z.....d |
+[debug] ssl_engine_io.c(1662): | 0190: 2c ec 0f 4e 9b 67 a8 00-35 51 d6 5d 96 89 a1 f1  ,..N.g..5Q.].... |
+[debug] ssl_engine_io.c(1662): | 01a0: d1 7c 93 e5 53 2b ea 40-85 95 ff 42 8f df 34 85  .|..S+.@...B..4. |
+[debug] ssl_engine_io.c(1662): | 01b0: 51 ff 7c ae ab 8e f2 a5-27 9a f6 fb f5 d9 61 30  Q.|.....'.....a0 |
+[debug] ssl_engine_io.c(1662): | 01c0: 1d ec b2 56 11 68 ae cd-60 c2 44 94 f2 97 24 57  ...V.h..`.D...$W |
+[debug] ssl_engine_io.c(1662): | 01d0: 4d 59 3a b7 1b 98 1c cd-c8 73 64 33 de 20 bc 54  MY:......sd3. .T |
+[debug] ssl_engine_io.c(1662): | 01e0: 85 e9 c9 74 a9 d9 ff 83-81 ee 94 e6 25 bc ad fa  ...t........%... |
+[debug] ssl_engine_io.c(1662): | 01f0: 92 85 50 50 aa 6d f8 00-94 77 ac 08 69 ac 19 4d  ..PP.m...w..i..M |
+[debug] ssl_engine_io.c(1662): | 0200: b8 98 36 a6 c7 bc 63 64-78 0a 21 f2 80 72 92 e0  ..6...cdx.!..r.. |
+[debug] ssl_engine_io.c(1662): | 0210: f6 59 62 27 78 95 45 ff-d8 e2 11 04 51 45 0d 93  .Yb'x.E.....QE.. |
+[debug] ssl_engine_io.c(1662): | 0220: 45 7d 49 69 0f 17 2d d2-bc ed 37 5f b8 06 b0 b7  E}Ii..-...7_.... |
+[debug] ssl_engine_io.c(1662): | 0230: 4c b8 2b 9c cc a5 47 1d-66 c0 47 45 9c d6 c3 07  L.+...G.f.GE.... |
+[debug] ssl_engine_io.c(1662): | 0240: b1 67 24 f0 35 3a 38 6d-97 1d 9b d5 1b 3a f9 9d  .g$.5:8m.....:.. |
+[debug] ssl_engine_io.c(1662): | 0250: 8a 92 ac d2 91 85 f5 91-d7 f3 8f 42 f8 2f 1e f5  ...........B./.. |
+[debug] ssl_engine_io.c(1662): | 0260: 07 25 31 7a 65 47 c7 06-9d 76 eb 1f 20 fa 2a 89  .%1zeG...v.. .*. |
+[debug] ssl_engine_io.c(1662): | 0270: e7 e6 71 2c a0 d3 f1 c4-9d c9 e1 83 8d 2e ae fe  ..q,............ |
+[debug] ssl_engine_io.c(1662): | 0280: a0 2b 1d a6 d5 c3 3f 0d-87 71 f5 f0 72 f6 43 4c  .+....?..q..r.CL |
+[debug] ssl_engine_io.c(1662): | 0290: 9e 50 9b 13 62 03 ce 81-5f 1f 1e 95 88 20 cd e0  .P..b..._.... .. |
+[debug] ssl_engine_io.c(1662): | 02a0: 74 75 28 89 fb 0e cb 2f-83 0a 0b 82 68 10 ff b9  tu(..../....h... |
+[debug] ssl_engine_io.c(1662): | 02b0: 01 5c a2 0b a2 44 be d7-28 c0 9f 02 43 f0 14 bb  .\\...D..(...C... |
+[debug] ssl_engine_io.c(1662): | 02c0: bd 2e 41 cb 98 3f 30 e7-45 db bf 30 d1 f1 8b 93  ..A..?0.E..0.... |
+[debug] ssl_engine_io.c(1662): | 02d0: 99 e5 ab 7b 67 12 92 a4-40 7e 5c a5 86 d9 bb f3  ...{g...@~\\..... |
+[debug] ssl_engine_io.c(1662): | 02e0: ce 95 55 89 ed fd 8c 27-45 0b 51 c2 bf 07 ee a9  ..U....'E.Q..... |
+[debug] ssl_engine_io.c(1662): | 02f0: 05 fd 04 2e 1b d8 d5 57-5d 70 ec f6 84 e0 23 d3  .......W]p....#. |
+[debug] ssl_engine_io.c(1662): | 0300: 96 f2 aa 43 7e 12 67 09-c3 e4 17 56 b3 62 b3 17  ...C~.g....V.b.. |
+[debug] ssl_engine_io.c(1662): | 0310: 4a 10 90 8b 04 32 73 86-1a 00 17 62 c6 a7 8d cc  J....2s....b.... |
+[debug] ssl_engine_io.c(1662): | 0320: ff 8f 9f 6b a9 80 e9 08-51 95 3b cb 16 1a 48 69  ...k....Q.;...Hi |
+[debug] ssl_engine_io.c(1662): | 0330: dc 7b 2d 7e 97 c2 b8 a5-98 e5 0d 3d d5 8c c3 da  .{-~.......=.... |
+[debug] ssl_engine_io.c(1662): | 0340: 23 fd 7c 46 85 17 6a be-05 d1 44 52 1d 07 14 f0  #.|F..j...DR.... |
+[debug] ssl_engine_io.c(1662): | 0350: 61 1d 59 09 3f 66 d9 00-4d 89 3a 73 83 62 ac 81  a.Y.?f..M.:s.b.. |
+[debug] ssl_engine_io.c(1662): | 0360: 29 0e d0 13 ed 55 24 b5-fb 42 dd 76 2e 7a b8 21  )....U$..B.v.z.! |
+[debug] ssl_engine_io.c(1662): | 0370: 25 d0 d3 ae ad d8 8c 27-a6 9c cc 70 70 47 74 a0  %......'...ppGt. |
+[debug] ssl_engine_io.c(1662): | 0380: 03 c5 48 26 21 80 d0 ae-65 c3 dd 72 5d 4e 52 6f  ..H&!...e..r]NRo |
+[debug] ssl_engine_io.c(1662): | 0390: 43 5a 00 9f 41 ad bc 56-13 2d 86 63 7b 6f 93 90  CZ..A..V.-.c{o.. |
+[debug] ssl_engine_io.c(1662): | 03a0: 36 48 dc 13 9a 99 b6 2c-40 a8 ca 66 3b 8e c5 8f  6H.....,@..f;... |
+[debug] ssl_engine_io.c(1662): | 03b0: e2 7b 4a 50 36 37 31 a9-7e 12 5f ce 2e 34 80 51  .{JP671.~._..4.Q |
+[debug] ssl_engine_io.c(1662): | 03c0: 99 94 bc b4 cf aa 1b b9-de 4b 8e b0 02 b0 70 7d  .........K....p} |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 3 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1655): [client 204.16.157.225] pubcookie_user_hook: uri: /secure/index.html auth_type: WebISO, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1778): [client 204.16.157.225] pubcookie_user: going to check uri: /secure/index.html creds: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(177): [client 204.16.157.225] dump_server_rec:\n\t\tdirdepth: 0\n\t\tnoblank: 0\n\t\tlogin: https://webiso.andrew.cmu.edu/\n\t\tappsrvid: rails.west.cmu.edu\n\t\tauthtype_names: WebISO\n\t\tuse_post: 1\n        no_clean_creds: 0\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(190): [client 204.16.157.225] dump_dir_rec:\n\t\tinact_exp: 400\n                hard_exp: 3700\n                non_ssl_ok: 0\n\t\tappid: svrails\n                end_session: \n                session_reauth: -1\n                noprompt: 0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1799): [client 204.16.157.225] pubcookie_user: have ssl_var: on, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1825): [client 204.16.157.225] pubcookie_user: about to look for some cookies; current uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1273): [client 204.16.157.225]  .. return: Uqr0I8KTl+9ciLo6lLDatr3NjXkXqJ9MmKFOXBb3eB0MNDINu/8YHNEUXD+lbcHoEOPRbo8b/sMXVIGaQVEKsHsuKwaIOV3n9WIvAj5GCrJt6YCvkQBAhnSM2pMZcNCh/WkuPP92rba2d4c+LyEX7CcKc/CpC9ECGdJ1nw2hUr1nHO7TavIWWV/st7pKk/8Om+vtiP20IJnDWIzKOxrl3FLw7vFqg6Lf4CxwkopsAqp/Qhx6E8GmGFgB4QH90g7uDtHFnPSX1HGx79BsFIQekqUig2NyOXy7U4Xf3l7FsB6Y6DY+/Rn5HtiTCATWGMptFBE3uCCGl/bVUxEv/tc/argVSGdANbcdFTAp+YDQIIpMMNhvq1ijAVf6VhxuradvxINJ6pbUdZ+IlKIIZ9M5pTu9Ot/MnlVftSRuLgRUADY2vP+JwTtOZo8VsAb92jsjm5kGJl4wiHx5GKTlufZgvnt1s4q4iw==, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_unbundle_cookie: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] get_crypt_key: myname=rails.west.cmu.edu, peer=rails.west.cmu.edu\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] Verifying signature with granting certificate, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_rd_safe: couldn't verify signature for rails.west.cmu.edu OpenSSL error: error:0407006A:rsa routines:RSA_padding_check_PKCS1_type_1:block type is not 01, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: goodbye, r: -1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: goodbye\n, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_unbundle_cookie: libpbc_rd_priv() failed\n, referer: https://webiso.andrew.cmu.edu/
+[info] [client 204.16.157.225] can't unbundle G cookie, it's probably not for us; uri: /secure/index.html\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(697): [client 204.16.157.225] clear_granting_cookie: setting cookie: pubcookie_g=; path=/; expires=Fri, 11-Jan-1990 00:00:01 GMT; secure, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (1), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_s_svrails (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1981): [client 204.16.157.225] No G or S cookie; uri: /secure/index.html appid: svrails sess_cookie_name: pubcookie_s_svrails, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1703): [client 204.16.157.225]  .. user_hook: user failed, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(913): [client 204.16.157.225] auth_failed_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(367): [client 204.16.157.225] get_pre_s_token: token is 1009714423, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(993): [client 204.16.157.225] Post URI before encoding length 18, string: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(996): [client 204.16.157.225] Post URI after encoding length 24, string: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1042): [client 204.16.157.225] g_req before encoding length 241, string: one=rails.west.cmu.edu&two=svrails&three=1&four=a5&five=GET&six=rails.west.cmu.edu&seven=L3NlY3VyZS9pbmRleC5odG1s&eight=&hostname=rails.west.cmu.edu&nine=1&file=&referer=https://webiso.andrew.cmu.edu/&sess_re=0&pre_sess_tok=1009714423&flag=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(300): [client 204.16.157.225] pubcookie flush headers: merging 4 output headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1178): [client 204.16.157.225] auth_failed_handler: redirect sent. uri: /secure/index.html reason: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 3 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 2 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8b17e40 [mem: b8b0d12b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 6f ed 7a 3e 5c-8b 56 f4 87 c0 e8 de 9b  H..o.z>\\.V...... |
+[debug] ssl_engine_io.c(1662): | 0010: bb 87 63 83 57 90 2b 4f-6b af 9d 7b b3 e4 b5 80  ..c.W.+Ok..{.... |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: f2 02 1f 07 43 65 c8 f4-b7 cb 74 14 df 54 2a ec  ....Ce....t..T*. |
+[debug] ssl_engine_io.c(1662): | 0010: 9b c9 03 08 4e 95 fe 55-e8 45 73 de 0e 48 49 95  ....N..U.Es..HI. |
+[debug] ssl_engine_io.c(1662): | 0020: 0d 92 aa 77 8b 77 2f bf-1e 73 76 e1 78 3e a1 19  ...w.w/..sv.x>.. |
+[debug] ssl_engine_io.c(1662): | 0030: 39 5d e3 04 4b ff e5 be-ba bf e0 a2 0c f4 56 2a  9]..K.........V* |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 04 90                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1168/1168 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 68 6e 52 50 a9 22 65 35-6c 62 fa c5 e8 0b b9 54  hnRP."e5lb.....T |
+[debug] ssl_engine_io.c(1662): | 0010: fd 2f fe a8 b9 c5 e3 72-dc 1a 6f 53 d7 86 ae 95  ./.....r..oS.... |
+[debug] ssl_engine_io.c(1662): | 0020: 72 9f b4 b1 49 e3 3f 59-d2 c4 a6 cd 24 24 1e 47  r...I.?Y....$$.G |
+[debug] ssl_engine_io.c(1662): | 0030: ea eb 71 c8 f4 dc 47 03-16 ce 41 9c f2 69 b2 d6  ..q...G...A..i.. |
+[debug] ssl_engine_io.c(1662): | 0040: 28 e2 83 01 e3 53 77 4c-c4 04 1a bd 35 9f 8a cb  (....SwL....5... |
+[debug] ssl_engine_io.c(1662): | 0050: 80 42 52 03 ae 93 80 95-4d b4 56 11 e0 30 b5 0c  .BR.....M.V..0.. |
+[debug] ssl_engine_io.c(1662): | 0060: 7f 12 4f c7 d9 e3 40 b9-ad 83 63 c6 62 c7 44 e0  ..O...@...c.b.D. |
+[debug] ssl_engine_io.c(1662): | 0070: cb 3f 4d 1d fe 3a 7d 93-eb 1e aa 8a 43 27 de e3  .?M..:}.....C'.. |
+[debug] ssl_engine_io.c(1662): | 0080: ae ec 76 eb ec d3 23 18-79 0b b5 33 f5 4b 24 4e  ..v...#.y..3.K$N |
+[debug] ssl_engine_io.c(1662): | 0090: 36 80 d3 d9 86 30 d6 e9-e5 4a bf f6 2d d3 fe 2a  6....0...J..-..* |
+[debug] ssl_engine_io.c(1662): | 00a0: 0c b3 f8 28 6c 8b af 89-2d f6 2e cd cc 5c 8a c0  ...(l...-....\\.. |
+[debug] ssl_engine_io.c(1662): | 00b0: ac dd b7 c4 92 5c d3 92-7a 12 49 97 c0 3d cc a0  .....\\..z.I..=.. |
+[debug] ssl_engine_io.c(1662): | 00c0: 94 da 7b ec 4c 8a 45 6d-a0 eb df 68 48 bb 8a b9  ..{.L.Em...hH... |
+[debug] ssl_engine_io.c(1662): | 00d0: 1e 18 82 a8 b3 06 f9 04-38 f6 27 55 cb b6 dd 35  ........8.'U...5 |
+[debug] ssl_engine_io.c(1662): | 00e0: 0d 8b 36 1d 9f 58 44 26-fc 9e 3e 86 5c 28 2e 01  ..6..XD&..>.\\(.. |
+[debug] ssl_engine_io.c(1662): | 00f0: fc 25 9c 38 60 7f 75 85-0a 82 37 d0 79 d3 e8 06  .%.8`.u...7.y... |
+[debug] ssl_engine_io.c(1662): | 0100: a6 76 df 32 a5 3f 6d 5b-3c 03 1d 91 b7 35 b4 e5  .v.2.?m[<....5.. |
+[debug] ssl_engine_io.c(1662): | 0110: 1c f6 6e 96 7e ff 32 83-0e be 4e 4c 95 7f fa 57  ..n.~.2...NL...W |
+[debug] ssl_engine_io.c(1662): | 0120: c3 e6 69 d0 4b 81 7a 6d-c9 f4 3b c1 4c 5f 80 27  ..i.K.zm..;.L_.' |
+[debug] ssl_engine_io.c(1662): | 0130: a9 0d 91 41 45 c5 a2 74-dd 84 60 8a a8 47 e9 a2  ...AE..t..`..G.. |
+[debug] ssl_engine_io.c(1662): | 0140: 64 e8 60 1f 11 27 91 1e-8a 2f 7b af 74 c8 6e c6  d.`..'.../{.t.n. |
+[debug] ssl_engine_io.c(1662): | 0150: 51 53 99 be 80 e1 4c 37-3c 17 7e 17 c9 7b c7 fc  QS....L7<.~..{.. |
+[debug] ssl_engine_io.c(1662): | 0160: 8b b8 97 c1 e4 f1 3b 02-59 91 77 4c c7 4d c3 6a  ......;.Y.wL.M.j |
+[debug] ssl_engine_io.c(1662): | 0170: 2b b1 a6 a0 95 74 34 39-aa 07 a0 5e 7d 13 da 1b  +....t49...^}... |
+[debug] ssl_engine_io.c(1662): | 0180: dd d5 e5 0a f8 2b 60 0f-0c c6 d3 76 f9 d5 fd ff  .....+`....v.... |
+[debug] ssl_engine_io.c(1662): | 0190: d5 77 38 a4 2c ac df 60-22 34 80 e6 35 4e 63 22  .w8.,..`"4..5Nc" |
+[debug] ssl_engine_io.c(1662): | 01a0: 54 d8 01 02 7c 9f 0f 6c-25 72 0b 2f 0f d9 e9 0d  T...|..l%r./.... |
+[debug] ssl_engine_io.c(1662): | 01b0: 8d 1b fe 29 a2 50 66 8a-42 83 67 73 65 b6 23 7b  ...).Pf.B.gse.#{ |
+[debug] ssl_engine_io.c(1662): | 01c0: 66 e9 e0 8a 45 db 19 2d-c2 db df c9 81 1a 6a 47  f...E..-......jG |
+[debug] ssl_engine_io.c(1662): | 01d0: ac fb 01 82 b9 03 9a fa-bf d2 4a 03 a6 ec fc ca  ..........J..... |
+[debug] ssl_engine_io.c(1662): | 01e0: c9 84 81 ba e3 f7 97 f2-a9 f9 96 3a 47 a5 18 90  ...........:G... |
+[debug] ssl_engine_io.c(1662): | 01f0: d3 bf 9b 81 02 89 9f f1-19 fc 87 56 0f 0a f5 96  ...........V.... |
+[debug] ssl_engine_io.c(1662): | 0200: 69 e8 02 69 0d e6 ef e1-0b 7f c9 96 0f b8 f8 c7  i..i............ |
+[debug] ssl_engine_io.c(1662): | 0210: f6 ed 4e e4 b0 4a 62 70-27 d4 00 98 68 1c 9a 40  ..N..Jbp'...h..@ |
+[debug] ssl_engine_io.c(1662): | 0220: 2c 69 17 84 a3 64 59 14-3c 71 1a 87 02 f2 7a 85  ,i...dY.<q....z. |
+[debug] ssl_engine_io.c(1662): | 0230: f0 1d df 6c f9 f4 d8 52-94 59 81 75 22 a5 2c 25  ...l...R.Y.u".,% |
+[debug] ssl_engine_io.c(1662): | 0240: e8 2a 15 6e 6c b9 95 9f-95 12 41 cf f2 2a c8 9d  .*.nl.....A..*.. |
+[debug] ssl_engine_io.c(1662): | 0250: ce 44 23 d1 53 82 ba c8-a2 19 ee fa c5 19 4d 5b  .D#.S.........M[ |
+[debug] ssl_engine_io.c(1662): | 0260: f8 60 3d ca 57 52 60 6b-ce 32 03 c4 9b ea 28 75  .`=.WR`k.2....(u |
+[debug] ssl_engine_io.c(1662): | 0270: 9b 54 4d 64 1f 4a cd 3a-a7 ee 9b 1d 1b d7 24 46  .TMd.J.:......$F |
+[debug] ssl_engine_io.c(1662): | 0280: e5 dd d7 0b f5 c5 50 a9-73 77 b9 48 a7 03 0b 9f  ......P.sw.H.... |
+[debug] ssl_engine_io.c(1662): | 0290: 10 b2 4b a8 ce 01 29 b7-99 42 d4 6b 6d 1b 0f 8c  ..K...)..B.km... |
+[debug] ssl_engine_io.c(1662): | 02a0: ac eb d0 df 76 f1 2b a2-77 d2 fc c3 30 93 91 30  ....v.+.w...0..0 |
+[debug] ssl_engine_io.c(1662): | 02b0: 4a 7a 54 c5 b5 23 f4 c2-3a b5 3a 2c 25 bd 62 6d  JzT..#..:.:,%.bm |
+[debug] ssl_engine_io.c(1662): | 02c0: 88 6c 5d 13 9a 02 ea 98-2f 42 91 21 0f 5e 3d 64  .l]...../B.!.^=d |
+[debug] ssl_engine_io.c(1662): | 02d0: a7 28 22 8d e2 dc 72 ec-8b dd 5e ea 6b 63 b8 5c  .("...r...^.kc.\\ |
+[debug] ssl_engine_io.c(1662): | 02e0: 23 e8 da b5 6d 90 48 a7-97 0b 47 0e 1a 60 9e a8  #...m.H...G..`.. |
+[debug] ssl_engine_io.c(1662): | 02f0: 1f 31 fa a7 91 3c 89 52-65 fb 1d 84 96 e4 85 a1  .1...<.Re....... |
+[debug] ssl_engine_io.c(1662): | 0300: 59 cd 32 1d 59 fb be 88-1e f5 5c b6 af 77 c3 19  Y.2.Y.....\\..w.. |
+[debug] ssl_engine_io.c(1662): | 0310: 6f 70 4c 60 d6 7c 0c 3f-8c 5f 25 67 42 d3 f9 eb  opL`.|.?._%gB... |
+[debug] ssl_engine_io.c(1662): | 0320: e0 74 4a 5d 15 fe 12 0f-8f 4e fd 39 0b bd 74 c4  .tJ].....N.9..t. |
+[debug] ssl_engine_io.c(1662): | 0330: 1f 66 aa 3c c4 a8 b5 ab-09 32 08 0f 19 f2 f2 03  .f.<.....2...... |
+[debug] ssl_engine_io.c(1662): | 0340: 79 37 ff f5 32 dd be 11-0c ff e5 2e 22 a6 9f 70  y7..2......."..p |
+[debug] ssl_engine_io.c(1662): | 0350: 2b 61 81 91 14 0c fd 3e-f7 25 fa ff 88 f8 0f af  +a.....>.%...... |
+[debug] ssl_engine_io.c(1662): | 0360: c2 46 f9 76 f7 8f d2 af-c6 c7 f1 06 54 3b f2 f5  .F.v........T;.. |
+[debug] ssl_engine_io.c(1662): | 0370: fe c7 3e d9 fb 13 e7 2c-3e b7 a9 80 53 26 ae fc  ..>....,>...S&.. |
+[debug] ssl_engine_io.c(1662): | 0380: 9e bd eb 05 c4 da 1a 9d-66 d7 a6 67 12 f2 0d 2b  ........f..g...+ |
+[debug] ssl_engine_io.c(1662): | 0390: ec f3 41 10 d1 3a 22 3b-8c d8 32 cd b6 79 29 b1  ..A..:";..2..y). |
+[debug] ssl_engine_io.c(1662): | 03a0: 58 72 18 63 26 4b eb 1b-3d b2 b3 73 ec 66 ad 3e  Xr.c&K..=..s.f.> |
+[debug] ssl_engine_io.c(1662): | 03b0: 04 7b b5 fd 9c 3d e5 00-bc 3a 67 80 ef f5 e5 36  .{...=...:g....6 |
+[debug] ssl_engine_io.c(1662): | 03c0: 01 ff a5 2c ef c9 80 8c-22 3e 6e 8c f3 31 72 79  ...,....">n..1ry |
+[debug] ssl_engine_io.c(1662): | 03d0: 58 38 84 ae 89 00 c2 fa-d3 6b 5e 17 72 90 20 8b  X8.......k^.r. . |
+[debug] ssl_engine_io.c(1662): | 03e0: 2a 1c 47 99 a9 a6 6a ba-2e 2e 06 6f 21 68 1f 03  *.G...j....o!h.. |
+[debug] ssl_engine_io.c(1662): | 03f0: 21 9f df f0 59 0b f2 1b-3a bb 08 be 17 b3 6c c7  !...Y...:.....l. |
+[debug] ssl_engine_io.c(1662): | 0400: fc 4c 94 5a 05 0d cb ba-c4 29 2c 9b e0 b1 77 e9  .L.Z.....),...w. |
+[debug] ssl_engine_io.c(1662): | 0410: 65 22 23 c6 6f 04 c2 ca-01 77 c8 1c 08 a7 41 2b  e"#.o....w....A+ |
+[debug] ssl_engine_io.c(1662): | 0420: 3d e3 25 2e 34 c3 e6 8f-a0 67 ae c6 3d b0 db 45  =.%.4....g..=..E |
+[debug] ssl_engine_io.c(1662): | 0430: 3f d8 80 60 7b e9 3d 29-3d aa b8 08 75 36 fd 85  ?..`{.=)=...u6.. |
+[debug] ssl_engine_io.c(1662): | 0440: 35 b6 0e 0f 58 79 a3 cc-75 35 7b d2 4b 76 b9 3b  5...Xy..u5{.Kv.; |
+[debug] ssl_engine_io.c(1662): | 0450: 80 b8 5b 22 93 78 8c c2-f0 93 80 51 b9 b6 14 2e  ..[".x.....Q.... |
+[debug] ssl_engine_io.c(1662): | 0460: a4 9c db ba a1 ee 10 c2-e5 1a ea 7c ed cc 55 af  ...........|..U. |
+[debug] ssl_engine_io.c(1662): | 0470: 86 b8 30 83 24 9f 35 7a-fc 49 89 2c 3c cd c4 77  ..0.$.5z.I.,<..w |
+[debug] ssl_engine_io.c(1662): | 0480: 34 dd ad ed c6 02 01 8c-33 5a 78 00 f0 c1 00 33  4.......3Zx....3 |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 2 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3436): [client 204.16.157.225] pubcookie adding output filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3796): [client 204.16.157.225] login_reply_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3665): [client 204.16.157.225] verify-url in: https://rails.west.cmu.edu/L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3691): [client 204.16.157.225] verify-url decoding: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3699): [client 204.16.157.225] verify-url path is: secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3445): [client 204.16.157.225] pubcookie adding error filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3480): [client 204.16.157.225] error_filter: merging 5 error headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Location, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 2 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 0 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8b08b60 [mem: b8b12a20] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8b08b60 [mem: b8b12a2b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 70 76 f8 ce 4d-fb 0b 5e 15 4c 6c 68 27  H..pv..M..^.Llh' |
+[debug] ssl_engine_io.c(1662): | 0010: 59 0d b0 fb b9 c3 06 ff-a4 de ce fd 49 81 c5 d2  Y...........I... |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b08b60 [mem: b8b12a20] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8b08b60 [mem: b8b12a25] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b08b60 [mem: b8b12a20] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8b08b60 [mem: b8b12a25] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 73 fd f1 77 5e f3 6b 02-77 45 3f 31 56 e9 a4 23  s..w^.k.wE?1V..# |
+[debug] ssl_engine_io.c(1662): | 0010: 58 af c5 49 81 b6 31 b2-8e 87 73 25 46 5f 44 bf  X..I..1...s%F_D. |
+[debug] ssl_engine_io.c(1662): | 0020: 09 85 3a 73 96 a7 7a 51-ec 9c 15 c8 8c 34 2b ac  ..:s..zQ.....4+. |
+[debug] ssl_engine_io.c(1662): | 0030: be 11 a5 92 2c 7a 90 8f-bf 31 4c ad a9 8f 2a e0  ....,z...1L...*. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b08b60 [mem: b8b12a20] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 03 d0                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 976/976 bytes from BIO#b8b08b60 [mem: b8b12a25] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 3e ca a3 ab 85 1a 8f 0b-79 d7 7a ba 5e 0d 27 b3  >.......y.z.^.'. |
+[debug] ssl_engine_io.c(1662): | 0010: fd 18 9e 92 9d 26 b6 60-48 f5 a7 eb 09 04 6e 45  .....&.`H.....nE |
+[debug] ssl_engine_io.c(1662): | 0020: 66 d8 24 2d c2 c6 da 03-f2 61 84 09 86 84 91 14  f.$-.....a...... |
+[debug] ssl_engine_io.c(1662): | 0030: 82 43 e3 80 36 bf c3 a5-d1 95 d4 ec c9 1b 39 31  .C..6.........91 |
+[debug] ssl_engine_io.c(1662): | 0040: ff 98 06 95 83 d4 7b 03-86 b7 98 df 09 d7 4f 91  ......{.......O. |
+[debug] ssl_engine_io.c(1662): | 0050: 96 7d 64 9c 76 55 fe 33-2f a7 c9 f7 78 bf 54 3c  .}d.vU.3/...x.T< |
+[debug] ssl_engine_io.c(1662): | 0060: 22 b4 7a 03 44 8e b3 cf-37 66 d4 33 37 4a 21 90  ".z.D...7f.37J!. |
+[debug] ssl_engine_io.c(1662): | 0070: 66 b8 9d 05 63 a7 fe b0-98 da 39 04 23 eb ee 17  f...c.....9.#... |
+[debug] ssl_engine_io.c(1662): | 0080: b8 16 18 cc 0a 16 cb ae-e9 fb 0e bf e9 e7 23 03  ..............#. |
+[debug] ssl_engine_io.c(1662): | 0090: b0 8f 19 76 79 4b 08 0b-e7 53 a8 71 0d c4 92 e9  ...vyK...S.q.... |
+[debug] ssl_engine_io.c(1662): | 00a0: e4 c9 31 71 50 ad 25 29-d5 c9 c2 06 47 79 1b da  ..1qP.%)....Gy.. |
+[debug] ssl_engine_io.c(1662): | 00b0: 9a e0 07 26 41 f0 c5 b7-e7 c0 3e 83 53 0c e7 f9  ...&A.....>.S... |
+[debug] ssl_engine_io.c(1662): | 00c0: 53 21 5e b7 88 90 77 33-d8 96 ef 25 6d a0 46 22  S!^...w3...%m.F" |
+[debug] ssl_engine_io.c(1662): | 00d0: 58 a4 2d 2a fa 73 8e a1-1b 7d 5b 5a 13 3a cc 6a  X.-*.s...}[Z.:.j |
+[debug] ssl_engine_io.c(1662): | 00e0: 43 5c 18 6d 49 de ff 09-23 85 69 29 f4 96 fa 82  C\\.mI...#.i).... |
+[debug] ssl_engine_io.c(1662): | 00f0: 90 d7 05 8d 9d 00 fc 5d-d8 3d 86 fe ca 9c 1a 64  .......].=.....d |
+[debug] ssl_engine_io.c(1662): | 0100: 4f 65 e3 6f 6b 05 7b 06-c5 46 52 5f c5 df 09 1e  Oe.ok.{..FR_.... |
+[debug] ssl_engine_io.c(1662): | 0110: d4 13 40 65 6d 5c a9 85-39 e6 b4 22 05 17 ed d9  ..@em\\..9..".... |
+[debug] ssl_engine_io.c(1662): | 0120: 88 82 71 3f 5c 02 53 97-5b 1e 32 12 f4 9e 29 50  ..q?\\.S.[.2...)P |
+[debug] ssl_engine_io.c(1662): | 0130: 2d f2 7f 46 6f d8 57 7e-46 27 48 4a 49 86 0f 85  -..Fo.W~F'HJI... |
+[debug] ssl_engine_io.c(1662): | 0140: dd 0f 15 69 66 2d ec ad-9c 73 42 10 0c d0 21 4f  ...if-...sB...!O |
+[debug] ssl_engine_io.c(1662): | 0150: 29 56 59 88 f6 ab 9f 69-0a 99 41 bd 5a aa 7c f4  )VY....i..A.Z.|. |
+[debug] ssl_engine_io.c(1662): | 0160: 89 ec 81 d8 0c 90 f5 0c-32 92 bf 94 e2 86 be d7  ........2....... |
+[debug] ssl_engine_io.c(1662): | 0170: 9e 1c 42 d1 a0 66 47 7d-31 d6 64 dd 54 58 05 b0  ..B..fG}1.d.TX.. |
+[debug] ssl_engine_io.c(1662): | 0180: fe 20 1d 26 ee c5 e0 3d-83 3e 9c ba 38 04 e1 07  . .&...=.>..8... |
+[debug] ssl_engine_io.c(1662): | 0190: 2d 23 66 99 8b ed fa 84-e1 d7 71 63 87 d1 23 ee  -#f.......qc..#. |
+[debug] ssl_engine_io.c(1662): | 01a0: 24 dc 22 f1 26 13 a6 a1-d0 84 df 9f 8c 57 44 d5  $.".&........WD. |
+[debug] ssl_engine_io.c(1662): | 01b0: 2a 9d d7 86 36 7f cb d4-c3 d5 96 39 44 78 f4 7a  *...6......9Dx.z |
+[debug] ssl_engine_io.c(1662): | 01c0: dd 20 d2 e6 07 a0 42 6e-75 4b 43 2a 38 0e 3a c4  . ....BnuKC*8.:. |
+[debug] ssl_engine_io.c(1662): | 01d0: 39 55 df 6b 78 45 79 7d-d1 0f e5 39 b0 11 85 49  9U.kxEy}...9...I |
+[debug] ssl_engine_io.c(1662): | 01e0: b8 3d a3 42 02 b9 ec 23-ba 83 ee 33 ce 79 b6 9b  .=.B...#...3.y.. |
+[debug] ssl_engine_io.c(1662): | 01f0: c0 a1 7f 68 c5 8f d9 e7-af e6 98 c8 72 55 65 69  ...h........rUei |
+[debug] ssl_engine_io.c(1662): | 0200: df bd ee e2 5b f4 56 b1-fd 01 a4 bf bc 32 86 fa  ....[.V......2.. |
+[debug] ssl_engine_io.c(1662): | 0210: b8 bd 5f 12 05 d1 29 90-a6 7f fd 3f 51 2a a5 a6  .._...)....?Q*.. |
+[debug] ssl_engine_io.c(1662): | 0220: 1f 07 fe 89 f7 1c b2 df-ed b2 a5 27 5d d6 67 6b  ...........'].gk |
+[debug] ssl_engine_io.c(1662): | 0230: 42 ee 4d 4e 82 bb 11 a0-6c 04 a4 89 a7 da 7d 53  B.MN....l.....}S |
+[debug] ssl_engine_io.c(1662): | 0240: 75 0f e4 75 7f 08 d7 ac-fd 07 67 e5 72 40 25 ed  u..u......g.r@%. |
+[debug] ssl_engine_io.c(1662): | 0250: 8b 0f 79 11 03 c6 33 c6-8e ce 08 4f 73 ee 15 13  ..y...3....Os... |
+[debug] ssl_engine_io.c(1662): | 0260: 7e 24 c2 10 01 90 86 11-e2 8f 95 53 7d 51 e6 c3  ~$.........S}Q.. |
+[debug] ssl_engine_io.c(1662): | 0270: eb e4 1a 7e 6a e6 c5 5d-de 3b a9 de a1 ca 78 de  ...~j..].;....x. |
+[debug] ssl_engine_io.c(1662): | 0280: 87 12 7a 57 41 9a 50 80-02 5e 0a 07 c3 77 d7 94  ..zWA.P..^...w.. |
+[debug] ssl_engine_io.c(1662): | 0290: 97 17 f3 8b 4e 9c 74 9d-b4 98 51 4c 92 85 d3 98  ....N.t...QL.... |
+[debug] ssl_engine_io.c(1662): | 02a0: 8b 13 f1 dd e4 9b 79 64-e4 79 89 c8 58 bc 07 d0  ......yd.y..X... |
+[debug] ssl_engine_io.c(1662): | 02b0: 93 ec 20 25 5a 37 1b ac-2e 19 ed 8e 41 44 28 ae  .. %Z7......AD(. |
+[debug] ssl_engine_io.c(1662): | 02c0: 81 e2 b9 3a 84 fb 9b 43-eb 09 6e 9c d7 78 e5 a8  ...:...C..n..x.. |
+[debug] ssl_engine_io.c(1662): | 02d0: ca 26 9f 14 a0 99 8d c1-be c3 17 c1 62 20 1b 5f  .&..........b ._ |
+[debug] ssl_engine_io.c(1662): | 02e0: 03 8d ea b4 b4 6c ee ac-b5 f9 ed 9c 79 7c 56 19  .....l......y|V. |
+[debug] ssl_engine_io.c(1662): | 02f0: 7b d3 d5 5c ac 83 18 a6-70 7f 73 3e 3b 20 5c 74  {..\\....p.s>; \\t |
+[debug] ssl_engine_io.c(1662): | 0300: 6f bd b4 9c 5f e7 bd c6-43 c9 4e ec 72 95 01 58  o..._...C.N.r..X |
+[debug] ssl_engine_io.c(1662): | 0310: 87 5c 0b 42 13 71 c5 7a-c5 1a 3e 73 4a cb 68 7a  .\\.B.q.z..>sJ.hz |
+[debug] ssl_engine_io.c(1662): | 0320: 5c 17 29 d3 37 9d 36 8b-a5 27 55 78 03 09 4b 6d  \\.).7.6..'Ux..Km |
+[debug] ssl_engine_io.c(1662): | 0330: a9 3a ce 6a 46 3f a7 84-83 31 a0 54 a1 37 1f 15  .:.jF?...1.T.7.. |
+[debug] ssl_engine_io.c(1662): | 0340: 65 57 04 d6 b8 ad ee ba-cd eb 85 29 34 36 a2 3b  eW.........)46.; |
+[debug] ssl_engine_io.c(1662): | 0350: 78 ff 7b b0 24 33 06 10-d3 45 b7 6f a5 7b aa 91  x.{.$3...E.o.{.. |
+[debug] ssl_engine_io.c(1662): | 0360: 26 ca 10 dd fc 86 05 55-9e 19 a4 0a ad 47 bf 6a  &......U.....G.j |
+[debug] ssl_engine_io.c(1662): | 0370: e9 a8 eb e5 54 ad bf c8-c2 61 ea f1 56 c3 eb fc  ....T....a..V... |
+[debug] ssl_engine_io.c(1662): | 0380: 8a a0 99 f8 03 e7 0a af-8b b9 b3 51 f4 04 b2 6e  ...........Q...n |
+[debug] ssl_engine_io.c(1662): | 0390: 28 4b 7e bc 8e b1 13 26-f4 04 22 f8 40 a6 73 b0  (K~....&..".@.s. |
+[debug] ssl_engine_io.c(1662): | 03a0: a5 5b e8 d7 ff b7 1c 23-76 07 27 54 6f d1 f0 09  .[.....#v.'To... |
+[debug] ssl_engine_io.c(1662): | 03b0: 41 69 7d 95 43 56 d0 ad-32 ca 48 44 ae 0e fb c7  Ai}.CV..2.HD.... |
+[debug] ssl_engine_io.c(1662): | 03c0: 08 bb d1 ab 0f 24 e0 36-b3 b3 3e 31 c3 c7 93 d7  .....$.6..>1.... |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 0 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1655): [client 204.16.157.225] pubcookie_user_hook: uri: /secure/index.html auth_type: WebISO, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1778): [client 204.16.157.225] pubcookie_user: going to check uri: /secure/index.html creds: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(177): [client 204.16.157.225] dump_server_rec:\n\t\tdirdepth: 0\n\t\tnoblank: 0\n\t\tlogin: https://webiso.andrew.cmu.edu/\n\t\tappsrvid: rails.west.cmu.edu\n\t\tauthtype_names: WebISO\n\t\tuse_post: 1\n        no_clean_creds: 0\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(190): [client 204.16.157.225] dump_dir_rec:\n\t\tinact_exp: 400\n                hard_exp: 3700\n                non_ssl_ok: 0\n\t\tappid: svrails\n                end_session: \n                session_reauth: -1\n                noprompt: 0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1799): [client 204.16.157.225] pubcookie_user: have ssl_var: on, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1825): [client 204.16.157.225] pubcookie_user: about to look for some cookies; current uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1273): [client 204.16.157.225]  .. return: UwLpc6r2PZUBoaPoZfDJeRKFTKHCkPcCbCML1kYg+eLDGzn7c5OnzvdEq2+kbJUg1Y0zdoQcPLkAdBvWIxPH2dGHym11NXaRxV0XZIOHCYHzgT6eNIhy+hz/7qINricYObuEOyuuJ711yxRlyDNaz2TU05YE6FK4+mS/b0mdXVDtqV+4gjxDBJIObtWMlaBJ8I8rDS1Yy6pg/1fq8fmupIoeXApm7H61cBuvWhz9b1GdE1KB5otpgBW2sqDagA4FxDVJKrcDs2fYbK++oahOBSNFJdQ4/W+6ZR+YKGkmyeYLTYtpS/56GParRMeowre13fCMRGwLl++MxXEEJNmRRnRwbGKcqML2UDpC46Pu8fe57Pf2SelJWBIuVZ89srZoteuF1zEboY1D2RwkzgXdxlQL5IksU2NEhIr0zXF6NOTaGtpNCEV35a3+oO/exl88zLjgWg6tjLozDhVwesVCvOJ2sVJopA==, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_unbundle_cookie: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] get_crypt_key: myname=rails.west.cmu.edu, peer=rails.west.cmu.edu\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] Verifying signature with granting certificate, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_rd_safe: couldn't verify signature for rails.west.cmu.edu OpenSSL error: error:0407006A:rsa routines:RSA_padding_check_PKCS1_type_1:block type is not 01, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: goodbye, r: -1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: goodbye\n, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_unbundle_cookie: libpbc_rd_priv() failed\n, referer: https://webiso.andrew.cmu.edu/
+[info] [client 204.16.157.225] can't unbundle G cookie, it's probably not for us; uri: /secure/index.html\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(697): [client 204.16.157.225] clear_granting_cookie: setting cookie: pubcookie_g=; path=/; expires=Fri, 11-Jan-1990 00:00:01 GMT; secure, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (1), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_s_svrails (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1981): [client 204.16.157.225] No G or S cookie; uri: /secure/index.html appid: svrails sess_cookie_name: pubcookie_s_svrails, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1703): [client 204.16.157.225]  .. user_hook: user failed, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(913): [client 204.16.157.225] auth_failed_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(367): [client 204.16.157.225] get_pre_s_token: token is -1026340386, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(993): [client 204.16.157.225] Post URI before encoding length 18, string: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(996): [client 204.16.157.225] Post URI after encoding length 24, string: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1042): [client 204.16.157.225] g_req before encoding length 242, string: one=rails.west.cmu.edu&two=svrails&three=1&four=a5&five=GET&six=rails.west.cmu.edu&seven=L3NlY3VyZS9pbmRleC5odG1s&eight=&hostname=rails.west.cmu.edu&nine=1&file=&referer=https://webiso.andrew.cmu.edu/&sess_re=0&pre_sess_tok=-1026340386&flag=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(300): [client 204.16.157.225] pubcookie flush headers: merging 4 output headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1178): [client 204.16.157.225] auth_failed_handler: redirect sent. uri: /secure/index.html reason: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 0 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 1 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae5a40 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae5a40 [mem: b8b12fab] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 70 53 71 8a 3f-93 c5 84 5a 13 07 27 2b  H..pSq.?...Z..'+ |
+[debug] ssl_engine_io.c(1662): | 0010: d9 a7 9f 85 2d 03 8f a2-0f 19 57 81 74 92 b4 2b  ....-.....W.t..+ |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5a40 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae5a40 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5a40 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae5a40 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: fa 1f 32 32 c2 17 df b2-24 23 21 ce d0 b4 fa d6  ..22....$#!..... |
+[debug] ssl_engine_io.c(1662): | 0010: e3 d7 5e 62 49 34 8c 17-62 2a 12 3b 1a 6c 4b 09  ..^bI4..b*.;.lK. |
+[debug] ssl_engine_io.c(1662): | 0020: 19 92 fb 4d 81 7c bf 25-6a 8b c0 2f fd 64 38 ab  ...M.|.%j../.d8. |
+[debug] ssl_engine_io.c(1662): | 0030: 4c d2 18 00 be 17 9a fc-d4 1c cf 7e df 3d 7e d7  L..........~.=~. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5a40 [mem: b8b12fa0] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 04 90                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1168/1168 bytes from BIO#b8ae5a40 [mem: b8b12fa5] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: c1 86 b4 0a fb 31 c9 9a-b6 14 76 e0 6b a3 1f 2c  .....1....v.k.., |
+[debug] ssl_engine_io.c(1662): | 0010: 7e fe 35 a6 7a 17 1b 8b-8b 63 cc 4d 83 35 ae b1  ~.5.z....c.M.5.. |
+[debug] ssl_engine_io.c(1662): | 0020: 04 2a 61 d8 16 e6 3c 88-bf be 3d 37 0e 6d 58 e3  .*a...<...=7.mX. |
+[debug] ssl_engine_io.c(1662): | 0030: 71 9e 66 6d 63 93 fe 12-2f 6f c9 be 8d 84 3b bc  q.fmc.../o....;. |
+[debug] ssl_engine_io.c(1662): | 0040: bf e6 f4 cb b1 b7 b5 18-d8 bf e6 08 1a 81 c8 f7  ................ |
+[debug] ssl_engine_io.c(1662): | 0050: 7d 7a ee e1 bb 86 2b 18-d5 f5 65 70 46 fd 91 be  }z....+...epF... |
+[debug] ssl_engine_io.c(1662): | 0060: cd 71 31 b2 4d db 79 17-43 8b 28 02 f2 57 f3 53  .q1.M.y.C.(..W.S |
+[debug] ssl_engine_io.c(1662): | 0070: 34 02 23 3c 62 2d c8 7c-41 f8 95 79 79 31 0d 8f  4.#<b-.|A..yy1.. |
+[debug] ssl_engine_io.c(1662): | 0080: e5 c9 12 4a 2d db c9 1b-40 7f 07 65 2f 9a f6 c5  ...J-...@..e/... |
+[debug] ssl_engine_io.c(1662): | 0090: e0 70 3f 22 de 4b f1 1b-71 d3 1a 40 41 0d 40 de  .p?".K..q..@A.@. |
+[debug] ssl_engine_io.c(1662): | 00a0: 4d 44 df 0a f9 51 4f 94-6c 80 ad 2f 64 37 f7 a3  MD...QO.l../d7.. |
+[debug] ssl_engine_io.c(1662): | 00b0: d5 c7 0c d2 ce a4 ee 72-36 c7 ee 54 26 92 07 6a  .......r6..T&..j |
+[debug] ssl_engine_io.c(1662): | 00c0: 0d 26 4f 60 71 d9 59 a4-94 c5 4a d9 34 1b bf 95  .&O`q.Y...J.4... |
+[debug] ssl_engine_io.c(1662): | 00d0: da a5 66 a8 1e 5c fe af-e0 d3 1f 38 4c aa aa 51  ..f..\\.....8L..Q |
+[debug] ssl_engine_io.c(1662): | 00e0: cd 60 33 b7 67 c9 46 76-18 77 54 e6 44 3e 3f de  .`3.g.Fv.wT.D>?. |
+[debug] ssl_engine_io.c(1662): | 00f0: 91 f2 0b f8 9f 3a 5b dd-b0 5f 3e 17 44 d8 78 14  .....:[.._>.D.x. |
+[debug] ssl_engine_io.c(1662): | 0100: 6d 19 e9 b9 73 a4 9e df-47 27 26 27 e8 b7 ea 67  m...s...G'&'...g |
+[debug] ssl_engine_io.c(1662): | 0110: 92 6f 32 05 0e 38 40 76-21 a5 a6 54 99 42 e2 92  .o2..8@v!..T.B.. |
+[debug] ssl_engine_io.c(1662): | 0120: 42 4f f3 d2 7d 51 de 19-8d 13 aa 1c 9c 0b 71 fb  BO..}Q........q. |
+[debug] ssl_engine_io.c(1662): | 0130: 0d 8c 83 18 c6 31 c9 ef-be 25 e2 01 fb 6e 49 b7  .....1...%...nI. |
+[debug] ssl_engine_io.c(1662): | 0140: e9 a3 1e 83 5e f5 a7 91-b7 cb 5f 17 90 a0 e9 f5  ....^....._..... |
+[debug] ssl_engine_io.c(1662): | 0150: 4b 90 7d 1d fa e4 a9 b5-00 0e 81 90 63 33 64 79  K.}.........c3dy |
+[debug] ssl_engine_io.c(1662): | 0160: 9d 2c 9c 58 b9 16 ef 56-25 3d 55 e5 52 3f 62 b9  .,.X...V%=U.R?b. |
+[debug] ssl_engine_io.c(1662): | 0170: f1 24 f3 26 73 7f 9b 4c-70 d6 89 bf a5 59 d5 da  .$.&s..Lp....Y.. |
+[debug] ssl_engine_io.c(1662): | 0180: e3 63 4a e8 b5 60 f8 43-26 21 c9 48 d1 93 7c 61  .cJ..`.C&!.H..|a |
+[debug] ssl_engine_io.c(1662): | 0190: fb 00 ec bf 40 ef a7 7c-63 f0 f2 e4 37 5e 20 a9  ....@..|c...7^ . |
+[debug] ssl_engine_io.c(1662): | 01a0: 02 41 09 b0 eb 48 6c 59-ac 18 5a 53 9d eb 31 9c  .A...HlY..ZS..1. |
+[debug] ssl_engine_io.c(1662): | 01b0: 56 44 3a e3 16 e3 33 7e-f9 25 39 81 06 3d 07 f9  VD:...3~.%9..=.. |
+[debug] ssl_engine_io.c(1662): | 01c0: c4 29 f7 71 f2 52 22 9a-2d d1 1f 90 35 2b 74 0d  .).q.R".-...5+t. |
+[debug] ssl_engine_io.c(1662): | 01d0: 03 04 4c 3e e0 d0 9c b0-b0 96 6f b1 80 18 64 9c  ..L>......o...d. |
+[debug] ssl_engine_io.c(1662): | 01e0: 13 77 42 e1 a3 82 3e 58-38 7f 64 3e 30 f3 00 59  .wB...>X8.d>0..Y |
+[debug] ssl_engine_io.c(1662): | 01f0: 28 b7 d9 34 fa f0 f7 33-12 19 fe 22 88 f3 cb b9  (..4...3...".... |
+[debug] ssl_engine_io.c(1662): | 0200: f8 5b c7 8f 28 99 d3 16-6d d9 ef 62 c8 04 67 06  .[..(...m..b..g. |
+[debug] ssl_engine_io.c(1662): | 0210: de b4 88 bd 2c 17 4d 88-67 dc 46 12 e3 50 38 5f  ....,.M.g.F..P8_ |
+[debug] ssl_engine_io.c(1662): | 0220: 01 37 c9 e8 59 5d 41 b8-0e 2f e2 06 49 7f 00 66  .7..Y]A../..I..f |
+[debug] ssl_engine_io.c(1662): | 0230: 7b b0 f4 60 02 67 5f b1-63 db a3 54 71 4b 1b 41  {..`.g_.c..TqK.A |
+[debug] ssl_engine_io.c(1662): | 0240: f7 fe 8a b6 f5 b3 45 42-49 3e 21 92 24 74 19 fb  ......EBI>!.$t.. |
+[debug] ssl_engine_io.c(1662): | 0250: 10 f5 25 ec ae 49 15 a5-ce 2a e4 99 15 fa 32 dc  ..%..I...*....2. |
+[debug] ssl_engine_io.c(1662): | 0260: 24 7c a9 68 5a d6 c6 d1-bd 37 0c e0 1b 42 6a 82  $|.hZ....7...Bj. |
+[debug] ssl_engine_io.c(1662): | 0270: d2 ce eb 67 8b 0e 6c 16-0c 33 24 41 65 b9 87 bc  ...g..l..3$Ae... |
+[debug] ssl_engine_io.c(1662): | 0280: 1a 24 91 44 e9 d4 2e ef-73 ef e6 af 89 51 1d ac  .$.D....s....Q.. |
+[debug] ssl_engine_io.c(1662): | 0290: d1 db 57 0a 98 45 ab fb-d3 53 0a 6b 8f b0 93 64  ..W..E...S.k...d |
+[debug] ssl_engine_io.c(1662): | 02a0: 2b 96 f6 25 d2 44 b4 71-2d a3 d5 86 de 7d 99 27  +..%.D.q-....}.' |
+[debug] ssl_engine_io.c(1662): | 02b0: d1 a9 eb ef 67 55 f6 ff-c5 a2 5d 86 fb cc 0f a4  ....gU....]..... |
+[debug] ssl_engine_io.c(1662): | 02c0: 8f bc f7 d6 60 7d 27 b6-2f 26 b7 d9 70 34 ac 3c  ....`}'./&..p4.< |
+[debug] ssl_engine_io.c(1662): | 02d0: 21 b0 0a a4 c9 05 d7 b4-ba 37 e0 16 79 72 4e 5e  !........7..yrN^ |
+[debug] ssl_engine_io.c(1662): | 02e0: 39 8e 87 54 b2 b3 39 3c-7a 70 3e ac 1c c6 ab 00  9..T..9<zp>..... |
+[debug] ssl_engine_io.c(1662): | 02f0: 35 dc 13 53 bb c8 68 e3-16 fb d6 7b ad e8 5a 03  5..S..h....{..Z. |
+[debug] ssl_engine_io.c(1662): | 0300: 1c c0 51 11 2a 64 54 6b-17 80 1b 68 4a 8b d9 78  ..Q.*dTk...hJ..x |
+[debug] ssl_engine_io.c(1662): | 0310: 3c b4 71 5a e8 ae 68 c7-84 a1 48 f5 e1 5f cd 13  <.qZ..h...H.._.. |
+[debug] ssl_engine_io.c(1662): | 0320: ea b3 aa 7c 1c 70 06 c0-6b 59 41 14 cf e3 97 a0  ...|.p..kYA..... |
+[debug] ssl_engine_io.c(1662): | 0330: 4d 2f 98 64 50 81 d8 54-8c e7 c7 ad b7 94 75 5f  M/.dP..T......u_ |
+[debug] ssl_engine_io.c(1662): | 0340: 96 c7 e2 f0 44 b8 9c d1-cc a4 27 76 e6 94 ef 1c  ....D.....'v.... |
+[debug] ssl_engine_io.c(1662): | 0350: 74 f7 8b ae 4b 4d 76 68-f1 e3 b2 31 38 8b b7 12  t...KMvh...18... |
+[debug] ssl_engine_io.c(1662): | 0360: b1 22 18 2c c6 87 8e a5-a0 b7 fd d5 80 5b fa e6  .".,.........[.. |
+[debug] ssl_engine_io.c(1662): | 0370: 4f b2 a9 b1 38 b4 e1 d5-e4 80 eb f4 b0 4c 2c 26  O...8........L,& |
+[debug] ssl_engine_io.c(1662): | 0380: 3d 03 90 f5 7d 34 27 89-92 cd 00 f8 f5 3b a5 ab  =...}4'......;.. |
+[debug] ssl_engine_io.c(1662): | 0390: 33 4c 5f 14 5f e0 20 ba-52 8d 75 a2 44 a3 46 86  3L_._. .R.u.D.F. |
+[debug] ssl_engine_io.c(1662): | 03a0: 6a 01 a1 b2 d5 8c 35 34-45 1e d2 e4 0c f2 1b 8e  j.....54E....... |
+[debug] ssl_engine_io.c(1662): | 03b0: db 27 0f 78 19 eb ae 8a-5d e5 59 9e d8 3b 68 89  .'.x....].Y..;h. |
+[debug] ssl_engine_io.c(1662): | 03c0: 8d 4e f3 0d 69 39 f1 63-ad 5c 4b f8 dd da b6 d6  .N..i9.c.\\K..... |
+[debug] ssl_engine_io.c(1662): | 03d0: 8d ef 84 59 c1 04 1b 11-5c 87 8c 44 17 1b 83 d5  ...Y....\\..D.... |
+[debug] ssl_engine_io.c(1662): | 03e0: c6 f2 e8 22 0e 9a 5b 4e-28 07 ec 8e fb e1 11 33  ..."..[N(......3 |
+[debug] ssl_engine_io.c(1662): | 03f0: 4b ac 0f 68 a9 5b fd 8b-50 23 d8 40 cd a8 e8 72  K..h.[..P#.@...r |
+[debug] ssl_engine_io.c(1662): | 0400: 52 9c f4 3c 0b 45 15 9e-8b a3 e3 a9 22 fa 52 61  R..<.E......".Ra |
+[debug] ssl_engine_io.c(1662): | 0410: 40 ee 7a 89 28 c7 87 b0-9d 6f 9e c9 d7 74 f7 e3  @.z.(....o...t.. |
+[debug] ssl_engine_io.c(1662): | 0420: 4d e1 6a 69 83 7d 28 af-44 aa 53 29 d8 f5 7f 21  M.ji.}(.D.S)...! |
+[debug] ssl_engine_io.c(1662): | 0430: b9 58 4f 12 c8 e7 e7 d1-a3 ae 1e 3f 34 3a 5d c9  .XO........?4:]. |
+[debug] ssl_engine_io.c(1662): | 0440: a8 f9 5c 02 96 af 54 07-04 7d 1b 1d e7 05 b1 93  ..\\...T..}...... |
+[debug] ssl_engine_io.c(1662): | 0450: 4e 7a 4f 77 6a a5 58 2c-9a 44 12 3e df 0c b1 7c  NzOwj.X,.D.>...| |
+[debug] ssl_engine_io.c(1662): | 0460: d2 f9 81 b3 54 b8 c5 da-d8 96 2f 47 5e 88 80 e6  ....T...../G^... |
+[debug] ssl_engine_io.c(1662): | 0470: 29 59 63 1c f7 9b 24 39-99 c2 36 6b b9 84 a2 67  )Yc...$9..6k...g |
+[debug] ssl_engine_io.c(1662): | 0480: 9f 11 26 50 91 ec 54 14-68 46 f0 60 7e 8f 7d 6f  ..&P..T.hF.`~.}o |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 1 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3436): [client 204.16.157.225] pubcookie adding output filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3796): [client 204.16.157.225] login_reply_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3665): [client 204.16.157.225] verify-url in: https://rails.west.cmu.edu/L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3691): [client 204.16.157.225] verify-url decoding: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3699): [client 204.16.157.225] verify-url path is: secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3445): [client 204.16.157.225] pubcookie adding error filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3480): [client 204.16.157.225] error_filter: merging 5 error headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Location, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 1 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 4 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae5c68 [mem: b8b05e3b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 71 45 74 e8 b7-a6 54 c4 88 b9 71 f9 0c  H..qEt...T...q.. |
+[debug] ssl_engine_io.c(1662): | 0010: 03 0f cd a5 3b de b3 a2-d4 95 b4 78 de 16 8c 6b  ....;......x...k |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 3b 0f 48 98 ac e5 bc 08-6a e9 1f 04 5c a0 99 71  ;.H.....j...\\..q |
+[debug] ssl_engine_io.c(1662): | 0010: c6 a2 36 17 e3 86 5b c2-c2 8e 93 d8 3e c0 c0 c7  ..6...[.....>... |
+[debug] ssl_engine_io.c(1662): | 0020: bc 79 e6 55 41 63 00 1c-3c 79 e0 80 97 1e 8e d5  .y.UAc..<y...... |
+[debug] ssl_engine_io.c(1662): | 0030: 87 23 b2 d5 fb f2 15 d2-d9 bd b6 b4 5d 70 6f 21  .#..........]po! |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b05e30] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 03 d0                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 976/976 bytes from BIO#b8ae5c68 [mem: b8b05e35] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: f1 3e b1 dc 65 0b 6d 7f-77 c6 c3 a0 fc 42 0c 1d  .>..e.m.w....B.. |
+[debug] ssl_engine_io.c(1662): | 0010: 48 cd 29 49 64 30 fb d7-55 8a c9 e3 e6 71 0e 44  H.)Id0..U....q.D |
+[debug] ssl_engine_io.c(1662): | 0020: 56 cf a1 87 c8 66 77 09-58 f5 5a 0d 23 64 55 b8  V....fw.X.Z.#dU. |
+[debug] ssl_engine_io.c(1662): | 0030: 93 14 c4 3d 77 ba be 43-3a 5b 05 7f 9e e1 a9 0d  ...=w..C:[...... |
+[debug] ssl_engine_io.c(1662): | 0040: bf 67 2b 0c 70 5e c1 da-30 60 f4 ab e6 dd af 00  .g+.p^..0`...... |
+[debug] ssl_engine_io.c(1662): | 0050: 95 68 53 6c 84 f2 a3 1d-4a a3 e9 54 ae 8e cc 87  .hSl....J..T.... |
+[debug] ssl_engine_io.c(1662): | 0060: b9 f0 90 4c 5a af 5a 42-ac 62 7f 2b cd cc e6 bd  ...LZ.ZB.b.+.... |
+[debug] ssl_engine_io.c(1662): | 0070: 83 c1 9c 26 00 af 0e 58-b5 35 af 35 6a fb cc 0c  ...&...X.5.5j... |
+[debug] ssl_engine_io.c(1662): | 0080: 61 1a 87 2f eb 6b 1c f1-db 4e 2d 28 02 6a 8a 61  a../.k...N-(.j.a |
+[debug] ssl_engine_io.c(1662): | 0090: fc 04 4d 55 74 a1 63 9c-2d 05 b2 66 87 f4 2a 90  ..MUt.c.-..f..*. |
+[debug] ssl_engine_io.c(1662): | 00a0: d1 4b e7 76 66 78 d7 85-7f 8a b4 6f 79 4c a1 e6  .K.vfx.....oyL.. |
+[debug] ssl_engine_io.c(1662): | 00b0: d5 dd ff a0 46 54 10 20-28 b6 c9 b2 e0 72 03 3f  ....FT. (....r.? |
+[debug] ssl_engine_io.c(1662): | 00c0: ca 25 46 64 5c 57 ff 26-39 4c e1 34 d2 b5 ce af  .%Fd\\W.&9L.4.... |
+[debug] ssl_engine_io.c(1662): | 00d0: d8 57 10 74 b3 c6 13 70-7c 6d eb e5 ac e0 d5 e1  .W.t...p|m...... |
+[debug] ssl_engine_io.c(1662): | 00e0: ec 01 3c 26 db 12 e1 eb-4d 3b 1e a7 33 25 8d e3  ..<&....M;..3%.. |
+[debug] ssl_engine_io.c(1662): | 00f0: 83 03 e5 2a 2b 8a 76 ef-88 19 39 22 e7 fd ec a9  ...*+.v...9".... |
+[debug] ssl_engine_io.c(1662): | 0100: 5d 55 35 1a 51 ba 83 c2-ee 40 44 a9 3e b1 d1 1a  ]U5.Q....@D.>... |
+[debug] ssl_engine_io.c(1662): | 0110: 6b b7 00 22 c0 b0 78 a8-3a 7b 33 a5 84 7a fd 81  k.."..x.:{3..z.. |
+[debug] ssl_engine_io.c(1662): | 0120: 55 1e 33 7e 93 55 60 3b-00 d7 76 95 f1 e8 16 3f  U.3~.U`;..v....? |
+[debug] ssl_engine_io.c(1662): | 0130: 05 b6 3c c0 9f 5e b5 84-dd d3 7a f4 aa ec 3e 52  ..<..^....z...>R |
+[debug] ssl_engine_io.c(1662): | 0140: f0 be 26 17 20 36 f6 44-bc 2b e5 db 6a b0 28 86  ..&. 6.D.+..j.(. |
+[debug] ssl_engine_io.c(1662): | 0150: 35 a0 72 08 54 7c 9f 34-fc 43 7c 95 9a 7e 81 df  5.r.T|.4.C|..~.. |
+[debug] ssl_engine_io.c(1662): | 0160: 51 c4 46 e8 c5 c4 5f 7e-07 31 ba 2b ab ed 32 cb  Q.F..._~.1.+..2. |
+[debug] ssl_engine_io.c(1662): | 0170: dd d0 c0 fc 88 bf 99 50-44 95 c0 b0 90 c5 09 82  .......PD....... |
+[debug] ssl_engine_io.c(1662): | 0180: 5e ae 5d 68 39 ab 4f 58-17 8c dd 9f eb 51 1a 8d  ^.]h9.OX.....Q.. |
+[debug] ssl_engine_io.c(1662): | 0190: 94 1d db 51 71 69 4e db-98 d1 52 be fa 65 2d 68  ...QqiN...R..e-h |
+[debug] ssl_engine_io.c(1662): | 01a0: b8 f3 77 54 e1 1c d1 3d-6f 1a 35 4a 46 bc 69 05  ..wT...=o.5JF.i. |
+[debug] ssl_engine_io.c(1662): | 01b0: a9 89 2f 36 c8 ea 29 cb-be 39 0f 63 6b 43 cd c3  ../6..)..9.ckC.. |
+[debug] ssl_engine_io.c(1662): | 01c0: eb a2 dd 55 3b 66 44 8d-ea 55 34 db 89 7b 66 ef  ...U;fD..U4..{f. |
+[debug] ssl_engine_io.c(1662): | 01d0: d1 06 ab ca 87 d0 f6 6b-cb dc 9c 42 9f 59 1e 85  .......k...B.Y.. |
+[debug] ssl_engine_io.c(1662): | 01e0: c8 c4 8b 72 24 5d 1b b3-8c fb 1c c8 6d cd 1d 15  ...r$]......m... |
+[debug] ssl_engine_io.c(1662): | 01f0: 9b d7 1a 8f ec 02 b2 2b-58 92 b1 c6 9f 61 cc fd  .......+X....a.. |
+[debug] ssl_engine_io.c(1662): | 0200: ca c2 d3 de 39 c9 8d d3-ac 6f 24 8c ed 1f b8 0f  ....9....o$..... |
+[debug] ssl_engine_io.c(1662): | 0210: 2f 78 31 69 f3 13 86 ac-ae 61 87 ca 93 fc db e6  /x1i.....a...... |
+[debug] ssl_engine_io.c(1662): | 0220: 13 f5 42 63 c0 b4 76 07-aa 63 4f 7b 6b d6 06 dd  ..Bc..v..cO{k... |
+[debug] ssl_engine_io.c(1662): | 0230: d0 c5 1f 42 31 0d 8d 73-ca b8 dc 2d de eb 2e d9  ...B1..s...-.... |
+[debug] ssl_engine_io.c(1662): | 0240: d0 ee 03 8d fb 5c 0f 78-e8 3e 59 e1 bf 7a fc 16  .....\\.x.>Y..z.. |
+[debug] ssl_engine_io.c(1662): | 0250: 79 55 55 e1 ac 7b 0d 17-e6 68 1f b3 46 af b2 fa  yUU..{...h..F... |
+[debug] ssl_engine_io.c(1662): | 0260: 48 eb 72 3e 0e b6 76 cc-ec 89 49 5b d9 17 3c df  H.r>..v...I[..<. |
+[debug] ssl_engine_io.c(1662): | 0270: 02 99 64 a2 4c d8 78 03-8a 72 81 8e e0 4f 39 9d  ..d.L.x..r...O9. |
+[debug] ssl_engine_io.c(1662): | 0280: 60 56 14 ad 43 b2 2b ab-67 18 bd 6a 45 10 9e f3  `V..C.+.g..jE... |
+[debug] ssl_engine_io.c(1662): | 0290: c0 1e de 64 82 71 a3 96-89 2e 1e 26 c4 95 a8 34  ...d.q.....&...4 |
+[debug] ssl_engine_io.c(1662): | 02a0: c0 39 a0 56 fa 3a e1 d1-ee 77 8e d3 eb 34 d9 91  .9.V.:...w...4.. |
+[debug] ssl_engine_io.c(1662): | 02b0: f1 c0 2c 51 57 31 23 d2-c3 f9 dd 1f c8 f2 04 ea  ..,QW1#......... |
+[debug] ssl_engine_io.c(1662): | 02c0: 48 33 0c 90 c9 ee c1 fc-aa 31 47 06 fe 87 6a ca  H3.......1G...j. |
+[debug] ssl_engine_io.c(1662): | 02d0: b6 c0 73 19 f1 a0 56 e5-95 9c 06 3a a8 33 4e 4c  ..s...V....:.3NL |
+[debug] ssl_engine_io.c(1662): | 02e0: d0 7b 35 66 df fe cf a7-64 8e 2f fe cd ad a7 08  .{5f....d./..... |
+[debug] ssl_engine_io.c(1662): | 02f0: 5d 67 37 d3 30 45 02 23-82 58 56 2a 33 5a 73 83  ]g7.0E.#.XV*3Zs. |
+[debug] ssl_engine_io.c(1662): | 0300: 17 58 3d 3a aa 7d 71 88-39 41 40 5b 91 ae de 5e  .X=:.}q.9A@[...^ |
+[debug] ssl_engine_io.c(1662): | 0310: c3 db f2 55 9a a6 63 a8-3c 17 c3 d3 59 e2 58 70  ...U..c.<...Y.Xp |
+[debug] ssl_engine_io.c(1662): | 0320: e6 c9 ae 2d 0e 4a 5a 5f-55 ce 11 da f5 07 77 95  ...-.JZ_U.....w. |
+[debug] ssl_engine_io.c(1662): | 0330: 25 18 20 f6 93 45 bf 2c-11 6c 3a 94 80 8f 94 bc  %. ..E.,.l:..... |
+[debug] ssl_engine_io.c(1662): | 0340: ec b9 f3 e8 c5 f9 9a 74-85 b2 19 80 33 7b b9 0e  .......t....3{.. |
+[debug] ssl_engine_io.c(1662): | 0350: 6b 1f f0 35 15 83 ee 67-45 3c e0 72 29 67 7d bc  k..5...gE<.r)g}. |
+[debug] ssl_engine_io.c(1662): | 0360: 7e bb ca 6b 54 7f 1e 7f-2c 38 0f 37 81 71 43 89  ~..kT...,8.7.qC. |
+[debug] ssl_engine_io.c(1662): | 0370: d5 0c d4 5d bf 66 f7 03-bc c2 d2 b8 5d 04 4d ac  ...].f......].M. |
+[debug] ssl_engine_io.c(1662): | 0380: ca fa ef 79 3b de 7b 8b-64 48 56 78 cc 98 2d d7  ...y;.{.dHVx..-. |
+[debug] ssl_engine_io.c(1662): | 0390: f4 7e 28 cc cd 40 72 67-23 55 f8 0f 6d e3 bf ab  .~(..@rg#U..m... |
+[debug] ssl_engine_io.c(1662): | 03a0: ae f9 cf 0c a0 3d 08 0c-56 75 5d 60 64 56 00 d5  .....=..Vu]`dV.. |
+[debug] ssl_engine_io.c(1662): | 03b0: d9 3f 7e 9d ab ad 4a 73-86 a5 87 66 bb cb 0d 5b  .?~...Js...f...[ |
+[debug] ssl_engine_io.c(1662): | 03c0: cb 5c 12 f1 fd e1 22 73-b4 fc 0e 07 d9 5b cc e2  .\\...."s.....[.. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 4 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1655): [client 204.16.157.225] pubcookie_user_hook: uri: /secure/index.html auth_type: WebISO, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1778): [client 204.16.157.225] pubcookie_user: going to check uri: /secure/index.html creds: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(177): [client 204.16.157.225] dump_server_rec:\n\t\tdirdepth: 0\n\t\tnoblank: 0\n\t\tlogin: https://webiso.andrew.cmu.edu/\n\t\tappsrvid: rails.west.cmu.edu\n\t\tauthtype_names: WebISO\n\t\tuse_post: 1\n        no_clean_creds: 0\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(190): [client 204.16.157.225] dump_dir_rec:\n\t\tinact_exp: 400\n                hard_exp: 3700\n                non_ssl_ok: 0\n\t\tappid: svrails\n                end_session: \n                session_reauth: -1\n                noprompt: 0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1799): [client 204.16.157.225] pubcookie_user: have ssl_var: on, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1825): [client 204.16.157.225] pubcookie_user: about to look for some cookies; current uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1273): [client 204.16.157.225]  .. return: Eu1Zi281Ktoz1cP3ygYR6eFlCMomPF9A3xvKytQ5t/tP7ls3iBJqwX4dasopbleVz3kRHM0reHcHvTOPSCIdnOoIdYQNMvLxVupihTZbbst2+tT6RTvDJZzB10cUp4hsKaD1M2aOG0+7At2dxxeuxzqxQO/3yW+YKpNpaXYm9SYGGBVeLhkw+iQKwLF6m9c0/r6TOjIo7sYvvSHbfJuLkYBaQKsMmYMvrivUNG22oB9pfRHaINQ46jHETwUSCMARFEzsn98KXnlszPid/llPAuuigtd4jlT1wSg1n0yAPO3GyuyzTOzQ0ds/urz9yq9Sfz2YGYClQ4T0C8I6wExDSIT6a/vg2CbxsFoY3M+/ngJ3RWpY72/h/IUc16lXTWnDfoim82fkUxe1tXyZtHxlpu3PgITo85hvBme/EuF/4LuzN2khVToqLKETYLUq7wfFC42zWhwvpr6IP+E/AQGV+AciI+bLjQ==, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_unbundle_cookie: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] get_crypt_key: myname=rails.west.cmu.edu, peer=rails.west.cmu.edu\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] Verifying signature with granting certificate, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_rd_safe: couldn't verify signature for rails.west.cmu.edu OpenSSL error: error:0407006A:rsa routines:RSA_padding_check_PKCS1_type_1:block type is not 01, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: goodbye, r: -1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: goodbye\n, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_unbundle_cookie: libpbc_rd_priv() failed\n, referer: https://webiso.andrew.cmu.edu/
+[info] [client 204.16.157.225] can't unbundle G cookie, it's probably not for us; uri: /secure/index.html\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(697): [client 204.16.157.225] clear_granting_cookie: setting cookie: pubcookie_g=; path=/; expires=Fri, 11-Jan-1990 00:00:01 GMT; secure, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (1), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_s_svrails (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1981): [client 204.16.157.225] No G or S cookie; uri: /secure/index.html appid: svrails sess_cookie_name: pubcookie_s_svrails, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1703): [client 204.16.157.225]  .. user_hook: user failed, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(913): [client 204.16.157.225] auth_failed_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(367): [client 204.16.157.225] get_pre_s_token: token is -93932211, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(993): [client 204.16.157.225] Post URI before encoding length 18, string: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(996): [client 204.16.157.225] Post URI after encoding length 24, string: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1042): [client 204.16.157.225] g_req before encoding length 240, string: one=rails.west.cmu.edu&two=svrails&three=1&four=a5&five=GET&six=rails.west.cmu.edu&seven=L3NlY3VyZS9pbmRleC5odG1s&eight=&hostname=rails.west.cmu.edu&nine=1&file=&referer=https://webiso.andrew.cmu.edu/&sess_re=0&pre_sess_tok=-93932211&flag=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(300): [client 204.16.157.225] pubcookie flush headers: merging 4 output headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1178): [client 204.16.157.225] auth_failed_handler: redirect sent. uri: /secure/index.html reason: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 4 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 3 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8ae5c68 [mem: b8b151a8] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8ae5c68 [mem: b8b151b3] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 71 76 8e a2 eb-f4 42 6a 9f d5 df ab f5  H..qv....Bj..... |
+[debug] ssl_engine_io.c(1662): | 0010: d8 b1 80 71 c0 b4 ad 1a-f2 52 ea 2c d7 ab ac 84  ...q.....R.,.... |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b151a8] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8ae5c68 [mem: b8b151ad] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b151a8] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8ae5c68 [mem: b8b151ad] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 4b c8 8b 36 b3 17 fb 85-c7 e7 04 ed 6e 58 b7 7b  K..6........nX.{ |
+[debug] ssl_engine_io.c(1662): | 0010: cb 14 70 43 da 50 11 c9-9a d3 ab 98 06 04 19 b0  ..pC.P.......... |
+[debug] ssl_engine_io.c(1662): | 0020: 38 70 b6 2e ff ed b9 a0-37 93 1f 69 98 28 2d ad  8p......7..i.(-. |
+[debug] ssl_engine_io.c(1662): | 0030: 35 4f a6 65 3d 42 f4 01-00 79 bf 55 5c a3 d5 01  5O.e=B...y.U\\... |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8ae5c68 [mem: b8b151a8] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 04 80                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1152/1152 bytes from BIO#b8ae5c68 [mem: b8b151ad] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 4a 1d e9 d5 2e 31 cc 48-e3 07 c5 7b de 14 ed 4a  J....1.H...{...J |
+[debug] ssl_engine_io.c(1662): | 0010: 40 8f 91 b9 3c d9 af 93-e8 83 9e 2b b3 2c 34 19  @...<......+.,4. |
+[debug] ssl_engine_io.c(1662): | 0020: 09 c0 3f 08 fb 4e 1b d5-13 03 04 55 c3 1d 8f c1  ..?..N.....U.... |
+[debug] ssl_engine_io.c(1662): | 0030: 51 4c 3c 6a 96 9a 09 38-be e9 f9 d6 8a cf 48 7c  QL<j...8......H| |
+[debug] ssl_engine_io.c(1662): | 0040: 34 4a a5 66 c9 b3 a1 b3-1b 6c 7c d8 ee 3f 9f 5a  4J.f.....l|..?.Z |
+[debug] ssl_engine_io.c(1662): | 0050: cd 63 b7 ae 03 74 98 3e-b7 a2 3a 12 00 a1 26 bf  .c...t.>..:...&. |
+[debug] ssl_engine_io.c(1662): | 0060: 3d ff 6c 76 6e 2e e0 0e-ae dc a5 fa d1 64 c2 33  =.lvn........d.3 |
+[debug] ssl_engine_io.c(1662): | 0070: 96 1b d6 f8 ae 02 40 dd-47 4b 35 0c d9 a1 c6 a5  ......@.GK5..... |
+[debug] ssl_engine_io.c(1662): | 0080: c1 0b e5 22 f5 ac cc c3-0a 69 3a 04 b4 a8 f2 0a  ...".....i:..... |
+[debug] ssl_engine_io.c(1662): | 0090: 8d 34 93 06 57 d9 4b 83-c1 43 f3 b1 9b 0f 35 e6  .4..W.K..C....5. |
+[debug] ssl_engine_io.c(1662): | 00a0: 42 99 60 db ee 41 f8 32-34 6a 30 0b 44 ba 36 f1  B.`..A.24j0.D.6. |
+[debug] ssl_engine_io.c(1662): | 00b0: c2 6f 8c b8 c5 11 00 9b-bb a3 2a 9f 51 3b f9 66  .o........*.Q;.f |
+[debug] ssl_engine_io.c(1662): | 00c0: b4 c2 94 b7 4c 29 3a 87-a3 5a b9 9f 8a 5f c9 f1  ....L):..Z..._.. |
+[debug] ssl_engine_io.c(1662): | 00d0: 6f 68 19 1f 71 e2 82 ea-e7 0c e4 27 af 1b 02 43  oh..q......'...C |
+[debug] ssl_engine_io.c(1662): | 00e0: 21 59 4a c6 cc 25 84 ea-c5 b0 d9 6c c3 80 90 56  !YJ..%.....l...V |
+[debug] ssl_engine_io.c(1662): | 00f0: 91 e7 e3 85 78 09 c5 9f-90 7b 40 3f 20 70 18 18  ....x....{@? p.. |
+[debug] ssl_engine_io.c(1662): | 0100: 46 19 27 ba 08 ee 0c b4-76 87 10 12 5d 66 b9 75  F.'.....v...]f.u |
+[debug] ssl_engine_io.c(1662): | 0110: b0 9c 36 7c 1a c9 17 bc-0b 53 ce dc 8f 58 5c bd  ..6|.....S...X\\. |
+[debug] ssl_engine_io.c(1662): | 0120: 7a 8e 14 dc ed 79 09 e9-5d ae 20 d2 c0 42 c0 87  z....y..]. ..B.. |
+[debug] ssl_engine_io.c(1662): | 0130: 31 d8 5b e0 65 e7 14 92-3a 47 9d 32 61 97 e9 a4  1.[.e...:G.2a... |
+[debug] ssl_engine_io.c(1662): | 0140: 95 1f 00 d5 f7 d1 05 a5-e0 db f7 62 e6 40 d5 44  ...........b.@.D |
+[debug] ssl_engine_io.c(1662): | 0150: 6a 37 a0 8a c5 66 21 e7-f4 b2 0e 82 99 58 31 5c  j7...f!......X1\\ |
+[debug] ssl_engine_io.c(1662): | 0160: ed 57 4e 4b 59 65 bd 9e-e5 e2 91 d7 7d 92 f9 0d  .WNKYe......}... |
+[debug] ssl_engine_io.c(1662): | 0170: 2c 6a bd 3a 69 91 71 38-7a 5d de 91 57 df 18 14  ,j.:i.q8z]..W... |
+[debug] ssl_engine_io.c(1662): | 0180: dd 6e d9 cf af 93 dc a8-50 b1 42 59 92 44 97 67  .n......P.BY.D.g |
+[debug] ssl_engine_io.c(1662): | 0190: d5 b5 12 6f 9c be a6 bf-c4 7d 9b 0c 1d cd fa 67  ...o.....}.....g |
+[debug] ssl_engine_io.c(1662): | 01a0: 88 03 4e 78 fd f1 3b bd-7d 0a 64 99 b9 fb b8 e7  ..Nx..;.}.d..... |
+[debug] ssl_engine_io.c(1662): | 01b0: c8 9e ba 15 72 8f 15 ba-c8 89 c9 87 0d b1 19 e2  ....r........... |
+[debug] ssl_engine_io.c(1662): | 01c0: af 7d 21 f1 9b 96 04 4f-47 40 59 93 74 61 1c ed  .}!....OG@Y.ta.. |
+[debug] ssl_engine_io.c(1662): | 01d0: 94 b9 28 75 25 d8 48 d1-db 05 f6 09 53 2d b7 d9  ..(u%.H.....S-.. |
+[debug] ssl_engine_io.c(1662): | 01e0: e4 53 cb 84 81 5e 64 22-dc b8 f1 37 1a a5 cd 64  .S...^d"...7...d |
+[debug] ssl_engine_io.c(1662): | 01f0: ab 40 0b 80 cf 30 59 43-3a 39 e6 ef 7f 0f 23 cb  .@...0YC:9....#. |
+[debug] ssl_engine_io.c(1662): | 0200: 7d b1 0d 0f 94 62 4d 56-20 e4 6b bf 98 1a 72 fb  }....bMV .k...r. |
+[debug] ssl_engine_io.c(1662): | 0210: 83 bc 12 a6 de 8d c3 26-0b 46 3d 6d a1 45 89 78  .......&.F=m.E.x |
+[debug] ssl_engine_io.c(1662): | 0220: b0 bf da ed f5 5c b7 bc-73 ed b3 e2 3a a2 26 f8  .....\\..s...:.&. |
+[debug] ssl_engine_io.c(1662): | 0230: f8 86 2b 3b ee da 94 ff-79 88 b8 58 03 18 47 00  ..+;....y..X..G. |
+[debug] ssl_engine_io.c(1662): | 0240: 91 90 4c 51 7f 2d b2 29-32 60 27 06 ae af cb f8  ..LQ.-.)2`'..... |
+[debug] ssl_engine_io.c(1662): | 0250: c2 51 c0 f0 8e 96 42 85-37 6c b8 95 84 08 9b e4  .Q....B.7l...... |
+[debug] ssl_engine_io.c(1662): | 0260: fb 3c 1a 61 a5 ef d9 ca-a2 46 7b dc 19 07 86 6f  .<.a.....F{....o |
+[debug] ssl_engine_io.c(1662): | 0270: ee 56 96 5a fa f8 db c4-1c 04 db 57 3e da ba f2  .V.Z.......W>... |
+[debug] ssl_engine_io.c(1662): | 0280: 9b 67 f0 74 6e ac d1 e4-d4 b0 ff 84 76 6f 20 13  .g.tn.......vo . |
+[debug] ssl_engine_io.c(1662): | 0290: 58 dd be 7d 4d 51 5b a2-95 8e 86 63 5a 3d e3 7e  X..}MQ[....cZ=.~ |
+[debug] ssl_engine_io.c(1662): | 02a0: db db b3 04 e5 32 ed 6b-08 b5 ec ae 7b 16 bb fc  .....2.k....{... |
+[debug] ssl_engine_io.c(1662): | 02b0: 07 1d 19 6c a0 67 b5 be-10 90 c8 e5 d4 85 86 b6  ...l.g.......... |
+[debug] ssl_engine_io.c(1662): | 02c0: 3a 30 b7 df 60 1b 41 ce-76 e1 80 fc 9f c6 89 44  :0..`.A.v......D |
+[debug] ssl_engine_io.c(1662): | 02d0: e4 29 b2 44 0d 98 53 22-3c e7 e8 83 3f 95 d2 f5  .).D..S"<...?... |
+[debug] ssl_engine_io.c(1662): | 02e0: 71 8a 8a 46 f9 31 4e 22-df aa 3f cb 64 62 b1 47  q..F.1N"..?.db.G |
+[debug] ssl_engine_io.c(1662): | 02f0: e3 f3 54 33 8c 95 d8 d0-f3 fa 56 c3 fe 52 c3 9d  ..T3......V..R.. |
+[debug] ssl_engine_io.c(1662): | 0300: 9e 81 1d f0 be da d6 44-60 ac 4e 66 fe 1c b4 fa  .......D`.Nf.... |
+[debug] ssl_engine_io.c(1662): | 0310: 17 63 06 d2 d6 97 d8 fe-4e af 0d 18 e2 88 ca 18  .c......N....... |
+[debug] ssl_engine_io.c(1662): | 0320: 11 d9 84 db a3 00 3b 7f-84 55 99 35 a8 85 79 cf  ......;..U.5..y. |
+[debug] ssl_engine_io.c(1662): | 0330: 1c 84 3e 4c dc 67 95 eb-b2 8a cf ba d1 7f 77 41  ..>L.g........wA |
+[debug] ssl_engine_io.c(1662): | 0340: f7 8a 65 47 6f 4d 9c 27-3f 36 23 31 5c db b5 a8  ..eGoM.'?6#1\\... |
+[debug] ssl_engine_io.c(1662): | 0350: 23 00 bd de 7d 2f da c7-7d cf ed bc a6 f3 5a 53  #...}/..}.....ZS |
+[debug] ssl_engine_io.c(1662): | 0360: 9c d2 02 3c e5 1f 7b 53-d1 fb a4 39 6a f1 ca ba  ...<..{S...9j... |
+[debug] ssl_engine_io.c(1662): | 0370: 18 70 fd b1 ec 09 88 f9-41 e0 2b ed d7 4d 49 62  .p......A.+..MIb |
+[debug] ssl_engine_io.c(1662): | 0380: d7 91 37 3d 7a 00 ba ac-b9 0b ba 6f 5a 18 7c f8  ..7=z......oZ.|. |
+[debug] ssl_engine_io.c(1662): | 0390: d5 de da 73 ac 21 08 4c-9d 47 59 76 0b 7d 6e 55  ...s.!.L.GYv.}nU |
+[debug] ssl_engine_io.c(1662): | 03a0: 19 22 44 3c 03 82 79 a9-ae ff 09 5b 90 5e c2 d7  ."D<..y....[.^.. |
+[debug] ssl_engine_io.c(1662): | 03b0: 02 37 80 be 5c 30 83 1a-9e 4d 79 ae 67 35 5b 74  .7..\\0...My.g5[t |
+[debug] ssl_engine_io.c(1662): | 03c0: a7 e1 a4 71 47 84 32 1b-5b b3 30 6b 2b 56 03 86  ...qG.2.[.0k+V.. |
+[debug] ssl_engine_io.c(1662): | 03d0: 3a fa b5 f9 6c 7e 20 eb-79 27 57 c2 03 a2 96 ac  :...l~ .y'W..... |
+[debug] ssl_engine_io.c(1662): | 03e0: fe 8b 26 05 89 e8 a8 fc-57 72 be 9a 86 7b 8d d9  ..&.....Wr...{.. |
+[debug] ssl_engine_io.c(1662): | 03f0: a4 d1 bf 95 5b b2 06 53-4d 6a 1c d8 45 08 a8 76  ....[..SMj..E..v |
+[debug] ssl_engine_io.c(1662): | 0400: ee 8e d9 3e be dc a0 5f-d1 87 18 bd ca aa 43 b7  ...>..._......C. |
+[debug] ssl_engine_io.c(1662): | 0410: 57 f3 6b 42 03 f9 68 55-4c f1 eb 86 33 6e 04 18  W.kB..hUL...3n.. |
+[debug] ssl_engine_io.c(1662): | 0420: 17 87 6a 44 19 0b 64 c0-c6 5e 29 bc 31 70 2b b3  ..jD..d..^).1p+. |
+[debug] ssl_engine_io.c(1662): | 0430: 49 42 0b ff 6c 25 d6 12-32 71 6d 26 0d 80 78 b9  IB..l%..2qm&..x. |
+[debug] ssl_engine_io.c(1662): | 0440: fe 8b 6d 8a fe 67 10 54-7f 35 cf 29 79 6a 49 f1  ..m..g.T.5.)yjI. |
+[debug] ssl_engine_io.c(1662): | 0450: 5f 95 16 e0 6d ac ca ab-e1 38 aa 18 ca ef 44 8d  _...m....8....D. |
+[debug] ssl_engine_io.c(1662): | 0460: 40 07 5d 12 7f c1 3d 35-38 4c 2b 9b 89 de 9e 29  @.]...=58L+....) |
+[debug] ssl_engine_io.c(1662): | 0470: 86 76 79 1a 85 e4 68 f4-e4 87 31 88 dc cb fc d3  .vy...h...1..... |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 3 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3436): [client 204.16.157.225] pubcookie adding output filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3796): [client 204.16.157.225] login_reply_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3665): [client 204.16.157.225] verify-url in: https://rails.west.cmu.edu/L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3691): [client 204.16.157.225] verify-url decoding: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3699): [client 204.16.157.225] verify-url path is: secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3445): [client 204.16.157.225] pubcookie adding error filter, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3480): [client 204.16.157.225] error_filter: merging 5 error headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Location, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 3 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 2 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8b17e40 [mem: b8b0d12b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 71 7f 53 88 80-d9 fd f2 e3 b4 aa 61 d4  H..q.S........a. |
+[debug] ssl_engine_io.c(1662): | 0010: cd 4c 7a 70 a5 42 fe 89-93 cf 20 07 b6 4b 85 1b  .Lzp.B.... ..K.. |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 14 03 00 00 01                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 1/1 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 01                                               .                |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 40                                   ....@            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 64/64 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 90 40 e1 08 7d bc 79 f8-0f 85 b8 13 04 0b 8d 19  .@..}.y......... |
+[debug] ssl_engine_io.c(1662): | 0010: 7f 47 93 cc 23 43 7c 55-fa 63 cf ea 93 0d d5 36  .G..#C|U.c.....6 |
+[debug] ssl_engine_io.c(1662): | 0020: f3 92 b4 e6 ae d7 15 5e-2e aa af 0e 0e c0 65 1d  .......^......e. |
+[debug] ssl_engine_io.c(1662): | 0030: 24 4f d8 0c 59 ce f9 95-d7 d7 47 23 22 64 3f 94  $O..Y.....G#"d?. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1731): OpenSSL: Handshake: done
+[info] Connection: Client IP: 204.16.157.225, Protocol: SSLv3, Cipher: DHE-RSA-AES256-SHA (256/256 bits)
+[debug] ssl_engine_io.c(1690): OpenSSL: read 5/5 bytes from BIO#b8b17e40 [mem: b8b0d120] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 17 03 00 03 d0                                   .....            |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 976/976 bytes from BIO#b8b17e40 [mem: b8b0d125] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 51 11 da 40 20 e0 20 c2-70 4c 19 db 0e 31 a8 51  Q..@ . .pL...1.Q |
+[debug] ssl_engine_io.c(1662): | 0010: aa 1b b8 07 29 95 99 93-cf c7 29 aa 3f 2d 94 65  ....).....).?-.e |
+[debug] ssl_engine_io.c(1662): | 0020: 64 2e ff 23 b5 78 2c e6-cc 0d e5 d0 4f 78 36 20  d..#.x,.....Ox6  |
+[debug] ssl_engine_io.c(1662): | 0030: 90 3d 6e ce fa 14 8e 8b-b9 66 94 38 6a b0 f1 15  .=n......f.8j... |
+[debug] ssl_engine_io.c(1662): | 0040: d4 d7 15 e3 e3 9c 1a fe-e6 a0 06 7f b5 db e6 e1  ................ |
+[debug] ssl_engine_io.c(1662): | 0050: 9c bf 54 e7 01 9a bd 1e-af e2 32 0d 32 fa c6 bf  ..T.......2.2... |
+[debug] ssl_engine_io.c(1662): | 0060: 37 1f 8b 2b 20 64 bc eb-21 98 d6 a2 2b 42 38 29  7..+ d..!...+B8) |
+[debug] ssl_engine_io.c(1662): | 0070: 8d 8c 6b 4e 31 65 87 ed-15 8d 7d ae 76 2c a3 1c  ..kN1e....}.v,.. |
+[debug] ssl_engine_io.c(1662): | 0080: 6b 4c 1a 8c 21 ae 91 9d-ad 9e 35 73 e6 0a 1b e0  kL..!.....5s.... |
+[debug] ssl_engine_io.c(1662): | 0090: 72 a8 ae 46 48 f4 f6 d3-09 4e f9 13 34 06 b6 5c  r..FH....N..4..\\ |
+[debug] ssl_engine_io.c(1662): | 00a0: 9e 64 0b 20 81 ac eb f7-7c c0 03 b4 35 b0 32 25  .d. ....|...5.2% |
+[debug] ssl_engine_io.c(1662): | 00b0: 77 78 b9 7c ee 42 07 76-ad a6 8b 41 b7 c6 a9 5f  wx.|.B.v...A..._ |
+[debug] ssl_engine_io.c(1662): | 00c0: 39 2d 3d 51 ec d6 6d 18-c5 ae 72 3f ff 4e 2e 25  9-=Q..m...r?.N.% |
+[debug] ssl_engine_io.c(1662): | 00d0: 42 3a 21 9b f5 92 18 fd-5d 67 ec 8f 98 1e 5e c4  B:!.....]g....^. |
+[debug] ssl_engine_io.c(1662): | 00e0: 56 e2 6f 18 57 61 68 3b-34 ac 25 fb 27 fb 73 16  V.o.Wah;4.%.'.s. |
+[debug] ssl_engine_io.c(1662): | 00f0: 24 30 35 41 72 51 52 12-49 c3 ac 0b ab 19 4a f2  $05ArQR.I.....J. |
+[debug] ssl_engine_io.c(1662): | 0100: 02 2d c9 36 34 e0 8d fc-6b 36 91 09 38 d0 2a e6  .-.64...k6..8.*. |
+[debug] ssl_engine_io.c(1662): | 0110: 19 92 3f 39 e8 8c 88 b7-e5 03 8f 93 c8 45 a1 fc  ..?9.........E.. |
+[debug] ssl_engine_io.c(1662): | 0120: f9 61 6f fb 16 77 54 64-c8 9c 0c 2a dd 91 87 cb  .ao..wTd...*.... |
+[debug] ssl_engine_io.c(1662): | 0130: dc a7 90 54 7b 5d f7 c9-5e 27 d7 9b 28 5a ae f1  ...T{]..^'..(Z.. |
+[debug] ssl_engine_io.c(1662): | 0140: 9a dd ca a8 fa 78 95 01-dc a9 ce fc 48 cf 33 49  .....x......H.3I |
+[debug] ssl_engine_io.c(1662): | 0150: dd 67 fd db 5c ee a7 b9-95 73 a2 99 47 ea 6d d6  .g..\\....s..G.m. |
+[debug] ssl_engine_io.c(1662): | 0160: 01 ff b1 f2 92 2c 4a 93-b8 b7 0f fe 67 b8 f8 9a  .....,J.....g... |
+[debug] ssl_engine_io.c(1662): | 0170: 61 21 b5 59 40 72 f6 4f-43 a7 ea dd ce 29 6b 62  a!.Y@r.OC....)kb |
+[debug] ssl_engine_io.c(1662): | 0180: eb 10 d4 f4 95 0f e3 0a-ed a1 96 7f ae 20 e1 37  ............. .7 |
+[debug] ssl_engine_io.c(1662): | 0190: fd 91 22 2b 3a 53 e0 ff-2f 1f e7 6d b8 31 c6 d3  .."+:S../..m.1.. |
+[debug] ssl_engine_io.c(1662): | 01a0: da df a5 d9 df b9 b3 e6-01 48 b7 98 f6 8a 10 57  .........H.....W |
+[debug] ssl_engine_io.c(1662): | 01b0: 75 c2 bb 31 9e 39 c3 fd-3d 6b 26 4a d5 a7 77 a6  u..1.9..=k&J..w. |
+[debug] ssl_engine_io.c(1662): | 01c0: 16 73 2e 7d 24 87 c4 1c-73 34 4d fc e0 dc 3e 07  .s.}$...s4M...>. |
+[debug] ssl_engine_io.c(1662): | 01d0: d2 5e 65 52 d7 ba d1 dc-03 34 ed cb e2 6a 4e d8  .^eR.....4...jN. |
+[debug] ssl_engine_io.c(1662): | 01e0: e2 96 b7 f2 14 62 73 fc-83 99 58 08 57 ef 0f 4a  .....bs...X.W..J |
+[debug] ssl_engine_io.c(1662): | 01f0: 39 31 75 8e f6 a4 7b 6d-c4 b8 49 d0 a3 60 ea f2  91u...{m..I..`.. |
+[debug] ssl_engine_io.c(1662): | 0200: 84 2e 6a 90 a0 d4 55 1f-3d eb 97 05 38 28 7a 44  ..j...U.=...8(zD |
+[debug] ssl_engine_io.c(1662): | 0210: c0 32 dd b2 e1 6b 67 95-3f 66 ce 00 53 e6 e9 d3  .2...kg.?f..S... |
+[debug] ssl_engine_io.c(1662): | 0220: 17 d1 78 64 e1 f6 0b 67-9b b7 6d 84 1d a9 e7 1c  ..xd...g..m..... |
+[debug] ssl_engine_io.c(1662): | 0230: 34 07 97 c1 de b1 ff de-23 d5 14 d5 69 62 3f e4  4.......#...ib?. |
+[debug] ssl_engine_io.c(1662): | 0240: 62 9f 91 ab b8 ef ad d3-6b b4 04 60 bd 5e ab 18  b.......k..`.^.. |
+[debug] ssl_engine_io.c(1662): | 0250: 59 18 1b 3b 10 38 13 e9-80 f2 c3 43 ff b0 01 43  Y..;.8.....C...C |
+[debug] ssl_engine_io.c(1662): | 0260: 2e bb 58 c0 1e 25 ea 30-cd 1d 38 dd 6a a2 dd c3  ..X..%.0..8.j... |
+[debug] ssl_engine_io.c(1662): | 0270: 4b ec 60 f5 f0 22 b3 e5-95 69 bd 53 66 2b 23 8c  K.`.."...i.Sf+#. |
+[debug] ssl_engine_io.c(1662): | 0280: 6c f9 8f 05 16 56 12 a2-ac 0f ab 4b 2b 50 3f 5c  l....V.....K+P?\\ |
+[debug] ssl_engine_io.c(1662): | 0290: bb 8a 14 2e f7 23 72 27-4b 0b 22 15 03 18 be 0f  .....#r'K."..... |
+[debug] ssl_engine_io.c(1662): | 02a0: 8c 54 80 07 f8 91 f7 15-0f 9c a3 85 ef 0e b3 2a  .T.............* |
+[debug] ssl_engine_io.c(1662): | 02b0: df 35 34 e8 d7 b1 03 9a-3a 40 fe 4f be 3d c0 e2  .54.....:@.O.=.. |
+[debug] ssl_engine_io.c(1662): | 02c0: cf 9a 9f e7 3c b8 c4 1d-10 dc a6 a5 68 d1 8f 5e  ....<.......h..^ |
+[debug] ssl_engine_io.c(1662): | 02d0: d0 5e 07 a3 5d 67 cc ca-45 6e 66 e3 ea 44 2e 14  .^..]g..Enf..D.. |
+[debug] ssl_engine_io.c(1662): | 02e0: ec 1b 07 29 c5 16 99 74-39 87 1c 66 49 54 c7 bf  ...)...t9..fIT.. |
+[debug] ssl_engine_io.c(1662): | 02f0: 6c 5f 65 41 20 ce 46 4f-0c 41 64 0a 3b e9 d9 92  l_eA .FO.Ad.;... |
+[debug] ssl_engine_io.c(1662): | 0300: 47 97 4b 5b 9e 29 d9 72-ee 2f 11 bd 9f 1f 52 15  G.K[.).r./....R. |
+[debug] ssl_engine_io.c(1662): | 0310: 8d 7a 6b d1 33 8b 60 42-59 f9 f3 89 26 0c fa 3d  .zk.3.`BY...&..= |
+[debug] ssl_engine_io.c(1662): | 0320: f7 77 60 3c 26 1d b5 62-32 b1 91 ec 96 cc 06 07  .w`<&..b2....... |
+[debug] ssl_engine_io.c(1662): | 0330: e1 cf d4 af b8 91 58 1f-85 f0 e3 eb 14 56 3f ca  ......X......V?. |
+[debug] ssl_engine_io.c(1662): | 0340: d3 fc 21 27 87 76 d2 75-6d 5f 39 05 f8 8d 0c 43  ..!'.v.um_9....C |
+[debug] ssl_engine_io.c(1662): | 0350: 2f b6 92 5c 7b aa a7 b3-19 82 93 e4 80 f8 60 ae  /..\\{.........`. |
+[debug] ssl_engine_io.c(1662): | 0360: f4 51 0f aa ac 0b e8 a7-3a 8d 96 54 33 5e 99 46  .Q......:..T3^.F |
+[debug] ssl_engine_io.c(1662): | 0370: 00 ee 36 15 4b 73 d2 68-06 f5 ef 26 79 b9 79 40  ..6.Ks.h...&y.y@ |
+[debug] ssl_engine_io.c(1662): | 0380: 66 40 c3 a5 09 4d f3 7c-43 c3 c1 e5 8e e7 3c 0e  f@...M.|C.....<. |
+[debug] ssl_engine_io.c(1662): | 0390: 91 59 32 f3 4c 47 b0 45-ea 74 18 1e 16 ce bd 89  .Y2.LG.E.t...... |
+[debug] ssl_engine_io.c(1662): | 03a0: b0 70 8c 6e f4 03 87 5f-67 df b7 0c 83 ac 9d 39  .p.n..._g......9 |
+[debug] ssl_engine_io.c(1662): | 03b0: 47 ea 91 92 f6 f2 38 e0-fb 5d 9f 49 ae 54 43 3d  G.....8..].I.TC= |
+[debug] ssl_engine_io.c(1662): | 03c0: 09 6d 2c 98 69 46 24 63-f0 1f 95 ed 8f bb 55 fe  .m,.iF$c......U. |
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[info] Initial (No.1) HTTPS request received for child 2 (server rails.west.cmu.edu:443)
+[debug] mod_pubcookie.c(2400): [client 204.16.157.225] pubcookie_post_read: sr=b89a6150, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(2356): [client 204.16.157.225] pubcookie_hparse: main=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1655): [client 204.16.157.225] pubcookie_user_hook: uri: /secure/index.html auth_type: WebISO, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1778): [client 204.16.157.225] pubcookie_user: going to check uri: /secure/index.html creds: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(177): [client 204.16.157.225] dump_server_rec:\n\t\tdirdepth: 0\n\t\tnoblank: 0\n\t\tlogin: https://webiso.andrew.cmu.edu/\n\t\tappsrvid: rails.west.cmu.edu\n\t\tauthtype_names: WebISO\n\t\tuse_post: 1\n        no_clean_creds: 0\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(190): [client 204.16.157.225] dump_dir_rec:\n\t\tinact_exp: 400\n                hard_exp: 3700\n                non_ssl_ok: 0\n\t\tappid: svrails\n                end_session: \n                session_reauth: -1\n                noprompt: 0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1799): [client 204.16.157.225] pubcookie_user: have ssl_var: on, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1825): [client 204.16.157.225] pubcookie_user: about to look for some cookies; current uri: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1273): [client 204.16.157.225]  .. return: hz3rf1fSQNW2Wpi+Sl3SEjqgev/XZLBXzIFgrqENoilc0mPuovPUa0uV/QlnaWEIC85aro3dANP1iXq/UURJOQ1ZI1vSzDx0J6ORJweKlGaFgnVlSaKXg30fakuQ8m6FWtub5zl50428sqF7d2iWSWRKdJ9HPd9FRU3a1dVNzyhp/D8hsONxFTPvx/9AgIlK02K5M87SjtqWHoDm6QwAJW3I8UFbbcAqJeJ0MIgqVRs7WnDTQluENiRJTPz8jYVzB++7STMf1cklq6LOYmu4rUAp9rQJMjoDP6VVz+6A4qgMprPmVSEcDwDySZ57/mmGd/0aRQrY4AOeyZJNzOxbwifqjb56M1hOSymd7uxGBFfV85ktc5Yq0Gww04UGMpul8Qkmte/5VR4Zy6X7WoqWj201frmsrpo28uzxD0JRCicp+3jSXLkGNiEZfaYa3C5g7HZpT/QgkkEDQhAeuhTIl9b1OtisCA==, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_unbundle_cookie: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: hello\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] get_crypt_key: myname=rails.west.cmu.edu, peer=rails.west.cmu.edu\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] Verifying signature with granting certificate, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_rd_safe: couldn't verify signature for rails.west.cmu.edu OpenSSL error: error:0407006A:rsa routines:RSA_padding_check_PKCS1_type_1:block type is not 01, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_safe: goodbye, r: -1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1303): [client 204.16.157.225] libpbc_rd_priv_des: goodbye\n, referer: https://webiso.andrew.cmu.edu/
+[error] [client 204.16.157.225] libpbc_unbundle_cookie: libpbc_rd_priv() failed\n, referer: https://webiso.andrew.cmu.edu/
+[info] [client 204.16.157.225] can't unbundle G cookie, it's probably not for us; uri: /secure/index.html\n, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(697): [client 204.16.157.225] clear_granting_cookie: setting cookie: pubcookie_g=; path=/; expires=Fri, 11-Jan-1990 00:00:01 GMT; secure, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_g (1), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1235): [client 204.16.157.225] get_cookie: pubcookie_s_svrails (0), referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1981): [client 204.16.157.225] No G or S cookie; uri: /secure/index.html appid: svrails sess_cookie_name: pubcookie_s_svrails, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1703): [client 204.16.157.225]  .. user_hook: user failed, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(913): [client 204.16.157.225] auth_failed_handler: hello, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(367): [client 204.16.157.225] get_pre_s_token: token is 1356542183, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(993): [client 204.16.157.225] Post URI before encoding length 18, string: /secure/index.html, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(996): [client 204.16.157.225] Post URI after encoding length 24, string: L3NlY3VyZS9pbmRleC5odG1s, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1042): [client 204.16.157.225] g_req before encoding length 241, string: one=rails.west.cmu.edu&two=svrails&three=1&four=a5&five=GET&six=rails.west.cmu.edu&seven=L3NlY3VyZS9pbmRleC5odG1s&eight=&hostname=rails.west.cmu.edu&nine=1&file=&referer=https://webiso.andrew.cmu.edu/&sess_re=0&pre_sess_tok=1356542183&flag=0, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(300): [client 204.16.157.225] pubcookie flush headers: merging 4 output headers, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Set-Cookie, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Expires, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Cache-Control, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(284): [client 204.16.157.225]  .. adding header Pragma, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(1178): [client 204.16.157.225] auth_failed_handler: redirect sent. uri: /secure/index.html reason: 1, referer: https://webiso.andrew.cmu.edu/
+[debug] mod_pubcookie.c(3394): [client 204.16.157.225] cleanup, referer: https://webiso.andrew.cmu.edu/
+[debug] ssl_engine_kernel.c(1745): OpenSSL: Write: SSL negotiation finished successfully
+[info] Connection to child 2 closed with standard shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Connection to child 0 established (server rails.west.cmu.edu:443, client 204.16.157.225)
+[info] Seeding PRNG with 136 bytes of entropy
+[debug] ssl_engine_kernel.c(1727): OpenSSL: Handshake: start
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: before/accept initialization
+[debug] ssl_engine_io.c(1690): OpenSSL: read 11/11 bytes from BIO#b8b08a68 [mem: b8b12a20] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 16 03 00 00 6f 01 00 00-6b 03                    ....o...k.       |
+[debug] ssl_engine_io.c(1666): | 0011 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1690): OpenSSL: read 105/105 bytes from BIO#b8b08a68 [mem: b8b12a2b] (BIO dump follows)
+[debug] ssl_engine_io.c(1637): +-------------------------------------------------------------------------+
+[debug] ssl_engine_io.c(1662): | 0000: 48 91 10 72 63 39 70 0f-d5 ab 7d e8 6f f5 b3 71  H..rc9p...}.o..q |
+[debug] ssl_engine_io.c(1662): | 0010: 02 8e e7 3a 2a f3 7a 17-26 cc 55 1a 9f 06 7d 0c  ...:*.z.&.U...}. |
+[debug] ssl_engine_io.c(1662): | 0020: 20 65 13 e3 a4 4b 22 90-ca 66 21 42 0e cf 7b cd   e...K"..f!B..{. |
+[debug] ssl_engine_io.c(1662): | 0030: e8 a9 5a 3a a2 bc 05 b5-18 fd cb d8 9b 8c 63 e9  ..Z:..........c. |
+[debug] ssl_engine_io.c(1662): | 0040: f6 00 24 00 88 00 87 00-39 00 38 00 84 00 35 00  ..$.....9.8...5. |
+[debug] ssl_engine_io.c(1662): | 0050: 45 00 44 00 33 00 32 00-41 00 04 00 05 00 2f 00  E.D.3.2.A...../. |
+[debug] ssl_engine_io.c(1662): | 0060: 16 00 13 fe ff 00 0a 01-                         ........         |
+[debug] ssl_engine_io.c(1666): | 0105 - <SPACES/NULS>
+[debug] ssl_engine_io.c(1668): +-------------------------------------------------------------------------+
+[debug] ssl_scache_shmcb.c(716): inside shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(728): id[0]=101, masked index=5
+[debug] ssl_scache_shmcb.c(1191): entering shmcb_lookup_session_id
+[debug] ssl_scache_shmcb.c(979): entering shmcb_expire_division
+[debug] ssl_scache_shmcb.c(1201): loop=0, count=1, curr_pos=0
+[debug] ssl_scache_shmcb.c(1205): idx->s_id2=19, id[1]=19, offset=0
+[debug] ssl_scache_shmcb.c(1222): at index 0, found possible session match
+[debug] ssl_scache_shmcb.c(1241): a match!
+[debug] ssl_scache_shmcb.c(744): leaving shmcb_retrieve_session
+[debug] ssl_scache_shmcb.c(425): shmcb_retrieve had a hit
+[debug] ssl_engine_kernel.c(1573): Inter-Process Session Cache: request=GET status=FOUND id=6513E3A44B2290CA6621420ECF7BCDE8A95A3AA2BC05B518FDCBD89B8C63E9F6 (session reuse)
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 read client hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write server hello A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write change cipher spec A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 write finished A
+[debug] ssl_engine_kernel.c(1735): OpenSSL: Loop: SSLv3 flush data
+[debug] ssl_engine_io.c(1701): OpenSSL: I/O error, 5 bytes expected to read on BIO#b8b08a68 [mem: b8b12a20]
+[debug] ssl_engine_kernel.c(1764): OpenSSL: Exit: error in SSLv3 read finished A
+[debug] ssl_engine_kernel.c(1764): OpenSSL: Exit: error in SSLv3 read finished A
+[info] (70014)End of file found: SSL handshake interrupted by system [Hint: Stop button pressed in browser?!]
+[info] Connection to child 0 closed with abortive shutdown(server rails.west.cmu.edu:443, client 204.16.157.225)

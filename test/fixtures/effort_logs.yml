@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  person: student_sam
+#  week_number: 1
+#  year: 2009
+#
+#two:
+#  person: student_sam
+#  week_number: 2
+#  year: 2009
+#
+#this_week:
+#  person: student_sam
+#  week_number: <%= Date.today.cweek %>
+#  year: <%= Date.today.cwyear %>
+
+
+week_one:
+  person:       student_sam
+  week_number:  1
+  year:         2009
+  sum:          5
+
+week_two:
+  person:       student_sam
+  week_number:  2
+  year:         2009
+  sum:          10
+
+this_week:
+  person:       student_sam
+  week_number:  <%= Date.today.cweek %>
+  year:         <%= Date.today.year %>
+  sum:          12

@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Paperclip::Storage::S3</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../vendor/plugins/paperclip/lib/paperclip/storage.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/paperclip/lib/paperclip/storage.rb">vendor/plugins/paperclip/lib/paperclip/storage.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#bucket_name">bucket_name</a></li>
+					
+					<li><a href="#exists?">exists?</a></li>
+					
+					<li><a href="#expiring_url">expiring_url</a></li>
+					
+					<li><a href="#extended">extended</a></li>
+					
+					<li><a href="#parse_credentials">parse_credentials</a></li>
+					
+					<li><a href="#s3_host_alias">s3_host_alias</a></li>
+					
+					<li><a href="#s3_protocol">s3_protocol</a></li>
+					
+					<li><a href="#to_file">to_file</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../Paperclip.html">Paperclip</a></li>
+				
+				
+					<li><a href="../../Paperclip/Attachment.html">Paperclip::Attachment</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability.html">Paperclip::CallbackCompatability</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability/ClassMethods.html">Paperclip::CallbackCompatability::ClassMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability/InstanceMethods.html">Paperclip::CallbackCompatability::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/ClassMethods.html">Paperclip::ClassMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/Geometry.html">Paperclip::Geometry</a></li>
+				
+				
+					<li><a href="../../Paperclip/InfiniteInterpolationError.html">Paperclip::InfiniteInterpolationError</a></li>
+				
+				
+					<li><a href="../../Paperclip/InstanceMethods.html">Paperclip::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/Interpolations.html">Paperclip::Interpolations</a></li>
+				
+				
+					<li><a href="../../Paperclip/NotIdentifiedByImageMagickError.html">Paperclip::NotIdentifiedByImageMagickError</a></li>
+				
+				
+					<li><a href="../../Paperclip/PaperclipCommandLineError.html">Paperclip::PaperclipCommandLineError</a></li>
+				
+				
+					<li><a href="../../Paperclip/PaperclipError.html">Paperclip::PaperclipError</a></li>
+				
+				
+					<li><a href="../../Paperclip/Processor.html">Paperclip::Processor</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda.html">Paperclip::Shoulda</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers.html">Paperclip::Shoulda::Matchers</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/HaveAttachedFileMatcher.html">Paperclip::Shoulda::Matchers::HaveAttachedFileMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentContentTypeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentContentTypeMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentPresenceMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentPresenceMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentSizeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentSizeMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage.html">Paperclip::Storage</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage/Filesystem.html">Paperclip::Storage::Filesystem</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage/S3.html">Paperclip::Storage::S3</a></li>
+				
+				
+					<li><a href="../../Paperclip/Style.html">Paperclip::Style</a></li>
+				
+				
+					<li><a href="../../Paperclip/Tempfile.html">Paperclip::Tempfile</a></li>
+				
+				
+					<li><a href="../../Paperclip/Thumbnail.html">Paperclip::Thumbnail</a></li>
+				
+				
+					<li><a href="../../Paperclip/Upfile.html">Paperclip::Upfile</a></li>
+				
+				
+					<li><a href="../../File.html">File</a></li>
+				
+				
+					<li><a href="../../IO.html">IO</a></li>
+				
+				
+					<li><a href="../../IOStream.html">IOStream</a></li>
+				
+				
+					<li><a href="../../StringIO.html">StringIO</a></li>
+				
+				
+					<li><a href="../../Tempfile.html">Tempfile</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">Paperclip::Storage::S3</h1>
+		
+
+		<div id="description">
+			<p>
+Amazon&#8217;s <a href="S3.html">S3</a> file hosting service is a scalable,
+easy place to store files for distribution. You can find out more about it
+at <a href="http://aws.amazon.com/s3">aws.amazon.com/s3</a> There are a few
+S3-specific options for has_attached_file:
+</p>
+<ul>
+<li><tt>s3_credentials</tt>: Takes a path, a File, or a Hash. The path (or
+File) must point to a YAML file containing the <tt>access_key_id</tt> and
+<tt>secret_access_key</tt> that Amazon gives you. You can
+&#8216;environment-space&#8217; this just like you do to your database.yml
+file, so different environments can use different accounts:
+
+<pre>
+  development:
+    access_key_id: 123...
+    secret_access_key: 123...
+  test:
+    access_key_id: abc...
+    secret_access_key: abc...
+  production:
+    access_key_id: 456...
+    secret_access_key: 456...
+</pre>
+<p>
+This is not required, however, and the file may simply look like this:
+</p>
+<pre>
+  access_key_id: 456...
+  secret_access_key: 456...
+</pre>
+<p>
+In which case, those access keys will be used in all environments. You can
+also put your bucket name in this file, instead of adding it to the code
+directly. This is useful when you want the same account but a different
+bucket for development versus production.
+</p>
+</li>
+<li><tt>s3_permissions</tt>: This is a String that should be one of the
+&#8220;canned&#8221; access policies that <a href="S3.html">S3</a> provides
+(more information can be found here: <a
+href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html#RESTCannedAccessPolicies">docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html#RESTCannedAccessPolicies</a>)
+The default for <a href="../../Paperclip.html">Paperclip</a> is
+:public_read.
+
+</li>
+<li><tt><a href="S3.html#M000087">s3_protocol</a></tt>: The protocol for the
+URLs generated to your <a href="S3.html">S3</a> assets. Can be either
+&#8216;http&#8217; or &#8216;https&#8217;. Defaults to &#8216;http&#8217;
+when your :s3_permissions are :public_read (the default), and
+&#8216;https&#8217; when your :s3_permissions are anything else.
+
+</li>
+<li><tt>s3_headers</tt>: A hash of headers such as {&#8216;Expires&#8217; =>
+1.year.from_now.httpdate}
+
+</li>
+<li><tt>bucket</tt>: This is the name of the <a href="S3.html">S3</a> bucket
+that will store your files. Remember that the bucket must be unique across
+all of Amazon <a href="S3.html">S3</a>. If the bucket does not exist <a
+href="../../Paperclip.html">Paperclip</a> will attempt to create it. The
+bucket name will not be interpolated. You can define the bucket as a Proc
+if you want to determine it&#8217;s name at runtime. <a
+href="../../Paperclip.html">Paperclip</a> will call that Proc with
+attachment as the only argument.
+
+</li>
+<li><tt><a href="S3.html#M000084">s3_host_alias</a></tt>: The fully-qualified
+domain name (FQDN) that is the alias to the <a href="S3.html">S3</a> domain
+of your bucket. Used with the :s3_alias_url url interpolation. See the link
+in the <tt>url</tt> entry for more information about <a
+href="S3.html">S3</a> domains and buckets.
+
+</li>
+<li><tt>url</tt>: There are three options for the <a href="S3.html">S3</a> url.
+You can choose to have the bucket&#8217;s name placed domain-style
+(bucket.s3.amazonaws.com) or path-style (s3.amazonaws.com/bucket). Lastly,
+you can specify a CNAME (which requires the CNAME to be specified as
+:s3_alias_url. You can read more about CNAMEs and <a href="S3.html">S3</a>
+at <a
+href="http://docs.amazonwebservices.com/AmazonS3/latest/index.html?VirtualHosting.html">docs.amazonwebservices.com/AmazonS3/latest/index.html?VirtualHosting.html</a>
+Normally, this won&#8217;t matter in the slightest and you can leave the
+default (which is path-style, or :s3_path_url). But in some cases paths
+don&#8217;t work and you need to use the domain-style (:s3_domain_url).
+Anything else here will be treated like path-style. NOTE: If you use a
+CNAME for use with CloudFront, you can NOT specify https as your :<a
+href="S3.html#M000087">s3_protocol</a>; This is *not supported* by
+S3/CloudFront. Finally, when using the host alias, the :bucket parameter is
+ignored, as the hostname is used as the bucket name by <a
+href="S3.html">S3</a>.
+
+</li>
+<li><tt>path</tt>: This is the key under the bucket in which the file will be
+stored. The URL will be constructed from the bucket and the path. This is
+what you will want to interpolate. Keys should be unique, like filenames,
+and despite the fact that <a href="S3.html">S3</a> (strictly speaking) does
+not support directories, you can still use a / to separate parts of your
+file name.
+
+</li>
+</ul>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+
+		
+			
+			<div id="extended-method" class="method-detail">
+			
+				<a name="extended"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">extended</span><span 
+						class="method-args">(base)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="extended-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 129</span>
+129:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">extended</span> <span class="ruby-identifier">base</span>
+130:         <span class="ruby-keyword kw">begin</span>
+131:           <span class="ruby-identifier">require</span> <span class="ruby-value str">'aws/s3'</span>
+132:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+133:           <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; (You may need to install the aws-s3 gem)&quot;</span>
+134:           <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>
+135:         <span class="ruby-keyword kw">end</span>
+136: 
+137:         <span class="ruby-identifier">base</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword kw">do</span>
+138:           <span class="ruby-ivar">@s3_credentials</span> = <span class="ruby-identifier">parse_credentials</span>(<span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_credentials</span>])
+139:           <span class="ruby-ivar">@bucket</span>         = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:bucket</span>]         <span class="ruby-operator">||</span> <span class="ruby-ivar">@s3_credentials</span>[<span class="ruby-identifier">:bucket</span>]
+140:           <span class="ruby-ivar">@bucket</span>         = <span class="ruby-ivar">@bucket</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@bucket</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Proc</span>)
+141:           <span class="ruby-ivar">@s3_options</span>     = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_options</span>]     <span class="ruby-operator">||</span> {}
+142:           <span class="ruby-ivar">@s3_permissions</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_permissions</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">:public_read</span>
+143:           <span class="ruby-ivar">@s3_protocol</span>    = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_protocol</span>]    <span class="ruby-operator">||</span> (<span class="ruby-ivar">@s3_permissions</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:public_read</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'http'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'https'</span>)
+144:           <span class="ruby-ivar">@s3_headers</span>     = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_headers</span>]     <span class="ruby-operator">||</span> {}
+145:           <span class="ruby-ivar">@s3_host_alias</span>  = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:s3_host_alias</span>]
+146:           <span class="ruby-ivar">@url</span>            = <span class="ruby-value str">&quot;:s3_path_url&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/^:s3.*url$/</span>)
+147:           <span class="ruby-constant">AWS</span><span class="ruby-operator">::</span><span class="ruby-constant">S3</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">establish_connection!</span>( <span class="ruby-ivar">@s3_options</span>.<span class="ruby-identifier">merge</span>(
+148:             <span class="ruby-identifier">:access_key_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@s3_credentials</span>[<span class="ruby-identifier">:access_key_id</span>],
+149:             <span class="ruby-identifier">:secret_access_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@s3_credentials</span>[<span class="ruby-identifier">:secret_access_key</span>]
+150:           ))
+151:         <span class="ruby-keyword kw">end</span>
+152:         <span class="ruby-constant">Paperclip</span>.<span class="ruby-identifier">interpolates</span>(<span class="ruby-identifier">:s3_alias_url</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attachment</span>, <span class="ruby-identifier">style</span><span class="ruby-operator">|</span>
+153:           <span class="ruby-node">&quot;#{attachment.s3_protocol}://#{attachment.s3_host_alias}/#{attachment.path(style).gsub(%r{^/}, &quot;&quot;)}&quot;</span>
+154:         <span class="ruby-keyword kw">end</span>
+155:         <span class="ruby-constant">Paperclip</span>.<span class="ruby-identifier">interpolates</span>(<span class="ruby-identifier">:s3_path_url</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attachment</span>, <span class="ruby-identifier">style</span><span class="ruby-operator">|</span>
+156:           <span class="ruby-node">&quot;#{attachment.s3_protocol}://s3.amazonaws.com/#{attachment.bucket_name}/#{attachment.path(style).gsub(%r{^/}, &quot;&quot;)}&quot;</span>
+157:         <span class="ruby-keyword kw">end</span>
+158:         <span class="ruby-constant">Paperclip</span>.<span class="ruby-identifier">interpolates</span>(<span class="ruby-identifier">:s3_domain_url</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attachment</span>, <span class="ruby-identifier">style</span><span class="ruby-operator">|</span>
+159:           <span class="ruby-node">&quot;#{attachment.s3_protocol}://#{attachment.bucket_name}.s3.amazonaws.com/#{attachment.path(style).gsub(%r{^/}, &quot;&quot;)}&quot;</span>
+160:         <span class="ruby-keyword kw">end</span>
+161:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="bucket-name-method" class="method-detail">
+			
+				<a name="bucket_name"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">bucket_name</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="bucket-name-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 167</span>
+167:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bucket_name</span>
+168:         <span class="ruby-ivar">@bucket</span>
+169:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="exists--method" class="method-detail">
+			
+				<a name="exists?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">exists?</span><span 
+						class="method-args">(style = default_style)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="exists--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 180</span>
+180:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">style</span> = <span class="ruby-identifier">default_style</span>)
+181:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">original_filename</span>
+182:           <span class="ruby-constant">AWS</span><span class="ruby-operator">::</span><span class="ruby-constant">S3</span><span class="ruby-operator">::</span><span class="ruby-constant">S3Object</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span>(<span class="ruby-identifier">style</span>), <span class="ruby-identifier">bucket_name</span>)
+183:         <span class="ruby-keyword kw">else</span>
+184:           <span class="ruby-keyword kw">false</span>
+185:         <span class="ruby-keyword kw">end</span>
+186:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="expiring-url-method" class="method-detail">
+			
+				<a name="expiring_url"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">expiring_url</span><span 
+						class="method-args">(time = 3600)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="expiring-url-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 163</span>
+163:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">expiring_url</span>(<span class="ruby-identifier">time</span> = <span class="ruby-value">3600</span>)
+164:         <span class="ruby-constant">AWS</span><span class="ruby-operator">::</span><span class="ruby-constant">S3</span><span class="ruby-operator">::</span><span class="ruby-constant">S3Object</span>.<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">bucket_name</span>, <span class="ruby-identifier">:expires_in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span> )
+165:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="parse-credentials-method" class="method-detail">
+			
+				<a name="parse_credentials"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse_credentials</span><span 
+						class="method-args">(creds)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="parse-credentials-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 175</span>
+175:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_credentials</span> <span class="ruby-identifier">creds</span>
+176:         <span class="ruby-identifier">creds</span> = <span class="ruby-identifier">find_credentials</span>(<span class="ruby-identifier">creds</span>).<span class="ruby-identifier">stringify_keys</span>
+177:         (<span class="ruby-identifier">creds</span>[<span class="ruby-constant">RAILS_ENV</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">creds</span>).<span class="ruby-identifier">symbolize_keys</span>
+178:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="s-host-alias-method" class="method-detail">
+			
+				<a name="s3_host_alias"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">s3_host_alias</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="s-host-alias-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 171</span>
+171:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">s3_host_alias</span>
+172:         <span class="ruby-ivar">@s3_host_alias</span>
+173:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="s-protocol-method" class="method-detail">
+			
+				<a name="s3_protocol"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">s3_protocol</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="s-protocol-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 188</span>
+188:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">s3_protocol</span>
+189:         <span class="ruby-ivar">@s3_protocol</span>
+190:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="to-file-method" class="method-detail">
+			
+				<a name="to_file"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">to_file</span><span 
+						class="method-args">(style = default_style)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns representation of the data of the file assigned to the given style,
+in the format most representative of the current storage.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="to-file-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 194</span>
+194:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_file</span> <span class="ruby-identifier">style</span> = <span class="ruby-identifier">default_style</span>
+195:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@queued_for_write</span>[<span class="ruby-identifier">style</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@queued_for_write</span>[<span class="ruby-identifier">style</span>]
+196:         <span class="ruby-identifier">file</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>(<span class="ruby-identifier">style</span>))
+197:         <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">AWS</span><span class="ruby-operator">::</span><span class="ruby-constant">S3</span><span class="ruby-operator">::</span><span class="ruby-constant">S3Object</span>.<span class="ruby-identifier">value</span>(<span class="ruby-identifier">path</span>(<span class="ruby-identifier">style</span>), <span class="ruby-identifier">bucket_name</span>))
+198:         <span class="ruby-identifier">file</span>.<span class="ruby-identifier">rewind</span>
+199:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">file</span>
+200:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+<% content_for :title, 'Curriculum Comment Types' %>
+<h1>Listing Curriculum Comment Types</h1>
+
+
+<% for curriculum_comment_type in @curriculum_comment_types %>
+<div class="rounded comment comment_type_<%=h curriculum_comment_type.name %>" style="padding: 5px; margin-right: 5px; background-color: <%=h curriculum_comment_type.background_color %>;">
+<%=h curriculum_comment_type.name %>
+<%=h curriculum_comment_type.background_color %>
+    <td><%= link_to 'Show', curriculum_comment_type %></td>
+    <td><%= link_to 'Edit', edit_curriculum_comment_type_path(curriculum_comment_type) %></td>
+    <td><%= link_to 'Destroy', curriculum_comment_type, :confirm => 'Are you sure?', :method => :delete %></td>
+</div>
+<br />
+<% end %>
+
+<br />
+
+<%= link_to 'New Curriculum Comment Type', new_curriculum_comment_type_path %>

@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: ActiveRecord::Acts::Versioned::ActMethods</title>
+
+	<link rel="stylesheet" href="../../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../../vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb">vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+			<div id="namespace-list-section" class="section">
+				<h3 class="section-header">Namespace</h3>
+				<ul class="link-list">
+					
+					<li><span class="type">Module</span> <a href="ActMethods/ClassMethods.html" class="link">ActiveRecord::Acts::Versioned::ActMethods::ClassMethods</a><br />
+</li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#altered?">altered?</a></li>
+					
+					<li><a href="#clear_old_versions">clear_old_versions</a></li>
+					
+					<li><a href="#clone_versioned_model">clone_versioned_model</a></li>
+					
+					<li><a href="#empty_callback">empty_callback</a></li>
+					
+					<li><a href="#next_version">next_version</a></li>
+					
+					<li><a href="#revert_to">revert_to</a></li>
+					
+					<li><a href="#revert_to!">revert_to!</a></li>
+					
+					<li><a href="#save_version">save_version</a></li>
+					
+					<li><a href="#save_version?">save_version?</a></li>
+					
+					<li><a href="#save_without_revision">save_without_revision</a></li>
+					
+					<li><a href="#save_without_revision!">save_without_revision!</a></li>
+					
+					<li><a href="#set_new_version">set_new_version</a></li>
+					
+					<li><a href="#version_condition_met?">version_condition_met?</a></li>
+					
+					<li><a href="#without_locking">without_locking</a></li>
+					
+					<li><a href="#without_revision">without_revision</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../CHANGELOG.html">CHANGELOG</a></li>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../ActiveRecord.html">ActiveRecord</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts.html">ActiveRecord::Acts</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/Versioned.html">ActiveRecord::Acts::Versioned</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/Versioned/ActMethods.html">ActiveRecord::Acts::Versioned::ActMethods</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/Versioned/ActMethods/ClassMethods.html">ActiveRecord::Acts::Versioned::ActMethods::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/Versioned/ClassMethods.html">ActiveRecord::Acts::Versioned::ClassMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">ActiveRecord::Acts::Versioned::ActMethods</h1>
+		
+
+		<div id="description">
+			
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="altered--method" class="method-detail">
+			
+				<a name="altered?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">altered?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="altered--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 325</span>
+325:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">altered?</span>
+326:           <span class="ruby-identifier">track_altered_attributes</span> <span class="ruby-value">? </span>(<span class="ruby-identifier">version_if_changed</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">changed</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">version_if_changed</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">changed?</span>
+327:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="clear-old-versions-method" class="method-detail">
+			
+				<a name="clear_old_versions"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">clear_old_versions</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Clears old revisions if a limit is set with the :limit option in
+<tt>acts_as_versioned</tt>. Override this method to set your own criteria
+for clearing old versions.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="clear-old-versions-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 283</span>
+283:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_old_versions</span>
+284:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">max_version_limit</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+285:           <span class="ruby-identifier">excess_baggage</span> = <span class="ruby-identifier">send</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">version_column</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">max_version_limit</span>
+286:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">excess_baggage</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+287:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>.<span class="ruby-identifier">delete_all</span> [<span class="ruby-node">&quot;#{self.class.version_column} &lt;= ? and #{self.class.versioned_foreign_key} = ?&quot;</span>, <span class="ruby-identifier">excess_baggage</span>, <span class="ruby-identifier">id</span>]
+288:           <span class="ruby-keyword kw">end</span>
+289:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="clone-versioned-model-method" class="method-detail">
+			
+				<a name="clone_versioned_model"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">clone_versioned_model</span><span 
+						class="method-args">(orig_model, new_model)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Clones a model. Used when saving a new version or reverting a model&#8217;s
+version.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="clone-versioned-model-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 330</span>
+330:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clone_versioned_model</span>(<span class="ruby-identifier">orig_model</span>, <span class="ruby-identifier">new_model</span>)
+331:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+332:             <span class="ruby-identifier">new_model</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{col.name}=&quot;</span>, <span class="ruby-identifier">orig_model</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">orig_model</span>.<span class="ruby-identifier">has_attribute?</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>)
+333:           <span class="ruby-keyword kw">end</span>
+334: 
+335:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">orig_model</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>)
+336:             <span class="ruby-identifier">new_model</span>[<span class="ruby-identifier">new_model</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">inheritance_column</span>] = <span class="ruby-identifier">orig_model</span>[<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_inheritance_column</span>]
+337:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">new_model</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>)
+338:             <span class="ruby-identifier">new_model</span>[<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_inheritance_column</span>] = <span class="ruby-identifier">orig_model</span>[<span class="ruby-identifier">orig_model</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">inheritance_column</span>]
+339:           <span class="ruby-keyword kw">end</span>
+340:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="empty-callback-method" class="method-detail">
+			
+				<a name="empty_callback"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">empty_callback</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="empty-callback-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 380</span>
+380:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty_callback</span>() <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="revert-to-method" class="method-detail">
+			
+				<a name="revert_to"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">revert_to</span><span 
+						class="method-args">(version)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Reverts a model to a given version. Takes either a version number or an
+instance of the versioned model
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="revert-to-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 292</span>
+292:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>)
+293:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">version</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>)
+294:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>.<span class="ruby-identifier">send</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_foreign_key</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">version</span>.<span class="ruby-identifier">new_record?</span>
+295:           <span class="ruby-keyword kw">else</span>
+296:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span> = <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;find_by_#{self.class.version_column}&quot;</span>, <span class="ruby-identifier">version</span>)
+297:           <span class="ruby-keyword kw">end</span>
+298:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">clone_versioned_model</span>(<span class="ruby-identifier">version</span>, <span class="ruby-keyword kw">self</span>)
+299:           <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{self.class.version_column}=&quot;</span>, <span class="ruby-identifier">version</span>.<span class="ruby-identifier">send</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">version_column</span>))
+300:           <span class="ruby-keyword kw">true</span>
+301:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="revert-to--method" class="method-detail">
+			
+				<a name="revert_to!"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">revert_to!</span><span 
+						class="method-args">(version)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Reverts a model to a given version and saves the model. Takes either a
+version number or an instance of the versioned model
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="revert-to--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 305</span>
+305:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to!</span>(<span class="ruby-identifier">version</span>)
+306:           <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">save_without_revision</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+307:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="save-version-method" class="method-detail">
+			
+				<a name="save_version"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">save_version</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Saves a version of the model in the versioned table. This is called in the
+after_save callback by default
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="save-version-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 270</span>
+270:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_version</span>
+271:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@saving_version</span>
+272:             <span class="ruby-ivar">@saving_version</span> = <span class="ruby-keyword kw">nil</span>
+273:             <span class="ruby-identifier">rev</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>.<span class="ruby-identifier">new</span>
+274:             <span class="ruby-identifier">clone_versioned_model</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">rev</span>)
+275:             <span class="ruby-identifier">rev</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{self.class.version_column}=&quot;</span>, <span class="ruby-identifier">send</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">version_column</span>))
+276:             <span class="ruby-identifier">rev</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{self.class.versioned_foreign_key}=&quot;</span>, <span class="ruby-identifier">id</span>)
+277:             <span class="ruby-identifier">rev</span>.<span class="ruby-identifier">save</span>
+278:           <span class="ruby-keyword kw">end</span>
+279:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="save-version--method" class="method-detail">
+			
+				<a name="save_version?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">save_version?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Checks whether a new version shall be saved or not. Calls
+<tt>version_condition_met?</tt> and <tt>changed?</tt>.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="save-version--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 343</span>
+343:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_version?</span>
+344:           <span class="ruby-identifier">version_condition_met?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">altered?</span>
+345:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="save-without-revision-method" class="method-detail">
+			
+				<a name="save_without_revision"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">save_without_revision</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Temporarily turns off Optimistic Locking while saving. Used when reverting
+so that a new version is not created.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="save-without-revision-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 310</span>
+310:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_without_revision</span>
+311:           <span class="ruby-identifier">save_without_revision!</span>
+312:           <span class="ruby-keyword kw">true</span>
+313:         <span class="ruby-keyword kw">rescue</span>
+314:           <span class="ruby-keyword kw">false</span>
+315:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="save-without-revision--method" class="method-detail">
+			
+				<a name="save_without_revision!"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">save_without_revision!</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="save-without-revision--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 317</span>
+317:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_without_revision!</span>
+318:           <span class="ruby-identifier">without_locking</span> <span class="ruby-keyword kw">do</span>
+319:             <span class="ruby-identifier">without_revision</span> <span class="ruby-keyword kw">do</span>
+320:               <span class="ruby-identifier">save!</span>
+321:             <span class="ruby-keyword kw">end</span>
+322:           <span class="ruby-keyword kw">end</span>
+323:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="version-condition-met--method" class="method-detail">
+			
+				<a name="version_condition_met?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">version_condition_met?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Checks condition set in the :if option to check whether a revision should
+be created or not. Override this for custom version condition checking.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="version-condition-met--source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 349</span>
+349:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version_condition_met?</span>
+350:           <span class="ruby-keyword kw">case</span>
+351:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">version_condition</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+352:             <span class="ruby-identifier">send</span>(<span class="ruby-identifier">version_condition</span>)
+353:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">version_condition</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:call</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">version_condition</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">version_condition</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>)
+354:             <span class="ruby-identifier">version_condition</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
+355:           <span class="ruby-keyword kw">else</span>
+356:             <span class="ruby-identifier">version_condition</span>
+357:           <span class="ruby-keyword kw">end</span>
+358:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="without-locking-method" class="method-detail">
+			
+				<a name="without_locking"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">without_locking</span><span 
+						class="method-args">(&amp;block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Turns off optimistic locking for the duration of the block
+</p>
+<pre>
+  @foo.without_locking do
+    @foo.save
+  end
+</pre>
+					
+					
+					
+					<div class="method-source-code" 
+						id="without-locking-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 376</span>
+376:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">without_locking</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+377:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">without_locking</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+378:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="without-revision-method" class="method-detail">
+			
+				<a name="without_revision"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">without_revision</span><span 
+						class="method-args">(&amp;block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Executes the block with the versioning callbacks disabled.
+</p>
+<pre>
+  @foo.without_revision do
+    @foo.save
+  end
+</pre>
+					
+					
+					
+					<div class="method-source-code" 
+						id="without-revision-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 366</span>
+366:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">without_revision</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+367:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">without_revision</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+368:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="protected-instance-method-details" class="method-section section">
+			<h3 class="section-header">Protected Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="next-version-method" class="method-detail">
+			
+				<a name="next_version"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">next_version</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Gets the next available version for the current record, or 1 for a new
+record
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="next-version-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 390</span>
+390:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_version</span>
+391:             (<span class="ruby-identifier">new_record?</span> <span class="ruby-value">? </span><span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">calculate</span>(<span class="ruby-identifier">:max</span>, <span class="ruby-identifier">version_column</span>).<span class="ruby-identifier">to_i</span>) <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+392:           <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="set-new-version-method" class="method-detail">
+			
+				<a name="set_new_version"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">set_new_version</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+sets the new version before saving, unless you&#8217;re using optimistic
+locking. In that case, let it take care of the version.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="set-new-version-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb, line 384</span>
+384:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_new_version</span>
+385:             <span class="ruby-ivar">@saving_version</span> = <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">save_version?</span>
+386:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{self.class.version_column}=&quot;</span>, <span class="ruby-identifier">next_version</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">locking_enabled?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">save_version?</span>)
+387:           <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

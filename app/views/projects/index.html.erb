@@ -1,0 +1,31 @@
+<% content_for :title, 'Projects' %>
+<h1>Listing projects</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Project Type</th>
+    <th>Course</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% for project in @projects %>
+  <tr>
+    <td><%=h project.name %></td>
+    <td><%=h project.project_type.name unless project.project_type.nil? %></td>
+    <td><%=h project.course.name unless project.course.nil? %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %></td>
+<!-->
+    <td><%= link_to 'Close', project, :confirm => 'Are you sure?', :method => :close %></td>
+ <-->
+<% if current_user.is_admin? %>
+    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p><%= link_to 'New project', new_project_path %></p>

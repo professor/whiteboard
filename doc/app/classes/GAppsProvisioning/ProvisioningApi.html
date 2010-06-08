@@ -1,0 +1,1312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: GAppsProvisioning::ProvisioningApi [Rails Application Documentation]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <div class='name'>
+          <span class='type'>Class</span>
+          GAppsProvisioning::ProvisioningApi
+        </div>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/gappsprovisioning/provisioningapi_rb.html">lib/gappsprovisioning/provisioningapi.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <h1>Administrative object for accessing your domain</h1>
+            <p>
+            Examples
+            </p>
+            <pre>adminuser = &quot;root@mydomain.com&quot;&#x000A;password  = &quot;PaSsWo4d!&quot;&#x000A;myapps = ProvisioningApi.new(adminuser,password)&#x000A;(see examples in  ProvisioningApi.new documentation for handling proxies)&#x000A;&#x000A;new_user = myapps.create_user(&quot;jsmith&quot;, &quot;john&quot;, &quot;smith&quot;, &quot;secret&quot;, nil, &quot;2048&quot;)&#x000A;puts new_user.family_name&#x000A;puts new_user.given_name</pre>
+            <p>
+            Want to update a user ?
+            </p>
+            <pre>user = myapps.retrieve_user('jsmith')&#x000A;user_updated = myapps.update_user(user.username, user.given_name, user.family_name, nil, nil, &quot;true&quot;)</pre>
+            <p>
+            Want to add an alias or nickname ?
+            </p>
+            <pre>new_nickname = myapps.create_nickname(&quot;jsmith&quot;, &quot;john.smith&quot;)</pre>
+            <p>
+            Want to manage groups ? (i.e. mailing lists)
+            </p>
+            <pre>new_group = myapps.create_group(&quot;sales-dep&quot;, ['Sales Departement'])&#x000A;new_member1 = myapps.add_member_to_group(&quot;john.doe@somedomain.com&quot;, &quot;sales-dep&quot;)&#x000A;new_member2 = myapps.add_member_to_group(&quot;jsmith&quot;, &quot;sales-dep&quot;)&#x000A;new_owner = myapps.add_owner_to_group(&quot;jsmith&quot;, &quot;sales-dep&quot;)&#x000A;         (ATTENTION: an owner is added only if it's already member of the group!)</pre>
+            <p>
+            Want to handle errors ?
+            </p>
+            <pre>begin&#x000A;        user = myapps.retrieve_user('noone')&#x000A;        puts &quot;givenName : &quot;+user.given_name, &quot;familyName : &quot;+user.family_name, &quot;username : &quot;+user.username&quot;&#x000A;        puts &quot;admin ? : &quot;+user.admin&#x000A;rescue GDataError =&gt; e&#x000A;        puts &quot;errorcode = &quot; +e.code, &quot;input : &quot;+e.input, &quot;reason : &quot;+e.reason&#x000A;end</pre>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000259">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000320">addMemberToGroup</a></li>
+              <li><a href="#M000324">addOwnerToGroup</a></li>
+              <li><a href="#M000282">add_address_to_email_list</a></li>
+              <li><a href="#M000289">add_member_to_group</a></li>
+              <li><a href="#M000293">add_owner_to_group</a></li>
+              <li><a href="#M000315">createGroup</a></li>
+              <li><a href="#M000306">createNickname</a></li>
+              <li><a href="#M000297">createUser</a></li>
+              <li><a href="#M000278">create_email_list</a></li>
+              <li><a href="#M000284">create_group</a></li>
+              <li><a href="#M000272">create_nickname</a></li>
+              <li><a href="#M000263">create_user</a></li>
+              <li><a href="#M000317">deleteGroup</a></li>
+              <li><a href="#M000311">deleteNickname</a></li>
+              <li><a href="#M000305">deleteUser</a></li>
+              <li><a href="#M000279">delete_email_list</a></li>
+              <li><a href="#M000286">delete_group</a></li>
+              <li><a href="#M000273">delete_nickname</a></li>
+              <li><a href="#M000268">delete_user</a></li>
+              <li><a href="#M000322">isMember</a></li>
+              <li><a href="#M000326">isOwner</a></li>
+              <li><a href="#M000291">is_member</a></li>
+              <li><a href="#M000295">is_owner</a></li>
+              <li><a href="#M000321">removeMemberFromGroup</a></li>
+              <li><a href="#M000325">removeOwnerFromGroup</a></li>
+              <li><a href="#M000314">removeRecipientFromEmailList</a></li>
+              <li><a href="#M000283">remove_address_from_email_list</a></li>
+              <li><a href="#M000290">remove_member_from_group</a></li>
+              <li><a href="#M000294">remove_owner_from_group</a></li>
+              <li><a href="#M000302">renameUser</a></li>
+              <li><a href="#M000265">rename_user</a></li>
+              <li><a href="#M000304">restoreUser</a></li>
+              <li><a href="#M000267">restore_user</a></li>
+              <li><a href="#M000319">retrieveAllGroups</a></li>
+              <li><a href="#M000323">retrieveAllMembers</a></li>
+              <li><a href="#M000309">retrieveAllNicknames</a></li>
+              <li><a href="#M000327">retrieveAllOwners</a></li>
+              <li><a href="#M000312">retrieveAllRecipients</a></li>
+              <li><a href="#M000299">retrieveAllUsers</a></li>
+              <li><a href="#M000318">retrieveGroups</a></li>
+              <li><a href="#M000307">retrieveNickname</a></li>
+              <li><a href="#M000308">retrieveNicknames</a></li>
+              <li><a href="#M000310">retrievePageOfNicknames</a></li>
+              <li><a href="#M000313">retrievePageOfRecipients</a></li>
+              <li><a href="#M000300">retrievePageOfUsers</a></li>
+              <li><a href="#M000298">retrieveUser</a></li>
+              <li><a href="#M000276">retrieve_all_email_lists</a></li>
+              <li><a href="#M000288">retrieve_all_groups</a></li>
+              <li><a href="#M000292">retrieve_all_members</a></li>
+              <li><a href="#M000271">retrieve_all_nicknames</a></li>
+              <li><a href="#M000296">retrieve_all_owners</a></li>
+              <li><a href="#M000280">retrieve_all_recipients</a></li>
+              <li><a href="#M000261">retrieve_all_users</a></li>
+              <li><a href="#M000275">retrieve_email_lists</a></li>
+              <li><a href="#M000287">retrieve_groups</a></li>
+              <li><a href="#M000269">retrieve_nickname</a></li>
+              <li><a href="#M000270">retrieve_nicknames</a></li>
+              <li><a href="#M000277">retrieve_page_of_email_lists</a></li>
+              <li><a href="#M000274">retrieve_page_of_nicknames</a></li>
+              <li><a href="#M000281">retrieve_page_of_recipients</a></li>
+              <li><a href="#M000262">retrieve_page_of_users</a></li>
+              <li><a href="#M000260">retrieve_user</a></li>
+              <li><a href="#M000303">suspendUser</a></li>
+              <li><a href="#M000266">suspend_user</a></li>
+              <li><a href="#M000316">updateGroup</a></li>
+              <li><a href="#M000301">updateUser</a></li>
+              <li><a href="#M000285">update_group</a></li>
+              <li><a href="#M000264">update_user</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>token</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      authentication token, valid up to 24 hours after the last connection
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='method public-class' id='method-M000259'>
+                <a name='M000259'></a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(mail, passwd, proxy=nil, proxy_port=nil, proxy_user=nil, proxy_passwd=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates a new <a href="ProvisioningApi.html">ProvisioningApi</a> object
+                  </p>
+                  <pre>mail : Google Apps domain administrator e-mail (string)&#x000A;passwd : Google Apps domain administrator password (string)&#x000A;proxy : (optional) host name, or IP, of the proxy (string)&#x000A;proxy_port : (optional) proxy port number (numeric)&#x000A;proxy_user : (optional) login for authenticated proxy only (string)&#x000A;proxy_passwd : (optional) password for authenticated proxy only (string)</pre>
+                  <p>
+                  The domain name is extracted from the mail param value.
+                  </p>
+                  <p>
+                  Examples :
+                  </p>
+                  <pre>standard : no proxy&#x000A;myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;proxy :&#x000A;myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd','domain.proxy.com',8080)&#x000A;authenticated proxy :&#x000A;myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd','domain.proxy.com',8080,'foo','bAr')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000259-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000259-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 157</span>&#x000A;157:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">mail</span>, <span class="ruby-identifier">passwd</span>, <span class="ruby-identifier">proxy</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">proxy_port</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">proxy_user</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">proxy_passwd</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;158:                         <span class="ruby-identifier">domain</span> = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'@'</span>)[<span class="ruby-value">1</span>]&#x000A;159:                         <span class="ruby-ivar">@action</span> = <span class="ruby-identifier">setup_actions</span>(<span class="ruby-identifier">domain</span>)&#x000A;160:                         <span class="ruby-identifier">conn</span> = <span class="ruby-constant">Connection</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@@google_host</span>, <span class="ruby-ivar">@@google_port</span>, <span class="ruby-identifier">proxy</span>, <span class="ruby-identifier">proxy_port</span>, <span class="ruby-identifier">proxy_user</span>, <span class="ruby-identifier">proxy_passwd</span>)&#x000A;161:                         <span class="ruby-ivar">@connection</span> = <span class="ruby-identifier">conn</span>&#x000A;162:                         <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">login</span>(<span class="ruby-identifier">mail</span>, <span class="ruby-identifier">passwd</span>)&#x000A;163:                         <span class="ruby-ivar">@headers</span> = {<span class="ruby-value str">'Content-Type'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'application/atom+xml'</span>, <span class="ruby-value str">'Authorization'</span>=<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'GoogleLogin auth='</span><span class="ruby-operator">+</span><span class="ruby-identifier">token</span>}&#x000A;164:                         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@connection</span>&#x000A;165:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='method public-instance' id='method-M000320'>
+                <a name='M000320'></a>
+                <div class='synopsis'>
+                  <span class='name'>addMemberToGroup</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000289">add_member_to_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000324'>
+                <a name='M000324'></a>
+                <div class='synopsis'>
+                  <span class='name'>addOwnerToGroup</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000293">add_owner_to_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000282'>
+                <a name='M000282'></a>
+                <div class='synopsis'>
+                  <span class='name'>add_address_to_email_list</span>
+                  <span class='arguments'>(email_list,address)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000282-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000282-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 395</span>&#x000A;395:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_address_to_email_list</span>(<span class="ruby-identifier">email_list</span>,<span class="ruby-identifier">address</span>)&#x000A;396:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;add_address_to_email_list : deprecated. Please use Group management instead.&quot;</span>)&#x000A;397:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000289'>
+                <a name='M000289'></a>
+                <div class='synopsis'>
+                  <span class='name'>add_member_to_group</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Adds an email address (user or group) to a mailing list in your domain and
+                  returns a <a href="MemberEntry.html">MemberEntry</a> instance. You can add
+                  addresses from other domains to your mailing list. Omit
+                  &#8220;@mydomain.com&#8220; in the group name.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        new_member = myapps.add_member_to_group('example@otherdomain.com', 'mygroup')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000289-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000289-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 462</span>&#x000A;462:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_member_to_group</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;463:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;464:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_member</span>(<span class="ruby-identifier">email_address</span>)&#x000A;465:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:membership_add</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/member'</span>, <span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;466:                         <span class="ruby-identifier">member_entry</span> = <span class="ruby-constant">MemberEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;467:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000293'>
+                <a name='M000293'></a>
+                <div class='synopsis'>
+                  <span class='name'>add_owner_to_group</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Adds a owner (user or group) to a mailing list in your domain and returns a
+                  <a href="OwnerEntry.html">OwnerEntry</a> instance. You can add addresses
+                  from other domains to your mailing list. Omit &#8220;@mydomain.com&#8220;
+                  in the group name. ATTENTION: a owner is added only if it&#8217;s already
+                  member of the group, otherwise no action is done!
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        new_member = myapps.add_owner_to_group('example@otherdomain.com', 'mygroup')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000293-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000293-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 507</span>&#x000A;507:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_owner_to_group</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;508:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;509:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_owner</span>(<span class="ruby-identifier">email_address</span>)&#x000A;510:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:ownership_add</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/owner'</span>, <span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;511:                         <span class="ruby-identifier">owner_entry</span> = <span class="ruby-constant">OwnerEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;512:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000315'>
+                <a name='M000315'></a>
+                <div class='synopsis'>
+                  <span class='name'>createGroup</span>
+                  <span class='arguments'>(group_id, properties)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000284">create_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000306'>
+                <a name='M000306'></a>
+                <div class='synopsis'>
+                  <span class='name'>createNickname</span>
+                  <span class='arguments'>(username,nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000272">create_nickname</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000297'>
+                <a name='M000297'></a>
+                <div class='synopsis'>
+                  <span class='name'>createUser</span>
+                  <span class='arguments'>(username, given_name, family_name, password, passwd_hash_function=nil, quota=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000263">create_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000278'>
+                <a name='M000278'></a>
+                <div class='synopsis'>
+                  <span class='name'>create_email_list</span>
+                  <span class='arguments'>(name)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000278-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000278-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 375</span>&#x000A;375:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_email_list</span>(<span class="ruby-identifier">name</span>)&#x000A;376:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;create_email_list : deprecated. Please use Group management instead.&quot;</span>)&#x000A;377:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000284'>
+                <a name='M000284'></a>
+                <div class='synopsis'>
+                  <span class='name'>create_group</span>
+                  <span class='arguments'>(group_id, properties)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates a group in your domain and returns a <a
+                  href="GroupEntry.html">GroupEntry</a> (ATTENTION: the group name is
+                  necessary!).
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        group= myapps.create_group(&quot;mygroup&quot;, [&quot;My Group name&quot;, &quot;My Group description&quot;, &quot;&lt;emailPermission&gt;&quot;])</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000284-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000284-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 408</span>&#x000A;408:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_group</span>(<span class="ruby-identifier">group_id</span>, <span class="ruby-identifier">properties</span>)&#x000A;409:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;410:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_group</span>(<span class="ruby-identifier">group_id</span>, <span class="ruby-identifier">properties</span>)&#x000A;411:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:group_create</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;412:                         <span class="ruby-identifier">group_entry</span> = <span class="ruby-constant">GroupEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;413:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000272'>
+                <a name='M000272'></a>
+                <div class='synopsis'>
+                  <span class='name'>create_nickname</span>
+                  <span class='arguments'>(username,nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates a nickname for the username in your domain and returns a <a
+                  href="NicknameEntry.html">NicknameEntry</a> instance
+                  </p>
+                  <pre>myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;mynewnick = myapps.create_nickname('jsmith', 'john.smith')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000272-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000272-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 333</span>&#x000A;333:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_nickname</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">nickname</span>)&#x000A;334:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;335:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">username</span>)&#x000A;336:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_nickname</span>(<span class="ruby-identifier">nickname</span>)&#x000A;337:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_create</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;338:                         <span class="ruby-identifier">nickname_entry</span> = <span class="ruby-constant">NicknameEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;339:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000263'>
+                <a name='M000263'></a>
+                <div class='synopsis'>
+                  <span class='name'>create_user</span>
+                  <span class='arguments'>(username, given_name, family_name, password, passwd_hash_function=nil, quota=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates an account in your domain, returns a <a
+                  href="UserEntry.html">UserEntry</a> instance
+                  </p>
+                  <pre>params :&#x000A;                username, given_name, family_name and password are required&#x000A;                passwd_hash_function (optional) : nil (default) or &quot;SHA-1&quot;&#x000A;                quota (optional) : nil (default) or integer for limit in MB&#x000A;ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                user = myapps.create('jsmith', 'John', 'Smith', 'p455wD')</pre>
+                  <p>
+                  By default, a new user must change his password at first login. Please use
+                  <a href="ProvisioningApi.html#M000264">update_user</a> if you want to
+                  change this just after the creation.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000263-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000263-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 213</span>&#x000A;213:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_user</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">given_name</span>, <span class="ruby-identifier">family_name</span>, <span class="ruby-identifier">password</span>, <span class="ruby-identifier">passwd_hash_function</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">quota</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;214:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;215:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">password</span>,<span class="ruby-identifier">passwd_hash_function</span>,<span class="ruby-value str">&quot;false&quot;</span>,<span class="ruby-value str">&quot;false&quot;</span>, <span class="ruby-value str">&quot;true&quot;</span>)&#x000A;216:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_name</span>(<span class="ruby-identifier">family_name</span>, <span class="ruby-identifier">given_name</span>)&#x000A;217:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_quota</span>(<span class="ruby-identifier">quota</span>.<span class="ruby-identifier">to_s</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">quota</span>&#x000A;218:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_create</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;219:                         <span class="ruby-identifier">user_entry</span> = <span class="ruby-constant">UserEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;220:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000317'>
+                <a name='M000317'></a>
+                <div class='synopsis'>
+                  <span class='name'>deleteGroup</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000286">delete_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000311'>
+                <a name='M000311'></a>
+                <div class='synopsis'>
+                  <span class='name'>deleteNickname</span>
+                  <span class='arguments'>(nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000273">delete_nickname</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000305'>
+                <a name='M000305'></a>
+                <div class='synopsis'>
+                  <span class='name'>deleteUser</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000268">delete_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000279'>
+                <a name='M000279'></a>
+                <div class='synopsis'>
+                  <span class='name'>delete_email_list</span>
+                  <span class='arguments'>(name)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000279-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000279-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 380</span>&#x000A;380:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_email_list</span>(<span class="ruby-identifier">name</span>)&#x000A;381:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;delete_email_list : deprecated. Please use Group management instead.&quot;</span>)&#x000A;382:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000286'>
+                <a name='M000286'></a>
+                <div class='synopsis'>
+                  <span class='name'>delete_group</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deletes a group in your domain.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        myapps.delete_group(&quot;mygroup&quot;)</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000286-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000286-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 430</span>&#x000A;430:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_group</span>(<span class="ruby-identifier">group_id</span>)&#x000A;431:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:group_delete</span>,<span class="ruby-identifier">group_id</span>,<span class="ruby-ivar">@headers</span>)&#x000A;432:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000273'>
+                <a name='M000273'></a>
+                <div class='synopsis'>
+                  <span class='name'>delete_nickname</span>
+                  <span class='arguments'>(nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deletes the nickname in your domain
+                  </p>
+                  <pre>myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;myapps.delete_nickname('john.smith')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000273-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000273-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 344</span>&#x000A;344:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_nickname</span>(<span class="ruby-identifier">nickname</span>)&#x000A;345:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_delete</span>,<span class="ruby-identifier">nickname</span>,<span class="ruby-ivar">@headers</span>)&#x000A;346:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000268'>
+                <a name='M000268'></a>
+                <div class='synopsis'>
+                  <span class='name'>delete_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deletes an account in your domain
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        myapps.delete('jsmith')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000268-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000268-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 295</span>&#x000A;295:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_user</span>(<span class="ruby-identifier">username</span>)&#x000A;296:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_delete</span>,<span class="ruby-identifier">username</span>,<span class="ruby-ivar">@headers</span>)&#x000A;297:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000322'>
+                <a name='M000322'></a>
+                <div class='synopsis'>
+                  <span class='name'>isMember</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000291">is_member</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000326'>
+                <a name='M000326'></a>
+                <div class='synopsis'>
+                  <span class='name'>isOwner</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000295">is_owner</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000291'>
+                <a name='M000291'></a>
+                <div class='synopsis'>
+                  <span class='name'>is_member</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns true if the email address (user or group) is member of the group,
+                  false otherwise.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        boolean = myapps.is_member('example@otherdomain.com', 'mylist')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000291-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000291-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 481</span>&#x000A;481:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_member</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;482:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:membership_confirm</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/member/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">email_address</span>, <span class="ruby-ivar">@headers</span>)&#x000A;483:                         <span class="ruby-comment cmt"># if the email_address is not member of the group, an error is raised, otherwise true is returned </span>&#x000A;484:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>&#x000A;485: &#x000A;486:                         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">GDataError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>&#x000A;487:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">reason</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-value str">&quot;EntityDoesNotExist&quot;</span>)&#x000A;488:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000295'>
+                <a name='M000295'></a>
+                <div class='synopsis'>
+                  <span class='name'>is_owner</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns true if the email address (user or group) is owner of the group,
+                  false otherwise.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        boolean = myapps.is_owner('example@otherdomain.com', 'mylist')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000295-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000295-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 527</span>&#x000A;527:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_owner</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;528:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:ownership_confirm</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/owner/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">email_address</span>, <span class="ruby-ivar">@headers</span>)&#x000A;529:                         <span class="ruby-comment cmt"># if the email_address is not member of the group, an error is raised, otherwise true is returned </span>&#x000A;530:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>&#x000A;531: &#x000A;532:                         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">GDataError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>&#x000A;533:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">reason</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-value str">&quot;EntityDoesNotExist&quot;</span>)&#x000A;534:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000321'>
+                <a name='M000321'></a>
+                <div class='synopsis'>
+                  <span class='name'>removeMemberFromGroup</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000290">remove_member_from_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000325'>
+                <a name='M000325'></a>
+                <div class='synopsis'>
+                  <span class='name'>removeOwnerFromGroup</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000294">remove_owner_from_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000314'>
+                <a name='M000314'></a>
+                <div class='synopsis'>
+                  <span class='name'>removeRecipientFromEmailList</span>
+                  <span class='arguments'>(address,email_list)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000283">remove_address_from_email_list</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000283'>
+                <a name='M000283'></a>
+                <div class='synopsis'>
+                  <span class='name'>remove_address_from_email_list</span>
+                  <span class='arguments'>(address,email_list)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000283-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000283-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 400</span>&#x000A;400:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_address_from_email_list</span>(<span class="ruby-identifier">address</span>,<span class="ruby-identifier">email_list</span>)&#x000A;401:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;remove_address_from_email_list : deprecated. Please use Group management instead.&quot;</span>)&#x000A;402:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000290'>
+                <a name='M000290'></a>
+                <div class='synopsis'>
+                  <span class='name'>remove_member_from_group</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Removes an email address (user or group) from a mailing list. Omit
+                  &#8220;@mydomain.com&#8220; in the group name.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        myapps.remove_member_from_group('example@otherdomain.com', 'mygroup')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000290-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000290-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 473</span>&#x000A;473:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_member_from_group</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;474:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:membership_remove</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/member/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">email_address</span>,<span class="ruby-ivar">@headers</span>)&#x000A;475:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000294'>
+                <a name='M000294'></a>
+                <div class='synopsis'>
+                  <span class='name'>remove_owner_from_group</span>
+                  <span class='arguments'>(email_address, group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Removes an owner from a mailing list. Omit &#8220;@mydomain.com&#8220; in
+                  the group name. ATTENTION: when a owner is removed, it loses the privileges
+                  but still remains member of the group!
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        myapps.remove_owner_from_group('example@otherdomain.com', 'mygroup')</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000294-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000294-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 519</span>&#x000A;519:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_owner_from_group</span>(<span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">group_id</span>)&#x000A;520:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:ownership_remove</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/owner/'</span><span class="ruby-operator">+</span><span class="ruby-identifier">email_address</span>,<span class="ruby-ivar">@headers</span>)&#x000A;521:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000302'>
+                <a name='M000302'></a>
+                <div class='synopsis'>
+                  <span class='name'>renameUser</span>
+                  <span class='arguments'>(username, new_username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000265">rename_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000265'>
+                <a name='M000265'></a>
+                <div class='synopsis'>
+                  <span class='name'>rename_user</span>
+                  <span class='arguments'>(username, new_username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Renames a user, returns a <a href="UserEntry.html">UserEntry</a> instance
+                  </p>
+                  <pre>ex :&#x000A;&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        user = myapps.rename_user('jsmith','jdoe')&#x000A;&#x000A;It is recommended to log out rhe user from all browser sessions and service before renaming.&#x000A; Once renamed, the old username becomes a nickname of the new username.&#x000A;Note from Google: Google Talk will lose all remembered chat invitations after renaming.&#x000A;The user must request permission to chat with friends again.&#x000A;Also, when a user is renamed, the old username is retained as a nickname to ensure continuous mail delivery in the case of email forwarding settings.&#x000A;To remove the nickname, you should issue an HTTP DELETE to the nicknames feed after renaming.</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000265-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000265-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 258</span>&#x000A;258:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rename_user</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">new_username</span>)&#x000A;259:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;260:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">new_username</span>)&#x000A;261:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">add_path</span>(<span class="ruby-value str">'https://'</span><span class="ruby-operator">+</span><span class="ruby-ivar">@@google_host</span><span class="ruby-operator">+</span><span class="ruby-ivar">@action</span>[<span class="ruby-identifier">:user_rename</span>][<span class="ruby-identifier">:path</span>]<span class="ruby-operator">+</span><span class="ruby-identifier">username</span>)&#x000A;262:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_update</span>,<span class="ruby-identifier">username</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;263:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000304'>
+                <a name='M000304'></a>
+                <div class='synopsis'>
+                  <span class='name'>restoreUser</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000267">restore_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000267'>
+                <a name='M000267'></a>
+                <div class='synopsis'>
+                  <span class='name'>restore_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Restores a suspended account in your domain, returns a <a
+                  href="UserEntry.html">UserEntry</a> instance
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        user = myapps.restore('jsmith')&#x000A;        puts user.suspended               =&gt; &quot;false&quot;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000267-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000267-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 283</span>&#x000A;283:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_user</span>(<span class="ruby-identifier">username</span>)&#x000A;284:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;285:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">username</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-value str">&quot;false&quot;</span>)&#x000A;286:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">add_path</span>(<span class="ruby-value str">'https://'</span><span class="ruby-operator">+</span><span class="ruby-ivar">@@google_host</span><span class="ruby-operator">+</span><span class="ruby-ivar">@action</span>[<span class="ruby-identifier">:user_update</span>][<span class="ruby-identifier">:path</span>]<span class="ruby-operator">+</span><span class="ruby-identifier">username</span>)&#x000A;287:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_update</span>,<span class="ruby-identifier">username</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;288:                         <span class="ruby-identifier">user_entry</span> = <span class="ruby-constant">UserEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;289:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000319'>
+                <a name='M000319'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllGroups</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000288">retrieve_all_groups</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000323'>
+                <a name='M000323'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllMembers</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000292">retrieve_all_members</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000309'>
+                <a name='M000309'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllNicknames</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000271">retrieve_all_nicknames</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000327'>
+                <a name='M000327'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllOwners</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000296">retrieve_all_owners</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000312'>
+                <a name='M000312'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllRecipients</span>
+                  <span class='arguments'>(email_list)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000280">retrieve_all_recipients</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000299'>
+                <a name='M000299'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveAllUsers</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000261">retrieve_all_users</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000318'>
+                <a name='M000318'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveGroups</span>
+                  <span class='arguments'>(user)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000287">retrieve_groups</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000307'>
+                <a name='M000307'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveNickname</span>
+                  <span class='arguments'>(nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000269">retrieve_nickname</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000308'>
+                <a name='M000308'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveNicknames</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000270">retrieve_nicknames</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000310'>
+                <a name='M000310'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrievePageOfNicknames</span>
+                  <span class='arguments'>(start_nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000274">retrieve_page_of_nicknames</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000313'>
+                <a name='M000313'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrievePageOfRecipients</span>
+                  <span class='arguments'>(email_list, start_recipient)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a
+                  href="ProvisioningApi.html#M000281">retrieve_page_of_recipients</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000300'>
+                <a name='M000300'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrievePageOfUsers</span>
+                  <span class='arguments'>(start_username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000262">retrieve_page_of_users</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000298'>
+                <a name='M000298'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieveUser</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000260">retrieve_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000276'>
+                <a name='M000276'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_email_lists</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000276-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000276-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 365</span>&#x000A;365:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_email_lists</span>&#x000A;366:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;retrieve_all_email_lists : deprecated. Please use Group management instead.&quot;</span>)&#x000A;367:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000288'>
+                <a name='M000288'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_groups</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="GroupEntry.html">GroupEntry</a> array for the whole
+                  domain.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        all_lists = myapps.retrieve_all_groups&#x000A;        all_lists.each {|list| puts list.group_id }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000288-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000288-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 451</span>&#x000A;451:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_groups</span>&#x000A;452:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:all_groups_retrieve</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-ivar">@headers</span>)&#x000A;453:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>], <span class="ruby-constant">GroupEntry</span>) &#x000A;454:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">list_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">GroupEntry</span>)&#x000A;455:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000292'>
+                <a name='M000292'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_members</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="MemberEntry.html">MemberEntry</a> array with the members
+                  of a group.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        list = myapps.retrieve_all_members('mygroup')&#x000A;        lists.each {|list| puts list.member_id }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000292-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000292-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 495</span>&#x000A;495:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_members</span>(<span class="ruby-identifier">group_id</span>)&#x000A;496:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:all_members_retrieve</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/member'</span>, <span class="ruby-ivar">@headers</span>)&#x000A;497:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>], <span class="ruby-constant">MemberEntry</span>)&#x000A;498:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">list_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">MemberEntry</span>)&#x000A;499:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000271'>
+                <a name='M000271'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_nicknames</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="NicknameEntry.html">NicknameEntry</a> array for the
+                  whole domain. May take a while depending on the number of users in your
+                  domain.
+                  </p>
+                  <pre>myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;allnicks = myapps.retrieve_all_nicknames&#x000A;allnicks.each {|nick| puts nick.nickname }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000271-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000271-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 324</span>&#x000A;324:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_nicknames</span>&#x000A;325:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_retrieve_all_in_domain</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-ivar">@headers</span>)&#x000A;326:                         <span class="ruby-identifier">nicknames_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">NicknameEntry</span>)&#x000A;327:                         <span class="ruby-identifier">nicknames_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">nicknames_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">NicknameEntry</span>)&#x000A;328:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000296'>
+                <a name='M000296'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_owners</span>
+                  <span class='arguments'>(group_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="OwnerEntry.html">OwnerEntry</a> array with the owners of
+                  a group.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        list = myapps.retrieve_all_owners('mygroup')&#x000A;        lists.each {|list| puts list.owner_id }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000296-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000296-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 541</span>&#x000A;541:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_owners</span>(<span class="ruby-identifier">group_id</span>)&#x000A;542:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:all_owners_retrieve</span>, <span class="ruby-identifier">group_id</span><span class="ruby-operator">+</span><span class="ruby-value str">'/owner'</span>, <span class="ruby-ivar">@headers</span>)&#x000A;543:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>], <span class="ruby-constant">OwnerEntry</span>)&#x000A;544:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">list_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">OwnerEntry</span>)&#x000A;545:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000280'>
+                <a name='M000280'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_recipients</span>
+                  <span class='arguments'>(email_list)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000280-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000280-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 385</span>&#x000A;385:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_recipients</span>(<span class="ruby-identifier">email_list</span>)&#x000A;386:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;retrieve_all_recipients : deprecated. Please use Group management instead.&quot;</span>)&#x000A;387:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000261'>
+                <a name='M000261'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_all_users</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="UserEntry.html">UserEntry</a> array populated with all
+                  the users in the domain. May take a while depending on the number of users
+                  in your domain.
+                  </p>
+                  <pre>ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                list= myapps.retrieve_all_users&#x000A;                list.each{ |user| puts user.username}&#x000A;                puts 'nb users : ',list.size</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000261-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000261-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 186</span>&#x000A;186:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_all_users</span>&#x000A;187:                         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_retrieve_all</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-ivar">@headers</span>)&#x000A;188:                         <span class="ruby-identifier">user_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">UserEntry</span>)&#x000A;189:                         <span class="ruby-identifier">user_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">user_feed</span>, <span class="ruby-identifier">response</span>, <span class="ruby-constant">UserEntry</span>)&#x000A;190:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000275'>
+                <a name='M000275'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_email_lists</span>
+                  <span class='arguments'>(email_adress)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000275-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000275-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 360</span>&#x000A;360:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_email_lists</span>(<span class="ruby-identifier">email_adress</span>)&#x000A;361:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;retrieve_email_lists : deprecated. Please use Group management instead.&quot;</span>)&#x000A;362:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000287'>
+                <a name='M000287'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_groups</span>
+                  <span class='arguments'>(user)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="GroupEntry.html">GroupEntry</a> array for a particular
+                  member of the domain (ATTENTION: it doesn&#8217;t work for members of other
+                  domains!). The user parameter can be a complete email address or can be
+                  written without &#8220;@mydomain.com&#8220;.
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        mylists = myapps.retrieve_groups('jsmith')   # you can search for 'jsmith@mydomain.com' too&#x000A;        mylists.each {|list| puts list.group_id }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000287-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000287-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 440</span>&#x000A;440:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_groups</span>(<span class="ruby-identifier">user</span>)&#x000A;441:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:groups_retrieve</span>, <span class="ruby-identifier">user</span>, <span class="ruby-ivar">@headers</span>)&#x000A;442:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>], <span class="ruby-constant">GroupEntry</span>) &#x000A;443:                         <span class="ruby-identifier">list_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">list_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">GroupEntry</span>)&#x000A;444:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000269'>
+                <a name='M000269'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_nickname</span>
+                  <span class='arguments'>(nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="NicknameEntry.html">NicknameEntry</a> instance from a
+                  nickname
+                  </p>
+                  <pre>ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                nickname = myapps.retrieve_nickname('jsmith')&#x000A;                puts &quot;login : &quot;+nickname.login</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000269-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000269-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 304</span>&#x000A;304:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_nickname</span>(<span class="ruby-identifier">nickname</span>)&#x000A;305:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_retrieve</span>, <span class="ruby-identifier">nickname</span>, <span class="ruby-ivar">@headers</span>)&#x000A;306:                         <span class="ruby-identifier">nickname_entry</span> = <span class="ruby-constant">NicknameEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;307:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000270'>
+                <a name='M000270'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_nicknames</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="NicknameEntry.html">NicknameEntry</a> array from a
+                  username
+                  </p>
+                  <pre>ex : lists jsmith's nicknames&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        mynicks = myapps.retrieve('jsmith')&#x000A;        mynicks.each {|nick| puts nick.nickname }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000270-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000270-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 314</span>&#x000A;314:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_nicknames</span>(<span class="ruby-identifier">username</span>)&#x000A;315:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_retrieve_all_for_user</span>, <span class="ruby-identifier">username</span>, <span class="ruby-ivar">@headers</span>)&#x000A;316:                         <span class="ruby-identifier">nicknames_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">NicknameEntry</span>)&#x000A;317:                         <span class="ruby-identifier">nicknames_feed</span> = <span class="ruby-identifier">add_next_feeds</span>(<span class="ruby-identifier">nicknames_feed</span>, <span class="ruby-identifier">xml_response</span>, <span class="ruby-constant">NicknameEntry</span>)&#x000A;318:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000277'>
+                <a name='M000277'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_page_of_email_lists</span>
+                  <span class='arguments'>(start_listname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000277-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000277-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 370</span>&#x000A;370:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_page_of_email_lists</span>(<span class="ruby-identifier">start_listname</span>)&#x000A;371:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;retrieve_page_of_email_lists : deprecated. Please use Group management instead.&quot;</span>)&#x000A;372:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000274'>
+                <a name='M000274'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_page_of_nicknames</span>
+                  <span class='arguments'>(start_nickname)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="NicknameEntry.html">NicknameEntry</a> array populated
+                  with 100 nicknames, starting from a nickname
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        list= myapps.retrieve_page_of_nicknames(&quot;joe&quot;)&#x000A;        list.each{ |nick| puts nick.login}</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000274-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000274-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 353</span>&#x000A;353:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_page_of_nicknames</span>(<span class="ruby-identifier">start_nickname</span>)&#x000A;354:                         <span class="ruby-identifier">param</span>=<span class="ruby-value str">'?startNickname='</span><span class="ruby-operator">+</span><span class="ruby-identifier">start_nickname</span>&#x000A;355:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:nickname_retrieve_all_in_domain</span>, <span class="ruby-identifier">param</span>, <span class="ruby-ivar">@headers</span>)&#x000A;356:                         <span class="ruby-identifier">nicknames_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">NicknameEntry</span>)&#x000A;357:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000281'>
+                <a name='M000281'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_page_of_recipients</span>
+                  <span class='arguments'>(email_list, start_recipient)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deprecated. Please use Group management instead.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000281-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000281-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 390</span>&#x000A;390:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_page_of_recipients</span>(<span class="ruby-identifier">email_list</span>, <span class="ruby-identifier">start_recipient</span>)&#x000A;391:                         <span class="ruby-identifier">puts</span>(<span class="ruby-value str">&quot;Deprecated. Please use Group management instead.&quot;</span>)&#x000A;392:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000262'>
+                <a name='M000262'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_page_of_users</span>
+                  <span class='arguments'>(start_username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="UserEntry.html">UserEntry</a> array populated with 100
+                  users, starting from a username
+                  </p>
+                  <pre>ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                list= myapps.retrieve_page_of_users(&quot;jsmtih&quot;)&#x000A;        list.each{ |user| puts user.username}</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000262-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000262-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 197</span>&#x000A;197:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_page_of_users</span>(<span class="ruby-identifier">start_username</span>)&#x000A;198:                         <span class="ruby-identifier">param</span>=<span class="ruby-value str">'?startUsername='</span><span class="ruby-operator">+</span><span class="ruby-identifier">start_username</span>&#x000A;199:                         <span class="ruby-identifier">response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_retrieve_all</span>,<span class="ruby-identifier">param</span>,<span class="ruby-ivar">@headers</span>)&#x000A;200:                         <span class="ruby-identifier">user_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">UserEntry</span>)&#x000A;201:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000260'>
+                <a name='M000260'></a>
+                <div class='synopsis'>
+                  <span class='name'>retrieve_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns a <a href="UserEntry.html">UserEntry</a> instance from a username
+                  </p>
+                  <pre>ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                user = myapps.retrieve_user('jsmith')&#x000A;                puts &quot;givenName : &quot;+user.given_name&#x000A;                puts &quot;familyName : &quot;+user.family_name</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000260-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000260-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 175</span>&#x000A;175:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_user</span>(<span class="ruby-identifier">username</span>)&#x000A;176:                         <span class="ruby-identifier">xml_response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_retrieve</span>, <span class="ruby-identifier">username</span>, <span class="ruby-ivar">@headers</span>) &#x000A;177:                         <span class="ruby-identifier">user_entry</span> = <span class="ruby-constant">UserEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml_response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;178:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000303'>
+                <a name='M000303'></a>
+                <div class='synopsis'>
+                  <span class='name'>suspendUser</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000266">suspend_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000266'>
+                <a name='M000266'></a>
+                <div class='synopsis'>
+                  <span class='name'>suspend_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Suspends an account in your domain, returns a <a
+                  href="UserEntry.html">UserEntry</a> instance
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        user = myapps.suspend('jsmith')&#x000A;        puts user.suspended               =&gt; &quot;true&quot;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000266-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000266-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 270</span>&#x000A;270:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">suspend_user</span>(<span class="ruby-identifier">username</span>)&#x000A;271:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;272:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">username</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-value str">&quot;true&quot;</span>)&#x000A;273:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">add_path</span>(<span class="ruby-value str">'https://'</span><span class="ruby-operator">+</span><span class="ruby-ivar">@@google_host</span><span class="ruby-operator">+</span><span class="ruby-ivar">@action</span>[<span class="ruby-identifier">:user_update</span>][<span class="ruby-identifier">:path</span>]<span class="ruby-operator">+</span><span class="ruby-identifier">username</span>)&#x000A;274:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_update</span>,<span class="ruby-identifier">username</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;275:                         <span class="ruby-identifier">user_entry</span> = <span class="ruby-constant">UserEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;276:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000316'>
+                <a name='M000316'></a>
+                <div class='synopsis'>
+                  <span class='name'>updateGroup</span>
+                  <span class='arguments'>(group_id, properties)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000285">update_group</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000301'>
+                <a name='M000301'></a>
+                <div class='synopsis'>
+                  <span class='name'>updateUser</span>
+                  <span class='arguments'>(username, given_name, family_name, password=nil, passwd_hash_function=nil, admin=nil, suspended=nil, changepasswd=nil, quota=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Alias for <a href="ProvisioningApi.html#M000264">update_user</a>
+                  </p>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000285'>
+                <a name='M000285'></a>
+                <div class='synopsis'>
+                  <span class='name'>update_group</span>
+                  <span class='arguments'>(group_id, properties)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Updates a group in your domain and returns a <a
+                  href="GroupEntry.html">GroupEntry</a> (ATTENTION: the group name is
+                  necessary!).
+                  </p>
+                  <pre>ex :&#x000A;        myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;        group= myapps.update_group(&quot;mygroup&quot;, [&quot;My Group name&quot;, &quot;My Group description&quot;, &quot;&lt;emailPermission&gt;&quot;])</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000285-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000285-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 419</span>&#x000A;419:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_group</span>(<span class="ruby-identifier">group_id</span>, <span class="ruby-identifier">properties</span>)&#x000A;420:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;421:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_group</span>(<span class="ruby-identifier">group_id</span>, <span class="ruby-identifier">properties</span>)&#x000A;422:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:group_update</span>, <span class="ruby-identifier">group_id</span>, <span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;423:                         <span class="ruby-identifier">group_entry</span> = <span class="ruby-constant">GroupEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;424:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000264'>
+                <a name='M000264'></a>
+                <div class='synopsis'>
+                  <span class='name'>update_user</span>
+                  <span class='arguments'>(username, given_name, family_name, password=nil, passwd_hash_function=nil, admin=nil, suspended=nil, changepasswd=nil, quota=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Updates an account in your domain, returns a <a
+                  href="UserEntry.html">UserEntry</a> instance
+                  </p>
+                  <pre>params :&#x000A;                username is required and can't be updated.&#x000A;                given_name and family_name are required, may be updated.&#x000A;                if set to nil, every other parameter won't update the attribute.&#x000A;                        passwd_hash_function :  string &quot;SHA-1&quot;, &quot;MD5&quot; or nil (default)&#x000A;                        admin :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false).&#x000A;                        suspended :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false)&#x000A;                        change_passwd :  string &quot;true&quot; or string &quot;false&quot; or nil (no boolean : true or false)&#x000A;                        quota : limit en MB, ex :  string &quot;2048&quot;&#x000A;        ex :&#x000A;                myapps = ProvisioningApi.new('root@mydomain.com','PaSsWoRd')&#x000A;                user = myapps.update('jsmith', 'John', 'Smith', nil, nil, &quot;true&quot;, nil, &quot;true&quot;, nil)&#x000A;                puts user.admin           =&gt; &quot;true&quot;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000264-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000264-source'>     <span class="ruby-comment cmt"># File lib/gappsprovisioning/provisioningapi.rb, line 236</span>&#x000A;236:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_user</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">given_name</span>, <span class="ruby-identifier">family_name</span>, <span class="ruby-identifier">password</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">passwd_hash_function</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">admin</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">suspended</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">changepasswd</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">quota</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;237:                         <span class="ruby-identifier">msg</span> = <span class="ruby-constant">RequestMessage</span>.<span class="ruby-identifier">new</span>&#x000A;238:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_login</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">password</span>,<span class="ruby-identifier">passwd_hash_function</span>,<span class="ruby-identifier">admin</span>,<span class="ruby-identifier">suspended</span>, <span class="ruby-identifier">changepasswd</span>)&#x000A;239:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_name</span>(<span class="ruby-identifier">family_name</span>, <span class="ruby-identifier">given_name</span>)&#x000A;240:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">about_quota</span>(<span class="ruby-identifier">quota</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">quota</span>&#x000A;241:                         <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">add_path</span>(<span class="ruby-value str">'https://'</span><span class="ruby-operator">+</span><span class="ruby-ivar">@@google_host</span><span class="ruby-operator">+</span><span class="ruby-ivar">@action</span>[<span class="ruby-identifier">:user_update</span>][<span class="ruby-identifier">:path</span>]<span class="ruby-operator">+</span><span class="ruby-identifier">username</span>)&#x000A;242:                         <span class="ruby-identifier">response</span>  = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_update</span>,<span class="ruby-identifier">username</span>,<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">to_s</span>)&#x000A;243:                         <span class="ruby-identifier">user_entry</span> = <span class="ruby-constant">UserEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;entry&quot;</span>])&#x000A;244:                 <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

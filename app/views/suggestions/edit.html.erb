@@ -1,0 +1,26 @@
+<% content_for :title, 'Edit Suggestion' %>
+<h1>Editing Suggestion</h1>
+
+<% form_for([@suggestion]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment, :size => "80x10"  %>
+  </p>
+  <% if !logged_in?  %>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <% end %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<p>
+<%= link_to 'Show', :action => 'show', :id => @suggestion %> |
+<%= link_to 'Back', suggestions_path %>
+</p>

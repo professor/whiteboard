@@ -1,0 +1,203 @@
+
+
+div.left_nav {
+    background-color: #f3f0e9;
+    width: 170px;
+    margin-left:8px;
+    margin-bottom: 8px;
+}
+
+div.left_nav_line {
+    font-family: Helvetica,sans-serif;
+    font-size: 15px;
+    padding: 10px 7px 0px 8px;
+}
+
+
+div.left_nav a{color:#990000; text-decoration:none; font-weight:normal; padding-top: 10px; margin-top: 20px;}
+
+div.course {
+    background-color: #f3f0e9;
+    color: #990000;
+    font-size: 11px;
+    font-family: Arial, Verdana, Helvetica,sans-serif;
+    padding: 10px 0px 10px 10px;
+    width: 240px;
+    margin-left:8px;
+}
+
+div.course_line {
+    height: 17px;
+}
+
+div.course a{color:#4B4B4B; text-decoration:none; font-weight:normal; padding-top: 10px; margin-top: 20px;}
+div.course a.active{color:#990000; text-decoration:none; font-weight:normal; padding-top: 10px; margin-top: 20px;}
+
+
+td.note_top {
+    background-image: url(../cmu_sv_simple/content_top.gif); background-repeat: no-repeat;
+    height: 18px;
+    width: 727px;
+    padding: 0px;
+}
+td.note_body {
+    background-image: url(../cmu_sv_simple/content_body.gif); background-repeat: repeat-y;
+    padding-left: 22px;
+    padding-right: 22px;
+    width: 687px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#424545;
+    }
+td.note_bottom {
+    background-image: url(../cmu_sv_simple/content_bot.gif); background-repeat: no-repeat;
+    height: 15px;
+    width: 727px;
+    padding: 0px;
+}
+
+
+
+
+td.course_content_top {
+    background-color: #f3f0e9;
+    height: 18px;
+    width: 727px;
+    padding: 0px;
+}
+td.course_content_body {
+    background-color: #f3f0e9;
+    padding-left: 22px;
+    padding-right: 22px;
+    width: 687px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#424545;
+    }
+td.course_content_bottom {
+    background-color: #f3f0e9;
+    height: 15px;
+    width: 727px;
+    padding: 0px;
+}
+
+
+
+
+
+div.note_top {
+    background-image: url(../cmu_sv_simple/content_top.gif); background-repeat: no-repeat;
+    height: 18px;
+}
+div.note_body {
+    background-image: url(../cmu_sv_simple/content_body.gif); background-repeat: repeat-y;
+    padding-left: 22px;
+    padding-right: 22px;
+    margin-top: -13px;
+    width: 687px;
+    float: none;
+    clear: none;
+    }
+div.note_bottom {
+    background-image: url(../cmu_sv_simple/content_bot.gif); background-repeat: no-repeat;
+    height: 15px;
+}
+
+.suggestion {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+body {
+    margin:0;
+    overflow:visible;
+/*    overflow:hidden; */
+    padding:0;
+    background-color:white;
+    border:10px none;
+}
+
+#gbar, #guser {
+    font-family:Arial,Sans-serif;
+    font-size:13px;
+    padding-right:8px;
+    padding-top:4px !important;
+}
+
+#gbar {
+    float:left;
+    height:22px;
+    padding-left:8px;
+}
+
+#guser {
+    padding-bottom:7px !important;
+    text-align:right;
+    float:right;
+    padding:5px 5px 0;
+    white-space:nowrap;
+}
+
+a.gb1, a.gb2, a.gb3 {
+    color:#0000CC !important;
+}
+
+.gb1, .gb3 {
+    margin-right: 0.5em;
+}
+
+.gbh {
+height:0;
+position:absolute;
+top:24px;
+width:100%;
+}
+
+.gbh, .gbd {
+    border-top:1px solid #C9D7F1;
+    font-size:1px;
+}
+
+.searchbar {
+padding:8px 0 8px 1ex;
+}
+
+
+
+/*ADMIN 2 Column Level Template Content Area */
+/* .admin_2ColLevelContentBG{background-image: url(https://www.cmu.edu/common/images/lvl_2colContentBG.gif); background-repeat: repeat-y;} */
+.admin_2ColLevelContentBG{background-image: url(lvl_2colContentBG.gif); background-repeat: repeat-y;}
+.admin_2ColLevelContentBG_Plain{background-color: #ffffff;}
+.admin_2ColLevelContent_Padding{margin:0px 0px 0px 0px; padding:0px 20px 5px 22px;}
+.admin_2ColLevelContent_Padding_Plain{margin:0px 0px 0px 0px; padding:0px 20px 5px 22px;}
+#admin_2ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545; padding:0px; margin:0px; overflow:hidden;} /* Todd removed width:685px; */
+
+#admin_2ColLevelContent img{padding:3px; border:0px;}
+#admin_2ColLevelContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545;text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_2ColLevelContent a{color:#D17702; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:hover{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:visited{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent ol{list-style-position:outside; margin:4px 0px 9px 0px; padding-left: 25px;}
+#admin_2ColLevelContent ul{list-style-position:outside; list-style:disc; margin:4px 0px 9px 0px; padding-left: 25px;}
+#admin_2ColLevelContent li{padding:0px 0px 1px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; margin-top:1px;}
+#admin_2ColLevelContent h1{font-family:Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent hr{background-color:#424545; color:#424545; height:1px; line-height:1px; margin-bottom:5px; font-size:0px; border:0px;}
+#admin_2ColLevelContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent input.radio {width:auto;}
+#admin_2ColLevelContent input.checkbox {width:auto;}
+#admin_2ColLevelContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent div.hr {height: 28px; background: url(http://www.cmu.edu/common/images/lvl_2colHorizontalRule.gif) no-repeat;}
+#admin_2ColLevelContent div.hr hr {display:none;}
+
+/*Admin Footer 2 Column Layout*/
+.footer_admin_level_Padding{margin:19px 0px 5px 0px; padding:0px 22px 0px 25px;}
+#footer_admin_level{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#626262; width:687px; overflow:hidden;}
+#footer_admin_level a, #footer_admin_level a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:underline; font-weight:normal;}
+#footer_admin_level a:hover, #footer_admin_level a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#footer_admin_level p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:none; font-weight:normal; margin:0px; padding:0px 0px 10px 0px;}
+

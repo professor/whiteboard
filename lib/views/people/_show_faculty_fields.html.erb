@@ -1,0 +1,31 @@
+  <fieldset>
+    <legend>Student information</legend>
+  <div class="formItem">
+    <%= f.label :graduation_year, "Graduation year (or class identifier)" %>
+    <%= f.text_field :graduation_year, :disabled=>'disabled' %><br/>
+    <span class="help_text">ie 2020, MSIT-28</span>
+  </div>
+  <div class="formItem">
+    <%= f.label :masters_program, "Graduate program" %>
+    <%= f.text_field :masters_program, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :masters_track, "Graduate track" %>
+    <%= f.text_field :masters_track, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :is_part_time, "Is part time student?" %>
+    <%= f.check_box :is_part_time, :disabled=>'disabled' %>
+  </div>
+  </fieldset>
+  <fieldset>
+    <legend>Faculty information</legend>
+  <div class="formItem">
+    <%= f.label :office, "Office number" %>
+    <%= f.text_field :office, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :office_hours %>
+    <%= f.text_field :office_hours, :disabled=>'disabled' %>
+  </div>
+  </fieldset>

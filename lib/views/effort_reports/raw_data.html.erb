@@ -1,0 +1,4 @@
+year, week_number, human_name, task, time, course_id<br>
+<% @report_lines.each do |item| %>
+<%= item.year%>, <%= item.week_number %>, <%= item.human_name %>, <%= item.name %>, <%= item.sum %>, <%= item.course_id %><br>
+<% end  %>

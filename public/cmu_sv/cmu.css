@@ -1,0 +1,980 @@
+/* General Styles */
+body
+{
+margin:0px;
+padding:0px;
+background-color:#FFFFFF;
+font-size:10px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+color:#000000;
+text-decoration:none; 
+font-weight:normal;
+}
+
+.printlogo{display:none;}
+
+.noDisplay{display:none;}
+
+td.blankBG{background-color:#FFFFFF;}
+
+form {margin: 0px;}
+
+.overflow{overflow:hidden !important;}
+
+.clear{clear:both;}
+
+/* Level Left Navigation */
+
+
+div.Lv1Nav
+{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+margin: 0px 0px 0px 0px;
+padding:4px 15px 4px 0px;
+font-weight:normal;
+list-style:none;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+}
+a.Lv1NavLink:link, a.Lv1NavLink:visited, a.Lv1NavLink:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv1NavLink:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:normal;}
+
+
+div.Lv1NavOn
+{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+margin: 0px 0px 0px 0px;
+padding:4px 15px 4px 0px;
+font-weight:bold;
+list-style:none;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+}
+a.Lv1NavOnLink:link, a.Lv1NavOnLink:visited, a.Lv1NavOnLink:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:bold;}
+a.Lv1NavOnLink:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:bold;}
+
+
+
+/* Level 2 NAV */
+
+
+div.Lv2Nav
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 10px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:207px;
+vertical-align:top;
+overflow:hidden;
+}
+a.Lv2NavLink:link, a.Lv2NavLink:visited, a.Lv2NavLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv2NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.Lv2NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#990000;
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 10px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:207px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv2NavOnLink:link, a.Lv2NavOnLink:visited, a.Lv2NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv2NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+/* Level 3 NAV */
+
+
+
+div.Lv3NavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+margin: 0px 0px 0px 0px;
+padding:2px 22px 2px 10px;
+font-weight:bold;
+list-style:none;
+width:232px;
+wid\th:190px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv3NavHeaderLink:link, a.Lv3NavHeaderLink:visited, a.Lv3NavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.Lv3NavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+
+div.Lv3NavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNavHeader_BG.gif);
+background-position: left center;
+background-repeat: no-repeat;
+background-color:#DDDDDD;
+margin: 0px 0px 0px 0px;
+padding:3px 22px 3px 10px;
+font-weight:normal;
+list-style:none;
+width:197px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv3NavHeaderOnLink:link, a.Lv3NavHeaderOnLink:visited, a.Lv3NavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.Lv3NavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+
+div.Lv3Nav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 20px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv3NavLink:link, a.Lv3NavLink:visited, a.Lv3NavLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv3NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv3NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#990000;
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 20px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv3NavOnLink:link, a.Lv3NavOnLink:visited, a.Lv3NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv3NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+/* Level 4 NAV */
+
+
+
+div.Lv4NavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 20px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv4NavHeaderLink:link, a.Lv4NavHeaderLink:visited, a.Lv4NavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv4NavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.Lv4NavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNavHeader_BG.gif);
+background-position: left center;
+background-repeat: no-repeat;
+background-color:#DDDDDD;
+margin: 0px 0px 0px 0px;
+padding:3px 0px 3px 20px;
+font-weight:normal;
+list-style:none;
+width:207px;
+wid\th:207px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv4NavHeaderOnLink:link, a.Lv4NavHeaderOnLink:visited, a.Lv4NavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv4NavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv4Nav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 15px 3px 30px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv4NavLink:link, a.Lv4NavLink:visited, a.Lv4NavLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv4NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv4NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#990000;
+background-image: url(http://www.cmu.edu/common/images/LvFourNav_BG.gif);
+background-repeat: no-repeat;
+margin: 0px 0px 0px 0px;
+padding:3px 0px 3px 30px;
+font-weight:normal;
+list-style:none;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv4NavOnLink:link, a.Lv4NavOnLink:visited, a.Lv4NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv4NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+/* Level 5 NAV */
+
+
+div.Lv5NavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+margin: 0px 0px 0px 0px;
+padding:3px 0px 3px 30px;
+font-weight:normal;
+list-style:none;
+width:197px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv5NavHeaderLink:link, a.Lv5NavHeaderLink:visited, a.Lv5NavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv5NavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv5NavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNavHeader_BG.gif);
+background-position: left center;
+background-repeat: no-repeat;
+background-color:#DDDDDD;
+margin: 0px 0px 0px 0px;
+padding:3px 0px 3px 30px;
+font-weight:normal;
+list-style:none;
+width:197px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv5NavHeaderOnLink:link, a.Lv5NavHeaderOnLink:visited, a.Lv5NavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv5NavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv5Nav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image:url(http://www.cmu.edu/common/images/LvFiveNav_Bullet.gif);
+background-repeat:no-repeat;
+background-position:top left;
+margin: 0px 20px 1px 20px;
+padding: 3px 20px 3px 15px;
+line-height: 14px;
+font-weight:normal;
+vertical-align:top;overflow:hidden;
+width:187px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv5NavLink:link, a.Lv5NavLink:visited, a.Lv5NavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv5NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv5NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNav_Bullet.gif);
+background-repeat: no-repeat;
+background-color:#EEEEEE;
+margin: 0px 20px 1px 20px;
+padding: 3px 20px 3px 15px;
+line-height: 13px;
+font-weight:bold;
+list-style:none;
+width:227px;
+wid\th:227px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv5NavOnLink:link, a.Lv5NavOnLink:visited, a.Lv5NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.Lv5NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+/* Use "div.Lv5NavContainer" from level 5 nav through level 7 nav */
+
+
+div.Lv5NavContainer
+{
+background-color:#EEEEEE;
+margin: 3px 0px 3px 0px;
+padding:7px 0px 4px 0px;
+list-style-type:none;
+width: 227px;
+wid\th:227px;
+vertical-align:top;overflow:hidden;
+}
+
+
+/* Level 6 NAV */
+
+
+div.Lv6NavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+margin: 0px 0px 0px 0px;
+padding:2px 0px 2px 50px;
+font-weight:normal;
+list-style:none;
+width:177px;
+wid\th:177px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv6NavHeaderLink:link, a.Lv6NavHeaderLink:visited, a.Lv6NavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv6NavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv6NavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+margin: 0px 0px 0px 0px;
+padding:2px 0px 2px 50px;
+font-weight:bold;
+list-style:none;
+width:177px;
+wid\th:177px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv6NavHeaderOnLink:link, a.Lv6NavHeaderOnLink:visited, a.Lv6NavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:bold;}
+a.Lv6NavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+div.Lv6Nav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+margin: 0px 0px 0px 0px;
+padding:2px 10px 2px 50px;
+line-height: 11px;
+font-weight:normal;
+list-style:none;
+width:177px;
+wid\th:177px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv6NavLink:link, a.Lv6NavLink:visited, a.Lv6NavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv6NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv6NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+margin: 0px 0px 0px 0px;
+padding:2px 10px 2px 50px;
+line-height: 11px;
+font-weight:bold;
+list-style:none;
+width:177px;
+wid\th:177px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv6NavOnLink:link, a.Lv6NavOnLink:visited, a.Lv6NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.Lv6NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+/* Level 7 NAV */
+
+
+div.Lv7NavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image:url(http://www.cmu.edu/common/images/LvSevenNav_Bullet.gif);
+background-repeat:no-repeat;
+background-position:center left;
+margin: 0px 0px 0px 50px;
+padding:2px 0px 2px 10px;
+font-weight:normal;
+list-style:none;
+width:157px;
+wid\th:157px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv7NavHeaderLink:link, a.Lv7NavHeaderLink:visited, a.Lv7NavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.Lv7NavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv7NavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image:url(http://www.cmu.edu/common/images/LvSevenNav_Bullet.gif);
+background-repeat:no-repeat;
+background-position:center left;
+margin: 0px 10px 0px 50px;
+padding:2px 10px 2px 10px;
+font-weight:bold;
+list-style:none;
+width:157px;
+wid\th:157px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv7NavHeaderOnLink:link, a.Lv7NavHeaderOnLink:visited, a.Lv7NavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:bold;}
+a.Lv7NavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+
+div.Lv7Nav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+margin: 0px 0px 0px 0px;
+padding:2px 10px 2px 60px;
+line-height: 11px;
+font-weight:normal;
+list-style:none;
+width:157px;
+wid\th:157px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv7NavLink:link, a.Lv7NavLink:visited, a.Lv7NavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.Lv7NavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.Lv7NavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+margin: 0px 0px 0px 0px;
+padding:2px 10px 2px 60px;
+line-height: 11px;
+font-weight:bold;
+list-style:none;
+width:157px;
+wid\th:157px;
+vertical-align:top;overflow:hidden;
+}
+a.Lv7NavOnLink:link, a.Lv7NavOnLink:visited, a.Lv7NavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.Lv7NavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:bold;}
+
+.level_ContentColumnBG {background-color:#FFFFFF;}
+
+/*ADMIN TEMPLATE Styles*/
+.admin_topredbar{background-color:#990000;}
+.admin_topred_BG{vertical-align:middle; background-color:#990000; margin:0px; padding:0px; width:748px;}
+.admin_searchtextBG{vertical-align:middle; background-color:#990000;}
+.admin_search{padding:4px 0px 3px 0px;}
+#admin_searchtext{vertical-align:middle; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#FFFFFF; width:538px; overflow:hidden;}
+#admin_searchtext a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal;}
+#admin_searchtext a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal;}
+#admin_searchtext a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal;}
+#admin_searchtext a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal;}
+#admin_searchtext input.checkbox{vertical-align:middle; width:auto; background-color:transparent;}
+
+.admin_inputLabel{vertical-align:middle; text-align:left;}
+input.admin_searchInputStyle{vertical-align:bottom; width:112px; height:17px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; padding:4px 0px 0px 0px;}
+.admin_searchgo{vertical-align:top; width:21px; height:18px; border:0px; padding:1px 0px 0px 0px;}
+
+/*
+.admin_level_leftnav_bg{background-image: url(https://www.cmu.edu/common/images/admin_level_leftnav_bg.gif); background-repeat: repeat-y;}
+.admin_level_leftnav_UnitLogo_bg{background-image: url(https://www.cmu.edu/common/images/admin_level_leftnav_bg.gif); background-repeat: repeat-y;}
+*/
+.admin_level_leftnav_bg{background-image: url(admin_level_leftnav_bg.gif); background-repeat: repeat-y;}
+.admin_level_leftnav_UnitLogo_bg{background-image: url(admin_level_leftnav_bg.gif); background-repeat: repeat-y;}
+.admin_level_leftColumn{padding:5px 0px 10px 11px;}
+.admin_level_leftnav_divider{padding:5px 0px 0px 0px;}
+
+.admin_UnitLogo{padding:10px 19px 0px 11px; width:214px;}
+.admin_UnitLogoDivider{padding:10px 0px 0px 11px;}
+.admin_ContentAreaPosition {margin:0px; padding:0px;}
+
+
+/*ADMIN 3 Column Level Template Content Area*/
+.admin_3ColLevelContentBG{background-image: url(http://www.cmu.edu/common/images/lvl_3colContentBG.gif); background-repeat: repeat-y;}
+.admin_3ColLevelContentBG_Plain{background-color: #ffffff;}
+.admin_3ColLevelContentPadding{margin:0px 0px 0px 0px; padding:0px 20px 5px 22px;}
+.admin_3ColLevelContentPadding_Plain{margin:0px 0px 0px 0px; padding:0px 20px 5px 15px;}
+#admin_3ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545; background-color:transparent; text-decoration:none; font-weight:normal; padding:0px; margin:0px; width:434px; overflow:hidden;}
+#admin_3ColLevelContent img{padding:3px; border:0px;}
+#admin_3ColLevelContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_3ColLevelContent a{color:#D17702; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent a:hover{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent a:visited{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent ol{list-style-position:outside; margin: 4px 0px 9px 0px; padding-left: 25px;}
+#admin_3ColLevelContent ul{list-style-position:outside; list-style:disc; margin: 4px 0px 9px 0px; padding-left: 25px;}
+#admin_3ColLevelContent li{padding:0px 0px 1px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; margin-top:1px;}
+#admin_3ColLevelContent h1{font-family:Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent hr{background-color:#424545; color:#424545; height:1px; line-height:1px; margin-bottom:5px; font-size:0px; border:0px;}
+#admin_3ColLevelContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_3ColLevelContent input.radio {width:auto;}
+#admin_3ColLevelContent input.checkbox {width:auto;}
+#admin_3ColLevelContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_3ColLevelContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_3ColLevelContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_3ColLevelContent div.hr {height: 28px; background: url(http://www.cmu.edu/common/images/lvl_3colHorizontalRule.gif) no-repeat;}
+#admin_3ColLevelContent div.hr hr {display:none;}
+
+
+/*ADMIN 3rd COLUMN ELEMENTS*/
+.admin_3rdColumnContent_Padding{margin:0px 0px 0px 0px; padding:1px 0px 25px 0px;}
+.admin_3rdColumnContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545; background-color:transparent; text-decoration:none; font-weight:normal; padding:0px; margin:0px; width:225px; overflow:hidden;}
+.admin_3rdColumnContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; font-size:11px; text-decoration:none; font-weight:normal; border-color:#424545;}
+.admin_3rdColumnContent img{padding:0px; border:0px;}
+.admin_3rdColumnContent table{border-color:#424545;}
+.admin_3rdColumnContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; padding:0px 0px 12px 0px; margin:0px 0px 0px 0px;}
+.admin_3rdColumnContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#D17702; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#D17702; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent ol{list-style-position:outside; margin-top:4px; margin-bottom:9px;}
+.admin_3rdColumnContent ul{list-style-position:outside; list-style-type:disc; margin-top:4px; margin-bottom:9px;}
+.admin_3rdColumnContent li{padding:0px 0px 1px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; margin-top:1px;}
+.admin_3rdColumnContent h1{font-family:Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#990000; padding:0px; margin:0px 0px 10px 0px;}
+.admin_3rdColumnContent h2{font-family:Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#424545; padding:0px; margin:0px 0px 10px 0px;}
+.admin_3rdColumnContent h3{font-family:Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#424545; padding:0px; margin:10px 0px 10px 0px;}
+.admin_3rdColumnContent hr{background-color:#424545; color:#424545; height:1px; line-height:1px; margin-bottom:5px; font-size:0px; border:0px;}
+.admin_3rdColumnContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent input.radio {width:auto;}
+.admin_3rdColumnContent input.checkbox {width:auto;}
+.admin_3rdColumnContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+
+
+
+
+/*ADMIN 2 Column Level Template Content Area */
+/* .admin_2ColLevelContentBG{background-image: url(https://www.cmu.edu/common/images/lvl_2colContentBG.gif); background-repeat: repeat-y;} */
+.admin_2ColLevelContentBG{background-image: url(lvl_2colContentBG.gif); background-repeat: repeat-y;}
+.admin_2ColLevelContentBG_Plain{background-color: #ffffff;}
+.admin_2ColLevelContent_Padding{margin:0px 0px 0px 0px; padding:0px 20px 5px 22px;}
+.admin_2ColLevelContent_Padding_Plain{margin:0px 0px 0px 0px; padding:0px 20px 5px 22px;}
+#admin_2ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545; padding:0px; margin:0px; width:685px; overflow:hidden;}
+
+#admin_2ColLevelContent img{padding:3px; border:0px;}
+#admin_2ColLevelContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545;text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_2ColLevelContent a{color:#D17702; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:hover{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:visited{color:#936241; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent ol{list-style-position:outside; margin:4px 0px 9px 0px; padding-left: 25px;}
+#admin_2ColLevelContent ul{list-style-position:outside; list-style:disc; margin:4px 0px 9px 0px; padding-left: 25px;}
+#admin_2ColLevelContent li{padding:0px 0px 1px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545; text-decoration:none; font-weight:normal; margin-top:1px;}
+#admin_2ColLevelContent h1{font-family:Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#990000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#424545; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent hr{background-color:#424545; color:#424545; height:1px; line-height:1px; margin-bottom:5px; font-size:0px; border:0px;}
+#admin_2ColLevelContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent input.radio {width:auto;}
+#admin_2ColLevelContent input.checkbox {width:auto;}
+#admin_2ColLevelContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent div.hr {height: 28px; background: url(http://www.cmu.edu/common/images/lvl_2colHorizontalRule.gif) no-repeat;}
+#admin_2ColLevelContent div.hr hr {display:none;}
+
+
+
+/*Admin Breadcrumbs*/
+.breadcrumbs_2Col_admin_template_BG{background-image: url(http://www.cmu.edu/common/images/breadcrumbs_2Col_admin_template_BG.gif); background-repeat: repeat-y;}
+#breadcrumbs_2Col_admin_template{background-color:#FFFFFF; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:normal; text-decoration:none; color:#990000; padding:10px 10px 0px 22px; margin:0px; background-color:#FFFFFF; line-height:22px; width:716px; overflow:hidden;}
+#breadcrumbs_2Col_admin_template a, #breadcrumbs_2Col_admin_template a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#424545;}
+#breadcrumbs_2Col_admin_template a:hover, #breadcrumbs_2Col_admin_template a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#424545;}
+
+
+#breadcrumbs_3Col_admin_template{background-color:#FFFFFF; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:normal; text-decoration:none; color:#990000; padding:10px 10px 0px 22px; margin:0px; background-color:#FFFFFF; line-height:22px; width:727px; wid\th:702px; overflow:hidden;}
+#breadcrumbs_3Col_admin_template a, #breadcrumbs_3Col_admin_template a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#424545;}
+#breadcrumbs_3Col_admin_template a:hover, #breadcrumbs_3Col_admin_template a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#424545;}
+
+
+input.searchInput {margin: 0px; padding: 0px; width:112px; height:17px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+.QuicklinksHome {margin:5px 0 15px; padding:0px; width:222px; height:19px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+.QuicklinksLevel {margin:5px 0 11px; padding:0px; width:214px; height:19px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+
+.home_leftColumn {padding:25px 0px 0px 15px; background-color:#FFFFFF;}
+.noscriptText {background-color:#FFFFFF; width:700px; border:2px solid #000000; margin:8px 0px 0px 20px; padding:5px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; color:#000000; text-decoration:none; font-weight:normal;}
+.noscriptText_Quicklinks {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#000000; font-weight:normal;}
+.home_leftnav_bg {background-image: url(http://www.cmu.edu/common/images/home_leftnav_bg.gif); background-repeat: repeat-y;}
+.lvl_searchbox_padding{padding:0px 0px 14px 0px;}
+
+
+
+div.LeftNavRed_Home{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+padding:4px 15px 4px 15px;
+font-weight:normal;
+width:222px;
+
+}
+a.LeftNavRed_Home_Link:link, a.LeftNavRed_Home_Link:visited, a.LeftNavRed_Home_Link:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LeftNavRed_Home_Link:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:normal;}
+.home_LeftNavRed {background-color:#FFFFFF;}
+
+
+div.LeftNavGray_Home{
+font-family:Helvetica, sans-serif;
+font-size: 12px;
+color:#4B4B4B;
+background-color:#FFFFFF;
+padding:4px 15px 4px 15px;
+font-weight:normal;
+width:222px;
+
+}
+a.LeftNavGray_Home_Link:link, a.LeftNavGray_Home_Link:visited, a.LeftNavGray_Home_Link:active{font-family:Helvetica, sans-serif; font-size:12px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LeftNavGray_Home_Link:hover{font-family:Helvetica, sans-serif; font-size:12px; color:#4B4B4B; text-decoration:underline; font-weight:normal;}
+.home_LeftNavGray {padding:13px 0px 10px 0px; background-color:#FFFFFF;}
+
+
+
+/* Topnav Elements */
+#topnav{position:relative; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#FFFFFF; margin:0px; padding:7px 0px 7px 20px; text-transform:uppercase; background-color:#464646; z-index:2;}
+#topnav a, topnav a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+#topnav a:hover, topnav a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal; text-transform:uppercase;}
+#topnav p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+
+#lvl_topnav{position:relative; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#FFFFFF; margin:0px; padding:7px 0px 7px 20px; text-transform:uppercase; background-color:#464646; width:748px; wid\th:728px;  z-index:2;}
+#lvl_topnav a, lvl_topnav a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+#lvl_topnav a:hover, lvl_topnav a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal; text-transform:uppercase;}
+#lvl_topnav p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+
+
+/*Admin Footer 2 Column Layout*/
+.footer_admin_level_Padding{margin:19px 0px 5px 0px; padding:0px 22px 0px 25px;}
+#footer_admin_level{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#626262; width:687px; overflow:hidden;}
+#footer_admin_level a, #footer_admin_level a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:underline; font-weight:normal;}
+#footer_admin_level a:hover, #footer_admin_level a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#footer_admin_level p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:none; font-weight:normal; margin:0px; padding:0px 0px 10px 0px;}
+
+
+/*Admin Footer 3 Column Layout*/
+.footer_admin_level_3ColumnLayout_Padding{margin:19px 0px 5px 0px; padding:0px 0px 0px 23px;}
+#footer_admin_level_3ColumnLayout{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#626262; width:707px; overflow:hidden;}
+#footer_admin_level_3ColumnLayout a, #footer_admin_level_3ColumnLayout a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:underline; font-weight:normal;}
+#footer_admin_level_3ColumnLayout a:hover, #footer_admin_level_3ColumnLayout a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#footer_admin_level_3ColumnLayout p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:none; font-weight:normal; margin:0px; padding:0px 0px 10px 0px;}
+
+.callout_Padding{margin:0px; padding:15px 20px 0px 20px;}
+
+
+.callout_red_BG{background-image: url(http://www.cmu.edu/common/images/callout_red_BG.gif); background-repeat: repeat-y;}
+.callout_green_BG{background-image: url(http://www.cmu.edu/common/images/callout_green_BG.gif); background-repeat: repeat-y;}
+.callout_mustard_BG{background-image: url(http://www.cmu.edu/common/images/callout_mustard_BG.gif); background-repeat: repeat-y;}
+.callout_violet_BG{background-image: url(http://www.cmu.edu/common/images/callout_violet_BG.gif); background-repeat: repeat-y;}
+.callout_darkgrey_BG{background-image: url(http://www.cmu.edu/common/images/callout_darkgrey_BG.gif); background-repeat: repeat-y;}
+.callout_lightgrey_BG{background-image: url(http://www.cmu.edu/common/images/callout_lightgrey_BG.gif); background-repeat: repeat-y;}
+.callout_blue_BG{background-image: url(http://www.cmu.edu/common/images/callout_blue_BG.gif); background-repeat: repeat-y;}
+
+.callout{font-family:Helvetica, sans-serif; font-size:14px; color:#FFFFFF; margin:0px; padding:0px; width:179px; overflow:hidden;}
+.callout p{font-family:Helvetica, sans-serif; color:#FFFFFF;}
+.callout td{font-family:Helvetica, sans-serif; color:#FFFFFF; font-size:14px; border-color:#FFFFFF;}
+.callout img{padding:0px; border:0px;}
+.callout a{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+.callout a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+.callout a:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+.callout a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+.callout ol{list-style-position:outside; margin-left:0; padding-left:35px;}
+.callout ul{list-style-position:outside; list-style-type:disc; margin-left:0; padding-left:35px;}
+.callout li{padding:0px 0px 2px 0px; font-family:Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px; margin-left:-17px;}
+.callout h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:10px 0px 9px 0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+.callout hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+.callout table{border-color:#FFFFFF;}
+1249a1251
+.callout_subhead{font-family:Helvetica, sans-serif; font-size:17px; color:#FFFFFF; margin:0px; padding:0px 0px 3px 0px; width:179px; overflow:hidden;}
+
+
+.callout_reverse{font-family:Helvetica, sans-serif; font-size:14px; color:#990000; margin:0px; padding:0px; width:179px; overflow:hidden;}
+.callout_reverse p{font-family:Helvetica, sans-serif; color:#990000;}
+.callout_reverse td{font-family:Helvetica, sans-serif; color:#990000; font-size:14px; border-color:#990000;}
+.callout_reverse img{padding:0px; border:0px;}
+.callout_reverse a{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+.callout_reverse a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+.callout_reverse a:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+.callout_reverse a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+.callout_reverse ol{list-style-position:outside; margin-left:0; padding-left:35px;}
+.callout_reverse ul{list-style-position:outside; list-style-type:disc; margin-left:0; padding-left:35px;}
+.callout_reverse li{padding:0px 0px 2px 0px; font-family:Helvetica, sans-serif; color:#990000; text-decoration:none; font-weight:normal; margin-top:4px; margin-left:-17px;}
+.callout_reverse h1{font-family:Helvetica, sans-serif; font-size:22px; color:#990000; margin:0px 0px 0px 0px; padding:10px 0px 9px 0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+.callout_reverse hr{background-color:#990000; color:#990000; height:1px; font-size:0px; border:0px;}
+.callout_reverse table{border-color:#990000;}
+.callout_reverse_subhead{font-family:Helvetica, sans-serif; font-size:17px; color:#990000; margin:0px; padding:0px 0px 3px 0px; width:179px; overflow:hidden;}
+
+.SecondaryNav_Padding{padding:6px 0px 0px 0px;}
+
+div.SecondaryNav{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#4B4B4B;
+background-color:#FFFFFF;
+padding:4px 15px 4px 0px;
+font-weight:normal;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+
+}
+a.SecondaryNav_Link:link, a.SecondaryNav_Link:visited, a.SecondaryNav_Link:active{font-family:Helvetica, sans-serif; font-size:14px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.SecondaryNav_Link:hover{font-family:Helvetica, sans-serif; font-size:14px; color:#4B4B4B; text-decoration:underline; font-weight:normal;}
+
+div.SecondaryNavOn{
+font-family:Helvetica, sans-serif;
+font-size: 14px;
+color:#4B4B4B;
+background-color:#FFFFFF;
+padding:4px 15px 4px 0px;
+font-weight:bold;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+
+}
+a.SecondaryNavOn_Link:link, a.SecondaryNavOn_Link:visited, a.SecondaryNavOn_Link:active{font-family:Helvetica, sans-serif; font-size:14px; color:#4B4B4B; text-decoration:none; font-weight:bold;}
+a.SecondaryNavOn_Link:hover{font-family:Helvetica, sans-serif; font-size:14px; color:#4B4B4B; text-decoration:underline; font-weight:bold;}
+
+div.MiscNavOn
+{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+margin: 0px 0px 0px 0px;
+padding: 8px 15px 4px 0px;
+font-weight:bold;
+list-style:none;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+}
+a.MiscNavOn_Link:link, a.MiscNavOn_Link:visited, a.MiscNavOn_Link:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:bold;}
+a.MiscNavOn_Link:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:bold;}
+
+.floatleft {float: left; margin: 0px 10px 10px 0; padding: 4px; background-color:#FFFFFF;}
+.floatright {float: right; margin: 0px 0 10px 10px; padding: 4px; background-color:#FFFFFF;}
+.imgnofloat {margin: 0px 0px 10px 0px; padding: 4px; background-color:#FFFFFF;}
+
+table.photoGallery {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border-top: 3px solid #ffffff !important;
+}
+
+td.galleryPhoto3Col,td.galleryPhoto3ColEndRow {
+  width: 226px;
+  height: 245px;
+  border-bottom: 3px solid #ffffff !important;
+  padding-top: 5px;
+  text-align: center;
+  vertical-align: top;
+}
+
+td.galleryPhoto3Col {
+  border-right: 3px solid #ffffff !important;
+}
+
+hr.photoGallery {
+  color: #ffffff !important;
+  background-color: #ffffff !important;
+  height: 3px !important;
+  margin-top: 25px;
+}
+
+table.basicTable {width:99%; border-collapse:collapse; border-style: none !important; margin: 3px 5px 3px 1px; background-color: transparent;}
+table.basicTable tr {}
+table.basicTable tbody td {font-size:11px; text-decoration:none; font-weight:normal; border: 1px solid #d4d4d4; padding: 5px 3px 11px 5px;  margin: 0px; vertical-align: top;}
+table.basicTable thead td, table.basicTable thead th {font-size:10px; text-decoration:none; font-weight:bold; border-style: none; padding:9px 4px 9px 5px; margin: 0px; text-transform:uppercase;  vertical-align: bottom; text-align: left;}
+table.basicTable p {padding:0px !important;margin:0px !important;}
+table.basicTable tr.alternateRow td {background-color: #dbdede;}
+
+table.sortable thead td, table.sortable thead tr th {background-color: #dbdede;}
+
+
+#headerPhotoStory {
+	height: 300px;
+	width: 748px;
+	margin:0px;
+	padding:0px;
+	position: relative;
+	background-color: #000000;
+}
+
+#fullHeaderRotator {
+	height: 250px;
+	width: 992px;
+	margin:0px;
+	padding:0px;
+	position: relative;
+	background-color: #ffffff;
+}
+
+#headerStoryImage1, #headerStoryImage2, #headerImage1, #headerImage2 {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#headerStory {
+	position:absolute;
+	left: 0px;
+	right: 0px;
+	background-color: #424545;
+	bottom: 0px;
+        width: 593px;
+        height: 55px;
+	opacity: 0.85;
+	filter:alpha(opacity=85);
+	-moz-opacity=0.85;
+	-khtml-opacity=0.85;
+	margin:0px;
+	padding-top: 1px !important;
+	padding-left: 30px;
+	padding-right: 125px;
+	color: #ffffff;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#headerStory a:visited, #headerStory a:link, #headerStory a:active {
+	color: #ffffff;
+	white-space: nowrap;
+}
+
+#headerStory h1 {
+	font-family: Helvetica, sans-serif !important;
+	font-size: 18px;
+	line-height: 23px;
+	padding: 0px;
+	margin: 0px;
+	font-weight: normal !important;
+}
+
+#headerStory p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 13px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#headerStorySelectors {
+    position: absolute;
+	bottom: 9px;
+    top: 281px;
+	right: 10px;
+	padding: 0px;
+	margin: 0px;
+}
+
+img.headerStorySelector {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 2px 0px 2px;
+	width: 10px;
+	height; 10px;
+	border: none;
+	vertical-align: top;
+}
+
+.newsFeaturedStory p {
+  line-height: 15px;
+}
+
+.newsFeaturedStory h2 {
+  margin: 5px 0px 5px 0px !important;
+}
+
+.newsFeaturedStory h3 {
+  color: #990000 !important;
+}
+
+h2.newsHeadline {
+  margin: 2px 0px 2px 0px !important;
+  font-size: 14px !important;
+}
+
+.newsSnippet {
+  margin-bottom: 20px;
+}
+
+.overline {
+  text-decoration: overline;
+}
+
+.eventCalendarListView{}
+
+.eventCalendarListView .summary {font-size: 12px; font-weight: bold; margin-top: 20px; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .location {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .time {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView p {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView h2 {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView .dayEnd {height: 10px;}
+
+.bioContactInfo {padding: 2px 0px 2px 0px;}

@@ -1,0 +1,1047 @@
+/* General Styles */
+body
+{
+margin:0px 0px 0px 0px;
+padding:0px;
+/*background-image: url(http://www.cmu.edu/common/images/CarnegieMellon_logo.gif); 
+background-repeat: no-repeat;*/
+background-color:#FFFFFF;
+font-size:10px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+color:#000000;
+text-decoration:none; 
+font-weight:normal;
+}
+
+.printlogo{padding:0px 0px 20px 0px;}
+#contentPrint{visibility:visible; width:auto;}
+.noPrint{display:none;}
+.noDisplay{display:none;}
+#TDCollapse{visibility:collapse; height:0; width:0; margin:0px; border:0px; padding:0px;}
+.TDCollapsewithnoPrint{display:none;visibility:collapse; height:0; width:0; margin:0px; border:0px; padding:0px;}
+
+
+td.blankBG{display:none;}
+
+
+form {margin: 0px;}
+
+.clear{clear:both;}
+
+.searchImage {margin:0px 0px 5px 0px;}
+
+input.searchInput {margin: 0px; padding: 0px; width:112px; height:17px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+.QuicklinksHome {margin:5px 0 15px; padding:0px; width:222px; height:19px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+.QuicklinksLevel {margin:5px 0 11px; padding:0px; width:214px; height:19px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000;}
+
+.home_leftColumn {padding:25px 0px 0px 15px; background-color:#FFFFFF;}
+.noscriptText {background-color:#FFFFFF; width:700px; border:2px solid #000000; margin:8px 0px 0px 20px; padding:5px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; color:#000000; text-decoration:none; font-weight:normal;}
+.noscriptText_Quicklinks {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#000000; font-weight:normal;}
+.home_leftnav_bg {background-image: url(http://www.cmu.edu/common/images/home_leftnav_bg.gif); background-repeat: repeat-y;}
+.lvl_searchbox_padding{display:none;}
+
+
+
+div.LeftNavRed_Home{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+padding:4px 15px 4px 15px;
+font-weight:normal;
+width:222px;
+
+}
+a.LeftNavRed_Home_Link:link, a.LeftNavRed_Home_Link:visited, a.LeftNavRed_Home_Link:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LeftNavRed_Home_Link:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:normal;}
+.home_LeftNavRed {background-color:#FFFFFF;}
+
+
+div.LeftNavGray_Home{
+font-family:Helvetica, sans-serif;
+font-size: 12px;
+color:#4B4B4B;
+background-color:#FFFFFF;
+padding:4px 15px 4px 15px;
+font-weight:normal;
+width:222px;
+
+}
+a.LeftNavGray_Home_Link:link, a.LeftNavGray_Home_Link:visited, a.LeftNavGray_Home_Link:active{font-family:Helvetica, sans-serif; font-size:12px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LeftNavGray_Home_Link:hover{font-family:Helvetica, sans-serif; font-size:12px; color:#4B4B4B; text-decoration:underline; font-weight:normal;}
+.home_LeftNavGray {padding:13px 0px 10px 0px; background-color:#FFFFFF;}
+
+
+
+/* Home Leftnav What's Happening */
+.whatshappening_coloredBG {font-family:Verdana, Arial, Helvetica, sans-serif; color:#474747; font-size:10px; text-decoration:none; font-weight:normal; padding:15px 10px 15px 15px; margin:0px; background-color:#EBE5E5; }
+.whatshappening_Link a, whatshappening_Link a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#474747; text-decoration:underline; font-weight:bold; }
+.whatshappening_Link a:hover, whatshappening_Link a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#474747; text-decoration:none; font-weight:bold; }
+.whatshappening_Text {font-family:Verdana, Arial, Helvetica, sans-serif; color:#474747; text-decoration:none; font-weight:normal; font-size:10px; }
+
+.whatshappening_BG {font-family:Verdana, Arial, Helvetica, sans-serif; color:#474747; font-size:10px; text-decoration:none; font-weight:normal; padding:15px 10px 15px 15px; margin:0px; background-color:#FFFFFF; }
+
+
+
+/* Topnav Elements */
+#topnav{position:relative; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#FFFFFF; margin:0px; padding:7px 0px 7px 20px; text-transform:uppercase; background-color:#464646; z-index:2;}
+#topnav a, topnav a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+#topnav a:hover, topnav a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal; text-transform:uppercase;}
+#topnav p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+
+
+
+#lvl_topnav{display:none;}
+#lvl_topnav a, lvl_topnav a:visited{display:none;}
+#lvl_topnav a:hover, lvl_topnav a:visited:hover{display:none;}
+#lvl_topnav p{display:none;}
+
+
+
+/* Footer Elements */
+#footer{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#626262; margin:13px 0px 13px 0px; padding:0px; text-transform:uppercase; width:850px; padding:0px 25px 0px 25px;}
+#footer a, footer a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+#footer a:hover, footer a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:underline; font-weight:normal; text-transform:uppercase;}
+#footer p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#626262; text-decoration:none; font-weight:normal; text-transform:uppercase;}
+
+
+
+/* Home Content background */
+.home_ContentColumnBG {background-image: url(http://www.cmu.edu/common/images/home_content_bg.gif); background-repeat: repeat-y;}
+
+
+
+/*Home White Theme Text*/
+.home_themetext{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:9px; color:#FFFFFF; margin:8px 0px 8px 20px; padding:0px; text-transform:uppercase; width:728px;}
+
+
+
+/* Home Themed Elements */
+
+#home_ThemeTabsBG{background-image: url(http://www.cmu.edu/common/images/home_toptabBG.gif); background-repeat: repeat-x; width:748px; padding:0px; margin:0px;}
+
+#locationThemedHeader{background-color:transparent; width:321px; padding:0px 30px 15px 0px; margin-left:20px; border-bottom:1px dashed #FFFFFF;}
+.homeThemedHeader{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:22px; font-weight:bold; text-decoration:none; color:#FFFFFF;}
+
+#locationThemedContent{background-color:transparent; width:321px; padding:20px 30px 0px 0px; margin-left:20px;}
+.homeThemedContent {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; font-weight:normal; text-decoration:none; color:#FFFFFF;}
+
+#locationThemedlinks{background-color:transparent; width:321px; padding:20px 30px 0px 0px; margin-left:20px; margin-top:25px; border-top:1px dashed #FFFFFF; font-size:10px;}
+#locationThemedlinks a, locationThemedlinks a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal;}
+#locationThemedlinks a:hover, locationThemedlinks a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal;}
+#locationThemedlinks p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal;}
+
+
+#home_defaultPhoto {border:5px solid #FFFFFF; width:236px; margin-left:12px;}
+#home_defaultHeading {font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; font-size:19px; text-decoration:none; font-weight:normal; padding:10px 5px 10px 14px; width:236px;}
+
+#home_defaultPhotoSubmitted {font-family:Verdana, Arial, Helvetica, sans-serif; color:#464646; font-size:10px; text-decoration:none; font-weight:normal; margin-left:12px; padding:6px 0px 6px 3px; width:236px; border-top:1px dashed #FFFFFF; border-bottom:1px dashed #FFFFFF;}
+#home_defaultPhotoSubmitted a, home_defaultPhotoSubmitted a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:underline; font-weight:normal;}
+#home_defaultPhotoSubmitted a:hover, home_defaultPhotoSubmitted a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal;}
+#home_defaultPhotoSubmitted p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#464646; text-decoration:none; font-weight:normal; font-size:10px;}
+
+
+.home_wherearewe {margin-left:15px;}
+
+
+
+/* Div for Flash events scroller */
+#hpEvents {/*height:330px;*/}
+
+
+
+
+
+
+
+/*LEVEL TEMPLATE STYLE*/
+.level_leftColumn {display:none; visibility:collapse; height:0; width:0; margin:0px; border:0px; padding:0px;}
+.level_leftnav_bg {display:none; visibility:collapse; height:0; width:0; margin:0px; border:0px; padding:0px;}
+#level_leftColumn_RadioButton{display:none;}
+.level_leftColumn_RadioButtonContent{display:none;}
+
+
+/* Level Body Content background */
+.level_ContentColumnBG {background-color:#FFFFFF;}
+.ContentAreaPosition {position:relative; margin:5px 0px 0px 0px; z-index:3;}
+
+
+/* Footer Level Pages */
+#footer_level{display:none;}
+#footer_level a, #footer_level a:visited{display:none;}
+#footer_level a:hover, #footer_level a:visited:hover{display:none;}
+#footer_level p{display:none;}
+
+
+
+
+#lvlImage{display:none;}
+
+
+/* Breadcrumbs */
+#breadcrumbs_3col_template{display:none;}
+#breadcrumbs_3col_template a, #breadcrumbs_3col_template a:visited{display:none;}
+#breadcrumbs_3col_template a:hover, #breadcrumbs_3col_template a:visited:hover{display:none;}
+
+
+#breadcrumbs_CurrentStudents_template{display:none;}
+#breadcrumbs_CurrentStudents_template a, #breadcrumbs_CurrentStudents_template a:visited{display:none;}
+#breadcrumbs_CurrentStudents_template a:hover, #breadcrumbs_CurrentStudents_template a:visited:hover{display:none;}
+
+
+#breadcrumbs_News_template{display:none;}
+#breadcrumbs_News_template a, #breadcrumbs_News_template a:visited{display:none;}
+#breadcrumbs_News_template a:hover, #breadcrumbs_News_template a:visited:hover{display:none;}
+
+
+#breadcrumbs_2Col_template{display:none;}
+#breadcrumbs_2Col_template a, #breadcrumbs_2Col_template a:visited{display:none;}
+#breadcrumbs_2Col_template a:hover, #breadcrumbs_2Col_template a:visited:hover{display:none;}
+
+
+
+/* Level Page Titles */
+.lvl_PageTitle_BG{background-color:#FFFFFF;}
+.lvl_PageTitle{background-color:#FFFFFF;}
+.lvl_PageTitle h1{font-family:Helvetica, sans-serif; font-size:17px; color:#000000; margin:0px; padding:0px 0px 0px 0px; font-weight:bold; text-transform:none;}
+
+
+.overflow{overflow:hidden !important;}
+
+
+/* Three Column Template Callouts */
+.lvl_3rdCol_HelpfulLinks_Padding{margin:0px 0px 0px 0px; padding:0px 10px 0px 10px; background-color:#990000;}
+#lvl_3rdCol_HelpfulLinks{font-family:Helvetica, sans-serif; font-size:14px; color:#FFFFFF; border-collapse:collapse; border-color:#FFFFFF; background-color:#990000; width:201px; overflow:hidden;}
+#lvl_3rdCol_HelpfulLinks p{font-family:Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_HelpfulLinks td{font-family:Helvetica, sans-serif; color:#FFFFFF; font-size:14px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_HelpfulLinks a, #lvl_3rdCol_HelpfulLinks a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_HelpfulLinks a:hover, #lvl_3rdCol_HelpfulLinks a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_HelpfulLinks ol{list-style-position:outside;}
+#lvl_3rdCol_HelpfulLinks ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_HelpfulLinks.gif);}
+#lvl_3rdCol_HelpfulLinks li{padding:0px 0px 2px 0px; font-family:Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_HelpfulLinks h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:25px 0px 0px 0px; padding:0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_HelpfulLinks hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_3rdCol_Fence_BG{background-image: url(http://www.cmu.edu/common/images/lvl_fence_BG.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_Fence{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#FFFFFF; margin:0px; padding:5px 20px 0px 20px; border-collapse:collapse; border-color:#FFFFFF; width:241px; wid\th:201px; }
+#lvl_3rdCol_Fence p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_Fence td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; font-size:11px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_Fence a, #lvl_3rdCol_Fence a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_Fence a:hover, #lvl_3rdCol_Fence a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_Fence ol{list-style-position:outside;}
+#lvl_3rdCol_Fence ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_3col_Callouts.gif);}
+#lvl_3rdCol_Fence li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_Fence h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:15px 0px 9px 0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_Fence hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_3rdCol_FastFacts_BG{background-image: url(http://www.cmu.edu/common/images/lvl_fastfacts_BG.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_FastFacts{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#FFFFFF; margin:0px; padding:15px 20px 0px 20px; border-collapse:collapse; border-color:#FFFFFF; width:241px; wid\th:201px;}
+#lvl_3rdCol_FastFacts p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_FastFacts td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; font-size:11px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_FastFacts a, #lvl_3rdCol_FastFacts a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_FastFacts a:hover, #lvl_3rdCol_FastFacts a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_FastFacts ol{list-style-position:outside;}
+#lvl_3rdCol_FastFacts ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_3col_Callouts.gif);}
+#lvl_3rdCol_FastFacts li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_FastFacts h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:15px 0px 9px 0px;; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_FastFacts hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+.lvl_3rdCol_FastFacts_BGwhite{background-image: url(http://www.cmu.edu/common/images/lvl_fastfacts_BGwhite.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_FastFacts_white{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#ABAAAA; margin:0px; padding:10px 20px 5px 20px; border-collapse:collapse; border-color:#CCCCCC;  width:241px; wid\th:201px; text-align:center;}
+#lvl_3rdCol_FastFacts_white hr{background-color:#CCCCCC; color:#CCCCCC; height:1px; font-size:0px; border:0px;}
+
+
+
+.lvl_3rdCol_Article_BG{background-image: url(http://www.cmu.edu/common/images/lvl_article_BG.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_Article{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#FFFFFF; margin:0px; padding:5px 20px 0px 20px; border-collapse:collapse; border-color:#FFFFFF; width:241px; wid\th:201px;}
+#lvl_3rdCol_Article p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_Article td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; font-size:11px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_Article a, #lvl_3rdCol_Article a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_Article a:hover, #lvl_3rdCol_Article a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_Article ol{list-style-position:outside;}
+#lvl_3rdCol_Article ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_3col_Callouts.gif);}
+#lvl_3rdCol_Article li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_Article h1{font-family:Helvetica, sans-serif; font-size:20px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:15px 0px 9px 0px;; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_Article h2{font-family:Helvetica, sans-serif; font-size:16px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;; font-weight:normal; text-transform:none;}
+#lvl_3rdCol_Article hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+.lvl_3rdCol_Article_BGwhite{background-image: url(http://www.cmu.edu/common/images/lvl_article_BGwhite.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_Article_white{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#ABAAAA; margin:0px; padding:10px 20px 5px 20px; border-collapse:collapse; border-color:#CCCCCC; width:241px; wid\th:201px; text-align:center;}
+#lvl_3rdCol_Article_white hr{background-color:#CCCCCC; color:#CCCCCC; height:1px; font-size:0px; border:0px;}
+
+
+
+
+.lvl_3rdCol_Announcements_Padding{margin:0px 0px 0px 0px; padding:0px 10px 0px 10px; background-color:#999933;}
+#lvl_3rdCol_Announcements{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#FFFFFF; border-collapse:collapse; border-color:#FFFFFF; background-color:#999933; width:201px; overflow:hidden;}
+#lvl_3rdCol_Announcements p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_Announcements td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; font-size:11px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_Announcements a, #lvl_3rdCol_Announcements a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_Announcements a:hover, #lvl_3rdCol_Announcements a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#936241;}
+#lvl_3rdCol_Announcements ol{list-style-position:outside;}
+#lvl_3rdCol_Announcements ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_3col_Callouts.gif);}
+#lvl_3rdCol_Announcements li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_Announcements h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:25px 0px 10px 0px; padding:0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_Announcements hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+.lvl_3rdCol_Announcements_BGwhite_Padding{margin:0px 0px 0px 0px; padding:11px 10px 0px 10px; background-color:#FFFFFF;}
+#lvl_3rdCol_Announcements_BGwhite{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF;  border-collapse:collapse; border-color:#CCCCCC; background-color:#FFFFFF; width:201px; text-align:right; overflow:hidden;}
+#lvl_3rdCol_Announcements_BGwhite hr{background-color:#CCCCCC; color:#CCCCCC; height:1px; font-size:0px; border:0px;}
+
+
+
+
+.lvl_3rdCol_NewsBlog_Padding{margin:0px 0px 0px 0px; padding:0px 10px 0px 10px; background-color:#7493A2;}
+#lvl_3rdCol_NewsBlog{font-family:Helvetica, sans-serif; font-size:14px; color:#FFFFFF; border-collapse:collapse; border-color:#FFFFFF; background-color:#7493A2; width:201px; overflow:hidden;}
+#lvl_3rdCol_NewsBlog p{font-family:Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_NewsBlog td{font-family:Helvetica, sans-serif; color:#FFFFFF; font-size:14px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_NewsBlog a, #lvl_3rdCol_NewsBlog a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_NewsBlog a:hover, #lvl_3rdCol_NewsBlog a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_NewsBlog ol{list-style-position:outside;}
+#lvl_3rdCol_NewsBlog ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_HelpfulLinks.gif);}
+#lvl_3rdCol_NewsBlog li{padding:0px 0px 2px 0px; font-family:Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:4px;  margin-left:-17px;}
+#lvl_3rdCol_NewsBlog h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:25px 0px 0px 0px; padding:0px; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_NewsBlog hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_3rdCol_News_RSS_BG{background-image: url(http://www.cmu.edu/common/images/lvl_News_RSS_BG.gif); background-repeat: repeat-y; width:241px;}
+#lvl_3rdCol_News_RSS{margin:0px; padding:0px 0px 0px 10px; width:231px;}
+
+
+.lvl_3rdCol_FeaturedEvents_BG{background-image: url(http://www.cmu.edu/common/images/lvl_featuredevents_BG.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_FeaturedEvents{font-family:Helvetica, sans-serif; font-size:12px; color:#FFFFFF; margin:0px; padding:15px 20px 0px 20px; border-collapse:collapse; border-color:#FFFFFF; width:241px; wid\th:201px;}
+#lvl_3rdCol_FeaturedEvents p{font-family:Helvetica, sans-serif; color:#FFFFFF;}
+#lvl_3rdCol_FeaturedEvents td{font-family:Helvetica, sans-serif; color:#FFFFFF; font-size:12px; border-collapse:collapse; border-color:#FFFFFF;}
+#lvl_3rdCol_FeaturedEvents a, #lvl_3rdCol_FeaturedEvents a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_FeaturedEvents a:hover, #lvl_3rdCol_FeaturedEvents a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#FFFFFF;}
+#lvl_3rdCol_FeaturedEvents ol{list-style-position:outside;}
+#lvl_3rdCol_FeaturedEvents ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_FeaturedEvents.gif);}
+#lvl_3rdCol_FeaturedEvents li{padding:0px 0px 0px 0px; font-family:Helvetica, sans-serif; color:#FFFFFF; text-decoration:none; font-weight:normal; margin-top:-4px; margin-bottom:-4px;  margin-left:-17px;}
+#lvl_3rdCol_FeaturedEvents h1{font-family:Helvetica, sans-serif; font-size:22px; color:#FFFFFF; margin:0px 0px 0px 0px; padding:15px 0px 9px 0px;; font-weight:normal; text-transform:lowercase; text-align:right;}
+#lvl_3rdCol_FeaturedEvents hr{background-color:#FFFFFF; color:#FFFFFF; height:1px; font-size:0px; border:0px;}
+
+.lvl_3rdCol_FeaturedEvents_BGwhite{background-image: url(http://www.cmu.edu/common/images/lvl_featuredevents_BGwhite.gif); background-repeat: repeat-y; width:241px; overflow:hidden;}
+#lvl_3rdCol_FeaturedEvents_white{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#ABAAAA; margin:0px; padding:10px 20px 5px 20px; border-collapse:collapse; border-color:#CCCCCC; width:241px; wid\th:201px; text-align:right;}
+#lvl_3rdCol_FeaturedEvents_white hr{background-color:#CCCCCC; color:#CCCCCC; height:1px; font-size:0px; border:0px;}
+
+
+
+
+/* Three Column Template Content */
+.lvl_3ColTemplateContentBG{background-color:#FFFFFF;}
+.lvl_3ColTemplateContentPadding{margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
+#lvl_3ColTemplateContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; background-color:transparent; width:600px; overflow:hidden;}
+#lvl_3ColTemplateContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px; margin:0px; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_3ColTemplateContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px 0px 10px 0px; margin:0px 0px 0px 0px;}
+#lvl_3ColTemplateContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent ol{list-style-position:outside;}
+#lvl_3ColTemplateContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#lvl_3ColTemplateContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_3ColTemplateContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_3ColTemplateContent h2{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_3ColTemplateContent h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_3ColTemplateContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_3ColTemplate_ProfileCallout_BG {display:none;}
+#lvl_3ColTemplate_ProfileCallout {display:none;}
+#lvl_3ColTemplate_ProfileCallout p{display:none;}
+#lvl_3ColTemplate_ProfileCallout td{display:none;}
+#lvl_3ColTemplate_ProfileCallout a, #lvl_3ColTemplate_ProfileCallout a:visited{display:none;}
+#lvl_3ColTemplate_ProfileCallout a:hover, #lvl_3ColTemplate_ProfileCallout a:visited:hover{display:none;}
+#lvl_3ColTemplate_ProfileCallout hr{display:none;}
+
+
+.whoareyouDropDown {margin:0px 0 0px; padding:0px; width:144px; wid\th:140px; height:19px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px; color:#424545;}
+
+
+
+#lvl_3ColTemplateContent_News{padding:15px 10px 0px 12px; border-collapse:collapse; border-color:#000000; margin:0px; text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; width:215px; wid\th:193px;overflow:hidden;}
+#lvl_3ColTemplateContent_News p{text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000;}
+#lvl_3ColTemplateContent_News td{text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_3ColTemplateContent_News a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent_News a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent_News a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent_News a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent_News ol{list-style-position:outside;}
+#lvl_3ColTemplateContent_News ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#lvl_3ColTemplateContent_News li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_3ColTemplateContent_News h1{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_News h2{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_News h3{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_News hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+#lvl_3ColTemplateContent_Events{padding:15px 10px 0px 12px; border-collapse:collapse; border-color:#000000; margin:0px; text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; width:215px; wid\th:193px;overflow:hidden;}
+#lvl_3ColTemplateContent_Events p{text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000;}
+#lvl_3ColTemplateContent_Events td{text-decoration:none; font-weight:normal; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_3ColTemplateContent_Events a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline;}
+#lvl_3ColTemplateContent_Events a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline;}
+#lvl_3ColTemplateContent_Events a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline;}
+#lvl_3ColTemplateContent_Events a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_3ColTemplateContent_Events ol{list-style-position:outside;}
+#lvl_3ColTemplateContent_Events ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#lvl_3ColTemplateContent_Events li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_3ColTemplateContent_Events h1{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_Events h2{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_Events h3{padding:0px; margin:0px; text-decoration:none; font-weight:normal; font-family:Helvetica, sans-serif; color:#000000; font-size:15px;}
+#lvl_3ColTemplateContent_Events hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+
+
+/* Current Students, Faculty and Staff Template Content */
+.lvl_CurrentStudentsFacStaffTempBG{background-color:#FFFFFF; width:476px;}
+
+
+.lvl_CurrentStudentsTemplateContentBG{background-color:#FFFFFF; width:238px; padding:15px 0px 0px 0px; margin:0px;}
+.lvl_CurrentStudentsTemplateContent_Padding{margin:0px 0px 0px 0px; padding:10px 0px 0px 22px;}
+#lvl_CurrentStudentsTemplateContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; background-color:transparent; width:193px; overflow:hidden;}
+#lvl_CurrentStudentsTemplateContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_CurrentStudentsTemplateContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; }
+#lvl_CurrentStudentsTemplateContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_CurrentStudentsTemplateContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_CurrentStudentsTemplateContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_CurrentStudentsTemplateContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_CurrentStudentsTemplateContent ol{list-style-position:outside;}
+#lvl_CurrentStudentsTemplateContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif); }
+#lvl_CurrentStudentsTemplateContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_CurrentStudentsTemplateContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_CurrentStudentsTemplateContent h2{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_CurrentStudentsTemplateContent h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_CurrentStudentsTemplateContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_FacultyStaffTemplateContentBG{background-color:#FFFFFF; width:238px; padding:15px 0px 0px 0px; margin:0px;}
+.lvl_FacultyStaffTemplateContent_Padding{margin:0px 0px 0px 0px; padding:10px 0px 0px 22px;}
+#lvl_FacultyStaffTemplateContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; background-color:transparent; width:193px; overflow:hidden;}
+#lvl_FacultyStaffTemplateContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_FacultyStaffTemplateContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; }
+#lvl_FacultyStaffTemplateContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_FacultyStaffTemplateContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_FacultyStaffTemplateContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_FacultyStaffTemplateContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal; }
+#lvl_FacultyStaffTemplateContent ol{list-style-position:outside; }
+#lvl_FacultyStaffTemplateContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif); }
+#lvl_FacultyStaffTemplateContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_FacultyStaffTemplateContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_FacultyStaffTemplateContent h2{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_FacultyStaffTemplateContent h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px 0px 0px 3px; margin:10px 0px 10px 0px; }
+#lvl_FacultyStaffTemplateContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+
+
+/*2 Column Template */
+.lvl_2ColTemplateContentBG{background-color:#FFFFFF;}
+.lvl_2ColTemplateContent_Padding{margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
+#lvl_2ColTemplateContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; background-color:transparent; width:600px;}
+#lvl_2ColTemplateContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px; margin:0px; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_2ColTemplateContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px 0px 20px 0px; margin:0px 0px 0px 0px;}
+#lvl_2ColTemplateContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_2ColTemplateContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_2ColTemplateContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_2ColTemplateContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_2ColTemplateContent ol{list-style-position:outside;}
+#lvl_2ColTemplateContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#lvl_2ColTemplateContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_2ColTemplateContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_2ColTemplateContent h2{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_2ColTemplateContent h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_2ColTemplateContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+
+.FastFact_bg_Brown{background-color:#EAE5DA; padding:0px; margin:0px;}
+.FastFact_bg_transparent{background-color:transparent; padding:0px; margin:0px;}
+
+
+
+/*News Template*/
+.lvl_NewsContent_BG{background-color:#FFFFFF; overflow:hidden;}
+.lvl_NewsContent_Padding{margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
+#lvl_NewsContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; background-color:transparent; width:434px; overflow:hidden;}
+#lvl_NewsContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px; margin:0px; font-size:11px; border-collapse:collapse; border-color:#000000;}
+#lvl_NewsContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; padding:0px 0px 10px 0px; margin:0px 0px 0px 0px;}
+#lvl_NewsContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_NewsContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_NewsContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_NewsContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#lvl_NewsContent ol{list-style-position:outside;}
+#lvl_NewsContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#lvl_NewsContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#lvl_NewsContent h1{font-family:Helvetica, sans-serif; font-size:21px; font-weight:normal; color:#000000; padding:0px; margin:0px 0px 0px 0px;}
+#lvl_NewsContent h2{font-family:Helvetica, sans-serif; font-size:14px; font-weight:normal; color:#000000; padding:0px; margin:5px 0px 0px 0px;}
+#lvl_NewsContent h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#lvl_NewsContent_ hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_NewsStories_BG{background-image: url(http://www.cmu.edu/common/images/lvl_NewsStories_BG.gif); background-repeat: repeat-y; margin:0px; padding:0px 0px 0px 0px; overflow:hidden;}
+#lvl_NewsStoriesContent {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:13px; color:#990000; border-collapse:collapse; border-color:#000000; overflow:hidden;}
+#lvl_NewsStoriesContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000;}
+#lvl_NewsStoriesContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:13px; border-collapse:collapse; border-color:#990000;}
+#lvl_NewsStoriesContent a, #lvl_NewsStoriesContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+#lvl_NewsStoriesContent a:hover, #lvl_NewsStoriesContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+#lvl_NewsStoriesContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+.lvl_NewsStories {background-color:#EAE5D9; width:259px; overflow:hidden;}
+
+
+
+
+/*School and Colleges Template */
+.lvl_SchoolsCollegesBG{background-color:#FFFFFF;}
+.lvl_2Col_SchoolsColleges_BG{background-color:#FFFFFF;  padding-bottom:15px;}
+.lvl_2Col_SchoolsColleges_Padding{margin:0px; padding:0px 0px 0px 0px;}
+div.lvl_2Col_SchoolsColleges{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; border-collapse:collapse; border-color:#000000; width:600px; }
+div.lvl_2Col_SchoolsColleges p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000;}
+div.lvl_2Col_SchoolsColleges td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-collapse:collapse; border-color:#000000;}
+div.lvl_2Col_SchoolsColleges a{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#D17702;}
+div.lvl_2Col_SchoolsColleges a:hover, div.lvl_2Col_SchoolsColleges a:visited, div.lvl_2Col_SchoolsColleges a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+div.lvl_2Col_SchoolsColleges ol{list-style-position:outside;}
+div.lvl_2Col_SchoolsColleges ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+div.lvl_2Col_SchoolsColleges li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+div.lvl_2Col_SchoolsColleges h1{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+div.lvl_2Col_SchoolsColleges h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+div.lvl_2Col_SchoolsColleges h3{font-family:Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+div.lvl_2Col_SchoolsColleges hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+.lvl_2Col_SchoolsColleges_Thumb_Padding{padding-top:15px;}
+.lvl_2Col_SchoolsColleges_divider{display:none;}
+.lvl_2Col_SchoolsColleges_launchbtn{display:none}
+
+/*Created a new specific style for the headers so that they would be linkable noted from user testing and had to make a new style for it to work cross browser and still and an H2 for SEO */
+div.SchoolsColleges_Headers{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#990000; font-weight:normal; text-decoration:none; padding:0px; margin:10px 0px 10px 0px;}
+div.SchoolsColleges_Headers a{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:none; color:#990000;}
+div.SchoolsColleges_Headers a:visited{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:none; color:#990000;}
+div.SchoolsColleges_Headers a:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+div.SchoolsColleges_Headers a:visited:hover{font-family:Helvetica, sans-serif; font-weight:normal; text-decoration:underline; color:#990000;}
+div.SchoolsColleges_Headers h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#990000; font-weight:normal; text-decoration:none; padding:0px; margin:10px 0px 10px 0px;}
+
+
+
+
+/* Level Left Navigation */
+div.LvOneNav
+{
+font-family:Helvetica, sans-serif;
+font-size: 16px;
+color:#990000;
+background-color:#FFFFFF;
+padding:4px 15px 4px 0px;
+font-weight:normal;
+width:228px;
+wid\th:213px;
+vertical-align:top;
+overflow:hidden;
+}
+a.LvOneNavLink:link, a.LvOneNavLink:visited, a.LvOneNavLink:active{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LvOneNavLink:hover{font-family:Helvetica, sans-serif; font-size:16px; color:#990000; text-decoration:underline; font-weight:normal;}
+
+
+
+
+div.LvTwoNav
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvTwoNav_BG.gif);
+background-repeat: no-repeat; 
+padding:2px 15px 2px 10px;
+font-weight:normal;
+width:232px;
+wid\th:207px;
+vertical-align:top;
+overflow:hidden;
+}
+a.LvTwoNavLink:link, a.LvTwoNavLink:visited, a.LvTwoNavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvTwoNavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvTwoNavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image: url(http://www.cmu.edu/common/images/LvTwoNav_BG.gif);
+background-repeat: no-repeat; 
+padding:2px 15px 2px 10px;
+font-weight:normal;
+width:232px;
+wid\th:207px;
+vertical-align:top;overflow:hidden;
+}
+a.LvTwoNavOnLink:link, a.LvTwoNavOnLink:visited, a.LvTwoNavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LvTwoNavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvThreeNavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+padding:2px 22px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:190px;
+vertical-align:top;overflow:hidden;
+}
+a.LvThreeNavHeaderLink:link, a.LvThreeNavHeaderLink:visited, a.LvThreeNavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvThreeNavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+
+div.LvThreeNavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvThreeNavHeader_BG.gif);
+background-repeat: no-repeat;
+background-color:#EAE6E5;
+padding:2px 22px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:190px;
+vertical-align:top;overflow:hidden;
+}
+a.LvThreeNavHeaderOnLink:link, a.LvThreeNavHeaderOnLink:visited, a.LvThreeNavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvThreeNavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvThreeNav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvThreeNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvThreeNavLink:link, a.LvThreeNavLink:visited, a.LvThreeNavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvThreeNavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.LvThreeNavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image: url(http://www.cmu.edu/common/images/LvThreeNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvThreeNavOnLink:link, a.LvThreeNavOnLink:visited, a.LvThreeNavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LvThreeNavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvFourNavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+padding:2px 15px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFourNavHeaderLink:link, a.LvFourNavHeaderLink:visited, a.LvFourNavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFourNavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvFourNavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFourNavHeader_BG.gif);
+background-repeat: no-repeat;
+background-color:#EAE6E5;
+padding:2px 15px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFourNavHeaderOnLink:link, a.LvFourNavHeaderOnLink:visited, a.LvFourNavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFourNavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvFourNav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFourNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFourNavLink:link, a.LvFourNavLink:visited, a.LvFourNavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFourNavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.LvFourNavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image: url(http://www.cmu.edu/common/images/LvThreeNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFourNavOnLink:link, a.LvFourNavOnLink:visited, a.LvFourNavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LvFourNavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvFiveNavHeader
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-color:transparent;
+padding:2px 15px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFiveNavHeaderLink:link, a.LvFiveNavHeaderLink:visited, a.LvFiveNavHeaderLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFiveNavHeaderLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+
+div.LvFiveNavHeaderOn
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 13px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNavHeader_BG.gif);
+background-repeat: no-repeat;
+background-color:#EAE6E5;
+padding:2px 15px 2px 20px;
+font-weight:normal;
+width:232px;
+wid\th:197px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFiveNavHeaderOnLink:link, a.LvFiveNavHeaderOnLink:visited, a.LvFiveNavHeaderOnLink:active{font-family:Helvetica,Sans-Serif; font-size:13px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFiveNavHeaderOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:13px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+div.LvFiveNav
+{ 
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#4B4B4B;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFiveNavLink:link, a.LvFiveNavLink:visited, a.LvFiveNavLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#4B4B4B; text-decoration:none; font-weight:normal;}
+a.LvFiveNavLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+div.LvFiveNavOn
+{
+font-family: Helvetica,Sans-Serif;
+font-size: 11px;
+color:#990000;
+background-image: url(http://www.cmu.edu/common/images/LvFiveNav_BG.gif);
+background-repeat: no-repeat;
+padding:2px 15px 2px 30px;
+font-weight:normal;
+width:232px;
+wid\th:187px;
+vertical-align:top;overflow:hidden;
+}
+a.LvFiveNavOnLink:link, a.LvFiveNavOnLink:visited, a.LvFiveNavOnLink:active{font-family:Helvetica,Sans-Serif; font-size:11px; color:#990000; text-decoration:none; font-weight:normal;}
+a.LvFiveNavOnLink:hover{font-family:Helvetica,Sans-Serif; font-size:11px; color:#DE9B44; text-decoration:none; font-weight:normal;}
+
+
+
+
+
+/*ADMIN TEMPLATE Styles*/
+.admin_topredbar{display:none;visibility:collapse; height:0; width:0; margin:0px; border:0px; padding:0px;}
+.admin_topred_BG{display:none;}
+
+
+.admin_searchtextBG{display:none;}
+.admin_search{display:none;}
+#admin_searchtext{display:none;}
+#admin_searchtext a{display:none;}
+#admin_searchtext a:hover{display:none;}
+#admin_searchtext a:visited{display:none;}
+#admin_searchtext a:visited:hover{display:none;}
+#admin_searchtext input.checkbox {display:none;}
+
+
+
+.admin_topredcontent_Padding{display:none;}
+#admin_topredcontent{display:none;}
+
+
+.admin_topredsearch_Padding{display:none;}
+input.admin_searchInput{display:none;}
+.admin_searchImage{display:none;}
+
+
+.admin_level_leftnav_bg{background-color:#FFFFFF;}
+.admin_level_leftnav_UnitLogo_bg{background-color:#FFFFFF;}
+.admin_level_leftColumn{display:none;}
+
+.admin_UnitLogo{padding:0px 0px 0px 0px; width:214px; height: 220px;}
+.admin_ContentAreaPosition {margin:0px; padding:0px;}
+
+#printleftcolumn{position:absolute; z-index:2;}
+
+
+/*ADMIN 3 Column Landing Template Content Area*/
+.admin_3ColLandingContentBG{background-color:#FFFFFF; position:static; z-index:1;}
+.admin_3ColLandingContentPadding{margin:0px 0px 0px 0px; padding:220px 0px 0px 0px;}
+#admin_3ColLandingContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; background-color:transparent; text-decoration:none; font-weight:normal; width:600px;}
+#admin_3ColLandingContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; text-decoration:none; font-weight:normal; border-color:#000000;}
+#admin_3ColLandingContent img{padding:3px; border:0px;}
+#admin_3ColLandingContent table{border-color:#000000;}
+#admin_3ColLandingContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; padding:8px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_3ColLandingContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLandingContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLandingContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLandingContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLandingContent ol{list-style-position:outside;}
+#admin_3ColLandingContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#admin_3ColLandingContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#admin_3ColLandingContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_3ColLandingContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_3ColLandingContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_3ColLandingContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_3ColLandingContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+
+
+
+/*ADMIN 3 Column Level Template Content Area*/
+.admin_3ColLevelContentBG{background-color:#FFFFFF; position:static; z-index:1;}
+.admin_3ColLevelContentPadding{margin:0px 0px 0px 0px; padding:220px 0px 0px 0px;}
+#admin_3ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; background-color:transparent; width:600px; text-decoration:none; font-weight:normal;}
+#admin_3ColLevelContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; border-color:#000000; text-decoration:none; font-weight:normal;}
+#admin_3ColLevelContent img{padding:3px; border:0px;}
+#admin_3ColLevelContent table{border-color:#000000;}
+#admin_3ColLevelContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; border-color:#000000; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_3ColLevelContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_3ColLevelContent ol{list-style-position:outside;}
+#admin_3ColLevelContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#admin_3ColLevelContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#admin_3ColLevelContent h1{font-family:Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_3ColLevelContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+#admin_3ColLevelContent div.hr {height: 28px; background: url(http://www.cmu.edu/common/images/lvl_3colHorizontalRule.gif) no-repeat;}
+#admin_3ColLevelContent div.hr hr {display:none;}
+
+
+
+
+/*ADMIN 3rd COLUMN ELEMENTS*/
+.admin_3rdColumnContent_Padding{margin:0px 0px 0px 0px; padding:1px 0px 25px 0px;}
+.admin_3rdColumnContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; width:225px; text-align:left; overflow:hidden;}
+.admin_3rdColumnContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; font-size:11px; border-color:#000000;}
+.admin_3rdColumnContent img{padding:0px 3px 3px 3px; border:0px;}
+.admin_3rdColumnContent table{border-color:#000000;}
+.admin_3rdColumnContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; padding:0px 0px 12px 0px; margin:0px 0px 0px 0px;}
+.admin_3rdColumnContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+.admin_3rdColumnContent ol{list-style-position:outside;}
+.admin_3rdColumnContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+.admin_3rdColumnContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+.admin_3rdColumnContent h1{font-family:Helvetica, sans-serif; font-size:13px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+.admin_3rdColumnContent h2{font-family:Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+.admin_3rdColumnContent h3{font-family:Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+.admin_3rdColumnContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+.admin_3rdColumnContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent input.radio {width:auto;}
+.admin_3rdColumnContent input.checkbox {width:auto;}
+.admin_3rdColumnContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+.admin_3rdColumnContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+
+
+
+/*ADMIN 2 Column Landing Template Content Area */
+.admin_2ColLandingContentBG{background-color:#FFFFFF; position:static; z-index:1;}
+.admin_2ColLandingContent_Padding{margin:0px 0px 0px 0px; padding:220px 0px 0px 0px;}
+#admin_2ColLandingContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; background-color:transparent; width:600px;}
+#admin_2ColLandingContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; text-decoration:none; font-weight:normal; border-color:#000000;}
+#admin_2ColLandingContent img{padding:3px; border:0px;}
+#admin_2ColLandingContent table{border-color:#000000;}
+#admin_2ColLandingContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; padding:8px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_2ColLandingContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLandingContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLandingContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLandingContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLandingContent ol{list-style-position:outside;}
+#admin_2ColLandingContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#admin_2ColLandingContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#admin_2ColLandingContent h1{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_2ColLandingContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_2ColLandingContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_2ColLandingContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 10px 0px;}
+#admin_2ColLandingContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+#admin_2ColLandingContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLandingContent input.radio {width:auto;}
+#admin_2ColLandingContent input.checkbox {width:auto;}
+#admin_2ColLandingContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLandingContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLandingContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+
+
+
+/*ADMIN 2 Column Level Template Content Area */
+.admin_2ColLevelContentBG{background-color:#FFFFFF; position:static; z-index:1;}
+.admin_2ColLevelContent_Padding{margin:0px 0px 0px 0px; padding:220px 0px 0px 0px;}
+#admin_2ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; width:600px;}
+#admin_2ColLevelContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; text-decoration:none; font-weight:normal; border-color:#000000;}
+#admin_2ColLevelContent img{padding:3px; border:0px;}
+#admin_2ColLevelContent table{border-color:#000000;}
+#admin_2ColLevelContent p{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+#admin_2ColLevelContent a{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:visited{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent a:visited:hover{font-family:Verdana, Arial, Helvetica, sans-serif; color:#990000; text-decoration:underline; font-weight:normal;}
+#admin_2ColLevelContent ol{list-style-position:outside;}
+#admin_2ColLevelContent ul{list-style-position:outside; list-style-image:url(http://www.cmu.edu/common/images/bullet_content.gif);}
+#admin_2ColLevelContent li{padding:0px 0px 2px 0px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; text-decoration:none; font-weight:normal; margin-top:4px;}
+#admin_2ColLevelContent h1{font-family:Helvetica, sans-serif; font-size:18px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h2{font-family:Helvetica, sans-serif; font-size:15px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h3{font-family:Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent h4{font-family:Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#000000; padding:0px; margin:10px 0px 8px 0px;}
+#admin_2ColLevelContent hr{background-color:#000000; color:#000000; height:1px; font-size:0px; border:0px;}
+#admin_2ColLevelContent input {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent input.radio {width:auto;}
+#admin_2ColLevelContent input.checkbox {width:auto;}
+#admin_2ColLevelContent textarea {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent select.option {font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#424545;}
+#admin_2ColLevelContent div.hr {height: 28px; background: url(http://www.cmu.edu/common/images/lvl_2colHorizontalRule.gif) no-repeat;}
+#admin_2ColLevelContent div.hr hr {display:none;}
+
+
+
+
+/*Admin Breadcrumbs*/
+.breadcrumbs_2Col_admin_template_BG{display:none;}
+#breadcrumbs_2Col_admin_template{display:none;}
+#breadcrumbs_2Col_admin_template a, #breadcrumbs_2Col_admin_template a:visited{display:none;}
+#breadcrumbs_2Col_admin_template a:hover, #breadcrumbs_2Col_admin_template a:visited:hover{display:none;}
+
+
+#breadcrumbs_3Col_admin_template{display:none;}
+#breadcrumbs_3Col_admin_template a, #breadcrumbs_3Col_admin_template a:visited{display:none;}
+#breadcrumbs_3Col_admin_template a:hover, #breadcrumbs_3Col_admin_template a:visited:hover{display:none;}
+
+
+
+
+/*Admin Footer 2 Column Layout*/
+.footer_admin_level_Padding{margin:0px; padding:0px;}
+#footer_admin_level{display:none;}
+#footer_admin_level a, #footer_admin_level a:visited{display:none;}
+#footer_admin_level a:hover, #footer_admin_level a:visited:hover{display:none;}
+#footer_admin_level p{display:none;}
+
+
+/*Admin Footer 3 Column Layout*/
+.footer_admin_level_3ColumnLayout_Padding{margin:0px; padding:0px;}
+#footer_admin_level_3ColumnLayout{display:none;}
+#footer_admin_level_3ColumnLayout a, #footer_admin_level_3ColumnLayout a:visited{display:none;}
+#footer_admin_level_3ColumnLayout a:hover, #footer_admin_level_3ColumnLayout a:visited:hover{display:none;}
+#footer_admin_level_3ColumnLayout p{display:none;}
+
+
+.floatleft {float: left; margin: 0px 10px 10px 0; padding: 4px; background-color:#FFFFFF;}
+.floatright {float: right; margin: 0px 0 10px 10px; padding: 4px; background-color:#FFFFFF;}
+.imgnofloat {margin: 0px 0px 10px 0px; padding: 4px; background-color:#FFFFFF;}
+
+.clear {
+ clear: both;
+}
+
+table.basicTable {width:99%; border-collapse:collapse; border-style: none !important; margin: 3px 0px 3px 1px;}
+table.basicTable tr {}
+table.basicTable tbody td {font-size:11px; text-decoration:none; font-weight:normal; border: 1px solid #d4d4d4; padding: 5px 3px 11px 5px;  margin: 0px; background-color: transparent; vertical-align: top;}
+table.basicTable thead td {font-size:10px; text-decoration:none; font-weight:normal; border-style: none; padding:9px 4px 9px 5px; margin: 0px; text-transform:uppercase;  background-color: transparent; vertical-align: bottom;}
+table.basicTable p {padding:0px !important;margin:0px !important;}
+table.basicTable tr.alternateRow td {background-color: #dbdede;}
+
+.newsFeaturedStory {
+  line-height: 15px;
+}
+
+h2.newsHeadline {
+  margin: 2px 0px 2px 0px !important;
+  font-size: 14px !important;
+}
+
+.newsSnippet {
+  margin-bottom: 20px;
+}
+
+.overline {
+  text-decoration: overline;
+}
+
+.eventCalendarListView{}
+
+.eventCalendarListView .summary {font-size: 12px; font-weight: bold; margin-top: 20px; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .location {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .time {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView p {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView h2 {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView .dayEnd {height: 10px;}
+
+.bioContactInfo {padding: 2px 0px 2px 0px;}

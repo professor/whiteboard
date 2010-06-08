@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  url: MyString
+  semester: MyString
+  year: MyString
+  user_id: 1
+  type: 1
+
+two:
+  url: MyString
+  semester: MyString
+  year: MyString
+  user_id: 1
+  type: 1

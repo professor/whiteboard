@@ -1,0 +1,51 @@
+<h1>New effort_log_line_item</h1>
+
+<% form_for(@effort_log_line_item) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :effort_log_id %><br />
+    <%= f.text_field :effort_log_id %>
+  </p>
+  <p>
+    <%= f.label :course_id %><br />
+    <%= f.text_field :course_id %>
+  </p>
+  <p>
+    <%= f.label :task_type_id %><br />
+    <%= f.text_field :task_type_id %>
+  </p>
+  <p>
+    <%= f.label :day1 %><br />
+    <%= f.text_field :day1 %>
+  </p>
+  <p>
+    <%= f.label :day2 %><br />
+    <%= f.text_field :day2 %>
+  </p>
+  <p>
+    <%= f.label :day3 %><br />
+    <%= f.text_field :day3 %>
+  </p>
+  <p>
+    <%= f.label :day4 %><br />
+    <%= f.text_field :day4 %>
+  </p>
+  <p>
+    <%= f.label :day5 %><br />
+    <%= f.text_field :day5 %>
+  </p>
+  <p>
+    <%= f.label :day6 %><br />
+    <%= f.text_field :day6 %>
+  </p>
+  <p>
+    <%= f.label :day7 %><br />
+    <%= f.text_field :day7 %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', effort_log_line_items_path %>

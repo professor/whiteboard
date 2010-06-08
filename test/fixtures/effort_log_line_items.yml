@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  effort_log_id: 1
+  course_id: 1
+  task_type_id: 1
+  day1: 1
+  day2: 1
+  day3: 1
+  day4: 1
+  day5: 1
+  day6: 1
+  day7: 1
+
+two:
+  effort_log_id: 1
+  course_id: 1
+  task_type_id: 1
+  day1: 1
+  day2: 1
+  day3: 1
+  day4: 1
+  day5: 1
+  day6: 1
+  day7: 1

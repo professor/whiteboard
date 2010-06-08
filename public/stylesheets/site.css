@@ -1,0 +1,221 @@
+
+td.log_sum {
+   padding-left: 10px;
+   text-align: right;
+}        
+
+td.log_remove {
+   padding-left: 10px; 
+}
+
+td.log_weeknumber {
+    text-align: right;
+    
+}
+
+td.log_action  {
+    padding-left: 7px;
+    
+}
+
+#description {
+  color: green;
+}
+
+td.even {
+    background-color: #eae5da;
+    color: green;
+}
+
+td.today {
+    background-color: #eae5da;
+}
+
+
+
+/* tables - http://tablesorter.com*/
+table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #e6EEEE;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+table.tablesorter thead tr .header {
+	background-image: url(/images/tablesorter/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(/images/tablesorter/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(/images/tablesorter/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+    background-color: #8dbdd8;
+}
+
+table.tablesorter tbody tr.hover td {
+    background-color: #FFFFCC;
+}
+
+
+.comment_text {
+    font-size: 12px;
+}
+
+.comment_new {
+    font-size: 12px;
+}
+
+.comment_author {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}
+
+.comment_edit {
+    font-size: 12px;
+}
+
+/* this group is from the same set of colors
+    background-color:#F7E1AB;
+    backbround-color:#DBE89A;
+    background-color:#E0EBEB;
+    background-color:#FFF499;
+    */
+/* this group is from a different set of colors
+    background-color:#DDDDCC;
+    background-color:#acc;
+
+*/
+.comment {
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;    
+}
+
+.comment_type_none {
+    background-color: #DDDDCC;
+}
+
+.help_text {
+    margin-left: 10px;
+    font-size: 10px;
+}
+
+.user_photo {
+    float: right;
+}
+
+
+div.student {
+    padding: 5px;
+    margin: 5px;
+    background-color: rgb(247, 225, 171);    
+}
+
+div.staff {
+    padding: 5px;
+    margin: 5px;
+    background-color: rgb(224, 235, 235);
+}
+
+div.admin {
+    padding: 5px;
+    margin: 5px;
+    background-color: rgb(221, 221, 204);
+}
+
+div.system {
+    padding: 5px;
+    margin: 5px;
+    background-color: rgb(219, 232, 154);
+}
+
+
+.student .instructions {
+    vertical-align: top;
+}
+.staff .instructions {
+    vertical-align: top;
+}
+.admin .instructions {
+    vertical-align: top;
+}
+
+
+.formItem {
+/*
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+*/
+    padding: 6px 12px 8px;
+/*    display: block;  */
+}
+
+.formItem .help_text {
+    margin-left: 195px;
+    font-size: 10px;
+}
+
+.formItem label {
+     display: inline-block;
+     width: 180px;
+     font-size: 13px;
+}
+.formItem .label {
+     display: inline-block;
+     width: 180px;
+     background-repeat: no-repeat;
+}
+.formItem input {
+    border: 1px solid #999999;
+    padding: 3px;
+/*
+    display: block;
+    margin: 0 0 2px 190px;
+*/
+    }
+
+.formItem .indented {
+    margin_left: 10px;
+}
+
+
+
+
+#image_box {
+position: absolute;
+top: 0; right: 0;
+z-index: 10;
+background:#ffc;
+padding:5px;
+border:1px solid #CCCCCC;
+text-align:center;
+font-weight:bold;
+width:200px;
+}
+
+div.right_link {
+    text-align: right;
+    margin-top: -27px;
+}

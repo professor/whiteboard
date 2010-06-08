@@ -1,0 +1,32 @@
+<% content_for :title, "Paper " + @paper.title %>
+
+<p>
+  <b>Title:</b>
+  <%=h @paper.title %>
+</p>
+
+<p>
+  <b>Authors:</b>
+  <%=h @paper.authors_full_listing %>
+</p>
+
+ <p><b>Authors</b></p>
+ <% @paper.people.each do |person| %>
+ <p>   <%= person.human_name %> </p>
+ <% end %>
+  <b>Conference:</b>
+  <%=h @paper.conference %>
+
+<p>
+  <b>Year:</b>
+  <%=h @paper.year %>
+</p>
+
+<p>
+  <b>Paper url:</b>
+  <%=h @paper.paper.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_paper_path(@paper) %> |
+<%= link_to 'Back', papers_path %>

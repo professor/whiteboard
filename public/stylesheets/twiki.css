@@ -1,0 +1,127 @@
+.team_member_photo {
+    float: left;
+    margin-right: 10px;
+}
+
+.team_member_photo .label {
+    text-align: center;
+}
+
+.user_header_photo {
+    float: left;
+    padding: 0em 1em 0em 0em;
+}
+
+.user_clear {
+    clear: both;
+}
+
+/* From colors.css */
+h1, h2, h3, h4, h5, h6 {
+	color:#a00;
+/* from style.css #patternPage */
+	font-family:arial, "Lucida Grande", verdana, sans-serif;
+    font-weight:normal;
+    line-height:104%;
+}
+
+
+/* From style.css */
+h1 {
+font-size:210%;
+}
+
+.twikiTable th {  /*originally just th */
+	line-height:1.15em;
+}
+
+
+.twikiTable {
+    border-style:solid;
+    border-width:1px;
+    margin:2px 0;
+}
+
+.twikiTable td {
+	padding:.25em .5em;
+	border-style:none none solid none;
+	border-width:0 0 1px 0;
+}
+
+.twikiTable th {
+	border-style:none none none solid;
+	border-width:0 0 0 1px;
+	padding:.4em .5em;
+}
+
+.twikiTable th.twikiFirstCol {
+	border-left-style:none;
+}
+
+
+
+.twikiTable, twikiTable td {
+    border-color:#ccc;
+ }
+
+
+/* From colors.css */
+/* TablePlugin */
+.twikiTable,
+.twikiTable td {
+	border-color:#ccc;
+}
+.twikiTable th {
+	border-color:#ccc #fff;
+}
+.twikiTable th a:link,
+.twikiTable th a:visited,
+.twikiTable th a font {
+	color:#fff;
+}
+
+
+
+
+/* Todd's tweaks */
+
+.twikiTable td {
+    vertical-align: top;
+    
+/* from style.css #patternPage */
+	font-family:arial, "Lucida Grande", verdana, sans-serif;
+	line-height:1.4em; /*S1*/
+	/* change font size here */
+	font-size:105%;
+    color: #000000;
+}
+
+
+/* from colors.css */
+.twikiTable :link:focus,
+.twikiTable :visited:focus,
+.twikiTable :link,
+.twikiTable :visited,
+.twikiTable :link:active,
+.twikiTable :visited:active {
+	color:#06c;
+	background-color:transparent;
+}
+
+.twikiTable a:hover
+{
+	color:#666666;
+}
+
+
+.twikiTable th {
+    background-color: #6b7f93;
+    color: #FFFFFF;
+}
+
+
+
+.twikiTableEven {
+    
+    background-color: #edf4f9;
+}

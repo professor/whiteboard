@@ -1,0 +1,16 @@
+<table class="tablesorter">
+  <THEAD>
+    <tr>
+      <th>Student Name</th>
+      <th>Courses </th>
+    </tr>
+  </THEAD>
+  <% unless @error_effort_logs_users.nil? %>
+  <%  @error_effort_logs_users.each_pair {|user, courses|  %>
+  <tr>
+    <td><%= user.first_name%><%= user.last_name%></td>
+    <td><%= courses%> </td>
+  </tr>
+  <% } %>
+  <% end %>
+</table>

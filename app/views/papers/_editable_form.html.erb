@@ -1,0 +1,48 @@
+<% form_for @paper, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title, :size => 100 %>
+    <span class="help_text">No need for quotation marks</span>
+  </p>
+  <p>
+    <%= f.label :conference %><br />
+    <%= f.text_field :conference, :size => 100 %>
+    <span class="help_text">Example: Special Interest Group on Computer Science Education (SIGCSE). Milwaukee, WI.</span><br/>
+    <span class="help_text">Example: MobiCASE. San Diego, CA.</span>
+
+  </p>
+
+  <p>
+    <%= f.label :authors_full_listing, "Author List" %><br />
+    <%= f.text_field :authors_full_listing, :size => 100 %>
+    <span class="help_text">As it appears in the paper</span>
+  </p>
+<div id="authors">
+  <p>Carnegie Mellon Silicon Valley authors<br/>
+    <span class="help_text">Please add any authors that are in our database</span>
+  </p>
+
+  <%= render :partial => 'author', :collection =>@paper.people, :locals => { :paper_form => f } %>
+
+
+
+
+
+</div>
+<div class="formItem indented"><p><%= add_author_link("Add an author") %></p></div>
+<p>
+</p>
+  <p>
+    <%= f.label :year %><br />
+    <%= f.text_field :year, :size => 4 %>
+  </p>
+  <p>
+    <%= f.label :paper, "Upload paper" %>
+    <%= f.file_field :paper %>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>

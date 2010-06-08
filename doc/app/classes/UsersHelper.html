@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: UsersHelper [Rails Application Documentation]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Module</span>
+          UsersHelper
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../files/app/helpers/users_helper_rb.html">app/helpers/users_helper.rb</a>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000254">if_authorized?</a></li>
+              <li><a href="#M000257">link_to_current_user</a></li>
+              <li><a href="#M000256">link_to_login_with_IP</a></li>
+              <li><a href="#M000255">link_to_user</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public instance methods</h2>
+              <div class='method public-instance' id='method-M000254'>
+                <a name='M000254'></a>
+                <div class='synopsis'>
+                  <span class='name'>if_authorized?</span>
+                  <span class='arguments'>(action, resource) {|action, resource| ...}</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Use this to wrap view elements that the user can&#8217;t access. !! Note:
+                  this is an <b>interface</b>, not <b>security</b> feature !! You need to do
+                  all access control at the controller level.
+                  </p>
+                  <p>
+                  Example: <%= if_authorized?(:index, <a href="User.html">User</a>) do
+                  link_to(&#8216;List all users&#8217;, users_path) end %> | <%=
+                  if_authorized?(:edit, @user) do link_to(&#8216;Edit this user&#8217;,
+                  edit_user_path) end %> | <%= if_authorized?(:destroy, @user) do link_to
+                  &#8216;Destroy&#8217;, @user, :confirm => &#8216;Are you sure?&#8217;,
+                  :method => :delete end %>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000254-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000254-source'>    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 14</span>&#x000A;14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">if_authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;15:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>)&#x000A;16:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>&#x000A;17:     <span class="ruby-keyword kw">end</span>&#x000A;18:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000257'>
+                <a name='M000257'></a>
+                <div class='synopsis'>
+                  <span class='name'>link_to_current_user</span>
+                  <span class='arguments'>(options={})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Link to the current user&#8217;s page (using <a
+                  href="UsersHelper.html#M000255">link_to_user</a>) or to the login page
+                  (using <a href="UsersHelper.html#M000256">link_to_login_with_IP</a>).
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000257-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000257-source'>    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 82</span>&#x000A;82:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_current_user</span>(<span class="ruby-identifier">options</span>={})&#x000A;83:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_user</span>&#x000A;84:       <span class="ruby-identifier">link_to_user</span> <span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">options</span>&#x000A;85:     <span class="ruby-keyword kw">else</span>&#x000A;86:       <span class="ruby-identifier">content_text</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>) <span class="ruby-operator">||</span> <span class="ruby-value str">'not signed in'</span>&#x000A;87:       <span class="ruby-comment cmt"># kill ignored options from link_to_user</span>&#x000A;88:       [<span class="ruby-identifier">:content_method</span>, <span class="ruby-identifier">:title_method</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">opt</span>)} &#x000A;89:       <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>, <span class="ruby-identifier">options</span>&#x000A;90:     <span class="ruby-keyword kw">end</span>&#x000A;91:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000256'>
+                <a name='M000256'></a>
+                <div class='synopsis'>
+                  <span class='name'>link_to_login_with_IP</span>
+                  <span class='arguments'>(content_text=nil, options={})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Link to login page using remote ip address as link content
+                  </p>
+                  <p>
+                  The :title (and thus, tooltip) is set to the IP address
+                  </p>
+                  <p>
+                  Examples:
+                  </p>
+                  <pre>link_to_login_with_IP&#x000A;# =&gt; &lt;a href=&quot;/login&quot; title=&quot;169.69.69.69&quot;&gt;169.69.69.69&lt;/a&gt;&#x000A;&#x000A;link_to_login_with_IP :content_text =&gt; 'not signed in'&#x000A;# =&gt; &lt;a href=&quot;/login&quot; title=&quot;169.69.69.69&quot;&gt;not signed in&lt;/a&gt;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000256-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000256-source'>    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 67</span>&#x000A;67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={}&#x000A;68:     <span class="ruby-identifier">ip_addr</span>           = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">remote_ip</span>&#x000A;69:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">ip_addr</span>&#x000A;70:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ip_addr</span>&#x000A;71:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:tag</span>)&#x000A;72:       <span class="ruby-identifier">content_tag</span> <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">options</span>&#x000A;73:     <span class="ruby-keyword kw">else</span>&#x000A;74:       <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">login_path</span>, <span class="ruby-identifier">options</span>&#x000A;75:     <span class="ruby-keyword kw">end</span>&#x000A;76:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-M000255'>
+                <a name='M000255'></a>
+                <div class='synopsis'>
+                  <span class='name'>link_to_user</span>
+                  <span class='arguments'>(user, options={})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Link to user&#8217;s page (&#8216;users/1&#8217;)
+                  </p>
+                  <p>
+                  By default, their login is used as link text and link title (tooltip)
+                  </p>
+                  <p>
+                  Takes options
+                  </p>
+                  <ul>
+                  <li>:content_text => &#8216;Content text in place of user.login&#8217;, escaped
+                  with the standard h() function.
+                  
+                  </li>
+                  <li>:content_method => :user_instance_method_to_call_for_content_text
+                  
+                  </li>
+                  <li>:title_method => :user_instance_method_to_call_for_title_attribute
+                  
+                  </li>
+                  <li>as well as link_to()&#8217;s standard options
+                  
+                  </li>
+                  </ul>
+                  <p>
+                  Examples:
+                  </p>
+                  <pre> link_to_user @user&#x000A; # =&gt; &lt;a href=&quot;/users/3&quot; title=&quot;barmy&quot;&gt;barmy&lt;/a&gt;&#x000A;&#x000A; # if you've added a .name attribute:&#x000A;content_tag :span, :class =&gt; :vcard do&#x000A;  (link_to_user user, :class =&gt; 'fn n', :title_method =&gt; :login, :content_method =&gt; :name) +&#x000A;        ': ' + (content_tag :span, user.email, :class =&gt; 'email')&#x000A; end&#x000A; # =&gt; &lt;span class=&quot;vcard&quot;&gt;&lt;a href=&quot;/users/3&quot; title=&quot;barmy&quot; class=&quot;fn n&quot;&gt;Cyril Fotheringay-Phipps&lt;/a&gt;: &lt;span class=&quot;email&quot;&gt;barmy@blandings.com&lt;/span&gt;&lt;/span&gt;&#x000A;&#x000A; link_to_user @user, :content_text =&gt; 'Your user page'&#x000A; # =&gt; &lt;a href=&quot;/users/3&quot; title=&quot;barmy&quot; class=&quot;nickname&quot;&gt;Your user page&lt;/a&gt;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000255-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000255-source'>    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 46</span>&#x000A;46:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_user</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})&#x000A;47:     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Invalid user&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">user</span>&#x000A;48:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:content_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:title_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:nickname</span>&#x000A;49:     <span class="ruby-identifier">content_text</span>      = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>)&#x000A;50:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_method</span>))&#x000A;51:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:title</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:title_method</span>))&#x000A;52:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">user_path</span>(<span class="ruby-identifier">user</span>), <span class="ruby-identifier">options</span>&#x000A;53:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

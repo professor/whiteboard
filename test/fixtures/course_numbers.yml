@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+foundations:
+  name: Foundations of Software Engineering
+  number: 96-700
+
+mfse:
+  name: Metrics for Software Engineers
+  number: 96-703

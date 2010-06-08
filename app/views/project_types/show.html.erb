@@ -1,0 +1,15 @@
+<% content_for :title, 'Project' %>
+<p>
+  <b>Name:</b>
+  <%=h @project_type.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @project_type.description %>
+</p>
+
+<p>
+<%= link_to 'Edit', edit_project_type_path(@project_type) %> |
+<%= link_to 'Back', project_types_path %>
+</p>

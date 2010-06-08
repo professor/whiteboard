@@ -1,0 +1,10 @@
+<% content_for :title, 'Edit page' %>
+
+<%= render :partial => "left_nav" %>
+
+<h1>Edit page</h1>
+<%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
+
+
+<%= link_to 'Show', @page %> |
+<%= link_to 'Back', pages_path %>

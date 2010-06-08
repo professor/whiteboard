@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  authors_full_listing: MyString
+  conference: MyString
+  year: MyString
+  paper_file_name: Bareiss_and_Sedano_Developing_Software_Engineering_Leaders.pdf
+  paper_content_type: application/download
+  paper_file_size: 186461
+  paper_updated_at: 2010-04-11 03:17:49
+
+two:
+  title: MyString
+  authors_full_listing: MyString
+  conference: MyString
+  year: MyString
+  paper_file_name: Bareiss_and_Sedano_Developing_Software_Engineering_Leaders.pdf
+  paper_content_type: application/download
+  paper_file_size: 186461
+  paper_updated_at: 2010-04-11 03:17:49

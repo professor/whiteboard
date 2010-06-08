@@ -1,0 +1,43 @@
+<h1>Editing Effort Log</h1>
+<%= javascript_include_tag :all, :cache => true %>
+
+<% if logged_in? && current_user.is_staff %>
+  <H2>The faculty view is different than the student view</h2>
+<% end %>
+
+<div id="description"></div>
+<% form_for(@effort_log) do |f| %>
+  <%= f.error_messages %>
+
+  <% if logged_in? && current_user.is_admin %>  
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <% else %>
+    <p> <%= f.label :person_id %>: <%= @effort_log.person.human_name %> </p> 
+
+  <% end  %>
+  <% if logged_in? && current_user.is_admin %>  
+  <p>
+    <%= f.label :week_number %><br />
+    <%= f.text_field :week_number %>
+  </p>
+  <% else %>  
+    <p> <%= f.label :week_number %>: <%= @effort_log.week_number %> </p> 
+  <% end %>  
+  <p>Note: The unit of measure is hours. Partial hours are ok.</p>
+  <table id="effort_log_line_items" border=0>
+  <%= render :partial => 'effort_log_header' %>
+    <%= render :partial => 'effort_log_line_item', :collection => @effort_log.effort_log_line_items %>
+  <tr id="add_line_item"><td colspan="3">&nbsp;</td><td colspan=7><%= add_line_item_link "Add another line" %></td><td class="log_sum"><%= @effort_log.sum %> hrs</td><td>&nbsp;</td></tr>
+  </table>
+  <p>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @effort_log %> |
+<%= link_to 'Back', effort_logs_path %>

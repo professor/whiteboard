@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: ApplicationController [Rails Application Documentation]</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          ApplicationController
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../files/app/controllers/application_rb.html">app/controllers/application.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>ActionController::Base</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            Filters added to this controller apply to all controllers in the
+            application. Likewise, all the methods added will be available for all
+            controllers.
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000135">current_semester</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000134">robot?</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+            <div id='includes'>
+              <h2>Included modules</h2>
+              <ol>
+                <li><a href="AuthenticatedSystem.html">AuthenticatedSystem</a></li>
+                <li>ExceptionNotifiable</li>
+              </ol>
+            </div>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='method public-class' id='method-M000135'>
+                <a name='M000135'></a>
+                <div class='synopsis'>
+                  <span class='name'>current_semester</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  For the academic year 2008-2009, here are the start dates of each semester
+                  Fall, 8/25/08 which is cweek 35, (Orientation is 34) Spring, 1/12/09 which
+                  is cweek 3, (Gathering is 2) Summer, 5/18/09 which is cweek 21, (Gathering
+                  is 20)
+                  </p>
+                  <p>
+                  For the academic year 2009-2010, here are the start dates of each semester
+                  Fall, 8/24/09 which is cweek 34, (Orienation is 33) Spring, 1/11/10 which
+                  is cweek 2, (Gathering is 1) Summer, 5/17/10 which is cweek 20, (Gathering
+                  is 19)
+                  </p>
+                  <p>
+                  Note: to check future dates, use the following code. Date.new(2010, 8,
+                  23).cweek
+                  </p>
+                  <p>
+                  Looking at the calendar, we want <a
+                  href="ApplicationController.html#M000135">current_semester</a> to have
+                  these characteristics Spring starts roughly around Christmas and ends 1
+                  week after last day of semester Summer starts 1 week before and end 1 week
+                  after semester Fall starts 1 week before and goes to roughly around
+                  Christmas
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000135-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000135-source'>    <span class="ruby-comment cmt"># File app/controllers/application.rb, line 44</span>&#x000A;44:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_semester</span>&#x000A;45:     <span class="ruby-identifier">cweek</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cweek</span>()&#x000A;46:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Spring&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cweek</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">19</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">cweek</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">51</span>&#x000A;47:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Summer&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cweek</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">33</span>&#x000A;48:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Fall&quot;</span>&#x000A;49:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='method public-instance' id='method-M000134'>
+                <a name='M000134'></a>
+                <div class='synopsis'>
+                  <span class='name'>robot?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Return true if the user agent is a bot.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000134-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000134-source'>    <span class="ruby-comment cmt"># File app/controllers/application.rb, line 22</span>&#x000A;22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">robot?</span>&#x000A;23:     <span class="ruby-identifier">bot</span> = <span class="ruby-regexp re">/(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i</span>&#x000A;24:     <span class="ruby-identifier">request</span>.<span class="ruby-identifier">user_agent</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">bot</span>&#x000A;25:   <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

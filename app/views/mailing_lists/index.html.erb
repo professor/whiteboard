@@ -1,0 +1,68 @@
+<% content_for :title, 'Mailing Lists' %>
+
+<% content_for :tablesorter do %>
+  <%= javascript_include_tag 'tablesorter' %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+<script type="text/javascript">
+$(document).ready(function()
+    {
+       if ($("#filterBoxOne").attr("disabled") == true)
+       {
+         $('#filterBoxOne').val('');
+         $('#filterBoxOne').removeAttr("disabled");
+         $('#filterBoxOne').focus();
+        }
+        $("#mailing_list_table").tablesorter({widgets: ['zebra'],
+                                        headers: {2: {sorter: false}  },
+                                        sortList: [[0,0]]})
+            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                filterClearContainer: $("#filterClearOne"),
+                filterColumns: [0],
+                filterCaseSensitive: false
+            });
+
+        //hoving over a line selects it
+        $("tr").hover(
+        function () {
+          $(this).addClass("hover");
+        },
+        function () {
+          $(this).removeClass("hover");
+        });
+      }
+);
+
+</script>
+<% end %>
+
+<h1>Mailing lists</h1>
+<div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
+
+
+<table id="mailing_list_table" class="tablesorter">
+  <thead>
+  <tr>
+    <th>Mailing List</th>
+    <th>Actions</th>
+  <% if current_user.is_admin? %>
+    <th>Admin</th>
+  <% end %>
+  </tr>
+</thead>
+<tbody>
+<% for mailing_list in @mailing_lists %>
+<tr class="tablesorter">
+    <td><%= mailing_list.sub('@west.cmu.edu','@sv.cmu.edu') %></td>
+    <td><%= link_to 'Show', :controller => "mailing_lists", :action => "show",  :id => mailing_list %></td>
+    <% if current_user.is_admin? %>
+    <% url_mailing_list = mailing_list.gsub(/@/,'%40') %>
+    <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{GOOGLE_APPS_CONFIG['google_domain']}/Group?groupId=#{mailing_list}" %></td>
+    <% end %>
+
+</tr>
+<% end %>
+</tbody>
+</table>
+<p>There are <%= @mailing_lists.size %> mailing lists.</p>
+
+<br />

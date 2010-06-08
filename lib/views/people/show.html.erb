@@ -1,0 +1,48 @@
+<% content_for :title, @person.human_name + " - Contact Information"%>
+<h1><%=h @person.human_name %></h1>
+
+This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
+
+<% form_for(@person) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="rounded student">
+  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
+  <span class="instructions">These fields can be edited by anyone.</span>
+  <%= render :partial => 'show_user_fields', :locals=>{:f => f} %>
+  </div>
+
+  <div class="rounded staff">
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+  <span class="instructions">These fields can be edited by faculty.</span>
+  <%= render :partial => 'show_faculty_fields', :locals=>{:f => f} %>
+  </div>
+
+  <div class="rounded admin">
+  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <span class="instructions">These fields can be edited by admin.</span>
+  <%= render :partial => 'show_admin_fields', :locals=>{:f => f} %>
+  </div>
+
+
+<% end %>
+
+<br/><br/>
+
+
+<% for version in @person.versions.reverse %>
+Version <%= version.version %>
+<%= link_to '(revert)', { :action => 'revert_to_version', :version_id => version.version, :id => @person}, {:confirm => "Are you sure?" } %>
+<% if @person.version == version.version %>
+(currently on page)
+<% else %>
+<%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
+<% end %>
+<% updated_by = Person.find(:first, :conditions=> ["id = ?", version.updated_by_user_id]) %><% if !updated_by.nil? %>by <%=h updated_by.human_name %><% end %>
+on <%=h version.updated_at.to_s(:detailed) %>
+ <br/>
+<% end %>
+<br/><br/>
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

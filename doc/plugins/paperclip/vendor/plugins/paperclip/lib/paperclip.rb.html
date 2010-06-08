@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: paperclip.rb [Paperclip Plugin Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+</head>
+	
+<body class="file file-popup">
+	<div id="metadata">
+		<dl>
+			<dt class="modified-date">Last Modified</dt>
+			<dd class="modified-date">Wed Apr 07 17:33:56 -0700 2010</dd>
+			
+			
+			<dt class="requires">Requires</dt>
+			<dd class="requires">
+				<ul>
+				
+					<li>erb</li>
+				
+					<li>tempfile</li>
+				
+					<li>paperclip/upfile</li>
+				
+					<li>paperclip/iostream</li>
+				
+					<li>paperclip/geometry</li>
+				
+					<li>paperclip/processor</li>
+				
+					<li>paperclip/thumbnail</li>
+				
+					<li>paperclip/storage</li>
+				
+					<li>paperclip/interpolations</li>
+				
+					<li>paperclip/style</li>
+				
+					<li>paperclip/attachment</li>
+				
+				</ul>
+			</dd>
+			
+			
+			
+		</dl>
+
+		
+		<div class="description">
+			<h2>Description</h2>
+			<p>
+<a href="../../../../Paperclip.html">Paperclip</a> allows file attachments
+that are stored in the filesystem. All graphical transformations are done
+using the Graphics/ImageMagick command line utilities and are stored in
+Tempfiles until the record is saved. <a
+href="../../../../Paperclip.html">Paperclip</a> does not require a separate
+model for storing the attachment&#8217;s information, instead adding a few
+simple columns to your table.
+</p>
+<table>
+<tr><td valign="top">Author:</td><td>Jon Yurek
+
+</td></tr>
+<tr><td valign="top">Copyright:</td><td>Copyright &#169; 2008-2009 thoughtbot, inc.
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT License (<a
+href="http://www.opensource.org/licenses/mit-license.php">www.opensource.org/licenses/mit-license.php</a>)
+
+</td></tr>
+</table>
+<p>
+<a href="../../../../Paperclip.html">Paperclip</a> defines an attachment as
+any file, though it makes special considerations for image files. You can
+declare that a model has an attached file with the
+<tt>has_attached_file</tt> method:
+</p>
+<pre>
+  class User &lt; ActiveRecord::Base
+    has_attached_file :avatar, :styles =&gt; { :thumb =&gt; &quot;100x100&quot; }
+  end
+
+  user = User.new
+  user.avatar = params[:user][:avatar]
+  user.avatar.url
+  # =&gt; &quot;/users/avatars/4/original_me.jpg&quot;
+  user.avatar.url(:thumb)
+  # =&gt; &quot;/users/avatars/4/thumb_me.jpg&quot;
+</pre>
+<p>
+See the <tt>has_attached_file</tt> documentation for more details.
+</p>
+
+		</div>
+		
+	</div>
+</body>
+</html>
+

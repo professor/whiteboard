@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Auto Complete Plugin Documentation</title>
+
+	<link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+
+	<script src="js/jquery.js" type="text/javascript"  charset="utf-8"></script>
+	<script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="indexpage">
+
+	
+	<h1>Auto Complete Plugin Documentation</h1>
+
+	
+	<div id="main">
+		<p>
+Example:
+</p>
+<pre>
+  # Controller
+  class BlogController &lt; ApplicationController
+    auto_complete_for :post, :title
+  end
+
+  # View
+  &lt;%= text_field_with_auto_complete :post, title %&gt;
+</pre>
+<p>
+By default, auto_complete_for limits the results to 10 entries, and sorts
+by the given field.
+</p>
+<p>
+auto_complete_for takes a third parameter, an options hash to the find
+method used to search for the records:
+</p>
+<pre>
+  auto_complete_for :post, :title, :limit =&gt; 15, :order =&gt; 'created_at DESC'
+</pre>
+<p>
+For more examples, see script.aculo.us:
+</p>
+<ul>
+<li><a
+href="http://script.aculo.us/demos/ajax/autocompleter">script.aculo.us/demos/ajax/autocompleter</a>
+
+</li>
+<li><a
+href="http://script.aculo.us/demos/ajax/autocompleter_customized">script.aculo.us/demos/ajax/autocompleter_customized</a>
+
+</li>
+</ul>
+<p>
+Copyright &#169; 2007 David Heinemeier Hansson, released under the MIT
+license
+</p>
+
+	</div>
+	
+
+	
+	
+	<h2>Files</h2>
+	<ul>
+		
+			<li class="file"><a href="README.html">README</a></li>
+		
+	</ul>
+	
+
+	<h2>Classes/Modules</h2>
+	<ul>
+		
+		
+		<li class="module"><a 
+			href="AutoComplete.html">AutoComplete</a></li>
+		
+		
+		<li class="module"><a 
+			href="AutoComplete/ClassMethods.html">AutoComplete::ClassMethods</a></li>
+		
+		
+		<li class="module"><a 
+			href="AutoCompleteMacrosHelper.html">AutoCompleteMacrosHelper</a></li>
+		
+	</ul>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>

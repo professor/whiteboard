@@ -1,0 +1,34 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+#
+one:
+  name: Team Alpha
+  course: foundations
+  twiki_space: http://something.com
+  tigris_space: http://something.com
+
+empty_team:
+  name: NULL
+  twiki_space: NULL
+  email: NULL
+  tigris_space: NULL
+  livemeeting: NULL
+  section: NULL
+  course: foundations
+  primary_faculty_id: NULL
+  secondary_faculty_id: NULL
+
+teamOne:
+   name: "FixtureDeming teamOne"
+   course: foundations
+   primary_faculty_id: 2
+
+teamTwo:
+   name: "FixtureDeming teamTwo"
+   course: foundations
+   primary_faculty_id: 2

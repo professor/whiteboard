@@ -1,0 +1,22 @@
+<% content_for :title, 'Course Numbers' %>
+<h1>Course Numbers</h1>
+
+<table>
+<% for course_number in @course_numbers %>
+  <tr>
+    <td><%=h course_number.number %></td>
+    <td><%=h course_number.display_name %></td>
+    <% if logged_in? && current_user.is_admin? %>
+    <td><%= link_to 'Show', course_number %></td>
+    <td><%= link_to 'Edit', edit_course_number_path(course_number) %></td>
+    <td><%= link_to 'Destroy', course_number, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if logged_in? && current_user.is_admin? %>
+<%= link_to 'New course number', new_course_number_path %>
+<% end %>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: README [Acts As List Plugin Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+</head>
+	
+<body class="file">
+  <div id="metadata">
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../ActiveRecord.html">ActiveRecord</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts.html">ActiveRecord::Acts</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List.html">ActiveRecord::Acts::List</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/ClassMethods.html">ActiveRecord::Acts::List::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../ActiveRecord/Acts/List/InstanceMethods.html">ActiveRecord::Acts::List::InstanceMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<p>
+ActsAsList
+</p>
+<h6>====</h6>
+<p>
+This acts_as extension provides the capabilities for sorting and reordering
+a number of objects in a list. The class that has this specified needs to
+have a <tt>position</tt> column defined as an integer on the mapped
+database table.
+</p>
+<p>
+Example
+</p>
+<h6>=</h6>
+<pre>
+  class TodoList &lt; ActiveRecord::Base
+    has_many :todo_items, :order =&gt; &quot;position&quot;
+  end
+
+  class TodoItem &lt; ActiveRecord::Base
+    belongs_to :todo_list
+    acts_as_list :scope =&gt; :todo_list
+  end
+
+  todo_list.first.move_to_bottom
+  todo_list.last.move_higher
+</pre>
+<p>
+Copyright &#169; 2007 David Heinemeier Hansson, released under the MIT
+license
+</p>
+
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>
+

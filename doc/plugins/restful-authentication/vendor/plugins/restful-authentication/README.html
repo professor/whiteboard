@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: README [Restful Authentication Plugin Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+</head>
+	
+<body class="file">
+  <div id="metadata">
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../CHANGELOG.html">CHANGELOG</a></li>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../Authentication.html">Authentication</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieToken.html">Authentication::ByCookieToken</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieToken/ModelClassMethods.html">Authentication::ByCookieToken::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieToken/ModelInstanceMethods.html">Authentication::ByCookieToken::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieTokenController.html">Authentication::ByCookieTokenController</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieTokenController/ControllerClassMethods.html">Authentication::ByCookieTokenController::ControllerClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByCookieTokenController/ControllerInstanceMethods.html">Authentication::ByCookieTokenController::ControllerInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByPassword.html">Authentication::ByPassword</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByPassword/ModelClassMethods.html">Authentication::ByPassword::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ByPassword/ModelInstanceMethods.html">Authentication::ByPassword::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ModelClassMethods.html">Authentication::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authentication/ModelInstanceMethods.html">Authentication::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization.html">Authorization</a></li>
+				
+				
+					<li><a href="../../../Authorization/AasmRoles.html">Authorization::AasmRoles</a></li>
+				
+				
+					<li><a href="../../../Authorization/AasmRoles/StatefulRolesClassMethods.html">Authorization::AasmRoles::StatefulRolesClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization/AasmRoles/StatefulRolesInstanceMethods.html">Authorization::AasmRoles::StatefulRolesInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization/ModelClassMethods.html">Authorization::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization/ModelInstanceMethods.html">Authorization::ModelInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization/StatefulRoles.html">Authorization::StatefulRoles</a></li>
+				
+				
+					<li><a href="../../../Authorization/StatefulRoles/StatefulRolesClassMethods.html">Authorization::StatefulRoles::StatefulRolesClassMethods</a></li>
+				
+				
+					<li><a href="../../../Authorization/StatefulRoles/StatefulRolesInstanceMethods.html">Authorization::StatefulRoles::StatefulRolesInstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Trustification.html">Trustification</a></li>
+				
+				
+					<li><a href="../../../Trustification/EmailValidation.html">Trustification::EmailValidation</a></li>
+				
+				
+					<li><a href="../../../Trustification/EmailValidation/ClassMethods.html">Trustification::EmailValidation::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../Trustification/EmailValidation/InstanceMethods.html">Trustification::EmailValidation::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../../Trustification/ModelClassMethods.html">Trustification::ModelClassMethods</a></li>
+				
+				
+					<li><a href="../../../Trustification/ModelInstanceMethods.html">Trustification::ModelInstanceMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<p>
+h1. Restful <a href="../../../Authentication.html">Authentication</a>
+Generator
+</p>
+<p>
+This widely-used plugin provides a foundation for securely managing user
+authentication:
+</p>
+<ul>
+<li>Login / logout
+
+</li>
+<li>Secure password handling
+
+</li>
+<li>Account activation by validating email
+
+</li>
+<li>Account approval / disabling by admin
+
+</li>
+<li>Rudimentary hooks for authorization and access control.
+
+</li>
+</ul>
+<p>
+Several features were updated in May, 2008. The newest version of this
+plugin may be found in
+</p>
+<pre>
+  http://github.com/technoweenie/restful-authentication/tree/master
+</pre>
+<p>
+While a &#8220;classic&#8221; (backward-compatible) version may be found in
+</p>
+<pre>
+  http://github.com/technoweenie/restful-authentication/tree/classic
+
+  !! important: if you upgrade your site, existing user account !!
+  !! passwords will stop working unless you use --old-passwords !!
+</pre>
+<p>
+This page has notes on
+</p>
+<ul>
+<li>&#8220;Installation&#8221;:INSTALL
+
+</li>
+<li>&#8220;Compatibility Warning&#8221;:COMPATIBILITY
+
+</li>
+<li>&#8220;New Features&#8221;:AWESOME
+
+</li>
+<li>&#8220;After installing&#8221;:POST-INSTALL
+
+</li>
+</ul>
+<p>
+See the &#8220;wiki&#8221;:<a
+href="http://github.com/technoweenie/restful-authentication/wikis/home">github.com/technoweenie/restful-authentication/wikis/home</a>
+(or the notes/ directory) if you want to learn more about:
+</p>
+<ul>
+<li>&#8220;Security Design Patterns&#8221;:Security-Patterns with &#8220;snazzy
+diagram&#8221;:<img
+src="http://github.com/technoweenie/restful-authentication/tree/master/notes/SecurityFramework.png"
+/>
+
+</li>
+<li>[[Authentication]] &#8212; Lets a visitor identify herself (and lay claim
+to her corresponding Roles and measure of Trust)
+
+</li>
+<li>&#8220;Trust Metrics&#8221;:<a
+href="../../../Trustification.html">Trustification</a> &#8212; Confidence
+we can rely on the outcomes of this visitor&#8217;s actions.
+
+</li>
+<li>[[Authorization]] and Policy &#8212; Based on trust and identity, what
+actions may this visitor perform?
+
+</li>
+<li>[[Access Control]] &#8212; How the <a
+href="../../../Authorization.html">Authorization</a> policy is actually
+enforced in your code (A: hopefully without turning it into a spaghetti of
+if thens)
+
+</li>
+<li>[[Rails Plugins]] for <a
+href="../../../Authentication.html">Authentication</a>, Trust, <a
+href="../../../Authorization.html">Authorization</a> and Access Control
+
+</li>
+<li>[[Tradeoffs]] &#8212; for the paranoid or the curious, a rundown of
+tradeoffs made in the code
+
+</li>
+<li>[[CHANGELOG]] &#8212; Summary of changes to internals
+
+</li>
+<li>[[TODO]] &#8212; Ideas for how you can help
+
+</li>
+</ul>
+<p>
+These best version of the release notes are in the notes/ directory in the
+&#8220;source code&#8221;:<a
+href="http://github.com/technoweenie/restful-authentication/tree/master">github.com/technoweenie/restful-authentication/tree/master</a>
+&#8212; look there for the latest version. The wiki versions are taken
+(manually) from there.
+</p>
+<p>
+***************************************************************************
+<a id=&#8220;AWESOME&#8221;/> </a> h2. Exciting new features
+</p>
+<p>
+h3. Stories
+</p>
+<p>
+There are now RSpec stories that allow expressive, enjoyable tests for the
+authentication code. The flexible code for resource testing in stories was
+extended from &#8220;Ben Mabey&#8217;s.&#8221;:<a
+href="http://www.benmabey.com/2008/02/04/rspec-plain-text-stories-webrat-chunky-bacon">www.benmabey.com/2008/02/04/rspec-plain-text-stories-webrat-chunky-bacon</a>/
+</p>
+<p>
+h3. Modularize to match security design patterns:
+</p>
+<ul>
+<li><a href="../../../Authentication.html">Authentication</a> (currently:
+password, browser cookie token, HTTP basic)
+
+</li>
+<li>Trust metric (email validation)
+
+</li>
+<li><a href="../../../Authorization.html">Authorization</a> (stateful roles)
+
+</li>
+<li>Leave a flexible framework that will play nicely with other access control
+/ policy definition / trust metric plugins
+
+</li>
+</ul>
+<p>
+h3. Other
+</p>
+<ul>
+<li>Added a few helper methods for linking to user pages
+
+</li>
+<li>Uniform handling of logout, remember_token
+
+</li>
+<li>Stricter email, login field validation
+
+</li>
+<li>Minor security fixes &#8212; see CHANGELOG
+
+</li>
+</ul>
+<p>
+***************************************************************************
+<a id=&#8220;COMPATIBILITY&#8221;/> </a> h2. Non-backwards compatible
+Changes
+</p>
+<p>
+Here are a few changes in the May 2008 release that increase &#8220;Defense
+in Depth&#8221; but may require changes to existing accounts
+</p>
+<ul>
+<li>If you have an existing site, none of these changes are compelling enough
+to warrant migrating your userbase.
+
+</li>
+<li>If you are generating for a new site, all of these changes are low-impact.
+You should apply them.
+
+</li>
+</ul>
+<p>
+h3. Passwords
+</p>
+<p>
+The new password encryption (using a site key salt and stretching) will
+break existing user accounts&#8217; passwords. We recommend you use the
+&#8212;old-passwords option or write a migration tool and submit it as a
+patch. See the
+</p>
+<dl>
+<dt>[Tradeoffs]</dt><dd>note for more information.
+
+</dd>
+</dl>
+<p>
+h3. Validations
+</p>
+<p>
+By default,
+</p>
+<p>
+***************************************************************************
+<a id=&#8220;INSTALL&#8221;/> </a> h2. Installation
+</p>
+<p>
+This is a basic restful authentication generator for rails, taken from acts
+as authenticated. Currently it requires Rails 1.2.6 or above.
+</p>
+<p>
+To use:
+</p>
+<pre>
+  ./script/generate authenticated user sessions \
+    --include-activation \
+    --stateful \
+    --rspec \
+    --skip-migration \
+    --skip-routes \
+    --old-passwords
+</pre>
+<ul>
+<li>The first parameter specifies the model that gets created in signup
+(typically a user or account model). A model with migration is created, as
+well as a basic controller with the create method. You probably want to say
+&#8220;User&#8221; here.
+
+</li>
+<li>The second parameter specifies the session controller name. This is the
+controller that handles the actual login/logout function on the site.
+(probably: &#8220;Session&#8221;).
+
+</li>
+<li>&#8212;include-activation: Generates the code for a ActionMailer and its
+respective Activation Code through email.
+
+</li>
+<li>&#8212;stateful: Builds in support for acts_as_state_machine and generates
+activation code. (@&#8212;stateful@ implies @&#8212;include-activation@).
+Based on the idea at [[<a
+href="http://www.vaporbase.com/postings/stateful_authentication">www.vaporbase.com/postings/stateful_authentication</a>]].
+Passing @&#8212;skip-migration@ will skip the user migration, and
+@&#8212;skip-routes@ will skip resource generation &#8212; both useful if
+you&#8217;ve already run this generator.
+
+</li>
+<li>&#8212;aasm: Works the same as stateful but uses the updated aasm gem
+
+</li>
+<li>&#8212;rspec: Generate RSpec tests and Stories in place of standard rails
+tests. This requires the
+
+<pre>
+  &quot;RSpec and Rspec-on-rails plugins&quot;:http://rspec.info/
+</pre>
+<p>
+(make sure you &#8220;./script/generate rspec&#8221; after installing
+RSpec.) The rspec and story suite are much more thorough than the rails
+tests, and changes are unlikely to be backported.
+</p>
+</li>
+<li>&#8212;old-passwords: Use the older password scheme (see [[COMPATIBILITY]],
+above)
+
+</li>
+<li>&#8212;skip-migration: Don&#8217;t generate a migration file for this model
+
+</li>
+<li>&#8212;skip-routes: Don&#8217;t generate a resource line in
+@config/routes.rb@
+
+</li>
+</ul>
+<p>
+***************************************************************************
+<a id=&#8220;POST-INSTALL&#8221;/> </a> h2. After installing
+</p>
+<p>
+The below assumes a Model named &#8216;User&#8217; and a Controller named
+&#8216;Session&#8217;; please alter to suit. There are additional security
+minutae in @notes/README-Tradeoffs@ &#8212; only the paranoid or the
+curious need bother, though.
+</p>
+<ul>
+<li>Add these familiar login URLs to your @config/routes.rb@ if you like:
+
+<pre>
+   map.signup  '/signup', :controller =&gt; 'users',   :action =&gt; 'new' @
+   map.login   '/login',  :controller =&gt; 'sessions', :action =&gt; 'new' @
+   map.logout  '/logout', :controller =&gt; 'sessions', :action =&gt; 'destroy' @
+</pre>
+</li>
+<li>With @&#8212;include-activation@, also add to your @config/routes.rb@:
+
+<pre>
+  map.activate '/activate/:activation_code', :controller =&gt; 'users', :action =&gt; 'activate', :activation_code =&gt; nil)
+</pre>
+<p>
+and add an observer to @config/environment.rb@:
+</p>
+<pre>
+  config.active_record.observers = :users_observer
+</pre>
+</li>
+<li>With @&#8212;stateful@, add an observer to config/environment.rb:
+
+<pre>
+  config.active_record.observers = :user_observer
+</pre>
+<p>
+and modify the users resource line to read
+</p>
+<pre>
+  map.resources :users, :member =&gt; { :suspend   =&gt; :put,
+                                     :unsuspend =&gt; :put,
+                                     :purge     =&gt; :delete }
+</pre>
+</li>
+<li>If you use a public repository for your code (such as github, rubyforge,
+gitorious, etc.) make sure to NOT post your site_keys.rb (add a line like
+&#8216;/config/initializers/site_keys.rb&#8217; to your .gitignore or do
+the svn ignore dance), but make sure you DO keep it backed up somewhere
+safe.
+
+</li>
+</ul>
+
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>
+

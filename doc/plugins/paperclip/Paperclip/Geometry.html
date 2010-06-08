@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Paperclip::Geometry</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../vendor/plugins/paperclip/lib/paperclip/geometry.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/paperclip/lib/paperclip/geometry.rb">vendor/plugins/paperclip/lib/paperclip/geometry.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#aspect">aspect</a></li>
+					
+					<li><a href="#from_file">from_file</a></li>
+					
+					<li><a href="#horizontal?">horizontal?</a></li>
+					
+					<li><a href="#inspect">inspect</a></li>
+					
+					<li><a href="#larger">larger</a></li>
+					
+					<li><a href="#new">new</a></li>
+					
+					<li><a href="#parse">parse</a></li>
+					
+					<li><a href="#smaller">smaller</a></li>
+					
+					<li><a href="#square?">square?</a></li>
+					
+					<li><a href="#to_s">to_s</a></li>
+					
+					<li><a href="#transformation_to">transformation_to</a></li>
+					
+					<li><a href="#vertical?">vertical?</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../Paperclip.html">Paperclip</a></li>
+				
+				
+					<li><a href="../Paperclip/Attachment.html">Paperclip::Attachment</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability.html">Paperclip::CallbackCompatability</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/ClassMethods.html">Paperclip::CallbackCompatability::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/CallbackCompatability/InstanceMethods.html">Paperclip::CallbackCompatability::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/ClassMethods.html">Paperclip::ClassMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Geometry.html">Paperclip::Geometry</a></li>
+				
+				
+					<li><a href="../Paperclip/InfiniteInterpolationError.html">Paperclip::InfiniteInterpolationError</a></li>
+				
+				
+					<li><a href="../Paperclip/InstanceMethods.html">Paperclip::InstanceMethods</a></li>
+				
+				
+					<li><a href="../Paperclip/Interpolations.html">Paperclip::Interpolations</a></li>
+				
+				
+					<li><a href="../Paperclip/NotIdentifiedByImageMagickError.html">Paperclip::NotIdentifiedByImageMagickError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipCommandLineError.html">Paperclip::PaperclipCommandLineError</a></li>
+				
+				
+					<li><a href="../Paperclip/PaperclipError.html">Paperclip::PaperclipError</a></li>
+				
+				
+					<li><a href="../Paperclip/Processor.html">Paperclip::Processor</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda.html">Paperclip::Shoulda</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers.html">Paperclip::Shoulda::Matchers</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/HaveAttachedFileMatcher.html">Paperclip::Shoulda::Matchers::HaveAttachedFileMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentContentTypeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentContentTypeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentPresenceMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentPresenceMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Shoulda/Matchers/ValidateAttachmentSizeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentSizeMatcher</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage.html">Paperclip::Storage</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/Filesystem.html">Paperclip::Storage::Filesystem</a></li>
+				
+				
+					<li><a href="../Paperclip/Storage/S3.html">Paperclip::Storage::S3</a></li>
+				
+				
+					<li><a href="../Paperclip/Style.html">Paperclip::Style</a></li>
+				
+				
+					<li><a href="../Paperclip/Tempfile.html">Paperclip::Tempfile</a></li>
+				
+				
+					<li><a href="../Paperclip/Thumbnail.html">Paperclip::Thumbnail</a></li>
+				
+				
+					<li><a href="../Paperclip/Upfile.html">Paperclip::Upfile</a></li>
+				
+				
+					<li><a href="../File.html">File</a></li>
+				
+				
+					<li><a href="../IO.html">IO</a></li>
+				
+				
+					<li><a href="../IOStream.html">IOStream</a></li>
+				
+				
+					<li><a href="../StringIO.html">StringIO</a></li>
+				
+				
+					<li><a href="../Tempfile.html">Tempfile</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="class">Paperclip::Geometry</h1>
+		
+
+		<div id="description">
+			<p>
+Defines the geometry of an image.
+</p>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+		<div id="attribute-method-details" class="method-section section">
+			<h3 class="section-header">Attributes</h3>
+
+			
+			<div id="height-attribute-method" class="method-detail">
+				<a name="height"></a>
+				
+				<a name="height="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">height</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="modifier-attribute-method" class="method-detail">
+				<a name="modifier"></a>
+				
+				<a name="modifier="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">modifier</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+			<div id="width-attribute-method" class="method-detail">
+				<a name="width"></a>
+				
+				<a name="width="></a>
+				
+				<div class="method-heading attribute-method-heading">
+					<span class="method-name">width</span><span 
+						class="attribute-access-type">[RW]</span>
+				</div>
+
+				<div class="method-description">
+				
+				<p class="missing-docs">(Not documented)</p>
+				
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+
+		
+			
+			<div id="from-file-method" class="method-detail">
+			
+				<a name="from_file"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">from_file</span><span 
+						class="method-args">(file)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Uses ImageMagick to determing the dimensions of a file, passed in as either
+a File or path.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="from-file-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_file</span> <span class="ruby-identifier">file</span>
+17:       <span class="ruby-identifier">file</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value str">&quot;path&quot;</span>
+18:       <span class="ruby-identifier">geometry</span> = <span class="ruby-keyword kw">begin</span>
+19:                    <span class="ruby-constant">Paperclip</span>.<span class="ruby-identifier">run</span>(<span class="ruby-value str">&quot;identify&quot;</span>, <span class="ruby-node">%Q[-format &quot;%wx%h&quot; &quot;#{file}&quot;[0]]</span>)
+20:                  <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">PaperclipCommandLineError</span>
+21:                    <span class="ruby-value str">&quot;&quot;</span>
+22:                  <span class="ruby-keyword kw">end</span>
+23:       <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">geometry</span>) <span class="ruby-operator">||</span>
+24:         <span class="ruby-identifier">raise</span>(<span class="ruby-constant">NotIdentifiedByImageMagickError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{file} is not recognized by the 'identify' command.&quot;</span>))
+25:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="new-method" class="method-detail">
+			
+				<a name="new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span 
+						class="method-args">(width = nil, height = nil, modifier = nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Gives a <a href="Geometry.html">Geometry</a> representing the given height
+and width
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 8</span>
+ 8:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">width</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">height</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">modifier</span> = <span class="ruby-keyword kw">nil</span>
+ 9:       <span class="ruby-ivar">@height</span> = <span class="ruby-identifier">height</span>.<span class="ruby-identifier">to_f</span>
+10:       <span class="ruby-ivar">@width</span>  = <span class="ruby-identifier">width</span>.<span class="ruby-identifier">to_f</span>
+11:       <span class="ruby-ivar">@modifier</span> = <span class="ruby-identifier">modifier</span>
+12:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="parse-method" class="method-detail">
+			
+				<a name="parse"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse</span><span 
+						class="method-args">(string)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Parses a &#8220;WxH&#8221; formatted string, where W is the width and H is
+the height.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="parse-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">string</span>
+29:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">match</span> = (<span class="ruby-identifier">string</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/\b(\d*)x?(\d*)\b([\&gt;\&lt;\#\@\%^!])?/i</span>))
+30:         <span class="ruby-constant">Geometry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">match</span>[<span class="ruby-value">1</span>,<span class="ruby-value">3</span>])
+31:       <span class="ruby-keyword kw">end</span>
+32:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="aspect-method" class="method-detail">
+			
+				<a name="aspect"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">aspect</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+The aspect ratio of the dimensions.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="aspect-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 50</span>
+50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">aspect</span>
+51:       <span class="ruby-identifier">width</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">height</span>
+52:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="horizontal--method" class="method-detail">
+			
+				<a name="horizontal?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">horizontal?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+True if the dimensions represent a horizontal rectangle
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="horizontal--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 40</span>
+40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">horizontal?</span>
+41:       <span class="ruby-identifier">height</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">width</span>
+42:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="inspect-method" class="method-detail">
+			
+				<a name="inspect"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">inspect</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Same as <a href="Geometry.html#M000104">to_s</a>
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="inspect-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 74</span>
+74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+75:       <span class="ruby-identifier">to_s</span>
+76:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="larger-method" class="method-detail">
+			
+				<a name="larger"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">larger</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the larger of the two dimensions
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="larger-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">larger</span>
+56:       [<span class="ruby-identifier">height</span>, <span class="ruby-identifier">width</span>].<span class="ruby-identifier">max</span>
+57:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="smaller-method" class="method-detail">
+			
+				<a name="smaller"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">smaller</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the smaller of the two dimensions
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="smaller-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 60</span>
+60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">smaller</span>
+61:       [<span class="ruby-identifier">height</span>, <span class="ruby-identifier">width</span>].<span class="ruby-identifier">min</span>
+62:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="square--method" class="method-detail">
+			
+				<a name="square?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">square?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+True if the dimensions represent a square
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="square--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 35</span>
+35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">square?</span>
+36:       <span class="ruby-identifier">height</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">width</span>
+37:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="to-s-method" class="method-detail">
+			
+				<a name="to_s"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">to_s</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the width and height in a format suitable to be passed to <a
+href="Geometry.html#M000097">Geometry.parse</a>
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="to-s-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 65</span>
+65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+66:       <span class="ruby-identifier">s</span> = <span class="ruby-value str">&quot;&quot;</span>
+67:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">width</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">width</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+68:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;x#{height.to_i}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">height</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+69:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">modifier</span>.<span class="ruby-identifier">to_s</span>
+70:       <span class="ruby-identifier">s</span>
+71:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="transformation-to-method" class="method-detail">
+			
+				<a name="transformation_to"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">transformation_to</span><span 
+						class="method-args">(dst, crop = false)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the scaling and cropping geometries (in string-based ImageMagick
+format) neccessary to transform this <a href="Geometry.html">Geometry</a>
+into the <a href="Geometry.html">Geometry</a> given. If crop is true, then
+it is assumed the destination <a href="Geometry.html">Geometry</a> will be
+the exact final resolution. In this case, the source <a
+href="Geometry.html">Geometry</a> is scaled so that an image containing the
+destination <a href="Geometry.html">Geometry</a> would be completely filled
+by the source image, and any overhanging image would be cropped. Useful for
+square thumbnail images. The cropping is weighted at the center of the <a
+href="Geometry.html">Geometry</a>.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="transformation-to-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 85</span>
+85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transformation_to</span> <span class="ruby-identifier">dst</span>, <span class="ruby-identifier">crop</span> = <span class="ruby-keyword kw">false</span>
+86:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">crop</span>
+87:         <span class="ruby-identifier">ratio</span> = <span class="ruby-constant">Geometry</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">dst</span>.<span class="ruby-identifier">width</span> <span class="ruby-operator">/</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">width</span>, <span class="ruby-identifier">dst</span>.<span class="ruby-identifier">height</span> <span class="ruby-operator">/</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">height</span> )
+88:         <span class="ruby-identifier">scale_geometry</span>, <span class="ruby-identifier">scale</span> = <span class="ruby-identifier">scaling</span>(<span class="ruby-identifier">dst</span>, <span class="ruby-identifier">ratio</span>)
+89:         <span class="ruby-identifier">crop_geometry</span>         = <span class="ruby-identifier">cropping</span>(<span class="ruby-identifier">dst</span>, <span class="ruby-identifier">ratio</span>, <span class="ruby-identifier">scale</span>)
+90:       <span class="ruby-keyword kw">else</span>
+91:         <span class="ruby-identifier">scale_geometry</span>        = <span class="ruby-identifier">dst</span>.<span class="ruby-identifier">to_s</span>
+92:       <span class="ruby-keyword kw">end</span>
+93: 
+94:       [ <span class="ruby-identifier">scale_geometry</span>, <span class="ruby-identifier">crop_geometry</span> ]
+95:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="vertical--method" class="method-detail">
+			
+				<a name="vertical?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">vertical?</span><span 
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+True if the dimensions represent a vertical rectangle
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="vertical--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/geometry.rb, line 45</span>
+45:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vertical?</span>
+46:       <span class="ruby-identifier">height</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">width</span>
+47:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

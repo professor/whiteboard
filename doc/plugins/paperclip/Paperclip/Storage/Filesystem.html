@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Paperclip::Storage::Filesystem</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../vendor/plugins/paperclip/lib/paperclip/storage.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/paperclip/lib/paperclip/storage.rb">vendor/plugins/paperclip/lib/paperclip/storage.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#exists?">exists?</a></li>
+					
+					<li><a href="#extended">extended</a></li>
+					
+					<li><a href="#to_file">to_file</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../Paperclip.html">Paperclip</a></li>
+				
+				
+					<li><a href="../../Paperclip/Attachment.html">Paperclip::Attachment</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability.html">Paperclip::CallbackCompatability</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability/ClassMethods.html">Paperclip::CallbackCompatability::ClassMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/CallbackCompatability/InstanceMethods.html">Paperclip::CallbackCompatability::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/ClassMethods.html">Paperclip::ClassMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/Geometry.html">Paperclip::Geometry</a></li>
+				
+				
+					<li><a href="../../Paperclip/InfiniteInterpolationError.html">Paperclip::InfiniteInterpolationError</a></li>
+				
+				
+					<li><a href="../../Paperclip/InstanceMethods.html">Paperclip::InstanceMethods</a></li>
+				
+				
+					<li><a href="../../Paperclip/Interpolations.html">Paperclip::Interpolations</a></li>
+				
+				
+					<li><a href="../../Paperclip/NotIdentifiedByImageMagickError.html">Paperclip::NotIdentifiedByImageMagickError</a></li>
+				
+				
+					<li><a href="../../Paperclip/PaperclipCommandLineError.html">Paperclip::PaperclipCommandLineError</a></li>
+				
+				
+					<li><a href="../../Paperclip/PaperclipError.html">Paperclip::PaperclipError</a></li>
+				
+				
+					<li><a href="../../Paperclip/Processor.html">Paperclip::Processor</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda.html">Paperclip::Shoulda</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers.html">Paperclip::Shoulda::Matchers</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/HaveAttachedFileMatcher.html">Paperclip::Shoulda::Matchers::HaveAttachedFileMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentContentTypeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentContentTypeMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentPresenceMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentPresenceMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Shoulda/Matchers/ValidateAttachmentSizeMatcher.html">Paperclip::Shoulda::Matchers::ValidateAttachmentSizeMatcher</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage.html">Paperclip::Storage</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage/Filesystem.html">Paperclip::Storage::Filesystem</a></li>
+				
+				
+					<li><a href="../../Paperclip/Storage/S3.html">Paperclip::Storage::S3</a></li>
+				
+				
+					<li><a href="../../Paperclip/Style.html">Paperclip::Style</a></li>
+				
+				
+					<li><a href="../../Paperclip/Tempfile.html">Paperclip::Tempfile</a></li>
+				
+				
+					<li><a href="../../Paperclip/Thumbnail.html">Paperclip::Thumbnail</a></li>
+				
+				
+					<li><a href="../../Paperclip/Upfile.html">Paperclip::Upfile</a></li>
+				
+				
+					<li><a href="../../File.html">File</a></li>
+				
+				
+					<li><a href="../../IO.html">IO</a></li>
+				
+				
+					<li><a href="../../IOStream.html">IOStream</a></li>
+				
+				
+					<li><a href="../../StringIO.html">StringIO</a></li>
+				
+				
+					<li><a href="../../Tempfile.html">Tempfile</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">Paperclip::Storage::Filesystem</h1>
+		
+
+		<div id="description">
+			<p>
+The default place to store attachments is in the filesystem. Files on the
+local filesystem can be very easily served by Apache without requiring a
+hit to your app. They also can be processed more easily after they&#8217;ve
+been saved, as they&#8217;re just normal files. There is one
+Filesystem-specific option for has_attached_file.
+</p>
+<ul>
+<li><tt>path</tt>: The location of the repository of attachments on disk. This
+can (and, in almost all cases, should) be coordinated with the value of the
+<tt>url</tt> option to allow files to be saved into a place where Apache
+can serve them without hitting your app. Defaults to
+&#8220;:rails_root/public/:attachment/:id/:style/:basename.:extension&#8221;
+By default this places the files in the app&#8217;s public directory which
+can be served directly. If you are using capistrano for deployment, a good
+idea would be to make a symlink to the capistrano-created system directory
+from inside your app&#8217;s public directory. See
+Paperclip::Attachment#interpolate for more information on variable
+interpolaton.
+
+<pre>
+  :path =&gt; &quot;/var/app/attachments/:class/:id/:style/:basename.:extension&quot;
+</pre>
+</li>
+</ul>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+
+		
+			
+			<div id="extended-method" class="method-detail">
+			
+				<a name="extended"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">extended</span><span 
+						class="method-args">(base)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="extended-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 20</span>
+20:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">extended</span> <span class="ruby-identifier">base</span>
+21:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+
+		
+			
+			<div id="exists--method" class="method-detail">
+			
+				<a name="exists?"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">exists?</span><span 
+						class="method-args">(style_name = default_style)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="exists--source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 23</span>
+23:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">style_name</span> = <span class="ruby-identifier">default_style</span>)
+24:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">original_filename</span>
+25:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">path</span>(<span class="ruby-identifier">style_name</span>))
+26:         <span class="ruby-keyword kw">else</span>
+27:           <span class="ruby-keyword kw">false</span>
+28:         <span class="ruby-keyword kw">end</span>
+29:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+
+		
+			
+			<div id="to-file-method" class="method-detail">
+			
+				<a name="to_file"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">to_file</span><span 
+						class="method-args">(style_name = default_style)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns representation of the data of the file assigned to the given style,
+in the format most representative of the current storage.
+</p>
+					
+					
+					
+					<div class="method-source-code" 
+						id="to-file-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/paperclip/lib/paperclip/storage.rb, line 33</span>
+33:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_file</span> <span class="ruby-identifier">style_name</span> = <span class="ruby-identifier">default_style</span>
+34:         <span class="ruby-ivar">@queued_for_write</span>[<span class="ruby-identifier">style_name</span>] <span class="ruby-operator">||</span> (<span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>(<span class="ruby-identifier">style_name</span>), <span class="ruby-value str">'rb'</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">style_name</span>))
+35:       <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: README [Exception Notification Plugin Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+</head>
+	
+<body class="file">
+  <div id="metadata">
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../../ExceptionNotifiable.html">ExceptionNotifiable</a></li>
+				
+				
+					<li><a href="../../../ExceptionNotifiable/ClassMethods.html">ExceptionNotifiable::ClassMethods</a></li>
+				
+				
+					<li><a href="../../../ExceptionNotifier.html">ExceptionNotifier</a></li>
+				
+				
+					<li><a href="../../../ExceptionNotifierHelper.html">ExceptionNotifierHelper</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1>Exception Notifier Plugin for Rails</h1>
+<p>
+The Exception Notifier plugin provides a mailer object and a default set of
+templates for sending email notifications when errors occur in a Rails
+application. The plugin is configurable, allowing programmers to specify:
+</p>
+<ul>
+<li>the sender address of the email
+
+</li>
+<li>the recipient addresses
+
+</li>
+<li>the text used to prefix the subject line
+
+</li>
+</ul>
+<p>
+The email includes information about the current request, session, and
+environment, and also gives a backtrace of the exception.
+</p>
+<h2>Usage</h2>
+<p>
+First, include the <a
+href="../../../ExceptionNotifiable.html">ExceptionNotifiable</a> mixin in
+whichever controller you want to generate error emails (typically
+ApplicationController):
+</p>
+<pre>
+  class ApplicationController &lt; ActionController::Base
+    include ExceptionNotifiable
+    ...
+  end
+</pre>
+<p>
+Then, specify the email recipients in your environment:
+</p>
+<pre>
+  ExceptionNotifier.exception_recipients = %w(joe@schmoe.com bill@schmoe.com)
+</pre>
+<p>
+And that&#8217;s it! The defaults take care of the rest.
+</p>
+<h2>Configuration</h2>
+<p>
+You can tweak other values to your liking, as well. In your environment
+file, just set any or all of the following values:
+</p>
+<pre>
+  # defaults to exception.notifier@default.com
+  ExceptionNotifier.sender_address =
+    %(&quot;Application Error&quot; &lt;app.error@myapp.com&gt;)
+
+  # defaults to &quot;[ERROR] &quot;
+  ExceptionNotifier.email_prefix = &quot;[APP] &quot;
+</pre>
+<p>
+Email notifications will only occur when the IP address is determined not
+to be local. You can specify certain addresses to always be local so that
+you&#8217;ll get a detailed error instead of the generic error page. You do
+this in your controller (or even per-controller):
+</p>
+<pre>
+  consider_local &quot;64.72.18.143&quot;, &quot;14.17.21.25&quot;
+</pre>
+<p>
+You can specify subnet masks as well, so that all matching addresses are
+considered local:
+</p>
+<pre>
+  consider_local &quot;64.72.18.143/24&quot;
+</pre>
+<p>
+The address &#8220;127.0.0.1&#8220; is always considered local. If you want
+to completely reset the list of all addresses (for instance, if you wanted
+&#8220;127.0.0.1&#8220; to NOT be considered local), you can simply do,
+somewhere in your controller:
+</p>
+<pre>
+  local_addresses.clear
+</pre>
+<h2>Customization</h2>
+<p>
+By default, the notification email includes four parts: request, session,
+environment, and backtrace (in that order). You can customize how each of
+those sections are rendered by placing a partial named for that part in
+your app/views/exception_notifier directory (e.g., _session.rhtml). Each
+partial has access to the following variables:
+</p>
+<ul>
+<li>@controller: the controller that caused the error
+
+</li>
+<li>@request: the current request object
+
+</li>
+<li>@exception: the exception that was raised
+
+</li>
+<li>@host: the name of the host that made the request
+
+</li>
+<li>@backtrace: a sanitized version of the exception&#8217;s backtrace
+
+</li>
+<li>@rails_root: a sanitized version of RAILS_ROOT
+
+</li>
+<li>@data: a hash of optional data values that were passed to the notifier
+
+</li>
+<li>@sections: the array of sections to include in the email
+
+</li>
+</ul>
+<p>
+You can reorder the sections, or exclude sections completely, by altering
+the ExceptionNotifier.sections variable. You can even add new sections that
+describe application-specific data&#8212;just add the section&#8217;s name
+to the list (whereever you&#8217;d like), and define the corresponding
+partial. Then, if your new section requires information that isn&#8217;t
+available by default, make sure it is made available to the email using the
+exception_data macro:
+</p>
+<pre>
+  class ApplicationController &lt; ActionController::Base
+    ...
+    protected
+      exception_data :additional_data
+
+      def additional_data
+        { :document =&gt; @document,
+          :person =&gt; @person }
+      end
+    ...
+  end
+</pre>
+<p>
+In the above case, @document and @person would be made available to the
+email renderer, allowing your new section(s) to access and display them.
+See the existing sections defined by the plugin for examples of how to
+write your own.
+</p>
+<h2>Advanced Customization</h2>
+<p>
+By default, the email notifier will only notify on critical errors. For
+ActiveRecord::RecordNotFound and ActionController::UnknownAction, it will
+simply render the contents of your public/404.html file. Other exceptions
+will render public/500.html and will send the email notification. If you
+want to use different rules for the notification, you will need to
+implement your own rescue_action_in_public method. You can look at the
+default implementation in <a
+href="../../../ExceptionNotifiable.html">ExceptionNotifiable</a> for an
+example of how to go about that.
+</p>
+<p>
+Copyright &#169; 2005 Jamis Buck, released under the MIT license
+</p>
+
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>
+

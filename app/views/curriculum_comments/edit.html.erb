@@ -1,0 +1,30 @@
+<h1>Editing comment</h1>
+
+<% form_for(@curriculum_comment) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :url %><br />
+    <%=h @curriculum_comment.url %>
+  </p>
+  <p>
+    Blog Etiquette suggests that is isn't appropriate to change a comment once other people have referenced your comment. It is ok to update your comment if it isn't clear or contains mistakes.
+  </p>
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment, :size => "80x10"  %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.collection_select(:curriculum_comment_type_id, @types, :id, :name) %>
+  </p>
+  <p>
+    <%= f.label :notify_me, "Email me if other people add comments to the same page" %>
+    <%= f.check_box :notify_me %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', @curriculum_comment.url %>

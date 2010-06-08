@@ -1,0 +1,25 @@
+<% content_for :title, 'Edit Course Number' %>
+<h1>Editing course number</h1>
+
+<% form_for(@course_number) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :number %><br />
+    <%= f.text_field :number %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :short_name, "Abbreviation" %><br />
+    <%= f.text_field :short_name %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @course_number %> |
+<%= link_to 'Back', course_numbers_path %>

@@ -1,0 +1,1 @@
+Bug fix 1: [ERROR] effort_logs#show (ActionView::TemplateError) "undefined method `human_name' for #<EffortLog:0xb73c8e64>

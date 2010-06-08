@@ -1,0 +1,57 @@
+<h1>New person</h1>
+
+<% form_for(@person) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, :onblur => "this.form.person_twiki_name.value=capitalise(this.value)+capitalise(this.form.person_last_name.value)" %>
+
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, :onblur => "this.form.person_twiki_name.value=capitalise(this.form.person_first_name.value)+capitalise(this.value)" %> 
+  </p>
+  <p>
+    <%= f.label :twiki_name %><br />
+    <%= f.text_field :twiki_name %>
+  </p>
+  <p>
+    <%= f.label :webiso_account %><br />
+    <%= f.text_field :webiso_account %>
+  </p>
+  <p>
+    <%= f.label :is_staff %><br />
+    <%= f.check_box :is_staff %>
+  </p>
+  <p>
+    <%= f.label :is_teacher %><br />
+    <%= f.check_box :is_teacher %>
+  </p>
+  <p>
+    <%= f.label :is_student %><br />
+    <%= f.check_box :is_student %>
+  </p>
+  <p>
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </p>
+<h2>Just for students</h2>
+  <p>
+    <%= f.label :graduation_year %><br />
+    <%= f.text_field :graduation_year %>
+  </p>
+  <p>
+    Graduate program<br />
+    <%= f.text_field :masters_program %>
+  </p>
+  <p>
+    Graduate track <br />
+    <%= f.text_field :masters_track %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', people_path %>

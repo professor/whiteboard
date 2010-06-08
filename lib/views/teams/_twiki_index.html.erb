@@ -1,0 +1,124 @@
+<%= stylesheet_link_tag 'twiki' %>
+
+<!-- -->
+<style type="text/css" media="all">
+.patternTopic .twikiTable td a:hover {
+color:#666666;
+}
+
+.patternTopic .twikiTable th a:hover {
+color:#FFFFFF;
+background-color: #6B7F93;
+}
+</style>
+<!-- -->
+
+<% if @show_create_course %>
+
+<% if development? %>
+<%= link_to 'Add teams to your course?', '/twiki/teams/new' %>
+<% else %>
+<%= link_to 'Add teams to your course?', 'http://info.sv.cmu.edu/rails/twiki/teams/new' %>
+<% end %>
+
+<% else %>
+
+
+<table class="twikiTable" cellpadding="0" cellspacing="0">
+  <tr>
+    <% if show_course %>
+    <th>Course</th>
+    <% end %>
+    <th class="twikiFirstCol" bgcolor="#6b7f93">Team</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <% if @show_section %>
+    <th>Section</th>
+    <% end %>
+    <% if @show_teams_for_many_courses %>
+    <th>Primary faculty</th>
+    <th>Secondary faculty</th>
+    <th>Team members</th>
+    <% else %>
+    <th><%=h @course.primary_faculty_label%></th>
+    <th><%=h @course.secondary_faculty_label%></th>
+    <!-- <th>Team members <%= link_to '(Show Photo View)', course_teams_path(@course.id), {:target =>'_top'} %> </th> -->
+    <% if show_photo_view_link %>
+    <th>Team members <a href="<%=@machine_name%>/courses/<%=@course.id%>/teams_photos" target="_top">(Show Photo View)</a></th>
+    <% else %>
+    <th>Team members</th>
+    <% end %>
+    <% end %>
+    <th>&nbsp;</th>
+    <% if logged_in? && current_user.is_admin %>
+    <th>&nbsp;</th>
+    <% end %>
+  </tr>
+
+<% teams.each do |team|%>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+<% if show_course %>
+     <td><%= team.course.name %></td>
+<% end %>
+<% if !(team.twiki_space.nil? || team.twiki_space.empty?) %>
+    <td class="twikiFirstCol"><a href='<%=h team.twiki_space%>' target='_top'><%=h team.name %></a></td>    
+<% else %>
+    <td class="twikiFirstCol"><%=h team.name %></td>
+<% end %>
+<% if !(team.email.nil? || team.email.empty?) %>
+    <td><a href='mailto:<%=h team.email %>' target='_top'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
+<% else %>
+    <td> &nbsp; </td>
+<% end %>
+<% if !(team.tigris_space.nil? || team.tigris_space.empty?) %>
+    <td><a href='<%=h team.tigris_space %>' target='_top'><%= image_tag("/images/tigris.gif", :width=>"16", :height=>"16", :border=>0) %></a></td>
+<% else %>
+    <td> &nbsp; </td>
+<% end %>
+
+    <% if @show_section %>
+    <td><%= team.section %></td>
+    <% end  %>
+    <% if team.primary_faculty %>
+    <td><%= twiki_user_link(team.primary_faculty.twiki_name, team.primary_faculty.human_name) %></td>
+    <% else %>
+    <td>&nbsp;</td>     
+    <% end %>
+    <% if team.secondary_faculty %>
+    <td><%= twiki_user_link(team.secondary_faculty.twiki_name, team.secondary_faculty.human_name) %></td>
+    <% else %>
+    <td>&nbsp;</td>     
+    <% end %>
+
+    <td>
+    <% team.people.each do |person| %>
+      <% if show_student_photos %>
+         <%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %>
+      <% else %>
+         <%=  twiki_user_link(person.twiki_name, person.human_name) %>
+      <% end  %>
+    <% if @show_teams_for_many_courses  && person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
+    <% end %>
+     </td>
+
+
+    <% if logged_in? && (current_user.is_staff? || current_user.is_admin?) %>
+<!--    <td><%= link_to 'Show', course_team_path(team.course_id, team), :target => '_top' %></td> -->
+    <td><a href="<%=@machine_name%>/courses/<%=team.course_id%>/teams/<%=team.id%>" target="_top">Show</a></td>
+
+    <% end %>
+<!--    <td><%= link_to 'Edit', edit_course_team_path(team.course_id, team), :target => '_top' %></td>-->
+    <td><a href="<%=@machine_name%>/courses/<%=team.course_id%>/teams/<%=team.id%>/edit" target="_top">Edit</a></td>
+   <% if logged_in? && current_user.is_admin %>
+   <% end %>
+
+  </tr>
+<% end %>
+</table>
+
+  <% if show_new_teams_link %>
+  <!-- &nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :only_path => :false, :target => '_top' %> -->
+  &nbsp;&nbsp;<a href="<%=@machine_name%>/courses/<%= @course.id%>/teams/new" target="_top">New team</a>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  saying: "Yip yip yip"
+  user_id: 1
+
+two:
+  saying: "It's time to log effort"
+  user_id: 1

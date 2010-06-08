@@ -1,0 +1,114 @@
+<% content_for :title, "New person" %>
+<h1>New person</h1>
+
+<script type="text/javascript">
+ function capitalise(string) {
+//    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g");
+    }
+
+ function lower_case(string) {
+//    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g");
+    }
+
+
+ function update_twiki_and_email() {
+   document.forms["new_person"].person_twiki_name.value=capitalise(document.forms["new_person"].person_first_name.value)+capitalise(document.forms["new_person"].person_last_name.value);
+   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@sv.cmu.edu";
+ }
+
+ function update_student() {
+   now = new Date;
+   offset = 1;
+   if (document.forms["new_person"].person_is_part_time.checked == true) { offset = 2}
+   if (document.forms["new_person"].person_is_student.checked == true)
+   {
+     document.forms["new_person"].person_graduation_year.value=(now.getFullYear() + offset);
+   }
+   else
+   {
+     document.forms["new_person"].person_graduation_year.value="";
+   }
+   
+ }
+
+
+</script>
+
+<% form_for(@person) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :first_name, "Preferred first name" %><br />
+    <%= f.text_field :first_name, :onblur => "update_twiki_and_email()" %>
+  </p>
+  <p>
+    <%= f.label :legal_first_name %><br />
+    <%= f.text_field :legal_first_name %><br />
+    <span class="help_text">Ok to leave blank</span>
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, :onblur => "update_twiki_and_email()" %>
+  </p>
+  <p>
+    <%= f.label :twiki_name %><br />
+    <%= f.text_field :twiki_name %>
+    <%= check_box_tag("create_twiki_account", 1, false) %> Create twiki account?
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+    <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
+  </p>
+  <p>
+    <%= f.label :personal_email %><br />
+    <%= f.text_field :personal_email %><br/>
+    <span class="help_text">(Necessary for google email account creation)</span>
+  </p>
+  <p>
+    <%= f.label :webiso_account %><br />
+    <%= f.text_field :webiso_account %>
+  </p>
+  <p>
+    <%= f.label :is_staff %><br />
+    <%= f.check_box :is_staff %>
+  </p>
+  <p>
+    <%= f.label :is_teacher %><br />
+    <%= f.check_box :is_teacher %>
+  </p>
+  <p>
+    <%= f.label :is_student %><br />
+    <%= f.check_box :is_student, :onchange => "update_student()" %>
+  </p>
+  <p>
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </p>
+<h2>Just for students</h2>
+  <p>
+    <%= f.label :is_part_time, "Is part time student?" %>
+    <%= f.check_box :is_part_time, :onchange => "update_student()" %>
+  </p>
+  <p>
+    <%= f.label :graduation_year %><br />
+    <%= f.text_field :graduation_year %>
+  </p>
+  <p>
+    Graduate program<br />
+    <%= f.text_field :masters_program %><br />
+    <span class="help_text">SE SM INI PhD</span>
+  </p>
+  <p>
+    Graduate track <br />
+    <%= f.text_field :masters_track %><br />
+    <span class="help_text">Tech DM IS MOB SM</span>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', people_path %>

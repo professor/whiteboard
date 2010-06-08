@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: ActiveRecord::Acts::Versioned</title>
+
+	<link rel="stylesheet" href="../../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../../js/jquery.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript" 
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript" 
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+	
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../../vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb">vendor/plugins/acts_as_versioned/lib/acts_as_versioned.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+			<div id="namespace-list-section" class="section">
+				<h3 class="section-header">Namespace</h3>
+				<ul class="link-list">
+					
+					<li><span class="type">Module</span> <a href="Versioned/ActMethods.html" class="link">ActiveRecord::Acts::Versioned::ActMethods</a><br />
+</li>
+					
+					<li><span class="type">Module</span> <a href="Versioned/ClassMethods.html" class="link">ActiveRecord::Acts::Versioned::ClassMethods</a><br />
+</li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Method Quickref -->
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+	
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../../CHANGELOG.html">CHANGELOG</a></li>
+				
+					<li class="file"><a href="../../README.html">README</a></li>
+				
+				</ul>
+			</div>
+			
+			
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index 
+					<span class="search-toggle"><img src="../../images/find.png" 
+						height="16" width="16" alt="[+]" 
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value="" 
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+				
+					<li><a href="../../ActiveRecord.html">ActiveRecord</a></li>
+				
+				
+					<li><a href="../../ActiveRecord/Acts.html">ActiveRecord::Acts</a></li>
+				
+				
+					<li><a href="../../ActiveRecord/Acts/Versioned.html">ActiveRecord::Acts::Versioned</a></li>
+				
+				
+					<li><a href="../../ActiveRecord/Acts/Versioned/ActMethods.html">ActiveRecord::Acts::Versioned::ActMethods</a></li>
+				
+				
+					<li><a href="../../ActiveRecord/Acts/Versioned/ActMethods/ClassMethods.html">ActiveRecord::Acts::Versioned::ActMethods::ClassMethods</a></li>
+				
+				
+					<li><a href="../../ActiveRecord/Acts/Versioned/ClassMethods.html">ActiveRecord::Acts::Versioned::ClassMethods</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+			
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		
+		<h1 class="module">ActiveRecord::Acts::Versioned</h1>
+		
+
+		<div id="description">
+			<p>
+Specify this act if you want to save a copy of the row in a versioned
+table. This assumes there is a versioned table ready and that your model
+has a version field. This works with optimistic locking if the lock_version
+column is present as well.
+</p>
+<p>
+The class for the versioned model is derived the first time it is seen.
+Therefore, if you change your database schema you have to restart your
+container for the changes to be reflected. In development mode this usually
+means restarting WEBrick.
+</p>
+<pre>
+  class Page &lt; ActiveRecord::Base
+    # assumes pages_versions table
+    acts_as_versioned
+  end
+</pre>
+<p>
+Example:
+</p>
+<pre>
+  page = Page.create(:title =&gt; 'hello world!')
+  page.version       # =&gt; 1
+
+  page.title = 'hello world'
+  page.save
+  page.version       # =&gt; 2
+  page.versions.size # =&gt; 2
+
+  page.revert_to(1)  # using version number
+  page.title         # =&gt; 'hello world!'
+
+  page.revert_to(page.versions.last) # using versioned instance
+  page.title         # =&gt; 'hello world'
+
+  page.versions.earliest # efficient query to find the first version
+  page.versions.latest   # efficient query to find the most recently created version
+</pre>
+<p>
+Simple Queries to page between versions
+</p>
+<pre>
+  page.versions.before(version)
+  page.versions.after(version)
+</pre>
+<p>
+Access the previous/next versions from the versioned model itself
+</p>
+<pre>
+  version = page.versions.latest
+  version.previous # go back one version
+  version.next     # go forward one version
+</pre>
+<p>
+See <a
+href="Versioned/ClassMethods.html#M000022">ActiveRecord::Acts::Versioned::ClassMethods#acts_as_versioned</a>
+for configuration options
+</p>
+
+		</div>
+
+
+		<!-- Constants -->
+		
+		<div id="constants-list" class="section">
+			<h3 class="section-header">Constants</h3>
+			<dl>
+			
+				<dt><a name="CALLBACKS">CALLBACKS</a></dt>
+				
+				<dd class="description missing-docs">(Not documented)</dd>
+				
+			
+			</dl>
+		</div>
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with $DEBUG to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish 
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
