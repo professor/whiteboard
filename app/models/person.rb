@@ -85,9 +85,9 @@ class Person < ActiveRecord::Base
      logger.debug("Attempting to create google email account for " + self.email)
      (username, domain) = switch_sv_to_west(self.email).split('@')
      
-     if domain != GOOGLE_APPS_CONFIG['google_domain']
-       logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_APPS_CONFIG['google_domain'] )
-       return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_APPS_CONFIG['google_domain'] + ")"
+     if domain != ENV['GOOGLE_DOMAIN']
+       logger.debug("Domain (" + domain + ") is not the same as the google domain (" + ENV['GOOGLE_DOMAIN'] )
+       return "Domain (" + domain + ") is not the same as the google domain (" + ENV['GOOGLE_DOMAIN'] + ")"
      end
 
      begin

@@ -8,7 +8,7 @@ class TeamTest < ActiveSupport::TestCase
   #  2: do a .destroy on all objects that were saved
 
   def test_build_email
-    domain = GOOGLE_APPS_CONFIG['google_domain']
+    domain = ENV['GOOGLE_DOMAIN']
     course = Course.find(:first)
     record = Team.new(:name => 'RailsFixture Team A', :course_id => course.id)
     assert_equal(record.build_email, "fall-2009-railsfixture-team-a" + "@" + domain)
@@ -77,7 +77,7 @@ class TeamTest < ActiveSupport::TestCase
     course = Course.find(:first)
     record = Team.new(:name => 'RailsFixture Deming Team A', :course_id => course.id)
     record.save
-    expected_email = "#{course.semester}-#{course.year}-#{record.name}@#{GOOGLE_APPS_CONFIG['google_domain']}".chomp.downcase.gsub(/ /, '-')
+    expected_email = "#{course.semester}-#{course.year}-#{record.name}@#{ENV['GOOGLE_DOMAIN']}".chomp.downcase.gsub(/ /, '-')
     assert_equal record.email, expected_email, "Unexpected email value"
     record.destroy
     wait_for_google_sync

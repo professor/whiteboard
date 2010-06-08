@@ -2,16 +2,18 @@
 #AMAZON_S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[RAILS_ENV]
 #SYSTEMS_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/systems.yml")
 
-GOOGLE_APPS_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/google_apps.yml")[RAILS_ENV]
+google_username = ENV['GOOGLE_USERNAME'] || "team.deming@sandbox.sv.cmu.edu"
+google_password = ENV['GOOGLE_PASSWORD'] || "MfSE@sv"
+google_domain = ENV['GOOGLE_DOMAIN'] || "sandbox.sv.cmu.edu"
 
 require 'gappsprovisioning/provisioningapi'
 include GAppsProvisioning
 def google_apps_connection
-  @google_apps_connection ||= ProvisioningApi.new(GOOGLE_APPS_CONFIG['username'], GOOGLE_APPS_CONFIG['password'])
+  @google_apps_connection ||= ProvisioningApi.new(google_username, google_password)
 rescue
   Rails.logger.debug "had to rescue (ie reconnect) google apps"
   Rails.logger.info "had to rescue (ie reconnect) google apps"
-  @google_apps_connection = ProvisioningApi.new(GOOGLE_APPS_CONFIG['username'], GOOGLE_APPS_CONFIG['password'])
+  @google_apps_connection = ProvisioningApi.new(google_username, google_password)
 end
 
 #This code works for a person's email address or a team's distribution list

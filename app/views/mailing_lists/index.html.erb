@@ -56,7 +56,7 @@ $(document).ready(function()
     <td><%= link_to 'Show', :controller => "mailing_lists", :action => "show",  :id => mailing_list %></td>
     <% if current_user.is_admin? %>
     <% url_mailing_list = mailing_list.gsub(/@/,'%40') %>
-    <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{GOOGLE_APPS_CONFIG['google_domain']}/Group?groupId=#{mailing_list}" %></td>
+    <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{ENV['GOOGLE_DOMAIN']}/Group?groupId=#{mailing_list}" %></td>
     <% end %>
 
 </tr>
