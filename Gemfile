@@ -9,7 +9,7 @@ gem 'ruby-openid-apps-discovery'
 gem 'rack-openid'
 
 gem 'authlogic'
-gem 'google_chart'
+#gem 'gchartrb'
 
 group :production do
 #  gem 'activerecord-postgresql-adapter'

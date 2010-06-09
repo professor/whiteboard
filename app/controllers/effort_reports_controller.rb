@@ -1,4 +1,4 @@
-require 'google_chart'
+#require 'google_chart'
 
 class EffortReportsController < ApplicationController
 
@@ -30,19 +30,19 @@ class EffortReportsController < ApplicationController
     end
 
   
-    def load_google_chart
-      puts "test google place !!!!!!!!!!!!!!!!!!!!!!!!!!"
-      GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
-#      GoogleChart::FinancialLineChart.new('800x200', "Box Chart") do |bc|
-        bc.data "course1", [-1,5,10,7,12,-1]
-        bc.data "course2", [-1,25,30,27,24,-1]
-        bc.data "course3", [-1,40,45,47,39,-1]
-        bc.data "course4", [-1,55,63,59,80,-1]
-        bc.data "course5", [-1,30,40,35,30,-1]
-        bc.data "course6", [-1,-1,5,70,90,-1]
-        @chart = bc.to_url
-     end
-    end
+#    def load_google_chart
+#      puts "test google place !!!!!!!!!!!!!!!!!!!!!!!!!!"
+#      GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
+##      GoogleChart::FinancialLineChart.new('800x200', "Box Chart") do |bc|
+#        bc.data "course1", [-1,5,10,7,12,-1]
+#        bc.data "course2", [-1,25,30,27,24,-1]
+#        bc.data "course3", [-1,40,45,47,39,-1]
+#        bc.data "course4", [-1,55,63,59,80,-1]
+#        bc.data "course5", [-1,30,40,35,30,-1]
+#        bc.data "course6", [-1,-1,5,70,90,-1]
+#        @chart = bc.to_url
+#     end
+#    end
 
     
     def load_weekly_chart
