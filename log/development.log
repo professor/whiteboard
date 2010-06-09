@@ -1,0 +1,31 @@
+OpenIdAuthentication.store is nil. Using in-memory store.
+  [4;36;1mSQL (30.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ActionController::Base#index (for 127.0.0.1 at 2010-06-08 22:29:03) [GET]
+
+NameError (uninitialized constant ApplicationController):
+  app/controllers/welcome_controller.rb:1
+  /Users/tsedano/.gem/ruby/1.8/gems/ruby-debug-ide-0.3.1/lib/ruby-debug.rb:96:in `debug_load'
+  /Users/tsedano/.gem/ruby/1.8/gems/ruby-debug-ide-0.3.1/lib/ruby-debug.rb:96:in `main'
+  /Users/tsedano/.gem/ruby/1.8/gems/ruby-debug-ide-0.3.1/bin/rdebug-ide:76
+  /Users/tsedano/.gem/ruby/1.8/bin/rdebug-ide:19:in `load'
+  /Users/tsedano/.gem/ruby/1.8/bin/rdebug-ide:19
+
+Rendered rescues/_trace (58.9ms)
+Rendered rescues/_request_and_response (2.3ms)
+Rendering rescues/layout (internal_server_error)
+OpenIdAuthentication.store is nil. Using in-memory store.
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ActionController::Base#index (for 127.0.0.1 at 2010-06-08 22:29:49) [GET]
+
+NameError (uninitialized constant ApplicationController):
+  app/controllers/welcome_controller.rb:1
+
+Rendered rescues/_trace (32.8ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
