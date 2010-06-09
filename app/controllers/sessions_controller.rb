@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
   end
 
   private
-  def successful_login
+  def successful_login_new
     @user_session = UserSession.create(@current_user, true)
     if @user_session.save
       flash[:notice] = "Successfully logged in."
@@ -65,9 +65,15 @@ class SessionsController < ApplicationController
     else
       render :action => 'new'
     end
-
-
   end
+
+      def successful_login
+        session[:user_id] = @current_user.id
+        redirect_to(session_url)
+#        redirect_to(root_url)
+      end
+  
+
 
   def failed_login(message)
 #    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
