@@ -1,65 +1,79 @@
-# This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
 
-  # render new.rhtml
-  def new
-  end
-
-  def new_dev_env
-  end
-  
-  def create_webiso
-    create
-  end
-  
   def create
-    logout_keeping_session!
-    webiso_error_msg = ""
-
-    
-    if request.env['HTTP_AUTHORIZATION'].nil?
-      login_name = params[:login]
-      user = User.authenticate(params[:login], params[:password])    
-    else
-      login_name = request.env['HTTP_AUTHORIZATION'].split(' ')[1].unpack("m").to_s.split(':')[0]
-#      user = Person.find(:first, :conditions => ["webiso_account = ?", login_name])
-      user = User.find(:first, :conditions => ["webiso_account = ?", login_name]) 
-      webiso_error_msg = ": No user associated with " + login_name if !user 
-      logger.error webiso_error_msg if webiso_error_msg
-      params[:remember_me] = "1"
-
-    end
-
-    if user
-      logger.info 'login of user ' + login_name unless login_name.nil? 
-      # Protects against session fixation attacks, causes request forgery
-      # protection if user resubmits an earlier form using back
-      # button. Uncomment if you understand the tradeoffs.
-      # reset_session
-      self.current_user = user
-      new_cookie_flag = (params[:remember_me] == "1")
-      handle_remember_cookie! new_cookie_flag
-      redirect_back_or_default('/')
-      flash[:notice] = "Logged in successfully"
-    else
-      note_failed_signin
-      @login       = params[:login]
-      @remember_me = params[:remember_me]
-      flash.now[:error] = "Authentication failed" + webiso_error_msg
-      render :action => 'new'
-    end
+    open_id_authentication
   end
 
   def destroy
-    logout_killing_session!
-    flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/')
+    @user_session = UserSession.find
+    @user_session.destroy
+    flash[:notice] = "Successfully logged out."
+    redirect_to root_url
   end
 
-protected
-  # Track failed login attempts
-  def note_failed_signin
-    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
-    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+  protected
+  def open_id_authentication
+    authenticate_with_open_id(params[:openid_identifier], :required => ["http://axschema.org/contact/email", "http://axschema.org/namePerson/first", "http://axschema.org/namePerson/last"]) do |result, identity_url, registration|
+      ax_response = OpenID::AX::FetchResponse.from_success_response(request.env[Rack::OpenID::RESPONSE])
+      case result.status
+      when :missing
+        failed_login "Sorry, the OpenID server couldn't be found"
+      when :invalid
+        failed_login "Sorry, but this does not appear to be a valid OpenID"
+      when :canceled
+        failed_login "OpenID verification was canceled"
+      when :failed
+        failed_login "Sorry, the OpenID verification failed"
+      when :successful
+
+        email = ax_response['http://axschema.org/contact/email'].first()
+        first_name = ax_response['http://axschema.org/namePerson/first'].first()
+        last_name = ax_response['http://axschema.org/namePerson/last'].first()
+
+        email = switch_west_to_sv(email)
+        logger.info "email: #{email}"
+
+        if result.successful?
+          p registration.data
+          @current_user = User.find_by_email(email)
+          if @current_user.nil?
+            logger.info "creating new user account"
+            @current_user = User.new({:first_name => first_name, :last_name=>last_name, :email=>email})
+            @current_user.save
+            #send email to help@sv.cmu.edu -- similar to twiki email
+          end
+          if @current_user
+            successful_login
+          else
+            failed_login "Sorry, no user by that identity URL exists (#{identity_url})"
+          end
+        else
+          failed_login result.message
+        end
+      end
+    end
   end
+
+  private
+  def successful_login
+    @user_session = UserSession.create(@current_user, true)
+    if @user_session.save
+      flash[:notice] = "Successfully logged in."
+      redirect_to root_url
+      #        redirect_to(session_url)
+      #        redirect_to(root_url)
+    else
+      render :action => 'new'
+    end
+
+
+  end
+
+  def failed_login(message)
+#    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+
+    flash[:error] = message
+    redirect_to(new_session_url)
+  end
+
 end

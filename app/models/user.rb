@@ -1,9 +1,9 @@
-require 'digest/sha1'
-
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
+  acts_as_authentic
+#
+#  acts_as_authentic do |c|
+#    c.my_config_option = my_value
+#  end # the configuration block is optional  include
   
 #  validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -40,17 +40,6 @@ class User < ActiveRecord::Base
 #    person.is_staff?
 #  end
 
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
-  def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
 
   def emailed_recently
     return false if self.effort_log_warning_email.nil?

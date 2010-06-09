@@ -1,7 +1,20 @@
 <h1>Log In</h1>
 
 
-<%= link_to 'Click here to login with WebISO', login_webiso_path   %>
+<% if flash[:notice] %><p style="color: green"><%= flash[:notice] %></p><% end %>
+<% if flash[:error] %><p style="color: red"><%= flash[:error] %></p><% end %>
+
+
+<% form_tag(session_url) do %>
+    <p>
+      <label for="openid_identifier">OpenID:</label>
+      <%= text_field_tag "openid_identifier", "west.cmu.edu" %>
+    </p>
+
+    <p>
+      <%= submit_tag 'Sign in', :disable_with => "Signing in&hellip;" %>
+    </p>
+  <% end %>
 
 
 <% if development? %>
