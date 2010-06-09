@@ -1,12 +1,13 @@
 
 .svn
-
+.bundle
 20090827190915_mfse_add_people.rb	
 
 config/database.yml
 config/google_apps.yml
 config/amazon_s3.yml
 
+log/*
 nbproject/*
 MfSE/*
 
