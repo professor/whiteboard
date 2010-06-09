@@ -11,7 +11,7 @@ gem 'rack-openid'
 gem 'authlogic'
 
 group :production do
-  gem 'activerecord-postgresql-adapter'
+#  gem 'activerecord-postgresql-adapter'
 end
 
 group :development do
