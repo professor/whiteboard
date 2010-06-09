@@ -390,3 +390,12 @@ Processing SessionsController#show (for 127.0.0.1 at 2010-06-09 10:28:10) [GET]
 Rendering template within layouts/sessions
 Rendering sessions/show
 Completed in 19ms (View: 16, DB: 0) | 200 OK [http://localhost/session]
+OpenIdAuthentication.store is nil. Using in-memory store.
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#show (for 127.0.0.1 at 2010-06-09 17:09:55) [GET]
+Rendering template within layouts/sessions
+Rendering sessions/show
+Completed in 35ms (View: 32, DB: 0) | 200 OK [http://localhost/session]
