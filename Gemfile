@@ -9,16 +9,15 @@ gem 'ruby-openid-apps-discovery'
 gem 'rack-openid'
 
 gem 'authlogic'
-gem 'mongrel'
 
+group :production do
+  gem 'activerecord-postgresql-adapter'
+end
 
 group :development do
-  # bundler requires these gems in development
-  # gem "rails-footnotes"
+  gem 'mongrel'
 end
 
 group :test do
-  # bundler requires these gems while running tests
-  # gem "rspec"
-  # gem "faker"
+  gem 'mongrel'
 end
