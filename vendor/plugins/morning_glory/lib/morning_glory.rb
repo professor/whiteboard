@@ -12,7 +12,10 @@ rescue
 end
 
 begin
-  S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[Rails.env] if !defined? S3_CONFIG
+  if (!ENV['S3_KEY'] && !ENV['S3_SECRET']) 
+    S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[Rails.env] if !defined? S3_CONFIG
+  end
+
 rescue
   raise "Error loading MorningGlory configuration files. Please check config/amazon_s3.yml is configured correctly."
 end
