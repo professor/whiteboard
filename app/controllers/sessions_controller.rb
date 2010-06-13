@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
 
+   layout 'cmu_sv'
+
+
+ # Additional reading:
+ # http://openidenabled.com/files/ruby-openid/repos/2.x.x/UPGRADE
+
   def create
     open_id_authentication
   end
@@ -55,19 +61,19 @@ class SessionsController < ApplicationController
   end
 
   private
-  def successful_login_new
+  def successful_login
     @user_session = UserSession.create(@current_user, true)
     if @user_session.save
       flash[:notice] = "Successfully logged in."
-      redirect_to root_url
-      #        redirect_to(session_url)
+#      redirect_to root_url
+              redirect_to(session_url)
       #        redirect_to(root_url)
     else
       render :action => 'new'
     end
   end
 
-      def successful_login
+      def successful_login_old
         session[:user_id] = @current_user.id
         redirect_to(session_url)
 #        redirect_to(root_url)

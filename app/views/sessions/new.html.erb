@@ -1,10 +1,5 @@
 <h1>Log In</h1>
 
-
-<% if flash[:notice] %><p style="color: green"><%= flash[:notice] %></p><% end %>
-<% if flash[:error] %><p style="color: red"><%= flash[:error] %></p><% end %>
-
-
 <% form_tag(session_url) do %>
     <p>
       <label for="openid_identifier">OpenID:</label>

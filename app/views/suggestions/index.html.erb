@@ -12,7 +12,7 @@
     <% else %>
       <td>&nbsp;</td>
     <% end %>
-    <% if logged_in? && current_user.is_admin %>
+    <% if current_user && current_user.is_admin %>
       <td><%= link_to 'Destroy', suggestion, :confirm => 'Are you sure?', :method => :delete %></td>
     <% else %>
       <td>&nbsp;</td>

@@ -17,13 +17,21 @@ group :production do
 end
 
 group :development do
+  gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
+#  gem 'hanna'
+#  gem 'rcov'
+#  gem 'rdoc'
 end
 
 group :test do
+  gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
+  gem 'hanna'
+  gem 'rcov'
+  gem 'rdoc'
 end
 
 

@@ -1,8 +1,3 @@
-<% if flash[:notice] %><p style="color: green"><%= flash[:notice] %></p><% end %>
-<% if flash[:error] %><p style="color: red"><%= flash[:error] %></p><% end %>
-
-
-
 Hello there<br/>
 
 <% if @current_user %>
@@ -12,3 +7,14 @@ Welcome <%= @current_user.human_name  %> with email address <%= @current_user.em
 <br/>
 
 Session id = <%=  session[:user_id] %>
+
+<br/>
+
+<% if current_user %>
+Welcome <%= current_user.human_name  %> with email address <%= current_user.email %>
+<% end %>
+
+
+<% if current_user %>
+Welcome <%= current_user.human_name  %> with email address <%= current_user.email %>
+<% end %>

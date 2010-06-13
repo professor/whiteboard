@@ -11,7 +11,7 @@
     <%= f.label :comment %><br />
     <%= f.text_area :comment, :size => "80x10"  %>
   </p>
-  <% if !logged_in?  %>
+  <% if !current_user  %>
   <p>
     <%= f.label :email %><br />
     <%= f.text_field :email %>

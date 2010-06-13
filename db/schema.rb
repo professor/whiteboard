@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100520212356) do
+ActiveRecord::Schema.define(:version => 20100610002054) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
   end
 
   create_table "courses", :force => true do |t|
-    t.integer  "course_number_id",        :limit => 11
+    t.integer  "course_number_id"
     t.string   "name"
     t.string   "number"
     t.string   "semester"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
   end
 
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
-  add_index "courses", ["year"], :name => "index_courses_on_year"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
+  add_index "courses", ["year"], :name => "index_courses_on_year"
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.string   "url"
     t.string   "semester"
     t.string   "year"
-    t.integer  "user_id",                    :limit => 11
-    t.integer  "curriculum_comment_type_id", :limit => 11
+    t.integer  "user_id"
+    t.integer  "curriculum_comment_type_id"
     t.string   "comment",                    :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -59,14 +59,14 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.boolean  "notify_me"
   end
 
-  add_index "curriculum_comments", ["url"], :name => "index_curriculum_comments_on_url"
   add_index "curriculum_comments", ["semester"], :name => "index_curriculum_comments_on_semester"
+  add_index "curriculum_comments", ["url"], :name => "index_curriculum_comments_on_url"
   add_index "curriculum_comments", ["year"], :name => "index_curriculum_comments_on_year"
 
   create_table "effort_log_line_items", :force => true do |t|
-    t.integer  "effort_log_id", :limit => 11
-    t.integer  "course_id",     :limit => 11
-    t.integer  "task_type_id",  :limit => 11
+    t.integer  "effort_log_id"
+    t.integer  "course_id"
+    t.integer  "task_type_id"
     t.float    "day1"
     t.float    "day2"
     t.float    "day3"
@@ -77,13 +77,13 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.float    "sum"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "project_id",    :limit => 11
+    t.integer  "project_id"
   end
 
   create_table "effort_logs", :force => true do |t|
-    t.integer  "person_id",   :limit => 11
-    t.integer  "week_number", :limit => 11
-    t.integer  "year",        :limit => 11
+    t.integer  "person_id"
+    t.integer  "week_number"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "sum"
@@ -93,15 +93,15 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
   add_index "effort_logs", ["week_number"], :name => "index_effort_logs_on_week_number"
 
   create_table "pages", :force => true do |t|
-    t.integer  "course_id",              :limit => 11
+    t.integer  "course_id"
     t.string   "label"
-    t.integer  "position",               :limit => 11
-    t.integer  "indentation_level",      :limit => 11
+    t.integer  "position"
+    t.integer  "indentation_level"
     t.boolean  "is_task"
     t.text     "tab_one_contents"
     t.text     "tab_two_contents"
     t.text     "tab_three_contents"
-    t.integer  "task_duration",          :limit => 11
+    t.integer  "task_duration"
     t.string   "tab_one_email_from"
     t.string   "tab_one_email_subject"
     t.datetime "created_at"
@@ -111,38 +111,38 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.text     "faculty_notes"
   end
 
-  add_index "pages", ["position"], :name => "index_pages_on_position"
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
+  add_index "pages", ["position"], :name => "index_pages_on_position"
 
   create_table "papers", :force => true do |t|
     t.string   "title"
     t.string   "authors_full_listing"
     t.string   "conference"
-    t.integer  "year",                 :limit => 11
+    t.integer  "year"
     t.string   "paper_file_name"
     t.string   "paper_content_type"
-    t.integer  "paper_file_size",      :limit => 11
+    t.integer  "paper_file_size"
     t.datetime "paper_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "papers_people", :id => false, :force => true do |t|
-    t.integer "paper_id",  :limit => 11
-    t.integer "person_id", :limit => 11
+    t.integer "paper_id"
+    t.integer "person_id"
   end
 
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
-    t.integer  "person_id",          :limit => 11
-    t.integer  "team_id",            :limit => 11
+    t.integer  "person_id"
+    t.integer  "team_id"
     t.string   "learning_objective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "peer_evaluation_reports", :force => true do |t|
-    t.integer  "team_id",      :limit => 11
-    t.integer  "recipient_id", :limit => 11
+    t.integer  "team_id"
+    t.integer  "recipient_id"
     t.text     "feedback"
     t.datetime "email_date"
     t.datetime "created_at"
@@ -150,12 +150,12 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
   end
 
   create_table "peer_evaluation_reviews", :force => true do |t|
-    t.integer  "team_id",         :limit => 11
-    t.integer  "author_id",       :limit => 11
-    t.integer  "recipient_id",    :limit => 11
+    t.integer  "team_id"
+    t.integer  "author_id"
+    t.integer  "recipient_id"
     t.string   "question"
     t.text     "answer"
-    t.integer  "sequence_number", :limit => 11
+    t.integer  "sequence_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.integer  "project_type_id", :limit => 11
-    t.integer  "course_id",       :limit => 11
+    t.integer  "project_type_id"
+    t.integer  "course_id"
     t.boolean  "is_closed"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -213,13 +213,13 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
 
   create_table "scotty_dog_sayings", :force => true do |t|
     t.text     "saying"
-    t.integer  "user_id",    :limit => 11
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "suggestions", :force => true do |t|
-    t.integer  "user_id",    :limit => 11
+    t.integer  "user_id"
     t.string   "comment"
     t.string   "page"
     t.datetime "created_at"
@@ -242,8 +242,8 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.string   "twiki_space"
     t.string   "tigris_space"
     t.string   "course_id"
-    t.integer  "primary_faculty_id",                  :limit => 11
-    t.integer  "secondary_faculty_id",                :limit => 11
+    t.integer  "primary_faculty_id"
+    t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -254,16 +254,16 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
   end
 
   create_table "teams_people", :id => false, :force => true do |t|
-    t.integer "team_id",   :limit => 11
-    t.integer "person_id", :limit => 11
+    t.integer "team_id"
+    t.integer "person_id"
   end
 
-  add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
   add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
+  add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
 
   create_table "user_verions", :force => true do |t|
-    t.integer  "person_id",                 :limit => 11
-    t.integer  "version",                   :limit => 11
+    t.integer  "person_id"
+    t.integer  "version"
     t.string   "webiso_account"
     t.string   "login",                     :limit => 40
     t.string   "email",                     :limit => 100
@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.string   "telephone3_label"
     t.string   "telephone4"
     t.string   "telephone4_label"
-    t.integer  "updated_by_user_id",        :limit => 11
+    t.integer  "updated_by_user_id",        :limit => 8
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
@@ -324,17 +324,14 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
-    t.string   "login",                     :limit => 40
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "login",                    :limit => 40
+    t.string   "email",                    :limit => 100
+    t.string   "crypted_password",         :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.boolean  "is_staff",                                 :default => false
-    t.boolean  "is_student",                               :default => false
-    t.boolean  "is_admin",                                 :default => false
+    t.boolean  "is_staff",                                :default => false
+    t.boolean  "is_student",                              :default => false
+    t.boolean  "is_admin",                                :default => false
     t.string   "twiki_name"
     t.string   "first_name"
     t.string   "last_name"
@@ -370,18 +367,29 @@ ActiveRecord::Schema.define(:version => 20100520212356) do
     t.string   "telephone3_label"
     t.string   "telephone4"
     t.string   "telephone4_label"
-    t.integer  "updated_by_user_id",        :limit => 11
-    t.integer  "version",                   :limit => 11
+    t.integer  "updated_by_user_id"
+    t.integer  "version"
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
+    t.string   "password_salt",                           :default => "",    :null => false
+    t.string   "persistence_token",                       :default => "",    :null => false
+    t.string   "single_access_token",                     :default => "",    :null => false
+    t.string   "perishable_token",                        :default => "",    :null => false
+    t.integer  "login_count",                             :default => 0,     :null => false
+    t.integer  "failed_login_count",                      :default => 0,     :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
 end
