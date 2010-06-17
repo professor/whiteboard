@@ -1,5 +1,5 @@
 <tr>
-<% if logged_in? && current_user.is_student? %>  
+<% if current_user && current_user.is_student? %>  
   <td>Course</td><td><%= link_to 'Type', task_types_path %></td><td>&nbsp;</td>
 <% else %>
   <td><%= link_to 'Project', projects_path %></td><td><%= link_to 'Type', task_types_path %></td><td>&nbsp;</td>

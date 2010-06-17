@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   layout 'cmu_sv'
-  before_filter :login_required
+  before_filter :require_user
 
   # GET /projects
   # GET /projects.xml

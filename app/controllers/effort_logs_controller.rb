@@ -1,7 +1,7 @@
 class EffortLogsController < ApplicationController
 #  layout "cmu_sv", :except => :new_effort_log_line_item
 
-  before_filter :login_required, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
+  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
 
 
   # Todo: consider moving these email methods to the model and update the rake task accordingly

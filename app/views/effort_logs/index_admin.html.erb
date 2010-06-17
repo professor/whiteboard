@@ -1,6 +1,6 @@
 <% content_for :title, 'Effort Logs' %>
 <h1>Listing Effort Logs</h1>
-<% if logged_in? && current_user.is_admin %>  
+<% if current_user && current_user.is_admin %>  
 <%= link_to 'List your effort log', :controller=>"effort_log_line_items", :action=>"index" %>
 <% end %>
 

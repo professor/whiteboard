@@ -1,8 +1,7 @@
 class CourseNumbersController < ApplicationController
   layout 'cmu_sv'
 
-  before_filter :login_from_cookie
-#   before_filter :login_required
+  before_filter :require_user
 
   
   # GET /course_numbers

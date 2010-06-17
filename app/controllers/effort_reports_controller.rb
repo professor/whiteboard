@@ -5,7 +5,7 @@ class EffortReportsController < ApplicationController
 #  layout "effort_logs", :except => "load_weekly_chart"
 
 
-  before_filter :login_required
+  before_filter :require_user
 
 #    helper Ziya::Helper
 

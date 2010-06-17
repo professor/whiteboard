@@ -46,7 +46,7 @@ $(document).ready(function()
     <th class="all_courses">Year</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
-    <% if logged_in? && current_user.is_admin %>
+    <% if current_user && current_user.is_admin %>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
@@ -64,7 +64,7 @@ $(document).ready(function()
     <td><a href="/courses/<%=course.id%>/teams_photos">Teams</a></td>
     <td><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => course, :week => nil, :only_path=>true%></td>
     
-    <% if logged_in? && current_user.is_admin? %>
+    <% if current_user && current_user.is_admin? %>
     <td><%= link_to 'Show', course %></td>
     <td><%= link_to 'Edit', edit_course_path(course) %></td>
     <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -76,6 +76,6 @@ $(document).ready(function()
 
 <br />
 
-<% if logged_in? && current_user.is_admin? %>
+<% if current_user && current_user.is_admin? %>
 <%= link_to 'New course', new_course_path %>
 <% end %>

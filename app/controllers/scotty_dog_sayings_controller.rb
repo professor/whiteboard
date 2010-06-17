@@ -1,7 +1,7 @@
 class ScottyDogSayingsController < ApplicationController
   layout 'cmu_sv'
 
-  before_filter :login_required
+  before_filter :require_user
   
   # GET /scotty_dog_sayings
   # GET /scotty_dog_sayings.xml
@@ -45,7 +45,7 @@ class ScottyDogSayingsController < ApplicationController
   # POST /scotty_dog_sayings.xml
   def create
     @scotty_dog_saying = ScottyDogSaying.new(params[:scotty_dog_saying])
-    @scotty_dog_saying.user_id = current_user.id if logged_in?
+    @scotty_dog_saying.user_id = current_user.id if current_user
     
     respond_to do |format|
       if @scotty_dog_saying.save

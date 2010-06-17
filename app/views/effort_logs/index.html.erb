@@ -1,11 +1,11 @@
 <% content_for :title, 'Effort Logs' %>
 <h1>Listing Effort Logs</h1>
-<% if logged_in? %>  
+<% if current_user %>
 Hello <%= current_user.human_name %><br/><br/>
 <% end %>
 
-<% if logged_in? && current_user.is_admin %>  
-<br><%= link_to 'List all effort log', :controller=>"effort_log_line_items", :action=>"index_admin" %>
+<% if current_user && current_user.is_admin %>
+<br/><%= link_to 'List all effort log', :controller=>"effort_log_line_items", :action=>"index_admin" %>
 <% end %>
 
 
@@ -53,7 +53,7 @@ Hello <%= current_user.human_name %><br/><br/>
     <td>&nbsp;</td>
     <% end %>
     <td>&nbsp;</td>
-<% if logged_in? && current_user.is_admin %>  
+<% if current_user && current_user.is_admin %>
     <td class="log_action"><%= link_to 'Destroy', effort_log, :confirm => 'Are you sure?', :method => :delete %></td>
 <% end %>
   </tr>

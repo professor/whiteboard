@@ -44,7 +44,7 @@
 <% end %>
 
 <br style="clear:both;" />
-<% if logged_in? && (current_user.is_admin) %>
+<% if current_user && (current_user.is_admin) %>
   <div class="rounded admin">
   <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
 <h2>Admin Helpers</h2>

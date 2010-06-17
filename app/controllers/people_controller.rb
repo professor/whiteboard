@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
       @person.last_name = names[1] unless names.nil?
       @person.webiso_account = Time.now.to_f.to_s #This line probably not necessary since I added it to Person.before_validation
       @person.is_active = true
-      @person.updated_by_user_id = current_user.id if logged_in?
+      @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/students/mascot.jpg"
       @person.local_near_remote = "Unknown"
       @person.save

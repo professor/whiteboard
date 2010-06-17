@@ -20,14 +20,14 @@
 
 <%= image_tag("/images/peer_evaluation.jpg", :size => "106x71", :border=>"0") %>
 
-<%if logged_in? && !current_user.is_student %>
+<%if current_user && !current_user.is_student %>
 <h2>Step 0: See what the student will see</h2>
 <%end%>
 
 <p><%= link_to "Complete the peer evaluation", :action => "edit_evaluation", :id => params[:id], :controller => "peer_evaluation" %>
 </p>
 
-<%if logged_in? && (current_user.is_staff || current_user.is_admin)%>
+<%if current_user && (current_user.is_staff || current_user.is_admin)%>
 <h2>Step 1: Setup the tool for this team</h2>
 <p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
 

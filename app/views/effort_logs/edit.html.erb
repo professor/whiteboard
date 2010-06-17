@@ -1,7 +1,7 @@
 <h1>Editing Effort Log</h1>
 <%= javascript_include_tag :all, :cache => true %>
 
-<% if logged_in? && current_user.is_staff %>
+<% if current_user && current_user.is_staff %>
   <H2>The faculty view is different than the student view</h2>
 <% end %>
 
@@ -9,7 +9,7 @@
 <% form_for(@effort_log) do |f| %>
   <%= f.error_messages %>
 
-  <% if logged_in? && current_user.is_admin %>  
+  <% if current_user && current_user.is_admin %>  
   <p>
     <%= f.label :person_id %><br />
     <%= f.text_field :person_id %>
@@ -18,7 +18,7 @@
     <p> <%= f.label :person_id %>: <%= @effort_log.person.human_name %> </p> 
 
   <% end  %>
-  <% if logged_in? && current_user.is_admin %>  
+  <% if current_user && current_user.is_admin %>  
   <p>
     <%= f.label :week_number %><br />
     <%= f.text_field :week_number %>

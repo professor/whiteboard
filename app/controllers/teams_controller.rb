@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_filter :login_required, :except => [:index, :twiki_index, :twiki_new]
+  before_filter :require_user, :except => [:index, :twiki_index, :twiki_new]
 
   layout 'cmu_sv'
 

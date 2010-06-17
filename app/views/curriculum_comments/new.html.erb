@@ -24,7 +24,7 @@ Thank you!
     <%= f.label :comment %><br />
     <%= f.text_area :comment, :size => "80x10"  %>
   </p>
-  <% if !logged_in?  %>
+  <% if !current_user  %>
   <p>
     <%= f.label :human_name, "Your full name" %><br />
     <%= f.text_field :human_name %>
@@ -34,7 +34,7 @@ Thank you!
     <%= f.label :type %><br />
     <%= f.collection_select(:curriculum_comment_type_id, @types, :id, :name) %>
   </p>
-  <% if logged_in?  %>
+  <% if current_user  %>
     <%= f.label :notify_me, "Email me if other people add comments to the same page" %>
     <%= f.check_box :notify_me %>
   <% end %>

@@ -1,6 +1,6 @@
 class PeerEvaluationController < ApplicationController
     layout 'cmu_sv'
-    before_filter :login_required
+    before_filter :require_user
 
     @@questions = [
       "What was this team member's most significant positive contribution to the team?",

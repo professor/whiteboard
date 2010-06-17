@@ -20,7 +20,7 @@ Indeed, Scotty Dog's bark is worse than his bite, but now you have control over 
     <% else %>
       <td>&nbsp;</td>
     <% end %>
-    <% if logged_in? && current_user.is_admin %>
+    <% if current_user && current_user.is_admin %>
       <td><%= link_to 'Destroy', scotty_dog_saying, :confirm => 'Are you sure?', :method => :delete %></td>
     <% else %>
       <td>&nbsp;</td>

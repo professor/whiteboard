@@ -46,7 +46,7 @@ class SuggestionsController < ApplicationController
   # POST /suggestions.xml
   def create
     @suggestion = Suggestion.new(params[:suggestion])
-    @suggestion.user_id = current_user.id if logged_in?
+    @suggestion.user_id = current_user.id if current_user
 
     respond_to do |format|
       if @suggestion.save
