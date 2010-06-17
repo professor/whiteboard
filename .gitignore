@@ -10,4 +10,4 @@ config/amazon_s3.yml
 log/*
 nbproject/*
 MfSE/*
-
+tmp/*

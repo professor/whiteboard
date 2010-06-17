@@ -89,6 +89,13 @@ tinyMCE.init({
 <div class="Lv1Nav"><font color="#626262">My Teams (Login required)</font></div>
 <div class="Lv1Nav"><%= link_to "Login", "/login_webiso", :class=>"Lv1NavLink" %></div>
 <% end %>
+
+<% if current_user %>
+<div class="Lv1Nav"><%= link_to "Logout 2", session_path, :method => :delete, :class=>"Lv1NavLink" %></div>
+<% else %>
+<div class="Lv1Nav"><%= link_to "Log In 2", new_session_path, :class=>"Lv1NavLink" %></div>
+<% end %>
+
 <div class="admin_level_leftnav_divider"><%=  image_tag("/cmu_sv/lvl_leftnav_HorizontalRule.gif", :border=>"0", :height=>"14", :width=>"214") %></div><div class="SecondaryNav_Padding">
 <!-- <div class="SecondaryNav"><a class="SecondaryNav_Link" href="http://www.cmu.edu/silicon-valley/prospective-students/index.html">Foundations</a></div><div class="SecondaryNav"><a class="SecondaryNav_Link" href="http://www.cmu.edu/silicon-valley/faculty-staff/index.html">Calendar</a></div><div class="SecondaryNav"><a class="SecondaryNav_Link" href="http://www.cmu.edu/silicon-valley/alumni/index.html">Task 1. Preparation</a></div>
                 <div class="SecondaryNav"><a class="SecondaryNav_Link" href="http://www.cmu.edu/silicon-valley/corporate-visitors/index.html">Task 2. Iteration 0: Project Definition</a></div>

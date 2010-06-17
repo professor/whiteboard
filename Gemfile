@@ -20,6 +20,8 @@ group :development do
   gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
+  gem 'ruby-debug-base' #'0.10.3'
+  gem 'ruby-debug-ide' #'0.4.6'
 #  gem 'hanna'
 #  gem 'rcov'
 #  gem 'rdoc'

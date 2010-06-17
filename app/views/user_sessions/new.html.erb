@@ -1,6 +1,6 @@
 <h1>Log In</h1>
 
-<% form_tag(session_url) do %>
+<% form_tag(user_session_url) do %>
     <p>
       <label for="openid_identifier">OpenID:</label>
       <%= text_field_tag "openid_identifier", "west.cmu.edu" %>
@@ -14,7 +14,7 @@
 
 <% if development? %>
 
-<% form_tag session_path do -%>
+<% form_tag user_session_path do -%>
 <p><label for="login">Login</label><br/>
 <%= text_field_tag 'login', @login %></p>
 

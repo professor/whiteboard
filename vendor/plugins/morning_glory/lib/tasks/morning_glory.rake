@@ -15,8 +15,10 @@ namespace :morning_glory do
       if !defined? MORNING_GLORY_CONFIG[Rails.env] || MORNING_GLORY_CONFIG[Rails.env]['enabled'] != true
           raise "Deployment appears to be disabled for this environment (#{Rails.env}) within config/morning_glory.yml. Specify an alternative environment with RAILS_ENV={environment name}."
       end
-      if !defined? S3_CONFIG[Rails.env]
-        raise "You seem to be lacking your Amazon S3 configuration file, config/amazon_s3.yml"
+      if (!ENV['S3_KEY'] && !ENV['S3_SECRET'])   
+        if !defined? S3_CONFIG[Rails.env]
+          raise "You seem to be lacking your Amazon S3 configuration file, config/amazon_s3.yml"
+        end
       end
     end
     
@@ -134,8 +136,8 @@ namespace :morning_glory do
       # TODO: Update references within JS files
     
       AWS::S3::Base.establish_connection!(
-        :access_key_id     => S3_CONFIG['access_key_id'],
-        :secret_access_key => S3_CONFIG['secret_access_key']
+        :access_key_id     => ENV['S3_KEY'] || S3_CONFIG['access_key_id'],
+        :secret_access_key => ENV['S3_SECRET'] || S3_CONFIG['secret_access_key'] 
       )
 
       begin

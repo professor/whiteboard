@@ -1,6 +1,8 @@
-class SessionsController < ApplicationController
+class UserSessionsController < ApplicationController
+#  before_filter :require_no_user, :only => [:new, :create]
+#  before_filter :require_user, :only => :destroy
 
-   layout 'cmu_sv'
+  layout 'cmu_sv'
 
 
  # Additional reading:
@@ -11,8 +13,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @user_session = UserSession.find
-    @user_session.destroy
+    current_user_session.destroy
+#    @user_session = UserSession.find
+#    @user_session.destroy
     flash[:notice] = "Successfully logged out."
     redirect_to root_url
   end
@@ -45,10 +48,16 @@ class SessionsController < ApplicationController
           if @current_user.nil?
             logger.info "creating new user account"
             @current_user = User.new({:first_name => first_name, :last_name=>last_name, :email=>email})
-            @current_user.save
+            @current_user.save #Note AuthLogic creates the session too
             #send email to help@sv.cmu.edu -- similar to twiki email
+          else
+            logger.info "creating new user sessoin"
+#            @user_session = UserSession.new(params[:user_session])
+            @user_session = UserSession.create(@current_user, true)
+ #           @user_session.save
+
           end
-          if @current_user
+          if current_user
             successful_login
           else
             failed_login "Sorry, no user by that identity URL exists (#{identity_url})"
@@ -62,20 +71,20 @@ class SessionsController < ApplicationController
 
   private
   def successful_login
-    @user_session = UserSession.create(@current_user, true)
-    if @user_session.save
+#    @user_session = UserSession.create(@current_user, true)
+#    if @user_session.save
       flash[:notice] = "Successfully logged in."
 #      redirect_to root_url
-              redirect_to(session_url)
+              redirect_to(user_session_url)
       #        redirect_to(root_url)
-    else
-      render :action => 'new'
-    end
+#    else
+#      render :action => 'new'
+#    end
   end
 
       def successful_login_old
         session[:user_id] = @current_user.id
-        redirect_to(session_url)
+        redirect_to(user_session_url)
 #        redirect_to(root_url)
       end
   
@@ -85,7 +94,7 @@ class SessionsController < ApplicationController
 #    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
 
     flash[:error] = message
-    redirect_to(new_session_url)
+    redirect_to(new_user_session_url)
   end
 
 end

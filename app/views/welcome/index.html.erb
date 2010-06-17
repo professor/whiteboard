@@ -1,6 +1,6 @@
 <% content_for :title, 'CMU-SV Rails Application' %>
-<%= render :partial=>'rss_feeds/index', :locals => {:rss_feeds => @rss_feeds} %>
 
+<%# render :partial=>'rss_feeds/index', :locals => {:rss_feeds => @rss_feeds} %>
 
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
 <h2>Faculty views</h2>
