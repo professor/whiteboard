@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 #  include AuthenticatedSystem
   include ExceptionNotifiable
 
-helper_method :current_user
+  helper_method :current_user_session, :current_user
+
 
 
   

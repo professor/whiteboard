@@ -86,13 +86,6 @@ tinyMCE.init({
                 <div class="Lv1NavOn"><a class="Lv1NavLink" href="/effort_logs">Effort Logs</a></div><div class="Lv1Nav"><a class="Lv1NavLink" href="/courses/current_semester">Effort Reports</a></div><div class="Lv1Nav"><a class="Lv1NavLink" href="/people">Users</a></div><!--<div class="Lv1Nav"><a class="Lv1NavLink" href="/">My Teams</a></div> --><div class="Lv1Nav"><a class="Lv1NavLink" href="/courses/current_semester"><%= current_semester() %> <%= Date.today.year %> Courses</a></div>
 <% if current_user %>
 <div class="Lv1Nav"><%= link_to "My Teams", my_teams_path(current_user.id), :class=>"Lv1NavLink" %></div>
-<div class="Lv1Nav"><%= link_to "Logout " + current_user.first_name, "/logout", :class=>"Lv1NavLink" %></div>
-<% else %>
-<div class="Lv1Nav"><font color="#626262">My Teams (Login required)</font></div>
-<div class="Lv1Nav"><%= link_to "Login", "/login_webiso", :class=>"Lv1NavLink" %></div>
-<% end %>
-<% if current_user %>
-<div class="Lv1Nav"><%= link_to "My Teams", my_teams_path(current_user.id), :class=>"Lv1NavLink" %></div>
 <div class="Lv1Nav"><%= link_to "Logout " + current_user.first_name, user_session_path, :method => :delete, :class=>"Lv1NavLink" %></div>
 <% else %>
 <div class="Lv1Nav"><font color="#626262">My Teams (Login required)</font></div>

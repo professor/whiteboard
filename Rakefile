@@ -9,3 +9,5 @@ require 'rake/testtask'
 require 'hanna/rdoctask'
 
 require 'tasks/rails'
+
+require 'delayed/tasks'

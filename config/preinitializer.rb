@@ -13,6 +13,7 @@ rescue LoadError
   end
 
   begin
+
     # Set up load paths for all bundled gems
     Bundler.setup
     # Require all gems not in a group

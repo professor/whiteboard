@@ -1,13 +1,10 @@
 class User < ActiveRecord::Base
 
-
+acts_as_authentic
 
   
-  acts_as_authentic
-#
 #  acts_as_authentic do |c|
-#    c.my_config_option = my_value
-#  end # the configuration block is optional  include
+#  end
   
 #  validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40

@@ -11,3 +11,6 @@ log/*
 nbproject/*
 MfSE/*
 tmp/*
+
+push*.dat
+

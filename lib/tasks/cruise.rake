@@ -10,8 +10,12 @@ require 'fileutils'
 
 desc "Task for cruise Control"
 task :cruise do
-  RAILS_ENV = ENV['RAILS_ENV'] = 'test' 
+  RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
+#    if ENV['RAILS_ENV'] == 'test'
+#      Bundler::CLI.run('bundle')
+#    end
+  
 #  if !File.exists?(Dir.pwd+"/config/database.yml")
 #    FileUtils.copy(Dir.pwd+"/config/database.cc.yml", Dir.pwd+"/config/database.yml")
 #  end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100610002054) do
+ActiveRecord::Schema.define(:version => 20100619210535) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,19 @@ ActiveRecord::Schema.define(:version => 20100610002054) do
   add_index "curriculum_comments", ["semester"], :name => "index_curriculum_comments_on_semester"
   add_index "curriculum_comments", ["url"], :name => "index_curriculum_comments_on_url"
   add_index "curriculum_comments", ["year"], :name => "index_curriculum_comments_on_year"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.text     "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "effort_log_line_items", :force => true do |t|
     t.integer  "effort_log_id"

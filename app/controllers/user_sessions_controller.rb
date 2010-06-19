@@ -74,8 +74,10 @@ class UserSessionsController < ApplicationController
 #    @user_session = UserSession.create(@current_user, true)
 #    if @user_session.save
       flash[:notice] = "Successfully logged in."
+      redirect_back_or_default(root_url)
+##      redirect_back_or_default(user_session_url)
 #      redirect_to root_url
-              redirect_to(user_session_url)
+#              redirect_to(user_session_url)
       #        redirect_to(root_url)
 #    else
 #      render :action => 'new'
