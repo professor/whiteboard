@@ -19,7 +19,7 @@ class CoursesController < ApplicationController
     @all_courses = false
     @current_semester = ApplicationController.current_semester()
     @year = Date.today.year
-    @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @current_semester, Date.today.year], :order => "name ASC")
+    @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @current_semester.to_s, Date.today.year], :order => "name ASC")
     index_core
   end
 
