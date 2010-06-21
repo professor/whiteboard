@@ -59,6 +59,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
 
   map.resource :user_session
+  map.login_google '/login_google', :controller => 'user_sessions', :action => 'login_google'
 
   
   map.load_chart '/load_chart', :controller => 'effort_reports', :action => 'load_chart' 
