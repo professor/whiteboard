@@ -6,7 +6,6 @@ gem 'mechanize', '1.0.0'
 gem 'ruby-openid'
 gem 'ruby-openid-apps-discovery'
 gem 'rack-openid'
-gem 'gappsprovisioning'
 
 gem 'delayed_job'
 
