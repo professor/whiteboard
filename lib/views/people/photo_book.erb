@@ -1,9 +1,0 @@
-<% content_for :title, 'Photo Book' %>
-<h1>Photo Book (alpha)</h1>
-<div class="right_link" ><%= link_to 'See people', :action => 'index' %><br/>
-<%= link_to 'See phone book', :action=>'phone_book' %></div>
-
-<% for person in @people %>
-    <div width="200"><%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %></div>
-<% end %>
-<br/>
