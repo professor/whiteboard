@@ -1,0 +1,101 @@
+
+  <fieldset>
+    <legend>Your information</legend>
+  <div class="formItem">
+    <%= f.label "Preferred first name" %>
+    <%= f.text_field :first_name, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :legal_first_name %>
+    <%= f.text_field :legal_first_name, :disabled=>'disabled' %><br />
+    <span class="help_text">Ok to leave blank</span>
+  </div>
+  <div class="formItem">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :pronunciation %>
+    <%= f.text_field :pronunciation, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+  Telephones
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ], :disabled=>'disabled'  %></span>
+    <%= f.text_field :telephone1, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ], :disabled=>'disabled'  %></span>
+    <%= f.text_field :telephone2, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ], :disabled=>'disabled'  %></span>
+    <%= f.text_field :telephone3, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <span class="label"><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ], :disabled=>'disabled'  %></span>
+    <%= f.text_field :telephone4, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :local_near_remote %>
+    <%= f.select :local_near_remote, %w{ Unknown Local Near Remote }, :disabled=>'disabled'  %><br />
+    <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br />
+    <span class="help_text">Near - I live near Silicon Valley. I can drive in for final presentations or weekend events. </span><br />
+    <span class="help_text">Remote - I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation. </span>
+  </div>
+  <div class="formItem">
+    <%= f.label :skype %>
+    <%= f.text_field :skype, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :tigris %>
+    <%= f.text_field :tigris, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :personal_email %>
+    <%= f.text_field :personal_email, :disabled=>'disabled' %>
+  </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your work information</legend>
+  <div class="formItem">
+    <%= f.label :organization_name %>
+    <%= f.text_field :organization_name, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :title %>
+    <%= f.text_field :title, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_city %>
+    <%= f.text_field :work_city, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_state %>
+    <%= f.text_field :work_state, :disabled=>'disabled' %>
+  </div>
+  <div class="formItem">
+    <%= f.label :work_country %>
+    <%= f.text_field :work_country, :disabled=>'disabled' %>
+  </div>
+  </fieldset>
+  <div class="formItem">
+    <%= f.label :biography %>
+    <%= f.text_area :biography, :size=>"80x30", :class=>"tinymce"  %>
+  </div>
+  <div class="formItem">
+    <%= f.label :user_text %>
+    <%= f.text_area :user_text, :size=>"80x30", :class=>"tinymce" %>
+  </div>  
+  <p>
+    Biography<br />
+    <%=h @person.biography %>
+  </p>
+  <p>
+    User text<br />
+    <%=h @person.user_text %>
+  </p>
+
+

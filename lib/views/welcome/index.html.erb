@@ -1,0 +1,14 @@
+<% content_for :title, 'CMU-SV Rails Application' %>
+<%= render :partial=>'rss_feeds/index', :locals => {:rss_feeds => @rss_feeds} %>
+
+
+<% if current_user && (current_user.is_staff || current_user.is_admin) %>
+<h2>Faculty views</h2>
+<p><a href="/teams">All teams</a></p>
+<h2>Admin notes</h2>
+<p>The current semester is <%= current_semester() %>. The current time is <%= Time.now.to_s(:chatty)  %> </p>
+<% end %>
+
+<h2>Known bugs</h2><p>When you login, it should be through webiso. If you see a pop-up, something is wrong. I'm having difficulty replicating the situation on my machine. If you can help me with this, I would appreciate it. Here's the work around, go directly to this url: <a href="http://rails.sv.cmu.edu/login_webiso">http://rails.sv.cmu.edu/login_webiso</a> and login through webiso.</p>
+<h2>New features</h2>
+<p><%= link_to "New Features", new_features_path %></p>

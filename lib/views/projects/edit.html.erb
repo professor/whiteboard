@@ -1,0 +1,31 @@
+<% content_for :title, 'Edit Project' %>
+<h1>Editing project</h1>
+
+<% form_for(@project) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :project_type_id %><br />
+    <%= f.collection_select(:project_type_id , @project_types, :id, :name, :include_blank => true) %>
+  </p>
+   <p>
+    <%= f.label :course_id %><br />
+    <%= f.collection_select(:course_id , @courses, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :is_closed %><br />
+    <%= f.check_box :is_closed %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<p>
+<%= link_to 'Show', @project %> |
+<%= link_to 'Back', projects_path %>
+</p>

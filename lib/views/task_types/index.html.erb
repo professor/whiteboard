@@ -1,0 +1,32 @@
+<h1>Listing Task Types</h1>
+
+<table>
+  <tr>
+    <th width="150" >Name</th>
+    <th>Description</th>
+<!--
+    <th>Is staff</th>
+    <th>Is student</th>
+    -->
+  </tr>
+
+<% for task_type in @task_types %>
+  <tr class="<%= cycle("odd", "even")%>">
+    <td><%=h task_type.name %></td>
+    <td><%=h task_type.description %></td>
+<!--
+    <td><%=h "x" if task_type.is_staff %></td>
+    <td><%=h "x" if task_type.is_student %></td>
+-->
+<% if current_user.is_admin? %>
+    <td><%= link_to 'Show', task_type %></td>
+    <td><%= link_to 'Edit', edit_task_type_path(task_type) %></td>
+    <td><%= link_to 'Destroy', task_type, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if current_user.is_admin? %> <p><%= link_to 'New task_type', new_task_type_path %></p> <% end %>

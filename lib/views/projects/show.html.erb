@@ -1,0 +1,20 @@
+<% content_for :title, 'Project' %>
+<p>
+  <b>Name:</b>
+  <%=h @project.name %>
+</p>
+
+<p>
+  <b>Project type:</b>
+<%=h @project.project_type.name unless @project.project_type.nil? %>
+</p>
+
+<p>
+  <b>Course:</b>
+  <%=h @project.course.name unless @project.course.nil? %>
+</p>
+
+<p>
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
+</p>

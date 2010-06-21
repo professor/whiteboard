@@ -1,0 +1,58 @@
+<p>
+  <b>Course number:</b>
+  <%=h @page.course_number_id %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%=h @page.label %>
+</p>
+
+<p>
+  <b>Sequence number:</b>
+  <%=h @page.position %>
+</p>
+
+<p>
+  <b>Indentation level:</b>
+  <%=h @page.indentation_level %>
+</p>
+
+<p>
+  <b>Is task:</b>
+  <%=h @page.is_task %>
+</p>
+
+<p>
+  <b>Tab one contents:</b>
+  <%=h @page.tab_one_contents %>
+</p>
+
+<p>
+  <b>Tab two contents:</b>
+  <%=h @page.tab_two_contents %>
+</p>
+
+<p>
+  <b>Tab three contents:</b>
+  <%=h @page.tab_three_contents %>
+</p>
+
+<p>
+  <b>Task duration:</b>
+  <%=h @page.task_duration %>
+</p>
+
+<p>
+  <b>Tab one email from:</b>
+  <%=h @page.tab_one_email_from %>
+</p>
+
+<p>
+  <b>Tab one email subject:</b>
+  <%=h @page.tab_one_email_subject %>
+</p>
+
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>

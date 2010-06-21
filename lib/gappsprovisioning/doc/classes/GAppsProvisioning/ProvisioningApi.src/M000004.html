@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>retrieve_page_of_users (GAppsProvisioning::ProvisioningApi)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File provisioningapi.rb, line 197</span>
+                <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_page_of_users</span>(<span class="ruby-identifier">start_username</span>)
+                        <span class="ruby-identifier">param</span>=<span class="ruby-value str">'?startUsername='</span><span class="ruby-operator">+</span><span class="ruby-identifier">start_username</span>
+                        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:user_retrieve_all</span>,<span class="ruby-identifier">param</span>,<span class="ruby-ivar">@headers</span>)
+                        <span class="ruby-identifier">user_feed</span> = <span class="ruby-constant">Feed</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;feed&quot;</span>],  <span class="ruby-constant">UserEntry</span>)
+                <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

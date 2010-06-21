@@ -1,0 +1,44 @@
+<% content_for :title, 'Edit Course - ' + @course.name %>
+<h1>Editing course</h1>
+
+<% form_for(@course) do |f| %>
+    <%= f.error_messages %>
+  <p>
+    Course template<br />
+    <%= f.collection_select(:course_number_id, @course_numbers, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :name%><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :number %><br />
+    <%= f.text_field :number %>
+  </p>
+  <p>
+    <%= f.label :semester %><br />
+    <%= f.select(:semester, ['Fall', 'Spring', 'Summer'], :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :mini %><br />
+    <%= f.select(:mini, ['Both', 'A', 'B'], :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :year %><br />
+    <%= f.select(:year, ['2008', '2009', '2010', '2011'], :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :primary_faculty_label %><br />
+    <%= f.text_field(:primary_faculty_label, :size => 40)%>
+  </p>
+  <p>
+    <%= f.label :secondary_faculty_label %><br />
+    <%= f.text_field(:secondary_faculty_label, :size => 40)%>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @course %> |
+<%= link_to 'Back', courses_path %>

@@ -1,0 +1,58 @@
+<% content_for :title, 'Team' + @team.name %>
+<p>
+  <b>Name:</b>
+  <%=h @team.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @team.email %>
+</p>
+
+<p>
+  <b>Twiki space:</b>
+  <%=h @team.twiki_space %>
+</p>
+
+<p>
+  <b>Tigris space:</b>
+  <%=h @team.tigris_space %>
+</p>
+
+<p>
+  <b>Course Name:</b>
+  <%=h @team.course.number %>
+  <%=h @team.course.name %>
+</p>
+
+<p>
+   <b><%=h @course.primary_faculty_label%></b>
+   <% if @team.primary_faculty %>
+   <%= twiki_user_link(@team.primary_faculty.twiki_name, @team.primary_faculty.human_name) %>
+  <% end %>
+</p>
+
+<p>
+  <b><%=h @course.secondary_faculty_label%></b>
+  <% if @team.secondary_faculty %>
+  <%= twiki_user_link(@team.secondary_faculty.twiki_name, @team.secondary_faculty.human_name) %>
+  <% end %>
+</p>
+
+    <p>
+      <b>Team Members: </b>
+    <% @team.people.each do |person| %>
+    <%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %>
+    <% end %>
+  </p>
+<br style="clear:both;" />
+<% if logged_in? && (current_user.is_staff || current_user.is_admin) %>
+<h2>Faculty Helpers</h2>
+<a href="<%=url_for :action=>"survey_monkey", :id => params[:id], :course_id => params[:course_id], :only_path=>true%>">
+<%= image_tag("/images/peer_evaluation.jpg", :size => "106x71", :border=>"0") %><p>Peer Evaluation Tool</p></a>
+
+<% end %>
+<br style="clear:both;" />
+
+<%= link_to 'Edit', edit_course_team_path(@team.course_id, @team) %> |
+<%= link_to 'Back', course_teams_path(@team.course_id) %>

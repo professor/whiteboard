@@ -1,0 +1,9 @@
+<h1>Update Report</h1>
+
+Edit the report here: <br />
+<% form_for @report, :url => {:action => "complete_report_update"} do |f| %>
+<input type="hidden" name="id" value="<%=params[:id]%>">
+
+  <%= f.text_area :feedback, :value => @reportString %><br />
+  <%= f.submit 'Finalize Report' %>
+<% end %>

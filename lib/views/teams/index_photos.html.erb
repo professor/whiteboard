@@ -1,0 +1,75 @@
+<% content_for :title, 'Teams for ' + @course.name %>
+<!--    
+<h1><%=h @course.name %>
+    <%=h @course.semester %>
+    <%=h @course.mini %>
+    <%=h @course.year %></h1>
+  <h2> teams </h2>
+-->
+<table class="twikiTable" cellpadding="0" cellspacing="0">
+  <tr>
+    <th class="twikiFirstCol">Team</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th><%=h @course.primary_faculty_label%></th>
+    <th><%=h @course.secondary_faculty_label%></th>
+    <% if logged_in? && current_user.is_staff %>
+    <th>Team members <%= link_to '(Show Regular View)', {:action=>'index'}, {:target=>'_top'} %> </th>
+    <% else %>
+    <th>Team members</th>
+    <% end %>
+    <th>&nbsp;</th>
+    <% if logged_in? && current_user.is_admin %>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <% end %>
+  </tr>
+
+<% @teams.each do |team|%>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+<% if !(team.twiki_space.nil? || team.twiki_space.empty?) %>
+    <td class="twikiFirstCol"><a href='<%=h team.twiki_space%>' target='_top'><%=h team.name %></a></td>
+<% else %>
+    <td class="twikiFirstCol"><%=h team.name %></td>
+<% end %>
+<% if !(team.email.nil? || team.email.empty?) %>
+    <td><a href='mailto:<%=h team.email %>' target='_top'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
+<% else %>
+    <td> &nbsp; </td>
+<% end %>
+<% if !(team.tigris_space.nil? || team.tigris_space.empty?) %>
+    <td><a href='<%=h team.tigris_space %>' target='_top'><%= image_tag("/images/tigris.gif", :width=>"16", :height=>"16", :border=>0) %></a></td>
+<% else %>
+    <td> &nbsp; </td>
+<% end %>
+
+   
+    <% if team.primary_faculty %>
+    <td><%= twiki_user_link(team.primary_faculty.twiki_name, team.primary_faculty.human_name) %></td>
+    <% else %>
+    <td>&nbsp;</td>     
+    <% end %>
+    <% if team.secondary_faculty %>
+    <td><%= twiki_user_link(team.secondary_faculty.twiki_name, team.secondary_faculty.human_name) %></td>
+    <% else %>
+    <td>&nbsp;</td>     
+    <% end %>
+
+    <td>
+    <% team.people.each do |person| %>
+    <%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %>
+    <% end %>
+     </td>
+
+    <% if logged_in? && (current_user.is_staff? || current_user.is_admin?) %>
+    <td><%= link_to 'Show', course_team_path(@course, team), :target => '_top' %></td>
+    <% end %>
+    <td><%= link_to 'Edit', edit_course_team_path(@course, team), :target => '_top' %></td>
+    <% if logged_in? && current_user.is_admin %>
+    <td><%= link_to 'Destroy', course_team_path(@course, team), :target => '_top', :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+&nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :target => '_top' %>

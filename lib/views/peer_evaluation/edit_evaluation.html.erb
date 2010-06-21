@@ -1,0 +1,67 @@
+<% content_for :title, 'Peer evaluation for ' + @team.name %>
+<h1>Peer evaluation form completed by <%= @author.human_name %></h1>
+
+
+<p>The goal of the Peer Evaluation Process is give you a chance to receive constructive feedback from your peers. As your team strives to become a high-performance team, it is important to communicate what is working well and what needs a little more improvement.</p>
+<p>From the results of this form, faculty gain additional insight into how individual students contributed to the performance of the team. The results may affect your individual grade.</p>
+<p>We don’t want rubber stamped answers. Carefully consider your teammates’ performance. Good answers are actionable and specific to the student. Please provide thoughtful, constructive feedback.</p>
+<p>Instead of saying "Did not show any leadership skills" be clear about what the person can do. Here are some examples, "Encourage the team to have a high standard" or "Prepare meeting agendas to solve specific problems"</p>
+<p>Do not use this as an opportunity to vent about frustrations that you should have brought up in person.</p>
+
+
+<% form_for @review, :url => {:action => "complete_evaluation"} do |f| %>
+
+  <% personcounter = 0 %>
+  <% questioncounter = 0 %>
+
+  <input type="hidden" name="id" value="<%=params[:id]%>">
+  <input type="hidden" name="person_id" value="<%=params[:person_id]%>">
+
+  <% @people.each do |person| %>
+
+    <h2>Feedback for <%= person.human_name %> </h2>
+    <% @questions.each do |question| %>
+      <p><%= question %></p>
+      <%if questioncounter == @questions.size - 1%>
+        <% learning_objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person.id}) %>
+        <% if learning_objective.nil? || learning_objective.learning_objective.nil?%>
+          <p>Please skip this question as no learning objective was provided.</p>
+        <% else %>
+          <p>"<%= learning_objective.learning_objective %>"</p>
+        <% end %>
+      <%end%>
+      <% if @on_team %>
+      <%= f.text_area :answer, :index => (@questions.size*personcounter) + questioncounter , :value=> @answers[(@questions.size*personcounter) + questioncounter], :size => "95x20"%><br /><br />
+      <% else %>
+      <%= f.text_area :answer, :disabled => true, :index => (@questions.size*personcounter) + questioncounter , :value=> @answers[(@questions.size*personcounter) + questioncounter], :size => "95x20"%><br /><br />
+      <% end  %>
+      <% questioncounter += 1 %>
+    <%end%>
+      
+      <% personcounter += 1 %>
+      <% questioncounter = 0 %>
+  <%end%>
+
+<h2>Contribution Allocation</h2>
+<p>In the table below, allocate 100 points among you and your group members that reflects each individual's effective contribution to all group work, including yourself.</p>
+<p>Note that we are not interested in the amount of material produced. We are interested in quality contributions to the team. If a team member provided significant amount of material that needed to be reworked, then feel free to score accordingly.</p>
+<p>Taking or adding a few points to anyone's score will not substantially affect their grade. Therefore, if a member did not contribute, you must clearly denote it by deducting an amount of points commensurate with the lack of participation.</p>
+<br/>
+<p>There are <%=@people.size%> members on this team. On average, each team member will receive <%=100 / @people.size unless @people.size == 0%> points. Please use whole numbers.</p>
+      <%membercounter = 0%>
+      <%@people.each do |member| %>
+        <p><%= member.human_name %></p>
+        <% if @on_team %>
+        <input type="text" name="allocations[<%membercounter%>]" value="<%= @point_allocations[member.human_name]%>"><br />
+        <% else %>
+        <input type="text" disabled name="allocations[<%membercounter%>]" value="<%= @point_allocations[member.human_name]%>"><br />
+        <% end %>
+        <%membercounter += 1%>
+      <%end%>
+
+  <% if @on_team %>
+  <%= f.submit 'Submit' %>
+  <% else %>
+  <%= f.submit 'Submit', :disabled => true %>
+  <% end %>
+<% end %>

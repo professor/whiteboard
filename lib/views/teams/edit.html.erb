@@ -1,0 +1,124 @@
+<h1>Editing team</h1>
+<%= javascript_include_tag :all, :cache => true %>
+
+
+<% form_for([@course, @team]) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="rounded student">
+  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
+  <span class="instructions">These fields can be edited by anyone.</span>
+    <br/><%= f.label :name %><br />
+    <%= f.text_field :name, :size => 40 %>
+  </div>
+
+
+  <div class="rounded staff">
+<%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+  <span class="instructions">These fields can be edited by faculty.</span>
+
+  <% if !(current_user.is_admin? || current_user.is_staff?)  %>
+  <%= render :partial => 'show_faculty_fields' %>
+  <% else %>
+  <p>
+    <%= f.label :section %><br />
+    <%= f.text_field :section  %><br />
+  </p>
+
+  <table><tbody>
+    <tr><td><%= f.label :primary_faculty_id, "Primary faculty" %><br /></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td>Alter label for primary faculty (ie Coach, VP of Engineering)</td></tr>
+  <tr><td><%= f.collection_select(:primary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td><%= text_field_tag :primary_faculty_label, @course.primary_faculty_label, :size => 20 %> <i>(affects all teams in this course)</i></td></tr>
+    <tr><td><%= f.label :secondary_faculty_id, "Secondary faculty" %><br /></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td>Alter label for secondary faculty (ie Coach, VP of Engineering)</td></tr>
+  <tr><td><%= f.collection_select(:secondary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td><%= text_field_tag :secondary_faculty_label, @course.secondary_faculty_label, :size => 20 %> <i>(affects all teams in this course)</i></td></tr>
+</tbody></table>
+  <br />
+  <h3> Team members </h3>
+<table>
+  <% @team.people.each do |person| %>
+  <tr id="person<%= person.id%>">
+    <td>
+    <%= person.human_name %>
+    <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
+  </td><td>
+    <%= link_to_remote "Remove now",
+        :url=>{
+            :controller=>"teams",
+            :action=>"remove_team_member",
+            :person_id=>person.id,
+            :team_id=>@team.id},
+        :update=>"person#{person.id}",
+        :loading=>"status('person#{person.id}')"
+%></td>
+</tr>
+
+  <% end %>
+</table>
+
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name2, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name3, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name4, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name5, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+  <p>
+    <%= f.label 'Add a team member' %><br />
+    <%= text_field_with_auto_complete :team, :person_name6, { :size => 30 }, { :frequency=>0.5, :url => formatted_people_path(:js), :method => :get, :param_name => 'search' } %>
+  </p>
+
+  <% end %>
+  </div>
+  <div class="rounded admin">
+  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <span class="instructions">These fields can be edited by admin.</span>
+  <% if !(current_user.is_admin?)  %>
+  <%= render :partial => 'show_admin_fields' %>
+  <% else %>
+  <p>
+    <%= f.label :twiki_space, "TWiki space" %><br />
+    <%= f.text_field :twiki_space, :size => 90 %><br />
+    <span class="help_text">Email twiki@sv.cmu.edu once all of your students have selected team names. </span>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email, :size=>90 %><br />
+    <span class="help_text">Distribution lists for each team are created during the first week of the course. Email help@sv.cmu.edu once you've created your teams.</span>
+  </p>
+  <p>
+    <%= f.label :tigris_space %><br />
+    <%= f.text_field :tigris_space, :size => 90 %><br />
+    <span class="help_text">Email todd.sedano@sv.cmu.edu if you want tigris.org project(s) created for your course, please indicate if you need one project per team or one project for the whole course</span>
+  </p>
+  <% end %>
+  </div>
+  <br />
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+
+
+<% if logged_in? && current_user.is_admin %>
+<%= link_to 'Show', course_team_path(@team.course_id, @team) %> |
+<% end %>
+<%= link_to 'Back', course_teams_path(@team.course_id) %>
+
+

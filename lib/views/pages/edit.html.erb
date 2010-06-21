@@ -1,0 +1,56 @@
+<h1>Editing page</h1>
+
+<% form_for(@page) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :course_number_id %><br />
+    <%= f.text_field :course_number_id %>
+  </p>
+  <p>
+    <%= f.label :label %><br />
+    <%= f.text_field :label %>
+  </p>
+  <p>
+    <%= f.label :sequence_number %><br />
+    <%= f.text_field :position %>
+  </p>
+  <p>
+    <%= f.label :indentation_level %><br />
+    <%= f.text_field :indentation_level %>
+  </p>
+  <p>
+    <%= f.label :is_task %><br />
+    <%= f.check_box :is_task %>
+  </p>
+  <p>
+    <%= f.label :tab_one_contents %><br />
+    <%= f.text_area :tab_one_contents %>
+  </p>
+  <p>
+    <%= f.label :tab_two_contents %><br />
+    <%= f.text_area :tab_two_contents %>
+  </p>
+  <p>
+    <%= f.label :tab_three_contents %><br />
+    <%= f.text_area :tab_three_contents %>
+  </p>
+  <p>
+    <%= f.label :task_duration %><br />
+    <%= f.text_field :task_duration %>
+  </p>
+  <p>
+    <%= f.label :tab_one_email_from %><br />
+    <%= f.text_field :tab_one_email_from %>
+  </p>
+  <p>
+    <%= f.label :tab_one_email_subject %><br />
+    <%= f.text_field :tab_one_email_subject %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @page %> |
+<%= link_to 'Back', pages_path %>

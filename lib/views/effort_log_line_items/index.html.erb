@@ -1,0 +1,38 @@
+<h1>Listing effort_log_line_items</h1>
+
+<table>
+  <tr>
+    <th>Effort log</th>
+    <th>Course</th>
+    <th>Task type</th>
+    <th>Day1</th>
+    <th>Day2</th>
+    <th>Day3</th>
+    <th>Day4</th>
+    <th>Day5</th>
+    <th>Day6</th>
+    <th>Day7</th>
+  </tr>
+
+<% for effort_log_line_item in @effort_log_line_items %>
+  <tr>
+    <td><%=h effort_log_line_item.effort_log_id %></td>
+    <td><%=h effort_log_line_item.course_id %></td>
+    <td><%=h effort_log_line_item.task_type_id %></td>
+    <td><%=h effort_log_line_item.day1 %></td>
+    <td><%=h effort_log_line_item.day2 %></td>
+    <td><%=h effort_log_line_item.day3 %></td>
+    <td><%=h effort_log_line_item.day4 %></td>
+    <td><%=h effort_log_line_item.day5 %></td>
+    <td><%=h effort_log_line_item.day6 %></td>
+    <td><%=h effort_log_line_item.day7 %></td>
+    <td><%= link_to 'Show', effort_log_line_item %></td>
+    <td><%= link_to 'Edit', edit_effort_log_line_item_path(effort_log_line_item) %></td>
+    <td><%= link_to 'Destroy', effort_log_line_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New effort_log_line_item', new_effort_log_line_item_path %>
