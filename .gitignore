@@ -11,6 +11,7 @@ log/*
 nbproject/*
 MfSE/*
 tmp/*
+lib/views/*
 
 push*.dat
 
