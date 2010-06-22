@@ -180,14 +180,7 @@ class EffortLogsController < ApplicationController
   end
 
 
-  def index_admin
-    @effort_logs = EffortLog.find(:all, :order => "id DESC")
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @effort_logs }
-    end
-  end
   
   
   # GET /effort_logs/1
