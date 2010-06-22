@@ -55,7 +55,7 @@ class EffortLogsController < ApplicationController
       logger.debug "** team #{team.name}"
       team.people.each do |person|
         logger.debug "**    person #{person.human_name}"
-        effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year]) 
+        effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year])
         if(!person.emailed_recently)
           if((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently))
   #            logger.debug "**  sent email to #{person.human_name} (#{person.id}) for #{week_number} of #{year} in course #{course_id}"
@@ -374,7 +374,7 @@ private
 #      Date.commercial(today.year, today.cweek, day).strftime "%m/%d/%y"  # 7/1/08
     end
 
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear.to_s, ApplicationController.current_semester()] )
     @projects = Project.find(:all, :conditions => "is_closed = FALSE", :order => "name ASC")
     
      @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )      
