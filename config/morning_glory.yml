@@ -1,19 +1,26 @@
 --- 
 development: 
   bucket: cmusv-rails-development
-  revision: e31b3d89d8630cd6bc2832fecff4832e
   enabled: false
-production: 
-  delete_prev_rev: false
-  bucket: cmusv-rails-production
-  revision: 99dcb1bcec47268b2db00b90413d294f
-  enabled: true
-  s3_logging_enabled: false
+  revision: e31b3d89d8630cd6bc2832fecff4832e
 test: 
   delete_prev_rev: true
   bucket: cmusv-rails-test
-  revision: "20100316165112"
   enabled: true
+  revision: "20100316165112"
+  s3_logging_enabled: false
+production: 
+  delete_prev_rev: false
+  bucket: cmusv-rails-production
+  enabled: true
+  revision: fa5bc612c2791a84c8a3ffc450b97977
+  asset_directories: 
+  - images
+  - javascripts
+  - stylesheets
+  - cmu_sv
+  - cmu_sv_simple
+  - charts
   s3_logging_enabled: false
 staging: 
   bucket: cmusv-rails-test

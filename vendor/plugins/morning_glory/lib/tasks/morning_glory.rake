@@ -108,7 +108,7 @@ namespace :morning_glory do
       S3_LOGGING_ENABLED = MORNING_GLORY_CONFIG[Rails.env]['s3_logging_enabled'] || false
       DELETE_PREV_REVISION = MORNING_GLORY_CONFIG[Rails.env]['delete_prev_rev'] || false
       REGEX_ROOT_RELATIVE_CSS_URL = /url\((\'|\")?(\/+.*(#{CONTENT_TYPES.keys.map { |k| '\.' + k.to_s }.join('|')}))\1?\)/
-    
+
       # Copy all the assets into the temp directory for processing
       File.makedirs TEMP_DIRECTORY if !FileTest::directory?(TEMP_DIRECTORY)
       puts "* Copying files to working directory for cache-busting-renaming"
