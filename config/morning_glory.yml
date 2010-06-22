@@ -6,7 +6,7 @@ development:
 test: 
   delete_prev_rev: true
   bucket: cmusv-rails-test
-  enabled: true
+  enabled: false
   revision: "20100316165112"
   s3_logging_enabled: false
 production: 

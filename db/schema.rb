@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100619210535) do
+ActiveRecord::Schema.define(:version => 20100622002054) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20100619210535) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
-    t.integer   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -33,11 +32,11 @@ ActiveRecord::Schema.define(:version => 20100619210535) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
+    t.integer  "year"
   end
 
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
-  add_index "courses", ["year"], :name => "index_courses_on_year"
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -254,7 +253,6 @@ ActiveRecord::Schema.define(:version => 20100619210535) do
     t.string   "email"
     t.string   "twiki_space"
     t.string   "tigris_space"
-    t.integer  "course_id"
     t.integer  "primary_faculty_id"
     t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
@@ -264,6 +262,7 @@ ActiveRecord::Schema.define(:version => 20100619210535) do
     t.datetime "peer_evaluation_first_email"
     t.datetime "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
+    t.integer  "course_id"
   end
 
   create_table "teams_people", :id => false, :force => true do |t|
@@ -331,6 +330,17 @@ ActiveRecord::Schema.define(:version => 20100619210535) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
+    t.string   "password_salt",                            :default => "",    :null => false
+    t.string   "persistence_token",                        :default => "",    :null => false
+    t.string   "single_access_token",                      :default => "",    :null => false
+    t.string   "perishable_token",                         :default => "",    :null => false
+    t.integer  "login_count",                              :default => 0,     :null => false
+    t.integer  "failed_login_count",                       :default => 0,     :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
   add_index "user_verions", ["person_id"], :name => "index_user_verions_on_person_id"
