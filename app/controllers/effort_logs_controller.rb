@@ -374,7 +374,7 @@ private
 #      Date.commercial(today.year, today.cweek, day).strftime "%m/%d/%y"  # 7/1/08
     end
 
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear.to_s, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @projects = Project.find(:all, :conditions => "is_closed = FALSE", :order => "name ASC")
     
      @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )      

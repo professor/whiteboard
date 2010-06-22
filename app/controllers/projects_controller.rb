@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
 
     @project = Project.new
     @project_types = ProjectType.find(:all, :order => "name ASC")
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.year.to_s, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.year, ApplicationController.current_semester()] )
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
 
     @project = Project.find(params[:id])
     @project_types = ProjectType.find(:all, :order => "name ASC")
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.year.to_s, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.year, ApplicationController.current_semester()] )
   end
 
   # POST /projects

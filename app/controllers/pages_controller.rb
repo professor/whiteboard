@@ -30,7 +30,7 @@ class PagesController < ApplicationController
   # GET /pages/new.xml
   def new
     @page = Page.new
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear.to_s, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear.to_s, ApplicationController.current_semester()] )
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @courses = Course.find(:all)
   end
 
