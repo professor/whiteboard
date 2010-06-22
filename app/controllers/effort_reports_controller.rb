@@ -2,8 +2,7 @@
 
 class EffortReportsController < ApplicationController
 
-#  layout "effort_logs", :except => "load_weekly_chart"
-
+  layout 'cmu_sv', :only => [:index, :show]
 
   before_filter :require_user
 

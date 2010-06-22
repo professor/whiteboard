@@ -1,10 +1,5 @@
 <% content_for :title, 'Effort Logs' %>
 <h1>Listing Effort Logs</h1>
-<% if current_user %>
-Hello <%= current_user.human_name %><br/><br/>
-<% end %>
-
-
 
 <table>
   <tr>
@@ -59,7 +54,7 @@ Hello <%= current_user.human_name %><br/><br/>
 
 <br />
 
-Note: Every week, you'll be able to create a new effort log entry.
+<p>Note: Every week, you'll be able to create a new effort log entry.</p>
 <br />
-<br />
-<%= link_to 'Back', '/' %>
+<p><%= link_to 'Back', '/' %></p>
+<br/>
