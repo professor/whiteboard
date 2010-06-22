@@ -1,5 +1,8 @@
 <h1>Editing Effort Log</h1>
-<%= javascript_include_tag :all, :cache => true %>
+
+<%# javascript_include_tag :all, :cache => true %>
+  <%= javascript_include_tag 'prototype' %>
+
 
 <% if current_user && current_user.is_staff %>
   <H2>The faculty view is different than the student view</h2>
