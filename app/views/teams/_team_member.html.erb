@@ -3,6 +3,6 @@
         <%= link_to_remote "<img id='remove_#{team_member.id}' src='/images/tablesorter/cross.png' alt='&times;' title='Click to remove #{team_member.human_name} from team #{@team.name}' />", :update => "list_team_members", :url => { :action => :ajax_remove_team_member, :team_id=>@team.id, :person_id=>team_member.id } %>
         <%= team_member.human_name %>
         <% if team_member.is_adobe_connect_host -%>
-        <img src="/images/connect.gif" width="16" height="16" alt="Adobe Connect Host"/><% end -%>
+        <%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :border=>0, :alt=>"Adobe Connect Host") %><% end -%>
     </td>
 </tr>

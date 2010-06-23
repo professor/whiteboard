@@ -1,6 +1,7 @@
 <% content_for :title, 'Edit Team' %>
 <h1>Edit team</h1>
-<%= javascript_include_tag :all, :cache => true %>
+<%# javascript_include_tag :all, :cache => true %>
+  <%= javascript_include_tag 'prototype' %>
 
 <%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
 
