@@ -11,6 +11,9 @@ class Person < ActiveRecord::Base
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
   acts_as_versioned  :table_name => 'user_verions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ) }
 
+  acts_as_authentic
+
+
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
 
 
