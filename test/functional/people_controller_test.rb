@@ -59,7 +59,7 @@ class PeopleControllerTest < ActionController::TestCase
 #    google_user = google_apps_connection.retrieve_user(google_username)
 
     assert_difference('Person.count') do
-        post :create, { :person => { :first_name => "New", :last_name => "Person"}, :create_google_email => "1", :create_twiki_account => "0"}
+        post :create, { :person => { :first_name => "New", :last_name => "Person"}, :create_google_email => "1", :create_twiki_account => nil}
     end
 #    google_user = google_apps_connection.retrieve_user(google_username)
 

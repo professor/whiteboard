@@ -124,7 +124,7 @@ class Team < ActiveRecord::Base
 
   def build_email
 #    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@sv.cmu.edu"
-    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + ENV['GOOGLE_DOMAIN']
+    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
   end
 
 

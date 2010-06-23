@@ -24,17 +24,17 @@ group :development do
   gem 'ruby-debug-base' #'0.10.3'
   gem 'ruby-debug-ide' #'0.4.6'
 #  gem 'hanna'
-#  gem 'rcov'
-#  gem 'rdoc'
+  gem 'rcov'
+  gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
 end
 
 group :test do
   gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
-  gem 'hanna'
+#  gem 'hanna'
   gem 'rcov'
-  gem 'rdoc'
+  gem 'rdoc',     '2.4.3'
 end
 
 

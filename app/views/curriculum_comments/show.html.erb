@@ -1,4 +1,4 @@
- <%= render :partial => 'curriculum_comment' %>
+ <%= render :partial => 'curriculum_comment', :locals=>{:curriculum_comment => @curriculum_comment} %>
 
 <p>
 <%= link_to 'Back', curriculum_comments_path %>

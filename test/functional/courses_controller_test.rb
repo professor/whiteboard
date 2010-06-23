@@ -2,11 +2,14 @@ require 'test_helper'
 
 class CoursesControllerTest < ActionController::TestCase
 
-   fixtures :course_numbers
+  fixtures :course_numbers
+  setup :activate_authlogic
+
+
 
   def test_should_get_index_without_user
     get :index
-    assert_redirected_to :controller => "sessions", :action => "new"
+    assert_redirected_to login_google_url
   end
 
 

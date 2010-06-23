@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'rake'
 require 'fileutils'
+require 'bundler'
+
 
 #Very good tutorial: http://railsenvy.com/2007/6/11/ruby-on-rails-rake-tutorial
 #http://railsbros.de/2007/11/19/rake-code-cruise-code-task
@@ -12,11 +14,9 @@ desc "Task for cruise Control"
 task :cruise do
   RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
-  Bundler::CLI.run('bundle')
 
-#    if ENV['RAILS_ENV'] == 'test'
-#      Bundler::CLI.run('bundle')
-#    end
+  sh "bundle install"  
+  Bundler.setup(:default, :test)
   
   if !File.exists?(Dir.pwd+"/config/database.yml")
     FileUtils.copy(Dir.pwd+"/config/database.cc.yml", Dir.pwd+"/config/database.yml")

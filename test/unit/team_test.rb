@@ -11,7 +11,7 @@ class TeamTest < ActiveSupport::TestCase
     domain = ENV['GOOGLE_DOMAIN']
     course = Course.find(:first)
     record = Team.new(:name => 'RailsFixture Team A', :course_id => course.id)
-    assert_equal(record.build_email, "fall-2009-railsfixture-team-a" + "@" + domain)
+    assert_equal(record.build_email, "fall-#{course.year}-railsfixture-team-a" + "@" + domain)
   end
 
 
