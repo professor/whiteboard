@@ -83,7 +83,7 @@ class EffortLogsController < ApplicationController
   end
 
   def create_endweek_faculty_email
-    notify_course_list = Course.remind_about_effort()
+    notify_course_list = Course.remind_about_effort_course_list()
 
 #    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
     last_week = (Date.today - 7).cweek

@@ -70,7 +70,7 @@ class Course < ActiveRecord::Base
     return self.name + " (" + self.short_name + ")"
   end
 
-  def remind_about_effort
+  def remind_about_effort_course_list
     return Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
   end
   
