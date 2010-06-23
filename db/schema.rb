@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.string   "title"
     t.string   "link"
     t.datetime "publication_date"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

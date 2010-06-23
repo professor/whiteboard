@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mailing_lists, :requirements => {:id => /\S+/}
   #At present we only do index and show
 
-  map.resources :rss_feeds
+  map.resources :rss_feeds #I don't think we need this here
 
   map.connect 'pages/:id/:tab',  :controller => 'pages', :action => "show"
   map.resources :pages
@@ -21,8 +21,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :project_types
 
   map.resources :projects
-
-  map.resources :sub_task_types
 
 
   map.resources :task_types
