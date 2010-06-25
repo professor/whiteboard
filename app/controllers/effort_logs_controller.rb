@@ -216,7 +216,7 @@ class EffortLogsController < ApplicationController
     @effort_log.person_id = current_user.id
     
     #find the most recent effort log to copy its structure, but not its effort data
-    recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "week_number DESC")
+    recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
 
     if recent_effort_log
       logger.debug "Copy effort log from week #{recent_effort_log.week_number}"
