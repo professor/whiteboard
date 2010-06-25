@@ -12,6 +12,14 @@ mysql -h localhost -u cmu_rails cmu_education -p < /tmp/production.sql
 Source: http://www.nateclark.com/articles/2007/02/23/rails-rake-tasks-to-sync-your-remote-database-to-your-local-development-environment
 Should be possible to create a rake task for this....
 
+
+ToddSedano on dev
+crypted_password
+3f766e509de14b060963d103739f466cd372ad23
+password_salt
+RQ1qeJlJuEZIGyeJkY0T
+
+
 ToddSedano on dev
 crypted_password
 5bfb041c656048ec09bd25e6c568ac1fcaeb4249

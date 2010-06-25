@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
 
-  before_filter :require_user, :except => [:show_by_twiki]
+#  before_filter :require_user, :except => [:show_by_twiki]
 
 # Floating box source: http://roshanbh.com.np/2008/07/top-floating-message-box-using-jquery.html
 
@@ -79,7 +79,8 @@ class PeopleController < ApplicationController
       @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/students/mascot.jpg"
       @person.local_near_remote = "Unknown"
-      @person.save
+#      @person.save
+      @person.save_without_session_maintenance
 
       GenericMailer.deliver_email(
         :to => "help@sv.cmu.edu",
@@ -163,7 +164,8 @@ class PeopleController < ApplicationController
         error_message +=  'TWiki account password was not reset.</br>' unless status
       end
 
-      if @person.save
+#      if @person.save
+      if @person.save_without_session_maintenance
         flash[:error] = error_message unless error_message.blank?
 
         flash[:notice] = 'Person was successfully created.'

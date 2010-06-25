@@ -31,6 +31,15 @@ Students should
 1. with MySQL query browser, alter your is_student, etc fields.
 1. create a  ~/.bashrc with the following values OR modify these files: config/initializers/s3.rb
 
+Creating a local user account
+1. Create a row in users table for you with your google apps user id (ie andrew.carnegie@sv.cmu.edu).
+You may not need many of the columns on INSERT. You can add them later in the tool.
+Need: email, is_admin, anything else?
+2. Login with openid
+If you want to work off line do this:
+3. Create new people with http://localhost:3000/people/new, record crypted_password, and password_salt
+4. Copy and past the crypted_password and password_salt to users you want to log in as
+5. To log in: http://localhost:3000/user_session/new
 
 My system configuration
 Ruby 1.8.6-p287

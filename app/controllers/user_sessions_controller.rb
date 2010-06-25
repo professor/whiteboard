@@ -12,8 +12,30 @@ class UserSessionsController < ApplicationController
     open_id_authentication("west.cmu.edu")
   end
 
+  def new
+    @user_session = UserSession.new
+  end
+
   def create
-    open_id_authentication
+    if !development? || !params[:user_session]
+      open_id_authentication
+    else
+          @user_session = UserSession.new(params[:user_session])
+          if @user_session.save
+            flash[:notice] = "Login successful!"
+            redirect_back_or_default(root_url)
+          else
+            flash[:notice] = "Login unsuccessful"
+            render :action => :new
+          end
+    end
+
+#      if using_open_id?
+#        open_id_authentication
+#      else
+#        password_authentication(params[:name], params[:password])
+#      end
+
   end
 
   def destroy
