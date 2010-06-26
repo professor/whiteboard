@@ -190,6 +190,8 @@ class PeopleController < ApplicationController
     @person.updated_by_user_id = current_user.id
 
     respond_to do |format|
+
+#      if @person.save_without_session_maintenance
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Person was successfully updated.'
         format.html { redirect_to(@person) }

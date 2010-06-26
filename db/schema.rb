@@ -333,7 +333,6 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.string   "password_salt",                            :default => "",    :null => false
     t.string   "persistence_token",                        :default => "",    :null => false
     t.string   "single_access_token",                      :default => "",    :null => false
-    t.string   "perishable_token",                         :default => "",    :null => false
     t.integer  "login_count",                              :default => 0,     :null => false
     t.integer  "failed_login_count",                       :default => 0,     :null => false
     t.datetime "last_request_at"
@@ -401,7 +400,6 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.string   "password_salt",                           :default => "",    :null => false
     t.string   "persistence_token",                       :default => "",    :null => false
     t.string   "single_access_token",                     :default => "",    :null => false
-    t.string   "perishable_token",                        :default => "",    :null => false
     t.integer  "login_count",                             :default => 0,     :null => false
     t.integer  "failed_login_count",                      :default => 0,     :null => false
     t.datetime "last_request_at"
