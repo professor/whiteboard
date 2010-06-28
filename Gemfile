@@ -7,6 +7,7 @@ gem 'ruby-openid'
 gem 'ruby-openid-apps-discovery'
 gem 'rack-openid'
 
+gem 'bundler'
 gem 'delayed_job'
 
 group :plugins do
