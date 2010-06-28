@@ -8,7 +8,7 @@ class TeamTest < ActiveSupport::TestCase
   #  2: do a .destroy on all objects that were saved
 
   def test_build_email
-    domain = ENV['GOOGLE_DOMAIN']
+    domain = GOOGLE_DOMAIN
     course = Course.find(:first)
     record = Team.new(:name => 'RailsFixture Team A', :course_id => course.id)
     assert_equal(record.build_email, "fall-#{course.year}-railsfixture-team-a" + "@" + domain)
@@ -40,16 +40,21 @@ class TeamTest < ActiveSupport::TestCase
   def test_cannot_be_same_name
     original_team = teams(:teamOne)
     original_team.save
+
     assert_no_difference 'count_teams' do
       assert_no_difference 'Team.count' do
-        record = original_team.clone
-        assert !record.save, "Should not be able to save cloned team"
+        #clone original_team
+        new_team = Team.new
+#        original_team.attributes.each {|attr, value| eval("new_team.#{attr}= original_team.#{attr}")}
+        new_team.email = original_team.email
+        assert !new_team.save, "Should not be able to save cloned team"
       end
       wait_for_google_sync
     end
     original_team.destroy
     wait_for_google_sync
   end
+
 
   def test_rename_team
     #Clean up from a previous execuction of a failed run of this test case
@@ -77,7 +82,7 @@ class TeamTest < ActiveSupport::TestCase
     course = Course.find(:first)
     record = Team.new(:name => 'RailsFixture Deming Team A', :course_id => course.id)
     record.save
-    expected_email = "#{course.semester}-#{course.year}-#{record.name}@#{ENV['GOOGLE_DOMAIN']}".chomp.downcase.gsub(/ /, '-')
+    expected_email = "#{course.semester}-#{course.year}-#{record.name}@#{GOOGLE_DOMAIN}".chomp.downcase.gsub(/ /, '-')
     assert_equal record.email, expected_email, "Unexpected email value"
     record.destroy
     wait_for_google_sync

@@ -29,7 +29,7 @@ class PersonTest < ActiveSupport::TestCase
 
   def test_create_google_email
     google_username = "Ender.Wiggins"
-    google_email_address = google_username + "@" + ENV['GOOGLE_DOMAIN']
+    google_email_address = google_username + "@" + GOOGLE_DOMAIN
 
     normal_user = Person.new(:first_name => "Ender",
                    :last_name => "Wiggins",
