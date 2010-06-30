@@ -1,57 +1,63 @@
+/* not fixed*/
 .team_member_photo {
     float: left;
     margin-right: 10px;
 }
 
+/* not fixed*/
 .team_member_photo .label {
     text-align: center;
 }
 
+/* not fixed*/
 .user_header_photo {
     float: left;
     padding: 0em 1em 0em 0em;
 }
 
+/* not fixed*/
 .user_clear {
     clear: both;
 }
 
 /* From colors.css */
 h1, h2, h3, h4, h5, h6 {
-	color:#a00;
+    color:#FF6600;
 /* from style.css #patternPage */
-	font-family:arial, "Lucida Grande", verdana, sans-serif;
+    font-family: arial,verdana,sans-serif;
     font-weight:normal;
-    line-height:104%;
+    line-height:1.1em;
 }
 
 
 /* From style.css */
 h1 {
-font-size:210%;
+font-size:190%;
 }
 
+/* not fixed*/
 .twikiTable th {  /*originally just th */
+
 	line-height:1.15em;
 }
-
 
 .twikiTable {
     border-style:solid;
     border-width:1px;
-    margin:2px 0;
+    margin:1em 0;
+    border-collapse:collapse;
 }
 
 .twikiTable td {
-	padding:.25em .5em;
-	border-style:none none solid none;
-	border-width:0 0 1px 0;
+	padding:.25em 1em;
+	border-width:1px;
 }
 
 .twikiTable th {
-	border-style:none none none solid;
-	border-width:0 0 0 1px;
-	padding:.4em .5em;
+	border-left-style:solid;
+	border-width:1px;
+	padding:.3em 1em .6em 1em;
+
 }
 
 .twikiTable th.twikiFirstCol {
@@ -60,43 +66,46 @@ font-size:210%;
 
 
 
-.twikiTable, twikiTable td {
-    border-color:#ccc;
- }
-
-
 /* From colors.css */
 /* TablePlugin */
 .twikiTable,
 .twikiTable td {
-	border-color:#ccc;
+	border-color:#e7e9ef;
 }
+
 .twikiTable th {
-	border-color:#ccc #fff;
+	border-color:#fff;
 }
+
 .twikiTable th a:link,
 .twikiTable th a:visited,
 .twikiTable th a font {
-	color:#fff;
+	color:#252b37;
 }
 
 
 
 
 /* Todd's tweaks */
-
+/* not fixed - maybe for latest twiki? */
 .twikiTable td {
     vertical-align: top;
     
 /* from style.css #patternPage */
-	font-family:arial, "Lucida Grande", verdana, sans-serif;
+	font-family:arial, verdana, sans-serif;
 	line-height:1.4em; /*S1*/
 	/* change font size here */
 	font-size:105%;
     color: #000000;
 }
 
+.twikiTable th {
+    font-family: arial,verdana,sans-serif;
+}
+}
 
+
+/* not fixed*/
 /* from colors.css */
 .twikiTable :link:focus,
 .twikiTable :visited:focus,
@@ -104,24 +113,24 @@ font-size:210%;
 .twikiTable :visited,
 .twikiTable :link:active,
 .twikiTable :visited:active {
-	color:#06c;
+	color:#252B37;
 	background-color:transparent;
 }
 
+/* not fixed*/
 .twikiTable a:hover
 {
 	color:#666666;
 }
 
-
 .twikiTable th {
-    background-color: #6b7f93;
-    color: #FFFFFF;
+    background-color: #d8dde4;
+    color: #252B37;
 }
 
 
-
+/* not fixed - maybe fixed ? */
 .twikiTableEven {
     
-    background-color: #edf4f9;
+    background-color: #f2f3f6;
 }
