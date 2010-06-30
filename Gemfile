@@ -14,6 +14,9 @@ group :plugins do
   gem 'authlogic'
 end
 
+# gem 'smtp_tls'           # Used for sending mail to gmail
+# gem 'actionmailer_gmail' # Used for sending mail to gmail
+
 group :production do
 #  gem 'activerecord-postgresql-adapter'
 end
