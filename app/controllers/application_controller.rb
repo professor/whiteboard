@@ -64,19 +64,20 @@ class ApplicationController < ActionController::Base
 #      return request.env["HTTP_REFERER"].gsub('http:', 'https:')
 #    end
 # Heroku code
-    url = request.protocol + request.env["HTTP_HOST"] + request.env["REQUEST_URI"]
+    url = request.protocol + get_http_host + request.env["REQUEST_URI"]
+    logger.info("url #{url}")
+    puts ("url #{url}")
 
-    if request.env["URL"].nil? then
+    if url.nil? then
       return ""
     else
-      return request.env["URL"].gsub('http:', 'https:')
+      return url.gsub('http:', 'https:')
     end
   end
 
   def get_http_host
     return request.env["HTTP_X_FORWARDED_HOST"] || request.env["HTTP_HOST"]
-#    return request.env["HTTP_HOST"]
-  end
+# end
 
   def get_twiki_http_referer
     if request.env["HTTP_REFERER"].nil? then
