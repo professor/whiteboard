@@ -57,11 +57,20 @@ class ApplicationController < ActionController::Base
 
   private
   def get_http_referer
-    if request.env["HTTP_REFERER"].nil? then
+# Eapps code
+#    if request.env["HTTP_REFERER"].nil? then
+#      return ""
+#    else
+#      return request.env["HTTP_REFERER"].gsub('http:', 'https:')
+#    end
+# Heroku code
+    if request.env["URL"].nil? then
       return ""
     else
-      return request.env["HTTP_REFERER"].gsub('http:', 'https:')
+      return request.env["URL"].gsub('http:', 'https:')
     end
+
+
   end
 
   def get_twiki_http_referer
