@@ -58,8 +58,9 @@ class PeopleController < ApplicationController
   # GET /people/twiki/AndrewCarnegie.xml
   def show_by_twiki
     redirect_to :action => 'robots' if robot?
-    url = get_http_referer()
-    if (current_user.nil?) && !(url.contains("info.sv.cmu.edu") || url.contains("info.west.cmu.edu"))
+    host = get_http_host()
+    logger.debug("host #{host}")
+    if (current_user.nil?) && !(host.include?("info.sv.cmu.edu") || host.include?("info.west.cmu.edu"))
       flash[:error] = 'You don''t have permissions to view this data.'
       redirect_to(people_url)
       return
