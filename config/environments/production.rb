@@ -22,10 +22,10 @@ ActionController::Base.asset_host = "http://cmusv-rails-production.s3.amazonaws.
 #ActionController::Base.asset_host = "http://assets%d.rails.sv.cmu.edu"
 
 # Disable delivery errors, bad email addresses will be ignored
-# config.action_mailer.raise_delivery_errors = false
+## config.action_mailer.raise_delivery_errors = false
 
-ActionMailer::Base.delivery_method = :sendmail  
-ActionMailer::Base.perform_deliveries = true  
-ActionMailer::Base.raise_delivery_errors = true  
-ActionMailer::Base.default_charset = "utf-8"
+#ActionMailer::Base.delivery_method = :sendmail
+#ActionMailer::Base.perform_deliveries = true
+#ActionMailer::Base.raise_delivery_errors = true
+#ActionMailer::Base.default_charset = "utf-8"
 

@@ -1,2 +1,2 @@
-# require 'smtp_tls'
-# require 'actionmailer_gmail'
+ require 'smtp_tls'
+ require 'actionmailer_gmail'

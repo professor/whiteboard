@@ -16,8 +16,8 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-ActionMailer::Base.delivery_method = :sendmail  
-#ActionMailer::Base.perform_deliveries = true
-ActionMailer::Base.perform_deliveries = false
-ActionMailer::Base.raise_delivery_errors = true  
-ActionMailer::Base.default_charset = "utf-8"
+#ActionMailer::Base.delivery_method = :sendmail
+##ActionMailer::Base.perform_deliveries = true
+#ActionMailer::Base.perform_deliveries = false
+#ActionMailer::Base.raise_delivery_errors = true
+#ActionMailer::Base.default_charset = "utf-8"
