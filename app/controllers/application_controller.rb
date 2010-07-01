@@ -74,7 +74,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_http_host
-    return request.env["HTTP_HOST"]
+    return request.env["HTTP_X_FORWARDED_HOST"] || request.env["HTTP_HOST"]
+#    return request.env["HTTP_HOST"]
   end
 
   def get_twiki_http_referer
