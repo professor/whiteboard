@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
 
   def get_http_host
     return request.env["HTTP_X_FORWARDED_HOST"] || request.env["HTTP_HOST"]
-# end
+  end
 
   def get_twiki_http_referer
     if request.env["HTTP_REFERER"].nil? then
