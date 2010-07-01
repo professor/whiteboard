@@ -29,3 +29,12 @@ ActionController::Base.asset_host = "http://cmusv-rails-production.s3.amazonaws.
 #ActionMailer::Base.raise_delivery_errors = true
 #ActionMailer::Base.default_charset = "utf-8"
 
+ ActionMailer::Base.smtp_settings = {
+   :address => "smtp.gmail.com",
+   :port => 587,
+   :authentication => :plain,
+   :domain => ENV['GMAIL_SMTP_USER'],
+   :user_name => ENV['GMAIL_SMTP_USER'],
+   :password => ENV['GMAIL_SMTP_PASSWORD'],
+   :enable_starttls_auto => true
+ }
