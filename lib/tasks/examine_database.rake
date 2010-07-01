@@ -6,11 +6,12 @@ namespace :cmu do
 desc "Task for fixing 'invalid' entries in the database"
 task(:examine_database => :environment) do
 
-    #  records = PeerEvaluationReport.find(:all)
+#      records = PeerEvaluationReport.find(:all)
     records = PeerEvaluationReview.find(:all)
     records.each do |row|
-      #    untrusted_string = row.feedback
+#          untrusted_string = row.feedback
       untrusted_string = row.answer
+#      untrusted_string = row.question
       valid_string = cleanup_characters(untrusted_string)
 
       if(valid_string != untrusted_string)
@@ -18,9 +19,10 @@ task(:examine_database => :environment) do
         #        puts "#{untrusted_string}"
         #        puts "\n--------------------------------------------"
         #        puts "#{valid_string}"
-        #        row.feedback = valid_string
-        row.answer = valid_string
-        row.save
+#                row.feedback = valid_string
+##        row.answer = valid_string
+#        row.question = valid_string
+#        row.save
       end
     end
     puts "done"
