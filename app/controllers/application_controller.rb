@@ -57,22 +57,11 @@ class ApplicationController < ActionController::Base
 
   private
   def get_http_referer
-# Eapps code
-    if request.env["HTTP_REFERER"].nil? then
+   if request.env["HTTP_REFERER"].nil? then
       return ""
     else
       return request.env["HTTP_REFERER"].gsub('http:', 'https:')
     end
-# Heroku code
-#    url = request.protocol + get_http_host + request.env["REQUEST_URI"]
-#    logger.info("url #{url}")
-#    puts ("url #{url}")
-#
-#    if url.nil? then
-#      return ""
-#    else
-#      return url.gsub('http:', 'https:')
-#    end
   end
 
   def get_http_host

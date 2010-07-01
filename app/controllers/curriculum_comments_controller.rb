@@ -7,7 +7,6 @@ class CurriculumCommentsController < ApplicationController
   def index
     url = get_http_referer()
     @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ?", url])
-    logger.info "  Url       :  #{url}"
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @curriculum_comments }
