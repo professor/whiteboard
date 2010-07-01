@@ -59,7 +59,8 @@ class PeopleController < ApplicationController
   def show_by_twiki
     redirect_to :action => 'robots' if robot?
     host = get_http_host()
-    logger.debug("host #{host}")
+    logger.info("host #{host}")
+    puts ("host #{host}")
     if !(host.include?("info.sv.cmu.edu") || host.include?("info.west.cmu.edu")) && (current_user.nil?)
       flash[:error] = 'You don''t have permissions to view this data.'
       redirect_to(people_url)
