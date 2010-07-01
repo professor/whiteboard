@@ -4,7 +4,7 @@ class GenericMailer < ActionMailer::Base
   def email(options = {})
     subject    options[:subject]
     recipients options[:to]
-    from       options[:from] || ENV['GMAIL_SMTP_USER'] || 'scotty.dog@west.cmu.edu'
+    from       options[:from] || ENV['GMAIL_SMTP_USER'] || 'scotty.dog@sv.cmu.edu'
     cc         options[:cc]
     bcc        options[:bcc]
     sent_on    Time.now
