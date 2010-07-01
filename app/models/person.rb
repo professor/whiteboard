@@ -9,7 +9,7 @@
 class Person < ActiveRecord::Base
   set_table_name "users"
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned  :table_name => 'user_verions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ) }
+  acts_as_versioned  :table_name => 'user_versions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ) }
 
 #  acts_as_authentic
   acts_as_authentic do |c|
