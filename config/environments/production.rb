@@ -33,10 +33,10 @@ ActionController::Base.asset_host = "http://cmusv-rails-production.s3.amazonaws.
    :address => "smtp.gmail.com",
    :port => 587,
    :authentication => :plain,
-   :domain => "west.cmu.edu",
-   :user_name => "scotty.dog@west.cmu.edu",
-#   :domain => ENV['GMAIL_SMTP_USER'],
-#   :user_name => ENV['GMAIL_SMTP_USER'],
+#   :domain => "west.cmu.edu",
+#   :user_name => "scotty.dog@west.cmu.edu",
+   :domain => ENV['GMAIL_SMTP_USER'],
+   :user_name => ENV['GMAIL_SMTP_USER'],
    :password => ENV['GMAIL_SMTP_PASSWORD'],
    :enable_starttls_auto => true
  }
