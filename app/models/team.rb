@@ -70,7 +70,7 @@ class Team < ActiveRecord::Base
      ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
 
   end
-  handle_asynchronously :update_google_mailing_list
+#  handle_asynchronously :update_google_mailing_list
 
   def after_save
     self.old_email = self.email
