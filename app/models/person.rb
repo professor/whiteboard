@@ -108,6 +108,7 @@ class Person < ActiveRecord::Base
          return pretty_print_google_error(e)
      end
      self.google_created = Time.now()
+     self.save_without_session_maintenance
      return(user)
    end
 
@@ -142,6 +143,7 @@ class Person < ActiveRecord::Base
          return false
        end
        self.twiki_created = Time.now()
+       self.save_without_session_maintenance
        return true
      end
 

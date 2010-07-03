@@ -28,10 +28,17 @@ class Team < ActiveRecord::Base
     return if self.name.blank?
     return unless self.old_email != self.email|| self.team_members_list_changed
 
+    self.updating_email = true
     logger.debug("team.before_save() executed")
+    update_google_mailing_list(self.email, self.old_email, self.id)
+    self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+  end
 
-    new_email = self.email
-    old_email = self.old_email
+  def update_google_mailing_list(new_email, old_email, id)
+    logger.debug("team.update_google_mailing_list() executed")
+
+#    new_email = self.email
+#    old_email = self.old_email
 
     new_group = new_email.split('@')[0] unless new_email.blank?
     old_group = old_email.split('@')[0] unless old_email.blank?
@@ -56,8 +63,14 @@ class Team < ActiveRecord::Base
       logger.debug "\nTeams:adding #{member.email}"
       google_apps_connection.add_member_to_group(member.email, new_group)
     end
-    self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+#    self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+#    self.updating_email = false
+#    team = Team.find(id)
+#    team.update_attribute(updating_email, false)
+     ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
+
   end
+  handle_asynchronously :update_google_mailing_list
 
   def after_save
     self.old_email = self.email

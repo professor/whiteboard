@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100622002054) do
+ActiveRecord::Schema.define(:version => 20100702044644) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.datetime "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
     t.integer  "course_id"
+    t.boolean  "updating_email"
   end
 
   create_table "teams_people", :id => false, :force => true do |t|
@@ -273,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
   add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
   add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
 
-  create_table "user_verions", :force => true do |t|
+  create_table "user_versions", :force => true do |t|
     t.integer  "person_id"
     t.integer  "version"
     t.string   "webiso_account"
@@ -330,7 +331,7 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.string   "password_salt",                            :default => "",    :null => false
+    t.string   "password_salt"
     t.string   "persistence_token",                        :default => "",    :null => false
     t.string   "single_access_token",                      :default => "",    :null => false
     t.integer  "login_count",                              :default => 0,     :null => false
@@ -342,7 +343,7 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.string   "last_login_ip"
   end
 
-  add_index "user_verions", ["person_id"], :name => "index_user_verions_on_person_id"
+  add_index "user_versions", ["person_id"], :name => "index_user_verions_on_person_id"
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
@@ -397,9 +398,9 @@ ActiveRecord::Schema.define(:version => 20100622002054) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.string   "password_salt",                           :default => "",    :null => false
-    t.string   "persistence_token",                       :default => "",    :null => false
-    t.string   "single_access_token",                     :default => "",    :null => false
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
     t.integer  "login_count",                             :default => 0,     :null => false
     t.integer  "failed_login_count",                      :default => 0,     :null => false
     t.datetime "last_request_at"

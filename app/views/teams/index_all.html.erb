@@ -29,7 +29,7 @@
 <% else %>
     <td class="twikiFirstCol"><%=h team.name %></td>
 <% end %>
-<% if !team.email.empty? %>
+<% if !(team.email.nil? || team.email.empty?)&&(!team.updating_email) %>
     <td><a href='mailto:<%=h team.email %>'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
 <% else %>
     <td> &nbsp; </td>

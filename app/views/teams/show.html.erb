@@ -6,7 +6,9 @@
 
 <p>
   <b>Email:</b>
-  <%=h @team.email %><br/><br/>
+  <%=h @team.email %> 
+  <% if @team.updating_email %> (...updating...)<% end %>
+  <br/><br/>
   <% unless @team.email.blank? %>
       According to Google Apps for Education, this mailing list contains:<br/>
       <% for member in @team.show_addresses_for_mailing_list() %>

@@ -12,10 +12,9 @@ return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g")
 return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g");
     }
 
-
  function update_twiki_and_email() {
    document.forms["new_person"].person_twiki_name.value=capitalise(document.forms["new_person"].person_first_name.value)+capitalise(document.forms["new_person"].person_last_name.value);
-   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@sv.cmu.edu";
+   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=GOOGLE_DOMAIN%>";
  }
 
  function update_student() {
