@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.connect 'delayed_jobs/',  :controller => 'delayed_jobs', :action => "index"
+  map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"
 
   map.resources :papers
 
