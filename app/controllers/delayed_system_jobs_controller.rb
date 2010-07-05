@@ -1,4 +1,4 @@
-class DelayedSystemJobsController < ApplicationController
+  class DelayedSystemJobsController < ApplicationController
 
   before_filter :require_user
 
@@ -11,12 +11,12 @@ class DelayedSystemJobsController < ApplicationController
       redirect_to(root_url) and return
     end
 
-    @delayed_jobs = DelayedSystemJob.find(:all)
+    @delayed_system_jobs = DelayedSystemJob.find(:all)
 
     respond_to do |format|
-      format.html { render :html => @delayed_jobs, :layout => "cmu_sv" } # index.html.erb
-      format.js   { render :js => @delayed_jobs, :layout => false }
-      format.xml  { render :xml => @delayed_jobs }
+      format.html { render :html => @delayed_system_jobs, :layout => "cmu_sv" } # index.html.erb
+      format.js   { render :js => @delayed_system_jobs, :layout => false }
+      format.xml  { render :xml => @delayed_system_jobs }
     end
   end
 
