@@ -44,7 +44,7 @@ class TeamsController < ApplicationController
   def index
     @show_teams_for_many_courses = false
     @machine_name = ""
-    @teams = Team.find(:all, :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     @course = Course.find(params[:course_id])
 
@@ -95,7 +95,7 @@ class TeamsController < ApplicationController
        render :partial => "twiki_index", :layout => false, :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false}
        return
     end
-    @teams = Team.find(:all, :conditions => ["course_id = ?", @course.id]) unless @course.nil?
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", @course.id]) unless @course.nil?
 
     @show_section = false
     @teams.each do |team|
@@ -106,7 +106,7 @@ class TeamsController < ApplicationController
   end
 
   def index_photos
-    @teams = Team.find(:all, :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     @course = Course.find(params[:course_id])
 
