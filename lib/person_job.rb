@@ -14,9 +14,9 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
        end
     end
     if create_twiki_account && person.twiki_created.blank?
-      status = @person.create_twiki_account
+      status = person.create_twiki_account
       error_message +=  'TWiki account was not created.<br/></br>' unless status
-      status = @person.reset_twiki_password
+      status = person.reset_twiki_password
       error_message +=  'TWiki account password was not reset.</br>' unless status
     end
 
@@ -41,7 +41,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
            GenericMailer.deliver_email(
              :bcc => "todd.sedano@sv.cmu.edu",
              :to => personal_email,
-             :subject => "Welcome to Carnegie Mellon Silicon Valley (" + sv_email + ")",
+             :subject => "Welcome to Carnegie Mellon University Silicon Valley (" + sv_email + ")",
              :message => message,
 #             :url_label => "Check your email",
 #             :url => "http://mail.google.com/a/west.cmu.edu/#inbox",
