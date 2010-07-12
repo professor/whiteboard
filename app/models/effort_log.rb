@@ -27,7 +27,6 @@ class EffortLog < ActiveRecord::Base
     registered_courses = self.person.get_registered_courses()
 
     unregistered_courses = {}
-    puts self.id
     self.effort_log_line_items.each do |log_line_item|
       if (log_line_item.sum != 0)
         if(log_line_item.course.nil?)
@@ -50,7 +49,6 @@ class EffortLog < ActiveRecord::Base
     sql_effort_logs_this_week = "SELECT e.* FROM effort_logs e,users u where e.week_number=#{cweek} and e.year=#{cyear} and u.id=e.person_id and u.is_student=1"
 
     effort_logs_this_week = EffortLog.find_by_sql(sql_effort_logs_this_week)
-    puts "hello"
     @error_effort_logs_users = {}
 
     effort_logs_this_week.each do |effort_log|
