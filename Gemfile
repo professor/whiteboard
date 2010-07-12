@@ -10,8 +10,12 @@ gem 'rack-openid'
 gem 'bundler'
 gem 'delayed_job'
 
+
+gem 'oauth'
+
 group :plugins do
   gem 'authlogic'
+  gem 'calendar_date_select'
 end
 
 # gem 'smtp_tls'           # Used for sending mail to gmail
@@ -36,6 +40,8 @@ group :test do
   gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
+  gem 'ruby-debug-base' #'0.10.3'
+  gem 'ruby-debug-ide' #'0.4.6'
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',     '2.4.3'
