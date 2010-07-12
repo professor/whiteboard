@@ -117,6 +117,13 @@ class PeopleController < ApplicationController
     @person = Person.new
     @person.is_active = true
 
+     if development?
+       @domain = GOOGLE_DOMAIN
+     else
+       @domain = "sv.cmu.edu"
+     end
+
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @person }

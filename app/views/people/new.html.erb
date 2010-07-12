@@ -14,7 +14,8 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
 
  function update_twiki_and_email() {
    document.forms["new_person"].person_twiki_name.value=capitalise(document.forms["new_person"].person_first_name.value)+capitalise(document.forms["new_person"].person_last_name.value);
-   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=GOOGLE_DOMAIN%>";
+
+   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
  }
 
  function update_student() {
@@ -79,20 +80,21 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= f.label :webiso_account, "Andrew account" %><br />
     <%= f.text_field :webiso_account %>
   </p>
+<h2>System Roles</h2>
   <p>
-    <%= f.label :is_staff %><br />
+    <%= f.label :is_staff, "Is staff or faculty?" %><br />
     <%= f.check_box :is_staff %>
   </p>
   <p>
-    <%= f.label :is_teacher %><br />
-    <%= f.check_box :is_teacher %>
+    <%= f.label :is_teacher, "Is teacher? - will be teaching a course?" %><br />
+    <%= f.check_box :is_teacher %><br />
   </p>
   <p>
-    <%= f.label :is_student %><br />
+    <%= f.label :is_student, "Is a student?" %><br />
     <%= f.check_box :is_student, :onchange => "update_student()" %>
   </p>
   <p>
-    <%= f.label :is_active %><br />
+    <%= f.label :is_active, "Is active? - a current user?" %><br />
     <%= f.check_box :is_active %>
   </p>
 <h2>Just for students</h2>
