@@ -15,8 +15,10 @@ gem 'oauth'
 
 group :plugins do
   gem 'authlogic'
-  gem 'calendar_date_select'
+  gem 'calendar_date_select' 
 end
+
+
 
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail

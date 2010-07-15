@@ -67,5 +67,16 @@ faculty_frank:
   human_name: Faculty Frank
   image_uri:                 images/students/mascot.jpg
 
-
+#student_john:
+#  login:  john
+#  email:  john@andrew.cmu.edu
+#  is_student: true
+#  is_staff: false
+#  is_teacher: false
+#  is_admin: false
+#  is_alumnus: false
+#  first_name: John
+#  last_name: Student
+#  human_name: John Student
+#  image_uri: images/students/mascot.jpg
 

@@ -36,8 +36,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :course_numbers
   map.connect '/courses/current_semester', :controller => 'courses', :action => 'current'
   map.resources :courses, :has_many => :teams
+
+    map.connect '/effort_reports/campus_view', :controller => 'effort_reports', :action => 'campus_view'
+    map.connect '/effort_reports/semester_view', :controller => 'effort_reports', :action => 'semester_view'
+    map.connect '/effort_reports/course_view/:course_id', :controller => 'effort_reports', :action => 'course_view'
+
   
   map.resources :effort_reports
+
   map.connect '/people/phone_book', :controller => 'people', :action => 'phone_book'
   map.connect '/people/photo_book', :controller => 'people', :action => 'photo_book'
   map.my_teams '/people/:id/my_teams', :controller => 'people', :action => 'my_teams'
