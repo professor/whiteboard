@@ -64,12 +64,15 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
   <p>
     <%= f.label :twiki_name %><br />
     <%= f.text_field :twiki_name %>
-    <%= check_box_tag("create_twiki_account", 1, false) %> Create twiki account?
+    <%= check_box_tag("create_twiki_account", 1, true) %> Create twiki account?
   </p>
   <p>
     <%= f.label :email %><br />
     <%= f.text_field :email %>
-    <%= check_box_tag("create_google_email", 1, false) %> Create google email account?
+    <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
+  </p>
+  <p>
+    <%= check_box_tag("create_yammer_account", 1, true) %> Invite to yammer?
   </p>
   <p>
     <%= f.label :personal_email %><br />

@@ -167,24 +167,22 @@ class Person < ActiveRecord::Base
    end
 
    def create_yammer_account
+     #See lib/yammer.rb for code that would create the user account.
+     #We can't use the yammer API until we upgrade the service
+
      #The most simple way here is to invite the user to register
      #Note that yammer requires https://www.yammer.com/
-#     require 'mechanize'
-#     agent = Mechanize.new
-#     agent.get('https://www.yammer.com/') do |page|
-#       result_page = page.form_with(:action => '/users') do |invite_page|
-#           invite_page.user[email] = self.email
-#       end.submit
-#     end
+     require 'mechanize'
+     agent = Mechanize.new
+     agent.get('https://www.yammer.com/') do |page|
+       result_page = page.form_with(:action => '/users') do |invite_page|
+           invite_page['user[email]'] = self.email
+         end.submit
+     end
 
-#     require 'oauth/consumer'
-#     consumer      = OAuth::Consumer.new(CONSUMER_KEY, SECRET, {:site=>"https://www.yammer.com"})
-#     consumer      = OAuth::Consumer.new("JUbt0bVxzf7WSbMvHACAA", "kZ8UzOCw3A3Fu696XU1lZWwoLvzgsHzTrAs5CRrxfo", {:site=>"https://www.yammer.com"})
-#     request_token = consumer.get_request_token
-#     request_token.authorize_url # go to that url and hit authorize.  then copy the oauth_verifier code on that page.
-#     access_token  = request_token.get_access_token(:oauth_verifier => "OAUTH VERIFIER CODE FROM PRIOR STEP")
-#     response      = access_token.get '/api/v1/messages.json'
-#     puts response.body
+     self.yammer_created = Time.now()
+     self.save_without_session_maintenance
+     return true
    end
 
 
