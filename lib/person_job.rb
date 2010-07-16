@@ -47,7 +47,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
            GenericMailer.deliver_email(
              :bcc => "todd.sedano@sv.cmu.edu",
              :to => personal_email,
-             :from => "student.affairs@sv.cmu.edu",
+             :from => "CMU-SV Official Communication <student.affairs@sv.cmu.edu>",
              :subject => "Welcome to Carnegie Mellon University Silicon Valley (" + sv_email + ")",
              :message => message,
 #             :url_label => "Check your email",
