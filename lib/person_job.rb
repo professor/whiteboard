@@ -47,6 +47,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
            GenericMailer.deliver_email(
              :bcc => "todd.sedano@sv.cmu.edu",
              :to => personal_email,
+             :from => "student.affairs@sv.cmu.edu",
              :subject => "Welcome to Carnegie Mellon University Silicon Valley (" + sv_email + ")",
              :message => message,
 #             :url_label => "Check your email",
@@ -65,8 +66,8 @@ This email provides you with detailed information regarding your Silicon Valley 
 Your Silicon Valley email account is your primary email account for all Silicon Valley academic and administrative communications. <i>We ask for all Silicon Valley community members to check their Silicon Valley email account <u>every business day.</u></i>
 <ul><li>Your new email address is #{person.email}</li>
 <li>Your temporary password is #{password}</li>
-<li>To check your email, you can use http://gmail.sv.cmu.edu/</li></ul></br>
-<li>As a start page, you can use http://my.sv.cmu.edu</li>
+<li>To check your email, you can use http://gmail.sv.cmu.edu/</li>
+<li>As a start page, you can use http://my.sv.cmu.edu</li></ul></br>
 Note: We have two domains associated with our campus. "west.cmu.edu" is deprecated and "sv.cmu.edu" is prefered - Due to a Google Apps limitation, you will log in with a west.cmu.edu and urls will contain west.cmu.edu, even though we refer to ourselves as sv.cmu.edu -- you will need to update your account settings so that your email will appear as #{person.email}.
 <ul><li>Log into <a href="http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts">Account Settings</a></li>
 <li>Click "Add another email address you own"</li>
