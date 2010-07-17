@@ -44,10 +44,10 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
 
   private
   def send_email(personal_email, sv_email, message)
-           GenericMailer.deliver_email(
+           PersonMailer.deliver_email(
              :bcc => "todd.sedano@sv.cmu.edu",
              :to => personal_email,
-             :from => "CMU-SV Official Communication <student.affairs@sv.cmu.edu>",
+             :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
              :subject => "Welcome to Carnegie Mellon University Silicon Valley (" + sv_email + ")",
              :message => message,
 #             :url_label => "Check your email",
@@ -55,6 +55,10 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
              :cc => "help@sv.cmu.edu"
             )
   end
+
+  #
+  # TODO: move the following method into app/views/person_model/email...
+  #
 
   def generate_message(person,password)
    message =<<MESSAGE
@@ -143,7 +147,7 @@ __ Action required: My phone plan will allow me to participate remotely without 
 Before you arrive, use the Graffiti web for collaboration. We have a twiki web that is designed for student use. We call it Graffiti. You can use that web however you want - from looking for housing in the Silicon Valley, putting on a student social event (e.g. paintball excusion, billards), etc.  For example, if you are looking for housing in the Silicon Valley area and want to talk about what you are finding with other people, create a twiki word in the Graffiti web, email out the word to yammer or a distribution list, and everyone just updates that twiki word. This is a twiki best practice, that way, there is one place to look for current status. http://info.sv.cmu.edu/do/view/Graffiti/WebHome<br/>
 <br/>
 <b>Questions?</b><br/>
-If you have any questions regarding your email account or technical resources at Carnegie Mellon Silicon Valley, please email help@sv.cmu.edu.  If you are a student and have any questions regarding Orientation or other transition items, please contact Gerry Elizondo at gerry.elizondo@sv.cmu.edu.  We look forward to your arrival!
+If you have any questions regarding your email account or technical resources at Carnegie Mellon Silicon Valley, please email help@sv.cmu.edu.  If you are a student and have any questions regarding Orientation or other transition items, please contact Gerry Elizondo at gerry.elizondo@sv.cmu.edu. If you are a new hire, please contact Hector Rastrullo at hector.rastrullo@sv.cmu.edu. We look forward to your arrival!
 
 MESSAGE
 

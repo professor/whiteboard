@@ -1,0 +1,5 @@
+class PersonMailer < GenericMailer
+
+end
+
+
