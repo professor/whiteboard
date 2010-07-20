@@ -1,5 +1,9 @@
 * session id: <%= @request.session.instance_variable_get(:@session_id).inspect %>
 * data: <%= PP.pp(@request.session.instance_variable_get(:@data),"").gsub(/\n/, "\n  ").strip %>
+
+* user_id: <%= current_user.id if current_user%>
+* user:  <%= current_user.human_name if current_user %>
+
 * user_id: <%= @request.session.data[:user_id] %>
 * user: <% id = @request.session.data[:user_id] %> <%= User.find(id).human_name unless id.nil? %>
 
