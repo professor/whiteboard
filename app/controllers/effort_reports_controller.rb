@@ -17,8 +17,7 @@ class EffortReportsController < ApplicationController
 
         def generate_sql
          sql_statement = "select el.week_number, e.sum student_effort, course_id,el.person_id
-      from effort_log_line_items e,effort_logs el,
-      courses c, users u
+      from effort_log_line_items e, effort_logs el,courses c, users u
       where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id"
          sql_statement = sql_statement + " AND el.year=#{self.year}"
          sql_statement = sql_statement + " and e.course_id=#{self.course_id}" if !self.course_id.eql?("All") && !self.course_id.blank?
@@ -88,7 +87,7 @@ class EffortReportsController < ApplicationController
 
        def get_campus_data(year, week_number)
 
-         boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum student_effort from effort_log_line_items e, effort_logs el, courses c
+         boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum student_effort from effort_log_line_items e,effort_logs el,courses c
    where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} order by course_id;")
 
          task_sums={}
