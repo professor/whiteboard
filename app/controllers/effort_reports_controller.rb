@@ -13,12 +13,12 @@ class EffortReportsController < ApplicationController
         attr_accessor :year, :week_number, :course_id, :date
       end
       class SemesterPanel
-        attr_accessor :program, :graduation_year, :is_part_time, :person_id, :course_id, :semester, :year
+        attr_accessor :program, :track, :graduation_year, :is_part_time, :person_id, :course_id, :semester, :year
 
         def generate_sql
          sql_statement = "select el.week_number, e.sum student_effort, course_id,el.person_id
       from effort_log_line_items e, effort_logs el,courses c, users u
-      where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id"
+      where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id and el.year=c.year"
          sql_statement = sql_statement + " AND el.year=#{self.year}"
          sql_statement = sql_statement + " and e.course_id=#{self.course_id}" if !self.course_id.eql?("All") && !self.course_id.blank?
          sql_statement = sql_statement + " and c.semester='#{self.semester}'"
@@ -39,6 +39,7 @@ class EffortReportsController < ApplicationController
             weeks_in_semester = 15
             weeks_in_report = [weeks_in_semester, (last_week_number - first_week_number + 1)].max
 
+            
             weeks_in_report.times do |i|
               task_sums[i] = []
             end
@@ -47,11 +48,12 @@ class EffortReportsController < ApplicationController
               task_sums[report.week_number - first_week_number] << report.student_effort.to_f
             end
 
-
+           puts "weeks!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+           puts weeks_in_report
            puts "first_week_number is #{first_week_number}"
+           puts "last_week_number is #{last_week_number}"
 
-#       puts "float!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-#       puts task_sums
+
             minimums = {}
             maximums = {}
             lower25 = {}
@@ -66,7 +68,6 @@ class EffortReportsController < ApplicationController
             labels << key + 1
 
               values = task_sums[key].sort()
-
               minimums[key] = values.min()
               maximums[key] = values.max()
               medians[key] = values[values.length/2]
@@ -100,8 +101,7 @@ class EffortReportsController < ApplicationController
               end
               task_sums[report.course_id] << report.student_effort.to_f
             end
-#       puts "float!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-#       puts task_sums
+
             minimums = {}
             maximums = {}
             lower25 = {}
@@ -158,16 +158,17 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
         max_value = -1
         labels = []
-     #  puts "testing!!!!!!!!!!!!!!!!!!!!"
+ 
         task_sums.keys.each do |key|
           values = task_sums[key].sort()
 
           minimums[key] = values.min()
+        
           maximums[key] = values.max()
           medians[key] = values[values.length/2]
           lower25[key] = values[values.length/4]
           upper25[key] = values[3 * values.length/4]
-
+         
 #          labels << Course.find(key).short_name
           labels << TaskType.find(key).name
 
@@ -189,50 +190,50 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
     end
 
 
-       def box_chart_helper(values, multiplier)
-        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"
-#        return "-1,"+ values.map{|v| (v ?  (v*multiplier):0)}.join(",") + ",-1"
-       end
+       def box_chart_helper(reports, multiplier)
+#        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"
+         str = "-1,"
+         reports.keys.sort.each do |key|
+            v = reports[key]
+            str = str + (v ? "%.2f" % (v*multiplier) : 0).to_s  + ","
+         end
+            str += "-1"
+       return str
+      end
 
    def generate_google_box_chart(title, reports)     
       title_str = title.gsub(' ', '+')
       
       if reports
         max_value = reports[6]
-     puts "max_value is !!!!!!!!!!!!!!!!!!!!!!!!"
-     puts max_value
+
         if max_value!=0
           multiplier = 100.0/(max_value)
         else
           multiplier = 1
         end
-      puts "multiplier !!!!!!!!!!!!!"
-      puts reports[0].values
-      if !reports[0].values.empty?
-        minimums_str = box_chart_helper(reports[0].values, multiplier)
-      else
-        minimums_str = 0
-      end
 
-             puts "multiplier1 !!!!!!!!!!!!!"
-             puts reports[1].values
+      if !reports[0].values.empty?
+        minimums_str = box_chart_helper(reports[0], multiplier)
+      end
+      
       if !reports[1].values.empty?
-        lower25_str = box_chart_helper(reports[1].values, multiplier)
+        lower25_str = box_chart_helper(reports[1], multiplier)
      #   "-1,"+ reports[1].values.map{|v| (v ?  (v*multiplier):0)}.join(",") + ",-1"
       end
 
       if !reports[2].values.empty?
-        medians_str = box_chart_helper(reports[2].values, multiplier)
+        medians_str = box_chart_helper(reports[2], multiplier)
      #   "-1,"+ reports[2].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
       end
 
       if !reports[3].values.empty?
-        upper25_str = box_chart_helper(reports[3].values, multiplier)
+        upper25_str = box_chart_helper(reports[3], multiplier)
      #   "-1,"+ reports[3].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
       end
 
       if !reports[4].values.empty?
-        maximums_str = box_chart_helper(reports[4].values, multiplier)
+        maximums_str = box_chart_helper(reports[4], multiplier)
       #  "-1,"+ reports[4].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
       end
 
@@ -244,13 +245,13 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 #        maximums_str = "-1,"+ reports[4].values.join(",") + ",-1"
 
         puts "data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        puts  multiplier
-        puts  max_value
-        puts  minimums_str
-        puts  lower25_str
-        puts  medians_str
-        puts  upper25_str
-        puts  maximums_str
+        puts  "multiplier is #{multiplier}"
+        puts  "max_value is #{max_value}"
+        puts  "minimums_str is #{minimums_str}"
+        puts  "lower25_str is #{lower25_str}"
+        puts  "medians_str is #{medians_str} "
+        puts  "upper25_str is #{upper25_str} "
+        puts  "maximums_str is #{maximums_str} "
 
        labels_str ="|"+ reports[5].join("|")+"|"
 
@@ -289,6 +290,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
     if params[:semester_panel]
         @semester_panel = SemesterPanel.new
         @semester_panel.program = params[:semester_panel][:program]
+        @semester_panel.track = params[:semester_panel][:track]
         @semester_panel.graduation_year = params[:semester_panel][:graduation_year]
         @semester_panel.is_part_time = params[:semester_panel][:is_part_time]
         @semester_panel.person_id = params[:semester_panel][:person_id]
@@ -298,6 +300,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       else
         @semester_panel = SemesterPanel.new
         @semester_panel.program = "All"
+        @semester_panel.track = "All"
         @semester_panel.graduation_year = ""
         @semester_panel.is_part_time = "Both"
         @semester_panel.person_id = "All"
@@ -309,9 +312,9 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       @students = Person.find(:all, :conditions => ['is_student IS TRUE'], :order => "first_name ASC, last_name ASC")
       @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester_panel.semester, @semester_panel.year], :order =>"name ASC")
       @programs = []
-      ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM cmu_education_development.people p;").each do |result| @programs << result end
+      ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM people p;").each do |result| @programs << result end
       @tracks = []
-      ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM cmu_education_development.people p;").each do |result| @programs << result end
+      ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM people p;").each do |result| @tracks << result end
 
      title = "Semester View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
      reports=get_semester_data(@semester_panel)
@@ -441,7 +444,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
     ########## To be removed ############
     def load_ziya_chart
-      puts "test ziya place !!!!!!!!!!!!!!!!!!!!!!!!"
+
           # Create a bar chart with 2 series composed of 3 data points each.
           # Chart will be rendered using the default look and feel
          #chart = Ziya::Charts::CandleStick.new
@@ -456,7 +459,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
     #####################################
     def load_google_chart
-      puts "test google place !!!!!!!!!!!!!!!!!!!!!!!!!!"
+
 
 #      GoogleChart::BarChart.new('800x200', "Box Chart", :vertical, false) do |bc|
       GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
