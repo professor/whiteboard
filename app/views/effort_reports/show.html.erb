@@ -1,7 +1,17 @@
 <% content_for :title, 'Effort Reports' %>
 <h1>Effort Reports</h1>
 
+
+<%if current_user.is_staff || current_user.is_admin %>
+<h2>Pick a report format (Experimental)</h2>
+  <a href="<%=url_for :action=>"semester_view", :id => params[:id], :week => nil, :only_path=>true%>">Semester view</a>
+  <a href="<%=url_for :action=>"campus_view", :id => params[:id], :week => nil, :only_path=>true%>">campus view</a>
+  <a href="<%=url_for :action=>"course_view", :id => params[:id], :week => nil, :only_path=>true%>">course view</a>
+<% end %>
+
 <h2>Pick a report format</h2>
+
+
 <a href="<%=url_for :action=>"course_table", :id => params[:id], :only_path=>true%>">
 <%= image_tag("/images/effort_report_course_table.jpg", :size => "474x320", :border=>"0") %></a>
 &nbsp;
