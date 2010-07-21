@@ -17,14 +17,13 @@
     </tr></table>
   </div>
 
-
 <div>
 <% form_for :panel_state, @panel_state, :url => {:action => "course_view", :id=> params[:id]} do |f| %>
   <table>
     <tr>
       <td>
   Date
-<%= calendar_date_select "e_date", nil, :embedded => true, :year_range => 10.years.ago..0.years.ago %>
+<%= f.calendar_date_select :date, :year_range => [2000, 2020], :size => 20 %>
       </td>
       
        <td>
@@ -47,7 +46,6 @@
       </td>
   </tr></table>
   <% end %>
-
 <!--  <img src='http://chart.apis.google.com/chart?cht=p3&chs=450x200&chd=t:2,4,3,1&chl=Phones|Computers|Services|Other&chtt=Company%20Sales&chco=ff0000'>
  -->
 <%= image_tag(@chart_url)  %>
