@@ -16,7 +16,7 @@ class EffortReportsController < ApplicationController
         attr_accessor :program, :track, :graduation_year, :is_part_time, :person_id, :course_id, :semester, :year
 
         def generate_sql
-         sql_statement = "select el.week_number, e.sum student_effort, course_id,el.person_id
+         sql_statement = "select el.week_number, e.sum as student_effort, course_id,el.person_id
       from effort_log_line_items e, effort_logs el,courses c, users u
       where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id and el.year=c.year"
          sql_statement = sql_statement + " AND el.year=#{self.year}"
@@ -88,7 +88,7 @@ class EffortReportsController < ApplicationController
 
        def get_campus_data(year, week_number)
 
-         boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum student_effort from effort_log_line_items e,effort_logs el,courses c
+         boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,courses c
    where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} order by course_id;")
 
          task_sums={}
@@ -137,7 +137,7 @@ class EffortReportsController < ApplicationController
 
 
        def get_course_data(year, week_number, course_id)
-         boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum student_effort from effort_log_line_items e,effort_logs el,task_types t
+         boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t
 where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
       task_sums={}
