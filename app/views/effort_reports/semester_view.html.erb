@@ -31,8 +31,7 @@
   <tr>
       <td>
         Program:
-        <%= f.select(:program, @programs, :include_blank => true) %>
-     
+        <%= f.select(:program, @programs, :include_blank => true) %>   
       </td>
       <td>
         Course:
@@ -45,10 +44,13 @@
   </tr>
    <tr>
       <td>
-        Class of
-        <%= f.select(:graduation_year, %w{  2006 2007 2008 2009 2010 2011 }, :include_blank => true) %>
+        Track:
+        <%= f.select(:track, @tracks, :include_blank => true) %>
       </td>
-      <td></td>
+      <td>
+        Class of
+        <%= f.select(:graduation_year, %w{2006 2007 2008 2009 2010 2011}, :include_blank => true) %>
+      </td>
         <td>
         Year:
         <%= f.text_field(:year, :size => "4") %>
