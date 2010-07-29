@@ -4,7 +4,7 @@ class EffortReportsController < ApplicationController
 
   layout 'cmu_sv', :only => [:index, :show, :semester_view, :campus_view, :course_view]
 
-  before_filter :require_user
+#  before_filter :require_user
 #  before_filter :login_required
 
 #    helper Ziya::Helper
@@ -16,8 +16,13 @@ class EffortReportsController < ApplicationController
         attr_accessor :program, :track, :graduation_year, :is_part_time, :person_id, :course_id, :semester, :year
 
         def generate_sql(just_student = nil)
-         sql_statement = "select el.week_number, e.sum as student_effort, course_id,el.person_id
-      from effort_log_line_items e, effort_logs el,courses c, users u
+          
+          if (self.course_id.blank?)
+           sql_statement = "select distinct el.week_number, el.sum as student_effort, el.person_id "
+          else
+           sql_statement = "select el.week_number, e.sum as student_effort, el.person_id "
+          end
+         sql_statement = sql_statement + "from effort_log_line_items e, effort_logs el,courses c, users u
       where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id and el.year=c.year"
          sql_statement = sql_statement + " AND el.year=#{self.year}"
          sql_statement = sql_statement + " and e.course_id=#{self.course_id}" if !self.course_id.eql?("All") && !self.course_id.blank?
@@ -32,15 +37,14 @@ class EffortReportsController < ApplicationController
              sql_statement = sql_statement + " and u.is_part_time is false"
           end
          sql_statement = sql_statement + " and el.person_id=#{self.person_id}" if just_student && !self.person_id.eql?("All") && !self.person_id.blank?
+
          sql_statement = sql_statement + " order by el.week_number"
+         puts "SQLLLLLLLLLLLLLLLLL"
+         puts sql_statement
+         return sql_statement
         end
-
-       def generate_individual_sql
-         puts generate_sql + " and el.person_id=#{self.person_id}" if !self.person_id.eql?("All") && !self.person_id.blank?
-         return generate_sql + " and el.person_id=#{self.person_id}" if !self.person_id.eql?("All") && !self.person_id.blank?
-       end
-      end
-
+       end               
+     
       
 
        def get_semester_data(panel)
@@ -67,7 +71,7 @@ class EffortReportsController < ApplicationController
             end
 
             if !panel.person_id.blank?
-               student_logs = EffortLog.find_by_sql(panel.generate_sql(true))
+               student_logs = EffortLog.find_by_sql(panel.generate_sql(:true))
                student_logs.each do |preport|
                  student_sums[preport.week_number - first_week_number] << preport.student_effort.to_f
                end
@@ -98,10 +102,10 @@ class EffortReportsController < ApplicationController
               medians[key] = values[values.length/2]
               lower25[key] = values[values.length/4]
               upper25[key] = values[3 * values.length/4]
-              outliers[key] = student_sums[key]
+              outliers[key] = !student_sums[key].blank? ? student_sums[key][0]:0
 
               if !values.empty?
-              tmp_max_value = [0.0, minimums[key], maximums[key], medians[key], lower25[key], upper25[key]].max()
+              tmp_max_value = [0.0, minimums[key], maximums[key], medians[key], lower25[key], upper25[key], outliers[key]].max()
               if tmp_max_value>max_value
                 max_value = tmp_max_value # maximum among all
               end
@@ -221,31 +225,27 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
 
    def box_chart_helper(reports, multiplier)
-#        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"     
+#        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"
+    puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    puts reports.values.join(",")
+    puts reports.keys.join(",")
      str = "-1,"
      reports.keys.sort.each do |key|
         v = reports[key]
-        str = str + (v ? "%.2f" % (v*multiplier) : 0).to_s  + ","
+        #puts "LENNNNNNNNNNNN %d" % v.length
+        if !v.nil?
+          puts v
+          #str = str + (!v.nil? ? ("%.2f" % (v*multiplier)) : 0.0).to_s  + ","
+          str = str + "%.2f" % (v*multiplier) + ","
+        else
+          puts "=EMPTY="
+          str = str + "0,"
+        end
      end
      str += "-1"
      return str
   end
 
-   def box_chart_helper2(reports, multiplier)
-     str = "-1,"
-     reports.keys.sort.each do |key|
-
-      v = reports[key]
-      sum = 0
-      v.each { |a| sum+=a }
-      sum = sum/10.0;
-      str = str + (sum ? "%.2f" % (sum*multiplier) : 0).to_s  + ","
-     end
-     str += "-1"
-     return str
-  end
-
-   
 
    def generate_google_box_chart(title, reports)
       title_str = title.gsub(' ', '+')
@@ -280,12 +280,16 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       end
 
       if !reports[4].values.empty?
+        puts "================ MAX VALUES  ========================"
+        puts reports[4].keys
         maximums_str = box_chart_helper(reports[4], multiplier)
       #  "-1,"+ reports[4].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
       end
 
       if show_outliers
-        outliers_str = box_chart_helper2(reports[7], multiplier)
+        puts "================ OUTLIERS ========================"
+        puts reports[7].keys
+        outliers_str = box_chart_helper(reports[7], multiplier)
       end
 
 #        minimums_str = "-1,"+ reports[0].values.join(",") + ",-1"
@@ -302,6 +306,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         puts  "medians_str is #{medians_str} "
         puts  "upper25_str is #{upper25_str} "
         puts  "maximums_str is #{maximums_str} "
+        puts  "outliers_str is #{outliers_str} "
 
        labels_str ="|"+ reports[5].join("|")+"|"
 
@@ -352,8 +357,8 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.year = params[:semester_panel][:year]
       else
         @semester_panel = SemesterPanel.new
-        @semester_panel.program = "All"
-        @semester_panel.track = "All"
+        @semester_panel.program = ""
+        @semester_panel.track = ""
         @semester_panel.graduation_year = ""
         @semester_panel.is_part_time = "Both"
         @semester_panel.person_id = ""
@@ -374,7 +379,6 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
     # @chart_url = generate_semester_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
      @chart_url = generate_google_box_chart(title, reports)
    end
-
 
 
   def campus_view
@@ -437,29 +441,6 @@ where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} o
 
 
 
-#      if params[:date]
-#        @e_date_str = params[:date]
-#        e_date = Date.parse(@e_date_str)
-#        @week_number = e_date.cweek-0
-#        @year = e_date.year
-#      else
-#        if params[:year] and params[:week]
-#          @week_number = params[:week].to_i
-#          @year = params[:year].to_i
-#        else
-#          @week_number = Date.today.cweek
-#          @year = Date.today.cwyear
-#        end
-#      end
-#
-#      if @week_number <= 0 then @week_number = 1 end
-#      if @week_number >52 then @week_number = @week_number - 52 end
-#
-#      @week_number = params[:week].to_i
-#      @next_week_number = @week_number + 1
-#      @prev_week_number = @week_number - 1
-
-
 
     def index
     end
@@ -501,19 +482,6 @@ where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} o
     end
 
 
-#    def load_google_chart
-#      puts "test google place !!!!!!!!!!!!!!!!!!!!!!!!!!"
-#      GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
-##      GoogleChart::FinancialLineChart.new('800x200', "Box Chart") do |bc|
-#        bc.data "course1", [-1,5,10,7,12,-1]
-#        bc.data "course2", [-1,25,30,27,24,-1]
-#        bc.data "course3", [-1,40,45,47,39,-1]
-#        bc.data "course4", [-1,55,63,59,80,-1]
-#        bc.data "course5", [-1,30,40,35,30,-1]
-#        bc.data "course6", [-1,-1,5,70,90,-1]
-#        @chart = bc.to_url
-#     end
-#    end
 
 
 
