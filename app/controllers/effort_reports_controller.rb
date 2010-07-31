@@ -400,7 +400,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
      #  EffortLogLineItems.find(:first, :conditions => "course_id = '#{params[:course_id]}'", :order_by => "id DESC" )
      if !@panel_state.year.blank?
        @year_array=[]
-       @panel_state.year = ActiveRecord::Base.connection.execute("select el.year from cmu_education_development.effort_log_line_items e,cmu_education_development.effort_logs el
+       @panel_state.year = ActiveRecord::Base.connection.execute("select el.year from effort_log_line_items e, effort_logs el
 where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;").each do |result| @year_array << result end
         @panel_state.year = @year_array[0]
      end
@@ -410,7 +410,7 @@ where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} o
 
       if !@panel_state.week_number.blank?
         @week_array=[]
-       @panel_state.week_number = ActiveRecord::Base.connection.execute("select el.week_number from cmu_education_development.effort_log_line_items e,cmu_education_development.effort_logs el
+       @panel_state.week_number = ActiveRecord::Base.connection.execute("select el.week_number from effort_log_line_items e, effort_logs el
 where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;").each do |result| @week_array << result end
         @panel_state.week_number = @week_array[0]
       end
