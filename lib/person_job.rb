@@ -31,7 +31,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
       puts error_message
       message = error_message
       GenericMailer.deliver_email(
-        :to => "todd.sedano@sv.cmu.edu",
+        :to => ["help@sv.cmu.edu", "todd.sedano@sv.cmu.edu"],
         :subject => "PersonJob had an error on person id = #{person.id}",
         :message => message,
         :url_label => "Show which person",
