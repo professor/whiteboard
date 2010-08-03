@@ -100,16 +100,16 @@ class EffortLogsController < ApplicationController
         return
     end
 
-    notify_course_list.each do |course_id|
+    notify_course_list.each do |course|
       faculty = {}
-      teams = Team.find(:all, :conditions => ["course_id = ? ", course_id])
+      teams = Team.find(:all, :conditions => ["course_id = ? ", course.id])
       teams.each do |team|
         faculty[team.primary_faculty_id] = 1 unless team.primary_faculty_id.nil?
         faculty[team.secondary_faculty_id] = 1 unless team.secondary_faculty_id.nil?
       end
       faculty_emails = []
       faculty.each {|faculty_id, value| faculty_emails << User.find_by_id(faculty_id).email }
-      EffortLogMailer.deliver_endweek_admin_report(course_id, Course.find_by_id(course_id).name, faculty_emails)
+      EffortLogMailer.deliver_endweek_admin_report(course.id, course.name, faculty_emails)
     end
   end
     
