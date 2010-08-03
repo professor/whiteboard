@@ -1,7 +1,7 @@
 class EffortLogsController < ApplicationController
 #  layout "cmu_sv", :except => :new_effort_log_line_item
 
-  layout 'cmu_sv', :only => [:index, :show]
+#  layout 'cmu_sv', :only => [:index, :show]
 
 
   before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
@@ -83,10 +83,13 @@ class EffortLogsController < ApplicationController
   end
 
   def create_endweek_faculty_email
+   puts "01--create_endweek_faculty_email"
     notify_course_list = Course.remind_about_effort_course_list()
+   puts "02--create_endweek_faculty_email"
 
 #    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
     last_week = (Date.today - 7).cweek
+   puts "03--create_endweek_faculty_email"
 
 #    if (Date.today.cweek != 1)
 #      #normal week
@@ -101,6 +104,8 @@ class EffortLogsController < ApplicationController
     end
 
     notify_course_list.each do |course_id|
+      puts "05--create_endweek_faculty_email"
+
       faculty = {}
       teams = Team.find(:all, :conditions => ["course_id = ? ", course_id])
       teams.each do |team|
