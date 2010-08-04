@@ -353,8 +353,8 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.track = params[:semester_panel][:track]
         @semester_panel.graduation_year = params[:semester_panel][:graduation_year]
         @semester_panel.is_part_time = params[:semester_panel][:is_part_time]
-        @semester_panel.person_id = params[:semester_panel][:person_id].to_i
-        @semester_panel.course_id = params[:semester_panel][:course_id].to_i
+        @semester_panel.person_id = params[:semester_panel][:person_id].to_i unless params[:semester_panel][:person_id].blank?
+        @semester_panel.course_id = params[:semester_panel][:course_id].to_i unless params[:semester_panel][:course_id].blank?
         @semester_panel.semester = params[:semester_panel][:semester]
         @semester_panel.year = params[:semester_panel][:year]
       else
@@ -362,7 +362,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.program = ""
         @semester_panel.track = ""
         @semester_panel.graduation_year = ""
-        @semester_panel.is_part_time = "Both"
+        @semester_panel.is_part_time = "PT"
         @semester_panel.person_id = ""
         @semester_panel.course_id = ""
         @semester_panel.semester = ApplicationController.current_semester
