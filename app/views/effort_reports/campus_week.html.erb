@@ -1,0 +1,51 @@
+<% content_for :title, 'Campus view for ' + @panel_state.year.to_s + ' ' + @panel_state.week_number.to_s %>
+<script src="/javascripts/prototype.js"></script>
+<script src="/javascripts/application.js"></script>
+<script src="/javascripts/controls.js"></script>
+<script src="/javascripts/effects.js"></script>
+<script src="/javascripts/calendar_date_select/calendar_date_select.js"></script>
+<%= stylesheet_link_tag "calendar_date_select/red" %>
+
+  <div>
+    <table><tr><td>
+  <a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
+
+              </td>
+    </tr></table>
+  </div>
+
+  <br/>
+<div>
+<% form_for :panel_state, @panel_state, :url => {:action => "campus_view", :id=> params[:id]} do |f| %>
+  <table><tr>
+      <td>
+  Date
+<%= f.calendar_date_select :date, :year_range => [2000, 2020], :size => 20 %>
+      </td>
+       <td>
+        <%= f.submit "Update" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Year
+        <%= f.text_field :year, :size => 4 %>        
+        Week
+        <%= f.text_field :week_number, :size => 2 %>
+      </td>
+       <td>
+        <%= f.submit "Update" %>
+      </td>
+
+
+  </tr></table>
+  <% end %>
+
+<%= image_tag(@chart_url)  %>
+<!--  <img src='http://chart.apis.google.com/chart?cht=p3&chs=450x200&chd=t:2,4,3,1&chl=Phones|Computers|Services|Other&chtt=Company%20Sales&chco=ff0000'>
+ -->
+
+
+</div>
+
+  <br/>
