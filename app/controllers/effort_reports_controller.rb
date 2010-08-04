@@ -171,6 +171,9 @@ class EffortReportsController < ApplicationController
 
 
        def get_course_data(year, week_number, course_id)
+         t = year
+         u = week_number
+         c = course_id
          boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t
 where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
@@ -398,22 +401,22 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       else
        @panel_state.course_id = params[:course_id]
      #  EffortLogLineItems.find(:first, :conditions => "course_id = '#{params[:course_id]}'", :order_by => "id DESC" )
-     if !@panel_state.year.blank?
-       @year_array=[]
-       @panel_state.year = ActiveRecord::Base.connection.execute("select el.year from effort_log_line_items e, effort_logs el
-where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;").each do |result| @year_array << result end
-        @panel_state.year = @year_array[0]
-     end
+#     if !@panel_state.year.blank?
+#       @year_array=[]
+#       ActiveRecord::Base.connection.execute("select el.year from effort_log_line_items e, effort_logs el
+# where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;#").each do |result| @year_array << result end
+#        @panel_state.year = @year_array[0]
+#     end
      if @panel_state.year.blank?
         @panel_state.year = Date.today.cwyear
      end
 
-      if !@panel_state.week_number.blank?
-        @week_array=[]
-       @panel_state.week_number = ActiveRecord::Base.connection.execute("select el.week_number from effort_log_line_items e, effort_logs el
-where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;").each do |result| @week_array << result end
-        @panel_state.week_number = @week_array[0]
-      end
+#      if !@panel_state.week_number.blank?
+#        @week_array=[]
+#        ActiveRecord::Base.connection.execute("select el.week_number from effort_log_line_items e, effort_logs el
+# where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;#").each do |result| @week_array << result end
+#        @panel_state.week_number = @week_array[0]
+#      end
       if @panel_state.week_number.blank?
         @panel_state.week_number = Date.today.cweek - 1
       end
