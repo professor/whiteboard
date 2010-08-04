@@ -25,7 +25,7 @@ class EffortReportsController < ApplicationController
          sql_statement = sql_statement + "from effort_log_line_items e, effort_logs el,courses c, users u
       where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id and el.year=c.year"
          sql_statement = sql_statement + " AND el.year=#{self.year}"
-         sql_statement = sql_statement + " and e.course_id=#{self.course_id}" if !self.course_id.eql?("All") && !self.course_id.blank?
+         sql_statement = sql_statement + " and e.course_id=#{self.course_id}" unless self.course_id.blank?
          sql_statement = sql_statement + " and c.semester='#{self.semester}'"
          sql_statement = sql_statement + " and u.graduation_year='#{self.graduation_year}'" unless self.graduation_year.blank?
          sql_statement = sql_statement + " and u.masters_program='#{self.program}'" unless self.program.blank?
@@ -36,10 +36,9 @@ class EffortReportsController < ApplicationController
          when "FT"
              sql_statement = sql_statement + " and u.is_part_time is false"
           end
-         sql_statement = sql_statement + " and el.person_id=#{self.person_id}" if just_student && !self.person_id.eql?("All") && !self.person_id.blank?
+         sql_statement = sql_statement + " and el.person_id=#{self.person_id}" if just_student && !self.person_id.blank?
 
          sql_statement = sql_statement + " order by el.week_number"
-         puts "SQLLLLLLLLLLLLLLLLL"
          puts sql_statement
          return sql_statement
         end
@@ -365,7 +364,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.graduation_year = ""
         @semester_panel.is_part_time = "Both"
         @semester_panel.person_id = ""
-        @semester_panel.course_id = "All"
+        @semester_panel.course_id = ""
         @semester_panel.semester = ApplicationController.current_semester
         @semester_panel.year = Date.today.cwyear
       end
