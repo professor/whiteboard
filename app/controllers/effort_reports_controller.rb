@@ -2,7 +2,7 @@ require 'calendar_date_select'
 
 class EffortReportsController < ApplicationController
 
-  layout 'cmu_sv', :only => [:index, :show, :semester_view, :campus_view, :course_view]
+  layout 'cmu_sv', :only => [:index, :show, :campus_semester, :campus_week, :course]
 
 #  before_filter :require_user
 #  before_filter :login_required
@@ -46,7 +46,7 @@ class EffortReportsController < ApplicationController
      
       
 
-       def get_semester_data(panel)
+       def get_campus_semester_data(panel)
 
          boxreports = EffortLog.find_by_sql(panel.generate_sql())
          
@@ -76,7 +76,6 @@ class EffortReportsController < ApplicationController
                end
             end
 
-           puts "weeks!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
            puts weeks_in_report
            puts "first_week_number is #{first_week_number}"
            puts "last_week_number is #{last_week_number}"
@@ -119,7 +118,7 @@ class EffortReportsController < ApplicationController
           return nil
        end
 
-       def get_campus_data(year, week_number)
+       def get_campus_week_data(year, week_number)
 
          boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,courses c
    where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} order by course_id;")
@@ -170,9 +169,6 @@ class EffortReportsController < ApplicationController
 
 
        def get_course_data(year, week_number, course_id)
-         t = year
-         u = week_number
-         c = course_id
          boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t
 where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
@@ -346,7 +342,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       end
    end
 
-   def semester_view
+   def campus_semester
     if params[:semester_panel]
         @semester_panel = SemesterPanel.new
         @semester_panel.program = params[:semester_panel][:program]
@@ -376,24 +372,24 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       @tracks = []
       ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM people p;").each do |result| @tracks << result end
 
-     title = "Semester View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
-     reports = get_semester_data(@semester_panel)
+     title = "Campus View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
+     reports = get_campus_semester_data(@semester_panel)
     # @chart_url = generate_semester_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
      @chart_url = generate_google_box_chart(title, reports)
    end
 
 
-  def campus_view
+  def campus_week
       determine_panel_state()
       puts "PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:id]}"
-      title = "Campus View"
-      reports = get_campus_data(@panel_state.year, @panel_state.week_number)
+      title = "Campus View - Week "  + @panel_state.week_number.to_s + " of " + @panel_state.year.to_s
+      reports = get_campus_week_data(@panel_state.year, @panel_state.week_number)
       @chart_url = generate_google_box_chart(title, reports)
     end
 
 
 
-    def course_view
+    def course
       determine_panel_state()
      if params[:panel_state]
         @panel_state.course_id = params[:panel_state][:course_id]

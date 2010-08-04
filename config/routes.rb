@@ -34,12 +34,12 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :course_numbers
-  map.connect '/courses/current_semester', :controller => 'courses', :action => 'current'
+  map.current_semester '/courses/current_semester', :controller => 'courses', :action => 'current'
   map.resources :courses, :has_many => :teams
 
-    map.connect '/effort_reports/campus_view', :controller => 'effort_reports', :action => 'campus_view'
-    map.connect '/effort_reports/semester_view', :controller => 'effort_reports', :action => 'semester_view'
-    map.connect '/effort_reports/course_view/:course_id', :controller => 'effort_reports', :action => 'course_view'
+    map.connect '/effort_reports/campus_week', :controller => 'effort_reports', :action => 'campus_week'
+    map.connect '/effort_reports/campus_semester', :controller => 'effort_reports', :action => 'campus_semester'
+    map.connect '/effort_reports/course/:course_id', :controller => 'effort_reports', :action => 'course'
 
   
   map.resources :effort_reports

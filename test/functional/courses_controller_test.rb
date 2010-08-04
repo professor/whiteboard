@@ -3,7 +3,7 @@ require 'test_helper'
 class CoursesControllerTest < ActionController::TestCase
 
   fixtures :course_numbers
-  setup :activate_authlogic
+#  setup :activate_authlogic
 
 
 

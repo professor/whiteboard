@@ -3,18 +3,21 @@
 
 
 <%if current_user.is_staff || current_user.is_admin %>
-<h2>Pick a report format (Experimental)</h2>
+<h2>Campus View</h2>
   <a href="<%=url_for :action=>"semester_view", :id => params[:id], :week => nil, :only_path=>true%>">Semester view</a>
   <a href="<%=url_for :action=>"campus_view", :id => params[:id], :week => nil, :only_path=>true%>">campus view</a>
-  <a href="<%=url_for :action=>"course_view", :id => params[:id], :week => nil, :only_path=>true%>">course view</a>
 <% end %>
 
+<%if current_user.is_staff || current_user.is_admin %>
 <h2>Pick a report format</h2>
-
-
 <a href="<%=url_for :action=>"course_table", :id => params[:id], :only_path=>true%>">
-<%= image_tag("/images/effort_report_course_table.jpg", :size => "474x320", :border=>"0") %></a>
+<%= image_tag("/images/effort_report_course_table.jpg", :size => "474x320", :border=>"0", :alt=>"Course Table") %></a>
 &nbsp;
+<a href="<%=url_for :action=>"course_view", :id => params[:id], :week => nil, :only_path=>true%>">
+<%= image_tag("/images/effort_report_course.jpg", :size => "474x320", :border=>"0", :alt=>"Course View") %></a>
+
+&nbsp;
+<% end %>
 <a href="<%=url_for :action=>"show_week", :id => params[:id], :week => @this_week_number, :only_path=>true%>">
 <%= image_tag("/images/effort_report.jpg", :size => "373x320", :border=>"0") %></a>
 
