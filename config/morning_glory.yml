@@ -11,7 +11,7 @@ production:
   - cmu_sv
   - cmu_sv_simple
   - charts
-  revision: c144c32592fd1db80646292bde334720
+  revision: 8fdd6fb1f3925be41bcb15bf74d6021decc845c2
 development: 
   bucket: cmusv-rails-development
   enabled: false
