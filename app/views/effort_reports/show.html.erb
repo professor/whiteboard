@@ -4,8 +4,11 @@
 
 <%if current_user.is_staff || current_user.is_admin %>
 <h2>Campus View</h2>
+  <a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
+<!--
   <a href="<%=url_for :action=>"campus_semester", :id => params[:id], :week => nil, :only_path=>true%>">Campus semester view</a>
   <a href="<%=url_for :action=>"campus_week", :id => params[:id], :week => nil, :only_path=>true%>">Campus week view</a>
+-->
 <% end %>
 
 <%if current_user.is_staff || current_user.is_admin %>
@@ -14,7 +17,7 @@
 <%= image_tag("/images/effort_report_course_table.jpg", :size => "474x320", :border=>"0", :alt=>"Course Table") %></a>
 &nbsp;
 <a href="<%=url_for :action=>"course", :id => params[:id], :week => nil, :only_path=>true%>">
-<%= image_tag("/images/effort_report_course.jpg", :size => "474x320", :border=>"0", :alt=>"Course View") %></a>
+<%= image_tag("/images/effort_report_course.png", :size => "474x271", :border=>"0", :alt=>"Course View") %></a>
 
 &nbsp;
 <% end %>

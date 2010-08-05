@@ -6,11 +6,26 @@
 
 <%if current_user.is_staff || current_user.is_admin %>
 <h2>Campus View</h2>
-  <a href="<%=url_for :action=>"campus_semester", :id => params[:id], :week => nil, :only_path=>true%>">Campus semester view</a>
-  <a href="<%=url_for :action=>"campus_week", :id => params[:id], :week => nil, :only_path=>true%>">Campus week view</a>
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <a href="<%=url_for :action=>"campus_semester", :id => params[:id], :week => nil, :only_path=>true%>">
+      <%= image_tag("/images/effort_report_campus_semester.png", :size => "300x170", :border=>"0", :alt=>"Campus Semester View") %></a>      
+    </td>
+    <td>
+      <a href="<%=url_for :action=>"campus_week", :id => params[:id], :week => nil, :only_path=>true%>">
+      <%= image_tag("/images/effort_report_campus_week.png", :size => "300x170", :border=>"0", :alt=>"Campus Week View") %></a>      
+    </td>
+  </tr>
+  <tr>
+    <td align="center">Semester</td>
+    <td align="center">Week</td>
+  </tr>
+</table>
+<br/>
 <% end %>
 
-  <h2>Select a course</h2>
+  <h2>Course View</h2>
   <p><%= link_to "Pick a course", current_semester_path %></p>
 
 <br/>

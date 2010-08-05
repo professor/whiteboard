@@ -15,13 +15,13 @@ production:
 development: 
   bucket: cmusv-rails-development
   enabled: false
-  revision: e31b3d89d8630cd6bc2832fecff4832e
-staging: 
-  bucket: cmusv-rails-test
-  enabled: false
+  revision: 8fdd6fb1f3925be41bcb15bf74d6021decc845c2
 test: 
   delete_prev_rev: true
   bucket: cmusv-rails-test
   s3_logging_enabled: false
   enabled: false
   revision: "20100316165112"
+staging: 
+  bucket: cmusv-rails-test
+  enabled: false
