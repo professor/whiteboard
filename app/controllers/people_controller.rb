@@ -38,8 +38,14 @@ class PeopleController < ApplicationController
 
   # GET /people/1
   # GET /people/1.xml
+  # GET /people/AndrewCarnegie
+  # GET /people/AndrewCarnegie.xml
   def show
-    @person = Person.find(params[:id])
+    if(params[:id].to_i == 0) #This is a string
+      @person = Person.find_by_twiki_name(params[:id])
+    else #This is a number
+      @person = Person.find(params[:id])
+    end
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|

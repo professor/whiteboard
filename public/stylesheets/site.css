@@ -219,3 +219,24 @@ div.right_link {
     text-align: right;
     margin-top: -27px;
 }
+
+.cmuTable {
+border-collapse:collapse;
+border-style:solid;
+border-width:1px;
+    border-color: #EAE5E5;
+}
+
+.cmuTable td {
+    border-color: #EAE5E5;
+    border-width: 1px;
+    padding: 0.25em 1em;
+}
+
+.cmuTableOdd {
+/*    background-color:#EBEBEB;*/
+/*    background-color:#F2F3F6;*/
+    background-color:#FbFbFb;
+}
+
+.toddTable td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545;text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
