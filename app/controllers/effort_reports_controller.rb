@@ -4,8 +4,7 @@ class EffortReportsController < ApplicationController
 
   layout 'cmu_sv', :only => [:index, :show, :campus_semester, :campus_week, :course]
 
-#  before_filter :require_user
-#  before_filter :login_required
+  before_filter :require_user
 
 #    helper Ziya::Helper
 
