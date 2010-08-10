@@ -44,6 +44,10 @@
 
   <%= sanitize @person.biography, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
 
+<h2>Helpful info</h2>
+Skype: <%=h @person.skype %><br />
+Tigris: <%=h @person.tigris %><br />
+Personal email: <%=h @person.personal_email %><br />
 
 
 <h1><%=h @person.human_name %></h1>
