@@ -31,7 +31,7 @@
     <% if !(@person.graduation_year.nil? || @person.graduation_year.empty?) %>
   Class of <%=h @person.graduation_year %>.
     <% end %>
-<% unless @person.blank? || @person.local_near_remote=="Unknown" %><br/> I am a  <%=h @person.local_near_remote.downcase %> student.<% end %>
+<% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %><br/> I am a  <%=h @person.local_near_remote.downcase %> student.<% end %>
   </td></tr>
 <% end %>
 </table>
