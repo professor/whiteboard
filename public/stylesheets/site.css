@@ -220,23 +220,27 @@ div.right_link {
     margin-top: -27px;
 }
 
-.cmuTable {
+.cmu_table {
 border-collapse:collapse;
 border-style:solid;
 border-width:1px;
     border-color: #EAE5E5;
 }
 
-.cmuTable td {
+.cmu_table td {
     border-color: #EAE5E5;
     border-width: 1px;
     padding: 0.25em 1em;
 }
 
-.cmuTableOdd {
+.cmu_tableOdd {
 /*    background-color:#EBEBEB;*/
 /*    background-color:#F2F3F6;*/
     background-color:#FbFbFb;
 }
 
-.toddTable td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#424545;text-decoration:none; font-weight:normal; padding:0px 0px 8px 0px; margin:0px 0px 0px 0px;}
+.header_subtext {
+    margin-top: -10px;
+    padding-left: 3px;
+    padding-bottom: 10px;
+}

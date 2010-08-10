@@ -3,6 +3,8 @@ To deploy static assets (ie images) to amazon S3
 rake morning_glory:cloudfront:deploy RAILS_ENV=production
 
 
+
+
 How to move production database onto local machine
 (I did this once, but for some reason there wasn't an exact row match!)
 
