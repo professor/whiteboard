@@ -13,23 +13,23 @@
 <div class="header_subtext">Pronounced <%=h @person.pronunciation %></div>
 <% end %>
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
-<tr class="cmu_tableOdd"><td>Organization:</td>
+<tr class="cmu_table_odd"><td>Organization:</td>
     <td><% if @person.organization_name %><% if @person.title %><%=h @person.title%><br/><%end%><%=h @person.organization_name %><%else%>&nbsp;<%end%></td></tr>
 <tr class="cmu_tableEven"><td>Location:</td>
     <td><% if display_location(@person) %><%=h display_location(@person) %><%else%>&nbsp;<%end%></td></tr>
-<tr class="cmu_tableOdd"><td><p>Telephone:</p></td>
+<tr class="cmu_table_odd"><td><p>Telephone:</p></td>
     <td><%= render :partial => 'show_telephones' %></td></tr>
-<tr class="cmu_tableEven"><td>E-mail:</td>
+<tr class="cmu_table_even"><td>E-mail:</td>
     <td><%=h @person.email %></td></tr>
 <% if @person.is_staff %>
-<tr class="cmu_tableOdd"><td>Office:</td>
+<tr class="cmu_table_odd"><td>Office:</td>
     <td><%=h @person.office %></td></tr>
-<tr class="cmu_tableEven"><td>Office Hours:</td>
+<tr class="cmu_table_even"><td>Office Hours:</td>
     <td><%=h @person.office_hours %></td></tr>
 <% end %>
 
 <% if @person.is_student %>
-<tr class="cmu_tableOdd"><td colspan="2">
+<tr class="cmu_table_odd"><td colspan="2">
     I am a <% if @person.is_part_time %> part time <% else %> full time <% end %> student in the <%=h @person.masters_program %> program<% if !(@person.masters_track.nil? || @person.masters_track.empty?) %> (<%=h @person.masters_track %> Track)<% end %>.
     <% if !(@person.graduation_year.nil? || @person.graduation_year.empty?) %>
   Class of <%=h @person.graduation_year %>.
