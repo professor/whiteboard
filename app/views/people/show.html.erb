@@ -15,7 +15,7 @@
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
 <tr class="cmu_table_odd"><td>Organization:</td>
     <td><% if @person.organization_name %><% if @person.title %><%=h @person.title%><br/><%end%><%=h @person.organization_name %><%else%>&nbsp;<%end%></td></tr>
-<tr class="cmu_tableEven"><td>Location:</td>
+<tr class="cmu_table_even"><td>Location:</td>
     <td><% if display_location(@person) %><%=h display_location(@person) %><%else%>&nbsp;<%end%></td></tr>
 <tr class="cmu_table_odd"><td><p>Telephone:</p></td>
     <td><%= render :partial => 'show_telephones' %></td></tr>
