@@ -357,14 +357,18 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.program = ""
         @semester_panel.track = ""
         @semester_panel.graduation_year = ""
-        @semester_panel.is_part_time = "PT"
+        @semester_panel.is_part_time = params[:program] || "PT"
         @semester_panel.person_id = ""
         @semester_panel.course_id = ""
         @semester_panel.semester = ApplicationController.current_semester
         @semester_panel.year = Date.today.cwyear
       end
 
+     if current_user.is_staff || current_user.is_admin
       @students = Person.find(:all, :conditions => ['is_student IS TRUE'], :order => "first_name ASC, last_name ASC")
+     else
+      @students = [current_user]
+     end
       @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester_panel.semester, @semester_panel.year], :order =>"name ASC")
       @programs = []
       ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM people p;").each do |result| @programs << result end
@@ -375,6 +379,15 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
      reports = get_campus_semester_data(@semester_panel)
     # @chart_url = generate_semester_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
      @chart_url = generate_google_box_chart(title, reports)
+
+
+    respond_to do |format|
+      if params[:layout]
+      format.html { render :layout => false } # index.html.erb
+      else
+      format.html { render :layout => "cmu_sv" } # index.html.erb
+      end
+    end
    end
 
 
