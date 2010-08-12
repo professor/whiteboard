@@ -2,6 +2,7 @@ require 'test_helper'
 
 class PeopleControllerTest < ActionController::TestCase
   def test_should_get_index_without_login
+    login_as nil
     get :index
     assert_response :redirect
   end
@@ -46,7 +47,7 @@ class PeopleControllerTest < ActionController::TestCase
   def test_should_create_person_as_admin
     login_as :admin_andy
     assert_difference('Person.count', 1) do
-      post :create, :person => { :first_name => "New", :last_name => "Person"}
+      post :create, :person => { :first_name => "New", :last_name => "Person", :email => "New.Person@sv.cmu.edu"}
     end
 
     assert_redirected_to person_path(assigns(:person))
@@ -59,7 +60,7 @@ class PeopleControllerTest < ActionController::TestCase
 #    google_user = google_apps_connection.retrieve_user(google_username)
 
     assert_difference('Person.count') do
-        post :create, { :person => { :first_name => "New", :last_name => "Person"}, :create_google_email => "1", :create_twiki_account => nil}
+        post :create, { :person => { :first_name => "New", :last_name => "Person", :email => "New.Person@sv.cmu.edu"}, :create_google_email => "1", :create_twiki_account => nil}
     end
 #    google_user = google_apps_connection.retrieve_user(google_username)
 
@@ -72,7 +73,8 @@ class PeopleControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-    def test_should_show_person_without_login
+  def test_should_show_person_without_login
+    login_as nil
     get :show, :id => users(:student_sam).id
     assert_response :redirect
   end

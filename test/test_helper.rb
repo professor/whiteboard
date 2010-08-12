@@ -44,6 +44,7 @@ end
 class ActionController::TestCase
   setup :activate_authlogic
 
+
   #This testing method converts the old restful authentication testing code into the correct code for AuthLogic
   def login_as_broken(user)
     UserSession.create(users(user))
@@ -51,7 +52,13 @@ class ActionController::TestCase
 
   #My work around with Samer's brilliant help
   def login_as(user)
-    UserSession.stubs(:find).returns(UserSession.create(users(user)))
+    if user.nil?
+      return UserSession.stubs(:find).returns(nil)
+    else
+      return UserSession.stubs(:find).returns(UserSession.create(users(user)))
+    end
   end
+
+
 
 end

@@ -12,7 +12,8 @@ class EffortReportsControllerTest < ActionController::TestCase
 
   end
 
-  def test_should_get_index_without_user
+  def test_should_get_index_without_login
+    login_as nil
     get :index
     assert_redirected_to login_google_url
   end

@@ -95,11 +95,11 @@ class TeamTest < ActiveSupport::TestCase
     team = Team.find(:first)
     team.save
     #This next line is necessary since send_later delays
-    team.update_google_mailing_list(team.email, "nonexistant-email",  team.id)
+    team.update_google_mailing_list(team.email, "nonexistant-email@sandbox.sv.cmu.edu",  team.id)
     student = users(:student_sam)
     assert_not_nil team, "team should not be nil"
     assert_not_nil student, "student should not be nil"
-    #puts "DEBUG: #{team.name} consistes of #{count_members(team.build_email)} members"
+    #puts "DEBUG: #{team.name} consists of #{count_members(team.build_email)} members"
     # add member
     assert_difference 'count_members(team.build_email)', 1 do
       team.add_person_by_human_name(student.human_name)
