@@ -2,7 +2,9 @@
 To deploy static assets (ie images) to amazon S3
 rake morning_glory:cloudfront:deploy RAILS_ENV=production
 
-
+Helpful git commands
+#this will delete in the repository, but not on the filesystem
+git update-index --force-remove file
 
 
 How to move production database onto local machine
