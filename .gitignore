@@ -6,6 +6,7 @@
 config/database.yml
 config/google_apps.yml
 config/amazon_s3.yml
+config/systems.cc.yml.yml
 
 log/*
 nbproject/*
@@ -13,6 +14,10 @@ nbproject/*
 MfSE/*
 tmp/*
 lib/views/*
+
+db/migrate/2009*
+public/images/staff/*
+public/images/students/*
 
 push*.dat
 

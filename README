@@ -41,9 +41,7 @@ svn checkout http://subversion.west.cmu.edu/svn/cmu_rails/trunk/CMUEducation > f
 cd CMUEducation
 rm -rf `find . -type d -name .svn`
 4. remove student sensitive information
-cp public/images/students/mascot.jpg mascot.jpg
 rm -Rf public/images/students/*
-mv mascot.jpg public/images/students/mascot.jpg
 
 ???? New thought for next time, just remove all of the migrations
 

@@ -83,7 +83,7 @@ class PeopleController < ApplicationController
       @person.webiso_account = Time.now.to_f.to_s #This line probably not necessary since I added it to Person.before_validation
       @person.is_active = true
       @person.updated_by_user_id = current_user.id if current_user
-      @person.image_uri = "/images/students/mascot.jpg"
+      @person.image_uri = "/images/mascot.jpg"
       @person.local_near_remote = "Unknown"
 #      @person.save
       @person.save_without_session_maintenance
@@ -156,7 +156,7 @@ class PeopleController < ApplicationController
 
     @person = Person.new(params[:person])
     @person.updated_by_user_id = current_user.id
-    @person.image_uri = "/images/students/mascot.jpg"
+    @person.image_uri = "/images/mascot.jpg"
 
     respond_to do |format|
 

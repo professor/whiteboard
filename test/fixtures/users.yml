@@ -7,7 +7,7 @@ quentin:
   first_name:                Mr.
   last_name:                 quentin
   human_name:                Mr. quentin
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 aaron:
   id:                        2
@@ -17,7 +17,7 @@ aaron:
   first_name:                Mr.
   last_name:                 aaron
   human_name:                Mr. aaron
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 
 old_password_holder:
@@ -28,7 +28,7 @@ old_password_holder:
   first_name:                Old
   last_name:                 User
   human_name:                Old User
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 admin_andy:
   login:  andy
@@ -40,7 +40,7 @@ admin_andy:
   first_name: Admin
   last_name: Andy
   human_name: Admin Andy
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 student_sam:
   login:  sam
@@ -53,7 +53,7 @@ student_sam:
   first_name: Student
   last_name: Sam
   human_name: Student Sam
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 faculty_frank:
   login:  frank
@@ -65,7 +65,7 @@ faculty_frank:
   first_name: Faculty
   last_name: Frank
   human_name: Faculty Frank
-  image_uri:                 images/students/mascot.jpg
+  image_uri:                 images/mascot.jpg
 
 #student_john:
 #  login:  john
@@ -78,5 +78,5 @@ faculty_frank:
 #  first_name: John
 #  last_name: Student
 #  human_name: John Student
-#  image_uri: images/students/mascot.jpg
+#  image_uri: images/mascot.jpg
 
