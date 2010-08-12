@@ -9,6 +9,7 @@ config/amazon_s3.yml
 
 log/*
 nbproject/*
+.idea/*
 MfSE/*
 tmp/*
 lib/views/*
