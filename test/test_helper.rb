@@ -44,21 +44,14 @@ end
 class ActionController::TestCase
   setup :activate_authlogic
 
-  #This testng method converts the old restful authentication testing code into the correct code for AuthLogic
-  def login_as(user)
-    puts "before create"
-
-    a = UserSession.create(users(user))
-    puts "after create"
-    
-#    a = current_user
-#    if a.nil?
-#      puts "current user is nil"
-#    else
-#      puts current_user.human_name
-#    end
-
+  #This testing method converts the old restful authentication testing code into the correct code for AuthLogic
+  def login_as_broken(user)
+    UserSession.create(users(user))
   end
 
+  #My work around with Samer's brilliant help
+  def login_as(user)
+    UserSession.stubs(:find).returns(UserSession.create(users(user)))
+  end
 
 end
