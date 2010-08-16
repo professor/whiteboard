@@ -130,7 +130,7 @@ class TeamTest < ActiveSupport::TestCase
     google_apps_connection.retrieve_all_groups.size
   end
   def count_members(team_email)
-    puts "count_members#{team_email}"
+    logger.debug "count_members#{team_email}"
     google_apps_connection.retrieve_all_members(team_email).size
   end
 end
