@@ -10,8 +10,6 @@ require 'gappsprovisioning/provisioningapi'
 include GAppsProvisioning
 def google_apps_connection
   @google_apps_connection ||= ProvisioningApi.new(GOOGLE_USERNAME, GOOGLE_PASSWORD)
-  puts "GOOGLE_USERNAME #{GOOGLE_USERNAME}"
-  puts "GOOGLE_PASSWORD #{GOOGLE_PASSWORD}"
 rescue
   Rails.logger.debug "had to rescue (ie reconnect) google apps"
   Rails.logger.info "had to rescue (ie reconnect) google apps"
