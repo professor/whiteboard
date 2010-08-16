@@ -20,6 +20,16 @@
     end
   end
 
+  # DELETE /delayed_systems_job/1
+  # DELETE /delayed_systems_job/1.xml
+  def destroy
+    @delayed_system_jobs = DelayedSystemJob.find(params[:id])
+    @delayed_system_jobs.destroy
 
+    respond_to do |format|
+      format.html { redirect_to("/delayed_system_jobs") }
+      format.xml  { head :ok }
+    end
+  end
 
 end

@@ -10,9 +10,10 @@
     <th>last_error</th>
     <th>run_at</th>
     <th>created_at</th>
+    <th>&nbsp;</th>
   </tr>
 <% for job in @delayed_system_jobs %>
-  <tr>
+  <tr valign="top">
     <td><%=h job.id %></td>
     <td><%=h job.priority  %></td>
     <td><%=h job.attempts  %></td>
@@ -20,6 +21,7 @@
     <td><%=h job.last_error  %></td>
     <td><%=h job.run_at  %></td>
     <td><%=h job.created_at  %></td>
+    <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
