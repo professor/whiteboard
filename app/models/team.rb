@@ -32,7 +32,7 @@ class Team < ActiveRecord::Base
     logger.debug("team.before_save() executed")
 #    update_google_mailing_list(self.email, self.old_email, self.id)
 #    self.send_later(:update_google_mailing_list, self.email, self.old_email, self.id)
-    self.delay(:update_google_mailing_list, self.email, self.old_email, self.id)
+    self.delay.update_google_mailing_list self.email, self.old_email, self.id
     self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
   end
 
