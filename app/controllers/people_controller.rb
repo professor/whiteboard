@@ -18,13 +18,14 @@ class PeopleController < ApplicationController
     else
           @people = Person.find(:all, :conditions => ['is_active IS TRUE'],  :order => "first_name ASC, last_name ASC")
     end
-      
-    respond_to do |format|
-#      format.html # index.html.erb
-      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
-      format.js   { render :js => @people, :layout => false }
-      format.xml  { render :xml => @people }
-    end
+
+    
+#    respond_to do |format|
+##      format.html # index.html.erb
+#      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
+#      format.js   { render :js => @people, :layout => false }
+#      format.xml  { render :xml => @people }
+#    end
   end
 
   def phone_book
