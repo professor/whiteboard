@@ -161,6 +161,7 @@ class Team < ActiveRecord::Base
   end
 
   def add_person_to_team(name)
+    logger.debug("add_person_to_team(#{name})")
     unless name.blank?
       self.team_members_list_changed = true
       person = Person.find_by_human_name(name)
