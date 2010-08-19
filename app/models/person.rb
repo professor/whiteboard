@@ -19,7 +19,10 @@ class Person < ActiveRecord::Base
 #    c.require_password_confirmation = false
 #    c.validate_password_field = false
 #  end
-
+# This next method is a dummy method while Authlogic is turned off for Person
+  def save_without_session_maintenance
+    self.save
+  end
 
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
 
