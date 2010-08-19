@@ -12,11 +12,13 @@ class Person < ActiveRecord::Base
   acts_as_versioned  :table_name => 'user_versions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ) }
 
 #  acts_as_authentic
-  acts_as_authentic do |c|
-    c.validate_login_field = false #We are using openid, no login field required
-    c.require_password_confirmation = false
-    c.validate_password_field = false
-  end
+
+#  enabling this currently breaks adding a team member to a team. Not sure why Authlogic would cause that to happen  
+#  acts_as_authentic do |c|
+#    c.validate_login_field = false #We are using openid, no login field required
+#    c.require_password_confirmation = false
+#    c.validate_password_field = false
+#  end
 
 
   has_and_belongs_to_many :teams, :join_table=>"teams_people"

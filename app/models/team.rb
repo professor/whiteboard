@@ -121,7 +121,7 @@ class Team < ActiveRecord::Base
   def add_person_by_human_name(name)
     person = Person.find_by_human_name(name) unless name.blank?
   rescue ActiveRecord::RecordNotFound
-    logger.error "Attempting to add an unknow person with name=#{name}"
+    logger.error "Attempting to add an unknown person with name=#{name}"
     errors.add(:person_name, "Person " + name + " not found")
   else
     unless person == nil or self.people.include?(person) # prevent duplicat people in same team
