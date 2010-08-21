@@ -14,15 +14,15 @@ class Person < ActiveRecord::Base
 #  acts_as_authentic
 
 #  enabling this currently breaks adding a team member to a team. Not sure why Authlogic would cause that to happen  
-  acts_as_authentic do |c|
-    c.validate_login_field = false #We are using openid, no login field required
-    c.require_password_confirmation = false
-    c.validate_password_field = false
-  end
-# This next method is a dummy method while Authlogic is turned off for Person
-#  def save_without_session_maintenance
-#    self.save
+#  acts_as_authentic do |c|
+#    c.validate_login_field = false #We are using openid, no login field required
+#    c.require_password_confirmation = false
+#    c.validate_password_field = false
 #  end
+# This next method is a dummy method while Authlogic is turned off for Person
+  def save_without_session_maintenance
+    self.save
+  end
 
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
 
