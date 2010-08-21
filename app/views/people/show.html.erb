@@ -5,10 +5,16 @@
   <%= f.error_messages %>
 
 
+
 <table><tr valign="top"><td>
   <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
   </td><td>&nbsp;</td><td>
 <h1><%=h @person.human_name %></h1>
+  <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;" >
+    <%= link_to 'Edit', edit_person_path(@person) %> |
+    <%= link_to 'Back', people_path %>
+  </div>
+
 <% unless @person.pronunciation.blank? %>
 <div class="header_subtext">Pronounced <%=h @person.pronunciation %></div>
 <% end %>
@@ -40,6 +46,11 @@
 </table>
 
 </td></tr></table>
+
+
+
+
+
 <!--
   </td><td>&nbsp;</td></tr>
   <tr><td colspan="4">
