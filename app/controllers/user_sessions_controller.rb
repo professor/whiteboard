@@ -72,14 +72,14 @@ class UserSessionsController < ApplicationController
           p registration.data
           @current_user = User.find_by_email(email)
           if @current_user.nil?
-            GenericMailer.deliver_email(
-              :to => "todd.sedano@sv.cmu.edu",
-              :subject => "Login problem to the rails app for user  #{email}",
-              :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
-              :url_label => "",
-              :url => "",
-              :cc => "todd.sedano@sv.cmu.edu"
-            )
+#            GenericMailer.deliver_email(
+#              :to => "todd.sedano@sv.cmu.edu",
+#              :subject => "Login problem to the rails app for user  #{email}",
+#              :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
+#              :url_label => "",
+#              :url => "",
+#              :cc => "todd.sedano@sv.cmu.edu"
+#            )
             logger.info "creating new user account"
             @current_user = User.new({:first_name => first_name, :last_name=>last_name, :email=>email})
             @current_user.save #Note AuthLogic creates the session too
