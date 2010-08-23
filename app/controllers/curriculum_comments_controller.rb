@@ -6,8 +6,8 @@ class CurriculumCommentsController < ApplicationController
   # GET /curriculum_comments.xml
   def index
     url = get_http_referer()
-    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ?", url])
-#    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ? and semester = ? and year = ?", url, ApplicationController.current_semester(), Date.today.year])
+#    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ?", url])
+    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ? and semester = ? and year = ?", url, ApplicationController.current_semester(), Date.today.year.to_s])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @curriculum_comments }
