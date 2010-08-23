@@ -11,17 +11,17 @@ production:
   - cmu_sv
   - cmu_sv_simple
   - charts
-  revision: da884337fe332582dc14726fabf8f4e9
+  revision: 6768ad5446def702f1f8060cfa850cfe
 development: 
   bucket: cmusv-rails-development
   enabled: false
   revision: 8fdd6fb1f3925be41bcb15bf74d6021decc845c2
-staging: 
-  bucket: cmusv-rails-test
-  enabled: false
 test: 
   delete_prev_rev: true
   bucket: cmusv-rails-test
   s3_logging_enabled: false
   enabled: false
   revision: "20100316165112"
+staging: 
+  bucket: cmusv-rails-test
+  enabled: false
