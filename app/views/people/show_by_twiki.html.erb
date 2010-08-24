@@ -70,12 +70,11 @@ background-color: #6B7F93;
 
 <% end %>
 
-<%= @person.user_text %>
-
-
 <div class="user_clear"></div>
 <h2>Biography</h2>
-<%= @person.biography %>
+<%= sanitize @person.biography, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
+
+<%= sanitize @person.user_text, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
 
 
 <h2>Helpful info</h2>
