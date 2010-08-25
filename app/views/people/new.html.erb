@@ -2,6 +2,10 @@
 <h1>New person</h1>
 
 <script type="text/javascript">
+ function remove_hyphens(string) {
+     return string.replace(/-/g, "");
+ }
+
  function capitalise(string) {
 //    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
 return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g");
@@ -13,7 +17,7 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     }
 
  function update_twiki_and_email() {
-   document.forms["new_person"].person_twiki_name.value=capitalise(document.forms["new_person"].person_first_name.value)+capitalise(document.forms["new_person"].person_last_name.value);
+   document.forms["new_person"].person_twiki_name.value=capitalise(remove_hyphens(document.forms["new_person"].person_first_name.value))+capitalise(remove_hyphens(document.forms["new_person"].person_last_name.value));
 
    document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
  }
