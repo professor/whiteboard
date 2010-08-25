@@ -36,6 +36,7 @@ group :development do
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
+  gem 'rspec-rails'
 end
 
 group :test do
@@ -48,6 +49,7 @@ group :test do
   gem 'rcov'
   gem 'rdoc',     '2.4.3'
   gem 'mocha'
+  gem 'rspec'
 end
 
 
