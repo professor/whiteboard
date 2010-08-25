@@ -16,6 +16,16 @@ mysql -h localhost -u cmu_rails cmu_education -p < /tmp/production.sql
 Source: http://www.nateclark.com/articles/2007/02/23/rails-rake-tasks-to-sync-your-remote-database-to-your-local-development-environment
 Should be possible to create a rake task for this....
 
+Image Sizes
+150 x 200 (0.75) Orienation 2009
+133 x 200 (0.66) Orientation 2010
+190 x 260 (0.7308) Recent Staff (Colin, Todd, Martin, Martin) -- looks like most
+173 x 260  Older Staff (Abe, Sarah)
+
+Decision: for the team tables, we don't want the id photos to be higher than 200. Moving forward let's have
+student id photos be 133 x 200 (0.66 aspect ratio) the same as 4x6 photos. That aspect ratio looks really good
+as it makes people look taller.
+
 
 ToddSedano on dev
 crypted_password
