@@ -69,7 +69,7 @@ class CoursesController < ApplicationController
   # POST /courses.xml
   def create
     @course = Course.new(params[:course])
-    @course_template = CourseNumber.find(params[:course][:course_number_id]) if !params[:course][:course_number_id].nil?
+    @course_template = CourseNumber.find(params[:course][:course_number_id]) unless params[:course][:course_number_id].blank?
     if @course_template
       @course.name = @course_template.name
       @course.number = @course_template.number      
