@@ -48,6 +48,8 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     @course = Course.new
+    @course.semester = ApplicationController.current_semester
+    @course.year = Time.now.year
     @course_numbers = CourseNumber.find(:all, :order => "name")
 
     respond_to do |format|
