@@ -10,8 +10,8 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
        if status.is_a?(String)
          error_message += "Google account not created. " + status + "</br></br>"
        else
-#         PersonMailer.deliver_welcome_email(person.personal_email, person, password)
-        send_email([person.personal_email, person.email], person.email, generate_message(person, password))
+         PersonMailer.deliver_welcome_email([person.personal_email, person.email], person, password)
+#        send_email([person.personal_email, person.email], person.email, generate_message(person, password))
        end
     end
     if create_twiki_account && person.twiki_created.blank?
@@ -69,7 +69,6 @@ This email provides you with detailed information regarding your Silicon Valley 
 <br/>
 <b>Silicon Valley email</b><br/>
 Your Silicon Valley email account is your primary email account for all Silicon Valley academic and administrative communications. <i>We ask for all Silicon Valley community members to check their Silicon Valley email account <u>every business day.</u></i>
-You may want to forward your Silicon Valley email account to your andrew account.
 <ul><li>Your new email address is #{person.email}</li>
 <li>Your temporary password is #{password}</li>
 <li>To check your email, you can use http://gmail.sv.cmu.edu/</li>
@@ -82,6 +81,15 @@ Note: We have two domains associated with our campus. "west.cmu.edu" is deprecat
 <li>Verify the address by going to "Inbox" on the left nav, reading the new email, and clicking on the confirmation link.</li>
 <li>Go back to <a href="http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts">Account Settings</a></li>
 <li>Click "make default" to the right of #{person.email}</li></ul>
+<br/>
+<b>Andrew email</b><br/>
+Your Andrew email account receives all main campus-based communications - including course registration, communications from HUB/Enrollment Services, graduation information, etc.  All Carnegie Mellon community members are assigned an Andrew email account.  As important communications from the main campus are sent to this account, it is also important to review emails received from this account.  We encourage everyone to forward their Andrew email account to their Silicon Valley email account by doing the following:
+<ul><li>Go to https://my.cmu.edu/portal/site/main/email/</li>
+<li>On the right hand side of the screen, you'll see a section called "Email Forward"</li>
+<li>Click on Modify, at the form line "Forward email to:" enter your sv.cmu.edu email address, click Add, and Submit</li>
+<li>Mail forwarding will take effect immediately</li>
+<li>Email forwarding insures notifications from the university are received and Spam is properly blocked.</li></ul>
+__ Action required: I have forwarded my Andrew email to my Silicon Valley email account<br/>
 <br/>
 <b>TWiki is our primary collaboration tool</b><br/>
 We use TWiki, a wiki server, for our collaboration needs.  Faculty use the twiki to collaborate and share important information. Each course will have a twiki web and each student team is given a wiki web for sharing information among the team members.  You will receive a separate email with your twiki account information asking you to set your password.  All wiki words look SomethingLikeThis and we'll cover more about our TWiki server during your orientation.<br/>
