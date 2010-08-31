@@ -123,4 +123,11 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
 
+  def test_should_retreive_people_by_ajax
+#    http://localhost:3000/people.js?search=todd
+# <ul><li>Todd Sedano</li></ul>
+
+#renable bug by putting the format back in.    
+  end
+
 end
