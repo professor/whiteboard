@@ -23,7 +23,7 @@ class EffortLogsController < ApplicationController
     random_scotty_saying = ScottyDogSaying.find(:all).rand.saying
 
 #   courses = [48, 47, 46]  #list all courses that we want to track effort
-   courses = Course.remind_about_effort()
+   courses = Course.remind_about_effort_course_list
    courses.each do |course_id|
        create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end
