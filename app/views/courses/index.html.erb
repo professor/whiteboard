@@ -30,8 +30,8 @@ $(document).ready(function()
 <h1>All Courses</h1>
 <div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
 <% else %>
-<% content_for :title, @current_semester + " " + @year.to_s + " Courses" %>
-<h1><%= @current_semester %> <%= @year %> Courses</h1>
+<% content_for :title, @semester + " " + @year.to_s + " Courses" %>
+<h1><%= @semester %> <%= @year %> Courses</h1>
 <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
 <% end %>
 <%= render :partial => "/people/tablesorter_filter_box" %>

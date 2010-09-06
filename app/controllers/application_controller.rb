@@ -55,6 +55,26 @@ class ApplicationController < ActionController::Base
     return "Fall"
   end
 
+  def self.next_semester
+    case self.current_semester
+      when "Spring"
+        return "Summer"
+      when "Summer"
+        return "Fall"
+      when "Fall"
+        return "Spring"
+    end
+  end
+
+  def self.next_semester_year
+    case ApplicationController.next_semester
+     when "Spring"
+      return Date.today.year + 1
+    else
+      return Date.today.year
+    end
+  end
+
   private
   def get_http_referer
    if request.env["HTTP_REFERER"].nil? then

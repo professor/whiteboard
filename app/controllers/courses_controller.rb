@@ -12,14 +12,20 @@ class CoursesController < ApplicationController
 
     index_core
   end
-
   
-  #can't call this method current_semster since that interfers with the gloabl method
-  def current
+  def current_semester
     @all_courses = false
-    @current_semester = ApplicationController.current_semester()
+    @semester = ApplicationController.current_semester()
     @year = Date.today.year
-    @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @current_semester, Date.today.year], :order => "name ASC")
+    @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester, Date.today.year], :order => "name ASC")
+    index_core
+  end
+
+  def next_semester
+    @all_courses = false
+    @semester = ApplicationController.next_semester()
+    @year = ApplicationController.next_semester_year()
+    @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester, @year], :order => "name ASC")
     index_core
   end
 
