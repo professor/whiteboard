@@ -10,12 +10,12 @@ gem 'rack-openid'
 gem 'bundler'
 gem 'delayed_job', '2.1.0.pre'
 
-
 gem 'oauth'
+
 
 group :plugins do
   gem 'authlogic'
-  gem 'calendar_date_select' 
+  gem 'calendar_date_select'
 end
 
 
@@ -50,6 +50,8 @@ group :test do
   gem 'rdoc',     '2.4.3'
   gem 'mocha'
   gem 'rspec'
+  gem 'factory_girl'  
+# gem 'factory_girl_rails'  #only works for Rails 3
 end
 
 
