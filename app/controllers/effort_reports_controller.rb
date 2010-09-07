@@ -6,8 +6,6 @@ class EffortReportsController < ApplicationController
 
   before_filter :require_user
 
-#    helper Ziya::Helper
-
       class PanelState
         attr_accessor :year, :week_number, :course_id, :date
       end
@@ -493,24 +491,6 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
 
 
-
-
-    ########## To be removed ############
-    def load_ziya_chart
-
-          # Create a bar chart with 2 series composed of 3 data points each.
-          # Chart will be rendered using the default look and feel
-         #chart = Ziya::Charts::CandleStick.new
-         chart = Ziya::Charts::CandleStick.new
-          #chart.add( :axis_category_text, %w[2006 2007 2008 2009] )
-          chart.add( :series, "student1", [10,20,30,50,60] )
-          chart.add( :series, "student2", [5,15,25,40,50] )
-          respond_to do |fmt|
-            fmt.xml { render :xml => chart.to_xml }
-          end
-    end
-
-    #####################################
     def load_google_chart
 
 
@@ -618,109 +598,6 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
     end
 
 
-    # Callback from the flash movie to get the chart's data
-    def load_chart
-#    if !(current_user.is_admin? || current_user.is_staff?)
-#      flash[:error] = 'You don''t have permissions to view this data.'
-#      redirect_to(effort_reports_url)
-#      return
-#    end
-      chart = Ziya::Charts::Line.new
-      chart.add( :theme, "simple" )
-
-      weeks_array = [35, 36, 37, 38, 39, 40, 41, 42]
-
-#      reports = EffortLog.find_by_sql("SELECT effort_logs.week_number, users.human_name, sum(effort_log_line_items.sum), effort_log_line_items.course_id FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = person_id inner join task_types on task_type_id = task_types.id where course_id = '7' group by week_number, human_name, course_id")
-      reports = EffortLog.find_by_sql("SELECT effort_logs.week_number, users.human_name, task_types.name, effort_log_line_items.sum, effort_log_line_items.course_id FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = person_id inner join task_types on task_type_id = task_types.id where course_id = '7'  order by week_number ")
-
-      if reports.size != 0 then
-
-        first_week = reports.first.week_number.to_i
-        last_week = reports.last.week_number.to_i
-        weeks_array = []
-        (first_week..last_week).each do |week| weeks_array.push week end
-
-  #      data is a hash of person -> week -> effort
-
-        data = {}
-        anonymous_counter = 1
-        reports.each do |report|
-          r_human_name = report.human_name
-          r_week_number = report.week_number.to_i
-          r_sum = report.sum.to_i
-          if data.has_key?(r_human_name) then
-            time_hash = data[r_human_name]
-          else
-            time_hash = {}
-          end
-          if time_hash.has_key?(r_week_number) then
-            time_hash[r_week_number] = time_hash[r_week_number] + r_sum
-          else
-            time_hash[r_week_number] = r_sum
-          end
-          data[r_human_name] = time_hash
-        end
-  #    chart.add( :axis_category_text, %w[2006 2007 2009] )
-
-
-        chart.add( :axis_category_text, weeks_array )
-        data.each do |human_name, time_hash|
-          effort_array = []
-          (first_week..last_week).each do |week|
-            if time_hash.has_key?(week) then
-              effort_array.push(time_hash[week])
-            else
-              effort_array.push(0)
-            end
-          end
-         if current_user && (!current_user.is_staff? && !current_user.is_admin?) then
-            if human_name != current_user.human_name then
-              human_name = "anonymous " + anonymous_counter.to_s
-              anonymous_counter = anonymous_counter + 1
-            end
-          end
-          chart.add( :series, human_name, effort_array)
-        end
-      end
-
-        #      data.each { |key,value| chart.add( :series, key, value)  }
-#      chart.add( :series, "Dogs2", [10,20,30] )
-#      chart.add( :series, "Cats", [5,15,25] )
-      respond_to do |fmt|
-        fmt.xml { render :xml => chart.to_xml }
-      end
-
-    end
-
-
-
-  # GET /effort_reports
-  # GET /effort_reports.xml
-#  def index
-#    authorize
-#    @effort_logs = EffortLog.find(:all, :conditions => "person_id = '#{current_user.id}'", :order => "id DESC")
-#
-#    if @effort_logs.empty?
-#       @show_new_link = true
-#    else
-#      if @effort_logs[0].year == Date.today.cwyear && @effort_logs[0].week_number == Date.today.cweek
-#        @show_new_link = false
-#      else
-#        @show_new_link = true
-#      end
-#    end
-#
-#
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @effort_logs }
-#    end
-#  end
-
-
-  # GET /effort_reports/1
-  # GET /effort_reports/1.xml
   def raw_data
     if !(current_user.is_admin? || current_user.is_staff?)
       flash[:error] = 'You don''t have permissions to view this data.'
