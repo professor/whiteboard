@@ -2,7 +2,23 @@ class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
-  
+
+  def self.for_semester(semester, year)
+    return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
+  end
+
+  def self.current_semester_courses()
+    return self.for_semester(ApplicationController.current_semester(),
+                      Date.today.year)
+
+  end
+
+  def self.next_semester_courses()
+    return self.for_semester(ApplicationController.next_semester(),
+                             ApplicationController.next_semester_year())
+  end
+
+
   def semester_length
     if self.mini == "Both" then
       if semester == "Summer" then 
