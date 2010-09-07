@@ -1,20 +1,51 @@
 require 'spec_helper'
 
-describe SuggestionsController do
+describe PagesController do
   integrate_views
 
-  describe "NEW suggestion" do
-    it "remembers the HTTP referer" do
-       get :new
-       
-       response.should be_success
+  describe "SOMETHING ELSE" do
+    it "should allow faculty to bundle pages together in an order"
+    it "should allow faculty to reorder the items in the bundle"
+    it "should allow a bundle to be copied for another course"
+  end
+
+
+  describe "SHOW page" do
+    context "all pages" do
+#moved to model      it "should allow faculty to edit it" 
+#moved to model      it "should allow faculty to see previous versions of the page"
+      it "should allow anyone to add comments to the page"
+#moved to model      it "should show who did the last edit and when it occurred"
     end
-    it "prompts for an email address if the user is not logged in" do
-       get :new
-       response.should have_tag("input", :id => "suggestion_email")
+
+    context "three tab page" do
+      it "should show three tabs"
+      it "should show all the tasks in the course"
+    end
+
+    context "normal page" do
+      it ""
     end
 
   end
+
+
+  describe "NEW page" do
+    it "should allow faculty to upload attachments"
+    it "should allow faculty to choose between normal page or three tabs"
+  end
+
+
+  describe "EDIT page" do
+    it "should do everything that NEW page does"
+    it "should allow faculty to replace an attachment"
+    it "should saves previous versions of the page"
+    it "should allow faculty to comment about the changes"
+    it "should allow three tab page to be converted to normal page without loosing three tab content"
+    it "should allow normal page to be converted to three tab page with contents ending in tab one"
+
+  end
+
 
   describe "POST suggestion" do
 

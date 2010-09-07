@@ -9,25 +9,51 @@ describe Page do
   end
 
 
-#  it "is valid with valid attributes" do
-#    @page.should be_valid
-#  end
-#
-#  it "is not valid without a title" do
-#    @page.title = nil
-#    @page.should_not be_valid
-#  end
-#
-#  it "is not valid without an updated_by_user_id" do
-#    @page.updated_by_user_id = nil
-#    @page.should_not be_valid
+  it "is valid with valid attributes" do
+    @page.should be_valid
+  end
+
+  it "is not valid without a title" do
+    @page.title = nil
+    @page.should_not be_valid
+  end
+
+  it "is not valid without an updated_by_user_id" do
+    @page.updated_by_user_id = nil
+    @page.should_not be_valid
+  end
+
+  it "should allow faculty to upload attachments"
+#    setup :activate_authlogic
+#    UserSession.create(users("FacultyFrank"))
+
+
+  it "should show who did the last edit and when it occurred"
+
+  it "is editable by faculty and staff" 
+  #do
+#    @page.should_not be_editable
+#    user = stub('User', :is_staff => true)
+#    @page.stub(:current_user).and_return(user)
+#    @page.should be_editable
+#   end
+
+  it "is versioned"
+#  do
+#    @page.save
+#    version_number = @page.version
+#    @page.title = "A Brave New Title"
+#    @page.save
+#    new_version_number = @page.version
+#    @page.version.should == version_number + 1
 #  end
 
-  it "is editable by faculty and staff"
-    @page.should be_editable
-#    @page.should_not be_editable?
-#    user = stub('User', :is_faculty => true)
-#    @page.stub(:current_user).and_return(user)
+  it "should allow faculty to comment about the changes" do
+    @page.version_comments = "A very simple change"
+    @page.save
+#This seems to simple
+  end
+
 
 
   

@@ -6,8 +6,8 @@
     <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
   </p>
   <p>
-    <%= f.label :label %><br />
-    <%= f.text_field :label %>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>(*)
   </p>
   <p>
     <%= f.label :indentation_level %><br />
