@@ -26,6 +26,14 @@ Decision: for the team tables, we don't want the id photos to be higher than 200
 student id photos be 133 x 200 (0.66 aspect ratio) the same as 4x6 photos. That aspect ratio looks really good
 as it makes people look taller.
 
+Sendgrid----
+Failed to deliver emails. I manually reset google accounts. I used this line of ruby to random generate strings:
+irb > (0...8).map{65.+(rand(25)).chr}.join     
+I used this line of code to deliver emails from heroku console:
+p = Person.find(100)
+PersonMailer.deliver_welcome_email([p.personal_email, p.email], p, "HDOJYMKB")
+
+
 
 ToddSedano on dev
 crypted_password
