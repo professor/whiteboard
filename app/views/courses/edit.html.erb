@@ -29,7 +29,7 @@
   </p>
   <p>
     <%= f.label :year %><br />
-    <%= f.select(:year, ['2008', '2009', '2010', '2011'], :include_blank => true) %>
+    <%= f.text_field :year, :size => 4 %>
   </p>
   <p>
     <%= f.label :primary_faculty_label %><br />
