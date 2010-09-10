@@ -8,7 +8,7 @@
   <% unless @error_effort_logs_users.nil? %>
   <%  @error_effort_logs_users.each_pair {|user, courses|  %>
   <tr>
-    <td><%= user.first_name%><%= user.last_name%></td>
+    <td><%= user.first_name%><%= user.last_name%> (<%= user.id %> )</td>
     <td><%= courses%> </td>
   </tr>
   <% } %>

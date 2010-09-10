@@ -43,10 +43,8 @@ class EffortLog < ActiveRecord::Base
  def self.users_with_effort_against_unregistered_courses
     cweek = Date.today.cweek
     cyear = Date.today.cwyear
-    cweek = 15
-    cyear = 2010
 
-    sql_effort_logs_this_week = "SELECT e.* FROM effort_logs e,users u where e.week_number=#{cweek} and e.year=#{cyear} and u.id=e.person_id and u.is_student=1"
+    sql_effort_logs_this_week = "SELECT e.* FROM effort_logs e,users u where e.week_number=#{cweek} and e.year=#{cyear} and u.id=e.person_id and u.is_student IS TRUE"
 
     effort_logs_this_week = EffortLog.find_by_sql(sql_effort_logs_this_week)
     @error_effort_logs_users = {}
