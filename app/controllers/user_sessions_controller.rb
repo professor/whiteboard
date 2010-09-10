@@ -83,7 +83,7 @@ class UserSessionsController < ApplicationController
             successful_login(openid_identifier, email)
           else
             GenericMailer.deliver_email(
-              :to => "todd.sedano@sv.cmu.edu",
+              :to => "help@sv.cmu.edu",
               :subject => "Login problem to on rails.sv.cmu.edu for user #{email}",
               :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
               :url_label => "",
