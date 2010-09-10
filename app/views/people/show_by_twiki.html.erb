@@ -72,15 +72,15 @@ background-color: #6B7F93;
 
 <div class="user_clear"></div>
 <h2>Biography</h2>
-<%= sanitize @person.biography, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
-
-<%= sanitize @person.user_text, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
-
+<%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 <h2>Helpful info</h2>
 Skype: <%=h @person.skype %><br />
 Tigris: <%=h @person.tigris %><br />
 Personal email: <%=h @person.personal_email %><br />
+
+<%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+
 
 <% machine_name = "http://rails.sv.cmu.edu" if !development? %>
 <!-- <%= link_to 'Edit', edit_person_path(@person) %> | -->

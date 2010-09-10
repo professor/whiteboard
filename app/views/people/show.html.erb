@@ -48,20 +48,14 @@
 </td></tr></table>
 
 
-
-
-
-<!--
-  </td><td>&nbsp;</td></tr>
-  <tr><td colspan="4">
--->
-
-  <%= sanitize @person.biography, :tags => %w(table tr td p br span img a), :attributes => %w(id class style) %>
+  <%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 <h2>Helpful info</h2>
 Skype: <%=h @person.skype %><br />
 Tigris: <%=h @person.tigris %><br />
 Personal email: <%=h @person.personal_email %><br />
+
+    <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 
 <h1><%=h @person.human_name %></h1>
