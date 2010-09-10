@@ -72,28 +72,25 @@ class UserSessionsController < ApplicationController
           p registration.data
           @current_user = User.find_by_email(email)
           if @current_user.nil?
-#            GenericMailer.deliver_email(
-#              :to => "todd.sedano@sv.cmu.edu",
-#              :subject => "Login problem to the rails app for user  #{email}",
-#              :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
-#              :url_label => "",
-#              :url => "",
-#              :cc => "todd.sedano@sv.cmu.edu"
-#            )
-            logger.info "creating new user account"
-            @current_user = User.new({:first_name => first_name, :last_name=>last_name, :email=>email})
-            @current_user.save #Note AuthLogic creates the session too
-          else
-            logger.info "creating new user session"
-#            @user_session = UserSession.new(params[:user_session])
-            @user_session = UserSession.create(@current_user, true)
- #           @user_session.save
-
+#            logger.info "creating new user account"
+#            @current_user = Person.new({:first_name => first_name, :last_name=>last_name, :email=>email})
+#            @current_user.save_without_session_maintenance #Note AuthLogic creates the session too
+#            @current_user = User.find_by_email(email)
           end
+          logger.info "creating new user session"
+          @user_session = UserSession.create(@current_user, true)
           if current_user
             successful_login(openid_identifier, email)
           else
-            failed_login "Sorry, no user by that identity URL exists (#{identity_url})"
+            GenericMailer.deliver_email(
+              :to => "todd.sedano@sv.cmu.edu",
+              :subject => "Login problem to on rails.sv.cmu.edu for user #{email}",
+              :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
+              :url_label => "",
+              :url => "",
+              :cc => "todd.sedano@sv.cmu.edu"
+            )
+            failed_login "Sorry, no user with this email (#{email}) exists in the system. help@sv.cmu.edu was just notified of this issue."
           end
         else
           failed_login result.message
@@ -133,8 +130,11 @@ class UserSessionsController < ApplicationController
   def failed_login(message)
 #    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
 
+
+
     flash[:error] = message
-    redirect_to(new_user_session_url)
-  end
+#    redirect_to(new_user_session_url)
+    redirect_to(root_url)
+   end
 
 end
