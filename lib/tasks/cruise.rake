@@ -15,7 +15,7 @@ task :cruise do
   RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
 
-  'bundle install'  
+  `bundle install`  
   Bundler.setup(:default, :test)
   
   if !File.exists?(Dir.pwd+"/config/database.yml")
