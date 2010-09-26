@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(:version => 20100904211437) do
     t.datetime "updated_at"
     t.text     "tips_and_traps"
     t.text     "readings_and_resources"
+    t.text     "faculty_notes"
     t.integer  "updated_by_user_id"
     t.integer  "version"
     t.string   "version_comments"
-    t.string   "faculty_notes"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"

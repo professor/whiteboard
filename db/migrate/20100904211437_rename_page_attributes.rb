@@ -4,15 +4,13 @@ class RenamePageAttributes < ActiveRecord::Migration
     add_column :pages, :updated_by_user_id, :integer
     add_column :pages, :version, :integer
     add_column :pages, :version_comments, :string
-    add_column :pages, :faculty_notes, :string
-  end
+ end
 
   def self.down
     rename_column :pages, :title, :label
     remove_column :pages, :updated_by_user_id
     remove_column :pages, :version
     remove_column :pages, :version_comments
-    remove_column :pages, :faculty_notes
   end
   
 end

@@ -2,7 +2,7 @@
 
 one:
   course: foundations
-  label: MyString
+  title: MyString
   position: 1
   indentation_level: 1
   is_task: false
@@ -15,7 +15,7 @@ one:
 
 two:
   course: foundations
-  label: MyString
+  title: MyString
   position: 1
   indentation_level: 1
   is_task: false
