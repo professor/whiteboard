@@ -40,7 +40,7 @@ task :cruise do
 
 
 
-  #Step 2 - Rcov
+  #Step 2 - Rcov and TestUnit
   # source: http://deadprogrammersociety.blogspot.com/2007/06/cruisecontrolrb-and-rcov-are-so-good.html
   out = ENV['CC_BUILD_ARTIFACTS']
   mkdir_p out unless File.directory? out if out
@@ -54,6 +54,10 @@ task :cruise do
   mv 'coverage/functionals', "#{out}/functional test coverage" if out
 
   Rake::Task["test:integration"].invoke
+
+  #Step 3 - Rcov and Rspec
+  Rake::Task["spec:rcov"].invoke
+#  mv 'coverage/', "#{out}/spec test coverage" if out
 
 
 end
