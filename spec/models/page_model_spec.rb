@@ -38,7 +38,7 @@ describe Page do
 #    @page.should be_editable
 #   end
 
-  it "is versioned"
+    it "is versioned"
 #  do
 #    @page.save
 #    version_number = @page.version
@@ -48,7 +48,7 @@ describe Page do
 #    @page.version.should == version_number + 1
 #  end
 
-  it "should allow faculty to comment about the changes" do
+    it "should allow faculty to comment about the changes" do
     @page.version_comments = "A very simple change"
     @page.save
 #This seems to simple
