@@ -55,16 +55,26 @@ Test User:
 
 Here are the directions on how to create the metrics for software engineering course
 1. Go to a new directory
+
 2. checkout the code
 svn checkout http://subversion.west.cmu.edu/svn/cmu_rails/trunk/CMUEducation > filelist
+git clone git@github.com:professor/cmusv.git
+
 3. remove .svn directories
-cd CMUEducation
-rm -rf `find . -type d -name .svn`
-4. remove student sensitive information
+cd cmusv
+rm -rf `find . -type d -name .git`
+
+4. create a filelist
+(Note: there are better ways of doing this)
+find ./ *.* > alldirnfiles.txt
+
+5. remove student sensitive information
 rm -Rf public/images/students/*
 
-???? New thought for next time, just remove all of the migrations
+6. remove all migrations
+?? rm db/migrate/*
 
+6.old don't need this anymore
 find db/migrate/. -exec grep -l "jpg" {} \;
 #remove the files found
 #copy 20090827190915_mfse_add_people.rb from CMUEducation root
@@ -73,26 +83,34 @@ find db/migrate/. -exec grep -l "Team" {} \;
 #remove files found except for ....create_teams.rb
 
 
-5. remove database password information
+7. remove database password information
 rm config/database.yml
 rm config/amazon_s3.yml
 rm config/google_apps.yml
 
-6. alter environment.rb, remove todd.sedano@sv.cmu.edu, change secret key
+8. create example configuration files?
+
+9. alter environment.rb, remove todd.sedano@sv.cmu.edu, change secret key
 vi config/environment.rb
 
-7. remove netbeans project file
-rm -R nbproject
-
-7b. remove 'scotty.dog@sv.cmu.edu' in these files:
+10. remove 'scotty.dog@sv.cmu.edu' in these files:
 vi app/models/curriculum_comment_mailer.rb
 vi app/models/effort_log_mailer.rb
 
 
-8. split code into segments
+11. split code into segments
 
+What do I want in every team segment?
+Gemfile
+db/schema.rb
+app/controllers/application_controller.rb
+app/models/generic_mailer.rb (New for Fall 2011)
+app/views/generic_mailer/* (New for Fall 2011)
+
+#should we make a thor or rake script for all of this? This started simple, but gets more complicated each year?
 mkdir TeamCourses; cd TeamCourses
-mkdir CMUEducation; cd CMUEducation; mkdir app; cd app; mkdir controllers; mkdir models; mkdir views; mkdir helpers; cd ../../..
+mkdir CMUEducation; cd CMUEducation; mkdir db; mkdir test; cd test; mkdir fixtures; mkdir functional; mkdir unit; cd .. mkdir spec; mkdir app; cd app; mkdir controllers; mkdir models; mkdir views; mkdir helpers; cd ../..
+cp  ../Gemfile CMUEducation; cp ../db/schema.rb CMUEducation/db/schema.rb; cp ../app/controllers/application_controller.rb CMUEducation/app/controllers/application_controller.rb; cd ..
 mkdir TeamEffortLogs; cd TeamEffortLogs;
 MAGIC LINE
 mkdir TeamEffortReports; cd TeamEffortReports;
@@ -101,8 +119,22 @@ mkdir TeamUsers; cd TeamUsers;
 MAGIC LINE
 mkdir TeamTeams; cd TeamTeams;
 MAGIC LINE
+mkdir TeamPeerEvaluation; cd TeamPeerEvaluation
+MAGIC LINE
+mkdir TeamScottyDogSayings; cd TeamScottyDogSayings
+MAGIC LINE
+mkdir TeamGoogleMailingLists; cd TeamGoogleMailingLists
 
-9. Use schema.rb (not migrations) to generate tables. Use a single migration (maybe) to populate tables.
+12. Use schema.rb (not migrations) to generate tables. Use a single migration (maybe) to populate tables.
+
+
+
+
+To create the defected product, take all the teams zips and move over the files carefully
+from app/controllers/ app/helpers, app/models/ app/views.
+
+Copy over a 
+
 
 
 
