@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100904211437) do
+ActiveRecord::Schema.define(:version => 20100930025344) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -140,7 +140,11 @@ ActiveRecord::Schema.define(:version => 20100904211437) do
     t.datetime "paper_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "citation"
+    t.date     "date"
   end
+
+  add_index "papers", ["date"], :name => "index_papers_on_date"
 
   create_table "papers_people", :id => false, :force => true do |t|
     t.integer "paper_id"

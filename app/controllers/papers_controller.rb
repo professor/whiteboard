@@ -36,10 +36,24 @@ class PapersController < ApplicationController
     end
   end
 
+  def new_tmp
+    @paper = Paper.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @paper }
+    end
+  end
+
   # GET /papers/1/edit
   def edit
     @paper = Paper.find(params[:id])
   end
+
+  def edit_tmp
+    @paper = Paper.find(params[:id])
+  end
+
 
   # POST /papers
   # POST /papers.xml

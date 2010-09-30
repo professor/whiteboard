@@ -13,8 +13,11 @@ class Paper < ActiveRecord::Base
  #     :path => ":rails_root/public/papers/:id/:basename.:extension"
 
 
+
+
   def after_initialize
     self.year ||= Date.today.year
+    self.date ||= Date.today
   end
 
   def before_save
