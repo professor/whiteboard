@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "updated_at"
     t.text     "tips_and_traps"
     t.text     "readings_and_resources"
-    t.text     "faculty_notes"
     t.integer  "updated_by_user_id"
     t.integer  "version"
     t.string   "version_comments"
+    t.string   "faculty_notes"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
@@ -281,7 +281,7 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
   add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
   add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
 
-  create_table "user_verions", :force => true do |t|
+  create_table "user_versions", :force => true do |t|
     t.integer  "person_id"
     t.integer  "version"
     t.string   "webiso_account"
@@ -339,8 +339,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
     t.string   "password_salt"
-    t.string   "persistence_token",                        :default => "",    :null => false
-    t.string   "single_access_token",                      :default => "",    :null => false
+    t.string   "persistence_token"
+    t.string   "single_access_token"
     t.integer  "login_count",                              :default => 0,     :null => false
     t.integer  "failed_login_count",                       :default => 0,     :null => false
     t.datetime "last_request_at"
@@ -348,77 +348,10 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
-  end
-
-  add_index "user_verions", ["person_id"], :name => "index_user_verions_on_person_id"
-
-  create_table "user_versions", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "version"
-    t.string   "webiso_account"
-    t.string   "login",                    :limit => 40
-    t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 40
-    t.string   "salt",                     :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_staff",                                :default => false
-    t.boolean  "is_student",                              :default => false
-    t.boolean  "is_admin",                                :default => false
-    t.string   "twiki_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "human_name"
-    t.string   "image_uri"
-    t.string   "graduation_year"
-    t.string   "masters_program"
-    t.string   "masters_track"
-    t.boolean  "is_part_time"
-    t.boolean  "is_teacher"
-    t.boolean  "is_adobe_connect_host"
-    t.datetime "effort_log_warning_email"
-    t.boolean  "is_active"
-    t.string   "legal_first_name"
-    t.string   "organization_name"
-    t.string   "title"
-    t.string   "work_city"
-    t.string   "work_state"
-    t.string   "work_country"
-    t.string   "telephone1"
-    t.string   "skype"
-    t.string   "tigris"
-    t.string   "personal_email"
-    t.string   "local_near_remote"
-    t.text     "biography"
-    t.text     "user_text"
-    t.string   "office"
-    t.string   "office_hours"
-    t.string   "telephone1_label"
-    t.string   "telephone2"
-    t.string   "telephone2_label"
-    t.string   "telephone3"
-    t.string   "telephone3_label"
-    t.string   "telephone4"
-    t.string   "telephone4_label"
-    t.integer  "updated_by_user_id",       :limit => 8
-    t.boolean  "is_alumnus"
-    t.string   "pronunciation"
-    t.datetime "google_created"
-    t.datetime "twiki_created"
-    t.datetime "adobe_created"
-    t.datetime "msdnaa_created"
-    t.string   "password_salt"
-    t.string   "persistence_token"
-    t.string   "single_access_token"
-    t.integer  "login_count",                             :default => 0,     :null => false
-    t.integer  "failed_login_count",                      :default => 0,     :null => false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
     t.datetime "yammer_created"
   end
+
+  add_index "user_versions", ["person_id"], :name => "index_user_verions_on_person_id"
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"

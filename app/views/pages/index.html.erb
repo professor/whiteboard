@@ -5,7 +5,7 @@
 <table>
   <tr>
     <th>Course Id</th>
-    <th>Label</th>
+    <th>Title</th>
     <th>Sequence number</th>
     <th>Indentation level</th>
     <th>Is task</th>
@@ -20,7 +20,7 @@
 <% for page in @pages %>
   <tr>
     <td><%=h page.course_id %></td>
-    <td><%=h page.label %></td>
+    <td><%=h page.title %></td>
     <td><%=h page.position %></td>
     <td><%=h page.indentation_level %></td>
     <td><%=h page.is_task %></td>

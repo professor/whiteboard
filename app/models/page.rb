@@ -7,11 +7,13 @@ class Page < ActiveRecord::Base
     belongs_to :course
     acts_as_list :scope => :course
 
-  def before_save
-     self.updated_by_user_id = current_user.id if current_user      
+  def before_validation
+    current_user = UserSession.find.user
+     self.updated_by_user_id = current_user if current_user
   end
 
   def editable?
+    current_user = UserSession.find.user
     return (current_user.is_staff? || current_user.is_admin?)
   end
 
