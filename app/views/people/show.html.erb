@@ -54,17 +54,12 @@
 Skype: <%=h @person.skype %><br />
 Tigris: <%=h @person.tigris %><br />
 Personal email: <%=h @person.personal_email %><br />
+TWiki Page: <%= twiki_user_link(@person.twiki_name, @person.twiki_name) %>    
 
     <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 
-<h1><%=h @person.human_name %></h1>
-  <div class="rounded student">
-  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
-  <span class="instructions">These fields can be edited by anyone.</span>
-  <%= render :partial => 'show_user_fields', :locals=>{:f => f, :person => @person} %>
-  </div>
-
+<h1><%=h @person.human_name %></h1>    
   <div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
   <span class="instructions">These fields can be edited by faculty.</span>
