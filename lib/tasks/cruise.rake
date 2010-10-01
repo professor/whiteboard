@@ -14,7 +14,6 @@ desc "Task for cruise Control"
 task :cruise do
   RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
-
   `bundle install`  
   Bundler.setup(:default, :test)
   
@@ -60,7 +59,7 @@ task :cruise do
   mkdir_p out unless File.directory? out if out
 
   Rake::Task["spec:rcov"].invoke
-#  mv 'coverage/', "#{out}/spec test coverage" if out
+  mv 'coverage/', "#{out}/spec test coverage" if out
 
 
 end
