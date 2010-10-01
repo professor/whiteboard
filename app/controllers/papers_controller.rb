@@ -17,7 +17,7 @@ class PapersController < ApplicationController
   def index_by_person
     @person = Person.find_by_twiki_name(params[:twiki_name])
     @papers = @person.papers
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @papers }
