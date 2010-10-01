@@ -108,6 +108,10 @@ class PeopleController < ApplicationController
 
     end
 
+    if(@person.papers.size > 0 )
+      @show_my_papers_link = true
+    end
+
     respond_to do |format|
       if @person.nil?
         flash[:error] = "Person #{params[:twiki_name]} is not in this system."

@@ -59,6 +59,10 @@ background-color: #6B7F93;
   </p>
 <% end %>
 
+ <% if @show_my_papers_link %>
+      <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %>
+  <% end %>
+
 <% if @person.is_staff %>
 
   <p>
