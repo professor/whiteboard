@@ -6,7 +6,7 @@ class PapersController < ApplicationController
   # GET /papers
   # GET /papers.xml
   def index
-    @papers = Paper.find(:all, :order => "date ASC")
+    @papers = Paper.find(:all, :order => "date DESC")
 
     respond_to do |format|
       format.html # index.html.erb
