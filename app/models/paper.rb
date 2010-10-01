@@ -2,7 +2,7 @@ class Paper < ActiveRecord::Base
 
   has_and_belongs_to_many :people, :join_table=>"papers_people", :class_name => "Person"
 
-    validates_presence_of     :title
+    validates_presence_of     :citation
 
     has_attached_file :paper,
       :storage => :s3,

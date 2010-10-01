@@ -17,7 +17,7 @@ class PagesControllerTest < ActionController::TestCase
   def test_should_create_page
     login_as :faculty_frank
     assert_difference('Page.count') do
-      post :create, :page => { }
+      post :create, :page => { :title => "Syllabus" }
     end
 
     assert_redirected_to page_path(assigns(:page))

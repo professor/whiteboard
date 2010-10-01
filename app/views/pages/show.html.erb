@@ -1,9 +1,9 @@
-<% content_for :title, @page.course.name + " - " + @page.label %>
+<% content_for :title, @page.course.name + " - " + @page.title %>
 
 <%= render :partial => "left_nav" %>
 
 <h1 name="course"><%=h @page.course.name %></h1>
-<h2 name="page">  <%=h @page.label %></h2>
+<h2 name="page">  <%=h @page.title %></h2>
 
 <div id="lvl_topnav">
 

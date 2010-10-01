@@ -7,7 +7,7 @@
 
 <% for page in @page.course.pages %>
   <div class="SecondaryNav">
-  <%= link_to page.label, page, :class=>"SecondaryNav_Link" %>
+  <%= link_to page.title, page, :class=>"SecondaryNav_Link" %>
   </div>
 <% end %>
 
