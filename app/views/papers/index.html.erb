@@ -11,14 +11,9 @@
 
 <% for paper in @papers %>
   <tr>
-<% if paper.citation.blank? %>
-    <td><p><%=h paper.authors_full_listing %> "<%=h paper.title %>" <%=h paper.conference %> <%=h paper.year %>.
-    [<%= link_to 'paper', paper.paper.url %>]</p></td>
-<% else %>
         <td><p><%=h paper.citation %>
-        [<%= link_to 'paper', paper.paper.url %>]</p></td>
-
-<% end %>
+<% unless paper.paper_file_name.blank? %>
+        [<%= link_to 'paper', paper.paper.url %>] <% end %> </p></td>
 
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
 <td><%= link_to 'Edit', edit_paper_path(paper) %></td>
