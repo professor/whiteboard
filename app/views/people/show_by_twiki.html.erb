@@ -60,7 +60,7 @@ background-color: #6B7F93;
 <% end %>
 
  <% if @show_my_papers_link %>
-      <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %>
+    <a href="<%=machine_name%>/papers/by/<%=@person.twiki_name%>" target="_top">My papers</a>
   <% end %>
 
 <% if @person.is_staff %>
