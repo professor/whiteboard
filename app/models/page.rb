@@ -12,8 +12,8 @@ class Page < ActiveRecord::Base
      self.updated_by_user_id = current_user if current_user
   end
 
-  def editable?
-    current_user = UserSession.find.user
+  def editable?(current_user)
+#    current_user = UserSession.find.user
     return (current_user.is_staff? || current_user.is_admin?)
   end
 

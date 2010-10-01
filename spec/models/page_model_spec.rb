@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Page do
+  fixtures :users  
 
   before(:each) do
     @page = Page.new(:title => "Syllabus",
@@ -10,18 +11,23 @@ describe Page do
 
 
   it "is valid with valid attributes" do
+    UserSession.create(users(:faculty_frank))
     @page.should be_valid
   end
 
   it "is not valid without a title" do
+    UserSession.create(users(:faculty_frank))
     @page.title = nil
     @page.should_not be_valid
   end
 
-  it "is not valid without an updated_by_user_id" do
-    @page.updated_by_user_id = nil
-    @page.should_not be_valid
-  end
+  it "is not valid without an updated_by_user_id"
+#   Not sure how to test this one since the invariant is upheld by the model with a before_validation
+#  do
+#    UserSession.create(users(:faculty_frank))
+#    @page.updated_by_user_id = nil
+#    @page.should_not be_valid
+#  end
 
   it "should allow faculty to upload attachments"
 #    setup :activate_authlogic
@@ -49,9 +55,10 @@ describe Page do
 #  end
 
     it "should allow faculty to comment about the changes" do
-    @page.version_comments = "A very simple change"
-    @page.save
-#This seems to simple
+      UserSession.create(users(:faculty_frank))
+      @page.version_comments = "A very simple change"
+      @page.save
+#This seems too simple
   end
 
 
