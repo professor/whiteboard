@@ -1,0 +1,37 @@
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% for paper in @papers %>
+  <tr>
+        <td><p><%=h paper.citation %>
+<% unless paper.paper_file_name.blank? %>
+        [<%= link_to 'paper', paper.paper.url %>] <% end %> </p></td>
+
+<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
+<td><%= link_to 'Edit', edit_paper_path(paper) %></td>
+<% else %>
+<td>&nbsp;</td>
+<% end %>
+
+
+<% if current_user && current_user.is_admin? %>
+    <td><%= link_to 'Destroy', paper, :confirm => 'Are you sure?', :method => :delete %></td>
+<% else %>
+<td>&nbsp;</td>
+<% end %>
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
+<%= link_to 'New paper', new_paper_path %>
+<% end %>
+<br/>
+<br/>

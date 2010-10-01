@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"
   map.resources :delayed_system_jobs #so that we can easily delete
 
+  map.connect 'papers/by/:twiki_name', :controller => 'papers', :action => 'index_by_person'
   map.resources :papers
 
   map.resources :mailing_lists, :requirements => {:id => /\S+/}

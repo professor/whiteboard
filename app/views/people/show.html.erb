@@ -43,7 +43,13 @@
 <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %><br/> I am a  <%=h @person.local_near_remote.downcase %> student.<% end %>
   </td></tr>
 <% end %>
+  <% if @show_my_papers_link %>
+      <tr class="cmu_table_odd"><td>&nbsp;</td>
+      <td> <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %></td></tr>
+  <% end %>
 </table>
+
+
 
 </td></tr></table>
 
