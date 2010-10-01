@@ -25,6 +25,8 @@ class Person < ActiveRecord::Base
 #  end
 
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
+  has_and_belongs_to_many :papers, :join_table=>"papers_people"
+
 
 
   validates_uniqueness_of   :login,    :case_sensitive => false, :allow_nil => true
