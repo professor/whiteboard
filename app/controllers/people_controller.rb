@@ -53,7 +53,7 @@ class PeopleController < ApplicationController
     end
     @person.revert_to params[:version_id] if params[:version_id]
 
-    if(@person.papers.size > 0 )
+    if(@person && @person.papers.size > 0 )
       @show_my_papers_link = true
     end
 
@@ -108,7 +108,7 @@ class PeopleController < ApplicationController
 
     end
 
-    if(@person.papers.size > 0 )
+    if(@person && @person.papers.size > 0 )
       @show_my_papers_link = true
     end
 
