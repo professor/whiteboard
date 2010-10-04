@@ -127,9 +127,8 @@ class Person < ActiveRecord::Base
    def create_twiki_account
      require 'mechanize'
      agent = Mechanize.new
-     agent.basic_auth('RailsApp', 'cmu1qaz')
-#     agent.get('http://info.sv.cmu.edu/do/view/TWiki/TWikiRegistration')
-     agent.get('http://info.sv.cmu.edu/do/view/TWiki/TWikiRegistration') do |page|
+     agent.basic_auth(TWIKI_USERNAME, TWIKI_PASSWORD)
+     agent.get(TWIKI_URL + '/do/view/TWiki/TWikiRegistration' ) do |page|
        registration_result = page.form_with(:action => '/do/register/Main/WebHome') do |registration|
            registration.Twk1FirstName = self.first_name
            registration.Twk1LastName = self.last_name
@@ -160,8 +159,8 @@ class Person < ActiveRecord::Base
    def reset_twiki_password
      require 'mechanize'
      agent = Mechanize.new
-     agent.basic_auth('RailsApp', 'cmu1qaz')
-     agent.get('http://info.sv.cmu.edu/do/view/TWiki/ResetPassword') do |page|
+     agent.basic_auth(TWIKI_USERNAME, TWIKI_PASSWORD)
+     agent.get(TWIKI_URL + '/do/view/TWiki/ResetPassword') do |page|
        reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
            reset_page.LoginName = self.twiki_name
        end.submit
@@ -193,21 +192,21 @@ class Person < ActiveRecord::Base
    end
 
 
-   def create_adobe_connect
-     require 'mechanize'
-     agent = Mechanize.new
-     agent.get('https://admin.na6.acrobat.com/admin/administration/user/new-user/1?account-id=829716469&in-wizard=true&principal-id=1035176766') do |login_page|
-       login_page.login = "rails.app@sv.cmu.edu"
-       login_page.password = "5tgb2ert"
-       reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
-           reset_page.LoginName = self.twiki_name
-       end.submit
-
-       return false if reset_result_page.parser.css('.patternTopic h3').text == " Password reset failed "
-       return true if reset_result_page.link_with(:text => 'change password')
-
-       return true
-     end
-   end
+#   def create_adobe_connect
+#     require 'mechanize'
+#     agent = Mechanize.new
+#     agent.get(ADOBE_CONNECT_NEW_USER_URL) do |login_page|
+#       login_page.login = ADOBE_CONNECT_USERNAME
+#       login_page.password = ADOBE_CONNECT_PASSWORD
+#       reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
+#           reset_page.LoginName = self.twiki_name
+#       end.submit
+#
+#       return false if reset_result_page.parser.css('.patternTopic h3').text == " Password reset failed "
+#       return true if reset_result_page.link_with(:text => 'change password')
+#
+#       return true
+#     end
+#   end
 
 end
