@@ -52,6 +52,7 @@ group :test do
   gem 'rspec'
   gem 'factory_girl'  
 # gem 'factory_girl_rails'  #only works for Rails 3
+  gem 'test-unit'
 end
 
 
