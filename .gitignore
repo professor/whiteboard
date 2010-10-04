@@ -11,6 +11,8 @@ config/database.yml
 config/google_apps.yml
 config/amazon_s3.yml
 config/systems.cc.yml.yml
+config/adobe_cnnect.yml
+config/systems.yml
 
 log/*
 nbproject/*
