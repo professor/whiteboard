@@ -1,0 +1,33 @@
+development:
+  twiki:
+    username: RailsApp
+    password: cmu1edc
+    url: http://info.sv.cmu.edu
+  adobe_connect:
+    username: "rails.app@sv.cmu.edu"
+    password: "something"
+    new_user_url: "https://admin.na6.acrobat.com/admin/administration/user/new-user/1?account-id=829716469&in-wizard=true&principal-id=1035176766"
+
+
+
+     
+test:
+  twiki:
+    username: RailsApp
+    password: cmu1edc
+    url: http://info.sv.cmu.edu
+  adobe_connect:
+    username: "rails.app@sv.cmu.edu"
+    password: "something"
+    new_user_url: "https://admin.na6.acrobat.com/admin/administration/user/new-user/1?account-id=829716469&in-wizard=true&principal-id=1035176766"
+
+
+production:
+  twiki:
+    username: RailsApp
+    password: cmu1edc
+    url: http://info.sv.cmu.edu
+  adobe_connect:
+    username: "rails.app@sv.cmu.edu"
+    password: "something"
+    new_user_url: "https://admin.na6.acrobat.com/admin/administration/user/new-user/1?account-id=829716469&in-wizard=true&principal-id=1035176766"
