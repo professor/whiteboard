@@ -12,6 +12,7 @@ gem 'delayed_job', '2.1.0.pre'
 
 gem 'oauth'
 
+gem 'heroku'
 
 group :plugins do
   gem 'authlogic'
@@ -52,6 +53,7 @@ group :test do
   gem 'rspec'
   gem 'factory_girl'  
 # gem 'factory_girl_rails'  #only works for Rails 3
+  gem 'test-unit'
 end
 
 

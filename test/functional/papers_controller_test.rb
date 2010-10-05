@@ -14,7 +14,7 @@ class PapersControllerTest < ActionController::TestCase
 
   def test_should_create_paper
     assert_difference('Paper.count') do
-      post :create, :paper => { :title => "This is a sample paper"}
+      post :create, :paper => { :citation => "This is a sample paper"}
     end
 
 #    assert_redirected_to paper_path(assigns(:paper))

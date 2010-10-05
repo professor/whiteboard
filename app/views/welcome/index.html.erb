@@ -12,3 +12,8 @@
 <h2>New features</h2>
 <p><%= link_to "New Features", new_features_path %></p>
 <p><%= link_to "Google Mailing Lists", mailing_lists_path %></p>
+
+<% if current_user && current_user.is_admin %>
+<h2>Admin only</h2>
+    <p><%= link_to "Config", config_path %></p>
+<% end %>
