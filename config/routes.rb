@@ -123,6 +123,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
 
   map.new_features '/new_features', :controller => "welcome", :action => "new_features"
+  map.config '/config', :controller => "welcome", :action => "config"
   
   map.root :controller => "welcome"
 end
