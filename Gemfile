@@ -13,6 +13,7 @@ gem 'delayed_job', '2.1.0.pre'
 gem 'oauth'
 
 gem 'heroku'
+gem 'taps'
 
 group :plugins do
   gem 'authlogic'
