@@ -4,6 +4,9 @@ Welcome to the CMU-SV rails project for the Education group.
 
 Check out the design document inside docs
 
+{Design Documents}[link:docs/README_FOR_APP.rdoc]
+
+
 == Getting involved
 
 For individual maintainers, please fork the project on github, make your changes, and submit a pull request.
