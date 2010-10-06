@@ -21,6 +21,8 @@ MfSE/*
 tmp/*
 lib/views/*
 
+README_personal
+
 #sensitive student info
 db/migrate/2008*
 db/migrate/2009*
