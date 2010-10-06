@@ -4,8 +4,25 @@ Welcome to the CMU-SV rails project for the Education group.
 
 Check out the design document inside docs
 
+== Getting involved
+
+For individual maintainers, please fork the project on github, make your changes, and submit a pull request.
+
+For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
+a repository to work from. Each new feature should be done in its own branch.
+
+
+== Submitting code
+
+The criteria for code being accepted is as follows:
+
+   1. there must be test cases for all code written, we already have enough code that was test by hand
+   2. the code should solve a need experienced by many of our users
+   3. the code must be relatively well written
+   4. if you are considering using new gems, run your ideas by the maintainers first
 
 
 
 == License
-Copyright 2010 Todd Sedano
+This code is released under the TBD license -- Copyright 2010 Todd Sedano -- see "New Features" for a complete list
+of contributors
