@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_filter :require_user
 
-  layout 'cmu_sv'
+  layout 'cmu_sv_no_pad'
 
   # GET /pages
   # GET /pages.xml

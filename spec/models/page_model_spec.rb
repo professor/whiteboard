@@ -62,6 +62,9 @@ describe Page do
   end
 
 
+    it "should allow the creator to specify edit permissions as either anyone or faculty"
+
+  
 
   
 end
