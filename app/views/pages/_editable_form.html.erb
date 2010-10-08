@@ -1,3 +1,136 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+<%= javascript_include_tag 'wymeditor/jquery.wymeditor.min' %>
+<!-- stylesheet_link_tag "wymeditor/skins/refinery/wymiframe", :media => "all"  -->
+<%= stylesheet_link_tag "wymeditor/skins/refinery/skin", :media => "all" %>
+
+
+
+<script type="text/javascript">
+	$(function() {
+		$("#tabs").tabs();
+        $( ".selector" ).tabs({ cookie: { expires: 30 } });
+	});
+
+
+//    jQuery(function() {
+//        jQuery('#page_tab_one_contents').wymeditor();
+//    });
+
+    jQuery(function() {
+
+    jQuery('#page_tab_one_contents').wymeditor({
+        //Read http://trac.wymeditor.org/trac/wiki/0.5/Customization
+
+//        logo: ''
+        skin: 'refinery'
+
+        //customize the tools menu with toolsItems option
+        //'name' is the name of the command which will be executed
+        //when the user clicks on the button
+        //'title' is the button's title (automagically localized)
+        //'css' is the button's class name
+//        toolsItems: [
+//        {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'},
+//        {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
+//        {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
+//        {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
+//        {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
+//        {'name': 'InsertOrderedList', 'title': 'Ordered_List',
+//            'css': 'wym_tools_ordered_list'},
+//        {'name': 'InsertUnorderedList', 'title': 'Unordered_List',
+//            'css': 'wym_tools_unordered_list'},
+//        {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
+//        {'name': 'Paste', 'title': 'Paste_From_Word',
+//            'css': 'wym_tools_paste'},
+//        {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
+//        {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}
+//    ]
+
+
+  , cssSkinPath: "/stylesheets/wymeditor/skins/"
+
+
+  , boxHtml:
+  "<div class='wym_box'>"
+    + "<div class='wym_area_top clearfix'>"
+      + WYMeditor.CONTAINERS
+      + WYMeditor.TOOLS
+    + "</div>"
+    + "<div class='wym_area_main'>"
+      + WYMeditor.HTML
+      + WYMeditor.IFRAME
+      + WYMeditor.STATUS
+    + "</div>"
+  + "</div>"        
+
+  , containersItems: [
+    {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
+    , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
+    , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
+    , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
+  ]
+
+  ,
+        toolsItems: [
+    {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
+    ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
+    ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
+    ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
+    /*,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
+    ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
+    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
+    ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}*/
+    ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
+    ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
+    ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
+    ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
+    ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
+    ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
+  ]
+
+
+    , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
+
+    , containersItemHtml:
+        "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
+          + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
+        + "</li>"
+
+    ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
+
+    ,toolsItemHtml:
+    "<li class='" + WYMeditor.TOOL_CLASS + "'>"
+      + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
+        + WYMeditor.TOOL_TITLE
+      + "</a>"
+    + "</li>"
+
+    , classesHtml: ''
+        , classesItemHtml: ''
+        ,       classesItemHtmlMultiple: ''
+
+//  , classesHtml: "<li class='wym_tools_class'>"
+//                 + "<a href='#' name='" + WYMeditor.APPLY_CLASS + "' title='"+ titleize(WYMeditor.APPLY_CLASS) +"'></a>"
+//                 + "<ul class='wym_classes wym_classes_hidden'>" + WYMeditor.CLASSES_ITEMS + "</ul>"
+//                + "</li>"
+
+//  , classesItemHtml: "<li><a href='#' name='"+ WYMeditor.CLASS_NAME + "'>"+ WYMeditor.CLASS_TITLE+ "</a></li>"
+//  , classesItemHtmlMultiple: "<li class='wym_tools_class_multiple_rules'>"
+//                              + "<span>" + WYMeditor.CLASS_TITLE + "</span>"
+//                              + "<ul>{classesItemHtml}</ul>"
+//                            +"</li>"
+
+    });
+    });
+
+
+</script>
+
+
+
 <% form_for(@page) do |f| %>
   <%= f.error_messages %>
 
@@ -17,32 +150,45 @@
     <%= f.label :is_task %><br />
     <%= f.check_box :is_task %>
   </p>
-  <p>
-    <%= f.label :tab_one_email_from %><br />
-    <%= f.text_field :tab_one_email_from %>
-  </p>
-  <p>
-    <%= f.label :tab_one_email_subject %><br />
-    <%= f.text_field :tab_one_email_subject %>
-  </p>
-  <p>
-    <%= f.label :tab_one_contents %><br />
-    <%= f.text_area :tab_one_contents %>
-  </p>
-  <p>
-    <%= f.label :tab_two_contents %><br />
-    <%= f.text_area :tab_two_contents %>
-  </p>
-  <p>
-    <%= f.label :tab_three_contents %><br />
-    <%= f.text_area :tab_three_contents %>
-  </p>
+
+<div id="tabs">
+	<ul class="none">
+		<li><a href="#tabs-1">Project Requirements</a></li>
+		<li><a href="#tabs-2">Getting help</a></li>
+		<li><a href="#tabs-3">Submitting your work</a></li>
+	</ul>
+	<div id="tabs-1">
+      <div id="email_from">From: <%= f.text_field :tab_one_email_from %></div>
+      <div id="email_subject">Subject: <%= f.text_field :tab_one_email_subject %></div>
+
+      <%= f.text_area :tab_one_contents %>
+
+       <div id="email_details">
+        <p><%= sanitize @page.tab_one_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      </div>
+		<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+	</div>
+	<div id="tabs-2">
+      <p><%= sanitize @page.tab_two_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      <%= f.text_area :tab_two_contents %>
+		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+	</div>
+	<div id="tabs-3">
+      <p><%= sanitize @page.tab_three_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      <%= f.text_area :tab_three_contents %>
+		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+		<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+	</div>
+</div>
+
   <p>
     <%= f.label :task_duration %><br />
-    <%= f.text_field :task_duration %>
+    <%= f.text_field :task_duration, :size => 2 %> weeks
   </p>
   <p>
-    <%= f.submit button_name %>
+    <input type="submit" class="wymupdate" />
+
+    <%= f.submit button_name,  :class => "wymupdate"  %>
   </p>
 <% end %>
 

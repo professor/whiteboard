@@ -135,8 +135,23 @@ tinyMCE.init({
 
   <div class="sv_main_contents">
 <a name="access" shape="rect"></a>               <!--   <h1>Content<br> </h1> -->
-<% if flash[:notice] %><p style="color: green"><%= flash[:notice] %></p><% end %>
-<% if flash[:error] %><p style="color: red"><%= flash[:error] %></p><% end %>
+    <% if flash[:notice] %>
+    <div class="ui-widget">
+        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+            <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+            <%= flash[:notice] %>
+        </div>
+    </div>
+    <% end %>
+    <% if flash[:error] %>
+        <div class="ui-widget">
+        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+            <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+            <%= flash[:error] %>
+        </div>
+    </div>
+    <% end %>
+
 
 <%= yield  %>
 
