@@ -38,6 +38,7 @@ group :development do
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
+  gem 'rspec'
   gem 'rspec-rails'
 end
 
@@ -52,6 +53,8 @@ group :test do
   gem 'rdoc',     '2.4.3'
   gem 'mocha'
   gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda'
   gem 'factory_girl'  
 # gem 'factory_girl_rails'  #only works for Rails 3
   gem 'test-unit'

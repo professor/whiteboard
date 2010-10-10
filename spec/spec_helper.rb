@@ -9,6 +9,7 @@ require 'spec/rails'
 #require 'webrat/integrations/rspec-rails'
 
 require 'authlogic/test_case'
+require 'shoulda'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

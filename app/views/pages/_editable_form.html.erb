@@ -15,13 +15,20 @@
 	});
 
 
+    jQuery(function() {
+        jQuery('#page_tab_two_contents').wymeditor();
+    });
+
 //    jQuery(function() {
-//        jQuery('#page_tab_one_contents').wymeditor();
+//      jQuery('.wymeditor').addClass("Todd")
 //    });
+
 
     jQuery(function() {
 
-    jQuery('#page_tab_one_contents').wymeditor({
+    jQuery('.wymeditor').wymeditor({
+
+
         //Read http://trac.wymeditor.org/trac/wiki/0.5/Customization
 
 //        logo: ''
@@ -153,15 +160,19 @@
 
 <div id="tabs">
 	<ul class="none">
-		<li><a href="#tabs-1">Project Requirements</a></li>
+		<li><a href="#tabs-1">Project requirements</a></li>
 		<li><a href="#tabs-2">Getting help</a></li>
 		<li><a href="#tabs-3">Submitting your work</a></li>
+<% if current_user.is_staff || current_user.is_admin %>
+        <li><a href="#tabs-4">Faculty notes</a></li>
+<% end %>
 	</ul>
 	<div id="tabs-1">
       <div id="email_from">From: <%= f.text_field :tab_one_email_from %></div>
       <div id="email_subject">Subject: <%= f.text_field :tab_one_email_subject %></div>
 
-      <%= f.text_area :tab_one_contents %>
+      <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
+      <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
 
        <div id="email_details">
         <p><%= sanitize @page.tab_one_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
@@ -170,16 +181,24 @@
 	</div>
 	<div id="tabs-2">
       <p><%= sanitize @page.tab_two_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
-      <%= f.text_area :tab_two_contents %>
+      <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
 		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
 	</div>
 	<div id="tabs-3">
       <p><%= sanitize @page.tab_three_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
-      <%= f.text_area :tab_three_contents %>
+      <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
 		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
 		<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
 	</div>
-</div>
+  <% if current_user.is_staff || current_user.is_admin %>
+	<div id="tabs-4">
+      <p><%= sanitize @page.faculty_notes, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      <%= f.text_area :faculty_notes, :class => "wymeditor" %>
+		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+		<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+	</div>
+  <% end %>    
+      </div>
 
   <p>
     <%= f.label :task_duration %><br />
