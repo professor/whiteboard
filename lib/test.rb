@@ -10,8 +10,6 @@ require 'rails'
 #
 ##= ActiveRecord::Base.connection.execute("UPDATE effort_log_line_items SET course_id = 55 WHERE course_id = 66;")
 #
-#
-#puts "hello"
 
 fixme = []
   list = Person.find(:all)

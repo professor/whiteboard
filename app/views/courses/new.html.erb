@@ -8,12 +8,12 @@
     <%= f.collection_select(:course_number_id, @course_numbers, :id, :name, :include_blank => true) %>
   </p>
     <p>
-      <%= f.label :name%><br />
-      <%= f.text_field :name %>
-    </p>
-    <p>
       <%= f.label :short_name, "Abbreviation" %><br />
       <%= f.text_field :short_name %>
+    </p>
+    <p>
+      <%= f.label :name%><br />
+      <%= f.text_field :name %>
     </p>
     <p>
       <%= f.label :number %><br />

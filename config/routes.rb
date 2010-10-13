@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :rss_feeds #I don't think we need this here
 
-  map.connect 'pages/:id/:tab',  :controller => 'pages', :action => "show"
+#  map.connect 'pages/:id/:tab',  :controller => 'pages', :action => "show"
   map.resources :pages
 
   map.resources :curriculum_comment_types

@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_filter :require_user
 
-  layout 'cmu_sv'
+  layout 'cmu_sv_no_pad'
 
   # GET /pages
   # GET /pages.xml
@@ -30,8 +30,8 @@ class PagesController < ApplicationController
   # GET /pages/new.xml
   def new
     @page = Page.new
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
-
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    @courses = Course.find(:all)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
@@ -43,14 +43,18 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @courses = Course.find(:all)
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @page }
+    end    
   end
 
   # POST /pages
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
-
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    @courses = Course.find(:all)
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -67,7 +71,8 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )   
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    @courses = Course.find(:all)
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

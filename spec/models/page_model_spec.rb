@@ -34,7 +34,19 @@ describe Page do
 #    UserSession.create(users("FacultyFrank"))
 
 
-  it "should show who did the last edit and when it occurred"
+  it "should show who did the last edit and when it occurred" do
+    UserSession.create(users(:faculty_frank))
+    last_user_id = @page.updated_by_user_id
+    @page.title = "Something different"
+    @page.save
+    latest_user_id = @page.updated_by_user_id
+    Time.now.to_i.should be_close @page.updated_at.to_i, 100 
+    UserSession.user.id.should == latest_user_id
+  end
+
+  it "should allow the creator to specify editable by faculty or any authenticated user"
+
+  
 
   it "is editable by faculty and staff" 
   #do
@@ -62,6 +74,9 @@ describe Page do
   end
 
 
+    it "should allow the creator to specify edit permissions as either anyone or faculty"
+
+  
 
   
 end

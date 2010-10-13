@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
     acts_as_list :scope => :course
 
   def before_validation
-    current_user = UserSession.find.user
+      current_user = UserSession.find.user
      self.updated_by_user_id = current_user if current_user
   end
 
