@@ -40,6 +40,10 @@ group :development do
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'autotest-rails'
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'
+  gem 'test-unit' #, '<=1.2.3' #Downgrading so that autotest will work
 end
 
 group :test do
@@ -57,7 +61,7 @@ group :test do
   gem 'shoulda'
   gem 'factory_girl'  
 # gem 'factory_girl_rails'  #only works for Rails 3
-  gem 'test-unit'
+  gem 'test-unit' #, '<=1.2.3' #Downgrading so that autotest will work
 end
 
 
