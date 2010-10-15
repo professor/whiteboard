@@ -57,7 +57,7 @@
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
 <h2>Faculty Helpers</h2>
 <a href="<%=url_for :action=>"survey_monkey", :id => params[:id], :course_id => params[:course_id], :only_path=>true%>">
-<%= image_tag("/images/peer_evaluation2.jpg", :size => "198x142", :border=>"0") %><p>Peer Evaluation Tool</p></a>
+<%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border=>"0") %><p>Peer Evaluation Tool</p></a>
 
 <% end %>
 <br style="clear:both;" />
