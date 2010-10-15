@@ -40,6 +40,9 @@
 		<li><a href="#tabs-1">Project Requirements</a></li>
 		<li><a href="#tabs-2">Getting help</a></li>
 		<li><a href="#tabs-3">Submitting your work</a></li>
+        <% if current_user.is_staff || current_user.is_admin %>
+        <li><a href="#tabs-4">Faculty notes</a></li>
+        <% end %>      
 	</ul>
 	<div id="tabs-1">
       <div id="email_from">From: <%=h @page.tab_one_email_from %></div>
@@ -54,6 +57,11 @@
 	<div id="tabs-3">
       <p><%= sanitize @page.tab_three_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
 	</div>
+  <% if current_user.is_staff || current_user.is_admin %>
+	<div id="tabs-4">
+      <p><%= sanitize @page.faculty_notes, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+	</div>
+  <% end %>
 </div>
 
 <% end %>
