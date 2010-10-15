@@ -6,9 +6,14 @@
     <span style="color:red"><%=  person.human_name  %> has not completed the survey.</span> <br />
   <%end%>
    <br /><span style="color:red">Do not press "Save All Reports" until everyone has completed the survey.</span><br />
+<% else %>
+    <span style="color:green">Everyone has done the reports. <br />
 <%end%><br />
 
-Edit the report here: <br />
+We've included who said what, so you'll want to remove people's names. Keep an eye out for unhelpful comments.
+Once you are done editing the reports, the last button allows you to email the results back to each individual.<br />
+
+<br />
 <% form_for @report, :url => {:action => "complete_report"} do |f| %>
 <input type="hidden" name="id" value="<%=params[:id]%>">
 <%personcounter = 0%>
@@ -21,6 +26,8 @@ Edit the report here: <br />
   <% end %>
 
   <h2>Point Allocation</h2>
+    This information will not be given to the student. This is an indicator to help determine if a team
+    has issues with everyone contributing equally.
   <table class="tablesorter">
     <thead><tr><td>&nbsp;</td><%@people.each do |person| %><td><%= person.human_name %></td><% end %></tr></thead>
     <tbody>
