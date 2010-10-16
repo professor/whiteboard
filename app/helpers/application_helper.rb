@@ -6,7 +6,9 @@ module ApplicationHelper
     @is_development ||=(ENV['RAILS_ENV']=='development')
   end
 
-  
+  def sanitize_trusted(html)
+    return sanitize html, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li em div), :attributes => %w(id href name class style)
+  end
 
  
   def scotty_dog_landscape

@@ -248,3 +248,12 @@ border-width:1px;
 .sv_main_contents {
     padding-left: 15px;
 }
+
+#email_from_header {
+    width: 70px;
+    float: left;
+}
+#email_subject_header {
+    width: 70px;
+    float: left;
+}
