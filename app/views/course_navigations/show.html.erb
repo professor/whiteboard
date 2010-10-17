@@ -47,7 +47,8 @@
     <%= link_to page.title, page, :class=>"SecondaryNav_Link" %>
      </li>
   <% end %>
-  
+  <%= link_to 'New page', new_page_path(:course_id => @course.id)  %>
+
 </ul>
 
 <!--This is a test <span class="ui-icon ui-icon-arrowthick-1-w"></span>-->
