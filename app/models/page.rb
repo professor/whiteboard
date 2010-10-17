@@ -17,4 +17,18 @@ class Page < ActiveRecord::Base
     return (current_user.is_staff? || current_user.is_admin?)
   end
 
+
+ #Re-position: change the sequence of pages for a given course
+ def self.reposition(ids)
+  if (ENV['RAILS_ENV']=='development') #development?
+    update_all(
+      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
+      { :id => ids }
+    )
+  else
+     update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })     
+  end
+
+ end
+
 end

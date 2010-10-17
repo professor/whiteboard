@@ -1,0 +1,54 @@
+<% content_for :title, @course.name %>
+
+<% content_for :javascript do %>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+    <style type="text/css">
+        #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+        #sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
+	</style>
+
+    <% javascript_tag do %>
+        $(function() {
+       $('#sortable').sortable(
+          {
+            cursor: 'hand',
+            dropOnEmpty:false,
+            opacity: 0.5,
+            update: function(){
+              $.ajax({
+                  type: 'post',
+                  data: $('#sortable').sortable('serialize') + '&id=<%=@course.id-%>',
+                  dataType: 'script',
+                  complete: function(request){
+                      $('#sortable').effect('highlight');
+                    },
+                  url: '/course_navigations/reposition'})
+              }
+            });
+        $("#sortable").disableSelection();        
+        })
+      <% end %>
+<% end %>
+
+
+
+
+
+<h1>Navigation for <%= @course.name %></h1>
+
+<p>To reorder the pages, drag them around and hit save.</p>
+<ul id="sortable">
+  <% for page in @pages %>
+    <li id="page_<%= page.id-%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+    <%= link_to page.title, page, :class=>"SecondaryNav_Link" %>
+     </li>
+  <% end %>
+  
+</ul>
+
+<!--This is a test <span class="ui-icon ui-icon-arrowthick-1-w"></span>-->
+<!--This is a test <span class="ui-icon ui-icon-arrowthick-1-e"></span>-->

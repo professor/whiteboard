@@ -31,7 +31,7 @@
 
 
 <% unless @page.is_task? %>
-    <p><%= sanitize @page.tab_one_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+    <p><%= sanitize_trusted(@page.tab_one_contents) %></p>
     
 <% else %>
 
@@ -48,18 +48,18 @@
       <div id="email_from_header">From: </div><div id="email_from_contents"><%=h @page.tab_one_email_from %></div>
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%=h @page.tab_one_email_subject %></div>
       <div id="email_details">
-        <p><%= sanitize @page.tab_one_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+        <p><%= sanitize_trusted(@page.tab_one_contents) %></p>
       </div>
 	</div>
 	<div id="tabs-2">
       <p><%= sanitize_trusted(@page.tab_two_contents) %></p>
 	</div>
 	<div id="tabs-3">
-      <p><%= sanitize @page.tab_three_contents, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      <p><%= sanitize_trusted(@page.tab_three_contents) %></p>
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
 	<div id="tabs-4">
-      <p><%= sanitize @page.faculty_notes, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></p>
+      <p><%= sanitize_trusted(@page.faculty_notes) %></p>
 	</div>
   <% end %>
 </div>
