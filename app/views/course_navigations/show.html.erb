@@ -40,7 +40,7 @@
 
 <h1>Navigation for <%= @course.name %></h1>
 
-<p>To reorder the pages, drag them around and hit save.</p>
+<p>To reorder the pages, drag them around. Changes are automatically saved.</p>
 <ul id="sortable">
   <% for page in @pages %>
     <li id="page_<%= page.id-%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
