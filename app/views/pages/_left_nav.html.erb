@@ -11,6 +11,12 @@
   </div>
 <% end %>
 
+<% if current_user.is_staff || current_user.is_admin %>
+            <div class="SecondaryNav">
+            <%= link_to "(Edit)", course_navigation_path(@page.course), :class=>"SecondaryNav_Link" %>
+            </div>
+<% end %>
+
 <% end %>
 
 <% end %>

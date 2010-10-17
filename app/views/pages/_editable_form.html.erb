@@ -251,8 +251,8 @@
 <% end %>
 	</ul>
 	<div id="tabs-1">
-      <div id="email_from">From: <%= f.text_field :tab_one_email_from %></div>
-      <div id="email_subject">Subject: <%= f.text_field :tab_one_email_subject %></div>
+      <div id="email_from_header">From: </div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+      <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
       <div id="email_details">
          <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
       </div>
