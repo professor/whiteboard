@@ -38,8 +38,14 @@ group :development do
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
-  gem 'rspec',   '1.3' #Default is rspec 2 which only works with Rails
-  gem 'rspec-rails'
+  gem 'rspec',   '1.3.1'
+#  gem 'rspec', '~>2.0.0'
+
+#  gem 'rspec-core'
+#  gem 'rspec-expectations'
+#  gem 'rspec-mocks'
+  gem 'rspec-rails', '1.3.3'
+#  gem 'rspec-rails'
   gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
   gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
   gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/  
@@ -56,8 +62,13 @@ group :test do
   gem 'rcov'
   gem 'rdoc',     '2.4.3'
   gem 'mocha'
-  gem 'rspec',   '1.3' #Default is rspec 2 which only works with Rails
-  gem 'rspec-rails'
+  gem 'rspec',   '1.3.1' 
+#  gem 'rspec', '~>2.0.0'
+#  gem 'rspec-core'
+#  gem 'rspec-expectations'
+#  gem 'rspec-mocks'
+  gem 'rspec-rails', '1.3.3'
+#  gem 'rspec-rails'
   gem 'shoulda'
   gem 'factory_girl'  
 # gem 'factory_girl_rails'  #only works for Rails 3
