@@ -4,35 +4,20 @@
 
 <table>
   <tr>
-    <th>Course Id</th>
     <th>Title</th>
-    <th>Sequence number</th>
-    <th>Indentation level</th>
-    <th>Is task</th>
-    <th>Tab one contents</th>
-    <th>Tab two contents</th>
-    <th>Tab three contents</th>
-    <th>Task duration</th>
-    <th>Tab one email from</th>
-    <th>Tab one email subject</th>
+    <th>Course</th>
   </tr>
 
 <% for page in @pages %>
   <tr>
-    <td><%=h page.course_id %></td>
     <td><%=h page.title %></td>
-    <td><%=h page.position %></td>
-    <td><%=h page.indentation_level %></td>
-    <td><%=h page.is_task %></td>
-    <td><%=h page.tab_one_contents %></td>
-    <td><%=h page.tab_two_contents %></td>
-    <td><%=h page.tab_three_contents %></td>
-    <td><%=h page.task_duration %></td>
-    <td><%=h page.tab_one_email_from %></td>
-    <td><%=h page.tab_one_email_subject %></td>
+<% unless page.course_id.blank?  %>
+    <td>(<%=h page.course.name %>)</td>
+<% else %>
+    <td>&nbsp;</td>
+<% end %>
     <td><%= link_to 'Show', page %></td>
     <td><%= link_to 'Edit', edit_page_path(page) %></td>
-    <td><%= link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
