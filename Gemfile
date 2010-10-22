@@ -53,7 +53,7 @@ group :development, :test do
   gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
   gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
   gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/  
-  gem 'test-unit' '=1.2.3' #Downgrading so that autotest, rspec will work
+  gem 'test-unit' #'=1.2.3' #Downgrading so that autotest, rspec will work
 end
 
 #gem 'gchartrb'
