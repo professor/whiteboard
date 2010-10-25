@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
         @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
       end
     else
-          @people = Person.find(:all, :conditions => ['is_active IS TRUE'],  :order => "first_name ASC, last_name ASC")
+          @people = Person.find(:all, :conditions => ['is_active = 1'],  :order => "first_name ASC, last_name ASC")
     end
 
     
