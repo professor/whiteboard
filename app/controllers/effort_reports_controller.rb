@@ -363,7 +363,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       end
 
      if current_user.is_staff || current_user.is_admin
-      @students = Person.find(:all, :conditions => ['is_student IS TRUE'], :order => "first_name ASC, last_name ASC")
+      @students = Person.find(:all, :conditions => ['is_student = ?', true], :order => "first_name ASC, last_name ASC")
      else
       @students = [current_user]
      end
