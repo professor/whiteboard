@@ -284,9 +284,12 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
   create_table "user_versions", :force => true do |t|
     t.integer  "person_id"
     t.integer  "version"
-    t.string   "webiso_account"
-    t.string   "login",                     :limit => 40
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "human_name"
     t.string   "email",                     :limit => 100
+    t.string   "persistence_token"
+    t.string   "login",                     :limit => 40
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
     t.datetime "created_at"
@@ -297,9 +300,6 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.boolean  "is_student",                               :default => false
     t.boolean  "is_admin",                                 :default => false
     t.string   "twiki_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "human_name"
     t.string   "image_uri"
     t.string   "graduation_year"
     t.string   "masters_program"
@@ -339,7 +339,6 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
     t.string   "password_salt"
-    t.string   "persistence_token"
     t.string   "single_access_token"
     t.integer  "login_count",                              :default => 0,     :null => false
     t.integer  "failed_login_count",                       :default => 0,     :null => false
@@ -349,6 +348,7 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "yammer_created"
+    t.string   "webiso_account"
   end
 
   add_index "user_versions", ["person_id"], :name => "index_user_verions_on_person_id"
