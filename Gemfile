@@ -10,6 +10,8 @@ gem 'rack-openid'
 gem 'bundler'
 gem 'delayed_job', '2.1.0.pre'
 
+# gem 'acts_as_list'
+
 gem 'oauth'
 
 gem 'heroku'
