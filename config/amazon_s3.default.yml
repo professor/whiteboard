@@ -1,0 +1,17 @@
+#We need to keep this file for Morning Glory
+
+development:
+  access_key_id: 
+  secret_access_key: 
+  bucket: 
+
+test:
+  access_key_id: 
+  secret_access_key: 
+  bucket: 
+
+production:
+  access_key_id: 
+  secret_access_key: 
+  bucket: 
+
