@@ -1,0 +1,14 @@
+development:
+  username: 
+  password: 
+  google_domain: 
+
+test:
+  username: 
+  password: 
+  google_domain: 
+
+production:
+  username: 
+  password: 
+  google_domain: 

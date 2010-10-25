@@ -2,6 +2,8 @@
 
 Welcome to the CMU-SV rails project for the Education group.
 
+
+=== Getting Started
 Check out the design document inside docs
 
 {Welcome to the Project}[http://github.com/professor/cmusv/blob/master/doc/README_FOR_APP.rdoc]

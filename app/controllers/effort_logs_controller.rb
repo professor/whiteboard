@@ -363,28 +363,19 @@ class EffortLogsController < ApplicationController
 private
   
   def setup_required_datastructures(year, week_number)
-    #first, setup labels
-#    today = Date.today
-    @day_labels = [1,2,3,4,5,6,7].collect do |day| 
+    @day_labels = [1,2,3,4,5,6,7].collect do |day|
       Date.commercial(year, week_number, day).strftime "%b %d"  # Jul 01
-#      Date.commercial(today.year, today.cweek, day).strftime "%m/%d/%y"  # 7/1/08
     end
 
     @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @projects = Project.find(:all, :conditions => "is_closed = FALSE", :order => "name ASC")
     
-     @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )      
-    if current_user.is_student? && current_user.is_staff?
+    if current_user.is_staff? && current_user.is_student?
       @task_types = TaskType.find(:all )           
-    end
-    if current_user.is_student? && !current_user.is_staff?
-      @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )               
-    end
-    if !current_user.is_student? && current_user.is_staff?    
-      @task_types = TaskType.find(:all, :conditions => ['is_staff = ?', true] )      
-    end
-    if !current_user.is_student? && !current_user.is_staff?
-      @task_types = TaskType.find(:all)           
+    elsif current_user.is_staff? && !current_user.is_student?
+      @task_types = TaskType.find(:all, :conditions => ['is_staff = ?', true] )
+    else
+      @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )
     end
     @today_column = which_column_is_today(year, week_number)
   end

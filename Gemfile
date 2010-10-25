@@ -10,6 +10,8 @@ gem 'rack-openid'
 gem 'bundler'
 gem 'delayed_job', '2.1.0.pre'
 
+# gem 'acts_as_list'
+
 gem 'oauth'
 
 gem 'heroku'
@@ -29,40 +31,31 @@ group :production do
 #  gem 'activerecord-postgresql-adapter'
 end
 
-group :development do
+group :development, :test do
   gem 'rake'
   gem 'mysql',    '2.8.1'
   gem 'mongrel'
+#  gem 'ruby-debug'
   gem 'ruby-debug-base' #'0.10.3'
-  gem 'ruby-debug-ide' #'0.4.6'
+  gem 'ruby-debug-ide'#, '0.4.6'
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
-  gem 'rspec',   '1.3' #Default is rspec 2 which only works with Rails
-  gem 'rspec-rails'
+  gem 'mocha'
+  gem 'rspec',   '1.3.1'
+#  gem 'rspec', '~>2.0.0'
+
+#  gem 'rspec-core'
+#  gem 'rspec-expectations'
+#  gem 'rspec-mocks'
+  gem 'rspec-rails', '1.3.3'
+#  gem 'rspec-rails'
+  gem 'shoulda'
+  gem 'factory_girl'
   gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
   gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
   gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/  
-  gem 'test-unit' #, '<=1.2.3' #Downgrading so that autotest will work
+  gem 'test-unit' #'=1.2.3' #Downgrading so that autotest, rspec will work
 end
-
-group :test do
-  gem 'rake'
-  gem 'mysql',    '2.8.1'
-  gem 'mongrel'
-  gem 'ruby-debug-base' #'0.10.3'
-  gem 'ruby-debug-ide' #'0.4.6'
-#  gem 'hanna'
-  gem 'rcov'
-  gem 'rdoc',     '2.4.3'
-  gem 'mocha'
-  gem 'rspec',   '1.3' #Default is rspec 2 which only works with Rails
-  gem 'rspec-rails'
-  gem 'shoulda'
-  gem 'factory_girl'  
-# gem 'factory_girl_rails'  #only works for Rails 3
-  gem 'test-unit' #, '<=1.2.3' #Downgrading so that autotest will work
-end
-
 
 #gem 'gchartrb'

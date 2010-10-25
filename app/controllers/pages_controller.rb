@@ -30,6 +30,7 @@ class PagesController < ApplicationController
   # GET /pages/new.xml
   def new
     @page = Page.new
+    @page.course_id = params[:course_id].to_i
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @courses = Course.find(:all)
     respond_to do |format|
