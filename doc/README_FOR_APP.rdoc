@@ -1,8 +1,8 @@
 Welcome to the CMU-SV rails project for the Education group.
 
 == System Modules
-{Peer Evaluation}[link:classes/PeerEvaluationReview.html]
-{People}[link:classes/Person.html]
+* {Peer Evaluation}[link:classes/PeerEvaluationReview.html]
+* {People}[link:classes/Person.html]
 
 
 == Conventions
@@ -23,30 +23,31 @@ Things to note...
 == MfSE - Getting Started for Students
 Students should
 1. If you are using mysql, then create mfse_development schema and user in mysql
-(Note: the code is not tested for sqlite, you may be tempted to use sqlite since it is easier to configure than mysql.
-The code is not designed for sqlite.)
 1. create a config/database.yml
 1. copy config/morning_glory.mfse.yml to config/morning_glory.yml -- no need to configure
 1. copy config/systems.default.yml to config/systems.yml -- no need to configure
 1. create a config/amazon_s3.yml from (http://rails.sv.cmu.edu/pages/9)
 1. create a config/google_apps.yml from (http://rails.sv.cmu.edu/pages/10)
+1. Modify the db/seeds.rb and add yourself to it.
 1. bundle install
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
 
+<!--
+this is now old
 Creating a local user account
-1. Create a row in users table for you with your google apps user id (ie andrew.carnegie@sv.cmu.edu).
+Create a row in users table for you with your google apps user id (ie andrew.carnegie@sv.cmu.edu).
 You may not need many of the columns on INSERT. You can add them later in the tool.
 Need: email, first_name, last_name, persistance_token
 insert into users (email, first_name,last_name,persistence_token) values ('andrew.carnegie@sv.cmu.edu','Andrew','Carnegie','2324');
 1. Run your system (script/server)
 1. Login with openid
-
+-->
 
 
 My system configuration
 Ruby 1.8.7-p302
-Mongrel 1.1.4
+Mongrel 1.1.5
 
 
 == System Architecture
