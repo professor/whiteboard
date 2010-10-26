@@ -22,7 +22,7 @@ Things to note...
 
 == MfSE - Getting Started for Students
 Students should
-1. If you are using mysql, then create mfse_development schema and user (see below)
+1. If you are using mysql, then create a user, the mfse_development schema and the mfse_test schema (see below)
 1. create a config/database.yml
 1. copy config/morning_glory.mfse.yml to config/morning_glory.yml -- no need to configure
 1. copy config/systems.default.yml to config/systems.yml -- no need to configure
