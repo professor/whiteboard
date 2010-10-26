@@ -22,7 +22,7 @@ Things to note...
 
 == MfSE - Getting Started for Students
 Students should
-1. If you are using mysql, then create mfse_development schema and user in mysql
+1. If you are using mysql, then create mfse_development schema and user (see below)
 1. create a config/database.yml
 1. copy config/morning_glory.mfse.yml to config/morning_glory.yml -- no need to configure
 1. copy config/systems.default.yml to config/systems.yml -- no need to configure
@@ -33,16 +33,17 @@ Students should
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
 
-<!--
-this is now old
-Creating a local user account
-Create a row in users table for you with your google apps user id (ie andrew.carnegie@sv.cmu.edu).
-You may not need many of the columns on INSERT. You can add them later in the tool.
-Need: email, first_name, last_name, persistance_token
-insert into users (email, first_name,last_name,persistence_token) values ('andrew.carnegie@sv.cmu.edu','Andrew','Carnegie','2324');
-1. Run your system (script/server)
-1. Login with openid
--->
+=== DB setup
+According to team Marcadores, this is how you startup mysql. I use the GUI tools myself
+start mysql server using or from the preference pane:
+sudo mysql /usr/local/mysql/bin/safe_mysqld
+login in to mysql using:
+mysql -u root
+
+run commands:
+"create database mfse_development;"
+"exit;"
+
 
 
 My system configuration
