@@ -1,0 +1,27 @@
+--- 
+production: 
+  delete_prev_rev: false
+  bucket: 
+  s3_logging_enabled: false
+  enabled: true
+  asset_directories: 
+  - images
+  - javascripts
+  - stylesheets
+  - cmu_sv
+  - cmu_sv_simple
+  - charts
+  revision: 0cfe
+development: 
+  bucket: 
+  enabled: false
+  revision: 45c2
+staging: 
+  bucket: 
+  enabled: false
+test: 
+  delete_prev_rev: true
+  bucket:
+  s3_logging_enabled: false
+  enabled: false
+  revision: "20100316165112"
