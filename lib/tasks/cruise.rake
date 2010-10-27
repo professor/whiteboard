@@ -14,9 +14,6 @@ desc "Task for cruise Control"
 task :cruise do
   RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
-  `bundle install`  
-  Bundler.setup(:default, :test)
-  
   if !File.exists?(Dir.pwd+"/config/database.yml")
     FileUtils.copy(Dir.pwd+"/config/database.cc.yml", Dir.pwd+"/config/database.yml")
   end
@@ -33,6 +30,10 @@ task :cruise do
   if !File.exists?(Dir.pwd+"/config/amazon_s3.yml")
     FileUtils.copy(Dir.pwd+"/config/amazon_s3.cc.yml", Dir.pwd+"/config/amazon_s3.yml")
   end
+
+  
+  `bundle install`
+  Bundler.setup(:default, :test)
 
 
   #Step 1 - Drop and recreate your database
