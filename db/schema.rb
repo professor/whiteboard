@@ -179,28 +179,6 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "updated_at"
   end
 
-  create_table "people", :force => true do |t|
-    t.string   "twiki_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "human_name"
-    t.boolean  "is_staff",                                :default => false
-    t.boolean  "is_student",                              :default => false
-    t.boolean  "is_admin",                                :default => false
-    t.string   "webiso_account"
-    t.string   "image_uri"
-    t.string   "graduation_year"
-    t.string   "masters_program"
-    t.string   "masters_track"
-    t.boolean  "is_part_time"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "people", ["human_name"], :name => "index_people_on_human_name"
-
   create_table "project_types", :force => true do |t|
     t.string   "name"
     t.string   "description"
