@@ -431,6 +431,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       #@chart_url = generate_chart_url(2008, 35, 7)
       @chart_url = generate_course_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
 
+      @course = Course.find(params[:course_id])
     end
 
 
