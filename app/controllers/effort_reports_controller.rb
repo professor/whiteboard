@@ -369,9 +369,9 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
      end
       @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester_panel.semester, @semester_panel.year], :order =>"name ASC")
       @programs = []
-      ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM people p;").each do |result| @programs << result end
+      ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result end
       @tracks = []
-      ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM people p;").each do |result| @tracks << result end
+      ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result end
 
      title = "Campus View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
      reports = get_campus_semester_data(@semester_panel)
@@ -431,6 +431,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       #@chart_url = generate_chart_url(2008, 35, 7)
       @chart_url = generate_course_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
 
+      @course = Course.find(params[:course_id])
     end
 
 

@@ -1,22 +1,8 @@
-<!--
-<html>
-<head>
-<title>Hello, Rails!</title>
-<script src="/javascripts/prototype.js"></script>
-<script src="/javascripts/application.js"></script>
-<script src="/javascripts/controls.js"></script>
-<script src="/javascripts/effects.js"></script>
-<script src="/javascripts/calendar_date_select/calendar_date_select.js"></script>
-<%= stylesheet_link_tag "calendar_date_select/red" %>
-</head>
-<body>
--->
-  <div>
-    <table><tr><td>
-  <a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
-              </td>
-    </tr></table>
-  </div>
+<% content_for :title, 'Semester view for ' + @semester_panel.semester + ' ' + @semester_panel.year.to_s %>
+<div>
+  <table><tr><td><a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a></td></tr>
+  </table>
+</div>
 
 
 <div>
@@ -77,6 +63,4 @@
 <%= image_tag(@chart_url)  %>
 
 </div>
-<!--
-</body>
--->
+

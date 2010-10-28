@@ -1,6 +1,6 @@
-<html>
+<% content_for :title, 'Effort Report for ' + @course.name  %>
+
 <head>
-<title>Hello, Rails!</title>
 <script src="/javascripts/prototype.js"></script>
 <script src="/javascripts/application.js"></script>
 <script src="/javascripts/controls.js"></script>
@@ -11,14 +11,13 @@
 <body>
 
   <div>
-    <table><tr><td>
-  <a href="<%=url_for :action=>"show", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
-              </td>
-    </tr></table>
+    <table><tr><td><%= link_to "Back to Effort Reports for this course", effort_report_path(params[:course_id]) %></td></tr>
+      <tr><td><a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a></td></tr>
+    </table>
   </div>
 
 <div>
-<% form_for :panel_state, @panel_state, :url => {:action => "course_view", :id=> params[:id]} do |f| %>
+<% form_for :panel_state, @panel_state, :url => {:action => "course", :id=> params[:id]} do |f| %>
   <table>
     <tr>
       <td>

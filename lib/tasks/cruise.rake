@@ -14,12 +14,14 @@ desc "Task for cruise Control"
 task :cruise do
   RAILS_ENV = ENV['RAILS_ENV'] = 'test'
 
-  `bundle install`  
-  Bundler.setup(:default, :test)
-  
   if !File.exists?(Dir.pwd+"/config/database.yml")
     FileUtils.copy(Dir.pwd+"/config/database.cc.yml", Dir.pwd+"/config/database.yml")
   end
+
+  if !File.exists?(Dir.pwd+"/config/morning_glory.yml")
+    FileUtils.copy(Dir.pwd+"/config/morning_glory.default.yml", Dir.pwd+"/config/morning_glory.yml")
+  end
+
 #  Now in ~/.profile
 #  if !File.exists?(Dir.pwd+"/config/google_apps.yml")
 #    FileUtils.copy(Dir.pwd+"/config/google_apps.cc.yml", Dir.pwd+"/config/google_apps.yml")
@@ -28,6 +30,10 @@ task :cruise do
   if !File.exists?(Dir.pwd+"/config/amazon_s3.yml")
     FileUtils.copy(Dir.pwd+"/config/amazon_s3.cc.yml", Dir.pwd+"/config/amazon_s3.yml")
   end
+
+  
+  `bundle install`
+  Bundler.setup(:default, :test)
 
 
   #Step 1 - Drop and recreate your database
