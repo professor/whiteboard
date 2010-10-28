@@ -5,7 +5,6 @@
 .gems
 .gems_old
 20090827190915_mfse_add_people.rb
-Gemfile.lock
 
 config/database.yml
 config/google_apps.yml
