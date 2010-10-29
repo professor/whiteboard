@@ -9,7 +9,7 @@ class Page < ActiveRecord::Base
 
   def before_validation
       current_user = UserSession.find.user
-     self.updated_by_user_id = current_user if current_user
+     self.updated_by_user_id = current_user.id if current_user
   end
 
   def editable?(current_user)
