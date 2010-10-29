@@ -1,4 +1,3 @@
---- 
 production: 
   delete_prev_rev: false
   bucket: cmusv-rails-mfse-production
