@@ -69,7 +69,7 @@
 </div>
 
 <% end %>
-<div class="modified">Last modified by <%= @page.updated_by.human_name %></div>
+<div class="modified">Last modified by <% unless @page.updated_by.blank? %><%= @page.updated_by.human_name %><% end %></div>
 <div class="modified"><%= time_ago_in_words(@page.updated_at) %> ago</div>
 <br/>
 
