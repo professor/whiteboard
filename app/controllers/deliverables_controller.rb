@@ -5,7 +5,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables
   # GET /deliverables.xml
   def index
-    @deliverables = Deliverable.all
+    @deliverables = Deliverable.find(:all, :conditions => ["parent_id IS NULL"])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,11 +20,11 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1
   # GET /deliverables/1.xml
   def show
-    @deliverable = Deliverable.find(params[:id])
+    @deliverables = Deliverable.find(:all, :conditions => ["id = ? or parent_id = ?", params[:id], params[:id]], :order => "submission_date" )
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @deliverable }
+      format.xml  { render :xml => @deliverables }
     end
   end
 
@@ -70,7 +70,10 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1
   # PUT /deliverables/1.xml
   def update
-    @deliverable = Deliverable.find(params[:id])
+    @deliverable_parent = Deliverable.find(params[:id])
+    @deliverable = Deliverable.new(params[:deliverable])
+    @deliverable.parent_id = @deliverable_parent.id
+
     msg = @deliverable.update_authors(params[:people])
     unless msg.blank?
       flash[:error] = msg
@@ -79,13 +82,13 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      if @deliverable.update_attributes(params[:deliverable])
+      if @deliverable.save
         flash[:notice] = 'Deliverable was successfully updated.'
-        format.html { redirect_to(@deliverable) }
-        format.xml  { head :ok }
+        format.html { redirect_to(@deliverable_parent) }
+        format.xml  { render :xml => @deliverable_parent, :status => :created, :location => @deliverable_parent }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @deliverable_parent.errors, :status => :unprocessable_entity }
       end
     end
   end
