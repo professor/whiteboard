@@ -257,3 +257,8 @@ border-width:1px;
     width: 70px;
     float: left;
 }
+
+/* Used in pages */
+div.modified {
+    text-align: right;
+}

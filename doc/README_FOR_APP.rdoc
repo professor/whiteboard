@@ -32,6 +32,11 @@ Students should
 1. bundle install
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
+1. verify your configuration
+   1. script/server
+   1. bundle exec rake test
+   1. bundle exec spec spec
+   1. run the server in debug mode in an IDE.
 
 === DB setup
 According to team Marcadores, this is how you startup mysql. I use the GUI tools myself

@@ -1,11 +1,16 @@
 require 'spec_helper'
 
-describe Page do
+describe PagesController do
   fixtures :users  
+
+
+  before(:all) do
+      activate_authlogic
+  end
 
   before(:each) do
     @page = Page.new(:title => "Syllabus",
-                     :updated_by_user_id => 1,
+                     :updated_by_user_id => 10,
                      :tab_one_contents => "As a student in this course, you have the opportunity to practice principled software development in the context of an authentic project using an agile method. You track your progress against a plan and manage risks along the way. You prioritize features, do pair programming and follow test-driven development. You measure code coverage and code quality. Through this course, you experience the ins and outs of software engineering.")
   end
 
@@ -40,8 +45,8 @@ describe Page do
     @page.title = "Something different"
     @page.save
     latest_user_id = @page.updated_by_user_id
-    Time.now.to_i.should be_close @page.updated_at.to_i, 100 
-    UserSession.user.id.should == latest_user_id
+    Time.now.to_i.should be_close @page.updated_at.to_i, 100
+    UserSession.find.user.id.should == latest_user_id
   end
 
   it "should allow the creator to specify editable by faculty or any authenticated user"
@@ -66,12 +71,13 @@ describe Page do
 #    @page.version.should == version_number + 1
 #  end
 
-    it "should allow faculty to comment about the changes" do
-      UserSession.create(users(:faculty_frank))
-      @page.version_comments = "A very simple change"
-      @page.save
-#This seems too simple
-  end
+    it "should allow faculty to comment about the changes"
+#  do
+#      UserSession.create(users(:faculty_frank))
+#      @page.version_comments = "A very simple change"
+#      @page.save
+##This seems too simple
+#  end
 
 
     it "should allow the creator to specify edit permissions as either anyone or faculty"
