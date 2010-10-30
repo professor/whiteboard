@@ -13,6 +13,10 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  def my_deliverables
+    redirect_to :action => "index"
+  end
+
   # GET /deliverables/1
   # GET /deliverables/1.xml
   def show
