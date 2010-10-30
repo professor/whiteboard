@@ -48,6 +48,12 @@ class DeliverablesController < ApplicationController
   # POST /deliverables.xml
   def create
     @deliverable = Deliverable.new(params[:deliverable])
+    msg = @deliverable.update_authors(params[:people])
+    unless msg.blank?
+      flash[:error] = msg
+      redirect_to :action => 'edit'
+      return
+    end
 
     respond_to do |format|
       if @deliverable.save

@@ -9,7 +9,7 @@
     <span class="help_text">Please add any authors that are in our database</span>
   </p>
 
-  <%= render :partial => 'author', :collection =>@deliverable.people, :locals => { :paper_form => f } %>
+  <%= render :partial => 'author', :collection =>@deliverable.people, :locals => { :deliverable_form => f } %>
 
 </div>
 <div class="formItem indented"><p><%= add_author_link("Add an author") %></p></div>
