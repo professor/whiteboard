@@ -1,0 +1,18 @@
+<p>
+  <b>Submission date:</b>
+  <%=h @deliverable.submission_date %>
+</p>
+
+ <p><b>Authors</b></p>
+ <% @deliverable.people.each do |person| %>
+ <p>   <%= person.human_name %> </p>
+ <% end %>
+
+<p>
+  <b>Deliverable url:</b>
+  <%=h @deliverable.deliverable.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_deliverable_path(@deliverable) %> |
+<%= link_to 'Back', deliverables_path %>

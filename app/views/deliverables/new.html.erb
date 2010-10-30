@@ -1,0 +1,13 @@
+<% content_for :title, "New deliverable" %>
+<% content_for :head do %>
+<%# javascript_include_tag :defaults, :cache => true %>
+<%= javascript_include_tag 'prototype' %>
+<% end %>
+
+<h1>New deliverable</h1>
+
+<%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
+
+<%= link_to 'Back', deliverables_path %>
+<br/>
+<br/>

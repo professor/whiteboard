@@ -1,0 +1,20 @@
+<h1>Listing deliverables</h1>
+
+<table>
+  <tr>
+    <th>Submission date</th>
+  </tr>
+
+<% @deliverables.each do |deliverable| %>
+  <tr>
+    <td><%=h deliverable.submission_date %></td>
+    <td><%= link_to 'Show', deliverable %></td>
+    <td><%= link_to 'Edit', edit_deliverable_path(deliverable) %></td>
+    <td><%= link_to 'Destroy', deliverable, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New deliverable', new_deliverable_path %>

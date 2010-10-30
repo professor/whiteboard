@@ -1,0 +1,25 @@
+
+
+<%= stylesheet_link_tag "calendar_date_select/red" %>
+<% form_for @deliverable, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+
+ <div id="authors">
+  <p>Carnegie Mellon Silicon Valley authors<br/>
+    <span class="help_text">Please add any authors that are in our database</span>
+  </p>
+
+  <%= render :partial => 'author', :collection =>@deliverable.people, :locals => { :paper_form => f } %>
+
+</div>
+<div class="formItem indented"><p><%= add_author_link("Add an author") %></p></div>
+<p>
+</p>
+  <p>
+    <%= f.label :deliverable, "Upload deliverable" %>
+    <%= f.file_field :deliverable %>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>
