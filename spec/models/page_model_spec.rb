@@ -10,7 +10,7 @@ describe PagesController do
 
   before(:each) do
     @page = Page.new(:title => "Syllabus",
-                     :updated_by_user_id => 1,
+                     :updated_by_user_id => 10,
                      :tab_one_contents => "As a student in this course, you have the opportunity to practice principled software development in the context of an authentic project using an agile method. You track your progress against a plan and manage risks along the way. You prioritize features, do pair programming and follow test-driven development. You measure code coverage and code quality. Through this course, you experience the ins and outs of software engineering.")
   end
 
@@ -22,7 +22,6 @@ describe PagesController do
 
   it "is not valid without a title" do
     UserSession.create(users(:faculty_frank))
-   
     @page.title = nil
     @page.should_not be_valid
   end
@@ -40,16 +39,15 @@ describe PagesController do
 #    UserSession.create(users("FacultyFrank"))
 
 
-  it "should show who did the last edit and when it occurred"
-#  do
-#    UserSession.create(users(:faculty_frank))
-#    last_user_id = @page.updated_by_user_id
-#    @page.title = "Something different"
-#    @page.save
-#    latest_user_id = @page.updated_by_user_id
-#    Time.now.to_i.should be_close @page.updated_at.to_i, 100
-#    UserSession.user.id.should == latest_user_id
-#  end
+  it "should show who did the last edit and when it occurred" do
+    UserSession.create(users(:faculty_frank))
+    last_user_id = @page.updated_by_user_id
+    @page.title = "Something different"
+    @page.save
+    latest_user_id = @page.updated_by_user_id
+    Time.now.to_i.should be_close @page.updated_at.to_i, 100
+    UserSession.find.user.id.should == latest_user_id
+  end
 
   it "should allow the creator to specify editable by faculty or any authenticated user"
 

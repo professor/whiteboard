@@ -6,11 +6,15 @@
 
 <%= render :partial => "left_nav" %>
 
+
 <% if @page.course.blank? %>
     <h1 name="page">  <%=h @page.title %></h1>
 <% else %>
     <h1 name="course"><%=h @page.course.name %></h1>
     <h2 name="page">  <%=h @page.title %></h2>
+<% end %>
+<% if @page.editable?(current_user) %>
+<div class="right_link"><%= link_to 'Edit Page', edit_page_path(@page) %></div>
 <% end %>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
@@ -65,14 +69,9 @@
 </div>
 
 <% end %>
-
-<h3>debug stuff</h3>
-<p>
-  <b>Sequence number:</b>
-  <%=h @page.position %>
-</p>
-
-
+<div class="modified">Last modified by <% unless @page.updated_by.blank? %><%= @page.updated_by.human_name %><% end %></div>
+<div class="modified"><%= time_ago_in_words(@page.updated_at) %> ago</div>
+<br/>
 
 <%= link_to 'Edit', edit_page_path(@page) %> |
 <%= link_to 'Back', pages_path %>
