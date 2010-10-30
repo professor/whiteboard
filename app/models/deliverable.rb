@@ -5,7 +5,7 @@ class Deliverable < ActiveRecord::Base
   has_attached_file :deliverable,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :path => "deliverables/:id/:filename"
+    :path => "deliverable_submissions/super8/:id/:filename"
 
   def before_save
     self.submission_date = DateTime.now
