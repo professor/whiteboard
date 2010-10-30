@@ -135,3 +135,77 @@ architecture = Factory.create(:architecture)
 
 Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture)
 
+
+Factory.define :anthony_tang, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "AnthonyTang"
+  p.first_name "Anthony"
+  p.last_name "Tang"
+  p.human_name "Anthony Tang"
+  p.image_uri "/images/mascot.jpg"
+  p.email "anthony.tang@sv.cmu.edu"
+end
+
+Factory.define :henry_barnor, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "HenryBarnor"
+  p.first_name "Henry"
+  p.last_name "Barnor"
+  p.human_name "Henry Barnor"
+  p.image_uri "/images/mascot.jpg"
+  p.email "henry.barnor@sv.cmu.edu"
+end
+
+Factory.define :fred, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "FrederickKautz"
+  p.first_name "Frederik"
+  p.last_name "Kautz"
+  p.human_name "Frederick Kautz"
+  p.image_uri "/images/mascot.jpg"
+  p.email "frederick.kautz@sv.cmu.edu"
+end
+
+Factory.define :vibhor, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "VibhorNanavati"
+  p.first_name "Vibhor"
+  p.last_name "Nanavati"
+  p.human_name "Vibhor Nanavati"
+  p.image_uri "/images/mascot.jpg"
+  p.email "vibhor.nanavati@sv.cmu.edu"
+  p.webiso_account "vnanavat@andrew.cmu.edu"
+end
+
+Factory.define :team_calipers, :class => Team do |t|
+ t.name "Team Calipers"
+ t.email "fall-2010-calipers@west.cmu.edu"
+ t.person_name "Anthony Tang"
+ t.person_name2 "Frederick Kautz"
+ t.person_name3 "Henry Barnor"
+ t.person_name4 "Vibhor Nanavati"
+end
+
+Factory.create(:anthony_tang)
+Factory.create(:henry_barnor)
+Factory.create(:fred)
+Factory.create(:vibhor)
+
+Factory.create(:team_calipers, :primary_faculty_id => martin.id, :course_id=> architecture)
+
