@@ -1,18 +1,33 @@
-<p>
-  <b>Submission date:</b>
-  <%=h @deliverable.submission_date %>
-</p>
+<h1>Listing Deliverable Revisions</h1>
 
- <p><b>Authors</b></p>
- <% @deliverable.people.each do |person| %>
- <p>   <%= person.human_name %> </p>
- <% end %>
+<table cellpadding="5">
+  <tr>
+    <th>Submission Date</th>
+    <th>Authors</th>
+    <th>Deliverable URL</th>
+    <th>Actions</th>
+  </tr>
 
-<p>
-  <b>Deliverable url:</b>
-  <%=h @deliverable.deliverable.url %>
-</p>
+<% @deliverables.each do |deliverable| %>
+  <tr>
+    <td><%=h deliverable.submission_date %></td>
+    <td>
+        <% deliverable.people.each do |person| %>
+            <%= person.human_name %><br />
+        <% end %>
+    </td>
+    <td>
+        <% if deliverable.deliverable_file_name != nil %>
+            <%= link_to deliverable.deliverable_file_name, deliverable.deliverable.url %>
+        <% end %>
+    </td>
+    <td>
+        <%= link_to 'Show', deliverable %>
+        <%= link_to 'Destroy', deliverable, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
 
-
-<%= link_to 'Edit', edit_deliverable_path(@deliverable) %> |
+<%= link_to 'Edit', edit_deliverable_path(@deliverables[0].id) %>
 <%= link_to 'Back', deliverables_path %>
