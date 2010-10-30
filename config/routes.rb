@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :deliverables
-
+  map.my_deliverables '/people/:id/my_deliverables', :controller => 'deliverables', :action => 'my_deliverables'
 
   map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"
   map.resources :delayed_system_jobs #so that we can easily delete
