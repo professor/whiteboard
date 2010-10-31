@@ -8,7 +8,7 @@ Factory.define :person, :class => Person do |p|
 end
 
 Factory.define :todd, :parent => :person  do |p|
-  p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Time.now.to_f.to_s + "todd"
   p.first_name "Todd"
   p.last_name "Sedano"
   p.human_name "Todd Sedano"
@@ -17,7 +17,7 @@ Factory.define :todd, :parent => :person  do |p|
 end
 
 Factory.define :martin, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Time.now.to_f.to_s + "martin"
   p.first_name "Martin"
   p.last_name "Radley"
   p.human_name "Martin Radley"
@@ -26,7 +26,7 @@ Factory.define :martin, :parent => :person do |p|
 end
 
 Factory.define :ed, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Time.now.to_f.to_s + "ed"
   p.first_name "Ed"
   p.last_name "Katz"
   p.human_name "Ed Katz"
@@ -35,7 +35,7 @@ Factory.define :ed, :parent => :person do |p|
 end
 
 Factory.define :chris, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Time.now.to_f.to_s + "chris"
   p.first_name "Chris"
   p.last_name "Jensen"
   p.human_name "Chris Jensen"
@@ -44,7 +44,7 @@ Factory.define :chris, :parent => :person do |p|
 end
 
 Factory.define :howard, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Time.now.to_f.to_s + "howard"
   p.first_name "Howard"
   p.last_name "Huang"
   p.human_name "Howard Awesome Huang"
@@ -52,6 +52,14 @@ Factory.define :howard, :parent => :person do |p|
   p.is_student 1
 end
 
+Factory.define :sam, :parent => :person do |p|
+  p.persistence_token Time.now.to_f.to_s + "sam"
+  p.first_name "Sam"
+  p.last_name "Karp"
+  p.human_name "Sam Karp"
+  p.email "sam.karp@sv.cmu.edu"
+  p.is_student 1
+end
 
 Factory.define :awe_smith, :parent => :person do |p|
   p.is_student 1
@@ -126,6 +134,7 @@ martin = Factory.create(:martin)
 Factory.create(:ed)
 Factory.create(:chris)
 Factory.create(:howard)
+Factory.create(:sam)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
