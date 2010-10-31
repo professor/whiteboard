@@ -65,6 +65,19 @@ function toggleStaff()
   $("#filterBoxOne").trigger("keyup");
 }
 
+function toggleView()
+{
+
+  if ($('#table').is(':checked')) {
+      var rails_view = true;
+    //$(".staff").show();
+  } else {
+      var rails_view = false;
+    //$(".staff").hide();
+  }
+  $("#filterBoxOne").trigger("keyup");
+}
+
 function updateImage(uri,label)
 {
  $('#image_box_image').attr("src", uri);
@@ -78,14 +91,17 @@ function updateImage(uri,label)
 <h1>Listing people</h1>
 <div class="right_link" ><%= link_to 'See phone book', :action=>'phone_book' %><br/><%= link_to 'See photo book', :action=>'photo_book' %></div>
 <div style="float:none"><%= render :partial => "tablesorter_filter_box" %><label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked" />
-  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" />
+  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" /><br/>
+</div>
+
+<div style="float:none">Advanced Filter Options
+    <div style="float:none"><%= render :partial => "advanced_tablesorter_filter_box" %></div>
 </div>
 
 <div id="image_box">
   <%= image_tag("/images/mascot.jpg", :width=>"150", :alt=>"Temporary Picture", :id=>"image_box_image")%><%= image_tag("/images/tablesorter/cross.png", :width=>"16", :height=>"16", :alt=>"Close Me", :style=>"float:right;cursor:pointer", :id=>"close_image_box") %>
   <div id='image_box_label'></div>
 </div>
-
 <table id="people_table" class="tablesorter">
   <thead>
   <tr>
@@ -95,6 +111,12 @@ function updateImage(uri,label)
     <th>Graduation year</th>
     <th>Graduate program</th>
     <th>Graduate track</th>
+    <th class="hide">State</th>
+    <th class="hide">Work Location</th>
+    <th class="hide">Part Time</th>
+    <th class="hide">Local?</th>
+    <th class="hide">Has Image</th>
+    <th class="hide">Has Tigris Account</th>
   </tr>
 </thead>
 <tbody>
@@ -118,6 +140,16 @@ function updateImage(uri,label)
 <% else %>
     <td>&nbsp;</td>
 <% end %>
+  <td class="hide"><%=h person.work_state %></td>
+  <td class="hide"><%=h person.organization_name %></td>
+  <td class="hide"><%=h person.is_part_time %></td>
+  <td class="hide"><%=h person.local_near_remote %></td>
+  <td class="hide"><%=h person.image_uri %></td>
+  <td class="hide"><%=h person.is_part_time %></td>
+  <td class="hide"><%=h person.tigris %></td>
+  <td class="hide"><%=h person.tigris %></td>
+  <td class="hide"><%=h person.tigris %></td>
+
 <!--
 <% if current_user && current_user.is_admin? %>
     <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -129,7 +161,6 @@ function updateImage(uri,label)
 <% end %>
 </tbody>
 </table>
-
 <br />
 
 <% if current_user && (current_user.is_admin? || current_user.is_staff?) %>
