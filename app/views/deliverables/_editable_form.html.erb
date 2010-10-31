@@ -1,23 +1,31 @@
 
 
-<%= stylesheet_link_tag "calendar_date_select/red" %>
 <% form_for @deliverable, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
-
- <div id="authors">
-  <p>Carnegie Mellon Silicon Valley authors<br/>
-    <span class="help_text">Please add any authors that are in our database</span>
-  </p>
-
-  <%= render :partial => 'author', :collection =>@deliverable.people, :locals => { :deliverable_form => f } %>
-
-</div>
-<div class="formItem indented"><p><%= add_author_link("Add an author") %></p></div>
-<p>
-</p>
   <p>
-    <%= f.label :deliverable, "Upload deliverable" %>
-    <%= f.file_field :deliverable %>
+    <%= f.label :description, "Deliverable Description" %>
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :course_id, "Select Course" %>
+    <%= f.collection_select(:course_id, @deliverable.submitter.get_registered_courses, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :task_number, "Task Number" %>
+    <%= f.text_field :task_number %>
+  </p>
+  <p>
+    <%= f.label :is_team_deliverable, "Team Deliverable?" %>
+    <%= f.check_box :is_team_deliverable %>
+  </p>
+    <p>
+      <%= f.label :deliverable, "Deliverable file to upload" %>
+      <%= f.file_field :deliverable %>
+    </p>
+  <p>
+    <%= f.label :comment, "Comments" %>
+    <br>
+    <%= f.text_area :comment %>
   </p>
   <p>
     <%= f.submit button_name %>

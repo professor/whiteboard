@@ -1,6 +1,8 @@
 class Deliverable < ActiveRecord::Base
 
-  has_and_belongs_to_many :people, :join_table=>"deliverables_people", :class_name => "Person"
+  belongs_to :submitter, :class_name => "Person", :foreign_key => "submitter_id"
+  belongs_to :team
+  belongs_to :course
 
   has_attached_file :deliverable,
     :storage => :s3,
@@ -8,25 +10,9 @@ class Deliverable < ActiveRecord::Base
     :path => "deliverable_submissions/super8/:id/:filename"
 
   def before_save
+    # Look up the team this person is on
+    self.team = submitter.teams.find(:first, :conditions => ['course_id = ?', course_id])
     self.submission_date = DateTime.now
   end
 
-  def update_authors(authors)
-    self.people = []
-    return "" if authors.nil?
-
-    msg = ""
-    authors.each do |name|
-       person = Person.find_by_human_name(name)
-       if person.nil?
-         all_valid_names = false
-         msg = msg + "'" + name + "' is not in the database. "
-         #This next line doesn't quite seem to work
-         self.errors.add(:person_name, "Person " + name + " not found")
-       else
-         self.people << person
-       end
-    end
-    return msg
-  end
 end

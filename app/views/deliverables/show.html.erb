@@ -3,7 +3,7 @@
 <table cellpadding="5">
   <tr>
     <th>Submission Date</th>
-    <th>Authors</th>
+    <th>Team</th>
     <th>Deliverable URL</th>
     <th>Actions</th>
   </tr>
@@ -11,11 +11,7 @@
 <% @deliverables.each do |deliverable| %>
   <tr>
     <td><%=h deliverable.submission_date %></td>
-    <td>
-        <% deliverable.people.each do |person| %>
-            <%= person.human_name %><br />
-        <% end %>
-    </td>
+    <td><%= deliverable.team.name %></td>
     <td>
         <% if deliverable.deliverable_file_name != nil %>
             <%= link_to deliverable.deliverable_file_name, deliverable.deliverable.url %>

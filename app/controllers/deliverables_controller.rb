@@ -31,7 +31,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/new
   # GET /deliverables/new.xml
   def new
-    @deliverable = Deliverable.new
+    @deliverable = Deliverable.new(:submitter => Person.find(current_user))
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,12 +48,7 @@ class DeliverablesController < ApplicationController
   # POST /deliverables.xml
   def create
     @deliverable = Deliverable.new(params[:deliverable])
-    msg = @deliverable.update_authors(params[:people])
-    unless msg.blank?
-      flash[:error] = msg
-      redirect_to :action => 'edit'
-      return
-    end
+    @deliverable.submitter = Person.find(current_user)
 
     respond_to do |format|
       if @deliverable.save
@@ -72,14 +67,8 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable_parent = Deliverable.find(params[:id])
     @deliverable = Deliverable.new(params[:deliverable])
+    @deliverable.submitter = Person.find(current_user)
     @deliverable.parent_id = @deliverable_parent.id
-
-    msg = @deliverable.update_authors(params[:people])
-    unless msg.blank?
-      flash[:error] = msg
-      redirect_to :action => 'edit'
-      return
-    end
 
     respond_to do |format|
       if @deliverable.save
@@ -87,7 +76,7 @@ class DeliverablesController < ApplicationController
         format.html { redirect_to(@deliverable_parent) }
         format.xml  { render :xml => @deliverable_parent, :status => :created, :location => @deliverable_parent }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "edit" }
         format.xml  { render :xml => @deliverable_parent.errors, :status => :unprocessable_entity }
       end
     end

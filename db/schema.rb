@@ -77,17 +77,17 @@ ActiveRecord::Schema.define(:version => 20101030165206) do
 
   create_table "deliverables", :force => true do |t|
     t.integer  "parent_id"
+    t.text     "description"
+    t.integer  "submitter_id"
     t.datetime "submission_date"
     t.string   "deliverable_file_name"
     t.string   "deliverable_content_type"
     t.integer  "deliverable_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "deliverables_people", :id => false, :force => true do |t|
-    t.integer "deliverable_id"
-    t.integer "person_id"
+    t.integer  "team_id"
+    t.integer  "course_id"
+    t.string   "task_number"
+    t.integer  "is_team_deliverable"
+    t.text     "comment"
   end
 
   create_table "effort_log_line_items", :force => true do |t|
