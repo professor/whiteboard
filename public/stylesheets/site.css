@@ -18,6 +18,16 @@ td.log_action  {
     
 }
 
+td.hide {
+    visibility:hidden;
+    display:none;
+}
+
+th.hide {
+    visibility:hidden;
+    display: none;
+}
+
 #description {
   color: green;
 }
