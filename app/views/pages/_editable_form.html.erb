@@ -10,13 +10,41 @@
 <script src="/javascripts/wymeditor/jquery.wymeditor.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
 
+<%= javascript_include_tag 'jquery.cookie' %>
 
 
 <script type="text/javascript">
+
+    function enable_tabs(checkbox){
+            if (checkbox.attr('checked')) {
+                $tabs = $('#tabs').tabs();
+                $tabs.tabs( "option", "disabled", [] ); //enables the tabs
+                $tabs.tabs( "option", "selected", 0 );
+                $('.ui-tabs-nav').css('display', 'block');
+                $('#email_header').css('display', 'block');
+            }
+            else {
+                $tabs = $('#tabs').tabs();
+                $tabs.tabs( "option", "selected", 0 );
+                $tabs.tabs( "option", "disabled", [1, 2, 3] );
+                $('.ui-tabs-nav').css('display', 'none');
+                $('#email_header').css('display', 'none');
+            };
+      }
+
+
 	$(function() {
 		$("#tabs").tabs();
         $( ".selector" ).tabs({ cookie: { expires: 30 } });
-	});
+        $('#page_is_task').change(function(){
+            enable_tabs($(this));
+        })
+    });
+
+
+    $(document).ready(function(){
+        enable_tabs($('#page_is_task'))
+    });
 
 
 //    jQuery(function() {
@@ -237,7 +265,7 @@
     <%= f.text_field :indentation_level %>
   </p>
   <p>
-    <%= f.label :is_task %><br />
+    <%= f.label :is_task, 'Is this a task page for a course?' %> 
     <%= f.check_box :is_task %>
   </p>
 
@@ -251,8 +279,10 @@
 <% end %>
 	</ul>
 	<div id="tabs-1">
+      <div id="email_header">
       <div id="email_from_header">From: </div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
+      </div>
       <div id="email_details">
          <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
       </div>
@@ -275,8 +305,6 @@
     <%= f.text_field :task_duration, :size => 2 %> weeks
   </p>
   <p>
-    <input type="submit" class="wymupdate" />
-
     <%= f.submit button_name,  :class => "wymupdate"  %>
   </p>
 <% end %>

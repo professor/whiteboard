@@ -2,6 +2,8 @@ class Page < ActiveRecord::Base
     validates_presence_of :title
     validates_presence_of :updated_by_user_id
 
+    belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
+
 #    acts_as_versioned  :table_name => 'page_versions'
 
     belongs_to :course
@@ -9,7 +11,7 @@ class Page < ActiveRecord::Base
 
   def before_validation
       current_user = UserSession.find.user
-     self.updated_by_user_id = current_user if current_user
+     self.updated_by_user_id = current_user.id if current_user
   end
 
   def editable?(current_user)
