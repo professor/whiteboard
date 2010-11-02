@@ -45,9 +45,9 @@ group :development, :test do
   gem 'rspec'
   gem 'factory_girl'
 
-  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
-  gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
-  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
+#  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
+#  gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
+#  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
   gem 'test-unit', '1.2.3'
 
