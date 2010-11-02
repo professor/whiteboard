@@ -239,6 +239,10 @@ border-width:1px;
     background-color:#FbFbFb;
 }
 
+.cmu_table #icon {
+    padding: 0px;
+}
+
 .header_subtext {
     margin-top: -10px;
     padding-left: 3px;
