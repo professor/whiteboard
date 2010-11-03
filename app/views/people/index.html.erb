@@ -12,7 +12,12 @@ $(document).ready(function()
          $('#filterBoxOne').removeAttr("disabled");
          $('#filterBoxOne').focus();
         }
-        $("#people_table").tablesorter({widgets: ['zebra'],         
+        if ($("#stateFilterBox").attr("disabled") == true)
+       {
+         $('#stateFilterBox').val('');
+         $('#stateFilterBox').removeAttr("disabled");
+        }
+        $("#people_table").tablesorter({widgets: ['zebra'],
                                         headers: {2: {sorter: false}  },
                                         sortList: [[0,0], [1,0]]})
             .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
@@ -94,9 +99,10 @@ function updateImage(uri,label)
   <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" /><br/>
 </div>
 
-<div style="float:none">Advanced Filter Options
-    <div style="float:none"><%= render :partial => "advanced_tablesorter_filter_box" %></div>
+<div id="advancedfilter" style="float:none"> 
+  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Advanced Filter Options</a>
 </div>
+
 
 <div id="image_box">
   <%= image_tag("/images/mascot.jpg", :width=>"150", :alt=>"Temporary Picture", :id=>"image_box_image")%><%= image_tag("/images/tablesorter/cross.png", :width=>"16", :height=>"16", :alt=>"Close Me", :style=>"float:right;cursor:pointer", :id=>"close_image_box") %>
@@ -111,12 +117,12 @@ function updateImage(uri,label)
     <th>Graduation year</th>
     <th>Graduate program</th>
     <th>Graduate track</th>
-    <th class="hide">State</th>
-    <th class="hide">Work Location</th>
-    <th class="hide">Part Time</th>
-    <th class="hide">Local?</th>
-    <th class="hide">Has Image</th>
-    <th class="hide">Has Tigris Account</th>
+    <th>State</th>
+    <th>Work Location</th>
+    <th>Part Time</th>
+    <th>Local?</th>
+    <th>Has Image</th>
+    <th>Has Tigris Account</th>
   </tr>
 </thead>
 <tbody>
@@ -140,15 +146,14 @@ function updateImage(uri,label)
 <% else %>
     <td>&nbsp;</td>
 <% end %>
-  <td class="hide"><%=h person.work_state %></td>
-  <td class="hide"><%=h person.organization_name %></td>
-  <td class="hide"><%=h person.is_part_time %></td>
-  <td class="hide"><%=h person.local_near_remote %></td>
-  <td class="hide"><%=h person.image_uri %></td>
-  <td class="hide"><%=h person.is_part_time %></td>
-  <td class="hide"><%=h person.tigris %></td>
-  <td class="hide"><%=h person.tigris %></td>
-  <td class="hide"><%=h person.tigris %></td>
+  <td><%=h person.work_state %></td>
+  <td><%=h person.organization_name %></td>
+  <td><%=h person.is_part_time %></td>
+  <td><%=h person.local_near_remote %></td>
+  <td><%=h person.image_uri %></td>
+  <td><%=h person.is_part_time %></td>
+  <td><%=h person.tigris %></td>
+
 
 <!--
 <% if current_user && current_user.is_admin? %>
@@ -166,3 +171,26 @@ function updateImage(uri,label)
 <% if current_user && (current_user.is_admin? || current_user.is_staff?) %>
 <%= link_to 'New person', new_person_path %>
 <% end %>
+
+
+
+
+<div id="light" class="white_content">
+  First Name:   <input id='firstNameFilterBox' maxlength='30' size='10' type='text' />  Last Name:  <input id='lastNameFilterBox' maxlength='30' size='10' type='text' /><br />
+  Graduation Year: 2009<input id='2009' type='checkbox'/> 2010<input id='2010' type='checkbox'/> 2011<input id='2011' type='checkbox'/> 2012<input id='2012' type='checkbox'/></select><br />
+  Graduation Program:   SE<input id='SE' type='checkbox'/> SM<input id='SM' type='checkbox'/> INI<input id='INI' type='checkbox'/> PhD<input id='PhD' type='checkbox'/> SCS Undergraduate<input id='SCS' type='checkbox'><br />
+  Track:  SM <input id='trackSM' type='checkbox'/> Tech <input id='trackTech' type='checkbox'/> DM <input id='trackDM' type='checkbox'/> IS <input id='trackIS' type='checkbox'/> MOB <input id='trackMOB' type='checkbox'/><br />
+  Email  <input id='emailFilterBox' maxlength='30' size='10' type='text' /><br />
+  Twiki Name:  <input id='twikiNameFilterBox' maxlength='30' size='10' type='text' /><br />
+  Status:  Student<input id='isStudent' type='checkbox'/> Teacher<input id='isTeacher' type='checkbox'/>Staff<input id='isStaff' type='checkbox'/> Admin<input id='isAdmin' type='checkbox'/> Alumnus<input id='alumnus' type='checkbox'/><br/>
+  Has Image: <input id='defautImage' type='checkbox'/><br/>
+  Student Status: Part Time<input id='partTime' type='checkbox'/> Full Time<input id='fullTime' type='checkbox'/> Active<input id='active' type='checkbox'/> Not Active<input id='inActive' type='checkbox'/><br/>
+  Organization Name:  <input id='organizationNameFilterBox' maxlength='30' size='10' type='text' />  Title:  <input id='titleNameFilterBox' maxlength='30' size='10' type='text' /><br />
+  City:  <input id='cityNameFilterBox' maxlength='30' size='10' type='text' /> State:  <input id='stateNameFilterBox' maxlength='10' size='10' type='text' /> Country: <input id='countryNameFilterBox' maxlength='20' size='10' type='text' /><br />
+  Area:  Local<input id='loca' type='checkbox'/> Near<input id='near' type='checkbox'/> Remote<input id='remote' type='checkbox'/><br/>
+  Telephone:  <input id='telephone1FilterBox' maxlength='12' size='10' type='text' /> Skype Name:  <input id='skypeNameFilterBox' maxlength='30' size='10' type='text' />  Tigris Name:  <input id='tigrisNameFilterBox' maxlength='30' size='10' type='text' /><br/>
+  Biography :  <input id='bioFilterBox' maxlength='30' size='10' type='text' /><br />
+  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Update</a>
+  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
+</div>
+<div id="fade" class="black_overlay"></div>
