@@ -7,12 +7,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables
   # GET /deliverables.xml
   def index
-    @deliverables = Deliverable.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @deliverables }
-    end
+    redirect_to my_deliverables_path(current_user)
   end
 
   def my_deliverables
@@ -39,6 +34,12 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1.xml
   def show
     @deliverable = Deliverable.find(params[:id])
+
+    # If we aren't on this deliverable's team, you can't see it.
+    if !Person.find(current_user).get_registered_courses.find(@deliverable.team.course)
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
 
     respond_to do |format|
       format.html # show.html.erb
