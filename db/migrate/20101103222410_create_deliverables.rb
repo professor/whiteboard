@@ -16,7 +16,6 @@ class CreateDeliverables < ActiveRecord::Migration
       t.integer  "course_id"
       t.string   "task_number"
       t.integer  "is_team_deliverable"
-      t.integer  "current_revision_id"
       t.integer  "creator_id"
       t.timestamps
     end

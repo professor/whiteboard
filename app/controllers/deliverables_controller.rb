@@ -51,7 +51,8 @@ class DeliverablesController < ApplicationController
     @deliverable.creator = Person.find(current_user)
     @revision = DeliverableRevision.new(params[:deliverable_revision])
     @revision.submitter = @deliverable.creator
-    @deliverable.current_revision = @revision
+    @deliverable.revisions << @revision
+    @revision.deliverable = @deliverable
 
     respond_to do |format|
       if @revision.valid? and @deliverable.valid? and @deliverable.save
@@ -75,19 +76,20 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1
   # PUT /deliverables/1.xml
   def update
-    @deliverable_parent = DeliverableRevision.find(params[:id])
-    @deliverable = DeliverableRevision.new(params[:deliverable])
-    @deliverable.submitter = Person.find(current_user)
-    @deliverable.parent_id = @deliverable_parent.id
+    @deliverable = Deliverable.find(params[:id])
+    @revision = DeliverableRevision.new(params[:deliverable_revision])
+    @revision.submitter = Person.find(current_user)
+    @deliverable.revisions << @revision
+    @revision.deliverable = @deliverable
 
     respond_to do |format|
-      if @deliverable.save
+      if @revision.valid? and @deliverable.valid? and @deliverable.save
         flash[:notice] = 'Deliverable was successfully updated.'
-        format.html { redirect_to(@deliverable_parent) }
-        format.xml  { render :xml => @deliverable_parent, :status => :created, :location => @deliverable_parent }
+        format.html { redirect_to(@deliverable) }
+        format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable_parent.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
     end
   end

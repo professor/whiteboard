@@ -1,9 +1,5 @@
-<% content_for :title, @deliverable.course.name + " Task " + @deliverable.task_number %>
-<h1><%= @deliverable.course.name + ", Task " + @deliverable.task_number -%></h1>
-<p>
-  <b>Description:</b>
-  <%=h @deliverable.description %>
-</p>
+<% content_for :title, "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
+<h1><%= "Deliverable for " + @deliverable.course.name + ", Task " + @deliverable.task_number -%></h1>
 
 <p>
   <% if @deliverable.is_team_deliverable? %>
@@ -14,12 +10,18 @@
 </p>
 
 <p>
-  Current Revision:
-  <%= link_to @deliverable.current_revision.revision_file_name, @deliverable.current_revision.revision.url %>
+  <b>Description:</b>
+  <%=h @deliverable.description %>
 </p>
 
 <p>
-  Submitted on <%= @deliverable.current_revision.submission_date %>
+  <b>Current Revision:</b>
+  <%= link_to @deliverable.current_revision.revision_file_name, @deliverable.current_revision.revision.url %>
+  (<%= link_to 'Upload New Revision', edit_deliverable_path(@deliverable) %>)
+</p>
+
+<p>
+  <b>Submitted on:</b> <%= @deliverable.current_revision.submission_date %>
 </p>
 
 <h1>Revision History</h1>
@@ -33,7 +35,7 @@
 
   <% for revision in @deliverable.revisions %>
 
-  <tr>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
     <td><%=h revision.submission_date %></td>
     <td>
         <% if revision.revision_file_name != nil %>
@@ -47,5 +49,4 @@
   <% end %>
 </table>
 
-<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>
-<%= link_to 'Back', deliverables_path %>
+

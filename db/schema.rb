@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(:version => 20101103222410) do
     t.integer  "course_id"
     t.string   "task_number"
     t.integer  "is_team_deliverable"
-    t.integer  "current_revision_id"
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"

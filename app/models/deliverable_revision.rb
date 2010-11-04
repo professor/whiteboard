@@ -10,7 +10,7 @@ class DeliverableRevision < ActiveRecord::Base
 
   validates_presence_of :submitter
 
-  def before_save
+  def before_validation_on_create
     self.submission_date = DateTime.now
   end
 
