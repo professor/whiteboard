@@ -5,7 +5,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables
   # GET /deliverables.xml
   def index
-    @deliverables = Deliverable.find(:all, :conditions => ["parent_id IS NULL"])
+    @deliverables = Deliverable.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1
   # GET /deliverables/1.xml
   def show
-    @deliverables = Deliverable.find(:all, :conditions => ["id = ? or parent_id = ?", params[:id], params[:id]], :order => "submission_date" )
+    @deliverable = Deliverable.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -31,7 +31,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/new
   # GET /deliverables/new.xml
   def new
-    @deliverable = Deliverable.new(:submitter => Person.find(current_user))
+    @deliverable = Deliverable.new(:creator => Person.find(current_user))
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,14 +48,24 @@ class DeliverablesController < ApplicationController
   # POST /deliverables.xml
   def create
     @deliverable = Deliverable.new(params[:deliverable])
-    @deliverable.submitter = Person.find(current_user)
+    @deliverable.creator = Person.find(current_user)
+    @revision = DeliverableRevision.new(params[:deliverable_revision])
+    @revision.submitter = @deliverable.creator
+    @deliverable.current_revision = @revision
 
     respond_to do |format|
-      if @deliverable.save
+      if @revision.valid? and @deliverable.valid? and @deliverable.save
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
       else
+        if not @revision.valid?
+          flash[:notice] = 'Revision not valid'
+        elsif not @deliverable.valid?
+          flash[:notice] = 'Deliverable not valid'
+        else
+          flash[:notice] = 'Something else went wrong'          
+        end
         format.html { render :action => "new" }
         format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
@@ -65,8 +75,8 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1
   # PUT /deliverables/1.xml
   def update
-    @deliverable_parent = Deliverable.find(params[:id])
-    @deliverable = Deliverable.new(params[:deliverable])
+    @deliverable_parent = DeliverableRevision.find(params[:id])
+    @deliverable = DeliverableRevision.new(params[:deliverable])
     @deliverable.submitter = Person.find(current_user)
     @deliverable.parent_id = @deliverable_parent.id
 
@@ -85,7 +95,7 @@ class DeliverablesController < ApplicationController
   # DELETE /deliverables/1
   # DELETE /deliverables/1.xml
   def destroy
-    @deliverable = Deliverable.find(params[:id])
+    @deliverable = DeliverableRevision.find(params[:id])
     @deliverable.destroy
 
     respond_to do |format|

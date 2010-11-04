@@ -1,29 +1,51 @@
-<h1>Listing Deliverable Revisions</h1>
+<% content_for :title, @deliverable.course.name + " Task " + @deliverable.task_number %>
+<h1><%= @deliverable.course.name + ", Task " + @deliverable.task_number -%></h1>
+<p>
+  <b>Description:</b>
+  <%=h @deliverable.description %>
+</p>
+
+<p>
+  <% if @deliverable.is_team_deliverable? %>
+    <b>Team Deliverable for team <%= @deliverable.team.name -%></b>
+  <% else %>
+    <b>Individual Deliverable for <%= @deliverable.creator.human_name -%></b>
+  <% end %>
+</p>
+
+<p>
+  Current Revision:
+  <%= link_to @deliverable.current_revision.revision_file_name, @deliverable.current_revision.revision.url %>
+</p>
+
+<p>
+  Submitted on <%= @deliverable.current_revision.submission_date %>
+</p>
+
+<h1>Revision History</h1>
 
 <table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <th>Submission Date</th>
-    <th>Team</th>
-    <th>Deliverable URL</th>
-    <th>Actions</th>
+    <th>Deliverable File</th>
+    <th>Comments</th>
   </tr>
 
-<% @deliverables.each do |deliverable| %>
+  <% for revision in @deliverable.revisions %>
+
   <tr>
-    <td><%=h deliverable.submission_date %></td>
-    <td><%= deliverable.team.name %></td>
+    <td><%=h revision.submission_date %></td>
     <td>
-        <% if deliverable.deliverable_file_name != nil %>
-            <%= link_to deliverable.deliverable_file_name, deliverable.deliverable.url %>
+        <% if revision.revision_file_name != nil %>
+            <%= link_to revision.revision_file_name, revision.revision.url %>
         <% end %>
     </td>
     <td>
-        <%= link_to 'Show', deliverable %>
-        <%= link_to 'Destroy', deliverable, :confirm => 'Are you sure?', :method => :delete %>
+      <%=h revision.comment -%>
     </td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
-<%= link_to 'Edit', edit_deliverable_path(@deliverables[0].id) %>
+<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>
 <%= link_to 'Back', deliverables_path %>

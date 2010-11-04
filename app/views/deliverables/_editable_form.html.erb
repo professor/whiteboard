@@ -8,7 +8,7 @@
   </p>
   <p>
     <%= f.label :course_id, "Select Course" %>
-    <%= f.collection_select(:course_id, @deliverable.submitter.get_registered_courses, :id, :name, :include_blank => true) %>
+    <%= f.collection_select(:course_id, @deliverable.creator.get_registered_courses, :id, :name, :include_blank => true) %>
   </p>
   <p>
     <%= f.label :task_number, "Task Number" %>
@@ -18,15 +18,19 @@
     <%= f.label :is_team_deliverable, "Team Deliverable?" %>
     <%= f.check_box :is_team_deliverable %>
   </p>
+  <div class="deliverable_revision">
+  <% fields_for :deliverable_revision do |revision_form| -%>
     <p>
-      <%= f.label :deliverable, "Deliverable file to upload" %>
-      <%= f.file_field :deliverable %>
+      <%= revision_form.label :revision, "Deliverable file to upload" %>
+      <%= revision_form.file_field :revision %>
     </p>
-  <p>
-    <%= f.label :comment, "Comments" %>
-    <br>
-    <%= f.text_area :comment %>
-  </p>
+    <p>
+      <%= revision_form.label :comment, "Comments" %>
+      <br>
+      <%= revision_form.text_area :comment %>
+    </p>
+  <% end -%>
+  </div>
   <p>
     <%= f.submit button_name %>
   </p>
