@@ -2,6 +2,8 @@ class DeliverablesController < ApplicationController
 
   layout 'cmu_sv'
   
+  before_filter :require_user
+
   # GET /deliverables
   # GET /deliverables.xml
   def index
@@ -14,7 +16,23 @@ class DeliverablesController < ApplicationController
   end
 
   def my_deliverables
-    redirect_to :action => "index"
+    current_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.semester = ? AND c.year = ?", current_user.id, @current_semester, @current_year])
+    past_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", current_user.id, @current_semester, @current_year])
+    all_deliverables = Deliverable.find(:all)
+    @current_deliverables = []
+    @past_deliverables = []
+    for d in all_deliverables
+      if current_teams_as_member.find(d.team)
+        @current_deliverables << d
+      elsif past_teams_as_member.find(d.team)
+        @past_deliverables << d
+      end
+    end
+
+    respond_to do |format|
+      format.html { render :action => "index" }
+      format.xml  { render :xml => @deliverables }
+    end
   end
 
   # GET /deliverables/1

@@ -8,6 +8,6 @@
 
 <%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
 
-<%= link_to 'Back', deliverables_path %>
+<%= link_to 'Cancel', my_deliverables_path(@deliverable.creator) %>
 <br/>
 <br/>
