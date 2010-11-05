@@ -406,3 +406,31 @@ def test_should_not_create_current_effort_log_with_new
   end
 
 end
+
+def test_should_not_update_old_effort_log_as_student
+  login_as :student_sam
+  put :update, :id => effort_logs(:week_one).id, :effort_log => { }
+  assert_equal('You are unable to update effort logs from the past.', flash[:error])
+  assert_response :redirect
+end
+
+def test_should_not_update_effort_log_as_another_student
+  login_as :student_john
+  put :update, :id => effort_logs(:this_week).id, :effort_log => { }
+  assert_equal('You do not have permission to edit the effort log.', flash[:error])
+  assert_response :redirect
+end
+
+def test_should_not_get_edit_previous
+  login_as :student_sam
+  get :edit, :id => effort_logs(:week_one).id
+  assert_equal('You are unable to update effort logs from the past.', flash[:error])
+  assert_response :redirect
+end
+
+def test_should_not_get_edit_current_as_another_student
+  login_as :student_john
+  get :edit, :id => effort_logs(:this_week).id
+  assert_equal('You do not have permission to edit the effort log.', flash[:error])
+  assert_response :redirect
+end
