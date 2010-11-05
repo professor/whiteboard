@@ -6,6 +6,7 @@
     <th>Owner</th>
     <th>Description</th>
     <th>File</th>
+    <th>Feedback Received?</th>
     <th>Actions</th>
   </tr>
 
@@ -20,7 +21,14 @@
               <%= link_to deliverable.current_revision.revision_file_name, deliverable.current_revision.revision.url %>
           <% end %>
       </td>
-      <td><%= link_to 'See Revisions', deliverable %></td>
+      <td>
+          <% if deliverable.has_feedback? %>
+            Yes
+          <% else %>
+            No
+          <% end %>
+      </td>
+      <td><%= link_to 'View History and Feedback', deliverable %></td>
     </tr>
   <% end %>
 </table>

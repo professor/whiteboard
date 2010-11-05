@@ -35,11 +35,14 @@ class DeliverablesController < ApplicationController
 
     # If we aren't on this deliverable's team, you can't see it.
     if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
-      flash[:error] = "You don't have permission to see another team's deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
+      unless (current_user.is_staff?)||(current_user.is_admin?)
+        flash[:error] = "You don't have permission to see another team's deliverables."
+        redirect_to :controller => "welcome", :action => "index"
+        return
+      end
     end
 
+    @current_user = current_user
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @deliverables }
@@ -61,11 +64,15 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
+    @staff = (current_user.is_staff?||current_user.is_admin?) ? current_user : nil
+    current_user
     cur_person = Person.find(current_user)
     if !Team.find_by_person(cur_person).find(@deliverable.team)
-      flash[:error] = "You don't have permission to edit another team's deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
+      unless !@staff.nil?
+        flash[:error] = "You don't have permission to edit another team's deliverables."
+        redirect_to :controller => "welcome", :action => "index"
+        return
+      end
     end
   end
 
@@ -110,6 +117,7 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1
   # PUT /deliverables/1.xml
   def update
+    blah
     @deliverable = Deliverable.find(params[:id])
     cur_person = Person.find(current_user)
     if !Team.find_by_person(cur_person).find(@deliverable.team)
@@ -159,6 +167,37 @@ class DeliverablesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(deliverables_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def edit_feedback
+    # Only staff can provide feedback
+    if !current_user.is_staff?
+      flash[:error] = "Only faculty can provide feedback on deliverables."
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
+
+    @staff = current_user
+    @deliverable = Deliverable.find(params[:id])
+  end
+
+  def update_feedback
+    @deliverable = Deliverable.find(params[:id])
+    @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
+    unless params[:deliverable][:feedback].nil? or params[:deliverable][:feedback] == ""
+      @deliverable.feedback = params[:deliverable][:feedback]
+    end
+    respond_to do |format|
+      if @deliverable.save
+        flash[:notice] = 'Feedback successfully saved.'
+        format.html { redirect_to(@deliverable) }
+        format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }
+      else
+        flash[:error] = 'Unable to save feedback'
+        format.html { redirect_to(@deliverable) }
+        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+      end
     end
   end
 end

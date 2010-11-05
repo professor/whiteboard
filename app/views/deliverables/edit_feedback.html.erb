@@ -1,0 +1,22 @@
+<% content_for :title, "Provide Feedback" %>
+
+<h1>Provide Deliverable Feedback</h1>
+
+<% form_for @deliverable, :html => { :multipart => true }, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+  <p>
+    <%= f.label :feedback, "Feedback file to upload" %>
+    <%= f.file_field :feedback %>
+  </p>
+  <p>
+    <%= f.label :feedback_comment, "Feedback Comments" %>
+    <br>
+    <%= f.text_area :feedback_comment %>
+  </p>
+  <p>
+    <%= f.submit "Submit Feedback" %>
+  </p>    
+<% end %>
+
+<%= link_to 'Cancel', deliverable_path(@deliverable) %>
+<br/>
+<br/>

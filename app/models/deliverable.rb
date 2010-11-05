@@ -7,6 +7,11 @@ class Deliverable < ActiveRecord::Base
 
   validates_presence_of :course, :creator, :team
 
+  has_attached_file :feedback,
+    :storage => :s3,
+    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+    :path => "deliverable_feedback/super8/:id/:filename"
+
   def before_validation_on_create
     # Look up the team this person is on
     self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id])
@@ -47,5 +52,9 @@ class Deliverable < ActiveRecord::Base
       team_condition << ") OR "
     end
     Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{person.id})")
+  end
+
+  def has_feedback?
+    !(self.feedback_comment.nil? or self.feedback_comment == "") or !self.feedback_file_name.nil?
   end
 end

@@ -17,11 +17,34 @@
 <p>
   <b>Current Revision:</b>
   <%= link_to @deliverable.current_revision.revision_file_name, @deliverable.current_revision.revision.url %>
-  (<%= link_to 'Upload New Revision', edit_deliverable_path(@deliverable) %>)
+  <% if @current_user.is_student? %>
+      (<%= link_to 'Upload New Revision', edit_deliverable_path(@deliverable) %>)
+  <% end %>
 </p>
 
 <p>
   <b>Submitted on:</b> <%= @deliverable.current_revision.submission_date %>
+</p>
+
+<h1>Feedback</h1>
+<p>
+  <b>File:</b>
+  <% unless @deliverable.feedback_file_name.nil? %>
+      <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+  <% else %>
+      None
+  <% end %>
+  <% if @current_user.is_staff? %>
+      (<%= link_to 'Update Feedback', deliverable_feedback_path(@deliverable) %>)
+  <% end %>
+</p>
+<p>
+  <b>Comments:</b>
+  <% if @deliverable.feedback_comment.nil? or @deliverable.feedback_comment == "" %>
+     None
+  <% else %>
+      <%=h @deliverable.feedback_comment %>
+  <% end %>
 </p>
 
 <h1>Revision History</h1>
