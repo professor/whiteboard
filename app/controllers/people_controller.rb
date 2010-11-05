@@ -13,22 +13,41 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    criteria = ["graduation_year", "first_name", "last_name", "masters_program", "masters_track", "tigris", "skype", "email", "organization_name", "work_city", "work_state", "work_country", "is_staff", "is_student", "is_active", "is_teacher", "is_teacher"]
+    criteria = ["graduation_year", "first_name", "last_name", "masters_program", "masters_track", "tigris", "skype", "email", "organization_name", "work_city", "work_state", "work_country", "is_staff", "is_student","is_admin", "is_active", "is_teacher", "is_teacher", "is_alumnus", "office", "telephone1", "personal_email", "local_near_remote", "is_adobe_connect_host", "is_part_time", :image_uri]
     conditions = {}
     criteria.each {|name| conditions[name] = params[name] if (params[name] && (params[name] != ''))}
+    if !conditions[:image_uri].nil?
+      conditions[:image_uri] = "/images/mascot.jpg"
+    end
 
     if !conditions.empty?
-      @people = Person.find(:all, :conditions => conditions)
+      @people = Person.find(:all, :conditions => to_like_conditions(conditions))
     else
       @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
     end
-    
-#    respond_to do |format|
-##      format.html # index.html.erb
-#      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
-#      format.js   { render :js => @people, :layout => false }
-#      format.xml  { render :xml => @people }
-#    end
+
+  end
+
+    def to_like_conditions( conditions )
+
+    like_conditions = []
+    key_count = conditions.size
+    k = ""
+    conditions.each_key do |key|
+      k += "#{key} LIKE ?"
+      if key_count > 1
+        k += " and "
+      end
+      key_count -= 1
+    end
+    like_conditions << k
+
+    conditions.each_value do |value|
+      like_conditions << "%#{value}%"
+    end
+
+    like_conditions
+
   end
 
   def phone_book
