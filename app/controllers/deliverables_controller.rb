@@ -72,8 +72,17 @@ class DeliverablesController < ApplicationController
   # POST /deliverables
   # POST /deliverables.xml
   def create
+    # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = Person.find(current_user)
+    if !params[:deliverable_revision][:revision]
+      flash[:error] = 'Must specify a file to upload'
+      respond_to do |format|
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+      end
+      return
+    end
     @revision = DeliverableRevision.new(params[:deliverable_revision])
     @revision.submitter = @deliverable.creator
     @deliverable.revisions << @revision
