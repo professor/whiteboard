@@ -86,6 +86,11 @@ class Team < ActiveRecord::Base
     self.email.split('@')[0] #strips out @sv.cmu.edu
   end
 
+  def self.find_by_person(person)
+    person_id = person.id
+    Team.find_by_sql("SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) WHERE tp.person_id = #{person_id}")
+  end
+
   def self.find_current_by_person(person)
     person_id = person.id
     current_year = Date.today.year()
