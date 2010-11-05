@@ -130,4 +130,16 @@ class PeopleControllerTest < ActionController::TestCase
 #renable bug by putting the format back in.    
   end
 
+  def should_filter_students
+
+  end
+
+  def should_filter_default_image
+
+  end
+
+  def should_filter_organization_name
+    
+  end
+
 end
