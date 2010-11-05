@@ -24,4 +24,28 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  def self.find_current_by_person(person)
+    # Find everything where the passed in person is either the creator
+    # or is on the deliverable's team
+    current_teams = Team.find_current_by_person(person)
+    Deliverable.find_by_person_and_teams(person, current_teams)
+  end
+
+  def self.find_past_by_person(person)
+    # Find everything where the passed in person is either the creator
+    # or is on the deliverable's team
+    past_teams = Team.find_past_by_person(person)
+    Deliverable.find_by_person_and_teams(person, past_teams)
+  end
+
+  def self.find_by_person_and_teams(person, teams)
+    team_ids_string = ""
+    team_condition = ""
+    if !teams.empty?
+      team_condition = "team_id IN ("
+      teams.each {|t| team_condition << "#{t.id} "}
+      team_condition << ") OR "
+    end
+    Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{person.id})")
+  end
 end
