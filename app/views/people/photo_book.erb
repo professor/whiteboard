@@ -3,7 +3,32 @@
 <div class="right_link" ><%= link_to 'See people', :action => 'index' %><br/>
 <%= link_to 'See phone book', :action=>'phone_book' %></div>
 
+<div id="advancedfilter" style="float:none">
+  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Advanced Filter Options</a>
+  <%= link_to "Clear Filter", :action => 'photo_book' %>
+</div>
+
 <% for person in @people %>
     <div width="200"><%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %></div>
 <% end %>
 <br/>
+
+<div id="light" class="white_content">
+  <% form_tag search_photo_path :action => 'photo_book', :method => 'get' do %>
+    <%= label_tag(:first_name, "First Name:") %><%= text_field_tag(:first_name) %> <%= label_tag(:last_name, "Last Name:") %><%= text_field_tag(:last_name) %><br/>
+    <%= label_tag(:graduation_year, "Graduation Year:") %><%= text_field_tag :graduation_year, nil, :size => 5 %> <%= label_tag(:masters_program, "Masters Program:") %><%= text_field_tag :masters_program, nil, :size => 10 %><%= label_tag(:masters_track, "Masters Track:") %><%= text_field_tag :masters_track, nil, :size => 5 %><br/>
+    <%= label_tag(:email, "Email:") %><%= text_field_tag :email, nil, :size => 25 %>  <%= label_tag(:personal_email, "Personal Email:") %><%= text_field_tag(:personal_email) %><br/>
+    <%= label_tag(:skype, "Skype ID:") %><%= text_field_tag :skype, nil, :size => 20 %><%= label_tag(:tigris, "Tigris ID:") %><%= text_field_tag :tigris, nil, :size => 20 %><br/>
+    <%= label_tag(:organization_name, "Organization Name:") %><%= text_field_tag(:organization_name) %> <%= label_tag(:work_city, "Work City:") %><%= text_field_tag(:work_city) %><br/>
+    <%= label_tag(:work_state, "Work State:") %><%= text_field_tag :work_state,nil, :size => 2 %><%= label_tag(:work_country, "Work Country:") %><%= text_field_tag :work_country,nil, :size => 15 %><br/>
+    <%= label_tag(:is_staff, "Is Staff:") %><%= check_box_tag :is_staff %> <%= label_tag(:is_student, "Is Student:") %><%= check_box_tag :is_student%> <%= label_tag(:is_admin, "Is Admin:") %><%= check_box_tag :is_admin %> <%= label_tag(:is_teacher, "Is Teacher:") %><%= check_box_tag :is_teacher %><br/>
+    <%= label_tag(:is_active, "Is Active: ") %>Yes<%= radio_button_tag :is_active, "1", :checked => "checked" %>No<%= radio_button_tag :is_active, "0" %><br/>
+    <%= label_tag(:is_part_time, "Is Part Time:") %><%= check_box_tag(:is_part_time)%><%= label_tag(:is_alumnus, "Is Alumnus:") %><%= check_box_tag(:is_alumnus)%><%= label_tag(:is_adobe_connect_host, "Is Adobe Connect Host:") %><%= check_box_tag(:is_adobe_connect_host)%><%= label_tag(:image_uri, "Has Default Image:") %><%= check_box_tag :image_uri%><br/>
+    <%= label_tag(:office, "Office:") %><%= text_field_tag(:office) %> <%= label_tag(:telephone1, "Telephone:") %><%= text_field_tag(:telephone1) %><br/>
+    <%= label_tag(:local_near_remote, "Student Location Status:") %><%= text_field_tag :local_near_remote,nil, :size => 8 %><br/>
+    <!-- Still need filter by class -->
+      <%= submit_tag 'Search' %>
+    <% end %>
+  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
+</div>
+<div id="fade" class="black_overlay"></div>
