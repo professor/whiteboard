@@ -56,6 +56,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :suggestions
 
+  map.search "search", :controller => 'people', :action => 'index'
+
   map.setup_peer_evaluation 'peer_evaluation/edit_setup/:id', :controller => "peer_evaluation", :action => "edit_setup"
   map.edit_peer_evaluation 'peer_evaluation/edit_evaluation/:id', :controller => "peer_evaluation", :action => "edit_evaluation"
   map.report_peer_evaluation 'peer_evaluation/edit_report/:id', :controller => "peer_evaluation", :action => "edit_report"

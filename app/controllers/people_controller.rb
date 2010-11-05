@@ -13,16 +13,15 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    if params[:search]
-      if development?
-        @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:search]}%"])
-      else
-        @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
-      end
-    else
-          @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
-    end
+    criteria = ["graduation_year", "first_name", "last_name", "masters_program", "masters_track", "tigris", "skype", "email", "organization_name", "work_city", "work_state", "work_country", "is_staff", "is_student", "is_active", "is_teacher", "is_teacher"]
+    conditions = {}
+    criteria.each {|name| conditions[name] = params[name] if (params[name] && (params[name] != ''))}
 
+    if !conditions.empty?
+      @people = Person.find(:all, :conditions => conditions)
+    else
+      @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
+    end
     
 #    respond_to do |format|
 ##      format.html # index.html.erb

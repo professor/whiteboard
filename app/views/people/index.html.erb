@@ -101,6 +101,7 @@ function updateImage(uri,label)
 
 <div id="advancedfilter" style="float:none"> 
   <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Advanced Filter Options</a>
+  <%= link_to "Clear Filter", :action => 'index' %>
 </div>
 
 
@@ -117,12 +118,6 @@ function updateImage(uri,label)
     <th>Graduation year</th>
     <th>Graduate program</th>
     <th>Graduate track</th>
-    <th>State</th>
-    <th>Work Location</th>
-    <th>Part Time</th>
-    <th>Local?</th>
-    <th>Has Image</th>
-    <th>Has Tigris Account</th>
   </tr>
 </thead>
 <tbody>
@@ -146,13 +141,6 @@ function updateImage(uri,label)
 <% else %>
     <td>&nbsp;</td>
 <% end %>
-  <td><%=h person.work_state %></td>
-  <td><%=h person.organization_name %></td>
-  <td><%=h person.is_part_time %></td>
-  <td><%=h person.local_near_remote %></td>
-  <td><%=h person.image_uri %></td>
-  <td><%=h person.is_part_time %></td>
-  <td><%=h person.tigris %></td>
 
 
 <!--
@@ -176,21 +164,32 @@ function updateImage(uri,label)
 
 
 <div id="light" class="white_content">
-  First Name:   <input id='firstNameFilterBox' maxlength='30' size='10' type='text' />  Last Name:  <input id='lastNameFilterBox' maxlength='30' size='10' type='text' /><br />
-  Graduation Year: 2009<input id='2009' type='checkbox'/> 2010<input id='2010' type='checkbox'/> 2011<input id='2011' type='checkbox'/> 2012<input id='2012' type='checkbox'/></select><br />
-  Graduation Program:   SE<input id='SE' type='checkbox'/> SM<input id='SM' type='checkbox'/> INI<input id='INI' type='checkbox'/> PhD<input id='PhD' type='checkbox'/> SCS Undergraduate<input id='SCS' type='checkbox'><br />
-  Track:  SM <input id='trackSM' type='checkbox'/> Tech <input id='trackTech' type='checkbox'/> DM <input id='trackDM' type='checkbox'/> IS <input id='trackIS' type='checkbox'/> MOB <input id='trackMOB' type='checkbox'/><br />
-  Email  <input id='emailFilterBox' maxlength='30' size='10' type='text' /><br />
-  Twiki Name:  <input id='twikiNameFilterBox' maxlength='30' size='10' type='text' /><br />
-  Status:  Student<input id='isStudent' type='checkbox'/> Teacher<input id='isTeacher' type='checkbox'/>Staff<input id='isStaff' type='checkbox'/> Admin<input id='isAdmin' type='checkbox'/> Alumnus<input id='alumnus' type='checkbox'/><br/>
-  Has Image: <input id='defautImage' type='checkbox'/><br/>
-  Student Status: Part Time<input id='partTime' type='checkbox'/> Full Time<input id='fullTime' type='checkbox'/> Active<input id='active' type='checkbox'/> Not Active<input id='inActive' type='checkbox'/><br/>
-  Organization Name:  <input id='organizationNameFilterBox' maxlength='30' size='10' type='text' />  Title:  <input id='titleNameFilterBox' maxlength='30' size='10' type='text' /><br />
-  City:  <input id='cityNameFilterBox' maxlength='30' size='10' type='text' /> State:  <input id='stateNameFilterBox' maxlength='10' size='10' type='text' /> Country: <input id='countryNameFilterBox' maxlength='20' size='10' type='text' /><br />
-  Area:  Local<input id='loca' type='checkbox'/> Near<input id='near' type='checkbox'/> Remote<input id='remote' type='checkbox'/><br/>
-  Telephone:  <input id='telephone1FilterBox' maxlength='12' size='10' type='text' /> Skype Name:  <input id='skypeNameFilterBox' maxlength='30' size='10' type='text' />  Tigris Name:  <input id='tigrisNameFilterBox' maxlength='30' size='10' type='text' /><br/>
-  Biography :  <input id='bioFilterBox' maxlength='30' size='10' type='text' /><br />
-  <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Update</a>
+  <!--First Name:   <input id='firstNameFilterBox' maxlength='30' size='10' type='text' />  Last Name:  <input id='lastNameFilterBox' maxlength='30' size='10' type='text' /><br />-->
+  <!--Graduation Year:  <input id='yearFilterBox' maxlength='5' size='10' type='text' />-->
+  <!--Graduation Program:   SE<input id='SE' type='checkbox'/> SM<input id='SM' type='checkbox'/> INI<input id='INI' type='checkbox'/> PhD<input id='PhD' type='checkbox'/> SCS Undergraduate<input id='SCS' type='checkbox'><br />-->
+  <!--Track:  SM <input id='trackSM' type='checkbox'/> Tech <input id='trackTech' type='checkbox'/> DM <input id='trackDM' type='checkbox'/> IS <input id='trackIS' type='checkbox'/> MOB <input id='trackMOB' type='checkbox'/><br />-->
+  <!--Email  <input id='emailFilterBox' maxlength='30' size='10' type='text' /><br />-->
+  <!--Twiki Name:  <input id='twikiNameFilterBox' maxlength='30' size='10' type='text' /><br />-->
+  <!--Status:  Student<input id='isStudent' type='checkbox'/> Teacher<input id='isTeacher' type='checkbox'/>Staff<input id='isStaff' type='checkbox'/> Admin<input id='isAdmin' type='checkbox'/> Alumnus<input id='alumnus' type='checkbox'/><br/>-->
+  <!--Has Image: <input id='defautImage' type='checkbox'/><br/>-->
+  <!--Student Status: Part Time<input id='partTime' type='checkbox'/> Full Time<input id='fullTime' type='checkbox'/> Active<input id='active' type='checkbox'/> Not Active<input id='inActive' type='checkbox'/><br/>-->
+  <!--Organization Name:  <input id='organizationNameFilterBox' maxlength='30' size='10' type='text' />  Title:  <input id='titleNameFilterBox' maxlength='30' size='10' type='text' /><br />-->
+  <!--City:  <input id='cityNameFilterBox' maxlength='30' size='10' type='text' /> State:  <input id='stateNameFilterBox' maxlength='10' size='10' type='text' /> Country: <input id='countryNameFilterBox' maxlength='20' size='10' type='text' /><br />-->
+  <!--Area:  Local<input id='loca' type='checkbox'/> Near<input id='near' type='checkbox'/> Remote<input id='remote' type='checkbox'/><br/>-->
+  <!--Telephone:  <input id='telephone1FilterBox' maxlength='12' size='10' type='text' /> Skype Name:  <input id='skypeNameFilterBox' maxlength='30' size='10' type='text' />  Tigris Name:  <input id='tigrisNameFilterBox' maxlength='30' size='10' type='text' /><br/>-->
+  <!--Biography :  <input id='bioFilterBox' maxlength='30' size='10' type='text' /><br />-->
+  <% form_tag search_path :action => 'index', :method => 'get' do %>
+    <%= label_tag(:first_name, "First Name:") %><%= text_field_tag(:first_name) %> <%= label_tag(:last_name, "Last Name:") %><%= text_field_tag(:last_name) %><br/>
+    <%= label_tag(:graduation_year, "Graduation Year:") %><%= text_field_tag :graduation_year, nil, :size => 5 %> <%= label_tag(:masters_program, "Masters Program:") %><%= text_field_tag :masters_program, nil, :size => 10 %><%= label_tag(:masters_track, "Masters Track:") %><%= text_field_tag :masters_track, nil, :size => 5 %><br/>
+    <%= label_tag(:email, "Email:") %><%= text_field_tag :email, nil, :size => 25 %> <%= label_tag(:skype, "Skype ID:") %><%= text_field_tag :skype, nil, :size => 20 %><%= label_tag(:tigris, "Tigris ID:") %><%= text_field_tag :tigris, nil, :size => 20 %>
+    <%= label_tag(:organization_name, "Organization Name:") %><%= text_field_tag(:organization_name) %> <%= label_tag(:work_city, "Work City:") %><%= text_field_tag(:work_city) %><%= label_tag(:work_state, "Work State:") %><%= text_field_tag :work_state,nil, :size => 2 %><%= label_tag(:work_country, "Work Country:") %><%= text_field_tag :work_country,nil, :size => 15 %><br/>
+    <%= label_tag(:organization_name, "Is Staff:") %><%= check_box_tag(:is_staff)%> <%= label_tag(:is_student, "Is Student:") %><%= check_box_tag(:is_student)%> <%= label_tag(:is_admin, "Is Admin:") %><%= check_box_tag(:is_admin)%> <%= label_tag(:is_teacher, "Is Teacher:") %><%= check_box_tag :is_teacher %> <%= label_tag(:is_active, "Is Active:") %><%= check_box_tag(:is_active)%><br/>
+
+
+
+
+      <%= submit_tag 'Search' %>
+    <% end %>
   <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
 </div>
 <div id="fade" class="black_overlay"></div>
