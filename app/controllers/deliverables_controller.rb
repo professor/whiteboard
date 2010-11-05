@@ -11,7 +11,7 @@ class DeliverablesController < ApplicationController
   end
 
   def my_deliverables
-    person = Person.find(current_user.id)
+    person = Person.find(params[:id])
     @current_deliverables = Deliverable.find_current_by_person(person)
     @past_deliverables = Deliverable.find_past_by_person(person)
 

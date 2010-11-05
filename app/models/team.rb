@@ -88,9 +88,6 @@ class Team < ActiveRecord::Base
 
   def self.find_current_by_person(person)
     person_id = person.id
-    if person_id != 9
-      raise "Not the expected ID:" + person_id.to_s
-    end
     current_year = Date.today.year()
     # I don't like that a model is calling a controller...
     current_semester = ApplicationController.current_semester()
