@@ -12,6 +12,13 @@ class DeliverablesController < ApplicationController
 
   def my_deliverables
     person = Person.find(params[:id])
+    if (current_user.id != person.id)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
+        flash[:error] = "You don't have permission to see another person's deliverables."
+        redirect_to :controller => "welcome", :action => "index"
+        return
+      end
+    end
     @current_deliverables = Deliverable.find_current_by_person(person)
     @past_deliverables = Deliverable.find_past_by_person(person)
 
@@ -27,7 +34,8 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.find(params[:id])
 
     # If we aren't on this deliverable's team, you can't see it.
-    if !Person.find(current_user).get_registered_courses.find(@deliverable.team.course)
+    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+      flash[:error] = "You don't have permission to see another team's deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
     end
@@ -41,6 +49,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/new
   # GET /deliverables/new.xml
   def new
+    # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => Person.find(current_user))
 
     respond_to do |format|
@@ -52,6 +61,12 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
+    cur_person = Person.find(current_user)
+    if !Team.find_by_person(cur_person).find(@deliverable.team)
+      flash[:error] = "You don't have permission to edit another team's deliverables."
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
   end
 
   # POST /deliverables
@@ -87,6 +102,13 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
+    cur_person = Person.find(current_user)
+    if !Team.find_by_person(cur_person).find(@deliverable.team)
+      flash[:error] = "You don't have permission to edit another team's deliverables."
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
+    
     @revision = DeliverableRevision.new(params[:deliverable_revision])
     @revision.submitter = Person.find(current_user)
     @deliverable.revisions << @revision
@@ -107,7 +129,13 @@ class DeliverablesController < ApplicationController
   # DELETE /deliverables/1
   # DELETE /deliverables/1.xml
   def destroy
-    @deliverable = DeliverableRevision.find(params[:id])
+    @deliverable = Deliverable.find(params[:id])
+    cur_person = Person.find(current_user)
+    if !Team.find_by_person(cur_person).find(@deliverable.team)
+      flash[:error] = "You don't have permission to delete another team's deliverables."
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
     @deliverable.destroy
 
     respond_to do |format|
