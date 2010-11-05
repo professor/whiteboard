@@ -118,6 +118,15 @@ class DeliverablesController < ApplicationController
       return
     end
     
+    if !params[:deliverable_revision][:revision]
+      flash[:error] = 'You must specify a file to upload'
+      respond_to do |format|
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+      end
+      return
+    end
+
     @revision = DeliverableRevision.new(params[:deliverable_revision])
     @revision.submitter = Person.find(current_user)
     @deliverable.revisions << @revision
