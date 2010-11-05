@@ -287,8 +287,8 @@ class PeopleController < ApplicationController
     @current_semester = ApplicationController.current_semester()
 
     #SQL statements determined by Team Juran
-    @current_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.semester = ? AND c.year = ?", person_id, @current_semester, @current_year])
-    @past_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", person_id, @current_semester, @current_year])
+    @current_teams_as_member = Team.find_current_by_person(@person)
+    @past_teams_as_member = Team.find_past_by_person(@person)
 
     (@teams_map, @teams_students_map) = current_user.faculty_teams_map(person_id)
     a = 10
