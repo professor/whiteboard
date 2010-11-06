@@ -289,7 +289,7 @@ class EffortLogsController < ApplicationController
         course_error_msg = @effort_log.validate_effort_against_registered_courses()
         flash[:notice] = 'EffortLog was successfully created.'
         if (course_error_msg!="")
-           flash[:error] = 'You are not on a team in the following course(s) ' + course_error_msg
+           flash[:error] = 'You are either not on a team in, or not registered for the following course(s) ' + course_error_msg
         end
         format.html { redirect_to(@effort_log) }
         format.xml  { render :xml => @effort_log, :status => :created, :location => @effort_log }
