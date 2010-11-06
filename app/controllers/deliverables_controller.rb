@@ -117,7 +117,6 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1
   # PUT /deliverables/1.xml
   def update
-    blah
     @deliverable = Deliverable.find(params[:id])
     cur_person = Person.find(current_user)
     if !Team.find_by_person(cur_person).find(@deliverable.team)
