@@ -16,12 +16,10 @@ acts_as_authentic
 
   validates_uniqueness_of   :webiso_account,    :case_sensitive => false, :allow_nil => true
 
-  
-
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :first_name, :last_name, :webiso_account, :isStaff, :isStudent, :isAdmin, :twiki_name
+  attr_accessible :login, :email, :password, :password_confirmation, :first_name, :last_name, :webiso_account, :isStaff, :isStudent, :isAdmin, :twiki_name, :photo
 
   
   # Lines modified by Todd go here:

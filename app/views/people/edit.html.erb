@@ -50,7 +50,7 @@
 
 This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
 
-<% form_for(@person) do |f| %>
+<% form_for @person, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
 
 
@@ -150,6 +150,10 @@ This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
   <div class="formItem">
     <%= f.label :personal_email %>
     <%= f.text_field :personal_email %>
+  </div>
+  <div class="formItem">
+    <%= f.label :upload_photo %>
+    <%= f.file_field :photo %>
   </div>
   </fieldset>
 

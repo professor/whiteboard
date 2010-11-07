@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100930025344) do
+ActiveRecord::Schema.define(:version => 20101107103529) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -327,6 +327,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.string   "last_login_ip"
     t.datetime "yammer_created"
     t.string   "webiso_account"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   add_index "user_versions", ["person_id"], :name => "index_user_verions_on_person_id"
@@ -395,6 +397,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "yammer_created"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
