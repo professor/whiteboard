@@ -269,7 +269,11 @@ class EffortLogsController < ApplicationController
     @effort_log = EffortLog.find(params[:id])
 
 #    if @effort_log.week_number != Date.today.cweek
-    if !@effort_log.editable(current_user)          
+    if !@effort_log.has_permission_to_edit(current_user)
+      flash[:error] = 'You do not have permission to edit the effort log.'
+      redirect_to(effort_logs_url) and return
+    end
+    if !@effort_log.has_permission_to_edit_period(current_user)
       flash[:error] = 'You are unable to update effort logs from the past.'
       redirect_to(effort_logs_url) and return
     end
@@ -306,7 +310,11 @@ class EffortLogsController < ApplicationController
     params[:effort_log][:existing_effort_log_line_item_attributes] ||= {}
     
     @effort_log = EffortLog.find(params[:id])
-    if !@effort_log.editable(current_user)        
+    if !@effort_log.has_permission_to_edit(current_user)
+      flash[:error] = 'You do not have permission to edit the effort log.'
+      redirect_to(effort_logs_url) and return
+    end
+    if !@effort_log.has_permission_to_edit_period(current_user)
       flash[:error] = 'You are unable to update effort logs from the past.'
       redirect_to(effort_logs_url) and return
     end

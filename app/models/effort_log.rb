@@ -8,16 +8,29 @@ class EffortLog < ActiveRecord::Base
 
   before_save :determine_total_effort
 
+  def has_permission_to_edit(current_user)
+    if (current_user && current_user.is_admin?)
+      return true
+    end
+    if (current_user && current_user.id == person_id)
+      return true
+    end
+    return false
+  end
+
+  def has_permission_to_edit_period(current_user)
+    if (current_user && current_user.is_admin?)
+      return true
+    end
+    if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
+       return true
+    end
+    return false
+  end
 
   def editable(current_user)
-    if (current_user && current_user.is_admin?)
+    if (has_permission_to_edit(current_user) || has_permission_to_edit_period(current_user))
       return true 
-    end
-    if (current_user && current_user.id != person_id) 
-      return false
-    end
-    if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day)) 
-       return true
     end
     return false    
   end
