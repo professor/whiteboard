@@ -319,7 +319,7 @@ class EffortLogsController < ApplicationController
         course_error_msg = @effort_log.validate_effort_against_registered_courses()
         flash[:notice] = 'EffortLog was successfully updated.'
         if (course_error_msg!="")
-           flash[:error] = 'You are not on a team in the following course(s)<br/>' + course_error_msg
+           flash[:error] = 'You are either not on a team in, or not registered for the following course(s)<br/>' + course_error_msg
         end
         format.html { redirect_to(edit_effort_log_url) }
         format.xml  { head :ok }
