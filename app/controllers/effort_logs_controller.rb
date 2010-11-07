@@ -344,7 +344,6 @@ class EffortLogsController < ApplicationController
 
   def effort_for_unregistered_courses
     @error_effort_logs_users = EffortLog.users_with_effort_against_unregistered_courses()
-    tmp = EffortLog.users_with_effort_against_unregistered_courses()
     puts "Hello"
     respond_to do |format|
       format.html
