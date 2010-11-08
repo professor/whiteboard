@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :webiso_account,    :case_sensitive => false, :allow_nil => true
 
   has_attached_file :photo, :storage => :s3, :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml", :path => "upload_photo/Veracity/:id/:filename"
-  validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png"], :unless => "photo.blank?"
+  validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png"], :unless => "!photo.file?"
 
 
     def before_validation
