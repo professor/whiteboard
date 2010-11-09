@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 foundations:
+  id: 1
   name: Foundations of Software Engineering
   course_number: foundations
   number: 96-700
