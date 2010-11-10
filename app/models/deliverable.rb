@@ -29,6 +29,14 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  def owner_email
+    if self.is_team_deliverable?
+      team.email
+    else
+      creator.email
+    end
+  end
+
   def self.find_current_by_person(person)
     # Find everything where the passed in person is either the creator
     # or is on the deliverable's team
@@ -44,7 +52,6 @@ class Deliverable < ActiveRecord::Base
   end
 
   def self.find_by_person_and_teams(person, teams)
-    team_ids_string = ""
     team_condition = ""
     if !teams.empty?
       team_condition = "team_id IN ("

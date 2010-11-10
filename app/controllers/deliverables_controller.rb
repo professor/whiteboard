@@ -55,6 +55,13 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => Person.find(current_user))
 
+    unless params[:course_id].nil?
+      @deliverable.course_id = params[:course_id]
+    end
+    unless params[:task_number].nil?
+      @deliverable.task_number = params[:task_number]
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @deliverable }
@@ -97,6 +104,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       if @revision.valid? and @deliverable.valid? and @deliverable.save
+        send_deliverable_upload_email(@deliverable)
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
@@ -141,6 +149,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       if @revision.valid? and @deliverable.valid? and @deliverable.save
+        send_deliverable_upload_email(@deliverable)
         flash[:notice] = 'Deliverable was successfully updated.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
@@ -189,6 +198,7 @@ class DeliverablesController < ApplicationController
     end
     respond_to do |format|
       if @deliverable.save
+        send_deliverable_feedback_email(deliverable)
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }
@@ -199,4 +209,51 @@ class DeliverablesController < ApplicationController
       end
     end
   end
+
+  def send_deliverable_upload_email(deliverable)
+    mail_to = ""
+    unless deliverable.team.primary_faculty.nil?
+      mail_to = deliverable.team.primary_faculty.email
+    end
+    unless deliverable.team.secondary_faculty.nil?
+      mail_to += deliverable.team.secondary_faculty.email
+    end
+
+    if mail_to == ""
+      return
+    end
+
+    message = deliverable.owner_name + " has submitted a deliverable for "
+    if !deliverable.task_number.nil? and deliverable.task_number != ""
+      message += "task " + deliverable.task_number + " of "
+    end
+    message += deliverable.course.name
+
+    GenericMailer.deliver_email(
+      :to => mail_to,
+      :subject => "Deliverable submitted for " + deliverable.course.name,
+      :message => message,
+      :url_label => "View this deliverable",
+      :url => url_for(deliverable)
+    )
+  end
+
+  def send_deliverable_feedback_email(deliverable)
+    mail_to = deliverable.owner_email
+
+    message = "Feedback has been submitted for "
+    if !deliverable.task_number.nil? and deliverable.task_number != ""
+      message += "task " + deliverable.task_number + " of "
+    end
+    message += deliverable.course.name
+
+    GenericMailer.deliver_email(
+      :to => mail_to,
+      :subject => "Feedback for " + deliverable.course.name,
+      :message => message,
+      :url_label => "View this deliverable",
+      :url => url_for(deliverable)
+    )
+  end
+
 end
