@@ -8,7 +8,7 @@ class DeliverableRevision < ActiveRecord::Base
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
     :path => "deliverable_submissions/super8/:id/:filename"
 
-  validates_presence_of :submitter
+  validates_presence_of :submitter, :submission_date
 
   def before_validation_on_create
     self.submission_date = DateTime.now
