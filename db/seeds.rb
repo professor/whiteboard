@@ -16,6 +16,8 @@ Factory.define :todd, :parent => :person  do |p|
   p.is_staff 1
 end
 
+sleep(0.02)
+
 Factory.define :martin, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Martin"
@@ -24,6 +26,8 @@ Factory.define :martin, :parent => :person do |p|
   p.email "martin.radley@sv.cmu.edu"
   p.is_staff 1
 end
+
+sleep(0.02)
 
 Factory.define :ed, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
@@ -34,6 +38,8 @@ Factory.define :ed, :parent => :person do |p|
   p.is_staff 1
 end
 
+sleep(0.02)
+
 Factory.define :chris, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Chris"
@@ -42,6 +48,8 @@ Factory.define :chris, :parent => :person do |p|
   p.email "chris.jensen@sv.cmu.edu"
   p.is_student 1
 end
+
+sleep(0.02)
 
 Factory.define :howard, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
