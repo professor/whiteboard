@@ -176,7 +176,7 @@ function updateImage(uri,label)
     <%= label_tag(:is_part_time, "Is Part Time:") %><%= check_box_tag(:is_part_time)%><%= label_tag(:is_alumnus, "Is Alumnus:") %><%= check_box_tag(:is_alumnus)%><%= label_tag(:is_adobe_connect_host, "Is Adobe Connect Host:") %><%= check_box_tag(:is_adobe_connect_host)%><%= label_tag(:image_uri, "Has Default Image:") %><%= check_box_tag :image_uri%><br/>
     <%= label_tag(:office, "Office:") %><%= text_field_tag(:office) %> <%= label_tag(:telephone1, "Telephone:") %><%= text_field_tag(:telephone1) %><br/>
     <%= label_tag(:local_near_remote, "Student Location Status:") %><%= text_field_tag :local_near_remote,nil, :size => 8 %><br/>
-    <!-- Still need filter by class -->
+    <%= label_tag(:course_name, "Course Name:")%><%= text_field_tag :course_name, nil, :size => 20 %><%= label_tag(:course_semester, "Course Semester:")%><%= text_field_tag :course_semester, nil, :size => 8 %><%= label_tag(:course_year, "Course Year:")%><%= text_field_tag :course_year, nil, :size => 4 %>
       <%= submit_tag 'Search' %>
     <% end %>
   <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a>
