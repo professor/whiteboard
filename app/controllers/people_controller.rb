@@ -26,6 +26,35 @@ class PeopleController < ApplicationController
       @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
     end
 
+    if params[:course_name] == ''
+      class_name = nil
+    else
+      class_name = params[:course_name]
+    end
+    if params[:course_semester] == ''
+      class_semester = nil
+    else
+      class_semester = params[:course_semester]
+    end
+    if params[:course_year] == ''
+      class_year = nil
+    else
+      class_year = params[:course_year]
+    end
+
+   #print "current people size2 = " + @people.size().to_s
+    if !(class_name.nil? && class_semester.nil? && class_year.nil?)
+      #print "current people size3 = " + @people.size().to_s
+      @people.each do |person|
+        if !class_name.nil?
+          @people.delete_if { |person|  !(find_course_per_person(person, class_semester, class_year).include? params[:course_name])}
+        else
+          @people.delete_if { |person|  find_course_per_person(person, class_semester, class_year) == ''}
+        end
+      end
+
+    end
+    @people
   end
 
     def to_like_conditions( conditions )
@@ -310,6 +339,30 @@ class PeopleController < ApplicationController
 
     (@teams_map, @teams_students_map) = current_user.faculty_teams_map(person_id)
     a = 10
+  end
+
+  def find_course_per_person(person, semester, year)
+    #SQL statements determined by Team Juran
+    if !semester.nil? and !year.nil?
+      teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.semester like ? AND c.year like ?", person.id.to_i, semester, year])
+    elsif !semester.nil? and year.nil?
+      teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.semester like ?", person.id.to_i, semester])
+    elsif semester.nil? and !year.nil?
+      teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.year like ?", person.id.to_i, year])
+    else
+      teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ?", person.id.to_i])
+    end
+    count = 0
+    my_courses = ""
+      teams_as_member.each do |team|
+        team_course = Course.find_by_id(team.course_id)
+          count = count + 1
+          if count > 1
+            my_courses.concat(", ")
+          end
+          my_courses.concat(team_course.name.to_s)
+      end
+    return my_courses
   end
 
 end
