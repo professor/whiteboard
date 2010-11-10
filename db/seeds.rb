@@ -127,7 +127,20 @@ Factory.define :team_triumphant, :class => Team do |t|
  t.person_name3 "Charlie Moss"
 end
 
-
+Factory.define :paul, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "DM"
+  p.twiki_name "PaulWong"
+  p.first_name "Paul"
+  p.last_name "Wong"
+  p.human_name "Paul Wong"
+  p.image_uri "/images/mascot.jpg"
+  p.email "paul.wong@sv.cmu.edu"
+  p.webiso_account "paulwong@andrew.cmu.edu"
+end
 
 Factory.create(:todd)
 martin = Factory.create(:martin)
@@ -137,6 +150,7 @@ Factory.create(:howard)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
+Factory.create(:paul)
 
 architecture = Factory.create(:architecture)
 
