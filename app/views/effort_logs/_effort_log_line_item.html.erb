@@ -10,7 +10,7 @@
     <td><%= effort_log_line_item_form.collection_select(:task_type_id, @task_types, :id, :name, :include_blank => true) %> </td>
     <td>&nbsp;</td>
 <% else %>
-    <td><%= effort_log_line_item_form.collection_select(:project_id, @projects, :id, :name, :include_blank => false) %> </td>
+    <td><%= effort_log_line_item_form.collection_select(:project_id, @projects, :id, :name, :include_blank => true) %> </td>
     <td><%= effort_log_line_item_form.collection_select(:task_type_id, @task_types, :id, :name, :include_blank => true) %> </td>
     <td>&nbsp;</td>
 <% end %>
