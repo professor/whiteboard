@@ -45,7 +45,6 @@ class TeamsController < ApplicationController
     @show_teams_for_many_courses = false
     @machine_name = ""
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     @course = Course.find(params[:course_id])
 
     @show_section = false
