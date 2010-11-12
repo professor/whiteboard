@@ -130,16 +130,25 @@ class PeopleControllerTest < ActionController::TestCase
 #renable bug by putting the format back in.    
   end
 
-  def should_filter_students
-
+  def test_should_filter_students
+    login_as :student_sam
+    get :index,  :is_student => 1
+    assert_response :success
+    assert_not_nil assigns(:people)
   end
 
-  def should_filter_default_image
-
+  def test_should_filter_default_image
+    login_as :student_sam
+    get :index,  :image_uri => 1
+    assert_response :success
+    assert_not_nil assigns(:people)
   end
 
-  def should_filter_organization_name
-    
+  def test_should_filter_course_name
+    login_as :student_sam
+    get :index,  :course_name => "My"
+    assert_response :success
+    assert_not_nil assigns(:people)
   end
 
 end
