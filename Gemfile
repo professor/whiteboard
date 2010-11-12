@@ -40,16 +40,16 @@ group :development, :test do
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc',    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
-  gem 'rspec-rails'
+  gem 'rspec-rails', '1.3.3'
   gem 'mocha'
-  gem 'rspec'
+  gem 'rspec',   '1.3.1'
   gem 'factory_girl'
 
-  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
-  gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
-  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
+#  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
+#  gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
+#  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
-  gem 'test-unit', '1.2.3'
+  gem 'test-unit', '1.2.3' #Downgrading so that autotest, rspec will work
 
 end
 

@@ -43,10 +43,19 @@
 <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %><br/> I am a  <%=h @person.local_near_remote.downcase %> student.<% end %>
   </td></tr>
 <% end %>
-  <% if @show_my_papers_link %>
-      <tr class="cmu_table_odd"><td>&nbsp;</td>
-      <td> <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %></td></tr>
-  <% end %>
+<tr class="cmu_table_odd"><td>&nbsp;</td>
+  <td>
+    <% if @person.papers.count > 0 %>
+       <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %><br/>
+    <% else %>
+       <%= link_to 'Add a published paper', "/papers/new" %><br/>    
+    <% end %>
+    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>        
+        <%= link_to "My teams", my_teams_path(@person) %>
+        <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(@person) %>
+    <% end %>
+  </td></tr>
+
 </table>
 
 
