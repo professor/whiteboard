@@ -53,138 +53,124 @@ This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
 <% form_for(@person) do |f| %>
   <%= f.error_messages %>
 
+<table><tr valign="top"><td>
+  <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
+  </td><td>&nbsp;</td><td>
 
-<!--  
-<h1><%= f.text_field :first_name %> <%= f.text_field :last_name %></h1>
+    <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;" >
+    <%= link_to 'Back', @person %>
+  </div>
 
-<div class="user_photo"><img src="<%=h @person.image_uri %>" /></div>
-<table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="twikiTable">
-<tr class="twikiTableOdd"><td>Organization:</td>
-    <td><b> <%= f.text_field :organization_name %></b></td>
-    <td>Location:</td>
-    <td><b><%= f.text_field :work_city %>, <%= f.text_field :work_state %> <%= f.text_field :work_country %></b></td></tr>
-<tr class="twikiTableEven"><td>Telephone:</td>
-    <td><b>  <p>
-    <%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
-    <%= f.text_field :telephone1 %>
-  </p>
-  <p>
-    <%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
-    <%= f.text_field :telephone2 %>
-  </p>
-  <p>
-    <%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
-    <%= f.text_field :telephone3 %>
-  </p>
-  <p>
-    <%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %>
-    <%= f.text_field :telephone4 %>
-  </p>
-</b></td>
-    <td>E-mail:</td>
-    <td><b><%=h @person.email %></b></td></tr>
+<table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
+<tr class="cmu_table_odd"><td class="field_label"><%= f.label "Preferred first name" %>:</td>
+    <td>
+        <%= f.text_field :first_name %>
+    </td>
+</tr>
+<tr class="cmu_table_even"><td class="field_label"><%= f.label :legal_first_name %>:</td>
+    <td>
+        <%= f.text_field :legal_first_name %><br />
+        <span class="help_text">Ok to leave blank</span>
+    </td>
+</tr>
+<tr class="cmu_table_odd"><td class="field_label"><%= f.label :last_name %>:</td>
+    <td>
+        <%= f.text_field :last_name %>
+    </td>
+</tr>
+<tr class="cmu_table_even"><td class="field_label"><%= f.label :pronunciation %>:</td>
+    <td>
+        <%= f.text_field :pronunciation %>
+    </td>
+</tr>
+<tr class="cmu_table_odd"><td class="field_label">Organization:</td>
+    <td>
+        <%= f.label :title %>:
+        <%= f.text_field :title %>
+        <br />
+        <%= f.label :organization_name %>:
+        <%= f.text_field :organization_name %>
+    </td>
+</tr>
+<tr class="cmu_table_even"><td>Location:</td>
+    <td>
+        <%= f.label :work_city %>:
+        <%= f.text_field :work_city %>
+        <br />
+        <%= f.label :work_state %>:
+        <%= f.text_field :work_state %>
+        <br />
+        <%= f.label :work_country %>:
+        <%= f.text_field :work_country %>
+        </div>
+    </td>
+</tr>
+<tr class="cmu_table_odd"><td class="field_label"><p>Telephone:</p></td>
+    <td>
+        <span class="label"><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+        <%= f.text_field :telephone1 %>
+        <br />
+        <span class="label"><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+        <%= f.text_field :telephone2 %>
+        <br />
+        <span class="label"><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+        <%= f.text_field :telephone3 %>
+        <br />
+        <span class="label"><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
+        <%= f.text_field :telephone4 %>
+    </td>
+</tr>
+<tr class="cmu_table_even"><td class="field_label"><%= f.label :email, "CMU-SV email address" %>:</td>
+    <td>
+        <%= f.text_field :email %>
+    </td>
+</tr>
+
+<% if @person.is_student %>
+<tr class="cmu_table_odd"><td class="field_label"><%= f.label :local_near_remote %>:</td>
+    <td>
+        <%= f.select :local_near_remote, %w{ Unknown Local Near Remote }  %><br />
+        <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br />
+        <span class="help_text">Near - I live near Silicon Valley. I can drive in for final presentations or weekend events. </span><br />
+        <span class="help_text">Remote - I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation. </span>
+    </td>
+</tr>
+<% end %>
+<tr class="cmu_table_even"><td class="field_label">&nbsp;</td>
+  <td>
+    <% if @person.papers.count > 0 %>
+       <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %><br/>
+    <% else %>
+       <%= link_to 'Add a published paper', "/papers/new" %><br/>
+    <% end %>
+    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
+        <%= link_to "My teams", my_teams_path(@person) %>
+        <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(@person) %>
+    <% end %>
+  </td></tr>
 
 </table>
 
- -->
 
 
+</td></tr></table>
 
-  <div class="rounded student">
-  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
-  <span class="instructions">These fields can be edited by anyone.</span>
 
-  <fieldset>
-    <legend>Your information</legend>
-  <div class="formItem">
-    <%= f.label "Preferred first name" %>
-    <%= f.text_field :first_name %>
-  </div>
-  <div class="formItem">
-    <%= f.label :legal_first_name %>
-    <%= f.text_field :legal_first_name %><br />
-    <span class="help_text">Ok to leave blank</span>
-  </div>
-  <div class="formItem">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="formItem">
-    <%= f.label :pronunciation %>
-    <%= f.text_field :pronunciation %>
-  </div>
-  <div class="formItem">
-  Telephones
-  </div>
-  <div class="formItem">
-    <span class="label"><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
-    <%= f.text_field :telephone1 %>
-  </div>
-  <div class="formItem">
-    <span class="label"><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
-    <%= f.text_field :telephone2 %>
-  </div>
-  <div class="formItem">
-    <span class="label"><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
-    <%= f.text_field :telephone3 %>
-  </div>
-  <div class="formItem">
-    <span class="label"><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice" ]  %></span>
-    <%= f.text_field :telephone4 %>
-  </div>
-  <div class="formItem">
-    <%= f.label :local_near_remote %>
-    <%= f.select :local_near_remote, %w{ Unknown Local Near Remote }  %><br />
-    <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br />
-    <span class="help_text">Near - I live near Silicon Valley. I can drive in for final presentations or weekend events. </span><br />
-    <span class="help_text">Remote - I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation. </span>
-  </div>
-  <div class="formItem">
-    <%= f.label :skype %>
-    <%= f.text_field :skype %>
-  </div>
-  <div class="formItem">
-    <%= f.label :tigris %>
-    <%= f.text_field :tigris %>
-  </div>
-  <div class="formItem">
-    <%= f.label :personal_email %>
-    <%= f.text_field :personal_email %>
-  </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Your work information</legend>
-  <div class="formItem">
-    <%= f.label :organization_name %>
-    <%= f.text_field :organization_name %>
-  </div>
-  <div class="formItem">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-  <div class="formItem">
-    <%= f.label :work_city %>
-    <%= f.text_field :work_city %>
-  </div>
-  <div class="formItem">
-    <%= f.label :work_state %>
-    <%= f.text_field :work_state %>
-  </div>
-  <div class="formItem">
-    <%= f.label :work_country %>
-    <%= f.text_field :work_country %>
-  </div>
-  </fieldset>
-  <div class="formItem">
+<div class="formItem">
     <%= f.label :biography %>
     <%= f.text_area :biography, :size=>"80x30", :class=>"tinymce"  %>
-  </div>
-  <div class="formItem">
+</div>
+
+<h2>Helpful info</h2>
+<%= f.label :skype %>: <%= f.text_field :skype %><br />
+<%= f.label :tigris %>: <%= f.text_field :tigris %><br />
+<%= f.label :personal_email %>: <%= f.text_field :personal_email %><br />
+<%= f.label :twiki_name, "TWiki name" %>: <%= f.text_field :twiki_name %>
+
+<div class="formItem">
     <%= f.label :user_text %>
     <%= f.text_area :user_text, :size=>"80x30", :class=>"tinymce" %>
-  </div>
-  </div>
+</div>
 
   <div class="rounded staff">
 <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
@@ -298,7 +284,6 @@ This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
 
 <% end %>
 
-<%= link_to 'Show', @person %> |
-<%= link_to 'Back', people_path %>
+<%= link_to 'Back', @person %>
 
 <!-- Checkbox can be done with this html character code: &#x2714; -->
