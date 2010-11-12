@@ -239,6 +239,10 @@ border-width:1px;
     background-color:#FbFbFb;
 }
 
+.cmu_table #icon {
+    padding: 0px;
+}
+
 .header_subtext {
     margin-top: -10px;
     padding-left: 3px;
@@ -256,4 +260,9 @@ border-width:1px;
 #email_subject_header {
     width: 70px;
     float: left;
+}
+
+/* Used in pages */
+div.modified {
+    text-align: right;
 }

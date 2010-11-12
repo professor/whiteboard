@@ -53,10 +53,6 @@ class PeopleController < ApplicationController
     end
     @person.revert_to params[:version_id] if params[:version_id]
 
-    if(@person && @person.papers.size > 0 )
-      @show_my_papers_link = true
-    end
-
     respond_to do |format|
       if @person.nil?
         flash[:error] = "Person with an id of #{params[:id]} is not in this system."
