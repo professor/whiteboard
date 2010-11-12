@@ -49,25 +49,35 @@
           <td align="left" style="padding-left:1.5em">
             <div id="cont"></div>
           <script type="text/javascript">
-            var FIRST_DATE_PICKER = Calendar.setup({
-                    cont: "cont",
+            /**
+             * createDatePicker creates a datePicker object used to select a calender date in the UI.
+             * @param cont The div id to use for the div that the calender is inserted in.
+             * @param date
+             * @param selection The date to select in the UI.
+             * @param yearField
+             * @param dayField
+             * @param monthField
+             */
+            function createDatePicker(cont, date, selection, yearField, dayField, monthField) {
+              // create the calender object
+              var datePicker = Calendar.setup({
+                    cont: cont,
                     weekNumbers: false,
                     fdow: 0,
-                    date: <%= @first_email_date %>,
-                    selection: <%= @first_email_date %>
-                   // titleFormat: "%B %Y"
-            })
+                    date: date,
+                    selection: selection
+              })
 
-            FIRST_DATE_PICKER.addEventListener("onSelect", function(){
-                          var yearField = document.getElementById("yearFieldOne");
-                          var dayField = document.getElementById("dayFieldOne");
-                          var monthField = document.getElementById("monthFieldOne");
+              // add a listener for when the user selects a date
+              datePicker.addEventListener("onSelect", function(){
+                    document.getElementById(yearField).value = this.selection.print("%Y");
+                    document.getElementById(dayField).value = this.selection.print("%d");
+                    document.getElementById(monthField).value = this.selection.print("%m");
+              });
+            }
 
-                          yearField.value = this.selection.print("%Y");
-                          monthField.value = this.selection.print("%m");
-                          dayField.value = this.selection.print("%d");
-
-                  });
+            // create first date picker for the first email date - heads up notification
+            createDatePicker("cont", <%= @first_email_date %>, <%= @first_email_date %>, "yearFieldOne", "dayFieldOne", "monthFieldOne");
           </script>
           </td>
         </tr>
@@ -77,24 +87,8 @@
           <td align="left" style="padding-left:1.5em">
             <div id="cont2"></div>
           <script type="text/javascript">
-            var SECOND_DATE_PICKER = Calendar.setup({
-                    cont: "cont2",
-                    weekNumbers: false,
-                    fdow: 0,
-                    date: <%= @second_email_date %>,
-                    selection: <%= @second_email_date %>
-            })
-
-            SECOND_DATE_PICKER.addEventListener("onSelect", function(){
-                          var yearField = document.getElementById("yearFieldTwo");
-                          var dayField = document.getElementById("dayFieldTwo");
-                          var monthField = document.getElementById("monthFieldTwo");
-
-                          yearField.value = this.selection.print("%Y");
-                          monthField.value = this.selection.print("%m");
-                          dayField.value = this.selection.print("%d");
-
-                  });
+            // create second date picker second email date - do it today reminder
+            createDatePicker("cont2", <%= @second_email_date %>, <%= @second_email_date %>, "yearFieldTwo", "dayFieldTwo", "monthFieldTwo");
           </script></td></tr>
 </table>
 
