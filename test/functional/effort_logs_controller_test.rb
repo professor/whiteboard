@@ -405,4 +405,13 @@ def test_should_not_create_current_effort_log_with_new
     end
   end
 
+  def test_should_not_create_prior_effort_log_twice
+    login_as :student_sam
+    assert_difference('EffortLog.count') do
+      get :new, :prior => 'true'
+    end
+    assert_difference('EffortLog.count',0) do
+      get :new, :prior => 'true'
+    end
+  end
 end
