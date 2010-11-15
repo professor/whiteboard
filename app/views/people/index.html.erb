@@ -67,10 +67,17 @@ function toggleStaff()
 
 function updateImage(uri,label)
 {
+  $('image_box').show();
  $('#image_box_image').attr("src", uri);
 
  $('#image_box_label').text(label);
 }
+
+function hideImage()
+{
+  $('image_box').hide();
+}
+
 
 </script>
 <% end %>
@@ -85,6 +92,10 @@ function updateImage(uri,label)
   <%= image_tag("/images/mascot.jpg", :width=>"150", :alt=>"Temporary Picture", :id=>"image_box_image")%><%= image_tag("/images/tablesorter/cross.png", :width=>"16", :height=>"16", :alt=>"Close Me", :style=>"float:right;cursor:pointer", :id=>"close_image_box") %>
   <div id='image_box_label'></div>
 </div>
+<!-- Hide the image when page loads -->
+<script>
+  hideImage();
+</script>
 
 <table id="people_table" class="tablesorter">
   <thead>
@@ -100,7 +111,8 @@ function updateImage(uri,label)
 <tbody>
 <% for person in @people %>
 
-<tr class="tablesorter <%if person.is_student %>student<% end %> <% if person.is_staff %>staff<%end%>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+<tr class="tablesorter <%if person.is_student %>student<% end %> <% if person.is_staff %>staff<%end%>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')"
+    onmouseout="hideImage();">
     <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
     <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>    
     <td><a href='http://info.sv.cmu.edu/twiki/bin/view/Main/<%= person.twiki_name %>' target='_top'><%= image_tag('/images/twiki.gif', :width=>'16', :height=>'16', :border=>"0", :alt=>"My TWiki page", :title=>"My TWiki page") %></a>
