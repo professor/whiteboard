@@ -41,3 +41,10 @@ this_week_2:
   week_number:  <%= (Date.today-7).cweek %>
   year:         <%= (Date.today-7).year %>
   sum:          12
+
+this_week_3:
+  id:            62
+  person:       aaron
+  week_number:  <%= (Date.today-7).cweek %>
+  year:         <%= (Date.today-7).year %>
+  sum:          12

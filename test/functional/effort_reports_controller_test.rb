@@ -51,13 +51,28 @@ class EffortReportsControllerTest < ActionController::TestCase
   def test_campus_week_url_accuracy_odd_set
     login_as :student_sam
 
-    EffortLogLineItem.create(:effort_log_id => 61, :course_id => 1,:task_type_id => 1,:day1 => 2,:day2 => 2,:day3 => 2,:day4 => 2,:day5 => 2,:day6 => 1,:day7 => 1,:sum => 24)
+    EffortLogLineItem.create(:effort_log_id => 62, :course_id => 1,:task_type_id => 1,:day1 => 2,:day2 => 2,:day3 => 2,:day4 => 2,:day5 => 2,:day6 => 1,:day7 => 1,:sum => 24)
 
     get :campus_week
     assert_response :success
     url = assigns(:chart_url)
 
     line_items = [effort_log_line_items(:three).sum, effort_log_line_items(:four).sum, 24].sort
+
+    minimum, lower25, median, upper25, maximum = getvals(line_items)
+    course_dimensions =
+            "chd=t0:-1,#{"%.02f"%minimum},-1|-1,#{"%.02f"%lower25},-1|-1,#{"%.02f"%upper25},-1|-1,#{"%.02f"%maximum},-1|-1,#{"%.02f"%median},-1"
+    assert_match course_dimensions, url, "Course name should be correct"
+  end
+
+  def test_campus_semester_url_accuracy_even_set
+    login_as :student_sam
+    get :campus_semester
+    assert_response :success
+    url = assigns(:chart_url)
+
+
+    line_items = [effort_log_line_items(:three).sum, effort_log_line_items(:four).sum].sort
 
     minimum, lower25, median, upper25, maximum = getvals(line_items)
     course_dimensions =
@@ -78,7 +93,7 @@ class EffortReportsControllerTest < ActionController::TestCase
     end
 
     minimum *= 100.0 / maximum
-    median *= 100.0 / maximum
+    median  *= 100.0 / maximum
     lower25 *= 100.0 / maximum
     upper25 *= 100.0 / maximum
     maximum = 100.0

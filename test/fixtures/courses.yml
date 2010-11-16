@@ -11,6 +11,7 @@ foundations:
   primary_faculty_label: Primary faculty
 
 mfse:
+  id: 2
   name: Metrics for Software Engineers
   course_number: mfse
   number: 96-703

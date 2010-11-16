@@ -45,124 +45,53 @@ class EffortReportsController < ApplicationController
 
   def get_campus_semester_data(panel)
 
-    boxreports = EffortLog.find_by_sql(panel.generate_sql())
+    effort_logs = EffortLog.
+            find(
+              :all,
+              :conditions => ["week_number IN (?) AND year=? AND sum > 0", ApplicationController.semester_week_range(panel.semester), panel.year.to_i])
 
-    task_sums=[]
-    student_sums=[]
-    #   last_course_name = ""
-    if boxreports.size != 0 then
-      first_week_number = boxreports.first.week_number
-      last_week_number = boxreports.last.week_number
-
-      weeks_in_semester = 15
-      weeks_in_report = [weeks_in_semester, (last_week_number - first_week_number + 1)].max
-
-      weeks_in_report.times do |i|
-        task_sums[i] = []
-        student_sums[i] = []
+    course_id_to_value_ary_hash = {}
+    effort_logs.each do |effort_log|
+      course_to_person_hash = {}
+      effort_log.effort_log_line_items.each do |line_item|
+        course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
+        course_to_person_hash[line_item.course_id] += line_item.sum
       end
-
-      boxreports.each do |report|
-        task_sums[report.week_number - first_week_number] << report.student_effort.to_f
-      end
-
-      if !panel.person_id.blank?
-        student_logs = EffortLog.find_by_sql(panel.generate_sql(:true))
-        student_logs.each do |preport|
-          student_sums[preport.week_number - first_week_number] << preport.student_effort.to_f
-        end
-      end
-
-      puts weeks_in_report
-      puts "first_week_number is #{first_week_number}"
-      puts "last_week_number is #{last_week_number}"
-
-
-      minimums = {}
-      maximums = {}
-      lower25 = {}
-      upper25 = {}
-      medians = {}
-      outliers ={}
-      max_value = -1
-      labels = []
-
-
-      task_sums.each_index do |key|  #here key is week_number
-        labels << key + 1
-
-        values = task_sums[key].sort()
-        minimums[key] = values.min()
-        maximums[key] = values.max()
-        medians[key] = values[values.length/2]
-        lower25[key] = values[values.length/4]
-        upper25[key] = values[3 * values.length/4]
-        outliers[key] = !student_sums[key].blank? ? student_sums[key][0]:0
-
-        if !values.empty?
-          tmp_max_value = [0.0, minimums[key], maximums[key], medians[key], lower25[key], upper25[key], outliers[key]].max()
-          if tmp_max_value>max_value
-            max_value = tmp_max_value # maximum among all
-          end
-        end
-      end
-      if panel.person_id.blank?
-        return [minimums, lower25, medians, upper25, maximums,labels, max_value]
-      else
-        return [minimums, lower25, medians, upper25, maximums,labels, max_value, outliers]
+      course_to_person_hash.each do |course_id, sum|
+        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
+        course_id_to_value_ary_hash[course_id] << sum
       end
     end
-    return nil
+
+    values_ary = []
+    course_id_to_value_ary_hash.each do |course_id, values|
+      values_ary << ([Course.find_by_id(course_id).name] + course_ranges_array(values))
+    end
+    return values_ary
   end
 
   def get_campus_week_data(year, week_number)
+    effort_logs = EffortLog.find(:all, :conditions => ["week_number=? AND year=? AND sum > 0", week_number.to_i, year.to_i])
+            #{:week_number => week_number, :year => year, :sum_gt => 0})
 
-    boxreports = EffortLog.find_by_sql("select course_id, c.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,courses c
-   where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} order by course_id;")
-    all = EffortLog.all
-    all2 = EffortLogLineItem.all
-    task_sums={}
-    #   last_course_name = ""
-    if boxreports.size != 0 then
-
-      boxreports.each do |report|
-        if !task_sums.has_key?(report.course_id)
-          task_sums[report.course_id] = []
-        end
-        task_sums[report.course_id] << report.student_effort.to_f
+    course_id_to_value_ary_hash = {}
+    effort_logs.each do |effort_log|
+      course_to_person_hash = {}
+      effort_log.effort_log_line_items.each do |line_item|
+        course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
+        course_to_person_hash[line_item.course_id] += line_item.sum
       end
-
-      minimums = {}
-      maximums = {}
-      lower25 = {}
-      upper25 = {}
-      medians = {}
-
-      max_value = -1
-      labels = []
-      task_sums.keys.each do |key|
-        course = Course.find(key)
-        if(!course.short_name.blank?)
-          labels << course.short_name
-        else
-          labels << course.name
-        end
-
-        values = task_sums[key].sort()
-
-        minimums[key] = values.min()
-        maximums[key] = values.max()
-        medians[key] = values[values.length/2]
-        lower25[key] = values[values.length/4]
-        upper25[key] = values[3 * values.length/4]
-        tmp_max_value = [minimums[key], maximums[key], medians[key], lower25[key], upper25[key]].max()
-        if tmp_max_value>max_value
-          max_value = tmp_max_value # maximum among all
-        end
+      course_to_person_hash.each do |course_id, sum|
+        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
+        course_id_to_value_ary_hash[course_id] << sum
       end
-      return [minimums, lower25, medians, upper25, maximums, labels, max_value]
     end
-    return nil
+
+    values_ary = []
+    course_id_to_value_ary_hash.each do |course_id, values|
+      values_ary << ([Course.find_by_id(course_id).name] + course_ranges_array(values)) 
+    end
+    return values_ary
   end
 
 
@@ -245,79 +174,32 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
   def generate_google_box_chart(title, reports)
     title_str = title.gsub(' ', '+')
-    show_outliers = !reports.nil? && !reports[7].nil? && !reports[7].values.empty?
 
-    if reports
-      max_value = reports[6]
+    # array: [course_name, min, 25, median, 75, max]
 
-      if max_value!=0
-        multiplier = 100.0/(max_value)
-      else
-        multiplier = 1
-      end
+    if reports && reports.size > 0
+      max_value = reports.collect{|r| r[5]}.max
 
-      if !reports[0].values.empty?
-        minimums_str = box_chart_helper(reports[0], multiplier)
-      end
+      multiplier = 100.0/(max_value)
+      multiplier = 1 if max_value <= 0.0
 
-      if !reports[1].values.empty?
-        lower25_str = box_chart_helper(reports[1], multiplier)
-        #   "-1,"+ reports[1].values.map{|v| (v ?  (v*multiplier):0)}.join(",") + ",-1"
-      end
+      minimums_str = "-1," + reports.collect{|r| "%.2f"%(r[1]*multiplier)}.join(",")+",-1"
+      lower25_str = "-1," +  reports.collect{|r| "%.2f"%(r[2]*multiplier)}.join(",")+",-1"
+      medians_str = "-1," +  reports.collect{|r| "%.2f"%(r[3]*multiplier)}.join(",")+",-1"
+      upper25_str = "-1," +  reports.collect{|r| "%.2f"%(r[4]*multiplier)}.join(",")+",-1"
+      maximums_str = "-1," + reports.collect{|r| "%.2f"%(r[5]*multiplier)}.join(",")+",-1"
 
-      if !reports[2].values.empty?
-        medians_str = box_chart_helper(reports[2], multiplier)
-        #   "-1,"+ reports[2].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
-      end
+      labels_str = "|"+reports.collect{|r| r[0]}.join("|")+"|"
 
-      if !reports[3].values.empty?
-        upper25_str = box_chart_helper(reports[3], multiplier)
-        #   "-1,"+ reports[3].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
-      end
-
-      if !reports[4].values.empty?
-        puts "================ MAX VALUES  ========================"
-        puts reports[4].keys
-        maximums_str = box_chart_helper(reports[4], multiplier)
-        #  "-1,"+ reports[4].values.map{|v| (v ? (v*multiplier):0)}.join(",") + ",-1"
-      end
-
-      if show_outliers
-        puts "================ OUTLIERS ========================"
-        puts reports[7].keys
-        outliers_str = box_chart_helper(reports[7], multiplier)
-      end
-
-#        minimums_str = "-1,"+ reports[0].values.join(",") + ",-1"
-#        lower25_str = "-1,"+ reports[1].values.join(",") + ",-1"
-#        medians_str = "-1,"+ reports[2].values.join(",") + ",-1"
-#        upper25_str = "-1,"+ reports[3].values.join(",") + ",-1"
-#        maximums_str = "-1,"+ reports[4].values.join(",") + ",-1"
-
-      puts "data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-      puts  "multiplier is #{multiplier}"
-      puts  "max_value is #{max_value}"
-      puts  "minimums_str is #{minimums_str}"
-      puts  "lower25_str is #{lower25_str}"
-      puts  "medians_str is #{medians_str} "
-      puts  "upper25_str is #{upper25_str} "
-      puts  "maximums_str is #{maximums_str} "
-      puts  "outliers_str is #{outliers_str} "
-
-      labels_str ="|"+ reports[5].join("|")+"|"
-
-      url = "http://chart.apis.google.com/chart?chtt="+title_str+"&chxt=x,y&chs=700x400&cht=lc&chd=t0:"
-      url = url + minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str
-      url = url +"|" + outliers_str if show_outliers
-      url = url +"&chl=" + labels_str  #get course_id and course_name from DB
-      #url = url + "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10"
-      url = url + "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10"
-      url = url + "|o,FF0000,5,-1,7|o,FF0000,6,-1,7" if show_outliers
-      url = url + "&chxr=1,0," + (max_value).to_s
+      url = "http://chart.apis.google.com/chart?chtt="+title_str+"&chxt=x,y&chs=700x400&cht=lc&chd=t0:" +
+            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str +
+            "&chl=" + labels_str +  #get course_id and course_name from DB
+            "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10" +
+            "&chxr=1,0," + (max_value).to_s
       return url
+    else
+      return "http://chart.apis.google.com/chart?chtt="+ title_str+ "&chxt=x,y&chs=700x400&cht=lc&chd=t0:-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10&chxr=1,0,15"
     end
-    return "http://chart.apis.google.com/chart?chtt="+ title_str+ "&chxt=x,y&chs=700x400&cht=lc&chd=t0:-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10&chxr=1,0,15"
-
   end
 
   def determine_panel_state
@@ -370,6 +252,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
     end
     @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester_panel.semester, @semester_panel.year], :order =>"name ASC")
     @programs = []
+
     ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result end
     @tracks = []
     ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result end
@@ -392,10 +275,9 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
   def campus_week
     determine_panel_state()
-    puts "PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:id]}"
     title = "Campus View - Week "  + @panel_state.week_number.to_s + " of " + @panel_state.year.to_s
-    reports = get_campus_week_data(@panel_state.year, @panel_state.week_number)
-    @chart_url = generate_google_box_chart(title, reports)
+    course_data = get_campus_week_data(@panel_state.year, @panel_state.week_number)
+    @chart_url = generate_google_box_chart(title, course_data)
   end
 
 
@@ -696,6 +578,36 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
     end
     return person_result
+  end
+
+  def course_ranges_array(data_set) # data_set is an array of Numeric objects
+    data_set = data_set.sort
+    maximum = data_set.max
+    minimum = data_set.min
+    median = median(data_set)
+    if data_set.count % 2 == 1
+      lower25 = median(data_set[0..((data_set.count / 2).ceil)], 0.25)
+      upper25 = median(data_set[((data_set.count / 2).floor)..-1], 0.75)
+    else
+      lower25 = median(data_set[0...(1 + data_set.count / 2)], 0.25)
+      upper25 = median(data_set[(-1 + data_set.count / 2)..-1], 0.75)
+    end
+
+    [minimum, lower25, median, upper25, maximum]
+  end
+
+  def median(data_set, pct = 0.5)
+    middle = (data_set.count + 1)/2.0
+    middle -= 1 # convert from set index to array index (count from 0)
+    if data_set.nil? or data_set.count == 0
+      nil
+    elsif data_set.count == 1
+      data_set[0]
+    elsif data_set.count % 2 == 1
+      data_set[middle.floor]
+    else
+      data_set[middle.floor] + (pct * (data_set[middle.ceil] - data_set[middle.floor]))
+    end
   end
 
 
