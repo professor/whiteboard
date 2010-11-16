@@ -24,7 +24,7 @@
       <% else %>
          <td> &nbsp; </td>
       <% end %>
-      <% if !team.tigris_space.nil? && team.tigris_space.empty? %>
+      <% if !team.tigris_space.nil? && !team.tigris_space.empty? %>
         <td><a href='<%=h team.tigris_space %>'><%= image_tag("/images/tigris.gif", :width=>"16", :height=>"16", :border=>0) %></a></td>
       <% else %>
         <td> &nbsp; </td>
