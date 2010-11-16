@@ -105,7 +105,7 @@ function updateImage(uri,label)
     <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>    
     <td><a href='http://info.sv.cmu.edu/twiki/bin/view/Main/<%= person.twiki_name %>' target='_top'><%= image_tag('/images/twiki.gif', :width=>'16', :height=>'16', :border=>"0", :alt=>"My TWiki page", :title=>"My TWiki page") %></a>
         <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host", :title=>"I am Adobe Connect Host") %><% end %>
-        <% if current_user.is_staff? || current_user.is_admin? %>
+        <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
         <%= link_to image_tag("/images/my_teams2.gif", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(person.id) %>
         <% end %>
     </td>
