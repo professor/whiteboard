@@ -51,7 +51,22 @@ describe PagesController do
 
   it "should allow the creator to specify editable by faculty or any authenticated user"
 
-  
+
+  it "can be a named url that is unique" do
+    UserSession.create(users(:faculty_frank))
+    @page.url = "ppm"
+    @page.save
+
+    @msp = Page.new(:title => "Syllabus",
+                    :updated_by_user_id => 10,
+                    :url => "ppm")
+    @msp.should_not be_valid
+    @msp.errors[:url].should_not be_nil
+    @msp.errors[:url].should == "has already been taken"
+
+  end
+
+
 
   it "is editable by faculty and staff" 
   #do

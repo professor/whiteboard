@@ -10,12 +10,30 @@ describe PagesController do
   end
 
 
+  it "allows named pages in the url" do
+      { :get => "/pages/ppm" }.should be_routable
+       get "/pages/ppm"
+#       need to create ppm model in test database    
+#       response.code.should == "302"
+  end
+
+  it "allows named urls with additional / " do
+    { :get => "/pages/ppm/announcements" }.should be_routable
+     get "/pages/ppm/announcements"
+#       need to create ppm model in test database
+#       response.code.should == "302"
+  end
+
+
+
+
   describe "SHOW page" do
     context "all pages" do
 #moved to model      it "should allow faculty to edit it" 
 #moved to model      it "should allow faculty to see previous versions of the page"
       it "should allow anyone to add comments to the page"
 #moved to model      it "should show who did the last edit and when it occurred"
+
     end
 
     context "three tab page" do

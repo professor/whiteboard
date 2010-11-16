@@ -17,7 +17,11 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.xml
   def show
-    @page = Page.find(params[:id])
+    if(params[:id].to_i == 0) #This is a string
+      @page = Page.find_by_url(params[:id])
+    else #This is a number
+      @page = Page.find(params[:id])
+    end
     @tab = params[:tab]
 
     respond_to do |format|
