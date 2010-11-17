@@ -29,5 +29,7 @@ db/migrate/2009*
 public/images/staff/*
 public/images/students/*
 
+cmusv*gz
+
 push*.dat
 
