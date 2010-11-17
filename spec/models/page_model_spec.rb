@@ -68,6 +68,7 @@ describe PagesController do
 
 
 
+
   it "is editable by faculty and staff" 
   #do
 #    @page.should_not be_editable
