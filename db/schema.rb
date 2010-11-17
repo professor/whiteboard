@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100930025344) do
+ActiveRecord::Schema.define(:version => 20101116234544) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.integer  "project_id"
   end
 
+  add_index "effort_log_line_items", ["effort_log_id"], :name => "index_effort_log_line_items_on_effort_log_id"
+
   create_table "effort_logs", :force => true do |t|
     t.integer  "person_id"
     t.integer  "week_number"
@@ -120,14 +122,16 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "updated_at"
     t.text     "tips_and_traps"
     t.text     "readings_and_resources"
+    t.text     "faculty_notes"
     t.integer  "updated_by_user_id"
     t.integer  "version"
     t.string   "version_comments"
-    t.string   "faculty_notes"
+    t.string   "url"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
   add_index "pages", ["position"], :name => "index_pages_on_position"
+  add_index "pages", ["url"], :name => "index_pages_on_url", :unique => true
 
   create_table "papers", :force => true do |t|
     t.string   "title"
@@ -151,6 +155,9 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.integer "person_id"
   end
 
+  add_index "papers_people", ["paper_id"], :name => "index_papers_people_on_paper_id"
+  add_index "papers_people", ["person_id"], :name => "index_papers_people_on_person_id"
+
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
     t.integer  "person_id"
     t.integer  "team_id"
@@ -158,6 +165,9 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "peer_evaluation_learning_objectives", ["person_id"], :name => "index_peer_evaluation_learning_objectives_on_person_id"
+  add_index "peer_evaluation_learning_objectives", ["team_id"], :name => "index_peer_evaluation_learning_objectives_on_team_id"
 
   create_table "peer_evaluation_reports", :force => true do |t|
     t.integer  "team_id"
@@ -167,6 +177,9 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "peer_evaluation_reports", ["recipient_id"], :name => "index_peer_evaluation_reports_on_recipient_id"
+  add_index "peer_evaluation_reports", ["team_id"], :name => "index_peer_evaluation_reports_on_team_id"
 
   create_table "peer_evaluation_reviews", :force => true do |t|
     t.integer  "team_id"
@@ -178,6 +191,10 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "peer_evaluation_reviews", ["author_id"], :name => "index_peer_evaluation_reviews_on_author_id"
+  add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
+  add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
 
   create_table "project_types", :force => true do |t|
     t.string   "name"
@@ -215,6 +232,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "updated_at"
   end
 
+  add_index "scotty_dog_sayings", ["user_id"], :name => "index_scotty_dog_sayings_on_user_id"
+
   create_table "suggestions", :force => true do |t|
     t.integer  "user_id"
     t.string   "comment"
@@ -223,6 +242,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "updated_at"
     t.string   "email"
   end
+
+  add_index "suggestions", ["user_id"], :name => "index_suggestions_on_user_id"
 
   create_table "task_types", :force => true do |t|
     t.string   "name"
@@ -251,6 +272,8 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.boolean  "updating_email"
   end
 
+  add_index "teams", ["course_id"], :name => "index_teams_on_course_id"
+
   create_table "teams_people", :id => false, :force => true do |t|
     t.integer "team_id"
     t.integer "person_id"
@@ -262,22 +285,20 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
   create_table "user_versions", :force => true do |t|
     t.integer  "person_id"
     t.integer  "version"
+    t.string   "webiso_account"
+    t.string   "login",                    :limit => 40
+    t.string   "email",                    :limit => 100
+    t.string   "crypted_password",         :limit => 40
+    t.string   "salt",                     :limit => 40
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_staff",                                :default => false
+    t.boolean  "is_student",                              :default => false
+    t.boolean  "is_admin",                                :default => false
+    t.string   "twiki_name"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "human_name"
-    t.string   "email",                     :limit => 100
-    t.string   "persistence_token"
-    t.string   "login",                     :limit => 40
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
-    t.boolean  "is_staff",                                 :default => false
-    t.boolean  "is_student",                               :default => false
-    t.boolean  "is_admin",                                 :default => false
-    t.string   "twiki_name"
     t.string   "image_uri"
     t.string   "graduation_year"
     t.string   "masters_program"
@@ -309,7 +330,7 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.string   "telephone3_label"
     t.string   "telephone4"
     t.string   "telephone4_label"
-    t.integer  "updated_by_user_id",        :limit => 8
+    t.integer  "updated_by_user_id",       :limit => 8
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
@@ -317,19 +338,17 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
     t.string   "password_salt"
+    t.string   "persistence_token"
     t.string   "single_access_token"
-    t.integer  "login_count",                              :default => 0,     :null => false
-    t.integer  "failed_login_count",                       :default => 0,     :null => false
+    t.integer  "login_count",                             :default => 0,     :null => false
+    t.integer  "failed_login_count",                      :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "yammer_created"
-    t.string   "webiso_account"
   end
-
-  add_index "user_versions", ["person_id"], :name => "index_user_verions_on_person_id"
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
@@ -399,6 +418,10 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
+  add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
+  add_index "users", ["is_student"], :name => "index_users_on_is_student"
+  add_index "users", ["is_teacher"], :name => "index_users_on_is_teacher"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
 
 end

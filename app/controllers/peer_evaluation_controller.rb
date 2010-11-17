@@ -235,7 +235,7 @@ class PeerEvaluationController < ApplicationController
     )
     @allocations.save!
 
-    flash[:notice] = "Thank you for completing the peer evaluation form."
+    flash[:notice] = "Thank you for saving the peer evaluation form."
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
