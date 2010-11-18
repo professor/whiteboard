@@ -288,7 +288,7 @@ ActiveRecord::Schema.define(:version => 20101116234544) do
     t.string   "webiso_account"
     t.string   "login",                    :limit => 40
     t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 40
+    t.string   "crypted_password",         :limit => 128
     t.string   "salt",                     :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -354,7 +354,7 @@ ActiveRecord::Schema.define(:version => 20101116234544) do
     t.string   "webiso_account"
     t.string   "login",                    :limit => 40
     t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 40
+    t.string   "crypted_password",         :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_staff",                                :default => false
