@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :require_user, :except => [:index, :twiki_index, :twiki_new]
+  require 'csv'
 
   layout 'cmu_sv'
 
@@ -321,9 +322,37 @@ class TeamsController < ApplicationController
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
+   def export_to_csv
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    report = StringIO.new
+    CSV::Writer.generate(report, ',') do |title|
+      title << ['Team Name','Team Member','Past Teams']
+        @teams.each do |team|
+          team.people.each do |person|
+            title << [team.name, person.human_name, find_past_teams(person)]
+          end
+        end
+      end
+    report.rewind
+    send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>'report.csv',
+    :disposition =>'attachment', :encoding => 'utf8')
+  end
 
+  def find_past_teams(person)
+    @past_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, ApplicationController.current_semester(), Date.today.year])
 
-
+    teams_list = ""
+    count = 0
+    @past_teams_as_member.each do |team|
+      if count == 0
+        teams_list = team.name
+      else
+        teams_list = teams_list.concat(", " + team.name)
+      end
+      count += 1
+    end
+    return teams_list
+  end
 
 
   private
