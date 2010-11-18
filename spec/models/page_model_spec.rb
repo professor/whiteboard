@@ -52,17 +52,36 @@ describe PagesController do
   it "should allow the creator to specify editable by faculty or any authenticated user"
 
 
-  it "can be a named url that is unique" do
-    UserSession.create(users(:faculty_frank))
-    @page.url = "ppm"
-    @page.save
+  context "can be a named url" do
 
-    @msp = Page.new(:title => "Syllabus",
-                    :updated_by_user_id => 10,
-                    :url => "ppm")
-    @msp.should_not be_valid
-    @msp.errors[:url].should_not be_nil
-    @msp.errors[:url].should == "has already been taken"
+    it "that is unique" do
+      UserSession.create(users(:faculty_frank))
+      @page.url = "ppm"
+      @page.save
+
+      @msp = Page.new(:title => "Syllabus",
+                      :updated_by_user_id => 10,
+                      :url => "ppm")
+      @msp.should_not be_valid
+      @msp.errors[:url].should_not be_nil
+      @msp.errors[:url].should == "has already been taken"
+    end
+
+    it "that is not a number because it would cause conflicts with the id field on lookup" do
+      UserSession.create(users(:faculty_frank))
+      @page.url = "123"
+      @page.should_not be_valid
+      @page.errors[:url].should_not be_nil
+#      @page.errors[:url].should == "has already been taken"
+      @page.url = "test123"
+      @page.should be_valid
+      @page.errors[:url].should be_nil
+
+      @page.url = "123test123test12321"
+      @page.should be_valid
+      @page.errors[:url].should be_nil
+    end
+
 
   end
 
