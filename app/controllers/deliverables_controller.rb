@@ -198,7 +198,7 @@ class DeliverablesController < ApplicationController
     end
     respond_to do |format|
       if @deliverable.save
-        send_deliverable_feedback_email(deliverable)
+        send_deliverable_feedback_email(@deliverable)
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }
