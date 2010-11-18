@@ -49,7 +49,11 @@ GEM
       daemons (>= 1.0.3)
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
+    mongrel (1.1.5-x86-mingw32)
+      cgi_multipart_eof_fix (>= 2.4)
+      gem_plugin (>= 0.2.3)
     mysql (2.8.1)
+    mysql (2.8.1-x86-mingw32)
     nokogiri (1.4.3.1)
     oauth (0.4.4)
     rack (1.0.1)
@@ -99,6 +103,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   authlogic
