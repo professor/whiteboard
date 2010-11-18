@@ -27,7 +27,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.nil?
-        flash[:notice] = "Page with an id of #{params[:id]} is not in this system."
+        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
         format.html { redirect_to(pages_url) }
         format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       else
