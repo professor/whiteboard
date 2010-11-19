@@ -207,7 +207,7 @@ class EffortLogsController < ApplicationController
       week_number = 52 if Date.today.cweek == 1
       error_msg = "There already is an effort log for the previous week"
     else
-      week_number = Date.today.cweek - 0
+      week_number = Date.today.cweek
       error_msg = "There already is an effort log for the current week"
     end
     setup_required_datastructures(Date.today.cwyear, week_number)
