@@ -5,7 +5,7 @@ class EffortLogLineItem < ActiveRecord::Base
     belongs_to :course
   
 #    before_save :determine_total_effort #this is not necessary since it is also called by the effort_log before a save
-      
+  validates_numericality_of :day1, :day2, :day3, :day4, :day5, :day6, :day7, :greater_than_or_equal_to => 0, :allow_nil => true
     
     def determine_total_effort
       self.sum = 0
