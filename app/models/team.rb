@@ -108,7 +108,7 @@ class Team < ActiveRecord::Base
   def remove_person(id)
     person = Person.find_by_id(id)
   rescue ActiveRecord::RecordNotFound
-    logger.error "Attempting to remove an unknow person with id=#{id}"
+    logger.error "Attempting to remove an unknown person with id=#{id}"
   else
     if self.people.include?(person)
       self.people.delete person
