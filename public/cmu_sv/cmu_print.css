@@ -13,7 +13,7 @@ text-decoration:none;
 font-weight:normal;
 }
 
-.printlogo{padding:0px 0px 20px 0px;}
+.printlogo{display:none;}
 #contentPrint{visibility:visible; width:auto;}
 .noPrint{display:none;}
 .noDisplay{display:none;}
@@ -826,7 +826,7 @@ input.admin_searchInput{display:none;}
 .admin_searchImage{display:none;}
 
 
-.admin_level_leftnav_bg{background-color:#FFFFFF;}
+.admin_level_leftnav_bg{display:none;}
 .admin_level_leftnav_UnitLogo_bg{background-color:#FFFFFF;}
 .admin_level_leftColumn{display:none;}
 
@@ -943,7 +943,7 @@ input.admin_searchInput{display:none;}
 
 /*ADMIN 2 Column Level Template Content Area */
 .admin_2ColLevelContentBG{background-color:#FFFFFF; position:static; z-index:1;}
-.admin_2ColLevelContent_Padding{margin:0px 0px 0px 0px; padding:220px 0px 0px 0px;}
+.admin_2ColLevelContent_Padding{margin:0px 0px 0px 0px; padding:0px 0px 0px 0px;}
 #admin_2ColLevelContent{font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#000000; width:600px;}
 #admin_2ColLevelContent td{font-family:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px; text-decoration:none; font-weight:normal; border-color:#000000;}
 #admin_2ColLevelContent img{padding:3px; border:0px;}
