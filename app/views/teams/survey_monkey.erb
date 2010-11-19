@@ -42,7 +42,7 @@
 <%= hidden_field_tag("dayFieldTwo", @team.peer_evaluation_second_email.day) %>
 <%= hidden_field_tag("monthFieldTwo", @team.peer_evaluation_second_email.month) %>
 
-<input type="hidden" name="id" value="<%=params[:id]%>">
+<%= hidden_field_tag("id", params[:id]) %>
 <table>
         <tr>
           <td valign="top">First Email Date:<br/>"Heads up" notification</td>
