@@ -324,8 +324,7 @@ class EffortLogsController < ApplicationController
         format.html { redirect_to(edit_effort_log_url) }
         format.xml  { head :ok }
       else
-        flash[:error] = 'Error saving effort log; Changes to log were not saved'
-        format.html { redirect_to(edit_effort_log_url) }        
+        format.html { render "edit" }
         format.xml  { render :xml => @effort_log.errors, :status => :unprocessable_entity }
       end
     end
