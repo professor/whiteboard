@@ -237,12 +237,10 @@ class EffortLogsController < ApplicationController
       end
     else
       logger.debug "This is the first effort log for the person in the system"
-      if true # if a student
-        course = recent_foundations_or_course
-        course_id = course.id
-      else
-        course_id = ""
-      end
+
+      course = recent_foundations_or_course
+      course_id = course.id
+
       @task_types.each do |task_type|
         @effort_log.effort_log_line_items << EffortLogLineItem.new(:course_id => course_id, :task_type_id => task_type.id)      
       end
