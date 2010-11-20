@@ -1,3 +1,9 @@
+#
+#
+# Todo: consider removing this controller entirely.....
+#
+#
+#
 class EffortLogLineItemsController < ApplicationController
   # GET /effort_log_line_items
   # GET /effort_log_line_items.xml
