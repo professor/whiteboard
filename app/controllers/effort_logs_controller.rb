@@ -218,13 +218,20 @@ class EffortLogsController < ApplicationController
     #find the most recent effort log to copy its structure, but not its effort data
     recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
 
+    if recent_effort_log and recent_effort_log.week_number == week_number
+      duplicate_effort_log = recent_effort_log
+    else
+      duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND week_number = #{week_number}")
+    end
+
+    if duplicate_effort_log
+      logger.debug "We should not be creating another effort log for week #{week_number}"
+      flash[:error] = error_msg
+      redirect_to(effort_logs_url) and return
+    end
+
     if recent_effort_log
       logger.debug "Copy effort log from week #{recent_effort_log.week_number}"
-      if recent_effort_log.week_number == week_number
-        logger.debug "We should not be creating another effort log for week #{week_number}"
-        flash[:error] = error_msg
-        redirect_to(effort_logs_url) and return        
-      end
       recent_effort_log.effort_log_line_items.each do | line|
         @effort_log.effort_log_line_items << EffortLogLineItem.new(:course_id => line.course_id, :task_type_id => line.task_type_id)
       end
