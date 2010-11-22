@@ -218,9 +218,13 @@ class EffortLogsController < ApplicationController
     #find the most recent effort log to copy its structure, but not its effort data
     recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
 
+    # We want to make sure that the user isn't accidentally creating two efforts for the same week.
+    # Since students are only able to log effort for this week (or a previous week)
     if recent_effort_log and recent_effort_log.week_number == week_number
+      #Yes we already have effort for this week
       duplicate_effort_log = recent_effort_log
     else
+      #Do we already have effort for the week we are trying to log effort against?
       duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND week_number = #{week_number}")
     end
 
