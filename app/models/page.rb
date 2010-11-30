@@ -17,7 +17,7 @@ class Page < ActiveRecord::Base
   end
 
   def editable?(current_user)
-#    current_user = UserSession.find.user
+    return true if self.is_editable_by_all?
     return (current_user.is_staff? || current_user.is_admin?)
   end
 

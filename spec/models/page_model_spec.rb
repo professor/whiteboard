@@ -26,8 +26,8 @@ describe PagesController do
     @page.should_not be_valid
   end
 
-  it "is not valid without an updated_by_user_id"
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
+  it "is not valid without an updated_by_user_id"
 #  do
 #    UserSession.create(users(:faculty_frank))
 #    @page.updated_by_user_id = nil
@@ -49,11 +49,7 @@ describe PagesController do
     UserSession.find.user.id.should == latest_user_id
   end
 
-  it "should allow the creator to specify editable by faculty or any authenticated user"
-
-
   context "can be a named url" do
-
     it "that is unique" do
       UserSession.create(users(:faculty_frank))
       @page.url = "ppm"
@@ -81,22 +77,25 @@ describe PagesController do
       @page.should be_valid
       @page.errors[:url].should be_nil
     end
-
-
   end
 
 
+  it "is editable by staff or admin" do
+    @page.should be_editable(users(:faculty_frank))
+   end
 
+  it "is not editable unless they are staff or admin" do
+    @page.should_not be_editable(users(:student_sam))
+  end
 
-  it "is editable by faculty and staff" 
-  #do
-#    @page.should_not be_editable
-#    user = stub('User', :is_staff => true)
-#    @page.stub(:current_user).and_return(user)
-#    @page.should be_editable
-#   end
+  it "should allow the creator to specify editable by faculty or any authenticated user" do
+    @page.should respond_to(:is_editable_by_all)
+    @page.is_editable_by_all = true
+    @page.should be_editable(users(:student_sam))    
+  end
+  
 
-    it "is versioned"
+  it "is versioned"
 #  do
 #    @page.save
 #    version_number = @page.version
@@ -115,7 +114,6 @@ describe PagesController do
 #  end
 
 
-    it "should allow the creator to specify edit permissions as either anyone or faculty"
 
   
 

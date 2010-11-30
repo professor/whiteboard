@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119000356) do
+ActiveRecord::Schema.define(:version => 20101130011634) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20101119000356) do
     t.integer  "version"
     t.string   "version_comments"
     t.string   "url"
+    t.boolean  "is_editable_by_all",     :default => false
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
