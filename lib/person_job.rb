@@ -94,8 +94,11 @@ __ Action required: I have forwarded my Andrew email to my Silicon Valley email 
 <b>TWiki is our primary collaboration tool</b><br/>
 We use TWiki, a wiki server, for our collaboration needs.  Faculty use the twiki to collaborate and share important information. Each course will have a twiki web and each student team is given a wiki web for sharing information among the team members.  You will receive a separate email with your twiki account information asking you to set your password.  All wiki words look SomethingLikeThis and we'll cover more about our TWiki server during your orientation.<br/>
 <br/>
-Your twiki user name is "#{person.twiki_name}", and your twiki page url would be:<br/> http://info.sv.cmu.edu/do/view/Main/#{person.twiki_name} -- Please visit your own twiki page and update your biography and objectives.  In the middle of your page, click on 'Edit my information.' This is your opportunity to share information about yourself with your peers.  You can update all of your personal information as well. Your information is only viewable by Silicon Valley community members.<br/>
-<br/> __ Action required: I have updated my biography and goals on my twiki user page<br/>
+Your twiki user name is "#{person.twiki_name}"<br/>
+
+<b>Personal Profile</b><br/>
+Please visit this page http://rails.sv.cmu.edu/people/#{person.twiki_name} and update your biography and objectives. This is your opportunity to share information about yourself with your peers.  You can update all of your personal information as well. Your information is only viewable by Silicon Valley community members.<br/>
+<br/> __ Action required: I have updated my biography and goals on my user page<br/>
 <br/>
 <b>Google Apps</b><br/>
 Google Apps is composed of a number of tools, including Docs, Calendar, Chat, Sites.<br>
