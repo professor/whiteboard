@@ -3,6 +3,8 @@ require 'spec_helper'
 describe PagesController do
   fixtures :users  
 
+  
+
 
   before(:all) do
       activate_authlogic
@@ -27,12 +29,13 @@ describe PagesController do
   end
 
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
-  it "is not valid without an updated_by_user_id"
-#  do
-#    UserSession.create(users(:faculty_frank))
-#    @page.updated_by_user_id = nil
-#    @page.should_not be_valid
-#  end
+  it "is not valid without an updated_by_user_id"  do
+    UserSession.create(u = users(:faculty_frank))
+    @page.updated_by_user_id = nil
+    lambda {
+      @page.valid?
+    }.should change(self, :updated_by_user_id).from(nil).to(u.id)    
+  end
 
   it "should allow faculty to upload attachments"
 #    setup :activate_authlogic

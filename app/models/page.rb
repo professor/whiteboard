@@ -1,4 +1,8 @@
 class Page < ActiveRecord::Base
+    attr_accessible :course_id, :title, :position, :identation_levels, :is_task, :tab_one_contents, :tab_two_contents,
+                    :tab_three_contents, :task_duration, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
+                    :url, :is_editable_by_all, :version_comments
+
     validates_presence_of :title
     validates_presence_of :updated_by_user_id
     validates_uniqueness_of :url, :allow_blank => true
@@ -32,7 +36,6 @@ class Page < ActiveRecord::Base
   else
      update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })     
   end
-
  end
 
 end
