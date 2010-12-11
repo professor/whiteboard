@@ -22,11 +22,18 @@ class PagesController < ApplicationController
     else #This is a number
       @page = Page.find(params[:id])
     end
+
     @tab = params[:tab]
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @page }
+      if @page.nil?
+        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+        format.html { redirect_to(pages_url) }
+        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
+      else
+        format.html # show.html.erb
+        format.xml { render :xml => @page }
+      end
     end
   end
 

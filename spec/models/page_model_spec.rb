@@ -3,6 +3,8 @@ require 'spec_helper'
 describe PagesController do
   fixtures :users  
 
+  
+
 
   before(:all) do
       activate_authlogic
@@ -26,13 +28,14 @@ describe PagesController do
     @page.should_not be_valid
   end
 
-  it "is not valid without an updated_by_user_id"
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
-#  do
-#    UserSession.create(users(:faculty_frank))
-#    @page.updated_by_user_id = nil
-#    @page.should_not be_valid
-#  end
+  it "is not valid without an updated_by_user_id"  do
+    UserSession.create(u = users(:faculty_frank))
+    @page.updated_by_user_id = nil
+    lambda {
+      @page.valid?
+    }.should change(self, :updated_by_user_id).from(nil).to(u.id)    
+  end
 
   it "should allow faculty to upload attachments"
 #    setup :activate_authlogic
@@ -49,35 +52,53 @@ describe PagesController do
     UserSession.find.user.id.should == latest_user_id
   end
 
-  it "should allow the creator to specify editable by faculty or any authenticated user"
+  context "can be a named url" do
+    it "that is unique" do
+      UserSession.create(users(:faculty_frank))
+      @page.url = "ppm"
+      @page.save
 
+      @msp = Page.new(:title => "Syllabus",
+                      :updated_by_user_id => 10,
+                      :url => "ppm")
+      @msp.should_not be_valid
+      @msp.errors[:url].should_not be_nil
+      @msp.errors[:url].should == "has already been taken"
+    end
 
-  it "can be a named url that is unique" do
-    UserSession.create(users(:faculty_frank))
-    @page.url = "ppm"
-    @page.save
+    it "that is not a number because it would cause conflicts with the id field on lookup" do
+      UserSession.create(users(:faculty_frank))
+      @page.url = "123"
+      @page.should_not be_valid
+      @page.errors[:url].should_not be_nil
+#      @page.errors[:url].should == "has already been taken"
+      @page.url = "test123"
+      @page.should be_valid
+      @page.errors[:url].should be_nil
 
-    @msp = Page.new(:title => "Syllabus",
-                    :updated_by_user_id => 10,
-                    :url => "ppm")
-    @msp.should_not be_valid
-    @msp.errors[:url].should_not be_nil
-    @msp.errors[:url].should == "has already been taken"
-
+      @page.url = "123test123test12321"
+      @page.should be_valid
+      @page.errors[:url].should be_nil
+    end
   end
 
 
+  it "is editable by staff or admin" do
+    @page.should be_editable(users(:faculty_frank))
+   end
 
+  it "is not editable unless they are staff or admin" do
+    @page.should_not be_editable(users(:student_sam))
+  end
 
-  it "is editable by faculty and staff" 
-  #do
-#    @page.should_not be_editable
-#    user = stub('User', :is_staff => true)
-#    @page.stub(:current_user).and_return(user)
-#    @page.should be_editable
-#   end
+  it "should allow the creator to specify editable by faculty or any authenticated user" do
+    @page.should respond_to(:is_editable_by_all)
+    @page.is_editable_by_all = true
+    @page.should be_editable(users(:student_sam))    
+  end
+  
 
-    it "is versioned"
+  it "is versioned"
 #  do
 #    @page.save
 #    version_number = @page.version
@@ -96,7 +117,6 @@ describe PagesController do
 #  end
 
 
-    it "should allow the creator to specify edit permissions as either anyone or faculty"
 
   
 

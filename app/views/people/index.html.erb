@@ -29,11 +29,12 @@ $(document).ready(function()
         //when the close button at right corner of the message box is clicked
         $('#close_image_box').click(function()
         {
-          //the messagebox gets scrool down with top property and gets hidden with zero opacity
+          //the messagebox gets scroll down with top property and gets hidden with zero opacity
           $('#image_box').animate({ top:"+=15px",opacity:0 }, "slow");
+          $('#image_box').hide();
         });
 
-        //hoving over a line selects it
+        //hovering over a line selects it
         $("tr").hover(
         function () {
           $(this).addClass("hover");

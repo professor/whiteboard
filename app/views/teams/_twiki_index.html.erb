@@ -108,8 +108,6 @@ background-color: #6B7F93;
 
 <!--    <td><%= link_to 'Edit', edit_course_team_path(team.course_id, team), :target => '_top' %></td>-->
     <td><a href="<%=@machine_name%>/courses/<%=team.course_id%>/teams/<%=team.id%>/edit" target="_top">Edit</a></td>
-   <% if current_user && current_user.is_admin %>
-   <% end %>
 
   </tr>
 <% end %>

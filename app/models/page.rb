@@ -1,7 +1,12 @@
 class Page < ActiveRecord::Base
+    attr_accessible :course_id, :title, :position, :identation_levels, :is_task, :tab_one_contents, :tab_two_contents,
+                    :tab_three_contents, :task_duration, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
+                    :url, :is_editable_by_all, :version_comments
+
     validates_presence_of :title
     validates_presence_of :updated_by_user_id
     validates_uniqueness_of :url, :allow_blank => true
+    validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
 
     belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
 
@@ -16,7 +21,7 @@ class Page < ActiveRecord::Base
   end
 
   def editable?(current_user)
-#    current_user = UserSession.find.user
+    return true if self.is_editable_by_all?
     return (current_user.is_staff? || current_user.is_admin?)
   end
 
@@ -31,7 +36,6 @@ class Page < ActiveRecord::Base
   else
      update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })     
   end
-
  end
 
 end

@@ -42,7 +42,7 @@
 <%= hidden_field_tag("dayFieldTwo", @team.peer_evaluation_second_email.day) %>
 <%= hidden_field_tag("monthFieldTwo", @team.peer_evaluation_second_email.month) %>
 
-<input type="hidden" name="id" value="<%=params[:id]%>">
+<%= hidden_field_tag("id", params[:id]) %>
 <table>
         <tr>
           <td valign="top">First Email Date:<br/>"Heads up" notification</td>
@@ -98,10 +98,10 @@
           </script></td></tr>
 </table>
 
-<%= submit_tag 'Save Dates' %><br><br>
+<%= submit_tag 'Save Dates' %><br/><br/>
 <% end %>
 
-<h2>Step 2: Generate feedback for thes students</h2>
+<h2>Step 2: Generate feedback for these students</h2>
 <p><%= link_to "Edit the peer evaluation reports", :action => "edit_report", :id => params[:id], :controller => "peer_evaluation" %></p>
 
 <%end%>

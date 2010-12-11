@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116234544) do
+ActiveRecord::Schema.define(:version => 20101130011634) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20101116234544) do
     t.integer  "version"
     t.string   "version_comments"
     t.string   "url"
+    t.boolean  "is_editable_by_all",     :default => false
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
@@ -288,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20101116234544) do
     t.string   "webiso_account"
     t.string   "login",                    :limit => 40
     t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 40
+    t.string   "crypted_password",         :limit => 128
     t.string   "salt",                     :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -354,7 +355,7 @@ ActiveRecord::Schema.define(:version => 20101116234544) do
     t.string   "webiso_account"
     t.string   "login",                    :limit => 40
     t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 40
+    t.string   "crypted_password",         :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_staff",                                :default => false

@@ -1,6 +1,15 @@
+#
+#
+# Todo: consider removing this controller entirely.....
+#
+#
+#
 class EffortLogLineItemsController < ApplicationController
   # GET /effort_log_line_items
   # GET /effort_log_line_items.xml
+
+  before_filter :redirect_to_effort_log_index
+
   def index
     @effort_log_line_items = EffortLogLineItem.find(:all)
 
@@ -82,5 +91,10 @@ class EffortLogLineItemsController < ApplicationController
       format.html { redirect_to(effort_log_line_items_url) }
       format.xml  { head :ok }
     end
+  end
+
+  protected
+  def redirect_to_effort_log_index
+    redirect_to :controller => :effort_logs, :action => :index
   end
 end

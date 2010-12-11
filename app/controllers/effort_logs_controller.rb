@@ -207,7 +207,7 @@ class EffortLogsController < ApplicationController
       week_number = 52 if Date.today.cweek == 1
       error_msg = "There already is an effort log for the previous week"
     else
-      week_number = Date.today.cweek - 0
+      week_number = Date.today.cweek
       error_msg = "There already is an effort log for the current week"
     end
     setup_required_datastructures(Date.today.cwyear, week_number)
@@ -218,24 +218,33 @@ class EffortLogsController < ApplicationController
     #find the most recent effort log to copy its structure, but not its effort data
     recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
 
+    # We want to make sure that the user isn't accidentally creating two efforts for the same week.
+    # Since students are only able to log effort for this week (or a previous week)
+    if recent_effort_log and recent_effort_log.week_number == week_number
+      #Yes we already have effort for this week
+      duplicate_effort_log = recent_effort_log
+    else
+      #Do we already have effort for the week we are trying to log effort against?
+      duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND week_number = #{week_number}")
+    end
+
+    if duplicate_effort_log
+      logger.debug "We should not be creating another effort log for week #{week_number}"
+      flash[:error] = error_msg
+      redirect_to(effort_logs_url) and return
+    end
+
     if recent_effort_log
       logger.debug "Copy effort log from week #{recent_effort_log.week_number}"
-      if recent_effort_log.week_number == week_number
-        logger.debug "We should not be creating another effort log for week #{week_number}"
-        flash[:error] = error_msg
-        redirect_to(effort_logs_url) and return        
-      end
       recent_effort_log.effort_log_line_items.each do | line|
         @effort_log.effort_log_line_items << EffortLogLineItem.new(:course_id => line.course_id, :task_type_id => line.task_type_id)
       end
     else
       logger.debug "This is the first effort log for the person in the system"
-      if true # if a student
-        course = recent_foundations_or_course
-        course_id = course.id
-      else
-        course_id = ""
-      end
+
+      course = recent_foundations_or_course
+      course_id = course.id
+
       @task_types.each do |task_type|
         @effort_log.effort_log_line_items << EffortLogLineItem.new(:course_id => course_id, :task_type_id => task_type.id)      
       end
@@ -269,7 +278,11 @@ class EffortLogsController < ApplicationController
     @effort_log = EffortLog.find(params[:id])
 
 #    if @effort_log.week_number != Date.today.cweek
-    if !@effort_log.editable(current_user)          
+    if !@effort_log.has_permission_to_edit(current_user)
+      flash[:error] = 'You do not have permission to edit the effort log.'
+      redirect_to(effort_logs_url) and return
+    end
+    if !@effort_log.has_permission_to_edit_period(current_user)
       flash[:error] = 'You are unable to update effort logs from the past.'
       redirect_to(effort_logs_url) and return
     end
@@ -306,7 +319,11 @@ class EffortLogsController < ApplicationController
     params[:effort_log][:existing_effort_log_line_item_attributes] ||= {}
     
     @effort_log = EffortLog.find(params[:id])
-    if !@effort_log.editable(current_user)        
+    if !@effort_log.has_permission_to_edit(current_user)
+      flash[:error] = 'You do not have permission to edit the effort log.'
+      redirect_to(effort_logs_url) and return
+    end
+    if !@effort_log.has_permission_to_edit_period(current_user)
       flash[:error] = 'You are unable to update effort logs from the past.'
       redirect_to(effort_logs_url) and return
     end
@@ -324,6 +341,7 @@ class EffortLogsController < ApplicationController
         format.html { redirect_to(edit_effort_log_url) }
         format.xml  { head :ok }
       else
+        flash[:error] = 'Error saving effort log; Changes to log were not saved'
         format.html { redirect_to(edit_effort_log_url) }        
         format.xml  { render :xml => @effort_log.errors, :status => :unprocessable_entity }
       end
@@ -344,8 +362,6 @@ class EffortLogsController < ApplicationController
 
   def effort_for_unregistered_courses
     @error_effort_logs_users = EffortLog.users_with_effort_against_unregistered_courses()
-    tmp = EffortLog.users_with_effort_against_unregistered_courses()
-    puts "Hello"
     respond_to do |format|
       format.html
       format.xml  { render :xml => @error_effort_logs_users }
