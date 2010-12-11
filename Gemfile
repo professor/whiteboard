@@ -27,7 +27,7 @@ end
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
 group :production do
-#  gem 'activerecord-postgresql-adapter'
+  gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
 end
 
 group :development, :test do
