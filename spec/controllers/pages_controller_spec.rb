@@ -48,15 +48,13 @@ describe PagesController do
 
 
 
-#
 #  it "allows named pages in the url" do
 #     @ppm = Factory(:ppm)
-#      { :get => "/pages/ppm" }.should be_routable
-#       get "/pages/ppm"
-##       need to create ppm model in test database
-##       response.code.should == "302"
+#       { :get => "/pages/#{@ppm.url}" }.should be_routable
+#       get "/pages/#{@ppm.url}"
+#       response.code.should == "302"
 #  end
-#
+
 #  it "allows named urls with additional / " do
 #    { :get => "/pages/ppm/announcements" }.should be_routable
 #     get "/pages/ppm/announcements"
