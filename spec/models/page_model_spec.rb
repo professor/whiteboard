@@ -34,7 +34,7 @@ describe PagesController do
     @page.updated_by_user_id = nil
     lambda {
       @page.valid?
-    }.should change(self, :updated_by_user_id).from(nil).to(u.id)    
+    }.should change(@page, :updated_by_user_id).from(nil).to(u.id)    
   end
 
   it "should allow faculty to upload attachments"
