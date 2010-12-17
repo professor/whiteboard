@@ -138,6 +138,8 @@ class PeopleController < ApplicationController
        @domain = "sv.cmu.edu"
      end
 
+    @strength_themes = StrengthTheme.find(:all)
+    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -153,6 +155,7 @@ class PeopleController < ApplicationController
 #    end
 
     @person = Person.find(params[:id])
+    @strength_themes = StrengthTheme.find(:all)
   end
 
   # POST /people

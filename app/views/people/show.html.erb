@@ -1,6 +1,12 @@
 <% content_for :title, @person.human_name + " - Contact Information"%>
 
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+
+
 <% form_for(@person) do |f| %>
   <%= f.error_messages %>
 
@@ -73,6 +79,15 @@ TWiki Page: <%= twiki_user_link(@person.twiki_name, @person.twiki_name) %>
 
     <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
+<h2>Strength Finders</h2>
+<p>For more information about Clifton's Strength Finders, visit <a href="http://www.strengthquest.com">Strength Quest</a></p>    
+    <%= render :partial => 'show_strength_theme', :locals=>{:number => 1, :strength_theme => @person.strength1} %>
+    <%= render :partial => 'show_strength_theme', :locals=>{:number => 2, :strength_theme => @person.strength2} %>
+    <%= render :partial => 'show_strength_theme', :locals=>{:number => 3, :strength_theme => @person.strength3} %>
+    <%= render :partial => 'show_strength_theme', :locals=>{:number => 4, :strength_theme => @person.strength4} %>
+    <%= render :partial => 'show_strength_theme', :locals=>{:number => 5, :strength_theme => @person.strength5} %>
+<% if @person.strength1.nil? %>
+<% end %>
 
 <h1><%=h @person.human_name %></h1>    
   <div class="rounded staff">
@@ -109,3 +124,7 @@ on <%=h version.updated_at.to_s(:detailed) %>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
+
+
+
+

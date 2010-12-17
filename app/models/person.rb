@@ -27,6 +27,12 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
   has_and_belongs_to_many :papers, :join_table=>"papers_people"
 
+  belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
+  belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
+  belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
+  belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
+  belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
+
 
 
   validates_uniqueness_of   :login,    :case_sensitive => false, :allow_nil => true
