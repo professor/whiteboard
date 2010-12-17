@@ -184,6 +184,33 @@ This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
     <%= f.label :user_text %>
     <%= f.text_area :user_text, :size=>"80x30", :class=>"tinymce" %>
   </div>
+  </fieldset>
+  <fieldset>
+      <legend>Strength Finders</legend>
+    For more information about Clifton's Strength Finders, visit <a href="http://www.strengthquest.com">Strength Quest</a>
+    
+  <div class="formItem">
+    <%= f.label :strength1, "Strength 1" %>
+    <%= f.collection_select :strength1_id, @strength_themes, :id, :theme, :include_blank => true%>
+  </div>
+  <div class="formItem">
+    <%= f.label :strength2, "Strength 2" %>
+    <%= f.collection_select :strength2_id, @strength_themes, :id, :theme, :include_blank => true%>
+  </div>
+  <div class="formItem">
+    <%= f.label :strength3, "Strength 3" %>
+    <%= f.collection_select :strength3_id, @strength_themes, :id, :theme, :include_blank => true%>
+  </div>
+  <div class="formItem">
+    <%= f.label :strength4, "Strength 4" %>
+    <%= f.collection_select :strength4_id, @strength_themes, :id, :theme, :include_blank => true%>
+  </div>
+  <div class="formItem">
+    <%= f.label :strength5, "Strength 5" %>
+    <%= f.collection_select :strength5_id, @strength_themes, :id, :theme, :include_blank => true%>
+  </div>
+  </fieldset>
+
   </div>
 
   <div class="rounded staff">

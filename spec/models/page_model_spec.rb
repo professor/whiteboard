@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PagesController do
+describe Page do
   fixtures :users  
 
   
@@ -34,12 +34,10 @@ describe PagesController do
     @page.updated_by_user_id = nil
     lambda {
       @page.valid?
-    }.should change(self, :updated_by_user_id).from(nil).to(u.id)    
+    }.should change(@page, :updated_by_user_id).from(nil).to(u.id)    
   end
 
   it "should allow faculty to upload attachments"
-#    setup :activate_authlogic
-#    UserSession.create(users("FacultyFrank"))
 
 
   it "should show who did the last edit and when it occurred" do

@@ -1,0 +1,39 @@
+<% unless strength_theme.nil? %>
+<p>
+<b><%=h strength_theme.theme %></b>
+
+- <%=h strength_theme.brief_description %> 
+      <a id="dialog_link_<%= number %>" href="#">more</a>
+</p>
+
+
+<!--
+<a class="ui-state-default ui-corner-all" id="dialog_link_<%= number %>" href="#"><span class="ui-icon ui-icon-newwin"></span>More</a>
+-->
+ <div id="dialog_<%= number %>" title="<%=h strength_theme.theme %>">
+     <p><%= strength_theme.long_description %></p>
+ </div>
+
+
+<script type="text/javascript">
+
+  $(function(){
+
+$('#dialog_<%= number %>').dialog({
+    autoOpen: false,
+    width: 600,
+    buttons: {
+        "Ok": function() {
+            $(this).dialog("close");
+        }
+    }
+});
+// Dialog Link
+$('#dialog_link_<%= number %>').click(function(){
+    $('#dialog_<%= number %>').dialog('open');
+    return false;
+});
+  });
+
+</script>
+<% end %>

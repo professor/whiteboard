@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130011634) do
+ActiveRecord::Schema.define(:version => 20101214220304) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -235,6 +235,14 @@ ActiveRecord::Schema.define(:version => 20101130011634) do
 
   add_index "scotty_dog_sayings", ["user_id"], :name => "index_scotty_dog_sayings_on_user_id"
 
+  create_table "strength_themes", :force => true do |t|
+    t.string   "theme"
+    t.string   "brief_description"
+    t.text     "long_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "suggestions", :force => true do |t|
     t.integer  "user_id"
     t.string   "comment"
@@ -349,6 +357,11 @@ ActiveRecord::Schema.define(:version => 20101130011634) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "yammer_created"
+    t.integer  "strength1_id"
+    t.integer  "strength2_id"
+    t.integer  "strength3_id"
+    t.integer  "strength4_id"
+    t.integer  "strength5_id"
   end
 
   create_table "users", :force => true do |t|
@@ -415,6 +428,11 @@ ActiveRecord::Schema.define(:version => 20101130011634) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "yammer_created"
+    t.integer  "strength1_id"
+    t.integer  "strength2_id"
+    t.integer  "strength3_id"
+    t.integer  "strength4_id"
+    t.integer  "strength5_id"
   end
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
