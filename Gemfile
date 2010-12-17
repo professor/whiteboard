@@ -28,6 +28,7 @@ end
 
 group :production do
   gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
+  gem 'factory_girl' #This is necessary when we want to load factory seeds into a production database
 end
 
 group :development, :test do
