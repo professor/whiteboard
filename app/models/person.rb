@@ -38,6 +38,14 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :login,    :case_sensitive => false, :allow_nil => true
   validates_uniqueness_of   :webiso_account,    :case_sensitive => false, :allow_nil => true
 
+#  def to_param
+#    if twiki_name.blank?
+#      id.to_s
+#    else
+#      twiki_name
+#    end
+#  end
+
     def before_validation
       self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
     end

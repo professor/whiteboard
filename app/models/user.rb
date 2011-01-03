@@ -21,7 +21,7 @@ acts_as_authentic
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :first_name, :last_name, :webiso_account, :isStaff, :isStudent, :isAdmin, :twiki_name
+  attr_accessible :login, :email, :password, :password_confirmation, :first_name, :last_name, :webiso_account, :isStaff, :isStudent, :isAdmin, :twiki_name, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id
 
   
   # Lines modified by Todd go here:
