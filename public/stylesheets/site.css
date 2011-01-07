@@ -266,3 +266,12 @@ border-width:1px;
 div.modified {
     text-align: right;
 }
+
+.pageContentDiv table {
+    border-collapse:collapse;
+}
+
+.pageContentDiv table, .pageContentDiv th, .pageContentDiv td  {
+    border: 1px solid black;
+    padding: 10px;
+}
