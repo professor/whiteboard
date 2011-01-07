@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def sanitize_trusted(html)
-    return sanitize html, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li em div), :attributes => %w(id href name class style)
+    return sanitize html, :tags => %w(table tbody tr td p br span img a h1 h2 h3 ul ol li em div strong), :attributes => %w(id href name class style)
   end
 
  
