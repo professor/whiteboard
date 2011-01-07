@@ -87,6 +87,10 @@ function updateImage(uri,label)
   <div id='image_box_label'></div>
 </div>
 
+<% if current_user && (current_user.is_admin? || current_user.is_staff?) %>
+<%= link_to 'New person', new_person_path %>
+<% end %>
+
 <table id="people_table" class="tablesorter">
   <thead>
   <tr>

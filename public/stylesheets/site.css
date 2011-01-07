@@ -266,3 +266,12 @@ border-width:1px;
 div.modified {
     text-align: right;
 }
+
+.sv_main_contents table {
+    border-collapse:collapse;
+}
+
+.sv_main_contents table, .sv_main_contents th, .sv_main_contents td  {
+    border: 1px solid black;
+    padding: 10px;
+}
