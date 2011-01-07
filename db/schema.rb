@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101214220304) do
+ActiveRecord::Schema.define(:version => 20110107054904) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -132,7 +132,6 @@ ActiveRecord::Schema.define(:version => 20101214220304) do
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
   add_index "pages", ["position"], :name => "index_pages_on_position"
-  add_index "pages", ["url"], :name => "index_pages_on_url", :unique => true
 
   create_table "papers", :force => true do |t|
     t.string   "title"
