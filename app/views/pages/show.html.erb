@@ -70,5 +70,7 @@
 <div class="modified"><%= time_ago_in_words(@page.updated_at) %> ago</div>
 <br/>
 
+<% if @page.editable?(current_user) %>
 <%= link_to 'Edit', edit_page_path(@page) %> |
+<% end %>
 <%= link_to 'Back', pages_path %>
