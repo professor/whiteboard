@@ -78,6 +78,14 @@ describe Page do
       @page.should be_valid
       @page.errors[:url].should be_nil
     end
+
+    it "that defaults from the title field" do
+      UserSession.create(users(:faculty_frank))
+      @page.url = ""
+      @page.should be_valid
+      @page.url.should == @page.title      
+    end
+
   end
 
 
