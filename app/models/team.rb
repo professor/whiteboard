@@ -113,9 +113,6 @@ class Team < ActiveRecord::Base
 
   def remove_person(id)
     person = Person.find_by_id(id)
-  rescue ActiveRecord::RecordNotFound
-    logger.error "Attempting to remove an unknown person with id=#{id}"
-  else
     if self.people.include?(person)
       self.people.delete person
       google_apps_connection.remove_member_from_group(person.email, self.google_group) unless self.name.blank?
@@ -123,6 +120,10 @@ class Team < ActiveRecord::Base
     else
       logger.error "Attempting to remove person #{person.human_name} who is not in team #{team.name}"
     end
+    rescue ActiveRecord::RecordNotFound
+      logger.error "Attempting to remove an unknown person with id=#{id}"
+    rescue GAppsProvisioning::GDataError
+      logger.error "Probably trying to remove a person from a team that no longer has a google email."    
   end
 
   def add_person_by_human_name(name)
