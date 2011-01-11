@@ -3,49 +3,93 @@ require 'spec_helper'
 describe PagesController do
   fixtures :users
 
-  before do
-    Page.delete_all
-    UserSession.create(users(:faculty_frank))
-    @page = Factory(:page)
-  end
-
-  shared_examples_for "finding page" do
-    it "assigns page" do
-      assigns(:page).should == @page
-    end
-  end
-  
-  describe "GET index" do
-    it "assigns all pages as @pages" do
-      get :index
-      assigns(:pages).should_not be_nil
-    end
-  end
-
-  describe "GET show" do
+  context "any user can" do
     before do
-      get :show, :id => @page.to_param
+      Page.delete_all
+      UserSession.create(users(:student_sam))
+      @page = Factory(:page)
     end
-    it_should_behave_like "finding page"
+
+    shared_examples_for "finding page" do
+      it "assigns page" do
+        assigns(:page).should == @page
+      end
+    end
+
+    describe "GET index" do
+      it "assigns all pages as @pages" do
+        get :index
+        assigns(:pages).should_not be_nil
+      end
+    end
+
+    describe "GET show" do
+      before do
+        get :show, :id => @page.to_param
+      end
+      it_should_behave_like "finding page"
+    end
+
+    describe "GET new" do
+      it "assigns a new page as page" do
+        get :new
+        assigns(:page).should_not be_nil
+      end
+    end
+
+    describe "GET edit" do
+      before do
+        get :edit, :id => @page.to_param
+      end
+      it_should_behave_like "finding page"
+    end
   end
 
-  describe "GET new" do
-    it "assigns a new page as page" do
-      get :new
-      assigns(:page).should_not be_nil
-    end
-  end
-
-  describe "GET edit" do
+  context "as a student can" do
     before do
+      Page.delete_all     
+      UserSession.create(users(:student_sam))
+      @page = Factory(:page, :title => "new title")
+    end
+
+    describe "GET edit" do
+      it "but not for a page that is editable only by faculty" do
+      @page.is_editable_by_all = false
       get :edit, :id => @page.to_param
+      response.should redirect_to(page_url)
+       end
     end
-    it_should_behave_like "finding page"
+
+   describe "POST update" do
+      it "but not for a page that is editable only by faculty" do
+      @page.is_editable_by_all = false
+      @page.save
+      post :update, :page => @page.attributes, :id => @page.id
+      response.should redirect_to(page_url)
+      flash[:error].should == "You don't have permission to do this action."
+       end
+    end
+
   end
 
+  context "as a faculty member can" do
 
+    before do
+      UserSession.create(users(:faculty_frank))
+      @page = Factory(:page)
+    end
 
+    describe "GET edit" do
+      context "for a page that is not editable by all" do
+        before do
+          @page.is_editable_by_all = false
+          get :edit, :id => @page.to_param
+        end
+        it_should_behave_like "finding page"
+      end
 
+    end
+  end
 
 
 #  it "allows named pages in the url" do
@@ -61,8 +105,6 @@ describe PagesController do
 ##       need to create ppm model in test database
 ##       response.code.should == "302"
 #  end
-
-
 
 
 #  describe "SHOW page" do

@@ -1,5 +1,5 @@
 Factory.define :page, :class => Page do |p|
-  p.title "My page"
+  p.title "My page "
   p.updated_by_user_id 10
   p.tab_one_contents "Lorem Ipsum"
 end

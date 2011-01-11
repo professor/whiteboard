@@ -53,6 +53,13 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
+
+    unless @page.editable?(current_user)
+      flash[:error] = "You don't have permission to do this action."
+      redirect_to(page_url) and return
+    end
+    
+
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @courses = Course.find(:all)
     respond_to do |format|
@@ -83,6 +90,12 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
+
+    unless @page.editable?(current_user)
+      flash[:error] = "You don't have permission to do this action."
+      redirect_to(page_url) and return
+    end
+
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
     @courses = Course.find(:all)
 
@@ -100,13 +113,13 @@ class PagesController < ApplicationController
 
   # DELETE /pages/1
   # DELETE /pages/1.xml
-  def destroy
-    @page = Page.find(params[:id])
-    @page.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(pages_url) }
-      format.xml  { head :ok }
-    end
-  end
+#  def destroy
+#    @page = Page.find(params[:id])
+#    @page.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(pages_url) }
+#      format.xml  { head :ok }
+#    end
+#  end
 end
