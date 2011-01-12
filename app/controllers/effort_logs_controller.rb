@@ -203,14 +203,20 @@ class EffortLogsController < ApplicationController
   # GET /effort_logs/new.xml
   def new
     if params[:prior] == 'true' then
-      week_number = Date.today.cweek - 1
-      week_number = 52 if Date.today.cweek == 1
+      if Date.today.cweek == 1
+        week_number = 52
+        year = Date.today.cwyear -1
+      else
+        week_number = Date.today.cweek - 1
+        year = Date.today.cwyear
+      end
       error_msg = "There already is an effort log for the previous week"
     else
       week_number = Date.today.cweek
+      year = Date.today.cwyear
       error_msg = "There already is an effort log for the current week"
     end
-    setup_required_datastructures(Date.today.cwyear, week_number)
+    setup_required_datastructures(year, week_number)
 
     @effort_log = EffortLog.new
     @effort_log.person_id = current_user.id
@@ -225,7 +231,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND week_number = #{week_number}")
+      duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}")
     end
 
     if duplicate_effort_log
@@ -253,7 +259,7 @@ class EffortLogsController < ApplicationController
     # Ps. if we wanted to have an effort log with a single effort log line item that is blank, then this would do it       @effort_log.effort_log_line_items.build      
 
             
-    @effort_log.year = Date.today.cwyear
+    @effort_log.year = year
     @effort_log.week_number = week_number
     
 #          format.html # new.html.erb

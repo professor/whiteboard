@@ -18,12 +18,21 @@ class Page < ActiveRecord::Base
   def before_validation
       current_user = UserSession.find.user
      self.updated_by_user_id = current_user.id if current_user
+     self.url = self.title if self.url.blank?
   end
 
   def editable?(current_user)
     return true if self.is_editable_by_all?
     return (current_user.is_staff? || current_user.is_admin?)
   end
+
+#  def to_param
+#    if url.blank?
+#      id.to_s
+#    else
+#      url
+#    end
+#  end
 
 
  #Re-position: change the sequence of pages for a given course
