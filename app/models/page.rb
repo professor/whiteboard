@@ -26,6 +26,10 @@ class Page < ActiveRecord::Base
     return (current_user.is_staff? || current_user.is_admin?)
   end
 
+
+  def to_param
+    url
+  end
 #  def to_param
 #    if url.blank?
 #      id.to_s

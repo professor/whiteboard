@@ -260,6 +260,11 @@
     <%= f.label :title %><br />
     <%= f.text_field :title %>(*)
   </p>
+    <p>
+      <%= f.label :url, "Named page" %><br />
+      (Optional) http://rails.sv.cmu.edu/pages/<%= f.text_field :url %><br/>
+      <span class="help_text">This must be unique for all pages in the system.</span>
+    </p>
 <!--
   <p>
     <%= f.label :indentation_level %><br />
@@ -302,11 +307,6 @@
   <% end %>    
       </div>
 
-  <p>
-    <%= f.label :url, "Named page" %><br />
-    (Optional) http://rails.sv.cmu.edu/pages/<%= f.text_field :url %><br/>
-    <span class="help_text">This must be unique for all pages in the system.</span>
-  </p>
   <p>
     <%= f.label :task_duration %><br />
     <%= f.text_field :task_duration, :size => 2 %> weeks

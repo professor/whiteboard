@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #  map.connect 'pages/:id/:tab',  :controller => 'pages', :action => "show"
 #  map.connect 'pages/*other', :controller => 'pages', :action => 'show'
-  map.resources :pages
+  map.resources :pages,  :requirements => { :id => /.+/ }
 
   map.resources :curriculum_comment_types
 
