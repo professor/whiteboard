@@ -4,6 +4,7 @@ describe "pages/edit.html.erb" do
   before(:each) do
     UserSession.create(Factory(:faculty_frank))
     @page = assigns[:page] = stub_model(Page,
+        :url => "something",
       :new_record? => false
     )
     assigns[:courses] =  [

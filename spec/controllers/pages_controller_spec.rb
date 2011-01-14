@@ -64,7 +64,7 @@ describe PagesController do
       it "but not for a page that is editable only by faculty" do
       @page.is_editable_by_all = false
       @page.save
-      post :update, :page => @page.attributes, :id => @page.id
+      post :update, :page => @page.attributes, :id => @page.to_param
       response.should redirect_to(page_url)
       flash[:error].should == "You don't have permission to do this action."
        end
