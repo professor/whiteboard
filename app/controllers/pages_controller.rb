@@ -17,11 +17,13 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.xml
   def show
-    if(params[:id].to_i == 0) #This is a string
-      @page = Page.find_by_url(params[:id])
-    else #This is a number
-      @page = Page.find(params[:id])
-    end
+    @page = Page.find_by_url(params[:id])
+#
+#    if(params[:id].to_i == 0) #This is a string
+#      @page = Page.find_by_url(params[:id])
+#    else #This is a number
+#      @page = Page.find(params[:id])
+#    end
 
     @tab = params[:tab]
 
@@ -52,7 +54,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    @page = Page.find(params[:id])
+    @page = Page.find_by_url(params[:id])
 
     unless @page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
@@ -89,7 +91,7 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.xml
   def update
-    @page = Page.find(params[:id])
+    @page = Page.find_by_url(params[:id])
 
     unless @page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
