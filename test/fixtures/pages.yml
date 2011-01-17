@@ -3,6 +3,7 @@
 one:
   course: foundations
   title: MyString
+  url: my_string
   position: 1
   indentation_level: 1
   is_task: false
@@ -16,6 +17,7 @@ one:
 two:
   course: foundations
   title: MyString
+  url: my_string
   position: 1
   indentation_level: 1
   is_task: false

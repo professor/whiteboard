@@ -87,7 +87,9 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    return Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, ApplicationController.current_semester(), "both"] )
+    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, ApplicationController.current_semester(), ApplicationController.current_mini] )
+    return courses
   end
   
 end

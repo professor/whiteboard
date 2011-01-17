@@ -55,6 +55,20 @@ class ApplicationController < ActionController::Base
     return "Fall"
   end
 
+  #Note that course has similiar logic
+  def self.current_mini
+    cweek = Date.today.cweek()
+    case cweek
+      when 2..8 then "A"
+      when 11..17 then "B"
+      when 20..25 then "A"
+      when 26..31 then "B"
+      when 35..41 then "A"
+      when 42..48 then "B"
+      else "Unknown"
+    end
+  end
+
   def self.next_semester
     case self.current_semester
       when "Spring"
