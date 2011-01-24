@@ -104,13 +104,11 @@ describe Page do
   end
   
 
-  it "is versioned"
-#  do
-#    @page.save
+#  it "is versioned" do
+#    @page.should respond_to(:version)
 #    version_number = @page.version
 #    @page.title = "A Brave New Title"
 #    @page.save
-#    new_version_number = @page.version
 #    @page.version.should == version_number + 1
 #  end
 

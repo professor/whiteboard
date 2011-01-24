@@ -16,6 +16,9 @@ gem 'oauth'
 gem 'heroku'
 gem 'taps'
 
+#gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
+
+
 group :plugins do
   gem 'authlogic'
   gem 'calendar_date_select' 
@@ -29,6 +32,8 @@ end
 group :production do
   gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
   gem 'factory_girl' #This is necessary when we want to load factory seeds into a production database
+
+  gem 'vestal_versions', '1.0.2' #, :git => 'git://github.com/laserlemon/vestal_versions'
 end
 
 group :development, :test do
@@ -53,6 +58,7 @@ group :development, :test do
 
   gem 'test-unit', '1.2.3' #Downgrading so that autotest, rspec will work
 
+  gem 'vestal_versions', '1.0.2' #, :git => 'git://github.com/laserlemon/vestal_versions'
 end
 
 
