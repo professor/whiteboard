@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107054904) do
+ActiveRecord::Schema.define(:version => 20110118183803) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20110107054904) do
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
   add_index "pages", ["position"], :name => "index_pages_on_position"
+  add_index "pages", ["url"], :name => "index_pages_on_url"
 
   create_table "papers", :force => true do |t|
     t.string   "title"
@@ -441,5 +442,25 @@ ActiveRecord::Schema.define(:version => 20110107054904) do
   add_index "users", ["is_teacher"], :name => "index_users_on_is_teacher"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
+
+  create_table "versions", :force => true do |t|
+    t.integer  "versioned_id"
+    t.string   "versioned_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "user_name"
+    t.text     "changes"
+    t.integer  "number"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
+  add_index "versions", ["number"], :name => "index_versions_on_number"
+  add_index "versions", ["tag"], :name => "index_versions_on_tag"
+  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
+  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
+  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
 
 end
