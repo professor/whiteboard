@@ -104,13 +104,15 @@ describe Page do
   end
   
 
-#  it "is versioned" do
-#    @page.should respond_to(:version)
-#    version_number = @page.version
-#    @page.title = "A Brave New Title"
-#    @page.save
-#    @page.version.should == version_number + 1
-#  end
+  it "is versioned" do
+    UserSession.create(users(:faculty_frank))    
+    @page.should respond_to(:version)
+    @page.save   
+    version_number = @page.version
+    @page.title = "A Brave New Title"
+    @page.save
+    @page.version.should == version_number + 1
+  end
 
     it "should allow faculty to comment about the changes"
 #  do
