@@ -3,6 +3,8 @@ class Page < ActiveRecord::Base
                     :tab_three_contents, :task_duration, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
                     :url, :is_editable_by_all, :version_comments
 
+    versioned
+
     validates_presence_of :title
     validates_presence_of :updated_by_user_id
     validates_uniqueness_of :url, :allow_blank => true

@@ -1,0 +1,13 @@
+<h2>Version History</h2>
+<% @page.versions.reverse_each do |version| %>
+   <%= link_to "Version #{version.number}", :version => version.number %> by <%= version.user.human_name %> <%= time_ago_in_words(version.updated_at) %> ago<br/>
+<% end %>
+<% if @page.versions.size == 0 %>
+    There is no history for this page.
+<% else %>
+    <%= link_to "Version 1", :version => 1 %> <%= time_ago_in_words(@page.created_at) %> ago<br/>
+<% end %>
+
+<br/>
+<%= link_to "Back", @page %>
+<br/>

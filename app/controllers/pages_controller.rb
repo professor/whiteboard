@@ -18,12 +18,7 @@ class PagesController < ApplicationController
   # GET /pages/1.xml
   def show
     @page = Page.find_by_url(params[:id])
-#
-#    if(params[:id].to_i == 0) #This is a string
-#      @page = Page.find_by_url(params[:id])
-#    else #This is a number
-#      @page = Page.find(params[:id])
-#    end
+    @page.revert_to(params[:version].to_i) if params[:version]
 
     @tab = params[:tab]
 
