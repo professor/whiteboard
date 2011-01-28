@@ -1,6 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 foundations:
+  id: 1
   name: Foundations of Software Engineering
   course_number: foundations
   number: 96-700
@@ -10,6 +11,7 @@ foundations:
   primary_faculty_label: Primary faculty
 
 mfse:
+  id: 2
   name: Metrics for Software Engineers
   course_number: mfse
   number: 96-703
