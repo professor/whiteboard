@@ -81,7 +81,7 @@ class EffortLogsController < ApplicationController
      people_with_effort = []
      year = Date.today.cwyear
      week_number = Date.today.cweek
-     people = Person.find(:all, :conditions => ["masters_program = ? ", "SE"])   
+     people = Person.find(:all, :conditions => ["masters_program = ? and is_active = true and is_alumnus = false", "SE"])
      people.each do |person|
          effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year])
          if(!person.emailed_recently)
