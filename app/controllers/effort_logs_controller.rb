@@ -22,11 +22,12 @@ class EffortLogsController < ApplicationController
     @people_without_effort = Array.new
     random_scotty_saying = ScottyDogSaying.find(:all).rand.saying
 
-#   courses = [48, 47, 46]  #list all courses that we want to track effort
    courses = Course.remind_about_effort_course_list
    courses.each do |course_id|
        create_midweek_warning_email_for_course(random_scotty_saying, course_id)
-    end
+    end                
+    
+    create_midweek_warning_email_for_se_students(random_scotty_saying)    
 
     EffortLogMailer.deliver_midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort)
 
@@ -74,6 +75,29 @@ class EffortLogsController < ApplicationController
       end
     end
   end
+              
+  def create_midweek_warning_email_for_se_students(random_scotty_saying)
+     people_without_effort = []
+     people_with_effort = []
+     year = Date.today.cwyear
+     week_number = Date.today.cweek
+     people = Person.find(:all, :conditions => ["masters_program = ? ", "SE"])   
+     people.each do |person|
+         effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year])
+         if(!person.emailed_recently)
+           if((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently))
+             create_midweek_warning_email_send_it(random_scotty_saying, person.id)
+             people_without_effort << person.human_name
+           else
+             people_with_effort << person.human_name
+           end
+           person.effort_log_warning_email = Time.now
+           person.save
+         end
+     end
+     return people_without_effort, people_with_effort
+   end
+ 
  
   def create_midweek_warning_email_send_it(random_scotty_saying, id)
     user = User.find_by_id(id) 
