@@ -36,7 +36,6 @@ class EffortReportsController < ApplicationController
       sql_statement = sql_statement + " and el.person_id=#{self.person_id}" if just_student && !self.person_id.blank?
 
       sql_statement = sql_statement + " order by el.week_number"
-      puts sql_statement
       return sql_statement
     end
   end
@@ -44,31 +43,62 @@ class EffortReportsController < ApplicationController
 
 
   def get_campus_semester_data(panel)
+    logger.debug panel.generate_sql()
 
-    effort_logs = EffortLog.
-            find(
-              :all,
-              :conditions => ["week_number IN (?) AND year=? AND sum > 0", ApplicationController.semester_week_range(panel.semester), panel.year.to_i])
+    effort_logs = EffortLog.find_by_sql(panel.generate_sql())
 
-    course_id_to_value_ary_hash = {}
-    effort_logs.each do |effort_log|
-      course_to_person_hash = {}
-      effort_log.effort_log_line_items.each do |line_item|
-        unless line_item.course_id == nil
-          course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
-          course_to_person_hash[line_item.course_id] += line_item.sum
-        end
-      end
-      course_to_person_hash.each do |course_id, sum|
-        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
-        course_id_to_value_ary_hash[course_id] << sum
-      end
+    #The data we get is not sorted by week number and it is indexed by the commercial week of the year
+    #At the beginning of a semester we want to show all the weeks in a semester
+    #So we need to do a little calculation to figure out which week to start and end.
+
+
+    #The code is not adding multiplte entries per student together. Ie meetings and working on deliverables for a course
+
+    unless effort_logs.blank?
+      first_dataset_week_number = effort_logs.first.week_number
+      last_dataset_week_number = effort_logs.last.week_number
+      weeks_in_semester = 15
+      weeks_in_report = [weeks_in_semester, (last_dataset_week_number - first_dataset_week_number + 1)].max
+    else
+      weeks_in_report = 15
     end
+
+
+#    tmp_thing = {}
+#    effort_logs.each do |effort_log|
+#      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
+#      value = effort_log.student_effort.to_f
+#      if tmp_thing[key].nil?
+#        tmp_thing[key] = []
+#      else
+#        tmp_thing[key] = tmp_thing[key] + value
+#      end
+#    end
+
+
+
+
+
+    week_number_to_value_ary_array = []
+    weeks_in_report.times do |i|
+       week_number_to_value_ary_array[i] = []
+    end
+    
+    effort_logs.each do |effort_log|
+      key = effort_log.week_number - first_dataset_week_number
+      value = effort_log.student_effort.to_f
+      week_number_to_value_ary_array[key] = [] if week_number_to_value_ary_array[key].nil?
+      week_number_to_value_ary_array[key] << value
+    end
+
+
 
     values_ary = []
-    course_id_to_value_ary_hash.each do |course_id, values|
-      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
+    week_number_to_value_ary_array.each_index do |week_number|
+      values = week_number_to_value_ary_array[week_number]
+      values_ary << ([week_number + 1] + course_ranges_array(values))
     end
+
     return values_ary
   end
 
@@ -605,6 +635,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
   end
 
   def course_ranges_array(data_set) # data_set is an array of Numeric objects
+    return [0, 0, 0, 0, 0] if data_set.blank?
     data_set = data_set.sort
     maximum = data_set.max
     minimum = data_set.min
