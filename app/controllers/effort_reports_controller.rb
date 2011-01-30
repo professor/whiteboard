@@ -64,29 +64,26 @@ class EffortReportsController < ApplicationController
     end
 
 
-#    tmp_thing = {}
-#    effort_logs.each do |effort_log|
-#      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
-#      value = effort_log.student_effort.to_f
-#      if tmp_thing[key].nil?
-#        tmp_thing[key] = []
-#      else
-#        tmp_thing[key] = tmp_thing[key] + value
-#      end
-#    end
-
-
-
+    tmp_thing = {}
+    effort_logs.each do |effort_log|
+      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
+      value = effort_log.student_effort.to_f
+      if tmp_thing[key].nil?
+        tmp_thing[key] = value
+      else
+        tmp_thing[key] = tmp_thing[key] + value
+      end
+    end
 
 
     week_number_to_value_ary_array = []
     weeks_in_report.times do |i|
        week_number_to_value_ary_array[i] = []
     end
-    
-    effort_logs.each do |effort_log|
-      key = effort_log.week_number - first_dataset_week_number
-      value = effort_log.student_effort.to_f
+
+    tmp_thing.each do |array, hours|
+      key = array[0] #week_number
+      value = hours
       week_number_to_value_ary_array[key] = [] if week_number_to_value_ary_array[key].nil?
       week_number_to_value_ary_array[key] << value
     end
@@ -246,7 +243,7 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       labels_str = "|"+reports.collect{|r| r[0]}.join("|")+"|"
 
       url = "http://chart.apis.google.com/chart?chtt="+title_str+"&chxt=x,y&chs=700x400&cht=lc&chd=t0:" +
-            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str +
+            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str + 
             "&chl=" + labels_str +  #get course_id and course_name from DB
             "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10" +
             "&chxr=1,0," + (max_value).to_s
