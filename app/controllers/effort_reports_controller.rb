@@ -63,6 +63,13 @@ class EffortReportsController < ApplicationController
       weeks_in_report = 15
     end
 
+#    unless panel.person_id.blank?
+#      student_logs = EffortLog.find_by_sql(panel.generate_sql(:true))
+#      student_logs.each do |preport|
+#        student_sums[preport.week_number - first_week_number] << preport.student_effort.to_f
+#      end
+#    end
+
 
     tmp_thing = {}
     effort_logs.each do |effort_log|
@@ -77,8 +84,10 @@ class EffortReportsController < ApplicationController
 
 
     week_number_to_value_ary_array = []
+ #   person_hours = []
     weeks_in_report.times do |i|
        week_number_to_value_ary_array[i] = []
+#       person_hours[i] = 0
     end
 
     tmp_thing.each do |array, hours|
@@ -88,12 +97,25 @@ class EffortReportsController < ApplicationController
       week_number_to_value_ary_array[key] << value
     end
 
+    person_hours = []
+    unless panel.person_id.blank?
+      tmp_thing.each do |array, hours|
+        week_number = array[0]
+        person_id = array[1]
+        person_hours[week_number] = hours
+      end
+    end
 
 
     values_ary = []
     week_number_to_value_ary_array.each_index do |week_number|
       values = week_number_to_value_ary_array[week_number]
+      unless panel.person_id.blank?
+      values_ary << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
+      else        
       values_ary << ([week_number + 1] + course_ranges_array(values))
+      end
+
     end
 
     return values_ary
@@ -239,13 +261,19 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
       medians_str = "-1," +  reports.collect{|r| "%.2f"%(r[3]*multiplier)}.join(",")+",-1"
       upper25_str = "-1," +  reports.collect{|r| "%.2f"%(r[4]*multiplier)}.join(",")+",-1"
       maximums_str = "-1," + reports.collect{|r| "%.2f"%(r[5]*multiplier)}.join(",")+",-1"
+      if reports.first[6].blank?
+        outliers_str = ""
+      else
+        outliers_str = "|-1," + reports.collect{|r| "%.2f"%(r[6]*multiplier)}.join(",")+",-1"
+      end
 
       labels_str = "|"+reports.collect{|r| r[0]}.join("|")+"|"
 
       url = "http://chart.apis.google.com/chart?chtt="+title_str+"&chxt=x,y&chs=700x400&cht=lc&chd=t0:" +
-            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str + 
+            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str + outliers_str +
             "&chl=" + labels_str +  #get course_id and course_name from DB
             "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10" +
+            "|o,FF0000,5,-1,7|o,FF0000,6,-1,7" +
             "&chxr=1,0," + (max_value).to_s
       return url
     else
