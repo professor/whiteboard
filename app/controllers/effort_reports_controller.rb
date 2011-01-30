@@ -100,6 +100,26 @@ class EffortReportsController < ApplicationController
 
 
   def get_course_data(year, week_number, course_id)
+    effort_logs  = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
+
+    task_type_id_to_value_ary_hash = {}
+    effort_logs.each do |effort_log|
+      key = effort_log.task_type_id
+      value = effort_log.student_effort.to_f
+      task_type_id_to_value_ary_hash[key] = [] if task_type_id_to_value_ary_hash[key].nil?
+      task_type_id_to_value_ary_hash[key] << value
+    end
+
+    values_ary = []
+    task_type_id_to_value_ary_hash.each do |task_type_id, values|
+      values_ary << ([TaskType.find(task_type_id).name] + course_ranges_array(values))
+    end
+    return values_ary
+  end
+
+
+
+  def get_course_data_old(year, week_number, course_id)
     boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t
 where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
