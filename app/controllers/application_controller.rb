@@ -69,6 +69,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+ def self.semester_week_range(semester)
+    return (1..19) if semester == "Spring"
+    return (20..33) if semester == "Summer"
+    return (34..52) if semester == "Fall"
+    return nil
+  end
+
   def self.next_semester
     case self.current_semester
       when "Spring"

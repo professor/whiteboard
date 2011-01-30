@@ -54,8 +54,10 @@ class EffortReportsController < ApplicationController
     effort_logs.each do |effort_log|
       course_to_person_hash = {}
       effort_log.effort_log_line_items.each do |line_item|
-        course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
-        course_to_person_hash[line_item.course_id] += line_item.sum
+        unless line_item.course_id == nil
+          course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
+          course_to_person_hash[line_item.course_id] += line_item.sum
+        end
       end
       course_to_person_hash.each do |course_id, sum|
         course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
@@ -65,7 +67,7 @@ class EffortReportsController < ApplicationController
 
     values_ary = []
     course_id_to_value_ary_hash.each do |course_id, values|
-      values_ary << ([Course.find_by_id(course_id).name] + course_ranges_array(values))
+      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
     end
     return values_ary
   end
@@ -78,8 +80,10 @@ class EffortReportsController < ApplicationController
     effort_logs.each do |effort_log|
       course_to_person_hash = {}
       effort_log.effort_log_line_items.each do |line_item|
-        course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
-        course_to_person_hash[line_item.course_id] += line_item.sum
+        unless line_item.course_id == nil
+          course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
+          course_to_person_hash[line_item.course_id] += line_item.sum
+        end
       end
       course_to_person_hash.each do |course_id, sum|
         course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
@@ -89,7 +93,7 @@ class EffortReportsController < ApplicationController
 
     values_ary = []
     course_id_to_value_ary_hash.each do |course_id, values|
-      values_ary << ([Course.find_by_id(course_id).name] + course_ranges_array(values)) 
+      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values)) 
     end
     return values_ary
   end
