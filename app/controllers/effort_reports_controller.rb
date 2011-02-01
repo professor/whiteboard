@@ -256,10 +256,10 @@ class EffortReportsController < ApplicationController
       @semester_panel.track = ""
       @semester_panel.graduation_year = ""
       @semester_panel.is_part_time = params[:program] || "PT"
-      @semester_panel.person_id = ""
+      @semester_panel.person_id = current_user.is_student ? current_user.id : ""
       @semester_panel.course_id = ""
       @semester_panel.semester = ApplicationController.current_semester
-      @semester_panel.year = Date.today.cwyear
+      @semester_panel.year = Date.today.cwyear 
     end
 
     if current_user.is_staff || current_user.is_admin
