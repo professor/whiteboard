@@ -40,114 +40,6 @@ class EffortReportsController < ApplicationController
     end
   end
 
-
-
-  def get_campus_semester_data(panel)
-    logger.debug panel.generate_sql()
-
-    effort_logs = EffortLog.find_by_sql(panel.generate_sql())
-
-    #The data we get is not sorted by week number and it is indexed by the commercial week of the year
-    #At the beginning of a semester we want to show all the weeks in a semester
-    #So we need to do a little calculation to figure out which week to start and end.
-
-
-    #The code is not adding multiplte entries per student together. Ie meetings and working on deliverables for a course
-
-    unless effort_logs.blank?
-      first_dataset_week_number = effort_logs.first.week_number
-      last_dataset_week_number = effort_logs.last.week_number
-      weeks_in_semester = 15
-      weeks_in_report = [weeks_in_semester, (last_dataset_week_number - first_dataset_week_number + 1)].max
-    else
-      weeks_in_report = 15
-    end
-
-#    unless panel.person_id.blank?
-#      student_logs = EffortLog.find_by_sql(panel.generate_sql(:true))
-#      student_logs.each do |preport|
-#        student_sums[preport.week_number - first_week_number] << preport.student_effort.to_f
-#      end
-#    end
-
-
-    tmp_thing = {}
-    effort_logs.each do |effort_log|
-      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
-      value = effort_log.student_effort.to_f
-      if tmp_thing[key].nil?
-        tmp_thing[key] = value
-      else
-        tmp_thing[key] = tmp_thing[key] + value
-      end
-    end
-
-
-    week_number_to_value_ary_array = []
- #   person_hours = []
-    weeks_in_report.times do |i|
-       week_number_to_value_ary_array[i] = []
-#       person_hours[i] = 0
-    end
-
-    tmp_thing.each do |array, hours|
-      key = array[0] #week_number
-      value = hours
-      week_number_to_value_ary_array[key] = [] if week_number_to_value_ary_array[key].nil?
-      week_number_to_value_ary_array[key] << value
-    end
-
-    person_hours = []
-    unless panel.person_id.blank?
-      tmp_thing.each do |array, hours|
-        week_number = array[0]
-        person_id = array[1]
-        person_hours[week_number] = hours
-      end
-    end
-
-
-    values_ary = []
-    week_number_to_value_ary_array.each_index do |week_number|
-      values = week_number_to_value_ary_array[week_number]
-      unless panel.person_id.blank?
-      values_ary << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
-      else        
-      values_ary << ([week_number + 1] + course_ranges_array(values))
-      end
-
-    end
-
-    return values_ary
-  end
-
-  def get_campus_week_data(year, week_number)
-    effort_logs = EffortLog.find(:all, :conditions => ["week_number=? AND year=? AND sum > 0", week_number.to_i, year.to_i])
-            #{:week_number => week_number, :year => year, :sum_gt => 0})
-
-    course_id_to_value_ary_hash = {}
-    effort_logs.each do |effort_log|
-      course_to_person_hash = {}
-      effort_log.effort_log_line_items.each do |line_item|
-        unless line_item.course_id == nil
-          course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
-          course_to_person_hash[line_item.course_id] += line_item.sum
-        end
-      end
-      course_to_person_hash.each do |course_id, sum|
-        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
-        course_id_to_value_ary_hash[course_id] << sum
-      end
-    end
-
-    values_ary = []
-    course_id_to_value_ary_hash.each do |course_id, values|
-      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values)) 
-    end
-    return values_ary
-  end
-
-
   def get_course_data(year, week_number, course_id)
     effort_logs  = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
@@ -167,58 +59,95 @@ class EffortReportsController < ApplicationController
   end
 
 
+  def get_campus_week_data(year, week_number)
+    effort_logs = EffortLog.find(:all, :conditions => ["week_number=? AND year=? AND sum > 0", week_number.to_i, year.to_i])
 
-  def get_course_data_old(year, week_number, course_id)
-    boxreports = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t
-where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
-
-    task_sums={}
-    if boxreports.size != 0 then
-
-      boxreports.each do |report|
-        if !task_sums.has_key?(report.task_type_id)
-          task_sums[report.task_type_id] = []
-        end
-        task_sums[report.task_type_id] << report.student_effort.to_f
-      end
-
-      minimums = {}
-      maximums = {}
-      lower25 = {}
-      upper25 = {}
-      medians = {}
-
-      max_value = -1
-      labels = []
-
-      task_sums.keys.each do |key|
-        values = task_sums[key].sort()
-
-        minimums[key] = values.min()
-
-        maximums[key] = values.max()
-        medians[key] = values[values.length/2]
-        lower25[key] = values[values.length/4]
-        upper25[key] = values[3 * values.length/4]
-
-#          labels << Course.find(key).short_name
-        labels << TaskType.find(key).name
-
-#          puts "Array " + key + ": " + values.join(",")
-#          puts "min    " + key + ":" + minimums[key].to_s
-#          puts "lower  " + key + ":" + lower25[key].to_s
-#          puts "median " + key + ":" + medians[key].to_s
-#          puts "upper25" + key + ":" + upper25[key].to_s
-#          puts "max    " + key + ":" + maximums[key].to_s
-
-        tmp_max_value = [minimums[key], maximums[key], medians[key], lower25[key], upper25[key]].max()
-        if tmp_max_value>max_value
-          max_value = tmp_max_value # maximum among all
+    course_id_to_value_ary_hash = {}
+    effort_logs.each do |effort_log|
+      course_to_person_hash = {}
+      effort_log.effort_log_line_items.each do |line_item|
+        unless line_item.course_id == nil
+          course_to_person_hash[line_item.course_id] = 0 if course_to_person_hash[line_item.course_id].nil?
+          course_to_person_hash[line_item.course_id] += line_item.sum
         end
       end
-      return [minimums, lower25, medians, upper25, maximums, labels, max_value]
+      course_to_person_hash.each do |course_id, sum|
+        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
+        course_id_to_value_ary_hash[course_id] << sum
+      end
     end
-    return nil
+
+    values_ary = []
+    course_id_to_value_ary_hash.each do |course_id, values|
+      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
+    end
+    return values_ary
+  end
+ 
+
+  def get_campus_semester_data(panel)
+    logger.debug panel.generate_sql()
+
+    effort_logs = EffortLog.find_by_sql(panel.generate_sql())
+
+    #The data we get is not sorted by week number and it is indexed by the commercial week of the year
+    #At the beginning of a semester we want to show all the weeks in a semester
+    #So we need to do a little calculation to figure out which week to start and end.
+
+    #The code is not adding multiplte entries per student together. Ie meetings and working on deliverables for a course
+
+    unless effort_logs.blank?
+      first_dataset_week_number = effort_logs.first.week_number
+      last_dataset_week_number = effort_logs.last.week_number
+      weeks_in_semester = 15
+      weeks_in_report = [weeks_in_semester, (last_dataset_week_number - first_dataset_week_number + 1)].max
+    else
+      weeks_in_report = 15
+    end
+
+    tmp_thing = {}
+    effort_logs.each do |effort_log|
+      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
+      value = effort_log.student_effort.to_f
+      if tmp_thing[key].nil?
+        tmp_thing[key] = value
+      else
+        tmp_thing[key] = tmp_thing[key] + value
+      end
+    end
+
+    week_number_to_value_ary_array = []
+    weeks_in_report.times do |i|
+       week_number_to_value_ary_array[i] = []
+    end
+
+    tmp_thing.each do |array, hours|
+      key = array[0] #week_number
+      value = hours
+      week_number_to_value_ary_array[key] = [] if week_number_to_value_ary_array[key].nil?
+      week_number_to_value_ary_array[key] << value
+    end
+
+    person_hours = []
+    unless panel.person_id.blank?
+      tmp_thing.each do |array, hours|
+        week_number = array[0]
+        person_id = array[1]
+        person_hours[week_number] = hours
+      end
+    end
+
+    values_ary = []
+    week_number_to_value_ary_array.each_index do |week_number|
+      values = week_number_to_value_ary_array[week_number]
+      unless panel.person_id.blank?
+      values_ary << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
+      else        
+      values_ary << ([week_number + 1] + course_ranges_array(values))
+      end
+    end
+
+    return values_ary
   end
 
 
