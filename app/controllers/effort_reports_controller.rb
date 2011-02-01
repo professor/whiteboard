@@ -151,33 +151,35 @@ class EffortReportsController < ApplicationController
   end
 
 
-  def box_chart_helper(reports, multiplier)
-#        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"
-    puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    puts reports.values.join(",")
-    puts reports.keys.join(",")
-    str = "-1,"
-    reports.keys.sort.each do |key|
-      v = reports[key]
-      #puts "LENNNNNNNNNNNN %d" % v.length
-      if !v.nil?
-        puts v
-        #str = str + (!v.nil? ? ("%.2f" % (v*multiplier)) : 0.0).to_s  + ","
-        str = str + "%.2f" % (v*multiplier) + ","
-      else
-        puts "=EMPTY="
-        str = str + "0,"
-      end
-    end
-    str += "-1"
-    return str
-  end
+#  def box_chart_helper(reports, multiplier)
+##        return "-1,"+ values.map{|v| (v ? "%.2f" % (v*multiplier):0)}.join(",") + ",-1"
+#    puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#    puts reports.values.join(",")
+#    puts reports.keys.join(",")
+#    str = "-1,"
+#    reports.keys.sort.each do |key|
+#      v = reports[key]
+#      #puts "LENNNNNNNNNNNN %d" % v.length
+#      if !v.nil?
+#        puts v
+#        #str = str + (!v.nil? ? ("%.2f" % (v*multiplier)) : 0.0).to_s  + ","
+#        str = str + "%.2f" % (v*multiplier) + ","
+#      else
+#        puts "=EMPTY="
+#        str = str + "0,"
+#      end
+#    end
+#    str += "-1"
+#    return str
+#  end
 
 
   def generate_google_box_chart(title, reports)
     title_str = title.gsub(' ', '+')
 
+    # Datastructure of the reports
     # array: [course_name, min, 25, median, 75, max]
+    # array: [course_name, min, 25, median, 75, max, student_data] #used in campus semester view
 
     if reports && reports.size > 0
       max_value = reports.collect{|r| r[5]}.max
@@ -267,7 +269,6 @@ class EffortReportsController < ApplicationController
 
     title = "Campus View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
     reports = get_campus_semester_data(@semester_panel)
-    # @chart_url = generate_semester_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
     @chart_url = generate_google_box_chart(title, reports)
 
 
@@ -289,37 +290,23 @@ class EffortReportsController < ApplicationController
   end
 
 
-
   def course
     determine_panel_state()
     if params[:panel_state]
       @panel_state.course_id = params[:panel_state][:course_id]
     else
       @panel_state.course_id = params[:course_id]
-      #  EffortLogLineItems.find(:first, :conditions => "course_id = '#{params[:course_id]}'", :order_by => "id DESC" )
-#     if !@panel_state.year.blank?
-#       @year_array=[]
-#       ActiveRecord::Base.connection.execute("select el.year from effort_log_line_items e, effort_logs el
-# where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;#").each do |result| @year_array << result end
-#        @panel_state.year = @year_array[0]
-#     end
+
       if @panel_state.year.blank?
         @panel_state.year = Date.today.cwyear
       end
 
-#      if !@panel_state.week_number.blank?
-#        @week_array=[]
-#        ActiveRecord::Base.connection.execute("select el.week_number from effort_log_line_items e, effort_logs el
-# where e.sum>0 and e.effort_log_id=el.id  AND e.course_id=#{params[:course_id]} order by el.week_number desc;#").each do |result| @week_array << result end
-#        @panel_state.week_number = @week_array[0]
-#      end
       if @panel_state.week_number.blank?
         @panel_state.week_number = Date.today.cweek - 1
       end
 
     end
     puts "PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:course_id]}"
-    #@chart_url = generate_chart_url(2008, 35, 7)
     @chart_url = generate_course_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
 
     @course = Course.find(params[:course_id])
@@ -383,30 +370,26 @@ class EffortReportsController < ApplicationController
 
 
 
-  def load_google_chart
-
-
-#      GoogleChart::BarChart.new('800x200', "Box Chart", :vertical, false) do |bc|
-    GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
-      bc.data "s1",[-1,5,10,7,12,-1]
-      bc.data "s2",[-1,25,30,27,24,-1]
-      bc.data "s3",[-1,40,45,47,39,-1]
-      bc.data "s4",[-1,55,63,59,80,-1]
-      bc.data "s5",[-1,30,40,35,30,-1]
-      bc.data "s6",[-1,-1,5,70,90,-1]
-      bc.data "s7",[-1,-1,-1,80,5,-1]
-      bc.data_encoding = :text
-      @chart = bc.to_url(:chm => "F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20|o,FF0000,5,-1,7|o,FF0000,6,-1,7")
-    end
-
-
-  end
+#  def load_google_chart
+#
+#    GoogleChart::BoxChart.new('800x200', "Box Chart") do |bc|
+#      bc.data "s1",[-1,5,10,7,12,-1]
+#      bc.data "s2",[-1,25,30,27,24,-1]
+#      bc.data "s3",[-1,40,45,47,39,-1]
+#      bc.data "s4",[-1,55,63,59,80,-1]
+#      bc.data "s5",[-1,30,40,35,30,-1]
+#      bc.data "s6",[-1,-1,5,70,90,-1]
+#      bc.data "s7",[-1,-1,-1,80,5,-1]
+#      bc.data_encoding = :text
+#      @chart = bc.to_url(:chm => "F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20|o,FF0000,5,-1,7|o,FF0000,6,-1,7")
+#    end
+#
+#
+#  end
 
 
 
   def load_weekly_chart
-    puts "Another places!!!!!!!!!!"
-
     if params[:date]
       @e_date_str = params[:date]
       e_date = Date.parse(@e_date_str)
