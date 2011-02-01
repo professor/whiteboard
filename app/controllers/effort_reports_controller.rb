@@ -134,11 +134,13 @@ class EffortReportsController < ApplicationController
       week_number_to_value_array_array[key] << value
     end
 
+    #Determine the effort for a particular, selected student
     unless panel.person_id.blank?
+      a = panel.person_id
       student_effort_accumulator.each do |array, hours|
         week_number = array[0]
         person_id = array[1]
-        person_hours[week_number] = hours
+        person_hours[week_number] = hours if panel.person_id == person_id
       end
     end
 
@@ -250,7 +252,7 @@ class EffortReportsController < ApplicationController
       @semester_panel.year = params[:semester_panel][:year]
     else
       @semester_panel = SemesterPanel.new
-      @semester_panel.program = ""
+      @semester_panel.program = "SE"
       @semester_panel.track = ""
       @semester_panel.graduation_year = ""
       @semester_panel.is_part_time = params[:program] || "PT"
