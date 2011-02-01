@@ -252,10 +252,10 @@ class EffortReportsController < ApplicationController
       @semester_panel.year = params[:semester_panel][:year]
     else
       @semester_panel = SemesterPanel.new
-      @semester_panel.program = "SE"
+      @semester_panel.program = current_user.is_student ? current_user.masters_program : "SE"
       @semester_panel.track = ""
       @semester_panel.graduation_year = ""
-      @semester_panel.is_part_time = params[:program] || "PT"
+      @semester_panel.is_part_time = current_user.is_student && current_user.is_full_time ? "FT" : "PT"
       @semester_panel.person_id = current_user.is_student ? current_user.id : ""
       @semester_panel.course_id = ""
       @semester_panel.semester = ApplicationController.current_semester
