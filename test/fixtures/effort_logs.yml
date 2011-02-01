@@ -31,20 +31,26 @@ week_two:
 this_week:
   id:            60
   person:       student_sam
-  week_number:  <%= (Date.today-7).cweek %>
-  year:         <%= (Date.today-7).year %>
-  sum:          6
-
-this_week_2:
-  id:            61
-  person:       student_samantha
-  week_number:  <%= (Date.today-7).cweek %>
-  year:         <%= (Date.today-7).year %>
+  week_number:  <%= Date.today.cweek %>
+  year:         <%= Date.today.year %>
   sum:          12
 
-this_week_3:
-  id:            62
-  person:       aaron
-  week_number:  <%= (Date.today-7).cweek %>
-  year:         <%= (Date.today-7).year %>
-  sum:          12
+#this_week_1:
+#  id:            60
+#  person:       student_sam
+#  week_number:  <%= (Date.today-7).cweek %>
+#  year:         <%= (Date.today-7).year %>
+#  sum:          6
+#this_week_2:
+#  id:            61
+#  person:       student_samantha
+#  week_number:  <%= (Date.today-7).cweek %>
+#  year:         <%= (Date.today-7).year %>
+#  sum:          12
+#
+#this_week_3:
+#  id:            62
+#  person:       aaron
+#  week_number:  <%= (Date.today-7).cweek %>
+#  year:         <%= (Date.today-7).year %>
+#  sum:          12

@@ -2,7 +2,7 @@
 
 one:
   effort_log_id: 1
-  course_id: 1
+  course: foundations
   task_type_id: 1
   day1: 1
   day2: 1
@@ -14,7 +14,7 @@ one:
 
 two:
   effort_log_id: 1
-  course_id: 1
+  course: foundations
   task_type_id: 1
   day1: 1
   day2: 1
@@ -26,7 +26,7 @@ two:
 
 three:
   effort_log_id: 60
-  course_id: 1
+  course: foundations
   task_type_id: 1
   day1: 1
   day2: 1
@@ -38,7 +38,7 @@ three:
   sum: 6
 four:
   effort_log_id: 61
-  course_id: 1
+  course: foundations
   task_type_id: 1
   day1: 2
   day2: 2
