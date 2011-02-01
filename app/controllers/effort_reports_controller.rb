@@ -43,26 +43,26 @@ class EffortReportsController < ApplicationController
   def get_course_data(year, week_number, course_id)
     effort_logs  = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
-    task_type_id_to_value_ary_hash = {}
+    task_type_id_to_value_array_hash = {}
     effort_logs.each do |effort_log|
       key = effort_log.task_type_id
       value = effort_log.student_effort.to_f
-      task_type_id_to_value_ary_hash[key] = [] if task_type_id_to_value_ary_hash[key].nil?
-      task_type_id_to_value_ary_hash[key] << value
+      task_type_id_to_value_array_hash[key] = [] if task_type_id_to_value_array_hash[key].nil?
+      task_type_id_to_value_array_hash[key] << value
     end
 
-    values_ary = []
-    task_type_id_to_value_ary_hash.each do |task_type_id, values|
-      values_ary << ([TaskType.find(task_type_id).name] + course_ranges_array(values))
+    values_array = []
+    task_type_id_to_value_array_hash.each do |task_type_id, values|
+      values_array << ([TaskType.find(task_type_id).name] + course_ranges_array(values))
     end
-    return values_ary
+    return values_array
   end
 
 
   def get_campus_week_data(year, week_number)
     effort_logs = EffortLog.find(:all, :conditions => ["week_number=? AND year=? AND sum > 0", week_number.to_i, year.to_i])
 
-    course_id_to_value_ary_hash = {}
+    course_id_to_value_array_hash = {}
     effort_logs.each do |effort_log|
       course_to_person_hash = {}
       effort_log.effort_log_line_items.each do |line_item|
@@ -72,16 +72,16 @@ class EffortReportsController < ApplicationController
         end
       end
       course_to_person_hash.each do |course_id, sum|
-        course_id_to_value_ary_hash[course_id] = [] if course_id_to_value_ary_hash[course_id].nil?
-        course_id_to_value_ary_hash[course_id] << sum
+        course_id_to_value_array_hash[course_id] = [] if course_id_to_value_array_hash[course_id].nil?
+        course_id_to_value_array_hash[course_id] << sum
       end
     end
 
-    values_ary = []
-    course_id_to_value_ary_hash.each do |course_id, values|
-      values_ary << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
+    values_array = []
+    course_id_to_value_array_hash.each do |course_id, values|
+      values_array << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
     end
-    return values_ary
+    return values_array
   end
  
 
@@ -94,7 +94,7 @@ class EffortReportsController < ApplicationController
     #At the beginning of a semester we want to show all the weeks in a semester
     #So we need to do a little calculation to figure out which week to start and end.
 
-    #The code is not adding multiplte entries per student together. Ie meetings and working on deliverables for a course
+    #The code is not adding multiple entries per student together. Ie meetings and working on deliverables for a course
 
     unless effort_logs.blank?
       first_dataset_week_number = effort_logs.first.week_number
@@ -105,49 +105,54 @@ class EffortReportsController < ApplicationController
       weeks_in_report = 15
     end
 
-    tmp_thing = {}
+
+    # When the view is for only one course, a student will have logged effort for different types (meetings, deliverable)
+    # Each of these is a row in the returnset, so we need to add up all the effort the student did for that course for
+    # a given week
+    student_effort_accumulator = {}
     effort_logs.each do |effort_log|
       key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
       value = effort_log.student_effort.to_f
-      if tmp_thing[key].nil?
-        tmp_thing[key] = value
+      if student_effort_accumulator[key].nil?
+        student_effort_accumulator[key] = value
       else
-        tmp_thing[key] = tmp_thing[key] + value
+        student_effort_accumulator[key] = student_effort_accumulator[key] + value
       end
     end
 
-    week_number_to_value_ary_array = []
+    week_number_to_value_array_array = []
+    person_hours = []
     weeks_in_report.times do |i|
-       week_number_to_value_ary_array[i] = []
+       week_number_to_value_array_array[i] = []
+       person_hours[i] = 0
     end
 
-    tmp_thing.each do |array, hours|
+    student_effort_accumulator.each do |array, hours|
       key = array[0] #week_number
       value = hours
-      week_number_to_value_ary_array[key] = [] if week_number_to_value_ary_array[key].nil?
-      week_number_to_value_ary_array[key] << value
+      week_number_to_value_array_array[key] = [] if week_number_to_value_array_array[key].nil?
+      week_number_to_value_array_array[key] << value
     end
 
-    person_hours = []
     unless panel.person_id.blank?
-      tmp_thing.each do |array, hours|
+      student_effort_accumulator.each do |array, hours|
         week_number = array[0]
         person_id = array[1]
         person_hours[week_number] = hours
       end
     end
 
-    values_ary = []
-    week_number_to_value_ary_array.each_index do |week_number|
-      values = week_number_to_value_ary_array[week_number]
+    values_array = []
+    week_number_to_value_array_array.each_index do |week_number|
+      values = week_number_to_value_array_array[week_number]
       unless panel.person_id.blank?
-      values_ary << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
+      values_array << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
       else        
-      values_ary << ([week_number + 1] + course_ranges_array(values))
+      values_array << ([week_number + 1] + course_ranges_array(values))
       end
     end
 
-    return values_ary
+    return values_array
   end
 
 
