@@ -26,7 +26,7 @@ README_personal
 #sensitive student info
 db/migrate/2008*
 db/migrate/2009*
-public/images/staff/*
+#public/images/staff/*
 public/images/students/*
 
 cmusv*gz
