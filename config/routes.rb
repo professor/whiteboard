@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 
+  map.resources :sponsored_projects
+
   map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"
   map.resources :delayed_system_jobs #so that we can easily delete
 
