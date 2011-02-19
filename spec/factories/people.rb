@@ -1,14 +1,3 @@
-Factory.define :person, :class => Person do |p|
-  p.is_staff 0
-  p.is_student 0
-  p.is_admin 0
-  p.is_teacher 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
-end
-
-
 Factory.define :admin_andy, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.login "admin_andy"
