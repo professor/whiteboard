@@ -1,3 +1,4 @@
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :admin_andy, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.login "admin_andy"

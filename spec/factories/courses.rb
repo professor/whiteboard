@@ -1,3 +1,4 @@
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :fse, :parent => :course do |c|
   c.name 'Foundations of Software Engineering'
   c.short_name 'FSE'

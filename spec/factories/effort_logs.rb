@@ -1,3 +1,4 @@
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :effort1, :parent => :effort_log do |e|
   e.week_number {(Date.today-7).cweek}
   e.year {(Date.today-7).cwyear}

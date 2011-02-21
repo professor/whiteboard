@@ -1,3 +1,4 @@
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :ppm, :parent => :page  do |p|
   p.title "Syllabus"
   p.url "ppm"
