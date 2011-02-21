@@ -1,4 +1,6 @@
 class EffortLogLineItem < ActiveRecord::Base
+    acts_as_list :scope => :effort_log
+  
     belongs_to :effort_log
     belongs_to :task_type
     belongs_to :project

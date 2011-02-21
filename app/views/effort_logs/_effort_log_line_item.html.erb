@@ -4,7 +4,7 @@
 
 
 <% fields_for prefix, effort_log_line_item do |effort_log_line_item_form| -%>
-
+<td><%= effort_log_line_item.position %></td>
 <% if current_user && current_user.is_student? %>
     <td><%= effort_log_line_item_form.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %></td>
     <td><%= effort_log_line_item_form.collection_select(:task_type_id, @task_types, :id, :name, :include_blank => true) %> </td>
