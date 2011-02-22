@@ -3,7 +3,7 @@ class SponsoredProjectsController < ApplicationController
   layout 'cmu_sv'
 
   def index
-    @projects = SponsoredProject.find(:all)
+    @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
     @sponsors = SponsoredProjectSponsor.find(:all)
   end
 
@@ -15,7 +15,6 @@ class SponsoredProjectsController < ApplicationController
   def edit
     @project = SponsoredProject.find(params[:id])
     @sponsors = SponsoredProjectSponsor.find(:all)
-
   end
 
   def create
@@ -29,12 +28,16 @@ class SponsoredProjectsController < ApplicationController
     end
   end
 
-  def new_sponsor
-    @sponsor = SponsoredProjectSponsor.new
+  def update
+    @project = SponsoredProject.find(params[:id])
+    @sponsors = SponsoredProjectSponsor.find(:all)
+
+    if @project.update_attributes(params[:sponsored_project])
+      redirect_to(sponsored_projects_path, :notice => 'Project was successfully updated.')
+    else
+      render "edit"
+    end
   end
 
-  def edit_sponsor
-    @sponsor = SponsoredProjectSponsor.find(params[:id])
-  end
 
 end

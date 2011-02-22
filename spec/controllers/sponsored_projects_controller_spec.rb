@@ -80,4 +80,46 @@ describe SponsoredProjectsController do
     end
   end
 
+
+  describe "PUT update" do
+
+    describe "with valid params" do
+
+      before do
+        put :update, :id => project.to_param, :sponsored_project => {:name => 'NNNNN'}
+      end
+
+      it "updates the requested project name" do
+        project.reload.name.should == "NNNNN"
+      end
+
+      it "should assign @project" do
+        assigns(:project).should_not be_nil
+      end
+
+      it "redirects to projects" do
+        response.should redirect_to(sponsored_projects_path)
+      end
+    end
+
+    describe "with invalid params" do
+      before do
+        put :update, :id => project.to_param, :sponsored_project => {:name => ''}
+      end
+
+      it "should assign @project" do
+        assigns(:project).should_not be_nil
+      end
+
+      it "assigns all sponsors as @sponsors" do
+        assigns(:sponsors).should_not be_nil
+      end
+
+      it "re-renders the 'edit' template" do
+        response.should render_template("edit")
+      end
+    end
+
+  end     
+
 end
