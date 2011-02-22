@@ -17,7 +17,6 @@ describe SponsoredProjectsController do
     end
   end
 
-
   describe "GET new" do
     it "assigns a new sponsored project as project" do
       get :new
@@ -36,23 +35,49 @@ describe SponsoredProjectsController do
       
   end
 
-#
-#    it 'assigns a new name' do
-#      get :new
-#      assigns(:project).name.should_not be_empty
-#    end
-#
-#    it 'assigns a sponsor' do
-#      get :new
-#      assigns(:project).sponsor.name.should_not be_empty
-#    end
+  describe "POST create" do
 
+    describe "with valid params" do
+      before(:each) do
+        @project = Factory.build(:sponsored_project)
+      end
 
-#  describe "GET new sponsor" do
-#    it '' do
-#      get :new_sponsor
-#    end
-#  end
+      it "saves a newly created project" do
+        lambda {
+          post :create, :sponsored_project => @project.attributes
+        }.should change(SponsoredProject,:count).by(1)
+      end
 
+      it "redirects to the index of projects" do
+        post :create, :sponsored_project => @project.attributes
+        response.should redirect_to(sponsored_projects_path)
+      end
+
+      it "assigns all sponsors as @sponsors" do
+        post :create, :sponsored_project => @project.attributes
+        assigns(:sponsors).should_not be_nil
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved project as project" do
+        lambda {
+          post :create, :sponsored_project => {}
+        }.should_not change(SponsoredProject,:count)
+        assigns(:project).should_not be_nil
+        assigns(:project).should be_kind_of(SponsoredProject)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :sponsored_project => {}
+        response.should render_template("new")
+      end
+
+      it "assigns all sponsors as @sponsors" do
+        post :create, :sponsored_project => {}
+        assigns(:sponsors).should_not be_nil
+      end
+    end
+  end
 
 end

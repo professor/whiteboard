@@ -18,4 +18,23 @@ class SponsoredProjectsController < ApplicationController
 
   end
 
+  def create
+    @project = SponsoredProject.new(params[:sponsored_project])
+    @sponsors = SponsoredProjectSponsor.find(:all)
+
+    if @project.save
+      redirect_to(sponsored_projects_path, :notice => 'Project was successfully created.')
+    else
+      render "new"
+    end
+  end
+
+  def new_sponsor
+    @sponsor = SponsoredProjectSponsor.new
+  end
+
+  def edit_sponsor
+    @sponsor = SponsoredProjectSponsor.find(params[:id])
+  end
+
 end

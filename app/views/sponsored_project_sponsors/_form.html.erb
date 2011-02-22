@@ -1,0 +1,14 @@
+<% form_for(@sponsor) do |f| %>
+  <%= f.error_messages %>
+
+
+  <table>
+    <tr><td><%= f.label :name %></td><td><%= f.text_field :name %></td></tr>
+  </table>
+
+  <br />
+  <%= f.submit %>
+  <br/>
+  <br/>
+<% end %>
+
