@@ -6,6 +6,7 @@
 <% fields_for prefix, effort_log_line_item_show do |effort_log_line_item_form| -%>
 
 <% if current_user && current_user.is_student? %>  
+    <td><%= effort_log_line_item_show.position %></td>
   <% if effort_log_line_item_show.course.nil? %>
     <td>&nbsp;</td>
   <% else %>

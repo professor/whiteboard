@@ -19,9 +19,11 @@
   <% @sponsors.each do |sponsor| %>
       <tr>
         <td><%= sponsor.name %></td>
-      </tr>
+        <td><%= link_to 'Edit', edit_sponsored_project_sponsor_path(sponsor) %></td>
 
+      </tr>
   <% end %>
+  <tr><td colspan="2"><%= link_to 'New sponsor', new_sponsored_project_sponsor_path %></td></tr>
 </table>
 <br/>
 <br/>

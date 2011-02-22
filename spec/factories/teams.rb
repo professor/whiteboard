@@ -1,4 +1,5 @@
-Factory.define :team_triumphant, :class => Team do |t|
+require File.join(Rails.root,'spec','factories','factories.rb')
+Factory.define :team_triumphant, :parent => :team do |t|
  t.name "Team Triumphant"
  t.email "triumphant@sv.cmu.edu"
  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"

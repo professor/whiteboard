@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211174453) do
+ActiveRecord::Schema.define(:version => 20110221012656) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20110211174453) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
+    t.integer  "position"
   end
 
   add_index "effort_log_line_items", ["effort_log_id"], :name => "index_effort_log_line_items_on_effort_log_id"

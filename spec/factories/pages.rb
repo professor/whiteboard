@@ -1,11 +1,4 @@
-Factory.define :page, :class => Page do |p|
-  p.title "My page "
-  p.url "my_page"
-  p.updated_by_user_id 10
-  p.tab_one_contents "Lorem Ipsum"
-end
-
-
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :ppm, :parent => :page  do |p|
   p.title "Syllabus"
   p.url "ppm"

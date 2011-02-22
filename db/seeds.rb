@@ -1,6 +1,7 @@
 require 'factory_girl'
 
 require File.join(Rails.root,'spec','factories','strength_themes.rb')
+require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.create(:achiever)
 Factory.create(:activator)
 Factory.create(:adaptability)
@@ -37,11 +38,6 @@ Factory.create(:strategic)
 Factory.create(:woo)
 
 
-Factory.define :person, :class => Person do |p|
-  p.is_staff 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-end
 
 Factory.define :todd, :parent => :person  do |p|
   p.persistence_token Time.now.to_f.to_s
@@ -153,15 +149,15 @@ Factory.define :architecture, :class => Course do |c|
 end
 
 
-Factory.define :team_triumphant, :class => Team do |t|
- t.name "Team Triumphant"
- t.email "triumphant@sv.cmu.edu"
- t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
- t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
- t.person_name "Awe Smith"
- t.person_name2 "Betty Ross"
- t.person_name3 "Charlie Moss"
-end
+# Factory.define :team_triumphant, :class => Team do |t|
+#  t.name "Team Triumphant"
+#  t.email "triumphant@sv.cmu.edu"
+#  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
+#  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+#  t.person_name "Awe Smith"
+#  t.person_name2 "Betty Ross"
+#  t.person_name3 "Charlie Moss"
+# end
 
 Factory.define :ian_zhang, :parent => :person do |p|
   p.is_student 1
@@ -197,20 +193,23 @@ Factory.create(:ian_zhang)
 Factory.create(:paul)
 
 
-
+Factory(:task_type)
+Factory(:task_type, :name => "task 2")
+Factory(:task_type, :name => "task 3")
+Factory(:task_type, :name => "task 4")
 
 
 Factory.create(:todd)
 martin = Factory.create(:martin)
 Factory.create(:ed)
-Factory.create(:chris)
+chris = Factory.create(:chris)
 Factory.create(:howard)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
 
 
-architecture = Factory.create(:architecture)
-Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture)
+architecture = Factory.create(:mfse_current_semester)
+Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
 
 

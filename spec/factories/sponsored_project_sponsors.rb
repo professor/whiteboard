@@ -1,3 +1,1 @@
-Factory.define :sponsored_project_sponsor, :class => SponsoredProjectSponsor do |sp|
-  sp.name 'SGT'
-end
+require File.join(Rails.root,'spec','factories','factories.rb')
