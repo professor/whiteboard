@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe SponsoredProjectsPeople do
+describe SponsoredProjectAllocation do
 
   it 'can be created' do
     lambda {
-      Factory(:sponsored_projects_people)
-    }.should change(SponsoredProjectsPeople, :count).by(1)
+      Factory(:sponsored_project_allocation)
+    }.should change(SponsoredProjectAllocation, :count).by(1)
   end
 
   context "is not valid" do
@@ -18,12 +18,12 @@ describe SponsoredProjectsPeople do
     end
 
     it "when current_allocation is non-numerical" do
-      sponsored_project_person = Factory.build(:sponsored_projects_people, :current_allocation => "test")
+      sponsored_project_person = Factory.build(:sponsored_project_allocation, :current_allocation => "test")
       sponsored_project_person.should_not be_valid
     end
 
     it "when current_allocation is a negative number" do
-      sponsored_project_person = Factory.build(:sponsored_projects_people, :current_allocation => -1)
+      sponsored_project_person = Factory.build(:sponsored_project_allocation, :current_allocation => -1)
       sponsored_project_person.should_not be_valid
     end
   end
@@ -34,7 +34,7 @@ describe SponsoredProjectsPeople do
     end
 
     it 'belongs to a sponsored project name' do
-      sponsored_project_person = Factory(:sponsored_projects_people)
+      sponsored_project_person = Factory(:sponsored_project_allocation)
       sponsored_project_person.sponsored_project.name.should_not be_empty
     end
 
@@ -43,7 +43,7 @@ describe SponsoredProjectsPeople do
     end
 
     it 'belongs to a person human_name' do
-      sponsored_project_person = Factory(:sponsored_projects_people)
+      sponsored_project_person = Factory(:sponsored_project_allocation)
       sponsored_project_person.person.human_name.should_not be_empty
     end
 

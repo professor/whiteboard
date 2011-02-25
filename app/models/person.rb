@@ -46,6 +46,10 @@ class Person < ActiveRecord::Base
 #    end
 #  end
 
+  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}
+  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}
+
+
     def before_validation
       self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
     end
@@ -90,6 +94,8 @@ class Person < ActiveRecord::Base
     end
     return s_teams
   end
+
+
 
    def get_registered_courses
     semester = ApplicationController.current_semester()

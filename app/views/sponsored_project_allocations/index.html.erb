@@ -1,0 +1,18 @@
+<h1>Allocations</h1>
+<table cellpadding="3">
+<tr>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th></th>
+</tr>
+<% @allocations.each do |allocation| %>
+    <tr>
+      <td><%= allocation.person.human_name %></td>
+      <td><%= allocation.sponsored_project.sponsor.name %></td>
+      <td><%= allocation.sponsored_project.name %></td>
+      <td><%= allocation.current_allocation %></td>
+      <td><%#= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
+    </tr>
+<% end %>
+</table>

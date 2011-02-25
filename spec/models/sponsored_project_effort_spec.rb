@@ -11,7 +11,7 @@ describe SponsoredProjectEffort do
 
   context "is not valid" do
 
-    [:current_allocation, :year, :month, :sponsored_projects_people_id, :confirmed].each do |attr|
+    [:current_allocation, :year, :month, :sponsored_project_allocation_id, :confirmed].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -34,12 +34,12 @@ describe SponsoredProjectEffort do
 
 
     context "associations --" do
-      it 'belongs to a sponsored projects people' do
-        subject.should respond_to(:sponsored_projects_people)
+      it 'belongs to a sponsored project allocation' do
+        subject.should respond_to(:sponsored_project_allocation)
       end
 
-      it 'belongs to a sponsored projects people current allocation' do
-        sponsored_project_people = Factory(:sponsored_projects_people)
+      it 'belongs to a sponsored project current allocation' do
+        sponsored_project_people = Factory(:sponsored_project_allocation)
         sponsored_project_people.current_allocation.should_not be_nil
       end
     end

@@ -33,7 +33,7 @@ Factory.define :person, :class => Person do |p|
 end
 
 Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |spe|
-  spe.association :sponsored_projects_people, :factory => :sponsored_projects_people
+  spe.association :sponsored_project_allocation, :factory => :sponsored_project_allocation
   spe.current_allocation 10
   spe.year {Date.today.year}
   spe.month {Date.today.month}
@@ -49,7 +49,7 @@ Factory.define :sponsored_project, :class => SponsoredProject do |sp|
   sp.association :sponsor, :factory => :sponsored_project_sponsor
 end
 
-Factory.define :sponsored_projects_people, :class => SponsoredProjectsPeople do |sp|
+Factory.define :sponsored_project_allocation, :class => SponsoredProjectAllocation do |sp|
   sp.current_allocation 10
   sp.association :person, :factory => :student_sam
   sp.association :sponsored_project, :factory => :sponsored_project

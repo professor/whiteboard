@@ -1,4 +1,4 @@
-class SponsoredProjectsPeople < ActiveRecord::Base
+class SponsoredProjectAllocation < ActiveRecord::Base
   belongs_to :person
   belongs_to :sponsored_project
   validates_presence_of :person_id, :sponsored_project_id

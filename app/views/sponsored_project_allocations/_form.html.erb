@@ -1,0 +1,16 @@
+<% form_for(@allocation) do |f| %>
+  <%= f.error_messages %>
+
+
+  <table>
+    <tr><td><%= f.label :person %></td><td><%= f.select :person_id, @people.collect{|item| [item.name, item.id]} %></td></tr>
+    <tr><td><%= f.label :project %></td><td><%= f.select :sponsored_project_id, @projects.collect{|item| [item.name, item.id]} %></td></tr>
+    <tr><td><%= f.label :current_allocation %></td><td><%= f.text_field :name %></td></tr>
+  </table>
+
+  <br />
+  <%= f.submit %>
+  <br/>
+  <br/>
+<% end %>
+
