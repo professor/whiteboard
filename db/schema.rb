@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110221012656) do
+ActiveRecord::Schema.define(:version => 20110225193907) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -236,8 +236,19 @@ ActiveRecord::Schema.define(:version => 20110221012656) do
 
   add_index "scotty_dog_sayings", ["user_id"], :name => "index_scotty_dog_sayings_on_user_id"
 
+  create_table "sponsored_project_allocations", :force => true do |t|
+    t.integer  "sponsored_project_id"
+    t.integer  "person_id"
+    t.integer  "current_allocation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocations_on_person_id"
+  add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocations_on_sponsored_project_id"
+
   create_table "sponsored_project_efforts", :force => true do |t|
-    t.integer  "sponsored_projects_people_id"
+    t.integer  "sponsored_project_allocation_id"
     t.integer  "year"
     t.integer  "month"
     t.integer  "actual_allocation"
@@ -247,11 +258,17 @@ ActiveRecord::Schema.define(:version => 20110221012656) do
     t.datetime "updated_at"
   end
 
+  add_index "sponsored_project_efforts", ["month"], :name => "index_sponsored_project_efforts_on_month"
+  add_index "sponsored_project_efforts", ["sponsored_project_allocation_id"], :name => "index_sponsored_project_efforts_on_sponsored_projects_people_id"
+  add_index "sponsored_project_efforts", ["year"], :name => "index_sponsored_project_efforts_on_year"
+
   create_table "sponsored_project_sponsors", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "sponsored_project_sponsors", ["name"], :name => "index_sponsored_project_sponsors_on_name"
 
   create_table "sponsored_projects", :force => true do |t|
     t.string   "name"
@@ -260,13 +277,8 @@ ActiveRecord::Schema.define(:version => 20110221012656) do
     t.datetime "updated_at"
   end
 
-  create_table "sponsored_projects_peoples", :force => true do |t|
-    t.integer  "sponsored_project_id"
-    t.integer  "person_id"
-    t.integer  "current_allocation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "sponsored_projects", ["name"], :name => "index_sponsored_projects_on_name"
+  add_index "sponsored_projects", ["sponsor_id"], :name => "index_sponsored_projects_on_sponsor_id"
 
   create_table "strength_themes", :force => true do |t|
     t.string   "theme"

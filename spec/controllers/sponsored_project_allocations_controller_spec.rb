@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe SponsoredProjectsPeopleController do
+describe SponsoredProjectAllocationsController do
 
-  let(:allocation) { Factory(:sponsored_projects_people) }
+  let(:allocation) { Factory(:sponsored_project_allocation) }
 
   describe 'GET index' do
 

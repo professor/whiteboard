@@ -1,20 +1,20 @@
-class SponsoredProjectsPeopleController < ApplicationController
+class SponsoredProjectAllocationsController < ApplicationController
 
   layout 'cmu_sv'
 
   def index
-    @allocations = SponsoredProjectsPeople.find(:all)
+    @allocations = SponsoredProjectAllocation.find(:all)
 
   end
 
   def new
-    @allocation = SponsoredProjectsPeople.new
+    @allocation = SponsoredProjectAllocation.new
     @people = Person.staff
     @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
   end
 
   def edit
-    @allocation = SponsoredProjectsPeople.find(params[:id])
+    @allocation = SponsoredProjectAllocation.find(params[:id])
     @people = Person.staff
     @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
   end

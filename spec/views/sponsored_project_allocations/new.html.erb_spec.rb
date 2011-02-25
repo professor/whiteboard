@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "sponsored_projects_people/new" do
+describe "sponsored_project_allocations/new" do
 
 #  before(:each) do
-#    assigns[:allocation] = stub_model(SponsoredProjectsPeople).as_new_record
+#    assigns[:allocation] = stub_model(SponsoredProjectAllocation).as_new_record
 #
 #    assigns[:projects] = [Factory.build(:sponsored_project)]
 #    assigns[:people] = [Factory.build(:faculty_frank), Factory.build(:admin_andy)]

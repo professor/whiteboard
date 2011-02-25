@@ -264,3 +264,290 @@ Command /Users/tsedano/.rvm/rubies/ruby-1.8.7-p302/bin/ruby -I"lib"  "/Users/tse
 
 (See full trace by running task with --trace)
 bash-3.2$ 
+bash-3.2$ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#	modified:   app/views/sponsored_projects_people/index.html.erb
+#	modified:   console
+#	modified:   spec/models/person_model_spec.rb
+#	modified:   spec/views/sponsored_projects_people/index.html.erb_spec.rb
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ git add .
+bash-3.2$ git commit -m "Tests pass"
+Created commit e42a895: Tests pass
+ 4 files changed, 118 insertions(+), 6 deletions(-)
+bash-3.2$ autotest
+loading autotest/rails
+
+
+--------------------------------------------------------------------------------
+
+[2J[f/Users/tsedano/.rvm/rubies/ruby-1.8.7-p302/bin/ruby -I.:lib:test -rubygems -e "%w[test/unit test/unit/project_type_test.rb test/unit/time_machine_test.rb test/functional/teams_controller_test.rb test/unit/person_test.rb test/unit/task_type_test.rb test/functional/scotty_dog_sayings_controller_test.rb test/functional/courses_controller_test.rb test/functional/welcome_controller_test.rb test/functional/effort_log_line_items_controller_test.rb test/functional/effort_reports_controller_test.rb test/functional/people_controller_test.rb test/functional/papers_controller_test.rb test/unit/effort_log_test.rb test/functional/course_numbers_controller_test.rb test/unit/google_apps_test.rb test/unit/user_test.rb test/unit/effort_log_template_test.rb test/unit/paper_test.rb test/functional/project_types_controller_test.rb test/unit/curriculum_comment_test.rb test/unit/course_number_test.rb test/functional/users_controller_test.rb test/unit/page_test.rb test/unit/team_test.rb test/unit/project_test.rb test/functional/curriculum_comments_controller_test.rb test/unit/effort_log_line_item_test.rb test/functional/rss_feeds_controller_test.rb test/unit/curriculum_comment_type_test.rb test/unit/effort_log_mailer_test.rb test/functional/effort_logs_controller_test.rb test/functional/pages_controller_test.rb test/functional/task_types_controller_test.rb test/functional/sessions_controller_test.rb test/unit/course_test.rb test/functional/curriculum_comment_types_controller_test.rb test/unit/scotty_dog_saying_test.rb test/unit/rss_feed_test.rb test/functional/system_controller_test.rb test/functional/projects_controller_test.rb test/functional/mailing_lists_controller_test.rb].each { |f| require f }" | unit_diff -u
+HI.  You're using libxml2 version 2.6.16 which is over 4 years old and has
+plenty of bugs.  We suggest that for maximum HTML/XML parsing pleasure, you
+upgrade your version of libxml2 and re-install nokogiri.  If you like using
+libxml2 version 2.6.16, but don't like this warning, please define the constant
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 before requring nokogiri.
+
+/Users/tsedano/.rvm/gems/ruby-1.8.7-p302/gems/rails-2.3.4/lib/rails/gem_dependency.rb:119:Warning: Gem::Dependency#version_requirements is deprecated and will be removed on or after August 2010.  Use #requirement
+Loaded suite -e
+Started
+........................................................................................................................................................................
+Finished in 53.876942 seconds.
+
+168 tests, 328 assertions, 0 failures, 0 errors
+
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f/Users/tsedano/.rvm/rubies/ruby-1.8.7-p302/bin/ruby -I.:lib:test -rubygems -e "%w[test/unit test/functional/rss_feeds_controller_test.rb test/functional/sessions_controller_test.rb test/functional/teams_controller_test.rb test/functional/project_types_controller_test.rb test/functional/courses_controller_test.rb test/functional/users_controller_test.rb test/functional/welcome_controller_test.rb test/functional/people_controller_test.rb test/functional/task_types_controller_test.rb test/functional/projects_controller_test.rb test/functional/system_controller_test.rb test/functional/course_numbers_controller_test.rb test/functional/curriculum_comment_types_controller_test.rb test/functional/effort_reports_controller_test.rb test/functional/mailing_lists_controller_test.rb test/functional/papers_controller_test.rb test/functional/effort_log_line_items_controller_test.rb test/functional/curriculum_comments_controller_test.rb test/functional/scotty_dog_sayings_controller_test.rb test/functional/pages_controller_test.rb test/functional/effort_logs_controller_test.rb].each { |f| require f }" | unit_diff -u
+HI.  You're using libxml2 version 2.6.16 which is over 4 years old and has
+plenty of bugs.  We suggest that for maximum HTML/XML parsing pleasure, you
+upgrade your version of libxml2 and re-install nokogiri.  If you like using
+libxml2 version 2.6.16, but don't like this warning, please define the constant
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 before requring nokogiri.
+
+/Users/tsedano/.rvm/gems/ruby-1.8.7-p302/gems/rails-2.3.4/lib/rails/gem_dependency.rb:119:Warning: Gem::Dependency#version_requirements is deprecated and will be removed on or after August 2010.  Use #requirement
+Loaded suite -e
+Started
+...........................................................................................................................................
+Finished in 8.699671 seconds.
+
+139 tests, 257 assertions, 0 failures, 0 errors
+
+
+--------------------------------------------------------------------------------
+
+[2J[f/Users/tsedano/.rvm/rubies/ruby-1.8.7-p302/bin/ruby -I.:lib:test -rubygems -e "%w[test/unit test/functional/papers_controller_test.rb test/functional/mailing_lists_controller_test.rb test/functional/effort_reports_controller_test.rb test/functional/effort_logs_controller_test.rb test/functional/rss_feeds_controller_test.rb test/functional/effort_log_line_items_controller_test.rb test/functional/scotty_dog_sayings_controller_test.rb test/functional/people_controller_test.rb test/functional/system_controller_test.rb test/functional/curriculum_comment_types_controller_test.rb test/functional/projects_controller_test.rb test/functional/curriculum_comments_controller_test.rb test/functional/users_controller_test.rb test/functional/pages_controller_test.rb test/functional/sessions_controller_test.rb test/functional/task_types_controller_test.rb test/functional/project_types_controller_test.rb test/functional/welcome_controller_test.rb test/functional/courses_controller_test.rb test/functional/teams_controller_test.rb test/functional/course_numbers_controller_test.rb].each { |f| require f }" | unit_diff -u
+HI.  You're using libxml2 version 2.6.16 which is over 4 years old and has
+plenty of bugs.  We suggest that for maximum HTML/XML parsing pleasure, you
+upgrade your version of libxml2 and re-install nokogiri.  If you like using
+libxml2 version 2.6.16, but don't like this warning, please define the constant
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 before requring nokogiri.
+
+/Users/tsedano/.rvm/gems/ruby-1.8.7-p302/gems/rails-2.3.4/lib/rails/gem_dependency.rb:119:Warning: Gem::Dependency#version_requirements is deprecated and will be removed on or after August 2010.  Use #requirement
+Loaded suite -e
+Started
+...........................................................................................................................................
+Finished in 8.57594 seconds.
+
+139 tests, 257 assertions, 0 failures, 0 errors
+
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+^C[2J[fInterrupt a second time to quit
+
+
+--------------------------------------------------------------------------------
+
+[2J[f/Users/tsedano/.rvm/rubies/ruby-1.8.7-p302/bin/ruby -I.:lib:test -rubygems -e "%w[test/unit test/unit/paper_test.rb test/functional/users_controller_test.rb test/functional/courses_controller_test.rb test/functional/effort_log_line_items_controller_test.rb test/unit/curriculum_comment_test.rb test/unit/effort_log_line_item_test.rb test/unit/person_test.rb test/unit/project_test.rb test/functional/effort_logs_controller_test.rb test/functional/pages_controller_test.rb test/functional/effort_reports_controller_test.rb test/unit/scotty_dog_saying_test.rb test/unit/time_machine_test.rb test/functional/system_controller_test.rb test/functional/curriculum_comment_types_controller_test.rb test/functional/course_numbers_controller_test.rb test/functional/rss_feeds_controller_test.rb test/unit/course_test.rb test/functional/sessions_controller_test.rb test/unit/project_type_test.rb test/functional/people_controller_test.rb test/unit/user_test.rb test/unit/google_apps_test.rb test/unit/course_number_test.rb test/functional/scotty_dog_sayings_controller_test.rb test/functional/welcome_controller_test.rb test/functional/project_types_controller_test.rb test/unit/effort_log_test.rb test/unit/task_type_test.rb test/unit/curriculum_comment_type_test.rb test/functional/papers_controller_test.rb test/unit/page_test.rb test/functional/projects_controller_test.rb test/functional/teams_controller_test.rb test/unit/team_test.rb test/functional/curriculum_comments_controller_test.rb test/unit/effort_log_template_test.rb test/unit/rss_feed_test.rb test/functional/task_types_controller_test.rb test/unit/effort_log_mailer_test.rb test/functional/mailing_lists_controller_test.rb].each { |f| require f }" | unit_diff -u
+HI.  You're using libxml2 version 2.6.16 which is over 4 years old and has
+plenty of bugs.  We suggest that for maximum HTML/XML parsing pleasure, you
+upgrade your version of libxml2 and re-install nokogiri.  If you like using
+libxml2 version 2.6.16, but don't like this warning, please define the constant
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 before requring nokogiri.
+
+/Users/tsedano/.rvm/gems/ruby-1.8.7-p302/gems/rails-2.3.4/lib/rails/gem_dependency.rb:119:Warning: Gem::Dependency#version_requirements is deprecated and will be removed on or after August 2010.  Use #requirement
+Loaded suite -e
+Started
+........................................................................................................................................................................
+Finished in 55.450491 seconds.
+
+168 tests, 328 assertions, 0 failures, 0 errors
+
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
+
+--------------------------------------------------------------------------------
+
+[2J[f
