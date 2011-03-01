@@ -41,7 +41,7 @@ Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |s
 end
 
 Factory.define :sponsored_project_sponsor, :class => SponsoredProjectSponsor do |sp|
-  sp.name 'SGT'
+  sp.sequence(:name) {|n| "Sponsor #{n}"}
 end
 
 Factory.define :sponsored_project, :class => SponsoredProject do |sp|

@@ -46,4 +46,30 @@ describe SponsoredProjectEffort do
 
   end
 
+  context "with custom creators" do
+    it "responds to new_from_sponsored_project_allocation" do
+      SponsoredProjectEffort.should respond_to(:new_from_sponsored_project_allocation)
+    end
+
+    it "creates new from sponsored project allocation" do
+      allocation = Factory(:sponsored_project_allocation)
+      sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
+
+      sponsored_project_effort.current_allocation.should == allocation.current_allocation
+      sponsored_project_effort.actual_allocation.should == allocation.current_allocation
+      sponsored_project_effort.confirmed.should == false
+      sponsored_project_effort.month.should == Date.today.month
+      sponsored_project_effort.year.should == Date.today.year
+    end
+
+    it "won't create a duplicate for same month and allocation" do
+      allocation = Factory(:sponsored_project_allocation)
+      successful_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
+      failed_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
+
+      efforts = SponsoredProjectEffort.find_all_by_month_and_year_and_sponsored_project_allocation_id(Date.today.month, Date.today.year, allocation.id)
+      efforts.length.should == 1
+    end
+  end
+
 end

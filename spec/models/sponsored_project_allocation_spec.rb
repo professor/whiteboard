@@ -50,5 +50,45 @@ describe SponsoredProjectAllocation do
 
   end
 
+  context "creates monthly copy to sponsored project effort" do
+    before(:all) do
+      User.delete_all
+      SponsoredProject.delete_all
+      SponsoredProjectSponsor.delete_all
+      SponsoredProjectAllocation.delete_all
+      
+      @faculty_fagan = Factory(:faculty_fagan)
+      @faculty_frank = Factory(:faculty_frank)
+      @project_rover = Factory(:sponsored_project, :name => "Rover SW")
+      @project_disaster = Factory(:sponsored_project, :name => "Disaster Response")
+      @allocation_fagan_rover = Factory(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
+      @allocation_fagan_disaster = Factory(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
+    end
+
+    after(:all) do
+      User.delete_all
+      SponsoredProject.delete_all
+      SponsoredProjectSponsor.delete_all
+      SponsoredProjectAllocation.delete_all
+    end
+
+    it 'responds to monthly_copy_to_sponsored_project_effort' do
+      subject.should respond_to(:monthly_copy_to_sponsored_project_effort)
+    end
+
+    it 'it succeeds' do
+      lambda {
+        subject.monthly_copy_to_sponsored_project_effort
+        }.should change(SponsoredProjectEffort, :count).by(2) 
+    end
+
+    context "if run twice in the same month, " do
+      it 'does not alter existing project effort'
+
+      it 'does creates missing project effort'
+    end
+
+
+  end
 
 end
