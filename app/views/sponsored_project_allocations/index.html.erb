@@ -1,5 +1,42 @@
+<% content_for :tablesorter do %>
+  <%= javascript_include_tag 'tablesorter' %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+<script type="text/javascript">
+$(document).ready(function()
+    {
+       if ($("#filterBoxOne").attr("disabled") == true)
+       {
+         $('#filterBoxOne').val('');
+         $('#filterBoxOne').removeAttr("disabled");
+         $('#filterBoxOne').focus();
+        }
+        $("#people_table").tablesorter({widgets: ['zebra'],
+                                        headers: {2: {sorter: false}  },
+                                        sortList: [[0,0], [1,0]]})
+            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                filterClearContainer: $("#filterClearOne"),
+                filterColumns: [0, 1, 2, 3],
+                filterCaseSensitive: false
+            });
+
+
+        //hovering over a line selects it
+        $("tr").hover(
+        function () {
+          $(this).addClass("hover");
+        },
+        function () {
+          $(this).removeClass("hover");
+        });
+      }
+);
+</script>
+<% end %>
+
+
+
 <h1>Allocations</h1>
-<table cellpadding="3">
+<table id="people_table" class="tablesorter" cellpadding="3">
 <tr>
   <th>Person</th>
   <th>Sponsor</th>
@@ -8,7 +45,7 @@
   <th></th>
 </tr>
 <% @allocations.each do |allocation| %>
-    <tr>
+    <tr class="tablesorter">
       <td><%= allocation.person.human_name %></td>
       <td><%= allocation.sponsored_project.sponsor.name %></td>
       <td><%= allocation.sponsored_project.name %></td>
