@@ -3,7 +3,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   layout 'cmu_sv'
 
   def index
-    @allocations = SponsoredProjectAllocation.find(:all)
+    @allocations = SponsoredProjectAllocation.find(:all, :order => 'person_id ASC')
 
   end
 
