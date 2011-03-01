@@ -5,6 +5,7 @@
   <th></th>
   <th></th>
   <th></th>
+  <th></th>
 </tr>
 <% @allocations.each do |allocation| %>
     <tr>
@@ -15,4 +16,5 @@
       <td><%#= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
     </tr>
 <% end %>
+  <tr><td colspan="5"><%= link_to 'New allocation', new_sponsored_project_allocation_path %></td></tr>
 </table>

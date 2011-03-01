@@ -49,7 +49,74 @@ describe SponsoredProjectAllocationsController do
     end
   end
 
-  describe 'POST update' do
+  describe 'POST create' do
 
+    describe "with valid params" do
+      before(:each) do
+        @allocation = Factory.build(:sponsored_project_allocation)
+      end
+
+      it "saves a newly created allocation" do
+        lambda {
+          post :create, :sponsored_project_allocation => @allocation.attributes
+        }.should change(SponsoredProjectAllocation,:count).by(1)
+      end
+
+      it "redirects to the index of allocations" do
+        post :create, :sponsored_project_allocation => @allocation.attributes
+        response.should redirect_to(sponsored_project_allocations_path)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved allocation as @allocation" do
+        lambda {
+          post :create, :sponsored_project_allocation => {}
+        }.should_not change(SponsoredProjectAllocation,:count)
+        assigns(:allocation).should_not be_nil
+        assigns(:allocation).should be_kind_of(SponsoredProjectAllocation)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, :sponsored_project_allocation => {}
+        response.should render_template("new")
+      end
+    end
+  end
+
+  describe "PUT update" do
+
+    describe "with valid params" do
+
+      before do
+        put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => 50}
+      end
+
+      it "updates the requested allocation" do
+        allocation.reload.current_allocation.should == 50
+      end
+
+      it "should assign @allocation" do
+        assigns(:allocation).should_not be_nil
+      end
+
+      it "redirects to allocations" do
+        response.should redirect_to(sponsored_project_allocations_path)
+      end
+    end
+
+    describe "with invalid params" do
+      before do
+        put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => ''}
+      end
+
+      it "should assign @allocation" do
+        assigns(:allocation).should_not be_nil
+      end
+
+      it "re-renders the 'edit' template" do
+        response.should render_template("edit")
+      end
+    end
   end
 end
