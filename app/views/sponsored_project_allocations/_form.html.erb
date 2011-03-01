@@ -5,7 +5,7 @@
   <table>
     <tr><td><%= f.label :person %></td><td><%= f.select :person_id, @people.collect{|item| [item.human_name, item.id]} %></td></tr>
     <tr><td><%= f.label :project %></td><td><%= f.select :sponsored_project_id, @projects.collect{|item| [item.name, item.id]} %></td></tr>
-    <tr><td><%= f.label :current_allocation %></td><td><%= f.text_field :current_allocation %></td></tr>
+    <tr><td><%= f.label :current_allocation %></td><td><%= f.text_field :current_allocation, :size => 2 %> %</td></tr>
   </table>
 
   <br />

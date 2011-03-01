@@ -31,6 +31,16 @@ Factory.define :faculty_frank, :parent => :person do |p|
   p.human_name "Faculty Frank"
 end
 
+Factory.define :faculty_fagan, :parent => :person do |p|
+  p.login "faculty_fagan"
+  p.email "fagan@andrew.cmu.edu"
+  p.is_staff true
+  p.is_teacher true
+  p.first_name "Faculty"
+  p.last_name "Fagan"
+  p.human_name "Faculty Fagan"
+end
+
 Factory.define :strength_quest, :parent => :person do |p|
   p.association :strength1, :factory => :achiever
   p.association :strength2, :factory => :activator

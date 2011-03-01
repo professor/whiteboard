@@ -46,8 +46,8 @@ class Person < ActiveRecord::Base
 #    end
 #  end
 
-  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}
-  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}
+  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
+  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
 
     def before_validation
