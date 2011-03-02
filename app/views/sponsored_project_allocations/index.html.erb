@@ -10,8 +10,9 @@ $(document).ready(function()
          $('#filterBoxOne').removeAttr("disabled");
          $('#filterBoxOne').focus();
         }
-        $("#people_table").tablesorter({widgets: ['zebra'],
-                                        headers: {2: {sorter: false}  },
+        
+        $("#allocation_table").tablesorter({widgets: ['zebra'],
+                                        headers: {4: {sorter: false}  },
                                         sortList: [[0,0], [1,0]]})
             .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
                 filterClearContainer: $("#filterClearOne"),
@@ -22,11 +23,11 @@ $(document).ready(function()
 
         //hovering over a line selects it
         $("tr").hover(
-        function () {
-          $(this).addClass("hover");
-        },
-        function () {
-          $(this).removeClass("hover");
+            function () {
+              $(this).addClass("hover");
+            },
+            function () {
+              $(this).removeClass("hover");
         });
       }
 );
@@ -36,7 +37,11 @@ $(document).ready(function()
 
 
 <h1>Allocations</h1>
-<table id="people_table" class="tablesorter" cellpadding="3">
+<div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
+<br/>
+<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
+<table id="allocation_table" class="tablesorter" cellpadding="3">
+  <thead>
 <tr>
   <th>Person</th>
   <th>Sponsor</th>
@@ -44,17 +49,20 @@ $(document).ready(function()
   <th>Allocation</th>
   <th></th>
 </tr>
+</thead>
+<tbody>
 <% @allocations.each do |allocation| %>
     <tr class="tablesorter">
       <td><%= allocation.person.human_name %></td>
       <td><%= allocation.sponsored_project.sponsor.name %></td>
       <td><%= allocation.sponsored_project.name %></td>
-      <td><%= allocation.current_allocation %></td>
+      <td><%= allocation.current_allocation %> %</td>
       <td><%= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
     </tr>
 <% end %>
-  <tr><td colspan="5"><%= link_to 'New allocation', new_sponsored_project_allocation_path %></td></tr>
+</tbody>
 </table>
+<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
 
 <br/>
 <br/>
