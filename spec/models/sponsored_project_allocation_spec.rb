@@ -73,12 +73,12 @@ describe SponsoredProjectAllocation do
     end
 
     it 'responds to monthly_copy_to_sponsored_project_effort' do
-      subject.should respond_to(:monthly_copy_to_sponsored_project_effort)
+      SponsoredProjectAllocation.should respond_to(:monthly_copy_to_sponsored_project_effort)
     end
 
     it 'it succeeds' do
       lambda {
-        subject.monthly_copy_to_sponsored_project_effort
+        SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
         }.should change(SponsoredProjectEffort, :count).by(2) 
     end
 

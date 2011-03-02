@@ -32,18 +32,25 @@ describe SponsoredProjectEffort do
       end
     end
 
+    it "when a duplicate effort for the same month, year and project allocation" do
+      original = Factory(:sponsored_project_effort)
+      duplicate = SponsoredProjectEffort.new()
+      duplicate.month = original.month
+      duplicate.year = original.year
+      duplicate.sponsored_project_allocation_id = original.sponsored_project_allocation_id
+      duplicate.should_not be_valid
+    end
+  end
 
-    context "associations --" do
-      it 'belongs to a sponsored project allocation' do
-        subject.should respond_to(:sponsored_project_allocation)
-      end
-
-      it 'belongs to a sponsored project current allocation' do
-        sponsored_project_people = Factory(:sponsored_project_allocation)
-        sponsored_project_people.current_allocation.should_not be_nil
-      end
+  context "associations --" do
+    it 'belongs to a sponsored project allocation' do
+      subject.should respond_to(:sponsored_project_allocation)
     end
 
+    it 'belongs to a sponsored project current allocation' do
+      sponsored_project_people = Factory(:sponsored_project_allocation)
+      sponsored_project_people.current_allocation.should_not be_nil
+    end
   end
 
   context "with custom creators" do
