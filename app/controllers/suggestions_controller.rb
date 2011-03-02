@@ -47,11 +47,7 @@ class SuggestionsController < ApplicationController
   def create
     @suggestion = Suggestion.new(params[:suggestion])
     @suggestion.user_id = current_user.id if current_user
-    puts "suggestion #{@suggestion}"
-    puts "page #{@suggestion.page}"
     page = @suggestion.page
-    puts "page #{page}"
-    puts "comment @suggestion.comment"
 
 
     respond_to do |format|
