@@ -76,19 +76,11 @@ describe SponsoredProjectAllocation do
       SponsoredProjectAllocation.should respond_to(:monthly_copy_to_sponsored_project_effort)
     end
 
-    it 'it succeeds' do
+    it 'of unique allocations even if it is executed twice in the same month' do
       lambda {
         SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
         }.should change(SponsoredProjectEffort, :count).by(2) 
     end
-
-    context "if run twice in the same month, " do
-      it 'does not alter existing project effort'
-
-      it 'does creates missing project effort'
-    end
-
-
   end
 
 end
