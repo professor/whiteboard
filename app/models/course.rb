@@ -14,8 +14,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.next_semester_courses()
-    return self.for_semester(ApplicationController.next_semester(),
-                             ApplicationController.next_semester_year())
+    return self.for_semester(AcademicCalendar.next_semester(),
+                             AcademicCalendar.next_semester_year())
   end
 
 

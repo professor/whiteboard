@@ -26,6 +26,45 @@ describe AcademicCalendar do
     end
   end
 
+  context 'next semester' do
+    it 'should respond to next_semester' do
+      AcademicCalendar.should respond_to :next_semester
+    end
+
+    it 'should return Spring in the Fall' do
+       Date.stub!(:today).and_return(Date.new(2010, 9, 1))
+       AcademicCalendar.next_semester.should == "Spring"
+    end
+    it 'should return Summer in the Spring' do
+       Date.stub!(:today).and_return(Date.new(2011, 3, 1))
+       AcademicCalendar.next_semester.should == "Summer"
+    end
+    it 'should return Fall in the Summer' do
+       Date.stub!(:today).and_return(Date.new(2011, 7, 1))
+       AcademicCalendar.next_semester.should == "Fall"
+    end
+  end
+
+  context 'next semester year' do
+    it 'should respond to next_semester year' do
+      AcademicCalendar.should respond_to :next_semester_year
+    end
+
+    it 'should return year+1 in the Fall' do
+       Date.stub!(:today).and_return(Date.new(2010, 9, 1))
+       AcademicCalendar.next_semester_year.should == 2011
+    end
+    it 'should return year in the Spring' do
+       Date.stub!(:today).and_return(Date.new(2011, 3, 1))
+       AcademicCalendar.next_semester_year.should == 2011
+    end
+    it 'should return year in the Summer' do
+       Date.stub!(:today).and_return(Date.new(2011, 7, 1))
+       AcademicCalendar.next_semester_year.should == 2011
+    end
+  end
+
+
   context 'semester start' do
     it 'should respond to semester_start' do
       AcademicCalendar.should respond_to :semester_start

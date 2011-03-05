@@ -23,8 +23,8 @@ class CoursesController < ApplicationController
 
   def next_semester
     @all_courses = false
-    @semester = ApplicationController.next_semester()
-    @year = ApplicationController.next_semester_year()
+    @semester = AcademicCalendar.next_semester()
+    @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
     index_core
   end

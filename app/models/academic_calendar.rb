@@ -17,6 +17,26 @@ class AcademicCalendar
     return "Fall"
   end
 
+  def self.next_semester
+    case AcademicCalendar.current_semester
+      when "Spring"
+        return "Summer"
+      when "Summer"
+        return "Fall"
+      when "Fall"
+        return "Spring"
+    end
+  end
+
+  def self.next_semester_year
+    case AcademicCalendar.next_semester
+     when "Spring"
+      return Date.today.year + 1
+    else
+      return Date.today.year
+    end
+  end
+
 
   def self.semester_start(semester, year)
 
