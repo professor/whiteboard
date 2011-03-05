@@ -32,16 +32,6 @@ class ApplicationController < ActionController::Base
   end
 
 
-  # Looking at the calendar, we want current_semester to have these characteristics
-  # Spring starts roughly around Christmas and ends 1 week after last day of semester
-  # Summer starts 1 week before and end 1 week after semester
-  # Fall starts 1 week before and goes to roughly around Christmas
-  def self.current_semester
-    cweek = Date.today.cweek()
-    return "Spring" if cweek < 19 || cweek > 51
-    return "Summer" if cweek < 33
-    return "Fall"
-  end
 
   #Note that course has similiar logic
   def self.current_mini
@@ -66,7 +56,7 @@ class ApplicationController < ActionController::Base
 #  end
 
   def self.next_semester
-    case self.current_semester
+    case AcademicCalendar.current_semester
       when "Spring"
         return "Summer"
       when "Summer"

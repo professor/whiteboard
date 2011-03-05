@@ -283,7 +283,7 @@ class PeopleController < ApplicationController
     @course = Course.new()
 
     @current_year = Date.today.year()
-    @current_semester = ApplicationController.current_semester()
+    @current_semester = AcademicCalendar.current_semester()
 
     #SQL statements determined by Team Juran
     @current_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND c.semester = ? AND c.year = ?", person_id, @current_semester, @current_year])

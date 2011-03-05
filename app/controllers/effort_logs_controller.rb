@@ -414,7 +414,7 @@ private
       Date.commercial(year, week_number, day).strftime "%b %d"  # Jul 01
     end
 
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
     @projects = Project.find(:all, :conditions => "is_closed = FALSE", :order => "name ASC")
     
     if current_user.is_staff? && current_user.is_student?

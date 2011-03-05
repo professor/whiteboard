@@ -1,6 +1,6 @@
 Factory.define :course, :class => Course do |c|
   c.name 'Course'
-  c.semester ApplicationController.current_semester
+  c.semester AcademicCalendar.current_semester
   c.year Date.today.year
   c.mini 'Both'
 end

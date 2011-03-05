@@ -98,7 +98,7 @@ class Person < ActiveRecord::Base
 
 
    def get_registered_courses
-    semester = ApplicationController.current_semester()
+    semester = AcademicCalendar.current_semester()
 
     @sql_str = "select c.* FROM courses c,teams t
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in

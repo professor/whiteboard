@@ -7,7 +7,7 @@ class CurriculumCommentsController < ApplicationController
   def index
     url = get_http_referer()
 #    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ?", url])
-    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ? and semester = ? and year = ?", url, ApplicationController.current_semester(), Date.today.year.to_s])
+    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ? and semester = ? and year = ?", url, AcademicCalendar.current_semester(), Date.today.year.to_s])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @curriculum_comments }
@@ -52,7 +52,7 @@ class CurriculumCommentsController < ApplicationController
   def create
     @curriculum_comment = CurriculumComment.new(params[:curriculum_comment])
     @curriculum_comment.user_id = current_user.id if current_user
-    @curriculum_comment.semester = ApplicationController.current_semester()
+    @curriculum_comment.semester = AcademicCalendar.current_semester()
     @curriculum_comment.year = Date.today.year
     @types = CurriculumCommentType.find(:all)
 

@@ -39,7 +39,7 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     @page.course_id = params[:course_id].to_i
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
     @courses = Course.find(:all)
     respond_to do |format|
       format.html # new.html.erb
@@ -57,7 +57,7 @@ class PagesController < ApplicationController
     end
     
 
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
     @courses = Course.find(:all)
     respond_to do |format|
       format.html # new.html.erb
@@ -69,7 +69,7 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
     @courses = Course.find(:all)
     respond_to do |format|
       if @page.save
@@ -93,7 +93,7 @@ class PagesController < ApplicationController
       redirect_to(page_url) and return
     end
 
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, ApplicationController.current_semester()] )
+#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
     @courses = Course.find(:all)
 
     respond_to do |format|

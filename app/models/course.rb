@@ -8,7 +8,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.current_semester_courses()
-    return self.for_semester(ApplicationController.current_semester(),
+    return self.for_semester(AcademicCalendar.current_semester(),
                       Date.today.year)
 
   end
@@ -97,8 +97,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, ApplicationController.current_semester(), "both"] )
-    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, ApplicationController.current_semester(), ApplicationController.current_mini] )
+    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "both"] )
+    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), ApplicationController.current_mini] )
     return courses
   end
   

@@ -45,7 +45,7 @@ RUBY_RUBY_RUBY
 
 
  def current_semester
-    ApplicationController.current_semester()
+    AcademicCalendar.current_semester()
  end
 
 
