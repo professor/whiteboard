@@ -50,7 +50,7 @@
             <h3>public instance</h3>
             <ol>
               <li><a href="#M000228">display_name</a></li>
-              <li><a href="#M000225">semester_end</a></li>
+              <li><a href="#M000225">course_end</a></li>
               <li><a href="#M000223">course_length</a></li>
               <li><a href="#M000224">semester_start</a></li>
               <li><a href="#M000226">sortable_value</a></li>
@@ -89,14 +89,14 @@
               <div class='method public-instance' id='method-M000225'>
                 <a name='M000225'></a>
                 <div class='synopsis'>
-                  <span class='name'>semester_end</span>
+                  <span class='name'>course_end</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000225-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000225-source'>    <span class="ruby-comment cmt"># File app/models/course.rb, line 44</span>&#x000A;44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">semester_end</span>&#x000A;45:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">semester_start</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">course_length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>&#x000A;46:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000225-source'>    <span class="ruby-comment cmt"># File app/models/course.rb, line 44</span>&#x000A;44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">course_end</span>&#x000A;45:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">semester_start</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">course_length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>&#x000A;46:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <div class='method public-instance' id='method-M000223'>
@@ -140,7 +140,7 @@
                   <a class='source-toggle' href='#' onclick="toggleCode('M000226-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000226-source'>    <span class="ruby-comment cmt"># File app/models/course.rb, line 48</span>&#x000A;48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sortable_value</span>&#x000A;49:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">semester_end</span>&#x000A;50:   <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000226-source'>    <span class="ruby-comment cmt"># File app/models/course.rb, line 48</span>&#x000A;48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sortable_value</span>&#x000A;49:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span> <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">course_end</span>&#x000A;50:   <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

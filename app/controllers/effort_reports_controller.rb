@@ -568,8 +568,8 @@ class EffortReportsController < ApplicationController
     if !person_effort_log_lines.nil? && person_effort_log_lines.size != 0 then
       person_effort_log_lines.each do |line|
         week = line.week_number.to_i
-        if week >= @course.semester_start && week <= @course.semester_end then
-          person_result[week - @course.semester_start + 0] += line.sum.to_i  #add two to skip the team and person label at the front of the array
+        if week >= @course.course_start && week <= @course.course_end then
+          person_result[week - @course.course_start + 0] += line.sum.to_i  #add two to skip the team and person label at the front of the array
         end
 
       end

@@ -31,8 +31,7 @@ class Course < ActiveRecord::Base
     end    
   end
 
-  # Todo:rename this course_start
-  def semester_start
+  def course_start
     start = AcademicCalendar.semester_start(semester, year)
 
     if semester == "Spring" then
@@ -47,12 +46,12 @@ class Course < ActiveRecord::Base
     return 0 #If the semester field isn't set
   end
   
-  def semester_end
-    self.semester_start + self.course_length - 1
+  def course_end
+    self.course_start + self.course_length - 1
   end
 
   def sortable_value
-    self.year.to_i * 100 + self.semester_end
+    self.year.to_i * 100 + self.course_end
   end
 
   def display_name
