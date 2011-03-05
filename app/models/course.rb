@@ -36,15 +36,12 @@ class Course < ActiveRecord::Base
     start = AcademicCalendar.semester_start(semester, year)
 
     if semester == "Spring" then
-      return self.mini == "B" ? 9 : 2
       return self.mini == "B" ? start + 7 : start
     end
     if semester == "Summer" then
-      return self.mini == "B" ? 26 : 20
       return self.mini == "B" ? start + 6 : start
     end
     if semester == "Fall" then
-      return self.mini == "B" ? 41 : 34
       return self.mini == "B" ? start + 7 : start
     end
     return 0 #If the semester field isn't set
