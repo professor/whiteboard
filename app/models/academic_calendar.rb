@@ -38,19 +38,6 @@ class AcademicCalendar
     end
   end
 
-  def self.current_mini_old
-    cweek = Date.today.cweek()
-    case cweek
-      when 2..8 then "A"
-      when 11..17 then "B"
-      when 20..25 then "A"
-      when 26..31 then "B"
-      when 35..41 then "A"
-      when 42..48 then "B"
-      else "Unknown"
-    end
-  end
-
   def self.next_semester
     case AcademicCalendar.current_semester
       when "Spring"
@@ -92,7 +79,7 @@ class AcademicCalendar
       else
         GenericMailer.deliver_email(
           :to => "todd.sedano@sv.cmu.edu",
-          :subject => "Academic Calendar needs updating",
+          :subject => "Academic Calendar needs updating: spring_break",
           :message => "Please modify app/models/AcademicCalendar.rb spring_break(#{year})",
           :url_label => "",
           :url => ""
@@ -139,7 +126,7 @@ class AcademicCalendar
       else
         GenericMailer.deliver_email(
           :to => "todd.sedano@sv.cmu.edu",
-          :subject => "Academic Calendar needs updating",
+          :subject => "Academic Calendar needs updating: semester_start",
           :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
           :url_label => "",
           :url => ""
