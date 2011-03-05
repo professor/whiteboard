@@ -86,7 +86,7 @@ class AcademicCalendar
           :url_label => "",
           :url => ""
         )
-        return 9..10
+        return nil
     end
   end
 
