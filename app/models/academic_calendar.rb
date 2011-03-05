@@ -74,7 +74,9 @@ class AcademicCalendar
 
   def self.spring_break(year)
     case year
-      when 2011
+      when 2010
+        return 9..10
+      when 2010
         return 9..10
       else
         GenericMailer.deliver_email(
@@ -84,6 +86,7 @@ class AcademicCalendar
           :url_label => "",
           :url => ""
         )
+        return 9..10
     end
   end
 
