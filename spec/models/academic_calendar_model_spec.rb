@@ -65,6 +65,58 @@ describe AcademicCalendar do
   end
 
 
+  context 'determine if a particular week is in a semester' do
+    it 'should respond to semester_start' do
+      AcademicCalendar.should respond_to :week_during_semester?
+    end
+
+    it 'weeks before semester start are not in' do
+      year = Date.today.cwyear
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Fall", year) - 1).should == false
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Spring", year) - 1).should == false
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Summer", year) - 1).should == false
+    end
+
+    it 'weeks starting a semester are in' do
+      year = Date.today.cwyear
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Fall", year)).should == true
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Spring", year)).should == true
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Summer", year)).should == true
+    end
+  end
+
+  context 'log_effort_week?' do
+    it 'should respond to log_effort_week?' do
+      AcademicCalendar.should respond_to :log_effort_week?
+    end
+
+    it 'it is spring break' do
+      AcademicCalendar.log_effort_week?(2010, 9).should == false
+      AcademicCalendar.log_effort_week?(2010, 10).should == false
+    end
+
+    it 'it is not spring break' do
+      (1..8).each do |week_number|
+        AcademicCalendar.log_effort_week?(2010, week_number).should == AcademicCalendar.week_during_semester?(2010, week_number)
+      end
+      (11..52).each do |week_number|
+        AcademicCalendar.log_effort_week?(2010, week_number).should == AcademicCalendar.week_during_semester?(2010, week_number)
+      end
+    end
+
+  end
+
+
+  context 'spring_break' do
+    it 'should respond to spring_break' do
+      AcademicCalendar.should respond_to :spring_break
+    end
+
+    it 'it is spring break' do
+      AcademicCalendar.spring_break(2010) == (9..10)
+    end
+  end
+
   context 'semester start' do
     it 'should respond to semester_start' do
       AcademicCalendar.should respond_to :semester_start
