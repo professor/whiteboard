@@ -70,36 +70,6 @@ class AcademicCalendar
   end
 
 
-
-  def self.week_during_semester_tmp?(year, week_number)
-    case week_number
-#      when 0..(self.semester_start("Spring", year ) - 1)
-#        return false #before spring semester
-      when (self.semester_end("Spring", year)..(self.semester_start("Summer", year)-1))
-        return false #after spring, before summer semester
-      when (self.semester_end("Summer", year)..(self.semester_start("Fall", year)-1))
-        return false #summer break before fall semester
-      when (self.semester_end("Fall", year))..53
-        return false #winter break after fall semester
-      else
-        return true
-    end
-
-    case week_number
-    when 0..1
-      return false #before spring semester
-    when 18..19
-      return false #after spring, before summer semester
-    when 32..33
-      return false #summer break before fall semester
-    when 50..53
-      return false #winter break after fall semester
-    else
-      return true
-    end
-  end
-
-
   def self.semester_start(semester, year)
 
     case year
