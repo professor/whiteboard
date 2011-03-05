@@ -51,15 +51,6 @@ class AcademicCalendar
     end
   end
 
-  def self.log_effort_week?(year, week_number)
-    case week_number
-      when self.spring_break(year)
-        return false
-      else
-        return self.week_during_semester?(year, week_number)
-    end
-  end
-
   def self.spring_break(year)
     case year
       when 2011

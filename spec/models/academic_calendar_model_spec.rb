@@ -85,27 +85,6 @@ describe AcademicCalendar do
     end
   end
 
-  context 'log_effort_week?' do
-    it 'should respond to log_effort_week?' do
-      AcademicCalendar.should respond_to :log_effort_week?
-    end
-
-    it 'it is spring break' do
-      AcademicCalendar.log_effort_week?(2010, 9).should == false
-      AcademicCalendar.log_effort_week?(2010, 10).should == false
-    end
-
-    it 'it is not spring break' do
-      (1..8).each do |week_number|
-        AcademicCalendar.log_effort_week?(2010, week_number).should == AcademicCalendar.week_during_semester?(2010, week_number)
-      end
-      (11..52).each do |week_number|
-        AcademicCalendar.log_effort_week?(2010, week_number).should == AcademicCalendar.week_during_semester?(2010, week_number)
-      end
-    end
-
-  end
-
 
   context 'spring_break' do
     it 'should respond to spring_break' do

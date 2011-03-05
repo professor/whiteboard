@@ -109,4 +109,13 @@ class EffortLog < ActiveRecord::Base
         effort_log_line_item.save(false)
       end
     end
+
+    def self.log_effort_week?(year, week_number)
+    case week_number
+      when AcademicCalendar.spring_break(year)
+        return false
+      else
+        return AcademicCalendar.week_during_semester?(year, week_number)
+    end
+  end
 end
