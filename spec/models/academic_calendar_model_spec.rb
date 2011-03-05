@@ -85,6 +85,26 @@ describe AcademicCalendar do
     end
   end
 
+  it 'should determine which Semester Mini it is' do
+    Date.stub!(:today).and_return(Date.new(2011, 1, 10)) #Also Date.commercial(year, week_number) works
+    AcademicCalendar.current_mini.should == "A"
+
+    Date.stub!(:today).and_return(Date.new(2011, 3, 14))
+    AcademicCalendar.current_mini.should == "B"
+
+    Date.stub!(:today).and_return(Date.new(2011, 5, 16))
+    AcademicCalendar.current_mini.should == "A"
+
+    Date.stub!(:today).and_return(Date.new(2011, 6, 27))
+    AcademicCalendar.current_mini.should == "B"
+
+    Date.stub!(:today).and_return(Date.new(2011, 8, 29))
+    AcademicCalendar.current_mini.should == "A"
+
+    Date.stub!(:today).and_return(Date.new(2011, 10, 17))
+    AcademicCalendar.current_mini.should == "B"
+  end
+
 
   context 'spring_break' do
     it 'should respond to spring_break' do

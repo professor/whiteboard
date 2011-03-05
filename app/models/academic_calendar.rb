@@ -17,6 +17,40 @@ class AcademicCalendar
     return "Fall"
   end
 
+  def self.current_mini
+    cweek = Date.today.cweek()
+    cwyear = Date.today.cwyear()
+
+    spring_a = AcademicCalendar.semester_start("Spring", cwyear)
+    summer_a = AcademicCalendar.semester_start("Summer", cwyear)
+    fall_a = AcademicCalendar.semester_start("Fall", cwyear)
+
+    case cweek
+      when (spring_a)..(spring_a + 6) then "A"
+      when (spring_a + 9)..(spring_a + 15) then "B"
+
+      when (summer_a)..(summer_a + 5) then "A"
+      when (summer_a + 6)..(summer_a + 11) then "B"
+
+      when (fall_a)..(fall_a + 6) then "A"
+      when (fall_a + 7)..(fall_a + 13) then "B"
+      else "Unknown"
+    end
+  end
+
+  def self.current_mini_old
+    cweek = Date.today.cweek()
+    case cweek
+      when 2..8 then "A"
+      when 11..17 then "B"
+      when 20..25 then "A"
+      when 26..31 then "B"
+      when 35..41 then "A"
+      when 42..48 then "B"
+      else "Unknown"
+    end
+  end
+
   def self.next_semester
     case AcademicCalendar.current_semester
       when "Spring"

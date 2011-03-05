@@ -32,32 +32,6 @@ class ApplicationController < ActionController::Base
   end
 
 
-
-  #Note that course has similiar logic
-  def self.current_mini
-    cweek = Date.today.cweek()
-    case cweek
-      when 2..8 then "A"
-      when 11..17 then "B"
-      when 20..25 then "A"
-      when 26..31 then "B"
-      when 35..41 then "A"
-      when 42..48 then "B"
-      else "Unknown"
-    end
-  end
-
-# This code isn't being used anywhere
-# def self.semester_week_range(semester)
-#    return (1..19) if semester == "Spring"
-#    return (20..33) if semester == "Summer"
-#    return (34..52) if semester == "Fall"
-#    return nil
-#  end
-
-
-
-
   private
   def get_http_referer
    if request.env["HTTP_REFERER"].nil? then
