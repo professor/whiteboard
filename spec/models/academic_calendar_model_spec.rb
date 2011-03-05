@@ -111,6 +111,11 @@ describe AcademicCalendar do
       AcademicCalendar.should respond_to :spring_break
     end
 
+    it 'should warn the site administrator when the calendar is not current and needs updating' do
+      GenericMailer.should_receive(:deliver_email)
+      AcademicCalendar.spring_break(1900).should == nil
+    end
+
     it 'it is spring break' do
       AcademicCalendar.spring_break(2010) == (9..10)
     end
@@ -119,6 +124,11 @@ describe AcademicCalendar do
   context 'semester start' do
     it 'should respond to semester_start' do
       AcademicCalendar.should respond_to :semester_start
+    end
+
+    it 'should warn the site administrator when the calendar is not current and needs updating' do
+      GenericMailer.should_receive(:deliver_email)
+      AcademicCalendar.semester_start("Fall", 1900).should == nil
     end
 
 

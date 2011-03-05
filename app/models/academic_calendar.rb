@@ -90,7 +90,13 @@ class AcademicCalendar
       when 2011
         return 9..10
       else
-        return 9..10
+        GenericMailer.deliver_email(
+          :to => "todd.sedano@sv.cmu.edu",
+          :subject => "Academic Calendar needs updating",
+          :message => "Please modify app/models/AcademicCalendar.rb spring_break(#{year})",
+          :url_label => "",
+          :url => ""
+        )
     end
   end
 
@@ -130,7 +136,14 @@ class AcademicCalendar
           when "Fall"
             return 35
         end
-
+      else
+        GenericMailer.deliver_email(
+          :to => "todd.sedano@sv.cmu.edu",
+          :subject => "Academic Calendar needs updating",
+          :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
+          :url_label => "",
+          :url => ""
+        )
     end
     
   end
