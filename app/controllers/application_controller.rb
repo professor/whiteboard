@@ -32,18 +32,6 @@ class ApplicationController < ActionController::Base
   end
 
 
-  # For the academic year 2008-2009, here are the start dates of each semester
-  # Fall, 8/25/08 which is cweek 35, (Orientation is 34)
-  # Spring, 1/12/09 which is cweek 3, (Gathering is 2)
-  # Summer, 5/18/09 which is cweek 21, (Gathering is 20)
-  #
-  # For the academic year 2009-2010, here are the start dates of each semester
-  # Fall, 8/24/09 which is cweek 34, (Orienation is 33)
-  # Spring, 1/11/10 which is cweek 2, (Gathering is 1)
-  # Summer, 5/17/10 which is cweek 20, (Gathering is 19)
-  #
-  # Note: to check future dates, use the following code. Date.new(2010, 8, 23).cweek
-  #
   # Looking at the calendar, we want current_semester to have these characteristics
   # Spring starts roughly around Christmas and ends 1 week after last day of semester
   # Summer starts 1 week before and end 1 week after semester
@@ -69,12 +57,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
- def self.semester_week_range(semester)
-    return (1..19) if semester == "Spring"
-    return (20..33) if semester == "Summer"
-    return (34..52) if semester == "Fall"
-    return nil
-  end
+# This code isn't being used anywhere
+# def self.semester_week_range(semester)
+#    return (1..19) if semester == "Spring"
+#    return (20..33) if semester == "Summer"
+#    return (34..52) if semester == "Fall"
+#    return nil
+#  end
 
   def self.next_semester
     case self.current_semester

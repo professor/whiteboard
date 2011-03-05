@@ -19,6 +19,7 @@ class Course < ActiveRecord::Base
   end
 
 
+  #Todo: rename this to be course_length
   def semester_length
     if self.mini == "Both" then
       if semester == "Summer" then 
@@ -31,6 +32,7 @@ class Course < ActiveRecord::Base
     end    
   end
 
+  # Todo:rename this course_start
   # Note that current_semester() logic is in application.rb
   def semester_start
     #Todo: refactor this code to check for self.year
