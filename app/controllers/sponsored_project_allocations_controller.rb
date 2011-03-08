@@ -3,26 +3,25 @@ class SponsoredProjectAllocationsController < ApplicationController
   layout 'cmu_sv'
 
   def index
-    @allocations = SponsoredProjectAllocation.find(:all, :order => 'person_id ASC')
-
+    @allocations = SponsoredProjectAllocation.current
   end
 
   def new
     @allocation = SponsoredProjectAllocation.new
     @people = Person.staff
-    @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
+    @projects = SponsoredProject.current
   end
 
   def edit
     @allocation = SponsoredProjectAllocation.find(params[:id])
     @people = Person.staff
-    @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
+    @projects = SponsoredProject.current
   end
 
   def create
     @allocation = SponsoredProjectAllocation.new(params[:sponsored_project_allocation])
     @people = Person.staff
-    @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
+    @projects = SponsoredProject.current
 
     if @allocation.save
       redirect_to(sponsored_project_allocations_path, :notice => 'Allocation was successfully created.')
@@ -35,7 +34,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   def update
     @allocation = SponsoredProjectAllocation.find(params[:id])
     @people = Person.staff
-    @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
+    @projects = SponsoredProject.current
 
     if @allocation.update_attributes(params[:sponsored_project_allocation])
       redirect_to(sponsored_project_allocations_path, :notice => 'Allocation was successfully updated.')
