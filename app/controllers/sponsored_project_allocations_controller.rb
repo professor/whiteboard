@@ -46,5 +46,15 @@ class SponsoredProjectAllocationsController < ApplicationController
 
   end
 
+  def archive
+    @allocation = SponsoredProjectAllocation.find(params[:id])
+    if @allocation.update_attributes({:is_archived => true})
+      flash[:notice] = 'Allocation was successfully archived.'
+      redirect_to(sponsored_project_allocations_path)
+    else
+      flash[:notice] = 'Allocation could not be archived.'
+      redirect_to(sponsored_project_allocations_path)
+    end
+  end
   
 end

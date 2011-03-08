@@ -119,4 +119,12 @@ describe SponsoredProjectAllocationsController do
       end
     end
   end
+
+   describe "GET archive" do
+    it "archives the allocation" do
+      get :archive, :id => allocation.to_param
+      flash[:notice].should == "Allocation was successfully archived."
+    end
+  end 
+
 end

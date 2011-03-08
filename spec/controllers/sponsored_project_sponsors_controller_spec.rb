@@ -95,5 +95,11 @@ describe SponsoredProjectSponsorsController do
 
   end
 
+ describe "GET archive" do
+    it "archives the sponsor" do
+      get :archive, :id => sponsor.to_param
+      flash[:notice].should == "Sponsor was successfully archived."
+    end
+  end
 
 end

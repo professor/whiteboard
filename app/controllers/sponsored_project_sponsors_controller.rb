@@ -31,5 +31,15 @@ class SponsoredProjectSponsorsController < ApplicationController
       render "edit"
     end
   end
-
+  
+  def archive
+    @sponsor = SponsoredProjectSponsor.find(params[:id])
+    if @sponsor.update_attributes({:is_archived => true})
+      flash[:notice] = 'Sponsor was successfully archived.'
+      redirect_to(sponsored_projects_path)
+    else
+      flash[:notice] = 'Sponsor could not be archived.'
+      redirect_to(sponsored_projects_path)
+    end
+  end
 end
