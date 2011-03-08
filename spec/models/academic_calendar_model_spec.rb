@@ -21,7 +21,7 @@ describe AcademicCalendar do
        AcademicCalendar.current_semester.should == "Spring"
     end
     it 'should return Summer in the Summer' do
-       Date.stub!(:today).and_return(Date.new(2010, 7, 1))
+       Date.stub!(:today).and_return(Date.new(2011, 7, 1))
        AcademicCalendar.current_semester.should == "Summer"
     end
   end
