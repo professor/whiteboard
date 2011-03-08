@@ -122,4 +122,11 @@ describe SponsoredProjectsController do
 
   end     
 
+  describe "GET archive" do
+    it "archives the project" do
+      get :archive, :id => project.to_param
+      flash[:notice].should == "Project was successfully archived."
+    end
+  end
+
 end

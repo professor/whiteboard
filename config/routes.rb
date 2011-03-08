@@ -1,5 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
 
+  map.archive_sponsored_project '/sponsored_projects/:id/archive', :controller => 'sponsored_projects', :action => 'archive'
+  map.archive_sponsored_project_sponsor '/sponsored_project_sponsors/:id/archive', :controller => 'sponsored_project_sponsors', :action => 'archive'
+  map.archive_sponsored_project_allocation '/sponsored_project_allocations/:id/archive', :controller => 'sponsored_project_allocations', :action => 'archive'
   map.resources :sponsored_projects
   map.resources :sponsored_project_sponsors
   map.resources :sponsored_project_allocations

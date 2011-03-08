@@ -1,6 +1,6 @@
 Factory.define :course, :class => Course do |c|
   c.name 'Course'
-  c.semester ApplicationController.current_semester
+  c.semester AcademicCalendar.current_semester
   c.year Date.today.year
   c.mini 'Both'
 end
@@ -41,11 +41,11 @@ Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |s
 end
 
 Factory.define :sponsored_project_sponsor, :class => SponsoredProjectSponsor do |sp|
-  sp.name 'SGT'
+  sp.sequence(:name) {|n| "Sponsor #{n}"}
 end
 
 Factory.define :sponsored_project, :class => SponsoredProject do |sp|
-  sp.name 'Disaster Response'
+  sp.sequence(:name) {|n| "Project #{n}"}
   sp.association :sponsor, :factory => :sponsored_project_sponsor
 end
 
@@ -53,6 +53,7 @@ Factory.define :sponsored_project_allocation, :class => SponsoredProjectAllocati
   sp.current_allocation 10
   sp.association :person, :factory => :student_sam
   sp.association :sponsored_project, :factory => :sponsored_project
+  sp.is_archived false
 end
 
 Factory.define :task_type do |t|

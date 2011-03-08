@@ -2,10 +2,9 @@ require 'spec_helper'
 
 describe 'sponsored_project_allocations/index' do
   before(:each) do
-    allocation = Factory.build(:sponsored_project_allocation)
+    allocation = Factory(:sponsored_project_allocation)
 
     assigns[:allocations] = [
-#        allocation,
         allocation
     ]
   end

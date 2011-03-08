@@ -258,7 +258,7 @@ class EffortReportsController < ApplicationController
       @semester_panel.is_part_time = current_user.is_student && !current_user.is_part_time ? "FT" : "PT"
       @semester_panel.person_id = current_user.is_student ? current_user.id : ""
       @semester_panel.course_id = ""
-      @semester_panel.semester = ApplicationController.current_semester
+      @semester_panel.semester = AcademicCalendar.current_semester
       @semester_panel.year = Date.today.cwyear 
     end
 
@@ -507,17 +507,17 @@ class EffortReportsController < ApplicationController
     #given the course id, determine the start week and the end week of the semester
 
     @report_header = ["Team", "Person"]
-    (1..@course.semester_length).each do |week| @report_header << "Wk #{week} "  end
-#    @course.semester_length.times do @report_header << "Wk  "  end
+    (1..@course.course_length).each do |week| @report_header << "Wk #{week} "  end
+#    @course.course_length.times do @report_header << "Wk  "  end
 
     @report_lines = []
 
-    blank_line = Array.new(@course.semester_length, "-")
-    min_effort = Array.new(@course.semester_length, 100)
-    max_effort = Array.new(@course.semester_length, 0)
-    total_effort = Array.new(@course.semester_length, 0)
-    count_effort = Array.new(@course.semester_length, 0)
-    average_effort = Array.new(@course.semester_length, 0)
+    blank_line = Array.new(@course.course_length, "-")
+    min_effort = Array.new(@course.course_length, 100)
+    max_effort = Array.new(@course.course_length, 0)
+    total_effort = Array.new(@course.course_length, 0)
+    count_effort = Array.new(@course.course_length, 0)
+    average_effort = Array.new(@course.course_length, 0)
 
 
     @course.teams.each do |team|
@@ -564,12 +564,12 @@ class EffortReportsController < ApplicationController
     person_effort_log_lines = EffortLog.find_by_sql(["SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.person_id = ? order by effort_logs.week_number", course.id, person.id])
 
     person_result = []
-    @course.semester_length.times do person_result << 0 end
+    @course.course_length.times do person_result << 0 end
     if !person_effort_log_lines.nil? && person_effort_log_lines.size != 0 then
       person_effort_log_lines.each do |line|
         week = line.week_number.to_i
-        if week >= @course.semester_start && week <= @course.semester_end then
-          person_result[week - @course.semester_start + 0] += line.sum.to_i  #add two to skip the team and person label at the front of the array
+        if week >= @course.course_start && week <= @course.course_end then
+          person_result[week - @course.course_start + 0] += line.sum.to_i  #add two to skip the team and person label at the front of the array
         end
 
       end

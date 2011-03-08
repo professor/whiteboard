@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
   
   def current_semester
     @all_courses = false
-    @semester = ApplicationController.current_semester()
+    @semester = AcademicCalendar.current_semester()
     @year = Date.today.year
     @courses = Course.for_semester(@semester, @year)
     index_core
@@ -23,8 +23,8 @@ class CoursesController < ApplicationController
 
   def next_semester
     @all_courses = false
-    @semester = ApplicationController.next_semester()
-    @year = ApplicationController.next_semester_year()
+    @semester = AcademicCalendar.next_semester()
+    @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
     index_core
   end
@@ -54,7 +54,7 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     @course = Course.new
-    @course.semester = ApplicationController.current_semester
+    @course.semester = AcademicCalendar.current_semester
     @course.year = Time.now.year
     @course_numbers = CourseNumber.find(:all, :order => "name")
 

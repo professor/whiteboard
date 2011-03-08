@@ -1,4 +1,5 @@
 require "spec_helper"
+require "models/archived_behavior"
 
 describe SponsoredProjectSponsor do
 
@@ -16,6 +17,12 @@ describe SponsoredProjectSponsor do
         subject.errors[attr].should_not be_empty
       end
     end
+
+    it "without is_archived" do
+      subject.is_archived = nil
+      subject.should_not be_valid
+      subject.errors[:is_archived].should_not be_empty
+    end
   end
 
   it 'name must be unique' do
@@ -23,6 +30,16 @@ describe SponsoredProjectSponsor do
     non_unique_project = SponsoredProjectSponsor.new(:name => sponsor.name)
     non_unique_project.should_not be_valid
   end
+
+
+  describe "objects" do
+    before(:each) do
+       @archived =  Factory(:sponsored_project_sponsor, :is_archived => true)
+       @current =  Factory(:sponsored_project_sponsor, :is_archived => false)
+    end
+
+    it_should_behave_like "archived objects"
+  end  
 
 
 end

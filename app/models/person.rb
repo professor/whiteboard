@@ -46,8 +46,8 @@ class Person < ActiveRecord::Base
 #    end
 #  end
 
-  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}
-  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}
+  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
+  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
 
     def before_validation
@@ -98,7 +98,7 @@ class Person < ActiveRecord::Base
 
 
    def get_registered_courses
-    semester = ApplicationController.current_semester()
+    semester = AcademicCalendar.current_semester()
 
     @sql_str = "select c.* FROM courses c,teams t
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in

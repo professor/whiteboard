@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "models/archived_behavior"
 
 describe SponsoredProject do
 
@@ -15,6 +16,12 @@ describe SponsoredProject do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
       end
+    end
+
+    it "without is_archived" do
+      subject.is_archived = nil
+      subject.should_not be_valid
+      subject.errors[:is_archived].should_not be_empty
     end
   end
 
@@ -35,9 +42,14 @@ describe SponsoredProject do
       project.save
       project.sponsor.name.should_not be_empty
     end
-
-    
   end
 
+  describe "objects" do
+    before(:each) do
+      @archived = Factory(:sponsored_project, :is_archived => true)
+      @current = Factory(:sponsored_project, :is_archived => false)
+    end
 
+    it_should_behave_like "archived objects"
+  end
 end
