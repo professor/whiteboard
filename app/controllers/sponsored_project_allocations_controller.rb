@@ -24,7 +24,8 @@ class SponsoredProjectAllocationsController < ApplicationController
     @projects = SponsoredProject.current
 
     if @allocation.save
-      redirect_to(sponsored_project_allocations_path, :notice => 'Allocation was successfully created.')
+      flash[:notice] = 'Allocation was successfully created.'
+      redirect_to(sponsored_project_allocations_path)
     else
       render "new"
     end
@@ -37,7 +38,8 @@ class SponsoredProjectAllocationsController < ApplicationController
     @projects = SponsoredProject.current
 
     if @allocation.update_attributes(params[:sponsored_project_allocation])
-      redirect_to(sponsored_project_allocations_path, :notice => 'Allocation was successfully updated.')
+      flash[:notice] = 'Allocation was successfully updated.'
+      redirect_to(sponsored_project_allocations_path)
     else
       render "edit"
     end
