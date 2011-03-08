@@ -74,7 +74,7 @@ class AcademicCalendar
 
   def self.spring_break(year)
     case year
-      when 2010
+      when 2011
         return 9..10
       when 2010
         return 9..10
