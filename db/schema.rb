@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110225193907) do
+ActiveRecord::Schema.define(:version => 20110308175158) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -242,8 +242,10 @@ ActiveRecord::Schema.define(:version => 20110225193907) do
     t.integer  "current_allocation"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_archived",          :default => false
   end
 
+  add_index "sponsored_project_allocations", ["is_archived"], :name => "index_sponsored_project_allocations_on_is_archived"
   add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocations_on_person_id"
   add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocations_on_sponsored_project_id"
 
@@ -266,8 +268,10 @@ ActiveRecord::Schema.define(:version => 20110225193907) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_archived", :default => false
   end
 
+  add_index "sponsored_project_sponsors", ["is_archived"], :name => "index_sponsored_project_sponsors_on_is_archived"
   add_index "sponsored_project_sponsors", ["name"], :name => "index_sponsored_project_sponsors_on_name"
 
   create_table "sponsored_projects", :force => true do |t|
@@ -275,8 +279,10 @@ ActiveRecord::Schema.define(:version => 20110225193907) do
     t.integer  "sponsor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_archived", :default => false
   end
 
+  add_index "sponsored_projects", ["is_archived"], :name => "index_sponsored_projects_on_is_archived"
   add_index "sponsored_projects", ["name"], :name => "index_sponsored_projects_on_name"
   add_index "sponsored_projects", ["sponsor_id"], :name => "index_sponsored_projects_on_sponsor_id"
 

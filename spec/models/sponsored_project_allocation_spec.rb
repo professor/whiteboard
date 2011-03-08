@@ -17,6 +17,12 @@ describe SponsoredProjectAllocation do
       end
     end
 
+    it "without is_archived" do
+      subject.is_archived = nil
+      subject.should_not be_valid
+      subject.errors[:is_archived].should_not be_empty
+    end
+
     it "when current_allocation is non-numerical" do
       sponsored_project_person = Factory.build(:sponsored_project_allocation, :current_allocation => "test")
       sponsored_project_person.should_not be_valid
@@ -48,6 +54,29 @@ describe SponsoredProjectAllocation do
     end
 
 
+  end
+
+  describe 'Custom Finders' do
+    it "should respond to allocations" do
+      SponsoredProjectAllocation.should respond_to(:allocations)
+    end
+
+    it "allocations does not include archived allocations" do
+      Factory(:sponsored_project_allocation, :is_archived => true)
+      SponsoredProjectAllocation.allocations.should be_empty
+    end
+
+    it "should respond to archived_allocations" do
+      SponsoredProjectAllocation.should respond_to(:archived_allocations)
+    end
+
+    it "archived allocations includes only archived allocations" do
+      archived_allocation = Factory(:sponsored_project_allocation, :is_archived => true)
+      Factory(:sponsored_project_allocation, :is_archived => false, :person => archived_allocation.person)
+      archived_allocations = SponsoredProjectAllocation.archived_allocations
+      archived_allocations.length.should == 1
+      archived_allocations[0].should == archived_allocation
+    end
   end
 
   context "creates monthly copy to sponsored project effort" do
