@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "models/archived_behavior"
 
 describe SponsoredProjectAllocation do
 
@@ -56,27 +57,14 @@ describe SponsoredProjectAllocation do
 
   end
 
-  describe 'Custom Finders' do
-    it "should respond to allocations" do
-      SponsoredProjectAllocation.should respond_to(:allocations)
+
+  describe "objects" do
+    before(:each) do
+      @archived = Factory(:sponsored_project_allocation, :is_archived => true)
+      @current = Factory(:sponsored_project_allocation, :is_archived => false, :person => @archived.person)
     end
 
-    it "allocations does not include archived allocations" do
-      Factory(:sponsored_project_allocation, :is_archived => true)
-      SponsoredProjectAllocation.allocations.should be_empty
-    end
-
-    it "should respond to archived_allocations" do
-      SponsoredProjectAllocation.should respond_to(:archived_allocations)
-    end
-
-    it "archived allocations includes only archived allocations" do
-      archived_allocation = Factory(:sponsored_project_allocation, :is_archived => true)
-      Factory(:sponsored_project_allocation, :is_archived => false, :person => archived_allocation.person)
-      archived_allocations = SponsoredProjectAllocation.archived_allocations
-      archived_allocations.length.should == 1
-      archived_allocations[0].should == archived_allocation
-    end
+    it_should_behave_like "archived objects"
   end
 
   context "creates monthly copy to sponsored project effort" do

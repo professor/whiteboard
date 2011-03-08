@@ -5,8 +5,8 @@ class SponsoredProjectAllocation < ActiveRecord::Base
   validates_numericality_of :current_allocation, :greater_than_or_equal_to => 0
   validates_inclusion_of :is_archived, :in => [true, false]
 
-  named_scope :allocations, :conditions => {:is_archived => false}
-  named_scope :archived_allocations, :conditions => {:is_archived => true}
+  named_scope :current, :conditions => {:is_archived => false}
+  named_scope :archived, :conditions => {:is_archived => true}
 
   default_scope :order => "person_id ASC"
 

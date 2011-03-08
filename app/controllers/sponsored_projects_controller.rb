@@ -4,7 +4,7 @@ class SponsoredProjectsController < ApplicationController
 
   def index
     @projects = SponsoredProject.find(:all, :order => "SPONSOR_ID ASC, NAME ASC")
-    @sponsors = SponsoredProjectSponsor.sponsors
+    @sponsors = SponsoredProjectSponsor.current
   end
 
   def new

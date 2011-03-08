@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "models/archived_behavior"
 
 describe SponsoredProject do
 
@@ -43,28 +44,12 @@ describe SponsoredProject do
     end
   end
 
-  describe 'Custom Finders' do
-    it "should respond to projects" do
-      SponsoredProject.should respond_to(:projects)
+  describe "objects" do
+    before(:each) do
+      @archived = Factory(:sponsored_project, :is_archived => true)
+      @current = Factory(:sponsored_project, :is_archived => false)
     end
 
-    it "projects does not include archived projects" do
-      Factory(:sponsored_project, :is_archived => true)
-      SponsoredProject.projects.should be_empty
-    end
-
-    it "should respond to archived_projects" do
-      SponsoredProject.should respond_to(:archived_projects)
-    end
-
-    it "archived projects includes only archived projects" do
-      archived_project = Factory(:sponsored_project, :is_archived => true)
-      Factory(:sponsored_project, :is_archived => false)
-      archived_projects = SponsoredProject.archived_projects
-      archived_projects.length.should == 1
-      archived_projects[0].should == archived_project
-    end
+    it_should_behave_like "archived objects"
   end
-
-
 end

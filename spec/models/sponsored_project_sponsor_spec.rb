@@ -1,4 +1,5 @@
 require "spec_helper"
+require "models/archived_behavior"
 
 describe SponsoredProjectSponsor do
 
@@ -30,28 +31,15 @@ describe SponsoredProjectSponsor do
     non_unique_project.should_not be_valid
   end
 
-  describe 'Custom Finders' do
-    it "should respond to sponsors" do
-      SponsoredProjectSponsor.should respond_to(:sponsors)
+
+  describe "objects" do
+    before(:each) do
+       @archived =  Factory(:sponsored_project_sponsor, :is_archived => true)
+       @current =  Factory(:sponsored_project_sponsor, :is_archived => false)
     end
 
-    it "sponsors does not include archived sponsors" do
-      Factory(:sponsored_project_sponsor, :is_archived => true)
-      SponsoredProjectSponsor.sponsors.should be_empty
-    end
-
-    it "should respond to archived_sponsors" do
-      SponsoredProjectSponsor.should respond_to(:archived_sponsors)
-    end
-
-    it "archived sponsor includes only archived sponsors" do
-      archived_sponsor = Factory(:sponsored_project_sponsor, :is_archived => true)
-      Factory(:sponsored_project_sponsor, :is_archived => false)
-      archived_sponsors = SponsoredProjectSponsor.archived_sponsors
-      archived_sponsors.length.should == 1
-      archived_sponsors[0].should == archived_sponsor
-    end
-  end
+    it_should_behave_like "archived objects"
+  end  
 
 
 end
