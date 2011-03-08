@@ -1,12 +1,13 @@
 
 <h1>Sponsored Projects</h1>
 <table cellpadding="3">
-  <tr><th>Sponsor</th><th>Name</th><th>&nbsp;</th></tr>
+  <tr><th>Sponsor</th><th>Name</th><th>&nbsp;</th><th>&nbsp;</th></tr>
   <% @projects.each do |project| %>
       <tr>
         <td><%= project.sponsor.name %></td>
         <td><%= project.name %></td>
         <td><%= link_to 'Edit', edit_sponsored_project_path(project) %></td>
+        <td><%= link_to 'Archive', archive_sponsored_project_path(project) %></td>
       </tr>
   <% end %>
 <tr><td colspan="3"><%= link_to 'New project', new_sponsored_project_path %></td></tr>
@@ -15,12 +16,12 @@
 
 <h1>Sponsors</h1>
 <table cellpadding="3">
-  <tr><th>Name</th></tr>
+  <tr><th>Name</th><th>&nbsp;</th><th>&nbsp;</th></tr>
   <% @sponsors.each do |sponsor| %>
       <tr>
         <td><%= sponsor.name %></td>
         <td><%= link_to 'Edit', edit_sponsored_project_sponsor_path(sponsor) %></td>
-
+        <td><%= link_to 'Archive', archive_sponsored_project_sponsor_path(sponsor) %></td>
       </tr>
   <% end %>
   <tr><td colspan="2"><%= link_to 'New sponsor', new_sponsored_project_sponsor_path %></td></tr>
