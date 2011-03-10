@@ -61,6 +61,11 @@ Factory.define :sponsored_project_allocation, :class => SponsoredProjectAllocati
   sp.is_archived false
 end
 
+Factory.define :suggestion do |sds|
+  sds.page "http://rails.sv.cmu.edu"
+  sds.comment "This is the best website ever"
+end
+
 Factory.define :task_type do |t|
   t.is_staff 0
   t.name "Task name"
