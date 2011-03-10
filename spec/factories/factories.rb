@@ -32,6 +32,11 @@ Factory.define :person, :class => Person do |p|
   p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
 end
 
+Factory.define :scotty_dog_saying do |sds|
+  sds.association :user, :factory => :student_sam
+  sds.saying "Tartan is my favorite color"
+end
+
 Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |spe|
   spe.association :sponsored_project_allocation, :factory => :sponsored_project_allocation
   spe.current_allocation 10
