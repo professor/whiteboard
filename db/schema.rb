@@ -236,6 +236,19 @@ ActiveRecord::Schema.define(:version => 20110311170137) do
 
   add_index "scotty_dog_sayings", ["user_id"], :name => "index_scotty_dog_sayings_on_user_id"
 
+  create_table "sponsored_project_allocation", :force => true do |t|
+    t.integer  "sponsored_project_id"
+    t.integer  "person_id"
+    t.integer  "current_allocation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_archived",          :default => false
+  end
+
+  add_index "sponsored_project_allocation", ["is_archived"], :name => "index_sponsored_project_allocation_on_is_archived"
+  add_index "sponsored_project_allocation", ["person_id"], :name => "index_sponsored_project_allocation_on_person_id"
+  add_index "sponsored_project_allocation", ["sponsored_project_id"], :name => "index_sponsored_project_allocation_on_sponsored_project_id"
+
   create_table "sponsored_project_allocations", :force => true do |t|
     t.integer  "sponsored_project_id"
     t.integer  "person_id"
