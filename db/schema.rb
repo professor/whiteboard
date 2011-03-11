@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308175158) do
+ActiveRecord::Schema.define(:version => 20110311170137) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -245,9 +245,9 @@ ActiveRecord::Schema.define(:version => 20110308175158) do
     t.boolean  "is_archived",          :default => false
   end
 
-  add_index "sponsored_project_allocations", ["is_archived"], :name => "index_sponsored_project_allocations_on_is_archived"
-  add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocations_on_person_id"
-  add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocations_on_sponsored_project_id"
+  add_index "sponsored_project_allocations", ["is_archived"], :name => "index_sponsored_project_allocation_on_is_archived"
+  add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocation_on_person_id"
+  add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocation_on_sponsored_project_id"
 
   create_table "sponsored_project_efforts", :force => true do |t|
     t.integer  "sponsored_project_allocation_id"
