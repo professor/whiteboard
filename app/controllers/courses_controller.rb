@@ -56,7 +56,6 @@ class CoursesController < ApplicationController
     @course = Course.new
     @course.semester = AcademicCalendar.current_semester
     @course.year = Time.now.year
-    @course_numbers = CourseNumber.find(:all, :order => "name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -67,7 +66,6 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
-    @course_numbers = CourseNumber.find(:all, :order => "name")
 
   end
 
@@ -75,11 +73,6 @@ class CoursesController < ApplicationController
   # POST /courses.xml
   def create
     @course = Course.new(params[:course])
-    @course_template = CourseNumber.find(params[:course][:course_number_id]) unless params[:course][:course_number_id].blank?
-    if @course_template
-      @course.name = @course_template.name
-      @course.number = @course_template.number      
-    end
 
     respond_to do |format|
       if @course.save
