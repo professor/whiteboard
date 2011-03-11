@@ -3,6 +3,23 @@ require 'spec_helper'
 describe Course do
 
 
+  it 'can be created' do
+    lambda {
+      Factory(:course)
+    }.should change(Course, :count).by(1)
+  end
+
+  context "is not valid" do
+
+    [:semester, :year, :mini].each do |attr|
+      it "without #{attr}" do
+        subject.should_not be_valid
+        subject.errors[attr].should_not be_empty
+      end
+    end
+  end
+
+
   it "should know which courses are offered this semester" do
     list = Course.current_semester_courses
     course = Factory(:fse)

@@ -3,10 +3,6 @@
 
 <% form_for(@course) do |f| %>
     <%= f.error_messages %>
-  <p>
-    Course template<br />
-    <%= f.collection_select(:course_number_id, @course_numbers, :id, :name, :include_blank => true) %>
-  </p>
     <p>
       <%= f.label :short_name, "Abbreviation" %><br />
       <%= f.text_field :short_name %>

@@ -3,6 +3,8 @@ class Course < ActiveRecord::Base
   belongs_to :course_number
   has_many :pages, :order => "position"
 
+  validates_presence_of :semester, :year, :mini
+
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
