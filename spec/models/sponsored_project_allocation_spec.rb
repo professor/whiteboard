@@ -33,6 +33,12 @@ describe SponsoredProjectAllocation do
       sponsored_project_person = Factory.build(:sponsored_project_allocation, :current_allocation => -1)
       sponsored_project_person.should_not be_valid
     end
+
+    it "when a duplicate allocation exists for the same person to project" do
+      original = Factory(:sponsored_project_allocation)
+      duplicate = Factory.build(:sponsored_project_allocation, :person => original.person, :sponsored_project => original.sponsored_project)
+      duplicate.should_not be_valid
+    end
   end
 
   context "associations --" do
