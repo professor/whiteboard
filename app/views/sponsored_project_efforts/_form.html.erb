@@ -1,0 +1,38 @@
+
+<%# look at http://railscasts.com/episodes/165-edit-multiple %>
+
+<% form_for(@efforts) do |f| %>
+  <%= f.error_messages %>
+
+
+<table id="allocation_table" class="tablesorter" cellpadding="3">
+  <thead>
+<tr>
+  <th>Sponsor</th>
+  <th>Project</th>
+  <th>Planned Allocation</th>
+  <th>Actual Allocation</th>
+</tr>
+</thead>
+<tbody>
+
+For the month of X, our records show that your effort was distributed as follows:
+
+<% @efforts.each do |effort| %>
+    <tr><td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
+        <td><%= effort.sponsored_project_allocation.sponsored_project.name %></td>
+        <td><%= effort.current_allocation %> </td>
+        <td><%= f.text_field effort.actual_allocation, :size => 2 %> %</td></tr>
+<% end %>
+
+Is this distribution a correct approximation of your effort?
+
+ </tbody>
+</table>
+
+  <br />
+  <%= f.submit "I confirm this to be accurate" %>
+  <br/>
+  <br/>
+<% end %>
+

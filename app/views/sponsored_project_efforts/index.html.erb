@@ -1,0 +1,70 @@
+<% content_for :tablesorter do %>
+  <%= javascript_include_tag 'tablesorter' %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+<script type="text/javascript">
+$(document).ready(function()
+    {
+       if ($("#filterBoxOne").attr("disabled") == true)
+       {
+         $('#filterBoxOne').val('');
+         $('#filterBoxOne').removeAttr("disabled");
+         $('#filterBoxOne').focus();
+        }
+        
+        $("#allocation_table").tablesorter({widgets: ['zebra'],
+                                        headers: {4: {sorter: false},5: {sorter: false}  },
+                                        sortList: [[0,0], [1,0]]})
+            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                filterClearContainer: $("#filterClearOne"),
+                filterColumns: [0, 1, 2, 3],
+                filterCaseSensitive: false
+            });
+
+
+        //hovering over a line selects it
+        $("tr").hover(
+            function () {
+              $(this).addClass("hover");
+            },
+            function () {
+              $(this).removeClass("hover");
+        });
+      }
+);
+</script>
+<% end %>
+
+
+
+<h1>Allocations</h1>
+<div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
+<br/>
+<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
+<table id="allocation_table" class="tablesorter" cellpadding="3">
+  <thead>
+<tr>
+  <th>Person</th>
+  <th>Sponsor</th>
+  <th>Project</th>
+  <th>Allocation</th>
+  <th></th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+<% @allocations.each do |allocation| %>
+    <tr class="tablesorter">
+      <td><%= allocation.person.human_name %></td>
+      <td><%= allocation.sponsored_project.sponsor.name %></td>
+      <td><%= allocation.sponsored_project.name %></td>
+      <td><%= allocation.current_allocation %> %</td>
+      <td><%= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
+      <td><%= link_to 'Archive', archive_sponsored_project_allocation_path(allocation) %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>
+<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
+
+<br/>
+<br/>

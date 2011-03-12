@@ -8,7 +8,7 @@ class SponsoredProjectEffortsController < ApplicationController
   end
 
   def edit
-      @person = Person.find_by_twiki_name(params[:name])
+      @person = Person.find_by_twiki_name(params[:id])
 
       if true
 #      if @person == @current_user || @current_user.is_admin
