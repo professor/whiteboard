@@ -79,4 +79,37 @@ describe SponsoredProjectEffort do
     end
   end
 
+  context "with named scopes" do
+    before(:each) do
+      @faculty_frank = Factory(:faculty_frank)
+      @faculty_fagan = Factory(:faculty_fagan)
+
+      @allocation_frank = Factory(:sponsored_project_allocation, :person => @faculty_frank)
+      @allocation_fagan = Factory(:sponsored_project_allocation, :person => @faculty_fagan)
+
+      @effort_frank = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
+      @effort_fagan = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
+    end
+
+    it "responds to current_months_efforts_for_user" do
+      SponsoredProjectEffort.should respond_to(:current_months_efforts_for_user)
+    end
+
+    it "finds all effort for the current month for a given user" do
+      efforts = [@effort_frank]
+      SponsoredProjectEffort.current_months_efforts_for_user(@faculty_frank.id).should == efforts
+    end
+
+    it "responds to for_all_users_for_a_given_month" do
+      SponsoredProjectEffort.should respond_to(:for_all_users_for_a_given_month)
+    end
+
+    it "finds all effort for the current month for all users" do
+      efforts = [@effort_frank, @effort_fagan]
+
+      SponsoredProjectEffort.for_all_users_for_a_given_month(@effort_frank.month, @effort_frank.year).should == efforts
+    end    
+  end
+
+
 end

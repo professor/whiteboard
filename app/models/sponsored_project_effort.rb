@@ -12,6 +12,15 @@ class SponsoredProjectEffort < ActiveRecord::Base
     end
   end
 
+  named_scope :for_all_users_for_a_given_month,
+              lambda { |month, year| {:conditions => ["month = ? and year = ?", month, year] }}
+
+  named_scope :current_months_efforts_for_user,
+              lambda { |person_id| {:include => :sponsored_project_allocation,
+                                    :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", Date.today.month, Date.today.year, person_id] }}
+
+#  default_scope :order => 'actual_allocation '
+
 
   def self.new_from_sponsored_project_allocation(allocation)
     
