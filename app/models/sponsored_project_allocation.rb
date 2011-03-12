@@ -8,7 +8,7 @@ class SponsoredProjectAllocation < ActiveRecord::Base
 
   def unique_person_to_project_allocation?
     duplicate = SponsoredProjectAllocation.find_by_person_id_and_sponsored_project_id(self.person_id, self.sponsored_project_id)
-    unless duplicate.nil?
+    unless duplicate.nil? || duplicate.id == self.id
       errors.add_to_base("Can't create duplicate allocation for the same person to project.")
     end
   end

@@ -56,7 +56,7 @@ end
 
 Factory.define :sponsored_project_allocation, :class => SponsoredProjectAllocation do |sp|
   sp.current_allocation 10
-  sp.association :person, :factory => :faculty_frank
+  sp.association :person, :factory => :student_sam
   sp.association :sponsored_project, :factory => :sponsored_project
   sp.is_archived false
 end
