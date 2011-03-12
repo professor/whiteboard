@@ -19,7 +19,7 @@ class SponsoredProjectEffort < ActiveRecord::Base
               lambda { |person_id| {:include => :sponsored_project_allocation,
                                     :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", Date.today.month, Date.today.year, person_id] }}
 
-#  default_scope :order => 'actual_allocation '
+#  default_scope :include => :sponsored_project_allocation,:order => 'sponsored_project_allocations.person_id ASC'
 
 
   def self.new_from_sponsored_project_allocation(allocation)

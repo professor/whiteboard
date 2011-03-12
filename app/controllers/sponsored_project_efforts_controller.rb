@@ -10,7 +10,8 @@ class SponsoredProjectEffortsController < ApplicationController
   def edit
       @person = Person.find_by_twiki_name(params[:name])
 
-      if @person == @current_user || @current_user.is_admin
+      if true
+#      if @person == @current_user || @current_user.is_admin
         @efforts = SponsoredProjectEffort.current_months_efforts_for_user(@person.id)
       else
         #bounce with error

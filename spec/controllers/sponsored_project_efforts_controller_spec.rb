@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe SponsoredProjectEffortsController do
+  fixtures :users
 
 
 
-  describe "GET edit as admin" do
+  describe "GET index" do
     before(:each) do
 #      @faculty_frank = Factory(:faculty_frank)
 #      @allocation_frank_p1 = Factory(:sponsored_project_allocation, :person => @faculty_frank)
@@ -19,7 +20,7 @@ describe SponsoredProjectEffortsController do
 
       @effort_mock = mock_model(SponsoredProjectEffort)
       SponsoredProjectEffort.stub(:find).and_return([@effort_mock, @effort_mock])
-      get :edit
+      get :index
     end
 
     it 'assigns @efforts' do
@@ -29,24 +30,28 @@ describe SponsoredProjectEffortsController do
 
   describe "GET edit as faculty" do
     before(:each) do
-      @faculty_frank = Factory(:faculty_frank)
-      @faculty_fagan = Factory(:faculty_fagan)
-
-      allocation_frank = stub_model(SponsoredProjectAllocation)
-      allocation_frank.stub(:person).and_return(@faculty_frank)
-
-      allocation_fagan = stub_model(SponsoredProjectAllocation)
-      allocation_fagan.stub(:person).and_return(@faculty_fagan)
-
-      @effort_mock_frank = mock_model(SponsoredProjectEffort)
-      @effort_mock_frank.should_receive(:allocation).and_return(allocation_frank)
-
-      @effort_mock_fagan = mock_model(SponsoredProjectEffort)
-      @effort_mock_fagan.should_receive(:allocation).and_return(allocation_fagan)
+#      @faculty_frank = Factory(:faculty_frank)
+#      @faculty_fagan = Factory(:faculty_fagan)
+#
+#      allocation_frank = stub_model(SponsoredProjectAllocation)
+#      allocation_frank.stub(:person).and_return(@faculty_frank)
+#
+#      allocation_fagan = stub_model(SponsoredProjectAllocation)
+#      allocation_fagan.stub(:person).and_return(@faculty_fagan)
+#
+#      @effort_mock_frank = mock_model(SponsoredProjectEffort)
+#      @effort_mock_frank.should_receive(:allocation).and_return(allocation_frank)
+#
+#      @effort_mock_fagan = mock_model(SponsoredProjectEffort)
+#      @effort_mock_fagan.should_receive(:allocation).and_return(allocation_fagan)
     end
 
     it 'assigns @efforts' do
+      UserSession.create(users(:faculty_frank))
+
       faculty_frank = Factory(:faculty_frank)
+#      UserSession.create(faculty_frank)
+
       efforts = [stub_model(SponsoredProjectEffort)]
       SponsoredProjectEffort.should_receive(:current_months_efforts_for_user).with(faculty_frank.id).and_return(efforts)
       get :edit, :name => faculty_frank.twiki_name
