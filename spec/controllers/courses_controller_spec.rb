@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 describe CoursesController do
-  fixtures :users
 
 
   let(:course) { Factory(:course) }
 
   context "any user" do
     before do
-      UserSession.create(users(:student_sam))
+      UserSession.create(Factory(:student_sam))
     end
 
     describe "GET new course" do
