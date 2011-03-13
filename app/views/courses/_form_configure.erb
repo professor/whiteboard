@@ -1,0 +1,19 @@
+<% form_for(@course) do |f| %>
+    <%= f.error_messages %>
+
+  <p>
+    <%= f.label :primary_faculty_label %><br />
+    <%= f.text_field(:primary_faculty_label, :size => 40)%>
+  </p>
+  <p>
+    <%= f.label :secondary_faculty_label %><br />
+    <%= f.text_field(:secondary_faculty_label, :size => 40)%>
+  </p>
+  <p>
+    <%= f.label :remind_about_effort, "Send out emails about effort logs and effort reports?" %><br />
+    <%= f.check_box(:remind_about_effort)%>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>

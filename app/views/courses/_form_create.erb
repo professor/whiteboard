@@ -1,0 +1,30 @@
+<% form_for(@course) do |f| %>
+    <%= f.error_messages %>
+  <p>
+    <%= f.label :short_name, "Abbreviation" %><br />
+    <%= f.text_field :short_name, :size => "7" %>
+  </p>
+    <p>
+      <%= f.label :name%><br />
+      <%= f.text_field :name, :size => "60" %>
+    </p>
+  <p>
+    <%= f.label :number %><br />
+    <%= f.text_field :number, :size => "7" %>
+  </p>
+  <p>
+    <%= f.label :semester %><br />
+    <%= f.select(:semester, ['Fall', 'Spring', 'Summer']) %>
+  </p>
+  <p>
+    <%= f.label :mini %><br />
+    <%= f.select(:mini, ['Both', 'A', 'B']) %>
+  </p>
+  <p>
+    <%= f.label :year %><br />
+    <%= f.text_field :year, :size => 4 %>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>

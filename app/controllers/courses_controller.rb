@@ -54,8 +54,8 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     @course = Course.new
-    @course.semester = AcademicCalendar.current_semester
-    @course.year = Time.now.year
+    @course.semester = AcademicCalendar.next_semester
+    @course.year = AcademicCalendar.next_semester_year
 
     respond_to do |format|
       format.html # new.html.erb
