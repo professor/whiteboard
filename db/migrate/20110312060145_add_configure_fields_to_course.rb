@@ -13,8 +13,6 @@ class AddConfigureFieldsToCourse < ActiveRecord::Migration
       t.integer :person_id
       t.timestamps
     end
-
-
   end
 
   def self.down
@@ -28,5 +26,6 @@ class AddConfigureFieldsToCourse < ActiveRecord::Migration
 
     drop_table :courses_people
   end
+
 
 end

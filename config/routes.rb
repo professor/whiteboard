@@ -45,11 +45,12 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :course_numbers
+  map.resources :course_configurations
   map.current_semester '/courses/current_semester', :controller => 'courses', :action => 'current_semester'
   map.next_semester '/courses/next_semester', :controller => 'courses', :action => 'next_semester'
   map.resources :pages, :collection => { :reposition => :post }
   map.resources :course_navigations
-  map.resources :courses, :has_many => :teams
+  map.resources :courses, :has_many => :teams, :member => { :configure => [:get]}
 
     map.connect '/effort_reports/campus_week', :controller => 'effort_reports', :action => 'campus_week'
     map.connect '/effort_reports/campus_semester', :controller => 'effort_reports', :action => 'campus_semester'

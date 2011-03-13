@@ -69,6 +69,10 @@ class CoursesController < ApplicationController
 
   end
 
+  def configure
+    edit
+  end
+
   # POST /courses
   # POST /courses.xml
   def create
