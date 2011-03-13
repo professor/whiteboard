@@ -1,36 +1,38 @@
 require 'spec_helper'
 
 describe SponsoredProjectEffortsController do
-#  fixtures :users
 
+  context "as faculty do" do
 
-
-  describe "GET index" do
-    before(:each) do
-      @effort_mock = mock_model(SponsoredProjectEffort)
-      SponsoredProjectEffort.stub(:find).and_return([@effort_mock, @effort_mock])
-      get :index
+    before do
+      @faculty_frank = Factory(:faculty_frank)
+      UserSession.create(@faculty_frank)
     end
 
-    it 'assigns @efforts' do
-      assigns(:efforts).should == [@effort_mock, @effort_mock]
+    describe "GET index" do
+      before(:each) do
+        @effort_mock = mock_model(SponsoredProjectEffort)
+        SponsoredProjectEffort.stub(:find).and_return([@effort_mock, @effort_mock])
+        get :index
+      end
+
+      it 'assigns @efforts' do
+        assigns(:efforts).should == [@effort_mock, @effort_mock]
+      end
     end
+
+    describe "GET edit" do
+
+      it 'assigns @efforts' do
+        efforts = [stub_model(SponsoredProjectEffort)]
+        SponsoredProjectEffort.should_receive(:current_months_efforts_for_user).with(@faculty_frank.id).and_return(efforts)
+        get :edit, :id => @faculty_frank.twiki_name
+        assigns(:efforts).should == efforts
+      end
+    end
+
   end
 
-  describe "GET edit" do
-
-    it 'assigns @efforts' do
-#      UserSession.create(users(:faculty_frank))
-
-      faculty_frank = Factory(:faculty_frank)
-#      UserSession.create(faculty_frank)
-
-      efforts = [stub_model(SponsoredProjectEffort)]
-      SponsoredProjectEffort.should_receive(:current_months_efforts_for_user).with(faculty_frank.id).and_return(efforts)
-      get :edit, :id => faculty_frank.twiki_name
-      assigns(:efforts).should == efforts
-    end
-  end
 
 #  describe "PUT update" do
 #
