@@ -1,19 +1,48 @@
 <% form_for(@course) do |f| %>
     <%= f.error_messages %>
 
-  <p>
-    <%= f.label :primary_faculty_label %><br />
-    <%= f.text_field(:primary_faculty_label, :size => 40)%>
-  </p>
-  <p>
-    <%= f.label :secondary_faculty_label %><br />
-    <%= f.text_field(:secondary_faculty_label, :size => 40)%>
-  </p>
-  <p>
-    <%= f.label :remind_about_effort, "Send out emails about effort logs and effort reports?" %><br />
-    <%= f.check_box(:remind_about_effort)%>
-  </p>
-  <p>
-    <%= f.submit button_name %>
-  </p>
+    <p>
+      <input type="checkbox" disabled="true" checked="checked">
+      <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:" %><br/>
+      <%= f.text_field :curriculum_url, :size => 100, :class => "checkboxed_form" %><br />
+    <ul><li>We use a variety of systems to host our curriculum including<ul><li>the twiki (http://info.sv.cmu.edu),</li>
+  <li>curriculum website (http://curriculum.sv.cmu.edu),</li><li>rails curriculum website (http://rails.sv.cmu.edu),</li>
+  <li>blackboard (http://www.cmu.edu/blackboard),</li><li>or your own external site.</li></ul></li></ul>
+    </p>
+    <p>
+      <%= f.check_box :configure_course_twiki %>
+      <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
+    </p>
+    <p>
+      <%= f.check_box :configure_class_mailinglist %>
+      <%= f.label :configure_class_mailinglist, "I want a class mailing list" %>
+    </p>
+    <p>
+      <%= f.check_box :configure_teams_name_themselves %>   
+      <%= f.label :configure_teams_name_themselves, "I will allow teams to name themselves" %>
+    </p>
+    <p>
+      <%= f.check_box(:remind_about_effort) %>
+      <%= f.label :remind_about_effort, "I will be using the Effort Logging Tool (note, all SE students are required to log effort)" %><br/>
+    </p>
+    <p>
+      <input type="checkbox" disabled="true">
+      I plan on using the Peer Evaluation Tool <br/>
+      <%= f.text_field :configure_peer_evaluation_date1, :size => 11, :class => "checkboxed_form" %> On this date, email the teams telling them about the peer evaluation. <br/>
+      <%= f.text_field :configure_peer_evaluation_date2, :size => 11, :class => "checkboxed_form" %> Due Date (An email reminder will be sent on this date)
+    </p>
+    <p>
+      <%= f.submit button_name %>
+    </p>
+<!--
+    <p>
+      <%= f.label :primary_faculty_label %><br/>
+      <%= f.text_field(:primary_faculty_label, :size => 40) %>
+    </p>
+    <p>
+      <%= f.label :secondary_faculty_label %><br/>
+      <%= f.text_field(:secondary_faculty_label, :size => 40) %>
+    </p>
+-->
+
 <% end %>
