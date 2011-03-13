@@ -27,6 +27,16 @@ describe CoursesController do
       end
      end
 
+    describe "GET configure course" do
+      before do
+        get :configure, :id => course.to_param
+      end
+
+      it "assigns course" do
+        assigns(:course).should == course
+      end
+     end
+
     describe "POST create" do
 
       describe "with valid params" do
@@ -99,8 +109,5 @@ describe CoursesController do
 
     end
   end
-
-# describe "GET configure" do
-#  end
 
 end
