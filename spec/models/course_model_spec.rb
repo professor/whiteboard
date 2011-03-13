@@ -11,7 +11,7 @@ describe Course do
 
   context "is not valid" do
 
-    [:semester, :year, :mini].each do |attr|
+    [:semester, :year, :mini, :name].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
