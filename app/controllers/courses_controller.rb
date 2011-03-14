@@ -66,7 +66,6 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
-
   end
 
   def configure
@@ -94,6 +93,10 @@ class CoursesController < ApplicationController
   # PUT /courses/1.xml
   def update
     @course = Course.find(params[:id])
+
+    if(params[:course][:is_configured]) #The previous page was configure action
+      CourseMailer.deliver_configure_course_admin_email(@course)
+    end
 
     respond_to do |format|
       if @course.update_attributes(params[:course])

@@ -1,0 +1,27 @@
+The course <%= @course.name %>
+
+
+<table><tr>
+  <th>Configuration</th>
+  <th>Value</th>
+</tr>
+<tr>
+  <td><%= "Please create a twiki web for my course" %></td>
+  <td><%= @course.configure_course_twiki %></td>
+</tr>
+</table>
+
+
+
+<h1>Configure your course</h1>
+<%# this should be much easier in Rails 3, I hope %>
+<%# render :partial => "/courses/form_configure", :locals => { :button_name => "Update" } %>
+
+
+
+
+<br/>
+<br/>
+<p>Regards,</p>
+<p>Scotty Dog</p>
+

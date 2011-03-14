@@ -1,17 +1,44 @@
+<% content_for :javascript do %>
+<script type="text/javascript">
+  $(document).ready(function()
+    {
+    $('#course_configure_course_twiki').change(function() {
+        if ($(this).is(':checked')) {
+        $('#course_curriculum_url').val("<%= @course.auto_generated_twiki_url %>");
+        $('#course_curriculum_url_notice').text("The curriculum url is the landing page for your course, since you want a twiki course web, we assume that you want to start here for your students. Feel free to change this value.");
+        }
+        else
+        {
+            $('#course_curriculum_url_notice').text("");
+        }
+     });
+
+    $('#course_configure_peer_evaluation').change(function() {
+        if ($(this).is(':checked')) {
+        $('#course_configure_peer_evaluation_date1').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
+        $('#course_configure_peer_evaluation_date2').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
+        }
+     });
+
+   });
+ </script>
+
+<% end %>
+
 <% form_for(@course) do |f| %>
     <%= f.error_messages %>
-
+    <p>
+      <%= f.check_box :configure_course_twiki %>
+      <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
+    </p>
     <p>
       <input type="checkbox" disabled="true" checked="checked">
       <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:" %><br/>
       <%= f.text_field :curriculum_url, :size => 100, :class => "checkboxed_form" %><br />
+    <p id="course_curriculum_url_notice" style="color: green"></p>
     <ul><li>We use a variety of systems to host our curriculum including<ul><li>the twiki (http://info.sv.cmu.edu),</li>
   <li>curriculum website (http://curriculum.sv.cmu.edu),</li><li>rails curriculum website (http://rails.sv.cmu.edu),</li>
   <li>blackboard (http://www.cmu.edu/blackboard),</li><li>or your own external site.</li></ul></li></ul>
-    </p>
-    <p>
-      <%= f.check_box :configure_course_twiki %>
-      <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
     </p>
     <p>
       <%= f.check_box :configure_class_mailinglist %>
@@ -26,12 +53,13 @@
       <%= f.label :remind_about_effort, "I will be using the Effort Logging Tool (note, all SE students are required to log effort)" %><br/>
     </p>
     <p>
-      <input type="checkbox" disabled="true">
+      <input type="checkbox" id="course_configure_peer_evaluation">
       I plan on using the Peer Evaluation Tool <br/>
       <%= f.text_field :configure_peer_evaluation_date1, :size => 11, :class => "checkboxed_form" %> On this date, email the teams telling them about the peer evaluation. <br/>
       <%= f.text_field :configure_peer_evaluation_date2, :size => 11, :class => "checkboxed_form" %> Due Date (An email reminder will be sent on this date)
     </p>
     <p>
+      <%= f.hidden_field :is_configured, :value => true %>
       <%= f.submit button_name %>
     </p>
 <!--
@@ -46,3 +74,5 @@
 -->
 
 <% end %>
+
+
