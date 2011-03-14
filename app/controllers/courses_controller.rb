@@ -107,6 +107,9 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
+        if(params[:course][:is_configured]) #The previous page was configure action
+          CourseMailer.deliver_configure_course_admin_email(@course)
+        end
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }
