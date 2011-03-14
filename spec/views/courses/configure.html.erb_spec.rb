@@ -5,6 +5,9 @@ describe "courses/configure.html.erb" do
     UserSession.create(Factory(:faculty_frank))
     @course = assigns[:course] = stub_model(Course,
         :name => "something",
+        :semester => "Fall",
+        :year => "2011",
+        :mini => "Both",
       :new_record? => false
     )
   end
