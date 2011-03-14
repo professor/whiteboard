@@ -48,5 +48,11 @@ RUBY_RUBY_RUBY
     AcademicCalendar.current_semester()
  end
 
+  def add_person_link(name)
+    link_to_function name do |page|
+      page.insert_html :bottom, :people_in_a_collection, :partial => '/people/person_in_a_collection', :object => Person.new
+    end
+  end
+
 
 end

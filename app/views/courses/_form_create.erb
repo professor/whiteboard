@@ -24,6 +24,14 @@
     <%= f.label :year %><br />
     <%= f.text_field :year, :size => 4 %>
   </p>
+ <div id="people_in_a_collection">
+  <p>Carnegie Mellon Silicon Valley teachers<br/>
+    <span class="help_text">Please add any teachers that are in our database</span>
+  </p>
+
+  <%= render :partial => '/people/person_in_a_collection', :collection =>@course.people, :locals => { :collection_form => f , :text_label => "Teacher"}   %>
+</div>
+    <div class="formItem indented"><p><%= add_person_link("Add a teacher") %></p></div>
   <p>
     <%= f.submit button_name %>
   </p>

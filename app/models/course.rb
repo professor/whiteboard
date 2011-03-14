@@ -90,6 +90,23 @@ class Course < ActiveRecord::Base
    return Date.commercial(self.year, self.course_start + 7)
   end
 
+  def update_people(teachers)
+    self.people = []
+    return "" if teachers.nil?
+
+    msg = ""
+    teachers.each do |name|
+       person = Person.find_by_human_name(name)
+       if person.nil?
+         msg = msg + "'" + name + "' is not in the database. "
+         #This next line doesn't quite seem to work
+         self.errors.add(:person_name, "Person " + name + " not found")
+       else
+         self.people << person
+       end
+    end
+    return msg
+  end
 
 
 end

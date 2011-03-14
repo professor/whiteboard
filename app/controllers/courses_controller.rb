@@ -96,6 +96,13 @@ class CoursesController < ApplicationController
 
     if(params[:course][:is_configured]) #The previous page was configure action
       CourseMailer.deliver_configure_course_admin_email(@course)
+    else
+      msg = @course.update_people(params[:people])
+      unless msg.blank?
+        flash[:error] = msg
+        redirect_to :action => 'edit'
+        return
+      end
     end
 
     respond_to do |format|
