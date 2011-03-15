@@ -57,7 +57,11 @@ $(document).ready(function()
 <% for course in @courses %>
    <tr class="tablesorter">
     <td><%=h course.number %></td>
-    <td><%=h course.display_name %></td>
+<% if course.curriculum_url.blank? %>
+    <td> <%=h course.display_name %></td>
+<% else %>
+    <td><a href='<%=course.curriculum_url %>'><%=h course.display_name %></a></td>
+<% end %>
     <td class="all_courses"><%=h course.semester %></td>
     <td><%=h course.mini %></td>
     <td class="all_courses"><%=h course.year %></td>
