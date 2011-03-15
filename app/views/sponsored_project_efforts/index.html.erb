@@ -11,7 +11,7 @@ $(document).ready(function()
          $('#filterBoxOne').focus();
         }
         
-        $("#allocation_table").tablesorter({widgets: ['zebra'],
+        $("#effort_table").tablesorter({widgets: ['zebra'],
                                         headers: {4: {sorter: false},5: {sorter: false}  },
                                         sortList: [[0,0], [1,0]]})
             .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
@@ -36,35 +36,36 @@ $(document).ready(function()
 
 
 
-<h1>Allocations</h1>
+<h1>Efforts for <%= @month %>/<%= @year %></h1>
 <div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
 <br/>
-<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
-<table id="allocation_table" class="tablesorter" cellpadding="3">
+<table id="effort_table" class="tablesorter" cellpadding="3">
   <thead>
 <tr>
   <th>Person</th>
   <th>Sponsor</th>
   <th>Project</th>
-  <th>Allocation</th>
+  <th>Current Allocation</th>
+  <th>Actual Allocation</th>
+  <th>Confirmed</th>
   <th></th>
   <th></th>
 </tr>
 </thead>
 <tbody>
-<% @allocations.each do |allocation| %>
+<% @efforts.each do |effort| %>
     <tr class="tablesorter">
-      <td><%= allocation.person.human_name %></td>
-      <td><%= allocation.sponsored_project.sponsor.name %></td>
-      <td><%= allocation.sponsored_project.name %></td>
-      <td><%= allocation.current_allocation %> %</td>
-      <td><%= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
-      <td><%= link_to 'Archive', archive_sponsored_project_allocation_path(allocation) %></td>
+      <td><%= effort.sponsored_project_allocation.person.human_name %></td>
+      <td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
+      <td><%= effort.sponsored_project_allocation.sponsored_project.name %></td>
+      <td><%= effort.current_allocation %> %</td>
+      <td><%= effort.actual_allocation %> %</td>
+      <td><%= effort.confirmed %></td>
+      <td><%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %></td>
     </tr>
 <% end %>
 </tbody>
 </table>
-<%= link_to 'New allocation', new_sponsored_project_allocation_path %>
 
 <br/>
 <br/>

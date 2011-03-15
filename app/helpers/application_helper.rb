@@ -44,10 +44,10 @@ RUBY_RUBY_RUBY
 # end
 
 
-  #Do we need this?
-# def current_semester
-#    AcademicCalendar.current_semester()
-# end
+  #Do we need this, used on welcome page
+ def current_semester
+    AcademicCalendar.current_semester()
+ end
 
   def add_person_link(name)
     link_to_function name do |page|
