@@ -59,7 +59,16 @@ class AcademicCalendar
   end
 
   def self.next_semester_is_soon
-    true
+    case self.current_mini
+      when "A"
+        false
+      when "B"
+        true
+      when "Unknown"
+        true
+      else
+        true
+    end
   end
 
   def self.week_during_semester?(year, week_number)

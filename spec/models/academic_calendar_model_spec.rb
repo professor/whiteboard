@@ -64,6 +64,34 @@ describe AcademicCalendar do
     end
   end
 
+  context 'next semester is soon' do
+    it 'should respond to next semester is soon' do
+      AcademicCalendar.should respond_to :next_semester_is_soon
+    end
+
+    it 'should return false when we are in Mini A' do
+     year = Date.today.year
+     ["Fall", "Spring", "Summer"].each do |semester|
+       Date.stub!(:today).and_return(Date.commercial(year, AcademicCalendar.semester_start(semester, year)))
+       AcademicCalendar.next_semester_is_soon.should == false
+     end
+    end
+
+    it 'otherwise return true' do
+      Date.stub!(:today).and_return(Date.new(2011, 3, 14))
+      AcademicCalendar.next_semester_is_soon.should == true
+    end
+
+    it 'should return false during Mini A, otherwise return true' do
+      year = Date.today.year
+      (1..52).each do |cweek|
+        Date.stub!(:today).and_return(Date.commercial(year, cweek))
+        AcademicCalendar.current_mini == "A" ? AcademicCalendar.next_semester_is_soon.should == false : AcademicCalendar.next_semester_is_soon.should == true
+      end
+    end
+
+
+  end
 
   context 'determine if a particular week is in a semester' do
     it 'should respond to semester_start' do
