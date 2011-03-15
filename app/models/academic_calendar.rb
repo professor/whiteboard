@@ -58,6 +58,9 @@ class AcademicCalendar
     end
   end
 
+  def self.next_semester_is_soon
+    true
+  end
 
   def self.week_during_semester?(year, week_number)
     case week_number
