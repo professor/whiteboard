@@ -31,54 +31,56 @@ describe SponsoredProjectEffortsController do
       end
     end
 
-  end
+    describe "PUT update" do
 
+      describe "with valid params" do
 
-  describe "PUT update" do
+        it "updates the requested efforts" do
 
-    describe "with valid params" do
+          @effort_1 = stub_model(SponsoredProjectEffort)
+          @effort_2 = stub_model(SponsoredProjectEffort)
+          efforts = [@effort_1, @effort_2]
 
-      it "updates the requested allocation" do
+          @effort_1.stub(:unique_month_year_allocation_id?).and_return(true)
+          @effort_2.stub(:unique_month_year_allocation_id?).and_return(true)
 
-        @effort_1 = stub_model(SponsoredProjectEffort)
-        @effort_2 = stub_model(SponsoredProjectEffort)
-        efforts = [@effort_1, @effort_2]
+          SponsoredProjectEffort.should_receive(:find).with("0").and_return(@effort_1)
+          SponsoredProjectEffort.should_receive(:find).with("1").and_return(@effort_2)
 
-        put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          @effort_1.should_receive(:actual_allocation=).with("25")
+          @effort_2.should_receive(:actual_allocation=).with("75")
 
-        SponsoredProjectEffort.should_receive(:find).with(0).and_return(@effort_1)
-        SponsoredProjectEffort.should_receive(:find).with(1).and_return(@effort_2)
+          @effort_1.should_receive(:confirmed=).with(true)
+          @effort_2.should_receive(:confirmed=).with(true)
 
-        @effort_1.should_receive(:current_allocation=).with("25")
-        @effort_2.should_receive(:current_allocation=).with("75")
+          subject.should_receive(:setup_edit).and_return(true)
 
-        @effort_1.should_receive(:confirmed=).with(true)
-        @effort_2.should_receive(:confirmed=).with(true)
+          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+        end
+
+  #      it "should assign @allocation" do
+  #        assigns(:allocation).should_not be_nil
+  #      end
+  #
+  #      it "redirects to allocations" do
+  #        response.should redirect_to(sponsored_project_allocations_path)
+  #      end
       end
 
-#      it "should assign @allocation" do
-#        assigns(:allocation).should_not be_nil
-#      end
-#
-#      it "redirects to allocations" do
-#        response.should redirect_to(sponsored_project_allocations_path)
-#      end
-    end
-
-    describe "with invalid params" do
-#      before do
-#        put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => ''}
-#      end
-#
-#      it "should assign @allocation" do
-#        assigns(:allocation).should_not be_nil
-#      end
-#
-#      it "re-renders the 'edit' template" do
-#        response.should render_template("edit")
-#      end
+      describe "with invalid params" do
+  #      before do
+  #        put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => ''}
+  #      end
+  #
+  #      it "should assign @allocation" do
+  #        assigns(:allocation).should_not be_nil
+  #      end
+  #
+  #      it "re-renders the 'edit' template" do
+  #        response.should render_template("edit")
+  #      end
+      end
     end
   end
-
 
 end
