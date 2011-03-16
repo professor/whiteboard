@@ -3,6 +3,7 @@ class SponsoredProjectEffort < ActiveRecord::Base
   validates_presence_of :sponsored_project_allocation_id
   validates_inclusion_of :confirmed, :in => [true, false]
   validates_numericality_of :year, :month, :current_allocation, :greater_than_or_equal_to => 0
+  validates_numericality_of :actual_allocation, :greater_than_or_equal_to => 0, :allow_blank => true
   validate :unique_month_year_allocation_id?
 
   def unique_month_year_allocation_id?

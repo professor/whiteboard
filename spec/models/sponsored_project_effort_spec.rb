@@ -18,14 +18,14 @@ describe SponsoredProjectEffort do
       end
     end
 
-    [:current_allocation, :year, :month].each do |attr|
+    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
       it "when #{attr} is non-numerical" do
         sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => "test")
         sponsored_project_effort.should_not be_valid
       end
     end
 
-    [:current_allocation, :year, :month].each do |attr|
+    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
       it "when #{attr} is a negative number" do
         sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => -1)
         sponsored_project_effort.should_not be_valid

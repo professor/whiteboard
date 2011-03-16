@@ -21,15 +21,23 @@ class SponsoredProjectEffortsController < ApplicationController
   def update
     effort_id_values = params[:effort_id_values]
 
+    @failed = false
     effort_id_values.each do |key,value|
       effort = SponsoredProjectEffort.find(key)
       effort.actual_allocation = value
       effort.confirmed = true
-      effort.save
+      unless effort.save
+        @failed = true
+      end
+    end
+
+    if @failed
+      flash.now[:error] = 'Your allocations did not save.'
+    else
+      flash.now[:notice] = 'Your allocations are confirmed.'
     end
 
     setup_edit
-    flash.now[:notice] = 'Your allocations are confirmed.'
     render 'edit'
   end
 
