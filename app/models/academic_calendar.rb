@@ -58,6 +58,18 @@ class AcademicCalendar
     end
   end
 
+  def self.next_semester_is_soon
+    case self.current_mini
+      when "A"
+        false
+      when "B"
+        true
+      when "Unknown"
+        true
+      else
+        true
+    end
+  end
 
   def self.week_during_semester?(year, week_number)
     case week_number
@@ -121,8 +133,12 @@ class AcademicCalendar
           when "Fall"
             return 34
         end
-      when 2008
+      when 2008 #This calendar is not aligned to the CMU Pittsburgh calendar
         case semester
+          when "Spring"
+            return 2
+          when "Summer"
+            return 16
           when "Fall"
             return 35
         end

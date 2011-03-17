@@ -8,6 +8,7 @@ Factory.define :admin_andy, :parent => :person do |p|
   p.first_name "Admin"
   p.last_name "Andy"
   p.human_name "Admin Andy"
+  p.twiki_name "AdminAndy"
 end
 
 Factory.define :student_sam, :parent => :person do |p|
@@ -19,6 +20,7 @@ Factory.define :student_sam, :parent => :person do |p|
   p.first_name "Student"
   p.last_name "Sam"
   p.human_name "Student Sam"
+  p.twiki_name "StudentSam"
 end
 
 Factory.define :faculty_frank, :parent => :person do |p|
@@ -29,6 +31,7 @@ Factory.define :faculty_frank, :parent => :person do |p|
   p.first_name "Faculty"
   p.last_name "Frank"
   p.human_name "Faculty Frank"
+  p.twiki_name "FacultyFrank"
 end
 
 Factory.define :faculty_fagan, :parent => :person do |p|
@@ -39,6 +42,7 @@ Factory.define :faculty_fagan, :parent => :person do |p|
   p.first_name "Faculty"
   p.last_name "Fagan"
   p.human_name "Faculty Fagan"
+  p.twiki_name "FacultyFagan"
 end
 
 Factory.define :strength_quest, :parent => :person do |p|

@@ -1,0 +1,35 @@
+
+<% form_tag sponsored_project_effort_path, :method => :put do %>
+
+
+<table id="effort_table" class="tablesorter" cellpadding="3">
+  <thead>
+<tr>
+  <th>Sponsor</th>
+  <th>Project</th>
+  <th>Planned Allocation</th>
+  <th>Actual Allocation</th>
+</tr>
+</thead>
+<tbody>
+
+For the month of X, our records show that your effort was distributed as follows:
+
+<% @efforts.each do |effort| %>
+    <tr><td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
+        <td><%= effort.sponsored_project_allocation.sponsored_project.name %></td>
+        <td><%= effort.current_allocation %> </td>
+        <td><%= text_field_tag "effort_id_values[#{effort.id}]", effort.actual_allocation, :size => 2 %> %</td></tr>
+<% end %>
+
+Is this distribution a correct approximation of your effort?
+
+ </tbody>
+</table>
+
+  <br />
+  <%= submit_tag "I confirm this to be accurate" %>
+  <br/>
+  <br/>
+<% end %>
+

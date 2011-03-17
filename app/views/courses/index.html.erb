@@ -57,15 +57,18 @@ $(document).ready(function()
 <% for course in @courses %>
    <tr class="tablesorter">
     <td><%=h course.number %></td>
-    <td><%=h course.display_name %></td>
+<% if course.curriculum_url.blank? %>
+    <td> <%=h course.display_name %></td>
+<% else %>
+    <td><a href='<%=course.curriculum_url %>'><%=h course.display_name %></a></td>
+<% end %>
     <td class="all_courses"><%=h course.semester %></td>
     <td><%=h course.mini %></td>
     <td class="all_courses"><%=h course.year %></td>
     <td><a href="/courses/<%=course.id%>/teams_photos">Teams</a></td>
     <td><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => course, :week => nil, :only_path=>true%></td>
-    
     <% if current_user && current_user.is_admin? %>
-    <td><%= link_to 'Show', course %></td>
+    <td><%= link_to 'Configure', configure_course_path(course) %></td>
     <td><%= link_to 'Edit', edit_course_path(course) %></td>
     <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
     <% end %>

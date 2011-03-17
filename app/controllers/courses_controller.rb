@@ -54,9 +54,8 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     @course = Course.new
-    @course.semester = AcademicCalendar.current_semester
-    @course.year = Time.now.year
-    @course_numbers = CourseNumber.find(:all, :order => "name")
+    @course.semester = AcademicCalendar.next_semester
+    @course.year = AcademicCalendar.next_semester_year
 
     respond_to do |format|
       format.html # new.html.erb
@@ -67,19 +66,16 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
-    @course_numbers = CourseNumber.find(:all, :order => "name")
+  end
 
+  def configure
+    edit
   end
 
   # POST /courses
   # POST /courses.xml
   def create
     @course = Course.new(params[:course])
-    @course_template = CourseNumber.find(params[:course][:course_number_id]) unless params[:course][:course_number_id].blank?
-    if @course_template
-      @course.name = @course_template.name
-      @course.number = @course_template.number      
-    end
 
     respond_to do |format|
       if @course.save
@@ -98,8 +94,22 @@ class CoursesController < ApplicationController
   def update
     @course = Course.find(params[:id])
 
+    if(params[:course][:is_configured]) #The previous page was configure action
+      CourseMailer.deliver_configure_course_admin_email(@course)
+    else
+      msg = @course.update_people(params[:people])
+      unless msg.blank?
+        flash[:error] = msg
+        redirect_to :action => 'edit'
+        return
+      end
+    end
+
     respond_to do |format|
       if @course.update_attributes(params[:course])
+        if(params[:course][:is_configured]) #The previous page was configure action
+          CourseMailer.deliver_configure_course_admin_email(@course)
+        end
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }

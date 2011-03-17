@@ -122,6 +122,10 @@ table.tablesorter tbody tr.hover td {
     font-size: 10px;
 }
 
+.checkboxed_form {
+    margin-left: 24px;
+}
+
 .user_photo {
     float: right;
 }

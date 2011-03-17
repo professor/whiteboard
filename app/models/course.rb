@@ -3,6 +3,11 @@ class Course < ActiveRecord::Base
   belongs_to :course_number
   has_many :pages, :order => "position"
 
+  has_and_belongs_to_many :people, :join_table=>"courses_people", :class_name => "Person"
+
+
+  validates_presence_of :semester, :year, :mini, :name
+
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
@@ -72,5 +77,36 @@ class Course < ActiveRecord::Base
     courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini] )
     return courses
   end
-  
+
+  def auto_generated_twiki_url
+    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}".delete(' ')
+  end
+
+  def auto_generated_peer_evaluation_date_start
+    return Date.commercial(self.year,self.course_start + 6)
+  end
+
+  def auto_generated_peer_evaluation_date_end
+   return Date.commercial(self.year, self.course_start + 7)
+  end
+
+  def update_people(teachers)
+    self.people = []
+    return "" if teachers.nil?
+
+    msg = ""
+    teachers.each do |name|
+       person = Person.find_by_human_name(name)
+       if person.nil?
+         msg = msg + "'" + name + "' is not in the database. "
+         #This next line doesn't quite seem to work
+         self.errors.add(:person_name, "Person " + name + " not found")
+       else
+         self.people << person
+       end
+    end
+    return msg
+  end
+
+
 end

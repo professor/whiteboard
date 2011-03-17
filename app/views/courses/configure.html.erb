@@ -1,0 +1,7 @@
+<% content_for :title, 'Configure Course - ' + @course.name %>
+<h1>Configure your course</h1>
+
+<%= render :partial => "form_configure", :locals => { :button_name => "Update" } %>
+
+<%= link_to 'Show', @course %> |
+<%= link_to 'Back', courses_path %>

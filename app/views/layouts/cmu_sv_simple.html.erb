@@ -64,7 +64,10 @@ $(document).ready(function(){
 <div class="left_nav_line"><a href="/effort_logs">Effort Reports</a></div>
 <div class="left_nav_line"><a href="/people">Users</a></div>
 <div class="left_nav_line"><a href="/effort_logs">My Teams</a></div>
-<div class="left_nav_line"><a href="/courses/current_semester"><%= @current_semester %> <%= @year %> Courses</a></div>
+<div class="Lv1Nav"><a class="Lv1NavLink" href="/courses/current_semester"><%= AcademicCalendar.current_semester() %> <%= Date.today.year %> Courses</a></div>
+<% if AcademicCalendar.next_semester_is_soon %>
+<div class="Lv1Nav"><a class="Lv1NavLink" href="/courses/next_semester"><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></div>
+<% end %>
 <div class="left_nav_line" />
 </div>
 </td></tr></table>
