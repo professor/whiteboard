@@ -79,6 +79,14 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       if @course.save
+
+        msg = @course.update_people(params[:people])
+        unless msg.blank?
+          flash.now[:error] = msg
+          render :action => 'edit'
+          return
+        end
+
         flash[:notice] = 'Course was successfully created.'
         format.html { redirect_to(@course) }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
@@ -99,8 +107,8 @@ class CoursesController < ApplicationController
     else
       msg = @course.update_people(params[:people])
       unless msg.blank?
-        flash[:error] = msg
-        redirect_to :action => 'edit'
+        flash.now[:error] = msg
+        render :action => 'edit'
         return
       end
     end
