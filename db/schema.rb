@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110312060145) do
+ActiveRecord::Schema.define(:version => 20110317211513) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -45,12 +45,14 @@ ActiveRecord::Schema.define(:version => 20110312060145) do
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
 
-  create_table "courses_people", :force => true do |t|
+  create_table "courses_people", :id => false, :force => true do |t|
     t.integer  "course_id"
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "courses_people", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -249,19 +251,6 @@ ActiveRecord::Schema.define(:version => 20110312060145) do
   end
 
   add_index "scotty_dog_sayings", ["user_id"], :name => "index_scotty_dog_sayings_on_user_id"
-
-  create_table "sponsored_project_allocation", :force => true do |t|
-    t.integer  "sponsored_project_id"
-    t.integer  "person_id"
-    t.integer  "current_allocation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_archived",          :default => false
-  end
-
-  add_index "sponsored_project_allocation", ["is_archived"], :name => "index_sponsored_project_allocation_on_is_archived"
-  add_index "sponsored_project_allocation", ["person_id"], :name => "index_sponsored_project_allocation_on_person_id"
-  add_index "sponsored_project_allocation", ["sponsored_project_id"], :name => "index_sponsored_project_allocation_on_sponsored_project_id"
 
   create_table "sponsored_project_allocations", :force => true do |t|
     t.integer  "sponsored_project_id"

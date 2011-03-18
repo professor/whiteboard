@@ -49,9 +49,9 @@ RUBY_RUBY_RUBY
     AcademicCalendar.current_semester()
  end
 
-  def add_person_link(name)
+  def add_person_link(name, member_label=nil)
     link_to_function name do |page|
-      page.insert_html :bottom, :people_in_a_collection, :partial => '/people/person_in_a_collection', :object => Person.new
+      page.insert_html :bottom, :people_in_a_collection, :partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => member_label}
     end
   end
 
