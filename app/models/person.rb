@@ -96,6 +96,19 @@ class Person < ActiveRecord::Base
   end
 
 
+  def permission_level_of(role)
+    case role
+      when :student
+        return (self.is_student? || self.is_staff? || self.is_admin?)
+      when :staff
+        return (self.is_staff? || self.is_admin?)
+      when :admin
+        return (self.is_admin?)
+      else
+        return false
+    end
+  end
+
 
    def get_registered_courses
     semester = AcademicCalendar.current_semester()
