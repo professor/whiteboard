@@ -3,7 +3,9 @@ require 'spec_helper'
 describe "courses/new.html.erb" do
   before(:each) do
     UserSession.create(Factory(:faculty_frank))
-    assigns[:course] = stub_model(Course).as_new_record
+    course = stub_model(Course).as_new_record
+    course.stub(:people).and_return([stub_model(Person)])
+    assigns[:course] = course
     assigns[:course_numbers] = [stub_model(CourseNumber)]
 
   end
