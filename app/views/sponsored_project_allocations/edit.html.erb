@@ -2,7 +2,8 @@
 
 <%= render :partial => "form", :locals => { :button_name => "Update" } %>
 
-
+<% if current_user.is_admin %>
 <%= link_to 'Back', sponsored_project_allocations_path %>
+<% end %>
 <br/>
 <br/>

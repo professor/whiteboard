@@ -5,7 +5,6 @@
 #
 #    @efforts = assigns[:efforts] = [Factory(:sponsored_project_effort)]
 #    @person = @efforts[0].sponsored_project_allocation.person
-#    assigns[:id] = @person.twiki_name
 ##    @effort = assigns[:effort] = stub_model(SponsoredProjectEffort, :new_record? => false)
 #  end
 #
