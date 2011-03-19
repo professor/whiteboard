@@ -12,7 +12,7 @@ $(document).ready(function()
         }
         
         $("#effort_table").tablesorter({widgets: ['zebra'],
-                                        headers: {4: {sorter: false},5: {sorter: false}  },
+                                        headers: {6: {sorter: false}  },
                                         sortList: [[0,0], [1,0]]})
             .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
                 filterClearContainer: $("#filterClearOne"),
@@ -48,7 +48,6 @@ $(document).ready(function()
   <th>Current Allocation</th>
   <th>Actual Allocation</th>
   <th>Confirmed</th>
-  <th></th>
   <th></th>
 </tr>
 </thead>

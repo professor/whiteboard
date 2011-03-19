@@ -70,6 +70,20 @@ acts_as_authentic
     return [teams_map, teams_students_map]
   end
 
+
+  def permission_level_of(role)
+    case role
+      when :student
+        return (self.is_student? || self.is_staff? || self.is_admin?)
+      when :staff
+        return (self.is_staff? || self.is_admin?)
+      when :admin
+        return (self.is_admin?)
+      else
+        return false
+    end
+  end
+
   protected
     
 
