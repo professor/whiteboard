@@ -138,7 +138,8 @@ describe SponsoredProjectAllocationsController do
   context "as faculty do " do
 
     before do
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = allocation.person
+      @faculty_frank.is_admin = false
       UserSession.create(@faculty_frank)
     end
 
