@@ -95,5 +95,15 @@ class ApplicationController < ActionController::Base
       session[:return_to] = nil
     end
 
+    # level = :admin, :staff, :student
+    def has_permissions_or_redirect(level, url)
+        unless current_user.permission_level_of(level)
+          flash[:error] = t(:no_permission)
+#          redirect_back_or_default(url)
+          redirect_to(url)
+          return false
+        end
+      return true
+    end
 
 end

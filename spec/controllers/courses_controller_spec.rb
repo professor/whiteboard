@@ -1,13 +1,107 @@
 require 'spec_helper'
+require 'controllers/permission_behavior'
 
 describe CoursesController do
 
 
   let(:course) { Factory(:course) }
 
+  shared_examples_for "courses_for_a_given_semester" do
+    specify { assigns(:courses).should_not be_nil }
+    specify { assigns(:semester).should_not be_nil }
+    specify { assigns(:semester).should_not be_nil }
+    specify { assigns(:all_courses).should == false }
+  end
+
   context "any user" do
     before do
       UserSession.create(Factory(:student_sam))
+    end
+
+    describe "GET current semester" do
+      before do
+        get :current_semester
+      end
+
+      it_should_behave_like "courses_for_a_given_semester"
+    end
+
+    describe "GET next semester" do
+      before do
+        get :next_semester
+      end
+
+      it_should_behave_like "courses_for_a_given_semester"
+    end
+
+    describe "GET index" do
+      before do
+        get :index
+      end
+
+      specify { assigns(:courses).should_not be_nil }
+      specify { assigns(:all_courses).should == true }
+
+    end
+
+
+    describe "GET show" do
+      before do
+        get :show, :id => course.to_param
+      end
+
+      specify { assigns(:course).should_not be_nil }
+      specify { assigns(:emails).should_not be_nil }
+
+    end
+
+    describe "GET new course" do
+      before do
+        get :new
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+
+    describe "GET configure course" do
+      before do
+        get :configure, :id => course.to_param
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+    describe "POST create" do
+      before do
+        @course = Factory.build(:course)
+        post :create, :course => @course.attributes
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+    describe "PUT update" do
+      before do
+        put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+    describe "DELETE destroy" do
+      before do
+        delete :destroy, :id => course.to_param
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+  end
+
+  context "any staff can do" do
+    before do
+      UserSession.create(Factory(:faculty_frank))
     end
 
     describe "GET new course" do
@@ -22,20 +116,17 @@ describe CoursesController do
         get :edit, :id => course.to_param
       end
 
-      it "assigns course" do
-        assigns(:course).should == course
-      end
-     end
+      specify { assigns(:course).should == course }
+    end
 
     describe "GET configure course" do
       before do
         get :configure, :id => course.to_param
       end
 
-      it "assigns course" do
-        assigns(:course).should == course
-      end
-     end
+      specify { assigns(:course).should == course }
+    end
+
 
     describe "POST create" do
 
@@ -47,7 +138,7 @@ describe CoursesController do
         it "saves a newly created course" do
           lambda {
             post :create, :course => @course.attributes
-          }.should change(Course,:count).by(1)
+          }.should change(Course, :count).by(1)
         end
 
         it "redirects to the course" do
@@ -60,7 +151,7 @@ describe CoursesController do
         it "assigns a newly created but unsaved course as course" do
           lambda {
             post :create, :course => {}
-          }.should_not change(Course,:count)
+          }.should_not change(Course, :count)
           assigns(:course).should_not be_nil
           assigns(:course).should be_kind_of(Course)
         end
@@ -108,6 +199,39 @@ describe CoursesController do
       end
 
     end
+
+    describe "DELETE destroy" do
+
+      it "can't access page" do
+        delete :destroy, :id => course.to_param
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+
+    end
   end
 
+
+  context "as admin do" do
+#    before do
+#      UserSession.create(Factory(:admin_andy))
+#    end
+
+    describe "DELETE destroy" do
+
+      it "destroys the course" do
+#       course.should_receive(:destroy)
+
+#        lambda {
+#          a = Course.count
+#          c = course
+#          delete :destroy, :id => course.to_param
+#          b = Course.count
+#          t = 1
+#        }.should change(Course, :count).by(1)
+      end
+
+    end
+
+  end
 end

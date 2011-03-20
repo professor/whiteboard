@@ -10,7 +10,7 @@ class EffortLogsController < ApplicationController
   # Todo: consider moving these email methods to the model and update the rake task accordingly
   #
   def create_midweek_warning_email
-    if (!EffortLog.log_effort_week?(Date.today.cweek))
+    if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
       #We skip weeks that students aren't taking courses
       puts "There is no class this week, so we won't remind students to log effort"
 #      flash[:error] = 'Students are taking courses this week'
@@ -113,15 +113,9 @@ class EffortLogsController < ApplicationController
 
 #    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
     last_week = (Date.today - 7).cweek
+    last_week_year = (Date.today -7).cwyear
 
-#    if (Date.today.cweek != 1)
-#      #normal week
-#      last_week = Date.today.cweek - 1 unless false
-#    else
-#      #first week of the year
-#      last_week = (Date.today - 7).cweek 
-#    end
-    if (!EffortLog.log_effort_week?(last_week))
+    if (!EffortLog.log_effort_week?(last_week_year, last_week))
         puts "There was no class last week, so we won't remind students to log effort"
         return
     end
