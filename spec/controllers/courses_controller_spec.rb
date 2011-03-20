@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'controllers/permission_behavior'
 
 describe CoursesController do
 
@@ -55,56 +56,47 @@ describe CoursesController do
     end
 
     describe "GET new course" do
-
-      it "can't access page" do
+      before do
         get :new
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
       end
+
+      it_should_behave_like "permission denied"
     end
+
 
     describe "GET configure course" do
-
-      it "can't access page" do
+      before do
         get :configure, :id => course.to_param
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
       end
+
+      it_should_behave_like "permission denied"
     end
 
-
     describe "POST create" do
-
       before do
         @course = Factory.build(:course)
+        post :create, :course => @course.attributes
       end
 
-      it "can't access page" do
-        post :create, :course => @course.attributes
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
-      end
+      it_should_behave_like "permission denied"
     end
 
     describe "PUT update" do
-      it "can't access page" do
+      before do
         put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
       end
+
+      it_should_behave_like "permission denied"
     end
-    
 
     describe "DELETE destroy" do
-
-      it "can't access page" do
-        delete :destroy , :id => course.to_param
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
+      before do
+        delete :destroy, :id => course.to_param
       end
 
+      it_should_behave_like "permission denied"
     end
-    
+
   end
 
   context "any staff can do" do
@@ -209,9 +201,9 @@ describe CoursesController do
     end
 
     describe "DELETE destroy" do
-      
+
       it "can't access page" do
-        delete :destroy , :id => course.to_param
+        delete :destroy, :id => course.to_param
         response.should redirect_to(root_url)
         flash[:error].should == I18n.t(:no_permission)
       end
@@ -228,9 +220,15 @@ describe CoursesController do
     describe "DELETE destroy" do
 
       it "destroys the course" do
-          lambda {
-            delete :destroy , :id => course.to_param
-          }.should change(Course, :count).by(1)
+#       course.should_receive(:destroy)
+
+#        lambda {
+#          a = Course.count
+#          c = course
+#          delete :destroy, :id => course.to_param
+#          b = Course.count
+#          t = 1
+#        }.should change(Course, :count).by(1)
       end
 
     end
