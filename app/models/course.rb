@@ -8,6 +8,10 @@ class Course < ActiveRecord::Base
 
   validates_presence_of :semester, :year, :mini, :name
 
+#  def to_param
+#    self.short_name + self.semester + self.year.to_s
+#  end
+
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
