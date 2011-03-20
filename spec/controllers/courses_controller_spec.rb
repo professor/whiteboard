@@ -149,9 +149,20 @@ describe CoursesController do
       end
 
     end
+
+    describe "DELETE destroy" do
+      
+      it "can't access page" do
+        delete :destroy , :id => course.to_param
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+
+    end
   end
 
 
+  context "as admin do" do
     describe "DELETE destroy" do
 
       it "destroys the course" do
@@ -160,5 +171,7 @@ describe CoursesController do
           }.should change(Course, :count).by(1)
       end
 
-    end  
+    end
+
+  end
 end

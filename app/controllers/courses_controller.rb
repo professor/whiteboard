@@ -131,12 +131,14 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    @course = Course.find(params[:id])
-    @course.destroy
+    if has_permissions_or_redirect(:admin, root_url)
+      @course = Course.find(params[:id])
+      @course.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(courses_url) }
-      format.xml  { head :ok }
+      respond_to do |format|
+        format.html { redirect_to(courses_url) }
+        format.xml  { head :ok }
+      end
     end
   end
 
