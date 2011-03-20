@@ -55,6 +55,64 @@ describe CoursesController do
     end
 
     describe "GET new course" do
+
+      it "can't access page" do
+        get :new
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+    end
+
+    describe "GET configure course" do
+
+      it "can't access page" do
+        get :configure, :id => course.to_param
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+    end
+
+
+    describe "POST create" do
+
+      before do
+        @course = Factory.build(:course)
+      end
+
+      it "can't access page" do
+        post :create, :course => @course.attributes
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+    end
+
+    describe "PUT update" do
+      it "can't access page" do
+        put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+    end
+    
+
+    describe "DELETE destroy" do
+
+      it "can't access page" do
+        delete :destroy , :id => course.to_param
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+
+    end
+    
+  end
+
+  context "any staff can do" do
+    before do
+      UserSession.create(Factory(:faculty_frank))
+    end
+
+    describe "GET new course" do
       it 'assigns a new course as @course' do
         get :new
         assigns(:course).should_not be_nil
@@ -163,6 +221,10 @@ describe CoursesController do
 
 
   context "as admin do" do
+#    before do
+#      UserSession.create(Factory(:admin_andy))
+#    end
+
     describe "DELETE destroy" do
 
       it "destroys the course" do

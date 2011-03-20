@@ -53,46 +53,54 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    @course = Course.new
-    @course.semester = AcademicCalendar.next_semester
-    @course.year = AcademicCalendar.next_semester_year
+    if has_permissions_or_redirect(:staff, root_url)
+      @course = Course.new
+      @course.semester = AcademicCalendar.next_semester
+      @course.year = AcademicCalendar.next_semester_year
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @course }
-    end
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @course }
+      end
+    end   
   end
 
   # GET /courses/1/edit
   def edit
-    @course = Course.find(params[:id])
+    if has_permissions_or_redirect(:staff, root_url)
+      @course = Course.find(params[:id])
+    end
   end
 
   def configure
-    edit
+    if has_permissions_or_redirect(:staff, root_url)
+      edit
+    end
   end
 
   # POST /courses
   # POST /courses.xml
   def create
-    @course = Course.new(params[:course])
+    if has_permissions_or_redirect(:staff, root_url)
+      @course = Course.new(params[:course])
 
-    respond_to do |format|
-      if @course.save
+      respond_to do |format|
+        if @course.save
 
-        msg = @course.update_people(params[:people])
-        unless msg.blank?
-          flash.now[:error] = msg
-          render :action => 'edit'
-          return
+          msg = @course.update_people(params[:people])
+          unless msg.blank?
+            flash.now[:error] = msg
+            render :action => 'edit'
+            return
+          end
+
+          flash[:notice] = 'Course was successfully created.'
+          format.html { redirect_to(@course) }
+          format.xml  { render :xml => @course, :status => :created, :location => @course }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
         end
-
-        flash[:notice] = 'Course was successfully created.'
-        format.html { redirect_to(@course) }
-        format.xml  { render :xml => @course, :status => :created, :location => @course }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -100,30 +108,32 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    @course = Course.find(params[:id])
+    if has_permissions_or_redirect(:staff, root_url)
+      @course = Course.find(params[:id])
 
-    if(params[:course][:is_configured]) #The previous page was configure action
-      CourseMailer.deliver_configure_course_admin_email(@course)
-    else
-      msg = @course.update_people(params[:people])
-      unless msg.blank?
-        flash.now[:error] = msg
-        render :action => 'edit'
-        return
-      end
-    end
-
-    respond_to do |format|
-      if @course.update_attributes(params[:course])
-        if(params[:course][:is_configured]) #The previous page was configure action
-          CourseMailer.deliver_configure_course_admin_email(@course)
-        end
-        flash[:notice] = 'Course was successfully updated.'
-        format.html { redirect_to(@course) }
-        format.xml  { head :ok }
+      if(params[:course][:is_configured]) #The previous page was configure action
+        CourseMailer.deliver_configure_course_admin_email(@course)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        msg = @course.update_people(params[:people])
+        unless msg.blank?
+          flash.now[:error] = msg
+          render :action => 'edit'
+          return
+        end
+      end
+
+      respond_to do |format|
+        if @course.update_attributes(params[:course])
+          if(params[:course][:is_configured]) #The previous page was configure action
+            CourseMailer.deliver_configure_course_admin_email(@course)
+          end
+          flash[:notice] = 'Course was successfully updated.'
+          format.html { redirect_to(@course) }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
