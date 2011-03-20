@@ -5,6 +5,9 @@ Factory.define :course, :class => Course do |c|
   c.mini 'Both'
 end
 
+Factory.define :delayed_system_job do |c|
+end
+
 Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
   e.association :course, :factory => :fse
   e.task_type_id 1

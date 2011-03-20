@@ -6,30 +6,30 @@
 
 
   def index
-    if !current_user.is_admin?
-      flash[:error] = 'You don''t have permission to do this action.'
-      redirect_to(root_url) and return
-    end
+    if has_permissions_or_redirect(:admin, root_url)
 
-    @delayed_system_jobs = DelayedSystemJob.find(:all)
+      @delayed_system_jobs = DelayedSystemJob.find(:all)
 
-    respond_to do |format|
-      format.html { render :html => @delayed_system_jobs, :layout => "cmu_sv" } # index.html.erb
-      format.js   { render :js => @delayed_system_jobs, :layout => false }
-      format.xml  { render :xml => @delayed_system_jobs }
+      respond_to do |format|
+        format.html { render :html => @delayed_system_jobs, :layout => "cmu_sv" } # index.html.erb
+        format.js   { render :js => @delayed_system_jobs, :layout => false }
+        format.xml  { render :xml => @delayed_system_jobs }
+      end
     end
   end
 
   # DELETE /delayed_systems_job/1
   # DELETE /delayed_systems_job/1.xml
   def destroy
-    @delayed_system_jobs = DelayedSystemJob.find(params[:id])
-    @delayed_system_jobs.destroy
+    if has_permissions_or_redirect(:admin, root_url)
 
-    respond_to do |format|
-      format.html { redirect_to("/delayed_system_jobs") }
-      format.xml  { head :ok }
+      delayed_system_job = DelayedSystemJob.find(params[:id])
+      delayed_system_job.destroy
+
+      respond_to do |format|
+        format.html { redirect_to("/delayed_system_jobs") }
+        format.xml  { head :ok }
+      end
     end
   end
-
 end
