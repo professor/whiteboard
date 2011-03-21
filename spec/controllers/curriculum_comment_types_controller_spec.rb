@@ -30,7 +30,7 @@ describe CurriculumCommentTypesController do
       specify { assigns(:curriculum_comment_type).should_not be_nil }
     end
 
-    describe "GET new course" do
+    describe "GET new" do
       before do
         get :new
       end
@@ -95,32 +95,32 @@ describe CurriculumCommentTypesController do
           @curriculum_comment_type = Factory.build(:curriculum_comment_type)
         end
 
-        it "saves a newly created course" do
+        it "saves a newly created" do
           lambda {
             post :create, :curriculum_comment_type => @curriculum_comment_type.attributes
           }.should change(CurriculumCommentType, :count).by(1)
         end
 
-        it "redirects to the course" do
+        it "redirects to the item" do
           post :create, :curriculum_comment_type => @curriculum_comment_type.attributes
           response.should redirect_to(curriculum_comment_type_path(assigns(:curriculum_comment_type).id))
         end
       end
 
-#      describe "with invalid params" do
-#        it "assigns a newly created but unsaved course as course" do
-#          lambda {
-#            post :create, :curriculum_comment_type => {}
-#          }.should_not change(CurriculumCommentType, :count)
-#          assigns(:curriculum_comment_type).should_not be_nil
-#          assigns(:curriculum_comment_type).should be_kind_of(Course)
-#        end
-#
-#        it "re-renders the 'new' template" do
-#          post :create, :curriculum_comment_type => {}
-#          response.should render_template("new")
-#        end
-#      end
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved item as item" do
+          lambda {
+            post :create, :curriculum_comment_type => {}
+          }.should_not change(CurriculumCommentType, :count)
+          assigns(:curriculum_comment_type).should_not be_nil
+          assigns(:curriculum_comment_type).should be_kind_of(CurriculumCommentType)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, :curriculum_comment_type => {}
+          response.should render_template("new")
+        end
+      end
     end
 
     describe "PUT update" do
@@ -144,19 +144,19 @@ describe CurriculumCommentTypesController do
         end
       end
 
-#      describe "with invalid params" do
-#        before do
-#          put :update, :id => curriculum_comment_type.to_param, :curriculum_comment_type => {:name => ''}
-#        end
-#
-#        it "should assign @curriculum_comment_type" do
-#          assigns(:curriculum_comment_type).should_not be_nil
-#        end
-#
-#        it "re-renders the 'edit' template" do
-#          response.should render_template("edit")
-#        end
-#      end
+      describe "with invalid params" do
+        before do
+          put :update, :id => curriculum_comment_type.to_param, :curriculum_comment_type => {:name => ''}
+        end
+
+        it "should assign @curriculum_comment_type" do
+          assigns(:curriculum_comment_type).should_not be_nil
+        end
+
+        it "re-renders the 'edit' template" do
+          response.should render_template("edit")
+        end
+      end
 
     end
 

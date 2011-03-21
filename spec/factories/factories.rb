@@ -6,6 +6,8 @@ Factory.define :course, :class => Course do |c|
 end
 
 Factory.define :curriculum_comment_type do |c|
+  c.name 'Comment'
+  c.background_color "#FFF499"
 end
 
 Factory.define :delayed_system_job do |c|
