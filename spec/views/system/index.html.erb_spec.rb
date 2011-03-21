@@ -7,6 +7,6 @@ describe "system/index.html.erb" do
 
   it "renders the system page" do
     render
-
+    response.status.should be(200)
   end
 end
