@@ -13,7 +13,7 @@ describe CoursesController do
     specify { assigns(:all_courses).should == false }
   end
 
-  context "any user" do
+  context "any user can" do
     before do
       UserSession.create(Factory(:student_sam))
     end
@@ -99,16 +99,17 @@ describe CoursesController do
 
   end
 
-  context "any staff can do" do
+  context "any staff can" do
     before do
       UserSession.create(Factory(:faculty_frank))
     end
 
     describe "GET new course" do
-      it 'assigns a new course as @course' do
+      before do
         get :new
-        assigns(:course).should_not be_nil
       end
+
+      specify { assigns(:course).should_not be_nil }
     end
 
     describe "GET edit course" do
@@ -201,18 +202,16 @@ describe CoursesController do
     end
 
     describe "DELETE destroy" do
-
-      it "can't access page" do
+      before do
         delete :destroy, :id => course.to_param
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
       end
 
+      it_should_behave_like "permission denied"
     end
   end
 
 
-  context "as admin do" do
+  context "any admin can" do
 #    before do
 #      UserSession.create(Factory(:admin_andy))
 #    end
