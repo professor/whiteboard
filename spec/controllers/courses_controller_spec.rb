@@ -55,7 +55,7 @@ describe CoursesController do
 
     end
 
-    describe "GET new course" do
+    describe "GET new" do
       before do
         get :new
       end
@@ -64,7 +64,7 @@ describe CoursesController do
     end
 
 
-    describe "GET configure course" do
+    describe "GET configure" do
       before do
         get :configure, :id => course.to_param
       end
@@ -104,7 +104,7 @@ describe CoursesController do
       UserSession.create(Factory(:faculty_frank))
     end
 
-    describe "GET new course" do
+    describe "GET new" do
       before do
         get :new
       end
@@ -112,7 +112,7 @@ describe CoursesController do
       specify { assigns(:course).should_not be_nil }
     end
 
-    describe "GET edit course" do
+    describe "GET edit" do
       before do
         get :edit, :id => course.to_param
       end
@@ -120,7 +120,7 @@ describe CoursesController do
       specify { assigns(:course).should == course }
     end
 
-    describe "GET configure course" do
+    describe "GET configure" do
       before do
         get :configure, :id => course.to_param
       end
@@ -136,7 +136,7 @@ describe CoursesController do
           @course = Factory.build(:course)
         end
 
-        it "saves a newly created course" do
+        it "saves a newly created item" do
           lambda {
             post :create, :course => @course.attributes
           }.should change(Course, :count).by(1)
@@ -149,7 +149,7 @@ describe CoursesController do
       end
 
       describe "with invalid params" do
-        it "assigns a newly created but unsaved course as course" do
+        it "assigns a newly created but unsaved item as item" do
           lambda {
             post :create, :course => {}
           }.should_not change(Course, :count)
