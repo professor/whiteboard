@@ -1,37 +1,16 @@
 require 'spec_helper'
 require 'controllers/permission_behavior'
 
-describe CoursesController do
+describe CurriculumCommentTypesController do
 
 
-  let(:course) { Factory(:course) }
+  let(:curriculum_comment_type) { Factory(:curriculum_comment_type) }
 
-  shared_examples_for "courses_for_a_given_semester" do
-    specify { assigns(:courses).should_not be_nil }
-    specify { assigns(:semester).should_not be_nil }
-    specify { assigns(:semester).should_not be_nil }
-    specify { assigns(:all_courses).should == false }
-  end
 
-  context "any user" do
+  context "any user can" do
     before do
       UserSession.create(Factory(:student_sam))
-    end
-
-    describe "GET current semester" do
-      before do
-        get :current_semester
-      end
-
-      it_should_behave_like "courses_for_a_given_semester"
-    end
-
-    describe "GET next semester" do
-      before do
-        get :next_semester
-      end
-
-      it_should_behave_like "courses_for_a_given_semester"
+      @redirect_url = curriculum_comment_types_url
     end
 
     describe "GET index" do
@@ -39,34 +18,21 @@ describe CoursesController do
         get :index
       end
 
-      specify { assigns(:courses).should_not be_nil }
-      specify { assigns(:all_courses).should == true }
-
+      specify { assigns(:curriculum_comment_types).should_not be_nil }
     end
 
 
     describe "GET show" do
       before do
-        get :show, :id => course.to_param
+        get :show, :id => curriculum_comment_type.to_param
       end
 
-      specify { assigns(:course).should_not be_nil }
-      specify { assigns(:emails).should_not be_nil }
-
+      specify { assigns(:curriculum_comment_type).should_not be_nil }
     end
 
     describe "GET new course" do
       before do
         get :new
-      end
-
-      it_should_behave_like "permission denied"
-    end
-
-
-    describe "GET configure course" do
-      before do
-        get :configure, :id => course.to_param
       end
 
       it_should_behave_like "permission denied"
@@ -74,8 +40,8 @@ describe CoursesController do
 
     describe "POST create" do
       before do
-        @course = Factory.build(:course)
-        post :create, :course => @course.attributes
+        @curriculum_comment_type = Factory.build(:curriculum_comment_type)
+        post :create, :curriculum_comment_type => @curriculum_comment_type.attributes
       end
 
       it_should_behave_like "permission denied"
@@ -83,7 +49,7 @@ describe CoursesController do
 
     describe "PUT update" do
       before do
-        put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
+        put :update, :id => curriculum_comment_type.to_param, :curriculum_comment_type => {:name => 'NNNNN'}
       end
 
       it_should_behave_like "permission denied"
@@ -91,7 +57,7 @@ describe CoursesController do
 
     describe "DELETE destroy" do
       before do
-        delete :destroy, :id => course.to_param
+        delete :destroy, :id => curriculum_comment_type.to_param
       end
 
       it_should_behave_like "permission denied"
@@ -99,32 +65,26 @@ describe CoursesController do
 
   end
 
-  context "any staff can do" do
+  context "any staff can" do
     before do
       UserSession.create(Factory(:faculty_frank))
+      @redirect_url = curriculum_comment_types_url
     end
 
-    describe "GET new course" do
-      it 'assigns a new course as @course' do
+    describe "GET new " do
+      before do
         get :new
-        assigns(:course).should_not be_nil
       end
+
+      specify { assigns(:curriculum_comment_type).should_not be_nil }
     end
 
-    describe "GET edit course" do
+    describe "GET edit" do
       before do
-        get :edit, :id => course.to_param
+        get :edit, :id => curriculum_comment_type.to_param
       end
 
-      specify { assigns(:course).should == course }
-    end
-
-    describe "GET configure course" do
-      before do
-        get :configure, :id => course.to_param
-      end
-
-      specify { assigns(:course).should == course }
+      specify { assigns(:curriculum_comment_type).should == curriculum_comment_type }
     end
 
 
@@ -132,35 +92,35 @@ describe CoursesController do
 
       describe "with valid params" do
         before(:each) do
-          @course = Factory.build(:course)
+          @curriculum_comment_type = Factory.build(:curriculum_comment_type)
         end
 
         it "saves a newly created course" do
           lambda {
-            post :create, :course => @course.attributes
-          }.should change(Course, :count).by(1)
+            post :create, :curriculum_comment_type => @curriculum_comment_type.attributes
+          }.should change(CurriculumCommentType, :count).by(1)
         end
 
         it "redirects to the course" do
-          post :create, :course => @course.attributes
-          response.should redirect_to(course_path(assigns(:course).id))
+          post :create, :curriculum_comment_type => @curriculum_comment_type.attributes
+          response.should redirect_to(curriculum_comment_type_path(assigns(:curriculum_comment_type).id))
         end
       end
 
-      describe "with invalid params" do
-        it "assigns a newly created but unsaved course as course" do
-          lambda {
-            post :create, :course => {}
-          }.should_not change(Course, :count)
-          assigns(:course).should_not be_nil
-          assigns(:course).should be_kind_of(Course)
-        end
-
-        it "re-renders the 'new' template" do
-          post :create, :course => {}
-          response.should render_template("new")
-        end
-      end
+#      describe "with invalid params" do
+#        it "assigns a newly created but unsaved course as course" do
+#          lambda {
+#            post :create, :curriculum_comment_type => {}
+#          }.should_not change(CurriculumCommentType, :count)
+#          assigns(:curriculum_comment_type).should_not be_nil
+#          assigns(:curriculum_comment_type).should be_kind_of(Course)
+#        end
+#
+#        it "re-renders the 'new' template" do
+#          post :create, :curriculum_comment_type => {}
+#          response.should render_template("new")
+#        end
+#      end
     end
 
     describe "PUT update" do
@@ -168,67 +128,65 @@ describe CoursesController do
       describe "with valid params" do
 
         before do
-          put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
+          put :update, :id => curriculum_comment_type.to_param, :curriculum_comment_type => {:name => 'NNNNN'}
         end
 
-        it "updates the requested course name" do
-          course.reload.name.should == "NNNNN"
+        it "updates the requested curriculum_comment_type name" do
+          curriculum_comment_type.reload.name.should == "NNNNN"
         end
 
-        it "should assign @course" do
-          assigns(:course).should_not be_nil
+        it "should assign @curriculum_comment_type" do
+          assigns(:curriculum_comment_type).should_not be_nil
         end
 
-        it "redirects to the course" do
-          response.should redirect_to(course_path(course))
+        it "redirects to the curriculum_comment_type" do
+          response.should redirect_to(curriculum_comment_type_path(curriculum_comment_type))
         end
       end
 
-      describe "with invalid params" do
-        before do
-          put :update, :id => course.to_param, :course => {:name => ''}
-        end
-
-        it "should assign @course" do
-          assigns(:course).should_not be_nil
-        end
-
-        it "re-renders the 'edit' template" do
-          response.should render_template("edit")
-        end
-      end
+#      describe "with invalid params" do
+#        before do
+#          put :update, :id => curriculum_comment_type.to_param, :curriculum_comment_type => {:name => ''}
+#        end
+#
+#        it "should assign @curriculum_comment_type" do
+#          assigns(:curriculum_comment_type).should_not be_nil
+#        end
+#
+#        it "re-renders the 'edit' template" do
+#          response.should render_template("edit")
+#        end
+#      end
 
     end
 
     describe "DELETE destroy" do
-
-      it "can't access page" do
-        delete :destroy, :id => course.to_param
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
+      before do
+        delete :destroy, :id => curriculum_comment_type.to_param
       end
 
+      it_should_behave_like "permission denied"
     end
   end
 
 
-  context "as admin do" do
+  context "any admin can" do
 #    before do
 #      UserSession.create(Factory(:admin_andy))
 #    end
 
     describe "DELETE destroy" do
 
-      it "destroys the course" do
-#       course.should_receive(:destroy)
+      it "destroys the curriculum_comment_type" do
+#       curriculum_comment_type.should_receive(:destroy)
 
 #        lambda {
 #          a = Course.count
-#          c = course
-#          delete :destroy, :id => course.to_param
+#          c = curriculum_comment_type
+#          delete :destroy, :id => curriculum_comment_type.to_param
 #          b = Course.count
 #          t = 1
-#        }.should change(Course, :count).by(1)
+#        }.should change(CurriculumCommentType, :count).by(1)
       end
 
     end

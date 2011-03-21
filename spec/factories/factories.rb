@@ -5,6 +5,9 @@ Factory.define :course, :class => Course do |c|
   c.mini 'Both'
 end
 
+Factory.define :curriculum_comment_type do |c|
+end
+
 Factory.define :delayed_system_job do |c|
 end
 
