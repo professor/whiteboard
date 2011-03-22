@@ -106,4 +106,14 @@ class ApplicationController < ActionController::Base
       return true
     end
 
+    def editable_or_redirect(object, url)
+        unless object.editable(current_user)
+          flash[:error] = t(:not_editable)
+#          redirect_back_or_default(url)
+          redirect_to(url)
+          return false
+        end
+      return true
+    end
+
 end
