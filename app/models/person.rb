@@ -9,7 +9,8 @@
 class Person < ActiveRecord::Base
   set_table_name "users"
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned  :table_name => 'user_versions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ) }
+  acts_as_versioned  :table_name => 'user_versions', :if => Proc.new { |user| (user.effort_log_warning_email.nil? || user.effort_log_warning_email <= 1.minute.ago ||
+   user.sponsored_project_effort_last_emailed.nil? || user.sponsored_project_effort_last_emailed <= 1.minute.ago  ) }
 
 #  acts_as_authentic
 
@@ -60,10 +61,14 @@ class Person < ActiveRecord::Base
       self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.nil?
     end 
 
-  def emailed_recently
-    return false if self.effort_log_warning_email.nil?
-    return false if self.effort_log_warning_email < 1.day.ago
-    return true
+
+  def emailed_recently(email_type)
+    case email_type
+      when :effort_log
+        return self.effort_log_warning_email.nil? || (self.effort_log_warning_email < 1.day.ago) ? false : true
+      when :sponsored_project_effort
+        return self.sponsored_project_effort_last_emailed.nil? || (self.sponsored_project_effort_last_emailed < 1.day.ago) ? false : true
+    end
   end
 
   def telephones

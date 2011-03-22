@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317211513) do
+ActiveRecord::Schema.define(:version => 20110322233953) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -362,15 +362,15 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.integer  "person_id"
     t.integer  "version"
     t.string   "webiso_account"
-    t.string   "login",                    :limit => 40
-    t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 128
-    t.string   "salt",                     :limit => 40
+    t.string   "login",                                 :limit => 40
+    t.string   "email",                                 :limit => 100
+    t.string   "crypted_password",                      :limit => 128
+    t.string   "salt",                                  :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_staff",                                :default => false
-    t.boolean  "is_student",                              :default => false
-    t.boolean  "is_admin",                                :default => false
+    t.boolean  "is_staff",                                             :default => false
+    t.boolean  "is_student",                                           :default => false
+    t.boolean  "is_admin",                                             :default => false
     t.string   "twiki_name"
     t.string   "first_name"
     t.string   "last_name"
@@ -406,7 +406,7 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.string   "telephone3_label"
     t.string   "telephone4"
     t.string   "telephone4_label"
-    t.integer  "updated_by_user_id",       :limit => 8
+    t.integer  "updated_by_user_id",                    :limit => 8
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
@@ -416,8 +416,8 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.string   "password_salt"
     t.string   "persistence_token"
     t.string   "single_access_token"
-    t.integer  "login_count",                             :default => 0,     :null => false
-    t.integer  "failed_login_count",                      :default => 0,     :null => false
+    t.integer  "login_count",                                          :default => 0,     :null => false
+    t.integer  "failed_login_count",                                   :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -429,18 +429,19 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
+    t.datetime "sponsored_project_effort_last_emailed"
   end
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
-    t.string   "login",                    :limit => 40
-    t.string   "email",                    :limit => 100
-    t.string   "crypted_password",         :limit => 128
+    t.string   "login",                                 :limit => 40
+    t.string   "email",                                 :limit => 100
+    t.string   "crypted_password",                      :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_staff",                                :default => false
-    t.boolean  "is_student",                              :default => false
-    t.boolean  "is_admin",                                :default => false
+    t.boolean  "is_staff",                                             :default => false
+    t.boolean  "is_student",                                           :default => false
+    t.boolean  "is_admin",                                             :default => false
     t.string   "twiki_name"
     t.string   "first_name"
     t.string   "last_name"
@@ -487,8 +488,8 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.string   "password_salt"
     t.string   "persistence_token"
     t.string   "single_access_token"
-    t.integer  "login_count",                             :default => 0,     :null => false
-    t.integer  "failed_login_count",                      :default => 0,     :null => false
+    t.integer  "login_count",                                          :default => 0,     :null => false
+    t.integer  "failed_login_count",                                   :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -500,6 +501,7 @@ ActiveRecord::Schema.define(:version => 20110317211513) do
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
+    t.datetime "sponsored_project_effort_last_emailed"
   end
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"

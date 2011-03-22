@@ -11,6 +11,40 @@ describe Person do
     @student_sam = Factory(:student_sam)
   end
 
+#  context "is not valid" do
+#
+#    [:current_allocation, :year, :month, :sponsored_project_allocation_id, :confirmed].each do |attr|
+#      it "without #{attr}" do
+#        subject.should_not be_valid
+#        subject.errors[attr].should_not be_empty
+#      end
+#    end
+#
+#    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
+#      it "when #{attr} is non-numerical" do
+#        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => "test")
+#        sponsored_project_effort.should_not be_valid
+#      end
+#    end
+#
+#    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
+#      it "when #{attr} is a negative number" do
+#        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => -1)
+#        sponsored_project_effort.should_not be_valid
+#      end
+#    end
+#
+#    it "when a duplicate effort for the same month, year and project allocation" do
+#      original = Factory(:sponsored_project_effort)
+#      duplicate = SponsoredProjectEffort.new()
+#      duplicate.month = original.month
+#      duplicate.year = original.year
+#      duplicate.sponsored_project_allocation_id = original.sponsored_project_allocation_id
+#      duplicate.should_not be_valid
+#    end
+#  end
+
+
   describe 'Custom Finders' do
 
     it "should have a named scope staff" do
@@ -88,6 +122,43 @@ describe Person do
       @student_sam.permission_level_of(:staff).should == false
       @student_sam.permission_level_of(:student).should == true
     end
+  end
+
+  describe "emailed_recently" do
+    context "for effort logs" do
+      it "should be false if they've never received an email" do
+        @student_sam.effort_log_warning_email = nil
+        @student_sam.emailed_recently(:effort_log).should == false
+      end
+
+      it "should be false if they were emailed a while ago" do
+        @student_sam.effort_log_warning_email = 4.days.ago
+        @student_sam.emailed_recently(:effort_log).should == false
+      end
+
+      it "should be true if they were just emailed" do
+        @student_sam.effort_log_warning_email = 1.hour.ago
+        @student_sam.emailed_recently(:effort_log).should == true
+      end
+    end
+
+    context "for sponsored project effort" do
+      it "should be false if they've never received an email" do
+        @student_sam.sponsored_project_effort_last_emailed = nil
+        @student_sam.emailed_recently(:sponsored_project_effort).should == false
+      end
+
+      it "should be false if they were emailed a while ago" do
+        @student_sam.sponsored_project_effort_last_emailed = 4.days.ago
+        @student_sam.emailed_recently(:sponsored_project_effort).should == false
+      end
+
+      it "should be true if they were just emailed" do
+        @student_sam.sponsored_project_effort_last_emailed = 1.hour.ago
+        @student_sam.emailed_recently(:sponsored_project_effort).should == true
+      end
+    end
+
   end
 
 
