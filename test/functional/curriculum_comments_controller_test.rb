@@ -35,7 +35,7 @@ class CurriculumCommentsControllerTest < ActionController::TestCase
   def test_should_update_curriculum_comment
     login_as :student_sam
     put :update, :id => curriculum_comments(:one).id, :curriculum_comment => { :comment => "This comment has been updated.", :url => "http://sv.cmu.edu" }
-    assert_redirected_to "http://sv.cmu.edu"
+    assert_redirected_to curriculum_comments(:one).url
   end
 
   def test_should_destroy_curriculum_comment_as_student
