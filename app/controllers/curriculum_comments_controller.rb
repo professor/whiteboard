@@ -72,7 +72,7 @@ class CurriculumCommentsController < ApplicationController
   # PUT /curriculum_comments/1.xml
   def update
     @curriculum_comment = CurriculumComment.find(params[:id])
-    if @curriculum_comment.editable(current_user)
+    if editable_or_redirect(@curriculum_comment, @curriculum_comment.url)
       @types = CurriculumCommentType.find(:all)
 
       respond_to do |format|
@@ -86,17 +86,14 @@ class CurriculumCommentsController < ApplicationController
           format.xml  { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
         end
       end
-    else
-
     end
   end
 
   # DELETE /curriculum_comments/1
   # DELETE /curriculum_comments/1.xml
   def destroy
-    if has_permissions_or_redirect(:admin, curriculum_comments_url)
-
-      @curriculum_comment = CurriculumComment.find(params[:id])
+    @curriculum_comment = CurriculumComment.find(params[:id])
+    if has_permissions_or_redirect(:admin, @curriculum_comment.url)
       @curriculum_comment.destroy
 
       respond_to do |format|
