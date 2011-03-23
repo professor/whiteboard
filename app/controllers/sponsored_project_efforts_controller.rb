@@ -15,7 +15,6 @@ class SponsoredProjectEffortsController < ApplicationController
   end
 
   def edit
-SponsoredProjectAllocation.emails_staff_requesting_confirmation_for_allocations
     setup_edit
   end
 
