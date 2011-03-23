@@ -36,7 +36,7 @@ $(document).ready(function()
 
 
 
-<h1>Efforts for <%= @month %>/<%= @year %></h1>
+<h1>Efforts for <%= monthname(@month) %> <%= @year %></h1>
 <div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
 <br/>
 <table id="effort_table" class="tablesorter" cellpadding="3">

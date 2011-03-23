@@ -106,4 +106,47 @@ describe SponsoredProjectAllocation do
     end
   end
 
+  context "emails staff to confirm their effort for current month" do
+
+    before do
+      @faculty_frank = Factory(:faculty_frank)
+      @faculty_fagan = Factory(:faculty_fagan)
+
+      @allocation_frank = Factory(:sponsored_project_allocation, :person => @faculty_frank)
+      @allocation_fagan = Factory(:sponsored_project_allocation, :person => @faculty_fagan)
+
+      @effort_frank = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
+      @effort_fagan = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
+    end
+
+    specify { SponsoredProjectAllocation.should respond_to(:emails_staff_requesting_confirmation_for_allocations)}
+
+    it 'should email faculty that have not confirmed, but not email faculty that have already confirmed' do
+      @effort_frank.confirmed = false
+      @effort_frank.save
+      @effort_fagan.confirmed = true
+      @effort_fagan.save
+      SponsoredProjectEffortMailer.should_receive(:deliver_monthly_staff_email).with(@faculty_frank, @effort_frank.month, @effort_frank.year)
+      SponsoredProjectEffortMailer.should_not_receive(:deliver_monthly_staff_email).with(@faculty_fagan, @effort_fagan.month, @effort_fagan.year)
+      SponsoredProjectAllocation.emails_staff_requesting_confirmation_for_allocations
+    end
+
+    it 'should not email faculty who have been emailed recently' do
+      @effort_frank.confirmed == false
+      @effort_frank.save
+      @faculty_frank.sponsored_project_effort_last_emailed = Date.today - 20
+      @faculty_frank.save
+
+      @effort_fagan.confirmed == false
+      @effort_fagan.save
+      @faculty_fagan.sponsored_project_effort_last_emailed = 1.hour.ago
+      @faculty_fagan.save
+
+      SponsoredProjectEffortMailer.should_receive(:deliver_monthly_staff_email).with(@faculty_frank, @effort_frank.month, @effort_frank.year)
+      SponsoredProjectEffortMailer.should_not_receive(:deliver_monthly_staff_email).with(@faculty_fagan, @effort_fagan.month, @effort_fagan.year)
+      SponsoredProjectAllocation.emails_staff_requesting_confirmation_for_allocations
+    end
+
+  end
+
 end
