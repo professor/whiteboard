@@ -40,10 +40,13 @@ acts_as_authentic
 #  end
 
 
-  def emailed_recently
-    return false if self.effort_log_warning_email.nil?
-    return false if self.effort_log_warning_email < 1.day.ago
-    return true
+  def emailed_recently(email_type)
+    case email_type
+      when :effort_log
+        return self.effort_log_warning_email.nil? || (self.effort_log_warning_email < 1.day.ago) ? false : true
+      when :sponsored_project_effort
+        return self.sponsored_project_effort_last_emailed.nil? || (self.sponsored_project_effort_last_emailed < 1.day.ago) ? false : true
+    end
   end
 
   #This method contributed by Team Juran
