@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Page do
-#  fixtures :users
-
-  
-
 
   before(:all) do
       activate_authlogic
