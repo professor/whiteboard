@@ -15,8 +15,8 @@
 
     $('#course_configure_peer_evaluation').change(function() {
         if ($(this).is(':checked')) {
-        $('#course_configure_peer_evaluation_date1').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
-        $('#course_configure_peer_evaluation_date2').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
+        $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
+        $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
         }
      });
 
@@ -58,8 +58,8 @@
     <p>
       <input type="checkbox" id="course_configure_peer_evaluation">
       I plan on using the Peer Evaluation Tool <br/>
-      <%= f.text_field :configure_peer_evaluation_date1, :size => 11, :class => "checkboxed_form" %> On this date, email the teams telling them about the peer evaluation. <br/>
-      <%= f.text_field :configure_peer_evaluation_date2, :size => 11, :class => "checkboxed_form" %> Due Date (An email reminder will be sent on this date)
+      <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email the teams telling them about the peer evaluation. <br/>
+      <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email reminder will be sent on this date)
     </p>
     <p>
       <%= f.hidden_field :is_configured, :value => true %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110322233953) do
+ActiveRecord::Schema.define(:version => 20110325232412) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(:version => 20110322233953) do
     t.string   "short_name"
     t.integer  "year"
     t.boolean  "configure_class_mailinglist",     :default => false
-    t.date     "configure_peer_evaluation_date1"
-    t.date     "configure_peer_evaluation_date2"
+    t.date     "peer_evaluation_first_email"
+    t.date     "peer_evaluation_second_email"
     t.boolean  "configure_teams_name_themselves", :default => true
     t.string   "curriculum_url"
     t.boolean  "configure_course_twiki",          :default => false

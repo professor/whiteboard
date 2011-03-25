@@ -28,6 +28,10 @@ class Team < ActiveRecord::Base
     return if self.name.blank?
     return unless self.old_email != self.email|| self.team_members_list_changed
 
+
+    self.peer_evaluation_first_email = self.course.peer_evaluation_first_email if self.peer_evaluation_first_email.blank?
+    self.peer_evaluation_second_email = self.course.peer_evaluation_second_email if self.peer_evaluation_second_email.blank?
+
     self.updating_email = true
     logger.debug("team.before_save() executed")
 #    update_google_mailing_list(self.email, self.old_email, self.id)
