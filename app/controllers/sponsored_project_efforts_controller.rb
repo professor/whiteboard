@@ -47,6 +47,8 @@ private
 
       if @person.id == @current_user.id || @current_user.is_admin
         @efforts = SponsoredProjectEffort.current_months_efforts_for_user(@person.id)
+        @month = !@efforts.empty? ? @efforts[0].month : Date.today.month
+        @year = !@efforts.empty? ? @efforts[0].year : Date.today.year
       else
         #bounce with error
       end

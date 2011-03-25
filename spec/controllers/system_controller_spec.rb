@@ -9,9 +9,12 @@ describe SystemController do
     end
 
     describe "GET index" do
+      before do
+        get :index
+      end
 
       it "should only setup normal rails information" do
-        
+#        response.status.should be(200)
       end
 
     end

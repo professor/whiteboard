@@ -5,6 +5,17 @@ Factory.define :course, :class => Course do |c|
   c.mini 'Both'
 end
 
+Factory.define :curriculum_comment_type do |c|
+  c.name 'Comment'
+  c.background_color "#FFF499"
+end
+
+Factory.define :curriculum_comment do |c|
+  c.comment 'This page has a broken link'
+  c.url 'https://curriculum.sv.cmu.edu/ppm/task3/submit.html'
+end
+
+
 Factory.define :delayed_system_job do |c|
 end
 

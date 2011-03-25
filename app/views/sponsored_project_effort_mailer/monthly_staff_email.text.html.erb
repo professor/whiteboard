@@ -1,0 +1,13 @@
+<%= @person.human_name %>,
+<br/><br/>
+Please go to the following url to confirm your effort for <%= Date::MONTHNAMES[@month] %> <%= @year %>,
+<br/><br/>
+<%# link_to  "Confirm your effort", edit_sponsored_project_effort_url(@person.twiki_name) %>
+<%= link_to  "Confirm your effort", "http://rails.sv.cmu.edu/sponsored_project_efforts/#{@person.twiki_name}/edit" %>
+<br/><br/>
+Please respond to this email so that we can make the corrections or appropriately document your work allocation.
+<br/><br/>
+Thank you,
+<br/><br/>
+Hector
+

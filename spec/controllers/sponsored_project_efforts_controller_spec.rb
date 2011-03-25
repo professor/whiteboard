@@ -28,6 +28,8 @@ describe SponsoredProjectEffortsController do
         SponsoredProjectEffort.should_receive(:current_months_efforts_for_user).with(@faculty_frank.id).and_return(efforts)
         get :edit, :id => @faculty_frank.twiki_name
         assigns(:efforts).should == efforts
+        assigns(:month).should == efforts[0].month
+        assigns(:year).should == efforts[0].year
       end
     end
 

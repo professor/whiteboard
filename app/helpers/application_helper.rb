@@ -56,4 +56,9 @@ RUBY_RUBY_RUBY
   end
 
 
+  def monthname(monthnumber)
+    if monthnumber
+      Date::MONTHNAMES[monthnumber]
+    end
+  end
 end

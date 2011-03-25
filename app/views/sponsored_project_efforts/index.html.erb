@@ -36,7 +36,9 @@ $(document).ready(function()
 
 
 
-<h1>Efforts for <%= @month %>/<%= @year %></h1>
+<h1>Efforts for <%= monthname(@month) %> <%= @year %></h1>
+<div class="right_link" ><%= link_to 'Allocations', sponsored_project_allocations_url %><br/>
+  <%= link_to "Projects", sponsored_projects_url %></div>
 <div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
 <br/>
 <table id="effort_table" class="tablesorter" cellpadding="3">

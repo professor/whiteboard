@@ -13,7 +13,7 @@
 </thead>
 <tbody>
 
-For the month of X, our records show that your effort was distributed as follows:
+For the month of <%= monthname(@month) %>, our records show that your effort was distributed as follows:
 
 <% @efforts.each do |effort| %>
     <tr><td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
@@ -22,11 +22,12 @@ For the month of X, our records show that your effort was distributed as follows
         <td><%= text_field_tag "effort_id_values[#{effort.id}]", effort.actual_allocation, :size => 2 %> %</td></tr>
 <% end %>
 
-Is this distribution a correct approximation of your effort?
 
  </tbody>
 </table>
 
+Is this distribution a correct approximation of your effort?
+<br/>
   <br />
   <%= submit_tag "I confirm this to be accurate" %>
   <br/>

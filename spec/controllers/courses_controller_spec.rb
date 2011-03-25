@@ -13,7 +13,7 @@ describe CoursesController do
     specify { assigns(:all_courses).should == false }
   end
 
-  context "any user" do
+  context "any user can" do
     before do
       UserSession.create(Factory(:student_sam))
     end
@@ -55,7 +55,7 @@ describe CoursesController do
 
     end
 
-    describe "GET new course" do
+    describe "GET new" do
       before do
         get :new
       end
@@ -64,7 +64,7 @@ describe CoursesController do
     end
 
 
-    describe "GET configure course" do
+    describe "GET configure" do
       before do
         get :configure, :id => course.to_param
       end
@@ -99,19 +99,20 @@ describe CoursesController do
 
   end
 
-  context "any staff can do" do
+  context "any staff can" do
     before do
       UserSession.create(Factory(:faculty_frank))
     end
 
-    describe "GET new course" do
-      it 'assigns a new course as @course' do
+    describe "GET new" do
+      before do
         get :new
-        assigns(:course).should_not be_nil
       end
+
+      specify { assigns(:course).should_not be_nil }
     end
 
-    describe "GET edit course" do
+    describe "GET edit" do
       before do
         get :edit, :id => course.to_param
       end
@@ -119,7 +120,7 @@ describe CoursesController do
       specify { assigns(:course).should == course }
     end
 
-    describe "GET configure course" do
+    describe "GET configure" do
       before do
         get :configure, :id => course.to_param
       end
@@ -135,7 +136,7 @@ describe CoursesController do
           @course = Factory.build(:course)
         end
 
-        it "saves a newly created course" do
+        it "saves a newly created item" do
           lambda {
             post :create, :course => @course.attributes
           }.should change(Course, :count).by(1)
@@ -148,7 +149,7 @@ describe CoursesController do
       end
 
       describe "with invalid params" do
-        it "assigns a newly created but unsaved course as course" do
+        it "assigns a newly created but unsaved item as item" do
           lambda {
             post :create, :course => {}
           }.should_not change(Course, :count)
@@ -201,18 +202,16 @@ describe CoursesController do
     end
 
     describe "DELETE destroy" do
-
-      it "can't access page" do
+      before do
         delete :destroy, :id => course.to_param
-        response.should redirect_to(root_url)
-        flash[:error].should == I18n.t(:no_permission)
       end
 
+      it_should_behave_like "permission denied"
     end
   end
 
 
-  context "as admin do" do
+  context "any admin can" do
 #    before do
 #      UserSession.create(Factory(:admin_andy))
 #    end

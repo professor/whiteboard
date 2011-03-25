@@ -6,7 +6,6 @@ class CurriculumCommentsController < ApplicationController
   # GET /curriculum_comments.xml
   def index
     url = get_http_referer()
-#    @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ?", url])
     @curriculum_comments = CurriculumComment.find(:all, :conditions => ["url = ? and semester = ? and year = ?", url, AcademicCalendar.current_semester(), Date.today.year.to_s])
     respond_to do |format|
       format.html # index.html.erb
@@ -73,17 +72,19 @@ class CurriculumCommentsController < ApplicationController
   # PUT /curriculum_comments/1.xml
   def update
     @curriculum_comment = CurriculumComment.find(params[:id])
-    @types = CurriculumCommentType.find(:all)
+    if editable_or_redirect(@curriculum_comment, @curriculum_comment.url)
+      @types = CurriculumCommentType.find(:all)
 
-    respond_to do |format|
-      if @curriculum_comment.update_attributes(params[:curriculum_comment])
-        CurriculumCommentMailer.deliver_comment_update(@curriculum_comment, "updated")
-        flash[:notice] = 'Comment was successfully updated.'
-        format.html { redirect_to(@curriculum_comment.url) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @curriculum_comment.update_attributes(params[:curriculum_comment])
+          CurriculumCommentMailer.deliver_comment_update(@curriculum_comment, "updated")
+          flash[:notice] = 'Comment was successfully updated.'
+          format.html { redirect_to(@curriculum_comment.url) }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -91,17 +92,14 @@ class CurriculumCommentsController < ApplicationController
   # DELETE /curriculum_comments/1
   # DELETE /curriculum_comments/1.xml
   def destroy
-    if !current_user.is_admin?
-      flash[:error] = 'You don''t have permission to do this action.'
-      redirect_to(curriculum_comments_url) and return
-    end
-
     @curriculum_comment = CurriculumComment.find(params[:id])
-    @curriculum_comment.destroy
+    if has_permissions_or_redirect(:admin, @curriculum_comment.url)
+      @curriculum_comment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(curriculum_comments_url) }
-      format.xml  { head :ok }
+      respond_to do |format|
+        format.html { redirect_to(curriculum_comments_url) }
+        format.xml  { head :ok }
+      end
     end
   end
 

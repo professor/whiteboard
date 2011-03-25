@@ -30,6 +30,8 @@ class CurriculumComment < ActiveRecord::Base
 
     def notify_instructors()
       instructors = []
+      return instructors if self.url.empty?
+      
       if self.url.include? "architecture_se"
         instructors << "Todd.Sedano@sv.cmu.edu"
         instructors << "Reed.Letsinger@sv.cmu.edu"
