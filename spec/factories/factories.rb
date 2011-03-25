@@ -54,8 +54,8 @@ end
 Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |spe|
   spe.association :sponsored_project_allocation, :factory => :sponsored_project_allocation
   spe.current_allocation 10
-  spe.year {Date.today.year}
-  spe.month {Date.today.month}
+  spe.year {1.month.ago.year}
+  spe.month {1.month.ago.month}
   spe.confirmed false
 end
 

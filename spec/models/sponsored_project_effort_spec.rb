@@ -65,8 +65,9 @@ describe SponsoredProjectEffort do
       sponsored_project_effort.current_allocation.should == allocation.current_allocation
       sponsored_project_effort.actual_allocation.should == allocation.current_allocation
       sponsored_project_effort.confirmed.should == false
-      sponsored_project_effort.month.should == Date.today.month
-      sponsored_project_effort.year.should == Date.today.year
+
+      sponsored_project_effort.month.should == 1.month.ago.month
+      sponsored_project_effort.year.should == 1.month.ago.year
     end
 
     it "won't create a duplicate for same month and allocation" do
@@ -74,7 +75,7 @@ describe SponsoredProjectEffort do
       successful_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
       failed_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
 
-      efforts = SponsoredProjectEffort.find_all_by_month_and_year_and_sponsored_project_allocation_id(Date.today.month, Date.today.year, allocation.id)
+      efforts = SponsoredProjectEffort.find_all_by_month_and_year_and_sponsored_project_allocation_id(1.month.ago.month, 1.month.ago.year, allocation.id)
       efforts.length.should == 1
     end
   end
@@ -91,13 +92,13 @@ describe SponsoredProjectEffort do
       @effort_fagan = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
     end
 
-    it "responds to current_months_efforts_for_user" do
-      SponsoredProjectEffort.should respond_to(:current_months_efforts_for_user)
+    it "responds to month_under_inspection_for_a_given_user" do
+      SponsoredProjectEffort.should respond_to(:month_under_inspection_for_a_given_user)
     end
 
     it "finds all effort for the current month for a given user" do
       efforts = [@effort_frank]
-      SponsoredProjectEffort.current_months_efforts_for_user(@faculty_frank.id).should == efforts
+      SponsoredProjectEffort.month_under_inspection_for_a_given_user(@faculty_frank.id).should == efforts
     end
 
     it "responds to for_all_users_for_a_given_month" do

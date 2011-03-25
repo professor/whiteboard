@@ -27,7 +27,7 @@ class SponsoredProjectAllocation < ActiveRecord::Base
   end
 
   def self.emails_staff_requesting_confirmation_for_allocations
-    efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(Date.today.month, Date.today.year)
+    efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(1.month.ago.month, 1.month.ago.year)
     efforts.each do |effort|
       person = effort.sponsored_project_allocation.person
       unless effort.confirmed || person.emailed_recently(:sponsored_project_effort)
