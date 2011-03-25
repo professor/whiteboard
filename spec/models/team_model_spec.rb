@@ -38,7 +38,7 @@ describe Team do
     end
 
     it "second email that is copied from the course's peer evaluation second email date if it exists" do
-      course = Factory(:course, :peer_evaluation_first_email => Date.today)
+      course = Factory(:course, :peer_evaluation_second_email => Date.today)
       team = Factory(:team, :course_id => course.id)
 
       team.peer_evaluation_second_email.to_date.should == course.peer_evaluation_second_email
