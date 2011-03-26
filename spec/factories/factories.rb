@@ -3,6 +3,7 @@ Factory.define :course, :class => Course do |c|
   c.semester AcademicCalendar.current_semester
   c.year Date.today.year
   c.mini 'Both'
+  c.updated_by_user_id 10
 end
 
 Factory.define :curriculum_comment_type do |c|

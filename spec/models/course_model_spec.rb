@@ -83,5 +83,16 @@ describe Course do
     course.auto_generated_peer_evaluation_date_end.to_s.should == "2010-10-15"
   end
 
+  it "is versioned" do
+    UserSession.create(Factory(:faculty_frank))
+    course = Factory.build(:course)
+    course.should respond_to(:version)
+    course.save
+    version_number = course.version
+    course.name = "I changed my mind"
+    course.save
+    course.version.should == version_number + 1
+  end
+
 
 end

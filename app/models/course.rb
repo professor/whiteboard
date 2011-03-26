@@ -5,12 +5,21 @@ class Course < ActiveRecord::Base
 
   has_and_belongs_to_many :people, :join_table=>"courses_people", :class_name => "Person"
 
-
   validates_presence_of :semester, :year, :mini, :name
+
+  versioned
+  validates_presence_of :updated_by_user_id
+  belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
+
 
 #  def to_param
 #    self.short_name + self.semester + self.year.to_s
 #  end
+
+  def before_validation
+     current_user = UserSession.find.user unless UserSession.find.nil?
+     self.updated_by_user_id = current_user.id if current_user
+  end
 
   named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
 

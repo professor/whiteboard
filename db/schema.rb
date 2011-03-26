@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20110325232412) do
     t.string   "curriculum_url"
     t.boolean  "configure_course_twiki",          :default => false
     t.boolean  "is_configured",                   :default => false
+    t.integer  "updated_by_user_id"
   end
 
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
