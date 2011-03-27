@@ -1,48 +1,16 @@
 <% content_for :title, @course.name %>
-<p>
-  <b>Name:</b>
-  <%=h @course.name %>
-</p>
 
-<p>
-  <b>Number:</b>
-  <%=h @course.number %>
-</p>
+<h1><%=h @course.number %> <%=h @course.name %> (<%=h @course.display_semester %>)</h1>
+<p>Aka <%=h @course.short_name %></p>
+<p><%= link_to "Course website", @course.curriculum_url %> </p>
+<p><%= link_to 'Teams for the course', course_teams_path(@course) %></p>
+<p><%= link_to 'Effort Reports for the course', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
 
-<p>
-  <b>Course Template: </b>
-  <% if !(@course.course_number.nil?) %>
-  <%=h @course.course_number.number %> <%=h @course.course_number.name %>
-  <% end %>
-</p>
-
-<p>
-  <b>Semester:</b>
-  <%=h @course.semester %>  <%=h @course.year %>  <%=h @course.mini %>
-</p>
-
-<p>
-  <b>Primary faculty label:</b>
-  <%=h @course.primary_faculty_label %> 
-</p>
-
-<p>
-  <b>Secondary faculty label:</b>
-  <%=h @course.secondary_faculty_label %> 
-</p>
-
-  <p>
-    <b>Send out emails about effort logs and effort reports?</b>
-    <%=h @course.remind_about_effort %>
-  </p>
-
-
-
-<%= link_to 'Teams for the course', course_teams_path(@course) %><br>
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
-<%= link_to 'Effort Reports for the course', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%>
+<p><%= link_to 'Configure course', configure_course_path(@course) %></p>
 <% end %>
 
+<br/>
 <br style="clear:both;" />
 <% if current_user && (current_user.is_admin) %>
   <div class="rounded admin">
@@ -59,4 +27,5 @@
 
 <br><br>
 <%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Configure', configure_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
