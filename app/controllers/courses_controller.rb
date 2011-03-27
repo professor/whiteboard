@@ -112,7 +112,7 @@ class CoursesController < ApplicationController
       @course = Course.find(params[:id])
 
       if(params[:course][:is_configured]) #The previous page was configure action
-        CourseMailer.deliver_configure_course_admin_email(@course)
+        @course.twiki_url = params[:course][:curriculum_url] if @course.twiki_url.blank? && params[:course][:configure_course_twiki]
       else
         msg = @course.update_people(params[:people])
         unless msg.blank?

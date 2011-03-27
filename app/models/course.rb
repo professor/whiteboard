@@ -99,7 +99,7 @@ class Course < ActiveRecord::Base
   end
 
   def auto_generated_twiki_url
-    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}".delete(' ')
+    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}/WebHome".delete(' ')
   end
 
   def auto_generated_peer_evaluation_date_start

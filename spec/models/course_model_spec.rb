@@ -67,10 +67,10 @@ describe Course do
 
   it "should be able to auto_generated_twiki_url" do
     course = Factory.build(:course, :semester => "Fall", :year => "2010", :name => "Foundations of Software Engineering")
-    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FoundationsofSoftwareEngineering"
+    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FoundationsofSoftwareEngineering/WebHome"
 
     course = Factory.build(:course, :semester => "Fall", :year => "2010", :short_name => "FSE")
-    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FSE"
+    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FSE/WebHome"
   end
 
   it "should auto_generated_peer_evaluation_date_start" do
