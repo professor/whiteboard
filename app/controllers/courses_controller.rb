@@ -95,7 +95,7 @@ class CoursesController < ApplicationController
           end
 
           flash[:notice] = 'Course was successfully created.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_to :action=> "new" }
           format.xml  { render :xml => @course, :status => :created, :location => @course }
         else
           format.html { render :action => "new" }
