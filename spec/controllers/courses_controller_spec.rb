@@ -144,7 +144,7 @@ describe CoursesController do
 
         it "redirects to the course" do
           post :create, :course => @course.attributes
-          response.should redirect_to(course_path(assigns(:course).id))
+          response.should redirect_to(new_course_path)
         end
       end
 
