@@ -26,6 +26,10 @@ class CoursesController < ApplicationController
     @semester = AcademicCalendar.next_semester()
     @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
+#    @semester_courses = Course.for_semester(@semester, @year, "Both")
+#    @mini_a_courses = Course.for_semester(@semester, @year, "A")
+#    @mini_b_courses = Course.for_semester(@semester, @year, "B")
+#
     index_core
   end
 

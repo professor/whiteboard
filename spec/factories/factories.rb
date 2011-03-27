@@ -98,4 +98,3 @@ Factory.define :team, :class => Team do |t|
  t.person_name3 "Student Sam"
  t.association :course, :factory => :course
 end
-

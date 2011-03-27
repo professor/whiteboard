@@ -23,6 +23,11 @@ class Course < ActiveRecord::Base
 
   named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
 
+#  def self.for_semester(semester, year, mini)
+#    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
+#  end
+
+
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
