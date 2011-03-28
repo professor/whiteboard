@@ -146,7 +146,6 @@ class Course < ActiveRecord::Base
     new_course = self.clone
     new_course.is_configured = false
     new_course.people = self.people
-    new_course.save
     return new_course
   end
 

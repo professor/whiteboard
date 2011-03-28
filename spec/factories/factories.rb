@@ -3,6 +3,7 @@ Factory.define :course, :class => Course do |c|
   c.semester AcademicCalendar.current_semester
   c.year Date.today.year
   c.mini 'Both'
+  c.number '96-700'
   c.updated_by_user_id 10
 end
 

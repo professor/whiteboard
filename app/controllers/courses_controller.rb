@@ -86,20 +86,21 @@ class CoursesController < ApplicationController
   # POST /courses.xml
   def create
     if has_permissions_or_redirect(:staff, root_url)
-      @course = Course.new(params[:course])
+      @last_offering = Course.last_offering(params[:course][:number])
+      if @last_offering.nil?
+        @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+      else
+        @course = @last_offering.copy_as_new_course
+      end
+
+      @course.year = params[:course][:year]
+      @course.semester = params[:course][:semester]
 
       respond_to do |format|
         if @course.save
 
-          msg = @course.update_people(params[:people])
-          unless msg.blank?
-            flash.now[:error] = msg
-            render :action => 'edit'
-            return
-          end
-
           flash[:notice] = 'Course was successfully created.'
-          format.html { redirect_to :action=> "new" }
+          format.html { redirect_to edit_course_path(@course) }
           format.xml  { render :xml => @course, :status => :created, :location => @course }
         else
           format.html { render :action => "new" }

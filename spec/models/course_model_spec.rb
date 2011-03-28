@@ -119,6 +119,7 @@ describe Course do
     it "all attributes are copied except 'is_configured'" do
       course = Factory(:course)
       new_course = course.copy_as_new_course
+      new_course.save
       course.attributes.each do |key, value|
         case key
           when "is_configured"
@@ -136,6 +137,7 @@ describe Course do
 #      course = Factory(:course, :people => [@faculty_frank])
       course = Factory(:course)
       new_course = course.copy_as_new_course
+      new_course.save
       new_course.people.should =~ course.people
     end
 
