@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Course do
 
+  before do
+    activate_authlogic
+    @faculty_frank = UserSession.create(Factory(:faculty_frank))
+  end
 
   it 'can be created' do
     lambda {
@@ -84,7 +88,6 @@ describe Course do
   end
 
   it "is versioned" do
-    UserSession.create(Factory(:faculty_frank))
     course = Factory.build(:course)
     course.should respond_to(:version)
     course.save
@@ -92,6 +95,36 @@ describe Course do
     course.name = "I changed my mind"
     course.save
     course.version.should == version_number + 1
+  end
+
+  context "copied as new course" do
+    it "responds to " do
+      subject.should respond_to(:copy_as_new_course)
+    end
+
+    it "all attributes are copied except 'is_configured'" do
+      course = Factory(:course)
+      new_course = course.copy_as_new_course
+      course.attributes.each do |key, value|
+        case key
+          when "is_configured"
+            new_course.is_configured.should == false
+          when "id"
+            new_course.id.should_not == course.id
+          else
+            new_course.attributes[key].should == value
+        end
+      end
+    end
+
+    it "also copies over the people association" do
+# Todo: fix this when user and person are the same class
+#      course = Factory(:course, :people => [@faculty_frank])
+      course = Factory(:course)
+      new_course = course.copy_as_new_course
+      new_course.people.should =~ course.people
+    end
+
   end
 
 

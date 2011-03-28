@@ -137,5 +137,13 @@ class Course < ActiveRecord::Base
     return msg
   end
 
+  def copy_as_new_course
+    new_course = self.clone
+    new_course.is_configured = false
+    new_course.people = self.people
+    new_course.save
+    return new_course
+  end
+
 
 end
