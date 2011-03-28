@@ -23,6 +23,20 @@ describe Course do
     end
   end
 
+  context "custom finders" do
+
+    specify { Course.should respond_to(:last_offering) }
+
+    it 'finds the last course offered with the same course number' do
+      @first = Factory(:course, :semester => "Fall", :year => 2010)
+      @third = Factory(:course, :semester => "Summer", :year => 2011)
+      @second = Factory(:course, :semester => "Spring", :year => 2011)
+      Course.last_offering(@first.number).should == @third
+    end
+
+
+  end
+
 
   it "should know which courses are offered this semester" do
     list = Course.current_semester_courses

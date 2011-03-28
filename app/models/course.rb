@@ -23,6 +23,11 @@ class Course < ActiveRecord::Base
 
   named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
 
+  named_scope :month_under_inspection_for_a_given_user,
+              lambda { |person_id| {:include => :sponsored_project_allocation,
+                                    :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", 1.month.ago.month, 1.month.ago.year, person_id] }}
+
+
 #  def self.for_semester(semester, year, mini)
 #    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
 #  end
@@ -145,5 +150,10 @@ class Course < ActiveRecord::Base
     return new_course
   end
 
+  def self.last_offering(course_number)
+    offerings = Course.find_all_by_number(course_number)
+    offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+    return offerings.first
+  end
 
 end
