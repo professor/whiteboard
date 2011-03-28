@@ -126,6 +126,12 @@ describe Course do
             new_course.is_configured.should == false
           when "id"
             new_course.id.should_not == course.id
+          when "curriculum_url"
+            if value.nil? || value.include?("twiki")
+              new_course.curriculum_url.should be_nil
+            else
+              new_course.curriculum_url.should == value
+            end
           else
             new_course.attributes[key].should == value
         end

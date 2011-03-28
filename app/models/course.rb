@@ -145,6 +145,7 @@ class Course < ActiveRecord::Base
   def copy_as_new_course
     new_course = self.clone
     new_course.is_configured = false
+    new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.people = self.people
     return new_course
   end
