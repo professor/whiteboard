@@ -20,9 +20,9 @@ describe "courses/new.html.erb" do
    render
 
     response.should have_tag('form') do |f|
-      f.should have_tag("input[name='course[semester]']")
-      f.should have_tag("input[name='course[year]']")
       f.should have_tag("input[name='course[number]']")
+      f.should have_tag("select[name='course[semester]']")
+      f.should have_tag("input[name='course[year]']")
     end
   end
 
