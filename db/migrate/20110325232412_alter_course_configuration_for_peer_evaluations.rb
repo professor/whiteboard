@@ -5,10 +5,13 @@ class AlterCourseConfigurationForPeerEvaluations < ActiveRecord::Migration
     rename_column :courses, :configure_peer_evaluation_date2, :peer_evaluation_second_email
 
     add_column :courses, :updated_by_user_id, :integer
-    
+
+    add_index :courses, :number
   end
 
   def self.down
+    remove_index :courses, :number
+
     remove_column :courses, :updated_by_user_id
 
 
