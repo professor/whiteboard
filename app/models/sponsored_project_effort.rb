@@ -31,4 +31,11 @@ class SponsoredProjectEffort < ActiveRecord::Base
                                   :actual_allocation => allocation.current_allocation,
                                   :confirmed => false)
   end
+
+  def self.emails_business_manager(an_effort_id)
+    effort = SponsoredProjectEffort.find(an_effort_id)
+    SponsoredProjectEffortMailer.deliver_changed_allocation_email_to_business_manager(effort.sponsored_project_allocation.person,
+                                                                                      effort.month, effort.year)
+  end
+
 end

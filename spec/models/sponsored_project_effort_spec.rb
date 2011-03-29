@@ -112,5 +112,18 @@ describe SponsoredProjectEffort do
     end    
   end
 
+  context "emails the business manager" do
+
+    specify { SponsoredProjectEffort.should respond_to(:emails_business_manager)}
+
+    it "successfully" do
+      @effort = Factory(:sponsored_project_effort)
+      SponsoredProjectEffortMailer.should_receive(:deliver_changed_allocation_email_to_business_manager)
+      SponsoredProjectEffort.emails_business_manager(@effort.id)
+    end
+
+  end
+
+
 
 end

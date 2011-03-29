@@ -1,0 +1,11 @@
+Hector,
+
+<br/><br/>
+Action Required: <%= @person.human_name %> just confirmed their effort for <%= Date::MONTHNAMES[@month] %> <%= @year %>,
+however, the actual allocation is different than the planned allocation. 
+<br/><br/>
+<%= link_to  "See their allocations", "http://rails.sv.cmu.edu/sponsored_project_efforts/#{@person.twiki_name}/edit" %>
+<br/><br/>
+Thank you for following up on this,
+<br/><br/>
+Scotty Dog

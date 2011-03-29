@@ -23,13 +23,18 @@ class SponsoredProjectEffortsController < ApplicationController
     effort_id_values = params[:effort_id_values]
 
     @failed = false
+    @changed_allocation = false
     effort_id_values.each do |key,value|
       effort = SponsoredProjectEffort.find(key)
+      @changed_allocation = true if effort.actual_allocation != value
       effort.actual_allocation = value
       effort.confirmed = true
       unless effort.save
         @failed = true
       end
+    end
+    if @changed_allocation
+      SponsoredProjectEffort.emails_business_manager(effort_id_values.keys[0])
     end
 
     if @failed
