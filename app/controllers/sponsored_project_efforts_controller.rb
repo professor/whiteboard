@@ -5,7 +5,8 @@ class SponsoredProjectEffortsController < ApplicationController
   layout "cmu_sv"
 
   def index
-    @month = params[:month] ||= 1.month.ago.month
+    @month = params[:date][:month].to_i unless params[:date].nil?
+    @month = @month ||= 1.month.ago.month
     @year = params[:year] ||= 1.month.ago.year
     @efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(@month, @year)
   end
