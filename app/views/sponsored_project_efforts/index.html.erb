@@ -55,7 +55,6 @@ $(document).ready(function()
   <th>Current Allocation</th>
   <th>Actual Allocation</th>
   <th>Confirmed</th>
-  <th></th>
 </tr>
 </thead>
 <tbody>
@@ -67,9 +66,10 @@ $(document).ready(function()
       <td><%= effort.current_allocation %> % 
       <%= link_to 'Edit', edit_sponsored_project_allocation_path(effort.sponsored_project_allocation) %>
       </td>
-      <td><%= effort.actual_allocation %> %</td>
+      <td><%= effort.actual_allocation %> %
+      <%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %>
+      </td>
       <td><%= effort.confirmed %></td>
-      <td><%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %></td>
     </tr>
 <% end %>
 </tbody>
