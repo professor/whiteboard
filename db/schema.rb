@@ -43,9 +43,11 @@ ActiveRecord::Schema.define(:version => 20110325232412) do
     t.integer  "updated_by_user_id"
   end
 
+  add_index "courses", ["mini"], :name => "index_courses_on_mini"
   add_index "courses", ["number"], :name => "index_courses_on_number"
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
+  add_index "courses", ["year"], :name => "index_courses_on_year"
 
   create_table "courses_people", :id => false, :force => true do |t|
     t.integer  "course_id"
