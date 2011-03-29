@@ -26,6 +26,10 @@ class CoursesController < ApplicationController
     @semester = AcademicCalendar.next_semester()
     @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
+#    @semester_courses = Course.for_semester(@semester, @year, "Both")
+#    @mini_a_courses = Course.for_semester(@semester, @year, "A")
+#    @mini_b_courses = Course.for_semester(@semester, @year, "B")
+#
     index_core
   end
 
@@ -82,20 +86,21 @@ class CoursesController < ApplicationController
   # POST /courses.xml
   def create
     if has_permissions_or_redirect(:staff, root_url)
-      @course = Course.new(params[:course])
+      @last_offering = Course.last_offering(params[:course][:number])
+      if @last_offering.nil?
+        @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+      else
+        @course = @last_offering.copy_as_new_course
+      end
+
+      @course.year = params[:course][:year]
+      @course.semester = params[:course][:semester]
 
       respond_to do |format|
         if @course.save
 
-          msg = @course.update_people(params[:people])
-          unless msg.blank?
-            flash.now[:error] = msg
-            render :action => 'edit'
-            return
-          end
-
           flash[:notice] = 'Course was successfully created.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_to edit_course_path(@course) }
           format.xml  { render :xml => @course, :status => :created, :location => @course }
         else
           format.html { render :action => "new" }
@@ -112,7 +117,7 @@ class CoursesController < ApplicationController
       @course = Course.find(params[:id])
 
       if(params[:course][:is_configured]) #The previous page was configure action
-        CourseMailer.deliver_configure_course_admin_email(@course)
+        @course.twiki_url = params[:course][:curriculum_url] if @course.twiki_url.blank? && params[:course][:configure_course_twiki]
       else
         msg = @course.update_people(params[:people])
         unless msg.blank?

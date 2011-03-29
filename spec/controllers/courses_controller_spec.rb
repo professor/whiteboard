@@ -131,21 +131,43 @@ describe CoursesController do
 
     describe "POST create" do
 
-      describe "with valid params" do
+      describe "with valid params for new course number" do
         before(:each) do
           @course = Factory.build(:course)
         end
 
         it "saves a newly created item" do
           lambda {
-            post :create, :course => @course.attributes
+            post :create, :course => {"number"=>"96-NEW", "semester"=>"Summer", "year"=>"2011"}
           }.should change(Course, :count).by(1)
         end
 
-        it "redirects to the course" do
+        it "redirects to edit course" do
           post :create, :course => @course.attributes
-          response.should redirect_to(course_path(assigns(:course).id))
+          @new_course = assigns(:course)
+          response.should redirect_to(edit_course_path(@new_course))
         end
+      end
+
+      describe "with valid params for an existing course number" do
+
+        before(:each) do
+          @number = "96-700"
+          @course = Factory(:course, :number => @number)
+        end
+
+        it "saves a newly created item" do
+          lambda {
+            post :create, :course => {"number"=>@number, "semester"=>"Summer", "year"=>"2011"}
+          }.should change(Course, :count).by(1)
+        end
+
+        it "redirects to edit course" do
+          post :create, :course => @course.attributes
+          @new_course = assigns(:course)
+          response.should redirect_to(edit_course_path(@new_course))
+        end
+
       end
 
       describe "with invalid params" do

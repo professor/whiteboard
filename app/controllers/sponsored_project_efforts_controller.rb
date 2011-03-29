@@ -5,8 +5,9 @@ class SponsoredProjectEffortsController < ApplicationController
   layout "cmu_sv"
 
   def index
-    @month = params[:month] ||= Date.today.month
-    @year = params[:year] ||= Date.today.year
+    @month = params[:date][:month].to_i unless params[:date].nil?
+    @month = @month ||= 1.month.ago.month
+    @year = params[:year] ||= 1.month.ago.year
     @efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(@month, @year)
   end
 
@@ -22,13 +23,18 @@ class SponsoredProjectEffortsController < ApplicationController
     effort_id_values = params[:effort_id_values]
 
     @failed = false
+    @changed_allocation = false
     effort_id_values.each do |key,value|
       effort = SponsoredProjectEffort.find(key)
+      @changed_allocation = true if effort.actual_allocation != value
       effort.actual_allocation = value
       effort.confirmed = true
       unless effort.save
         @failed = true
       end
+    end
+    if @changed_allocation
+      SponsoredProjectEffort.emails_business_manager(effort_id_values.keys[0])
     end
 
     if @failed
@@ -46,9 +52,9 @@ private
       @person = Person.find_by_twiki_name(params[:id])
 
       if @person.id == @current_user.id || @current_user.is_admin
-        @efforts = SponsoredProjectEffort.current_months_efforts_for_user(@person.id)
-        @month = !@efforts.empty? ? @efforts[0].month : Date.today.month
-        @year = !@efforts.empty? ? @efforts[0].year : Date.today.year
+        @efforts = SponsoredProjectEffort.month_under_inspection_for_a_given_user(@person.id)
+        @month = !@efforts.empty? ? @efforts[0].month : 1.month.ago.month
+        @year = !@efforts.empty? ? @efforts[0].year : 1.month.ago.year
       else
         #bounce with error
       end

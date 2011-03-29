@@ -12,8 +12,6 @@ class Page < ActiveRecord::Base
 
     belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
 
-#    acts_as_versioned  :table_name => 'page_versions'
-
     belongs_to :course
     acts_as_list :scope => :course
 

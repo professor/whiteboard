@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110322233953) do
+ActiveRecord::Schema.define(:version => 20110325232412) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -34,16 +34,20 @@ ActiveRecord::Schema.define(:version => 20110322233953) do
     t.string   "short_name"
     t.integer  "year"
     t.boolean  "configure_class_mailinglist",     :default => false
-    t.date     "configure_peer_evaluation_date1"
-    t.date     "configure_peer_evaluation_date2"
+    t.date     "peer_evaluation_first_email"
+    t.date     "peer_evaluation_second_email"
     t.boolean  "configure_teams_name_themselves", :default => true
     t.string   "curriculum_url"
     t.boolean  "configure_course_twiki",          :default => false
     t.boolean  "is_configured",                   :default => false
+    t.integer  "updated_by_user_id"
   end
 
+  add_index "courses", ["mini"], :name => "index_courses_on_mini"
+  add_index "courses", ["number"], :name => "index_courses_on_number"
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
+  add_index "courses", ["year"], :name => "index_courses_on_year"
 
   create_table "courses_people", :id => false, :force => true do |t|
     t.integer  "course_id"

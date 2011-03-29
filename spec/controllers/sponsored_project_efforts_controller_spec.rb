@@ -25,7 +25,7 @@ describe SponsoredProjectEffortsController do
 
       it 'assigns @efforts' do
         efforts = [stub_model(SponsoredProjectEffort)]
-        SponsoredProjectEffort.should_receive(:current_months_efforts_for_user).with(@faculty_frank.id).and_return(efforts)
+        SponsoredProjectEffort.should_receive(:month_under_inspection_for_a_given_user).with(@faculty_frank.id).and_return(efforts)
         get :edit, :id => @faculty_frank.twiki_name
         assigns(:efforts).should == efforts
         assigns(:month).should == efforts[0].month
@@ -49,6 +49,8 @@ describe SponsoredProjectEffortsController do
         SponsoredProjectEffort.should_receive(:find).with("1").and_return(@effort_2)
 
         subject.should_receive(:setup_edit).and_return(true)
+
+        SponsoredProjectEffort.stub(:emails_business_manager)
       end
 
 
@@ -74,6 +76,11 @@ describe SponsoredProjectEffortsController do
         it "re-renders the 'edit' template" do
           put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
           response.should render_template("edit")
+        end
+
+        it "emails the business manager when actual != confirmed" do
+          SponsoredProjectEffort.should_receive(:emails_business_manager)
+          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
         end
       end
 

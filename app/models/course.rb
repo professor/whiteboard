@@ -5,14 +5,29 @@ class Course < ActiveRecord::Base
 
   has_and_belongs_to_many :people, :join_table=>"courses_people", :class_name => "Person"
 
-
   validates_presence_of :semester, :year, :mini, :name
+
+  versioned
+  validates_presence_of :updated_by_user_id
+  belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
+
 
 #  def to_param
 #    self.short_name + self.semester + self.year.to_s
 #  end
 
+  def before_validation
+     current_user = UserSession.find.user unless UserSession.find.nil?
+     self.updated_by_user_id = current_user.id if current_user
+  end
+
   named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
+
+
+#  def self.for_semester(semester, year, mini)
+#    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
+#  end
+
 
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
@@ -78,6 +93,11 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def display_semester
+    mini_text = self.mini == "Both" ? "" : self.mini + " "
+    return self.semester + " " + mini_text + self.year.to_s
+  end
+
   def self.remind_about_effort_course_list
     courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "both"] )
     courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini] )
@@ -85,7 +105,7 @@ class Course < ActiveRecord::Base
   end
 
   def auto_generated_twiki_url
-    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}".delete(' ')
+    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}/WebHome".delete(' ')
   end
 
   def auto_generated_peer_evaluation_date_start
@@ -118,5 +138,18 @@ class Course < ActiveRecord::Base
     return msg
   end
 
+  def copy_as_new_course
+    new_course = self.clone
+    new_course.is_configured = false
+    new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
+    new_course.people = self.people
+    return new_course
+  end
+
+  def self.last_offering(course_number)
+    offerings = Course.find_all_by_number(course_number)
+    offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+    return offerings.first
+  end
 
 end

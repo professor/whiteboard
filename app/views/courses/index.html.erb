@@ -33,6 +33,7 @@ $(document).ready(function()
 <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
 <h1><%= @semester %> <%= @year %> Courses</h1>
 <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
+    <p>For more information about your options see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
 <% end %>
 <%= render :partial => "/people/tablesorter_filter_box" %>
 
@@ -76,6 +77,7 @@ $(document).ready(function()
 <% end %>
 </tbody>
 </table>
+
 
 <br />
 

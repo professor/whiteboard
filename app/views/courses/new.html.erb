@@ -2,7 +2,30 @@
 <%= javascript_include_tag 'prototype' %>
 <h1>New course</h1>
 
-<%= render :partial => "form_create", :locals => { :button_name => "Create" } %>
+<%# render :partial => "form_create", :locals => { :button_name => "Create" } %>
+
+<% form_for(@course) do |f| %>
+    <%= f.error_messages %>
+  <p>
+    <%= f.label :number %><br />
+    <%= f.text_field :number, :size => "7" %>
+  </p>
+    Example: 96-700
+
+    <p>
+      <%= f.label :semester %><br />
+      <%= f.select(:semester, ['Fall', 'Spring', 'Summer']) %>
+    </p>
+    <p>
+      <%= f.label :year %><br />
+      <%= f.text_field :year, :size => 4 %>
+    </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
 
 
 <%= link_to 'Back', courses_path %>

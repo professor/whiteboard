@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Page do
-  fixtures :users  
-
-  
-
 
   before(:all) do
       activate_authlogic
@@ -18,19 +14,19 @@ describe Page do
 
 
   it "is valid with valid attributes" do
-    UserSession.create(users(:faculty_frank))
+    UserSession.create(Factory(:faculty_frank))
     @page.should be_valid
   end
 
   it "is not valid without a title" do
-    UserSession.create(users(:faculty_frank))
+    UserSession.create(Factory(:faculty_frank))
     @page.title = nil
     @page.should_not be_valid
   end
 
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
   it "is not valid without an updated_by_user_id"  do
-    UserSession.create(u = users(:faculty_frank))
+    UserSession.create(u = Factory(:faculty_frank))
     @page.updated_by_user_id = nil
     lambda {
       @page.valid?
@@ -41,7 +37,7 @@ describe Page do
 
 
   it "should show who did the last edit and when it occurred" do
-    UserSession.create(users(:faculty_frank))
+    UserSession.create(Factory(:faculty_frank))
     last_user_id = @page.updated_by_user_id
     @page.title = "Something different"
     @page.save
@@ -52,7 +48,7 @@ describe Page do
 
   context "can be a named url" do
     it "that is unique" do
-      UserSession.create(users(:faculty_frank))
+      UserSession.create(Factory(:faculty_frank))
       @page.url = "ppm"
       @page.save
 
@@ -65,7 +61,7 @@ describe Page do
     end
 
     it "that is not a number because it would cause conflicts with the id field on lookup" do
-      UserSession.create(users(:faculty_frank))
+      UserSession.create(Factory(:faculty_frank))
       @page.url = "123"
       @page.should_not be_valid
       @page.errors[:url].should_not be_nil
@@ -80,7 +76,7 @@ describe Page do
     end
 
     it "that defaults from the title field" do
-      UserSession.create(users(:faculty_frank))
+      UserSession.create(Factory(:faculty_frank))
       @page.url = ""
       @page.should be_valid
       @page.url.should == @page.title      
@@ -90,22 +86,22 @@ describe Page do
 
 
   it "is editable by staff or admin" do
-    @page.should be_editable(users(:faculty_frank))
+    @page.should be_editable(Factory(:faculty_frank))
    end
 
   it "is not editable unless they are staff or admin" do
-    @page.should_not be_editable(users(:student_sam))
+    @page.should_not be_editable(Factory(:student_sam))
   end
 
   it "should allow the creator to specify editable by faculty or any authenticated user" do
     @page.should respond_to(:is_editable_by_all)
     @page.is_editable_by_all = true
-    @page.should be_editable(users(:student_sam))    
+    @page.should be_editable(Factory(:student_sam))    
   end
   
 
   it "is versioned" do
-    UserSession.create(users(:faculty_frank))    
+    UserSession.create(Factory(:faculty_frank))    
     @page.should respond_to(:version)
     @page.save   
     version_number = @page.version
@@ -116,7 +112,7 @@ describe Page do
 
     it "should allow faculty to comment about the changes"
 #  do
-#      UserSession.create(users(:faculty_frank))
+#      UserSession.create(Factory(:faculty_frank))
 #      @page.version_comments = "A very simple change"
 #      @page.save
 ##This seems too simple

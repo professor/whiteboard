@@ -37,6 +37,11 @@ $(document).ready(function()
 
 
 <h1>Efforts for <%= monthname(@month) %> <%= @year %></h1>
+<% form_tag(sponsored_project_efforts_path, :method => "get") do %>
+<%= select_month @month %>
+<%= text_field_tag('year', @year, :size=> '4', :maxlength => '4') %>
+<%= submit_tag 'Go' %>
+<% end %>
 <div class="right_link" ><%= link_to 'Allocations', sponsored_project_allocations_url %><br/>
   <%= link_to "Projects", sponsored_projects_url %></div>
 <div style="float:none"><%= render :partial => "/people/tablesorter_filter_box" %></div>
@@ -50,7 +55,6 @@ $(document).ready(function()
   <th>Current Allocation</th>
   <th>Actual Allocation</th>
   <th>Confirmed</th>
-  <th></th>
 </tr>
 </thead>
 <tbody>
@@ -59,10 +63,11 @@ $(document).ready(function()
       <td><%= effort.sponsored_project_allocation.person.human_name %></td>
       <td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
       <td><%= effort.sponsored_project_allocation.sponsored_project.name %></td>
-      <td><%= effort.current_allocation %> %</td>
-      <td><%= effort.actual_allocation %> %</td>
+      <td><%= effort.current_allocation %> % <%= link_to 'Edit', edit_sponsored_project_allocation_path(effort.sponsored_project_allocation) %>
+      </td>
+      <td><%= effort.actual_allocation %> % <%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %>
+      </td>
       <td><%= effort.confirmed %></td>
-      <td><%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %></td>
     </tr>
 <% end %>
 </tbody>

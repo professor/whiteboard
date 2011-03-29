@@ -3,6 +3,8 @@ Factory.define :course, :class => Course do |c|
   c.semester AcademicCalendar.current_semester
   c.year Date.today.year
   c.mini 'Both'
+  c.number '96-700'
+  c.updated_by_user_id 10
 end
 
 Factory.define :curriculum_comment_type do |c|
@@ -54,8 +56,8 @@ end
 Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |spe|
   spe.association :sponsored_project_allocation, :factory => :sponsored_project_allocation
   spe.current_allocation 10
-  spe.year {Date.today.year}
-  spe.month {Date.today.month}
+  spe.year {1.month.ago.year}
+  spe.month {1.month.ago.month}
   spe.confirmed false
 end
 
@@ -97,4 +99,3 @@ Factory.define :team, :class => Team do |t|
  t.person_name3 "Student Sam"
  t.association :course, :factory => :course
 end
-

@@ -6,6 +6,7 @@ class SponsoredProjectSponsorsController < ApplicationController
 
   def new
     if has_permissions_or_redirect
+      store_previous_location
       @sponsor = SponsoredProjectSponsor.new
     end
   end
@@ -22,7 +23,7 @@ class SponsoredProjectSponsorsController < ApplicationController
 
       if @sponsor.save
         flash[:notice] = 'Sponsor was successfully created.'
-        redirect_to(sponsored_projects_path)
+        redirect_back_or_default(sponsored_projects_path)
       else
         render "new"
       end
