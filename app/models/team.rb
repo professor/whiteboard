@@ -13,6 +13,7 @@ class Team < ActiveRecord::Base
 #  end
 
   attr :old_email, true
+  attr :old_name, true
   attr :team_members_list_changed, true
 
   def after_initialize
@@ -38,7 +39,15 @@ class Team < ActiveRecord::Base
 #    self.send_later(:update_google_mailing_list, self.email, self.old_email, self.id)
     self.delay.update_google_mailing_list self.email, self.old_email, self.id
     self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+
+    current_user = UserSession.find.user unless UserSession.find.nil?
+    if current_user && self.name_changed?
+      self.name =  self.name_was unless self.course.configure_teams_name_themselves || current_user.permission_level_of(:staff)
+    end
+
   end
+
+
 
   def update_google_mailing_list(new_email, old_email, id)
     logger.debug("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")

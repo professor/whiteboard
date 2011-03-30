@@ -2,14 +2,17 @@ require 'spec_helper'
 
 describe Team do
 
+  before(:all) do
+      activate_authlogic
+  end
+
 
   it "should throw an error when a google distribution list was not created" do
     google_apps_connection.stub(:create_group)
     google_apps_connection.stub(:add_member_to_group)
-    
-    team = Factory.create(:team_triumphant)
-    lambda{team.update_google_mailing_list("new", "old", 123)}.should raise_error()
 
+    team = Factory.create(:team_triumphant)
+    lambda { team.update_google_mailing_list("new", "old", 123) }.should raise_error()
 
 
   end
@@ -53,6 +56,28 @@ describe Team do
     end
 
 
+  end
+
+  context "can be named" do
+
+    before do
+      @course = Factory(:course, :configure_teams_name_themselves => false)
+      @team = Factory(:team, :course_id => @course.id, :name => "Dracula")
+    end
+
+    it "by the students if, this option wasn't selected when creating the course" do
+      @student_sam = UserSession.create(Factory(:student_sam))
+      @team.name = "Maccabees"
+      @team.save
+      @team.name.should == "Dracula"
+    end
+
+    it "by the faculty, regardless of the setting" do
+      @faculty_frank = UserSession.create(Factory(:faculty_frank))
+      @team.name = "Maccabees"
+      @team.save
+      @team.name.should == "Maccabees"
+    end
   end
 
 
