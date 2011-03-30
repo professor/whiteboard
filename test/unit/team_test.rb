@@ -2,6 +2,10 @@ require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
 
+  def setup
+    activate_authlogic
+  end
+
   # NOTE:
   #  when testing Google Apps:
   #  1: do a .save when before minipulating fixtures
