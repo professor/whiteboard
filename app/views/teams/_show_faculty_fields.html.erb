@@ -1,17 +1,21 @@
+ <% unless @course.configure_teams_name_themselves? %>
+    <p>
+      Name: <%= @team.name %>
+   </p>
+ <% end %>
  <p>
-   Section<br />
-   <%=h @team.section %>
+   Section: <%=h @team.section %>
  </p>
  <p>
-   <%=h @course.primary_faculty_label %><br />
-  <% @faculty.each { |person| if person.id == @team.primary_faculty_id %>
-  <%=h person.human_name %>
+   <%=h @course.primary_faculty_label %>
+   <% @faculty.each { |person| if person.id == @team.primary_faculty_id %>
+   : <%=h person.human_name %>
   <% end } %>
 </p>
  <p>
-   <%=h @course.secondary_faculty_label %><br />
+   <%=h @course.secondary_faculty_label %>
   <% @faculty.each { |person| if person.id == @team.secondary_faculty_id %>
-  <%=h person.human_name %>
+  : <%=h person.human_name %>
   <% end } %>
  </p>
   <br />

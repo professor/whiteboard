@@ -17,6 +17,7 @@ class Team < ActiveRecord::Base
   attr :team_members_list_changed, true
 
   def after_initialize
+    #Note: refactor this code using the rails dirty login, ie email_changed? email_was, etc.
     self.old_email = self.email
   end
 
