@@ -38,7 +38,7 @@ end
 
 group :development, :test do
   gem 'rake'
-  gem 'mysql',    '2.8.1'
+  gem 'pg'
   gem 'mongrel'
   gem 'ruby-debug-base' #'0.10.3'
   gem 'ruby-debug-ide' #'0.4.6'
