@@ -10,6 +10,7 @@ class Course < ActiveRecord::Base
   versioned
   validates_presence_of :updated_by_user_id
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
+  belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
 
 #  def to_param
@@ -152,4 +153,9 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
+  def email_faculty_to_configure
+    unless self.is_configured?
+      CourseMailer.deliver_configure_course_faculty_email(self)
+    end
+  end
 end
