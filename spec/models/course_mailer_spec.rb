@@ -14,4 +14,13 @@ describe CourseMailer do
     mail.body.should =~ Regexp.new(course.name)
     mail.subject.should =~ Regexp.new(course.name)
   end
+
+  it "should send faculty email" do
+    course = Factory(:course, :configure_course_twiki => true)
+    mail = CourseMailer.deliver_configure_course_faculty_email(course)
+    ActionMailer::Base.deliveries.size.should == 1
+    mail.body.should =~ Regexp.new(course.name)
+    mail.subject.should =~ Regexp.new(course.name)
+  end
+
 end
