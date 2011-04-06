@@ -37,12 +37,18 @@ task :cruise do
 
 
   #Step 1 - Drop and recreate your database
+  puts "***** CruiseControl::invoke_rake_task 'db:test:purge'"
   CruiseControl::invoke_rake_task 'db:test:purge'
   #necessary to reconnect, as purge drops database (and w mysql the conn)
-  # CruiseControl::reconnect
+
+  puts "***** CruiseControl::reconnect"
+  CruiseControl::reconnect
+
+  puts "***** CruiseControl::invoke_rake_task 'db:schema:load'"
   CruiseControl::invoke_rake_task 'db:schema:load'
 #  CruiseControl::invoke_rake_task 'test'
 
+  puts "***** Build artifacts"
 
 
   #Step 2 - Rcov and TestUnit
