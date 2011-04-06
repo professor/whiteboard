@@ -49,18 +49,22 @@ task :cruise do
   #CruiseControl::invoke_rake_task 'db:schema:load'
   `rake db:schema:load RAILS_ENV='test`
 
-  puts "***** Build artifacts"
 
+  sleep(1)
+
+  puts "***** Build artifacts"
 
   #Step 2 - Rcov and TestUnit
   # source: http://deadprogrammersociety.blogspot.com/2007/06/cruisecontrolrb-and-rcov-are-so-good.html
   out = ENV['CC_BUILD_ARTIFACTS']
   mkdir_p out unless File.directory? out if out
 
+  puts "***** test:units:rcov"
   ENV['SHOW_ONLY'] = 'models,lib,helpers'
   Rake::Task["test:units:rcov"].invoke
   mv 'coverage/units', "#{out}/unit test coverage" if out
 
+  puts "***** test:functionals:rcov"
   ENV['SHOW_ONLY'] = 'controllers'
   Rake::Task["test:functionals:rcov"].invoke
   mv 'coverage/functionals', "#{out}/functional test coverage" if out
