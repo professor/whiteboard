@@ -37,23 +37,34 @@ task :cruise do
 
 
   #Step 1 - Drop and recreate your database
-  CruiseControl::invoke_rake_task 'db:test:purge'
+  puts "***** CruiseControl::invoke_rake_task 'db:test:purge'"
+ # CruiseControl::invoke_rake_task 'db:test:purge'
+  `rake db:test:purge RAILS_ENV='test'`
   #necessary to reconnect, as purge drops database (and w mysql the conn)
-  CruiseControl::reconnect
-  CruiseControl::invoke_rake_task 'db:schema:load'
-#  CruiseControl::invoke_rake_task 'test'
+
+  puts "***** CruiseControl::reconnect"
+  #CruiseControl::reconnect
+
+  puts "***** CruiseControl::invoke_rake_task 'db:schema:load'"
+  #CruiseControl::invoke_rake_task 'db:schema:load'
+  `rake db:schema:load RAILS_ENV='test`
 
 
+  sleep(1)
+
+  puts "***** Build artifacts"
 
   #Step 2 - Rcov and TestUnit
   # source: http://deadprogrammersociety.blogspot.com/2007/06/cruisecontrolrb-and-rcov-are-so-good.html
   out = ENV['CC_BUILD_ARTIFACTS']
   mkdir_p out unless File.directory? out if out
 
+  puts "***** test:units:rcov"
   ENV['SHOW_ONLY'] = 'models,lib,helpers'
   Rake::Task["test:units:rcov"].invoke
   mv 'coverage/units', "#{out}/unit test coverage" if out
 
+  puts "***** test:functionals:rcov"
   ENV['SHOW_ONLY'] = 'controllers'
   Rake::Task["test:functionals:rcov"].invoke
   mv 'coverage/functionals', "#{out}/functional test coverage" if out

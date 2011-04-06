@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110325232412) do
+ActiveRecord::Schema.define(:version => 20110405202241) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20110325232412) do
     t.boolean  "configure_course_twiki",          :default => false
     t.boolean  "is_configured",                   :default => false
     t.integer  "updated_by_user_id"
+    t.integer  "configured_by_user_id"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"

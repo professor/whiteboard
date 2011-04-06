@@ -25,6 +25,10 @@
 
 <% end %>
 
+<% unless @course.configured_by_user_id.blank? %>
+<p>This information was configured last by <%= @course.configured_by.human_name %></p>
+<% end %>
+
 <% form_for(@course) do |f| %>
     <%= f.error_messages %>
     <p>

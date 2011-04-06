@@ -118,6 +118,7 @@ class CoursesController < ApplicationController
 
       if(params[:course][:is_configured]) #The previous page was configure action
         @course.twiki_url = params[:course][:curriculum_url] if @course.twiki_url.blank? && params[:course][:configure_course_twiki]
+        @course.configured_by_user_id = current_user.id
       else
         msg = @course.update_people(params[:people])
         unless msg.blank?
@@ -130,7 +131,9 @@ class CoursesController < ApplicationController
       respond_to do |format|
         if @course.update_attributes(params[:course])
           if(params[:course][:is_configured]) #The previous page was configure action
-            CourseMailer.deliver_configure_course_admin_email(@course)
+            CourseMailer.deliver_configure_course_admin_email(@course) 
+          else  #email faculty to configure the course, unless it was already configured
+            
           end
           flash[:notice] = 'Course was successfully updated.'
           format.html { redirect_to(@course) }
