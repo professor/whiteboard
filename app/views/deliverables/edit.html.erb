@@ -1,0 +1,24 @@
+<% content_for :title, "Upload Deliverable" %>
+
+<h1>Upload New Deliverable Revision</h1>
+
+<% form_for @deliverable, :html => { :multipart => true } do |f| %>
+    <% fields_for :deliverable_revision do |revision_form| -%>
+      <p>
+        <%= revision_form.label :revision, "Deliverable file to upload" %>
+        <%= revision_form.file_field :revision %>
+      </p>
+      <p>
+        <%= revision_form.label :comment, "Comments" %>
+        <br>
+        <%= revision_form.text_area :comment %>
+      </p>
+    <% end -%>
+    <p>
+      <%= f.submit "Upload" %>
+    </p>    
+<% end %>
+
+<%= link_to 'Cancel', deliverable_path(@deliverable) %>
+<br/>
+<br/>

@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+teamDeliverable1:
+  description: "deliverable one"
+  team: teamOne
+  course: foundations
+  task_number: 2A
+  is_team_deliverable: 1
+  creator: student_sam
+  
+
+# one:
+#   column: value
+#
+# two:
+#   column: value

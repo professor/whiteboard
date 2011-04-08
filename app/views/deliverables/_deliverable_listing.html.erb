@@ -1,0 +1,34 @@
+<% reset_cycle %>
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <th>Course</th>
+    <th>Task</th>
+    <th>Owner</th>
+    <th>Description</th>
+    <th>File</th>
+    <th>Feedback Received?</th>
+    <th>Actions</th>
+  </tr>
+
+  <% deliverables.each do |deliverable| %>
+    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+      <td><%=h deliverable.course.name %></td>
+      <td><%=h deliverable.task_number %></td>
+      <td><%= deliverable.owner_name  %></td>
+      <td><%= deliverable.description  %></td>
+      <td>
+          <% if deliverable.current_revision != nil and deliverable.current_revision.revision_file_name != nil %>
+              <%= link_to deliverable.current_revision.revision_file_name, deliverable.current_revision.revision.url %>
+          <% end %>
+      </td>
+      <td>
+          <% if deliverable.has_feedback? %>
+            Yes
+          <% else %>
+            No
+          <% end %>
+      </td>
+      <td><%= link_to 'View History and Feedback', deliverable %></td>
+    </tr>
+  <% end %>
+</table>

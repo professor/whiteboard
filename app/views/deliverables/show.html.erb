@@ -1,0 +1,76 @@
+<% content_for :title, "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
+<h1><%= "Deliverable for " + @deliverable.course.name + ", Task " + @deliverable.task_number -%></h1>
+
+<p>
+  <% if @deliverable.is_team_deliverable? %>
+    <b>Team Deliverable for team <%= @deliverable.team.name -%></b>
+  <% else %>
+    <b>Individual Deliverable for <%= @deliverable.creator.human_name -%></b>
+  <% end %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @deliverable.description %>
+</p>
+
+<p>
+  <b>Current Revision:</b>
+  <%= link_to @deliverable.current_revision.revision_file_name, @deliverable.current_revision.revision.url %>
+  <% if @current_user.is_student? %>
+      (<%= link_to 'Upload New Revision', edit_deliverable_path(@deliverable) %>)
+  <% end %>
+</p>
+
+<p>
+  <b>Submitted on:</b> <%= format_time_string(@deliverable.current_revision.submission_date) %>
+</p>
+
+<h1>Feedback</h1>
+<p>
+  <b>File:</b>
+  <% unless @deliverable.feedback_file_name.nil? %>
+      <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+  <% else %>
+      None
+  <% end %>
+  <% if @current_user.is_staff? %>
+      (<%= link_to 'Update Feedback', deliverable_feedback_path(@deliverable) %>)
+  <% end %>
+</p>
+<p>
+  <b>Comments:</b>
+  <% if @deliverable.feedback_comment.nil? or @deliverable.feedback_comment == "" %>
+     None
+  <% else %>
+      <%=h @deliverable.feedback_comment %>
+  <% end %>
+</p>
+
+<h1>Revision History</h1>
+
+<table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <th>Submission Date</th>
+    <th>Deliverable File</th>
+    <th>Comments</th>
+  </tr>
+
+  <% for revision in @deliverable.revisions %>
+
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+    <td><%=h format_time_string(revision.submission_date) %></td>
+    <td>
+        <% if revision.revision_file_name != nil %>
+            <%= link_to revision.revision_file_name, revision.revision.url %>
+        <% end %>
+    </td>
+    <td>
+      <%=h revision.comment -%>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to 'Back to deliverable list', my_deliverables_path(@deliverable.creator) %>
+
+

@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :deliverables
+  map.my_deliverables '/people/:id/my_deliverables', :controller => 'deliverables', :action => 'my_deliverables'
+  map.deliverable_feedback '/deliverables/:id/feedback', :controller => 'deliverables', :action => 'edit_feedback'
 
   map.archive_sponsored_project '/sponsored_projects/:id/archive', :controller => 'sponsored_projects', :action => 'archive'
   map.archive_sponsored_project_sponsor '/sponsored_project_sponsors/:id/archive', :controller => 'sponsored_project_sponsors', :action => 'archive'

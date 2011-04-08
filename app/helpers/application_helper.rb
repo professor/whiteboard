@@ -55,6 +55,10 @@ RUBY_RUBY_RUBY
     end
   end
 
+ def format_time_string(s)
+    s.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p Pacific Time')
+  end
+
 
   def monthname(monthnumber)
     if monthnumber
