@@ -114,14 +114,12 @@ class Team < ActiveRecord::Base
   def self.find_current_by_person(person)
     person_id = person.id
     current_year = Date.today.year()
-    # I don't like that a model is calling a controller...
     current_semester = AcademicCalendar.current_semester()
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND c.semester = ? AND c.year = ?", person_id, current_semester, current_year])
   end
 
   def self.find_past_by_person(person)
     current_year = Date.today.year()
-    # I don't like that a model is calling a controller...
     current_semester = AcademicCalendar.current_semester()
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, current_semester, current_year])
   end
