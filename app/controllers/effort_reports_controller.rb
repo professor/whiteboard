@@ -340,26 +340,17 @@ class EffortReportsController < ApplicationController
   end
 
   def show_week
+ puts "show_week*****"
 
-    if params[:date]
-      @e_date_str = params[:date]
-      e_date = Date.parse(@e_date_str)
-      @week_number = e_date.cweek-0
-      @year_number = e_date.year
-    else
-      if params[:year] and params[:week]
-        @week_number = params[:week].to_i
-        @year_number = params[:year].to_i
-      else
-        @week_number = 1
-        @year_number = 2010
-      end
-    end
+   if params[:week]
+     @week_number = params[:week].to_i
+   else
+     @week_number = Date.today.cweek     
+   end
 
     if @week_number <= 0 then @week_number = 1 end
     if @week_number >52 then @week_number = @week_number - 52 end
 
-    #@week_number = params[:week].to_i
     @next_week_number = @week_number + 1
     @prev_week_number = @week_number - 1
   end

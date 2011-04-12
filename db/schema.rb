@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405202241) do
+ActiveRecord::Schema.define(:version => 20110411233106) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -94,6 +94,31 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
     t.text     "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "deliverable_revisions", :force => true do |t|
+    t.integer  "deliverable_id"
+    t.integer  "submitter_id"
+    t.datetime "submission_date"
+    t.string   "revision_file_name"
+    t.string   "revision_content_type"
+    t.integer  "revision_file_size"
+    t.text     "comment"
+  end
+
+  create_table "deliverables", :force => true do |t|
+    t.text     "description"
+    t.integer  "team_id"
+    t.integer  "course_id"
+    t.string   "task_number"
+    t.integer  "is_team_deliverable"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "feedback_comment"
+    t.string   "feedback_file_name"
+    t.string   "feedback_content_type"
+    t.integer  "feedback_file_size"
   end
 
   create_table "effort_log_line_items", :force => true do |t|
@@ -317,7 +342,7 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
 
   create_table "suggestions", :force => true do |t|
     t.integer  "user_id"
-    t.string   "comment"
+    t.text     "comment"
     t.string   "page"
     t.datetime "created_at"
     t.datetime "updated_at"
