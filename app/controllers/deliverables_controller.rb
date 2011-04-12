@@ -42,7 +42,6 @@ class DeliverablesController < ApplicationController
       end
     end
 
-    @current_user = current_user
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @deliverables }
@@ -71,11 +70,9 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
-    @staff = (current_user.is_staff?||current_user.is_admin?) ? current_user : nil
-    current_user
-    cur_person = Person.find(current_user)
-    if !Team.find_by_person(cur_person).find(@deliverable.team)
-      unless !@staff.nil?
+
+    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = "You don't have permission to edit another team's deliverables."
         redirect_to :controller => "welcome", :action => "index"
         return
@@ -126,8 +123,7 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
-    cur_person = Person.find(current_user)
-    if !Team.find_by_person(cur_person).find(@deliverable.team)
+    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
       flash[:error] = "You don't have permission to edit another team's deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
@@ -164,8 +160,7 @@ class DeliverablesController < ApplicationController
   # DELETE /deliverables/1.xml
   def destroy
     @deliverable = Deliverable.find(params[:id])
-    cur_person = Person.find(current_user)
-    if !Team.find_by_person(cur_person).find(@deliverable.team)
+    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
       flash[:error] = "You don't have permission to delete another team's deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
@@ -186,14 +181,13 @@ class DeliverablesController < ApplicationController
       return
     end
 
-    @staff = current_user
     @deliverable = Deliverable.find(params[:id])
   end
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
-    unless params[:deliverable][:feedback].nil? or params[:deliverable][:feedback] == ""
+    unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
     end
     respond_to do |format|
