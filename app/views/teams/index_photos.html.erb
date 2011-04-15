@@ -14,9 +14,9 @@
     <th><%=h @course.primary_faculty_label%></th>
     <th><%=h @course.secondary_faculty_label%></th>
     <% if current_user && current_user.is_staff %>
-    <th>Team members <%= link_to '(Show Regular View)', {:action=>'index'}, {:target=>'_top'} %> </th>
+    <th>Team members <%= link_to '(Show Teams Listing)', {:action=>'index'}, {:target=>'_top'} %> </th>
     <% else %>
-    <th>Team members</th>
+    <th>Team members %></th>
     <% end %>
     <th>&nbsp;</th>
     <% if current_user && current_user.is_admin %>

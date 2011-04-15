@@ -129,6 +129,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.survey_monkey 'courses/:course_id/teams/:id/survey_monkey', :controller => 'teams', :action => 'survey_monkey'
   map.connect 'courses/:course_id/teams_photos', :controller => 'teams', :action => 'index_photos'
+  map.connect 'courses/:course_id/past_teams_list', :controller => 'teams', :action => 'past_teams_list'
+  map.connect 'courses/:course_id/export_to_csv', :controller => 'teams', :action => 'export_to_csv'
   map.connect 'effort_reports/:id/week/:week',  :controller => 'effort_reports', :action => "show_week"
 
   map.connect ':controller/:action/:id'

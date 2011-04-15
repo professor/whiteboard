@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :require_user, :except => [:index, :twiki_index, :twiki_new]
+  require 'csv'
 
   layout 'cmu_sv'
 
@@ -45,7 +46,8 @@ class TeamsController < ApplicationController
     @show_teams_for_many_courses = false
     @machine_name = ""
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @course = Course.find(params[:course_id])
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    @course = Course.find(params[:course_id])                         
 
     @show_section = false
     @teams.each do |team|
@@ -107,6 +109,16 @@ class TeamsController < ApplicationController
   def index_photos
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    @course = Course.find(params[:course_id])
+
+    respond_to do |format|
+      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
+      format.xml  { render :xml => @teams }
+    end
+  end
+
+  def past_teams_list
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     @course = Course.find(params[:course_id])
 
     respond_to do |format|
@@ -310,7 +322,21 @@ class TeamsController < ApplicationController
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
-
+   def export_to_csv
+    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    report = StringIO.new
+    CSV::Writer.generate(report, ',') do |title|
+      title << ['Team Name','Team Member','Past Teams']
+        @teams.each do |team|
+          team.people.each do |person|
+            title << [team.name, person.human_name, person.past_teams]
+          end
+        end
+      end
+    report.rewind
+    send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>'report.csv',
+    :disposition =>'attachment', :encoding => 'utf8')
+  end
 
 
 
