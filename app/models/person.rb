@@ -252,7 +252,7 @@ class Person < ActiveRecord::Base
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", self.id, AcademicCalendar.current_semester(), Date.today.year])
   end
 
-  # Given ["Awesome", "Devils", "Alpha Omega"]
+  # Given an array of team objects [Awesome, Devils, Alpha Omega]
   # Returns "Awesome, Devils, Alpha Omega"
   def formatted_past_teams
     self.past_teams.map {|team| team.name} * ", "

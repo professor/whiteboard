@@ -323,6 +323,7 @@ class TeamsController < ApplicationController
   end
 
    def export_to_csv
+    @course = Course.find(params[:course_id])
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     report = StringIO.new
     CSV::Writer.generate(report, ',') do |title|
@@ -334,7 +335,7 @@ class TeamsController < ApplicationController
         end
       end
     report.rewind
-    send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>'report.csv',
+    send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
     :disposition =>'attachment', :encoding => 'utf8')
   end
 
