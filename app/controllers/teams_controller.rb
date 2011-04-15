@@ -329,7 +329,7 @@ class TeamsController < ApplicationController
       title << ['Team Name','Team Member','Past Teams']
         @teams.each do |team|
           team.people.each do |person|
-            title << [team.name, person.human_name, person.past_teams]
+            title << [team.name, person.human_name, person.formatted_past_teams]
           end
         end
       end
