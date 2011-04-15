@@ -14,8 +14,15 @@ class Course < ActiveRecord::Base
 
 
 #  def to_param
-#    self.short_name + self.semester + self.year.to_s
+#    display_course_name
 #  end
+
+
+  def display_course_name
+    mini_text = self.mini == "Both" ? "" : self.mini
+   result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
+   result.gsub(" ", "")
+  end
 
   def before_validation
      current_user = UserSession.find.user unless UserSession.find.nil?
@@ -93,6 +100,8 @@ class Course < ActiveRecord::Base
       self.name
     end
   end
+
+
 
   def display_semester
     mini_text = self.mini == "Both" ? "" : self.mini + " "
