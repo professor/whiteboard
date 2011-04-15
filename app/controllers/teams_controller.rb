@@ -327,10 +327,11 @@ class TeamsController < ApplicationController
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     report = StringIO.new
     CSV::Writer.generate(report, ',') do |title|
-      title << ['Team Name','Team Member','Past Teams']
+      title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
         @teams.each do |team|
           team.people.each do |person|
-            title << [team.name, person.human_name, person.formatted_past_teams]
+            part_time = person.is_part_time ? "PT" : "FT"
+            title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
           end
         end
       end
