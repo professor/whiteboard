@@ -118,14 +118,37 @@ class TeamsController < ApplicationController
   end
 
   def past_teams_list
-    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @course = Course.find(params[:course_id])
+    if has_permissions_or_redirect(:staff, root_url)
+      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      @course = Course.find(params[:course_id])
 
-    respond_to do |format|
-      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
-      format.xml  { render :xml => @teams }
+      respond_to do |format|
+        format.html { render :html => @teams, :layout => "cmu_sv" } # index.html.erb
+        format.xml { render :xml => @teams }
+      end
     end
   end
+
+   def export_to_csv
+     if has_permissions_or_redirect(:staff, root_url)
+
+      @course = Course.find(params[:course_id])
+      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      report = StringIO.new
+      CSV::Writer.generate(report, ',') do |title|
+        title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
+          @teams.each do |team|
+            team.people.each do |person|
+              part_time = person.is_part_time ? "PT" : "FT"
+              title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
+            end
+          end
+        end
+      report.rewind
+      send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
+      :disposition =>'attachment', :encoding => 'utf8')
+     end
+  end  
 
   # GET /courses/1/teams
   # GET /courses/1/teams.xml
@@ -322,23 +345,7 @@ class TeamsController < ApplicationController
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
-   def export_to_csv
-    @course = Course.find(params[:course_id])
-    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    report = StringIO.new
-    CSV::Writer.generate(report, ',') do |title|
-      title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
-        @teams.each do |team|
-          team.people.each do |person|
-            part_time = person.is_part_time ? "PT" : "FT"
-            title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
-          end
-        end
-      end
-    report.rewind
-    send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
-    :disposition =>'attachment', :encoding => 'utf8')
-  end
+
 
 
 
