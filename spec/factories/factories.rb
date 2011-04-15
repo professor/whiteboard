@@ -21,6 +21,16 @@ end
 Factory.define :delayed_system_job do |c|
 end
 
+Factory.define :deliverable do |d|
+  d.association :course, :factory => :fse
+  d.association :creator, :factory => :student_sam
+end
+
+Factory.define :deliverable_attachement do |d|
+  d.association :deliverable, :factory => :deliverable
+end
+
+
 Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
   e.association :course, :factory => :fse
   e.task_type_id 1
