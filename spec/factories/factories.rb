@@ -28,6 +28,8 @@ Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
 end
 
 Factory.define :effort_log, :class => EffortLog do |e|
+  e.year {(Date.today-3).year}
+  e.week_number {(Date.today-3).cweek}
   e.association :person, :factory => :student_sam
 end
 
