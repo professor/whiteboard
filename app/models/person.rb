@@ -50,6 +50,9 @@ class Person < ActiveRecord::Base
   named_scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
   named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
+  has_attached_file :photo, :storage => :s3, :styles => { :original =>"", :profile => "133x200>" },
+                    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
+  validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
     def before_validation
       self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
@@ -59,6 +62,9 @@ class Person < ActiveRecord::Base
       # We populate some reasonable defaults, but this can be overridden in the database
       self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
       self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.nil?
+
+      # update the image_uri if a photo was uploaded
+      self.image_uri = self.photo.url(:profile).split('?')[0] if !self.photo.nil?
     end 
 
 

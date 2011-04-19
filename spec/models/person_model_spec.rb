@@ -11,6 +11,27 @@ describe Person do
     @student_sam = Factory(:student_sam)
   end
 
+  context "photo upload" do
+
+    it "accepts PNG files" do
+      @student_sam.photo = File.new("spec/fixtures/sample_photo.png")
+      @student_sam.should be_valid
+    end
+
+    it "accepts GIF files" do
+      @student_sam.photo = File.new("spec/fixtures/sample_photo.gif")
+      @student_sam.should be_valid
+    end
+
+    it "should update image_uri after photo is uploaded" do
+      @student_sam.photo = File.new("spec/fixtures/sample_photo.jpg")
+      @student_sam.save!
+      @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
+    end
+
+  end
+
+
 #  context "is not valid" do
 #
 #    [:current_allocation, :year, :month, :sponsored_project_allocation_id, :confirmed].each do |attr|
@@ -85,7 +106,7 @@ describe Person do
       teachers[1].should == @faculty_frank
     end
 
-    
+
   end
 
 
@@ -102,7 +123,7 @@ describe Person do
 
   describe "permission levels" do
     it "can respond to " do
-       subject.should respond_to(:permission_level_of)
+      subject.should respond_to(:permission_level_of)
     end
 
     it "faculty can do faculty and admin activities" do
@@ -160,8 +181,6 @@ describe Person do
     end
 
   end
-
-
 
 
 end

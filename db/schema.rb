@@ -460,6 +460,8 @@ ActiveRecord::Schema.define(:version => 20110411233106) do
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   create_table "users", :force => true do |t|
@@ -532,6 +534,8 @@ ActiveRecord::Schema.define(:version => 20110411233106) do
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
