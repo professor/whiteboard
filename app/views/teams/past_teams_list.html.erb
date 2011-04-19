@@ -1,0 +1,26 @@
+<% content_for :title, 'Teams for ' + @course.name %>
+
+<table class="twikiTable" cellpadding="0" cellspacing="0">
+  <tr>
+    <th class="twikiFirstCol">Team</th>
+    <th>Members</th>
+    <th>Past Teams</th>
+  </tr>
+
+<% @teams.each do |team|%>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+    <td class="twikiFirstCol"><%=h team.name %></td>
+    <td><% team.people.each do |person| %>
+        <%= person.human_name %> <br/>
+    <% end %>
+     </td>
+    <td><% team.people.each do |person| %>
+        <%= person.formatted_past_teams %> <br/>
+    <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Export Team Data', {:action=>'export_to_csv'}, {:target=>'_top'} %>
+&nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :target => '_top' %>

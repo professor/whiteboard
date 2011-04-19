@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :require_user, :except => [:index, :twiki_index, :twiki_new]
+  require 'csv'
 
   layout 'cmu_sv'
 
@@ -45,7 +46,8 @@ class TeamsController < ApplicationController
     @show_teams_for_many_courses = false
     @machine_name = ""
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @course = Course.find(params[:course_id])
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    @course = Course.find(params[:course_id])                         
 
     @show_section = false
     @teams.each do |team|
@@ -114,6 +116,39 @@ class TeamsController < ApplicationController
       format.xml  { render :xml => @teams }
     end
   end
+
+  def past_teams_list
+    if has_permissions_or_redirect(:staff, root_url)
+      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      @course = Course.find(params[:course_id])
+
+      respond_to do |format|
+        format.html { render :html => @teams, :layout => "cmu_sv" } # index.html.erb
+        format.xml { render :xml => @teams }
+      end
+    end
+  end
+
+   def export_to_csv
+     if has_permissions_or_redirect(:staff, root_url)
+
+      @course = Course.find(params[:course_id])
+      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      report = StringIO.new
+      CSV::Writer.generate(report, ',') do |title|
+        title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
+          @teams.each do |team|
+            team.people.each do |person|
+              part_time = person.is_part_time ? "PT" : "FT"
+              title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
+            end
+          end
+        end
+      report.rewind
+      send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
+      :disposition =>'attachment', :encoding => 'utf8')
+     end
+  end  
 
   # GET /courses/1/teams
   # GET /courses/1/teams.xml

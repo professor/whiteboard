@@ -92,6 +92,7 @@ Factory.define :howard, :parent => :person do |p|
   p.is_student 1
 end
 
+sleep(0.02)
 
 Factory.define :awe_smith, :parent => :person do |p|
   p.is_student 1
@@ -108,6 +109,8 @@ Factory.define :awe_smith, :parent => :person do |p|
   p.webiso_account "awesm@andrew.cmu.edu"
 end
 
+sleep(0.02)
+
 Factory.define :betty_ross, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
@@ -122,6 +125,8 @@ Factory.define :betty_ross, :parent => :person do |p|
   p.email "betty.ross@sv.cmu.edu"
   p.webiso_account "bross@andrew.cmu.edu"
 end
+
+sleep(0.02)
 
 Factory.define :charlie_moss, :parent => :person do |p|
   p.is_student 1
@@ -138,7 +143,7 @@ Factory.define :charlie_moss, :parent => :person do |p|
   p.webiso_account "cmoss@andrew.cmu.edu"
 end
 
-
+sleep(0.02)
 
 Factory.define :architecture, :class => Course do |c|
  c.name "Architecture"

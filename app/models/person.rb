@@ -50,6 +50,9 @@ class Person < ActiveRecord::Base
   named_scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
   named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
+  has_attached_file :photo, :storage => :s3, :styles => { :original =>"", :profile => "133x200>" },
+                    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
+  validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
     def before_validation
       self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
@@ -59,6 +62,9 @@ class Person < ActiveRecord::Base
       # We populate some reasonable defaults, but this can be overridden in the database
       self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
       self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.nil?
+
+      # update the image_uri if a photo was uploaded
+      self.image_uri = self.photo.url(:profile).split('?')[0] if !self.photo.nil?
     end 
 
 
@@ -247,4 +253,15 @@ class Person < ActiveRecord::Base
 #     end
 #   end
 
+
+  def past_teams
+    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", self.id, AcademicCalendar.current_semester(), Date.today.year])
+  end
+
+  # Given an array of team objects [Awesome, Devils, Alpha Omega]
+  # Returns "Awesome, Devils, Alpha Omega"
+  def formatted_past_teams
+    self.past_teams.map {|team| team.name} * ", "
+  end
+  
 end
