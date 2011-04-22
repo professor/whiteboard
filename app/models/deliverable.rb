@@ -3,18 +3,17 @@ class Deliverable < ActiveRecord::Base
   belongs_to :course
   belongs_to :creator, :class_name => "Person"
   has_many :revisions, :class_name => "DeliverableRevision", :order => "submission_date DESC"
-  # has_one :current_revision, :class_name => "DeliverableRevision", :order => 'submission_date DESC'
 
-  validates_presence_of :course, :creator, :team
+  validates_presence_of :course, :creator
 
   has_attached_file :feedback,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
-  def before_validation_on_create
-    # Look up the team this person is on
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id])
+  def before_validation
+    # Look up the team this person is on if it is a team deliverable
+    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
   end
 
   def current_revision
@@ -62,6 +61,6 @@ class Deliverable < ActiveRecord::Base
   end
 
   def has_feedback?
-    !(self.feedback_comment.nil? or self.feedback_comment == "") or !self.feedback_file_name.nil?
+    !self.feedback_comment.blank? or !self.feedback_file_name.blank?
   end
 end

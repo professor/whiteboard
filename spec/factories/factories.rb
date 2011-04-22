@@ -22,11 +22,11 @@ Factory.define :delayed_system_job do |c|
 end
 
 Factory.define :deliverable do |d|
-  d.association :course, :factory => :fse
+  d.association :course, :factory => :course
   d.association :creator, :factory => :student_sam
 end
 
-Factory.define :deliverable_attachement do |d|
+Factory.define :deliverable_attachment do |d|
   d.association :deliverable, :factory => :deliverable
 end
 
