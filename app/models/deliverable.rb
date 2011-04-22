@@ -10,7 +10,7 @@ class Deliverable < ActiveRecord::Base
   has_attached_file :feedback,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :path => "deliverable_feedback/super8/:id/:filename"
+    :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
   def before_validation_on_create
     # Look up the team this person is on

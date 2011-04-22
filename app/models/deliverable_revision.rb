@@ -6,7 +6,7 @@ class DeliverableRevision < ActiveRecord::Base
   has_attached_file :revision,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :path => "deliverable_submissions/super8/:id/:filename"
+    :path => "deliverables/:deliverable_course_year/:deliverable_course_name/:deliverable_random_hash/submissions/:id/:filename"
 
   validates_presence_of :submitter, :submission_date
 

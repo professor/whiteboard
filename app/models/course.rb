@@ -17,6 +17,12 @@ class Course < ActiveRecord::Base
 #    self.short_name + self.semester + self.year.to_s
 #  end
 
+  def display_course_name
+    mini_text = self.mini == "Both" ? "" : self.mini
+   result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
+   result.gsub(" ", "")
+  end
+
   def before_validation
      current_user = UserSession.find.user unless UserSession.find.nil?
      self.updated_by_user_id = current_user.id if current_user
