@@ -14,17 +14,17 @@ describe Person do
   context "photo upload" do
 
     it "accepts PNG files" do
-      @student_sam.photo = File.new("spec/fixtures/sample_photo.png")
+      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures','sample_photo.png'))
       @student_sam.should be_valid
     end
 
     it "accepts GIF files" do
-      @student_sam.photo = File.new("spec/fixtures/sample_photo.gif")
+      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.gif"))
       @student_sam.should be_valid
     end
 
     it "should update image_uri after photo is uploaded" do
-      @student_sam.photo = File.new("spec/fixtures/sample_photo.jpg")
+      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.jpg"))
       @student_sam.save!
       @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
     end
@@ -179,6 +179,33 @@ describe Person do
         @student_sam.emailed_recently(:sponsored_project_effort).should == true
       end
     end
+
+  end
+
+  context "is versioned" do
+
+    before(:each) do
+      @version_number = @student_sam.version
+    end
+
+    it "normally" do
+      @student_sam.first_name = "New"
+      @student_sam.save
+      @student_sam.version.should == (@version_number+1)
+    end
+
+    it "except when effort log email was sent" do
+      @student_sam.effort_log_warning_email = Time.now
+      @student_sam.save
+      @student_sam.version.should == (@version_number)
+    end
+
+    it "except when sponsored project email was sent" do
+      @student_sam.sponsored_project_effort_last_emailed = Time.now
+      @student_sam.save
+      @student_sam.version.should == (@version_number)
+    end
+
 
   end
 
