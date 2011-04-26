@@ -60,12 +60,15 @@ class Person < ActiveRecord::Base
 
     def before_save 
       # We populate some reasonable defaults, but this can be overridden in the database
-      self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
-      self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.nil?
+      self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
+      self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
 
+      logger.debug("self.photo.blank? #{self.photo.blank?}")
+      logger.debug("photo.url #{photo.url}")
       # update the image_uri if a photo was uploaded
-      self.image_uri = self.photo.url(:profile).split('?')[0] if !self.photo.nil?
-    end 
+      self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+    end
 
 
   def emailed_recently(email_type)
