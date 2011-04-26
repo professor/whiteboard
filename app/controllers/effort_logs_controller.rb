@@ -308,10 +308,10 @@ class EffortLogsController < ApplicationController
       flash[:error] = 'You do not have permission to edit the effort log.'
       redirect_to(effort_logs_url) and return
     end
-    if !@effort_log.has_permission_to_edit_period(current_user)
-      flash[:error] = 'You are unable to update effort logs from the past.'
-      redirect_to(effort_logs_url) and return
-    end
+#    if !@effort_log.has_permission_to_edit_period(current_user)
+#      flash[:error] = 'You are unable to update effort logs from the past.'
+#      redirect_to(effort_logs_url) and return
+#    end
     setup_required_datastructures(@effort_log.year, @effort_log.week_number)
   end
 
@@ -349,10 +349,10 @@ class EffortLogsController < ApplicationController
       flash[:error] = 'You do not have permission to edit the effort log.'
       redirect_to(effort_logs_url) and return
     end
-    if !@effort_log.has_permission_to_edit_period(current_user)
-      flash[:error] = 'You are unable to update effort logs from the past.'
-      redirect_to(effort_logs_url) and return
-    end
+#    if !@effort_log.has_permission_to_edit_period(current_user)
+#      flash[:error] = 'You are unable to update effort logs from the past.'
+#      redirect_to(effort_logs_url) and return
+#    end
         
     setup_required_datastructures(@effort_log.year, @effort_log.week_number)
         
