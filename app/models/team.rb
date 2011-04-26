@@ -132,7 +132,7 @@ class Team < ActiveRecord::Base
       google_apps_connection.remove_member_from_group(person.email, self.google_group) unless self.name.blank?
 #      async_google_remove_member(person.email,self.google_group)
     else
-      logger.error "Attempting to remove person #{person.human_name} who is not in team #{team.name}"
+      logger.error "Attempting to remove person #{person.human_name} who is not in team #{self.name}"
     end
     rescue ActiveRecord::RecordNotFound
       logger.error "Attempting to remove an unknown person with id=#{id}"
