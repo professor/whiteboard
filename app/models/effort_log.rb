@@ -14,23 +14,25 @@ class EffortLog < ActiveRecord::Base
       return true
     end
     if (current_user && current_user.id == person_id)
-      return true
+      if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
+         return true
+      end
     end
     return false
   end
 
-  def has_permission_to_edit_period(current_user)
-    if (current_user && current_user.is_admin?)
-      return true
-    end
-    if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
-       return true
-    end
-    return false
-  end
+#  def has_permission_to_edit_period(current_user)
+#    if (current_user && current_user.is_admin?)
+#      return true
+#    end
+#    if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
+#       return true
+#    end
+#    return false
+#  end
 
   def editable(current_user)
-    if(has_permission_to_edit(current_user) || has_permission_to_edit_period(current_user))
+    if(has_permission_to_edit(current_user)) # || has_permission_to_edit_period(current_user))
       return true 
     end
     return false    

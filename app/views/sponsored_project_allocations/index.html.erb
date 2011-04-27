@@ -59,7 +59,7 @@ $(document).ready(function()
       <td><%= allocation.person.human_name %></td>
       <td><%= allocation.sponsored_project.sponsor.name %></td>
       <td><%= allocation.sponsored_project.name %></td>
-      <td><%= allocation.current_allocation %> %</td>
+      <td align="right"><%= allocation.current_allocation %> %</td>
       <td><%= link_to 'Edit', edit_sponsored_project_allocation_path(allocation) %></td>
       <td><%= link_to 'Archive', archive_sponsored_project_allocation_path(allocation) %></td>
     </tr>
