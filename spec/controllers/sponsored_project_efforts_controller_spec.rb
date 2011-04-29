@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe SponsoredProjectEffortsController do
 
+
+
   context "as faculty do" do
 
     before do
@@ -30,6 +32,13 @@ describe SponsoredProjectEffortsController do
         assigns(:efforts).should == efforts
         assigns(:month).should == efforts[0].month
         assigns(:year).should == efforts[0].year
+      end
+
+      it "can't access page for a different user" do
+        @faculty_fagan = Factory(:faculty_fagan)
+        get :edit, :id => @faculty_fagan.twiki_name
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
       end
     end
 
@@ -99,7 +108,16 @@ describe SponsoredProjectEffortsController do
           response.should render_template("edit")
         end
       end
+
+      it "can't access page for a different user" do
+        @faculty_fagan = Factory(:faculty_fagan)
+        put :update, :id => @faculty_fagan.twiki_name, :effort_id_values => {"0" => "25", "1" => "75"}
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end      
     end
   end
+
+
 
 end
