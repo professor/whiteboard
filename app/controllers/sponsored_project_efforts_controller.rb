@@ -28,8 +28,9 @@ class SponsoredProjectEffortsController < ApplicationController
     @changed_allocation = false
     effort_id_values.each do |key,value|
       effort = SponsoredProjectEffort.find(key)
-      @changed_allocation = true if effort.actual_allocation != value
-      effort.actual_allocation = value
+#      @changed_allocation = true if effort.actual_allocation != value
+      effort.actual_allocation = value                    
+      @changed_allocation = true if effort.actual_allocation_changed?
       effort.confirmed = true
       unless effort.save
         @failed = true
