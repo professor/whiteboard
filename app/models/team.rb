@@ -259,6 +259,10 @@ class Team < ActiveRecord::Base
     return faculty
   end
 
+  def is_person_on_team?(person)
+    self.people.include?(person)
+  end
+
 
  def peer_evaluation_message_one
    return "Action Required: please do this peer evaluation survey\n\n by the end of " + self.peer_evaluation_second_email.to_date.to_formatted_s(:long)

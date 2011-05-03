@@ -43,10 +43,11 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.find(params[:id])
 
     # If we aren't on this deliverable's team, you can't see it.
+#    if !@deliverable.team.is_person_on_team?(current_person)
     if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = "You don't have permission to see another team's deliverables."
-        redirect_to :controller => "welcome", :action => "index"
+        redirect_to root_url
         return
       end
     end
@@ -82,8 +83,8 @@ class DeliverablesController < ApplicationController
 
     if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
       unless (current_user.is_staff?)||(current_user.is_admin?)
-        flash[:error] = "You don't have permission to edit another team's deliverables."
-        redirect_to :controller => "welcome", :action => "index"
+        flash[:error] = "You don't have permission to see another team's deliverables."
+        redirect_to root_url
         return
       end
     end
