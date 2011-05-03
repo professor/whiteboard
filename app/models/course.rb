@@ -3,7 +3,7 @@ class Course < ActiveRecord::Base
   belongs_to :course_number
   has_many :pages, :order => "position"
 
-  has_and_belongs_to_many :people, :join_table=>"courses_people", :class_name => "Person"
+  has_and_belongs_to_many :faculty, :join_table=>"courses_people", :class_name => "Person"
 
   validates_presence_of :semester, :year, :mini, :name
 
@@ -126,8 +126,8 @@ class Course < ActiveRecord::Base
 
   #Todo - create a test case for this
   #Todo - move to a higher class or try as a mixin
-  def update_people(members)
-    self.people = []
+  def update_faculty(members)
+    self.faculty = []
     return "" if members.nil?
 
     msg = ""
@@ -139,7 +139,7 @@ class Course < ActiveRecord::Base
          #This next line doesn't quite seem to work
          self.errors.add(:person_name, "Person " + name + " not found")
        else
-         self.people << person
+         self.faculty << person
        end
     end
     return msg
@@ -149,7 +149,7 @@ class Course < ActiveRecord::Base
     new_course = self.clone
     new_course.is_configured = false
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
-    new_course.people = self.people
+    new_course.faculty = self.faculty
     return new_course
   end
 

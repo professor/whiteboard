@@ -10,6 +10,15 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
+  def index_for_course
+    @course = Course.find(params[:course_id])
+    if(current_person.is_admin? || @course.faculty.include?(current_person) )
+      @deliverables = Deliverable.find_all_by_course_id(@course.id)
+    else
+      has_permissions_or_redirect(:admin, root_url)
+    end
+  end
+
   def my_deliverables
     person = Person.find(params[:id])
     if (current_user.id != person.id)

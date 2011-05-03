@@ -66,6 +66,15 @@ class ApplicationController < ActionController::Base
       @current_user = current_user_session && current_user_session.user
     end
 
+    #Temporary method until we merge person and user
+    def current_person
+      if current_user
+        Person.find(current_user.id)
+      else
+        nil
+      end
+    end
+
     def require_user
       unless current_user
         store_location

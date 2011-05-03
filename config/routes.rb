@@ -132,6 +132,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.survey_monkey 'courses/:course_id/teams/:id/survey_monkey', :controller => 'teams', :action => 'survey_monkey'
   map.connect 'courses/:course_id/teams_photos', :controller => 'teams', :action => 'index_photos'
+  map.course_deliverables 'courses/:course_id/deliverables', :controller => 'deliverables', :action => 'index_for_course'
   map.connect 'effort_reports/:id/week/:week',  :controller => 'effort_reports', :action => "show_week"
 
   map.connect ':controller/:action/:id'

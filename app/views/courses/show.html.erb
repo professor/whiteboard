@@ -8,6 +8,7 @@
 
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
 <p><%= link_to 'Configure course', configure_course_path(@course) %></p>
+<p><%= link_to 'Deliverables', course_deliverables_path(@course) %></p>
 <% end %>
 
 <br/>
