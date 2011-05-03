@@ -3,12 +3,12 @@ require 'controllers/permission_behavior'
 
 describe DeliverablesController do
 
-  context "as faculty do" do
-
     before do
+      @admin_andy = Factory(:admin_andy)
       @faculty_frank = Factory(:faculty_frank)
       @faculty_fagan = Factory(:faculty_fagan)
-      @admin_andy = Factory(:admin_andy)
+      @student_sam = Factory(:student_sam)
+      @student_sally = Factory(:student_sally)
     end
 
     describe "GET index for course" do
@@ -43,7 +43,6 @@ describe DeliverablesController do
         end
       end
 
-
       context "as any other user" do
         before do
           UserSession.create(@faculty_fagan)
@@ -52,8 +51,51 @@ describe DeliverablesController do
 
         it_should_behave_like "permission denied"
       end
+    end
 
 
+    describe "GET my_deliverables" do
+      before(:each) do
+        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
+        Deliverable.stub(:find_current_by_person).and_return([@deliverable, @deliverable])
+        Deliverable.stub(:find_past_by_person).and_return([@deliverable, @deliverable])
+        Course.stub(:find).and_return(@course)
+      end
+
+      context "as the owner of the deliverable" do
+        before do
+          UserSession.create(@student_sam)
+        end
+
+        it 'assigns deliverables' do
+          get :my_deliverables, :id => @student_sam.id
+          assigns(:current_deliverables).should == [@deliverable, @deliverable]
+          assigns(:past_deliverables).should == [@deliverable, @deliverable]
+        end
+      end
+
+      context "as an faculty" do
+
+        before do
+          UserSession.create(@faculty_frank)
+        end
+
+        it 'assigns @deliverables' do
+          get :my_deliverables, :id => @student_sam.id
+          assigns(:current_deliverables).should == [@deliverable, @deliverable]
+          assigns(:past_deliverables).should == [@deliverable, @deliverable]
+        end
+      end
+
+      context "as any other student" do
+        before do
+          UserSession.create(@student_sally)
+          get :my_deliverables, :id => @student_sam.id
+        end
+
+        it_should_behave_like "permission denied for person deliverable"
+      end
     end
 
 #    describe "GET edit" do
@@ -135,6 +177,6 @@ describe DeliverablesController do
 #        end
 #      end
 #    end
-  end
+
 
 end

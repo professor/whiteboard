@@ -22,9 +22,9 @@ class DeliverablesController < ApplicationController
   def my_deliverables
     person = Person.find(params[:id])
     if (current_user.id != person.id)
-      unless (current_user.is_staff?)||(current_user.is_admin?)
+      unless (current_person.is_staff?)||(current_user.is_admin?)
         flash[:error] = "You don't have permission to see another person's deliverables."
-        redirect_to :controller => "welcome", :action => "index"
+        redirect_to root_url
         return
       end
     end

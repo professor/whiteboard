@@ -8,7 +8,7 @@ describe "courses/edit.html.erb" do
         :name => "something",
       :new_record? => false
     )
-    @course.stub(:people).and_return([stub_model(Person)])
+    @course.stub(:faculty).and_return([stub_model(Person)])
     assigns[:course_numbers] = [stub_model(CourseNumber)]
   end
 
