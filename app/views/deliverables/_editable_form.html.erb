@@ -3,8 +3,8 @@
 <% form_for @deliverable, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :description, "Deliverable Description" %>
-    <%= f.text_field :description %>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, :size => "50" %>
   </p>
   <p>
     <%= f.label :course_id, "Select Course" %>
@@ -12,7 +12,7 @@
   </p>
   <p>
     <%= f.label :task_number, "Task Number" %>
-    <%= f.text_field :task_number %>
+    <%= f.text_field :task_number, :size => "3" %>
   </p>
   <p>
     <%= f.label :is_team_deliverable, "Team Deliverable?" %>
@@ -27,7 +27,7 @@
     <p>
       <%= attachment_form.label :comment, "Comments" %>
       <br>
-      <%= attachment_form.text_area :comment, :size=>"80x10" %>
+      <%= attachment_form.text_area :comment, :size=>"90x10" %>
     </p>
   <% end -%>
   </div>

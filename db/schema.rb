@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20110504032301) do
   end
 
   create_table "deliverables", :force => true do |t|
-    t.text     "description"
+    t.text     "name"
     t.integer  "team_id"
     t.integer  "course_id"
     t.string   "task_number"

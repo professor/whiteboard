@@ -4,7 +4,7 @@
     <th>Course</th>
     <th>Task</th>
     <th>Owner</th>
-    <th>Description</th>
+    <th>Name</th>
     <th>File</th>
     <th>Feedback Received?</th>
     <th>Actions</th>
@@ -15,7 +15,7 @@
       <td><%=h deliverable.course.name %></td>
       <td><%=h deliverable.task_number %></td>
       <td><%= deliverable.owner_name  %></td>
-      <td><%= deliverable.description  %></td>
+      <td><%= deliverable.name  %></td>
       <td>
           <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
               <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
