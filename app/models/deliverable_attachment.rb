@@ -1,9 +1,10 @@
-class DeliverableRevision < ActiveRecord::Base
+class DeliverableAttachment < ActiveRecord::Base
+  set_table_name "deliverable_attachment_versions"
 
   belongs_to :submitter, :class_name => "Person", :foreign_key => "submitter_id"
   belongs_to :deliverable
 
-  has_attached_file :revision,
+  has_attached_file :attachment,
     :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
     :path => "deliverables/:deliverable_course_year/:deliverable_course_name/:deliverable_random_hash/submissions/:id/:filename"

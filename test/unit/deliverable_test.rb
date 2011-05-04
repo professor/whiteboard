@@ -9,7 +9,7 @@ class DeliverableTest < ActiveSupport::TestCase
   test "is valid with valid attributes" do
     deliverable = deliverables(:teamDeliverable1)
     assert_valid deliverable
-    current_revision = deliverable.current_revision
+    current_revision = deliverable.current_attachment
     assert_not_nil current_revision
     assert_not_nil current_revision.submission_date
     assert_not_nil current_revision.submitter
@@ -19,7 +19,7 @@ class DeliverableTest < ActiveSupport::TestCase
 
   test "is not valid without a submission date" do
     deliverable = deliverables(:teamDeliverable1)
-    revision = deliverable.current_revision
+    revision = deliverable.current_attachment
     revision.submission_date = nil
     assert_nil revision.submission_date
     assert !revision.valid?
@@ -27,7 +27,7 @@ class DeliverableTest < ActiveSupport::TestCase
 
   test "is not valid without an submitter" do
     deliverable = deliverables(:teamDeliverable1)
-    revision = deliverable.current_revision
+    revision = deliverable.current_attachment
     revision.submitter = nil
     assert !revision.valid?    
   end

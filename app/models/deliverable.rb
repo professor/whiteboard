@@ -2,7 +2,7 @@ class Deliverable < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
   belongs_to :creator, :class_name => "Person"
-  has_many :revisions, :class_name => "DeliverableRevision", :order => "submission_date DESC"
+  has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
   validates_presence_of :course, :creator
 
@@ -16,8 +16,8 @@ class Deliverable < ActiveRecord::Base
     self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
   end
 
-  def current_revision
-    revisions.find(:first)
+  def current_attachment
+    attachment_versions.find(:first)
   end
 
   def owner_name

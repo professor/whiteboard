@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405202241) do
+ActiveRecord::Schema.define(:version => 20110504032301) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -96,13 +96,13 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
     t.datetime "updated_at"
   end
 
-  create_table "deliverable_revisions", :force => true do |t|
+  create_table "deliverable_attachment_versions", :force => true do |t|
     t.integer  "deliverable_id"
     t.integer  "submitter_id"
     t.datetime "submission_date"
-    t.string   "revision_file_name"
-    t.string   "revision_content_type"
-    t.integer  "revision_file_size"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
     t.text     "comment"
   end
 
@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
 
   create_table "suggestions", :force => true do |t|
     t.integer  "user_id"
-    t.string   "comment"
+    t.text     "comment"
     t.string   "page"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -460,6 +460,8 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   create_table "users", :force => true do |t|
@@ -532,6 +534,8 @@ ActiveRecord::Schema.define(:version => 20110405202241) do
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
   end
 
   add_index "users", ["human_name"], :name => "index_users_on_human_name"

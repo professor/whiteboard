@@ -17,8 +17,8 @@
       <td><%= deliverable.owner_name  %></td>
       <td><%= deliverable.description  %></td>
       <td>
-          <% if deliverable.current_revision != nil and deliverable.current_revision.revision_file_name != nil %>
-              <%= link_to deliverable.current_revision.revision_file_name, deliverable.current_revision.revision.url %>
+          <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
+              <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
           <% end %>
       </td>
       <td>

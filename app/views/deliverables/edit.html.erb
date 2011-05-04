@@ -1,17 +1,17 @@
 <% content_for :title, "Upload Deliverable" %>
 
-<h1>Upload New Deliverable Revision</h1>
+<h1>Upload New Deliverable Attachment</h1>
 
 <% form_for @deliverable, :html => { :multipart => true } do |f| %>
-    <% fields_for :deliverable_revision do |revision_form| -%>
+    <% fields_for :deliverable_attachment do |attachment_form| -%>
       <p>
-        <%= revision_form.label :revision, "Deliverable file to upload" %>
-        <%= revision_form.file_field :revision %>
+        <%= attachment_form.label :attachment, "Deliverable file to upload" %>
+        <%= attachment_form.file_field :attachment %>
       </p>
       <p>
-        <%= revision_form.label :comment, "Comments" %>
+        <%= attachment_form.label :comment, "Comments" %>
         <br>
-        <%= revision_form.text_area :comment %>
+        <%= attachment_form.text_area :comment %>
       </p>
     <% end -%>
     <p>

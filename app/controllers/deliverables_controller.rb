@@ -94,7 +94,7 @@ class DeliverablesController < ApplicationController
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = Person.find(current_user)
-    if !params[:deliverable_revision][:revision]
+    if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
         format.html { render :action => "new" }
@@ -102,20 +102,20 @@ class DeliverablesController < ApplicationController
       end
       return
     end
-    @revision = DeliverableRevision.new(params[:deliverable_revision])
-    @revision.submitter = @deliverable.creator
-    @deliverable.revisions << @revision
-    @revision.deliverable = @deliverable
+    @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+    @attachment.submitter = @deliverable.creator
+    @deliverable.attachment_versions << @attachment
+    @attachment.deliverable = @deliverable
 
     respond_to do |format|
-      if @revision.valid? and @deliverable.valid? and @deliverable.save
+      if @attachment.valid? and @deliverable.valid? and @deliverable.save
         send_deliverable_upload_email(@deliverable)
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
       else
-        if not @revision.valid?
-          flash[:notice] = 'Revision not valid'
+        if not @attachment.valid?
+          flash[:notice] = 'Attachment not valid'
         elsif not @deliverable.valid?
           flash[:notice] = 'Deliverable not valid'
         else
@@ -137,7 +137,7 @@ class DeliverablesController < ApplicationController
       return
     end
     
-    if !params[:deliverable_revision][:revision]
+    if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'You must specify a file to upload'
       respond_to do |format|
         format.html { render :action => "edit" }
@@ -146,13 +146,13 @@ class DeliverablesController < ApplicationController
       return
     end
 
-    @revision = DeliverableRevision.new(params[:deliverable_revision])
-    @revision.submitter = Person.find(current_user)
-    @deliverable.revisions << @revision
-    @revision.deliverable = @deliverable
+    @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+    @attachment.submitter = Person.find(current_user)
+    @deliverable.attachment_versions << @attachment
+    @attachment.deliverable = @deliverable
 
     respond_to do |format|
-      if @revision.valid? and @deliverable.valid? and @deliverable.save
+      if @attachment.valid? and @deliverable.valid? and @deliverable.save
         send_deliverable_upload_email(@deliverable)
         flash[:notice] = 'Deliverable was successfully updated.'
         format.html { redirect_to(@deliverable) }
