@@ -11,6 +11,8 @@ class Deliverable < ActiveRecord::Base
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
+  default_scope :order => "updated_at DESC"
+
   def before_validation
     # Look up the team this person is on if it is a team deliverable
     self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
