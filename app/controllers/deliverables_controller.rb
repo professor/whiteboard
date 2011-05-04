@@ -23,7 +23,7 @@ class DeliverablesController < ApplicationController
     person = Person.find(params[:id])
     if (current_user.id != person.id)
       unless (current_person.is_staff?)||(current_user.is_admin?)
-        flash[:error] = "You don't have permission to see another person's deliverables."
+        flash[:error] = I18n.t(:not_your_deliverable)
         redirect_to root_url
         return
       end
@@ -42,11 +42,9 @@ class DeliverablesController < ApplicationController
   def show
     @deliverable = Deliverable.find(params[:id])
 
-    # If we aren't on this deliverable's team, you can't see it.
-#    if !@deliverable.team.is_person_on_team?(current_person)
-    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+    unless @deliverable.team.is_person_on_team?(current_person)
       unless (current_user.is_staff?)||(current_user.is_admin?)
-        flash[:error] = "You don't have permission to see another team's deliverables."
+        flash[:error] = I18n.t(:not_your_deliverable)
         redirect_to root_url
         return
       end
@@ -54,7 +52,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @deliverables }
+      format.xml  { render :xml => @deliverable }
     end
   end
 
@@ -81,7 +79,7 @@ class DeliverablesController < ApplicationController
   def edit
     @deliverable = Deliverable.find(params[:id])
 
-    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+    unless @deliverable.team.is_person_on_team?(current_person)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = "You don't have permission to see another team's deliverables."
         redirect_to root_url

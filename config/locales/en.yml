@@ -1,3 +1,4 @@
 en:
   no_permission: You don't have permission to access this page.
   not_editable: You don't have permission to edit this object.
+  not_your_deliverable: You don't have permission to see another person's deliverables.

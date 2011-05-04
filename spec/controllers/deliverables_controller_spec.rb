@@ -98,6 +98,53 @@ describe DeliverablesController do
       end
     end
 
+
+    describe "GET show" do
+      before(:each) do
+        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :is_team_deliverable => true)
+        @team = stub_model(Team)
+        Deliverable.stub(:find).and_return(@deliverable)
+        @deliverable.stub(:team).and_return(@team)
+        Course.stub(:find).and_return(@course)
+      end
+
+      context "for a team deliverable" do
+
+        it 'the owner can see it' do
+          UserSession.create(@student_sam)
+          @team.stub(:is_person_on_team?).and_return(true)
+          get :show, :id => @deliverable.id
+          assigns(:deliverable).should == @deliverable
+        end
+
+        it "someone else on the team can see it" do
+          UserSession.create(@student_sam)
+          @team.stub(:is_person_on_team?).and_return(true)
+          get :show, :id => @deliverable.id
+          assigns(:deliverable).should == @deliverable
+        end
+
+        it "any faculty can see it" do
+          UserSession.create(@faculty_frank)
+          @team.stub(:is_person_on_team?).and_return(false)
+          get :show, :id => @deliverable.id
+          assigns(:deliverable).should == @deliverable
+        end
+
+        context "no other student can see it" do
+          before do
+            @team.stub(:is_person_on_team?).and_return(false)
+            UserSession.create(@student_sally)
+            get :show, :id => @deliverable.id
+          end
+
+          it_should_behave_like "permission denied for person deliverable"
+        end
+      end
+    end
+
+
 #    describe "GET edit" do
 #
 #      it 'assigns @efforts' do

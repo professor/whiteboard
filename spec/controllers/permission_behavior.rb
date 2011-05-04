@@ -27,6 +27,6 @@
       else
         response.should redirect_to(@redirect_url)
       end
-      flash[:error].should == "You don't have permission to see another person's deliverables."
+      flash[:error].should == I18n.t(:not_your_deliverable)
     end
  end
