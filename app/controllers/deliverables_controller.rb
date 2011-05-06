@@ -131,7 +131,7 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
-    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+    unless @deliverable.team.is_person_on_team?(current_person)
       flash[:error] = "You don't have permission to edit another team's deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
@@ -168,7 +168,7 @@ class DeliverablesController < ApplicationController
   # DELETE /deliverables/1.xml
   def destroy
     @deliverable = Deliverable.find(params[:id])
-    if !Team.find_by_person(Person.find(current_user)).find(@deliverable.team)
+    unless @deliverable.team.is_person_on_team?(current_person)
       flash[:error] = "You don't have permission to delete another team's deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
