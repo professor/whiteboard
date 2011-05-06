@@ -60,7 +60,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/new.xml
   def new
     # If we aren't on this deliverable's team, you can't see it.
-    @deliverable = Deliverable.new(:creator => Person.find(current_user))
+    @deliverable = Deliverable.new(:creator => current_person)
 
     unless params[:course_id].nil?
       @deliverable.course_id = params[:course_id]
@@ -93,7 +93,7 @@ class DeliverablesController < ApplicationController
   def create
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
-    @deliverable.creator = Person.find(current_user)
+    @deliverable.creator = current_person
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
@@ -147,7 +147,7 @@ class DeliverablesController < ApplicationController
     end
 
     @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
-    @attachment.submitter = Person.find(current_user)
+    @attachment.submitter = current_person
     @deliverable.attachment_versions << @attachment
     @attachment.deliverable = @deliverable
 
