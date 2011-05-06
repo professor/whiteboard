@@ -65,4 +65,52 @@ class Deliverable < ActiveRecord::Base
   def has_feedback?
     !self.feedback_comment.blank? or !self.feedback_file_name.blank?
   end
+
+
+  def send_deliverable_upload_email
+    mail_to = ""
+    unless self.team.primary_faculty.nil?
+      mail_to = self.team.primary_faculty.email
+    end
+    unless self.team.secondary_faculty.nil?
+      mail_to += self.team.secondary_faculty.email
+    end
+
+    if mail_to == ""
+      return
+    end
+
+    message = self.owner_name + " has submitted a deliverable for "
+    if !self.task_number.nil? and self.task_number != ""
+      message += "task " + self.task_number + " of "
+    end
+    message += self.course.name
+
+    GenericMailer.deliver_email(
+      :to => mail_to,
+      :subject => "Deliverable submitted for " + self.course.name,
+      :message => message,
+      :url_label => "View this deliverable",
+      :url => url_for(self)
+    )
+  end
+
+  def send_deliverable_feedback_email
+    mail_to = self.owner_email
+
+    message = "Feedback has been submitted for "
+    if !self.task_number.nil? and self.task_number != ""
+      message += "task " + self.task_number + " of "
+    end
+    message += self.course.name
+
+    GenericMailer.deliver_email(
+      :to => mail_to,
+      :subject => "Feedback for " + self.course.name,
+      :message => message,
+      :url_label => "View this deliverable",
+      :url => url_for(self)
+    )
+  end
+
 end

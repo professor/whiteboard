@@ -109,7 +109,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       if @attachment.valid? and @deliverable.valid? and @deliverable.save
-        send_deliverable_upload_email(@deliverable)
+        @deliverable.send_deliverable_upload_email
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
@@ -200,7 +200,7 @@ class DeliverablesController < ApplicationController
     end
     respond_to do |format|
       if @deliverable.save
-        send_deliverable_feedback_email(@deliverable)
+        @deliverable.send_deliverable_feedback_email
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }
@@ -212,50 +212,6 @@ class DeliverablesController < ApplicationController
     end
   end
 
-  def send_deliverable_upload_email(deliverable)
-    mail_to = ""
-    unless deliverable.team.primary_faculty.nil?
-      mail_to = deliverable.team.primary_faculty.email
-    end
-    unless deliverable.team.secondary_faculty.nil?
-      mail_to += deliverable.team.secondary_faculty.email
-    end
 
-    if mail_to == ""
-      return
-    end
-
-    message = deliverable.owner_name + " has submitted a deliverable for "
-    if !deliverable.task_number.nil? and deliverable.task_number != ""
-      message += "task " + deliverable.task_number + " of "
-    end
-    message += deliverable.course.name
-
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Deliverable submitted for " + deliverable.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url_for(deliverable)
-    )
-  end
-
-  def send_deliverable_feedback_email(deliverable)
-    mail_to = deliverable.owner_email
-
-    message = "Feedback has been submitted for "
-    if !deliverable.task_number.nil? and deliverable.task_number != ""
-      message += "task " + deliverable.task_number + " of "
-    end
-    message += deliverable.course.name
-
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Feedback for " + deliverable.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url_for(deliverable)
-    )
-  end
 
 end
