@@ -109,7 +109,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       if @attachment.valid? and @deliverable.valid? and @deliverable.save
-        @deliverable.send_deliverable_upload_email
+        @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
@@ -153,7 +153,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       if @attachment.valid? and @deliverable.valid? and @deliverable.save
-        send_deliverable_upload_email(@deliverable)
+        @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully updated.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
@@ -198,9 +198,12 @@ class DeliverablesController < ApplicationController
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
     end
+    unless @deliverable.feedback_comment.blank? && @deliverable.feedback_file_name.blank?
+      @deliverable.feedback_updated_at = Time.now
+    end
     respond_to do |format|
       if @deliverable.save
-        @deliverable.send_deliverable_feedback_email
+        @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }

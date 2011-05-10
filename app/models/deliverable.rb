@@ -67,7 +67,7 @@ class Deliverable < ActiveRecord::Base
   end
 
 
-  def send_deliverable_upload_email
+  def send_deliverable_upload_email(url)
     mail_to = ""
     unless self.team.primary_faculty.nil?
       mail_to = self.team.primary_faculty.email
@@ -91,11 +91,11 @@ class Deliverable < ActiveRecord::Base
       :subject => "Deliverable submitted for " + self.course.name,
       :message => message,
       :url_label => "View this deliverable",
-      :url => url_for(self)
+      :url => url
     )
   end
 
-  def send_deliverable_feedback_email
+  def send_deliverable_feedback_email(url)
     mail_to = self.owner_email
 
     message = "Feedback has been submitted for "
@@ -109,7 +109,7 @@ class Deliverable < ActiveRecord::Base
       :subject => "Feedback for " + self.course.name,
       :message => message,
       :url_label => "View this deliverable",
-      :url => url_for(self)
+      :url => url
     )
   end
 

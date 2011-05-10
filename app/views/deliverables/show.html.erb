@@ -15,26 +15,41 @@
 
 
 <h1>Feedback</h1>
-<p>
-  <b>File:</b>
-  <% unless @deliverable.feedback_file_name.nil? %>
-      <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
-  <% else %>
-      None
-  <% end %>
-  <% if @current_user.is_staff? %>
-      (<%= link_to 'Update Feedback', deliverable_feedback_path(@deliverable) %>)
-  <% end %>
-</p>
-<p>
-  <b>Comments:</b>
-  <% if @deliverable.feedback_comment.nil? or @deliverable.feedback_comment == "" %>
-     None
-  <% else %>
-      <%=h @deliverable.feedback_comment %>
-  <% end %>
-</p>
+<table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <th>Date</th>
+    <th>File</th>
+    <th>Comments</th>
+  </tr>
 
+  <% if @current_user.is_staff? %>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+        <td>(<%= link_to 'Alter Feedback', deliverable_feedback_path(@deliverable) %>)</td>
+        <td colspan="2">&nbsp;</td>
+  </tr>
+  <% end %>
+      
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+    <td><%= format_timestamp(@deliverable.feedback_updated_at) %></td>
+    <td>
+      <% unless @deliverable.feedback_file_name.nil? %>
+          <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+      <% else %>
+          None
+      <% end %>
+    </td>
+    <td>
+      <% if @deliverable.feedback_comment.blank? %>
+         None
+      <% else %>
+          <%=h @deliverable.feedback_comment %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+
+<br/>
 <h1>Attachment Version History</h1>
 
 <table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
@@ -50,12 +65,11 @@
   <td colspan="2">&nbsp;</td>
     </tr>
 
-  <% for version in @deliverable.attachment_versions %>
-
+  <% @deliverable.attachment_versions.each do |version| %>
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-    <td><%=h format_time_string(version.submission_date) %></td>
+    <td><%= format_timestamp(version.submission_date) %></td>
     <td>
-        <% if version.attachment_file_name != nil %>
+        <% unless version.attachment_file_name.nil? %>
             <%= link_to version.attachment_file_name, version.attachment.url %>
         <% end %>
     </td>

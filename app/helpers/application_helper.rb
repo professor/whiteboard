@@ -59,6 +59,10 @@ RUBY_RUBY_RUBY
     s.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p Pacific Time')
   end
 
+  def format_timestamp(timestamp)
+    return "" if timestamp.nil?
+    content_tag(:span, "#{time_ago_in_words(timestamp)} ago", :class => 'timestamp', :title => timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p Pacific Time'))
+  end
 
   def monthname(monthnumber)
     if monthnumber

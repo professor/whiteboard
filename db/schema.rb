@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504032301) do
+ActiveRecord::Schema.define(:version => 20110510175618) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20110504032301) do
     t.string   "feedback_file_name"
     t.string   "feedback_content_type"
     t.integer  "feedback_file_size"
+    t.datetime "feedback_updated_at"
   end
 
   create_table "effort_log_line_items", :force => true do |t|
