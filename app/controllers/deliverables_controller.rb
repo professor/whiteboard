@@ -198,7 +198,7 @@ class DeliverablesController < ApplicationController
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
     end
-    unless @deliverable.feedback_comment.blank? && @deliverable.feedback_file_name.blank?
+    if @deliverable.has_feedback?
       @deliverable.feedback_updated_at = Time.now
     end
     respond_to do |format|
