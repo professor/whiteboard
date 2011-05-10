@@ -58,6 +58,10 @@ class Deliverable < ActiveRecord::Base
       team_condition = "team_id IN ("
       team_condition << teams.collect{|t| t.id}.join(',')
       team_condition << ") OR "
+
+#      team_condition = "(team_id IN ("
+#      team_condition << teams.collect{|t| t.id}.join(',')
+#      team_condition << "AND is_team_deliverable = 0) OR "
     end
     Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{person.id})")
   end
