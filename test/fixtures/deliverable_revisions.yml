@@ -1,7 +1,0 @@
-v1:
-    deliverable: teamDeliverable1
-    submitter: student_sam
-    submission_date: <%= DateTime.now %>
-    revision_file_name: no_exist.txt
-    revision_file_size: 1024
-    comment: This is version 1
