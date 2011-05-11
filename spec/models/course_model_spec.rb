@@ -144,7 +144,7 @@ describe Course do
       course = Factory(:course)
       new_course = course.copy_as_new_course
       new_course.save
-      new_course.people.should =~ course.people
+      new_course.faculty.should =~ course.faculty
     end
 
   end

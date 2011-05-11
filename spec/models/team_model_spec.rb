@@ -81,4 +81,21 @@ describe Team do
   end
 
 
+  context "is_person_on_team?" do
+
+   before do
+      @faculty_frank = Factory(:faculty_frank)
+      @student_sam = Factory(:student_sam)
+      @student_sally = Factory(:student_sally)
+      @course = Factory(:course, :configure_teams_name_themselves => false)
+      @team = Factory(:team, :course_id => @course.id, :name => "Dracula", :people => [@student_sam, @student_sally])
+    end
+
+    it "correctly determines whether a person is on the team" do
+      @team.is_person_on_team?(@student_sam).should be_true
+      @team.is_person_on_team?(@student_sally).should be_true
+      @team.is_person_on_team?(@faculty_frank).should be_false
+    end
+  end
+
 end

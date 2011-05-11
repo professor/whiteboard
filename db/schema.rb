@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411233106) do
+ActiveRecord::Schema.define(:version => 20110510175618) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -96,18 +96,18 @@ ActiveRecord::Schema.define(:version => 20110411233106) do
     t.datetime "updated_at"
   end
 
-  create_table "deliverable_revisions", :force => true do |t|
+  create_table "deliverable_attachment_versions", :force => true do |t|
     t.integer  "deliverable_id"
     t.integer  "submitter_id"
     t.datetime "submission_date"
-    t.string   "revision_file_name"
-    t.string   "revision_content_type"
-    t.integer  "revision_file_size"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
     t.text     "comment"
   end
 
   create_table "deliverables", :force => true do |t|
-    t.text     "description"
+    t.text     "name"
     t.integer  "team_id"
     t.integer  "course_id"
     t.string   "task_number"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20110411233106) do
     t.string   "feedback_file_name"
     t.string   "feedback_content_type"
     t.integer  "feedback_file_size"
+    t.datetime "feedback_updated_at"
   end
 
   create_table "effort_log_line_items", :force => true do |t|

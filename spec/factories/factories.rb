@@ -21,6 +21,16 @@ end
 Factory.define :delayed_system_job do |c|
 end
 
+Factory.define :deliverable do |d|
+  d.association :course, :factory => :course
+  d.association :creator, :factory => :student_sam
+end
+
+Factory.define :deliverable_attachment do |d|
+  d.association :deliverable, :factory => :deliverable
+end
+
+
 Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
   e.association :course, :factory => :fse
   e.task_type_id 1
@@ -96,8 +106,6 @@ Factory.define :team, :class => Team do |t|
  t.email "team@sv.cmu.edu"
  t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
- t.person_name "Admin Andy"
- t.person_name2 "Faculty Frank"
- t.person_name3 "Student Sam"
+ t.people {|people| [people.association(:team_member)]}
  t.association :course, :factory => :course
 end

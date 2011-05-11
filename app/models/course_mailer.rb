@@ -2,7 +2,7 @@ class CourseMailer < GenericMailer
 
     def configure_course_faculty_email(course, options = {})
     subject    options[:subject] || "Please let us know about your course #{course.name} (#{course.semester} #{course.year})"
-    recipients options[:to] || course.people.collect { |person| person.email }
+    recipients options[:to] || course.faculty.collect { |person| person.email }
     from       options[:from] || "CMU-SV Official Communication <help@sv.cmu.edu>"
     bcc        options[:cc] || "todd.sedano@sv.cmu.edu"
     sent_on    Time.now
