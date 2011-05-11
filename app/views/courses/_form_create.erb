@@ -30,7 +30,7 @@
    <p>Instructors for this course<br/>
      <span class="help_text">(Eventually) they will be notified to configure their course</span>
    </p>
-  <%= render :partial => '/people/person_in_a_collection', :collection =>@course.people, :locals => { :collection_form => f , :member_label => "Teacher"}   %>
+  <%= render :partial => '/people/person_in_a_collection', :collection =>@course.faculty, :locals => { :collection_form => f , :member_label => "Teacher"}   %>
 </div>
     <div class="formItem indented"><p><%= add_person_link("Add a teacher", "Teacher") %></p></div>
     <!-- -->

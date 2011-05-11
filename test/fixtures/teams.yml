@@ -28,6 +28,7 @@ teamOne:
    course: foundations
    primary_faculty_id: 2
    email: something@sandbox.sv.cmu.edu
+   people: student_sam
 
 teamTwo:
    name: "FixtureDeming teamTwo"

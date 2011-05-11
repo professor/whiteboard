@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :deliverables
+  map.my_deliverables '/people/:id/my_deliverables', :controller => 'deliverables', :action => 'my_deliverables'
+  map.deliverable_feedback '/deliverables/:id/feedback', :controller => 'deliverables', :action => 'edit_feedback'
 
   map.archive_sponsored_project '/sponsored_projects/:id/archive', :controller => 'sponsored_projects', :action => 'archive'
   map.archive_sponsored_project_sponsor '/sponsored_project_sponsors/:id/archive', :controller => 'sponsored_project_sponsors', :action => 'archive'
@@ -131,6 +134,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'courses/:course_id/teams_photos', :controller => 'teams', :action => 'index_photos'
   map.past_teams_list 'courses/:course_id/past_teams_list', :controller => 'teams', :action => 'past_teams_list'
   map.connect 'courses/:course_id/export_to_csv', :controller => 'teams', :action => 'export_to_csv'
+  map.course_deliverables 'courses/:course_id/deliverables', :controller => 'deliverables', :action => 'index_for_course'
   map.connect 'effort_reports/:id/week/:week',  :controller => 'effort_reports', :action => "show_week"
 
   map.connect ':controller/:action/:id'
