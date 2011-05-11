@@ -27,7 +27,7 @@
 <% end %>
 
     <% if current_user && current_user.is_admin? %>
-    <td><%= link_to 'Destroy', @course, :confirm => 'Are you sure?', :method => :delete %></td>
+    <p><%= link_to 'Destroy', @course, :confirm => 'Are you sure?', :method => :delete %></p>
     <% end %>
 
 <br><br>
