@@ -64,17 +64,17 @@ class Team < ActiveRecord::Base
       new_group_exists = true if new_group == group_name
     end
     if old_group_exists
-      logger.info "\nDeleting #{old_group}\n"
+      logger.info "Deleting #{old_group}"
       google_apps_connection.delete_group(old_group)
       new_group_exists = false if old_group == new_group
     end
 
     if !new_group_exists
-      logger.info "\nCreating #{new_group}\n"
+      logger.info "Creating #{new_group}"
       google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
     end
     self.people.each do |member|
-      logger.info "\nTeams:adding #{member.email}"
+      logger.info "Teams:adding #{member.email}"
       google_apps_connection.add_member_to_group(member.email, new_group)
     end
 
@@ -84,7 +84,7 @@ class Team < ActiveRecord::Base
     google_list = all_team_members.map{|l| l.member_id}.sort
     team_list = self.people.map{|l| l.email}.sort
     unless google_list.eql?(team_list)
-      logger.warn("The peopel on the google list isn't right")
+      logger.warn("The people on the google list isn't right")
       logger.warn("google list: #{google_list} ")
       logger.warn("team list: #{team_list} ")
     end
