@@ -225,6 +225,7 @@ class PeopleController < ApplicationController
 
     @person = Person.find(params[:id])
     @person.updated_by_user_id = current_user.id
+    @strength_themes = StrengthTheme.find(:all)
 
     respond_to do |format|
 

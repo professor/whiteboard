@@ -51,7 +51,7 @@ class Team < ActiveRecord::Base
 
 
   def update_google_mailing_list(new_email, old_email, id)
-    logger.debug("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
+    logger.info("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
 
     new_group = new_email.split('@')[0] unless new_email.blank?
     old_group = old_email.split('@')[0] unless old_email.blank?
@@ -64,17 +64,17 @@ class Team < ActiveRecord::Base
       new_group_exists = true if new_group == group_name
     end
     if old_group_exists
-      logger.debug "\nDeleting #{old_group}\n"
+      logger.info "\nDeleting #{old_group}\n"
       google_apps_connection.delete_group(old_group)
       new_group_exists = false if old_group == new_group
     end
 
     if !new_group_exists
-      logger.debug "\nCreating #{new_group}\n"
+      logger.info "\nCreating #{new_group}\n"
       google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
     end
     self.people.each do |member|
-      logger.debug "\nTeams:adding #{member.email}"
+      logger.info "\nTeams:adding #{member.email}"
       google_apps_connection.add_member_to_group(member.email, new_group)
     end
 
@@ -83,10 +83,15 @@ class Team < ActiveRecord::Base
     all_team_members = google_apps_connection.retrieve_all_members(new_group)
     google_list = all_team_members.map{|l| l.member_id}.sort
     team_list = self.people.map{|l| l.email}.sort
+    unless google_list.eql?(team_list)
+      logger.warn("The peopel on the google list isn't right")
+      logger.warn("google list: #{google_list} ")
+      logger.warn("team list: #{team_list} ")
+    end
     raise Exception.new("The people on the google list isn't right") unless google_list.eql?(team_list)
 
     ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
-    logger.debug "#{id} -- finished"
+    logger.info "#{id} -- finished"
 
   end
 #  handle_asynchronously :update_google_mailing_list
