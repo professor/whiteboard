@@ -38,7 +38,7 @@ class Team < ActiveRecord::Base
     logger.debug("team.before_save() executed")
 #    update_google_mailing_list(self.email, self.old_email, self.id)
 #    self.send_later(:update_google_mailing_list, self.email, self.old_email, self.id)
-    self.delay.update_google_mailing_list self.email, self.old_email, self.id
+
     self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
 
     current_user = UserSession.find.user unless UserSession.find.nil?
@@ -97,6 +97,9 @@ class Team < ActiveRecord::Base
 #  handle_asynchronously :update_google_mailing_list
 
   def after_save
+#    Delayed::Job.enqueue(TeamMailingListJob.new(self.email_change, self.email_was, self.id))
+    self.delay.update_google_mailing_list self.email, self.email_was, self.id
+
     self.old_email = self.email
   end
 
@@ -129,23 +132,6 @@ class Team < ActiveRecord::Base
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, current_semester, current_year])
   end
 
-
-  #deprecated;
-  #TODO delete this method
-#  def load_old_email
-#    old = Team.find_by_id(self.id, :select => :email)
-#    return "undefined" if old == nil
-#    oldemail = old.attribute_for_inspect(:email)
-#    if oldemail == "nil"
-#      return "undefined"
-#    else
-#      return oldemail.split('"')[1]
-#    end
-#  end
-#  def email_changed?
-#    #logger.debug "\nDEBUG: build_email<#{self.build_email}> vs. old_email<#{self.old_email}>"
-#    return self.build_email != self.old_email
-#  end
 
   def remove_person(id)
     person = Person.find_by_id(id)
