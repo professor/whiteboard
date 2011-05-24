@@ -208,6 +208,23 @@ describe Person do
 
 
   end
+  
+  context "twiki name parsing" do
+    it "finds the correct first and last name" do
+      twiki_names = {}
+      twiki_names["StudentSam"] = ["Student", "Sam"]
+      twiki_names["TestUser4"] = ["Test", "User4"]
+      twiki_names["DenaHaritosTsamitis"] = ["Dena", "HaritosTsamitis"]
+      twiki_names["GordonMcCreight"] = ["Gordon", "McCreight"]
+            
+      twiki_names.each do |twiki_name, expected_names|
+        names = Person.parse_twiki(twiki_name)
+        assert_equal(names[0], expected_names[0])
+        assert_equal(names[1], expected_names[1])
+      end
+    end
+    
+  end
 
 
 end
