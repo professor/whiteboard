@@ -241,7 +241,7 @@ describe Person do
       person_courses = @team_member.get_registered_courses
     end
       it "should be courses for current semester" do
-        person_courses[0].semester.should == @team_sem
+        person_courses[0].semester.should == @team_sem 
       end
 
   end
