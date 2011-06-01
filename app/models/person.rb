@@ -131,6 +131,7 @@ class Person < ActiveRecord::Base
               (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
 
     @registered_courses = Course.find_by_sql(@sql_str)
+    # return statement missing?
   end
 
    #

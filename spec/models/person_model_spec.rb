@@ -208,6 +208,45 @@ describe Person do
 
 
   end
+  
+  describe "person's teams" do
 
+    context "found for each year and semester of person's enrollment" do
+
+    before(:all) do
+      activate_authlogic
+    end
+
+     before(:each) do
+      @team_member = Factory(:student_team_member)
+      @team_year = @team_member.teams[0].course.year
+      @team_sem = @team_member.teams[0].course.semester
+      @pteams = @team_member.find_teams_by_semester(@team_year, @team_sem)
+    end
+
+      it "should have a year" do
+        @pteams[0].course.year.should == @team_year
+      end
+
+      it "should have semester" do
+        @pteams[0].course.semester.should == @team_sem
+      end
+
+    end
+
+  end
+
+  describe "person's registered courses" do
+    before(:each) do
+      person_courses = @team_member.get_registered_courses
+    end
+      it "should be courses for current semester" do
+        person_courses[0].semester.should == @team_sem
+      end
+
+  end
+
+  # Effort log should only be set for person that is_student - test in effort_log
+  # TODO: Graduation_year should be set for person that is_student
 
 end

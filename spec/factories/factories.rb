@@ -109,3 +109,12 @@ Factory.define :team, :class => Team do |t|
  t.people {|people| [people.association(:team_member)]}
  t.association :course, :factory => :course
 end
+
+Factory.define :person_team, :class => Team do |t|
+ t.name "Team"
+ t.email "team@sv.cmu.edu"
+ t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
+ t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+ #t.people {|people| [people.association(:person_team_member)]}
+ t.association :course, :factory => :course
+end
