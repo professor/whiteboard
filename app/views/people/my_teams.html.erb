@@ -21,8 +21,11 @@
       <% for semester in ["fall", "summer", "spring"] %>
           <% if (semester.capitalize == @current_semester and year == @current_year) or !@teams_map[year][semester].nil? %>
             <h2><%= semester.capitalize %> <%= year %> Teams</h2>
-            <%= render :partial => "teams/twiki_index", :locals => { :teams => @teams_map[year][semester], :show_course => true, :show_student_photos => false, :show_photo_view_link => false, :show_new_teams_link => false } %>
-            <p><%= @person.first_name %> taught <b><%= @teams_students_map[year][semester] %></b> students in <%= semester.capitalize %> <%= year %></p>
+             <% unless @teams_map[year][semester].nil? %>
+               <%= render :partial => "teams/twiki_index", :locals => { :teams => @teams_map[year][semester], :show_course => true, :show_student_photos => false, :show_photo_view_link => false, :show_new_teams_link => false } %>
+             <% end %>
+             <% number = @teams_students_map[year][semester] || 0 %>
+            <p><%= @person.first_name %> taught <b><%= number %></b> students in <%= semester.capitalize %> <%= year %></p>
             <br>
           <% end %>
       <% end %>
