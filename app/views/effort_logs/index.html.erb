@@ -39,7 +39,7 @@
     <td><%=h show_monday_for(effort_log.year, effort_log.week_number) %></td>
     <td class="log_sum"><%=h effort_log.sum %> hrs</td>
     <td class="log_action"><%= link_to 'Show', effort_log %></td>
-    <% if effort_log.editable(current_user) %>
+    <% if effort_log.editable_by(current_user) %>
     <td class="log_action"><%= link_to 'Edit', edit_effort_log_path(effort_log) %></td>
     <% else %>
     <td>&nbsp;</td>

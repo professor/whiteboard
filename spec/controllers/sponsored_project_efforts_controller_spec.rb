@@ -3,12 +3,10 @@ require 'spec_helper'
 describe SponsoredProjectEffortsController do
 
 
-
-  context "as faculty do" do
-
+  context "as admin do" do
     before do
-      @faculty_frank = Factory(:faculty_frank)
-      UserSession.create(@faculty_frank)
+      @admin_andy= Factory(:admin_andy)
+      UserSession.create(@admin_andy)
     end
 
     describe "GET index" do
@@ -21,6 +19,23 @@ describe SponsoredProjectEffortsController do
       it 'assigns @efforts' do
         assigns(:efforts).should == [@effort_mock, @effort_mock]
       end
+    end
+  end
+
+  context "as faculty do" do
+
+    before do
+      @faculty_frank = Factory(:faculty_frank)
+      UserSession.create(@faculty_frank)
+    end
+
+    describe "GET index" do
+      it "can't access page" do
+        get :index
+        response.should redirect_to(root_url)
+        flash[:error].should == I18n.t(:no_permission)
+      end
+
     end
 
     describe "GET edit" do
@@ -68,13 +83,13 @@ describe SponsoredProjectEffortsController do
         it "updates the actual allocations" do
           @effort_1.should_receive(:actual_allocation=).with("25")
           @effort_2.should_receive(:actual_allocation=).with("75")
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
         end
   
         it 'updates the confirmed value' do
           @effort_1.should_receive(:confirmed=).with(true)
           @effort_2.should_receive(:confirmed=).with(true)
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
         end
 
 #        it 'sets the flash' do
@@ -83,13 +98,13 @@ describe SponsoredProjectEffortsController do
 #        end
 
         it "re-renders the 'edit' template" do
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
           response.should render_template("edit")
         end
 
         it "emails the business manager when actual != confirmed" do
           SponsoredProjectEffort.should_receive(:emails_business_manager)
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
         end
       end
 
@@ -97,27 +112,28 @@ describe SponsoredProjectEffortsController do
 
         it 'sets the flash to error' do
           @effort_2.should_receive(:save).and_return(false)
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
           assigns[:failed].should == true
           #flash.now[:error].should == "Your allocations did not save."
         end
 
         it "re-renders the 'edit' template" do
           @effort_2.should_receive(:save).and_return(false)
-          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
+          put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
           response.should render_template("edit")
         end
       end
+    end
 
+
+    describe "PUT update (unauthorized)" do
       it "can't access page for a different user" do
         @faculty_fagan = Factory(:faculty_fagan)
         put :update, :id => @faculty_fagan.twiki_name, :effort_id_values => {"0" => "25", "1" => "75"}
         response.should redirect_to(root_url)
         flash[:error].should == I18n.t(:no_permission)
-      end      
+      end
     end
   end
-
-
 
 end
