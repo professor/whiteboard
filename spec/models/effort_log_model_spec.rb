@@ -41,19 +41,19 @@ describe EffortLog do
     end
 
     it "for effort log owner" do
-      @effort.has_permission_to_edit(@effort.person).should be_true
+      @effort.editable_by(@effort.person).should be_true
     end
 
     it "for admin who is not effort owner" do
       admin_andy = Factory(:admin_andy)
       @effort.person.should_not be_equal(admin_andy)
-      @effort.has_permission_to_edit(admin_andy).should be_true
+      @effort.editable_by(admin_andy).should be_true
     end
 
     it "not for non admin and non effort log owner" do
       faculty_frank = Factory(:faculty_frank)
       @effort.person.should_not be_equal(faculty_frank)
-      @effort.has_permission_to_edit(faculty_frank).should be_false
+      @effort.editable_by(faculty_frank).should be_false
     end
   end
 
@@ -66,17 +66,17 @@ describe EffortLog do
       it "for admin who is not effort owner" do
         admin_andy = Factory(:admin_andy)
         @effort.person.should_not be_equal(admin_andy)
-        @effort.has_permission_to_edit_period(admin_andy).should be_true
+        @effort.editable_by(admin_andy).should be_true
       end
 
       it "for effort log owner" do
-        @effort.has_permission_to_edit_period(@effort.person).should be_true
+        @effort.editable_by(@effort.person).should be_true
       end
 
       it "not for non admin and non effort log owner" do
         faculty_frank = Factory(:faculty_frank)
         @effort.person.should_not be_equal(faculty_frank)
-        @effort.has_permission_to_edit_period(faculty_frank).should be_false
+        @effort.editable_by(faculty_frank).should be_false
       end
     end
 
@@ -90,17 +90,17 @@ describe EffortLog do
       it "for admin who is not effort owner" do
         admin_andy = Factory(:admin_andy)
         @effort.person.should_not be_equal(admin_andy)
-        @effort.has_permission_to_edit(admin_andy).should be_true
+        @effort.editable_by(admin_andy).should be_true
       end
 
       it "for effort log owner" do
-        @effort.has_permission_to_edit(@effort.person).should be_false
+        @effort.editable_by(@effort.person).should be_false
       end
 
       it "not for non admin and non effort log owner" do
         faculty_frank = Factory(:faculty_frank)
         @effort.person.should_not be_equal(faculty_frank)
-        @effort.has_permission_to_edit(faculty_frank).should be_false
+        @effort.editable_by(faculty_frank).should be_false
       end
     end
   end
