@@ -13,15 +13,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 require 'gapps_openid'
 
-module Rails
-    class GemDependency
-      def requirement
-        r = super
-        (r == Gem::Requirement.default) ? nil : r
-      end
-    end
-  end if Gem::VERSION >= "1.3.6"
-
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -84,7 +75,7 @@ Rails::Initializer.run do |config|
 
 end
 
-ExceptionNotifier.exception_recipients = %w(todd.sedano@sv.cmu.edu)
+#ExceptionNotifier.exception_recipients = %w(todd.sedano@sv.cmu.edu)
 
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 :chatty => "%A, %B %d, %Y at %I:%M %p"

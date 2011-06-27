@@ -206,12 +206,12 @@ describe Person do
       @student_sam.version.should == (@version_number)
     end
 
-
   end
-  
-  describe "person's teams" do
 
-    context "found for each year and semester of person's enrollment" do
+  #TODO: see all team tests
+  describe "person's teams" do  
+
+    context "found for current semester" do
 
     before(:all) do
       activate_authlogic
@@ -219,34 +219,27 @@ describe Person do
 
      before(:each) do
       @team_member = Factory(:student_team_member)
-      @team_year = @team_member.teams[0].course.year
-      @team_sem = @team_member.teams[0].course.semester
-      @pteams = @team_member.find_teams_by_semester(@team_year, @team_sem)
-    end
+      
+     end
 
-      it "should have a year" do
-        @pteams[0].course.year.should == @team_year
-      end
+     # TODO: look @ rspec for association again
 
-      it "should have semester" do
-        @pteams[0].course.semester.should == @team_sem
-      end
+     it "have teams" do
 
+     end
+
+     
     end
 
   end
 
   describe "person's registered courses" do
-    before(:each) do
-      person_courses = @team_member.get_registered_courses
-    end
-      it "should be courses for current semester" do
-        person_courses[0].semester.should == @team_sem 
-      end
+    # TODO: courses registered - as not tested in the course model
 
   end
 
-  # Effort log should only be set for person that is_student - test in effort_log
-  # TODO: Graduation_year should be set for person that is_student
+  # More tests
+  # Effort log should only be set for person that is_student - tested in effort_log
+  # Graduation_year should be set for person that is_student
 
 end
