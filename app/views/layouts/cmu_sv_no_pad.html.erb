@@ -9,13 +9,15 @@
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
   <%= stylesheet_link_tag 'scaffold' %>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
+                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
+                             "jquery_ujs.js",
+                              "jquery.corners",
+                              "tablesorter",
+                              "tablesorter_filter" %>
+  <%= csrf_meta_tag %>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
 
-  <%= javascript_include_tag 'jquery.corners' %>
-  <%= javascript_include_tag 'tablesorter' %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
   <%= yield :tablesorter %>
 
 <script type="text/javascript">

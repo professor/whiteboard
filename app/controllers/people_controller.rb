@@ -13,23 +13,21 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    if params[:search]
+    if params[:term] #Ajax call for autocomplete
       if Rails.env.development?
-        @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:search]}%"])
+        @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
       else
-        @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
+        @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
       end
     else
-          @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
+      @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
     end
 
     
-#    respond_to do |format|
-##      format.html # index.html.erb
-#      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
-#      format.js   { render :js => @people, :layout => false }
-#      format.xml  { render :xml => @people }
-#    end
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json   { render :json => @people.collect{|person| person.human_name}, :layout => false }
+    end
   end
 
   def phone_book
