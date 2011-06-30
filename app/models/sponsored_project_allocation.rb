@@ -13,8 +13,8 @@ class SponsoredProjectAllocation < ActiveRecord::Base
     end
   end
 
-  named_scope :current, :conditions => {:is_archived => false}
-  named_scope :archived, :conditions => {:is_archived => true}
+  scope :current, :conditions => {:is_archived => false}
+  scope :archived, :conditions => {:is_archived => true}
 
   default_scope :order => "person_id ASC"
 

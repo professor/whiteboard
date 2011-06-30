@@ -70,7 +70,7 @@
           <%#*</script></td></tr>%>
 <%#*</table>%>
 
-<% form_for @objectives, :url => {:action => "complete_setup_update"} do |f| %>
+<%= form_for @objectives, :url => {:action => "complete_setup_update"} do |f| %>
 
 <input type="hidden" name="id" value="<%=params[:id]%>">
 

@@ -1,6 +1,6 @@
 <div class="author">
   <% prefix = "paper[people_attributes][]" %>
-  <% fields_for :people do |author_form| -%>
+  <%= fields_for :people do |author_form| -%>
     <div class="formItem indented"><p>
       Author: <input type="text" size="30" name="people[]" id="people_name" value="<%=  author.human_name %>"/>
 

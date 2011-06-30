@@ -1,0 +1,450 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww20240\viewh28820\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 avila:CMUEducation[- git:rails-3 -] tsedano$     rake rails:upgrade:check\
+rake/rdoctask is deprecated.  Use rdoc/task instead (in RDoc 2.4.2+)\
+Deprecated test_help path\
+You now must require 'rails/test_help' not just 'test_help'.\
+More information: http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices\
+\
+The culprits: \
+	- test/test_helper.rb\
+\
+New file needed: config/application.rb\
+You need to add a config/application.rb.\
+More information: http://omgbloglol.com/post/353978923/the-path-to-rails-3-approaching-the-upgrade\
+\
+The culprits: \
+	- config/application.rb\
+\
+Deprecated ERb helper calls\
+Block helpers that use concat (e.g., form_for) should use <%= instead of <%.  The current form will continue to work for now, but you will get deprecation warnings since this form will go away in the future.\
+More information: http://weblog.rubyonrails.org/\
+\
+The culprits: \
+	- app/views/course_navigations/show.html.erb\
+	- app/views/courses/_form_configure.erb\
+	- app/views/courses/_form_create.erb\
+	- app/views/courses/new.html.erb\
+	- app/views/curriculum_comment_types/edit.html.erb\
+	- app/views/curriculum_comment_types/new.html.erb\
+	- app/views/curriculum_comments/edit.html.erb\
+	- app/views/curriculum_comments/new.html.erb\
+	- app/views/deliverables/_editable_form.html.erb\
+	- app/views/deliverables/edit.html.erb\
+	- app/views/deliverables/edit_feedback.html.erb\
+	- app/views/effort_log_line_items/edit.html.erb\
+	- app/views/effort_log_line_items/new.html.erb\
+	- app/views/effort_logs/edit.html.erb\
+	- app/views/effort_logs/new.html.erb\
+	- app/views/effort_reports/campus_semester.html.erb\
+	- app/views/effort_reports/campus_week.html.erb\
+	- app/views/effort_reports/course.html.erb\
+	- app/views/pages/_editable_form.html.erb\
+	- app/views/papers/_editable_form.html.erb\
+	- app/views/papers/_editable_form_tmp.html.erb\
+	- app/views/peer_evaluation/edit_evaluation.html.erb\
+	- app/views/peer_evaluation/edit_report.html.erb\
+	- app/views/peer_evaluation/edit_setup.html.erb\
+	- app/views/peer_evaluation/update_report.html.erb\
+	- app/views/peer_evaluation/update_setup.html.erb\
+	- app/views/people/edit.html.erb\
+	- app/views/people/new.html.erb\
+	- app/views/people/show.html.erb\
+	- app/views/project_types/edit.html.erb\
+	- app/views/project_types/new.html.erb\
+	- app/views/projects/edit.html.erb\
+	- app/views/projects/new.html.erb\
+	- app/views/scotty_dog_sayings/edit.html.erb\
+	- app/views/scotty_dog_sayings/new.html.erb\
+	- app/views/sponsored_project_allocations/_form.html.erb\
+	- app/views/sponsored_project_sponsors/_form.html.erb\
+	- app/views/sponsored_projects/_form.html.erb\
+	- app/views/suggestions/edit.html.erb\
+	- app/views/suggestions/new.html.erb\
+	- app/views/task_types/edit.html.erb\
+	- app/views/task_types/new.html.erb\
+	- app/views/teams/_editable_form.html.erb\
+	- app/views/teams/survey_monkey.erb\
+	- app/views/user_sessions/new.html.erb\
+	- app/views/users/new.html.erb\
+	- app/views/sponsored_project_efforts/_form.html.erb\
+	- app/views/sponsored_project_efforts/index.html.erb\
+	- app/views/effort_logs/_effort_log_line_item.html.erb\
+	- app/views/effort_logs/_effort_log_line_item_show.html.erb\
+	- app/views/papers/_author.html.erb\
+	- app/views/people/_person_in_a_collection.html.erb\
+\
+Deprecated constant(s)\
+Constants like RAILS_ENV, RAILS_ROOT, and RAILS_DEFAULT_LOGGER are now deprecated.\
+More information: http://litanyagainstfear.com/blog/2010/02/03/the-rails-module/\
+\
+The culprits: \
+	- app/controllers/application_controller.rb\
+	- app/helpers/application_helper.rb\
+	- app/models/page.rb\
+	- lib/tasks/cruise.rake\
+	- app/models/deliverable.rb\
+	- app/models/deliverable_attachment.rb\
+	- app/models/paper.rb\
+	- app/models/person.rb\
+	- lib/rails/gem_dependency.rb\
+	- lib/tasks/rspec.rake\
+\
+Soon-to-be-deprecated ActiveRecord calls\
+Methods such as find(:all), find(:first), finds with conditions, and the :joins option will soon be deprecated.\
+More information: http://m.onkey.org/2010/1/22/active-record-query-interface\
+\
+The culprits: \
+	- app/controllers/courses_controller.rb\
+	- app/controllers/curriculum_comment_types_controller.rb\
+	- app/controllers/curriculum_comments_controller.rb\
+	- app/controllers/delayed_system_jobs_controller.rb\
+	- app/controllers/effort_log_line_items_controller.rb\
+	- app/controllers/effort_logs_controller.rb\
+	- app/controllers/effort_logs_controller.rb\
+	- app/controllers/effort_reports_controller.rb\
+	- app/controllers/courses_controller.rb\
+	- app/controllers/curriculum_comments_controller.rb\
+	- app/controllers/effort_logs_controller.rb\
+\
+named_scope is now just scope\
+The named_scope method has been renamed to just scope.\
+More information: http://github.com/rails/rails/commit/d60bb0a9e4be2ac0a9de9a69041a4ddc2e0cc914\
+\
+The culprits: \
+	- app/models/course.rb\
+	- app/models/person.rb\
+	- app/models/sponsored_project.rb\
+	- app/models/sponsored_project_allocation.rb\
+	- app/models/sponsored_project_effort.rb\
+	- app/models/sponsored_project_sponsor.rb\
+\
+Deprecated AJAX helper calls\
+AJAX javascript helpers have been switched to be unobtrusive and use :remote => true instead of having a seperate function to handle remote requests.\
+More information: http://www.themodestrubyist.com/2010/02/24/rails-3-ujs-and-csrf-meta-tags/\
+\
+The culprits: \
+	- app/views/teams/_editable_form.html.erb\
+	- app/views/teams/_team_member.html.erb\
+	- app/views/teams/_list_team_members.html.erb\
+\
+Old gem bundling (config.gems)\
+The old way of bundling is gone now.  You need a Gemfile for bundler.\
+More information: http://omgbloglol.com/post/353978923/the-path-to-rails-3-approaching-the-upgrade\
+\
+The culprits: \
+	- config/environments/test.rb\
+\
+Deprecated ActionMailer API\
+You're using the old ActionMailer API to send e-mails in a controller, model, or observer.\
+More information: http://lindsaar.net/2010/1/26/new-actionmailer-api-in-rails-3\
+\
+The culprits: \
+	- app/models/academic_calendar.rb\
+	- app/models/course.rb\
+\
+Old ActionMailer class API\
+You're using the old API in a mailer class.\
+More information: http://lindsaar.net/2010/1/26/new-actionmailer-api-in-rails-3\
+\
+The culprits: \
+	- app/models/course_mailer.rb\
+	- app/models/course_mailer.rb\
+	- app/models/curriculum_comment_mailer.rb\
+	- app/models/effort_log_mailer.rb\
+	- app/models/generic_mailer.rb\
+	- app/models/person_mailer.rb\
+	- app/models/sponsored_project_effort_mailer.rb\
+	- app/models/course_mailer.rb\
+	- app/models/curriculum_comment_mailer.rb\
+	- app/models/effort_log_mailer.rb\
+	- app/models/generic_mailer.rb\
+\
+Old Rails generator API\
+A plugin in the app is using the old generator API (a new one may be available at http://github.com/trydionel/rails3-generators).\
+More information: http://blog.plataformatec.com.br/2010/01/discovering-rails-3-generators/\
+\
+The culprits: \
+	- vendor/plugins/paperclip/generators/\
+	- vendor/plugins/paperclip/generators/paperclip/\
+\
+Updated syntax for before_validation_on_* methods\
+before_validation_on_* methods have been changed to before_validation(:on => :create/:update) \{ ... \}\
+More information: https://rails.lighthouseapp.com/projects/8994/tickets/4699-before_validation_on_create-and-before_validation_on_update-doesnt-exist\
+\
+The culprits: \
+	- app/models/deliverable_attachment.rb\
+\
+Old router API\
+The router API has totally changed.\
+More information: http://yehudakatz.com/2009/12/26/the-rails-3-router-rack-it-up/\
+\
+The culprits: \
+	- config/routes.rb\
+\
+\
+\
+\
+\
+\
+   rake rails:upgrade:backup\
+rake/rdoctask is deprecated.  Use rdoc/task instead (in RDoc 2.4.2+)\
+\
+* backing up .gitignore to .gitignore.rails2\
+* backing up app/controllers/application_controller.rb to app/controllers/application_controller.rb.rails2\
+* backing up app/helpers/application_helper.rb to app/helpers/application_helper.rb.rails2\
+* backing up config/routes.rb to config/routes.rb.rails2\
+* backing up config/environment.rb to config/environment.rb.rails2\
+* backing up config/environments/development.rb to config/environments/development.rb.rails2\
+* backing up config/environments/production.rb to config/environments/production.rb.rails2\
+* backing up config/database.yml to config/database.yml.rails2\
+* backing up test/test_helper.rb to test/test_helper.rb.rails2\
+\
+This is a list of the files analyzed and backed up (if they existed);\
+you will probably not want the generator to replace them since\
+you probably modified them (but now they're safe if you accidentally do!).\
+\
+- .gitignore\
+- app/controllers/application_controller.rb\
+- app/helpers/application_helper.rb\
+- config/routes.rb\
+- config/environment.rb\
+- config/environments/development.rb\
+- config/environments/production.rb\
+- config/environments/staging.rb\
+- config/database.yml\
+- config.ru\
+- doc/README_FOR_APP\
+- test/test_helper.rb\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+rails new /Users/tsedano/Todd/rails/CMUEducation\
+      create  \
+      create  app/controllers\
+      create  app/helpers\
+      create  app/models\
+      create  app/views/layouts\
+      create  config/environments\
+      create  config/initializers\
+      create  config/locales\
+      create  db\
+      create  doc\
+      create  lib\
+      create  lib/tasks\
+      create  log\
+      create  public/images\
+      create  public/javascripts\
+      create  public/stylesheets\
+      create  script/performance\
+      create  test/fixtures\
+      create  test/functional\
+      create  test/integration\
+      create  test/performance\
+      create  test/unit\
+      create  vendor\
+      create  vendor/plugins\
+      create  tmp/sessions\
+      create  tmp/sockets\
+      create  tmp/cache\
+      create  tmp/pids\
+      create  Rakefile\
+      create  README\
+      create  app/controllers/application_controller.rb\
+      create  app/helpers/application_helper.rb\
+      create  config/database.yml\
+      create  config/routes.rb\
+      create  config/locales/en.yml\
+      create  db/seeds.rb\
+      create  config/initializers/backtrace_silencers.rb\
+      create  config/initializers/inflections.rb\
+      create  config/initializers/mime_types.rb\
+      create  config/initializers/new_rails_defaults.rb\
+      create  config/initializers/session_store.rb\
+      create  config/environment.rb\
+      create  config/boot.rb\
+      create  config/environments/production.rb\
+      create  config/environments/development.rb\
+      create  config/environments/test.rb\
+      create  script/about\
+      create  script/console\
+      create  script/dbconsole\
+      create  script/destroy\
+      create  script/generate\
+      create  script/runner\
+      create  script/server\
+      create  script/plugin\
+      create  script/performance/benchmarker\
+      create  script/performance/profiler\
+      create  test/test_helper.rb\
+      create  test/performance/browsing_test.rb\
+      create  public/404.html\
+      create  public/422.html\
+      create  public/500.html\
+      create  public/index.html\
+      create  public/favicon.ico\
+      create  public/robots.txt\
+      create  public/images/rails.png\
+      create  public/javascripts/prototype.js\
+      create  public/javascripts/effects.js\
+      create  public/javascripts/dragdrop.js\
+      create  public/javascripts/controls.js\
+      create  public/javascripts/application.js\
+      create  doc/README_FOR_APP\
+      create  log/server.log\
+      create  log/production.log\
+      create  log/development.log\
+      create  log/test.log\
+\
+\
+\
+\
+\
+avila:tmp tsedano$ rails new /Users/tsedano/Todd/rails/CMUEducation\
+       exist  \
+      create  README\
+    conflict  Rakefile\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/Rakefile? (enter "h" for help) [Ynaqdh] Y      -- OK\
+       force  Rakefile\
+      create  config.ru\
+    conflict  .gitignore\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/.gitignore? (enter "h" for help) [Ynaqdh] Y    -- OK\
+       force  .gitignore\
+    conflict  Gemfile\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/Gemfile? (enter "h" for help) [Ynaqdh] n     -- OK\
+        skip  Gemfile\
+       exist  app\
+    conflict  app/controllers/application_controller.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/app/controllers/application_controller.rb? (enter "h" for help) [Ynaqdh] Y  -- ALTERED\
+       force  app/controllers/application_controller.rb\
+    conflict  app/helpers/application_helper.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/app/helpers/application_helper.rb? (enter "h" for help) [Ynaqdh] Y  -- ALTERED\
+       force  app/helpers/application_helper.rb\
+      create  app/mailers\
+       exist  app/models\
+      create  app/views/layouts/application.html.erb\
+       exist  config\
+    conflict  config/routes.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/routes.rb? (enter "h" for help) [Ynaqdh] n  \
+        skip  config/routes.rb\
+      create  config/application.rb\
+    conflict  config/environment.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/environment.rb? (enter "h" for help) [Ynaqdh] n   -- LOOK AT THIS (exception notifier)\
+        skip  config/environment.rb\
+       exist  config/environments\
+    conflict  config/environments/development.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/environments/development.rb? (enter "h" for help) [Ynaqdh] n   -- ALTERED\
+        skip  config/environments/development.rb\
+    conflict  config/environments/production.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/environments/production.rb? (enter "h" for help) [Ynaqdh] n -- ALTERED -- change to config.asset host\
+        skip  config/environments/production.rb\
+    conflict  config/environments/test.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/environments/test.rb? (enter "h" for help) [Ynaqdh] n  -- LOOK AT THIS for RSPEC line\
+        skip  config/environments/test.rb\
+       exist  config/initializers\
+      create  config/initializers/backtrace_silencers.rb\
+    conflict  config/initializers/inflections.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/initializers/inflections.rb? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  config/initializers/inflections.rb\
+   identical  config/initializers/mime_types.rb\
+      create  config/initializers/secret_token.rb\
+      create  config/initializers/session_store.rb\
+       exist  config/locales\
+    conflict  config/locales/en.yml\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/locales/en.yml? (enter "h" for help) [Ynaqdh] Y  -- REVERTED to original\
+       force  config/locales/en.yml\
+    conflict  config/boot.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/boot.rb? (enter "h" for help) [Ynaqdh] Y -- OK \
+       force  config/boot.rb\
+    conflict  config/database.yml\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/config/database.yml? (enter "h" for help) [Ynaqdh] Y -- OK\
+       force  config/database.yml\
+       exist  db\
+    conflict  db/seeds.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/db/seeds.rb? (enter "h" for help) [Ynaqdh] n  -- OK\
+        skip  db/seeds.rb\
+       exist  doc\
+      create  doc/README_FOR_APP\
+       exist  lib\
+       exist  lib/tasks\
+      create  lib/tasks/.gitkeep\
+       exist  log\
+      create  log/server.log\
+    conflict  log/production.log\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/log/production.log? (enter "h" for help) [Ynaqdh] n -- OK \
+        skip  log/production.log\
+    conflict  log/development.log\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/log/development.log? (enter "h" for help) [Ynaqdh] n --  OK \
+        skip  log/development.log\
+    conflict  log/test.log\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/log/test.log? (enter "h" for help) [Ynaqdh] n  -- OK\
+        skip  log/test.log\
+       exist  public\
+    conflict  public/404.html\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/404.html? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/404.html\
+    conflict  public/422.html\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/422.html? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/422.html\
+    conflict  public/500.html\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/500.html? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/500.html\
+   identical  public/favicon.ico\
+      create  public/index.html\
+   identical  public/robots.txt\
+       exist  public/images\
+   identical  public/images/rails.png\
+       exist  public/stylesheets\
+      create  public/stylesheets/.gitkeep\
+       exist  public/javascripts\
+    conflict  public/javascripts/application.js\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/javascripts/application.js? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/javascripts/application.js\
+    conflict  public/javascripts/controls.js\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/javascripts/controls.js? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/javascripts/controls.js\
+    conflict  public/javascripts/dragdrop.js\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/javascripts/dragdrop.js? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/javascripts/dragdrop.js\
+    conflict  public/javascripts/effects.js\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/javascripts/effects.js? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/javascripts/effects.js\
+    conflict  public/javascripts/prototype.js\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/public/javascripts/prototype.js? (enter "h" for help) [Ynaqdh] Y  -- OK\
+       force  public/javascripts/prototype.js\
+      create  public/javascripts/rails.js\
+      create  script\
+      create  script/rails\
+       exist  test\
+       exist  test/fixtures\
+       exist  test/functional\
+       exist  test/integration\
+      create  test/performance/browsing_test.rb\
+    conflict  test/test_helper.rb\
+Overwrite /Users/tsedano/Todd/rails/CMUEducation/test/test_helper.rb? (enter "h" for help) [Ynaqdh] n  -- LOOK AT THIS\
+        skip  test/test_helper.rb\
+       exist  test/unit\
+       exist  tmp\
+       exist  tmp/sessions\
+       exist  tmp/sockets\
+       exist  tmp/cache\
+       exist  tmp/pids\
+       exist  vendor/plugins\
+      create  vendor/plugins/.gitkeep\
+\
+\
+\
+}

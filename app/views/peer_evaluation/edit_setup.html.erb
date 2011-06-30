@@ -1,7 +1,7 @@
 <% content_for :title, 'Setup peer evaluation for ' + @team.name %>
 <h1> Learning Objective Setup </h1>
 
-<% form_for @objective, :url => {:action => "complete_setup"} do |f| %>
+<%= form_for @objective, :url => {:action => "complete_setup"} do |f| %>
 
 <input type="hidden" name="id" value="<%=params[:id]%>">
 

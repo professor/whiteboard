@@ -1,8 +1,17 @@
 <h1>Editing Scotty Dog Saying</h1>
 
 <% form_for(@scotty_dog_saying) do |f| %>
-  <%= f.error_messages %>
+  <% if @scotty_dog_saying.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@scotty_dog_saying.errors.count, "error") %> prohibited this scotty dog saying from being saved:</h2>
 
+      <ul>
+      <% @scotty_dog_saying.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.label :saying, "Please put words in my mouth," %><br />
     <%= f.text_field :saying, :size => 80 %>

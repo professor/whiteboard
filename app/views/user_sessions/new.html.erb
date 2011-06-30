@@ -17,12 +17,21 @@ http://web.archive.org/web/20080605121920/http://last10percent.com/2008/05/26/po
   <% end %>
 
 
-<% if development? %>
+<% if Rails.env.development? %>
     <br/>
     There is a bug here.... "Password is not valid"
-  <% form_for @user_session, :url => user_session_path do |f| %>
-    <%= f.error_messages %>
-    <p><%= f.label :login %><br />
+  <%= form_for @user_session, :url => user_session_path do |f| %>
+  <% if @user_session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited this user session from being saved:</h2>
+
+      <ul>
+      <% @user_session.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>     <p><%= f.label :login %><br />
     <%= f.text_field :login %></p>
     <p><%= f.label :password %><br />
     <%= f.password_field :password %></p>

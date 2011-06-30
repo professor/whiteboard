@@ -23,12 +23,9 @@ class Course < ActiveRecord::Base
    result.gsub(" ", "")
   end
 
-  def before_validation
-     current_user = UserSession.find.user unless UserSession.find.nil?
-     self.updated_by_user_id = current_user.id if current_user
-  end
+  before_validation :set_updated_by_user
 
-  named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
+  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
 
 
 #  def self.for_semester(semester, year, mini)
@@ -163,5 +160,11 @@ class Course < ActiveRecord::Base
     unless self.is_configured?
       CourseMailer.deliver_configure_course_faculty_email(self)
     end
+  end
+
+  protected
+  def set_updated_by_user
+     current_user = UserSession.find.user unless UserSession.find.nil?
+     self.updated_by_user_id = current_user.id if current_user
   end
 end

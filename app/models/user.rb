@@ -23,11 +23,8 @@ acts_as_authentic
 
   
   # Lines modified by Todd go here:
-  
-   def before_save 
-      self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
-    end 
-   has_and_belongs_to_many :teams    
+  before_save :initialize_human_name
+   has_and_belongs_to_many :teams
 
 #  belongs_to :person
 #  def is_student?
@@ -86,7 +83,10 @@ acts_as_authentic
   end
 
   protected
-    
+ def initialize_human_name
+   self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
+ end
+
 
 
 end

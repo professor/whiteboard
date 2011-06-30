@@ -17,13 +17,13 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    if !development? || !params[:user_session]
+    if !Rails.env.development? || !params[:user_session]
       open_id_authentication
     else
           @user_session = UserSession.new(params[:user_session])
           if @user_session.save
             flash[:notice] = "Login successful!"
-            redirect_back_or_default(root_url)
+            redirect_back_or_default(Rails.root)
           else
             flash[:notice] = "Login unsuccessful"
             render :action => :new
@@ -43,7 +43,7 @@ class UserSessionsController < ApplicationController
 #    @user_session = UserSession.find
 #    @user_session.destroy
     flash[:notice] = "Successfully logged out."
-    redirect_to root_url
+    redirect_to Rails.root
   end
 
   protected
@@ -109,11 +109,11 @@ class UserSessionsController < ApplicationController
 
 #    @user_session = UserSession.create(@current_user, true)
 #    if @user_session.save
-      redirect_back_or_default(root_url)
+      redirect_back_or_default(Rails.root)
 ##      redirect_back_or_default(user_session_url)
-#      redirect_to root_url
+#      redirect_to Rails.root
 #              redirect_to(user_session_url)
-      #        redirect_to(root_url)
+      #        redirect_to(Rails.root)
 #    else
 #      render :action => 'new'
 #    end
@@ -122,7 +122,7 @@ class UserSessionsController < ApplicationController
       def successful_login_old
         session[:user_id] = @current_user.id
         redirect_to(user_session_url)
-#        redirect_to(root_url)
+#        redirect_to(Rails.root)
       end
   
 
@@ -134,7 +134,7 @@ class UserSessionsController < ApplicationController
 
     flash[:error] = message
 #    redirect_to(new_user_session_url)
-    redirect_to(root_url)
+    redirect_to(Rails.root)
    end
 
 end

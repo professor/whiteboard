@@ -69,9 +69,9 @@ $(document).ready(function(){
 <%=  image_spacer(10) %>|<%=  image_spacer(10) %><a href="http://sv.cmu.edu/" title="Visit Us">CMU-SV Website</a>
 </div>          <div class="noPrint"><%= image_tag("/cmu_sv/pros_stds.jpg", :id=>"pageHeaderPhoto", :border=>"0", :width=>"748") %></div>                    <!-- Breadcrumbs -->          <div id="breadcrumbs_2Col_admin_template">
      | <a href="http://www.cmu.edu/silicon-valley/index.html" title="Carnegie Mellon Silicon Valley Home Page">CARNEGIE MELLON SILICON VALLEY</a> |
-<% if request.path_parameters['controller']  != "welcome" %>
+<% if controller.controller_name  != "welcome" %>
      <%= link_to "Rails Application", "/" %> |
-    &gt; <%=  request.path_parameters['controller'].humanize %>         </div>
+    &gt; <%= controller.controller_name.humanize %>        </div>
 <% else %>
     &gt; Rails Application        </div> 
 <% end %>
@@ -136,5 +136,4 @@ provided by Carnegie Mellon's Computing Services. If you're interested in
 using this design, please visit http://www.cmu.edu/cms to learn more.
 
 -->
-<%= google_analytics %>
 </body></html>

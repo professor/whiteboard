@@ -8,7 +8,7 @@ class Deliverable < ActiveRecord::Base
 
   has_attached_file :feedback,
     :storage => :s3,
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
   default_scope :order => "updated_at DESC"

@@ -6,7 +6,7 @@ class Paper < ActiveRecord::Base
 
     has_attached_file :paper,
       :storage => :s3,
-      :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+      :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
       :path => "papers/:id/:filename"
       #:path => ":provider/:attachment/:id_:style.:extension",
  #     :url  => "papers/:id/:basename.:extension",

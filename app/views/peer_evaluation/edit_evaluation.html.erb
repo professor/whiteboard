@@ -9,7 +9,7 @@
 <p>Do not use this as an opportunity to vent about frustrations that you should have brought up in person.</p>
 
 
-<% form_for @review, :url => {:action => "complete_evaluation"} do |f| %>
+<%= form_for @review, :url => {:action => "complete_evaluation"} do |f| %>
 
   <% personcounter = 0 %>
   <% questioncounter = 0 %>

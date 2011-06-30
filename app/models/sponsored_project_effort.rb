@@ -13,10 +13,10 @@ class SponsoredProjectEffort < ActiveRecord::Base
     end
   end
 
-  named_scope :for_all_users_for_a_given_month,
+  scope :for_all_users_for_a_given_month,
               lambda { |month, year| {:conditions => ["month = ? and year = ?", month, year] }}
 
-  named_scope :month_under_inspection_for_a_given_user,
+  scope :month_under_inspection_for_a_given_user,
               lambda { |person_id| {:include => :sponsored_project_allocation,
                                     :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", 1.month.ago.month, 1.month.ago.year, person_id] }}
 

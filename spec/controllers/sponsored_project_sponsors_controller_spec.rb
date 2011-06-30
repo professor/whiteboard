@@ -120,7 +120,7 @@ describe SponsoredProjectSponsorsController do
       describe "GET #{http_verb}" do
         it "can't access page" do
           get http_verb, :id => sponsor.to_param
-          response.should redirect_to(root_url)
+          response.should redirect_to(Rails.root)
           flash[:error].should == I18n.t(:no_permission)
         end
       end
@@ -129,7 +129,7 @@ describe SponsoredProjectSponsorsController do
     describe "POST create" do
       it "can't access page" do
         post :create, :sponsored_project_sponsor => sponsor.attributes
-        response.should redirect_to(root_url)
+        response.should redirect_to(Rails.root)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -137,7 +137,7 @@ describe SponsoredProjectSponsorsController do
     describe "PUT update" do
       it "can't access page" do
         put :update, :id => sponsor.to_param, :sponsored_project_sponsor => {:name => 'NNNNN'}
-        response.should redirect_to(root_url)
+        response.should redirect_to(Rails.root)
         flash[:error].should == I18n.t(:no_permission)
       end
     end

@@ -16,7 +16,7 @@
 
   <br/>
 <div>
-<% form_for :panel_state, @panel_state, :url => {:action => "campus_week", :id=> params[:id]} do |f| %>
+<%= form_for @panel_state, :as => :panel_state, :url => {:action => "campus_week", :id=> params[:id]} do |f| %>
   <table><tr>
       <td>
   Date

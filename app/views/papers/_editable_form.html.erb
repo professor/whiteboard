@@ -1,8 +1,24 @@
-
+<% content_for :javascript do %>
+   <% javascript_tag do %>
+	$(function() {
+		$("#paper_date").datepicker();
+ 	});
+   <% end %>
+<% end %>
 
 <%= stylesheet_link_tag "calendar_date_select/red" %>
-<% form_for @paper, :html => { :multipart => true } do |f| %>
-  <%= f.error_messages %>
+<%= form_for @paper, :html => { :multipart => true } do |f| %>
+  <% if @paper.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
+
+      <ul>
+      <% @paper.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <p>
     <%= f.label :citation %><br />

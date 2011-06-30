@@ -14,7 +14,7 @@ class EffortLogsController < ApplicationController
       #We skip weeks that students aren't taking courses
       puts "There is no class this week, so we won't remind students to log effort"
 #      flash[:error] = 'Students are taking courses this week'
- #     redirect_to(root_url)
+ #     redirect_to(Rails.root)
       return
     end
 

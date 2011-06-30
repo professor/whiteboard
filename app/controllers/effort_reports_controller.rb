@@ -270,9 +270,9 @@ class EffortReportsController < ApplicationController
     @courses = Course.find(:all, :conditions => ["semester = ? and year = ?", @semester_panel.semester, @semester_panel.year], :order =>"name ASC")
     @programs = []
 
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result["masters_program"] end
     @tracks = []
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result["masters_trackcour"] end
 
     title = "Campus View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
     reports = get_campus_semester_data(@semester_panel)

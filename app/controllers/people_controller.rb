@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
   # GET /people.xml
   def index
     if params[:search]
-      if development?
+      if Rails.env.development?
         @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:search]}%"])
       else
         @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
@@ -132,7 +132,7 @@ class PeopleController < ApplicationController
     @person = Person.new
     @person.is_active = true
 
-     if development?
+     if Rails.env.development?
        @domain = GOOGLE_DOMAIN
      else
        @domain = "sv.cmu.edu"

@@ -7,12 +7,13 @@
 
 <div class="people_in_a_collection">
   <% prefix = "paper[people_attributes][]" %>
-  <% fields_for :people do |author_form| -%>
+  <%= fields_for :people do |author_form| -%>
     <div class="formItem indented"><p>
       <%= member_label %>: <input type="text" size="30" name="people[]" id="people_name" value="<%=  person_in_a_collection.human_name %>"/>
 
 <script type="text/javascript">
 //<![CDATA[
+
 var team_person_name2_auto_completer = new Ajax.Autocompleter('people_name', 'user_human_name_auto_complete', '/people.js', {frequency:0.5, method:'get', paramName:'search'})
 //]]>
 </script>

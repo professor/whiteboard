@@ -46,28 +46,18 @@ class Person < ActiveRecord::Base
 #    end
 #  end
 
-  named_scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
-  named_scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
+  scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
+  scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
   has_attached_file :photo, :storage => :s3, :styles => { :original =>"", :profile => "133x200>" },
-                    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
   validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
-    def before_validation
-      self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
-    end
+  before_validation :update_webiso_account
 
-    def before_save 
-      # We populate some reasonable defaults, but this can be overridden in the database
-      self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
-      self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+  before_save :person_before_save
 
-      logger.debug("self.photo.blank? #{self.photo.blank?}")
-      logger.debug("photo.url #{photo.url}")
-      # update the image_uri if a photo was uploaded
-      self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
 
-    end
 
 
   def emailed_recently(email_type)
@@ -265,5 +255,26 @@ class Person < ActiveRecord::Base
   def formatted_past_teams
     self.past_teams.map {|team| team.name} * ", "
   end
-  
+
+
+
+  protected
+    def update_webiso_account
+      self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
+    end  
+
+
+  def person_before_save
+    # We populate some reasonable defaults, but this can be overridden in the database
+    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
+    self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+
+    logger.debug("self.photo.blank? #{self.photo.blank?}")
+    logger.debug("photo.url #{photo.url}")
+    # update the image_uri if a photo was uploaded
+    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+  end
+
+
 end

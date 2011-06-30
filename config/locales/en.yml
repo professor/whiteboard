@@ -1,4 +1,11 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
 en:
+  time:
+    formats:
+     chatty: "%A, %B %d, %Y at %I:%M %p"
+     detailed: "%B %d, %Y at %I:%M %p"
   no_permission: You don't have permission to access this page.
   not_editable: You don't have permission to edit this object.
   no_person: This person doesn't exist in the system.

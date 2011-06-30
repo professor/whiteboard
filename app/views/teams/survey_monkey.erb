@@ -32,7 +32,7 @@
 <p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
 
 <p>The tool will send out two reminder emails to the students. Select the dates here.</p>
-<% form_for @team, :url => {:action => "survey_monkey_update"} do |f| %>
+<%= form_for @team, :url => {:action => "survey_monkey_update"} do |f| %>
 
 <%= hidden_field_tag("yearFieldOne", @team.peer_evaluation_first_email.year) %>
 <%= hidden_field_tag("dayFieldOne", @team.peer_evaluation_first_email.day) %>

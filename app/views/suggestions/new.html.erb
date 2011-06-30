@@ -1,8 +1,17 @@
 <% content_for :title, 'New Suggestion' %>
 <h1>New Suggestion</h1>
 <% form_for(@suggestion) do |f| %>
-  <%= f.error_messages %>
+  <% if @suggestion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@suggestion.errors.count, "error") %> prohibited this suggestion from being saved:</h2>
 
+      <ul>
+      <% @suggestion.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.hidden_field :page %>    
   </p>

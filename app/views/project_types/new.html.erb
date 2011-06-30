@@ -2,8 +2,17 @@
 <h1>New project type</h1>
 
 <% form_for(@project_type) do |f| %>
-  <%= f.error_messages %>
+  <% if @project_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project_type.errors.count, "error") %> prohibited this project type from being saved:</h2>
 
+      <ul>
+      <% @project_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
