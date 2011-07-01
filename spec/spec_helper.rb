@@ -35,6 +35,17 @@ class ActionController::TestCase
   setup :activate_authlogic
 end
 
+#potential fix for authlogic issues
+# module LoginHelper
+#   include Authlogic::TestCase
+#   
+#   def login_user userSymbol
+#     activate_authlogic
+#     user = Factory(userSymbol)
+#     UserSession.create(user)
+#   end
+# end
+# include LoginHelper
 
 # =============== OLD STUFF ===============
 # this stuff is from rails2 (old spec helper), might not be needed
