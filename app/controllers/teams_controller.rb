@@ -55,7 +55,7 @@ class TeamsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :partial => "twiki_index", :layout => "teams", :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false} } # index.html.erb
+      format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false} } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end
@@ -150,18 +150,6 @@ class TeamsController < ApplicationController
      end
   end  
 
-  # GET /courses/1/teams
-  # GET /courses/1/teams.xml
-#  def index_rails
-#    @teams = Team.find(:all, :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-#    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-#    @course = Course.find(params[:course_id])
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @teams }
-#    end
-#  end
 
   # GET /teams
   # GET /teams.xml
@@ -176,8 +164,7 @@ class TeamsController < ApplicationController
 #    @teams = @teams.sort_by {|team| team.course.year + team.course.semester + team.course.name }.reverse
 
     respond_to do |format|
-#      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
-      format.html { render :partial => "twiki_index", :layout => "teams", :locals => {:teams => @teams, :show_new_teams_link => false, :show_photo_view_link => false, :show_student_photos => false, :show_course => false} } # index.html.erb
+      format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => false, :show_photo_view_link => false, :show_student_photos => false, :show_course => false} } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end

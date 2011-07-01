@@ -40,10 +40,6 @@ CMUEducation::Application.routes.draw do
   resources :course_navigations
   resources :courses do
     resources :teams do
-#      member do
-#        get 'peer_evaluation'
-#        post 'peer_evaluation_update'
-#      end
     end
     member do
       get :configure
@@ -73,7 +69,6 @@ CMUEducation::Application.routes.draw do
   match 'people/twiki/:twiki_name' => 'people#show_by_twiki'
   match 'twiki/teams' => 'teams#twiki_index'
   match 'twiki/teams/new' => 'teams#twiki_new'
-#  match 'courses/:course_id/teams/:id/peer_evaluation' => 'peer_evaluation', :as => :peer_evaluation
   match 'courses/:course_id/teams_photos' => 'teams#index_photos'
   match 'courses/:course_id/past_teams_list' => 'teams#past_teams_list', :as => :past_teams_list
   match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'
