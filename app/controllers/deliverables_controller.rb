@@ -15,7 +15,7 @@ class DeliverablesController < ApplicationController
     if(current_person.is_admin? || @course.faculty.include?(current_person) )
       @deliverables = Deliverable.find_all_by_course_id(@course.id)
     else
-      has_permissions_or_redirect(:admin, Rails.root)
+      has_permissions_or_redirect(:admin, root_path)
     end
   end
 
@@ -24,7 +24,7 @@ class DeliverablesController < ApplicationController
     if (current_user.id != person.id)
       unless (current_person.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
-        redirect_to Rails.root
+        redirect_to root_path
         return
       end
     end
@@ -45,7 +45,7 @@ class DeliverablesController < ApplicationController
     unless @deliverable.team.is_person_on_team?(current_person)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
-        redirect_to Rails.root
+        redirect_to root_path
         return
       end
     end
@@ -82,7 +82,7 @@ class DeliverablesController < ApplicationController
     unless @deliverable.team.is_person_on_team?(current_person)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = "You don't have permission to see another team's deliverables."
-        redirect_to Rails.root
+        redirect_to root_path
         return
       end
     end

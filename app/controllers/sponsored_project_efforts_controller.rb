@@ -5,7 +5,7 @@ class SponsoredProjectEffortsController < ApplicationController
   layout "cmu_sv"
 
   def index
-    if has_permissions_or_redirect(:admin, Rails.root)
+    if has_permissions_or_redirect(:admin, root_path)
       @month = params[:date][:month].to_i unless params[:date].nil?
       @month = @month ||= 1.month.ago.month
       @year = params[:year] ||= 1.month.ago.year
@@ -60,13 +60,13 @@ private
     @person = Person.find_by_twiki_name(params[:id])
     if (@person.nil?)
       flash[:error] = t(:no_person)
-      redirect_to(Rails.root)
+      redirect_to(root_path)
       return false
     end
 
     unless @person.id == @current_user.id || @current_user.is_admin
       flash[:error] = t(:no_permission)
-      redirect_to(Rails.root)
+      redirect_to(root_path)
       return false
     end
     return true

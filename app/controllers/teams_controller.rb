@@ -91,7 +91,7 @@ class TeamsController < ApplicationController
   end
 
   def past_teams_list
-    if has_permissions_or_redirect(:staff, Rails.root)
+    if has_permissions_or_redirect(:staff, root_path)
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
       @course = Course.find(params[:course_id])
 
@@ -103,7 +103,7 @@ class TeamsController < ApplicationController
   end
 
    def export_to_csv
-     if has_permissions_or_redirect(:staff, Rails.root)
+     if has_permissions_or_redirect(:staff, root_path)
 
       @course = Course.find(params[:course_id])
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?

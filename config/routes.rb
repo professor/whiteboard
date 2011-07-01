@@ -65,6 +65,7 @@ CMUEducation::Application.routes.draw do
   resources :users
   resource :user_session
   match '/login_google' => 'user_sessions#login_google', :as => :login_google
+  match '/logout' => "user_sessions#destroy", :as => :logout
   match '/load_chart' => 'effort_reports#load_chart', :as => :load_chart
   match 'people/twiki/:twiki_name' => 'people#show_by_twiki'
   match 'twiki/teams' => 'teams#twiki_index'
@@ -77,6 +78,6 @@ CMUEducation::Application.routes.draw do
   match '/:controller(/:action(/:id))'
   match '/new_features' => 'welcome#new_features', :as => :new_features
   match '/config' => 'welcome#config', :as => :config
-  match '/' => 'welcome#index'
+  match '/' => 'welcome#index', :as => :root
 end
 

@@ -6,7 +6,7 @@
 
 
   def index
-    if has_permissions_or_redirect(:admin, Rails.root)
+    if has_permissions_or_redirect(:admin, root_path)
 
       @delayed_system_jobs = DelayedSystemJob.find(:all)
 
@@ -21,7 +21,7 @@
   # DELETE /delayed_systems_job/1
   # DELETE /delayed_systems_job/1.xml
   def destroy
-    if has_permissions_or_redirect(:admin, Rails.root)
+    if has_permissions_or_redirect(:admin, root_path)
 
       delayed_system_job = DelayedSystemJob.find(params[:id])
       delayed_system_job.destroy
