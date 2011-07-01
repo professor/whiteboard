@@ -4,33 +4,6 @@ class TeamsController < ApplicationController
 
   layout 'cmu_sv'
 
-#  auto_complete_for :user, :human_name
-#  layout 'cmu_sv', :except => [:ajax_add_team_member, :ajax_remove_team_member]
-
-  #  def ajax_add_team_member
-#    @team = Team.find(params[:team_id])
-#  rescue ActiveRecord::RecordNotFound
-#    logger.error("Attempt to access invalid team #{params[:team_id]}")
-#    flash[:notice] = 'Attempt to access invalid team'
-#    redirect_to teams_url
-#  else
-#    @added_member = @team.add_person_by_human_name(params[:user][:human_name])
-#    @course = Course.find(@team.course_id)
-#    render :partial => "list_team_members", :object=> @team
-#  end
-#
-#  def ajax_remove_team_member
-#    @team = Team.find(params[:team_id])
-#  rescue ActiveRecord::RecordNotFound
-#    logger.error("Attempt to access invalid team #{params[:team_id]}")
-#    flash[:notice] = 'Attempt to access invalid team'
-#    redirect_to teams_url
-#  else
-#    @team.remove_person(params[:person_id])
-#    @course = Course.find(@team.course_id)
-#    render :partial => "list_team_members", :object=> @team
-#  end
-
 
   def remove_team_member
     team = Team.find(params[:team_id])
