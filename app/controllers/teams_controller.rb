@@ -311,14 +311,11 @@ class TeamsController < ApplicationController
     end
 
     if(@team.peer_evaluation_first_email.nil?)
-      @team.peer_evaluation_first_email = Date.today() + 1
+      @team.peer_evaluation_first_email = Date.today()
     end
     if(@team.peer_evaluation_second_email.nil?)
         @team.peer_evaluation_second_email = Date.today()
     end
-
-    @first_email_date = @team.peer_evaluation_first_email.strftime("%Y%m%d")
-    @second_email_date = @team.peer_evaluation_second_email.strftime("%Y%m%d")
 
     respond_to do |format|
       format.html # show.html.erb
@@ -329,11 +326,15 @@ class TeamsController < ApplicationController
   def peer_evaluation_update
     @team = Team.find(params[:id])
 
-    @team.peer_evaluation_first_email = Date.strptime params[:peer_evaluation_first_email], american_date
-    @team.peer_evaluation_second_email = Date.strptime params[:peer_evaluation_second_email], american_date
-    @team.save!
+    @team.peer_evaluation_first_email = params[:team][:peer_evaluation_first_email]
+    @team.peer_evaluation_second_email =  params[:team][:peer_evaluation_second_email]
 
-    redirect_to(peer_evaluation_course_team_path(@team.course, @team.id))
+    if @team.save
+      flash[:notice] = 'Dates saved'
+    else
+      flash[:error] = 'Dates not saved'
+    end
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 

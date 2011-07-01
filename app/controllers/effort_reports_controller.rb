@@ -225,7 +225,7 @@ class EffortReportsController < ApplicationController
       @panel_state.date = params[:panel_state][:date]
       logger.debug(params[:panel_state][:date])
       if !@panel_state.date.blank?
-        panel_date = Date.strptime @panel_state.date, american_date
+        panel_date = Date.parse(@panel_state.date)
         @panel_state.year = panel_date.cwyear
         @panel_state.week_number = panel_date.cweek
 

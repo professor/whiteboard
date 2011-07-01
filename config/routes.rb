@@ -33,10 +33,8 @@ CMUEducation::Application.routes.draw do
   match '/courses/next_semester' => 'courses#next_semester', :as => :next_semester
   resources :pages do
     collection do
-  post :reposition
-  end
-  
-  
+      post :reposition
+    end
   end
 
   resources :course_navigations
@@ -51,6 +49,7 @@ CMUEducation::Application.routes.draw do
       get :configure
     end
   end
+
   match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
   match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
 

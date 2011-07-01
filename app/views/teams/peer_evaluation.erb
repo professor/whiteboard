@@ -3,10 +3,12 @@
    <%= javascript_tag do %>
 	$(function() {
 		$("#team_peer_evaluation_first_email").datepicker({
-          showButtonPanel: true
+          showButtonPanel: true,
+          dateFormat: 'yy-mm-dd'
         });
         $("#team_peer_evaluation_second_email").datepicker({
-          showButtonPanel: true
+          showButtonPanel: true,
+          dateFormat: 'yy-mm-dd'
         });
  	});
    <% end %>
@@ -38,9 +40,7 @@
 <p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
 
 <p>The tool will send out two reminder emails to the students. Select the dates here.</p>
-<%= form_for @team, :url => peer_evaluation_update_path(@course, @team) do |f| %>
-        <%# form_for @team, :url => peer_evaluation_update_course_team_path(@course, @team) do |f| %>
-
+<%= form_for :team, :url => peer_evaluation_update_path(@course, @team) do |f| %>
 <table>
         <tr>
           <td valign="top">First Email Date:<br/>"Heads up" notification</td>

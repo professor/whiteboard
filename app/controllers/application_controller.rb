@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
 
   
      def american_date
-       '%m/%d/%y'
+       '%m/%d/%Y'
      end
   
 end

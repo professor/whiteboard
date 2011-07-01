@@ -1,10 +1,3 @@
-GIT
-  remote: http://github.com/paneq/calendar_date_select.git
-  revision: 8e7ec79435a68665df40b14bd90f47e6ac5e9135
-  branch: rails3test
-  specs:
-    calendar_date_select (1.16.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -54,6 +47,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.1.9)
       ffi (~> 1.0.6)
+    cocaine (0.1.0)
     columnize (0.3.3)
     configuration (1.3.1)
     daemons (1.0.10)
@@ -98,8 +92,12 @@ GEM
       gem_plugin (~> 0.2.3)
     net-http-digest_auth (1.1.1)
     net-http-persistent (1.8)
-    nokogiri (1.4.6)
+    nokogiri (1.5.0)
     oauth (0.4.5)
+    paperclip (2.3.12)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
     pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.3)
@@ -147,6 +145,11 @@ GEM
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug-base19x (0.11.29)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      rake (>= 0.8.1)
       ruby_core_source (>= 0.1.4)
     ruby-debug-ide (0.4.16)
       rake (>= 0.8.1)
@@ -199,7 +202,6 @@ DEPENDENCIES
   authlogic
   aws-s3
   bundler
-  calendar_date_select!
   capybara
   delayed_job
   exception_notification
@@ -210,6 +212,7 @@ DEPENDENCIES
   mocha
   mongrel (>= 1.2.0.pre2)
   oauth
+  paperclip
   pg
   rack-google_analytics
   rack-openid
@@ -219,6 +222,7 @@ DEPENDENCIES
   rdoc
   rmagick
   rspec-rails
+  ruby-debug-base19x
   ruby-debug-ide
   ruby-debug19
   ruby-openid
@@ -227,3 +231,4 @@ DEPENDENCIES
   taps
   test-unit
   vestal_versions
+  webrobots (= 0.0.9)
