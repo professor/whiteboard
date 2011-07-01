@@ -294,8 +294,8 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /courses/1/teams/1/survey_monkey
-  def survey_monkey
+  # GET /courses/1/teams/1/peer_evaluation
+  def peer_evaluation
     @course = Course.find(params[:course_id])
     @team = Team.find(params[:id])
 
@@ -311,17 +311,14 @@ class TeamsController < ApplicationController
     end
 
     if(@team.peer_evaluation_first_email.nil?)
-      @team.peer_evaluation_first_email = Time.now()
+      @team.peer_evaluation_first_email = Date.today() + 1
     end
     if(@team.peer_evaluation_second_email.nil?)
-        @team.peer_evaluation_second_email = Time.now()
+        @team.peer_evaluation_second_email = Date.today()
     end
 
     @first_email_date = @team.peer_evaluation_first_email.strftime("%Y%m%d")
     @second_email_date = @team.peer_evaluation_second_email.strftime("%Y%m%d")
-
-    #    @first_email_date = @team.peer_evaluation_first_email.to_s.gsub('-','')
-#    @second_email_date = @team.peer_evaluation_second_email.to_s.gsub('-','')
 
     respond_to do |format|
       format.html # show.html.erb
@@ -329,20 +326,14 @@ class TeamsController < ApplicationController
     end
   end
 
-  def survey_monkey_update
+  def peer_evaluation_update
     @team = Team.find(params[:id])
 
-    firstDate = params[:yearFieldOne] + "-" + params[:monthFieldOne] + "-" + params[:dayFieldOne]
-    firstDate = firstDate.to_date
-
-    secondDate = params[:yearFieldTwo] + "-" + params[:monthFieldTwo] + "-" + params[:dayFieldTwo]
-    secondDate = secondDate.to_date
-
-    @team.peer_evaluation_first_email = firstDate
-    @team.peer_evaluation_second_email = secondDate
+    @team.peer_evaluation_first_email = Date.strptime params[:peer_evaluation_first_email], american_date
+    @team.peer_evaluation_second_email = Date.strptime params[:peer_evaluation_second_email], american_date
     @team.save!
 
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    redirect_to(peer_evaluation_course_team_path(@team.course, @team.id))
   end
 
 

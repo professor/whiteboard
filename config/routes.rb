@@ -41,12 +41,18 @@ CMUEducation::Application.routes.draw do
 
   resources :course_navigations
   resources :courses do
-    resources :teams
+    resources :teams do
+#      member do
+#        get 'peer_evaluation'
+#        post 'peer_evaluation_update'
+#      end
+    end
     member do
       get :configure
+    end
   end
-  
-  end
+  match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
+  match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
 
   match '/effort_reports/campus_week' => 'effort_reports#campus_week'
   match '/effort_reports/campus_semester' => 'effort_reports#campus_semester'
@@ -68,7 +74,7 @@ CMUEducation::Application.routes.draw do
   match 'people/twiki/:twiki_name' => 'people#show_by_twiki'
   match 'twiki/teams' => 'teams#twiki_index'
   match 'twiki/teams/new' => 'teams#twiki_new'
-  match 'courses/:course_id/teams/:id/survey_monkey' => 'teams#survey_monkey', :as => :survey_monkey
+#  match 'courses/:course_id/teams/:id/peer_evaluation' => 'peer_evaluation', :as => :peer_evaluation
   match 'courses/:course_id/teams_photos' => 'teams#index_photos'
   match 'courses/:course_id/past_teams_list' => 'teams#past_teams_list', :as => :past_teams_list
   match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'

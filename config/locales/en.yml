@@ -6,6 +6,9 @@ en:
     formats:
      chatty: "%A, %B %d, %Y at %I:%M %p"
      detailed: "%B %d, %Y at %I:%M %p"
+  date:
+    formats:
+      default: "%m/%d/%Y"
   no_permission: You don't have permission to access this page.
   not_editable: You don't have permission to edit this object.
   no_person: This person doesn't exist in the system.

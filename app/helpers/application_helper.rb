@@ -28,12 +28,6 @@ module ApplicationHelper
       AcademicCalendar.current_semester()
    end
 
-    def add_person_link(name, member_label=nil)
-      link_to_function name do |page|
-        page.insert_html :bottom, :people_in_a_collection, :partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => member_label}
-      end
-    end
-
     def format_timestamp(timestamp)
       return "" if timestamp.nil?
       content_tag(:span, "#{time_ago_in_words(timestamp)} ago", :class => 'timestamp', :title => timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p Pacific Time'))

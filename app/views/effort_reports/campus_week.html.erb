@@ -1,10 +1,14 @@
 <% content_for :title, 'Campus view for week ' + @panel_state.week_number.to_s + ' of ' + @panel_state.year.to_s %>
-<script src="/javascripts/prototype.js"></script>
-<script src="/javascripts/application.js"></script>
-<script src="/javascripts/controls.js"></script>
-<script src="/javascripts/effects.js"></script>
-<script src="/javascripts/calendar_date_select/calendar_date_select.js"></script>
-<%= stylesheet_link_tag "calendar_date_select/red" %>
+<% content_for :javascript do %>
+   <% javascript_tag do %>
+	$(function() {
+		$("#panel_state_date").datepicker({
+          showButtonPanel: true
+        });
+ 	});
+   <% end %>
+<% end %>
+
 
   <div>
     <table><tr><td>
@@ -20,7 +24,7 @@
   <table><tr>
       <td>
   Date
-<%= f.calendar_date_select :date, :year_range => [2000, 2020], :size => 20 %>
+<%= f.text_field :date, :size => 10 %>
       </td>
        <td>
         <%= f.submit "Update" %>
