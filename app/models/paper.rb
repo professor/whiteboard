@@ -15,17 +15,9 @@ class Paper < ActiveRecord::Base
 
 
 
-  def after_initialize
-    self.year ||= Date.today.year
-    self.date ||= Date.today
-  end
+   after_initialize :update_years
+   before_save :ends_with_periods
 
-  def before_save
-    self.title = ends_with_period(self.title)
-    self.conference = ends_with_period(self.conference)
-    self.authors_full_listing = ends_with_period(self.authors_full_listing)
-  end
-  
   def ends_with_period(string)
      return if string.nil?
      white_spaces_removed = string.strip()
@@ -52,6 +44,17 @@ class Paper < ActiveRecord::Base
     return msg
   end
 
+protected
+  def update_years
+    self.year ||= Date.today.year
+    self.date ||= Date.today
+  end
+
+  def ends_with_periods
+    self.title = ends_with_period(self.title)
+    self.conference = ends_with_period(self.conference)
+    self.authors_full_listing = ends_with_period(self.authors_full_listing)
+  end
 
 
 end
