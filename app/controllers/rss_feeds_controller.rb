@@ -4,7 +4,7 @@ class RssFeedsController < ApplicationController
   # GET /rss_feeds
   # GET /rss_feeds.xml
   def index
-    @rss_feeds = RssFeed.find(:all)
+    @rss_feeds = RssFeed.all
 puts "hello world"
     respond_to do |format|
       format.html # index.html.erb

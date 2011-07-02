@@ -15,7 +15,6 @@ CMUEducation::Application.routes.draw do
   resources :papers
   resources :mailing_lists
   resources :rss_feeds
-  resources :pages
   resources :curriculum_comment_types
   match '/curriculum_comments/test_page' => 'curriculum_comments#test_page'
   resources :curriculum_comments

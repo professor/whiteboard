@@ -5,7 +5,7 @@ class SuggestionsController < ApplicationController
   # GET /suggestions
   # GET /suggestions.xml
   def index
-    @suggestions = Suggestion.find(:all)
+    @suggestions = Suggestion.all
 
     respond_to do |format|
       format.html # index.html.erb

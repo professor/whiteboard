@@ -336,7 +336,7 @@ class PeerEvaluationController < ApplicationController
 
  def create_please_do_evaluation_email
 
-     teams = Team.find(:all)
+     teams = Team.all
      emails_sent = 0
    #    teams = Team.find(:all, :conditions => ["id = ? ", "215"])
       teams.each do |team|

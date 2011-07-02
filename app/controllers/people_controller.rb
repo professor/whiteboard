@@ -136,7 +136,7 @@ class PeopleController < ApplicationController
        @domain = "sv.cmu.edu"
      end
 
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
     
 
     respond_to do |format|
@@ -153,7 +153,7 @@ class PeopleController < ApplicationController
 #    end
 
     @person = Person.find(params[:id])
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
   end
 
   # POST /people
@@ -223,7 +223,7 @@ class PeopleController < ApplicationController
 
     @person = Person.find(params[:id])
     @person.updated_by_user_id = current_user.id
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
 
     respond_to do |format|
 

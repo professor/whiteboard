@@ -125,7 +125,7 @@ private
         task_types = TaskType.find(:all, :conditions => ['is_staff = ?', true] )      
       end
       if !current_user.is_student? && !current_user.is_staff?
-        task_types = TaskType.find(:all)           
+        task_types = TaskType.all
       end
       return task_types
   end

@@ -20,7 +20,7 @@ class EffortLogsController < ApplicationController
 
     @people_with_effort = Array.new
     @people_without_effort = Array.new
-    random_scotty_saying = ScottyDogSaying.find(:all).rand.saying
+    random_scotty_saying = ScottyDogSaying.all.rand.saying
 
    courses = Course.remind_about_effort_course_list
    courses.each do |course_id|

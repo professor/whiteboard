@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
    layout 'cmu_sv'
 
   def index
-    @rss_feeds = RssFeed.find(:all)
+    @rss_feeds = RssFeed.all
 
 
     respond_to do |format|

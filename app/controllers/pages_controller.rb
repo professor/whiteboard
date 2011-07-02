@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.xml
   def index
-    @pages = Page.find(:all)
+    @pages = Page.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
     @page = Page.new
     @page.course_id = params[:course_id].to_i
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.find(:all)
+    @courses = Course.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
@@ -58,7 +58,7 @@ class PagesController < ApplicationController
     
 
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.find(:all)
+    @courses = Course.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
@@ -70,7 +70,7 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(params[:page])
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.find(:all)
+    @courses = Course.all
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -94,7 +94,7 @@ class PagesController < ApplicationController
     end
 
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.find(:all)
+    @courses = Course.all
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

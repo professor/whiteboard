@@ -8,7 +8,7 @@
   def index
     if has_permissions_or_redirect(:admin, root_path)
 
-      @delayed_system_jobs = DelayedSystemJob.find(:all)
+      @delayed_system_jobs = DelayedSystemJob.all
 
       respond_to do |format|
         format.html { render :html => @delayed_system_jobs, :layout => "cmu_sv" } # index.html.erb

@@ -11,7 +11,7 @@ class EffortLogLineItemsController < ApplicationController
   before_filter :redirect_to_effort_log_index
 
   def index
-    @effort_log_line_items = EffortLogLineItem.find(:all)
+    @effort_log_line_items = EffortLogLineItem.all
 
     respond_to do |format|
       format.html # index.html.erb

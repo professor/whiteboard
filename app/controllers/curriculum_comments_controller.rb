@@ -32,7 +32,7 @@ class CurriculumCommentsController < ApplicationController
     @curriculum_comment = CurriculumComment.new
     @curriculum_comment.url = url
     @curriculum_comment.notify_me = true if current_user
-    @types = CurriculumCommentType.find(:all)
+    @types = CurriculumCommentType.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,7 +43,7 @@ class CurriculumCommentsController < ApplicationController
   # GET /curriculum_comments/1/edit
   def edit
     @curriculum_comment = CurriculumComment.find(params[:id])
-    @types = CurriculumCommentType.find(:all)
+    @types = CurriculumCommentType.all
   end
 
   # POST /curriculum_comments
@@ -53,7 +53,7 @@ class CurriculumCommentsController < ApplicationController
     @curriculum_comment.user_id = current_user.id if current_user
     @curriculum_comment.semester = AcademicCalendar.current_semester()
     @curriculum_comment.year = Date.today.year
-    @types = CurriculumCommentType.find(:all)
+    @types = CurriculumCommentType.all
 
     respond_to do |format|
       if @curriculum_comment.save
@@ -73,7 +73,7 @@ class CurriculumCommentsController < ApplicationController
   def update
     @curriculum_comment = CurriculumComment.find(params[:id])
     if editable_or_redirect(@curriculum_comment, @curriculum_comment.url)
-      @types = CurriculumCommentType.find(:all)
+      @types = CurriculumCommentType.all
 
       respond_to do |format|
         if @curriculum_comment.update_attributes(params[:curriculum_comment])
