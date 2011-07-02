@@ -13,10 +13,7 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "updated_at DESC"
 
-  def before_validation
-    # Look up the team this person is on if it is a team deliverable
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
-  end
+  before_validation :update_team
 
   def current_attachment
     attachment_versions.find(:first)
@@ -116,5 +113,12 @@ class Deliverable < ActiveRecord::Base
       :url => url
     )
   end
+
+  protected
+  def update_team
+    # Look up the team this person is on if it is a team deliverable
+    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
+  end
+
 
 end
