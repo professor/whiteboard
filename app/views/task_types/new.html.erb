@@ -1,6 +1,6 @@
 <h1>New Task Type</h1>
 
-<% form_for(@task_type) do |f| %>
+<%= form_for(@task_type) do |f| %>
   <% if @task_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@task_type.errors.count, "error") %> prohibited this task type from being saved:</h2>

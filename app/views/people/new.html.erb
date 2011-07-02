@@ -40,7 +40,7 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
 
 </script>
 
-<% form_for(@person) do |f| %>
+<%= form_for(@person) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>

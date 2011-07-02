@@ -3,7 +3,7 @@
 
 <%# render :partial => "form_create", :locals => { :button_name => "Create" } %>
 
-<% form_for(@course) do |f| %>
+<%= form_for(@course) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>

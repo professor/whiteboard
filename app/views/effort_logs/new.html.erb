@@ -7,7 +7,7 @@
   <H2>The faculty view is different than the student view</h2>
 <% end %>
 
-<% form_for(@effort_log) do |f| %>
+<%= form_for(@effort_log) do |f| %>
   <% if @effort_log.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@effort_log.errors.count, "error") %> prohibited this effort log from being saved:</h2>

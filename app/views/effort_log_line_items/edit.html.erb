@@ -1,6 +1,6 @@
 <h1>Editing effort_log_line_item</h1>
 
-<% form_for(@effort_log_line_item) do |f| %>
+<%= form_for(@effort_log_line_item) do |f| %>
   <% if @effort_log_line_item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@effort_log_line_item.errors.count, "error") %> prohibited this effort log line item from being saved:</h2>

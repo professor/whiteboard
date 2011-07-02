@@ -1,7 +1,7 @@
 <% content_for :title, 'Edit Project Type' %>
 <h1>Editing project type</h1>
 
-<% form_for(@project_type) do |f| %>
+<%= form_for(@project_type) do |f| %>
   <% if @project_type.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@project_type.errors.count, "error") %> prohibited this project type from being saved:</h2>

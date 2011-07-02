@@ -8,7 +8,7 @@
 <% end %>
 
 <div id="description"></div>
-<% form_for(@effort_log) do |f| %>
+<%= form_for(@effort_log) do |f| %>
   <% if @effort_log.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@effort_log.errors.count, "error") %> prohibited this effort log from being saved:</h2>

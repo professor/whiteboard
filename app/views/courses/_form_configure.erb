@@ -29,7 +29,7 @@
 <p>This information was configured last by <%= @course.configured_by.human_name %></p>
 <% end %>
 
-<% form_for(@course) do |f| %>
+<%= form_for(@course) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>

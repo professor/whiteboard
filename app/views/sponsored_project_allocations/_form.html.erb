@@ -1,4 +1,4 @@
-<% form_for(@allocation) do |f| %>
+<%= form_for(@allocation) do |f| %>
   <% if @allocation.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@allocation.errors.count, "error") %> prohibited this allocation from being saved:</h2>
