@@ -14,11 +14,9 @@ class PeopleController < ApplicationController
   # GET /people.xml
   def index
     if params[:term] #Ajax call for autocomplete
-      if Rails.env.development?
-        @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
-      else
-        @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
-      end
+        #if database is mysql
+        #@people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
+      @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
     else
       @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
     end

@@ -41,14 +41,13 @@ class Page < ActiveRecord::Base
 
  #Re-position: change the sequence of pages for a given course
  def self.reposition(ids)
-  if Rails.env.development?
-    update_all(
-      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
-      { :id => ids }
-    )
-  else
-     update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })     
-  end
+
+  #if database is mysql
+#    update_all(
+#      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
+#      { :id => ids }
+#    )
+     update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })
  end
 
 end
