@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    $(".remove_effort_log_line_item").click(function() {
+        $(this).parents('tr.effort_log_line_item').remove();
+    });
+</script>
+
 <tr class="effort_log_line_item">
 <% new_or_existing = effort_log_line_item.new_record? ? 'new' : 'existing'  %>
 <% prefix = "effort_log[#{new_or_existing}_effort_log_line_item_attributes][]" %>
@@ -5,21 +11,9 @@
 
 <%= fields_for prefix, effort_log_line_item do |effort_log_line_item_form| -%>
 <td><%= effort_log_line_item.position %></td>
-<% if current_user && current_user.is_student? %>
     <td><%= effort_log_line_item_form.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %></td>
     <td><%= effort_log_line_item_form.collection_select(:task_type_id, @task_types, :id, :name, :include_blank => true) %> </td>
     <td>&nbsp;</td>
-<% else %>
-    <td><%= effort_log_line_item_form.collection_select(:project_id, @projects, :id, :name, :include_blank => true) %> </td>
-    <td><%= effort_log_line_item_form.collection_select(:task_type_id, @task_types, :id, :name, :include_blank => true) %> </td>
-    <td>&nbsp;</td>
-<% end %>
-<!-- 
-    <td>
-<%= #effort_log_line_item_form.collection_select(:sub_task_type_id, effort_log_line_item.task_type.sub_task_types.find(:all), :id, :name, :include_blank => true) 
-%>
- </td>
- -->
     <%= td_class_is_today(1) %><%= effort_log_line_item_form.text_field :day1, :size => 4 %></td>
     <%= td_class_is_today(2) %><%= effort_log_line_item_form.text_field :day2, :size => 4 %></td>
     <%= td_class_is_today(3) %><%= effort_log_line_item_form.text_field :day3, :size => 4 %></td>
@@ -28,16 +22,9 @@
     <%= td_class_is_today(6) %><%= effort_log_line_item_form.text_field :day6, :size => 4 %></td>
     <%= td_class_is_today(7) %><%= effort_log_line_item_form.text_field :day7, :size => 4 %></td>
     <td class="log_sum"><%= effort_log_line_item.sum %> hrs</td>
-    <td class="log_remove"><%= link_to_function "remove", "$(this).up('.effort_log_line_item').remove()" %></td> 
+    <td class="log_remove"><%= link_to "remove", "#", :class => "remove_effort_log_line_item" %></td>
 <% end -%>
 </tr>
-
-<!--
-<%#prefix2 = "effort_log_#{new_or_existing}_effort_log_line_item_attributes_" + effort_log_line_item.id.to_s %>
-<%# observe_field prefix2+"_task_type_id" , :update=> "description", :url => {:action=>'update_task_type_select'},
- :with => '"task_id="+value'
-%>
--->
 
 <% content_for :javascript do %>
 <% field = "effort_log_#{new_or_existing}_effort_log_line_item_attributes_" + effort_log_line_item.id.to_s + "_task_type_id" %>
@@ -58,7 +45,7 @@ jQuery(function($) {
 <!-- Here's how I figured this out. 1st, the collection_select generated the correct select tag, but the wrong option list. (Course should id, not name),
   then I generated the select statement by hand.
   <% select_name = "effort_log[#{new_or_existing}_effort_log_line_item_attributes][#{effort_log_line_item.id}][course_id]" %>
-  <select name=<%="#{select_name}"%> id=<%="effort_log_existing_effort_log_line_item_attributes_#{effort_log_line_item.id}_course_id"%>><option value=""/>
-     <%= options_from_collection_for_select @courses.collect {|course| [course.id, course.name]}, 'first', 'last', effort_log_line_item.course_id %>
+  <select name=<%#"#{select_name}"%> id=<%="effort_log_existing_effort_log_line_item_attributes_#{effort_log_line_item.id}_course_id"%>><option value=""/>
+     <%# options_from_collection_for_select @courses.collect {|course| [course.id, course.name]}, 'first', 'last', effort_log_line_item.course_id %>
   </select>
 -->

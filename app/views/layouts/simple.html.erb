@@ -1,12 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>EffortLogs: <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'scaffold' %>
+              	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="Carnegie Mellon University" name="author">
+
+
+	<meta content="index,follow" name="robots">
+	<meta content="31 days" name="revisit-after">
   <%= stylesheet_link_tag 'site' %>
+  <%= stylesheet_link_tag 'twiki' %>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
+                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
+                             "jquery_ujs.js",
+                              "jquery.corners",
+                              "tablesorter",
+                              "tablesorter_filter" %>
+  <%= csrf_meta_tag %>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+  <%= yield :tablesorter %>
+
+<script type="text/javascript">
+        //<![CDATA[
+$(document).ready(function(){
+    $('.rounded').corners();
+});
+//]]>
+</script>
+
+        <title><%= (title = yield :title) ? title : 'Carnegie Mellon Silicon Valley'%></title>
+        <%# yield :javascript %>
+        <%= yield :head %>
 
 </head>
 <body>

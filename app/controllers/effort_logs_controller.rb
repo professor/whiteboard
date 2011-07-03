@@ -1,8 +1,8 @@
 class EffortLogsController < ApplicationController
-#  layout "cmu_sv", :except => :new_effort_log_line_item
+#  layout "cmu_sv_no_pad", :except => :new_effort_log_line_item
 
-#  layout 'cmu_sv', :only => [:index, :show]
-
+#  layout 'cmu_sv_no_pad', :only => [:index, :show]
+  layout 'simple'
 
   before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
 

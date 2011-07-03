@@ -85,7 +85,7 @@ class TeamsController < ApplicationController
     @course = Course.find(params[:course_id])
 
     respond_to do |format|
-      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
+      format.html { render :html => @teams, :layout => "simple" } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end
