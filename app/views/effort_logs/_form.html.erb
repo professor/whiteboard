@@ -1,0 +1,57 @@
+<div id="description"></div>
+<%= form_for(@effort_log) do |f| %>
+  <% if @effort_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@effort_log.errors.count, "error") %> prohibited this effort log from being saved:</h2>
+
+      <ul>
+      <% @effort_log.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user && current_user.is_admin %>
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <% else %>
+    <p> <%= f.label :person_id %>: <%= @effort_log.person.human_name %> </p>
+
+  <% end  %>
+  <% if current_user && current_user.is_admin %>
+  <p>
+    <%= f.label :week_number %><br />
+    <%= f.text_field :week_number %>
+  </p>
+  <% else %>
+    <p> <%= f.label :week_number %>: <%= @effort_log.week_number %> </p>
+  <% end %>
+  <p>Note: The unit of measure is hours. Partial hours are ok.</p>
+  <table id="effort_log_line_items" border=0>
+  <%= render :partial => 'effort_log_header' %>
+    <%= render :partial => 'effort_log_line_item', :collection => @effort_log.effort_log_line_items %>
+  <tr id="add_line_item"><td colspan="3">&nbsp;</td><td colspan=7><%= link_to "Add another line", "#", :id => "add_line" %></td><td class="log_sum"><%= @effort_log.sum %> hrs</td><td>&nbsp;</td></tr>
+  </table>
+
+
+<%# content_for :javascript do %>
+   <%# javascript_tag do %>
+<script type="text/javascript">
+	$(function() {
+		$("#add_line").click(function() {
+           $("#add_line_item").before("<%= escape_javascript(render(:partial => 'effort_log_line_item', :object => EffortLogLineItem.new, :local=>@courses)) %>");
+        });
+
+ 	});
+</script>
+   <%# end %>
+<%# end %>
+  <p>
+  </p>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>
