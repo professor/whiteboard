@@ -37,7 +37,7 @@ $(document).ready(function()
 
 
 <h1>Efforts for <%= monthname(@month) %> <%= @year %></h1>
-<% form_tag(sponsored_project_efforts_path, :method => "get") do %>
+<%= form_tag(sponsored_project_efforts_path, :method => "get") do %>
 <%= select_month @month %>
 <%= text_field_tag('year', @year, :size=> '4', :maxlength => '4') %>
 <%= submit_tag 'Go' %>

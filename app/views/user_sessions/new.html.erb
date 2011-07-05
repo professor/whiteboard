@@ -5,7 +5,7 @@ http://web.archive.org/web/20080605121920/http://last10percent.com/2008/05/26/po
 
 <h1>Log In</h1>
 
-<% form_tag(user_session_url) do %>
+<%= form_tag(user_session_url) do %>
     <p>
       <label for="openid_identifier">OpenID:</label>
       <%= text_field_tag "openid_identifier", "west.cmu.edu" %>

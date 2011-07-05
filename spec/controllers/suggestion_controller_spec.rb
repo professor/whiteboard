@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SuggestionsController do
-  integrate_views
+  render_views
 
   describe "NEW suggestion" do
     it "remembers the HTTP referer" do

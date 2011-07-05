@@ -11,7 +11,9 @@ class DeliverableAttachment < ActiveRecord::Base
 
   validates_presence_of :submitter, :submission_date
 
-  before_validation_on_create :update_submission_date
+  before_validation(:on => :create) do
+    update_submission_date
+  end
 
   protected
   def update_submission_date
