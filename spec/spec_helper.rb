@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 #require 'spec/autorun' #from rails2, might not be needed
 require 'rspec/rails'
 
+#include Capybara::DSL
+
 require 'authlogic/test_case'
 require 'shoulda'
 
