@@ -33,21 +33,36 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 end
 
-class ActionController::TestCase
-  setup :activate_authlogic
-end
 
 #potential fix for authlogic issues
-# module LoginHelper
-#   include Authlogic::TestCase
-#   
-#   def login_user userSymbol
-#     activate_authlogic
+module LoginHelper
+   include Authlogic::TestCase
+
+   def login_user userSymbol
+     activate_authlogic
 #     user = Factory(userSymbol)
+     UserSession.create(users(:student_sam))
 #     UserSession.create(user)
-#   end
-# end
-# include LoginHelper
+   end
+end
+include LoginHelper
+
+
+
+#class ActionController::TestCase
+#  puts "********** Authlogic setup **************"
+#  setup :activate_authlogic
+#
+##  def login_as(user)
+##    if user.nil?
+##      return UserSession.stubs(:find).returns(nil)
+##    else
+##      return UserSession.stubs(:find).returns(UserSession.create(users(user)))
+##    end
+##  end
+#end
+
+
 
 # =============== OLD STUFF ===============
 # this stuff is from rails2 (old spec helper), might not be needed
