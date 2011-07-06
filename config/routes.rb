@@ -11,8 +11,6 @@ CMUEducation::Application.routes.draw do
   resources :sponsored_project_efforts
   match 'delayed_system_jobs/' => 'delayed_system_jobs#index'
   resources :delayed_system_jobs
-  match 'papers/by/:twiki_name' => 'papers#index_by_person'
-  resources :papers
   resources :mailing_lists
   resources :rss_feeds
   resources :curriculum_comment_types

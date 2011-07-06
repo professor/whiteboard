@@ -60,12 +60,7 @@
 <% end %>
 <tr class="cmu_table_odd"><td>&nbsp;</td>
   <td>
-    <% if @person.papers.count > 0 %>
-       <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %><br/>
-    <% else %>
-       <%= link_to 'Add a published paper', "/papers/new" %><br/>    
-    <% end %>
-    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>        
+    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
         <%= link_to "My teams", my_teams_path(@person) %>
         <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(@person) %>
     <% end %>
