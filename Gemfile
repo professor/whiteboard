@@ -23,7 +23,7 @@ gem 'heroku'
 gem 'taps'
 gem 'paperclip' 
 
-#gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
+gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
 
 gem 'rmagick'
 
@@ -37,9 +37,7 @@ gem 'exception_notification', :require => 'exception_notifier'
 group :production do         
   gem 'rack-google_analytics', :require => "rack/google_analytics"
   gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
-  gem 'factory_girl' #This is necessary when we want to load factory seeds into a production database
-
-  gem 'vestal_versions' #, '1.0.2' #, :git => 'git://github.com/laserlemon/vestal_versions'
+  gem 'factory_girl_rails' #This is necessary when we want to load factory seeds into a production database
 end
 
 group :development, :test do
@@ -63,8 +61,6 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
   gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
-
-  gem 'vestal_versions' #, '1.0.2' #, :git => 'git://github.com/laserlemon/vestal_versions'
 end
 
 

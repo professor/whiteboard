@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/adamcooper/vestal_versions
+  revision: 6273df533f85014062e346cb1807b0531a809ee2
+  specs:
+    vestal_versions (1.2.2)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -190,8 +198,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.29)
-    vestal_versions (1.0.2)
-      activerecord (>= 2.1.0)
     webrobots (0.0.9)
       nokogiri (>= 1.4.4)
     xml-simple (1.1.0)
@@ -208,7 +214,6 @@ DEPENDENCIES
   capybara
   delayed_job
   exception_notification
-  factory_girl
   factory_girl_rails
   heroku
   jquery-rails (>= 1.0.3)
@@ -234,5 +239,5 @@ DEPENDENCIES
   shoulda
   taps
   test-unit
-  vestal_versions
+  vestal_versions!
   webrobots (= 0.0.9)
