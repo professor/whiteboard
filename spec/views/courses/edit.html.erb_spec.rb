@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "courses/edit.html.erb" do
   before(:each) do
 
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     @course = assigns[:course] = stub_model(Course,
         :name => "something",
       :new_record? => false

@@ -14,7 +14,7 @@ describe 'A user visiting the site', :type => :request do
   
   context 'when logged in' do
     before do
-      UserSession.create(user)
+      login_user(user)
     end
     
     it 'welcomes the user' do

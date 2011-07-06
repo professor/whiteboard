@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "people/edit.html.erb" do
   before(:each) do
     person = Factory(:student_sam)
-    UserSession.create(person)
+    login_user(person)
     @person = assigns[:person] = person
     
     assigns[:strength_themes] =  [

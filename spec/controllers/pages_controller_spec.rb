@@ -5,29 +5,11 @@ require 'spec_helper'
 #end
 
 describe PagesController do
-  fixtures :users
 
   context "any user can" do
     before do
       Page.delete_all
-
-      login_user(:student_sam)
-
-#      include LoginHelper
-      #LoginHelper.login_user(:student_sam)
-
-#      UserSession.create(users(:student_sam))
-
-
-
-#      include Authlogic::TestCase
-#      activate_authlogic
-
-#      require "authlogic/test_case" # include at the top of test_helper.rb
-#      setup :activate_authlogic # run before tests are executed
- #     UserSession.create(users(:student_sam)) # logs a user in
-
-
+      login_user(Factory(:student_sam))
       @page = Factory(:page)
     end
 
@@ -44,73 +26,75 @@ describe PagesController do
       end
     end
 
-#    describe "GET show" do
-#      before do
-#        get :show, :id => @page.to_param
-#      end
-#      it_should_behave_like "finding page"
-#    end
-#
-#    describe "GET new" do
-#      it "assigns a new page as page" do
-#        get :new
-#        assigns(:page).should_not be_nil
-#      end
-#    end
-#
-#    describe "GET edit" do
-#      before do
-#        get :edit, :id => @page.to_param
-#      end
-#      it_should_behave_like "finding page"
-#    end
+    describe "GET show" do
+      before do
+        get :show, :id => @page.to_param
+      end
+      it_should_behave_like "finding page"
+    end
+
+    describe "GET new" do
+      it "assigns a new page as page" do
+        get :new
+        assigns(:page).should_not be_nil
+      end
+    end
+
+    describe "GET edit" do
+      before do
+        get :edit, :id => @page.to_param
+      end
+      it_should_behave_like "finding page"
+    end
   end
 
-#  context "as a student can" do
-#    before do
-#      Page.delete_all
-#      UserSession.create(users(:student_sam))
-#      @page = Factory(:page, :title => "new title")
-#    end
-#
-#    describe "GET edit" do
-#      it "but not for a page that is editable only by faculty" do
-#      @page.is_editable_by_all = false
-#      get :edit, :id => @page.to_param
-#      response.should redirect_to(page_url)
-#       end
-#    end
-#
-#   describe "POST update" do
-#      it "but not for a page that is editable only by faculty" do
-#      @page.is_editable_by_all = false
-#      @page.save
-#      post :update, :page => @page.attributes, :id => @page.to_param
-#      response.should redirect_to(page_url)
-#      flash[:error].should == "You don't have permission to do this action."
-#       end
-#    end
-#
-#  end
-#
-#  context "as a faculty member can" do
-#
-#    before do
-#      UserSession.create(users(:faculty_frank))
-#      @page = Factory(:page)
-#    end
-#
-#    describe "GET edit" do
-#      context "for a page that is not editable by all" do
-#        before do
-#          @page.is_editable_by_all = false
-#          get :edit, :id => @page.to_param
-#        end
-#        it_should_behave_like "finding page"
-#      end
-#
-#    end
-#  end
+  context "as a student can" do
+    before do
+      Page.delete_all
+      login_user(:student_sam)
+      @page = Factory(:page, :title => "new title")
+    end
+
+    describe "GET edit" do
+      it "but not for a page that is editable only by faculty" do
+      @page.is_editable_by_all = false
+      get :edit, :id => @page.to_param
+      response.should redirect_to(page_url)
+       end
+    end
+
+   describe "POST update" do
+      it "but not for a page that is editable only by faculty" do
+      @page.is_editable_by_all = false
+      @page.save
+      post :update, :page => @page.attributes, :id => @page.to_param
+      response.should redirect_to(page_url)
+      flash[:error].should == "You don't have permission to do this action."
+       end
+    end
+
+  end
+
+  context "as a faculty member can" do
+
+    before do
+#      login_user(users(:faculty_frank))
+      login_user(:faculty_frank)
+
+      @page = Factory(:page)
+    end
+
+    describe "GET edit" do
+      context "for a page that is not editable by all" do
+        before do
+          @page.is_editable_by_all = false
+          get :edit, :id => @page.to_param
+        end
+        it_should_behave_like "finding page"
+      end
+
+    end
+  end
 
 
 

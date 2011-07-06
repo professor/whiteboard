@@ -23,7 +23,7 @@ describe CourseNavigationsController do
 
 #  context "any faculty can" do
 #    before do
-#      UserSession.create(Factory(:faculty_frank))
+#      login_user(Factory(:faculty_frank))
 #    end
 #
 #    describe "GET reposition" do

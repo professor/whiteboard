@@ -4,7 +4,7 @@ describe Course do
 
   before do
     activate_authlogic
-    @faculty_frank = UserSession.create(Factory(:faculty_frank))
+    @faculty_frank = login_user(Factory(:faculty_frank))
   end
 
   it 'can be created' do

@@ -22,7 +22,7 @@ describe DeliverablesController do
       context "as the faculty owner of the course" do
 
         before do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -34,7 +34,7 @@ describe DeliverablesController do
       context "as an admin" do
 
         before do
-          UserSession.create(@admin_andy)
+          login_user(@admin_andy)
         end
 
         it 'assigns @deliverables' do
@@ -45,7 +45,7 @@ describe DeliverablesController do
 
       context "as any other user" do
         before do
-          UserSession.create(@faculty_fagan)
+          login_user(@faculty_fagan)
           get :index_for_course, :course_id => @course.id
         end
 
@@ -65,7 +65,7 @@ describe DeliverablesController do
 
       context "as the owner of the deliverable" do
         before do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
         end
 
         it 'assigns deliverables' do
@@ -78,7 +78,7 @@ describe DeliverablesController do
       context "as an faculty" do
 
         before do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -90,7 +90,7 @@ describe DeliverablesController do
 
       context "as any other student" do
         before do
-          UserSession.create(@student_sally)
+          login_user(@student_sally)
           get :my_deliverables, :id => @student_sam.id
         end
 
@@ -112,21 +112,21 @@ describe DeliverablesController do
       context "for a team deliverable" do
 
         it 'the owner can see it' do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
           @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "someone else on the team can see it" do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
           @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "any faculty can see it" do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
           @team.stub(:is_person_on_team?).and_return(false)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
@@ -135,7 +135,7 @@ describe DeliverablesController do
         context "no other student can see it" do
           before do
             @team.stub(:is_person_on_team?).and_return(false)
-            UserSession.create(@student_sally)
+            login_user(@student_sally)
             get :show, :id => @deliverable.id
           end
 

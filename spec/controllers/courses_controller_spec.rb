@@ -15,7 +15,7 @@ describe CoursesController do
 
   context "any user can" do
     before do
-      UserSession.create(Factory(:student_sam))
+      login_user(Factory(:student_sam))
     end
 
     describe "GET current semester" do
@@ -101,7 +101,7 @@ describe CoursesController do
 
   context "any staff can" do
     before do
-      UserSession.create(Factory(:faculty_frank))
+      login_user(Factory(:faculty_frank))
     end
 
     describe "GET new" do
@@ -235,7 +235,7 @@ describe CoursesController do
 
   context "any admin can" do
 #    before do
-#      UserSession.create(Factory(:admin_andy))
+#      login_user(Factory(:admin_andy))
 #    end
 
     describe "DELETE destroy" do

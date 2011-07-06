@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "pages/show.html.erb" do
   before(:each) do
-    UserSession.create(Factory(:student_sam))    
+    login_user(Factory(:student_sam))
     assigns[:page] = Factory(:ppm) #rspec 1?
 #rspec 2?    @page = assign(:page, Factory(:ppm))
   end

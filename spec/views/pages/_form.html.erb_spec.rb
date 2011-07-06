@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'pages/_editable_form.html.erb' do
   before do
 
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     assigns[:page]= Factory.build(:page)
 #    assign(:page, Factory.build(:page))
     assigns[:courses] =  [

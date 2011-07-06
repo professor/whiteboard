@@ -9,7 +9,7 @@ describe SponsoredProjectSponsorsController do
 
     before do
       @admin_andy = Factory(:admin_andy)
-      UserSession.create(@admin_andy)
+      login_user(@admin_andy)
     end
     
     describe "GET new sponsor" do
@@ -113,7 +113,7 @@ describe SponsoredProjectSponsorsController do
 
     before do
       @faculty_frank = Factory(:faculty_frank)
-      UserSession.create(@faculty_frank)
+      login_user(@faculty_frank)
     end
 
     [:new, :edit, :archive].each do |http_verb|

@@ -38,12 +38,18 @@ end
 module LoginHelper
    include Authlogic::TestCase
 
-   def login_user userSymbol
+   def login_user_fixture userSymbol
      activate_authlogic
-#     user = Factory(userSymbol)
-     UserSession.create(users(:student_sam))
-#     UserSession.create(user)
+#     UserSession.create(users(:student_sam))
+     UserSession.create(users(userSymbol))
    end
+
+   def login_user person
+     activate_authlogic
+     UserSession.create(User.find(person.id))
+   end
+
+
 end
 include LoginHelper
 
