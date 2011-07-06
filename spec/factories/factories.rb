@@ -54,25 +54,6 @@ Factory.define :peer_evaluation_learning_objective, :class => PeerEvaluationLear
   p.learning_objective "this is my learning objective"
 end
 
-Factory.define :user_todd, :class => User do |p|
-  p.is_staff 0
-  p.is_student 0
-  p.is_admin 1
-  p.is_teacher 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
-  p.first_name "user"
-  p.last_name "todd"
-  p.login "user_todd"
-  p.password "ashoifjadslkfjaskl;h"
-  p.password_confirmation "ashoifjadslkfjaskl;h"
-  p.password_salt Authlogic::Random.hex_token
-  p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
-  p.persistence_token rand(36**60).to_s(36)
-#  "6cde0674657a8a313ce952df979de2830309aa4c11ca65805dd00bfdc65dbcc2f5e36718660a1d2e68c1a08c276d996763985d2f06fd3d076eb7bc4d97b1e317"
-end
-
 Factory.define :person, :class => Person do |p|
   p.is_staff 0
   p.is_student 0
@@ -132,4 +113,22 @@ Factory.define :team, :class => Team do |t|
  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
  t.people {|people| [people.association(:team_member)]}
  t.association :course, :factory => :course
+end
+
+Factory.define :user, :class => User do |p|
+  p.is_staff 0
+  p.is_student 0
+  p.is_admin 1
+  p.is_teacher 0
+  p.is_active 1
+  p.image_uri "/images/mascot.jpg"
+  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
+  p.first_name "user"
+  p.last_name "todd"
+  p.login "user_todd"
+  p.password "ashoifjadslkfjaskl;h"
+  p.password_confirmation "ashoifjadslkfjaskl;h"
+  p.password_salt Authlogic::Random.hex_token
+  p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
+  p.persistence_token rand(36**60).to_s(36)
 end

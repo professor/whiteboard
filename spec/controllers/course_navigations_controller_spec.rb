@@ -6,7 +6,7 @@ describe CourseNavigationsController do
 
   context "any user can" do
     before do
-      UserSession.create(Factory(:student_sam))
+      login_user(Factory(:student_sam))
     end
 
     describe "GET show" do

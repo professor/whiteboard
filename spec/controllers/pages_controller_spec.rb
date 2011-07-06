@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-#class ActionController::TestCase
-#  setup :activate_authlogic
-#end
-
 describe PagesController do
 
   context "any user can" do
@@ -51,7 +47,7 @@ describe PagesController do
   context "as a student can" do
     before do
       Page.delete_all
-      login_user(:student_sam)
+      login_user(Factory(:student_sam))
       @page = Factory(:page, :title => "new title")
     end
 
@@ -78,8 +74,7 @@ describe PagesController do
   context "as a faculty member can" do
 
     before do
-#      login_user(users(:faculty_frank))
-      login_user(:faculty_frank)
+      login_user(Factory(:faculty_frank))
 
       @page = Factory(:page)
     end
