@@ -15,6 +15,6 @@ describe "courses/edit.html.erb" do
   it "renders the edit course form" do
     render
 
-    response.should have_tag("form", :action => course_path(@course), :method => "post")
+    rendered.should have_tag("form", :action => course_path(@course), :method => "post")
   end
 end
