@@ -74,7 +74,7 @@ CMUEducation::Application.routes.draw do
   match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
   match '/:controller(/:action(/:id))'
   match '/new_features' => 'welcome#new_features', :as => :new_features
-  match '/config' => 'welcome#config', :as => :config
+  match '/config' => 'welcome#configuration', :as => :config
   match '/' => 'welcome#index', :as => :root
 end
 

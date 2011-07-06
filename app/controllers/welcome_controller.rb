@@ -16,7 +16,7 @@ class WelcomeController < ApplicationController
     
   end
 
-  def config
+  def configuration
     
   end
 
