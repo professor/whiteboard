@@ -147,7 +147,7 @@ describe SponsoredProjectAllocationsController do
       describe "GET #{http_verb}" do
         it "can't access page" do
           get http_verb, :id => allocation.to_param
-          response.should redirect_to(Rails.root)
+          response.should redirect_to(root_path)
           flash[:error].should == I18n.t(:no_permission)
         end
       end
@@ -156,7 +156,7 @@ describe SponsoredProjectAllocationsController do
     describe "POST create" do
       it "can't access page" do
         post :create, :sponsored_project_allocation => allocation.attributes
-        response.should redirect_to(Rails.root)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -164,7 +164,7 @@ describe SponsoredProjectAllocationsController do
     describe "PUT update" do
       it "can't access page" do
         put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => 50}
-        response.should redirect_to(Rails.root)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end

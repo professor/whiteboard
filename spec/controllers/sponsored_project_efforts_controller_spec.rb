@@ -32,7 +32,7 @@ describe SponsoredProjectEffortsController do
     describe "GET index" do
       it "can't access page" do
         get :index
-        response.should redirect_to(Rails.root)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
 
@@ -52,7 +52,7 @@ describe SponsoredProjectEffortsController do
       it "can't access page for a different user" do
         @faculty_fagan = Factory(:faculty_fagan)
         get :edit, :id => @faculty_fagan.twiki_name
-        response.should redirect_to(Rails.root)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -130,7 +130,7 @@ describe SponsoredProjectEffortsController do
       it "can't access page for a different user" do
         @faculty_fagan = Factory(:faculty_fagan)
         put :update, :id => @faculty_fagan.twiki_name, :effort_id_values => {"0" => "25", "1" => "75"}
-        response.should redirect_to(Rails.root)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
