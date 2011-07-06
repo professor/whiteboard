@@ -8,6 +8,7 @@ require 'rspec/rails'
 
 require 'authlogic/test_case'
 require 'shoulda'
+require 'helpers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -31,6 +32,8 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+#  config.include Helpers
 end
 
 
@@ -50,6 +53,10 @@ module LoginHelper
    end
 
 
+def current_user(stubs = {})
+  @current_user ||= mock_model("User", stubs)
+end
+
 end
 include LoginHelper
 
@@ -68,16 +75,18 @@ include LoginHelper
 ##  end
 #end
 
+#Helpers for authlogic and rspec
 
+#def current_user(stubs = {})
+#  @current_user ||= mock_model("User", stubs)
+#end
 
 # =============== OLD STUFF ===============
 # this stuff is from rails2 (old spec helper), might not be needed
 
 #Helpers for authlogic and rspec
 #
-#def current_user(stubs = {})
-#  @current_user ||= mock_model(User, stubs)
-#end
+
 #
 #def user_session(stubs = {}, user_stubs = {})
 #  @current_user ||= mock_model(UserSession, {:user => current_user(user_stubs)}.merge(stubs))
