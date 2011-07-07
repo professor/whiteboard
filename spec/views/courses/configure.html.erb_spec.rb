@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "courses/configure.html.erb" do
   before(:each) do
     login_user(Factory(:faculty_frank))
-    @course = assigns[:course] = stub_model(Course,
+    @course = assign(:course, stub_model(Course,
         :name => "something",
         :semester => "Fall",
         :year => "2011",
         :mini => "Both",
       :new_record? => false
-    )
+    ))
   end
 
   it "renders the configure course form" do

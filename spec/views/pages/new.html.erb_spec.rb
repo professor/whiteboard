@@ -2,14 +2,13 @@ require 'spec_helper'
 
 describe "pages/new.html.erb" do
   before(:each) do
-#    assigns[:page] = Factory(:ppm) #rspec 1?
+#    assign(:page] = Factory(:ppm) #rspec 1?
     login_user(Factory(:faculty_frank))
-    assigns[:page] = stub_model(Page).as_new_record #rspec 1
-    assigns[:courses] =  [
+    assign(:page, stub_model(Page).as_new_record)
+    assign(:courses, [
       stub_model(Course),
       stub_model(Course)
-    ]
-#    assign(:page, stub_model(Page).as_new_record) #rspec 2
+    ])
   end
 
   it "renders new page form" do

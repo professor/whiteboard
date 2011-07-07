@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "sponsored_projects/new.html.erb" do
   before(:each) do
-    assigns[:project] = stub_model(SponsoredProject).as_new_record
+    assign(:project, stub_model(SponsoredProject).as_new_record)
 
-    assigns[:sponsors] = [Factory.build(:sponsored_project_sponsor), Factory.build(:sponsored_project_sponsor)]
+    assign(:sponsors, [Factory.build(:sponsored_project_sponsor), Factory.build(:sponsored_project_sponsor)])
   end
 
   it "renders new project form" do

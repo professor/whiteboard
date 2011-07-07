@@ -4,12 +4,12 @@ describe "courses/edit.html.erb" do
   before(:each) do
 
     login_user(Factory(:faculty_frank))
-    @course = assigns[:course] = stub_model(Course,
+    @course = assign(:course, stub_model(Course,
         :name => "something",
       :new_record? => false
-    )
+    ))
     @course.stub(:faculty).and_return([stub_model(Person)])
-    assigns[:course_numbers] = [stub_model(CourseNumber)]
+    assign(:course_numbers, [stub_model(CourseNumber)])
   end
 
   it "renders the edit course form" do

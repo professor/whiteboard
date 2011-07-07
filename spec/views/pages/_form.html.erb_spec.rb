@@ -4,13 +4,12 @@ describe 'pages/_editable_form.html.erb' do
   before do
 
     login_user(Factory(:faculty_frank))
-    assigns[:page]= Factory.build(:page)
-#    assign(:page, Factory.build(:page))
-    assigns[:courses] =  [
+    assign(:page, Factory.build(:page))
+    assign(:courses, [
       stub_model(Course),
       stub_model(Course)
-    ]
-    assigns[:button_name] = "Update"
+    ])
+    assign(:button_name, "Update")
     render :locals => { :button_name => "Update" }
   end
 

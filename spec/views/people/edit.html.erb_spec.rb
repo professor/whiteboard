@@ -4,12 +4,12 @@ describe "people/edit.html.erb" do
   before(:each) do
     person = Factory(:student_sam)
     login_user(person)
-    @person = assigns[:person] = person
+    @person = assign(:person, person)
     
-    assigns[:strength_themes] =  [
+    assign(:strength_themes, [
       stub_model(StrengthTheme),
       stub_model(StrengthTheme)
-    ]
+    ])
   end
 
   it "renders the edit page form" do

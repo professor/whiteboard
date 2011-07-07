@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "sponsored_projects/edit.html.erb" do
   before(:each) do
-    @project = assigns[:project] = stub_model(SponsoredProject, :new_record? => false)
-    assigns[:sponsors] = [Factory.build(:sponsored_project_sponsor), Factory.build(:sponsored_project_sponsor)]
+    @project = assign(:project, stub_model(SponsoredProject, :new_record? => false))
+    assign(:sponsors, [Factory.build(:sponsored_project_sponsor), Factory.build(:sponsored_project_sponsor)])
   end
 
   it "renders edit project form" do

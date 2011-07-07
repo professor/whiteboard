@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "sponsored_project_allocations/new" do
 
   before(:each) do
-    assigns[:allocation] = stub_model(SponsoredProjectAllocation).as_new_record
+    assign(:allocation, stub_model(SponsoredProjectAllocation).as_new_record)
 
-    assigns[:projects] = [Factory.build(:sponsored_project)]
-    assigns[:people] = [Factory.build(:faculty_frank), Factory.build(:admin_andy)]
+    assign(:projects, [Factory.build(:sponsored_project)])
+    assign(:people, [Factory.build(:faculty_frank), Factory.build(:admin_andy)])
   end
 
   it "renders new allocation form" do

@@ -4,7 +4,7 @@ describe "people/show.html.erb" do
   before(:each) do
     person = Factory(:student_sam)
     login_user(person)
-    assigns[:person] = person #rspec 1?
+    assign(:person, person)
   end
 
   it "renders attributes in <p>" do

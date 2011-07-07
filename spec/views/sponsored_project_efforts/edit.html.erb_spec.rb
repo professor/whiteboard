@@ -3,9 +3,9 @@
 #describe "sponsored_project_efforts/edit.html.erb" do
 #  before(:each) do
 #
-#    @efforts = assigns[:efforts] = [Factory(:sponsored_project_effort)]
+#    @efforts = assign(:efforts, [Factory(:sponsored_project_effort)])
 #    @person = @efforts[0].sponsored_project_allocation.person
-##    @effort = assigns[:effort] = stub_model(SponsoredProjectEffort, :new_record? => false)
+##    @effort = assign(:effort, stub_model(SponsoredProjectEffort, :new_record? => false))
 #  end
 #
 #  it "renders edit effort form" do

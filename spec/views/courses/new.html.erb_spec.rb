@@ -5,8 +5,8 @@ describe "courses/new.html.erb" do
     login_user(Factory(:faculty_frank))
     course = stub_model(Course).as_new_record
     course.stub(:people).and_return([stub_model(Person)])
-    assigns[:course] = course
-    assigns[:course_numbers] = [stub_model(CourseNumber)]
+    assign(:course, course)
+    assign(:course_numbers, [stub_model(CourseNumber)])
 
   end
 

@@ -3,14 +3,14 @@ require 'spec_helper'
 describe "pages/edit.html.erb" do
   before(:each) do
     login_user(Factory(:faculty_frank))
-    @page = assigns[:page] = stub_model(Page,
+    @page = assign(:page, stub_model(Page,
         :url => "something",
       :new_record? => false
-    )
-    assigns[:courses] =  [
+    ))
+    assign(:courses, [
       stub_model(Course),
       stub_model(Course)
-    ]    
+    ])
 #rspec 2
 #    @page = assign(:page, stub_model(Page,
 #      :new_record? => false

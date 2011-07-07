@@ -213,7 +213,7 @@ describe DeliverablesController do
 #        it 'sets the flash to error' do
 #          @effort_2.should_receive(:save).and_return(false)
 #          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
-#          assigns[:failed].should == true
+#          assigns(:failed).should == true
 #          #flash.now[:error].should == "Your allocations did not save."
 #        end
 #
