@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   # GET /courses.xml
   def index
     @all_courses = true
-    @courses = Course.find(:all, :order => "year DESC, semester DESC, number ASC")
+    @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
     index_core
