@@ -149,8 +149,6 @@ class TeamsController < ApplicationController
     @course = Course.find(params[:course_id])
     @team = Team.find(params[:id])
 
-
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @team }
@@ -160,10 +158,13 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/new
   # GET /courses/1/teams/new.xml
   def new
-    @team = Team.new
+    @team = Team.new(:course_id => params[:course_id])
     @team.course_id = params[:course_id]
     @course = Course.find(params[:course_id])
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    (1..5).each do
+      @team.people << Person.new
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -182,17 +183,19 @@ class TeamsController < ApplicationController
   # POST /courses/1/teams
   # POST /courses/1/teams.xml
   def create
-    msg = check_valid_names
-    if !msg.empty?
-      logger.debug msg
-      flash[:error] = msg
-      redirect_to :action => 'new'
-      return
-    end
-    update_course_faculty_label
-
     @team = Team.new(params[:team])
     @team.course_id = params[:course_id]
+    @course = Course.find(params[:course_id])
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+
+    msg = @team.update_members(params[:people])
+    unless msg.blank?
+      flash.now[:error] = msg
+      render :action => 'new'
+      return
+    end
+
+    update_course_faculty_label
 
     respond_to do |format|
       if @team.save
@@ -211,15 +214,17 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1.xml
   def update
     @team = Team.find(params[:id])
+    @course = @team.course
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
-    msg = check_valid_names
-    if !msg.empty?
-      logger.debug msg
-      flash[:error] = msg
-      redirect_to :action => 'update'
+    msg = @team.update_members(params[:people])
+    unless msg.blank?
+      flash.now[:error] = msg
+      render :action => 'edit'
       return
     end
-    handle_teams_people
+
+#    handle_teams_people
 
     update_course_faculty_label
 
@@ -302,46 +307,20 @@ class TeamsController < ApplicationController
 
 
 
-  private
-  def check_valid_names
-    error_msg = ""
-    return error_msg
-    if params[:team]['person_name']
-         Person.find_by_human_name(params[:team][:person_name]) rescue error_msg = error_msg + params[:team][:person_name] + " "
-    end
-    if params[:team]['person_name2']
-         Person.find_by_human_name(params[:team][:person_name2]) rescue error_msg = error_msg + params[:team][:person_name2] + " "
-    end
-    if params[:team]['person_name3']
-         Person.find_by_human_name(params[:team][:person_name3]) rescue error_msg = error_msg + params[:team][:person_name3] + " "
-    end
-    if params[:team]['person_name4']
-         Person.find_by_human_name(params[:team][:person_name4]) rescue error_msg = error_msg + params[:team][:person_name4] + " "
-    end
-    if params[:team]['person_name5']
-         Person.find_by_human_name(params[:team][:person_name5]) rescue error_msg = error_msg + params[:team][:person_name5] + " "
-    end
-    if params[:team]['person_name6']
-         Person.find_by_human_name(params[:team][:person_name6]) rescue error_msg = error_msg + params[:team][:person_name6] + " "
-    end
-    if !error_msg.empty?
-        "Unable to find users with the name " + error_msg
-    end
-  end
-
-  def handle_teams_people
-    logger.debug("handle_teams_people()")
-    if params['person_ids']
-      logger.debug("**************")
-      @team.people.clear
-      people = params['person_ids'].map { |id| Person.find(id) }
-      logger.debug("part 2")
-      logger.debug(people)
-      @team.people << people
-    end
-#  rescue
-#    logger.debug "record not found"
-  end
+#  private
+#  def handle_teams_people
+#    logger.debug("handle_teams_people()")
+#    if params['person_ids']
+#      logger.debug("**************")
+#      @team.people.clear
+#      people = params['person_ids'].map { |id| Person.find(id) }
+#      logger.debug("part 2")
+#      logger.debug(people)
+#      @team.people << people
+#    end
+##  rescue
+##    logger.debug "record not found"
+#  end
 
   def update_course_faculty_label
     @course = Course.find(params[:course_id])

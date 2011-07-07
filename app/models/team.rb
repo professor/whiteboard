@@ -3,53 +3,46 @@ class Team < ActiveRecord::Base
   belongs_to :primary_faculty, :class_name=>'User', :foreign_key => "primary_faculty_id"
   belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
   has_and_belongs_to_many :people, :join_table=>"teams_people"
-  
-  
-  validates_presence_of     :course_id
-  validates_uniqueness_of   :email, :allow_blank => true, :message => "The team name has already be used in this semester. Pick another name"
-  
-#  validates_each :person_name, :person_name2, :allow_nil, :allow_blank do |record, attr, value|
-#      record.errors.add attr, 'Person does not exist' if Person.find_by_human_name(value).nil?
-#  end
 
-  attr :old_email, true
-  attr :old_name, true
+  validates_presence_of     :course_id, :name
+  validates_uniqueness_of   :email, :allow_blank => true, :message => "The team name has already be used in this semester. Pick another name"
+
   attr :team_members_list_changed, true
 
-  def after_initialize
-    #Note: refactor this code using the rails dirty login, ie email_changed? email_was, etc.
-    self.old_email = self.email
-  end
+  before_validation :clean_up_data
+  after_save :update_mailing_list
 
-  def before_validation
+  before_destroy :remove_google_group
+
+
+  def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
     self.email = build_email unless self.name.blank?
+    self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+  end
+
+  def copy_peer_evaluation_dates_from_course
+    self.peer_evaluation_first_email = self.course.peer_evaluation_first_email if self.peer_evaluation_first_email.blank?
+    self.peer_evaluation_second_email = self.course.peer_evaluation_second_email if self.peer_evaluation_second_email.blank?
   end
 
   def before_save
-    return if self.name.blank?
-    return unless self.old_email != self.email|| self.team_members_list_changed
-
-
-    self.peer_evaluation_first_email = self.course.peer_evaluation_first_email if self.peer_evaluation_first_email.blank?
-    self.peer_evaluation_second_email = self.course.peer_evaluation_second_email if self.peer_evaluation_second_email.blank?
+    logger.debug("team.before_save() executed")
+    copy_peer_evaluation_dates_from_course
 
     self.updating_email = true
-    logger.debug("team.before_save() executed")
-#    update_google_mailing_list(self.email, self.old_email, self.id)
-#    self.send_later(:update_google_mailing_list, self.email, self.old_email, self.id)
-
-    self.email = self.email.sub('@west.cmu.edu','@sv.cmu.edu')
+#    unless self.email_changed? || self.team_members_list_changed
+#      self.updating_email = true
+#    end
 
     current_user = UserSession.find.user unless UserSession.find.nil?
     if current_user && self.name_changed?
       self.name =  self.name_was unless self.course.configure_teams_name_themselves || current_user.permission_level_of(:staff)
     end
-
   end
 
 
-
+  
   def update_google_mailing_list(new_email, old_email, id)
     logger.info("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
 
@@ -96,18 +89,9 @@ class Team < ActiveRecord::Base
   end
 #  handle_asynchronously :update_google_mailing_list
 
-  def after_save
+  def update_mailing_list
 #    Delayed::Job.enqueue(TeamMailingListJob.new(self.email_change, self.email_was, self.id))
     self.delay.update_google_mailing_list self.email, self.email_was, self.id
-
-    self.old_email = self.email
-  end
-
-  def before_destroy
-    logger.debug "trying before_destroy"
-    google_apps_connection.delete_group(self.email)
-  rescue GDataError => e
-    logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
   end
 
   def google_group
@@ -133,96 +117,79 @@ class Team < ActiveRecord::Base
   end
 
 
-  def remove_person(id)
-    person = Person.find_by_id(id)
-    if self.people.include?(person)
-      self.people.delete person
-      google_apps_connection.remove_member_from_group(person.email, self.google_group) unless self.name.blank?
-#      async_google_remove_member(person.email,self.google_group)
-    else
-      logger.error "Attempting to remove person #{person.human_name} who is not in team #{self.name}"
-    end
-    rescue ActiveRecord::RecordNotFound
-      logger.error "Attempting to remove an unknown person with id=#{id}"
-    rescue GAppsProvisioning::GDataError
-      logger.error "Probably trying to remove a person from a team that no longer has a google email."    
-  end
+#  def remove_person(id)
+#    person = Person.find_by_id(id)
+#    if self.people.include?(person)
+#      self.people.delete person
+#      google_apps_connection.remove_member_from_group(person.email, self.google_group) unless self.name.blank?
+##      async_google_remove_member(person.email,self.google_group)
+#    else
+#      logger.error "Attempting to remove person #{person.human_name} who is not in team #{self.name}"
+#    end
+#    rescue ActiveRecord::RecordNotFound
+#      logger.error "Attempting to remove an unknown person with id=#{id}"
+#    rescue GAppsProvisioning::GDataError
+#      logger.error "Probably trying to remove a person from a team that no longer has a google email."
+#  end
 
-  def add_person_by_human_name(name)
-    person = Person.find_by_human_name(name) unless name.blank?
-  rescue ActiveRecord::RecordNotFound
-    logger.error "Attempting to add an unknown person with name=#{name}"
-    errors.add(:person_name, "Person " + name + " not found")
-  else
-    unless person == nil or self.people.include?(person) # prevent duplicat people in same team
-      self.people << person
-      google_apps_connection.add_member_to_group(person.email, self.google_group)
-#      async_google_add_member(person.email,self.build_email)
-
-    end
-    person
-  end
+#  def add_person_by_human_name(name)
+#    person = Person.find_by_human_name(name) unless name.blank?
+#  rescue ActiveRecord::RecordNotFound
+#    logger.error "Attempting to add an unknown person with name=#{name}"
+#    errors.add(:person_name, "Person " + name + " not found")
+#  else
+#    unless person == nil or self.people.include?(person) # prevent duplicat people in same team
+#      self.people << person
+#      google_apps_connection.add_member_to_group(person.email, self.google_group)
+##      async_google_add_member(person.email,self.build_email)
+#
+#    end
+#    person
+#  end
 
   def build_email
-#    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@sv.cmu.edu"
     return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
   end
 
 
   
-  
-  def person_name
+  #Todo - create a test case for this
+  #Todo - move to a higher class or try as a mixin
+  #Todo - this code was copied to course.rb
+  def update_members(members)
+    self.people = []
+    return "" if members.nil?
+    members.delete("")
     
-  end
-  def person_name2
-    
-  end
-  def person_name3
-    
-  end
-  def person_name4
-    
-  end
-  def person_name5
-    
-  end
-  def person_name6
-    
-  end
-
-  def add_person_to_team(name)
-    logger.debug("add_person_to_team(#{name})")
-    unless name.blank?
-      self.team_members_list_changed = true
-      person = Person.find_by_human_name(name)
-      if person.nil?
-        errors.add(:person_name, "Person " + name + " not found")
-      else
-        self.people << person
-      end
-#     this line only needed if this were converted to an ajax call
-#      google_apps_connection.add_member_to_group(person.email, self.google_group) unless self.name.blank?
+    msg = ""
+    members.each do |name|
+       person = Person.find_by_human_name(name)
+       if person.nil?
+         all_valid_names = false
+         msg = msg + "'" + name + "' is not in the database. "
+         #This next line doesn't quite seem to work
+         self.errors.add(:person_name, "Person " + name + " not found")
+       else
+         self.people << person
+       end
     end
+    return msg
   end
 
-  def person_name=(name)
-    add_person_to_team(name)
-  end
-  def person_name2=(name)
-    add_person_to_team(name)
-  end
-  def person_name3=(name)
-    add_person_to_team(name)
-  end
-  def person_name4=(name)
-    add_person_to_team(name)
-  end
-  def person_name5=(name)
-    add_person_to_team(name)
-  end
-  def person_name6=(name)
-    add_person_to_team(name)
-  end
+#  def add_person_to_team(name)
+#    logger.debug("add_person_to_team(#{name})")
+#    unless name.blank?
+#      self.team_members_list_changed = true
+#      person = Person.find_by_human_name(name)
+#      if person.nil?
+#        errors.add(:person_name, "Person " + name + " not found")
+#      else
+#        self.people << person
+#      end
+##     this line only needed if this were converted to an ajax call
+##      google_apps_connection.add_member_to_group(person.email, self.google_group) unless self.name.blank?
+#    end
+#  end
 
   def show_addresses_for_mailing_list
     begin
@@ -267,5 +234,14 @@ class Team < ActiveRecord::Base
  def peer_evaluation_message_two_incomplete
    return "Action Required: please do this peer evaluation survey NOW. \n\n Today is your last day to do the peer evaluation."
  end
+
+
+  protected
+  def remove_google_group
+    logger.debug "trying before_destroy"
+    google_apps_connection.delete_group(self.email)
+  rescue GDataError => e
+    logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
+  end
 
 end

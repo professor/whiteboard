@@ -53,52 +53,27 @@
   <td><%= text_field_tag :secondary_faculty_label, @course.secondary_faculty_label, :size => 20 %> <i>(affects all teams in this course)</i></td></tr>
 </tbody></table>
   <br />
-  <h2> Team members </h2>
-<table>
-  <% @team.people.each do |person| %>
-  <tr id="person<%= person.id%>">
-    <td>
-    <%= person.human_name %>
-    <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
-  </td><td>
-    <%= link_to_remote "Remove now",
-        :url=>{
-            :controller=>"teams",
-            :action=>"remove_team_member",
-            :person_id=>person.id,
-            :team_id=>@team.id},
-        :update=>"person#{person.id}",
-        :loading=>"status('person#{person.id}')"
-%></td>
-</tr>
 
-  <% end %>
-</table>
+        <div id="people_in_a_collection">
+          <p>Team members</p>
+         <%= render :partial => '/people/person_in_a_collection', :collection =>@team.people, :locals => { :collection_form => f , :member_label => "Person"}   %>
+       </div>
 
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name2, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name3, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name4, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name5, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
-  <p>
-    <%= f.label 'Add a team member' %><br />
-    <%= text_field_with_auto_complete :team, :person_name6, { :size => 30 }, { :frequency=>0.5, :url => people_path(:js), :method => :get, :param_name => 'search' } %>
-  </p>
+       <div class="formItem indented"><p><%= link_to "Add a team member", "#", :id => "add_person" %></p></div>
+
+
+<%# content_for :javascript do %>
+   <%# javascript_tag do %>
+<script type="text/javascript">
+	$(function() {
+		$("#add_person").click(function() {
+           $("#people_in_a_collection").append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>");
+        });
+
+ 	});
+</script>
+   <%# end %>
+<%# end %>        
 
   <% end %>
   </div>
@@ -132,12 +107,3 @@
     <%= f.submit button_name %>
   </p>
 <% end %>
-
-
-<!--
-<h3> Team members </h3>
-<div id="list_team_members">
-    <%= render(:partial => "list_team_members", :object=> @team) %>
-</div>
--->
-

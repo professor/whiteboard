@@ -99,12 +99,20 @@ same time.
 === Curriculum Website Integration
 * Comments post on the curriculum website are managed by the rails application.
 
+=== Delayed Job
+To run delayed jobs from a development environment, type "rake jobs:work"
+
 ==Additional References
 To learn about unobtrusive javascript, check out:
    * http://www.simonecarletti.com/blog/2010/06/unobtrusive-javascript-in-rails-3/
 
-Working with jquery
+ Working with jquery
    * See if you have the right element selected by adding a .css("border", "2px red solid")
+
+To learn more about delayed job, check out:
+   * http://devcenter.heroku.com/articles/delayed-job
+   * http://blog.leetsoft.com/2008/2/17/delayed-job-dj
+
 To learn about acts_as_versioned, check out:
    * http://duffsdevice.blogspot.com/2007/06/actsasversioned-simple-walkthrough.html
    * http://blog.cornetdesign.com/2009/05/acts_as_versioned-getting-started/

@@ -123,6 +123,7 @@ class Course < ActiveRecord::Base
 
   #Todo - create a test case for this
   #Todo - move to a higher class or try as a mixin
+  #Todo - this code was copied to team.rb
   def update_faculty(members)
     self.faculty = []
     return "" if members.nil?
