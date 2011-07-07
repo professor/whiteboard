@@ -58,6 +58,6 @@
     <% if @person.effort_log_warning_email.nil? %>
 An effort log warning email has never been sent
 <% else %>
-An effort log warning email was last sent on <%=h @person.effort_log_warning_email, :format => 'chatty'  %>
+An effort log warning email was last sent on <%=l @person.effort_log_warning_email, :format => :chatty %>
 <% end %> 
   </fieldset>
