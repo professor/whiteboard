@@ -8,7 +8,7 @@ describe "sponsored_project_sponsors/new.html.erb" do
   it "renders new sponsor form" do
     render
 
-    response.should have_selector("form", :action => sponsored_project_sponsors_path, :method => "post")
+    rendered.should have_selector("form", :action => sponsored_project_sponsors_path, :method => "post")
   end
 
 end

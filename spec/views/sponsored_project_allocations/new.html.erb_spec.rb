@@ -12,21 +12,21 @@ describe "sponsored_project_allocations/new" do
   it "renders new allocation form" do
     render
 
-    response.should have_selector("form", :action => sponsored_project_allocations_path, :method => "post")
+    rendered.should have_selector("form", :action => sponsored_project_allocations_path, :method => "post")
   end
 
   it "renders a list of projects to pick from" do
     #Todo , make this test more interesting in rails 3
     render
 
-    response.should have_selector("select")
+    rendered.should have_selector("select")
   end
 
   it "renders a list of people to pick from" do
     #Todo , make this test more interesting in rails 3
     render
 
-    response.should have_selector("select")
+    rendered.should have_selector("select")
   end
 
 end

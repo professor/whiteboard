@@ -11,17 +11,11 @@ describe "pages/edit.html.erb" do
       stub_model(Course),
       stub_model(Course)
     ])
-#rspec 2
-#    @page = assign(:page, stub_model(Page,
-#      :new_record? => false
-#    ))
   end
 
   it "renders the edit page form" do
     render
 
-    response.should have_selector("form", :action => page_path(@page), :method => "post")
-#rspec 2
-#    rendered.should have_selector("form", :action => page_path(@page), :method => "post")
+    rendered.should have_selector("form", :action => page_path(@page), :method => "post")
   end
 end

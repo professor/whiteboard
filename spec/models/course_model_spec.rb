@@ -93,12 +93,12 @@ describe Course do
 
   it "should auto_generated_peer_evaluation_date_start" do
     course = Factory.build(:course, :semester => "Fall", :year => "2010")
-    course.auto_generated_peer_evaluation_date_start.to_s.should == "2010-10-08"
+    course.auto_generated_peer_evaluation_date_start.to_s.should == "2010-10-04"
   end
 
   it "should auto_generated_peer_evaluation_date_end" do
     course = Factory.build(:course, :semester => "Fall", :year => "2010")
-    course.auto_generated_peer_evaluation_date_end.to_s.should == "2010-10-15"
+    course.auto_generated_peer_evaluation_date_end.to_s.should == "2010-10-11"
   end
 
   it "is versioned" do
