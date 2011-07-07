@@ -14,9 +14,9 @@ describe 'pages/_editable_form.html.erb' do
   end
 
   it 'should have title fields' do
-    response.should have_tag('form') do |f|
-      f.should have_tag("input[name='page[title]']")
-      f.should have_tag("textarea[name='page[tab_one_contents]']")
+    response.should have_selector('form') do |f|
+      f.should have_selector("input[name='page[title]']")
+      f.should have_selector("textarea[name='page[tab_one_contents]']")
 #rspec2
 #      rendered.should have_selector('form') do |f|
 #      f.should have_selector("input[name='page[title]']")

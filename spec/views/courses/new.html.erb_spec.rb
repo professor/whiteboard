@@ -13,16 +13,16 @@ describe "courses/new.html.erb" do
   it "renders new page form" do
     render
 
-    response.should have_tag("form", :action => courses_path, :method => "post")
+    response.should have_selector("form", :action => courses_path, :method => "post")
   end
 
  it 'should have fields' do
    render
 
-    response.should have_tag('form') do |f|
-      f.should have_tag("input[name='course[number]']")
-      f.should have_tag("select[name='course[semester]']")
-      f.should have_tag("input[name='course[year]']")
+    response.should have_selector('form') do |f|
+      f.should have_selector("input[name='course[number]']")
+      f.should have_selector("select[name='course[semester]']")
+      f.should have_selector("input[name='course[year]']")
     end
   end
 

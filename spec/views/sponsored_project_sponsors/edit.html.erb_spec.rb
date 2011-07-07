@@ -8,7 +8,7 @@ describe "sponsored_project_sponsors/edit.html.erb" do
   it "renders edit sponsor form" do
     render
 
-    rendered.should have_tag("form", :action => sponsored_project_sponsors_path(@sponsor), :method => "post")
+    rendered.should have_selector("form", :action => sponsored_project_sponsors_path(@sponsor), :method => "post")
 
   end
 end

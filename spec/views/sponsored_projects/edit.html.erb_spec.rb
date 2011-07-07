@@ -9,7 +9,7 @@ describe "sponsored_projects/edit.html.erb" do
   it "renders edit project form" do
     render
 
-    response.should have_tag("form", :action => sponsored_projects_path(@project), :method => "post")
+    response.should have_selector("form", :action => sponsored_projects_path(@project), :method => "post")
 
   end
 
@@ -17,6 +17,6 @@ describe "sponsored_projects/edit.html.erb" do
     #Todo , make this test more interesting in rails 3
     render
 
-    response.should have_tag("select")
+    response.should have_selector("select")
   end
 end

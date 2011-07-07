@@ -20,7 +20,7 @@ describe "pages/edit.html.erb" do
   it "renders the edit page form" do
     render
 
-    response.should have_tag("form", :action => page_path(@page), :method => "post")
+    response.should have_selector("form", :action => page_path(@page), :method => "post")
 #rspec 2
 #    rendered.should have_selector("form", :action => page_path(@page), :method => "post")
   end

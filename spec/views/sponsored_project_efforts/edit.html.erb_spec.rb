@@ -11,7 +11,7 @@
 #  it "renders edit effort form" do
 #    render :id => @person.twiki_name
 #
-##    response.should have_tag("form", :action => sponsored_project_effort_path(@efforts[0].sponsored_project_allocation.person.twiki_name), :method => "post")
+##    response.should have_selector("form", :action => sponsored_project_effort_path(@efforts[0].sponsored_project_allocation.person.twiki_name), :method => "post")
 #
 #  end
 #

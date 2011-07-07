@@ -10,7 +10,7 @@
 #  it "renders edit allocation form" do
 #    render
 #
-#    response.should have_tag("form", :action => sponsored_project_allocations_path(@allocation), :method => "post")
+#    response.should have_selector("form", :action => sponsored_project_allocations_path(@allocation), :method => "post")
 #
 #  end
 #
@@ -18,6 +18,6 @@
 #    #Todo , make this test more interesting in rails 3
 #    render
 #
-#    response.should have_tag("select")
+#    response.should have_selector("select")
 #  end
 #end

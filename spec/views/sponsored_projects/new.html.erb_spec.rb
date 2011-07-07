@@ -10,13 +10,13 @@ describe "sponsored_projects/new.html.erb" do
   it "renders new project form" do
     render
 
-    response.should have_tag("form", :action => sponsored_projects_path, :method => "post")
+    response.should have_selector("form", :action => sponsored_projects_path, :method => "post")
   end
 
   it "renders a list of sponsors to pick from" do
     #Todo , make this test more interesting in rails 3
     render
 
-    response.should have_tag("select")
+    response.should have_selector("select")
   end
 end
