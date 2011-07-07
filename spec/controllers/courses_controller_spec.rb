@@ -195,6 +195,7 @@ describe CoursesController do
         end
 
         it "updates the requested course name" do
+          #error has to do with course model being versioned. Making it un-versioned lets the test pass
           course.reload.name.should == "NNNNN"
         end
 
