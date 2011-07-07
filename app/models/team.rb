@@ -11,9 +11,9 @@ class Team < ActiveRecord::Base
 
   before_validation :clean_up_data
   after_save :update_mailing_list
+  before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email, :prevent_students_from_changing_team_name
 
   before_destroy :remove_google_group
-
 
   def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
@@ -28,13 +28,16 @@ class Team < ActiveRecord::Base
 
   def before_save
     logger.debug("team.before_save() executed")
-    copy_peer_evaluation_dates_from_course
+  end
 
+  def invalidate_team_email
     self.updating_email = true
 #    unless self.email_changed? || self.team_members_list_changed
 #      self.updating_email = true
 #    end
+  end
 
+  def prevent_students_from_changing_team_name
     current_user = UserSession.find.user unless UserSession.find.nil?
     if current_user && self.name_changed?
       self.name =  self.name_was unless self.course.configure_teams_name_themselves || current_user.permission_level_of(:staff)
