@@ -13,7 +13,7 @@ describe DeliverablesController do
 
     describe "GET index for course" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id)
         Deliverable.stub(:find_all_by_course_id).and_return([@deliverable, @deliverable])
         Course.stub(:find).and_return(@course)
@@ -56,7 +56,7 @@ describe DeliverablesController do
 
     describe "GET my_deliverables" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
         Deliverable.stub(:find_current_by_person).and_return([@deliverable, @deliverable])
         Deliverable.stub(:find_past_by_person).and_return([@deliverable, @deliverable])
@@ -101,7 +101,7 @@ describe DeliverablesController do
 
     describe "GET show" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :is_team_deliverable => true)
         @team = stub_model(Team)
         Deliverable.stub(:find).and_return(@deliverable)
