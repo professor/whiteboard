@@ -48,7 +48,7 @@
 
 <h1>Editing <%=h @person.human_name %> </h1>
 
-This account was last updated on <%= @person.updated_at.to_s("chatty")  %>
+This account was last updated on <%= l @person.updated_at, :format => :chatty  %>
 
 <%= form_for @person, :html => { :multipart => true } do |f| %>
   <% if @person.errors.any? %>
