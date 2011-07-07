@@ -121,7 +121,7 @@ Version <%= version.version %>
 <%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
 <% end %>
 <% updated_by = Person.find(:first, :conditions=> ["id = ?", version.updated_by_user_id]) %><% if !updated_by.nil? %>by <%=h updated_by.human_name %><% end %>
-on <%=h version.updated_at, :format => "detailed" %>
+on <%=h version.updated_at.to_s("detailed") %>
  <br/>
 <% end %>
 <br/><br/>
