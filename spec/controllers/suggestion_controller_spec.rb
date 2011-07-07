@@ -11,7 +11,7 @@ describe SuggestionsController do
     end
     it "prompts for an email address if the user is not logged in" do
        get :new
-       response.should have_tag("input", :id => "suggestion_email")
+       response.should have_selector("input", :id => "suggestion_email")
     end
 
   end

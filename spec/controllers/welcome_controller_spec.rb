@@ -16,9 +16,9 @@ describe WelcomeController do
     end
   end
 
-  describe "GET 'config'" do
+  describe "GET 'configuration'" do
     it "should be successful" do
-      get 'config'
+      get 'configuration'
       response.should be_success
     end
   end
