@@ -49,13 +49,15 @@ module LoginHelper
 
    def login_user person
      activate_authlogic
-     UserSession.create(User.find(person.id))
+     @current_user = User.find(person.id)
+     UserSession.create(@current_user)
    end
 
 
-def current_user(stubs = {})
-  @current_user ||= mock_model("User", stubs)
-end
+   def current_user(stubs = {})
+     #current user could get set when being login_user gets called, otherwise use a generic mock model
+     @current_user ||= mock_model("User", stubs)
+   end
 
 end
 include LoginHelper
