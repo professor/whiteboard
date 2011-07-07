@@ -8,20 +8,20 @@ describe 'A user visiting the site', :type => :request do
   context 'when not logged in' do
     it 'welcomes the user' do
       visit root_path
-      page.should have_content('Welcome')
+      page.should have_content('CARNEGIE MELLON SILICON VALLEY')
     end
   end
   
-  context 'when logged in' do
-    before do
-      login_user(user)
-    end
-    
-    it 'welcomes the user' do
-      visit "/people"
-      page.should have_content('Listing people')
-    end
-  end
+  # context 'when logged in' do
+  #   before do
+  #     login_user(user)
+  #   end
+  #   
+  #   it 'only shows content to a logged in user' do
+  #     visit people_path
+  #     page.should have_content('Listing people')
+  #   end
+  # end
   
   #Browse to the homepage and click the Sign In link 
   # before do 
