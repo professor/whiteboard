@@ -25,6 +25,7 @@ gem 'paperclip'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'acts_as_versioned' 
+gem 'acts_as_list'
 
 gem 'rmagick'
 
