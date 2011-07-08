@@ -56,7 +56,7 @@ describe Page do
                       :updated_by_user_id => 10,
                       :url => "ppm")
       @msp.should_not be_valid
-      @msp.errors[:url].should_not be_nil
+      @msp.errors[:url].should_not be_blank
       @msp.errors[:url].should == "has already been taken"
     end
 
@@ -64,15 +64,15 @@ describe Page do
       login_user(Factory(:faculty_frank))
       @page.url = "123"
       @page.should_not be_valid
-      @page.errors[:url].should_not be_nil
+      @page.errors[:url].should_not be_blank
 #      @page.errors[:url].should == "has already been taken"
       @page.url = "test123"
       @page.should be_valid
-      @page.errors[:url].should be_nil
+      @page.errors[:url].should be_blank
 
       @page.url = "123test123test12321"
       @page.should be_valid
-      @page.errors[:url].should be_nil
+      @page.errors[:url].should be_blank
     end
 
     it "that defaults from the title field" do
