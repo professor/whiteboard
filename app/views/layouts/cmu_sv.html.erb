@@ -12,7 +12,6 @@
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
                              "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
                              "jquery_ujs.js",
-                              "jquery.corners",
                               "tablesorter",
                               "tablesorter_filter" %>
   <%= csrf_meta_tag %>
@@ -20,13 +19,6 @@
 
   <%= yield :tablesorter %>
 
-<script type="text/javascript">
-        //<![CDATA[
-$(document).ready(function(){
-    $('.rounded').corners();
-});
-//]]>
-</script>
 
   <%= stylesheet_link_tag '/cmu_sv/cmu.css' %>
   <%= stylesheet_link_tag '/cmu_sv/cmu_print.css', :media=>"print" %>

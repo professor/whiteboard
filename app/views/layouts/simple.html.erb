@@ -13,21 +13,12 @@
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
                              "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
                              "jquery_ujs.js",
-                              "jquery.corners",
                               "tablesorter",
                               "tablesorter_filter" %>
   <%= csrf_meta_tag %>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
 
   <%= yield :tablesorter %>
-
-<script type="text/javascript">
-        //<![CDATA[
-$(document).ready(function(){
-    $('.rounded').corners();
-});
-//]]>
-</script>
 
         <title><%= (title = yield :title) ? title : 'Carnegie Mellon Silicon Valley'%></title>
         <%# yield :javascript %>

@@ -16,7 +16,6 @@
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js",
                              "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
                              "jquery_ujs.js",
-                              "jquery.corners",
                               "tablesorter",
                               "tablesorter_filter" %>
   <%= csrf_meta_tag %>
@@ -24,14 +23,6 @@
 
   <%= yield :tablesorter %>
 
-<script type="text/javascript">
-        //<![CDATA[
-$(document).ready(function(){
-    $('.rounded').corners();
-    $('.rounded_left').corners("left");
-});
-//]]>
-</script>
    <title>Carnegie Mellon Silicon Valley - Carnegie Mellon University</title>  </head><body>
 
 <div id=gbar class="noPrint"><nobr><b class=gb1>Rails</b><a href="http://partnerpage.google.com/west.cmu.edu?tab=oS" class=gb1 target=_blank>Google Apps</a><a href="http://info.sv.cmu.edu" class=gb1 target=_blank>TWiki</a> <a href="http://cmusv.acrobat.com" class=gb1 target=_blank>Adobe Connect</a>  <a href="http://sv.cmu.edu" class=gb1 target=_blank>CMU-SV website</a> </nobr></div><div class=gbh style=left:0></div><div class=gbh style=right:0></div>
