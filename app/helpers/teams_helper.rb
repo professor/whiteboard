@@ -19,7 +19,5 @@ module TeamsHelper
     end
     return teams_list
   end
-
-  
  
 end

@@ -107,8 +107,8 @@ class TeamsController < ApplicationController
 
       @course = Course.find(params[:course_id])
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-      report = StringIO.new
-      CSV::Writer.generate(report, ',') do |title|
+
+      report = CSV.generate do |title|
         title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
           @teams.each do |team|
             team.people.each do |person|
@@ -117,8 +117,7 @@ class TeamsController < ApplicationController
             end
           end
         end
-      report.rewind
-      send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
+      send_data(report,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
       :disposition =>'attachment', :encoding => 'utf8')
      end
   end  
