@@ -57,7 +57,7 @@ describe Page do
                       :url => "ppm")
       @msp.should_not be_valid
       @msp.errors[:url].should_not be_blank
-      @msp.errors[:url].should == "has already been taken"
+      @msp.errors[:url].should == ["has already been taken"]
     end
 
     it "that is not a number because it would cause conflicts with the id field on lookup" do
