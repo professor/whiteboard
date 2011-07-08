@@ -76,9 +76,6 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
   </p>
   <p>
-    <%= check_box_tag("create_yammer_account", 1, true) %> Invite to yammer?
-  </p>
-  <p>
     <%= f.label :personal_email %><br />
     <%= f.text_field :personal_email %><br/>
     <span class="help_text">(Necessary for google email account creation)</span>
