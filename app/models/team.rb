@@ -26,10 +26,6 @@ class Team < ActiveRecord::Base
     self.peer_evaluation_second_email = self.course.peer_evaluation_second_email if self.peer_evaluation_second_email.blank?
   end
 
-  def before_save
-    logger.debug("team.before_save() executed")
-  end
-
   def invalidate_team_email
     self.updating_email = true
 #    unless self.email_changed? || self.team_members_list_changed
