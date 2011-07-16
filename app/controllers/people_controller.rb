@@ -190,7 +190,7 @@ class PeopleController < ApplicationController
       if @person.save_without_session_maintenance
          create_google_email =  params[:create_google_email]
          create_twiki_account = params[:create_twiki_account]
-         create_yammer_account = params[:create_yammer_account]
+         create_yammer_account = false #params[:create_yammer_account]
          Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil? &&  params[:create_yammer_account].nil?
 #          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
 #          job.perform
