@@ -37,8 +37,6 @@ Factory.create(:significance)
 Factory.create(:strategic)
 Factory.create(:woo)
 
-
-
 Factory.define :todd, :parent => :person  do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Todd"
@@ -194,8 +192,24 @@ Factory.define :paul, :parent => :person do |p|
   p.webiso_account "paulwong@andrew.cmu.edu"
 end
 
+Factory.define :aretha, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 0
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "ArethaKebirungi"
+  p.first_name "Aretha"
+  p.last_name "Kebirungi"
+  p.human_name "Aretha Kebirungi"
+  p.image_uri "/images/mascot.jpg"
+  p.email "aretha.kebirungi@sv.cmu.edu"
+  p.webiso_account "akebirun@andrew.cmu.edu"
+end
+
 Factory.create(:ian_zhang)
 Factory.create(:paul)
+Factory.create(:aretha)
 
 
 Factory(:task_type)
@@ -216,5 +230,6 @@ Factory.create(:charlie_moss)
 
 architecture = Factory.create(:mfse_current_semester)
 Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+
 
 
