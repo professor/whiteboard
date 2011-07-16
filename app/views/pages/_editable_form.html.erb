@@ -12,38 +12,39 @@
 
 <%= javascript_include_tag 'jquery.cookie' %>
 
-
 <script type="text/javascript">
 
     function enable_tabs(checkbox){
-            if (checkbox.attr('checked')) {
+            if (checkbox.attr('checked')) { //partial called on new form
                 $tabs = $('#tabs').tabs();
-                $tabs.tabs( "option", "disabled", [] ); //enables the tabs
-                $tabs.tabs( "option", "selected", 0 );
+                $tabs.tabs( 'option', 'disabled', [] ); //enables the tabs
+                $tabs.tabs( 'option', 'selected', parseInt($.cookie('selected_tab')));
                 $('.ui-tabs-nav').css('display', 'block');
                 $('#email_header').css('display', 'block');
-            }
+              }
             else {
                 $tabs = $('#tabs').tabs();
-                $tabs.tabs( "option", "selected", 0 );
-                $tabs.tabs( "option", "disabled", [1, 2, 3] );
+                $tabs.tabs( 'option', 'selected', 0 );
+                $tabs.tabs( 'option', 'disabled', [1, 2, 3] );
                 $('.ui-tabs-nav').css('display', 'none');
                 $('#email_header').css('display', 'none');
-            };
-      }
-
+            }
+     }
 
 	$(function() {
-		$("#tabs").tabs();
-        $( ".selector" ).tabs({ cookie: { expires: 30 } });
-        $('#page_is_task').change(function(){
-            enable_tabs($(this));
+    $('#tabs').tabs();
+    $( '.selector' ).tabs({ cookie: { name: 'selected_tab', expires: 30 } });
+    $('#page_is_task').change(function(){
+      enable_tabs($(this));
         })
     });
 
-
     $(document).ready(function(){
-        enable_tabs($('#page_is_task'))
+      //enable_tabs($(this));  //does not seem to be required
+
+      //select tab according to index saved in cookie
+      $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+      $.cookie('selected_tab', null);   //clear cookie
     });
 
 
@@ -248,7 +249,6 @@
 </script>
 
 
-
 <%= form_for(@page) do |f| %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
@@ -261,6 +261,7 @@
       </ul>
     </div>
   <% end %> 
+
   <p>
     <%= f.label :course_id %><br />
     <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
@@ -296,7 +297,7 @@
 	</ul>
 	<div id="tabs-1">
       <div id="email_header">
-      <div id="email_from_header">From: </div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+      <div id="email_from_header">From:</div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
       </div>
       <div id="email_details">

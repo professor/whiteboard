@@ -1,19 +1,32 @@
 <% if @page.editable?(current_user) %>
-<div class="right_link"><%= link_to 'Edit Page', edit_page_path(@page) %></div>
+<div class="right_link">
+  <%= link_to 'Edit Page', edit_page_path(@page)%>
+</div>
 <% end %>
 
 <%= javascript_include_tag 'jquery.cookie' %>
 
-
 <script type="text/javascript">
-	$(function() {
-		$("#tabs").tabs();
-        $( ".selector" ).tabs({ cookie: { expires: 30 } });
-        $("#highlight").highlight();
-        $("#error").error();
-	});
 
-	</script>
+  $(function() {
+    $('#tabs').tabs();
+    $('.selector').tabs({ cookie: { name: 'selected_tab', expires: 30} });
+    $("#error").error();
+    //$("#highlight").highlight();
+    
+  });
+
+  $(document).ready(function(){
+
+    //Attach event to tab selection & save selected tab in cookie
+    $('#tabs').bind('tabsselect', function(event, tab){
+      $.cookie('selected_tab', tab.index);
+     });
+
+    $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+   });
+
+</script>
 
 
 <% unless @page.is_task? %>
@@ -31,7 +44,7 @@
         <% end %>
 	</ul>
 	<div id="tabs-1">
-      <div id="email_from_header">From: </div><div id="email_from_contents"><%=h @page.tab_one_email_from %></div>
+     <div id="email_from_header">From:</div><div id="email_from_contents"><%=h @page.tab_one_email_from %></div>
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%=h @page.tab_one_email_subject %></div>
       <div id="email_details">
         <p><%= sanitize_trusted(@page.tab_one_contents) %></p>

@@ -46,9 +46,11 @@ group :development, :test do
   gem 'rake'
   gem 'pg'
   gem 'mongrel', '>= 1.2.0.pre2', :require => nil
+
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x'
   gem 'ruby-debug-ide' #'0.4.6'
+
   gem 'shoulda'
 #  gem 'hanna'
   gem 'rcov'

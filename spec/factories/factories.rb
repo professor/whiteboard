@@ -131,4 +131,5 @@ Factory.define :user, :class => User do |p|
   p.password_salt Authlogic::Random.hex_token
   p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
   p.persistence_token rand(36**60).to_s(36)
+
 end

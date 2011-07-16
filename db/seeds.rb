@@ -92,6 +92,17 @@ end
 
 sleep(0.02)
 
+Factory.define :aretha, :parent => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Aretha"
+  p.last_name "Kebirungi"
+  p.human_name "Aretha Kebirungi"
+  p.email "aretha.kebirungi@sv.cmu.edu"
+  p.is_student 1
+end
+
+sleep(0.02)
+
 Factory.define :awe_smith, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
@@ -226,10 +237,12 @@ Factory.create(:howard)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
+Factory.create(:aretha)
 
 
-architecture = Factory.create(:mfse_current_semester)
-Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+#architecture = Factory.create(:mfse_current_semester)
+#Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+
 
 
 
