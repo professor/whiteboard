@@ -12,7 +12,7 @@ describe SponsoredProjectEffortsController do
     describe "GET index" do
       before(:each) do
         @effort_mock = mock_model(SponsoredProjectEffort)
-        SponsoredProjectEffort.stub(:find).and_return([@effort_mock, @effort_mock])
+        SponsoredProjectEffort.stub(:for_all_users_for_a_given_month).and_return([@effort_mock, @effort_mock])
         get :index
       end
 
