@@ -33,10 +33,16 @@ gem 'authlogic'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
+gem 'pg'
+
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
 group :production do
+  gem 'thin'
+  gem 'newrelic_rpm'
+  
+  #gem 'daemons 1.1.4' #this is used by heroku on 7/18/2011
   gem 'rack-google_analytics', :require => "rack/google_analytics"
   gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
   gem 'factory_girl_rails' #This is necessary when we want to load factory seeds into a production database
@@ -44,9 +50,7 @@ end
 
 group :development, :test do
   gem 'rake'
-  gem 'pg'
-  #gem 'mongrel', '>= 1.2.0.pre2', :require => nil
-  gem 'thin'
+  gem 'mongrel', '>= 1.2.0.pre2', :require => nil
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x'
   gem 'ruby-debug-ide' #'0.4.6'
