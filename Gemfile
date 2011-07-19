@@ -20,8 +20,7 @@ gem 'delayed_job' #, '2.1.0.pre'
 gem 'oauth'
 
 gem 'heroku'
-gem 'taps'
-gem 'paperclip' 
+gem 'paperclip'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'acts_as_versioned' 
@@ -49,6 +48,7 @@ group :production do
 end
 
 group :development, :test do
+  gem 'taps'
   gem 'rake'
   gem 'mongrel', '>= 1.2.0.pre2', :require => nil
   gem 'ruby-debug19'
