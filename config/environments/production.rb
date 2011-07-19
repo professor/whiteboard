@@ -53,7 +53,8 @@ CMUEducation::Application.configure do
   config.middleware.use ExceptionNotifier,
     :email_prefix => "[ERROR] ",
     :sender_address => %{"Exception" <support@example.com>},
-    :exception_recipients => %w(todd.sedano@sv.cmu.edu)
+    :exception_recipients => %w(todd.sedano@sv.cmu.edu),
+    :sections => %w{cmusv} + ExceptionNotifier::Notifier.default_sections
 
   config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-8300440-1")
 
