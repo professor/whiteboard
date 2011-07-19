@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   
     helper :all # include all helpers, all the time
 
-    include ExceptionNotifiable
-
     helper_method :current_user_session, :current_user
 
 
