@@ -26,10 +26,6 @@ class CoursesController < ApplicationController
     @semester = AcademicCalendar.next_semester()
     @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
-#    @semester_courses = Course.for_semester(@semester, @year, "Both")
-#    @mini_a_courses = Course.for_semester(@semester, @year, "A")
-#    @mini_b_courses = Course.for_semester(@semester, @year, "B")
-#
     index_core
   end
 
@@ -38,8 +34,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
 
-#    teams = Team.find_by_course_id(params[:id])
-    teams = Team.find(:all, :conditions => ["course_id = ?", params[:id]])
+    teams = Team.where("course_id = ?", params[:id])
 
     @emails = []
     teams.each do |team|
