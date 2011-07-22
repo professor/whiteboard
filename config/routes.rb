@@ -28,9 +28,11 @@ CMUEducation::Application.routes.draw do
   resources :course_configurations
   match '/courses/current_semester' => 'courses#current_semester', :as => :current_semester
   match '/courses/next_semester' => 'courses#next_semester', :as => :next_semester
-  resources :pages do
-    collection do
-      post :reposition
+  constraints({:id => /.*/}) do
+    resources :pages do
+      collection do
+        post :reposition
+      end
     end
   end
 
