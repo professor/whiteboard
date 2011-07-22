@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110706025043) do
+ActiveRecord::Schema.define(:version => 20110722213358) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -182,31 +182,6 @@ ActiveRecord::Schema.define(:version => 20110706025043) do
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
   add_index "pages", ["position"], :name => "index_pages_on_position"
   add_index "pages", ["url"], :name => "index_pages_on_url"
-
-  create_table "papers", :force => true do |t|
-    t.string   "title"
-    t.string   "authors_full_listing"
-    t.string   "conference"
-    t.integer  "year"
-    t.string   "paper_file_name"
-    t.string   "paper_content_type"
-    t.integer  "paper_file_size"
-    t.datetime "paper_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "citation"
-    t.date     "date"
-  end
-
-  add_index "papers", ["date"], :name => "index_papers_on_date"
-
-  create_table "papers_people", :id => false, :force => true do |t|
-    t.integer "paper_id"
-    t.integer "person_id"
-  end
-
-  add_index "papers_people", ["paper_id"], :name => "index_papers_people_on_paper_id"
-  add_index "papers_people", ["person_id"], :name => "index_papers_people_on_person_id"
 
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
     t.integer  "person_id"
