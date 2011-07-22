@@ -12,7 +12,7 @@
 <script type="text/javascript">
 
     function enable_tabs(checkbox){
-            if (checkbox.attr('checked')) {
+            if (checkbox.prop('checked')) {
                 $tabs = $('#tabs').tabs();
                 $tabs.tabs( "option", "disabled", [] ); //enables the tabs
                 $tabs.tabs( "option", "selected", 0 );

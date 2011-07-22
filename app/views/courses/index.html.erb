@@ -4,8 +4,9 @@
 <script type="text/javascript">
 $(document).ready(function() 
     {
-       if ($("#filterBoxOne").attr("disabled") == true)
+       if ($("#filterBoxOne").prop("disabled") == true)
        {
+           alert("were' here");
          $('#filterBoxOne').val('');
          $('#filterBoxOne').removeAttr("disabled");
          $('#filterBoxOne').focus();
