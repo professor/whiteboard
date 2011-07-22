@@ -25,7 +25,9 @@ CMUEducation::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  ActionMailer::Base.perform_deliveries = false
+  #ActionMailer::Base.perform_deliveries = false
+  ActionMailer::Base.perform_deliveries = true
+
 
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",

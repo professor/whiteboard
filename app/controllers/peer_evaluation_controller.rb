@@ -156,7 +156,7 @@ class PeerEvaluationController < ApplicationController
         @evaluation.save!
         questioncounter += 1
       end
-      
+
       personcounter += 1
       questioncounter = 0
     end
@@ -215,7 +215,7 @@ class PeerEvaluationController < ApplicationController
         @evaluation.save!
         questioncounter += 1
       end
-      
+
       personcounter += 1
       questioncounter = 0
     end
@@ -391,16 +391,20 @@ class PeerEvaluationController < ApplicationController
 
 private
   def send_email(team, faculty, to_address, message)
-           GenericMailer.deliver_email(
-             :bcc => "todd.sedano@sv.cmu.edu",
-             :to => to_address,
-             :subject => "peer evaluation for team #{team.name}",
-             :message => message,
-             :url_label => "Complete the survey now",
-             :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
-  #           :from => from_address,
-             :cc => faculty
-            )    
+    options = new Array(:to => to_address, :cc => faculty, :subject => "peer evaluation for team #{team.name}",
+                        :message => message, :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}",
+                        :url_label => "Complete the survey now")
+    GenericMailer.email(options).deliver
+  #         GenericMailer.deliver_email(
+  #           :bcc => "todd.sedano@sv.cmu.edu",
+  #           :to => to_address,
+  #           :subject => "peer evaluation for team #{team.name}",
+  #           :message => message,
+  #           :url_label => "Complete the survey now",
+  #           :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
+  ##           :from => from_address,
+  #           :cc => faculty
+  #          )
   end
 
 

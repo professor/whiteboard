@@ -1,6 +1,6 @@
 class EffortLogMailer < ActionMailer::Base
 
-  default :from => 'scotty.dog@sv.cmu.edu',
+  default :from => 'scotty.dog@sv.cmu.edu'
           :bcc => 'todd.sedano@sv.cmu.edu'
 
 
@@ -18,10 +18,9 @@ class EffortLogMailer < ActionMailer::Base
     @saying = saying
     @people_without_effort = people_without_effort
     @people_with_effort = people_with_effort
-    faculty = Array.new('todd.sedano@sv.cmu.edu', 'reed.letsinger@sv.cmu.edu', 'ed.katz@sv.cmu.edu', 'martin.radley@sv.cmu.edu')
     #consider using an list array for this up e.g EmailsArray.all.map(&:email).join(", ")
+    faculty = Array.new('todd.sedano@sv.cmu.edu', 'reed.letsinger@sv.cmu.edu', 'ed.katz@sv.cmu.edu', 'martin.radley@sv.cmu.edu')
 
-    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/public/images/ScottyDogLandscape.jpg")
     mail(:to => faculty, :subject => "Scotty Dog Midweek Warning Email Summary", :date => Time.now)
 
   end

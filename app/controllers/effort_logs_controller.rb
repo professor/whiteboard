@@ -4,10 +4,10 @@ class EffortLogsController < ApplicationController
 #  layout 'cmu_sv_no_pad', :only => [:index, :show]
   layout 'simple'
 
-  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
+  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email]
 
 
-  # Todo: consider moving these email methods to the model and update the rake task accordingly
+  # Todo: consider moving these email methods to the model(EffortLogs) and update the rake task accordingly
   #
   def create_midweek_warning_email
     if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
@@ -20,9 +20,7 @@ class EffortLogsController < ApplicationController
 
     @people_with_effort = Array.new
     @people_without_effort = Array.new
-    random_scotty_saying = ScottyDogSaying.all.rand.saying
-    #TOCHECK - sample() function proposed instead of rand for getting a random element from array
-    #random_scotty_saying = ScottyDogSaying.all.sample.saying
+    random_scotty_saying = ScottyDogSaying.all.sample.saying
 
     courses = Course.remind_about_effort_course_list
     courses.each do |course_id|
@@ -46,7 +44,6 @@ class EffortLogsController < ApplicationController
     @people_with_effort.each do |person|
       puts "#{person}"
     end
-
 
 #   respond_to do |format|
 #      format.html # index.html.erb
@@ -105,22 +102,22 @@ class EffortLogsController < ApplicationController
  
   def create_midweek_warning_email_send_it(random_scotty_saying, id)
     user = User.find_by_id(id)
-    #email = EffortLogMailer.create_midweek_warning(user)
+    EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
     #render(:text => "<pre>" + email.encoded + "</pre>")
-    email = EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
+
   end
 
   def create_endweek_faculty_email
-    notify_course_list = Course.remind_about_effort_course_list()
+  notify_course_list = Course.remind_about_effort_course_list
 
-#    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
-    last_week = (Date.today - 7).cweek
-    last_week_year = (Date.today -7).cwyear
+  #notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
+  last_week = (Date.today - 7).cweek
+  last_week_year = (Date.today -7).cwyear
 
-    if (!EffortLog.log_effort_week?(last_week_year, last_week))
-        puts "There was no class last week, so we won't remind students to log effort"
-        return
-    end
+  if (!EffortLog.log_effort_week?(last_week_year, last_week))
+       puts "There was no class last week, so we won't remind students to log effort"
+       return
+  end
 
     notify_course_list.each do |course|
       faculty = {}

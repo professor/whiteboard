@@ -1,0 +1,21 @@
+<p></p>
+
+<br/>
+<p>"<%= @curriculum_comment.comment %>"</p>
+<p><% if !@curriculum_comment.user_id.nil? %>
+by <%=h User.find(@curriculum_comment.user_id).human_name %>
+<% end %>
+</p>
+<br/>
+<p>This comment was <%= @status %> on this page:<br/>
+<%= @curriculum_comment.url %> </p>
+<!--
+<p><%= link_to "Curriculum page", @curriculum_comment.url %> </p>
+-->
+<br/>
+<br/>
+<p>Patrolling the campus,</p>
+<p>Scotty Dog</p>
+<br/>
+<%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %> 
+
