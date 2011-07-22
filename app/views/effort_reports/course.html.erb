@@ -1,6 +1,6 @@
 <% content_for :title, 'Effort Report for ' + @course.name  %>
 <% content_for :javascript do %>
-   <% javascript_tag do %>
+   <%= javascript_tag do %>
 	$(function() {
 		$("#panel_state_date").datepicker({
           showButtonPanel: true,

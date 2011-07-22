@@ -5,7 +5,8 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-s3'
 gem 'mechanize'
 
-gem 'webrobots', '0.0.9' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
+gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
+
 
 
 

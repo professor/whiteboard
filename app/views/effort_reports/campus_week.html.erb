@@ -1,6 +1,6 @@
 <% content_for :title, 'Campus view for week ' + @panel_state.week_number.to_s + ' of ' + @panel_state.year.to_s %>
 <% content_for :javascript do %>
-   <% javascript_tag do %>
+   <%= javascript_tag do %>
 	$(function() {
 		$("#panel_state_date").datepicker({
           showButtonPanel: true,
