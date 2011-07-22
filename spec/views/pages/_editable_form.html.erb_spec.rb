@@ -9,8 +9,8 @@ describe 'pages/_editable_form.html.erb' do
       stub_model(Course),
       stub_model(Course)
     ])
-    assign(:button_name, "Update")
-    render :locals => { :button_name => "Update" }
+    view.should_receive(:button_name).any_number_of_times.and_return("Update")
+    render
   end
 
   it 'should have title fields' do
