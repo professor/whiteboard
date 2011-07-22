@@ -3,7 +3,9 @@ class Course < ActiveRecord::Base
   belongs_to :course_number
   has_many :pages, :order => "position"
 
-  has_and_belongs_to_many :faculty, :join_table=>"courses_people", :class_name => "Person"
+  has_many :faculty_assignments
+  has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
+
 
   validates_presence_of :semester, :year, :mini, :name
 
