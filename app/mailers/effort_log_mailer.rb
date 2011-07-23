@@ -1,6 +1,6 @@
 class EffortLogMailer < ActionMailer::Base
 
-  default :from => 'scotty.dog@sv.cmu.edu'
+  default :from => 'scotty.dog@sv.cmu.edu',
           :bcc => 'todd.sedano@sv.cmu.edu'
 
 

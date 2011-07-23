@@ -162,16 +162,17 @@ Factory.define :architecture, :class => Course do |c|
  c.year "2008"
 end
 
+sleep(0.02)
 
-# Factory.define :team_triumphant, :class => Team do |t|
-#  t.name "Team Triumphant"
-#  t.email "triumphant@sv.cmu.edu"
-#  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
-#  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-#  t.person_name "Awe Smith"
-#  t.person_name2 "Betty Ross"
-#  t.person_name3 "Charlie Moss"
-# end
+Factory.define :team_triumphant, :class => Team do |t|
+  t.name "Team Triumphant"
+  t.email "triumphant@sv.cmu.edu"
+  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
+  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+  t.person_name "Awe Smith"
+  t.person_name2 "Betty Ross"
+  t.person_name3 "Charlie Moss"
+end
 
 Factory.define :ian_zhang, :parent => :person do |p|
   p.is_student 1
@@ -238,10 +239,11 @@ Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
 Factory.create(:aretha)
+#Factory.create(:team_triumphant)
 
 
-#architecture = Factory.create(:mfse_current_semester)
-#Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+architecture = Factory.create(:mfse_current_semester)
+Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
 
 
 
