@@ -157,7 +157,7 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/new
   # GET /courses/1/teams/new.xml
   def new
-    @team = Team.new(:course_id => params[:course_id])
+    @team = Team.new()
     @team.course_id = params[:course_id]
     @course = Course.find(params[:course_id])
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
