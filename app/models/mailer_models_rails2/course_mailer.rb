@@ -1,4 +1,4 @@
-class CourseMailer < GenericMailer
+class CourseMailer < ActionMailer::Base
 
     def configure_course_faculty_email(course, options = {})
     subject    options[:subject] || "Please let us know about your course #{course.name} (#{course.semester} #{course.year})"

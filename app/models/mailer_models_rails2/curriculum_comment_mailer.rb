@@ -1,4 +1,4 @@
-class CurriculumCommentMailer < ActionMailer::Base
+class CurriculumCommentMailer < ActionMailer::Base 
   
 
   def comment_update(curriculum_comment, status)

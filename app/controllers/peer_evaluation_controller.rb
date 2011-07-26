@@ -52,6 +52,7 @@ class PeerEvaluationController < ApplicationController
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
+
   def edit_evaluation
     @questions = @@questions
     @team = Team.find(params[:id])
@@ -121,8 +122,6 @@ class PeerEvaluationController < ApplicationController
 #    )
 #    @allocations.save!
 
-
-
   end
 
 
@@ -156,7 +155,7 @@ class PeerEvaluationController < ApplicationController
         @evaluation.save!
         questioncounter += 1
       end
-      
+
       personcounter += 1
       questioncounter = 0
     end
@@ -215,7 +214,7 @@ class PeerEvaluationController < ApplicationController
         @evaluation.save!
         questioncounter += 1
       end
-      
+
       personcounter += 1
       questioncounter = 0
     end
@@ -281,157 +280,159 @@ class PeerEvaluationController < ApplicationController
   def complete_report
     @team = Team.find(params[:id])
     @people = @team.people
-
     personcounter = 0
+
     @people.each do |person|
       #Step 1 save feedback
       feedback = params[:peer_evaluation_report][personcounter.to_s][:feedback]
       report = PeerEvaluationReport.find(:first,:conditions => {:recipient_id => person.id, :team_id => @team.id})
       if report.nil?
-        report = PeerEvaluationReport.new(
-          :recipient_id => person.id,
-          :team_id => @team.id,
-          :feedback => feedback
-        )
+        report = PeerEvaluationReport.new(:recipient_id => person.id, :team_id => @team.id, :feedback => feedback)
       else
         report.feedback = feedback
-      end
-      report.email_date = Date.today
-      report.save!
-
-      faculty = @team.faculty_email_addresses()
-
-      #Step 2 email feedback
-      if params[:commit] == "Save And Email All"
-        GenericMailer.deliver_email(
-          :to => person.email,
-          :subject => "Peer evaluation feedback from team #{@team.name}",
-          :message => feedback.gsub("\n", "<br/>"),
-          :url_label => "",
-          :url => "",
-#          :from => current_user.email,  Spam filters block it if the email from is different than the account it is sent from.
-          :cc => faculty
-        )
-      end
-
-      personcounter += 1
     end
 
+    report.email_date = Date.today
+    report.save!
 
+    faculty = @team.faculty_email_addresses()
+
+    #Step 2 email feedback
+    if params[:commit] == "Save And Email All"
+      options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
+                  :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
+      GenericMailer.email(options).deliver
+
+    # ---------- Rails 2 Implementation ----------
+
+    #     GenericMailer.deliver_email(
+    #          :to => person.email,
+    #          :subject => "Peer evaluation feedback from team #{@team.name}",
+    #          :message => feedback.gsub("\n", "<br/>"),
+    #          :url_label => "",
+    #          :url => "",
+    ##         :from => current_user.email,  Spam filters block it if the email from is different than the account it is sent from.
+    #          :cc => faculty
+    #)
+    end
+
+    personcounter += 1
+    end
 
     flash[:notice] = "Reports have been successfully saved."
     redirect_to(survey_monkey_path(@team.course, @team.id))
   end
 
 
- def email_reports
+  def email_reports
+
+  end
 
 
+  def create_please_do_evaluation_email
 
- end
+    teams = Team.all
+    emails_sent = 0
 
+    #teams = Team.find(:all, :conditions => ["id = ? ", "215"])
+    teams.each do |team|
+      #puts "Team: " + team.name + " (" + team.id.to_s + ") "
+      unless team.peer_evaluation_first_email.nil? && team.peer_evaluation_second_email.nil?
+        first_date_p = Date.today == team.peer_evaluation_first_email.to_date unless team.peer_evaluation_first_email.nil?
+        second_date_p = Date.today == team.peer_evaluation_second_email.to_date unless team.peer_evaluation_second_email.nil?
+        if ((first_date_p) ||
+            (second_date_p))
 
+          puts "Team: " + team.name + " (" + team.id.to_s + ") "
+          puts "First email date: " + team.peer_evaluation_first_email.to_s
+          puts "Second email date: " + team.peer_evaluation_second_email.to_s
+          puts "Today: " + Date.today.to_s
+          puts "1st comparison is true " if Date.today == team.peer_evaluation_first_email.to_date
+          puts "2nd comparison is true " if Date.today == team.peer_evaluation_second_email.to_date
+          puts ""
 
+          #from_address = "scotty.dog@sv.cmu.edu"
+          faculty = team.faculty_email_addresses()
 
-
- def create_please_do_evaluation_email
-
-     teams = Team.all
-     emails_sent = 0
-   #    teams = Team.find(:all, :conditions => ["id = ? ", "215"])
-      teams.each do |team|
-#        puts "Team: " + team.name + " (" + team.id.to_s + ") "
-        unless team.peer_evaluation_first_email.nil? && team.peer_evaluation_second_email.nil?
-          first_date_p = Date.today == team.peer_evaluation_first_email.to_date unless team.peer_evaluation_first_email.nil?
-          second_date_p = Date.today == team.peer_evaluation_second_email.to_date unless team.peer_evaluation_second_email.nil?
-          if ((first_date_p) ||
-              (second_date_p))
-
-              puts "Team: " + team.name + " (" + team.id.to_s + ") "
-              puts "First email date: " + team.peer_evaluation_first_email.to_s
-              puts "Second email date: " + team.peer_evaluation_second_email.to_s
-              puts "Today: " + Date.today.to_s
-              puts "1st comparison is true " if Date.today == team.peer_evaluation_first_email.to_date
-              puts "2nd comparison is true " if Date.today == team.peer_evaluation_second_email.to_date
-              puts ""
-
-              from_address = "scotty.dog@sv.cmu.edu"
-              faculty = team.faculty_email_addresses()
-
-              if first_date_p
-                to_address = team.email
-                to_address = []
-                team.people.each do |person|
-                  to_address << person.email
-                end
-                send_email(team, faculty, to_address, team.peer_evaluation_message_one)
-                emails_sent += 1
-              elsif second_date_p
-                to_address_done = []
-                to_address_incomplete = []
-                team.people.each do |person|
-                   if(PeerEvaluationReview.find(:first, :conditions => {:team_id => team.id, :author_id => person.id}).nil?)
-                     to_address_incomplete << person.email
-                   else
-                     to_address_done << person.email
-                   end
-                end
-                send_email(team, faculty, to_address_done, team.peer_evaluation_message_two_done)
-                send_email(team, faculty, to_address_incomplete, team.peer_evaluation_message_two_incomplete)
-                emails_sent += 2
+          if first_date_p
+            to_address = team.email
+            to_address = []
+            team.people.each do |person|
+              to_address << person.email
+            end
+              #send_email(team, faculty, to_address, team.peer_evaluation_message_one)
+            emails_sent += 1
+          elsif second_date_p
+            to_address_done = []
+            to_address_incomplete = []
+            team.people.each do |person|
+              if(PeerEvaluationReview.find(:first, :conditions => {:team_id => team.id, :author_id => person.id}).nil?)
+                to_address_incomplete << person.email
+              else
+                to_address_done << person.email
               end
-
+            end
+            send_email(team, faculty, to_address_done, team.peer_evaluation_message_two_done)
+            send_email(team, faculty, to_address_incomplete, team.peer_evaluation_message_two_incomplete)
+            emails_sent += 2
           end
+
         end
       end
+    end
 
-      return emails_sent
- end
+    return emails_sent
+  end
 
 
-private
+  private
   def send_email(team, faculty, to_address, message)
-           GenericMailer.deliver_email(
-             :bcc => "todd.sedano@sv.cmu.edu",
-             :to => to_address,
-             :subject => "peer evaluation for team #{team.name}",
-             :message => message,
-             :url_label => "Complete the survey now",
-             :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
-  #           :from => from_address,
-             :cc => faculty
-            )    
+    options = {:to => to_address, :cc => faculty, :subject => "Peer Evaluation for Team",
+               :message => "message", :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation",
+               :url_label => "Complete the survey now"}
+    GenericMailer.email(options).deliver
+
+    # ---------- Rails 2 Implementation ----------
+    #         GenericMailer.deliver_email(
+    #           :bcc => "todd.sedano@sv.cmu.edu",
+    #           :to => to_address,
+    #           :subject => "peer evaluation for team #{team.name}",
+    #           :message => message,
+    #           :url_label => "Complete the survey now",
+    #           :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
+    #           :from => from_address,
+    #           :cc => faculty
+    #          )
   end
 
 
   def generate_report_for_student(person_id, team_id)
-       report = PeerEvaluationReport.find(:first,:conditions => {:recipient_id => person_id, :team_id => team_id})
-       if report.nil?
-         report_string = ""
-            #report_string += "{" + person.human_name + "}\n"
-            questioncounter = 0
-            @@questions.each do |question|
-              report_string += question + "\n"
-             if questioncounter == @@questions.size - 1
-                learning_objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person_id})
-                report_string += "\"" + learning_objective.learning_objective + "\"\n" unless (learning_objective.nil? || learning_objective.learning_objective.nil? || learning_objective.learning_objective.empty?)
-             end
-              data = PeerEvaluationReview.find(:all, :conditions => {:team_id => team_id, :recipient_id => person_id, :question => question})
-              data.each do |answer|
-                author = Person.find(answer.author_id).human_name
-                report_string += "[" + author + "]\n"
-                report_string += " - " + answer.answer + "\n"
-              end
-              report_string += "\n"
-              questioncounter += 1
-            end
-            return report_string
-       else
-         return report.feedback
-       end
+    report = PeerEvaluationReport.find(:first,:conditions => {:recipient_id => person_id, :team_id => team_id})
+    if report.nil?
+      report_string = ""
+        #report_string += "{" + person.human_name + "}\n"
+      questioncounter = 0
+      @@questions.each do |question|
+        report_string += question + "\n"
+        if questioncounter == @@questions.size - 1
+          learning_objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person_id})
+          report_string += "\"" + learning_objective.learning_objective + "\"\n" unless (learning_objective.nil? || learning_objective.learning_objective.nil? || learning_objective.learning_objective.empty?)
+        end
+        data = PeerEvaluationReview.find(:all, :conditions => {:team_id => team_id, :recipient_id => person_id, :question => question})
+        data.each do |answer|
+          author = Person.find(answer.author_id).human_name
+          report_string += "[" + author + "]\n"
+          report_string += " - " + answer.answer + "\n"
+        end
+        report_string += "\n"
+        questioncounter += 1
+      end
+      return report_string
+    else
+      return report.feedback
+    end
 
- end
-
+  end
 
 
 end

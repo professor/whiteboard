@@ -1,4 +1,4 @@
-class PersonMailer < GenericMailer
+class PersonMailer < ActionMailer::Base 
 
 
   def welcome_email(welcome_email, person, password, options = {})

@@ -37,8 +37,6 @@ Factory.create(:significance)
 Factory.create(:strategic)
 Factory.create(:woo)
 
-
-
 Factory.define :todd, :parent => :person  do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Todd"
@@ -89,6 +87,17 @@ Factory.define :howard, :parent => :person do |p|
   p.last_name "Huang"
   p.human_name "Howard Awesome Huang"
   p.email "howard.huang@sv.cmu.edu"
+  p.is_student 1
+end
+
+sleep(0.02)
+
+Factory.define :aretha, :parent => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Aretha"
+  p.last_name "Kebirungi"
+  p.human_name "Aretha Kebirungi"
+  p.email "aretha.kebirungi@sv.cmu.edu"
   p.is_student 1
 end
 
@@ -153,16 +162,17 @@ Factory.define :architecture, :class => Course do |c|
  c.year "2008"
 end
 
+sleep(0.02)
 
-# Factory.define :team_triumphant, :class => Team do |t|
-#  t.name "Team Triumphant"
-#  t.email "triumphant@sv.cmu.edu"
-#  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
-#  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-#  t.person_name "Awe Smith"
-#  t.person_name2 "Betty Ross"
-#  t.person_name3 "Charlie Moss"
-# end
+Factory.define :team_triumphant, :class => Team do |t|
+  t.name "Team Triumphant"
+  t.email "triumphant@sv.cmu.edu"
+  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
+  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+  t.person_name "Awe Smith"
+  t.person_name2 "Betty Ross"
+  t.person_name3 "Charlie Moss"
+end
 
 Factory.define :ian_zhang, :parent => :person do |p|
   p.is_student 1
@@ -194,8 +204,24 @@ Factory.define :paul, :parent => :person do |p|
   p.webiso_account "paulwong@andrew.cmu.edu"
 end
 
+Factory.define :aretha, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 0
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "ArethaKebirungi"
+  p.first_name "Aretha"
+  p.last_name "Kebirungi"
+  p.human_name "Aretha Kebirungi"
+  p.image_uri "/images/mascot.jpg"
+  p.email "aretha.kebirungi@sv.cmu.edu"
+  p.webiso_account "akebirun@andrew.cmu.edu"
+end
+
 Factory.create(:ian_zhang)
 Factory.create(:paul)
+Factory.create(:aretha)
 
 
 Factory(:task_type)
@@ -212,9 +238,13 @@ Factory.create(:howard)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
+Factory.create(:aretha)
+#Factory.create(:team_triumphant)
 
 
 architecture = Factory.create(:mfse_current_semester)
 Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+
+
 
 

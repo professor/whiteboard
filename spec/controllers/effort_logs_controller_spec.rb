@@ -24,8 +24,8 @@ describe EffortLogsController do
 
     it "and not bother people who have logged effort" do
       person_who_has_logged_effort = Factory(:admin_andy, :effort_log_warning_email => Date.today - 7.days)
-      Person.stub(:find).and_return([person_who_has_logged_effort])
-      EffortLog.stub(:find).and_return(mock_model(EffortLog, :sum => 1))
+      Person.stub(:where).and_return([person_who_has_logged_effort])
+      EffortLog.stub(:where).and_return(mock_model(EffortLog, :sum => 1))
 
       (people_without_effort, people_with_effort) = subject.create_midweek_warning_email_for_se_students("random saying")
       people_without_effort.size.should == 0

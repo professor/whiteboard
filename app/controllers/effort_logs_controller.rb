@@ -4,10 +4,10 @@ class EffortLogsController < ApplicationController
 #  layout 'cmu_sv_no_pad', :only => [:index, :show]
   layout 'simple'
 
-  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
+  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email]
 
 
-  # Todo: consider moving these email methods to the model and update the rake task accordingly
+  # Todo: consider moving these email methods to the model(EffortLogs) and update the rake task accordingly
   #
   def create_midweek_warning_email
     if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
@@ -20,10 +20,10 @@ class EffortLogsController < ApplicationController
 
     @people_with_effort = Array.new
     @people_without_effort = Array.new
-    random_scotty_saying = ScottyDogSaying.all.rand.saying
+    random_scotty_saying = ScottyDogSaying.all.sample.saying
 
-   courses = Course.remind_about_effort_course_list
-   courses.each do |course_id|
+    courses = Course.remind_about_effort_course_list
+    courses.each do |course_id|
        create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end                
     
@@ -31,7 +31,7 @@ class EffortLogsController < ApplicationController
     @people_with_effort = @people_with_effort + with_effort
     @people_without_effort = @people_without_effort + without_effort
 
-    EffortLogMailer.deliver_midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort)
+    EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
 
     puts "There were #{@people_without_effort.size} without effort."
     puts ""
@@ -44,7 +44,6 @@ class EffortLogsController < ApplicationController
     @people_with_effort.each do |person|
       puts "#{person}"
     end
-
 
 #   respond_to do |format|
 #      format.html # index.html.erb
@@ -102,23 +101,23 @@ class EffortLogsController < ApplicationController
  
  
   def create_midweek_warning_email_send_it(random_scotty_saying, id)
-    user = User.find_by_id(id) 
-##    email = EffortLogMailer.create_midweek_warning(user) 
-##    render(:text => "<pre>" + email.encoded + "</pre>") 
-    email = EffortLogMailer.deliver_midweek_warning(random_scotty_saying, user)
+    user = User.find_by_id(id)
+    EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
+    #render(:text => "<pre>" + email.encoded + "</pre>")
+
   end
 
   def create_endweek_faculty_email
-    notify_course_list = Course.remind_about_effort_course_list()
+  notify_course_list = Course.remind_about_effort_course_list
 
-#    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
-    last_week = (Date.today - 7).cweek
-    last_week_year = (Date.today -7).cwyear
+  #notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
+  last_week = (Date.today - 7).cweek
+  last_week_year = (Date.today -7).cwyear
 
-    if (!EffortLog.log_effort_week?(last_week_year, last_week))
-        puts "There was no class last week, so we won't remind students to log effort"
-        return
-    end
+  if (!EffortLog.log_effort_week?(last_week_year, last_week))
+       puts "There was no class last week, so we won't remind students to log effort"
+       return
+  end
 
     notify_course_list.each do |course|
       faculty = {}
@@ -129,7 +128,7 @@ class EffortLogsController < ApplicationController
       end
       faculty_emails = []
       faculty.each {|faculty_id, value| faculty_emails << User.find_by_id(faculty_id).email }
-      EffortLogMailer.deliver_endweek_admin_report(course.id, course.name, faculty_emails)
+      EffortLogMailer.endweek_admin_report(course.id, course.name, faculty_emails).deliver
     end
   end
     
@@ -201,10 +200,6 @@ class EffortLogsController < ApplicationController
     end
   end
 
-
-
-  
-  
   # GET /effort_logs/1
   # GET /effort_logs/1.xml
   def show

@@ -81,3 +81,17 @@ Factory.define :team_member, :parent => :person do |p|
   p.human_name "Team Member"
   p.twiki_name "TeamMember"
 end
+
+Factory.define :student_team_member, :parent => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.login "team_member"
+  p.email "teammember@andrew.cmu.edu"
+  p.is_student true
+  p.is_alumnus false
+  p.first_name "Team"
+  p.last_name "Member"
+  p.human_name "Team Member"
+  p.twiki_name "TeamMember"
+  p.teams {|teams| [teams.association(:person_team)]}
+end
+

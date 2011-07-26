@@ -31,7 +31,7 @@ class SponsoredProjectAllocation < ActiveRecord::Base
     efforts.each do |effort|
       person = effort.sponsored_project_allocation.person
       unless effort.confirmed || person.emailed_recently(:sponsored_project_effort)
-        SponsoredProjectEffortMailer.deliver_monthly_staff_email(person, effort.month, effort.year)
+        SponsoredProjectEffortMailer.monthly_staff_email(person, effort.month, effort.year).deliver
         person.sponsored_project_effort_last_emailed = Time.now
         person.save
       end

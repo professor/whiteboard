@@ -8,38 +8,39 @@
 
 <%= javascript_include_tag 'jquery.cookie' %>
 
-
 <script type="text/javascript">
 
     function enable_tabs(checkbox){
             if (checkbox.prop('checked')) {
                 $tabs = $('#tabs').tabs();
-                $tabs.tabs( "option", "disabled", [] ); //enables the tabs
-                $tabs.tabs( "option", "selected", 0 );
+                $tabs.tabs( 'option', 'disabled', [] ); //enables the tabs
+                $tabs.tabs( 'option', 'selected', parseInt($.cookie('selected_tab')));
                 $('.ui-tabs-nav').css('display', 'block');
                 $('#email_header').css('display', 'block');
             }
             else {
                 $tabs = $('#tabs').tabs();
-                $tabs.tabs( "option", "selected", 0 );
-                $tabs.tabs( "option", "disabled", [1, 2, 3] );
+                $tabs.tabs( 'option', 'selected', 0 );
+                $tabs.tabs( 'option', 'disabled', [1, 2, 3] );
                 $('.ui-tabs-nav').css('display', 'none');
                 $('#email_header').css('display', 'none');
-            };
-      }
-
+            }
+     }
 
 	$(function() {
-		$("#tabs").tabs();
-        $( ".selector" ).tabs({ cookie: { expires: 30 } });
-        $('#page_is_task').change(function(){
-            enable_tabs($(this));
+    $('#tabs').tabs();
+    $( '.selector' ).tabs({ cookie: { name: 'selected_tab', expires: 30 } });
+    $('#page_is_task').change(function(){
+      enable_tabs($(this));
         })
     });
 
-
     $(document).ready(function(){
-        enable_tabs($('#page_is_task'))
+      //enable_tabs($(this));  //does not seem to be required
+
+      //select tab according to index saved in cookie
+      $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+      $.cookie('selected_tab', null);   //clear cookie
     });
 
 
@@ -113,10 +114,10 @@
     ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
     ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
     ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
-    /*,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
+    ,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
     ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
-    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
-    ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}*/
+/*    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
+    ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'} */
     ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
     ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
     ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
@@ -244,7 +245,6 @@
 </script>
 
 
-
 <%= form_for(@page) do |f| %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
@@ -257,6 +257,7 @@
       </ul>
     </div>
   <% end %> 
+
   <p>
     <%= f.label :course_id %><br />
     <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
@@ -292,7 +293,7 @@
 	</ul>
 	<div id="tabs-1">
       <div id="email_header">
-      <div id="email_from_header">From: </div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+      <div id="email_from_header">From:</div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
       </div>
       <div id="email_details">

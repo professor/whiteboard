@@ -1,0 +1,18 @@
+
+"<%= @curriculum_comment.comment %>"
+<% if !@curriculum_comment.user_id.nil? %>
+by <%=h User.find(@curriculum_comment.user_id).human_name %>
+<% end %>
+
+
+This comment was <%= @status %> on this page:
+<%= @curriculum_comment.url %>
+
+<%= link_to "Curriculum page", @curriculum_comment.url %>
+
+
+Patrolling the campus,
+Scotty Dog
+
+<%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %> 
+

@@ -91,13 +91,13 @@ class AcademicCalendar
       when 2010
         return 9..10
       else
-        GenericMailer.deliver_email(
-          :to => "todd.sedano@sv.cmu.edu",
-          :subject => "Academic Calendar needs updating: spring_break",
-          :message => "Please modify app/models/AcademicCalendar.rb spring_break(#{year})",
-          :url_label => "",
-          :url => ""
-        )
+        options = {:to => "todd.sedano@sv.cmu.edu",
+                   :subject => "Academic Calendar needs updating: spring_break",
+                   :message => "Please modify app/models/AcademicCalendar.rb spring_break(#{year})",
+                   :url_label => "",
+                   :url => ""
+        }
+        GenericMailer.email(options).email
         return nil
     end
   end
@@ -143,13 +143,13 @@ class AcademicCalendar
             return 35
         end
       else
-        GenericMailer.deliver_email(
-          :to => "todd.sedano@sv.cmu.edu",
-          :subject => "Academic Calendar needs updating: semester_start",
-          :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
-          :url_label => "",
-          :url => ""
-        )
+        options = {:to => "todd.sedano@sv.cmu.edu",
+                   :subject => "Academic Calendar needs updating: semester_start",
+                   :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
+                   :url_label => "",
+                   :url => ""
+        }
+        GenericMailer.email(options).email
     end
     
   end

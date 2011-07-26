@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+
+  <body>
+    <p><%= @message %></p>
+    <% unless (@url_label.blank? || @url.blank?) %>
+        <p><%= link_to @url_label, @url %> </p>
+    <% end %>
+    <br/>
+    <br/>
+    <p>Patrolling the campus,</p>
+    <p>Scotty Dog</p>
+    <br/>
+    <%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %>
+  </body>
+</html>

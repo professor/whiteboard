@@ -87,13 +87,13 @@ class Deliverable < ActiveRecord::Base
     end
     message += self.course.name
 
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Deliverable submitted for " + self.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url
-    )
+    options = {:to => mail_to,
+               :subject => "Deliverable submitted for " + self.course.name,
+               :message => message,
+               :url_label => "View this deliverable",
+               :url => url
+    }
+    GenericMailer.email(options).email
   end
 
   def send_deliverable_feedback_email(url)
@@ -105,13 +105,13 @@ class Deliverable < ActiveRecord::Base
     end
     message += self.course.name
 
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Feedback for " + self.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url
-    )
+    options = {:to => mail_to,
+               :subject => "Feedback for " + self.course.name,
+               :message => message,
+               :url_label => "View this deliverable",
+               :url => url
+    }
+    GenericMailer.email(options).email
   end
 
   protected

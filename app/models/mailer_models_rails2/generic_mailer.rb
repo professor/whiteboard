@@ -1,5 +1,4 @@
-class GenericMailer < ActionMailer::Base
-  
+class GenericMailer < ActionMailer::Base 
 
   def email(options = {})
     subject    options[:subject]
@@ -13,5 +12,6 @@ class GenericMailer < ActionMailer::Base
   end
 
 end
+
 
 

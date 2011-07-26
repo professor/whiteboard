@@ -1,4 +1,4 @@
-class SponsoredProjectEffortMailer < GenericMailer
+class SponsoredProjectEffortMailer < ActionMailer::Base 
 
   def monthly_staff_email(person, month, year, options = {})
     subject    options[:subject] || "Sponsored projects confirmation email for #{Date::MONTHNAMES[month]} #{year}"

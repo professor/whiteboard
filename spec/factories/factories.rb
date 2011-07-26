@@ -65,7 +65,7 @@ Factory.define :person, :class => Person do |p|
 end
 
 
-Factory.define :scotty_dog_saying do |sds|
+Factory.define :scotty_dog_saying, :class => ScottyDogSaying do |sds|
   sds.association :user, :factory => :student_sam
   sds.saying "Tartan is my favorite color"
 end
@@ -131,4 +131,5 @@ Factory.define :user, :class => User do |p|
   p.password_salt Authlogic::Random.hex_token
   p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
   p.persistence_token rand(36**60).to_s(36)
+
 end
