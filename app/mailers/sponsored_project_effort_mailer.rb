@@ -1,4 +1,4 @@
-class SponsoredProjectEffortMailer < ActionMailer::Base
+class SponsoredProjectEffortMailer < GenericMailer
   default :from => "hector.rastrullo@sv.cmu.edu",
           :cc => "hector.rastrullo@sv.cmu.edu",
           :bcc => "todd.sedano@sv.cmu.edu"

@@ -1,4 +1,4 @@
-class PersonMailer < ActionMailer::Base
+class PersonMailer < GenericMailer
   default :from => 'CMU-SV Official Communication <help@sv.cmu.edu>',
           :cc => 'help@sv.cmu.edu',
           :bcc => 'todd.sedano@sv.cmu.edu',
