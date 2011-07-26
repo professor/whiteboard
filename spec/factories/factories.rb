@@ -65,7 +65,7 @@ Factory.define :person, :class => Person do |p|
 end
 
 
-Factory.define :scotty_dog_saying do |sds|
+Factory.define :scotty_dog_saying, :class => ScottyDogSaying do |sds|
   sds.association :user, :factory => :student_sam
   sds.saying "Tartan is my favorite color"
 end

@@ -1,10 +1,10 @@
-<p><%= @message %></p>
+<%= @message %>
+
 <% unless (@url_label.blank? || @url.blank?) %>
-<p><%= link_to @url_label, @url %> </p>
+<%= link_to @url_label, @url %>
 <% end %>
-<br/>
-<br/>
-<p>Patrolling the campus,</p>
-<p>Scotty Dog</p>
-<br/>
+
+Patrolling the campus,
+Scotty Dog
+
 <%= image_tag("/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %>

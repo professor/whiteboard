@@ -21,9 +21,11 @@ class EffortLogsController < ApplicationController
     @people_with_effort = Array.new
     @people_without_effort = Array.new
     random_scotty_saying = ScottyDogSaying.all.rand.saying
+    #TOCHECK - sample() function proposed instead of rand for getting a random element from array
+    #random_scotty_saying = ScottyDogSaying.all.sample.saying
 
-   courses = Course.remind_about_effort_course_list
-   courses.each do |course_id|
+    courses = Course.remind_about_effort_course_list
+    courses.each do |course_id|
        create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end                
     
@@ -31,7 +33,7 @@ class EffortLogsController < ApplicationController
     @people_with_effort = @people_with_effort + with_effort
     @people_without_effort = @people_without_effort + without_effort
 
-    EffortLogMailer.deliver_midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort)
+    EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
 
     puts "There were #{@people_without_effort.size} without effort."
     puts ""
@@ -102,10 +104,10 @@ class EffortLogsController < ApplicationController
  
  
   def create_midweek_warning_email_send_it(random_scotty_saying, id)
-    user = User.find_by_id(id) 
-##    email = EffortLogMailer.create_midweek_warning(user) 
-##    render(:text => "<pre>" + email.encoded + "</pre>") 
-    email = EffortLogMailer.deliver_midweek_warning(random_scotty_saying, user)
+    user = User.find_by_id(id)
+    #email = EffortLogMailer.create_midweek_warning(user)
+    #render(:text => "<pre>" + email.encoded + "</pre>")
+    email = EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
   end
 
   def create_endweek_faculty_email
@@ -129,7 +131,7 @@ class EffortLogsController < ApplicationController
       end
       faculty_emails = []
       faculty.each {|faculty_id, value| faculty_emails << User.find_by_id(faculty_id).email }
-      EffortLogMailer.deliver_endweek_admin_report(course.id, course.name, faculty_emails)
+      EffortLogMailer.endweek_admin_report(course.id, course.name, faculty_emails).deliver
     end
   end
     
@@ -201,10 +203,6 @@ class EffortLogsController < ApplicationController
     end
   end
 
-
-
-  
-  
   # GET /effort_logs/1
   # GET /effort_logs/1.xml
   def show
