@@ -97,7 +97,7 @@ class AcademicCalendar
                    :url_label => "",
                    :url => ""
         }
-        GenericMailer.email(options).email
+        GenericMailer.email(options).deliver
         return nil
     end
   end
@@ -149,7 +149,7 @@ class AcademicCalendar
                    :url_label => "",
                    :url => ""
         }
-        GenericMailer.email(options).email
+        GenericMailer.email(options).deliver
     end
     
   end

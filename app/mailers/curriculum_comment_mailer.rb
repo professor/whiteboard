@@ -9,6 +9,6 @@ class CurriculumCommentMailer < ActionMailer::Base
     mail(:to => curriculum_comment.notify_instructors(),
         :subject => "Scotty Dog says: comment #{status} for your course",
         :date => Time.now)
-  end
+ end
 
 end

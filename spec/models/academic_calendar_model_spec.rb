@@ -140,7 +140,9 @@ describe AcademicCalendar do
     end
 
     it 'should warn the site administrator when the calendar is not current and needs updating' do
-      GenericMailer.should_receive(:deliver_email)
+      mailer = double("mailer")
+      mailer.stub(:deliver)
+      GenericMailer.should_receive(:email).and_return(mailer)
       AcademicCalendar.spring_break(1900).should == nil
     end
 
@@ -155,7 +157,9 @@ describe AcademicCalendar do
     end
 
     it 'should warn the site administrator when the calendar is not current and needs updating' do
-      GenericMailer.should_receive(:deliver_email)
+      mailer = double("mailer")
+      mailer.stub(:deliver)
+      GenericMailer.should_receive(:email).and_return(mailer)
       AcademicCalendar.semester_start("Fall", 1900).should == nil
     end
 

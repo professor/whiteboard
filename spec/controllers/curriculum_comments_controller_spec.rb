@@ -67,7 +67,9 @@ describe CurriculumCommentsController do
         end
 
         it "emails the comment" do
-          CurriculumCommentMailer.should_receive(:comment_update)
+          mailer = double("mailer")
+          mailer.stub(:deliver)
+          CurriculumCommentMailer.should_receive(:comment_update).and_return(mailer)
           post :create, :curriculum_comment => @curriculum_comment.attributes
         end
       end

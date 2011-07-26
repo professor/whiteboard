@@ -57,7 +57,8 @@ class CurriculumCommentsController < ApplicationController
 
     respond_to do |format|
       if @curriculum_comment.save
-        CurriculumCommentMailer.comment_update(@curriculum_comment, "created").deliver
+        a = CurriculumCommentMailer.comment_update(@curriculum_comment, "created")
+        a.deliver
         flash[:notice] = 'Comment was successfully created.'
         format.html { redirect_to(@curriculum_comment.url) }
         format.xml  { render :xml => @curriculum_comment, :status => :created, :location => @curriculum_comment }

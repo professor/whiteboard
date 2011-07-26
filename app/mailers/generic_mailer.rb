@@ -4,13 +4,16 @@ class GenericMailer < ActionMailer::Base
           :bcc => 'todd.sedano@sv.cmu.edu'
 
   def email(options = {})
-    @user = options[:to]
+    @to = options[:to]
     @message = options[:message]
     @url = options[:url]
     @url_label = options[:url_label]
 
-    mail(:to => @user.email, :cc => options[:cc],
+    mail(:to => @to, :cc => options[:cc],
          :subject => options[:subject], :date => Time.now)
+    #do |format|
+    #  format.text { render :text => message }
+#    end
 
   end
 

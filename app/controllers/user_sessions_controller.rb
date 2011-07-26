@@ -89,7 +89,7 @@ class UserSessionsController < ApplicationController
                        :url => "",
                        :cc => "todd.sedano@sv.cmu.edu"
             }
-            GenericMailer.email(options).email
+            GenericMailer.email(options).deliver
             failed_login "Sorry, no user with this email (#{email}) exists in the system. help@sv.cmu.edu was just notified of this issue."
           end
         else

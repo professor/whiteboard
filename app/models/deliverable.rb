@@ -93,7 +93,7 @@ class Deliverable < ActiveRecord::Base
                :url_label => "View this deliverable",
                :url => url
     }
-    GenericMailer.email(options).email
+    GenericMailer.email(options).deliver
   end
 
   def send_deliverable_feedback_email(url)
@@ -111,7 +111,7 @@ class Deliverable < ActiveRecord::Base
                :url_label => "View this deliverable",
                :url => url
     }
-    GenericMailer.email(options).email
+    GenericMailer.email(options).deliver
   end
 
   protected
