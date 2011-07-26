@@ -128,7 +128,7 @@ describe SponsoredProjectAllocation do
       @effort_fagan.save
 
       mailer = double("mailer")
-      mailer.stub(:monthly_staff_email)
+      mailer.stub(:deliver)
       SponsoredProjectEffortMailer.should_receive(:monthly_staff_email).with(@faculty_frank, @effort_frank.month, @effort_frank.year).and_return(mailer)
       SponsoredProjectEffortMailer.should_not_receive(:monthly_staff_email).with(@faculty_fagan, @effort_fagan.month, @effort_fagan.year)
       SponsoredProjectAllocation.emails_staff_requesting_confirmation_for_allocations
@@ -146,7 +146,7 @@ describe SponsoredProjectAllocation do
       @faculty_fagan.save
 
       mailer = double("mailer")
-      mailer.stub(:monthly_staff_email)
+      mailer.stub(:deliver)
       SponsoredProjectEffortMailer.should_receive(:monthly_staff_email).with(@faculty_frank, @effort_frank.month, @effort_frank.year).and_return(mailer)
       SponsoredProjectEffortMailer.should_not_receive(:monthly_staff_email).with(@faculty_fagan, @effort_fagan.month, @effort_fagan.year)
       SponsoredProjectAllocation.emails_staff_requesting_confirmation_for_allocations
