@@ -4,7 +4,7 @@ class EffortLogMailer < ActionMailer::Base
   def midweek_warning(saying, user)
     subject    "Scotty Dog says: #{saying}"
     recipients user.email
-    bcc        'todd.sedano@sv.cmu.edu'
+    #bcc        'todd.sedano@sv.cmu.edu'
     from       'scotty.dog@sv.cmu.edu'
     sent_on    Time.now
     
@@ -19,7 +19,8 @@ class EffortLogMailer < ActionMailer::Base
 
   def midweek_warning_admin_report(saying, people_without_effort, people_with_effort)
     subject    "Scotty Dog midweek warning email summary"
-    recipients ['todd.sedano@sv.cmu.edu', 'reed.letsinger@sv.cmu.edu', 'ed.katz@sv.cmu.edu', 'martin.radley@sv.cmu.edu']
+    #recipients ['todd.sedano@sv.cmu.edu', 'reed.letsinger@sv.cmu.edu', 'ed.katz@sv.cmu.edu', 'martin.radley@sv.cmu.edu']
+    recipients  'aretha.kebirungi@sv.cmu.edu'
     from       'scotty.dog@sv.cmu.edu'
     sent_on    Time.now
 
@@ -34,7 +35,7 @@ class EffortLogMailer < ActionMailer::Base
     subject    "Effort log data updated for #{course_name}"
     recipients faculty_emails
     from       'scotty.dog@sv.cmu.edu'
-    bcc        'todd.sedano@sv.cmu.edu'
+    #bcc        'todd.sedano@sv.cmu.edu'
     sent_on    Time.now
 
     body       :course_id => course_id, :course_name => course_name
@@ -42,8 +43,6 @@ class EffortLogMailer < ActionMailer::Base
 
 
   end
-
-
 
 
 end

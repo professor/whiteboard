@@ -1,29 +1,24 @@
-<p>Today, Scotty Dog says "<%= @saying %>"</p>
-<p></p>
+Today, Scotty Dog says "<%= @saying %>"
 
-<p>There were <%=  @people_without_effort.size %> without effort.</p>
+There were <%=  @people_without_effort.size %> without effort.
 
-<p>
 <% @people_without_effort.each do |person| %>
-   <%= person %><br/>
+   <%= person %>
 <% end %>
-</p>
-<p></p>
 
-<p>There were <%=  @people_with_effort.size %> with effort.</p>
-<p>
+
+There were <%=  @people_with_effort.size %> with effort.
 <% @people_with_effort.each do |person| %>
-   <%= person %><br/>
+   <%= person %>
 <% end %>
-</p>
 
-<p>Patrolling the campus,</p>
 
-<p>Scotty Dog</p>
-<br/>
+Patrolling the campus,
+
+Scotty Dog
+
 <%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %> 
-<br/>
-<p>Ps. Please put words in my mouth: <a href="http://rails.sv.cmu.edu/scotty_dog_sayings">Scotty Dog Sayings</a>
-</p>
+
+Ps. Please put words in my mouth: <%= link_to "Scotty Dog Sayings", "http://rails.sv.cmu.edu/scotty_dog_sayings" %>
 
   
