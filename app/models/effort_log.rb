@@ -100,6 +100,11 @@ class EffortLog < ActiveRecord::Base
         return false
       else
         return AcademicCalendar.week_during_semester?(year, week_number)
+      end
     end
+
+  def self.latest_for_person(person_id, week_number, year)
+    EffortLog.where("person_id = ? and week_number = ? and year = ?", person_id, week_number, year).first
   end
+
 end

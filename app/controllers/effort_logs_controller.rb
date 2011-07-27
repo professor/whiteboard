@@ -84,7 +84,7 @@ class EffortLogsController < ApplicationController
      week_number = Date.today.cweek
      people = Person.where("masters_program = ? and is_active = true and is_alumnus = false", "SE")
      people.each do |person|
-         effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", person.id, week_number, year).first
+         effort_log = EffortLog.latest_for_person(person.id, week_number, year)
          if(!person.emailed_recently(:effort_log))
            if((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently(:effort_log)))
              create_midweek_warning_email_send_it(random_scotty_saying, person.id)
