@@ -7,6 +7,7 @@ gem 'mechanize'
 
 gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
 
+gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
 
 
@@ -38,8 +39,9 @@ gem 'pg'
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
+gem 'thin'
+
 group :production do
-  gem 'thin'
   gem 'newrelic_rpm'
   
   #gem 'daemons 1.1.4' #this is used by heroku on 7/18/2011
@@ -51,8 +53,6 @@ end
 group :development, :test do
   gem 'taps'
   gem 'rake'
-  gem 'mongrel', '>= 1.2.0.pre2', :require => nil
-
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x'
   gem 'ruby-debug-ide' #'0.4.6'
