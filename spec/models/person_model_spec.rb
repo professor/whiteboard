@@ -208,28 +208,7 @@ describe Person do
 
   end
 
-  #TODO: see all team tests
-  describe "person's teams" do  
-
-    context "found for current semester" do
-
-    before(:all) do
-      activate_authlogic
-    end
-
-     before(:each) do
-      @team_member = Factory(:student_team_member)
-      
-     end
-
-     # TODO: look @ rspec for association again
-
-     it "have teams" do
-
-     end
-
-     
-    end
+  describe "person's teams" do
 
   end
 
