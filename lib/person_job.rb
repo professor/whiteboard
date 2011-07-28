@@ -10,7 +10,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
        if status.is_a?(String)
          error_message += "Google account not created. " + status + "</br></br>"
        else
-         PersonMailer.deliver_welcome_email([person.personal_email, person.email], person, password)
+         PersonMailer.welcome_email(person, password).deliver
        end
     end
     if create_twiki_account && person.twiki_created.blank?
@@ -39,22 +39,4 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
       ).deliver
     end
   end
-
-
-
-  private
-  def send_email(personal_email, sv_email, message)
-           PersonMailer.email(
-             :bcc => "todd.sedano@sv.cmu.edu",
-             :to => personal_email,
-             :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
-             :subject => "Welcome to Carnegie Mellon University Silicon Valley (" + sv_email + ")",
-             :message => message,
-#             :url_label => "Check your email",
-#             :url => "http://mail.google.com/a/west.cmu.edu/#inbox",
-             :cc => "help@sv.cmu.edu"
-            ).deliver
-  end
-
-
 end
