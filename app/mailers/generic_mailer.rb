@@ -11,10 +11,6 @@ class GenericMailer < ActionMailer::Base
 
     mail(:to => @to, :cc => options[:cc],
          :subject => options[:subject], :date => Time.now)
-    #do |format|
-    #  format.text { render :text => message }
-#    end
-
   end
 
 

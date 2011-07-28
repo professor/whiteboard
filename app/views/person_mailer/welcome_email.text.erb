@@ -13,12 +13,12 @@ As an INI student, you may want to forward your Silicon Valley email account to 
 -To check your email, you can use http://gmail.sv.cmu.edu/
 -As a start page, you can use http://my.sv.cmu.edu
 Note: We have two domains associated with our campus. "west.cmu.edu" is deprecated and "sv.cmu.edu" is prefered - Due to a Google Apps limitation, you will log in with a west.cmu.edu and urls will contain west.cmu.edu, even though we refer to ourselves as sv.cmu.edu -- you will need to update your account settings so that your email will appear as <%= @person.email %>.
--Log into <%= link_to "Account Settings", "http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts"%>
+-Log into "Account Settings" http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts
 -Click "Add another email address you own"
 -Type in <%= @person.email %>
 -Click "Send Verification"
 -Verify the address by going to "Inbox" on the left nav, reading the new email, and clicking on the confirmation link.
--Go back to <%= link_to "Account Settings","http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts"%>
+-Go back to "Account Settings" http://mail.google.com/a/west.cmu.edu/?ui=2#settings/accounts
 -Click "make default" to the right of <%= @person.email %>
 
 <% unless @person.masters_program == "INI" %>  
@@ -35,7 +35,7 @@ Your Andrew email account receives all main campus-based communications - includ
 Your Contact Information
 -------------------------
 Your contact information can be updated here:
-<%= link_to "http://rails.sv.cmu.edu/people/#{@person.twiki_name}"%> -- Please visit your page and update your biography and objectives. This is your opportunity to share information about yourself with your peers.  You can update all of your personal information as well. Your information is only viewable by Silicon Valley community members.
+<%= "http://rails.sv.cmu.edu/people/#{@person.twiki_name}"%> -- Please visit your page and update your biography and objectives. This is your opportunity to share information about yourself with your peers.  You can update all of your personal information as well. Your information is only viewable by Silicon Valley community members.
 * Action required: I have updated my biography and goals on my twiki user page
 
 TWiki is our primary collaboration tool
@@ -45,9 +45,9 @@ We use TWiki, a wiki server, for our collaboration needs.  Faculty use the twiki
 Google Apps
 ------------
 Google Apps is composed of a number of tools, including Docs, Calendar, Chat, Sites.
--<%= link_to "Email","http://gmail.sv.cmu.edu"%> is your primary communication tool between faculty, staff and students.
--<%= link_to "Docs", "http://docs.sv.cmu.edu"%> is used to occasionally share documents for immediate collaboration within small groups. (For long term and larger groups it's more appropriate to use TWiki)
--<%= link_to "Calendar", "http://calendar.sv.cmu.edu"%> is a must. It's used extensively for class/meeting planning, room reservations and various event planning. See <%= link_to "Google Calendars", "http://info.sv.cmu.edu/do/view/Public/GoogleCalendars"%> for directions on how to add in the Academic calendar.
+-Email: http://gmail.sv.cmu.edu is your primary communication tool between faculty, staff and students.
+-Docs: http://docs.sv.cmu.edu is used to occasionally share documents for immediate collaboration within small groups. (For long term and larger groups it's more appropriate to use TWiki)
+-Calendar: http://calendar.sv.cmu.edu is a must. It's used extensively for class/meeting planning, room reservations and various event planning. See Google Calendars http://info.sv.cmu.edu/do/view/Public/GoogleCalendars for directions on how to add in the Academic calendar.
 -Chat is just another useful tool for immediate quick communication with other staff and classmates. You can also make voice and video calls with it.
 -Sites can be used to quickly create a website for a small group of collaborators.
 
@@ -57,21 +57,21 @@ Adobe Acrobat Connect is an online meeting, collaboration and presentation tool.
 
 Facebook pages
 --------------
-In addition to the official <%= link_to "CMU-SV Facebook page", " http://www.facebook.com/carnegiemellonsiliconvalley"%>, our students have created a Facebook group for informal communication.
-Please add this group to your facebook account. <%= link_to "https://www.facebook.com/home.php?sk=group_154521461249599" %>
+In addition to the official CMU-SV Facebook page http://www.facebook.com/carnegiemellonsiliconvalley, our students have created a Facebook group for informal communication.
+Please add this group to your facebook account. https://www.facebook.com/home.php?sk=group_154521461249599
 
 MSDNAA
 -------
-The MSDN Academic Alliance (MSDNAA) is a library of free Microsoft software for Windows platform. (Office not included). You will receive an email when your account has been created. The url for MSDNAA is <%= link_to "http://msdnaa.sv.cmu.edu" %>
+The MSDN Academic Alliance (MSDNAA) is a library of free Microsoft software for Windows platform. (Office not included). You will receive an email when your account has been created. The url for MSDNAA is http://msdnaa.sv.cmu.edu
 
 Email distribution lists
 -------------------------
 A sample list of email distribution lists include:
--<%= mail_to "facilities@sv.cmu.edu" %> (room reservations and building inquiries)
--<%= mail_to "help@sv.cmu.edu" %> (tech help)
--<%= mail_to "twiki@sv.cmu.edu" %> (help for TWiki items)
--<%= mail_to "phd-students@sv.cmu.edu" %>
-All distribution lists are managed by Tech Ops. For a complete list of distrubtion lists, see <%= link_to "http://rails.sv.cmu.edu/mailing_lists" %>. Requests or questions regarding distribution lists should be forwarded to <%= mail_to "help@sv.cmu.edu" %>
+-facilities@sv.cmu.edu (room reservations and building inquiries)
+-help@sv.cmu.edu (tech help)
+-twiki@sv.cmu.edu (help for TWiki items)
+-phd-students@sv.cmu.edu
+All distribution lists are managed by Tech Ops. For a complete list of distrubtion lists, see http://rails.sv.cmu.edu/mailing_lists. Requests or questions regarding distribution lists should be forwarded to help@sv.cmu.edu
 
 Infrastructure requirements
 ---------------------------
@@ -84,18 +84,18 @@ We want every meeting participant to have the best possible experience. If you p
 -If your peers tell you that they can't hear you, it is your responsibility to do whatever it takes to remedy the situation which may include buying a different headset.  If you don't have a desk headset, we like the Plantronics S12. Cell phone headsets vary so much that we can't recommend one at this time.
 
 Review the best practices document:
-<%= link_to "http://info.sv.cmu.edu/do/view/Public/ConferenceCallBestPractices" %>
+http://info.sv.cmu.edu/do/view/Public/ConferenceCallBestPractices
 * Action required: I have the proper headset for my desk phone
 * Action required: I have the proper headset for my cell phone
 * Action required: My phone plan will allow me to participate remotely without resorting to Skype
 
 (Just for students)
 -------------------
-Before you arrive, use the Graffiti web for collaboration. We have a twiki web that is designed for student use. We call it Graffiti. You can use that web however you want - from looking for housing in the Silicon Valley, putting on a student social event (e.g. paintball excusion, billards), etc.  For example, if you are looking for housing in the Silicon Valley area and want to talk about what you are finding with other people, create a twiki word in the Graffiti web, email out the word to yammer or a distribution list, and everyone just updates that twiki word. This is a twiki best practice, that way, there is one place to look for current status. <%= link_to "http://info.sv.cmu.edu/do/view/Graffiti/WebHome" %>
+Before you arrive, use the Graffiti web for collaboration. We have a twiki web that is designed for student use. We call it Graffiti. You can use that web however you want - from looking for housing in the Silicon Valley, putting on a student social event (e.g. paintball excusion, billards), etc.  For example, if you are looking for housing in the Silicon Valley area and want to talk about what you are finding with other people, create a twiki word in the Graffiti web, email out the word to yammer or a distribution list, and everyone just updates that twiki word. This is a twiki best practice, that way, there is one place to look for current status.  http://info.sv.cmu.edu/do/view/Graffiti/WebHome
 
 Questions?
 -----------
-If you have any questions regarding your email account or technical resources at Carnegie Mellon Silicon Valley, please email <%= link_to "help@sv.cmu.edu" %>.  If you are a student and have any questions regarding Orientation or other transition items, please contact Gerry Elizondo at <%= mail_to "gerry.elizondo@sv.cmu.edu" %>. If you are a new hire, please contact Hector Rastrullo at <%= mail_to "hector.rastrullo@sv.cmu.edu" %>. We look forward to your arrival!
+If you have any questions regarding your email account or technical resources at Carnegie Mellon Silicon Valley, please email help@sv.cmu.edu  If you are a student and have any questions regarding Orientation or other transition items, please contact Gerry Elizondo at gerry.elizondo@sv.cmu.edu If you are a new hire, please contact Hector Rastrullo at hector.rastrullo@sv.cmu.edu We look forward to your arrival!
 
 
 

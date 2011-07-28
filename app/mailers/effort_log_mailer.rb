@@ -22,7 +22,6 @@ class EffortLogMailer < ActionMailer::Base
     faculty = Array.new('todd.sedano@sv.cmu.edu', 'reed.letsinger@sv.cmu.edu', 'ed.katz@sv.cmu.edu', 'martin.radley@sv.cmu.edu')
 
     mail(:to => faculty, :subject => "Scotty Dog Midweek Warning Email Summary", :date => Time.now)
-
   end
 
   def endweek_admin_report(course_id, course_name, faculty_emails)
@@ -30,7 +29,6 @@ class EffortLogMailer < ActionMailer::Base
     @course_name = course_name
 
     mail(:to => faculty_emails, :subject => "Effort log data updated for #{course_name}", :date => Time.now)
-
   end
 
 end
