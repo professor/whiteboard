@@ -1,4 +1,6 @@
 source 'http://rubygems.org'
+             
+gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
 
 gem 'rails', '3.0.9'
 gem 'jquery-rails', '>= 1.0.3'
@@ -52,7 +54,7 @@ end
 
 group :development, :test do
   gem 'taps'
-  gem 'rake'
+#  gem 'rake'
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x'
   gem 'ruby-debug-ide' #'0.4.6'
