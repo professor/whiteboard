@@ -84,7 +84,7 @@ Personal email: <%=h @person.personal_email %><br />
 
 <!-- <%= link_to 'Edit', edit_person_path(@person) %> | -->
 <p>
-<a href="<%=machine_name%>/people/<%=@person.id%>/edit" target="_top">Edit my information</a> |
-<a href="<%=machine_name%>/people/<%=@person.id%>" target="_top">More information</a>
+<a href="<%=@machine_name%>/people/<%=@person.id%>/edit" target="_top">Edit my information</a> |
+<a href="<%=@machine_name%>/people/<%=@person.id%>" target="_top">More information</a>
 </p>
 
