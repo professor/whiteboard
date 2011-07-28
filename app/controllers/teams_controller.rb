@@ -157,54 +157,61 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/new
   # GET /courses/1/teams/new.xml
   def new
-    @team = Team.new()
-    @team.course_id = params[:course_id]
-    @course = Course.find(params[:course_id])
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-    (1..5).each do
-      @team.people << Person.new
-    end
+    if has_permissions_or_redirect(:staff, root_path)
+      @team = Team.new()
+      @team.course_id = params[:course_id]
+      @course = Course.find(params[:course_id])
+      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+      (1..5).each do
+        @team.people << Person.new
+      end
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @team }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @team }
+      end
     end
   end
 
   # GET /courses/1/teams/1/edit
   def edit
     @team = Team.find(params[:id])
-    @team.course_id = params[:course_id]
-    @course = Course.find(params[:course_id])
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    if has_permissions_or_redirect(:staff, @team)
+      @team.course_id = params[:course_id]
+      @course = Course.find(params[:course_id])
+      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    end
   end
 
   # POST /courses/1/teams
   # POST /courses/1/teams.xml
   def create
-    @team = Team.new(params[:team])
-    @team.course_id = params[:course_id]
-    @course = Course.find(params[:course_id])
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    if has_permissions_or_redirect(:staff, root_path)
+      @team = Team.new(params[:team])
 
-    msg = @team.update_members(params[:people])
-    unless msg.blank?
-      flash.now[:error] = msg
-      render :action => 'new'
-      return
-    end
+      @team.course_id = params[:course_id]
+      @course = Course.find(params[:course_id])
+      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
-    update_course_faculty_label
+      msg = @team.update_members(params[:people])
+      unless msg.blank?
+        flash.now[:error] = msg
+        render :action => 'new'
+        return
+      end
 
-    respond_to do |format|
-      if @team.save
-        flash[:notice] = 'Team was successfully created.'
-        format.html { redirect_to(course_teams_path(@team.course_id)) }
-        format.xml  { render :xml => @team, :status => :created, :location => @team }
-      else
-        @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+      update_course_faculty_label
+
+      respond_to do |format|
+        if @team.save
+          flash[:notice] = 'Team was successfully created.'
+          format.html { redirect_to(course_teams_path(@team.course_id)) }
+          format.xml  { render :xml => @team, :status => :created, :location => @team }
+        else
+          @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -213,29 +220,31 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1.xml
   def update
     @team = Team.find(params[:id])
-    @course = @team.course
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    if has_permissions_or_redirect(:staff, @team)
+      @course = @team.course
+      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
-    msg = @team.update_members(params[:people])
-    unless msg.blank?
-      flash.now[:error] = msg
-      render :action => 'edit'
-      return
-    end
+      msg = @team.update_members(params[:people])
+      unless msg.blank?
+        flash.now[:error] = msg
+        render :action => 'edit'
+        return
+      end
 
-#    handle_teams_people
+  #    handle_teams_people
 
-    update_course_faculty_label
+      update_course_faculty_label
 
-    respond_to do |format|
-      if @team.update_attributes(params[:team])
-        flash[:notice] = 'Team was successfully updated.'
-        format.html { redirect_to(course_teams_path(@team.course)) }
-        format.xml  { head :ok }
-      else
-        @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @team.update_attributes(params[:team])
+          flash[:notice] = 'Team was successfully updated.'
+          format.html { redirect_to(course_teams_path(@team.course)) }
+          format.xml  { head :ok }
+        else
+          @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
