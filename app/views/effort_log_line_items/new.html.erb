@@ -1,8 +1,17 @@
 <h1>New effort_log_line_item</h1>
 
-<% form_for(@effort_log_line_item) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@effort_log_line_item) do |f| %>
+  <% if @effort_log_line_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@effort_log_line_item.errors.count, "error") %> prohibited this effort log line item from being saved:</h2>
 
+      <ul>
+      <% @effort_log_line_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.label :effort_log_id %><br />
     <%= f.text_field :effort_log_id %>

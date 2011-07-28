@@ -3,7 +3,7 @@
 <% prefix = "effort_log[#{new_or_existing}_effort_log_line_item_attributes][]" %>
 
 
-<% fields_for prefix, effort_log_line_item_show do |effort_log_line_item_form| -%>
+<%= fields_for prefix, effort_log_line_item_show do |effort_log_line_item_form| -%>
 
 <% if current_user && current_user.is_student? %>  
     <td><%= effort_log_line_item_show.position %></td>

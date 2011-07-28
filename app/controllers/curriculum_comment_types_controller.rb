@@ -4,7 +4,7 @@ class CurriculumCommentTypesController < ApplicationController
   # GET /curriculum_comment_types
   # GET /curriculum_comment_types.xml
   def index
-    @curriculum_comment_types = CurriculumCommentType.find(:all)
+    @curriculum_comment_types = CurriculumCommentType.all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -13,7 +13,7 @@ describe DeliverablesController do
 
     describe "GET index for course" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id)
         Deliverable.stub(:find_all_by_course_id).and_return([@deliverable, @deliverable])
         Course.stub(:find).and_return(@course)
@@ -22,7 +22,7 @@ describe DeliverablesController do
       context "as the faculty owner of the course" do
 
         before do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -34,7 +34,7 @@ describe DeliverablesController do
       context "as an admin" do
 
         before do
-          UserSession.create(@admin_andy)
+          login_user(@admin_andy)
         end
 
         it 'assigns @deliverables' do
@@ -45,7 +45,7 @@ describe DeliverablesController do
 
       context "as any other user" do
         before do
-          UserSession.create(@faculty_fagan)
+          login_user(@faculty_fagan)
           get :index_for_course, :course_id => @course.id
         end
 
@@ -56,7 +56,7 @@ describe DeliverablesController do
 
     describe "GET my_deliverables" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
         Deliverable.stub(:find_current_by_person).and_return([@deliverable, @deliverable])
         Deliverable.stub(:find_past_by_person).and_return([@deliverable, @deliverable])
@@ -65,7 +65,7 @@ describe DeliverablesController do
 
       context "as the owner of the deliverable" do
         before do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
         end
 
         it 'assigns deliverables' do
@@ -78,7 +78,7 @@ describe DeliverablesController do
       context "as an faculty" do
 
         before do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -90,7 +90,7 @@ describe DeliverablesController do
 
       context "as any other student" do
         before do
-          UserSession.create(@student_sally)
+          login_user(@student_sally)
           get :my_deliverables, :id => @student_sam.id
         end
 
@@ -101,7 +101,7 @@ describe DeliverablesController do
 
     describe "GET show" do
       before(:each) do
-        @course = stub_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :is_team_deliverable => true)
         @team = stub_model(Team)
         Deliverable.stub(:find).and_return(@deliverable)
@@ -112,21 +112,21 @@ describe DeliverablesController do
       context "for a team deliverable" do
 
         it 'the owner can see it' do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
           @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "someone else on the team can see it" do
-          UserSession.create(@student_sam)
+          login_user(@student_sam)
           @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "any faculty can see it" do
-          UserSession.create(@faculty_frank)
+          login_user(@faculty_frank)
           @team.stub(:is_person_on_team?).and_return(false)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
@@ -135,7 +135,7 @@ describe DeliverablesController do
         context "no other student can see it" do
           before do
             @team.stub(:is_person_on_team?).and_return(false)
-            UserSession.create(@student_sally)
+            login_user(@student_sally)
             get :show, :id => @deliverable.id
           end
 
@@ -213,7 +213,7 @@ describe DeliverablesController do
 #        it 'sets the flash to error' do
 #          @effort_2.should_receive(:save).and_return(false)
 #          put :update, :id => "AndrewCarnegie", :effort_id_values => {"0" => "25", "1" => "75"}
-#          assigns[:failed].should == true
+#          assigns(:failed).should == true
 #          #flash.now[:error].should == "Your allocations did not save."
 #        end
 #

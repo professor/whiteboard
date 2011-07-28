@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe "courses/index.html.erb" do
   before(:each) do
-    assigns[:courses] = [
+    assign(:courses, [
       stub_model(Course,:name => "something"),
       stub_model(Course,:name => "something2")
-    ]
-    assigns[:all_courses] = true
+    ])
+    assign(:all_courses, true)
+    login_user(Factory(:student_sam))
   end
 
   it "renders a list of courses" do

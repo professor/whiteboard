@@ -1,147 +1,82 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :deliverables
-  map.my_deliverables '/people/:id/my_deliverables', :controller => 'deliverables', :action => 'my_deliverables'
-  map.deliverable_feedback '/deliverables/:id/feedback', :controller => 'deliverables', :action => 'edit_feedback'
+CMUEducation::Application.routes.draw do
+  resources :deliverables
+  match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
+  match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
+  match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
+  match '/sponsored_project_sponsors/:id/archive' => 'sponsored_project_sponsors#archive', :as => :archive_sponsored_project_sponsor
+  match '/sponsored_project_allocations/:id/archive' => 'sponsored_project_allocations#archive', :as => :archive_sponsored_project_allocation
+  resources :sponsored_projects
+  resources :sponsored_project_sponsors
+  resources :sponsored_project_allocations
+  resources :sponsored_project_efforts
+  match 'delayed_system_jobs/' => 'delayed_system_jobs#index'
+  resources :delayed_system_jobs
+  resources :mailing_lists
+  resources :rss_feeds
+  resources :curriculum_comment_types
+  match '/curriculum_comments/test_page' => 'curriculum_comments#test_page'
+  resources :curriculum_comments
+  resources :scotty_dog_sayings
+  resources :project_types
+  resources :projects
+  resources :task_types
+  match '/effort_logs/update_task_type_select' => 'effort_logs#update_task_type_select', :as => :update_task_type_select
+  match '/effort_logs/effort_for_unregistered_courses' => 'effort_logs#effort_for_unregistered_courses'
+  resources :effort_logs
+  resources :effort_log_line_items
+  resources :course_numbers
+  resources :course_configurations
+  match '/courses/current_semester' => 'courses#current_semester', :as => :current_semester
+  match '/courses/next_semester' => 'courses#next_semester', :as => :next_semester
+  constraints({:id => /.*/}) do
+    resources :pages do
+      collection do
+        post :reposition
+      end
+    end
+  end
 
-  map.archive_sponsored_project '/sponsored_projects/:id/archive', :controller => 'sponsored_projects', :action => 'archive'
-  map.archive_sponsored_project_sponsor '/sponsored_project_sponsors/:id/archive', :controller => 'sponsored_project_sponsors', :action => 'archive'
-  map.archive_sponsored_project_allocation '/sponsored_project_allocations/:id/archive', :controller => 'sponsored_project_allocations', :action => 'archive'
-  map.resources :sponsored_projects
-  map.resources :sponsored_project_sponsors
-  map.resources :sponsored_project_allocations
-  map.resources :sponsored_project_efforts
+  resources :course_navigations
+  resources :courses do
+    resources :teams do
+    end
+    member do
+      get :configure
+    end
+  end
 
-  map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"
-  map.resources :delayed_system_jobs #so that we can easily delete
+  match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
+  match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
 
-  map.connect 'papers/by/:twiki_name', :controller => 'papers', :action => 'index_by_person'
-  map.resources :papers
-
-  map.resources :mailing_lists, :requirements => {:id => /\S+/}
-  #At present we only do index and show
-
-  map.resources :rss_feeds #I don't think we need this here
-
-#  map.connect 'pages/:id/:tab',  :controller => 'pages', :action => "show"
-#  map.connect 'pages/*other', :controller => 'pages', :action => 'show'
-  map.resources :pages,  :requirements => { :id => /.+/ }
-
-  map.resources :curriculum_comment_types
-
-  map.connect '/curriculum_comments/test_page', :controller => 'curriculum_comments', :action => 'test_page'
-  map.resources :curriculum_comments
-
-  map.resources :scotty_dog_sayings
-
-  map.resources :project_types
-
-  map.resources :projects
-
-
-  map.resources :task_types
-
-#  map.connect '/effort_logs/create_midweek_warning_email', :controller => 'effort_logs', :action => 'create_midweek_warning_email'
-#  map.connect '/effort_logs/create_endweek_faculty_email', :controller => 'effort_logs', :action => 'create_endweek_faculty_email'
-  map.connect '/effort_logs/effort_for_unregistered_courses', :controller=>'effort_logs', :action => 'effort_for_unregistered_courses'
-  map.resources :effort_logs
-  map.resources :effort_log_line_items
-
-
-  map.resources :course_numbers
-  map.resources :course_configurations
-  map.current_semester '/courses/current_semester', :controller => 'courses', :action => 'current_semester'
-  map.next_semester '/courses/next_semester', :controller => 'courses', :action => 'next_semester'
-  map.resources :pages, :collection => { :reposition => :post }
-  map.resources :course_navigations
-  map.resources :courses, :has_many => :teams, :member => { :configure => [:get]}
-
-    map.connect '/effort_reports/campus_week', :controller => 'effort_reports', :action => 'campus_week'
-    map.connect '/effort_reports/campus_semester', :controller => 'effort_reports', :action => 'campus_semester'
-    map.connect '/effort_reports/course/:course_id', :controller => 'effort_reports', :action => 'course'
-
-  
-  map.resources :effort_reports
-
-  map.connect '/people/phone_book', :controller => 'people', :action => 'phone_book'
-  map.connect '/people/photo_book', :controller => 'people', :action => 'photo_book'
-  map.my_teams '/people/:id/my_teams', :controller => 'people', :action => 'my_teams'
-  map.resources :people
-
-  map.resources :suggestions
-
-  map.setup_peer_evaluation 'peer_evaluation/edit_setup/:id', :controller => "peer_evaluation", :action => "edit_setup"
-  map.edit_peer_evaluation 'peer_evaluation/edit_evaluation/:id', :controller => "peer_evaluation", :action => "edit_evaluation"
-  map.report_peer_evaluation 'peer_evaluation/edit_report/:id', :controller => "peer_evaluation", :action => "edit_report"
-
-#  map.with_options :controller => "teams" do |page|
-#    page.conce
-#   page.concept_for_b_view  '/concept_for_b_view', :action => 'all'
-# end  
-  map.teams '/teams', :controller => 'teams', :action => 'index_all'
-  
-  map.resources :users
-
-  map.resource :user_session
-  map.login_google '/login_google', :controller => 'user_sessions', :action => 'login_google'
-
-  
-  map.load_chart '/load_chart', :controller => 'effort_reports', :action => 'load_chart' 
-#  map.load_google_chart '/load_google_chart', :controller => 'effort_reports', :action => 'load_google_chart'
-
-
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.connect 'people/twiki/:twiki_name', :controller => 'people', :action => 'show_by_twiki'
-  map.connect 'twiki/teams', :controller => 'teams', :action => 'twiki_index'
-  map.connect 'twiki/teams/new', :controller => 'teams', :action => 'twiki_new'
-
-  map.survey_monkey 'courses/:course_id/teams/:id/survey_monkey', :controller => 'teams', :action => 'survey_monkey'
-  map.connect 'courses/:course_id/teams_photos', :controller => 'teams', :action => 'index_photos'
-  map.past_teams_list 'courses/:course_id/past_teams_list', :controller => 'teams', :action => 'past_teams_list'
-  map.connect 'courses/:course_id/export_to_csv', :controller => 'teams', :action => 'export_to_csv'
-  map.course_deliverables 'courses/:course_id/deliverables', :controller => 'deliverables', :action => 'index_for_course'
-  map.connect 'effort_reports/:id/week/:week',  :controller => 'effort_reports', :action => "show_week"
-
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-
-  map.new_features '/new_features', :controller => "welcome", :action => "new_features"
-  map.config '/config', :controller => "welcome", :action => "config"
-  
-  map.root :controller => "welcome"
+  match '/effort_reports/campus_week' => 'effort_reports#campus_week'
+  match '/effort_reports/campus_semester' => 'effort_reports#campus_semester'
+  match '/effort_reports/course/:course_id' => 'effort_reports#course'
+  resources :effort_reports
+  match '/people/phone_book' => 'people#phone_book'
+  match '/people/photo_book' => 'people#photo_book'
+  match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
+  resources :people
+  resources :suggestions
+  match 'peer_evaluation/edit_setup/:id' => 'peer_evaluation#edit_setup', :as => :setup_peer_evaluation
+  match 'peer_evaluation/edit_evaluation/:id' => 'peer_evaluation#edit_evaluation', :as => :edit_peer_evaluation
+  match 'peer_evaluation/edit_report/:id' => 'peer_evaluation#edit_report', :as => :report_peer_evaluation
+  match '/teams' => 'teams#index_all', :as => :teams
+  resources :users
+  resource :user_session
+  match '/login_google' => 'user_sessions#login_google', :as => :login_google
+  match '/logout' => "user_sessions#destroy", :as => :logout
+  match '/load_chart' => 'effort_reports#load_chart', :as => :load_chart
+  match 'people/twiki/:twiki_name' => 'people#show_by_twiki'
+  match 'twiki/teams' => 'teams#twiki_index'
+  match 'twiki/teams/new' => 'teams#twiki_new'
+  match 'courses/:course_id/teams_photos' => 'teams#index_photos'
+  match 'courses/:course_id/past_teams_list' => 'teams#past_teams_list', :as => :past_teams_list
+  match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'
+  match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
+  match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
+  match '/:controller(/:action(/:id))'
+  match '/new_features' => 'welcome#new_features', :as => :new_features
+  match '/config' => 'welcome#configuration', :as => :config
+  match '/' => 'welcome#index', :as => :root
 end
+

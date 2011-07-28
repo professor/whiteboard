@@ -15,7 +15,7 @@ background-color: #6B7F93;
 
 <% if @show_create_course %>
 
-<% if development? %>
+<% if Rails.env.development? %>
 <%= link_to 'Add teams to your course?', '/twiki/teams/new' %>
 <% else %>
 <%= link_to 'Add teams to your course?', 'http://info.sv.cmu.edu/rails/twiki/teams/new' %>
@@ -42,7 +42,6 @@ background-color: #6B7F93;
     <% else %>
     <th><%=h @course.primary_faculty_label%></th>
     <th><%=h @course.secondary_faculty_label%></th>
-    <!-- <th>Team members <%= link_to '(Show Photo View)', course_teams_path(@course.id), {:target =>'_top'} %> </th> -->
     <% if show_photo_view_link %>
     <th>Team members <a href="<%=@machine_name%>/courses/<%=@course.id%>/teams_photos" target="_top">(Show Photo View)</a></th>
     <% else %>

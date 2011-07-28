@@ -60,7 +60,7 @@ class SponsoredProjectSponsorsController < ApplicationController
   def has_permissions_or_redirect
       unless current_user.permission_level_of(:admin)
         flash[:error] = t(:no_permission)
-        redirect_to(root_url)
+        redirect_to(root_path)
         return false
       end
     return true

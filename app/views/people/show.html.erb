@@ -1,15 +1,18 @@
 <% content_for :title, @person.human_name + " - Contact Information"%>
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+<%= form_for(@person) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
 
-
-
-<% form_for(@person) do |f| %>
-  <%= f.error_messages %>
-
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
 
 
 <table><tr valign="top"><td>
@@ -51,12 +54,7 @@
 <% end %>
 <tr class="cmu_table_odd"><td>&nbsp;</td>
   <td>
-    <% if @person.papers.count > 0 %>
-       <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %><br/>
-    <% else %>
-       <%= link_to 'Add a published paper', "/papers/new" %><br/>    
-    <% end %>
-    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>        
+    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
         <%= link_to "My teams", my_teams_path(@person) %>
         <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(@person) %>
     <% end %>
@@ -117,7 +115,7 @@ Version <%= version.version %>
 <%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
 <% end %>
 <% updated_by = Person.find(:first, :conditions=> ["id = ?", version.updated_by_user_id]) %><% if !updated_by.nil? %>by <%=h updated_by.human_name %><% end %>
-on <%=h version.updated_at.to_s(:detailed) %>
+on <%=l version.updated_at, :format => :detailed %>
  <br/>
 <% end %>
 <br/><br/>

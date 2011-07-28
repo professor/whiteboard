@@ -8,15 +8,12 @@ class Deliverable < ActiveRecord::Base
 
   has_attached_file :feedback,
     :storage => :s3,
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
   default_scope :order => "updated_at DESC"
 
-  def before_validation
-    # Look up the team this person is on if it is a team deliverable
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
-  end
+  before_validation :update_team
 
   def current_attachment
     attachment_versions.find(:first)
@@ -90,13 +87,13 @@ class Deliverable < ActiveRecord::Base
     end
     message += self.course.name
 
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Deliverable submitted for " + self.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url
-    )
+    options = {:to => mail_to,
+               :subject => "Deliverable submitted for " + self.course.name,
+               :message => message,
+               :url_label => "View this deliverable",
+               :url => url
+    }
+    GenericMailer.email(options).deliver
   end
 
   def send_deliverable_feedback_email(url)
@@ -108,13 +105,20 @@ class Deliverable < ActiveRecord::Base
     end
     message += self.course.name
 
-    GenericMailer.deliver_email(
-      :to => mail_to,
-      :subject => "Feedback for " + self.course.name,
-      :message => message,
-      :url_label => "View this deliverable",
-      :url => url
-    )
+    options = {:to => mail_to,
+               :subject => "Feedback for " + self.course.name,
+               :message => message,
+               :url_label => "View this deliverable",
+               :url => url
+    }
+    GenericMailer.email(options).deliver
   end
+
+  protected
+  def update_team
+    # Look up the team this person is on if it is a team deliverable
+    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
+  end
+
 
 end

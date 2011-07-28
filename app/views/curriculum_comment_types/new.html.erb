@@ -1,9 +1,18 @@
 <% content_for :title, 'New Curriculum Comment Type' %>
 <h1>New curriculum comment type</h1>
 
-<% form_for(@curriculum_comment_type) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@curriculum_comment_type) do |f| %>
+  <% if @curriculum_comment_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@curriculum_comment_type.errors.count, "error") %> prohibited this comment type from being saved:</h2>
 
+      <ul>
+      <% @curriculum_comment_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>

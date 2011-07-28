@@ -14,19 +14,19 @@ describe Page do
 
 
   it "is valid with valid attributes" do
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     @page.should be_valid
   end
 
   it "is not valid without a title" do
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     @page.title = nil
     @page.should_not be_valid
   end
 
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
   it "is not valid without an updated_by_user_id"  do
-    UserSession.create(u = Factory(:faculty_frank))
+    login_user(u = Factory(:faculty_frank))
     @page.updated_by_user_id = nil
     lambda {
       @page.valid?
@@ -37,18 +37,18 @@ describe Page do
 
 
   it "should show who did the last edit and when it occurred" do
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     last_user_id = @page.updated_by_user_id
     @page.title = "Something different"
     @page.save
     latest_user_id = @page.updated_by_user_id
-    Time.now.to_i.should be_close @page.updated_at.to_i, 100
+    Time.now.to_i.should be_within(100).of(@page.updated_at.to_i)
     UserSession.find.user.id.should == latest_user_id
   end
 
   context "can be a named url" do
     it "that is unique" do
-      UserSession.create(Factory(:faculty_frank))
+      login_user(Factory(:faculty_frank))
       @page.url = "ppm"
       @page.save
 
@@ -56,27 +56,27 @@ describe Page do
                       :updated_by_user_id => 10,
                       :url => "ppm")
       @msp.should_not be_valid
-      @msp.errors[:url].should_not be_nil
-      @msp.errors[:url].should == "has already been taken"
+      @msp.errors[:url].should_not be_blank
+      @msp.errors[:url].should == ["has already been taken"]
     end
 
     it "that is not a number because it would cause conflicts with the id field on lookup" do
-      UserSession.create(Factory(:faculty_frank))
+      login_user(Factory(:faculty_frank))
       @page.url = "123"
       @page.should_not be_valid
-      @page.errors[:url].should_not be_nil
+      @page.errors[:url].should_not be_blank
 #      @page.errors[:url].should == "has already been taken"
       @page.url = "test123"
       @page.should be_valid
-      @page.errors[:url].should be_nil
+      @page.errors[:url].should be_blank
 
       @page.url = "123test123test12321"
       @page.should be_valid
-      @page.errors[:url].should be_nil
+      @page.errors[:url].should be_blank
     end
 
     it "that defaults from the title field" do
-      UserSession.create(Factory(:faculty_frank))
+      login_user(Factory(:faculty_frank))
       @page.url = ""
       @page.should be_valid
       @page.url.should == @page.title      
@@ -101,7 +101,7 @@ describe Page do
   
 
   it "is versioned" do
-    UserSession.create(Factory(:faculty_frank))    
+    login_user(Factory(:faculty_frank))
     @page.should respond_to(:version)
     @page.save   
     version_number = @page.version
@@ -112,7 +112,7 @@ describe Page do
 
     it "should allow faculty to comment about the changes"
 #  do
-#      UserSession.create(Factory(:faculty_frank))
+#      login_user(Factory(:faculty_frank))
 #      @page.version_comments = "A very simple change"
 #      @page.save
 ##This seems too simple

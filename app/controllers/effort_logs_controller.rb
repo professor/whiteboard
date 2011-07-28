@@ -1,29 +1,29 @@
 class EffortLogsController < ApplicationController
-#  layout "cmu_sv", :except => :new_effort_log_line_item
+#  layout "cmu_sv_no_pad", :except => :new_effort_log_line_item
 
-#  layout 'cmu_sv', :only => [:index, :show]
+#  layout 'cmu_sv_no_pad', :only => [:index, :show]
+  layout 'simple'
+
+  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email]
 
 
-  before_filter :require_user, :except => [:create_midweek_warning_email, :create_endweek_admin_email ]
-
-
-  # Todo: consider moving these email methods to the model and update the rake task accordingly
+  # Todo: consider moving these email methods to the model(EffortLogs) and update the rake task accordingly
   #
   def create_midweek_warning_email
     if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
       #We skip weeks that students aren't taking courses
       puts "There is no class this week, so we won't remind students to log effort"
 #      flash[:error] = 'Students are taking courses this week'
- #     redirect_to(root_url)
+ #     redirect_to(root_path)
       return
     end
 
     @people_with_effort = Array.new
     @people_without_effort = Array.new
-    random_scotty_saying = ScottyDogSaying.find(:all).rand.saying
+    random_scotty_saying = ScottyDogSaying.all.sample.saying
 
-   courses = Course.remind_about_effort_course_list
-   courses.each do |course_id|
+    courses = Course.remind_about_effort_course_list
+    courses.each do |course_id|
        create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end                
     
@@ -31,7 +31,7 @@ class EffortLogsController < ApplicationController
     @people_with_effort = @people_with_effort + with_effort
     @people_without_effort = @people_without_effort + without_effort
 
-    EffortLogMailer.deliver_midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort)
+    EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
 
     puts "There were #{@people_without_effort.size} without effort."
     puts ""
@@ -45,7 +45,6 @@ class EffortLogsController < ApplicationController
       puts "#{person}"
     end
 
-
 #   respond_to do |format|
 #      format.html # index.html.erb
 #    end
@@ -56,12 +55,12 @@ class EffortLogsController < ApplicationController
   def create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    teams = Team.find(:all, :conditions => ["course_id = ? ", course_id])   
+    teams = Team.where("course_id = ? ", course_id)
     teams.each do |team| 
       logger.debug "** team #{team.name}"
       team.people.each do |person|
         logger.debug "**    person #{person.human_name}"
-        effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year])
+        effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", person.id, week_number, year).first
         if(!person.emailed_recently(:effort_log))
           if((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently(:effort_log)))
   #            logger.debug "**  sent email to #{person.human_name} (#{person.id}) for #{week_number} of #{year} in course #{course_id}"
@@ -83,9 +82,9 @@ class EffortLogsController < ApplicationController
      people_with_effort = []
      year = Date.today.cwyear
      week_number = Date.today.cweek
-     people = Person.find(:all, :conditions => ["masters_program = ? and is_active = true and is_alumnus = false", "SE"])
+     people = Person.where("masters_program = ? and is_active = true and is_alumnus = false", "SE")
      people.each do |person|
-         effort_log = EffortLog.find(:first, :conditions => ["person_id = ? and week_number = ? and year = ?", person.id, week_number, year])
+         effort_log = EffortLog.latest_for_person(person.id, week_number, year)
          if(!person.emailed_recently(:effort_log))
            if((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently(:effort_log)))
              create_midweek_warning_email_send_it(random_scotty_saying, person.id)
@@ -102,41 +101,40 @@ class EffortLogsController < ApplicationController
  
  
   def create_midweek_warning_email_send_it(random_scotty_saying, id)
-    user = User.find_by_id(id) 
-##    email = EffortLogMailer.create_midweek_warning(user) 
-##    render(:text => "<pre>" + email.encoded + "</pre>") 
-    email = EffortLogMailer.deliver_midweek_warning(random_scotty_saying, user)
+    user = User.find_by_id(id)
+    EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
+    #render(:text => "<pre>" + email.encoded + "</pre>")
+
   end
 
   def create_endweek_faculty_email
-    notify_course_list = Course.remind_about_effort_course_list()
+  notify_course_list = Course.remind_about_effort_course_list
 
-#    notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
-    last_week = (Date.today - 7).cweek
-    last_week_year = (Date.today -7).cwyear
+  #notify_course_list = [48, 47, 46]  #list all courses that we want to track effort
+  last_week = (Date.today - 7).cweek
+  last_week_year = (Date.today -7).cwyear
 
-    if (!EffortLog.log_effort_week?(last_week_year, last_week))
-        puts "There was no class last week, so we won't remind students to log effort"
-        return
-    end
+  if (!EffortLog.log_effort_week?(last_week_year, last_week))
+       puts "There was no class last week, so we won't remind students to log effort"
+       return
+  end
 
     notify_course_list.each do |course|
       faculty = {}
-      teams = Team.find(:all, :conditions => ["course_id = ? ", course.id])
+      teams = Team.where("course_id = ? ", course.id)
       teams.each do |team|
         faculty[team.primary_faculty_id] = 1 unless team.primary_faculty_id.nil?
         faculty[team.secondary_faculty_id] = 1 unless team.secondary_faculty_id.nil?
       end
       faculty_emails = []
       faculty.each {|faculty_id, value| faculty_emails << User.find_by_id(faculty_id).email }
-      EffortLogMailer.deliver_endweek_admin_report(course.id, course.name, faculty_emails)
+      EffortLogMailer.endweek_admin_report(course.id, course.name, faculty_emails).deliver
     end
   end
     
   def update_task_type_select
     unless params[:task_id].blank?
       logger.debug "updated " + params[:task_id]      
-#      @sub_types = SubTaskType.find(:all, :conditions => ['task_type_id = ?', params[:task_id]])
       @selected_type = TaskType.find_by_id(params[:task_id])
     end
     
@@ -146,7 +144,7 @@ class EffortLogsController < ApplicationController
   # GET /effort_logs
   # GET /effort_logs.xml
   def index
-    @effort_logs = EffortLog.find(:all, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
+    @effort_logs = EffortLog.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
 
     if Date.today.cweek == 1  #If the first week of the year, then we set to the last week of previous year
       @prior_week_number = 52
@@ -202,10 +200,6 @@ class EffortLogsController < ApplicationController
     end
   end
 
-
-
-  
-  
   # GET /effort_logs/1
   # GET /effort_logs/1.xml
   def show
@@ -242,7 +236,7 @@ class EffortLogsController < ApplicationController
     @effort_log.person_id = current_user.id
     
     #find the most recent effort log to copy its structure, but not its effort data
-    recent_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
+    recent_effort_log = EffortLog.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC").first
 
     # We want to make sure that the user isn't accidentally creating two efforts for the same week.
     # Since students are only able to log effort for this week (or a previous week)
@@ -251,7 +245,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.find(:first, :conditions => "person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}")
+      duplicate_effort_log = EffortLog.where("person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}").first
     end
 
     if duplicate_effort_log
@@ -408,16 +402,11 @@ private
       Date.commercial(year, week_number, day).strftime "%b %d"  # Jul 01
     end
 
-    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @projects = Project.find(:all, :conditions => "is_closed = FALSE", :order => "name ASC")
+    @courses = Course.where('year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester() )
+    @projects = Project.where("is_closed = FALSE", :order => "name ASC")
     
-    if current_user.is_staff? && current_user.is_student?
-      @task_types = TaskType.find(:all )           
-    elsif current_user.is_staff? && !current_user.is_student?
-      @task_types = TaskType.find(:all, :conditions => ['is_staff = ?', true] )
-    else
-      @task_types = TaskType.find(:all, :conditions => ['is_student = ?', true] )
-    end
+    @task_types = TaskType.where('is_student = ?', true )
+    
     @today_column = which_column_is_today(year, week_number)
   end
   
@@ -435,7 +424,7 @@ private
 #    if !recent_foundations.nil? 
 #      return recent_foundations
 #    end
-    Course.find(:first, :order => "id DESC")
+    Course.order("id DESC").first
   end
   
 

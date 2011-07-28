@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe PagesController do
-  fixtures :users
 
   context "any user can" do
     before do
       Page.delete_all
-      UserSession.create(users(:student_sam))
+      login_user(Factory(:student_sam))
       @page = Factory(:page)
     end
 
@@ -47,8 +46,8 @@ describe PagesController do
 
   context "as a student can" do
     before do
-      Page.delete_all     
-      UserSession.create(users(:student_sam))
+      Page.delete_all
+      login_user(Factory(:student_sam))
       @page = Factory(:page, :title => "new title")
     end
 
@@ -75,7 +74,8 @@ describe PagesController do
   context "as a faculty member can" do
 
     before do
-      UserSession.create(users(:faculty_frank))
+      login_user(Factory(:faculty_frank))
+
       @page = Factory(:page)
     end
 
@@ -92,6 +92,27 @@ describe PagesController do
   end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 #  it "allows named pages in the url" do
 #     @ppm = Factory(:ppm)
 #       { :get => "/pages/#{@ppm.url}" }.should be_routable

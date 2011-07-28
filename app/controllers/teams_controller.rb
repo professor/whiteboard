@@ -4,33 +4,6 @@ class TeamsController < ApplicationController
 
   layout 'cmu_sv'
 
-#  auto_complete_for :user, :human_name
-#  layout 'cmu_sv', :except => [:ajax_add_team_member, :ajax_remove_team_member]
-
-  #  def ajax_add_team_member
-#    @team = Team.find(params[:team_id])
-#  rescue ActiveRecord::RecordNotFound
-#    logger.error("Attempt to access invalid team #{params[:team_id]}")
-#    flash[:notice] = 'Attempt to access invalid team'
-#    redirect_to teams_url
-#  else
-#    @added_member = @team.add_person_by_human_name(params[:user][:human_name])
-#    @course = Course.find(@team.course_id)
-#    render :partial => "list_team_members", :object=> @team
-#  end
-#
-#  def ajax_remove_team_member
-#    @team = Team.find(params[:team_id])
-#  rescue ActiveRecord::RecordNotFound
-#    logger.error("Attempt to access invalid team #{params[:team_id]}")
-#    flash[:notice] = 'Attempt to access invalid team'
-#    redirect_to teams_url
-#  else
-#    @team.remove_person(params[:person_id])
-#    @course = Course.find(@team.course_id)
-#    render :partial => "list_team_members", :object=> @team
-#  end
-
 
   def remove_team_member
     team = Team.find(params[:team_id])
@@ -55,7 +28,7 @@ class TeamsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :partial => "twiki_index", :layout => "teams", :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false} } # index.html.erb
+      format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false} } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end
@@ -112,13 +85,13 @@ class TeamsController < ApplicationController
     @course = Course.find(params[:course_id])
 
     respond_to do |format|
-      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
+      format.html { render :html => @teams, :layout => "simple" } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end
 
   def past_teams_list
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
       @course = Course.find(params[:course_id])
 
@@ -130,12 +103,12 @@ class TeamsController < ApplicationController
   end
 
    def export_to_csv
-     if has_permissions_or_redirect(:staff, root_url)
+     if has_permissions_or_redirect(:staff, root_path)
 
       @course = Course.find(params[:course_id])
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-      report = StringIO.new
-      CSV::Writer.generate(report, ',') do |title|
+
+      report = CSV.generate do |title|
         title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
           @teams.each do |team|
             team.people.each do |person|
@@ -144,24 +117,11 @@ class TeamsController < ApplicationController
             end
           end
         end
-      report.rewind
-      send_data(report.read,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
+      send_data(report,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
       :disposition =>'attachment', :encoding => 'utf8')
      end
   end  
 
-  # GET /courses/1/teams
-  # GET /courses/1/teams.xml
-#  def index_rails
-#    @teams = Team.find(:all, :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-#    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-#    @course = Course.find(params[:course_id])
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @teams }
-#    end
-#  end
 
   # GET /teams
   # GET /teams.xml
@@ -176,8 +136,7 @@ class TeamsController < ApplicationController
 #    @teams = @teams.sort_by {|team| team.course.year + team.course.semester + team.course.name }.reverse
 
     respond_to do |format|
-#      format.html { render :html => @teams, :layout => "teams" } # index.html.erb
-      format.html { render :partial => "twiki_index", :layout => "teams", :locals => {:teams => @teams, :show_new_teams_link => false, :show_photo_view_link => false, :show_student_photos => false, :show_course => false} } # index.html.erb
+      format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => false, :show_photo_view_link => false, :show_student_photos => false, :show_course => false} } # index.html.erb
       format.xml  { render :xml => @teams }
     end
   end
@@ -189,8 +148,6 @@ class TeamsController < ApplicationController
     @course = Course.find(params[:course_id])
     @team = Team.find(params[:id])
 
-
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @team }
@@ -200,10 +157,13 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/new
   # GET /courses/1/teams/new.xml
   def new
-    @team = Team.new
+    @team = Team.new()
     @team.course_id = params[:course_id]
     @course = Course.find(params[:course_id])
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    (1..5).each do
+      @team.people << Person.new
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -222,17 +182,19 @@ class TeamsController < ApplicationController
   # POST /courses/1/teams
   # POST /courses/1/teams.xml
   def create
-    msg = check_valid_names
-    if !msg.empty?
-      logger.debug msg
-      flash[:error] = msg
-      redirect_to :action => 'new'
-      return
-    end
-    update_course_faculty_label
-
     @team = Team.new(params[:team])
     @team.course_id = params[:course_id]
+    @course = Course.find(params[:course_id])
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+
+    msg = @team.update_members(params[:people])
+    unless msg.blank?
+      flash.now[:error] = msg
+      render :action => 'new'
+      return
+    end
+
+    update_course_faculty_label
 
     respond_to do |format|
       if @team.save
@@ -251,15 +213,17 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1.xml
   def update
     @team = Team.find(params[:id])
+    @course = @team.course
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
-    msg = check_valid_names
-    if !msg.empty?
-      logger.debug msg
-      flash[:error] = msg
-      redirect_to :action => 'update'
+    msg = @team.update_members(params[:people])
+    unless msg.blank?
+      flash.now[:error] = msg
+      render :action => 'edit'
       return
     end
-    handle_teams_people
+
+#    handle_teams_people
 
     update_course_faculty_label
 
@@ -294,8 +258,8 @@ class TeamsController < ApplicationController
     end
   end
 
-  # GET /courses/1/teams/1/survey_monkey
-  def survey_monkey
+  # GET /courses/1/teams/1/peer_evaluation
+  def peer_evaluation
     @course = Course.find(params[:course_id])
     @team = Team.find(params[:id])
 
@@ -311,17 +275,11 @@ class TeamsController < ApplicationController
     end
 
     if(@team.peer_evaluation_first_email.nil?)
-      @team.peer_evaluation_first_email = Time.now()
+      @team.peer_evaluation_first_email = Date.today()
     end
     if(@team.peer_evaluation_second_email.nil?)
-        @team.peer_evaluation_second_email = Time.now()
+        @team.peer_evaluation_second_email = Date.today()
     end
-
-    @first_email_date = @team.peer_evaluation_first_email.strftime("%Y%m%d")
-    @second_email_date = @team.peer_evaluation_second_email.strftime("%Y%m%d")
-
-    #    @first_email_date = @team.peer_evaluation_first_email.to_s.gsub('-','')
-#    @second_email_date = @team.peer_evaluation_second_email.to_s.gsub('-','')
 
     respond_to do |format|
       format.html # show.html.erb
@@ -329,20 +287,18 @@ class TeamsController < ApplicationController
     end
   end
 
-  def survey_monkey_update
+  def peer_evaluation_update
     @team = Team.find(params[:id])
 
-    firstDate = params[:yearFieldOne] + "-" + params[:monthFieldOne] + "-" + params[:dayFieldOne]
-    firstDate = firstDate.to_date
+    @team.peer_evaluation_first_email = params[:team][:peer_evaluation_first_email]
+    @team.peer_evaluation_second_email =  params[:team][:peer_evaluation_second_email]
 
-    secondDate = params[:yearFieldTwo] + "-" + params[:monthFieldTwo] + "-" + params[:dayFieldTwo]
-    secondDate = secondDate.to_date
-
-    @team.peer_evaluation_first_email = firstDate
-    @team.peer_evaluation_second_email = secondDate
-    @team.save!
-
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    if @team.save
+      flash[:notice] = 'Dates saved'
+    else
+      flash[:error] = 'Dates not saved'
+    end
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 
@@ -350,46 +306,20 @@ class TeamsController < ApplicationController
 
 
 
-  private
-  def check_valid_names
-    error_msg = ""
-    return error_msg
-    if params[:team]['person_name']
-         Person.find_by_human_name(params[:team][:person_name]) rescue error_msg = error_msg + params[:team][:person_name] + " "
-    end
-    if params[:team]['person_name2']
-         Person.find_by_human_name(params[:team][:person_name2]) rescue error_msg = error_msg + params[:team][:person_name2] + " "
-    end
-    if params[:team]['person_name3']
-         Person.find_by_human_name(params[:team][:person_name3]) rescue error_msg = error_msg + params[:team][:person_name3] + " "
-    end
-    if params[:team]['person_name4']
-         Person.find_by_human_name(params[:team][:person_name4]) rescue error_msg = error_msg + params[:team][:person_name4] + " "
-    end
-    if params[:team]['person_name5']
-         Person.find_by_human_name(params[:team][:person_name5]) rescue error_msg = error_msg + params[:team][:person_name5] + " "
-    end
-    if params[:team]['person_name6']
-         Person.find_by_human_name(params[:team][:person_name6]) rescue error_msg = error_msg + params[:team][:person_name6] + " "
-    end
-    if !error_msg.empty?
-        "Unable to find users with the name " + error_msg
-    end
-  end
-
-  def handle_teams_people
-    logger.debug("handle_teams_people()")
-    if params['person_ids']
-      logger.debug("**************")
-      @team.people.clear
-      people = params['person_ids'].map { |id| Person.find(id) }
-      logger.debug("part 2")
-      logger.debug(people)
-      @team.people << people
-    end
-#  rescue
-#    logger.debug "record not found"
-  end
+#  private
+#  def handle_teams_people
+#    logger.debug("handle_teams_people()")
+#    if params['person_ids']
+#      logger.debug("**************")
+#      @team.people.clear
+#      people = params['person_ids'].map { |id| Person.find(id) }
+#      logger.debug("part 2")
+#      logger.debug(people)
+#      @team.people << people
+#    end
+##  rescue
+##    logger.debug "record not found"
+#  end
 
   def update_course_faculty_label
     @course = Course.find(params[:course_id])

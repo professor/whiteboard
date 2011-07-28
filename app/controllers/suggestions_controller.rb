@@ -5,7 +5,7 @@ class SuggestionsController < ApplicationController
   # GET /suggestions
   # GET /suggestions.xml
   def index
-    @suggestions = Suggestion.find(:all)
+    @suggestions = Suggestion.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -101,13 +101,13 @@ class SuggestionsController < ApplicationController
         message = "\"#{suggestion.comment}\"<br/><br/>"
     message = message + "by #{suggestion.user.human_name}" unless suggestion.user.nil?
 
-    GenericMailer.deliver_email(
-      :to => "todd.sedano@sv.cmu.edu",
-      :subject => "Suggestion #{status}",
-      :message => message,
-      :url_label => "Show this suggestion",
-      :url => "http://rails.sv.cmu.edu" + suggestion_path(suggestion)
-    )
+      options = {:to => "todd.sedano@sv.cmu.edu",
+                 :subject => "Suggestion #{status}",
+                 :message => message,
+                 :url_label => "Show this suggestion",
+                 :url => "http://rails.sv.cmu.edu" + suggestion_path(suggestion)
+      }
+    GenericMailer.email(options).deliver
 
   end
 

@@ -10,9 +10,19 @@ Thank you!
 <% else %>
 
 
-<% form_for(@curriculum_comment) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@curriculum_comment) do |f| %>
+  <% if @curriculum_comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@curriculum_comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
+      <ul>
+      <% @curriculum_comment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+        
     <%= f.hidden_field :url %>
 
 

@@ -59,11 +59,6 @@ background-color: #6B7F93;
   </p>
 <% end %>
 
-<% machine_name = "http://rails.sv.cmu.edu" if !development? %>
- <% if @show_my_papers_link %>
-    <a href="<%=machine_name%>/papers/by/<%=@person.twiki_name%>" target="_top">My papers</a>
-  <% end %>
-
 <% if @person.is_staff %>
 
   <p>

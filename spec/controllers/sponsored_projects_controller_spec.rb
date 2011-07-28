@@ -9,7 +9,7 @@ describe SponsoredProjectsController do
 
     before do
       @admin_andy = Factory(:admin_andy)
-      UserSession.create(@admin_andy)
+      login_user(@admin_andy)
     end
 
     describe "GET index" do
@@ -141,14 +141,14 @@ describe SponsoredProjectsController do
 
     before do
       @faculty_frank = Factory(:faculty_frank)
-      UserSession.create(@faculty_frank)
+      login_user(@faculty_frank)
     end
 
     [:index, :new, :edit, :archive].each do |http_verb|
       describe "GET #{http_verb}" do
         it "can't access page" do
           get http_verb, :id => project.to_param
-          response.should redirect_to(root_url)
+          response.should redirect_to(root_path)
           flash[:error].should == I18n.t(:no_permission)
         end
       end
@@ -157,7 +157,7 @@ describe SponsoredProjectsController do
     describe "POST create" do
       it "can't access page" do
         post :create, :sponsored_project => project.attributes
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -165,7 +165,7 @@ describe SponsoredProjectsController do
     describe "PUT update" do
       it "can't access page" do
         put :update, :id => project.to_param, :sponsored_project => {:name => 'NNNNN'}
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end

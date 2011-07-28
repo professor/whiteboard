@@ -1,9 +1,0 @@
---readme          README.md
---markup          markdown
---markup-provider maruku
---default-return  ""
---title           "Haml/Sass Documentation"
---hide-void-return
---protected
---no-private
---no-highlight

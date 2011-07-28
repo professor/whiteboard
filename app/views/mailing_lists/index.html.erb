@@ -6,7 +6,7 @@
 <script type="text/javascript">
 $(document).ready(function()
     {
-       if ($("#filterBoxOne").attr("disabled") == true)
+       if ($("#filterBoxOne").prop("disabled") == true)
        {
          $('#filterBoxOne').val('');
          $('#filterBoxOne').removeAttr("disabled");

@@ -6,7 +6,7 @@
 
 
 <div>
-<% form_for :semester_panel, @semester_panel, :url => {:action => "campus_semester", :id=> params[:id]} do |f| %>
+<%= form_for @semester_panel, :as => :semester_panel, :url => {:action => "campus_semester", :id=> params[:id]} do |f| %>
   <table width="100%" >
     <colgroup span="3" align="left"></colgroup>
     <colgroup align="right" style="color:#0000FF;"></colgroup>

@@ -1,9 +1,5 @@
 <% content_for :title, 'New Team' %>
 <h1>New team</h1>
-<%# javascript_include_tag :all, :cache => true %>
-<%= javascript_include_tag 'prototype' %>
-<%= javascript_include_tag 'effects' %>
-<%= javascript_include_tag 'controls' %>
 
 <%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
 <%= link_to 'Back', course_teams_path(@team.course_id) %>

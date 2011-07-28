@@ -1,0 +1,24 @@
+Today, Scotty Dog says "<%= @saying %>"
+
+There were <%=  @people_without_effort.size %> without effort.
+
+<% @people_without_effort.each do |person| %>
+   <%= person %>
+<% end %>
+
+
+There were <%=  @people_with_effort.size %> with effort.
+<% @people_with_effort.each do |person| %>
+   <%= person %>
+<% end %>
+
+
+Patrolling the campus,
+
+Scotty Dog
+
+<%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %> 
+
+Ps. Please put words in my mouth: <%= link_to "Scotty Dog Sayings", "http://rails.sv.cmu.edu/scotty_dog_sayings" %>
+
+  

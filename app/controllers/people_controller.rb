@@ -13,23 +13,19 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    if params[:search]
-      if development?
-        @people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:search]}%"])
-      else
-        @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
-      end
+    if params[:term] #Ajax call for autocomplete
+        #if database is mysql
+        #@people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
+      @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
     else
-          @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
+      @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
     end
 
     
-#    respond_to do |format|
-##      format.html # index.html.erb
-#      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
-#      format.js   { render :js => @people, :layout => false }
-#      format.xml  { render :xml => @people }
-#    end
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json   { render :json => @people.collect{|person| person.human_name}, :layout => false }
+    end
   end
 
   def phone_book
@@ -93,19 +89,14 @@ class PeopleController < ApplicationController
 #      @person.save
       @person.save_without_session_maintenance
 
-      GenericMailer.deliver_email(
-        :to => "help@sv.cmu.edu",
-        :cc => "todd.sedano@sv.cmu.edu",
-        :subject => "rails user account automatically created for #{twiki_name}",
-        :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
-        :url_label => "Edit this person's information",
-        :url => "http://rails.sv.cmu.edu" + edit_person_path(@person)
-      )
 
-    end
-
-    if(@person && @person.papers.size > 0 )
-      @show_my_papers_link = true
+      options = {:to => "help@sv.cmu.edu", :cc => "todd.sedano@sv.cmu.edu",
+                 :subject => "rails user account automatically created for #{twiki_name}",
+                  :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
+                  :url_label => "Edit this person's information",
+                  :url => "http://rails.sv.cmu.edu" + edit_person_path(@person)
+      }
+      GenericMailer.email(options).deliver
     end
 
     respond_to do |format|
@@ -132,13 +123,13 @@ class PeopleController < ApplicationController
     @person = Person.new
     @person.is_active = true
 
-     if development?
+     if Rails.env.development?
        @domain = GOOGLE_DOMAIN
      else
        @domain = "sv.cmu.edu"
      end
 
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
     
 
     respond_to do |format|
@@ -155,7 +146,7 @@ class PeopleController < ApplicationController
 #    end
 
     @person = Person.find(params[:id])
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
   end
 
   # POST /people
@@ -225,7 +216,7 @@ class PeopleController < ApplicationController
 
     @person = Person.find(params[:id])
     @person.updated_by_user_id = current_user.id
-    @strength_themes = StrengthTheme.find(:all)
+    @strength_themes = StrengthTheme.all
 
     respond_to do |format|
 

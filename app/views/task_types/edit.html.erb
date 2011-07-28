@@ -1,8 +1,18 @@
 <h1>Editing Task Type</h1>
 
-<% form_for(@task_type) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@task_type) do |f| %>
+  <% if @task_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task_type.errors.count, "error") %> prohibited this task type from being saved:</h2>
 
+      <ul>
+      <% @task_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+    
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>

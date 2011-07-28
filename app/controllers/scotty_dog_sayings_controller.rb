@@ -6,7 +6,7 @@ class ScottyDogSayingsController < ApplicationController
   # GET /scotty_dog_sayings
   # GET /scotty_dog_sayings.xml
   def index
-    @scotty_dog_sayings = ScottyDogSaying.find(:all)
+    @scotty_dog_sayings = ScottyDogSaying.all
 
     respond_to do |format|
       format.html # index.html.erb

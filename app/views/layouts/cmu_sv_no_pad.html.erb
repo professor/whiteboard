@@ -9,22 +9,15 @@
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
   <%= stylesheet_link_tag 'scaffold' %>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js",
+                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
+                             "jquery_ujs.js",
+                              "tablesorter",
+                              "tablesorter_filter" %>
+  <%= csrf_meta_tag %>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
 
-  <%= javascript_include_tag 'jquery.corners' %>
-  <%= javascript_include_tag 'tablesorter' %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
   <%= yield :tablesorter %>
-
-<script type="text/javascript">
-        //<![CDATA[
-$(document).ready(function(){
-    $('.rounded').corners();
-});
-//]]>
-</script>
 
   <%= stylesheet_link_tag '/cmu_sv/cmu.css' %>
   <%= stylesheet_link_tag '/cmu_sv/cmu_print.css', :media=>"print" %>
@@ -69,9 +62,9 @@ $(document).ready(function(){
 <%=  image_spacer(10) %>|<%=  image_spacer(10) %><a href="http://sv.cmu.edu/" title="Visit Us">CMU-SV Website</a>
 </div>          <div class="noPrint"><%= image_tag("/cmu_sv/pros_stds.jpg", :id=>"pageHeaderPhoto", :border=>"0", :width=>"748") %></div>                    <!-- Breadcrumbs -->          <div id="breadcrumbs_2Col_admin_template">
      | <a href="http://www.cmu.edu/silicon-valley/index.html" title="Carnegie Mellon Silicon Valley Home Page">CARNEGIE MELLON SILICON VALLEY</a> |
-<% if request.path_parameters['controller']  != "welcome" %>
+<% if controller.controller_name  != "welcome" %>
      <%= link_to "Rails Application", "/" %> |
-    &gt; <%=  request.path_parameters['controller'].humanize %>         </div>
+    &gt; <%= controller.controller_name.humanize %>        </div>
 <% else %>
     &gt; Rails Application        </div> 
 <% end %>
@@ -136,5 +129,4 @@ provided by Carnegie Mellon's Computing Services. If you're interested in
 using this design, please visit http://www.cmu.edu/cms to learn more.
 
 -->
-<%= google_analytics %>
 </body></html>

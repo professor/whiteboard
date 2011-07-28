@@ -24,7 +24,7 @@ describe Deliverable do
 
   it "should return team name for a team deliverable" do
     deliverable = Factory.build(:team_deliverable)
-    deliverable.stub(:before_validation)
+    deliverable.stub(:update_team)
     deliverable.save
     deliverable.owner_name.should be_equal(deliverable.team.name)
   end
@@ -36,13 +36,13 @@ describe Deliverable do
 
   it "should return team email for a team deliverable" do
     deliverable = Factory.build(:team_deliverable)
-    deliverable.stub(:before_validation)
+    deliverable.stub(:update_team)
     deliverable.save
     deliverable.owner_email.should be_equal(deliverable.team.email)
   end
 
   it "should return person email for a individual deliverable" do
-    deliverable = Factory.build(:individual_deliverable)
+    deliverable = Factory(:individual_deliverable)
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
 

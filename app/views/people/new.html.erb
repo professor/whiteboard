@@ -42,9 +42,19 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
 
 </script>
 
-<% form_for(@person) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@person) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
 
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+    
   <p>
     <%= f.label :first_name, "Preferred first name" %><br />
     <%= f.text_field :first_name, :onblur => "update_twiki_and_email()" %>
@@ -59,7 +69,7 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= f.text_field :last_name, :onblur => "update_twiki_and_email()" %>
   </p>
 
-  <% if development? %>
+  <% if Rails.env.development? %>
   <p>
   <%= f.label :password, f.object.new_record? ? nil : "Change password" %><br />
   <%= f.password_field :password %><br />

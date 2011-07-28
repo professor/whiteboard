@@ -1,6 +1,6 @@
 class Page < ActiveRecord::Base
     attr_accessible :course_id, :title, :position, :identation_levels, :is_task, :tab_one_contents, :tab_two_contents,
-                    :tab_three_contents, :task_duration, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
+                    :tab_three_contents, :task_duration, :tab_one_email_from, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
                     :url, :is_editable_by_all, :version_comments
 
     versioned
@@ -15,11 +15,7 @@ class Page < ActiveRecord::Base
     belongs_to :course
     acts_as_list :scope => :course
 
-  def before_validation
-      current_user = UserSession.find.user
-     self.updated_by_user_id = current_user.id if current_user
-     self.url = self.title if self.url.blank?
-  end
+    before_validation :update_user_and_url
 
   def editable?(current_user)
     return true if self.is_editable_by_all?
@@ -41,14 +37,20 @@ class Page < ActiveRecord::Base
 
  #Re-position: change the sequence of pages for a given course
  def self.reposition(ids)
-  if (ENV['RAILS_ENV']=='development') #development?
-    update_all(
-      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
-      { :id => ids }
-    )
-  else
-     update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })     
-  end
+
+  #if database is mysql
+#    update_all(
+#      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
+#      { :id => ids }
+#    )
+     update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })
  end
+
+  protected
+  def update_user_and_url
+      current_user = UserSession.find.user
+     self.updated_by_user_id = current_user.id if current_user
+     self.url = self.title if self.url.blank?
+  end
 
 end

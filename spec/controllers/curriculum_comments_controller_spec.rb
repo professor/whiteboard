@@ -9,7 +9,7 @@ describe CurriculumCommentsController do
 
   context "any user can" do
     before do
-      UserSession.create(Factory(:student_sam))
+      login_user(Factory(:student_sam))
       @redirect_url = curriculum_comment.url
     end
 
@@ -67,7 +67,9 @@ describe CurriculumCommentsController do
         end
 
         it "emails the comment" do
-          CurriculumCommentMailer.should_receive(:deliver_comment_update)
+          mailer = double("mailer")
+          mailer.stub(:deliver)
+          CurriculumCommentMailer.should_receive(:comment_update).and_return(mailer)
           post :create, :curriculum_comment => @curriculum_comment.attributes
         end
       end
@@ -108,7 +110,7 @@ describe CurriculumCommentsController do
 
   context "the author can" do
     before do
-      UserSession.create(Factory(:faculty_frank))
+      login_user(Factory(:faculty_frank))
       @redirect_url = curriculum_comment.url
     end
 
@@ -162,7 +164,7 @@ describe CurriculumCommentsController do
 
   context "any admin can" do
 #    before do
-#      UserSession.create(Factory(:admin_andy))
+#      login_user(Factory(:admin_andy))
 #    end
 
     describe "DELETE destroy" do

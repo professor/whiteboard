@@ -1,11 +1,10 @@
 <% content_for :tablesorter do %>
-  <%= javascript_include_tag 'jquery' %>
   <%= javascript_include_tag 'tablesorter' %>
   <%= javascript_include_tag 'tablesorter_filter' %>
 <script type="text/javascript">
 $(document).ready(function() 
     {
-       if ($("#filterBoxOne").attr("disabled") == true)
+       if ($("#filterBoxOne").prop("disabled") == true)
        {
          $('#filterBoxOne').val('');
          $('#filterBoxOne').removeAttr("disabled");

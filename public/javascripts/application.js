@@ -2,15 +2,11 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 
-//function ajaxRemoveTeamMemberNow()
-//{
-//    $.ajax({
-//        type:
-//        url:'/teams/remove_team_member?person_id=1&amp;team_id=216',
-//
-//    })
-//
-//
-//}
-//
-//    </a>new Ajax.Updater('person1', '/teams/remove_team_member?person_id=1&amp;team_id=216', {asynchronous:true, evalScripts:true, onLoading:function(request){status('person1')}, parameters:'authenticity_token=' + encodeURIComponent('06ed7835e9fa56f90641a30dd549fc0384b84ca8')}); return false;" href="#">Remove now</a>
+<script type="text/javascript">
+	$(function() {
+		$("#add_person").click(function() {
+            var a = $("<a></a>").attr('href','#').click(somefunction);
+           $("#people_in_a_collection").append(a);
+        });
+ 	});
+</script>

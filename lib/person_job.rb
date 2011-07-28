@@ -30,13 +30,13 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
  #     Delayed::Worker.logger.debug(error_message)
       puts error_message
       message = error_message
-      GenericMailer.deliver_email(
+      GenericMailer.email(
         :to => ["help@sv.cmu.edu", "todd.sedano@sv.cmu.edu"],
         :subject => "PersonJob had an error on person id = #{person.id}",
         :message => message,
         :url_label => "Show which person",
         :url => "http://rails.sv.cmu.edu/people/#{person.id}" #+ person_path(person)
-      )
+      ).deliver
     end
   end
 
@@ -44,7 +44,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
 
   private
   def send_email(personal_email, sv_email, message)
-           PersonMailer.deliver_email(
+           PersonMailer.email(
              :bcc => "todd.sedano@sv.cmu.edu",
              :to => personal_email,
              :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
@@ -53,7 +53,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
 #             :url_label => "Check your email",
 #             :url => "http://mail.google.com/a/west.cmu.edu/#inbox",
              :cc => "help@sv.cmu.edu"
-            )
+            ).deliver
   end
 
 

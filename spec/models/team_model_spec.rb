@@ -66,14 +66,14 @@ describe Team do
     end
 
     it "by the students if, this option wasn't selected when creating the course" do
-      @student_sam = UserSession.create(Factory(:student_sam))
+      @student_sam = login_user(Factory(:student_sam))
       @team.name = "Maccabees"
       @team.save
       @team.name.should == "Dracula"
     end
 
     it "by the faculty, regardless of the setting" do
-      @faculty_frank = UserSession.create(Factory(:faculty_frank))
+      @faculty_frank = login_user(Factory(:faculty_frank))
       @team.name = "Maccabees"
       @team.save
       @team.name.should == "Maccabees"

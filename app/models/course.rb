@@ -3,7 +3,9 @@ class Course < ActiveRecord::Base
   belongs_to :course_number
   has_many :pages, :order => "position"
 
-  has_and_belongs_to_many :faculty, :join_table=>"courses_people", :class_name => "Person"
+  has_many :faculty_assignments
+  has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
+
 
   validates_presence_of :semester, :year, :mini, :name
 
@@ -23,12 +25,9 @@ class Course < ActiveRecord::Base
    result.gsub(" ", "")
   end
 
-  def before_validation
-     current_user = UserSession.find.user unless UserSession.find.nil?
-     self.updated_by_user_id = current_user.id if current_user
-  end
+  before_validation :set_updated_by_user
 
-  named_scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
+  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
 
 
 #  def self.for_semester(semester, year, mini)
@@ -126,6 +125,7 @@ class Course < ActiveRecord::Base
 
   #Todo - create a test case for this
   #Todo - move to a higher class or try as a mixin
+  #Todo - this code was copied to team.rb
   def update_faculty(members)
     self.faculty = []
     return "" if members.nil?
@@ -163,5 +163,11 @@ class Course < ActiveRecord::Base
     unless self.is_configured?
       CourseMailer.deliver_configure_course_faculty_email(self)
     end
+  end
+
+  protected
+  def set_updated_by_user
+     current_user = UserSession.find.user unless UserSession.find.nil?
+     self.updated_by_user_id = current_user.id if current_user
   end
 end

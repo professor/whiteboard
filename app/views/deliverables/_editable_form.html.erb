@@ -1,7 +1,17 @@
 
 
-<% form_for @deliverable, :html => { :multipart => true } do |f| %>
-  <%= f.error_messages %>
+<%= form_for @deliverable, :html => { :multipart => true } do |f| %>
+  <% if @deliverable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deliverable.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
+
+      <ul>
+      <% @deliverable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
   <p>
     <%= f.label :name, "Name" %>
     <%= f.text_field :name, :size => "50" %>
@@ -19,7 +29,7 @@
     <%= f.check_box :is_team_deliverable %>
   </p>
   <div class="deliverable_attachment">
-  <% fields_for :deliverable_attachment do |attachment_form| -%>
+  <%= fields_for :deliverable_attachment do |attachment_form| -%>
     <p>
       <%= attachment_form.label :attachment, "Deliverable file to upload" %>
       <%= attachment_form.file_field :attachment %>

@@ -206,6 +206,14 @@ describe Person do
       @student_sam.version.should == (@version_number)
     end
 
+  end
+
+  describe "person's teams" do
+
+  end
+
+  describe "person's registered courses" do
+    # TODO: courses registered - as not tested in the course model
 
   end
   
@@ -226,5 +234,8 @@ describe Person do
     
   end
 
+  # More tests
+  # Effort log should only be set for person that is_student - tested in effort_log
+  # Graduation_year should be set for person that is_student
 
 end

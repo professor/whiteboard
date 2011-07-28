@@ -1,1 +1,2 @@
-rvm --create use ruby-1.8.7@rails2
+#rvm --create use ruby-1.8.7@rails2
+rvm --create use ruby-1.9.2-p180@rails3
