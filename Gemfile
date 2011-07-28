@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
              
 gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
+gem 'thin'
+gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
 gem 'rails', '3.0.9'
 gem 'jquery-rails', '>= 1.0.3'
@@ -8,10 +10,6 @@ gem 'aws-s3'
 gem 'mechanize'
 
 gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
-
-gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
-
-
 
 gem 'ruby-openid'
 gem 'ruby-openid-apps-discovery'
@@ -41,11 +39,14 @@ gem 'pg'
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
-gem 'thin'
 
 group :production do
+  gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
+  gem 'thin'
+  gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
+
   gem 'newrelic_rpm'
-  
+
   #gem 'daemons 1.1.4' #this is used by heroku on 7/18/2011
   gem 'rack-google_analytics', :require => "rack/google_analytics"
   gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
@@ -53,6 +54,8 @@ group :production do
 end
 
 group :development, :test do
+#  gem 'mongrel', '>= 1.2.0.pre2', :require => nil
+
   gem 'taps'
 #  gem 'rake'
   gem 'ruby-debug19'
