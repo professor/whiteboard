@@ -1,14 +1,14 @@
 <% content_for :title, 'Effort Report for ' + @course.name  %>
-
-<head>
-<script src="/javascripts/prototype.js"></script>
-<script src="/javascripts/application.js"></script>
-<script src="/javascripts/controls.js"></script>
-<script src="/javascripts/effects.js"></script>
-<script src="/javascripts/calendar_date_select/calendar_date_select.js"></script>
-<%= stylesheet_link_tag "calendar_date_select/red" %>
-</head>
-<body>
+<% content_for :javascript do %>
+   <%= javascript_tag do %>
+	$(function() {
+		$("#panel_state_date").datepicker({
+          showButtonPanel: true,
+          dateFormat: 'yy-mm-dd'
+        });
+ 	});
+   <% end %>
+<% end %>
 
   <div>
     <table><tr><td><%= link_to "Back to Effort Reports for this course", effort_report_path(params[:course_id]) %></td></tr>
@@ -17,12 +17,12 @@
   </div>
 
 <div>
-<% form_for :panel_state, @panel_state, :url => {:action => "course", :id=> params[:id]} do |f| %>
+<%= form_for @panel_state, :as => :panel_state, :url => {:action => "course", :id=> params[:id]} do |f| %>
   <table>
     <tr>
       <td>
   Date
-<%= f.calendar_date_select :date, :year_range => [2000, 2020], :size => 20 %>
+        <%= f.text_field :date, :size => 10 %>
       </td>
       
        <td>
@@ -50,5 +50,3 @@
 <%= image_tag(@chart_url)  %>
 
 </div>
-</body>
-

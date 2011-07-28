@@ -17,13 +17,13 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    if !development? || !params[:user_session]
+    if !Rails.env.development? || !params[:user_session]
       open_id_authentication
     else
           @user_session = UserSession.new(params[:user_session])
           if @user_session.save
             flash[:notice] = "Login successful!"
-            redirect_back_or_default(root_url)
+            redirect_back_or_default(root_path)
           else
             flash[:notice] = "Login unsuccessful"
             render :action => :new
@@ -43,7 +43,7 @@ class UserSessionsController < ApplicationController
 #    @user_session = UserSession.find
 #    @user_session.destroy
     flash[:notice] = "Successfully logged out."
-    redirect_to root_url
+    redirect_to root_path
   end
 
   protected
@@ -82,14 +82,14 @@ class UserSessionsController < ApplicationController
           if current_user
             successful_login(openid_identifier, email)
           else
-            GenericMailer.deliver_email(
-              :to => "help@sv.cmu.edu",
-              :subject => "Login problem to on rails.sv.cmu.edu for user #{email}",
-              :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
-              :url_label => "",
-              :url => "",
-              :cc => "todd.sedano@sv.cmu.edu"
-            )
+            options = {:to => "help@sv.cmu.edu",
+                       :subject => "Login problem to on rails.sv.cmu.edu for user #{email}",
+                       :message => "A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. <br><br>The email address is #{email}",
+                       :url_label => "",
+                       :url => "",
+                       :cc => "todd.sedano@sv.cmu.edu"
+            }
+            GenericMailer.email(options).deliver
             failed_login "Sorry, no user with this email (#{email}) exists in the system. help@sv.cmu.edu was just notified of this issue."
           end
         else
@@ -109,11 +109,11 @@ class UserSessionsController < ApplicationController
 
 #    @user_session = UserSession.create(@current_user, true)
 #    if @user_session.save
-      redirect_back_or_default(root_url)
+      redirect_back_or_default(root_path)
 ##      redirect_back_or_default(user_session_url)
-#      redirect_to root_url
+#      redirect_to root_path
 #              redirect_to(user_session_url)
-      #        redirect_to(root_url)
+      #        redirect_to(root_path)
 #    else
 #      render :action => 'new'
 #    end
@@ -122,7 +122,7 @@ class UserSessionsController < ApplicationController
       def successful_login_old
         session[:user_id] = @current_user.id
         redirect_to(user_session_url)
-#        redirect_to(root_url)
+#        redirect_to(root_path)
       end
   
 
@@ -134,7 +134,7 @@ class UserSessionsController < ApplicationController
 
     flash[:error] = message
 #    redirect_to(new_user_session_url)
-    redirect_to(root_url)
+    redirect_to(root_path)
    end
 
 end

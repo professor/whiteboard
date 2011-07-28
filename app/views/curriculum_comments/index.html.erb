@@ -2,7 +2,7 @@
 
 <div class="comment_new" style="font-size: 12px; margin-left: 5px;">
 <!-- when this code is jquery loaded on the curriculum website, the link needs to point to rails.sv.cmu.edu, not curriculum.sv.cmu.edu -->
-<% if development? %>
+<% if Rails.env.development? %>
 <%= link_to 'Post your comment about this page', new_curriculum_comment_path %>
 <% else %>
 <%= link_to 'Post your comment about this page', 'http://rails.sv.cmu.edu/curriculum_comments/new' %>

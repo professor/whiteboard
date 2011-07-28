@@ -1,0 +1,30 @@
+The course <%= @course.name %> for the <%= @course.semester %> <%= @course.year %> semester.
+
+<br/>
+<br/>
+<table border=1 cellspacing="5">
+<tr valign="top">
+  <td><%= "Please create a twiki web for my course" %><br/>
+  User says: <%= @course.configure_course_twiki ? "Yes" : "No" %>
+<% if @course.configure_course_twiki %>
+  <br/>System says: we'd expect the url to be <br/><%= @course.auto_generated_twiki_url %>
+<% end %>
+  </td>
+</tr>
+
+  <tr valign="top">
+    <td><%= "I want a class mailing list" %><br/>
+    User says: <%= @course.configure_class_mailinglist ? "Yes" : "No" %></td>
+  </tr>
+
+
+</table>
+
+<%# this should be much easier in Rails 3, I hope %>
+<%# render :partial => "/courses/form_configure", :locals => { :button_name => "Update" } %>
+
+<br/>
+<br/>
+<p>Regards,</p>
+<p>Scotty Dog</p>
+

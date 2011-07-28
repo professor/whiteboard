@@ -1,0 +1,3 @@
+rvm: 1.9.2
+
+before_script: FileUtils.copy(Dir.pwd+"/config/morning_glory.default.yml", Dir.pwd+"/config/morning_glory.yml")

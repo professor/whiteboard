@@ -4,7 +4,7 @@ describe EffortReportsController do
   fixtures :users
 
   it "should have the correct url for the google charting api" # do
-#    UserSession.create(users(:student_sam))
+#    login_user(users(:student_sam))
 #
 #    foundations = Factory(:fse)
 #    line1 = Factory(:effort1)

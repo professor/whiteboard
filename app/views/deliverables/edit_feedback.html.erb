@@ -2,7 +2,7 @@
 
 <h1>Provide Deliverable Feedback</h1>
 
-<% form_for @deliverable, :html => { :multipart => true }, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+<%= form_for @deliverable, :html => { :multipart => true }, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <p>
     <%= f.label :feedback, "Feedback file to upload" %>
     <%= f.file_field :feedback %>

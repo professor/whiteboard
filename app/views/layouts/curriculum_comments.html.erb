@@ -8,7 +8,6 @@
 
 <% if (request.env["HTTP_REFERER"].nil?) || (!request.env["HTTP_REFERER"].include? "curriculum.sv.cmu.edu") %>
   <%= javascript_include_tag  'jquery' %>
-  <%= javascript_include_tag 'jquery.corners' %>
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'site' %>
 <% else %>
@@ -23,10 +22,6 @@
 
 <%= yield  %>
 
-
-<script>$(document).ready( function(){
-  $('.rounded').corners();
-});</script>
 
 </body>
 </html>

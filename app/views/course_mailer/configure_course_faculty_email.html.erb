@@ -1,0 +1,13 @@
+According to our records, you will be teaching the course <%= @course.name %> for the <%= @course.semester %> <%= @course.year %> semester.
+<br/>
+<br/>
+<%= link_to "Configure my course", "http://rails.sv.cmu.edu#{configure_course_path(@course)}" %>
+<br/>
+<br/>
+Why do we ask for this information?<br/>
+Our students appreciate it since they often want to look at course materials before signing up for a course.<br/>
+Our IT department appreciates it since they can help setup the IT resources you need before your course starts.<br/>
+
+<p>Regards,</p>
+<p>Scotty Dog</p>
+

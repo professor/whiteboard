@@ -8,7 +8,7 @@ describe SponsoredProjectAllocationsController do
 
     before do
       @admin_andy = Factory(:admin_andy)
-      UserSession.create(@admin_andy)
+      login_user(@admin_andy)
     end
 
     describe 'GET index' do
@@ -140,14 +140,14 @@ describe SponsoredProjectAllocationsController do
     before do
       @faculty_frank = allocation.person
       @faculty_frank.is_admin = false
-      UserSession.create(@faculty_frank)
+      login_user(@faculty_frank)
     end
 
     [:index, :new, :edit, :archive].each do |http_verb|
       describe "GET #{http_verb}" do
         it "can't access page" do
           get http_verb, :id => allocation.to_param
-          response.should redirect_to(root_url)
+          response.should redirect_to(root_path)
           flash[:error].should == I18n.t(:no_permission)
         end
       end
@@ -156,7 +156,7 @@ describe SponsoredProjectAllocationsController do
     describe "POST create" do
       it "can't access page" do
         post :create, :sponsored_project_allocation => allocation.attributes
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -164,7 +164,7 @@ describe SponsoredProjectAllocationsController do
     describe "PUT update" do
       it "can't access page" do
         put :update, :id => allocation.to_param, :sponsored_project_allocation => {:current_allocation => 50}
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end

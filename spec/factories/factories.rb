@@ -64,7 +64,8 @@ Factory.define :person, :class => Person do |p|
   p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
 end
 
-Factory.define :scotty_dog_saying do |sds|
+
+Factory.define :scotty_dog_saying, :class => ScottyDogSaying do |sds|
   sds.association :user, :factory => :student_sam
   sds.saying "Tartan is my favorite color"
 end
@@ -112,4 +113,23 @@ Factory.define :team, :class => Team do |t|
  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
  t.people {|people| [people.association(:team_member)]}
  t.association :course, :factory => :course
+end
+
+Factory.define :user, :class => User do |p|
+  p.is_staff 0
+  p.is_student 0
+  p.is_admin 1
+  p.is_teacher 0
+  p.is_active 1
+  p.image_uri "/images/mascot.jpg"
+  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
+  p.first_name "user"
+  p.last_name "todd"
+  p.login "user_todd"
+  p.password "ashoifjadslkfjaskl;h"
+  p.password_confirmation "ashoifjadslkfjaskl;h"
+  p.password_salt Authlogic::Random.hex_token
+  p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
+  p.persistence_token rand(36**60).to_s(36)
+
 end

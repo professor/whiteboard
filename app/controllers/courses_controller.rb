@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   # GET /courses.xml
   def index
     @all_courses = true
-    @courses = Course.find(:all, :order => "year DESC, semester DESC, number ASC")
+    @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
     index_core
@@ -26,10 +26,6 @@ class CoursesController < ApplicationController
     @semester = AcademicCalendar.next_semester()
     @year = AcademicCalendar.next_semester_year()
     @courses = Course.for_semester(@semester, @year)
-#    @semester_courses = Course.for_semester(@semester, @year, "Both")
-#    @mini_a_courses = Course.for_semester(@semester, @year, "A")
-#    @mini_b_courses = Course.for_semester(@semester, @year, "B")
-#
     index_core
   end
 
@@ -38,8 +34,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
 
-#    teams = Team.find_by_course_id(params[:id])
-    teams = Team.find(:all, :conditions => ["course_id = ?", params[:id]])
+    teams = Team.where("course_id = ?", params[:id])
 
     @emails = []
     teams.each do |team|
@@ -57,7 +52,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       @course = Course.new
       @course.semester = AcademicCalendar.next_semester
       @course.year = AcademicCalendar.next_semester_year
@@ -71,13 +66,13 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       @course = Course.find(params[:id])
     end
   end
 
   def configure
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       edit
     end
   end
@@ -85,7 +80,7 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.xml
   def create
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       @last_offering = Course.last_offering(params[:course][:number])
       if @last_offering.nil?
         @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
@@ -113,7 +108,7 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    if has_permissions_or_redirect(:staff, root_url)
+    if has_permissions_or_redirect(:staff, root_path)
       @course = Course.find(params[:id])
 
       if(params[:course][:is_configured]) #The previous page was configure action
@@ -131,7 +126,8 @@ class CoursesController < ApplicationController
       respond_to do |format|
         if @course.update_attributes(params[:course])
           if(params[:course][:is_configured]) #The previous page was configure action
-            CourseMailer.deliver_configure_course_admin_email(@course) 
+            CourseMailer.configure_course_admin_email(@course).deliver
+#            CourseMailer.configure_course_admin_email.deliver(@course)
           else  #email faculty to configure the course, unless it was already configured
             
           end
@@ -149,7 +145,7 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    if has_permissions_or_redirect(:admin, root_url)
+    if has_permissions_or_redirect(:admin, root_path)
       @course = Course.find(params[:id])
       @course.destroy
 

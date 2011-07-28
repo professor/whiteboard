@@ -1,3 +1,4 @@
+# coding: utf-8
 # This file is included in the db/seeds.rb file
 
 Factory.define :achiever, :class => StrengthTheme do |st|

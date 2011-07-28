@@ -2,27 +2,27 @@ require 'spec_helper'
 
 describe "courses/new.html.erb" do
   before(:each) do
-    UserSession.create(Factory(:faculty_frank))
+    login_user(Factory(:faculty_frank))
     course = stub_model(Course).as_new_record
     course.stub(:people).and_return([stub_model(Person)])
-    assigns[:course] = course
-    assigns[:course_numbers] = [stub_model(CourseNumber)]
+    assign(:course, course)
+    assign(:course_numbers, [stub_model(CourseNumber)])
 
   end
 
   it "renders new page form" do
     render
 
-    response.should have_tag("form", :action => courses_path, :method => "post")
+    rendered.should have_selector("form", :action => courses_path, :method => "post")
   end
 
  it 'should have fields' do
    render
 
-    response.should have_tag('form') do |f|
-      f.should have_tag("input[name='course[number]']")
-      f.should have_tag("select[name='course[semester]']")
-      f.should have_tag("input[name='course[year]']")
+    rendered.should have_selector('form') do |f|
+      f.should have_selector("input[name='course[number]']")
+      f.should have_selector("select[name='course[semester]']")
+      f.should have_selector("input[name='course[year]']")
     end
   end
 

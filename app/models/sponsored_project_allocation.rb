@@ -9,12 +9,12 @@ class SponsoredProjectAllocation < ActiveRecord::Base
   def unique_person_to_project_allocation?
     duplicate = SponsoredProjectAllocation.find_by_person_id_and_sponsored_project_id(self.person_id, self.sponsored_project_id)
     unless duplicate.nil? || duplicate.id == self.id
-      errors.add_to_base("Can't create duplicate allocation for the same person to project.")
+      errors.add(:base, "Can't create duplicate allocation for the same person to project.")
     end
   end
 
-  named_scope :current, :conditions => {:is_archived => false}
-  named_scope :archived, :conditions => {:is_archived => true}
+  scope :current, :conditions => {:is_archived => false}
+  scope :archived, :conditions => {:is_archived => true}
 
   default_scope :order => "person_id ASC"
 
@@ -31,7 +31,7 @@ class SponsoredProjectAllocation < ActiveRecord::Base
     efforts.each do |effort|
       person = effort.sponsored_project_allocation.person
       unless effort.confirmed || person.emailed_recently(:sponsored_project_effort)
-        SponsoredProjectEffortMailer.deliver_monthly_staff_email(person, effort.month, effort.year)
+        SponsoredProjectEffortMailer.monthly_staff_email(person, effort.month, effort.year).deliver
         person.sponsored_project_effort_last_emailed = Time.now
         person.save
       end

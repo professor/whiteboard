@@ -1,0 +1,5 @@
+<% current_user = UserSession.find %>
+<% id = current_user && current_user.record.id %>
+* user_id: <%= id unless id.nil? %>
+* user:  <%= User.find(id).human_name unless id.nil? %>
+* robot: <%= @request.user_agent =~ /(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i %>

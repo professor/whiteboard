@@ -1,9 +1,19 @@
 <% content_for :title, 'Edit Suggestion' %>
 <h1>Editing Suggestion</h1>
 
-<% form_for([@suggestion]) do |f| %>
-  <%= f.error_messages %>
+<%= form_for([@suggestion]) do |f| %>
+  <% if @suggestion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@suggestion.errors.count, "error") %> prohibited this suggestion from being saved:</h2>
 
+      <ul>
+      <% @suggestion.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+    
   <p>
     <%= f.label :comment %><br />
     <%= f.text_area :comment, :size => "80x10"  %>

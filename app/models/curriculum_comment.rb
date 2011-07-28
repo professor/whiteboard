@@ -4,10 +4,6 @@ class CurriculumComment < ActiveRecord::Base
 
     validates_presence_of :comment
 
-#    after_save {
-#      CurriculumCommentMailer.deliver_comment_update(self)
-#    }
-
     def editable(current_user)
     if (current_user && current_user.is_admin?)
       return true

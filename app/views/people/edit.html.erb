@@ -48,11 +48,21 @@
 
 <h1>Editing <%=h @person.human_name %> </h1>
 
-This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
+This account was last updated on <%= l @person.updated_at, :format => :chatty  %>
 
-<% form_for @person, :html => { :multipart => true } do |f| %>
-  <%= f.error_messages %>
+<%= form_for @person, :html => { :multipart => true } do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
 
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+    
 <table><tr valign="top"><td>
   <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
   </td><td>&nbsp;</td><td>
@@ -138,11 +148,6 @@ This account was last updated on <%=h @person.updated_at.to_s(:chatty)  %>
 <% end %>
 <tr class="cmu_table_even"><td class="field_label">&nbsp;</td>
   <td>
-    <% if @person.papers.count > 0 %>
-       <%= link_to 'My papers', "/papers/by/#{@person.twiki_name}" %><br/>
-    <% else %>
-       <%= link_to 'Add a published paper', "/papers/new" %><br/>
-    <% end %>
     <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
         <%= link_to "My teams", my_teams_path(@person) %>
         <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"My Teams", :title=>"My Teams"), my_teams_path(@person) %>

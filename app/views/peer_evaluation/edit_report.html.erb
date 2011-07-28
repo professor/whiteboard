@@ -14,7 +14,7 @@ We've included who said what, so you'll want to remove people's names. Keep an e
 Once you are done editing the reports, the last button allows you to email the results back to each individual.<br />
 
 <br />
-<% form_for @report, :url => {:action => "complete_report"} do |f| %>
+<%= form_for @report, :url => {:action => "complete_report"} do |f| %>
 <input type="hidden" name="id" value="<%=params[:id]%>">
 <%personcounter = 0%>
 

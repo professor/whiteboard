@@ -6,13 +6,13 @@ describe SponsoredProjectEffortsController do
   context "as admin do" do
     before do
       @admin_andy= Factory(:admin_andy)
-      UserSession.create(@admin_andy)
+      login_user(@admin_andy)
     end
 
     describe "GET index" do
       before(:each) do
         @effort_mock = mock_model(SponsoredProjectEffort)
-        SponsoredProjectEffort.stub(:find).and_return([@effort_mock, @effort_mock])
+        SponsoredProjectEffort.stub(:for_all_users_for_a_given_month).and_return([@effort_mock, @effort_mock])
         get :index
       end
 
@@ -26,13 +26,13 @@ describe SponsoredProjectEffortsController do
 
     before do
       @faculty_frank = Factory(:faculty_frank)
-      UserSession.create(@faculty_frank)
+      login_user(@faculty_frank)
     end
 
     describe "GET index" do
       it "can't access page" do
         get :index
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
 
@@ -52,7 +52,7 @@ describe SponsoredProjectEffortsController do
       it "can't access page for a different user" do
         @faculty_fagan = Factory(:faculty_fagan)
         get :edit, :id => @faculty_fagan.twiki_name
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
@@ -113,7 +113,7 @@ describe SponsoredProjectEffortsController do
         it 'sets the flash to error' do
           @effort_2.should_receive(:save).and_return(false)
           put :update, :id => "FacultyFrank", :effort_id_values => {"0" => "25", "1" => "75"}
-          assigns[:failed].should == true
+          assigns(:failed).should == true
           #flash.now[:error].should == "Your allocations did not save."
         end
 
@@ -130,7 +130,7 @@ describe SponsoredProjectEffortsController do
       it "can't access page for a different user" do
         @faculty_fagan = Factory(:faculty_fagan)
         put :update, :id => @faculty_fagan.twiki_name, :effort_id_values => {"0" => "25", "1" => "75"}
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_path)
         flash[:error].should == I18n.t(:no_permission)
       end
     end
