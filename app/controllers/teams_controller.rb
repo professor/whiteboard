@@ -176,7 +176,7 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/1/edit
   def edit
     @team = Team.find(params[:id])
-    if has_permissions_or_redirect(:staff, @team)
+    if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
       @team.course_id = params[:course_id]
       @course = Course.find(params[:course_id])
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
@@ -220,7 +220,7 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1.xml
   def update
     @team = Team.find(params[:id])
-    if has_permissions_or_redirect(:staff, @team)
+    if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
       @course = @team.course
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
