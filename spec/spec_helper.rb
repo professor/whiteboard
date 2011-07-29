@@ -15,6 +15,16 @@ require 'helpers'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("spec/factories/**/*.rb")].each {|f| require f}
 
+  if !File.exists?(Dir.pwd+"/config/amazon_s3.yml")
+    FileUtils.copy(Dir.pwd+"/config/amazon_s3.default.yml", Dir.pwd+"/config/amazon_s3.yml")
+  end
+  if !File.exists?(Dir.pwd+"/config/morning_glory.yml")
+    FileUtils.copy(Dir.pwd+"/config/morning_glory.default.yml", Dir.pwd+"/config/morning_glory.yml")
+  end
+  if !File.exists?(Dir.pwd+"/config/systems.yml")
+    FileUtils.copy(Dir.pwd+"/config/systems.default.yml", Dir.pwd+"/config/systems.yml")
+  end
+
 RSpec.configure do |config|
   # == Mock Framework
   #
