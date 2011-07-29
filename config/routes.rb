@@ -52,7 +52,7 @@ CMUEducation::Application.routes.draw do
   match '/effort_reports/campus_semester' => 'effort_reports#campus_semester'
   match '/effort_reports/course/:course_id' => 'effort_reports#course'
   resources :effort_reports
-  match '/people/phone_book' => 'people#phone_book'
+  match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'
   match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
   resources :people
