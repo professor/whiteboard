@@ -1,7 +1,7 @@
 rvm: 1.9.2
 
 before_script:
--cp config/amazon_s3.default.yml config/amazon_s3.yml
--cp config/morning_glory.default.yml config/morning_glory.yml
--cp config/systems.default.yml config/systems.yml
+  - cp config/amazon_s3.default.yml config/amazon_s3.yml
+  - cp config/morning_glory.default.yml config/morning_glory.yml
+  - cp config/systems.default.yml config/systems.yml
                                                                                                                
