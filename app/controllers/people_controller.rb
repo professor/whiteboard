@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
     end
   end
 
-  def phone_book
+  def advanced
     index
   end
 
