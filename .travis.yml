@@ -6,4 +6,5 @@ before_script:
   - cp config/database.default.yml config/database.yml
   - cp config/morning_glory.default.yml config/morning_glory.yml
   - cp config/systems.default.yml config/systems.yml
+  - bundle exec rake db:schema:load RAILS_ENV='test'
                                                                                                                
