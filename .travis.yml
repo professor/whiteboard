@@ -1,6 +1,7 @@
 rvm: 1.9.2
 
 before_script:
+  - "psql -c 'create database myapp_test;' -U postgres >/dev/null"
   - cp config/amazon_s3.default.yml config/amazon_s3.yml
   - cp config/database.default.yml config/database.yml
   - cp config/morning_glory.default.yml config/morning_glory.yml
