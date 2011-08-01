@@ -29,12 +29,12 @@
 <% else %>
     <td class="twikiFirstCol"><%=h team.name %></td>
 <% end %>
-<% if !(team.email.nil? || team.email.empty?)&&(!team.updating_email) %>
+<% unless (team.email.blank? || team.updating_email) %>
     <td><a href='mailto:<%=h team.email %>'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
 <% else %>
     <td> &nbsp; </td>
 <% end %>
-<% if !team.tigris_space.empty? %>
+<% unless team.tigris_space.blank? %>
     <td><a href='<%=h team.tigris_space %>'><%= image_tag("/images/tigris.gif", :width=>"16", :height=>"16", :border=>0) %></a></td>
 <% else %>
     <td> &nbsp; </td>

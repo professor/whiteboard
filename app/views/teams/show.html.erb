@@ -22,10 +22,12 @@
   <a href="<%=h @team.twiki_space %>"><%=h @team.twiki_space %></a>
 </p>
 
+<% unless @team.tigris_space.blank? %>
 <p>
   <b>Tigris space:</b>
   <a href="<%=h @team.tigris_space %>"><%=h @team.tigris_space %></a>
 </p>
+<% end %>
 
 <p>
   <b>Course Name:</b>

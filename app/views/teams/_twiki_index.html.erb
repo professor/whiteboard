@@ -60,17 +60,17 @@ background-color: #6B7F93;
     <% if show_course %>
          <td><%= team.course.name %></td>
     <% end %>
-    <% if !(team.twiki_space.nil? || team.twiki_space.empty?) %>
+    <% unless team.twiki_space.blank? %>
         <td class="twikiFirstCol"><a href='<%=h team.twiki_space%>' target='_top'><%=h team.name %></a></td>
     <% else %>
         <td class="twikiFirstCol"><%=h team.name %></td>
     <% end %>
-    <% if !(team.email.nil? || team.email.empty?)&&(!team.updating_email) %>
+    <% unless (team.email.blank? || team.updating_email) %>
         <td><a href='mailto:<%=h team.email %>' target='_top'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
     <% else %>
         <td> &nbsp; </td>
     <% end %>
-    <% if !(team.tigris_space.nil? || team.tigris_space.empty?) %>
+    <% unless team.tigris_space.blank? %>
         <td><a href='<%=h team.tigris_space %>' target='_top'><%= image_tag("/images/tigris.gif", :width=>"16", :height=>"16", :border=>0) %></a></td>
     <% else %>
         <td> &nbsp; </td>
