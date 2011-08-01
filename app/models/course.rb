@@ -26,6 +26,8 @@ class Course < ActiveRecord::Base
   end
 
   before_validation :set_updated_by_user
+  before_save :strip_whitespaces
+
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'name ASC'
@@ -173,5 +175,13 @@ class Course < ActiveRecord::Base
   def set_updated_by_user
      current_user = UserSession.find.user unless UserSession.find.nil?
      self.updated_by_user_id = current_user.id if current_user
+  end
+
+  def strip_whitespaces
+#     self.number = self.number.strip
+#     self.name  = self.name.strip
+    @attributes.each do |attr,value|
+      self[attr] = value.strip
+    end
   end
 end
