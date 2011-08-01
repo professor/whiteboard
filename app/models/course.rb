@@ -29,6 +29,11 @@ class Course < ActiveRecord::Base
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'name ASC'
+  scope :in_current_semester_with_course_number, lambda {|number|
+    where("number = ? and semester = ? and year = ?", number, AcademicCalendar.current_semester(), Date.today.year)
+  }
+  
+
 
 #  def self.for_semester(semester, year, mini)
 #    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")

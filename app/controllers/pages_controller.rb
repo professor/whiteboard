@@ -60,8 +60,8 @@ class PagesController < ApplicationController
     
 
 #    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-#    @courses = Course.all
-    @courses = Course.unique_course_numbers_and_names
+    @courses = Course.all
+#    @courses = Course.unique_course_numbers_and_names
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
