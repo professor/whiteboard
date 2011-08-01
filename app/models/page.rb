@@ -44,7 +44,12 @@ class Page < ActiveRecord::Base
 #      { :id => ids }
 #    )
      update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })
- end
+ end             
+ 
+ def task_number  
+    match = self.title.match /\d/
+    match.nil? ? nil : match[0]
+ end 
 
   protected
   def update_user_and_url

@@ -118,7 +118,16 @@ describe Page do
 ##This seems too simple
 #  end
 
+  context "can determine its task number from the title" do
+    it "without a number" do
+      @page.task_number.should == nil
+    end
 
+    it "with a number" do
+      @page.title = "Task 7: Something Wonderful"
+      @page.task_number.should == "7"
+    end
+  end
 
   
 

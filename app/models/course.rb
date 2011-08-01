@@ -27,14 +27,13 @@ class Course < ActiveRecord::Base
 
   before_validation :set_updated_by_user
 
-  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
-
+  scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
+  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'name ASC'
 
 #  def self.for_semester(semester, year, mini)
 #    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
 #  end
-
-
+  
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end

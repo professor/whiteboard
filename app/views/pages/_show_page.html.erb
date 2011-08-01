@@ -53,7 +53,10 @@
 	<div id="tabs-2">
       <p><%= sanitize_trusted(@page.tab_two_contents) %></p>
 	</div>
-	<div id="tabs-3">
+	<div id="tabs-3">   
+	   <p>Before submitting your work, take a few minutes to review the checklist of questions below. The checklist will help you determine if your deliverables are complete and ready to be submitted. Remember  <%= link_to "'Tying the Bow'", page_path(:id => "tying_the_bow") %></p>
+	   <p>When you are confident that your work on this task is complete,  	         		
+          <%= link_to "submit your deliverable", new_deliverable_path(:task_number => @page.task_number) %></p>	
       <p><%= sanitize_trusted(@page.tab_three_contents) %></p>
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
