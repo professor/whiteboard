@@ -7,7 +7,7 @@ class CourseNumbersController < ApplicationController
   # GET /course_numbers
   # GET /course_numbers.xml
   def index
-     @courses = Course.unique_course_numbers_and_names
+     @courses = Course.unique_course_numbers_and_names_by_number
 
     respond_to do |format|
       format.html # index.html.erb

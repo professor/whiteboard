@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
     attr_accessible :course_id, :title, :position, :identation_levels, :is_task, :tab_one_contents, :tab_two_contents,
                     :tab_three_contents, :task_duration, :tab_one_email_from, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
-                    :url, :is_editable_by_all, :version_comments
+                    :url, :is_editable_by_all, :version_comments, :course_name
 
     versioned
 
@@ -37,14 +37,28 @@ class Page < ActiveRecord::Base
 
  #Re-position: change the sequence of pages for a given course
  def self.reposition(ids)
-
   #if database is mysql
 #    update_all(
 #      ['position = FIND_IN_SET(id, ?)', ids.join(',')],
 #      { :id => ids }
 #    )
      update_all(["position = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], { :id => ids })
- end
+ end             
+
+  def course_name
+    self.course.nil? ? nil : self.course.name
+  end
+
+  def course_name=(course_name)
+    course = Course.first_offering_for_course_name(course_name)
+    self.course = course
+  end
+
+
+ def task_number  
+    match = self.title.match /\d/
+    match.nil? ? nil : match[0]
+ end 
 
   protected
   def update_user_and_url

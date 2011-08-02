@@ -26,15 +26,27 @@ class Course < ActiveRecord::Base
   end
 
   before_validation :set_updated_by_user
+  before_save :strip_whitespaces
 
-  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'number ASC'
+
+  scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
+  scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
+  scope :in_current_semester_with_course_number, lambda {|number|
+    where("number = ? and semester = ? and year = ?", number, AcademicCalendar.current_semester(), Date.today.year)
+  }
+  scope :with_course_name, lambda {|name|
+    where("name = ?", name).order("id ASC")
+  }
+
+  def self.first_offering_for_course_name(course_name)
+    Course.with_course_name(course_name).first
+  end
 
 
 #  def self.for_semester(semester, year, mini)
 #    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
 #  end
-
-
+  
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
@@ -169,5 +181,13 @@ class Course < ActiveRecord::Base
   def set_updated_by_user
      current_user = UserSession.find.user unless UserSession.find.nil?
      self.updated_by_user_id = current_user.id if current_user
+  end
+
+  def strip_whitespaces
+#     self.number = self.number.strip
+#     self.name  = self.name.strip
+    @attributes.each do |attr,value|
+      self[attr] = value.strip
+    end
   end
 end

@@ -8,8 +8,10 @@
     <%=h @team.email %><br />
     <span class="help_text">Distribution lists for each team are created during the first week of the course. Email help@sv.cmu.edu once you've created your teams.</span>
   </p>
+  <% unless @team.tigris_space.blank? %>
   <p>
     Tigris_space<br />
     <%=h @team.tigris_space %><br />
     <span class="help_text">Email todd.sedano@sv.cmu.edu if you want tigris.org project(s) created for your course, please indicate if you need one project per team or one project for the whole course</span>
   </p>
+  <% end %>

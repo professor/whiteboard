@@ -35,7 +35,8 @@
         })
     });
 
-    $(document).ready(function(){
+    $(document).ready(function(){                           
+	  enable_tabs($('#page_is_task'));
       //enable_tabs($(this));  //does not seem to be required
 
       //select tab according to index saved in cookie
@@ -258,9 +259,14 @@
     </div>
   <% end %> 
 
+    <p>
+      <%# f.label :course_id %><br />
+      <%# f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
+    </p>
   <p>
-    <%= f.label :course_id %><br />
-    <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
+    <%= f.label :course_name %><br />
+    <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
+    <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
   </p>
   <p>
     <%= f.label :title %><br />
@@ -303,7 +309,8 @@
 	<div id="tabs-2">
       <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
 	</div>
-	<div id="tabs-3">
+	<div id="tabs-3"> 
+		
       <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
