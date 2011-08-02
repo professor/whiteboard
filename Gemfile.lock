@@ -91,7 +91,7 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     json_pure (1.5.3)
-    launchy (2.0.4)
+    launchy (2.0.5)
       addressable (~> 2.2.6)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -112,7 +112,7 @@ GEM
     newrelic_rpm (3.1.1)
     nokogiri (1.5.0)
     oauth (0.4.5)
-    paperclip (2.3.15)
+    paperclip (2.3.16)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
@@ -142,9 +142,9 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.4)
-    rake (0.9.2)
+    rake (0.8.7)
     rcov (0.9.9)
-    rdoc (3.8)
+    rdoc (3.9.1)
     rest-client (1.6.3)
       mime-types (>= 1.16)
     rmagick (2.13.1)
@@ -240,6 +240,7 @@ DEPENDENCIES
   rack-google_analytics
   rack-openid
   rails (= 3.0.9)
+  rake (= 0.8.7)
   rcov
   rdoc
   rmagick

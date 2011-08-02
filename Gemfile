@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
              
-#gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
+gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
 gem 'thin'
 gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
