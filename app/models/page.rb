@@ -50,7 +50,7 @@ class Page < ActiveRecord::Base
   end
 
   def course_name=(course_name)
-    course = Course.with_course_name(course_name).first
+    course = Course.first_offering_for_course_name(course_name)
     self.course = course
   end
 

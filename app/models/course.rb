@@ -38,6 +38,9 @@ class Course < ActiveRecord::Base
     where("name = ?", name).order("id ASC")
   }
 
+  def self.first_offering_for_course_name(course_name)
+    Course.with_course_name(course_name).first
+  end
 
 
 #  def self.for_semester(semester, year, mini)
