@@ -39,9 +39,8 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     @page.course_id = params[:course_id].to_i
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.all
-#    @courses = Course.unique_course_numbers_and_names
+#    @courses = Course.all
+    @courses = Course.unique_course_names
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,6 +51,7 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find_by_url(params[:id])
+    @courses = Course.unique_course_names
 
     unless @page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
@@ -59,9 +59,7 @@ class PagesController < ApplicationController
     end
     
 
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.all
-#    @courses = Course.unique_course_numbers_and_names
+#    @courses = Course.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
@@ -72,9 +70,9 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.all
-#    @courses = Course.unique_course_numbers_and_names
+#    @courses = Course.all
+    @courses = Course.unique_course_names
+
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -91,15 +89,16 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find_by_url(params[:id])
+    @courses = Course.unique_course_names
 
     unless @page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
       redirect_to(page_url) and return
     end
 
-#    @courses = Course.find(:all, :conditions => ['year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester()] )
-    @courses = Course.all
-#    @courses = Course.unique_course_numbers_and_names
+    #course = Course.with_course_name(params[:course_name]).first
+    #@page.course = course
+
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

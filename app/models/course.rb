@@ -30,11 +30,14 @@ class Course < ActiveRecord::Base
 
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
-  scope :unique_course_numbers_and_names, :select => "DISTINCT number, name", :order => 'name ASC'
+  scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
   scope :in_current_semester_with_course_number, lambda {|number|
     where("number = ? and semester = ? and year = ?", number, AcademicCalendar.current_semester(), Date.today.year)
   }
-  
+  scope :with_course_name, lambda {|name|
+    where("name = ?", name).order("id ASC")
+  }
+
 
 
 #  def self.for_semester(semester, year, mini)
