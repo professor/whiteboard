@@ -184,10 +184,8 @@ class Course < ActiveRecord::Base
   end
 
   def strip_whitespaces
-#     self.number = self.number.strip
-#     self.name  = self.name.strip
     @attributes.each do |attr,value|
-      self[attr] = value.strip
+      self[attr] = value.strip if value.is_a?(String)
     end
   end
 end
