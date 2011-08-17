@@ -11,7 +11,6 @@ CMUEducation::Application.routes.draw do
   resources :sponsored_project_efforts
   match 'delayed_system_jobs/' => 'delayed_system_jobs#index'
   resources :delayed_system_jobs
-  resources :mailing_lists
   resources :rss_feeds
   resources :curriculum_comment_types
   match '/curriculum_comments/test_page' => 'curriculum_comments#test_page'
@@ -29,6 +28,7 @@ CMUEducation::Application.routes.draw do
   match '/courses/current_semester' => 'courses#current_semester', :as => :current_semester
   match '/courses/next_semester' => 'courses#next_semester', :as => :next_semester
   constraints({:id => /.*/}) do
+    resources :mailing_lists
     resources :pages do
       collection do
         post :reposition

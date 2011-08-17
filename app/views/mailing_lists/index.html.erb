@@ -50,10 +50,10 @@ $(document).ready(function()
   </tr>
 </thead>
 <tbody>
-<% for mailing_list in @mailing_lists %>
+<% @mailing_lists.each do |mailing_list| %>
 <tr class="tablesorter">
     <td><%= mailing_list.sub('@west.cmu.edu','@sv.cmu.edu') %></td>
-    <td><%= link_to 'Show', :controller => "mailing_lists", :action => "show",  :id => mailing_list %></td>
+    <td><%= link_to 'Show', mailing_list_path(mailing_list) %></td>
     <% if current_user.is_admin? %>
     <% url_mailing_list = mailing_list.gsub(/@/,'%40') %>
     <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{ENV['GOOGLE_DOMAIN']}/Group?groupId=#{mailing_list}" %></td>
