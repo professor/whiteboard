@@ -20,7 +20,7 @@ class TeamsController < ApplicationController
     @machine_name = ""
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
     @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-    @course = Course.find(params[:course_id])                         
+    @course = Course.find(params[:course_id])
 
     @show_section = false
     @teams.each do |team|
@@ -176,9 +176,9 @@ class TeamsController < ApplicationController
   # GET /courses/1/teams/1/edit
   def edit
     @team = Team.find(params[:id])
+    @course = Course.find(params[:course_id])
     if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
       @team.course_id = params[:course_id]
-      @course = Course.find(params[:course_id])
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     end
   end
@@ -220,8 +220,8 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1.xml
   def update
     @team = Team.find(params[:id])
+    @course = @team.course
     if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
-      @course = @team.course
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
       msg = @team.update_members(params[:people])
@@ -253,7 +253,7 @@ class TeamsController < ApplicationController
   # DELETE /courses/1/teams/1.xml
   def destroy
     if !current_user.is_admin?
-      flash[:error] = 'You don''t have permission to do this action.'
+      flash[:error] = I18n.t(:no_permission)
       redirect_to(teams_url) and return
     end
 
