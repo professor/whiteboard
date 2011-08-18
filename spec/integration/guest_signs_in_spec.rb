@@ -1,4 +1,8 @@
-require 'spec_helper' 
+#Consider looking at this reference
+# It's cumcumber based though: http://laserlemon.com/blog/2011/05/20/make-authlogic-and-cucumber-play-nice/
+
+
+require 'spec_helper'
 
 describe 'A user visiting the site', :type => :request do
 

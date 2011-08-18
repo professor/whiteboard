@@ -55,7 +55,7 @@ describe CoursesController do
 
     end
 
-    describe "GET new" do
+    describe "not GET new" do
       before do
         get :new
       end
@@ -64,7 +64,7 @@ describe CoursesController do
     end
 
 
-    describe "GET configure" do
+    describe "not GET configure" do
       before do
         get :configure, :id => course.to_param
       end
@@ -72,7 +72,7 @@ describe CoursesController do
       it_should_behave_like "permission denied"
     end
 
-    describe "POST create" do
+    describe "not POST create" do
       before do
         @course = Factory.build(:course)
         post :create, :course => @course.attributes
@@ -81,7 +81,7 @@ describe CoursesController do
       it_should_behave_like "permission denied"
     end
 
-    describe "PUT update" do
+    describe "not PUT update" do
       before do
         put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
       end
@@ -89,7 +89,7 @@ describe CoursesController do
       it_should_behave_like "permission denied"
     end
 
-    describe "DELETE destroy" do
+    describe "not DELETE destroy" do
       before do
         delete :destroy, :id => course.to_param
       end
@@ -224,7 +224,7 @@ describe CoursesController do
 
     end
 
-    describe "DELETE destroy" do
+    describe "not DELETE destroy" do
       before do
         delete :destroy, :id => course.to_param
       end
