@@ -46,6 +46,9 @@ include LoginHelper
     end
     intro_page.course_id = intro_course.id
     intro_page.url = intro_url
+    intro_page.tab_one_contents = intro_page.tab_one_contents.gsub("pages/foundations", "pages/intro_to_se")
+    intro_page.tab_two_contents = intro_page.tab_two_contents.gsub("pages/foundations", "pages/intro_to_se")
+    intro_page.tab_three_contents = intro_page.tab_three_contents.gsub("pages/foundations", "pages/intro_to_se")
 
     if intro_page.save
       puts "Page #{intro_page.id} (#{intro_page.url}) copied successfully from #{foundations_page.id} (#{foundations_page.url})."
