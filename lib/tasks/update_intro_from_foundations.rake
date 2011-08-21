@@ -68,7 +68,7 @@ namespace :cmu do
     login_user(User.find(1))
     urls = ["foundations", "foundations_calendar", "foundations_rails_faq",
             "foundations_task1", "foundations_task2", "foundations_task3", "foundations_task4",
-            "foundations_task5", "foundations_task6"]
+            "foundations_task5", "foundations_task6", "foundations_class_notes"]
     urls.each do |url|
       update_intro_from_foundations(url)
     end
