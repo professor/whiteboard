@@ -46,6 +46,15 @@ class Person < ActiveRecord::Base
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
   scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
+  scope :part_time_class_of, lambda {|program, year|
+    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  }
+  scope :full_time_class_of, lambda {|program, year|
+    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  }
+
   has_attached_file :photo, :storage => :s3, :styles => { :original =>"", :profile => "133x200>" },
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
   validates_attachment_content_type   :photo,   :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"

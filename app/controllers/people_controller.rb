@@ -288,7 +288,7 @@ class PeopleController < ApplicationController
 
   
   class ClassProfileState
-    attr_accessor :graduation_year, :is_part_time, :program, :track
+    attr_accessor :graduation_year, :is_part_time, :program
   end
   
   
@@ -296,19 +296,21 @@ class PeopleController < ApplicationController
     if params[:class_profile_state]
       @class_profile_state = ClassProfileState.new
       @class_profile_state.program = params[:class_profile_state][:program]
-      @class_profile_state.track = params[:class_profile_state][:track]
       @class_profile_state.graduation_year = params[:class_profile_state][:graduation_year]
       @class_profile_state.is_part_time = params[:class_profile_state][:is_part_time]
     else
       @class_profile_state = ClassProfileState.new
       @class_profile_state.program = current_user.is_student ? current_user.masters_program : "SE"
-      @class_profile_state.track = ""
       @class_profile_state.graduation_year = Date.today.year + 1
       @class_profile_state.is_part_time = current_user.is_student && !current_user.is_part_time ? "FT" : "PT"
     end
 
-#    @students = Person.where("is_part_time = ? and graduation_year = ?", @class_profile_state.is_part_time, @class_profile_state.graduation_year).order("name ASC")
-    @students = Person.where("masters_program = ? and graduation_year = ?", @class_profile_state.program, @class_profile_state.graduation_year.to_s).order("human_name ASC")
+    case @class_profile_state.is_part_time
+      when "PT"
+        @students = Person.part_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+      when "FT"
+        @students = Person.full_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+    end
     @programs = []
     ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result["masters_program"] end
     @tracks = []
