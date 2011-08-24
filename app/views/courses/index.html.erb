@@ -59,6 +59,7 @@ $(document).ready(function()
     <td class="all_courses"><%=h course.semester %></td>
     <td><%=h course.mini %></td>
     <td class="all_courses"><%=h course.year %></td>
+    <td><%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"Teams", :title=>"My Teams"), "/courses/#{course.id}/teams_photos" %></td>
     <td><%= link_to 'More', course_path(course) %></td>
 
   </tr>
