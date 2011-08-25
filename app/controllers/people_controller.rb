@@ -5,7 +5,6 @@ class PeopleController < ApplicationController
 # Floating box source: http://roshanbh.com.np/2008/07/top-floating-message-box-using-jquery.html
 
   layout 'cmu_sv'
-
   
 #  auto_complete_for :person, :human_name
 #  protect_from_forgery :only => [:create, :update, :destroy] #required for auto complete to work
@@ -287,4 +286,45 @@ class PeopleController < ApplicationController
     a = 10
   end
 
+  
+  class ClassProfileState
+    attr_accessor :graduation_year, :is_part_time, :program
+  end
+  
+  
+  def class_profile
+    if params[:class_profile_state]
+      @class_profile_state = ClassProfileState.new
+      @class_profile_state.program = params[:class_profile_state][:program]
+      @class_profile_state.graduation_year = params[:class_profile_state][:graduation_year]
+      @class_profile_state.is_part_time = params[:class_profile_state][:is_part_time]
+    else
+      @class_profile_state = ClassProfileState.new
+      @class_profile_state.program = current_user.is_student ? current_user.masters_program : "SE"
+      @class_profile_state.graduation_year = Date.today.year + 1
+      @class_profile_state.is_part_time = current_user.is_student && !current_user.is_part_time ? "FT" : "PT"
+    end
+
+    case @class_profile_state.is_part_time
+      when "PT"
+        @students = Person.part_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+      when "FT"
+        @students = Person.full_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+    end
+    @programs = []
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result["masters_program"] end
+    @tracks = []
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result["masters_track"] end
+
+    @title = "Class profile for #{@class_profile_state.is_part_time} #{@class_profile_state.program} #{@class_profile_state.graduation_year}"
+
+    respond_to do |format|
+      if params[:layout]
+        format.html { render :layout => false } # index.html.erb
+      else
+        format.html { render :layout => "cmu_sv" } # index.html.erb
+      end
+    end
+  end
+  
 end
