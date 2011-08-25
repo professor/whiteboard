@@ -17,7 +17,8 @@ class Page < ActiveRecord::Base
 
     before_validation :update_user_and_url
 
-  def editable?(current_user)
+  def editable?(current_user)    
+    return false if self.is_duplicated_page? 
     return true if self.is_editable_by_all?
     return (current_user.is_staff? || current_user.is_admin?)
   end

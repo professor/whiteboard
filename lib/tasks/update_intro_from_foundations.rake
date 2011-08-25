@@ -31,6 +31,10 @@ include LoginHelper
     intro_course = Course.find_by_name("Introduction to Software Engineering")
 
     foundations_page = Page.find_by_url(url)
+    if foundations_page.nil?
+      return false
+    end    
+    
     intro_url = url.gsub("foundations", "intro_to_se")
     intro_page = Page.find_by_url(intro_url)
 
@@ -49,6 +53,7 @@ include LoginHelper
     intro_page.tab_one_contents = intro_page.tab_one_contents.gsub("pages/foundations", "pages/intro_to_se")
     intro_page.tab_two_contents = intro_page.tab_two_contents.gsub("pages/foundations", "pages/intro_to_se")
     intro_page.tab_three_contents = intro_page.tab_three_contents.gsub("pages/foundations", "pages/intro_to_se")
+    intro_page.is_duplicated_page = true
 
     if intro_page.save
       puts "Page #{intro_page.id} (#{intro_page.url}) copied successfully from #{foundations_page.id} (#{foundations_page.url})."
