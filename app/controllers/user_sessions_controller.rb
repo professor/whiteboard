@@ -65,7 +65,7 @@ class UserSessionsController < ApplicationController
         first_name = ax_response['http://axschema.org/namePerson/first'].first()
         last_name = ax_response['http://axschema.org/namePerson/last'].first()
 
-        email = switch_west_to_sv(email)
+        email = switch_west_to_sv(email).downcase        
         logger.info "email: #{email}"
 
         if result.successful?
