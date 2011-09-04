@@ -5,6 +5,11 @@
   <%= link_to @page.course.name, @page.course.pages[0], :class=>"SecondaryNav_Link" %>
 </div>
 
+<div class="SecondaryNav">
+  <%= link_to "Teams", course_teams_path(Course.in_current_semester_with_course_number(@page.course.number).first), :class=>"SecondaryNav_Link" %>
+</div>
+
+
 <% for page in @page.course.pages %>
   <div class="SecondaryNav">
   <%= link_to page.title, page, :class=>"SecondaryNav_Link" %>
