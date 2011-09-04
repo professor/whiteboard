@@ -69,15 +69,15 @@ class Deliverable < ActiveRecord::Base
 
 
   def send_deliverable_upload_email(url)
-    mail_to = ""
+    mail_to = []
     unless self.team.primary_faculty.nil?
-      mail_to = self.team.primary_faculty.email
+      mail_to << self.team.primary_faculty.email
     end
     unless self.team.secondary_faculty.nil?
-      mail_to += self.team.secondary_faculty.email
+      mail_to << self.team.secondary_faculty.email
     end
 
-    if mail_to == ""
+    if mail_to.empty?
       return
     end
 
