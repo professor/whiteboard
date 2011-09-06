@@ -20,6 +20,15 @@ class PagesController < ApplicationController
     @page = Page.find_by_url(params[:id])
     @page.revert_to(params[:version].to_i) if params[:version]
 
+    #This little bit of magic finds the current offering of a course. This is handy for deliverable submission
+    #and team lists where the static curriculum website points to the latest offering of the course.
+    unless @page.course.blank? || @page.course.number.blank?
+      @current_semester_course = Course.in_current_semester_with_course_number(@page.course.number).first
+    else
+      @current_semester_course = nil
+    end
+
+
     @tab = params[:tab]
 
     respond_to do |format|
