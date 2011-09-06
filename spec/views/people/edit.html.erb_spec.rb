@@ -15,6 +15,6 @@ describe "people/edit.html.erb" do
   it "renders the edit page form" do
     render
 
-    response.should have_selector("form", :action => person_path(@person), :method => "post")
+    rendered.should have_selector("form", :action => person_path(@person), :method => "post")
   end
 end
