@@ -19,6 +19,7 @@ class PagesController < ApplicationController
   def show
     @page = Page.find_by_url(params[:id])
     @page.revert_to(params[:version].to_i) if params[:version]
+    @current_semester_course = Course.in_current_semester_with_course_number(@page.course.number).first
 
     @tab = params[:tab]
 
