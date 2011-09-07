@@ -1,26 +1,24 @@
 <% reset_cycle %>
-<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
   <tr>
+    <% unless skip_course_column %>
     <th>Course</th>
+    <% end %>
     <th>Task</th>
     <th>Owner</th>
-    <th>Name</th>
-    <th>File</th>
     <th>Feedback Received?</th>
     <th>Actions</th>
+    <th>Name</th>
+    <th>File</th>
   </tr>
 
   <% deliverables.each do |deliverable| %>
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+      <% unless skip_course_column %>
       <td><%=h deliverable.course.name %></td>
+      <% end %>
       <td><%=h deliverable.task_number %></td>
       <td><%= deliverable.owner_name  %></td>
-      <td><%= deliverable.name  %></td>
-      <td>
-          <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
-              <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
-          <% end %>
-      </td>
       <td>
           <% if deliverable.has_feedback? %>
             Yes
@@ -29,6 +27,12 @@
           <% end %>
       </td>
       <td><%= link_to 'View History and Feedback', deliverable %></td>
+      <td><%= deliverable.name  %></td>
+      <td>
+          <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
+              <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
+          <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
