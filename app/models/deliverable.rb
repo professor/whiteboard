@@ -5,6 +5,7 @@ class Deliverable < ActiveRecord::Base
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
   validates_presence_of :course, :creator
+  validate :unique_course_task_owner?
 
   has_attached_file :feedback,
     :storage => :s3,
@@ -14,6 +15,20 @@ class Deliverable < ActiveRecord::Base
   default_scope :order => "updated_at DESC"
 
   before_validation :update_team
+
+
+  def unique_course_task_owner?
+    if self.is_team_deliverable
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+    else
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :creator_id => self.creator_id).first
+    end
+    unless duplicate.nil? || duplicate.id == self.id
+      errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
+    end
+  end
+
+
 
   def current_attachment
     attachment_versions.find(:first)
