@@ -17,6 +17,9 @@ class Page < ActiveRecord::Base
 
     before_validation :update_user_and_url
 
+    after_save :update_search_index
+    before_destroy :delete_from_search
+
   def editable?(current_user)    
     return false if self.is_duplicated_page? 
     return true if self.is_editable_by_all?
@@ -59,7 +62,23 @@ class Page < ActiveRecord::Base
  def task_number  
     match = self.title.match /\d/
     match.nil? ? nil : match[0]
- end 
+ end
+
+  def update_search_index
+    api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || '<API_URL>')
+    index = api.indexes 'cmux'
+    index.document(self.id.to_s).add({ :title => self.title, :type => "page", :text => self.tab_one_contents, :url => "pages/" + self.url})
+    if self.is_task?
+      index.document(self.id.to_s + "-tabs-1").add({ :title => self.title, :type => "page", :text => self.tab_two_contents, :url => "pages/" + self.url + "?tab=tabs-2"})
+      index.document(self.id.to_s + "-tabs-2").add({ :title => self.title, :type => "page", :text => self.tab_three_contents, :url => "pages/" + self.url + "?tab=tabs-3"})
+    end
+  end
+
+  def delete_from_search
+    api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || '<API_URL>')
+    index = api.indexes 'cmux'
+    index.document(self.id.to_s).delete
+  end
 
   protected
   def update_user_and_url

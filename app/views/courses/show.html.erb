@@ -24,8 +24,22 @@
  <div><%=h name %></div>
 <% end %>
 </p>
+ <p><b>Pivotal Tracker accounts</b>
+<% @course.teams.each do |team| %>
+   <% project_name = "#{@course.semester}-#{@course.year}-#{team.name.parameterize}" %>
+     <div><%= project_name%></div>
+     <% team.people.each do |person| %>
+        <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+        <div><%= person_entry %></div>
+     <% end %>
+        <% person = team.primary_faculty %>
+        <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+        <div><%= person_entry %></div>
+        <br/>
+<% end %>
   </div>
 <% end %>
+
 
     <% if current_user && current_user.is_admin? %>
     <p><%= link_to 'Destroy', @course, :confirm => 'Are you sure?', :method => :delete %></p>

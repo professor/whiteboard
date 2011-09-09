@@ -31,7 +31,7 @@
 <table>
 <% @students.each do |person| %>
    <tr valign="top"><td>
-        <div class="user_photo"><%= image_tag(person.image_uri) %></div>
+        <div class="user_photo"><%= link_to image_tag(person.image_uri), person_path(person) %></div>
         </td><td>&nbsp;</td><td>
       <h1><%=h person.human_name %></h1>
         <% unless person.organization_name.blank? %><% unless person.title.blank? %><%=h person.title%> - <%end%><%=h person.organization_name %><br/><%end%>
@@ -40,11 +40,10 @@
           <%= link_to 'Edit', edit_person_path(person) %> |
           <%= link_to 'Back', people_path %>
         </div>
-<!--
-  <tr>
-    <td><b><%= person.human_name %></b>
--->
+
+        <% unless person.biography.blank? %>
         <%= person.biography.html_safe %>
+        <% end %>
     </td>
   </tr><% end %>
 </table>

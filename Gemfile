@@ -18,6 +18,7 @@ gem 'rack-openid'
 gem 'bundler'
 gem 'delayed_job' #, '2.1.0.pre'
 
+gem 'indextank'
 
 gem 'oauth'
 
