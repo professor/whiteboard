@@ -33,8 +33,10 @@
         <div><%= person_entry %></div>
      <% end %>
         <% person = team.primary_faculty %>
+        <% unless person.nil? %>
         <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
         <div><%= person_entry %></div>
+        <% end %>
         <br/>
 <% end %>
   </div>
