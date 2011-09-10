@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 
     #This little bit of magic finds the current offering of a course. This is handy for deliverable submission
     #and team lists where the static curriculum website points to the latest offering of the course.
-    unless @page.course.blank? || @page.course.number.blank?
+    unless @page.blank? || @page.course.blank? || @page.course.number.blank?
       @current_semester_course = Course.in_current_semester_with_course_number(@page.course.number).first
     else
       @current_semester_course = nil
