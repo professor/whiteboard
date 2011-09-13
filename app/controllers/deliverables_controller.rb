@@ -42,7 +42,7 @@ class DeliverablesController < ApplicationController
   def show
     @deliverable = Deliverable.find(params[:id])
 
-    unless @deliverable.team.is_person_on_team?(current_person)
+    if @deliverable.is_team_deliverable? && !@deliverable.team.is_person_on_team?(current_person)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
         redirect_to root_path
