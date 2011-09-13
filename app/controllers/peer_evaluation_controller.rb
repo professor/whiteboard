@@ -49,7 +49,7 @@ class PeerEvaluationController < ApplicationController
     end
 
     flash[:notice] = "Learning objectives have been updated."
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 
@@ -74,7 +74,7 @@ class PeerEvaluationController < ApplicationController
         return
       end
       flash[:error] = "You are not on team #{@team.name}"
-      redirect_to(survey_monkey_path(@team.course, @team.id))
+      redirect_to(peer_evaluation_path(@team.course, @team.id))
       return
     end
 
@@ -181,7 +181,7 @@ class PeerEvaluationController < ApplicationController
       allocation.save!
 
     flash[:notice] = "Thank you for completing the peer evaluation form."
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
   def complete_evaluation_old
@@ -235,7 +235,7 @@ class PeerEvaluationController < ApplicationController
     @allocations.save!
 
     flash[:notice] = "Thank you for saving the peer evaluation form."
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
   def edit_report
@@ -320,7 +320,7 @@ class PeerEvaluationController < ApplicationController
     end
 
     flash[:notice] = "Reports have been successfully saved."
-    redirect_to(survey_monkey_path(@team.course, @team.id))
+    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 

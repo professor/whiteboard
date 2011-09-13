@@ -47,6 +47,9 @@ CMUEducation::Application.routes.draw do
 
   match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
   match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
+  match 'peer_evaluation/edit_setup/:id' => 'peer_evaluation#edit_setup', :as => :setup_peer_evaluation
+  match 'peer_evaluation/edit_evaluation/:id' => 'peer_evaluation#edit_evaluation', :as => :edit_peer_evaluation
+  match 'peer_evaluation/edit_report/:id' => 'peer_evaluation#edit_report', :as => :report_peer_evaluation
 
   match '/effort_reports/campus_week' => 'effort_reports#campus_week'
   match '/effort_reports/campus_semester' => 'effort_reports#campus_semester'
@@ -58,9 +61,6 @@ CMUEducation::Application.routes.draw do
   match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
   resources :people
   resources :suggestions
-  match 'peer_evaluation/edit_setup/:id' => 'peer_evaluation#edit_setup', :as => :setup_peer_evaluation
-  match 'peer_evaluation/edit_evaluation/:id' => 'peer_evaluation#edit_evaluation', :as => :edit_peer_evaluation
-  match 'peer_evaluation/edit_report/:id' => 'peer_evaluation#edit_report', :as => :report_peer_evaluation
   match '/teams' => 'teams#index_all', :as => :teams
   resources :users
   resource :user_session
