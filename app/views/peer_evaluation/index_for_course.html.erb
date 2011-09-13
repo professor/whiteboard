@@ -1,0 +1,19 @@
+<h1>Peer Evaluation</h1>
+<%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border=>"0") %>
+
+<table class="tablesorter">
+<tr><th>Team</th><th>People who have not done the peer evaluation</th></tr>
+<% @teams.each do |team| %>
+<tr>
+  <td>
+<p><%= link_to team.name, peer_evaluation_path(@course.id, team.id) %></p></td>
+<td>
+  <% team.people.each do |person| %>
+     <% unless PeerEvaluationReview.is_completed_for?(person.id, team.id) %>
+        <%= twiki_user_link(person.twiki_name, person.human_name) %>
+     <% end %>
+  <% end %>
+</td></tr>
+<% end %>
+</table>
+

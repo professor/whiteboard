@@ -10,6 +10,11 @@ class PeerEvaluationController < ApplicationController
     ]
     @@point_allocation = "Point allocations"
 
+  def index_for_course
+    @course = Course.find(params[:course_id])
+    @teams = Team.where(:course_id => params[:course_id])
+  end
+
   def edit_setup
     @team = Team.find(params[:id])
     @people = @team.people
@@ -246,7 +251,7 @@ class PeerEvaluationController < ApplicationController
 
     @incompletes = Array.new
     @team.people.each do |member|
-      if(PeerEvaluationReview.find(:first, :conditions => {:team_id => @team.id, :author_id => member.id}).nil?)
+      unless PeerEvaluationReview.is_completed_for?(member.id, @team.id)
         @incompletes << (member)
       end
     end
@@ -366,10 +371,10 @@ class PeerEvaluationController < ApplicationController
             to_address_done = []
             to_address_incomplete = []
             team.people.each do |person|
-              if(PeerEvaluationReview.find(:first, :conditions => {:team_id => team.id, :author_id => person.id}).nil?)
-                to_address_incomplete << person.email
-              else
+              if PeerEvaluationReview.is_complete_for?(person_id,team_id)
                 to_address_done << person.email
+              else
+                to_address_incomplete << person.email
               end
             end
             send_email(team, faculty, to_address_done, team.peer_evaluation_message_two_done)
