@@ -23,7 +23,7 @@ class Deliverable < ActiveRecord::Base
     else
       duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :is_team_deliverable => false, :creator_id => self.creator_id).first
     end
-    unless duplicate.nil? || duplicate.id == self.id
+    if duplicate && duplicate.id != self.id
       errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
     end
   end
