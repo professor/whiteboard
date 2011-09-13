@@ -45,6 +45,7 @@ CMUEducation::Application.routes.draw do
     end
   end
 
+  match '/courses/:course_id/peer_evaluations' => 'peer_evaluation#index_for_course', :via => :get, :as => "peer_evaluations"
   match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
   match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
   match 'peer_evaluation/edit_setup/:id' => 'peer_evaluation#edit_setup', :as => :setup_peer_evaluation
