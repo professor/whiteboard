@@ -39,5 +39,19 @@
       <p><%= link_to "Edit Curriculum Pages", course_navigation_path(Course.first_offering_for_course_name(course.name)) %></p>
     </td>
   </tr>
+  <tr class="staff">
+    <td>&nbsp;
+    </td>
+    <td>
+      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"), configure_course_path(course) %><br/>
+      <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
+    </td>
+    <td>&nbsp;
+    </td>
+    <td>&nbsp;
+    </td>
+    <td>&nbsp;
+    </td>
+  </tr>
 <% end %>
 </table>

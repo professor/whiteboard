@@ -20,34 +20,6 @@
 
 <%= render :partial => "show_actions" ,:locals => { :course => @course } %>
 
-<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
-<!--
-<div class="rounded staff">
-    <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
-  <table cellpadding="2" cellspacing="2" border=1>
-  <tr class="staff">
-    <td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"), configure_course_path(@course) %><br/>
-      <p><%= link_to 'Configure course', configure_course_path(@course) %></p>
-    </td>
-    <td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Team formation", :title=>"Team formation"), past_teams_list_path(@course) %><br/>
-      <p><%= link_to 'Team Formation', past_teams_list_path(@course) %></p>
-    </td><td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Deliverables", :title=>"Deliverables"), course_deliverables_path(@course) %><br/>
-      <p><%= link_to 'Deliverables', course_deliverables_path(@course) %></p>
-    </td><td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Edit curriculum pages", :title=>"Edit curriculum pages"), course_navigation_path(Course.first_offering_for_course_name(@course.name)) %><br/>
-      <p><%= link_to "Edit Curriculum Pages", course_navigation_path(Course.first_offering_for_course_name(@course.name)) %></p>
-    </td>
-  </tr>
-    </table>
-    </div>
-    --> 
-<% end %>
-
-
-
 <p><%= link_to "Course website", @course.curriculum_url %> </p>
 <p><a href="/courses/<%=@course.id%>/teams_photos">Teams</a></p>
 <p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
