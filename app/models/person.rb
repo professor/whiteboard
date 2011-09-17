@@ -24,6 +24,9 @@ class Person < ActiveRecord::Base
 #    self.save
 #  end
 
+  has_many :faculty_assignments
+  has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
+
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
@@ -127,8 +130,8 @@ class Person < ActiveRecord::Base
               (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
 
     @registered_courses = Course.find_by_sql(@sql_str)
-    # return statement missing?
   end
+
 
    #
    # Creates a Google Apps for University account for the user. For legacy reasons,

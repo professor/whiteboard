@@ -1,0 +1,17 @@
+<% content_for :title, 'CMU-SV Rails Application' %>
+
+<% unless @courses_registered_as_student.empty? %>
+    <h1><%= @person.human_name%> is taking these courses</h1>
+<% end %>
+<% @courses_registered_as_student.each do |course| %>
+<h2><%= course.name %></h2>
+<%= render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+<% end %>
+
+<% unless @courses_teaching_as_faculty.empty? %>
+<h1><%= @person.human_name%> is teaching these courses</h1>
+<% end %>
+<% @courses_teaching_as_faculty.each do |course| %>
+<h2><%= course.name %></h2>
+<%= render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+<% end %>

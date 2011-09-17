@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
 
   def index
     @rss_feeds = RssFeed.all
-
+    @courses_registered_as_student = current_person.get_registered_courses
 
     respond_to do |format|
       format.html # index.html.erb

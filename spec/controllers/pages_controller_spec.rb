@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe PagesController do
 
+  before(:each) do
+    Page.any_instance.stub(:update_search_index)
+    Page.any_instance.stub(:delete_from_search)
+  end
+
   context "any user can" do
     before do
       Page.delete_all

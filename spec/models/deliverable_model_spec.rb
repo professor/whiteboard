@@ -22,29 +22,20 @@ describe Deliverable do
     end
 
     context "when a duplicate deliverable for the same course, task and owner" do
-      it "for a team deliverable" do
-        original = Factory.build(:team_deliverable)
-        original.stub(:update_team)
-        original.save
-        duplicate = Deliverable.new()
-        duplicate.stub(:update_team)
-        duplicate.creator_id = original.creator_id
-        duplicate.course = original.course
-        duplicate.task_number = original.task_number
-        duplicate.is_team_deliverable = original.is_team_deliverable
-        duplicate.team_id = original.team_id
-        duplicate.should_not be_valid
-      end
-
-      it "for a individual deliverable" do
-        original = Factory(:individual_deliverable)
-        duplicate = Deliverable.new()
-        duplicate.creator_id = original.creator_id
-        duplicate.course = original.course
-        duplicate.task_number = original.task_number
-        duplicate.is_team_deliverable = original.is_team_deliverable
-        duplicate.team_id = original.team_id
-        duplicate.should_not be_valid
+      [:team_deliverable, :individual_deliverable].each do |symbol|
+        it "for a team/individual deliverable" do
+          original = Factory.build(symbol)
+          original.stub(:update_team)
+          original.save
+          duplicate = Deliverable.new()
+          duplicate.stub(:update_team)
+          duplicate.creator_id = original.creator_id
+          duplicate.course = original.course
+          duplicate.task_number = original.task_number
+          duplicate.is_team_deliverable = original.is_team_deliverable
+          duplicate.team_id = original.team_id
+          duplicate.should_not be_valid
+        end
       end
     end
   end

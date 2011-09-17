@@ -33,6 +33,11 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  if ENV['CI'] == "true"
+    config.filter_run_excluding :skip_on_build_machine => true
+  end
+
+
 #  config.include Helpers
 end
 
@@ -51,6 +56,9 @@ module LoginHelper
      activate_authlogic
      @current_user = User.find(person.id)
      UserSession.create(@current_user)
+
+     tmp = current_user
+     a = 1
    end
 
 
@@ -63,6 +71,18 @@ end
 include LoginHelper
 
 
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+
+  def self.connection
+    @@shared_connection || retrieve_connection
+  end
+end
+
+# Forces all threads to share the same connection. This works on
+# Capybara because it starts the web server in a thread.
+ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
 #class ActionController::TestCase
 #  puts "********** Authlogic setup **************"

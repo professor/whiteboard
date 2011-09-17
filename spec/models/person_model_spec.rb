@@ -23,7 +23,7 @@ describe Person do
       @student_sam.should be_valid
     end
 
-    it "should update image_uri after photo is uploaded" do
+    it "should update image_uri after photo is uploaded", :skip_on_build_machine => true do
       @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.jpg"))
       @student_sam.save!
       @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
