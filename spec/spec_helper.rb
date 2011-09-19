@@ -6,7 +6,6 @@ require 'rspec/rails'
 
 #include Capybara::DSL
 
-require 'authlogic/test_case'
 require 'shoulda'
 require 'helpers'
 
@@ -37,87 +36,50 @@ RSpec.configure do |config|
     config.filter_run_excluding :skip_on_build_machine => true
   end
 
+  config.include Devise::TestHelpers, :type => :controller
 
 #  config.include Helpers
 end
 
 
-#potential fix for authlogic issues
-module LoginHelper
-   include Authlogic::TestCase
-
-   def login_user_fixture userSymbol
-     activate_authlogic
-#     UserSession.create(users(:student_sam))
-     UserSession.create(users(userSymbol))
-   end
-
-   def login_user person
-     activate_authlogic
-     @current_user = User.find(person.id)
-     UserSession.create(@current_user)
-
-     tmp = current_user
-     a = 1
-   end
-
-
-   def current_user(stubs = {})
-     #current user could get set when being login_user gets called, otherwise use a generic mock model
-     @current_user ||= mock_model("User", stubs)
-   end
-
-end
-include LoginHelper
-
-
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
-
-  def self.connection
-    @@shared_connection || retrieve_connection
-  end
-end
-
-# Forces all threads to share the same connection. This works on
-# Capybara because it starts the web server in a thread.
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
-
-#class ActionController::TestCase
-#  puts "********** Authlogic setup **************"
-#  setup :activate_authlogic
+##potential fix for authlogic issues
+#module LoginHelper
+#   include Authlogic::TestCase
 #
-##  def login_as(user)
-##    if user.nil?
-##      return UserSession.stubs(:find).returns(nil)
-##    else
-##      return UserSession.stubs(:find).returns(UserSession.create(users(user)))
-##    end
-##  end
+#   def sign_in_fixture userSymbol
+#     activate_authlogic
+##     UserSession.create(users(:student_sam))
+#     UserSession.create(users(userSymbol))
+#   end
+#
+#   def sign_in person
+#     activate_authlogic
+#     @current_user = User.find(person.id)
+#     UserSession.create(@current_user)
+#
+#     tmp = current_user
+#     a = 1
+#   end
+#
+#
+#   def current_user(stubs = {})
+#     #current user could get set when being sign_in gets called, otherwise use a generic mock model
+#     @current_user ||= mock_model("User", stubs)
+#   end
+#
 #end
-
-#Helpers for authlogic and rspec
-
-#def current_user(stubs = {})
-#  @current_user ||= mock_model("User", stubs)
-#end
-
-# =============== OLD STUFF ===============
-# this stuff is from rails2 (old spec helper), might not be needed
-
-#Helpers for authlogic and rspec
+#include LoginHelper
 #
-
 #
-#def user_session(stubs = {}, user_stubs = {})
-#  @current_user ||= mock_model(UserSession, {:user => current_user(user_stubs)}.merge(stubs))
+#class ActiveRecord::Base
+#  mattr_accessor :shared_connection
+#  @@shared_connection = nil
+#
+#  def self.connection
+#    @@shared_connection || retrieve_connection
+#  end
 #end
 #
-#def login(session_stubs = {}, user_stubs = {})
-#  UserSession.stub!(:find).and_return(user_session(session_stubs, user_stubs))
-#end
-#
-#def logout
-#  @user_session = nil
-#end
+## Forces all threads to share the same connection. This works on
+## Capybara because it starts the web server in a thread.
+#ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection

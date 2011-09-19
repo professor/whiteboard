@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PeerEvaluationReview do
 
   before(:all) do
-      activate_authlogic
+#      activate_authlogic
   end
 
   it 'is_completed_for? returns true for people who have done it' do

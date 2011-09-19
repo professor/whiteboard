@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Page do
 
   before(:all) do
-      activate_authlogic
+#      activate_authlogic
   end
 
   before(:each) do
@@ -16,19 +16,19 @@ describe Page do
 
 
   it "is valid with valid attributes" do
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     @page.should be_valid
   end
 
   it "is not valid without a title" do
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     @page.title = nil
     @page.should_not be_valid
   end
 
 #   Not sure how to test this one since the invariant is upheld by the model with a before_validation
   it "is not valid without an updated_by_user_id"  do
-    login_user(u = Factory(:faculty_frank))
+    sign_in(u = Factory(:faculty_frank))
     @page.updated_by_user_id = nil
     lambda {
       @page.valid?
@@ -39,7 +39,7 @@ describe Page do
 
 
   it "should show who did the last edit and when it occurred" do
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     last_user_id = @page.updated_by_user_id
     @page.title = "Something different"
     @page.save
@@ -50,7 +50,7 @@ describe Page do
 
   context "can be a named url" do
     it "that is unique" do
-      login_user(Factory(:faculty_frank))
+      sign_in(Factory(:faculty_frank))
       @page.url = "ppm"
       @page.save
 
@@ -63,7 +63,7 @@ describe Page do
     end
 
     it "that is not a number because it would cause conflicts with the id field on lookup" do
-      login_user(Factory(:faculty_frank))
+      sign_in(Factory(:faculty_frank))
       @page.url = "123"
       @page.should_not be_valid
       @page.errors[:url].should_not be_blank
@@ -78,7 +78,7 @@ describe Page do
     end
 
     it "that defaults from the title field" do
-      login_user(Factory(:faculty_frank))
+      sign_in(Factory(:faculty_frank))
       @page.url = ""
       @page.should be_valid
       @page.url.should == @page.title      
@@ -103,7 +103,7 @@ describe Page do
   
 
   it "is versioned" do
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     @page.should respond_to(:version)
     @page.save   
     version_number = @page.version
@@ -114,7 +114,7 @@ describe Page do
 
     it "should allow faculty to comment about the changes"
 #  do
-#      login_user(Factory(:faculty_frank))
+#      sign_in(Factory(:faculty_frank))
 #      @page.version_comments = "A very simple change"
 #      @page.save
 ##This seems too simple

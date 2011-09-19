@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "pages/show.html.erb" do
   before(:each) do
-    login_user(Factory(:student_sam))
+    sign_in(Factory(:student_sam))
     Page.any_instance.stub(:update_search_index)
     Page.any_instance.stub(:delete_from_search)
     assign(:page, Factory(:ppm))

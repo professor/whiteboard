@@ -11,18 +11,18 @@ class Person < ActiveRecord::Base
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
   acts_as_versioned  :table_name => 'user_versions' , :if => Proc.new { |user| !(user.effort_log_warning_email_changed? || user.sponsored_project_effort_last_emailed_changed? ) }
 
-#  acts_as_authentic
-
-#  enabling this currently breaks adding a team member to a team. Not sure why Authlogic would cause that to happen  
-  acts_as_authentic do |c|
-    c.validate_login_field = false #We are using openid, no login field required
-    c.require_password_confirmation = false
-    c.validate_password_field = false
-  end
-# This next method is a dummy method while Authlogic is turned off for Person
-#  def save_without_session_maintenance
-#    self.save
+##  acts_as_authentic
+#
+##  enabling this currently breaks adding a team member to a team. Not sure why Authlogic would cause that to happen
+#  acts_as_authentic do |c|
+#    c.validate_login_field = false #We are using openid, no login field required
+#    c.require_password_confirmation = false
+#    c.validate_password_field = false
 #  end
+## This next method is a dummy method while Authlogic is turned off for Person
+##  def save_without_session_maintenance
+##    self.save
+##  end
 
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course

@@ -18,7 +18,7 @@ describe 'A user visiting the site', :type => :request do
   
   # context 'when logged in' do
   #   before do
-  #     login_user(user)
+  #     sign_in(user)
   #   end
   #   
   #   it 'only shows content to a logged in user' do

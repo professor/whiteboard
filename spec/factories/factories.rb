@@ -1,3 +1,6 @@
+#puts "....factories loaded....."
+#puts caller.join("\n")
+
 Factory.define :course, :class => Course do |c|
   c.name 'Course'
   c.semester AcademicCalendar.current_semester
@@ -116,12 +119,12 @@ Factory.define :task_type do |t|
 end
 
 Factory.define :team, :class => Team do |t|
- t.name "Team"
- t.email "team@sv.cmu.edu"
- t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
- t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
- t.people {|people| [people.association(:team_member)]}
- t.association :course, :factory => :course
+t.name "Team"
+t.email "team@sv.cmu.edu"
+t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
+t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+t.people {|people| [people.association(:team_member)]}
+t.association :course, :factory => :course
 end
 
 Factory.define :user, :class => User do |p|
@@ -137,8 +140,8 @@ Factory.define :user, :class => User do |p|
   p.login "user_todd"
   p.password "ashoifjadslkfjaskl;h"
   p.password_confirmation "ashoifjadslkfjaskl;h"
-  p.password_salt Authlogic::Random.hex_token
-  p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
+  p.password_salt "adasdsa"
+  p.crypted_password "adasdsaf"
   p.persistence_token rand(36**60).to_s(36)
 
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "pages/new.html.erb" do
   before(:each) do
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     assign(:page, stub_model(Page).as_new_record)
     assign(:courses, [
       stub_model(Course),

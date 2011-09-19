@@ -6,7 +6,7 @@ describe CourseNavigationsController do
 
   context "any user can" do
     before do
-      login_user(Factory(:student_sam))
+      sign_in(Factory(:student_sam))
     end
 
     describe "GET show" do
@@ -23,7 +23,7 @@ describe CourseNavigationsController do
 
 #  context "any faculty can" do
 #    before do
-#      login_user(Factory(:faculty_frank))
+#      sign_in(Factory(:faculty_frank))
 #    end
 #
 #    describe "GET reposition" do

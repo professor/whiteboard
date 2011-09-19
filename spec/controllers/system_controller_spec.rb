@@ -5,7 +5,7 @@ describe SystemController do
 
   context "any user" do
     before do
-      login_user(Factory(:student_sam))
+      sign_in(Factory(:student_sam))
     end
 
     describe "GET index" do

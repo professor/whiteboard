@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'pages/_editable_form.html.erb' do
   before do
 
-    login_user(Factory(:faculty_frank))
+    sign_in(Factory(:faculty_frank))
     assign(:page, Factory.build(:page))
     assign(:courses, [
       stub_model(Course),

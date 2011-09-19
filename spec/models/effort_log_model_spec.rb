@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EffortLog do
 
   before(:all) do
-    activate_authlogic
+#    activate_authlogic
   end
 
   context 'log_effort_week?' do

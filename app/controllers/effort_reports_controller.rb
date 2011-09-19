@@ -2,7 +2,7 @@ class EffortReportsController < ApplicationController
 
   layout 'cmu_sv', :only => [:index, :show, :campus_semester, :campus_week, :course]
 
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   class PanelState
     attr_accessor :year, :week_number, :course_id, :date

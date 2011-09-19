@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Deliverable do
 
   before(:all) do
-      activate_authlogic
+#      activate_authlogic
   end
 
   it 'can be created' do

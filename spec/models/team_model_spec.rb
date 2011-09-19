@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Team do
 
   before(:all) do
-      activate_authlogic
+#      activate_authlogic
   end
 
 
@@ -66,14 +66,14 @@ describe Team do
     end
 
     it "by the students if, this option wasn't selected when creating the course" do
-      @student_sam = login_user(Factory(:student_sam))
+      @student_sam = sign_in(Factory(:student_sam))
       @team.name = "Maccabees"
       @team.save
       @team.name.should == "Dracula"
     end
 
     it "by the faculty, regardless of the setting" do
-      @faculty_frank = login_user(Factory(:faculty_frank))
+      @faculty_frank = sign_in(Factory(:faculty_frank))
       @team.name = "Maccabees"
       @team.save
       @team.name.should == "Maccabees"

@@ -8,7 +8,7 @@ describe TeamsController do
 
   context "any user can" do
     before do
-      login_user(Factory(:student_sam))
+      sign_in(Factory(:student_sam))
     end
 
     describe "GET show" do
@@ -78,7 +78,7 @@ describe TeamsController do
 
   context "any staff can" do
     before do
-      login_user(Factory(:faculty_frank))
+      sign_in(Factory(:faculty_frank))
     end
 
     describe "GET new" do
@@ -198,7 +198,7 @@ describe TeamsController do
 
   context "any admin can" do
     before do
-      login_user(Factory(:admin_andy))
+      sign_in(Factory(:admin_andy))
     end
 
     describe "DELETE destroy" do

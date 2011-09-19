@@ -10,7 +10,7 @@ describe PagesController do
   context "any user can" do
     before do
       Page.delete_all
-      login_user(Factory(:student_sam))
+      sign_in(Factory(:student_sam))
       @page = Factory(:page)
     end
 
@@ -52,7 +52,7 @@ describe PagesController do
   context "as a student can" do
     before do
       Page.delete_all
-      login_user(Factory(:student_sam))
+      sign_in(Factory(:student_sam))
       @page = Factory(:page, :title => "new title")
     end
 
@@ -79,7 +79,7 @@ describe PagesController do
   context "as a faculty member can" do
 
     before do
-      login_user(Factory(:faculty_frank))
+      sign_in(Factory(:faculty_frank))
 
       @page = Factory(:page)
     end
