@@ -155,6 +155,11 @@ div.system {
     background-color: rgb(219, 232, 154);
 }
 
+tr.staff {
+    background-color: rgb(224, 235, 235);
+}
+
+
 
 .student .instructions {
     vertical-align: top;

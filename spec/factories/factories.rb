@@ -54,6 +54,15 @@ Factory.define :peer_evaluation_learning_objective, :class => PeerEvaluationLear
   p.learning_objective "this is my learning objective"
 end
 
+Factory.define :peer_evaluation_review, :class => PeerEvaluationReview do |p|
+  p.association :team, :factory => :team_triumphant
+  p.association :author, :factory => :student_sam
+  p.association :recipient, :factory => :student_sally
+  p.question "What was this team member's most significant positive contribution to the team?"
+  p.answer "Sally was always on time in meetings."
+  p.sequence_number 0
+end
+
 Factory.define :person, :class => Person do |p|
   p.is_staff 0
   p.is_student 0

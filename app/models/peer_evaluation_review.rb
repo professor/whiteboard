@@ -29,6 +29,13 @@
 # when prompted by the faculty.
 class PeerEvaluationReview < ActiveRecord::Base
 
+  belongs_to :team
+  belongs_to :author, :class_name => "Person"
+  belongs_to :recipient, :class_name => "Person"
+
+  def self.is_completed_for?(person_id, team_id)
+    !PeerEvaluationReview.find(:first, :conditions => {:team_id => team_id, :author_id => person_id}).nil?
+  end
   
 
 end

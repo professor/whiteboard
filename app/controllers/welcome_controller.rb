@@ -4,7 +4,11 @@ class WelcomeController < ApplicationController
 
   def index
     @rss_feeds = RssFeed.all
-
+    if current_person.nil?
+      @courses_registered_as_student = nil
+    else
+      @courses_registered_as_student = current_person.get_registered_courses
+    end
 
     respond_to do |format|
       format.html # index.html.erb

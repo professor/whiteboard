@@ -14,16 +14,16 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "updated_at DESC"
 
-  before_validation :update_team
+  before_validation :update_team, :sanitize_data
 
 
   def unique_course_task_owner?
-    if self.is_team_deliverable
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+    if self.is_team_deliverable?
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :is_team_deliverable => true, :team_id => self.team_id).first
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :is_team_deliverable => false, :creator_id => self.creator_id).first
     end
-    unless duplicate.nil? || duplicate.id == self.id
+    if duplicate && duplicate.id != self.id
       errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
     end
   end
@@ -85,10 +85,10 @@ class Deliverable < ActiveRecord::Base
 
   def send_deliverable_upload_email(url)
     mail_to = []
-    unless self.team.primary_faculty.nil?
+    unless self.team.nil? || self.team.primary_faculty.nil?
       mail_to << self.team.primary_faculty.email
     end
-    unless self.team.secondary_faculty.nil?
+    unless self.team.nil? || self.team.secondary_faculty.nil?
       mail_to << self.team.secondary_faculty.email
     end
 
@@ -103,7 +103,7 @@ class Deliverable < ActiveRecord::Base
     message += self.course.name
 
     options = {:to => mail_to,
-               :subject => "Deliverable submitted for " + self.course.name,
+               :subject => "Deliverable submitted for " + self.course.name + " by " + self.owner_name,
                :message => message,
                :url_label => "View this deliverable",
                :url => url
@@ -132,8 +132,11 @@ class Deliverable < ActiveRecord::Base
   protected
   def update_team
     # Look up the team this person is on if it is a team deliverable
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable
+    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable?
   end
 
+  def sanitize_data
+    self.name = self.name.titleize unless self.name.blank?
+  end
 
 end
