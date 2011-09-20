@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "courses/configure.html.erb" do
   before(:each) do
-    sign_in(Factory(:faculty_frank))
+    login(Factory(:faculty_frank))
     @course = assign(:course, stub_model(Course,
         :name => "something",
         :semester => "Fall",

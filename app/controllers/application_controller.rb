@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   
     helper :all # include all helpers, all the time
 
-    helper_method :current_user_session, :current_user
+    helper_method :current_user
 
 
     # See ActionController::RequestForgeryProtection for details
@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
       bot = /(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i
       request.user_agent =~ bot
     end
-
 
     private
     def get_http_referer

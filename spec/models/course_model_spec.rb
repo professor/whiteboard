@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe Course do
 
-  before do
-#    activate_authlogic
-    @faculty_frank = sign_in(Factory(:faculty_frank))
-  end
-
   it 'can be created' do
     lambda {
       Factory(:course)

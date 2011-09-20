@@ -36,11 +36,37 @@ RSpec.configure do |config|
     config.filter_run_excluding :skip_on_build_machine => true
   end
 
+#  config.include ControllerMacros, :type => :controller
+
   config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::TestHelpers, :type => :view
 
 #  config.include Helpers
 end
 
+
+module ControllerMacros
+  def login person
+     @current_user = User.find(person.id)
+     sign_in @current_user
+  end
+end
+
+
+#      sign_in(Factory(:student_sam))
+      #sign_in(:student_sam)
+
+#    @student_sam = sign_in(Factory(:student_sam))
+#    @student_sam= Factory(:student_sam)
+#    sign_in @student_sam
+
+
+      #@request.env["devise.mapping"] = Devise.mappings[:student_sam]
+      #user = Factory.create(:student_sam)
+      #sign_in user
+
+
+include ControllerMacros
 
 ##potential fix for authlogic issues
 #module LoginHelper

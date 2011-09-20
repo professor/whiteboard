@@ -40,9 +40,14 @@ Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
   e.effort_log_id 60
 end
 
+today = Date.today
+monday_of_this_week = Date.commercial(today.year, today.cweek, 1)
 Factory.define :effort_log, :class => EffortLog do |e|
-  e.year {(Date.today-3).year}
-  e.week_number {(Date.today-3).cweek}
+  # REMOVE
+  #e.year {(Date.today-3).year}
+  #e.week_number {(Date.today-3).cweek}
+  e.year monday_of_this_week.cwyear
+  e.week_number monday_of_this_week.cweek
   e.association :person, :factory => :student_sam
 end
 
@@ -74,6 +79,7 @@ Factory.define :person, :class => Person do |p|
   p.is_active 1
   p.image_uri "/images/mascot.jpg"
   p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
+#  p.remember_created_at Time.now.to_f.to_s
 end
 
 
@@ -142,6 +148,4 @@ Factory.define :user, :class => User do |p|
   p.password_confirmation "ashoifjadslkfjaskl;h"
   p.password_salt "adasdsa"
   p.crypted_password "adasdsaf"
-  p.persistence_token rand(36**60).to_s(36)
-
 end

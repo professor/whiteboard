@@ -7,7 +7,7 @@ describe "courses/index.html.erb" do
       stub_model(Course,:name => "something2")
     ])
     assign(:all_courses, true)
-    sign_in(Factory(:student_sam))
+    login(Factory(:student_sam))
   end
 
   it "renders a list of courses" do

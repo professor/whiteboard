@@ -82,6 +82,7 @@ class PagesController < ApplicationController
 #    @courses = Course.all
     @courses = Course.unique_course_names
 
+    @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -108,7 +109,7 @@ class PagesController < ApplicationController
     #course = Course.with_course_name(params[:course_name]).first
     #@page.course = course
 
-
+    @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'

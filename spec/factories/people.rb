@@ -1,6 +1,5 @@
 require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :admin_andy, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.login "admin_andy"
   p.email "andy@andrew.cmu.edu"
   p.is_staff true
@@ -12,7 +11,6 @@ Factory.define :admin_andy, :parent => :person do |p|
 end
 
 Factory.define :student_sam, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.login "student_sam"
   p.email "sam@andrew.cmu.edu"
   p.is_student true
@@ -24,7 +22,6 @@ Factory.define :student_sam, :parent => :person do |p|
 end
 
 Factory.define :student_sally, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.login "student_sally"
   p.email "sally@andrew.cmu.edu"
   p.is_student true
@@ -63,15 +60,9 @@ Factory.define :strength_quest, :parent => :person do |p|
   p.association :strength3, :factory => :adaptability
   p.association :strength4, :factory => :analytical
   p.association :strength5, :factory => :arranger
-#  p.strength1_id = :achiever.id # "Achiever"
-#  p.strength2_id = 2 # "Activator"
-#  p.strength3_id = 3 # "Adaptability"
-#  p.strength4 "Analytical"
-#  p.strength5 "Arranger"
 end
 
 Factory.define :team_member, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.login "team_member"
   p.email "teammember@andrew.cmu.edu"
   p.is_student true

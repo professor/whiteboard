@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "system/index.html.erb" do
   before(:each) do
-    sign_in(Factory(:student_sam))
+    login(Factory(:student_sam))
   end
 
   it "renders the system page" do

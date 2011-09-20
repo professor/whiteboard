@@ -55,7 +55,7 @@ class SponsoredProjectEffortsController < ApplicationController
   end
 
 private
-
+  #Todo: refactor this method to use Application Controller's has_permissions_or_redirect
   def authorized_or_redirect
     @person = Person.find_by_twiki_name(params[:id])
     if (@person.nil?)
@@ -64,7 +64,7 @@ private
       return false
     end
 
-    unless @person.id == @current_user.id || @current_user.is_admin
+    unless @person.id == current_user.id || current_user.is_admin
       flash[:error] = t(:no_permission)
       redirect_to(root_path)
       return false

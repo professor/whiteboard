@@ -8,7 +8,7 @@ describe SponsoredProjectAllocationsController do
 
     before do
       @admin_andy = Factory(:admin_andy)
-      sign_in(@admin_andy)
+      login(@admin_andy)
     end
 
     describe 'GET index' do
@@ -140,7 +140,7 @@ describe SponsoredProjectAllocationsController do
     before do
       @faculty_frank = allocation.person
       @faculty_frank.is_admin = false
-      sign_in(@faculty_frank)
+      login(@faculty_frank)
     end
 
     [:index, :new, :edit, :archive].each do |http_verb|

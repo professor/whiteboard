@@ -9,7 +9,7 @@ describe SponsoredProjectsController do
 
     before do
       @admin_andy = Factory(:admin_andy)
-      sign_in(@admin_andy)
+      login(@admin_andy)
     end
 
     describe "GET index" do
@@ -141,7 +141,7 @@ describe SponsoredProjectsController do
 
     before do
       @faculty_frank = Factory(:faculty_frank)
-      sign_in(@faculty_frank)
+      login(@faculty_frank)
     end
 
     [:index, :new, :edit, :archive].each do |http_verb|

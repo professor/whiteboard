@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe Team do
 
-  before(:all) do
-#      activate_authlogic
-  end
-
-
   it "should throw an error when a google distribution list was not created" do
     google_apps_connection.stub(:create_group)
     google_apps_connection.stub(:add_member_to_group)
@@ -57,29 +52,6 @@ describe Team do
 
 
   end
-
-  context "can be named" do
-
-    before do
-      @course = Factory(:course, :configure_teams_name_themselves => false)
-      @team = Factory(:team, :course_id => @course.id, :name => "Dracula")
-    end
-
-    it "by the students if, this option wasn't selected when creating the course" do
-      @student_sam = sign_in(Factory(:student_sam))
-      @team.name = "Maccabees"
-      @team.save
-      @team.name.should == "Dracula"
-    end
-
-    it "by the faculty, regardless of the setting" do
-      @faculty_frank = sign_in(Factory(:faculty_frank))
-      @team.name = "Maccabees"
-      @team.save
-      @team.name.should == "Maccabees"
-    end
-  end
-
 
   context "is_person_on_team?" do
 

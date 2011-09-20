@@ -70,6 +70,7 @@ describe EffortLog do
       end
 
       it "for effort log owner" do
+
         @effort.editable_by(@effort.person).should be_true
       end
 
