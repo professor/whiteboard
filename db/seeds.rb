@@ -48,17 +48,6 @@ end
 
 sleep(0.02)
 
-Factory.define :martin, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
-  p.first_name "Martin"
-  p.last_name "Radley"
-  p.human_name "Martin Radley"
-  p.email "martin.radley@sv.cmu.edu"
-  p.is_staff 1
-end
-
-sleep(0.02)
-
 Factory.define :ed, :parent => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Ed"
@@ -66,39 +55,6 @@ Factory.define :ed, :parent => :person do |p|
   p.human_name "Ed Katz"
   p.email "ed.katz@sv.cmu.edu"
   p.is_staff 1
-end
-
-sleep(0.02)
-
-Factory.define :chris, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
-  p.first_name "Chris"
-  p.last_name "Jensen"
-  p.human_name "Chris Jensen"
-  p.email "chris.jensen@sv.cmu.edu"
-  p.is_student 1
-end
-
-sleep(0.02)
-
-Factory.define :howard, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
-  p.first_name "Howard"
-  p.last_name "Huang"
-  p.human_name "Howard Awesome Huang"
-  p.email "howard.huang@sv.cmu.edu"
-  p.is_student 1
-end
-
-sleep(0.02)
-
-Factory.define :aretha, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
-  p.first_name "Aretha"
-  p.last_name "Kebirungi"
-  p.human_name "Aretha Kebirungi"
-  p.email "aretha.kebirungi@sv.cmu.edu"
-  p.is_student 1
 end
 
 sleep(0.02)
@@ -164,64 +120,29 @@ end
 
 sleep(0.02)
 
-Factory.define :team_triumphant, :class => Team do |t|
-  t.name "Team Triumphant"
-  t.email "triumphant@sv.cmu.edu"
-  t.tigris_space "http://triumphant.tigris.org/servlets/ProjectDocumentList"
+Factory.define :team_terrific, :class => Team do |t|
+  t.name "Team Terrific"
+  t.email "terrific@sv.cmu.edu"
+  t.tigris_space "http://terrific.tigris.org/servlets/ProjectDocumentList"
   t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
   t.person_name "Awe Smith"
   t.person_name2 "Betty Ross"
   t.person_name3 "Charlie Moss"
 end
 
-Factory.define :ian_zhang, :parent => :person do |p|
+Factory.define :your_name_here, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 0
-  p.graduation_year "2011"
+  p.graduation_year "2012"
   p.masters_program  "SE"
   p.masters_track  "Tech"
-  p.twiki_name "IanZhang"
-  p.first_name "Ian"
-  p.last_name "Zhang"
-  p.human_name "Ian Zhang"
-  p.image_uri "/images/mascot.jpg"
-  p.email "ian.zhang@sv.cmu.edu"
-  p.webiso_account "yz3@andrew.cmu.edu"
+  p.twiki_name "FirstLast"
+  p.first_name "First"
+  p.last_name "Last"
+  p.human_name "Your Name"
+  p.email "your.email@sv.cmu.edu"
+  p.webiso_account "your.name@andrew.cmu.edu"
 end
-
-Factory.define :paul, :parent => :person do |p|
-  p.is_student 1
-  p.is_part_time 1
-  p.graduation_year "2011"
-  p.masters_program  "SE"
-  p.masters_track  "DM"
-  p.twiki_name "PaulWong"
-  p.first_name "Paul"
-  p.last_name "Wong"
-  p.human_name "Paul Wong"
-  p.image_uri "/images/mascot.jpg"
-  p.email "paul.wong@sv.cmu.edu"
-  p.webiso_account "paulwong@andrew.cmu.edu"
-end
-
-Factory.define :aretha, :parent => :person do |p|
-  p.is_student 1
-  p.is_part_time 0
-  p.graduation_year "2011"
-  p.masters_program  "SE"
-  p.masters_track  "Tech"
-  p.twiki_name "ArethaKebirungi"
-  p.first_name "Aretha"
-  p.last_name "Kebirungi"
-  p.human_name "Aretha Kebirungi"
-  p.image_uri "/images/mascot.jpg"
-  p.email "aretha.kebirungi@sv.cmu.edu"
-  p.webiso_account "akebirun@andrew.cmu.edu"
-end
-
-Factory.create(:ian_zhang)
-Factory.create(:paul)
-Factory.create(:aretha)
 
 
 Factory(:task_type)
@@ -230,20 +151,15 @@ Factory(:task_type, :name => "task 3")
 Factory(:task_type, :name => "task 4")
 
 
-Factory.create(:todd)
-martin = Factory.create(:martin)
-Factory.create(:ed)
-chris = Factory.create(:chris)
-Factory.create(:howard)
-Factory.create(:awe_smith)
+todd = Factory.create(:todd)
+ed = Factory.create(:ed)
+awe = Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
-Factory.create(:aretha)
-#Factory.create(:team_triumphant)
-
+Factory.create(:your_name_here)
 
 architecture = Factory.create(:mfse_current_semester)
-Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture, :person_name3 => chris.human_name)
+Factory.create(:team_terrific, :primary_faculty_id => todd.id, :course_id=> architecture, :person_name3 => awe.human_name)
 
 
 
