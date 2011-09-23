@@ -1,1 +1,1 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
+#require File.join(Rails.root,'spec','factories','factories.rb')

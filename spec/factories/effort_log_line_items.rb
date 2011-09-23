@@ -1,4 +1,10 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
+# require File.join(Rails.root,'spec','factories','factories.rb')
+
+Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
+  e.association :course, :factory => :fse
+  e.task_type_id 1
+  e.effort_log_id 60
+end
 Factory.define :elli_line1, :parent => :effort_log_line_item do |e|
   e.day1 0
   e.day2 20
