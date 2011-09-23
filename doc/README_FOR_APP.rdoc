@@ -30,7 +30,13 @@ Students should
 1. Modify the db/seeds.rb and add yourself to it.
 1. install postgres see http://rails.sv.cmu.edu/pages/postgres_rails
 1. install a postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
-1. brew install imagemagick
+1. create a config/google_apps.yml from (http://rails.sv.cmu.edu/pages/google_apps.yml)
+1. Modify the db/seeds.rb and add yourself to it.
+1. install postgress see http://rails.sv.cmu.edu/pages/postgres_rails
+1. install imagemagick
+   1. (Directions for a mac)
+   1. install brew see http://mxcl.github.com/homebrew/  
+   1. brew install imagemagick
 1. bundle install
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
