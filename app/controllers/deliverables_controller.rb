@@ -90,11 +90,22 @@ class DeliverablesController < ApplicationController
   def edit
     @deliverable = Deliverable.find(params[:id])
 
-    unless @deliverable.team.is_person_on_team?(current_person)
-      unless (current_user.is_staff?)||(current_user.is_admin?)
-        flash[:error] = "You don't have permission to see another team's deliverables."
-        redirect_to root_path
-        return
+    if @deliverable.is_team_deliverable?
+      unless @deliverable.team.is_person_on_team?(current_person)
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          flash[:error] = I18n.t(:not_your_deliverable)
+          redirect_to root_path
+          return
+        end
+      end
+    end
+    if !@deliverable.is_team_deliverable?
+      unless current_person == @deliverable.creator
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          flash[:error] = I18n.t(:not_your_deliverable)
+          redirect_to root_path
+          return
+        end
       end
     end
   end
@@ -142,12 +153,26 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
-    unless @deliverable.team.is_person_on_team?(current_person)
-      flash[:error] = "You don't have permission to edit another team's deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
+
+    if @deliverable.is_team_deliverable?
+      unless @deliverable.team.is_person_on_team?(current_person)
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          flash[:error] = I18n.t(:not_your_deliverable)
+          redirect_to root_path
+          return
+        end
+      end
     end
-    
+    if !@deliverable.is_team_deliverable?
+      unless current_person == @deliverable.creator
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          flash[:error] = I18n.t(:not_your_deliverable)
+          redirect_to root_path
+          return
+        end
+      end
+    end
+
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'You must specify a file to upload'
       respond_to do |format|
