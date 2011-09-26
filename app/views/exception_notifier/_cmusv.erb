@@ -5,6 +5,6 @@
 * user_id: <%# id unless id.nil? %>
 * user:  <%# User.find(id).human_name unless id.nil? %>
 -->
-* user_id: <%= current_user.id unless current_user.nil? %>
-* user:  <%= current_user.human_name unless current_user.nil? %>
+* user_id: <%# current_user.id unless current_user.nil? %>
+* user:  <%# current_user.human_name unless current_user.nil? %>
 * robot: <%= @request.user_agent =~ /(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i %>
