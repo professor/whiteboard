@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
     helper_method :current_user
 
+    before_filter :make_available_for_exception_notification
 
     # See ActionController::RequestForgeryProtection for details
     # Uncomment the :secret if you're not using the cookie session store
@@ -117,5 +118,12 @@ class ApplicationController < ActionController::Base
      def american_date
        '%m/%d/%Y'
      end
+
+     protected
+       def make_available_for_exception_notification
+         request.env["exception_notifier.exception_data"] = {
+           :current_user => current_user
+         }
+       end
   
 end
