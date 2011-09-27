@@ -1,3 +1,6 @@
+#puts "....factories loaded....."
+#puts caller.join("\n")
+
 Factory.define :course, :class => Course do |c|
   c.name 'Course'
   c.semester AcademicCalendar.current_semester
@@ -37,9 +40,14 @@ Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
   e.effort_log_id 60
 end
 
+today = Date.today
+monday_of_this_week = Date.commercial(today.year, today.cweek, 1)
 Factory.define :effort_log, :class => EffortLog do |e|
-  e.year {(Date.today-3).year}
-  e.week_number {(Date.today-3).cweek}
+  # REMOVE
+  #e.year {(Date.today-3).year}
+  #e.week_number {(Date.today-3).cweek}
+  e.year monday_of_this_week.cwyear
+  e.week_number monday_of_this_week.cweek
   e.association :person, :factory => :student_sam
 end
 
@@ -71,6 +79,7 @@ Factory.define :person, :class => Person do |p|
   p.is_active 1
   p.image_uri "/images/mascot.jpg"
   p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
+#  p.remember_created_at Time.now.to_f.to_s
 end
 
 
@@ -116,12 +125,12 @@ Factory.define :task_type do |t|
 end
 
 Factory.define :team, :class => Team do |t|
- t.name "Team"
- t.email "team@sv.cmu.edu"
- t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
- t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
- t.people {|people| [people.association(:team_member)]}
- t.association :course, :factory => :course
+t.name "Team"
+t.email "team@sv.cmu.edu"
+t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
+t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+t.people {|people| [people.association(:team_member)]}
+t.association :course, :factory => :course
 end
 
 Factory.define :user, :class => User do |p|
@@ -137,8 +146,6 @@ Factory.define :user, :class => User do |p|
   p.login "user_todd"
   p.password "ashoifjadslkfjaskl;h"
   p.password_confirmation "ashoifjadslkfjaskl;h"
-  p.password_salt Authlogic::Random.hex_token
-  p.crypted_password Authlogic::CryptoProviders::Sha512.encrypt("benrocks")
-  p.persistence_token rand(36**60).to_s(36)
-
+  p.password_salt "adasdsa"
+  p.crypted_password "adasdsaf"
 end

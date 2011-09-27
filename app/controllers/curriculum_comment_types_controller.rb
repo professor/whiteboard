@@ -1,5 +1,5 @@
 class CurriculumCommentTypesController < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   # GET /curriculum_comment_types
   # GET /curriculum_comment_types.xml

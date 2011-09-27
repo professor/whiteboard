@@ -11,7 +11,7 @@ class Team < ActiveRecord::Base
 
   before_validation :clean_up_data
   after_save :update_mailing_list
-  before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email, :prevent_students_from_changing_team_name
+  before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email
 
   before_destroy :remove_google_group
 
@@ -33,15 +33,6 @@ class Team < ActiveRecord::Base
 #    end
   end
 
-  def prevent_students_from_changing_team_name
-    current_user = UserSession.find.user unless UserSession.find.nil?
-    if current_user && self.name_changed?
-      self.name =  self.name_was unless self.course.configure_teams_name_themselves || current_user.permission_level_of(:staff)
-    end
-  end
-
-
-  
   def update_google_mailing_list(new_email, old_email, id)
     logger.info("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
 

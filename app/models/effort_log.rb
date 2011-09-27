@@ -14,6 +14,9 @@ class EffortLog < ActiveRecord::Base
       return true
     end
     if (current_user && current_user.id == person_id)
+      a = Date.today
+      b = Date.commercial(self.year, self.week_number, 1)
+      c = (Date.commercial(self.year, self.week_number, 7) + 1.day)
       if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
          return true
       end

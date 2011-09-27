@@ -1,29 +1,31 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :omniauthable, :rememberable, :trackable, :timeoutable
+         #, :database_authenticatable, :registerable,
 
-acts_as_authentic
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  
-#  acts_as_authentic do |c|
-#  end
-  
-#  validates_presence_of     :login
-  validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login,    :case_sensitive => false, :allow_nil => true
 
-#  validates_presence_of     :email
-  validates_length_of       :email,    :within => 6..100 #r@a.wk
-#  validates_uniqueness_of   :email,    :case_sensitive => false
+  def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
+    data = access_token['user_info']
+    email = switch_west_to_sv(data["email"]).downcase
 
-  validates_uniqueness_of   :webiso_account,    :case_sensitive => false, :allow_nil => true
+    return User.find_by_email(email)
+  end
 
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation, :first_name, :last_name, :webiso_account, :isStaff, :isStudent, :isAdmin, :twiki_name, :photo, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.google_apps_data"] && session["devise.google_apps_data"]["extra"]["user_hash"]
+        user.email = data["email"]
+      end
+    end
+  end
 
-  
+
   # Lines modified by Todd go here:
-  before_save :initialize_human_name
+#  before_save :initialize_human_name
    has_and_belongs_to_many :teams
 
 #  belongs_to :person

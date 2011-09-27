@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "courses/show.html.erb" do
   before(:each) do
-    login_user(Factory(:student_sam))
+    current_user = Factory.build(:student_sam)
     assign(:course, Factory(:course))
   end
 

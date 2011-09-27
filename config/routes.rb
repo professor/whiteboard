@@ -64,10 +64,19 @@ CMUEducation::Application.routes.draw do
   resources :people
   resources :suggestions
   match '/teams' => 'teams#index_all', :as => :teams
-  resources :users
-  resource :user_session
-  match '/login_google' => 'user_sessions#login_google', :as => :login_google
-  match '/logout' => "user_sessions#destroy", :as => :logout
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
+    get 'logout' => 'devise/sessions#destroy'
+  end
+
+  #resources :users
+  #resource :user_session
+
+  #match '/login_google' => 'user_sessions#login_google', :as => :login_google
+  #match '/logout' => "user_sessions#destroy", :as => :logout
+
+
   match '/load_chart' => 'effort_reports#load_chart', :as => :load_chart
   match 'people/twiki/:twiki_name' => 'people#show_by_twiki'
   match 'twiki/teams' => 'teams#twiki_index'

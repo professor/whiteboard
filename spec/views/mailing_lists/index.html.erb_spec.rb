@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe 'mailing_lists/index' do
   before(:each) do
-    person = Factory(:student_sam)
-    login_user(person)
+    login(Factory(:student_sam))
     assign(:mailing_lists, ["staff-faculty@sv.cmu.edu", "allstudents@sv.cmu.edu"])
   end
 

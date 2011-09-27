@@ -2,8 +2,9 @@ class ApplicationController < ActionController::Base
   
     helper :all # include all helpers, all the time
 
-    helper_method :current_user_session, :current_user
+    helper_method :current_user
 
+    before_filter :make_available_for_exception_notification
 
     # See ActionController::RequestForgeryProtection for details
     # Uncomment the :secret if you're not using the cookie session store
@@ -14,7 +15,6 @@ class ApplicationController < ActionController::Base
       bot = /(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i
       request.user_agent =~ bot
     end
-
 
     private
     def get_http_referer
@@ -40,15 +40,16 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_user_session
-      return @current_user_session if defined?(@current_user_session)
-      @current_user_session = UserSession.find
-    end
-
-      def current_user
-        return @current_user if defined?(@current_user)
-        @current_user = current_user_session && current_user_session.user
-      end
+    #Authlogic stuff REMOVE
+    #def current_user_session
+    #  return @current_user_session if defined?(@current_user_session)
+    #  @current_user_session = UserSession.find
+    #end
+    #
+    #  def current_user
+    #    return @current_user if defined?(@current_user)
+    #    @current_user = current_user_session && current_user_session.user
+    #  end
 
       #Temporary method until we merge person and user
       def current_person
@@ -117,5 +118,12 @@ class ApplicationController < ActionController::Base
      def american_date
        '%m/%d/%Y'
      end
+
+     protected
+       def make_available_for_exception_notification
+         request.env["exception_notifier.exception_data"] = {
+           :current_user => current_user
+         }
+       end
   
 end

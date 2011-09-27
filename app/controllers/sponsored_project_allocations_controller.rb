@@ -2,7 +2,7 @@ class SponsoredProjectAllocationsController < ApplicationController
 
   layout 'cmu_sv'
 
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   def index
     if has_permissions_or_redirect(:admin, root_path)

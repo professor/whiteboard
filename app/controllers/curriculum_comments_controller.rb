@@ -1,5 +1,5 @@
 class CurriculumCommentsController < ApplicationController
-   before_filter :require_user, :except => [:index, :new, :create, :test_page ]
+   before_filter :authenticate_user!, :except => [:index, :new, :create, :test_page ]
 #  protect_from_forgery :only => [:create, :update, :destroy] #if the ajax load comes from http://curriculum to https://curriculum then this InvalidAuthenticityToken gets triggered. When pubcookie is functioning on curriculum again, we should be able reo remove this line of code.
  
   # GET /curriculum_comments

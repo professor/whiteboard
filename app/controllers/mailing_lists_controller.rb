@@ -1,5 +1,5 @@
 class MailingListsController < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   layout 'cmu_sv'
 

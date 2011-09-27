@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe CourseMailer do
   before(:each) do
-    activate_authlogic
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
