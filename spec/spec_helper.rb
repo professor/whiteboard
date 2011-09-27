@@ -14,6 +14,19 @@ require 'helpers'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("spec/factories/**/*.rb")].each {|f| require f}
 
+module ControllerMacros
+  def login person
+     @current_user = User.find(person.id)
+     sign_in @current_user
+  end
+end
+
+module IntegrationSpecHelper
+  def login_with_oauth(service = :google_apps)
+    visit "/users/auth/#{service}"
+  end
+end
+
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -37,6 +50,7 @@ RSpec.configure do |config|
   end
 
 #  config.include ControllerMacros, :type => :controller
+  config.include IntegrationSpecHelper, :type => :request
 
   config.include Devise::TestHelpers, :type => :controller
   config.include Devise::TestHelpers, :type => :view
@@ -45,12 +59,19 @@ RSpec.configure do |config|
 end
 
 
-module ControllerMacros
-  def login person
-     @current_user = User.find(person.id)
-     sign_in @current_user
-  end
-end
+
+
+
+
+Capybara.default_host = 'http://rails.sv.cmu.edu'
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.add_mock(:google_apps, {
+   :user_info => {:email => 'student.sam@west.cmu.edu',
+    :name => 'Student Sam',
+    :first_name => 'Student',
+    :last_name => 'Sam' }
+})
 
 
 #      sign_in(Factory(:student_sam))

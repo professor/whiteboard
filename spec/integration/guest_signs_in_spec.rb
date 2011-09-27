@@ -16,16 +16,16 @@ describe 'A user visiting the site', :type => :request do
     end
   end
   
-  # context 'when logged in' do
-  #   before do
-  #     sign_in(user)
-  #   end
-  #   
-  #   it 'only shows content to a logged in user' do
-  #     visit people_path
-  #     page.should have_content('Listing people')
-  #   end
-  # end
+  context 'when logged in' do
+     before do
+       login_with_oauth
+     end
+
+     it 'only shows content to a logged in user' do
+       visit people_path
+       page.should have_content('Phone book')
+     end
+  end
   
   #Browse to the homepage and click the Sign In link 
   # before do 
