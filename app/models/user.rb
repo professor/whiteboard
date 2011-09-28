@@ -11,8 +11,7 @@ class User < ActiveRecord::Base
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
     data = access_token['user_info']
     email = switch_west_to_sv(data["email"]).downcase
-
-    return User.find_by_email(email)
+    User.find_by_email(email)
   end
 
   def self.new_with_session(params, session)

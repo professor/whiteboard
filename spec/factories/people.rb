@@ -1,7 +1,8 @@
 require File.join(Rails.root,'spec','factories','factories.rb')
 Factory.define :admin_andy, :parent => :person do |p|
   p.login "admin_andy"
-  p.email "andy@andrew.cmu.edu"
+  p.email "admin.andy@sv.cmu.edu"
+  p.webiso_account "andy@andrew.cmu.edu"
   p.is_staff true
   p.is_admin true
   p.first_name "Admin"
@@ -12,7 +13,8 @@ end
 
 Factory.define :student_sam, :parent => :person do |p|
   p.login "student_sam"
-  p.email "sam@andrew.cmu.edu"
+  p.email "student.sam@sv.cmu.edu"
+  p.webiso_account "sam@andrew.cmu.edu"
   p.is_student true
   p.is_alumnus false
   p.first_name "Student"
@@ -23,7 +25,8 @@ end
 
 Factory.define :student_sally, :parent => :person do |p|
   p.login "student_sally"
-  p.email "sally@andrew.cmu.edu"
+  p.email "student.sally@sv.cmu.edu"
+  p.webiso_account "sally@andrew.cmu.edu"
   p.is_student true
   p.is_alumnus false
   p.first_name "Student"
@@ -34,7 +37,8 @@ end
 
 Factory.define :faculty_frank, :parent => :person do |p|
   p.login "faculty_frank"
-  p.email "frank@andrew.cmu.edu"
+  p.email "faculty.frank@sv.cmu.edu"
+  p.webiso_account "frank@andrew.cmu.edu"
   p.is_staff true
   p.is_teacher true
   p.first_name "Faculty"
@@ -45,7 +49,8 @@ end
 
 Factory.define :faculty_fagan, :parent => :person do |p|
   p.login "faculty_fagan"
-  p.email "fagan@andrew.cmu.edu"
+  p.email "faculty.fagan@sv.cmu.edu"
+  p.webiso_account "fagan@andrew.cmu.edu"
   p.is_staff true
   p.is_teacher true
   p.first_name "Faculty"
@@ -64,7 +69,8 @@ end
 
 Factory.define :team_member, :parent => :person do |p|
   p.login "team_member"
-  p.email "teammember@andrew.cmu.edu"
+  p.email "team.member@sv.cmu.edu"
+  p.webiso_account "teammember@andrew.cmu.edu"
   p.is_student true
   p.is_alumnus false
   p.first_name "Team"
