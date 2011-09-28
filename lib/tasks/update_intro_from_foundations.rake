@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'rake'
 require 'rails'
-#require 'authlogic/test_case'
 #
 ##potential fix for authlogic issues
 #module LoginHelper

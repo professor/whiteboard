@@ -35,8 +35,6 @@ gem 'acts_as_list'
 
 gem 'rmagick'
 
-#gem 'authlogic'
-
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
