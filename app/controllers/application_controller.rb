@@ -40,17 +40,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    #Authlogic stuff REMOVE
-    #def current_user_session
-    #  return @current_user_session if defined?(@current_user_session)
-    #  @current_user_session = UserSession.find
-    #end
-    #
-    #  def current_user
-    #    return @current_user if defined?(@current_user)
-    #    @current_user = current_user_session && current_user_session.user
-    #  end
-
       #Temporary method until we merge person and user
       def current_person
         if current_user
@@ -60,24 +49,16 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      def require_user
-        unless current_user
-          store_location
-          flash[:notice] = "You must be logged in to access this page"
-
-  #        redirect_to new_user_session_url
-          redirect_to login_google_url
-          return false
-        end
+      #Sets up the return to page when logging a user in
+      def authenticate_user!
+        session[:return_to] = request.fullpath
+        super
       end
 
-      def require_no_user
-        if current_user
-          store_location
-          flash[:notice] = "You must be logged out to access this page"
-          redirect_to account_url
-          return false
-        end
+      #Return to the page the user was trying to access after a login
+      def after_sign_in_path_for(resource)
+        stored_location_for(resource) || session[:return_to]
+        session[:return_to] = nil
       end
 
       def store_location
