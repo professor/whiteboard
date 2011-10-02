@@ -1,10 +1,10 @@
 class AddIsAlumniToUserFix < ActiveRecord::Migration
   def self.up
-    add_column :user_verions, :is_alumnus, :boolean
+    add_column :user_versions, :is_alumnus, :boolean
   end
 
   def self.down
-    remove_column :user_verions, :is_alumnus
+    remove_column :user_versions, :is_alumnus
 
   end
 end

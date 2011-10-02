@@ -1,7 +1,7 @@
 class AddAuthlogicToUserVersions < ActiveRecord::Migration
   def self.up
 
-    change_table :user_verions do |t|
+    change_table :user_versions do |t|
 
     t.string    :password_salt,       :null => false                # optional, but highly recommended
     t.string    :persistence_token,   :null => false                # required
