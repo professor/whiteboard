@@ -4,7 +4,7 @@ class CreateRssFeeds < ActiveRecord::Migration
       t.string :title
       t.string :link
       t.datetime :publication_date
-      t.string :description
+      t.text :description
 
       t.timestamps
     end

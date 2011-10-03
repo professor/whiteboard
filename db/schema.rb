@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -33,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
-    t.integer  "year"
     t.boolean  "configure_class_mailinglist",     :default => false
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"

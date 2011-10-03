@@ -2,6 +2,8 @@ class AddVersioningToUser < ActiveRecord::Migration
   def self.up
 #    Person.create_versioned_table # :table_name => 'user_verions'
 
+    add_column :users, :version, :string
+
     create_table "user_versions", :force => true do |t|
       t.integer  "person_id"
       t.integer  "version"
@@ -70,6 +72,9 @@ class AddVersioningToUser < ActiveRecord::Migration
 
   def self.down
 #    Person.drop_versioned_table
+
+    remove_column :users, :version
+
     drop_table :user_versions
   end
 end
