@@ -8,6 +8,9 @@ require 'bundler'
 #http://railsbros.de/2007/11/19/rake-code-cruise-code-task
 #http://abstractplain.net/blog/?p=1024
 #http://nullcreations.net/entries/general/enforcing-spec-coverage-with-cruisecontrol-rcov-and-rspec
+         
+desc "Task for Goldberg"
+task :goldberg ['db:migrate', 'spec'] 
 
 
 desc "Task for cruise Control"
