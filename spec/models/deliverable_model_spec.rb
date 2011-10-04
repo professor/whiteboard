@@ -84,6 +84,48 @@ describe Deliverable do
 
   end
 
+  context "for a team" do
+    before(:each) do
+      @deliverable = Factory.build(:team_deliverable)
+      @team_member = @deliverable.team.people[0]
+    end
+
+    it "is not editable by any random student" do
+      @deliverable.editable?(Factory(:student_sally)).should be_false
+    end
+
+    it "is editable by staff or admin" do
+      @deliverable.editable?(Factory(:faculty_frank)).should be_true
+     end
+
+    it "is editable by a team member" do
+      @deliverable.editable?(@team_member).should be_true
+    end
+  end
+
+  context "for an individual deliverable" do
+    before(:each) do
+      @deliverable = Factory.build(:individual_deliverable)
+      @individual = @deliverable.creator
+    end
+
+    it "is not editable by any random student" do
+      @deliverable.editable?(Factory(:student_sally)).should be_false
+    end
+
+    it "is editable by staff or admin" do
+      @deliverable.editable?(Factory(:faculty_frank)).should be_true
+     end
+
+    it "is editable by its owner" do
+      @deliverable.editable?(@individual).should be_true
+    end
+  end
+
+
+
+
+
 
 
 end
