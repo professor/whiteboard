@@ -10,6 +10,16 @@
   <% end %>
 <% end  %>
 
+<h2>Experimental features</h2>
+            <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
+<div>
+                    <label for="s" class="screen-reader-text">Search for:</label>
+    <input type="text" id="query" name="query" value="">
+    <input type="submit" value="Search" id="searchsubmit">
+    (Note: only searches through curriculum pages saved after Orientation 2011. This will move into the layout once done.)
+</div>
+            </form>
+
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
 <h2>Faculty views</h2>
 <p><a href="/teams">All teams</a></p>
