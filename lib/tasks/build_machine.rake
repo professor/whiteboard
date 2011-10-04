@@ -15,9 +15,9 @@ task :goldberg do
    puts "***** goldberg rake task started"
 
    puts "***** goldberg rake db:migrate"
-   'rake db:migrate'
+  `rake db:migrate`
    puts "***** goldberg rake spec"
-   'rake spec'                     
+  `rake spec`                     
    
    puts "***** goldberg rake task ended"   
 end   
