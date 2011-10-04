@@ -10,7 +10,10 @@ require 'bundler'
 #http://nullcreations.net/entries/general/enforcing-spec-coverage-with-cruisecontrol-rcov-and-rspec
          
 desc "Task for Goldberg"
-task :goldberg ['db:migrate', 'spec'] 
+task :goldberg do
+   'rake db:migrate'
+   'rake spec'
+end   
 
 
 desc "Task for cruise Control"
