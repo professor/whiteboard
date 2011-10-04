@@ -11,7 +11,6 @@ require 'bundler'
          
 desc "Task for Goldberg"
 task :goldberg do
-  RAILS_ENV = ENV['RAILS_ENV'] = 'test'
    puts "***** goldberg rake task started"
 
    puts "***** goldberg rake db:migrate"
