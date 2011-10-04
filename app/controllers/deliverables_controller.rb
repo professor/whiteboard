@@ -131,31 +131,32 @@ class DeliverablesController < ApplicationController
       redirect_to root_path and return
     end
 
-    if !params[:deliverable_attachment][:attachment]
-      flash[:error] = 'You must specify a file to upload'
-      respond_to do |format|
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
-      end
-      return
-    end
+    there_is_an_attachment = params[:deliverable_attachment][:attachment]
+    if there_is_an_attachment
 
-    @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
-    @attachment.submitter = current_person
-    @deliverable.attachment_versions << @attachment
-    @attachment.deliverable = @deliverable
+      @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+      @attachment.submitter = current_person
+      @deliverable.attachment_versions << @attachment
+      @attachment.deliverable = @deliverable
 
-    respond_to do |format|
-      if @attachment.valid? and @deliverable.valid? and @deliverable.save
+      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
         @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully updated.'
-        format.html { redirect_to(@deliverable) }
-        format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
+        redirect_to(@deliverable)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        render :action => "edit"
+      end
+    else
+      if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+        flash[:notice] = 'Deliverable was successfully updated.'
+        redirect_to(@deliverable)
+      else
+        render :action => "edit"
       end
     end
+
+
+
   end
 
   # DELETE /deliverables/1
