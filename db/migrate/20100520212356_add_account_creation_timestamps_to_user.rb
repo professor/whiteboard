@@ -5,10 +5,10 @@ class AddAccountCreationTimestampsToUser < ActiveRecord::Migration
     add_column :users, :adobe_created, :timestamp
     add_column :users, :msdnaa_created, :timestamp
 
-    add_column :user_verions, :google_created, :timestamp
-    add_column :user_verions, :twiki_created, :timestamp
-    add_column :user_verions, :adobe_created, :timestamp
-    add_column :user_verions, :msdnaa_created, :timestamp
+    add_column :user_versions, :google_created, :timestamp
+    add_column :user_versions, :twiki_created, :timestamp
+    add_column :user_versions, :adobe_created, :timestamp
+    add_column :user_versions, :msdnaa_created, :timestamp
   end
 
   def self.down
@@ -17,9 +17,9 @@ class AddAccountCreationTimestampsToUser < ActiveRecord::Migration
     remove_column :users, :adobe_created
     remove_column :users, :msdnaa_created
 
-    remove_column :user_verions, :google_created
-    remove_column :user_verions, :twiki_created
-    remove_column :user_verions, :adobe_created
-    remove_column :user_verions, :msdnaa_created
+    remove_column :user_versions, :google_created
+    remove_column :user_versions, :twiki_created
+    remove_column :user_versions, :adobe_created
+    remove_column :user_versions, :msdnaa_created
   end
 end

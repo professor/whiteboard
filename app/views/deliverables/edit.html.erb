@@ -1,6 +1,10 @@
 <% content_for :title, "Upload Deliverable" %>
 
-<h1>Upload New Deliverable Attachment</h1>
+<h1>Edit Deliverable or Upload a New Attachment</h1>
+
+<%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
+
+<!--
 
 <%= form_for @deliverable, :html => { :multipart => true } do |f| %>
     <%= fields_for :deliverable_attachment do |attachment_form| -%>
@@ -18,7 +22,9 @@
       <%= f.submit "Upload" %>
     </p>    
 <% end %>
+-->
 
 <%= link_to 'Cancel', deliverable_path(@deliverable) %>
+
 <br/>
 <br/>

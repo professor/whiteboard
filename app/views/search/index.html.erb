@@ -1,0 +1,25 @@
+ <% if @docs %>
+  <p id="result-count">Your search for "<%= params[:query] %>" returned <%= pluralize @docs['matches'], 'result' %></p>
+
+  <ul id="results">
+    <% @docs['results'].each do |doc| %>
+
+<%#
+      (junk, type, id) = doc['docid'].split("/")
+      @title = "Show"
+      case type
+        when 'posts'
+          post = Post.find(id)
+          @title = post.title
+        else
+          @title = "Show"
+        end
+%>
+      <li>
+        <%= link_to doc['title'], doc['docid'] %><br/>
+        <%= doc['snippet_text'].html_safe %>
+      </li>
+
+    <% end %>
+  </ul>
+<% end %>

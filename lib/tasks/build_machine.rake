@@ -9,6 +9,27 @@ require 'bundler'
 #http://abstractplain.net/blog/?p=1024
 #http://nullcreations.net/entries/general/enforcing-spec-coverage-with-cruisecontrol-rcov-and-rspec
 
+task :continuous_integration  => ['db:migrate', 'spec']
+
+task :copy_coverage_report do
+  FileUtils.cp_r('coverage', ENV['BUILD_ARTEFACTS'] || 'output', :verbose => true)
+end
+
+
+         
+desc "Task for Goldberg"
+task :goldberg do
+   puts "***** goldberg rake task started"
+
+   puts "***** goldberg rake db:migrate"
+  `rake db:migrate`
+   puts "***** goldberg rake spec"
+  `rake spec`                     
+   
+   puts "***** goldberg rake task ended"   
+end                     
+                    
+
 
 desc "Task for cruise Control"
 task :cruise do
