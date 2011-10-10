@@ -20,6 +20,7 @@ nbproject/*
 .idea/*
 MfSE/*
 lib/views/*
+coverage/*
 
 README_personal
 
