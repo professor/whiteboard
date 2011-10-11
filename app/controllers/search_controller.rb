@@ -1,8 +1,8 @@
 require 'open-uri'
 
 class SearchController < ApplicationController
-
   layout 'cmu_sv'
+  before_filter :authenticate_user!
 
   def self.index_tank
     @api  = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || 'http://your_api_url')

@@ -1,7 +1,7 @@
 class TaskTypesController < ApplicationController
   layout 'cmu_sv'
 
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   # GET /task_types
   # GET /task_types.xml

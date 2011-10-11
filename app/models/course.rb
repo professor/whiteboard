@@ -10,7 +10,6 @@ class Course < ActiveRecord::Base
   validates_presence_of :semester, :year, :mini, :name
 
   versioned
-  validates_presence_of :updated_by_user_id
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
   belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
@@ -25,7 +24,7 @@ class Course < ActiveRecord::Base
    result.gsub(" ", "")
   end
 
-  before_validation :set_updated_by_user
+  #before_validation :set_updated_by_user
   before_save :strip_whitespaces
 
 
@@ -178,11 +177,6 @@ class Course < ActiveRecord::Base
   end
 
   protected
-  def set_updated_by_user
-     current_user = UserSession.find.user unless UserSession.find.nil?
-     self.updated_by_user_id = current_user.id if current_user
-  end
-
   def strip_whitespaces
     @attributes.each do |attr,value|
       self[attr] = value.strip if value.is_a?(String)

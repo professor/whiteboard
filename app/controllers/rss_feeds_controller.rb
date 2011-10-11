@@ -1,5 +1,5 @@
 class RssFeedsController < ApplicationController
-  before_filter :require_user, :except => :index
+  before_filter :authenticate_user!, :except => :index
 
   # GET /rss_feeds
   # GET /rss_feeds.xml

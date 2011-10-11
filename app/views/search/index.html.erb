@@ -16,6 +16,7 @@
         end
 %>
       <li>
+        <%= link_to doc['title'], doc['url'] %><br/>
         <%= link_to doc['title'], doc['docid'] %><br/>
         <%= doc['snippet_text'].html_safe %>
       </li>

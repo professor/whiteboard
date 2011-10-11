@@ -10,7 +10,7 @@ describe PagesController do
   context "any user can" do
     before do
       Page.delete_all
-      login_user(Factory(:student_sam))
+      login(Factory(:student_sam))
       @page = Factory(:page)
     end
 
@@ -52,7 +52,7 @@ describe PagesController do
   context "as a student can" do
     before do
       Page.delete_all
-      login_user(Factory(:student_sam))
+      login(Factory(:student_sam))
       @page = Factory(:page, :title => "new title")
     end
 
@@ -71,7 +71,9 @@ describe PagesController do
       post :update, :page => @page.attributes, :id => @page.to_param
       response.should redirect_to(page_url)
       flash[:error].should == "You don't have permission to do this action."
-       end
+      end
+
+      it "will update updated_by_user_id"
     end
 
   end
@@ -79,7 +81,7 @@ describe PagesController do
   context "as a faculty member can" do
 
     before do
-      login_user(Factory(:faculty_frank))
+      login(Factory(:faculty_frank))
 
       @page = Factory(:page)
     end

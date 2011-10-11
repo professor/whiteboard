@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906021103) do
+ActiveRecord::Schema.define(:version => 20110919204537) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -372,8 +372,6 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.string   "webiso_account"
     t.string   "login",                                 :limit => 40
     t.string   "email",                                 :limit => 100
-    t.string   "crypted_password",                      :limit => 128
-    t.string   "salt",                                  :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_staff",                                             :default => false
@@ -421,16 +419,11 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.string   "password_salt"
-    t.string   "persistence_token"
-    t.string   "single_access_token"
-    t.integer  "login_count",                                          :default => 0,     :null => false
-    t.integer  "failed_login_count",                                   :default => 0,     :null => false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
+    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
@@ -441,13 +434,13 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.string   "github"
+    t.datetime "remember_created_at"
   end
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
     t.string   "login",                                 :limit => 40
     t.string   "email",                                 :limit => 100
-    t.string   "crypted_password",                      :limit => 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_staff",                                             :default => false
@@ -496,16 +489,11 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.string   "password_salt"
-    t.string   "persistence_token"
-    t.string   "single_access_token"
-    t.integer  "login_count",                                          :default => 0,     :null => false
-    t.integer  "failed_login_count",                                   :default => 0,     :null => false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
+    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
@@ -516,8 +504,10 @@ ActiveRecord::Schema.define(:version => 20110906021103) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.string   "github"
+    t.datetime "remember_created_at"
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["human_name"], :name => "index_users_on_human_name"
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
