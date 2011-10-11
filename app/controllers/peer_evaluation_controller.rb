@@ -365,7 +365,7 @@ class PeerEvaluationController < ApplicationController
             team.people.each do |person|
               to_address << person.email
             end
-              #send_email(team, faculty, to_address, team.peer_evaluation_message_one)
+            send_email(team, faculty, to_address, team.peer_evaluation_message_one)
             emails_sent += 1
           elsif second_date_p
             to_address_done = []
