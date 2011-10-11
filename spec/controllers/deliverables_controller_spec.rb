@@ -22,7 +22,7 @@ describe DeliverablesController do
       context "as the faculty owner of the course" do
 
         before do
-          login_user(@faculty_frank)
+          login(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -34,7 +34,7 @@ describe DeliverablesController do
       context "as an admin" do
 
         before do
-          login_user(@admin_andy)
+          login(@admin_andy)
         end
 
         it 'assigns @deliverables' do
@@ -45,7 +45,7 @@ describe DeliverablesController do
 
       context "as any other user" do
         before do
-          login_user(@faculty_fagan)
+          login(@faculty_fagan)
           get :index_for_course, :course_id => @course.id
         end
 
@@ -65,7 +65,7 @@ describe DeliverablesController do
 
       context "as the owner of the deliverable" do
         before do
-          login_user(@student_sam)
+          login(@student_sam)
         end
 
         it 'assigns deliverables' do
@@ -78,7 +78,7 @@ describe DeliverablesController do
       context "as an faculty" do
 
         before do
-          login_user(@faculty_frank)
+          login(@faculty_frank)
         end
 
         it 'assigns @deliverables' do
@@ -90,7 +90,7 @@ describe DeliverablesController do
 
       context "as any other student" do
         before do
-          login_user(@student_sally)
+          login(@student_sally)
           get :my_deliverables, :id => @student_sam.id
         end
 
@@ -112,30 +112,30 @@ describe DeliverablesController do
       context "for a team deliverable" do
 
         it 'the owner can see it' do
-          login_user(@student_sam)
-          @deliverable.stub(:editable?).and_return(true)
+          login(@student_sam)
+          @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "someone else on the team can see it" do
-          login_user(@student_sam)
-          @deliverable.stub(:editable?).and_return(true)
+          login(@student_sam)
+          @team.stub(:is_person_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "any faculty can see it" do
-          login_user(@faculty_frank)
-          @deliverable.stub(:editable?).and_return(false)
+          login(@faculty_frank)
+          @team.stub(:is_person_on_team?).and_return(false)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         context "no other student can see it" do
           before do
-            @deliverable.stub(:editable?).and_return(false)
-            login_user(@student_sally)
+            @team.stub(:is_person_on_team?).and_return(false)
+            login(@student_sally)
             get :show, :id => @deliverable.id
           end
 

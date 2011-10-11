@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
    layout 'cmu_sv'
   
-   before_filter :require_user
+   before_filter :authenticate_user!
 
   # GET /courses
   # GET /courses.xml
@@ -92,6 +92,7 @@ class CoursesController < ApplicationController
       @course.semester = params[:course][:semester]
 
       respond_to do |format|
+        @course.updated_by_user_id = current_user.id if current_user
         if @course.save
 
           flash[:notice] = 'Course was successfully created.'
@@ -124,6 +125,7 @@ class CoursesController < ApplicationController
       end
 
       respond_to do |format|
+        @course.updated_by_user_id = current_user.id if current_user
         if @course.update_attributes(params[:course])
           if(params[:course][:is_configured]) #The previous page was configure action
             CourseMailer.configure_course_admin_email(@course).deliver

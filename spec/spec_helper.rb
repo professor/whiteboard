@@ -1,12 +1,10 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
-#require 'spec/autorun' #from rails2, might not be needed
 require 'rspec/rails'
 
 #include Capybara::DSL
 
-require 'authlogic/test_case'
 require 'shoulda'
 require 'helpers'
 
@@ -15,14 +13,28 @@ require 'helpers'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("spec/factories/**/*.rb")].each {|f| require f}
 
+module ControllerMacros
+  def login person
+     @current_user = User.find(person.id)
+     sign_in @current_user
+  end
+end
+
+module IntegrationSpecHelper
+  def login_with_oauth(user, service = :google_apps)
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.add_mock(:google_apps, {
+       :user_info => {:email => user.email,
+          :name => user.human_name,
+          :first_name => user.first_name,
+          :last_name => user.last_name }
+      })
+    visit "/users/auth/#{service}"
+  end
+end
+
 RSpec.configure do |config|
   # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -37,87 +49,20 @@ RSpec.configure do |config|
     config.filter_run_excluding :skip_on_build_machine => true
   end
 
+#  config.include ControllerMacros, :type => :controller
+  config.include IntegrationSpecHelper, :type => :request
+
+  config.include Devise::TestHelpers, :type => :controller
+  config.include Devise::TestHelpers, :type => :view
 
 #  config.include Helpers
 end
 
-
-#potential fix for authlogic issues
-module LoginHelper
-   include Authlogic::TestCase
-
-   def login_user_fixture userSymbol
-     activate_authlogic
-#     UserSession.create(users(:student_sam))
-     UserSession.create(users(userSymbol))
-   end
-
-   def login_user person
-     activate_authlogic
-     @current_user = User.find(person.id)
-     UserSession.create(@current_user)
-
-     tmp = current_user
-     a = 1
-   end
+Capybara.default_host = 'http://rails.sv.cmu.edu'
 
 
-   def current_user(stubs = {})
-     #current user could get set when being login_user gets called, otherwise use a generic mock model
-     @current_user ||= mock_model("User", stubs)
-   end
+include ControllerMacros
 
-end
-include LoginHelper
-
-
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
-
-  def self.connection
-    @@shared_connection || retrieve_connection
-  end
-end
-
-# Forces all threads to share the same connection. This works on
-# Capybara because it starts the web server in a thread.
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
-
-#class ActionController::TestCase
-#  puts "********** Authlogic setup **************"
-#  setup :activate_authlogic
-#
-##  def login_as(user)
-##    if user.nil?
-##      return UserSession.stubs(:find).returns(nil)
-##    else
-##      return UserSession.stubs(:find).returns(UserSession.create(users(user)))
-##    end
-##  end
-#end
-
-#Helpers for authlogic and rspec
-
-#def current_user(stubs = {})
-#  @current_user ||= mock_model("User", stubs)
-#end
-
-# =============== OLD STUFF ===============
-# this stuff is from rails2 (old spec helper), might not be needed
-
-#Helpers for authlogic and rspec
-#
-
-#
-#def user_session(stubs = {}, user_stubs = {})
-#  @current_user ||= mock_model(UserSession, {:user => current_user(user_stubs)}.merge(stubs))
-#end
-#
-#def login(session_stubs = {}, user_stubs = {})
-#  UserSession.stub!(:find).and_return(user_session(session_stubs, user_stubs))
-#end
-#
-#def logout
-#  @user_session = nil
-#end
+## Forces all threads to share the same connection. This works on
+## Capybara because it starts the web server in a thread.
+#ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection

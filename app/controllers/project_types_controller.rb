@@ -1,6 +1,6 @@
 class ProjectTypesController < ApplicationController
   layout 'cmu_sv'
-  before_filter :require_user
+  before_filter :authenticate_user!
 
 
   # GET /project_types

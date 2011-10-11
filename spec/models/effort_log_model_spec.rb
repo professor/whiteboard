@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe EffortLog do
 
-  before(:all) do
-    activate_authlogic
-  end
-
   context 'log_effort_week?' do
     it 'should respond to log_effort_week?' do
       EffortLog.should respond_to :log_effort_week?
@@ -70,6 +66,7 @@ describe EffortLog do
       end
 
       it "for effort log owner" do
+
         @effort.editable_by(@effort.person).should be_true
       end
 

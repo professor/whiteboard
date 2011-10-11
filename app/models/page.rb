@@ -15,7 +15,7 @@ class Page < ActiveRecord::Base
     belongs_to :course
     acts_as_list :scope => :course
 
-    before_validation :update_user_and_url
+    before_validation :update_url
 
     after_save :update_search_index
     before_destroy :delete_from_search
@@ -81,9 +81,7 @@ class Page < ActiveRecord::Base
   end
 
   protected
-  def update_user_and_url
-      current_user = UserSession.find.user
-     self.updated_by_user_id = current_user.id if current_user
+  def update_url
      self.url = self.title if self.url.blank?
   end
 

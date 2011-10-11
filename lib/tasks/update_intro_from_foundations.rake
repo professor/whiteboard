@@ -1,31 +1,30 @@
 require 'rubygems'
 require 'rake'
 require 'rails'
-require 'authlogic/test_case'
-
-#potential fix for authlogic issues
-module LoginHelper
-   include Authlogic::TestCase
-
-   def login_user_fixture userSymbol
-     activate_authlogic
-#     UserSession.create(users(:student_sam))
-     UserSession.create(users(userSymbol))
-   end
-
-   def login_user person
-     activate_authlogic
-     @current_user = User.find(person.id)
-     UserSession.create(@current_user)
-   end
-
-   def current_user(stubs = {})
-     #current user could get set when being login_user gets called, otherwise use a generic mock model
-     @current_user ||= mock_model("User", stubs)
-   end
-
-end
-include LoginHelper
+#
+##potential fix for authlogic issues
+#module LoginHelper
+#   include Authlogic::TestCase
+#
+#   def login_user_fixture userSymbol
+#     activate_authlogic
+##     UserSession.create(users(:student_sam))
+#     UserSession.create(users(userSymbol))
+#   end
+#
+#   def login_user person
+#     activate_authlogic
+#     @current_user = User.find(person.id)
+#     UserSession.create(@current_user)
+#   end
+#
+#   def current_user(stubs = {})
+#     #current user could get set when being login_user gets called, otherwise use a generic mock model
+#     @current_user ||= mock_model("User", stubs)
+#   end
+#
+#end
+#include LoginHelper
 
   def update_intro_from_foundations(url)
     intro_course = Course.find_by_name("Introduction to Software Engineering")
