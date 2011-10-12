@@ -12,9 +12,8 @@
       <p><a href="/courses/<%=course.id%>/teams_photos">Teams</a></p>
       </td>
       <td valign="bottom">
-        <a href="<%=url_for :action=>"campus_semester", :id => params[:id], :week => nil, :only_path=>true%>">
-        <%= image_tag("/images/effort_report_campus_semester.png", :width => "100", :border=>"0", :alt=>"Campus Semester View") %></a><br/>
-
+        <%= link_to image_tag("/images/effort_report_campus_semester.png", :width => "100", :border=>"0", :alt=>"Campus Semester View"),
+                    :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%> <br/>
         <p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
 
       </td>
@@ -43,7 +42,7 @@
     <td>&nbsp;
     </td>
     <td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"), configure_course_path(course) %><br/>
+      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"),  peer_evaluations_path(course) %><br/>
       <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
     </td>
     <td>&nbsp;

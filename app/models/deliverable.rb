@@ -129,6 +129,26 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
+  def editable?(current_user)
+    person = Person.find(current_user.id)
+    if self.is_team_deliverable?
+      unless self.team.is_person_on_team?(person)
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          return false
+        end
+      end
+    end
+    if !self.is_team_deliverable?
+      unless person == self.creator
+        unless (current_user.is_staff?)||(current_user.is_admin?)
+          return false
+        end
+      end
+    end
+    return true
+  end
+
+
   protected
   def update_team
     # Look up the team this person is on if it is a team deliverable
@@ -138,5 +158,7 @@ class Deliverable < ActiveRecord::Base
   def sanitize_data
     self.name = self.name.titleize unless self.name.blank?
   end
+
+
 
 end

@@ -10,6 +10,8 @@
   <% else %>
     Individual Deliverable for <%= @deliverable.creator.human_name -%>
   <% end %>
+ (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
+    
 </p>
 
 

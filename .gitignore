@@ -16,6 +16,7 @@ config/systems.cc.yml.yml
 config/adobe_cnnect.yml
 config/systems.yml
 
+coverage/*
 nbproject/*
 .idea/*
 MfSE/*
@@ -25,8 +26,8 @@ coverage/*
 README_personal
 
 #sensitive student info
-db/migrate/2008*
-db/migrate/2009*
+#db/migrate/2008*
+#db/migrate/2009*
 public/images/staff/*
 public/images/students/*
 

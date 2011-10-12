@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919204537) do
+ActiveRecord::Schema.define(:version => 20111012001924) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -419,7 +419,7 @@ ActiveRecord::Schema.define(:version => 20110919204537) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -435,6 +435,7 @@ ActiveRecord::Schema.define(:version => 20110919204537) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                                        :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -489,7 +490,7 @@ ActiveRecord::Schema.define(:version => 20110919204537) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -505,6 +506,7 @@ ActiveRecord::Schema.define(:version => 20110919204537) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                                        :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

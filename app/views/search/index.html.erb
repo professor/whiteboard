@@ -1,0 +1,43 @@
+ <% if @docs %>
+  <p id="result-count">Your search for "<%= params[:query] %>" returned <%= pluralize @docs['matches'], 'result' %></p>
+
+  <ul id="results">
+    <% @docs['results'].each do |doc| %>
+
+<%#
+      (junk, type, id) = doc['docid'].split("/")
+      @title = "Show"
+      case type
+        when 'posts'
+          post = Post.find(id)
+          @title = post.title
+        else
+          @title = "Show"
+        end
+%>
+      <li>
+        <%= link_to doc['title'], doc['url'] %>
+        <% if doc['course'] %>
+            <%= doc['course'] %>
+            <% end %>
+        <br/>
+        <%= doc['snippet_text'].html_safe %>
+      </li>
+
+    <% end %>
+  </ul>
+<% end %>
+
+
+ <br/>
+ <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
+ <div><p>
+         <label for="s" class="screen-reader-text">Search for:</label>
+ <input type="text" id="query" name="query" value="<%= params[:query] %>">
+ <input type="submit" value="Search" id="searchsubmit">
+ </p>
+ </div>
+ </form>
+
+
+ <br/><br/>

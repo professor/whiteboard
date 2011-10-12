@@ -1,12 +1,12 @@
 class AddAuthlogicToUserVersions < ActiveRecord::Migration
   def self.up
 
-    change_table :user_verions do |t|
+    change_table :user_versions do |t|
 
-    t.string    :password_salt,       :null => false                # optional, but highly recommended
-    t.string    :persistence_token,   :null => false                # required
-    t.string    :single_access_token, :null => false                # optional, see Authlogic::Session::Params
-    t.string    :perishable_token,    :null => false                # optional, see Authlogic::Session::Perishability
+    t.string    :password_salt,       :null => false, :default => 0 # optional, but highly recommended
+    t.string    :persistence_token,   :null => false, :default => 0 # required
+    t.string    :single_access_token, :null => false, :default => 0 # optional, see Authlogic::Session::Params
+    t.string    :perishable_token,    :null => false, :default => 0 # optional, see Authlogic::Session::Perishability
 
     # Magic columns, just like ActiveRecord's created_at and updated_at. These are automatically maintained by Authlogic if they are present.
     t.integer   :login_count,         :null => false, :default => 0 # optional, see Authlogic::Session::MagicColumns

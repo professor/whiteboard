@@ -38,23 +38,23 @@ Factory.create(:strategic)
 Factory.create(:woo)
 
 Factory.define :todd, :parent => :person  do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.first_name "Todd"
   p.last_name "Sedano"
   p.human_name "Todd Sedano"
   p.email "todd.sedano@sv.cmu.edu"
   p.is_staff 1
+  p.is_teacher 1
 end
 
 sleep(0.02)
 
 Factory.define :ed, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
   p.first_name "Ed"
   p.last_name "Katz"
   p.human_name "Ed Katz"
   p.email "ed.katz@sv.cmu.edu"
   p.is_staff 1
+  p.is_teacher 1
 end
 
 sleep(0.02)
@@ -110,13 +110,13 @@ end
 
 sleep(0.02)
 
-Factory.define :architecture, :class => Course do |c|
- c.name "Architecture"
- c.number "96-705"
- c.semester "Summer"
- c.mini "Both"
- c.year "2008"
-end
+#Factory.define :architecture, :class => Course do |c|
+# c.name "Architecture"
+# c.number "96-705"
+# c.semester "Summer"
+# c.mini "Both"
+# c.year "2008"
+#end
 
 sleep(0.02)
 
@@ -125,9 +125,12 @@ Factory.define :team_terrific, :class => Team do |t|
   t.email "terrific@sv.cmu.edu"
   t.tigris_space "http://terrific.tigris.org/servlets/ProjectDocumentList"
   t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-  t.person_name "Awe Smith"
-  t.person_name2 "Betty Ross"
-  t.person_name3 "Charlie Moss"
+  t.association :course, :factory => :mfse_current_semester
+  t.after_create {|team| Factory(:awe_smith, :teams => [team])
+                         Factory(:betty_ross, :teams => [team])
+                         Factory(:charlie_moss, :teams => [team])
+                         }
+
 end
 
 Factory.define :your_name_here, :parent => :person do |p|
@@ -145,22 +148,16 @@ Factory.define :your_name_here, :parent => :person do |p|
 end
 
 
-Factory(:task_type)
-Factory(:task_type, :name => "task 2")
-Factory(:task_type, :name => "task 3")
-Factory(:task_type, :name => "task 4")
+Factory(:task_type, :name => "Working on deliverables")
+Factory(:task_type, :name => "Readings")
+Factory(:task_type, :name => "Meetings")
+Factory(:task_type, :name => "Other")
 
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-awe = Factory.create(:awe_smith)
-Factory.create(:betty_ross)
-Factory.create(:charlie_moss)
 Factory.create(:your_name_here)
-
-architecture = Factory.create(:mfse_current_semester)
-Factory.create(:team_terrific, :primary_faculty_id => todd.id, :course_id=> architecture, :person_name3 => awe.human_name)
-
+Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
 

@@ -42,23 +42,9 @@ class DeliverablesController < ApplicationController
   def show
     @deliverable = Deliverable.find(params[:id])
 
-    if @deliverable.is_team_deliverable?
-      unless @deliverable.team.is_person_on_team?(current_person)
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
-    end
-    if !@deliverable.is_team_deliverable?
-      unless current_person == @deliverable.creator
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
+    unless @deliverable.editable?(current_user)
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
     end
 
     respond_to do |format|
@@ -90,23 +76,9 @@ class DeliverablesController < ApplicationController
   def edit
     @deliverable = Deliverable.find(params[:id])
 
-    if @deliverable.is_team_deliverable?
-      unless @deliverable.team.is_person_on_team?(current_person)
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
-    end
-    if !@deliverable.is_team_deliverable?
-      unless current_person == @deliverable.creator
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
+    unless @deliverable.editable?(current_user)
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
     end
   end
 
@@ -154,60 +126,47 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable = Deliverable.find(params[:id])
 
-    if @deliverable.is_team_deliverable?
-      unless @deliverable.team.is_person_on_team?(current_person)
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
-    end
-    if !@deliverable.is_team_deliverable?
-      unless current_person == @deliverable.creator
-        unless (current_user.is_staff?)||(current_user.is_admin?)
-          flash[:error] = I18n.t(:not_your_deliverable)
-          redirect_to root_path
-          return
-        end
-      end
+    unless @deliverable.editable?(current_user)
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
     end
 
-    if !params[:deliverable_attachment][:attachment]
-      flash[:error] = 'You must specify a file to upload'
-      respond_to do |format|
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
-      end
-      return
-    end
+    there_is_an_attachment = params[:deliverable_attachment][:attachment]
+    if there_is_an_attachment
 
-    @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
-    @attachment.submitter = current_person
-    @deliverable.attachment_versions << @attachment
-    @attachment.deliverable = @deliverable
+      @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+      @attachment.submitter = current_person
+      @deliverable.attachment_versions << @attachment
+      @attachment.deliverable = @deliverable
 
-    respond_to do |format|
-      if @attachment.valid? and @deliverable.valid? and @deliverable.save
+      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
         @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully updated.'
-        format.html { redirect_to(@deliverable) }
-        format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
+        redirect_to(@deliverable)
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        render :action => "edit"
+      end
+    else
+      if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+        flash[:notice] = 'Deliverable was successfully updated.'
+        redirect_to(@deliverable)
+      else
+        render :action => "edit"
       end
     end
+
+
+
   end
 
   # DELETE /deliverables/1
   # DELETE /deliverables/1.xml
   def destroy
     @deliverable = Deliverable.find(params[:id])
-    unless @deliverable.team.is_person_on_team?(current_person)
-      flash[:error] = "You don't have permission to delete another team's deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
+
+    unless @deliverable.editable?(current_user)
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
     end
     @deliverable.destroy
 
