@@ -16,11 +16,28 @@
         end
 %>
       <li>
-        <%= link_to doc['title'], doc['url'] %><br/>
-        <%= link_to doc['title'], doc['docid'] %><br/>
+        <%= link_to doc['title'], doc['url'] %>
+        <% if doc['course'] %>
+            <%= doc['course'] %>
+            <% end %>
+        <br/>
         <%= doc['snippet_text'].html_safe %>
       </li>
 
     <% end %>
   </ul>
 <% end %>
+
+
+ <br/>
+ <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
+ <div><p>
+         <label for="s" class="screen-reader-text">Search for:</label>
+ <input type="text" id="query" name="query" value="<%= params[:query] %>">
+ <input type="submit" value="Search" id="searchsubmit">
+ </p>
+ </div>
+ </form>
+
+
+ <br/><br/>
