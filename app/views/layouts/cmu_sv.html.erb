@@ -43,7 +43,7 @@
 <% if current_user %>
 <div class="Lv1Nav"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class=>"Lv1NavLink" %></div>
 <div class="Lv1Nav"><%= link_to "My Teams", my_teams_path(current_user.id), :class=>"Lv1NavLink" %></div>
-<div class="Lv1Nav"><%= link_to "Logout " + current_user.first_name, logout_path, :class=>"Lv1NavLink" %></div>
+<div class="Lv1Nav"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class=>"Lv1NavLink" %></div>
 <% else %>
 <div class="Lv1Nav"><font color="#626262">My Deliverables (Login required)</font></div>
 <div class="Lv1Nav"><font color="#626262">My Teams (Login required)</font></div>

@@ -1,14 +1,7 @@
-#Consider looking at this reference
-# It's cumcumber based though: http://laserlemon.com/blog/2011/05/20/make-authlogic-and-cucumber-play-nice/
-
-
 require 'spec_helper'
 
 describe 'A user visiting the site', :type => :request do
 
-  #Make sure your factory generates a valid user for your authentication system 
-  let(:user) { Factory(:student_sam) }
-  
   context 'when not logged in' do
     it 'welcomes the user' do
       visit root_path
@@ -18,7 +11,7 @@ describe 'A user visiting the site', :type => :request do
   
   context 'when logged in' do
      before do
-       login_with_oauth
+       login_with_oauth Factory(:student_sam)
      end
 
      it 'only shows content to a logged in user' do
@@ -26,7 +19,19 @@ describe 'A user visiting the site', :type => :request do
        page.should have_content('Phone book')
      end
   end
-  
+
+  context 'when logged in' do
+     before do
+       login_with_oauth Factory(:admin_andy)
+#       login_with_oauth Factory(:faculty_frank)
+     end
+
+     it 'only shows content to a logged in user' do
+       visit sponsored_projects_path
+       page.should have_content('Sponsored Projects')
+     end
+  end
+
   #Browse to the homepage and click the Sign In link 
   # before do 
   #   visit root_path 
