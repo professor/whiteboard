@@ -4,8 +4,9 @@ describe "effort logs" do
 
   before do
    visit('/')
-   @effort_log = Factory(:effort_log)
-   @user = @effort_log.person
+#   @effort_log = Factory(:effort_log)
+#   @user = @effort_log.person
+   @user = Factory(:student_sam)
    login_with_oauth @user
    click_link "Effort Logs"
   end
@@ -27,24 +28,24 @@ describe "effort logs" do
     end
   end
 
-  context "new effort log" do
-
-    it "renders new effort log page" do
-      if has_link?("New effort log")
-         click_link "New effort log"
-         page.should have_content("New Effort Log")
-         page.should have_button("Create")
-         page.should have_link("Back")
-      end
-    end
-    it "creates the effort log" do
-      if has_link?("New effort log")
-         click_link "New effort log"
-        click_button "Create"
-        page.should have_content("EffortLog was successfully created.")
-      end
-    end
-  end
+  #context "new effort log" do
+  #
+  #  it "renders new effort log page" do
+  #    if has_link?("New effort log")
+  #       click_link "New effort log"
+  #       page.should have_content("New Effort Log")
+  #       page.should have_button("Create")
+  #       page.should have_link("Back")
+  #    end
+  #  end
+  #  it "creates the effort log" do
+  #    if has_link?("New effort log")
+  #       click_link "New effort log"
+  #      click_button "Create"
+  #      page.should have_content("EffortLog was successfully created.")
+  #    end
+  #  end
+  #end
 
 
 
