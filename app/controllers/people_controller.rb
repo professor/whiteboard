@@ -87,9 +87,7 @@ class PeopleController < ApplicationController
       @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/mascot.jpg"
       @person.local_near_remote = "Unknown"
-#      @person.save
-      @person.save_without_session_maintenance
-
+      @person.save
 
       options = {:to => "help@sv.cmu.edu", :cc => "todd.sedano@sv.cmu.edu",
                  :subject => "rails user account automatically created for #{twiki_name}",
@@ -186,8 +184,7 @@ class PeopleController < ApplicationController
 #        error_message +=  'TWiki account password was not reset.</br>' unless status
 #      end
 
-#      if @person.save
-      if @person.save_without_session_maintenance
+      if @person.save
          create_google_email =  params[:create_google_email]
          create_twiki_account = params[:create_twiki_account]
          create_yammer_account = false #params[:create_yammer_account]
