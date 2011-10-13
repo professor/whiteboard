@@ -16,6 +16,8 @@ return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g")
 return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g");
     }
 
+//TWiki - user names MJLee can be MjLee
+ 
  function update_twiki_and_email() {
    document.forms["new_person"].person_twiki_name.value=capitalise(remove_hyphens(document.forms["new_person"].person_first_name.value))+capitalise(remove_hyphens(document.forms["new_person"].person_last_name.value));
 

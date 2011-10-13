@@ -5,13 +5,13 @@ class SponsoredProjectAllocationsController < ApplicationController
   before_filter :require_user
 
   def index
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocations = SponsoredProjectAllocation.current
     end
   end
 
   def new
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocation = SponsoredProjectAllocation.new
       @people = Person.staff
       @projects = SponsoredProject.current
@@ -19,7 +19,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   end
 
   def edit
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocation = SponsoredProjectAllocation.find(params[:id])
       @people = Person.staff
       @projects = SponsoredProject.current
@@ -27,7 +27,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   end
 
   def create
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocation = SponsoredProjectAllocation.new(params[:sponsored_project_allocation])
       @people = Person.staff
       @projects = SponsoredProject.current
@@ -42,7 +42,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   end
 
   def update
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocation = SponsoredProjectAllocation.find(params[:id])
       @people = Person.staff
       @projects = SponsoredProject.current
@@ -57,7 +57,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   end
 
   def archive
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @allocation = SponsoredProjectAllocation.find(params[:id])
       if @allocation.update_attributes({:is_archived => true})
         flash[:notice] = 'Allocation was successfully archived.'
@@ -69,15 +69,4 @@ class SponsoredProjectAllocationsController < ApplicationController
     end
   end
 
-
-  protected
-  def has_permissions_or_redirect
-      unless current_user.permission_level_of(:admin)
-        flash[:error] = t(:no_permission)
-        redirect_to(root_path)
-        return false
-      end
-    return true
-  end  
-  
 end

@@ -72,6 +72,8 @@ class PeopleController < ApplicationController
       return
     end
 
+    @machine_name = "http://rails.sv.cmu.edu"
+
     twiki_name = params[:twiki_name]
     @person = Person.find_by_twiki_name(twiki_name)
 

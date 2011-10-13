@@ -5,20 +5,20 @@ class SponsoredProjectSponsorsController < ApplicationController
   before_filter :require_user
 
   def new
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       store_previous_location
       @sponsor = SponsoredProjectSponsor.new
     end
   end
 
   def edit
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.find(params[:id])
     end
   end
 
   def create
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.new(params[:sponsored_project_sponsor])
 
       if @sponsor.save
@@ -31,7 +31,7 @@ class SponsoredProjectSponsorsController < ApplicationController
   end
 
   def update
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.find(params[:id])
 
       if @sponsor.update_attributes(params[:sponsored_project_sponsor])
@@ -44,7 +44,7 @@ class SponsoredProjectSponsorsController < ApplicationController
   end
   
   def archive
-    if has_permissions_or_redirect
+    if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.find(params[:id])
       if @sponsor.update_attributes({:is_archived => true})
         flash[:notice] = 'Sponsor was successfully archived.'
@@ -56,13 +56,4 @@ class SponsoredProjectSponsorsController < ApplicationController
     end
   end
 
-  protected
-  def has_permissions_or_redirect
-      unless current_user.permission_level_of(:admin)
-        flash[:error] = t(:no_permission)
-        redirect_to(root_path)
-        return false
-      end
-    return true
-  end
 end

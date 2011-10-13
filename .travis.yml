@@ -1,0 +1,3 @@
+rvm: 1.9.2
+
+before_script: cp config/morning_glory.default.yml config/morning_glory.yml

@@ -10,17 +10,6 @@
       </ul>
     </div>
   <% end %> 
-  <% if @course.configure_teams_name_themselves? %>
-  <div class="rounded student">
-  <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
-  <span class="instructions">These fields can be edited by anyone.</span>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name, :size => 40 %>
-  </p>
-  </div>
-  <% end %>
-
   <div class="rounded staff">
 <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
   <span class="instructions">These fields can be edited by faculty.</span>
@@ -28,13 +17,10 @@
   <%= render :partial => 'show_faculty_fields' %>
   <% else %>
 
-
-    <% unless @course.configure_teams_name_themselves? %>
-          <p>
-            <%= f.label :name %><br />
-            <%= f.text_field :name, :size => 40 %>
-          </p>
-    <% end %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, :size => 40 %>
+  </p>
 
 
   <p>
