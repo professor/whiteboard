@@ -9,7 +9,7 @@ describe DelayedSystemJobsController do
 
   context "any user can" do
     before do
-      login_user(Factory(:student_sam))
+      login(Factory(:student_sam))
     end
 
     describe "GET index" do
@@ -33,7 +33,7 @@ describe DelayedSystemJobsController do
 
   context "any admin can" do
     before do
-      login_user(Factory(:admin_andy))
+      login(Factory(:admin_andy))
     end
 
     describe "GET index" do

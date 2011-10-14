@@ -6,8 +6,7 @@ describe CourseNumbersController do
 
   context "any user can" do
     before do
-      login_user(Factory(:student_sam))
-      #login_user(:student_sam)
+      login Factory(:student_sam)
     end
 
     describe "GET index" do

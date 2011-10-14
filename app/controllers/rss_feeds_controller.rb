@@ -1,14 +1,14 @@
 class RssFeedsController < ApplicationController
-  before_filter :require_user, :except => :index
+  before_filter :authenticate_user!, :except => :index
 
   # GET /rss_feeds
   # GET /rss_feeds.xml
   def index
     @rss_feeds = RssFeed.all
-puts "hello world"
+    puts "hello world"
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @rss_feeds }
+      format.xml { render :xml => @rss_feeds }
     end
   end
 
@@ -19,7 +19,7 @@ puts "hello world"
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @rss_feed }
+      format.xml { render :xml => @rss_feed }
     end
   end
 
@@ -30,7 +30,7 @@ puts "hello world"
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @rss_feed }
+      format.xml { render :xml => @rss_feed }
     end
   end
 
@@ -48,10 +48,10 @@ puts "hello world"
       if @rss_feed.save
         flash[:notice] = 'RssFeed was successfully created.'
         format.html { redirect_to(@rss_feed) }
-        format.xml  { render :xml => @rss_feed, :status => :created, :location => @rss_feed }
+        format.xml { render :xml => @rss_feed, :status => :created, :location => @rss_feed }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @rss_feed.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @rss_feed.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -65,10 +65,10 @@ puts "hello world"
       if @rss_feed.update_attributes(params[:rss_feed])
         flash[:notice] = 'RssFeed was successfully updated.'
         format.html { redirect_to(@rss_feed) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @rss_feed.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @rss_feed.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -81,7 +81,7 @@ puts "hello world"
 
     respond_to do |format|
       format.html { redirect_to(rss_feeds_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 end

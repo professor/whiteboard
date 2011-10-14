@@ -2,7 +2,7 @@ class SponsoredProjectSponsorsController < ApplicationController
 
   layout 'cmu_sv'
 
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   def new
     if has_permissions_or_redirect(:admin, root_path)
@@ -42,7 +42,7 @@ class SponsoredProjectSponsorsController < ApplicationController
       end
     end
   end
-  
+
   def archive
     if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.find(params[:id])

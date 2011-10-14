@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "people/show.html.erb" do
   before(:each) do
     person = Factory(:student_sam)
-    login_user(person)
+    login(person)
     assign(:person, person)
   end
 

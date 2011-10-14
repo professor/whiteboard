@@ -5,11 +5,10 @@ class AcademicCalendar
 #
 
 
-
-  # Looking at the calendar, we want current_semester to have these characteristics
-  # Spring starts roughly around Christmas and ends 1 week after last day of semester
-  # Summer starts 1 week before and end 1 week after semester
-  # Fall starts 1 week before and goes to roughly around Christmas
+# Looking at the calendar, we want current_semester to have these characteristics
+# Spring starts roughly around Christmas and ends 1 week after last day of semester
+# Summer starts 1 week before and end 1 week after semester
+# Fall starts 1 week before and goes to roughly around Christmas
   def self.current_semester
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
@@ -26,15 +25,22 @@ class AcademicCalendar
     fall_a = AcademicCalendar.semester_start("Fall", cwyear)
 
     case cweek
-      when (spring_a)..(spring_a + 6) then "A"
-      when (spring_a + 9)..(spring_a + 15) then "B"
+      when (spring_a)..(spring_a + 6) then
+        "A"
+      when (spring_a + 9)..(spring_a + 15) then
+        "B"
 
-      when (summer_a)..(summer_a + 5) then "A"
-      when (summer_a + 6)..(summer_a + 11) then "B"
+      when (summer_a)..(summer_a + 5) then
+        "A"
+      when (summer_a + 6)..(summer_a + 11) then
+        "B"
 
-      when (fall_a)..(fall_a + 6) then "A"
-      when (fall_a + 7)..(fall_a + 13) then "B"
-      else "Unknown"
+      when (fall_a)..(fall_a + 6) then
+        "A"
+      when (fall_a + 7)..(fall_a + 13) then
+        "B"
+      else
+        "Unknown"
     end
   end
 
@@ -51,10 +57,10 @@ class AcademicCalendar
 
   def self.next_semester_year
     case AcademicCalendar.next_semester
-     when "Spring"
-      return Date.today.year + 1
-    else
-      return Date.today.year
+      when "Spring"
+        return Date.today.year + 1
+      else
+        return Date.today.year
     end
   end
 
@@ -73,11 +79,11 @@ class AcademicCalendar
 
   def self.week_during_semester?(year, week_number)
     case week_number
-      when self.semester_start("Spring", year )..(self.semester_start("Spring", year )+15)
+      when self.semester_start("Spring", year)..(self.semester_start("Spring", year)+15)
         return true
-      when self.semester_start("Summer", year )..(self.semester_start("Summer", year )+11)
+      when self.semester_start("Summer", year)..(self.semester_start("Summer", year)+11)
         return true
-      when self.semester_start("Fall", year )..(self.semester_start("Fall", year )+15)
+      when self.semester_start("Fall", year)..(self.semester_start("Fall", year)+15)
         return true
       else
         return false
@@ -160,7 +166,7 @@ class AcademicCalendar
         }
         GenericMailer.email(options).deliver
     end
-    
+
   end
 
 

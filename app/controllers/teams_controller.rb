@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_filter :require_user, :except => [:index, :twiki_index, :twiki_new]
+  before_filter :authenticate_user!, :except => [:index, :twiki_index, :twiki_new]
   require 'csv'
 
   layout 'cmu_sv'
@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false} } # index.html.erb
-      format.xml  { render :xml => @teams }
+      format.xml { render :xml => @teams }
     end
   end
 
@@ -40,7 +40,7 @@ class TeamsController < ApplicationController
     # http://info.sv.cmu.edu/twiki/bin/view/Fall2009/Foundations/WebHome
     url = get_twiki_http_referer()
     @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
-    if(@course.nil?)
+    if (@course.nil?)
       parts = url.split('/')
       @course = Course.new()
       @course.twiki_url = url
@@ -55,19 +55,19 @@ class TeamsController < ApplicationController
     redirect_to url
   end
 
-   # generate the team table for a course on a page hosted on the twiki server
-   def twiki_index
+  # generate the team table for a course on a page hosted on the twiki server
+  def twiki_index
     @show_teams_for_many_courses = false
     @machine_name = "http://rails.sv.cmu.edu"
 
-     url = get_twiki_http_referer()
+    url = get_twiki_http_referer()
     @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
 
     @show_create_course = false
-    if(@course.nil?)
+    if (@course.nil?)
       @show_create_course = true
-       render :partial => "twiki_index", :layout => false, :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false}
-       return
+      render :partial => "twiki_index", :layout => false, :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false}
+      return
     end
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", @course.id]) unless @course.nil?
 
@@ -86,7 +86,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       format.html { render :html => @teams, :layout => "simple" } # index.html.erb
-      format.xml  { render :xml => @teams }
+      format.xml { render :xml => @teams }
     end
   end
 
@@ -102,25 +102,25 @@ class TeamsController < ApplicationController
     end
   end
 
-   def export_to_csv
-     if has_permissions_or_redirect(:staff, root_path)
+  def export_to_csv
+    if has_permissions_or_redirect(:staff, root_path)
 
       @course = Course.find(params[:course_id])
       @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
 
       report = CSV.generate do |title|
-        title << ['Team Name','Team Member','Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
-          @teams.each do |team|
-            team.people.each do |person|
-              part_time = person.is_part_time ? "PT" : "FT"
-              title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
-            end
+        title << ['Team Name', 'Team Member', 'Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
+        @teams.each do |team|
+          team.people.each do |person|
+            part_time = person.is_part_time ? "PT" : "FT"
+            title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
           end
         end
-      send_data(report,:type=>'text/csv;charset=iso-8859-1;',:filename=>"past_teams_for_#{@course.display_course_name}.csv",
-      :disposition =>'attachment', :encoding => 'utf8')
-     end
-  end  
+      end
+      send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
+                :disposition =>'attachment', :encoding => 'utf8')
+    end
+  end
 
 
   # GET /teams
@@ -133,11 +133,11 @@ class TeamsController < ApplicationController
 
     #If possible, we would prefer to do an order by in sql to sort latest semester alphabetical by course name.
     @teams = Team.find(:all, :order => "course_id DESC")
-#    @teams = @teams.sort_by {|team| team.course.year + team.course.semester + team.course.name }.reverse
+    #    @teams = @teams.sort_by {|team| team.course.year + team.course.semester + team.course.name }.reverse
 
     respond_to do |format|
       format.html { render :partial => "twiki_index", :locals => {:teams => @teams, :show_new_teams_link => false, :show_photo_view_link => false, :show_student_photos => false, :show_course => false} } # index.html.erb
-      format.xml  { render :xml => @teams }
+      format.xml { render :xml => @teams }
     end
   end
 
@@ -150,7 +150,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @team }
+      format.xml { render :xml => @team }
     end
   end
 
@@ -168,7 +168,7 @@ class TeamsController < ApplicationController
 
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render :xml => @team }
+        format.xml { render :xml => @team }
       end
     end
   end
@@ -177,7 +177,7 @@ class TeamsController < ApplicationController
   def edit
     @team = Team.find(params[:id])
     @course = Course.find(params[:course_id])
-    if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
+    if has_permissions_or_redirect(:staff, course_team_path(@course, @team))
       @team.course_id = params[:course_id]
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     end
@@ -206,11 +206,11 @@ class TeamsController < ApplicationController
         if @team.save
           flash[:notice] = 'Team was successfully created.'
           format.html { redirect_to(course_teams_path(@team.course_id)) }
-          format.xml  { render :xml => @team, :status => :created, :location => @team }
+          format.xml { render :xml => @team, :status => :created, :location => @team }
         else
           @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
           format.html { render :action => "new" }
-          format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @team.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -221,7 +221,7 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     @course = @team.course
-    if has_permissions_or_redirect(:staff,  course_team_path(@course, @team))
+    if has_permissions_or_redirect(:staff, course_team_path(@course, @team))
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
       msg = @team.update_members(params[:people])
@@ -231,7 +231,7 @@ class TeamsController < ApplicationController
         return
       end
 
-  #    handle_teams_people
+      #    handle_teams_people
 
       update_course_faculty_label
 
@@ -239,11 +239,11 @@ class TeamsController < ApplicationController
         if @team.update_attributes(params[:team])
           flash[:notice] = 'Team was successfully updated.'
           format.html { redirect_to(course_teams_path(@team.course)) }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         else
           @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
           format.html { render :action => "edit" }
-          format.xml  { render :xml => @team.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @team.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -263,7 +263,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(course_teams_path(course)) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 
@@ -276,23 +276,23 @@ class TeamsController < ApplicationController
     @first_names = []
     @full_names = []
     @ids = []
-    @team.people.each do | person|
+    @team.people.each do |person|
       @emails << person.email
       @first_names << person.first_name
       @full_names << person.human_name
       @ids << person.id
     end
 
-    if(@team.peer_evaluation_first_email.nil?)
+    if (@team.peer_evaluation_first_email.nil?)
       @team.peer_evaluation_first_email = Date.today()
     end
-    if(@team.peer_evaluation_second_email.nil?)
-        @team.peer_evaluation_second_email = Date.today()
+    if (@team.peer_evaluation_second_email.nil?)
+      @team.peer_evaluation_second_email = Date.today()
     end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @team }
+      format.xml { render :xml => @team }
     end
   end
 
@@ -300,7 +300,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
 
     @team.peer_evaluation_first_email = params[:team][:peer_evaluation_first_email]
-    @team.peer_evaluation_second_email =  params[:team][:peer_evaluation_second_email]
+    @team.peer_evaluation_second_email = params[:team][:peer_evaluation_second_email]
 
     if @team.save
       flash[:notice] = 'Dates saved'
@@ -309,10 +309,6 @@ class TeamsController < ApplicationController
     end
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
-
-
-
-
 
 
 #  private
@@ -333,7 +329,7 @@ class TeamsController < ApplicationController
   def update_course_faculty_label
     @course = Course.find(params[:course_id])
     if @course.primary_faculty_label != params[:primary_faculty_label] || @course.secondary_faculty_label != params[:seconday_faculty_label] then
-      @course.primary_faculty_label   = params[:primary_faculty_label]
+      @course.primary_faculty_label = params[:primary_faculty_label]
       @course.secondary_faculty_label = params[:secondary_faculty_label]
       @course.save
     end

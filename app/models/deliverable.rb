@@ -8,9 +8,9 @@ class Deliverable < ActiveRecord::Base
   validate :unique_course_task_owner?
 
   has_attached_file :feedback,
-    :storage => :s3,
-    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
-    :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
+                    :storage => :s3,
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+                    :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
   default_scope :order => "updated_at DESC"
 
@@ -27,7 +27,6 @@ class Deliverable < ActiveRecord::Base
       errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
     end
   end
-
 
 
   def current_attachment
@@ -68,7 +67,7 @@ class Deliverable < ActiveRecord::Base
     team_condition = ""
     if !teams.empty?
       team_condition = "team_id IN ("
-      team_condition << teams.collect{|t| t.id}.join(',')
+      team_condition << teams.collect { |t| t.id }.join(',')
       team_condition << ") OR "
 
 #      team_condition = "(team_id IN ("
@@ -158,7 +157,6 @@ class Deliverable < ActiveRecord::Base
   def sanitize_data
     self.name = self.name.titleize unless self.name.blank?
   end
-
 
 
 end

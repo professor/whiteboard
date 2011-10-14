@@ -1,8 +1,8 @@
 class DeliverablesController < ApplicationController
 
   layout 'cmu_sv'
-  
-  before_filter :require_user
+
+  before_filter :authenticate_user!
 
   # GET /deliverables
   # GET /deliverables.xml
@@ -12,7 +12,7 @@ class DeliverablesController < ApplicationController
 
   def index_for_course
     @course = Course.find(params[:course_id])
-    if(current_person.is_admin? || @course.faculty.include?(current_person) )
+    if (current_person.is_admin? || @course.faculty.include?(current_person))
       @deliverables = Deliverable.find_all_by_course_id(@course.id)
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -33,7 +33,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       format.html { render :action => "index" }
-      format.xml  { render :xml => @deliverables }
+      format.xml { render :xml => @deliverables }
     end
   end
 
@@ -49,7 +49,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @deliverable }
+      format.xml { render :xml => @deliverable }
     end
   end
 
@@ -68,7 +68,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @deliverable }
+      format.xml { render :xml => @deliverable }
     end
   end
 
@@ -92,7 +92,7 @@ class DeliverablesController < ApplicationController
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
         format.html { render :action => "new" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
       return
     end
@@ -106,17 +106,17 @@ class DeliverablesController < ApplicationController
         @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully created.'
         format.html { redirect_to(@deliverable) }
-        format.xml  { render :xml => @deliverable, :status => :created, :location => @deliverable }
+        format.xml { render :xml => @deliverable, :status => :created, :location => @deliverable }
       else
         if not @attachment.valid?
           flash[:notice] = 'Attachment not valid'
         elsif not @deliverable.valid?
           flash[:notice] = 'Deliverable not valid'
         else
-          flash[:notice] = 'Something else went wrong'          
+          flash[:notice] = 'Something else went wrong'
         end
         format.html { render :action => "new" }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -156,7 +156,6 @@ class DeliverablesController < ApplicationController
     end
 
 
-
   end
 
   # DELETE /deliverables/1
@@ -172,7 +171,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(deliverables_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 
@@ -201,15 +200,14 @@ class DeliverablesController < ApplicationController
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
-        format.xml  { render :xml => @deliverable, :status => :updated, :location => @deliverable }
+        format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
       else
         flash[:error] = 'Unable to save feedback'
         format.html { redirect_to(@deliverable) }
-        format.xml  { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
     end
   end
-
 
 
 end

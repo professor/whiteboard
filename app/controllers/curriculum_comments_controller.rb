@@ -1,15 +1,15 @@
 class CurriculumCommentsController < ApplicationController
-   before_filter :require_user, :except => [:index, :new, :create, :test_page ]
+  before_filter :authenticate_user!, :except => [:index, :new, :create, :test_page]
 #  protect_from_forgery :only => [:create, :update, :destroy] #if the ajax load comes from http://curriculum to https://curriculum then this InvalidAuthenticityToken gets triggered. When pubcookie is functioning on curriculum again, we should be able reo remove this line of code.
- 
-  # GET /curriculum_comments
-  # GET /curriculum_comments.xml
+
+# GET /curriculum_comments
+# GET /curriculum_comments.xml
   def index
     url = get_http_referer()
     @curriculum_comments = CurriculumComment.where("url = ? and semester = ? and year = ?", url, AcademicCalendar.current_semester(), Date.today.year.to_s)
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @curriculum_comments }
+      format.xml { render :xml => @curriculum_comments }
     end
   end
 
@@ -20,7 +20,7 @@ class CurriculumCommentsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @curriculum_comment }
+      format.xml { render :xml => @curriculum_comment }
     end
   end
 
@@ -36,7 +36,7 @@ class CurriculumCommentsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @curriculum_comment }
+      format.xml { render :xml => @curriculum_comment }
     end
   end
 
@@ -61,10 +61,10 @@ class CurriculumCommentsController < ApplicationController
         a.deliver
         flash[:notice] = 'Comment was successfully created.'
         format.html { redirect_to(@curriculum_comment.url) }
-        format.xml  { render :xml => @curriculum_comment, :status => :created, :location => @curriculum_comment }
+        format.xml { render :xml => @curriculum_comment, :status => :created, :location => @curriculum_comment }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -81,10 +81,10 @@ class CurriculumCommentsController < ApplicationController
           CurriculumCommentMailer.comment_update(@curriculum_comment, "updated").deliver
           flash[:notice] = 'Comment was successfully updated.'
           format.html { redirect_to(@curriculum_comment.url) }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         else
           format.html { render :action => "edit" }
-          format.xml  { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -99,21 +99,21 @@ class CurriculumCommentsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to(curriculum_comments_url) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       end
     end
   end
 
   def robots
-      logger.info("curriculum comment: robot detected")
-      format.html # index.html.erb
+    logger.info("curriculum comment: robot detected")
+    format.html # index.html.erb
   end
 
   def test_page
 
-   respond_to do |format|
+    respond_to do |format|
       format.html # index.html.erb
-#      format.xml  { render :xml => @effort_logs }
+                  #      format.xml  { render :xml => @effort_logs }
     end
     #    render(:text => "E-Mail sent")
   end

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   layout 'cmu_sv_no_pad'
 
@@ -10,7 +10,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @pages }
+      format.xml { render :xml => @pages }
     end
   end
 
@@ -53,7 +53,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @page }
+      format.xml { render :xml => @page }
     end
   end
 
@@ -66,13 +66,13 @@ class PagesController < ApplicationController
       flash[:error] = "You don't have permission to do this action."
       redirect_to(page_url) and return
     end
-    
+
 
 #    @courses = Course.all
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @page }
-    end    
+      format.xml { render :xml => @page }
+    end
   end
 
   # POST /pages
@@ -82,14 +82,15 @@ class PagesController < ApplicationController
 #    @courses = Course.all
     @courses = Course.unique_course_names
 
+    @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
         format.html { redirect_to(@page) }
-        format.xml  { render :xml => @page, :status => :created, :location => @page }
+        format.xml { render :xml => @page, :status => :created, :location => @page }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @page.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -108,28 +109,28 @@ class PagesController < ApplicationController
     #course = Course.with_course_name(params[:course_name]).first
     #@page.course = course
 
-
+    @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
         format.html { redirect_to(@page) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @page.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # DELETE /pages/1
   # DELETE /pages/1.xml
-#  def destroy
-#    @page = Page.find(params[:id])
-#    @page.destroy
-#
-#    respond_to do |format|
-#      format.html { redirect_to(pages_url) }
-#      format.xml  { head :ok }
-#    end
-#  end
+  #  def destroy
+  #    @page = Page.find(params[:id])
+  #    @page.destroy
+  #
+  #    respond_to do |format|
+  #      format.html { redirect_to(pages_url) }
+  #      format.xml  { head :ok }
+  #    end
+  #  end
 end

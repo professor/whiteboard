@@ -2,7 +2,7 @@ class EffortReportsController < ApplicationController
 
   layout 'cmu_sv', :only => [:index, :show, :campus_semester, :campus_week, :course]
 
-  before_filter :require_user
+  before_filter :authenticate_user!
 
   class PanelState
     attr_accessor :year, :week_number, :course_id, :date
@@ -39,7 +39,7 @@ class EffortReportsController < ApplicationController
   end
 
   def get_course_data(year, week_number, course_id)
-    effort_logs  = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
+    effort_logs = EffortLog.find_by_sql("select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;")
 
     task_type_id_to_value_array_hash = {}
     effort_logs.each do |effort_log|
@@ -81,7 +81,7 @@ class EffortReportsController < ApplicationController
     end
     return values_array
   end
- 
+
 
   def get_campus_semester_data(panel)
     logger.debug panel.generate_sql()
@@ -121,8 +121,8 @@ class EffortReportsController < ApplicationController
     week_number_to_value_array_array = []
     person_hours = []
     weeks_in_report.times do |i|
-       week_number_to_value_array_array[i] = []
-       person_hours[i] = 0
+      week_number_to_value_array_array[i] = []
+      person_hours[i] = 0
     end
 
     student_effort_accumulator.each do |array, hours|
@@ -146,9 +146,9 @@ class EffortReportsController < ApplicationController
     week_number_to_value_array_array.each_index do |week_number|
       values = week_number_to_value_array_array[week_number]
       unless panel.person_id.blank?
-      values_array << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
-      else        
-      values_array << ([week_number + 1] + course_ranges_array(values))
+        values_array << ([week_number + 1] + course_ranges_array(values) + [person_hours[week_number]])
+      else
+        values_array << ([week_number + 1] + course_ranges_array(values))
       end
     end
 
@@ -187,30 +187,30 @@ class EffortReportsController < ApplicationController
     # array: [course_name, min, 25, median, 75, max, student_data] #used in campus semester view
 
     if reports && reports.size > 0
-      max_value = reports.collect{|r| r[5]}.max
+      max_value = reports.collect { |r| r[5] }.max
 
       multiplier = 100.0/(max_value)
       multiplier = 1 if max_value <= 0.0
 
-      minimums_str = "-1," + reports.collect{|r| "%.2f"%(r[1]*multiplier)}.join(",")+",-1"
-      lower25_str = "-1," +  reports.collect{|r| "%.2f"%(r[2]*multiplier)}.join(",")+",-1"
-      medians_str = "-1," +  reports.collect{|r| "%.2f"%(r[3]*multiplier)}.join(",")+",-1"
-      upper25_str = "-1," +  reports.collect{|r| "%.2f"%(r[4]*multiplier)}.join(",")+",-1"
-      maximums_str = "-1," + reports.collect{|r| "%.2f"%(r[5]*multiplier)}.join(",")+",-1"
+      minimums_str = "-1," + reports.collect { |r| "%.2f"%(r[1]*multiplier) }.join(",")+",-1"
+      lower25_str = "-1," + reports.collect { |r| "%.2f"%(r[2]*multiplier) }.join(",")+",-1"
+      medians_str = "-1," + reports.collect { |r| "%.2f"%(r[3]*multiplier) }.join(",")+",-1"
+      upper25_str = "-1," + reports.collect { |r| "%.2f"%(r[4]*multiplier) }.join(",")+",-1"
+      maximums_str = "-1," + reports.collect { |r| "%.2f"%(r[5]*multiplier) }.join(",")+",-1"
       if reports.first[6].blank?
         outliers_str = ""
       else
-        outliers_str = "|-1," + reports.collect{|r| "%.2f"%(r[6]*multiplier)}.join(",")+",-1"
+        outliers_str = "|-1," + reports.collect { |r| "%.2f"%(r[6]*multiplier) }.join(",")+",-1"
       end
 
-      labels_str = "|"+reports.collect{|r| r[0]}.join("|")+"|"
+      labels_str = "|"+reports.collect { |r| r[0] }.join("|")+"|"
 
       url = "http://chart.apis.google.com/chart?chtt="+title_str+"&chxt=x,y&chs=700x400&cht=lc&chd=t0:" +
-            minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str + outliers_str +
-            "&chl=" + labels_str +  #get course_id and course_name from DB
-            "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10" +
-            "|o,FF0000,5,-1,7|o,FF0000,6,-1,7" +
-            "&chxr=1,0," + (max_value).to_s
+          minimums_str + "|" + lower25_str + "|" + upper25_str + "|" + maximums_str + "|" + medians_str + outliers_str +
+          "&chl=" + labels_str + #get course_id and course_name from DB
+          "&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10" +
+          "|o,FF0000,5,-1,7|o,FF0000,6,-1,7" +
+          "&chxr=1,0," + (max_value).to_s
       return url
     else
       return "http://chart.apis.google.com/chart?chtt="+ title_str+ "&chxt=x,y&chs=700x400&cht=lc&chd=t0:-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1&chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10&chxr=1,0,15"
@@ -257,7 +257,7 @@ class EffortReportsController < ApplicationController
       @semester_panel.person_id = current_user.is_student ? current_user.id : ""
       @semester_panel.course_id = ""
       @semester_panel.semester = AcademicCalendar.current_semester
-      @semester_panel.year = Date.today.cwyear 
+      @semester_panel.year = Date.today.cwyear
     end
 
     if current_user.is_staff || current_user.is_admin
@@ -268,9 +268,13 @@ class EffortReportsController < ApplicationController
     @courses = Course.where("semester = ? and year = ?", @semester_panel.semester, @semester_panel.year).order("name ASC")
     @programs = []
 
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result["masters_program"] end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result|
+      @programs << result["masters_program"]
+    end
     @tracks = []
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result["masters_track"] end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result|
+      @tracks << result["masters_track"]
+    end
 
     title = "Campus View - " + @semester_panel.semester + " " + @semester_panel.year.to_s
     reports = get_campus_semester_data(@semester_panel)
@@ -289,7 +293,7 @@ class EffortReportsController < ApplicationController
 
   def campus_week
     determine_panel_state()
-    title = "Campus View - Week "  + @panel_state.week_number.to_s + " of " + @panel_state.year.to_s
+    title = "Campus View - Week " + @panel_state.week_number.to_s + " of " + @panel_state.year.to_s
     course_data = get_campus_week_data(@panel_state.year, @panel_state.week_number)
     @chart_url = generate_google_box_chart(title, course_data)
   end
@@ -330,24 +334,24 @@ class EffortReportsController < ApplicationController
   end
 
 
-
-
-
-
   def index
   end
 
   def show_week
- puts "show_week*****"
+    puts "show_week*****"
 
-   if params[:week]
-     @week_number = params[:week].to_i
-   else
-     @week_number = Date.today.cweek     
-   end
+    if params[:week]
+      @week_number = params[:week].to_i
+    else
+      @week_number = Date.today.cweek
+    end
 
-    if @week_number <= 0 then @week_number = 1 end
-    if @week_number >52 then @week_number = @week_number - 52 end
+    if @week_number <= 0 then
+      @week_number = 1
+    end
+    if @week_number >52 then
+      @week_number = @week_number - 52
+    end
 
     @next_week_number = @week_number + 1
     @prev_week_number = @week_number - 1
@@ -363,7 +367,6 @@ class EffortReportsController < ApplicationController
     @this_week_number = @week_number
     @prev_week_number = @week_number - 1
   end
-
 
 
 #  def load_google_chart
@@ -384,7 +387,6 @@ class EffortReportsController < ApplicationController
 #  end
 
 
-
   def load_weekly_chart
     if params[:date]
       @e_date_str = params[:date]
@@ -399,11 +401,15 @@ class EffortReportsController < ApplicationController
 #      end
     end
 
-    if @week_number <= 0 then @week_number = 1 end
-    if @week_number >52 then @week_number = @week_number - 52 end
+    if @week_number <= 0 then
+      @week_number = 1
+    end
+    if @week_number >52 then
+      @week_number = @week_number - 52
+    end
 
     logger.debug "load weekly chart called"
-    @date_range_start = Date.commercial(Date.today.cwyear, @week_number, 1).strftime "%m/%d/%y"  # 1/19/09 (Monday)
+    @date_range_start = Date.commercial(Date.today.cwyear, @week_number, 1).strftime "%m/%d/%y" # 1/19/09 (Monday)
     @date_range_end = Date.commercial(Date.today.cwyear, @week_number, 7).strftime "%m/%d/%y" # 1/25/09 (Sunday)
 
     reports = EffortLog.find_by_sql(["SELECT task_types.name, users.human_name, effort_log_line_items.sum FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = person_id inner join task_types on task_type_id = task_types.id where course_id = ? and effort_logs.week_number = ? order by name, human_name", params[:id], @week_number])
@@ -442,9 +448,9 @@ class EffortReportsController < ApplicationController
       end
     end
 
-    row_width = @labels_array.size + 1  #Plus one is the for an additional first column, the "type" label.
+    row_width = @labels_array.size + 1 #Plus one is the for an additional first column, the "type" label.
     current_task = ""
-    current_task_chart_data_row = Array.new(row_width) {|i| "0.0" }
+    current_task_chart_data_row = Array.new(row_width) { |i| "0.0" }
     @chart_data = []
     reports.each do |line|
       if line.name == current_task
@@ -452,7 +458,7 @@ class EffortReportsController < ApplicationController
       else
         if current_task != "" then
           @chart_data << current_task_chart_data_row
-          current_task_chart_data_row = Array.new(row_width) {|i| "0.0" }
+          current_task_chart_data_row = Array.new(row_width) { |i| "0.0" }
         end
         current_task = line.name
         current_task_chart_data_row[0] = line.name
@@ -464,14 +470,14 @@ class EffortReportsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :layout => false  }
+      format.xml { render :layout => false }
     end
   end
 
 
   def raw_data
     if !(current_user.is_admin? || current_user.is_staff?)
-      flash[:error] = 'You don''t have permissions to view this data.'
+      flash[:error] = 'You don' 't have permissions to view this data.'
       redirect_to(effort_reports_url)
       return
     end
@@ -479,15 +485,14 @@ class EffortReportsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @effort_log }
+      format.xml { render :xml => @effort_log }
     end
   end
 
 
-
   def course_table
     if !(current_user.is_admin? || current_user.is_staff?)
-      flash[:error] = 'You don''t have permissions to view this data.'
+      flash[:error] = 'You don' 't have permissions to view this data.'
       redirect_to(effort_reports_url)
       return
     end
@@ -496,8 +501,10 @@ class EffortReportsController < ApplicationController
     #given the course id, determine the start week and the end week of the semester
 
     @report_header = ["Team", "Person"]
-    (1..@course.course_length).each do |week| @report_header << "Wk #{week} "  end
-#    @course.course_length.times do @report_header << "Wk  "  end
+    (1..@course.course_length).each do |week|
+      @report_header << "Wk #{week} "
+    end
+    #    @course.course_length.times do @report_header << "Wk  "  end
 
     @report_lines = []
 
@@ -511,8 +518,8 @@ class EffortReportsController < ApplicationController
 
     @course.teams.each do |team|
       team.people.each do |person|
-        person_result =  report_person_effort_for_course(person, @course)
-        @report_lines << { :team_name => team.name, :person_name => person.human_name, :effort => person_result }
+        person_result = report_person_effort_for_course(person, @course)
+        @report_lines << {:team_name => team.name, :person_name => person.human_name, :effort => person_result}
         min_effort = update_min(min_effort, person_result)
         max_effort = update_max(max_effort, person_result)
         total_effort = update_total(total_effort, person_result)
@@ -520,31 +527,35 @@ class EffortReportsController < ApplicationController
       end
     end
     update_average(average_effort, total_effort, count_effort)
-    @report_lines << { :team_name => "", :person_name => "", :effort => blank_line }
-    @report_lines << { :team_name => "Summary", :person_name => "Min", :effort => min_effort }
-    @report_lines << { :team_name => "Summary", :person_name => "Avg", :effort => average_effort }
-    @report_lines << { :team_name => "Summary", :person_name => "Max", :effort => max_effort }
-    @report_lines << { :team_name => "", :person_name => "", :effort => blank_line }
-    @report_lines << { :team_name => "Summary", :person_name => "Total", :effort => total_effort }
-    @report_lines << { :team_name => "Summary", :person_name => "Count", :effort => count_effort }
+    @report_lines << {:team_name => "", :person_name => "", :effort => blank_line}
+    @report_lines << {:team_name => "Summary", :person_name => "Min", :effort => min_effort}
+    @report_lines << {:team_name => "Summary", :person_name => "Avg", :effort => average_effort}
+    @report_lines << {:team_name => "Summary", :person_name => "Max", :effort => max_effort}
+    @report_lines << {:team_name => "", :person_name => "", :effort => blank_line}
+    @report_lines << {:team_name => "Summary", :person_name => "Total", :effort => total_effort}
+    @report_lines << {:team_name => "Summary", :person_name => "Count", :effort => count_effort}
 
   end
 
   # helper method for course_table
   def update_max(max_effort, person_result)
-    max_effort.each_index {|i| max_effort[i] = person_result[i] if person_result[i] > max_effort[i]}
+    max_effort.each_index { |i| max_effort[i] = person_result[i] if person_result[i] > max_effort[i] }
   end
+
   def update_min(min_effort, person_result)
-    min_effort.each_index {|i| min_effort[i] = person_result[i] if person_result[i] < min_effort[i] && person_result[i] > 0}
+    min_effort.each_index { |i| min_effort[i] = person_result[i] if person_result[i] < min_effort[i] && person_result[i] > 0 }
   end
+
   def update_total(total_effort, person_result)
-    total_effort.each_index {|i| total_effort[i] += person_result[i] }
+    total_effort.each_index { |i| total_effort[i] += person_result[i] }
   end
+
   def update_count(count_effort, person_result)
-    count_effort.each_index {|i| count_effort[i] += 1 if person_result[i] != 0 }
+    count_effort.each_index { |i| count_effort[i] += 1 if person_result[i] != 0 }
   end
+
   def update_average(average_effort, total_effort, count_effort)
-    average_effort.each_index {|i| average_effort[i] = total_effort[i] / count_effort[i] unless count_effort[i] == 0 }
+    average_effort.each_index { |i| average_effort[i] = total_effort[i] / count_effort[i] unless count_effort[i] == 0 }
   end
 
 
@@ -553,12 +564,14 @@ class EffortReportsController < ApplicationController
     person_effort_log_lines = EffortLog.find_by_sql(["SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.person_id = ? order by effort_logs.week_number", course.id, person.id])
 
     person_result = []
-    @course.course_length.times do person_result << 0 end
+    @course.course_length.times do
+      person_result << 0
+    end
     if !person_effort_log_lines.nil? && person_effort_log_lines.size != 0 then
       person_effort_log_lines.each do |line|
         week = line.week_number.to_i
         if week >= @course.course_start && week <= @course.course_end then
-          person_result[week - @course.course_start + 0] += line.sum.to_i  #add two to skip the team and person label at the front of the array
+          person_result[week - @course.course_start + 0] += line.sum.to_i #add two to skip the team and person label at the front of the array
         end
 
       end

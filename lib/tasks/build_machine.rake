@@ -10,6 +10,14 @@ task :continuous_integration => ['db:schema:load', 'spec']
 #http://railsbros.de/2007/11/19/rake-code-cruise-code-task
 #http://abstractplain.net/blog/?p=1024
 #http://nullcreations.net/entries/general/enforcing-spec-coverage-with-cruisecontrol-rcov-and-rspec
+
+task :continuous_integration  => ['db:migrate', 'spec']
+
+task :copy_coverage_report do
+  FileUtils.cp_r('coverage', ENV['BUILD_ARTEFACTS'] || 'output', :verbose => true)
+end
+
+
          
 desc "Task for Goldberg"
 task :goldberg do
@@ -21,7 +29,8 @@ task :goldberg do
   `rake spec`                     
    
    puts "***** goldberg rake task ended"   
-end   
+end                     
+                    
 
 
 desc "Task for cruise Control"
