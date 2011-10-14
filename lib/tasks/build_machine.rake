@@ -3,6 +3,8 @@ require 'rake'
 require 'fileutils'
 require 'bundler'
 
+task :continuous_integration => ['db:schema:load', 'spec']
+
 
 #Very good tutorial: http://railsenvy.com/2007/6/11/ruby-on-rails-rake-tutorial
 #http://railsbros.de/2007/11/19/rake-code-cruise-code-task
