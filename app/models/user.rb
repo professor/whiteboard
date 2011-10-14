@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable, :rememberable, :trackable, :timeoutable
-         #, :database_authenticatable, :registerable,
+  #, :database_authenticatable, :registerable,
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
   scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
-  scope :part_time_class_of, lambda {|program, year|
-    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  scope :part_time_class_of, lambda { |program, year|
+    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
 #    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
   }
-  scope :full_time_class_of, lambda {|program, year|
-    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  scope :full_time_class_of, lambda { |program, year|
+    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
 #    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
   }
 
@@ -35,18 +35,8 @@ class User < ActiveRecord::Base
   end
 
 
-  # Lines modified by Todd go here:
-#  before_save :initialize_human_name
-   has_and_belongs_to_many :teams
-
-#  belongs_to :person
-#  def is_student?
-#    person.is_student?
-#  end
-#  def is_staff?
-#    person.is_staff?
-#  end
-
+  #  before_save :initialize_human_name
+  has_and_belongs_to_many :teams
 
   def emailed_recently(email_type)
     case email_type
@@ -107,42 +97,40 @@ class User < ActiveRecord::Base
 
 
   def self.parse_twiki(username)
-     # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
-     # This does not work with numbers or characters in the firstname field
-     # http://rubular.com/
-      match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
-      if match.nil?
-        return nil
-      else
-        return [match[1], match[2]]
-      end
-   end
+    # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
+    # This does not work with numbers or characters in the firstname field
+    # http://rubular.com/
+    match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
+    if match.nil?
+      return nil
+    else
+      return [match[1], match[2]]
+    end
+  end
 
-   def find_teams_by_semester(year, semester)
-     s_teams = []
-     self.teams.each do |team|
-       s_teams << team if team.course.year == year and team.course.semester == semester
-     end
-     return s_teams
-   end
-
+  def find_teams_by_semester(year, semester)
+    s_teams = []
+    self.teams.each do |team|
+      s_teams << team if team.course.year == year and team.course.semester == semester
+    end
+    return s_teams
+  end
 
 
   protected
- def initialize_human_name
-   self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
- end
+  def initialize_human_name
+    self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
+  end
 
-      def update_webiso_account
-      self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
-      end
-
+  def update_webiso_account
+    self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
+  end
 
 
   def person_before_save
     # We populate some reasonable defaults, but this can be overridden in the database
     self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
-    self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+    self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
 
     logger.debug("self.photo.blank? #{self.photo.blank?}")
     logger.debug("photo.url #{photo.url}")

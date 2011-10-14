@@ -36,6 +36,6 @@ class PeerEvaluationReview < ActiveRecord::Base
   def self.is_completed_for?(person_id, team_id)
     !PeerEvaluationReview.find(:first, :conditions => {:team_id => team_id, :author_id => person_id}).nil?
   end
-  
+
 
 end

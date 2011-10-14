@@ -29,9 +29,9 @@ class SponsoredProjectEffortsController < ApplicationController
 
       @failed = false
       @changed_allocation = false
-      effort_id_values.each do |key,value|
+      effort_id_values.each do |key, value|
         effort = SponsoredProjectEffort.find(key)
-  #      @changed_allocation = true if effort.actual_allocation != value
+        #      @changed_allocation = true if effort.actual_allocation != value
         effort.actual_allocation = value
         @changed_allocation = true if effort.actual_allocation_changed?
         effort.confirmed = true
@@ -54,7 +54,7 @@ class SponsoredProjectEffortsController < ApplicationController
     end
   end
 
-private
+  private
   #Todo: refactor this method to use Application Controller's has_permissions_or_redirect
   def authorized_or_redirect
     @person = Person.find_by_twiki_name(params[:id])
@@ -73,9 +73,9 @@ private
   end
 
   def setup_edit
-      @efforts = SponsoredProjectEffort.month_under_inspection_for_a_given_user(@person.id)
-      @month = !@efforts.empty? ? @efforts[0].month : 1.month.ago.month
-      @year = !@efforts.empty? ? @efforts[0].year : 1.month.ago.year
+    @efforts = SponsoredProjectEffort.month_under_inspection_for_a_given_user(@person.id)
+    @month = !@efforts.empty? ? @efforts[0].month : 1.month.ago.month
+    @year = !@efforts.empty? ? @efforts[0].year : 1.month.ago.year
   end
 
 end

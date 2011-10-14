@@ -42,7 +42,7 @@ class SponsoredProjectSponsorsController < ApplicationController
       end
     end
   end
-  
+
   def archive
     if has_permissions_or_redirect(:admin, root_path)
       @sponsor = SponsoredProjectSponsor.find(params[:id])

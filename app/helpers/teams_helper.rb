@@ -1,7 +1,7 @@
 module TeamsHelper
-  
+
   def twiki_user_link(twiki_username, human_name)
-      "<a href='http://rails.sv.cmu.edu/people/#{twiki_username}' target='_top'>#{human_name}</a>".html_safe
+    "<a href='http://rails.sv.cmu.edu/people/#{twiki_username}' target='_top'>#{human_name}</a>".html_safe
   end
 
   def find_past_teams(person)
@@ -19,5 +19,5 @@ module TeamsHelper
     end
     return teams_list
   end
- 
+
 end

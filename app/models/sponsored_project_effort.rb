@@ -14,17 +14,17 @@ class SponsoredProjectEffort < ActiveRecord::Base
   end
 
   scope :for_all_users_for_a_given_month,
-              lambda { |month, year| {:conditions => ["month = ? and year = ?", month, year] }}
+        lambda { |month, year| {:conditions => ["month = ? and year = ?", month, year]} }
 
   scope :month_under_inspection_for_a_given_user,
-              lambda { |person_id| {:include => :sponsored_project_allocation,
-                                    :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", 1.month.ago.month, 1.month.ago.year, person_id] }}
+        lambda { |person_id| {:include => :sponsored_project_allocation,
+                              :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", 1.month.ago.month, 1.month.ago.year, person_id]} }
 
 #  default_scope :include => :sponsored_project_allocation,:order => 'sponsored_project_allocations.person_id ASC'
 
 
   def self.new_from_sponsored_project_allocation(allocation)
-    
+
     SponsoredProjectEffort.create(:month => 1.month.ago.month, :year => 1.month.ago.year,
                                   :sponsored_project_allocation_id => allocation.id,
                                   :current_allocation => allocation.current_allocation,

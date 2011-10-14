@@ -5,12 +5,12 @@ class ScottyDogSaying < ActiveRecord::Base
 
   def editable(current_user)
     if (current_user && current_user.is_admin?)
-      return true 
-    end
-    if (current_user && current_user.id == user_id) 
       return true
     end
-    return false    
+    if (current_user && current_user.id == user_id)
+      return true
+    end
+    return false
   end
 
-  end
+end
