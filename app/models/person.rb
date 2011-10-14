@@ -6,7 +6,7 @@
 #
 # {User}[link:classes/User.html]
 #
-class Person < ActiveRecord::Base
+class Person < User
   set_table_name "users"
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
   acts_as_versioned  :table_name => 'user_versions' , :if => Proc.new { |user| !(user.effort_log_warning_email_changed? || user.sponsored_project_effort_last_emailed_changed? ) }
@@ -56,14 +56,14 @@ class Person < ActiveRecord::Base
 
 
 
-  def emailed_recently(email_type)
-    case email_type
-      when :effort_log
-        return self.effort_log_warning_email.nil? || (self.effort_log_warning_email < 1.day.ago) ? false : true
-      when :sponsored_project_effort
-        return self.sponsored_project_effort_last_emailed.nil? || (self.sponsored_project_effort_last_emailed < 1.day.ago) ? false : true
-    end
-  end
+  #def emailed_recently(email_type)
+  #  case email_type
+  #    when :effort_log
+  #      return self.effort_log_warning_email.nil? || (self.effort_log_warning_email < 1.day.ago) ? false : true
+  #    when :sponsored_project_effort
+  #      return self.sponsored_project_effort_last_emailed.nil? || (self.sponsored_project_effort_last_emailed < 1.day.ago) ? false : true
+  #  end
+  #end
 
   def telephones
     phones = []
@@ -94,19 +94,19 @@ class Person < ActiveRecord::Base
     return s_teams
   end
 
-
-  def permission_level_of(role)
-    case role
-      when :student
-        return (self.is_student? || self.is_staff? || self.is_admin?)
-      when :staff
-        return (self.is_staff? || self.is_admin?)
-      when :admin
-        return (self.is_admin?)
-      else
-        return false
-    end
-  end
+  #
+  #def permission_level_of(role)
+  #  case role
+  #    when :student
+  #      return (self.is_student? || self.is_staff? || self.is_admin?)
+  #    when :staff
+  #      return (self.is_staff? || self.is_admin?)
+  #    when :admin
+  #      return (self.is_admin?)
+  #    else
+  #      return false
+  #  end
+  #end
 
 
    def get_registered_courses
