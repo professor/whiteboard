@@ -8,6 +8,18 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
 
+  scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
+  scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
+
+  scope :part_time_class_of, lambda {|program, year|
+    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  }
+  scope :full_time_class_of, lambda {|program, year|
+    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
+  }
+
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
     data = access_token['user_info']
     email = switch_west_to_sv(data["email"]).downcase
@@ -83,11 +95,61 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def telephones
+    phones = []
+    phones << "#{self.telephone1_label}: #{self.telephone1}" unless (self.telephone1_label.nil? || self.telephone1_label.empty?)
+    phones << "#{self.telephone2_label}: #{self.telephone2}" unless (self.telephone2_label.nil? || self.telephone2_label.empty?)
+    phones << "#{self.telephone3_label}: #{self.telephone3}" unless (self.telephone3_label.nil? || self.telephone3_label.empty?)
+    phones << "#{self.telephone4_label}: #{self.telephone4}" unless (self.telephone4_label.nil? || self.telephone4_label.empty?)
+    return phones
+  end
+
+
+  def self.parse_twiki(username)
+     # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
+     # This does not work with numbers or characters in the firstname field
+     # http://rubular.com/
+      match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
+      if match.nil?
+        return nil
+      else
+        return [match[1], match[2]]
+      end
+   end
+
+   def find_teams_by_semester(year, semester)
+     s_teams = []
+     self.teams.each do |team|
+       s_teams << team if team.course.year == year and team.course.semester == semester
+     end
+     return s_teams
+   end
+
+
+
   protected
  def initialize_human_name
    self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
  end
 
+      def update_webiso_account
+      self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
+      end
+
+
+
+  def person_before_save
+    # We populate some reasonable defaults, but this can be overridden in the database
+    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
+    self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+
+    logger.debug("self.photo.blank? #{self.photo.blank?}")
+    logger.debug("photo.url #{photo.url}")
+    # update the image_uri if a photo was uploaded
+    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+  end
 
 
 end

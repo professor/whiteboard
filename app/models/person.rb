@@ -33,17 +33,7 @@ class Person < User
 #    end
 #  end
 
-  scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
-  scope :teachers, :conditions => {:is_teacher => true, :is_active => true}, :order => 'human_name ASC'
 
-  scope :part_time_class_of, lambda {|program, year|
-    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
-#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
-  }
-  scope :full_time_class_of, lambda {|program, year|
-    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
-#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
-  }
 
   has_attached_file :photo, :storage => :s3, :styles => { :original =>"", :profile => "133x200>" },
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
@@ -56,57 +46,10 @@ class Person < User
 
 
 
-  #def emailed_recently(email_type)
-  #  case email_type
-  #    when :effort_log
-  #      return self.effort_log_warning_email.nil? || (self.effort_log_warning_email < 1.day.ago) ? false : true
-  #    when :sponsored_project_effort
-  #      return self.sponsored_project_effort_last_emailed.nil? || (self.sponsored_project_effort_last_emailed < 1.day.ago) ? false : true
-  #  end
-  #end
 
-  def telephones
-    phones = []
-    phones << "#{self.telephone1_label}: #{self.telephone1}" unless (self.telephone1_label.nil? || self.telephone1_label.empty?)
-    phones << "#{self.telephone2_label}: #{self.telephone2}" unless (self.telephone2_label.nil? || self.telephone2_label.empty?)
-    phones << "#{self.telephone3_label}: #{self.telephone3}" unless (self.telephone3_label.nil? || self.telephone3_label.empty?)
-    phones << "#{self.telephone4_label}: #{self.telephone4}" unless (self.telephone4_label.nil? || self.telephone4_label.empty?)
-    return phones
-  end
 
-  def self.parse_twiki(username)
-    # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
-    # This does not work with numbers or characters in the firstname field
-    # http://rubular.com/
-     match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
-     if match.nil?
-       return nil
-     else
-       return [match[1], match[2]]
-     end
-  end
 
-  def find_teams_by_semester(year, semester)
-    s_teams = []
-    self.teams.each do |team|
-      s_teams << team if team.course.year == year and team.course.semester == semester
-    end
-    return s_teams
-  end
 
-  #
-  #def permission_level_of(role)
-  #  case role
-  #    when :student
-  #      return (self.is_student? || self.is_staff? || self.is_admin?)
-  #    when :staff
-  #      return (self.is_staff? || self.is_admin?)
-  #    when :admin
-  #      return (self.is_admin?)
-  #    else
-  #      return false
-  #  end
-  #end
 
 
    def get_registered_courses
@@ -253,25 +196,6 @@ class Person < User
     self.past_teams.map {|team| team.name} * ", "
   end
 
-
-
-  protected
-    def update_webiso_account
-      self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
-    end  
-
-
-  def person_before_save
-    # We populate some reasonable defaults, but this can be overridden in the database
-    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
-    self.email = self.first_name.gsub(" ", "")  + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
-
-    logger.debug("self.photo.blank? #{self.photo.blank?}")
-    logger.debug("photo.url #{photo.url}")
-    # update the image_uri if a photo was uploaded
-    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
-
-  end
 
 
 end
