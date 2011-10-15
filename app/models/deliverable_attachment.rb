@@ -5,9 +5,9 @@ class DeliverableAttachment < ActiveRecord::Base
   belongs_to :deliverable
 
   has_attached_file :attachment,
-    :storage => :s3,
-    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
-    :path => "deliverables/:deliverable_course_year/:deliverable_course_name/:deliverable_random_hash/submissions/:id/:filename"
+                    :storage => :s3,
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+                    :path => "deliverables/:deliverable_course_year/:deliverable_course_name/:deliverable_random_hash/submissions/:id/:filename"
 
   validates_presence_of :submitter, :submission_date
 

@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
-   layout 'cmu_sv'
-  
-   before_filter :authenticate_user!
+  layout 'cmu_sv'
+
+  before_filter :authenticate_user!
 
   # GET /courses
   # GET /courses.xml
@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
 
     index_core
   end
-  
+
   def current_semester
     @all_courses = false
     @semester = AcademicCalendar.current_semester()
@@ -45,7 +45,7 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @course }
+      format.xml { render :xml => @course }
     end
   end
 
@@ -59,9 +59,9 @@ class CoursesController < ApplicationController
 
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render :xml => @course }
+        format.xml { render :xml => @course }
       end
-    end   
+    end
   end
 
   # GET /courses/1/edit
@@ -97,10 +97,10 @@ class CoursesController < ApplicationController
 
           flash[:notice] = 'Course was successfully created.'
           format.html { redirect_to edit_course_path(@course) }
-          format.xml  { render :xml => @course, :status => :created, :location => @course }
+          format.xml { render :xml => @course, :status => :created, :location => @course }
         else
           format.html { render :action => "new" }
-          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -112,7 +112,7 @@ class CoursesController < ApplicationController
     if has_permissions_or_redirect(:staff, root_path)
       @course = Course.find(params[:id])
 
-      if(params[:course][:is_configured]) #The previous page was configure action
+      if (params[:course][:is_configured]) #The previous page was configure action
         @course.twiki_url = params[:course][:curriculum_url] if @course.twiki_url.blank? && params[:course][:configure_course_twiki]
         @course.configured_by_user_id = current_user.id
       else
@@ -127,18 +127,18 @@ class CoursesController < ApplicationController
       respond_to do |format|
         @course.updated_by_user_id = current_user.id if current_user
         if @course.update_attributes(params[:course])
-          if(params[:course][:is_configured]) #The previous page was configure action
+          if (params[:course][:is_configured]) #The previous page was configure action
             CourseMailer.configure_course_admin_email(@course).deliver
-#            CourseMailer.configure_course_admin_email.deliver(@course)
-          else  #email faculty to configure the course, unless it was already configured
-            
+                                               #            CourseMailer.configure_course_admin_email.deliver(@course)
+          else #email faculty to configure the course, unless it was already configured
+
           end
           flash[:notice] = 'Course was successfully updated.'
           format.html { redirect_to(@course) }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         else
           format.html { render :action => "edit" }
-          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -153,7 +153,7 @@ class CoursesController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to(courses_url) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       end
     end
   end
@@ -163,7 +163,7 @@ class CoursesController < ApplicationController
   def index_core
     respond_to do |format|
       format.html { render :action => "index" }
-      format.xml  { render :xml => @courses }
+      format.xml { render :xml => @courses }
     end
   end
 end

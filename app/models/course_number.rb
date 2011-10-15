@@ -4,5 +4,5 @@ class CourseNumber < ActiveRecord::Base
     return self.name if self.short_name.blank?
     return self.name + " (" + self.short_name + ")"
   end
-  
+
 end

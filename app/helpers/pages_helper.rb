@@ -1,3 +1,3 @@
-module PagesHelper     
-    
+module PagesHelper
+
 end

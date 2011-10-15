@@ -15,7 +15,7 @@ class EffortLogLineItemsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @effort_log_line_items }
+      format.xml { render :xml => @effort_log_line_items }
     end
   end
 
@@ -26,7 +26,7 @@ class EffortLogLineItemsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @effort_log_line_item }
+      format.xml { render :xml => @effort_log_line_item }
     end
   end
 
@@ -37,7 +37,7 @@ class EffortLogLineItemsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @effort_log_line_item }
+      format.xml { render :xml => @effort_log_line_item }
     end
   end
 
@@ -56,10 +56,10 @@ class EffortLogLineItemsController < ApplicationController
       if @effort_log_line_item.save
         flash[:notice] = 'EffortLogLineItem was successfully created.'
         format.html { redirect_to(@effort_log_line_item) }
-        format.xml  { render :xml => @effort_log_line_item, :status => :created, :location => @effort_log_line_item }
+        format.xml { render :xml => @effort_log_line_item, :status => :created, :location => @effort_log_line_item }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @effort_log_line_item.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @effort_log_line_item.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -73,10 +73,10 @@ class EffortLogLineItemsController < ApplicationController
       if @effort_log_line_item.update_attributes(params[:effort_log_line_item])
         flash[:notice] = 'EffortLogLineItem was successfully updated.'
         format.html { redirect_to(@effort_log_line_item) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @effort_log_line_item.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @effort_log_line_item.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -89,7 +89,7 @@ class EffortLogLineItemsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(effort_log_line_items_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 

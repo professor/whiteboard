@@ -8,7 +8,7 @@ class CurriculumCommentTypesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @curriculum_comment_types }
+      format.xml { render :xml => @curriculum_comment_types }
     end
   end
 
@@ -19,7 +19,7 @@ class CurriculumCommentTypesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @curriculum_comment_type }
+      format.xml { render :xml => @curriculum_comment_type }
     end
   end
 
@@ -32,7 +32,7 @@ class CurriculumCommentTypesController < ApplicationController
 
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render :xml => @curriculum_comment_type }
+        format.xml { render :xml => @curriculum_comment_type }
       end
     end
   end
@@ -55,10 +55,10 @@ class CurriculumCommentTypesController < ApplicationController
         if @curriculum_comment_type.save
           flash[:notice] = 'CurriculumCommentType was successfully created.'
           format.html { redirect_to(@curriculum_comment_type) }
-          format.xml  { render :xml => @curriculum_comment_type, :status => :created, :location => @curriculum_comment_type }
+          format.xml { render :xml => @curriculum_comment_type, :status => :created, :location => @curriculum_comment_type }
         else
           format.html { render :action => "new" }
-          format.xml  { render :xml => @curriculum_comment_type.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @curriculum_comment_type.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -74,10 +74,10 @@ class CurriculumCommentTypesController < ApplicationController
         if @curriculum_comment_type.update_attributes(params[:curriculum_comment_type])
           flash[:notice] = 'CurriculumCommentType was successfully updated.'
           format.html { redirect_to(@curriculum_comment_type) }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         else
           format.html { render :action => "edit" }
-          format.xml  { render :xml => @curriculum_comment_type.errors, :status => :unprocessable_entity }
+          format.xml { render :xml => @curriculum_comment_type.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -92,7 +92,7 @@ class CurriculumCommentTypesController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to(curriculum_comment_types_url) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       end
     end
   end

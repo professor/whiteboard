@@ -13,7 +13,7 @@ class SponsoredProjectsController < ApplicationController
 
   def new
     if has_permissions_or_redirect
-      store_previous_location      
+      store_previous_location
       @project = SponsoredProject.new
       @sponsors = SponsoredProjectSponsor.current
     end
@@ -69,11 +69,11 @@ class SponsoredProjectsController < ApplicationController
 
   protected
   def has_permissions_or_redirect
-      unless current_user.permission_level_of(:admin)
-        flash[:error] = t(:no_permission)
-        redirect_to(root_path)
-        return false
-      end
+    unless current_user.permission_level_of(:admin)
+      flash[:error] = t(:no_permission)
+      redirect_to(root_path)
+      return false
+    end
     return true
   end
 

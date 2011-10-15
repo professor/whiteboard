@@ -9,8 +9,8 @@ class SponsoredProjectEffortMailer < ActionMailer::Base
     @year = year
 
     mail(:to => options[:to] || @person.email,
-        :subject => options[:subject] || "Sponsored projects confirmation email for #{Date::MONTHNAMES[month]} #{year}",
-        :date => Time.now)
+         :subject => options[:subject] || "Sponsored projects confirmation email for #{Date::MONTHNAMES[month]} #{year}",
+         :date => Time.now)
   end
 
   def changed_allocation_email_to_business_manager(person, month, year, options = {})
@@ -19,8 +19,8 @@ class SponsoredProjectEffortMailer < ActionMailer::Base
     @year = year
 
     mail(:to => options[:to] || @person.email,
-        :subject => options[:subject] || "Action required: change in monthly allocations for #{@person.human_name}",
-        :date => Time.now)
+         :subject => options[:subject] || "Action required: change in monthly allocations for #{@person.human_name}",
+         :date => Time.now)
   end
 
 end

@@ -20,8 +20,8 @@ class Course < ActiveRecord::Base
 
   def display_course_name
     mini_text = self.mini == "Both" ? "" : self.mini
-   result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
-   result.gsub(" ", "")
+    result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
+    result.gsub(" ", "")
   end
 
   #before_validation :set_updated_by_user
@@ -30,10 +30,10 @@ class Course < ActiveRecord::Base
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
-  scope :in_current_semester_with_course_number, lambda {|number|
+  scope :in_current_semester_with_course_number, lambda { |number|
     where("number = ? and semester = ? and year = ?", number, AcademicCalendar.current_semester(), Date.today.year)
   }
-  scope :with_course_name, lambda {|name|
+  scope :with_course_name, lambda { |name|
     where("name = ?", name).order("id ASC")
   }
 
@@ -45,14 +45,14 @@ class Course < ActiveRecord::Base
 #  def self.for_semester(semester, year, mini)
 #    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
 #  end
-  
+
   def self.for_semester(semester, year)
     return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
   end
 
   def self.current_semester_courses()
     return self.for_semester(AcademicCalendar.current_semester(),
-                      Date.today.year)
+                             Date.today.year)
 
   end
 
@@ -64,14 +64,14 @@ class Course < ActiveRecord::Base
 
   def course_length
     if self.mini == "Both" then
-      if semester == "Summer" then 
-        return 12 
+      if semester == "Summer" then
+        return 12
       else
         return 15
       end
-    else 
+    else
       return 7
-    end    
+    end
   end
 
   def course_start
@@ -88,7 +88,7 @@ class Course < ActiveRecord::Base
     end
     return 0 #If the semester field isn't set
   end
-  
+
   def course_end
     self.course_start + self.course_length - 1
   end
@@ -116,8 +116,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "both"] )
-    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini] )
+    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "both"])
+    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini])
     return courses
   end
 
@@ -126,11 +126,11 @@ class Course < ActiveRecord::Base
   end
 
   def auto_generated_peer_evaluation_date_start
-    return Date.commercial(self.year,self.course_start + 6)
+    return Date.commercial(self.year, self.course_start + 6)
   end
 
   def auto_generated_peer_evaluation_date_end
-   return Date.commercial(self.year, self.course_start + 7)
+    return Date.commercial(self.year, self.course_start + 7)
   end
 
 
@@ -143,15 +143,15 @@ class Course < ActiveRecord::Base
 
     msg = ""
     members.each do |name|
-       person = Person.find_by_human_name(name)
-       if person.nil?
-         all_valid_names = false
-         msg = msg + "'" + name + "' is not in the database. "
-         #This next line doesn't quite seem to work
-         self.errors.add(:person_name, "Person " + name + " not found")
-       else
-         self.faculty << person
-       end
+      person = Person.find_by_human_name(name)
+      if person.nil?
+        all_valid_names = false
+        msg = msg + "'" + name + "' is not in the database. "
+        #This next line doesn't quite seem to work
+        self.errors.add(:person_name, "Person " + name + " not found")
+      else
+        self.faculty << person
+      end
     end
     return msg
   end
@@ -178,7 +178,7 @@ class Course < ActiveRecord::Base
 
   protected
   def strip_whitespaces
-    @attributes.each do |attr,value|
+    @attributes.each do |attr, value|
       self[attr] = value.strip if value.is_a?(String)
     end
   end

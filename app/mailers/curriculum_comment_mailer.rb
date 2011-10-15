@@ -7,8 +7,8 @@ class CurriculumCommentMailer < ActionMailer::Base
     @status = status
 
     mail(:to => curriculum_comment.notify_instructors(),
-        :subject => "Scotty Dog says: comment #{status} for your course",
-        :date => Time.now)
- end
+         :subject => "Scotty Dog says: comment #{status} for your course",
+         :date => Time.now)
+  end
 
 end

@@ -2,9 +2,9 @@ class EffortLog < ActiveRecord::Base
   has_many :effort_log_line_items, :dependent => :destroy
   belongs_to :person
 
-  validates_presence_of     :person
-  validates_presence_of     :week_number
-  validates_presence_of     :year
+  validates_presence_of :person
+  validates_presence_of :week_number
+  validates_presence_of :year
 
   before_save :determine_total_effort
 
@@ -18,7 +18,7 @@ class EffortLog < ActiveRecord::Base
       b = Date.commercial(self.year, self.week_number, 1)
       c = (Date.commercial(self.year, self.week_number, 7) + 1.day)
       if (Date.today >= Date.commercial(self.year, self.week_number, 1) && Date.today <= (Date.commercial(self.year, self.week_number, 7) + 1.day))
-         return true
+        return true
       end
     end
     return false
@@ -31,8 +31,8 @@ class EffortLog < ActiveRecord::Base
     unregistered_courses = {}
     self.effort_log_line_items.each do |log_line_item|
       if (log_line_item.sum != 0)
-        if(log_line_item.course.nil?)
-           unregistered_courses["No course selected"] = 1
+        if (log_line_item.course.nil?)
+          unregistered_courses["No course selected"] = 1
         elsif (!registered_courses.include?(log_line_item.course))
           unregistered_courses[log_line_item.course.name] = 1
         end
@@ -42,7 +42,7 @@ class EffortLog < ActiveRecord::Base
     return course_error_msg
   end
 
- def self.users_with_effort_against_unregistered_courses
+  def self.users_with_effort_against_unregistered_courses
     cweek = Date.today.cweek
     cyear = Date.today.cwyear
 
@@ -56,55 +56,53 @@ class EffortLog < ActiveRecord::Base
       if (courses_in_error!="")
         @error_effort_logs_users[effort_log.person] = courses_in_error
       end
-     end
+    end
     @error_effort_logs_users
-   end
+  end
 
 
-  
-      
-    def determine_total_effort
-      self.sum =  0
-      self.effort_log_line_items.each do |line| 
-        line.determine_total_effort 
-        self.sum = self.sum + line.sum 
-      end
+  def determine_total_effort
+    self.sum = 0
+    self.effort_log_line_items.each do |line|
+      line.determine_total_effort
+      self.sum = self.sum + line.sum
     end
-  
-  
-    def new_effort_log_line_item_attributes=(line_item_attributes)
-      line_item_attributes.each do |attributes|
-          effort_log_line_items.build(attributes)
-      end
-    end
-    
-    after_update :save_effort_log_line_items
-    validates_associated :effort_log_line_items
-    
-    def existing_effort_log_line_item_attributes=(effort_log_line_item_attributes)
-      effort_log_line_items.reject(&:new_record?).each do |effort_log_line_item|
-        attributes = effort_log_line_item_attributes[effort_log_line_item.id.to_s]
-        if attributes
-          effort_log_line_item.attributes = attributes
-        else
-          effort_log_line_items.delete(effort_log_line_item)
-        end
-      end
-    end
-    
-    def save_effort_log_line_items
-      effort_log_line_items.each do |effort_log_line_item|
-        effort_log_line_item.save(false)
-      end
-    end
+  end
 
-    def self.log_effort_week?(year, week_number)
-      if AcademicCalendar.spring_break(year).include?(week_number)
-        return false
+
+  def new_effort_log_line_item_attributes=(line_item_attributes)
+    line_item_attributes.each do |attributes|
+      effort_log_line_items.build(attributes)
+    end
+  end
+
+  after_update :save_effort_log_line_items
+  validates_associated :effort_log_line_items
+
+  def existing_effort_log_line_item_attributes=(effort_log_line_item_attributes)
+    effort_log_line_items.reject(&:new_record?).each do |effort_log_line_item|
+      attributes = effort_log_line_item_attributes[effort_log_line_item.id.to_s]
+      if attributes
+        effort_log_line_item.attributes = attributes
       else
-        return AcademicCalendar.week_during_semester?(year, week_number)
+        effort_log_line_items.delete(effort_log_line_item)
       end
     end
+  end
+
+  def save_effort_log_line_items
+    effort_log_line_items.each do |effort_log_line_item|
+      effort_log_line_item.save(false)
+    end
+  end
+
+  def self.log_effort_week?(year, week_number)
+    if AcademicCalendar.spring_break(year).include?(week_number)
+      return false
+    else
+      return AcademicCalendar.week_during_semester?(year, week_number)
+    end
+  end
 
   def self.latest_for_person(person_id, week_number, year)
     EffortLog.where("person_id = ? and week_number = ? and year = ?", person_id, week_number, year).first

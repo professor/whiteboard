@@ -5,25 +5,25 @@ class PeopleController < ApplicationController
 # Floating box source: http://roshanbh.com.np/2008/07/top-floating-message-box-using-jquery.html
 
   layout 'cmu_sv'
-  
+
 #  auto_complete_for :person, :human_name
 #  protect_from_forgery :only => [:create, :update, :destroy] #required for auto complete to work
-  
-  # GET /people
-  # GET /people.xml
+
+# GET /people
+# GET /people.xml
   def index
     if params[:term] #Ajax call for autocomplete
-        #if database is mysql
-        #@people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
+                     #if database is mysql
+                     #@people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
       @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
     else
-      @people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
+      @people = Person.find(:all, :conditions => ['is_active = ?', true], :order => "first_name ASC, last_name ASC")
     end
 
-    
+
     respond_to do |format|
       format.html { render :html => @people }
-      format.json   { render :json => @people.collect{|person| person.human_name}, :layout => false }
+      format.json { render :json => @people.collect { |person| person.human_name }, :layout => false }
     end
   end
 
@@ -41,7 +41,7 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    if(params[:id].to_i == 0) #This is a string
+    if (params[:id].to_i == 0) #This is a string
       @person = Person.find_by_twiki_name(params[:id])
     else #This is a number
       @person = Person.find(params[:id])
@@ -51,11 +51,11 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.nil?
         flash[:error] = "Person with an id of #{params[:id]} is not in this system."
-        format.html { redirect_to(people_url)  }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.html { redirect_to(people_url) }
+        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       else
         format.html # show.html.erb
-        format.xml  { render :xml => @person }
+        format.xml { render :xml => @person }
       end
     end
   end
@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
     redirect_to :action => 'robots' if robot?
     host = get_http_host()
     if !(host.include?("info.sv.cmu.edu") || host.include?("info.west.cmu.edu")) && (current_user.nil?)
-      flash[:error] = 'You don''t have permissions to view this data.'
+      flash[:error] = 'You don' 't have permissions to view this data.'
       redirect_to(people_url)
       return
     end
@@ -91,9 +91,9 @@ class PeopleController < ApplicationController
 
       options = {:to => "help@sv.cmu.edu", :cc => "todd.sedano@sv.cmu.edu",
                  :subject => "rails user account automatically created for #{twiki_name}",
-                  :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
-                  :url_label => "Edit this person's information",
-                  :url => "http://rails.sv.cmu.edu" + edit_person_path(@person)
+                 :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
+                 :url_label => "Edit this person's information",
+                 :url => "http://rails.sv.cmu.edu" + edit_person_path(@person)
       }
       GenericMailer.email(options).deliver
     end
@@ -101,11 +101,11 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.nil?
         flash[:error] = "Person #{params[:twiki_name]} is not in this system."
-        format.html { redirect_to(people_url)  }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.html { redirect_to(people_url) }
+        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       else
-        format.html { render :html => @person, :layout => false }# show.html.erb
-        format.xml  { render :xml => @person }
+        format.html { render :html => @person, :layout => false } # show.html.erb
+        format.xml { render :xml => @person }
       end
     end
   end
@@ -122,18 +122,18 @@ class PeopleController < ApplicationController
     @person = Person.new
     @person.is_active = true
 
-     if Rails.env.development?
-       @domain = GOOGLE_DOMAIN
-     else
-       @domain = "sv.cmu.edu"
-     end
+    if Rails.env.development?
+      @domain = GOOGLE_DOMAIN
+    else
+      @domain = "sv.cmu.edu"
+    end
 
     @strength_themes = StrengthTheme.all
-    
+
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @person }
+      format.xml { render :xml => @person }
     end
   end
 
@@ -185,21 +185,21 @@ class PeopleController < ApplicationController
 #      end
 
       if @person.save
-         create_google_email =  params[:create_google_email]
-         create_twiki_account = params[:create_twiki_account]
-         create_yammer_account = false #params[:create_yammer_account]
-         Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil? &&  params[:create_yammer_account].nil?
-#          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
-#          job.perform
+        create_google_email = params[:create_google_email]
+        create_twiki_account = params[:create_twiki_account]
+        create_yammer_account = false #params[:create_yammer_account]
+        Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? && params[:create_twiki_account].nil? && params[:create_yammer_account].nil?
+                                      #          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
+                                      #          job.perform
 
-#        flash[:error] = error_message unless error_message.blank?
+                                      #        flash[:error] = error_message unless error_message.blank?
 
         flash[:notice] = 'Person was successfully created.'
         format.html { redirect_to(@person) }
-        format.xml  { render :xml => @person, :status => :created, :location => @person }
+        format.xml { render :xml => @person, :status => :created, :location => @person }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -222,43 +222,41 @@ class PeopleController < ApplicationController
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Person was successfully updated.'
         format.html { redirect_to(@person) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def revert_to_version
-    @person = Person.find( params[:id] )
+    @person = Person.find(params[:id])
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
 
   def robots
-      logger.info("curriculum comment: robot detected")
-      format.html # index.html.erb
+    logger.info("curriculum comment: robot detected")
+    format.html # index.html.erb
   end
 
   # DELETE /people/1
   # DELETE /people/1.xml
   def destroy
     if !current_user.is_admin?
-      flash[:error] = 'You don''t have permission to do this action.'
-      redirect_to(people_url) and return   
-    end  
-      
+      flash[:error] = 'You don' 't have permission to do this action.'
+      redirect_to(people_url) and return
+    end
+
     @person = Person.find(params[:id])
     @person.destroy
 
     respond_to do |format|
       format.html { redirect_to(people_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
-
-
 
 
   def my_teams
@@ -266,8 +264,8 @@ class PeopleController < ApplicationController
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
-      flash[:error] = 'You don''t have permission to see another person''s teams.'
-      redirect_to(people_url) and return
+        flash[:error] = 'You don' 't have permission to see another person' 's teams.'
+        redirect_to(people_url) and return
       end
     end
     @course = Course.new()
@@ -288,20 +286,20 @@ class PeopleController < ApplicationController
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
-      flash[:error] = 'You don''t have permission to see another person''s courses.'
-      redirect_to(people_url) and return
+        flash[:error] = 'You don' 't have permission to see another person' 's courses.'
+        redirect_to(people_url) and return
       end
     end
     @courses_registered_as_student = @person.get_registered_courses
     @courses_teaching_as_faculty = @person.teaching_these_courses
   end
 
-  
+
   class ClassProfileState
     attr_accessor :graduation_year, :is_part_time, :program
   end
-  
-  
+
+
   def class_profile
     if params[:class_profile_state]
       @class_profile_state = ClassProfileState.new
@@ -322,9 +320,13 @@ class PeopleController < ApplicationController
         @students = Person.full_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
     end
     @programs = []
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result| @programs << result["masters_program"] end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result|
+      @programs << result["masters_program"]
+    end
     @tracks = []
-    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result| @tracks << result["masters_track"] end
+    ActiveRecord::Base.connection.execute("SELECT distinct masters_track FROM users u;").each do |result|
+      @tracks << result["masters_track"]
+    end
 
     @title = "Class profile for #{@class_profile_state.is_part_time} #{@class_profile_state.program} #{@class_profile_state.graduation_year}"
 
@@ -336,5 +338,5 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
+
 end

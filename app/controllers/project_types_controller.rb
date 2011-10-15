@@ -10,7 +10,7 @@ class ProjectTypesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @project_types }
+      format.xml { render :xml => @project_types }
     end
   end
 
@@ -21,7 +21,7 @@ class ProjectTypesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @project_type }
+      format.xml { render :xml => @project_type }
     end
   end
 
@@ -37,7 +37,7 @@ class ProjectTypesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @project_type }
+      format.xml { render :xml => @project_type }
     end
   end
 
@@ -64,10 +64,10 @@ class ProjectTypesController < ApplicationController
       if @project_type.save
         flash[:notice] = 'ProjectType was successfully created.'
         format.html { redirect_to(@project_type) }
-        format.xml  { render :xml => @project_type, :status => :created, :location => @project_type }
+        format.xml { render :xml => @project_type, :status => :created, :location => @project_type }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @project_type.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @project_type.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -86,10 +86,10 @@ class ProjectTypesController < ApplicationController
       if @project_type.update_attributes(params[:project_type])
         flash[:notice] = 'ProjectType was successfully updated.'
         format.html { redirect_to(@project_type) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @project_type.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @project_type.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -98,7 +98,7 @@ class ProjectTypesController < ApplicationController
   # DELETE /project_types/1.xml
   def destroy
     if !current_user.is_admin?
-      flash[:error] = 'You don''t have permission to do this action.'
+      flash[:error] = 'You don' 't have permission to do this action.'
       redirect_to(project_types_url) and return
     end
 
@@ -107,7 +107,7 @@ class ProjectTypesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(project_types_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 end

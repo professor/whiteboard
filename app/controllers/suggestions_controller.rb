@@ -9,7 +9,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @suggestions }
+      format.xml { render :xml => @suggestions }
     end
   end
 
@@ -20,7 +20,7 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @suggestion }
+      format.xml { render :xml => @suggestion }
     end
   end
 
@@ -29,10 +29,10 @@ class SuggestionsController < ApplicationController
   def new
     @suggestion = Suggestion.new
     @suggestion.page = request.env["HTTP_REFERER"]
-    
+
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @suggestion }
+      format.xml { render :xml => @suggestion }
     end
   end
 
@@ -54,10 +54,10 @@ class SuggestionsController < ApplicationController
       if @suggestion.save
         flash[:notice] = 'Thank you for your suggestion'
         format.html { redirect_to @suggestion.page }
-        format.xml  { render :xml => @suggestion, :status => :created, :location => @suggestion }
+        format.xml { render :xml => @suggestion, :status => :created, :location => @suggestion }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @suggestion.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @suggestion.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -73,10 +73,10 @@ class SuggestionsController < ApplicationController
       if @suggestion.update_attributes(params[:suggestion])
         flash[:notice] = 'suggestion was successfully updated.'
         format.html { redirect_to(@suggestion) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @suggestion.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @suggestion.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -91,22 +91,22 @@ class SuggestionsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(suggestions_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 
 
   def email_suggestion(suggestion, status)
 
-        message = "\"#{suggestion.comment}\"<br/><br/>"
+    message = "\"#{suggestion.comment}\"<br/><br/>"
     message = message + "by #{suggestion.user.human_name}" unless suggestion.user.nil?
 
-      options = {:to => "todd.sedano@sv.cmu.edu",
-                 :subject => "Suggestion #{status}",
-                 :message => message,
-                 :url_label => "Show this suggestion",
-                 :url => "http://rails.sv.cmu.edu" + suggestion_path(suggestion)
-      }
+    options = {:to => "todd.sedano@sv.cmu.edu",
+               :subject => "Suggestion #{status}",
+               :message => message,
+               :url_label => "Show this suggestion",
+               :url => "http://rails.sv.cmu.edu" + suggestion_path(suggestion)
+    }
     GenericMailer.email(options).deliver
 
   end
