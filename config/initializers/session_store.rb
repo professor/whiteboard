@@ -7,4 +7,4 @@ CMUEducation::Application.config.session_store :cookie_store, :key => '_CMUEduca
 # (create the session table with "rails generate session_migration")
 # CMUEducation::Application.config.session_store :active_record_store
                                                                  
-CMUEducation::Application.config.session_store :expire_after => 1.day
+#CMUEducation::Application.config.session_store :expire_after => 1.day
