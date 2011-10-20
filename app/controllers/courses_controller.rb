@@ -113,7 +113,7 @@ class CoursesController < ApplicationController
       @course = Course.find(params[:id])
 
       if (params[:course][:is_configured]) #The previous page was configure action
-        @course.twiki_url = params[:course][:curriculum_url] if @course.twiki_url.blank? && params[:course][:configure_course_twiki]
+        @course.twiki_url = params[:course][:curriculum_url] if params[:course][:configure_course_twiki]
         @course.configured_by_user_id = current_user.id
       else
         msg = @course.update_faculty(params[:people])
