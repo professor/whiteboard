@@ -5,7 +5,7 @@
   </head>
 
   <body>
-    <p><%= @message %></p>
+    <p><%= @message.html_safe %></p>
     <% unless (@url_label.blank? || @url.blank?) %>
         <p><%= link_to @url_label, @url %> </p>
     <% end %>
