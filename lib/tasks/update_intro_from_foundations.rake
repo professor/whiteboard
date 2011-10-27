@@ -1,30 +1,6 @@
 require 'rubygems'
 require 'rake'
 require 'rails'
-#
-##potential fix for authlogic issues
-#module LoginHelper
-#   include Authlogic::TestCase
-#
-#   def login_user_fixture userSymbol
-#     activate_authlogic
-##     UserSession.create(users(:student_sam))
-#     UserSession.create(users(userSymbol))
-#   end
-#
-#   def login_user person
-#     activate_authlogic
-#     @current_user = User.find(person.id)
-#     UserSession.create(@current_user)
-#   end
-#
-#   def current_user(stubs = {})
-#     #current user could get set when being login_user gets called, otherwise use a generic mock model
-#     @current_user ||= mock_model("User", stubs)
-#   end
-#
-#end
-#include LoginHelper
 
   def update_intro_from_foundations(url)
     intro_course = Course.find_by_name("Introduction to Software Engineering")
@@ -53,6 +29,9 @@ require 'rails'
     intro_page.tab_two_contents = intro_page.tab_two_contents.gsub("pages/foundations", "pages/intro_to_se")
     intro_page.tab_three_contents = intro_page.tab_three_contents.gsub("pages/foundations", "pages/intro_to_se")
     intro_page.is_duplicated_page = true
+    intro_page.updated_by_user_id = foundations_page.updated_by_user_id
+
+
 
     if intro_page.save
       puts "Page #{intro_page.id} (#{intro_page.url}) copied successfully from #{foundations_page.id} (#{foundations_page.url})."
@@ -69,7 +48,6 @@ namespace :cmu do
   desc "Update Intro to SE from Foundations pages"
   task(:update_intro => :environment) do
 
-    login_user(User.find(1))
     urls = ["foundations", "foundations_calendar", "foundations_rails_faq",
             "foundations_task1", "foundations_task2", "foundations_task3", "foundations_task4",
             "foundations_task5", "foundations_task6", "foundations_class_notes"]
