@@ -69,14 +69,16 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= f.text_field :last_name, :onblur => "update_twiki_and_email()" %>
   </p>
 
+    <!--
   <% if Rails.env.development? %>
   <p>
-  <%= f.label :password, f.object.new_record? ? nil : "Change password" %><br />
-  <%= f.password_field :password %><br />
+  <%# f.label :password, f.object.new_record? ? nil : "Change password" %><br />
+  <%# f.password_field :password %><br />
     <span class="help_text">(This field only appears in development for local login testing without a network)</span>
   </p>
   <% end %>
-  
+  -->
+    
   <p>
     <%= f.label :twiki_name %><br />
     <%= f.text_field :twiki_name %>
