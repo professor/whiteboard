@@ -311,8 +311,8 @@ class PeerEvaluationController < ApplicationController
         options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
                    :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
         GenericMailer.email(options).deliver
-        report.email_date = Date.today
-        report.save!        
+        report.email_date = Time.now
+        report.save!
       end
 
       personcounter += 1
