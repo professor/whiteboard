@@ -283,6 +283,13 @@ class PeerEvaluationController < ApplicationController
   end
 
   def complete_report
+    if params[:commit] == "Save And Email All"
+      send_email = true
+    else
+      send_email = false
+    end
+             
+    
     @team = Team.find(params[:id])
     @people = @team.people
     personcounter = 0
@@ -296,29 +303,16 @@ class PeerEvaluationController < ApplicationController
       else
         report.feedback = feedback
       end
-
-      report.email_date = Date.today
       report.save!
 
       faculty = @team.faculty_email_addresses()
-
       #Step 2 email feedback
-      if params[:commit] == "Save And Email All"
+      if send_email
         options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
                    :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
         GenericMailer.email(options).deliver
-
-        # ---------- Rails 2 Implementation ----------
-
-        #     GenericMailer.deliver_email(
-        #          :to => person.email,
-        #          :subject => "Peer evaluation feedback from team #{@team.name}",
-        #          :message => feedback.gsub("\n", "<br/>"),
-        #          :url_label => "",
-        #          :url => "",
-        ##         :from => current_user.email,  Spam filters block it if the email from is different than the account it is sent from.
-        #          :cc => faculty
-        #)
+        report.email_date = Date.today
+        report.save!        
       end
 
       personcounter += 1
