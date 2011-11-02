@@ -2,7 +2,7 @@
 <%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border=>"0") %>
 
 <table class="tablesorter">
-<tr><th>Team's Peer Evaluation</th><th>People who have not started the peer evaluation</th></tr>
+<tr><th>Team's Peer Evaluation</th><th>People who have not started the peer evaluation</th><th>Faculty emailed team</th></tr>
 <% @teams.each do |team| %>
 <tr>
   <td>
@@ -13,7 +13,8 @@
         <%= twiki_user_link(person.twiki_name, person.human_name) %>
      <% end %>
   <% end %>
-</td></tr>
+</td><td> <%= format_timestamp(PeerEvaluationReport.emailed_on(team.id)) %>
+</td></tr>        
 <% end %>
 </table>
 
