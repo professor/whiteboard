@@ -20,6 +20,12 @@ class PagesController < ApplicationController
     @page = Page.find_by_url(params[:id])
     @page.revert_to(params[:version].to_i) if params[:version]
 
+    unless @page.viewable?(current_user)
+      flash[:error] = "You don't have permission to do this action."
+      redirect_to(root_url) and return
+    end
+
+
     #This little bit of magic finds the current offering of a course. This is handy for deliverable submission
     #and team lists where the static curriculum website points to the latest offering of the course.
     unless @page.blank? || @page.course.blank? || @page.course.number.blank?

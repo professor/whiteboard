@@ -53,15 +53,21 @@ describe PagesController do
     before do
       Page.delete_all
       login(Factory(:student_sam))
-      @page = Factory(:page, :title => "new title")
+      @page = Factory(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+    end
+
+    describe "GET show" do
+      it "but not for a page that is viewable only by faculty" do
+        get :show, :id => @page.to_param
+        response.should redirect_to(root_url)
+      end
     end
 
     describe "GET edit" do
       it "but not for a page that is editable only by faculty" do
-      @page.is_editable_by_all = false
-      get :edit, :id => @page.to_param
-      response.should redirect_to(page_url)
-       end
+        get :edit, :id => @page.to_param
+        response.should redirect_to(page_url)
+      end
     end
 
    describe "POST update" do
@@ -83,13 +89,21 @@ describe PagesController do
     before do
       login(Factory(:faculty_frank))
 
-      @page = Factory(:page)
+      @page = Factory(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+    end
+
+    describe "GET show" do
+      context "for a page that is not vieweable by all" do
+        before do
+          get :show, :id => @page.to_param
+        end
+        it_should_behave_like "finding page"
+      end
     end
 
     describe "GET edit" do
       context "for a page that is not editable by all" do
         before do
-          @page.is_editable_by_all = false
           get :edit, :id => @page.to_param
         end
         it_should_behave_like "finding page"
