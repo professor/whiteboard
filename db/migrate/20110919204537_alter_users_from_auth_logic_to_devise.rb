@@ -6,6 +6,7 @@ class AlterUsersFromAuthLogicToDevise < ActiveRecord::Migration
       add_column table, :remember_created_at, :timestamp
 
       remove_column table, :persistence_token
+      remove_column table, :perishable_token
       remove_column table, :crypted_password
       remove_column table, :password_salt
       remove_column table, :single_access_token
@@ -40,6 +41,8 @@ class AlterUsersFromAuthLogicToDevise < ActiveRecord::Migration
       rename_column table, :last_sign_in_ip, :last_login_ip
 
       add_column table, :persistence_token, :string
+      add_column table, :perishable_token, :string, :null => false
+
       add_column table, :crypted_password, :string, :limit => 128
       add_column table, :password_salt, :string
       add_column table, :single_access_token, :string

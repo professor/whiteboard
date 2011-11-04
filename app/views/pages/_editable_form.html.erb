@@ -328,6 +328,10 @@
      <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
      <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
   </p>
+    <p>This page is viewable by<br />
+       <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
+       <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
+    </p>
   <p>
     <%= f.submit button_name,  :class => "wymupdate"  %>
   </p>

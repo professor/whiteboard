@@ -79,7 +79,24 @@ describe Page do
     @page.is_editable_by_all = true
     @page.should be_editable(Factory(:student_sam))    
   end
-  
+
+
+  it "is viewable by anyone if permissions are set that way" do
+    @page.should respond_to(:is_viewable_by_all)
+    @page.is_viewable_by_all = true
+    @page.should be_viewable(Factory(:student_sam))
+  end
+
+  it "is not viewable by students when permissions are set that way " do
+    @page.should respond_to(:is_viewable_by_all)
+    @page.is_viewable_by_all = false
+    @page.should_not be_viewable(Factory(:student_sam))
+  end
+
+  it "is always viewable by faculty and admins" do
+    @page.should be_viewable(Factory(:faculty_frank))
+  end
+
 
   it "is versioned" do
     @page.should respond_to(:version)
