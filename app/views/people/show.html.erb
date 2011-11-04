@@ -35,7 +35,8 @@
 <tr class="cmu_table_odd"><td><p>Telephone:</p></td>
     <td><%= render :partial => 'show_telephones' %></td></tr>
 <tr class="cmu_table_even"><td>E-mail:</td>
-    <td><%=h @person.email %></td></tr>
+    <td><%=h @person.email %>
+      <%= link_to image_tag("/images/email.gif", :id => "icon", :width=>"12", :height=>"9", :alt=>"Email", :title=>"Email" + @person.email), "mailto:" + @person.email%>
 <% if @person.is_staff %>
 <tr class="cmu_table_odd"><td>Office:</td>
     <td><%=h @person.office %></td></tr>
