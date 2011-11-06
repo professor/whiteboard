@@ -165,6 +165,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.last_offering(course_number)
+    #TODO: move this sorting into the database
     offerings = Course.find_all_by_number(course_number)
     offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     return offerings.first

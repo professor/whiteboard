@@ -20,7 +20,7 @@
 
 
 
-<% if curriculum_comment.editable(current_user) %>
+<% if curriculum_comment.editable?(current_user) %>
 <div class="comment_edit" style="font-size: 12px;">
     <%= link_to 'Edit', edit_curriculum_comment_path(curriculum_comment) %>
 </div>

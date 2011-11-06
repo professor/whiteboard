@@ -28,15 +28,15 @@ describe Suggestion do
 
 
     it "by an admin" do
-      @saying.editable(@admin_andy).should == true
+      @saying.should be_editable(@admin_andy)
     end
 
     it "by the author" do
-      @saying.editable(@student_sam).should == true
+      @saying.should be_editable(@student_sam)
     end
 
     it "but not by anyone else" do
-      @saying.editable(@faculty_frank).should == false
+      @saying.should_not be_editable(@faculty_frank)
     end
 
   end

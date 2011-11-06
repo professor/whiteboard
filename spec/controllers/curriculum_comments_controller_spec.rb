@@ -95,7 +95,7 @@ describe CurriculumCommentsController do
         put :update, :id => curriculum_comment.to_param, :curriculum_comment => {:comment => 'NNNNN'}
       end
 
-      it_should_behave_like "not editable"
+      it_should_behave_like "permission denied"
     end
 
     describe "DELETE destroy" do

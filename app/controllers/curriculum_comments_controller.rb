@@ -73,19 +73,21 @@ class CurriculumCommentsController < ApplicationController
   # PUT /curriculum_comments/1.xml
   def update
     @curriculum_comment = CurriculumComment.find(params[:id])
-    if editable_or_redirect(@curriculum_comment, @curriculum_comment.url)
-      @types = CurriculumCommentType.all
+    unless @curriculum_comment.editable?(current_user)
+      flash[:error] = I18n.t(:no_permission)
+      redirect_to(@curriculum_comment.url) and return
+    end
+    @types = CurriculumCommentType.all
 
-      respond_to do |format|
-        if @curriculum_comment.update_attributes(params[:curriculum_comment])
-          CurriculumCommentMailer.comment_update(@curriculum_comment, "updated").deliver
-          flash[:notice] = 'Comment was successfully updated.'
-          format.html { redirect_to(@curriculum_comment.url) }
-          format.xml { head :ok }
-        else
-          format.html { render :action => "edit" }
-          format.xml { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @curriculum_comment.update_attributes(params[:curriculum_comment])
+        CurriculumCommentMailer.comment_update(@curriculum_comment, "updated").deliver
+        flash[:notice] = 'Comment was successfully updated.'
+        format.html { redirect_to(@curriculum_comment.url) }
+        format.xml { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml { render :xml => @curriculum_comment.errors, :status => :unprocessable_entity }
       end
     end
   end

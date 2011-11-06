@@ -7,7 +7,7 @@
     <td><%=h suggestion.comment %></td>
     <td><%=h suggestion.created_at.to_s(:long)  %></td>
     <td><%= link_to 'Show', suggestion %></td>
-    <% if suggestion.editable(current_user) %>
+    <% if suggestion.editable?(current_user) %>
       <td><%= link_to 'Edit', edit_suggestion_path(suggestion) %></td>
     <% else %>
       <td>&nbsp;</td>

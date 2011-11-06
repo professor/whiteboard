@@ -1,10 +1,10 @@
 class CurriculumComment < ActiveRecord::Base
-  belongs_to :user, :class_name=>"User", :foreign_key=>"user_id"
+  belongs_to :user
   belongs_to :type, :class_name=>"CurriculumCommentType", :foreign_key=>"curriculum_comment_type_id"
 
   validates_presence_of :comment
 
-  def editable(current_user)
+  def editable?(current_user)
     if (current_user && current_user.is_admin?)
       return true
     end
