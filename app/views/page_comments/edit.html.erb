@@ -1,12 +1,12 @@
 <h1>Editing comment</h1>
 
-<%= form_for(@curriculum_comment) do |f| %>
-  <% if @curriculum_comment.errors.any? %>
+<%= form_for(@page_comment) do |f| %>
+  <% if @page_comment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@curriculum_comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+      <h2><%= pluralize(@page_comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
-      <% @curriculum_comment.errors.full_messages.each do |msg| %>
+      <% @page_comment.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -14,7 +14,7 @@
   <% end %> 
   <p>
     <%= f.label :url %><br />
-    <%=h @curriculum_comment.url %>
+    <%=h @page_comment.url %>
   </p>
   <p>
     Blog Etiquette suggests that is isn't appropriate to change a comment once other people have referenced your comment. It is ok to update your comment if it isn't clear or contains mistakes.
@@ -36,4 +36,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', @curriculum_comment.url %>
+<%= link_to 'Back', @page_comment.url %>

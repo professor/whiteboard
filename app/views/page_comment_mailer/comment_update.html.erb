@@ -1,16 +1,16 @@
 <p></p>
 
 <br/>
-<p>"<%= @curriculum_comment.comment %>"</p>
-<p><% if !@curriculum_comment.user_id.nil? %>
-by <%=h User.find(@curriculum_comment.user_id).human_name %>
+<p>"<%= @page_comment.comment %>"</p>
+<p><% if !@page_comment.user_id.nil? %>
+by <%=h User.find(@page_comment.user_id).human_name %>
 <% end %>
 </p>
 <br/>
 <p>This comment was <%= @status %> on this page:<br/>
-<%= @curriculum_comment.url %> </p>
+<%= @page_comment.url %> </p>
 <!--
-<p><%= link_to "Curriculum page", @curriculum_comment.url %> </p>
+<p><%= link_to "Page", page_url(@page_comment.page) %> </p>
 -->
 <br/>
 <br/>

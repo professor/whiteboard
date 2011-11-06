@@ -1,9 +1,9 @@
-class CurriculumCommentMailer < ActionMailer::Base
+class PageCommentMailer < ActionMailer::Base
   default :from => "scotty.dog@sv.cmu.edu",
           :bcc => "todd.sedano@sv.cmu.edu"
 
   def comment_update(curriculum_comment, status)
-    @curriculum_comment = curriculum_comment
+    @page_comment = curriculum_comment
     @status = status
 
     mail(:to => curriculum_comment.notify_instructors(),

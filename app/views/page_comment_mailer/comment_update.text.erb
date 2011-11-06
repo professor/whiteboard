@@ -1,14 +1,13 @@
 
-"<%= @curriculum_comment.comment %>"
-<% if !@curriculum_comment.user_id.nil? %>
-by <%=h User.find(@curriculum_comment.user_id).human_name %>
+"<%= @page_comment.comment %>"
+<% if !@page_comment.user_id.nil? %>
+by <%=h User.find(@page_comment.user_id).human_name %>
 <% end %>
 
 
 This comment was <%= @status %> on this page:
-<%= @curriculum_comment.url %>
-
-<%= link_to "Curriculum page", @curriculum_comment.url %>
+<%= page_url(@page_comment.page) %>
+<%= link_to "Page", page_url(@page_comment.page) %>
 
 
 Patrolling the campus,
