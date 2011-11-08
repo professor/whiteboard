@@ -115,22 +115,6 @@ class PeerEvaluationController < ApplicationController
         @point_allocations[name] = points
       end
     end
-
-    #    @allocAnswer = ""
-    #    @people.each do |person|
-    #      @allocAnswer << person.human_name + ":" + params[:allocations][alloccounter] + " "
-    #      alloccounter += 1
-    #    end
-    #
-    #    @allocations = PeerEvaluationReview.new(
-    #      :author_id => @author.id,
-    #      :team_id => @team.id,
-    #      :question => "Point allocations",
-    #      :answer => @allocAnswer,
-    #      :sequence_number => questioncounter
-    #    )
-    #    @allocations.save!
-
   end
 
 
@@ -344,18 +328,6 @@ class PeerEvaluationController < ApplicationController
                :message => message, :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
                :url_label => "Complete the survey now"}
     GenericMailer.email(options).deliver
-
-    # ---------- Rails 2 Implementation ----------
-    #         GenericMailer.deliver_email(
-    #           :bcc => "todd.sedano@sv.cmu.edu",
-    #           :to => to_address,
-    #           :subject => "peer evaluation for team #{team.name}",
-    #           :message => message,
-    #           :url_label => "Complete the survey now",
-    #           :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
-    #           :from => from_address,
-    #           :cc => faculty
-    #          )
   end
 
 
