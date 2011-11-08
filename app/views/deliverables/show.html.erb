@@ -44,7 +44,7 @@
       <% if @deliverable.feedback_comment.blank? %>
          None
       <% else %>
-          <%=h @deliverable.feedback_comment %>
+          <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %>
       <% end %>
     </td>
   </tr>
@@ -76,7 +76,7 @@
         <% end %>
     </td>
     <td>
-      <%=h version.comment -%>
+      <%=h version -%>
     </td>
   </tr>
   <% end %>
