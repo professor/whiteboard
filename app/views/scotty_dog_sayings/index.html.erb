@@ -15,7 +15,7 @@ Indeed, Scotty Dog's bark is worse than his bite, but now you have control over 
     <td><%=h scotty_dog_saying.user.human_name %></td>
     <td><%=h scotty_dog_saying.created_at.to_s(:long)  %></td>
     <td><%= link_to 'Show', scotty_dog_saying %></td>
-    <% if scotty_dog_saying.editable(current_user) %>
+    <% if scotty_dog_saying.editable?(current_user) %>
       <td><%= link_to 'Edit', edit_scotty_dog_saying_path(scotty_dog_saying) %></td>
     <% else %>
       <td>&nbsp;</td>

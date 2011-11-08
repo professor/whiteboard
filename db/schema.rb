@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104210105) do
+ActiveRecord::Schema.define(:version => 20111106053221) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -154,6 +154,31 @@ ActiveRecord::Schema.define(:version => 20111104210105) do
 
   add_index "effort_logs", ["person_id"], :name => "index_effort_logs_on_person_id"
   add_index "effort_logs", ["week_number"], :name => "index_effort_logs_on_week_number"
+
+  create_table "page_comment_types", :force => true do |t|
+    t.string   "name"
+    t.string   "background_color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "page_comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "page_id"
+    t.integer  "page_comment_type_id"
+    t.text     "comment"
+    t.boolean  "notify_me"
+    t.string   "display_name"
+    t.string   "semester"
+    t.integer  "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "page_comments", ["page_id"], :name => "index_page_comments_on_page_id"
+  add_index "page_comments", ["semester"], :name => "index_page_comments_on_semester"
+  add_index "page_comments", ["user_id"], :name => "index_page_comments_on_user_id"
+  add_index "page_comments", ["year"], :name => "index_page_comments_on_year"
 
   create_table "pages", :force => true do |t|
     t.integer  "course_id"
@@ -420,7 +445,7 @@ ActiveRecord::Schema.define(:version => 20111104210105) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
+    t.integer  "sign_in_count",                                        :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -436,7 +461,6 @@ ActiveRecord::Schema.define(:version => 20111104210105) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                        :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -491,7 +515,7 @@ ActiveRecord::Schema.define(:version => 20111104210105) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
+    t.integer  "sign_in_count",                                        :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -507,7 +531,6 @@ ActiveRecord::Schema.define(:version => 20111104210105) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                        :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

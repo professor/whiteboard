@@ -16,45 +16,49 @@ class PeerEvaluationController < ApplicationController
   end
 
   def edit_setup
-    @team = Team.find(params[:id])
-    @people = @team.people
+    if has_permissions_or_redirect(:staff, root_path)
+      @team = Team.find(params[:id])
+      @people = @team.people
 
-    @objective = PeerEvaluationLearningObjective.new
+      @objective = PeerEvaluationLearningObjective.new
 
-    @objectives = []
-    @team.people.each do |member|
-      objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
-      if objective.nil?
-        @objectives << PeerEvaluationLearningObjective.new
-      else
-        @objectives << objective
+      @objectives = []
+      @team.people.each do |member|
+        objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
+        if objective.nil?
+          @objectives << PeerEvaluationLearningObjective.new
+        else
+          @objectives << objective
+        end
       end
     end
   end
 
   def complete_setup
-    @team = Team.find(params[:id])
+    if has_permissions_or_redirect(:staff, root_path)
+      @team = Team.find(params[:id])
 
-    counter = 0
+      counter = 0
 
-    @team.people.each do |member|
-      if (PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id}).nil?)
-        @objective = PeerEvaluationLearningObjective.new(
-            :team_id => params[:id],
-            :person_id => member.id,
-            :learning_objective => params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
-        )
-      else
-        @objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
-        @objective.learning_objective = params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
+      @team.people.each do |member|
+        if (PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id}).nil?)
+          @objective = PeerEvaluationLearningObjective.new(
+              :team_id => params[:id],
+              :person_id => member.id,
+              :learning_objective => params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
+          )
+        else
+          @objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
+          @objective.learning_objective = params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
+        end
+
+        @objective.save!
+        counter += 1
       end
 
-      @objective.save!
-      counter += 1
+      flash[:notice] = "Learning objectives have been updated."
+      redirect_to(peer_evaluation_path(@team.course, @team.id))
     end
-
-    flash[:notice] = "Learning objectives have been updated."
-    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 
@@ -244,82 +248,85 @@ class PeerEvaluationController < ApplicationController
   end
 
   def edit_report
-    @team = Team.find(params[:id])
-    @people = @team.people
+    if has_permissions_or_redirect(:staff, root_path)
+      @team = Team.find(params[:id])
+      @people = @team.people
 
-    @report = PeerEvaluationReport.new
+      @report = PeerEvaluationReport.new
 
-    @incompletes = Array.new
-    @team.people.each do |member|
-      unless PeerEvaluationReview.is_completed_for?(member.id, @team.id)
-        @incompletes << (member)
+      @incompletes = Array.new
+      @team.people.each do |member|
+        unless PeerEvaluationReview.is_completed_for?(member.id, @team.id)
+          @incompletes << (member)
+        end
       end
-    end
 
-    @reportArray = Array.new(@people.size)
-    personcounter = 0
-    @people.each do |person|
-      @reportArray[personcounter] = generate_report_for_student(person.id, @team.id)
-      personcounter += 1
-    end
+      @reportArray = Array.new(@people.size)
+      personcounter = 0
+      @people.each do |person|
+        @reportArray[personcounter] = generate_report_for_student(person.id, @team.id)
+        personcounter += 1
+      end
 
-    @report_allocations = {}
-    @point_allocations = Hash.new { |hash, key| hash[key] = {} } #two dimensional hash
-    @people.each do |person|
-      tmp = person.human_name
-      allocation = PeerEvaluationReview.find(:first, :conditions => {:author_id => person.id, :team_id => @team.id, :question => @@point_allocation})
-      unless allocation.nil?
-        @report_allocations[person.human_name] = allocation.answer
+      @report_allocations = {}
+      @point_allocations = Hash.new { |hash, key| hash[key] = {} } #two dimensional hash
+      @people.each do |person|
+        tmp = person.human_name
+        allocation = PeerEvaluationReview.find(:first, :conditions => {:author_id => person.id, :team_id => @team.id, :question => @@point_allocation})
+        unless allocation.nil?
+          @report_allocations[person.human_name] = allocation.answer
 
-        match_array = allocation.answer.scan /((\w| )*):(\d*)\s*/
-        match_array.each do |match|
-          name = match[0]
-          points = match[2]
-          @point_allocations[person.human_name][name] = points
+          match_array = allocation.answer.scan /((\w| )*):(\d*)\s*/
+          match_array.each do |match|
+            name = match[0]
+            points = match[2]
+            @point_allocations[person.human_name][name] = points
+          end
         end
       end
     end
-
   end
 
   def complete_report
-    if params[:commit] == "Save And Email All"
-      send_email = true
-    else
-      send_email = false
-    end
-             
-    
-    @team = Team.find(params[:id])
-    @people = @team.people
-    personcounter = 0
-
-    @people.each do |person|
-      #Step 1 save feedback
-      feedback = params[:peer_evaluation_report][personcounter.to_s][:feedback]
-      report = PeerEvaluationReport.find(:first, :conditions => {:recipient_id => person.id, :team_id => @team.id})
-      if report.nil?
-        report = PeerEvaluationReport.new(:recipient_id => person.id, :team_id => @team.id, :feedback => feedback)
+    if has_permissions_or_redirect(:staff, root_path)
+      if params[:commit] == "Save And Email All"
+        send_email = true
       else
-        report.feedback = feedback
+        send_email = false
       end
-      report.save!
 
-      faculty = @team.faculty_email_addresses()
-      #Step 2 email feedback
-      if send_email
-        options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
-                   :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
-        GenericMailer.email(options).deliver
-        report.email_date = Time.now
+
+      @team = Team.find(params[:id])
+      @people = @team.people
+      personcounter = 0
+
+      @people.each do |person|
+        #Step 1 save feedback
+        feedback = params[:peer_evaluation_report][personcounter.to_s][:feedback]
+        report = PeerEvaluationReport.find(:first, :conditions => {:recipient_id => person.id, :team_id => @team.id})
+        if report.nil?
+          report = PeerEvaluationReport.new(:recipient_id => person.id, :team_id => @team.id, :feedback => feedback)
+        else
+          report.feedback = feedback
+        end
         report.save!
+
+        faculty = @team.faculty_email_addresses()
+        #Step 2 email feedback
+        if send_email
+          options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
+                     :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
+          GenericMailer.email(options).deliver
+          report.email_date = Time.now
+          report.save!
+        end
+
+        personcounter += 1
       end
 
-      personcounter += 1
+      flash[:notice] = "Reports have been successfully saved."
+      redirect_to(peer_evaluation_path(@team.course, @team.id))
     end
-
-    flash[:notice] = "Reports have been successfully saved."
-    redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
 

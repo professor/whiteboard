@@ -10,16 +10,6 @@ Factory.define :course, :class => Course do |c|
   c.updated_by_user_id 10
 end
 
-Factory.define :curriculum_comment_type do |c|
-  c.name 'Comment'
-  c.background_color "#FFF499"
-end
-
-Factory.define :curriculum_comment do |c|
-  c.comment 'This page has a broken link'
-  c.url 'https://curriculum.sv.cmu.edu/ppm/task3/submit.html'
-end
-
 
 Factory.define :delayed_system_job do |c|
 end
@@ -53,6 +43,17 @@ Factory.define :page, :class => Page do |p|
   p.url "my_page"
   p.updated_by_user_id 10
   p.tab_one_contents "Lorem Ipsum"
+end
+
+Factory.define :page_comment do |p|
+  p.association :page, :factory => :page
+#  p.association :person, :factory => :student_sam
+  p.comment 'This page has a broken link'
+end
+
+Factory.define :page_comment_type do |c|
+  c.name 'Comment'
+  c.background_color "#FFF499"
 end
 
 Factory.define :peer_evaluation_learning_objective, :class => PeerEvaluationLearningObjective do |p|

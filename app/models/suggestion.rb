@@ -3,7 +3,7 @@ class Suggestion < ActiveRecord::Base
 
   validates_presence_of :comment
 
-  def editable(current_user)
+  def editable?(current_user)
     if (current_user && current_user.is_admin?)
       return true
     end

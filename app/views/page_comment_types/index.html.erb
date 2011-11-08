@@ -1,0 +1,18 @@
+<% content_for :title, 'Page Comment Types' %>
+<h1>Listing Page Comment Types</h1>
+
+
+<% for type in @page_comment_types %>
+<div class="rounded comment comment_type_<%=h type.name %>" style="padding: 5px; margin-right: 5px; background-color: <%=h type.background_color %>;">
+<%=h type.name %>
+<%=h type.background_color %>
+    <td><%= link_to 'Show', type %></td>
+    <td><%= link_to 'Edit', edit_page_comment_type_path(type) %></td>
+    <td><%= link_to 'Destroy', type, :confirm => 'Are you sure?', :method => :delete %></td>
+</div>
+<br />
+<% end %>
+
+<br />
+
+<%= link_to 'New Curriculum Comment Type', new_page_comment_type_path %>

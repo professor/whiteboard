@@ -19,7 +19,7 @@
 
 
 <p>
-<% if @suggestion.editable(current_user) %>
+<% if @suggestion.editable?(current_user) %>
     <%= link_to 'Edit', edit_suggestion_path(@suggestion) %> |
 <% end %>
 <%= link_to 'Back', suggestions_path %>

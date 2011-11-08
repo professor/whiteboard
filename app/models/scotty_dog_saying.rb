@@ -3,7 +3,7 @@ class ScottyDogSaying < ActiveRecord::Base
 
   validates_presence_of :saying, :user_id
 
-  def editable(current_user)
+  def editable?(current_user)
     if (current_user && current_user.is_admin?)
       return true
     end

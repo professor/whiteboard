@@ -13,9 +13,8 @@ CMUEducation::Application.routes.draw do
   match 'delayed_system_jobs/' => 'delayed_system_jobs#index'
   resources :delayed_system_jobs
   resources :rss_feeds
-  resources :curriculum_comment_types
-  match '/curriculum_comments/test_page' => 'curriculum_comments#test_page'
-  resources :curriculum_comments
+  resources :page_comment_types
+  resources :page_comments
   resources :scotty_dog_sayings
   resources :project_types
   resources :projects
