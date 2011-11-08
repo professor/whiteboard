@@ -115,22 +115,6 @@ class PeerEvaluationController < ApplicationController
         @point_allocations[name] = points
       end
     end
-
-    #    @allocAnswer = ""
-    #    @people.each do |person|
-    #      @allocAnswer << person.human_name + ":" + params[:allocations][alloccounter] + " "
-    #      alloccounter += 1
-    #    end
-    #
-    #    @allocations = PeerEvaluationReview.new(
-    #      :author_id => @author.id,
-    #      :team_id => @team.id,
-    #      :question => "Point allocations",
-    #      :answer => @allocAnswer,
-    #      :sequence_number => questioncounter
-    #    )
-    #    @allocations.save!
-
   end
 
 
@@ -190,60 +174,6 @@ class PeerEvaluationController < ApplicationController
     allocation.save!
 
     flash[:notice] = "Thank you for completing the peer evaluation form."
-    redirect_to(peer_evaluation_path(@team.course, @team.id))
-  end
-
-  def complete_evaluation_old
-    @questions = @@questions
-
-    @team = Team.find(params[:id])
-    @people = @team.people
-
-    @author = Person.find(current_user.id)
-
-    personcounter = 0
-    questioncounter = 0
-    alloccounter = 0
-
-    @people.each do |person|
-      @questions.each do |question|
-        if (PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question}).nil?)
-          @evaluation = PeerEvaluationReview.new(
-              :author_id => @author.id,
-              :recipient_id => person.id,
-              :team_id => @team.id,
-              :question => question,
-              :answer => params[:peer_evaluation_review][(@questions.size*personcounter + questioncounter).to_s][:answer],
-              :sequence_number => questioncounter
-          )
-        else
-          @evaluation = PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question})
-          @evaluation.answer = params[:peer_evaluation_review][(@questions.size*personcounter + questioncounter).to_s][:answer]
-        end
-        @evaluation.save!
-        questioncounter += 1
-      end
-
-      personcounter += 1
-      questioncounter = 0
-    end
-
-    @allocAnswer = ""
-    @people.each do |person|
-      @allocAnswer << person.human_name + ":" + params[:allocations][alloccounter] + " "
-      alloccounter += 1
-    end
-
-    @allocations = PeerEvaluationReview.new(
-        :author_id => @author.id,
-        :team_id => @team.id,
-        :question => "Point allocations",
-        :answer => @allocAnswer,
-        :sequence_number => questioncounter
-    )
-    @allocations.save!
-
-    flash[:notice] = "Thank you for saving the peer evaluation form."
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
@@ -398,18 +328,6 @@ class PeerEvaluationController < ApplicationController
                :message => message, :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
                :url_label => "Complete the survey now"}
     GenericMailer.email(options).deliver
-
-    # ---------- Rails 2 Implementation ----------
-    #         GenericMailer.deliver_email(
-    #           :bcc => "todd.sedano@sv.cmu.edu",
-    #           :to => to_address,
-    #           :subject => "peer evaluation for team #{team.name}",
-    #           :message => message,
-    #           :url_label => "Complete the survey now",
-    #           :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
-    #           :from => from_address,
-    #           :cc => faculty
-    #          )
   end
 
 
