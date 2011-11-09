@@ -7,8 +7,10 @@ class WelcomeController < ApplicationController
 
     if (current_person.nil?)
       @courses_registered_as_student = []
+      @teaching_these_courses_during_current_semester = []
     else
       @courses_registered_as_student = current_person.get_registered_courses
+      @teaching_these_courses_during_current_semester = current_person.teaching_these_courses_during_current_semester
     end
 
     respond_to do |format|

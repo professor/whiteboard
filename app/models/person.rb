@@ -42,6 +42,9 @@ class Person < User
 
   before_save :person_before_save
 
+  def teaching_these_courses_during_current_semester
+    teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+  end
 
   def get_registered_courses
     semester = AcademicCalendar.current_semester()
