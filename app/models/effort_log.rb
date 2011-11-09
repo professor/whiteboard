@@ -26,7 +26,7 @@ class EffortLog < ActiveRecord::Base
 
   def validate_effort_against_registered_courses
     course_error_msg = ""
-    registered_courses = self.person.get_registered_courses()
+    registered_courses = self.person.registered_for_these_courses_during_current_semester()
 
     unregistered_courses = {}
     self.effort_log_line_items.each do |log_line_item|
