@@ -290,7 +290,7 @@ class PeopleController < ApplicationController
         redirect_to(people_url) and return
       end
     end
-    @courses_registered_as_student = @person.get_registered_courses
+    @courses_registered_as_student = @person.registered_for_these_courses_during_current_semester
     @courses_teaching_as_faculty = @person.teaching_these_courses
   end
 

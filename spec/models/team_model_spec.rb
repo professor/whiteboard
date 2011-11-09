@@ -6,7 +6,8 @@ describe Team do
     google_apps_connection.stub(:create_group)
     google_apps_connection.stub(:add_member_to_group)
 
-    team = Factory.create(:team_triumphant)
+    team = Factory.create(:team_triumphant)                 
+#     team.update_google_mailing_list("new", "old", 123)
     lambda { team.update_google_mailing_list("new", "old", 123) }.should raise_error()
 
 

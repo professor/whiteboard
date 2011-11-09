@@ -1,5 +1,9 @@
 class CreatePageComments < ActiveRecord::Migration
   def self.up
+    drop_table :page_comments
+    drop_table :page_comment_types
+
+
     create_table :page_comments do |t|
       t.integer :user_id
       t.integer :page_id

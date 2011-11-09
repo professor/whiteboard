@@ -14,6 +14,10 @@ class Person < User
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
 
+# branch: register-students
+#    has-many :registered_courses
+#    has_many :registered_for_these_courses, :through => :registered_courses, :source => :course
+
   has_and_belongs_to_many :teams, :join_table=>"teams_people"
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
@@ -42,8 +46,15 @@ class Person < User
 
   before_save :person_before_save
 
+  def teaching_these_courses_during_current_semester
+    teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+  end
 
-  def get_registered_courses
+  def registered_for_these_courses_during_current_semester
+# New code...for register-students branch
+#    registered_for_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+
+# Old code...register-students branch
     semester = AcademicCalendar.current_semester()
 
     @sql_str = "select c.* FROM courses c,teams t

@@ -18,7 +18,7 @@
   </p>
   <p>
     <%= f.label :course_id, "Select Course" %>
-    <%= f.collection_select(:course_id, @deliverable.creator.get_registered_courses, :id, :name, :include_blank => true) %>
+    <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => true) %>
   </p>
   <p>
     <%= f.label :task_number, "Task Number" %>
