@@ -338,8 +338,6 @@ class EffortReportsController < ApplicationController
   end
 
   def show_week
-    puts "show_week*****"
-
     if params[:week]
       @week_number = params[:week].to_i
     else
