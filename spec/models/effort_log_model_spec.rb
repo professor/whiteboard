@@ -128,5 +128,40 @@ describe EffortLog do
 #    end
     
   end
+
+	describe '.users_with_effort_against_unregistered_courses' do
+    before do
+      @effort = Factory(:effort_log, :effort_log_line_items => [Factory(:elli_line1)])
+    end
+
+    context 'with courses in error' do
+      before do
+        EffortLog.any_instance.stub(:validate_effort_against_registered_courses).and_return("No course selected")
+      end
+      it 'returns the errors for each user' do
+        EffortLog.users_with_effort_against_unregistered_courses.should == {@effort.person => "No course selected"}
+      end
+    end
+
+    context 'with no courses in error' do
+      before do
+        EffortLog.any_instance.stub(:validate_effort_against_registered_courses).and_return("")
+      end
+      it 'returns nothing' do
+        EffortLog.users_with_effort_against_unregistered_courses.should == {}
+      end
+    end
+  end
+
+  describe '#determine_total_effort' do
+    before do
+      @effort = Factory(:effort_log, :effort_log_line_items => [Factory(:elli_line1, :day6 => 10)])
+      @effort.determine_total_effort
+    end
+    it 'sets the total effort sum' do
+      @effort.sum.should == 34
+    end
+  end
+
   
 end
