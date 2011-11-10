@@ -358,14 +358,6 @@ class EffortReportsController < ApplicationController
   end
 
   def show
-    if params[:week] then
-      @week_number = params[:week].to_i
-    else
-      @week_number = (Date.today.cweek - 0)
-    end
-    @next_week_number = @week_number + 1
-    @this_week_number = @week_number
-    @prev_week_number = @week_number - 1
   end
 
 
@@ -385,95 +377,6 @@ class EffortReportsController < ApplicationController
 #
 #
 #  end
-
-
-  def load_weekly_chart
-    if params[:date]
-      @e_date_str = params[:date]
-      e_date = Date.parse(@e_date_str)
-      @week_number = e_date.cweek-0
-    else
-      @week_number = params[:week].to_i
-#      if params[:week] then
-#        @week_number = params[:week].to_i
-#      else
-#        @week_number = (Date.today.cweek - 0)
-#      end
-    end
-
-    if @week_number <= 0 then
-      @week_number = 1
-    end
-    if @week_number >52 then
-      @week_number = @week_number - 52
-    end
-
-    logger.debug "load weekly chart called"
-    @date_range_start = Date.commercial(Date.today.cwyear, @week_number, 1).strftime "%m/%d/%y" # 1/19/09 (Monday)
-    @date_range_end = Date.commercial(Date.today.cwyear, @week_number, 7).strftime "%m/%d/%y" # 1/25/09 (Sunday)
-
-    reports = EffortLog.find_by_sql(["SELECT task_types.name, users.human_name, effort_log_line_items.sum FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = person_id inner join task_types on task_type_id = task_types.id where course_id = ? and effort_logs.week_number = ? order by name, human_name", params[:id], @week_number])
-
-    @labels_array = []
-    labels_index_hash = {}
-
-    reports.each do |line|
-      l_human_name = line.human_name
-      if !labels_index_hash.has_key?(l_human_name)
-        @labels_array << l_human_name
-        labels_index_hash[l_human_name] = @labels_array.size
-      end
-    end
-
-    #if the user is a student, move them to be the first column of data
-    if current_user && (!current_user.is_staff? && !current_user.is_admin?) then
-      @labels_array.each_index do |i|
-        if @labels_array[i] == current_user.human_name then
-          labels_index_hash[@labels_array[0]] = i+1
-          labels_index_hash[current_user.human_name] = 1
-          @labels_array[i] = @labels_array[0]
-          @labels_array[0] = current_user.human_name
-        end
-      end
-      @labels_array.each_index do |i|
-        if @labels_array[i] != current_user.human_name then
-          @labels_array[i] = 'anonymous'
-        end
-      end
-    end
-
-    if request.env["Anonymous"] then
-      @labels_array.each_index do |i|
-        @labels_array[i] = 'anonymous'
-      end
-    end
-
-    row_width = @labels_array.size + 1 #Plus one is the for an additional first column, the "type" label.
-    current_task = ""
-    current_task_chart_data_row = Array.new(row_width) { |i| "0.0" }
-    @chart_data = []
-    reports.each do |line|
-      if line.name == current_task
-        current_task_chart_data_row[labels_index_hash[line.human_name]] = line.sum
-      else
-        if current_task != "" then
-          @chart_data << current_task_chart_data_row
-          current_task_chart_data_row = Array.new(row_width) { |i| "0.0" }
-        end
-        current_task = line.name
-        current_task_chart_data_row[0] = line.name
-        current_task_chart_data_row[labels_index_hash[line.human_name]] = line.sum
-      end
-    end
-    @chart_data << current_task_chart_data_row
-
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :layout => false }
-    end
-  end
-
 
   def raw_data
     if !(current_user.is_admin? || current_user.is_staff?)
