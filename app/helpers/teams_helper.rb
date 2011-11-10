@@ -1,8 +1,6 @@
 module TeamsHelper
-  
-  def twiki_user_link(twiki_username, human_name)
-      "<a href='http://rails.sv.cmu.edu/people/#{twiki_username}' target='_top'>#{human_name}</a>".html_safe
-  end
+
+
 
   def find_past_teams(person)
     @past_teams_as_member = Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, AcademicCalendar.current_semester(), Date.today.year])
