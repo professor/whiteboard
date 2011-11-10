@@ -27,8 +27,8 @@
 </head>
 <body>
 
-<p style="color: green"><%= flash[:notice] %></p>
-<p style="color: red"><%= flash[:error] %></p>
+<div id="success_explanation"><p style="color: green"><%= flash[:notice] %></p></div>
+<div id="error_explanation"><p style="color: red"><%= flash[:error] %></p></div>
 
 <%= yield  %>
 
