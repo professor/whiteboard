@@ -4,15 +4,6 @@ class TeamsController < ApplicationController
 
   layout 'cmu_sv'
 
-
-  def remove_team_member
-    team = Team.find(params[:team_id])
-    team.remove_person(params[:person_id])
-    team.save
-
-    render :layout=>false
-  end
-
   # GET /courses/1/teams
   # GET /courses/1/teams.xml
   def index
