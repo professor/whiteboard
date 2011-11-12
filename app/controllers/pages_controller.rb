@@ -20,6 +20,11 @@ class PagesController < ApplicationController
     @page = Page.find_by_url(params[:id])
     @page.revert_to(params[:version].to_i) if params[:version]
 
+    if @page.blank?
+        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+        redirect_to(pages_url)
+    end
+
     unless @page.viewable?(current_user)
       flash[:error] = "You don't have permission to do this action."
       redirect_to(root_url) and return
@@ -38,14 +43,8 @@ class PagesController < ApplicationController
     @tab = params[:tab]
 
     respond_to do |format|
-      if @page.nil?
-        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
-        format.html { redirect_to(pages_url) }
-        format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
-      else
-        format.html # show.html.erb
-        format.xml { render :xml => @page }
-      end
+      format.html # show.html.erb
+      format.xml { render :xml => @page }
     end
   end
 
