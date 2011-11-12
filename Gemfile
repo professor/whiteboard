@@ -38,6 +38,7 @@ gem 'rmagick'
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
+gem 'ruby-rtf', :git => "https://github.com/dj2/Ruby-RTF.git"
 
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
