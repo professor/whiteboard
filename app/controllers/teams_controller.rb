@@ -26,24 +26,26 @@ class TeamsController < ApplicationController
 
   # Create a new team from a team table page hosted on the twiki server
   def twiki_new
-    # Example url:
-    # http://info.sv.cmu.edu/twiki/bin/view/Fall2008/Foundations/StudentTeams
-    # http://info.sv.cmu.edu/twiki/bin/view/Fall2009/Foundations/WebHome
-    url = get_twiki_http_referer()
-    @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
-    if (@course.nil?)
-      parts = url.split('/')
-      @course = Course.new()
-      @course.twiki_url = url
-      @course.name = parts[parts.length - 2]
-      match = parts[parts.length - 3].match /(\D+)(\d+)/
-      @course.semester = match[1] unless (match.nil? || match[1].nil?)
-      @course.year = match[2] unless (match.nil? || match[2].nil?)
-      @course.save()
-    else
-      #error
+    if has_permissions_or_redirect(:staff, root_path)
+      # Example url:
+      # http://info.sv.cmu.edu/twiki/bin/view/Fall2008/Foundations/StudentTeams
+      # http://info.sv.cmu.edu/twiki/bin/view/Fall2009/Foundations/WebHome
+      url = get_twiki_http_referer()
+      @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
+      if (@course.nil?)
+        parts = url.split('/')
+        @course = Course.new()
+        @course.twiki_url = url
+        @course.name = parts[parts.length - 2]
+        match = parts[parts.length - 3].match /(\D+)(\d+)/
+        @course.semester = match[1] unless (match.nil? || match[1].nil?)
+        @course.year = match[2] unless (match.nil? || match[2].nil?)
+        @course.save()
+      else
+        #error
+      end
+      redirect_to url
     end
-    redirect_to url
   end
 
   # generate the team table for a course on a page hosted on the twiki server
