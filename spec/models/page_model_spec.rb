@@ -12,6 +12,14 @@ describe Page do
     Page.any_instance.stub(:delete_from_search)
   end
 
+  it "can set indentation_levels with attributes=" do
+    @page.indentation_level = 0
+    @page.indentation_level.should == 0
+    @page.indentation_level=(5)
+    @page.indentation_level.should == 5
+    @page.attributes = { :indentation_level => 20 }
+    @page.indentation_level.should == 20
+  end
 
   it "is valid with valid attributes" do
     @page.should be_valid
