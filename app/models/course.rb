@@ -42,7 +42,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.for_semester(semester, year)
-    return Course.where(:semester = semester, :year = year).order("name ASC")
+    return Course.where(:semester => semester, :year => year).order("name ASC")
   end
 
   def self.current_semester_courses()
