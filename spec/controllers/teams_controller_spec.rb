@@ -46,7 +46,7 @@ describe TeamsController do
       it_should_behave_like "permission denied"
     end
 
-    describe "not POST twiki_new" do
+    describe "not GET twiki_new" do
       before do
         post :twiki_new
       end
