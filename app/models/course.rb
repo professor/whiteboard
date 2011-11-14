@@ -41,19 +41,13 @@ class Course < ActiveRecord::Base
     Course.with_course_name(course_name).first
   end
 
-
-#  def self.for_semester(semester, year, mini)
-#    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
-#  end
-
   def self.for_semester(semester, year)
-    return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
+    return Course.where(:semester = semester, :year = year).order("name ASC")
   end
 
   def self.current_semester_courses()
     return self.for_semester(AcademicCalendar.current_semester(),
                              Date.today.year)
-
   end
 
   def self.next_semester_courses()
