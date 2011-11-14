@@ -65,8 +65,8 @@ module HubStudentImporter
 
   private
 
-  # Should refactor this into a course document class
-  # under this module
+  # Should refactor Course and Student into its
+  # own class file and require this in the importer
   class Course
     attr_accessor :run_date, :semester, :number, :section, :name, :college, :department, :instructors, :students, :total_students
 
