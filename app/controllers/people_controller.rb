@@ -290,6 +290,19 @@ class PeopleController < ApplicationController
         redirect_to(people_url) and return
       end
     end
+    @registered_for_these_courses = [] #@person.registered_for_these_courses
+    @teaching_these_courses = @person.teaching_these_courses
+  end
+
+  def my_courses_verbose
+    @person = Person.find(params[:id])
+    person_id = @person.id.to_i
+    if (current_user.id != person_id)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
+        flash[:error] = 'You don' 't have permission to see another person' 's courses.'
+        redirect_to(people_url) and return
+      end
+    end
     @courses_registered_as_student = @person.registered_for_these_courses_during_current_semester
     @courses_teaching_as_faculty = @person.teaching_these_courses
   end
