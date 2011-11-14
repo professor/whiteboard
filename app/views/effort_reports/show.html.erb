@@ -21,8 +21,6 @@
 
 &nbsp;
 <% end %>
-<a href="<%=url_for :action=>"show_week", :id => params[:id], :week => @this_week_number, :only_path=>true%>">
-<%= image_tag("/images/effort_report.jpg", :size => "373x320", :border=>"0") %></a>
 
 <% if current_user && (current_user.is_staff || current_user.is_admin) then  %>
 <h2>Download your own data</h2>

@@ -12,7 +12,7 @@ class EffortLogsController < ApplicationController
   def create_midweek_warning_email
     if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
       #We skip weeks that students aren't taking courses
-      puts "There is no class this week, so we won't remind students to log effort"
+      logger.info "There is no class this week, so we won't remind students to log effort"
 #      flash[:error] = 'Students are taking courses this week'
 #     redirect_to(root_path)
       return
@@ -33,16 +33,13 @@ class EffortLogsController < ApplicationController
 
     EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
 
-    puts "There were #{@people_without_effort.size} without effort."
-    puts ""
+    logger.info "There were #{@people_without_effort.size} without effort."
     @people_without_effort.each do |person|
-      puts "#{person}"
+      logger.debug "#{person}"
     end
-    puts ""
-    puts "There were #{@people_with_effort.size} with effort."
-    puts ""
+    logger.info "There were #{@people_with_effort.size} with effort."
     @people_with_effort.each do |person|
-      puts "#{person}"
+      logger.debug "#{person}"
     end
 
 #   respond_to do |format|
@@ -115,7 +112,7 @@ class EffortLogsController < ApplicationController
     last_week_year = (Date.today -7).cwyear
 
     if (!EffortLog.log_effort_week?(last_week_year, last_week))
-      puts "There was no class last week, so we won't remind students to log effort"
+      logger.info "There was no class last week, so we won't remind students to log effort"
       return
     end
 

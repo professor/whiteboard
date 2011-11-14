@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe EffortReportsController do
-  fixtures :users
 
   it "should have the correct url for the google charting api" # do
 #    login(users(:student_sam))
@@ -56,6 +55,65 @@ describe EffortReportsController do
       ary[middle.floor]
     else
       ary[middle.floor] + (pct * (ary[middle.ceil] - ary[middle.floor]))
+    end
+  end
+
+  before(:each) do
+    login(Factory(:student_sam))
+  end
+
+  describe "#index" do
+    it "should be successful" do
+      get :index
+      response.should be_success
+    end
+  end
+
+  describe "#show_week" do
+    it "should be successful" do
+      get :show_week
+      response.should be_success
+    end
+
+    context "when the week is passed and is in last year" do
+      before do
+        get :show_week, :week => '-1'
+      end
+
+      specify { assigns(:week_number).should == 1 }
+      specify { assigns(:next_week_number).should == 2 }
+      specify { assigns(:prev_week_number).should == 0 }
+    end
+
+    context "when the week is passed and is in the middle of the year" do
+      before do
+        get :show_week, :week => '26'
+      end
+
+      specify { assigns(:week_number).should == 26 }
+      specify { assigns(:next_week_number).should == 27 }
+      specify { assigns(:prev_week_number).should == 25 }
+    end
+
+    context "when the week is passed and is in the next year" do
+      before do
+        get :show_week, :week => '53'
+      end
+
+      specify { assigns(:week_number).should == 1 }
+      specify { assigns(:next_week_number).should == 2 }
+      specify { assigns(:prev_week_number).should == 0 }
+    end
+
+    context "when the week is in the middle of the year" do
+      before do
+        Date.any_instance.stub(:cweek).and_return(26)
+        get :show_week
+      end
+
+      specify { assigns(:week_number).should == 26 }
+      specify { assigns(:next_week_number).should == 27 }
+      specify { assigns(:prev_week_number).should == 25 }
     end
   end
 end

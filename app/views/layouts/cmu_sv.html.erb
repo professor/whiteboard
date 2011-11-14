@@ -79,8 +79,8 @@
     
 <table border="0" cellpadding="0" cellspacing="0" width="727">                    <tbody><tr>                      <td class="noPrint" colspan="1" rowspan="1" align="left" valign="top" width="727"><%= image_tag("/cmu_sv/lvl_2colContent_top.gif", :border=>"0", :height=>"18", :width=>"727") %></td>                    </tr>                    <tr>                      <td colspan="1" rowspan="1" align="left" valign="top" width="727">                        <div class="admin_2ColLevelContent_Padding">                          <div id="admin_2ColLevelContent">
 <a name="access" shape="rect"></a>               <!--   <h1>Content<br> </h1> -->
-<% if flash[:notice] %><p style="color: green"><%= flash[:notice] %></p><% end %>
-<% if flash[:error] %><p style="color: red"><%= flash[:error] %></p><% end %>
+<% if flash[:notice] %><div id="success_explanation"><p style="color: green"><%= flash[:notice] %></p></div><% end %>
+<% if flash[:error] %><div id="error_explanation"><p style="color: red"><%= flash[:error] %></p></div><% end %>
 
 <%= yield  %>
 
