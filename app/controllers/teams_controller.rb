@@ -40,7 +40,10 @@ class TeamsController < ApplicationController
         match = parts[parts.length - 3].match /(\D+)(\d+)/
         @course.semester = match[1] unless (match.nil? || match[1].nil?)
         @course.year = match[2] unless (match.nil? || match[2].nil?)
-        @course.save()
+
+        if !@course.save()
+          flash[:error] = 'Course could not be created.'
+        end
       else
         #error
       end

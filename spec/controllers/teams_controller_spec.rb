@@ -116,7 +116,7 @@ describe TeamsController do
         it "saves a newly created project" do
           lambda {
             post :create, :team => @team.attributes, :course_id => @team.course.to_param
-          }.should change(Team,:count).by(1)
+          }.should change(Team, :count).by(1)
         end
 
         it "redirects to the index of teams" do
@@ -188,6 +188,26 @@ describe TeamsController do
         it "re-renders the 'edit' template" do
           response.should render_template("edit")
         end
+      end
+
+    end
+
+    describe "GET twiki_new with failed save" do
+      before do
+        @url = 'http://sv.cmu.edu'
+        controller.stub(:get_twiki_http_referer).and_return(@url)
+        crs = stub_model(Course)
+        crs.stub(:save).and_return(false)
+        Course.stub(:new).and_return(crs)
+        get :twiki_new
+      end
+
+      it "should show flash error" do
+        flash[:error].should eql 'Course could not be created.'
+      end
+
+      it "should redirect to referrer" do
+        assert_redirected_to @url
       end
 
     end
