@@ -47,6 +47,24 @@ describe PeopleController do
       end
     end
 
+    describe "GET show_by_twiki failed save" do
+      before do
+        person = stub_model(Person)
+        person.stub(:save).and_return(false)
+        Person.stub(:new).and_return(person)
+        Person.stub(:parse_twiki).and_return('')
+        get :show_by_twiki
+      end
+
+      it "should show flash error" do
+        flash[:error].should eql 'Person could not be saved.'
+      end
+
+      it "should redirect to people" do
+        assert_redirected_to people_url
+      end
+    end
+
     context "with a bad person id" do
       before do
         Person.stub(:find).and_return(nil)
@@ -54,18 +72,30 @@ describe PeopleController do
       end
 
       describe "GET my teams" do
-        it "should redirect to people_url" do
+        before do
           get :my_teams, :id => @id
+        end
+
+        it "should flash error message" do
           flash[:error].should eql 'Person with an id of 2 is not in this system.'
+        end
+
+        it "should redirect to people_url" do
           assert_redirected_to people_url
         end
       end
 
       describe "GET my courses" do
-        it "should redirect to people_url" do
+        before do
           get :my_courses, :id => @id
-          flash[:error].should eql 'Person with an id of 2 is not in this system.'
+        end
+
+        it "should redirect to people_url" do
           assert_redirected_to people_url
+        end
+
+        it "should flash error message" do
+          flash[:error].should eql 'Person with an id of 2 is not in this system.'
         end
       end
     end

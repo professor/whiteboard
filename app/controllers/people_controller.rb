@@ -63,6 +63,7 @@ class PeopleController < ApplicationController
   # GET /people/twiki/AndrewCarnegie
   # GET /people/twiki/AndrewCarnegie.xml
   def show_by_twiki
+
     redirect_to :action => 'robots' if robot?
     host = get_http_host()
     if !(host.include?("info.sv.cmu.edu") || host.include?("info.west.cmu.edu")) && (current_user.nil?)
@@ -87,7 +88,14 @@ class PeopleController < ApplicationController
       @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/mascot.jpg"
       @person.local_near_remote = "Unknown"
-      @person.save
+
+      if !@person.save
+        respond_to do |format|
+          flash[:error] = 'Person could not be saved.'
+          format.html { redirect_to(people_url) and return }
+          format.xml { render :xml => @person.errors, :status => :unprocessable_entity and return }
+        end
+      end
 
       options = {:to => "help@sv.cmu.edu", :cc => "todd.sedano@sv.cmu.edu",
                  :subject => "rails user account automatically created for #{twiki_name}",
