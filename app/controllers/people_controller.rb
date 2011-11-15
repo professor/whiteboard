@@ -261,6 +261,12 @@ class PeopleController < ApplicationController
 
   def my_teams
     @person = Person.find(params[:id])
+
+    if @person.nil?
+      flash[:error] = "Person with an id of #{params[:id]} is not in this system."
+      redirect_to(people_url) and return
+    end
+
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
@@ -283,6 +289,12 @@ class PeopleController < ApplicationController
 
   def my_courses
     @person = Person.find(params[:id])
+
+    if @person.nil?
+      flash[:error] = "Person with an id of #{params[:id]} is not in this system."
+      redirect_to(people_url) and return
+    end
+
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)

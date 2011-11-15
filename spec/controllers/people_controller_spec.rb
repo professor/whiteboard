@@ -35,7 +35,7 @@ describe PeopleController do
     describe "POST create" do
       it "should not be allowed" do
         expect { new_person = Factory.build(:faculty_frank)
-        post :create, :person => new_person}.should_not change { Person.count }
+        post :create, :person => new_person }.should_not change { Person.count }
 
       end
     end
@@ -44,6 +44,29 @@ describe PeopleController do
       it "should render edit page" do
         get :edit, :id => @person1.id
         should render_template("edit")
+      end
+    end
+
+    context "with a bad person id" do
+      before do
+        Person.stub(:find).and_return(nil)
+        @id = 2
+      end
+
+      describe "GET my teams" do
+        it "should redirect to people_url" do
+          get :my_teams, :id => @id
+          flash[:error].should eql 'Person with an id of 2 is not in this system.'
+          assert_redirected_to people_url
+        end
+      end
+
+      describe "GET my courses" do
+        it "should redirect to people_url" do
+          get :my_courses, :id => @id
+          flash[:error].should eql 'Person with an id of 2 is not in this system.'
+          assert_redirected_to people_url
+        end
       end
     end
   end
