@@ -72,6 +72,9 @@ group :development, :test do
   gem 'factory_girl', '2.0.2'
   gem 'factory_girl_rails', '1.1.0'
   gem 'capybara'
+  gem 'simplecov'
+  gem 'spork'
+  gem 'rspec_tag_matchers'
 #  gem 'morning_glory'
 
 #  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/
