@@ -1,4 +1,3 @@
-require 'spec_helper'
 require File.join(File.dirname(__FILE__), "../../../../lib/cmusv/hub_student_importer/hub_student_importer")
 
 describe HubStudentImporter do
@@ -92,8 +91,71 @@ end
 
 describe HubStudentImporter::Course do
   let(:course) { HubStudentImporter::Course.new }
+
+  describe "regex patterns" do
+    describe "::META_COURSE_HEADER_MATCHER" do
+      
+    end
+
+    describe "::META_DATA_LINE1_MATCHER" do
+
+    end
+
+    describe "::META_DATA_LINE2_MATCHER" do
+      
+    end
+
+    describe "::META_INSTRUCTOR_MATCHER" do
+      
+    end
+
+    describe "::META_INSTRUCTOR_NAME_MATCHER" do
+      
+    end
+
+    describe "::META_TOTAL_STUDENTS_MATCHER" do
+      
+    end
+  end
 end
 
 describe HubStudentImporter::Student do
   let(:student) { HubStudentImporter::Student.new }
+
+  def student_record_string(name)
+    "#{name}      Master CIT SV  M  24.0 foobar"
+  end
+
+  describe "regex patterns" do
+    describe "::META_STUDENT_INFO_MATCHER" do
+      it "should not match empty string" do
+        "".should_not match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should not match invalid string" do
+        "asdfas asdfa aiiaidif foo bar 24a dsfasdf 11".should_not match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should match students with simple first last name" do
+        student_record_string("bar, foo").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should match students with '-' in their last names" do
+        student_record_string("bar-baz, foo").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should match students with '-' in their first names" do
+        student_record_string("baz, foo-bar").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should match students with middle names" do
+        student_record_string("baz, foo bar").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+
+      it "should match students with first name of 3+ words" do
+        student_record_string("qux, foo bar baz").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
+      end
+    end
+  end
 end
+

@@ -35,8 +35,6 @@ module HubStudentImporter
           course.instructors << $1
         elsif text.match(Course::META_INSTRUCTOR_NAME_MATCHER)
           course.instructors << $1
-
-          
         elsif text.match(Student::META_STUDENT_INFO_MATCHER)
             first_name, last_name = $1.split(", ")
             course.students << Student.new({ :first_name => first_name.strip, :last_name => last_name.strip, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
