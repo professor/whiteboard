@@ -66,7 +66,7 @@ module HubStudentImporter
     META_DATA_LINE1_MATCHER = /^Run Date: (\d{2}-\w+-\d{4})\s+Course: (\d+) Sect: (\w+)\s+(.*)$/
     META_DATA_LINE2_MATCHER = /^Semester: (\w+)\s+College: (\w+) Department: (\w+).*$/
     META_INSTRUCTOR_MATCHER = /^\s+Instructor\(s\): (.*)$/
-    META_INSTRUCTOR_NAME_MATCHER = /(\w+, \w+.)$/
+    META_INSTRUCTOR_NAME_MATCHER = /(\S+, \S+)$/
     META_TOTAL_STUDENTS_MATCHER = /^Total Number Of Students In Course.*is\s+(\d+)$/
 
     def initialize(opts={})

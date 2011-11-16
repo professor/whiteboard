@@ -94,27 +94,89 @@ describe HubStudentImporter::Course do
 
   describe "regex patterns" do
     describe "::META_COURSE_HEADER_MATCHER" do
-      
+      it "should match CLASS with padding space" do
+        "                CLASS ".should match(HubStudentImporter::Course::META_COURSE_HEADER_MATCHER)
+      end
+
+      it "should not match class in lower case" do
+        "                class ".should_not match(HubStudentImporter::Course::META_COURSE_HEADER_MATCHER)
+      end
     end
 
     describe "::META_DATA_LINE1_MATCHER" do
+      it "should match valid course line 1 info" do
+        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A  FOUNDATNS SW ENG"
+        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
+      end
 
+      it "should match valid course line 1 info with multi-char section number" do
+        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A1  FOUNDATNS SW ENG"
+        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
+      end
+
+      it "should not match invalid course line 1 info" do
+        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A  "
+        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
+      end
     end
 
     describe "::META_DATA_LINE2_MATCHER" do
-      
+      it "should match valid course line 2 info" do
+        "Semester: F11       College: CIT Department: SV".should match(HubStudentImporter::Course::META_DATA_LINE2_MATCHER)
+      end
+
+      it "should not match invalid course line 2 info with missing semester" do
+        ": F11       College: CIT Department: SV".should_not match(HubStudentImporter::Course::META_DATA_LINE2_MATCHER)
+      end
     end
 
     describe "::META_INSTRUCTOR_MATCHER" do
+      it "should match simple instructor name" do
+        "             Instructor(s): SEDANO, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
+      end
       
+      it "should match instructor name with '-' in last name" do
+        "             Instructor(s): Foo-Bar, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
+      end
+      
+      it "should match instructor name with space in last name" do
+        "             Instructor(s): Foo Bar, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
+      end
+
+      it "should match instructor name with first and middle name initials" do
+        "             Instructor(s): Baz, F. B.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
+      end
     end
 
     describe "::META_INSTRUCTOR_NAME_MATCHER" do
+      it "should match simple instructor name" do
+        "                    KATZ, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
+      end
       
+      it "should match instructor name with '-' in last name" do
+        "                    Foo-Bar, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
+      end
+      
+      it "should match instructor name with space in last name" do
+        "                    Foo Bar, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
+      end
+
+      it "should match instructor name with first and middle name initials" do
+        "                    Baz, F.B.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
+      end
+
     end
 
     describe "::META_TOTAL_STUDENTS_MATCHER" do
-      
+      it "should match valid total students line" do
+        total_students_line = "Total Number Of Students In Course 96700 Section A  is    21"
+        total_students_line.should match(HubStudentImporter::Course::META_TOTAL_STUDENTS_MATCHER)
+      end
+
+      it "should match valid total students line with multi-char section name" do
+        total_students_line = "Total Number Of Students In Course 96700 Section A1  is    21"
+        total_students_line.should match(HubStudentImporter::Course::META_TOTAL_STUDENTS_MATCHER)
+      end
     end
   end
 end
@@ -158,4 +220,3 @@ describe HubStudentImporter::Student do
     end
   end
 end
-
