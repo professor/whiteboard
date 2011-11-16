@@ -103,8 +103,8 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.xml
   def destroy
     if !current_user.is_admin?
-      flash[:error] = 'You don' 't have permission to do this action.'
-      redirect_to(project_types_url) and return
+      flash[:error] = 'You don\'t have permission to do this action.'
+      redirect_to(projects_url) and return
     end
 
     @project = Project.find(params[:id])
