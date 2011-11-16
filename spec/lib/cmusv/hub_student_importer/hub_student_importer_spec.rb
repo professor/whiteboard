@@ -91,30 +91,7 @@ describe HubStudentImporter do
 end
 
 describe HubStudentImporter::Course do
-  before(:each) do
-    @course = HubStudentImporter::Course.new
-  end
-
-  describe "#update_parse_step!" do
-    it "should increment by 1 on every call" do
-      expect {
-        @course.update_parse_step!
-      }.should change(@course, :current_parse_step).from(HubStudentImporter::Course::PARSE_STEPS[0]).to(HubStudentImporter::Course::PARSE_STEPS[1])
-    end
-
-    it "should never exceed the max number of steps defined in PARSE_STEPS" do
-      10.times { @course.update_parse_step! }
-      @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS.values.last
-    end
-  end
-
-  describe "#current_parse_step" do
-    describe "when first initialized" do
-      it "should return PARSE_STEPS[0]" do
-        @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS[0]
-      end
-    end
-  end
+  let(:course) { HubStudentImporter::Course.new }
 end
 
 describe HubStudentImporter::Student do
