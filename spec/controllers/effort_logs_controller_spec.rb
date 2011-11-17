@@ -152,6 +152,19 @@ describe EffortLogsController do
             subject.should_not_receive(:create_midweek_warning_email_send_it)
             subject.create_midweek_warning_email
           end
+
+
+           #seperate tests for testing the actual send it method
+
+          it "should call midweek warning email send it" do
+            @person = Person.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "Frodo Baggins",:email => "frodo.baggins@sv.cmu.edu")
+            @mailer = EffortLogMailer.midweek_warning("ScottySaying",@person)
+
+           User.should_receive(:find_by_id).and_return(@person)
+            EffortLogMailer.should_receive(:midweek_warning).and_return(@mailer)
+            subject.create_midweek_warning_email
+            @person.effort_log_warning_email = Time.now
+          end
         end
 
         context "and there are effort logs" do
@@ -174,6 +187,7 @@ describe EffortLogsController do
 
           it "it should not send an email if the person has been emailed recently" do
             @person.effort_log_warning_email = Time.now
+
             subject.should_not_receive(:create_midweek_warning_email_send_it)
             subject.create_midweek_warning_email
           end
@@ -191,6 +205,8 @@ describe EffortLogsController do
     it "it should not throw an error for nil Scotty dog saying" do
       subject.create_midweek_warning_email_for_course(nil, Factory(:mfse).id)
     end
+
+
   end
 
   context "it should send midweekly reminder email to SE students" do
