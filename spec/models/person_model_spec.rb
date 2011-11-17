@@ -209,7 +209,16 @@ describe Person do
   end
 
   describe "person's teams" do
-
+     it "should format past teams" do
+       past_teams = []
+       @student_sam.stub!(:past_teams).and_return(past_teams)
+       @student_sam.formatted_past_teams.should == ""
+       @team_triumphant = Factory(:team_triumphant)
+       past_teams.push(@team_triumphant)
+       @student_sam.formatted_past_teams.should == "Team Triumphant"
+       past_teams.push(@team_triumphant)
+       @student_sam.formatted_past_teams.should == "Team Triumphant, Team Triumphant"
+     end
   end
 
   describe "person's registered courses" do
