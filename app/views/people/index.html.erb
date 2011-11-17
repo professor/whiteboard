@@ -6,6 +6,8 @@
 
 $(document).ready(function() 
     {
+        $('#image_box').css({opacity:1 });
+
        if ($("#filterBoxOne").prop("disabled") == true)
        {
          $('#filterBoxOne').val('');
@@ -70,7 +72,7 @@ function updateImage(uri,label)
  $('#image_box_image').prop("src", uri);
 
  $('#image_box_label').text(label);
-       $('#image_box').animate({opacity:100 }, "slow");
+       $('#image_box').animate({opacity:1 }, "slow");
 
 
 }
