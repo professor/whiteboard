@@ -1,4 +1,5 @@
 require 'ruby-rtf'
+require 'nokogiri'
 
 module HubStudentImporter
   extend self
@@ -65,7 +66,80 @@ module HubStudentImporter
     courses
   end
 
+	#Similar logic flow for RTF parsing but for HTML instead
   def import_html(src_file_path)
+  	# Open file from src_file_path
+  	# create the HTML parser from Nokogiri
+  	# close the file stream
+     	html_file = File.open(src_file_path)
+	 html_parser = Nokogiri::HTML(html_file)
+	 html_file.close()
+
+	 #define regular expression variables here;  These may be removed upon verification of logic used for RTF (leveraged RTF logic for HTML)
+	# time = Regexp.new(/Run Date: \d{2}-\w+-\d{4}/)
+	# course = Regexp.new(/Course: \d+/)
+	# section = Regexp.new(/Sect: \w/)
+	# semester = Regexp.new(/Semester: \w+/)
+	# college = Regexp.new(/College: \w+/)
+	# department = Regexp.new(/Department: .*/)
+	 
+	 
+	 # time_stripped = <line>.match(time).to_s.gsub("Run Date: ","").strip
+	 # course_stripped = <line>.match(course).to_s.gsub("Course: ","").strip
+	 # section_part = string_array[2].match(section).to_s.gsub("Sect: ","").strip
+	 # section_name = string_array[2].match(/\w+\s\w+\s\w+/).to_s
+	 # string_array[3].match(/Semester: \w+/).to_s.gsub("Semester: ","").strip
+	 # string_array[3].match(/Department: .*/).to_s.gsub("Department: ","").strip
+	 # string_array[4].gsub("Instructor(s): ","").match(/\w+, .*/)
+	 #  string_array[6].match(/^\s*Name/) - Determines which column is right before the students
+	 #  string_array[10].match(/\w+\s?\w*, \w+\s?[a-zA-z|\.]*/).strip - for last name, first name
+	 
+	 # Parse the html file by the tag <pre> and loop per tag (the HTML contents that we care about are surrounded in <pre> tags.
+	 # In the case where a multi-set HTML document exists (e.g. Foundations has a A section and a B section), the <pre> tags easily
+	 # distinguish which Semester portion the students are registered for.
+	 
+	 xpath_parser = html_parser.xpath("//pre")
+	 xpath_parser.each do |xpath_section|
+	 
+	 # split the file by newline character to access data line by line
+	    file_array = xpath_section.split(/\n+/)
+	    file_array.each_with_index do |string_line, i|
+		if course.current_parse_step == Course::PARSE_STEPS[0] && string_line.match(Course::META_DATA_LINE1_MATCHER)
+        		course.run_date = Time.parse($1)
+        		course.number = $2
+        		course.section = $3
+        		course.name = $4
+
+        		course.update_parse_step!
+      		elsif course.current_parse_step == Course::PARSE_STEPS[1] && string_line.match(Course::META_DATA_LINE2_MATCHER)
+        		course.semester = $1
+        		course.college = $2
+        		course.department = $3
+
+        		course.update_parse_step!
+      		elsif course.current_parse_step == Course::PARSE_STEPS[2] && string_line.match(Course::META_INSTRUCTOR_MATCHER)
+        		course.instructors << $1
+      		elsif course.current_parse_step == Course::PARSE_STEPS[2] && string_line.match(Course::META_INSTRUCTOR_NAME_MATCHER)
+        		course.instructors << $1
+
+        		course.update_parse_step!
+      		elsif course.current_parse_step == Course::PARSE_STEPS[3] && string_line.match(Student::META_STUDENT_INFO_MATCHER)
+          		first_name, last_name = $1.split(", ")
+          		course.students << Student.new({ :first_name => first_name, :last_name => last_name, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
+      		elsif course.current_parse_step == Course::PARSE_STEPS[3] && string_line.match(Course::META_TOTAL_STUDENTS_MATCHER)
+        		course.update_parse_step!
+
+        		course.total_students = $1.to_i
+
+        		course.update_parse_step!
+      		elsif course.current_parse_step == Course::PARSE_STEPS.values.last
+        		courses << course
+        		course = Course.new
+      		else
+        	# ignore junk
+      		end   
+	    end
+	 end
   end
 
   private
