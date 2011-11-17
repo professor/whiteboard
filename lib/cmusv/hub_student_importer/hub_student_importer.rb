@@ -70,6 +70,8 @@ module HubStudentImporter
 	# college = Regexp.new(/College: \w+/)
 	# department = Regexp.new(/Department: .*/)
 	 
+	 courses = []
+	 course = Course.new
 	 
 	 # time_stripped = <line>.match(time).to_s.gsub("Run Date: ","").strip
 	 # course_stripped = <line>.match(course).to_s.gsub("Course: ","").strip
@@ -85,46 +87,39 @@ module HubStudentImporter
 	 # In the case where a multi-set HTML document exists (e.g. Foundations has a A section and a B section), the <pre> tags easily
 	 # distinguish which Semester portion the students are registered for.
 	 
-	 xpath_parser = html_parser.xpath("//pre")
-	 xpath_parser.each do |xpath_section|
+	 search_parser = html_parser.search("//pre")
+	 search_parser.each do |search_section|
 	 
 	 # split the file by newline character to access data line by line
-	    file_array = xpath_section.split(/\n+/)
+	    file_array = search_section.to_s.split(/\n+/)
 	    file_array.each_with_index do |string_line, i|
-		if course.current_parse_step == Course::PARSE_STEPS[0] && string_line.match(Course::META_DATA_LINE1_MATCHER)
-        		course.run_date = Time.parse($1)
-        		course.number = $2
-        		course.section = $3
-        		course.name = $4
-
-        		course.update_parse_step!
-      		elsif course.current_parse_step == Course::PARSE_STEPS[1] && string_line.match(Course::META_DATA_LINE2_MATCHER)
-        		course.semester = $1
-        		course.college = $2
-        		course.department = $3
-
-        		course.update_parse_step!
-      		elsif course.current_parse_step == Course::PARSE_STEPS[2] && string_line.match(Course::META_INSTRUCTOR_MATCHER)
-        		course.instructors << $1
-      		elsif course.current_parse_step == Course::PARSE_STEPS[2] && string_line.match(Course::META_INSTRUCTOR_NAME_MATCHER)
-        		course.instructors << $1
-
-        		course.update_parse_step!
-      		elsif course.current_parse_step == Course::PARSE_STEPS[3] && string_line.match(Student::META_STUDENT_INFO_MATCHER)
-          		first_name, last_name = $1.split(", ")
-          		course.students << Student.new({ :first_name => first_name, :last_name => last_name, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
-      		elsif course.current_parse_step == Course::PARSE_STEPS[3] && string_line.match(Course::META_TOTAL_STUDENTS_MATCHER)
-        		course.update_parse_step!
-
-        		course.total_students = $1.to_i
-
-        		course.update_parse_step!
-      		elsif course.current_parse_step == Course::PARSE_STEPS.values.last
-        		courses << course
-        		course = Course.new
-      		else
-        	# ignore junk
-      		end   
+		
+			unless string_line.match(Course::META_COURSE_HEADER_MATCHER)
+				if string_line.match(Course::META_DATA_LINE1_MATCHER)
+					course.run_date = Time.parse($1)
+					course.number = $2
+					course.section = $3
+					course.name = $4
+				elsif string_line.match(Course::META_DATA_LINE2_MATCHER)
+					course.semester = $1
+					course.college = $2
+					course.department = $3
+				elsif string_line.match(Course::META_INSTRUCTOR_MATCHER)
+					course.instructors << $1
+				elsif string_line.match(Course::META_INSTRUCTOR_NAME_MATCHER)
+					course.instructors << $1
+				elsif string_line.match(Student::META_STUDENT_INFO_MATCHER)
+					first_name, last_name = $1.split(", ")
+					course.students << Student.new({ :first_name => first_name.strip, :last_name => last_name.strip, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
+				elsif string_line.match(Course::META_TOTAL_STUDENTS_MATCHER)
+					course.total_students = $1.to_i
+				else
+					# ignore junk
+				end
+			else
+				course = Course.new
+				courses << course
+			end
 	    end
 	 end
   end
