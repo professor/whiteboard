@@ -315,6 +315,7 @@ DEPENDENCIES
   mechanize
   mocha
   newrelic_rpm
+  nokogiri (= 1.5.0)
   omniauth (= 0.3.0.rc3)
   paperclip
   pg
