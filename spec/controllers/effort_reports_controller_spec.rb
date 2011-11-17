@@ -116,4 +116,13 @@ describe EffortReportsController do
       specify { assigns(:prev_week_number).should == 25 }
     end
   end
+
+  describe "GET course" do
+    it "should be redirected to effort_report_url if a invalid course_id is given" do
+      get :course, :course_id => 999
+      response.should redirect_to('/effort_reports/index')
+    end
+  end
+
+
 end

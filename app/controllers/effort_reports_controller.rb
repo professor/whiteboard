@@ -318,7 +318,12 @@ class EffortReportsController < ApplicationController
     puts "PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:course_id]}"
     @chart_url = generate_course_chart(@panel_state.year, @panel_state.week_number, @panel_state.course_id)
 
-    @course = Course.find(params[:course_id])
+    begin
+      @course = Course.find(params[:course_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to '/effort_reports/index'
+    end
+
   end
 
 

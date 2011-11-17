@@ -9,6 +9,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :updated_by_user_id
   validates_uniqueness_of :url, :allow_blank => true
   validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
+  validates_numericality_of :task_duration, :allow_nil => true, :allow_blank => true
 
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
 

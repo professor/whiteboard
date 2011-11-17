@@ -145,6 +145,21 @@ describe DeliverablesController do
     end
 
 
+  describe "POST create" do
+    it "should fail if task_number is not a number" do
+      @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+
+      deliverable = Deliverable.new
+      deliverable.course = @course
+      deliverable.creator = @student_sam
+      deliverable.task_number = 'aaa'
+      deliverable.save.should == false
+
+      #post :create, {:course_id => @course.id, :creator => @student_sam}
+      #response.should_not be_success
+    end
+  end
+
 #    describe "GET edit" do
 #
 #      it 'assigns @efforts' do
