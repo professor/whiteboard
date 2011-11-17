@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109050657) do
+ActiveRecord::Schema.define(:version => 20111117004719) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
+
+  create_table "courses_people", :id => false, :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "courses_people", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -153,7 +162,17 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.datetime "updated_at"
   end
 
-
+  create_table "page_attachments", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "submitter_id"
+    t.datetime "submission_date"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_comment_types", :force => true do |t|
     t.string   "name"
