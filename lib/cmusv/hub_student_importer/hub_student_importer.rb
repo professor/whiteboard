@@ -13,7 +13,7 @@ module HubStudentImporter
     document_hash = parser.parse(rtf_source)
 
     courses = []
-    course = Course.new
+    course = nil
 
     document_hash.sections.each do |section|
       # first clean up the text
