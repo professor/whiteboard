@@ -63,24 +63,16 @@ module HubStudentImporter
 	 html_file.close()
 
 	 #define regular expression variables here;  These may be removed upon verification of logic used for RTF (leveraged RTF logic for HTML)
-	# time = Regexp.new(/Run Date: \d{2}-\w+-\d{4}/)
-	# course = Regexp.new(/Course: \d+/)
-	# section = Regexp.new(/Sect: \w/)
-	# semester = Regexp.new(/Semester: \w+/)
-	# college = Regexp.new(/College: \w+/)
-	# department = Regexp.new(/Department: .*/)
+	 html_line1_matcher = Regexp.new(/^Run Date: (\d{2}-\w+-\d{4})\s*Course:\s*(\d+)\s*Sect:\s*(\w+)\s*(.*)$/)
+	 html_line2_matcher = Regexp.new(/^Semester: (\w+)\s*College:\s*(\w+)\s*Department:\s*(\w+).*$/)
+	 html_instructor_line = Regexp.new(/^\s+Instructor\(s\): (.*)$/)
+	 html_instructor_name_line = Regexp.new(/(\S+, \S+)$/)
+	 html_meta_student_info = Regexp.new(/^(\w+\s?\w*, \w+\s?[a-zA-z|\.]*)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
+	 html_meta_total_students = Regexp.new(/^Total Number Of Students In Course.*is\s+(\d+)$/)
 	 
 	 courses = []
 	 course = Course.new
 	 
-	 # time_stripped = <line>.match(time).to_s.gsub("Run Date: ","").strip
-	 # course_stripped = <line>.match(course).to_s.gsub("Course: ","").strip
-	 # section_part = string_array[2].match(section).to_s.gsub("Sect: ","").strip
-	 # section_name = string_array[2].match(/\w+\s\w+\s\w+/).to_s
-	 # string_array[3].match(/Semester: \w+/).to_s.gsub("Semester: ","").strip
-	 # string_array[3].match(/Department: .*/).to_s.gsub("Department: ","").strip
-	 # string_array[4].gsub("Instructor(s): ","").match(/\w+, .*/)
-	 #  string_array[6].match(/^\s*Name/) - Determines which column is right before the students
 	 #  string_array[10].match(/\w+\s?\w*, \w+\s?[a-zA-z|\.]*/).strip - for last name, first name
 	 
 	 # Parse the html file by the tag <pre> and loop per tag (the HTML contents that we care about are surrounded in <pre> tags.
@@ -94,34 +86,35 @@ module HubStudentImporter
 	    file_array = search_section.to_s.split(/\n+/)
 	    file_array.each_with_index do |string_line, i|
 		
-			unless string_line.match(Course::META_COURSE_HEADER_MATCHER)
-				if string_line.match(Course::META_DATA_LINE1_MATCHER)
+			unless string_line.match("</pre>")
+				if string_line.match(html_line1_matcher)
 					course.run_date = Time.parse($1)
 					course.number = $2
 					course.section = $3
 					course.name = $4
-				elsif string_line.match(Course::META_DATA_LINE2_MATCHER)
+				elsif string_line.match(html_line2_matcher)
 					course.semester = $1
 					course.college = $2
 					course.department = $3
-				elsif string_line.match(Course::META_INSTRUCTOR_MATCHER)
+				elsif string_line.match(html_instructor_line)
 					course.instructors << $1
-				elsif string_line.match(Course::META_INSTRUCTOR_NAME_MATCHER)
+				elsif string_line.match(html_instructor_name_line)
 					course.instructors << $1
-				elsif string_line.match(Student::META_STUDENT_INFO_MATCHER)
-					first_name, last_name = $1.split(", ")
+				elsif string_line.match(html_meta_student_info)
+					last_name, first_name = $1.split(", ")
 					course.students << Student.new({ :first_name => first_name.strip, :last_name => last_name.strip, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
-				elsif string_line.match(Course::META_TOTAL_STUDENTS_MATCHER)
+				elsif string_line.match(html_meta_total_students)
 					course.total_students = $1.to_i
 				else
 					# ignore junk
 				end
 			else
-				course = Course.new
 				courses << course
+				course = Course.new
 			end
 	    end
 	 end
+	 courses
   end
 
   private
