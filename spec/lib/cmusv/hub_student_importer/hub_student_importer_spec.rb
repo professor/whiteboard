@@ -85,7 +85,22 @@ describe HubStudentImporter do
   end
 
   describe "#import_html" do
-    
+    describe "when source file is not found" do
+	   it "should raise Errno::ENOENT" do
+	      expect{
+	         HubStudentImporter.import_html("erroneous_file.html")
+	      }.should raise_error(Errno::ENOENT)
+	   end
+	end
+	
+	describe "when source file is found" do
+      describe "when given file with valid HTML format" do
+        it "should parse the HTML correctly" do
+            courses = HubStudentImporter.import_html("public/data_input_mfse_fall_2011.html")
+			courses.length.should == 1
+        end
+	  end
+	end
   end
 end
 
@@ -220,3 +235,4 @@ describe HubStudentImporter::Student do
     end
   end
 end
+
