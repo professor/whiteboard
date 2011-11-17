@@ -3,6 +3,7 @@
   <%= javascript_include_tag 'tablesorter' %>
   <%= javascript_include_tag 'tablesorter_filter' %>
 <script type="text/javascript">
+
 $(document).ready(function() 
     {
        if ($("#filterBoxOne").prop("disabled") == true)
@@ -28,7 +29,7 @@ $(document).ready(function()
         $('#close_image_box').click(function()
         {
           //the messagebox gets scrool down with top property and gets hidden with zero opacity
-          $('#image_box').animate({ top:"+=15px",opacity:0 }, "slow");
+          $('#image_box').animate({opacity:0 }, "slow");
         });
 
         //hoving over a line selects it
@@ -69,6 +70,9 @@ function updateImage(uri,label)
  $('#image_box_image').prop("src", uri);
 
  $('#image_box_label').text(label);
+       $('#image_box').animate({opacity:100 }, "slow");
+
+
 }
 
 
