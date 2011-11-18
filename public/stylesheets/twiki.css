@@ -134,3 +134,12 @@ font-size:190%;
     
     background-color: #f2f3f6;
 }
+
+.patternTopic .twikiTable td a:hover {
+color:#666666;
+}
+
+.patternTopic .twikiTable th a:hover {
+color:#FFFFFF;
+background-color: #6B7F93;
+}
