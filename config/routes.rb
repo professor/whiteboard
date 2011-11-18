@@ -86,6 +86,7 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/past_teams_list' => 'teams#past_teams_list', :as => :past_teams_list
   match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'
   match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
+   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
   match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
   match '/:controller(/:action(/:id))'
   match '/new_features' => 'welcome#new_features', :as => :new_features
