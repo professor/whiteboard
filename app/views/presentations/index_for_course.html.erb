@@ -1,0 +1,5 @@
+<h1>Presentation for <%= @course.display_name %></h1>
+
+    <%= render :partial => "presentation_listing", :locals => { :presentations => @presentations, :skip_course_column => true }%>
+    <%= link_to "Assign new Presentation"%>
+<br />

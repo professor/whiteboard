@@ -1,0 +1,47 @@
+<p>Create a zip file if the task contains more than one file.</p>
+
+<%= form_for @deliverable, :html => { :multipart => true } do |f| %>
+  <% if @deliverable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deliverable.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
+
+      <ul>
+      <% @deliverable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+  <p>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, :size => "50" %>
+  </p>
+  <p>
+    <%= f.label :course_id, "Select Course" %>
+    <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :task_number, "Task Number" %>
+    <%= f.text_field :task_number, :size => "3" %>
+  </p>
+  <p>
+    <%= f.label :is_team_deliverable, "Team Deliverable?" %>
+    <%= f.check_box :is_team_deliverable %>
+  </p>
+  <div class="deliverable_attachment">
+  <%= fields_for :deliverable_attachment do |attachment_form| -%>
+    <p>
+      <%= attachment_form.label :attachment, "Deliverable file to upload" %>
+      <%= attachment_form.file_field :attachment %>
+    </p>
+    <p>
+      <%= attachment_form.label :comment, "Comments" %>
+      <br>
+      <%= attachment_form.text_area :comment, :size=>"90x10" %>
+    </p>
+  <% end -%>
+  </div>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>
