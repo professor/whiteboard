@@ -133,18 +133,18 @@ Factory.define :team_terrific, :class => Team do |t|
 
 end
 
-Factory.define :your_name_here, :parent => :person do |p|
+Factory.define :sheng_hao_tsao, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 0
   p.graduation_year "2012"
   p.masters_program  "SE"
   p.masters_track  "Tech"
-  p.twiki_name "FirstLast"
-  p.first_name "First"
-  p.last_name "Last"
-  p.human_name "Your Name"
-  p.email "your.email@sv.cmu.edu"
-  p.webiso_account "your.name@andrew.cmu.edu"
+  p.twiki_name "ShengHaoTsao"
+  p.first_name "Sheng-Hao"
+  p.last_name "Tsao"
+  p.human_name "Sheng-Hao Tsao"
+  p.email "sheng-hao.tsao@sv.cmu.edu"
+  p.webiso_account "shenghat@andrew.cmu.edu"
 end
 
 
@@ -156,7 +156,7 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:your_name_here)
+Factory.create(:sheng_hao_tsao)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
