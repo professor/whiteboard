@@ -67,7 +67,7 @@ module HubStudentImporter
    html_line2_matcher = Regexp.new(/^Semester: (\w+)\s*College:\s*(\w+)\s*Department:\s*(\w+).*$/)
    html_instructor_line = Regexp.new(/^\s+Instructor\(s\): (.*)$/)
    html_instructor_name_line = Regexp.new(/(\S+, \S+)$/)
-   html_meta_student_info = Regexp.new(/^(\w+\s?\w*, \w+\s?[a-zA-z|\.]*)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
+   html_meta_student_info = Regexp.new(/^(\w+\s?[a-zA-z|\.|-]*, \w+\s?[a-zA-z|\.|-]*)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
    html_meta_total_students = Regexp.new(/^Total Number Of Students In Course.*is\s+(\d+)$/)
    
    courses = []
@@ -102,7 +102,7 @@ module HubStudentImporter
           course.instructors << $1
         elsif string_line.match(html_meta_student_info)
           last_name, first_name = $1.split(", ")
-          course.students << Student.new({ :first_name => first_name.strip, :last_name => last_name.strip, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6, :user_id => $7})
+          course.students << Student.new({ :first_name => first_name.strip, :last_name => last_name.strip, :class => $2, :college => $3, :department => $4, :g_o => $5, :units => $6.to_f, :user_id => $7})
         elsif string_line.match(html_meta_total_students)
           course.total_students = $1.to_i
         else
