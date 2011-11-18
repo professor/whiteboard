@@ -67,7 +67,7 @@ module HubStudentImporter
    html_line2_matcher = Regexp.new(/^Semester: (\w+)\s*College:\s*(\w+)\s*Department:\s*(\w+).*$/)
    html_instructor_line = Regexp.new(/^\s+Instructor\(s\): (.*)$/)
    html_instructor_name_line = Regexp.new(/(\S+, \S+)$/)
-   html_meta_student_info = Regexp.new(/^(.+, .+)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
+   html_meta_student_info = Regexp.new(/^(\w+\s?[A-Za-z|\.|-]*, \w+\s?[A-Za-z|\.|-]*)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
    html_meta_total_students = Regexp.new(/^Total Number Of Students In Course.*is\s+(\d+)$/)
    
    courses = []
