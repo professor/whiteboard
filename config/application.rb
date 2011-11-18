@@ -50,7 +50,7 @@ module CMUEducation
   # no regular words or you'll be exposed to dictionary attacks.
   config.session_store = {
     :session_key => '_CMUEducation_session',
-    :secret      => '1d49995d604604d69d2c9dbb99eadb133c1385c9a2be3aa98d339732b76012b07e3c227f9ea10f2c281c6cfa678d27c02d552ef107ace23df59ba438aa81d47e'
+    :secret      => '1d49995d6078d27c02d552ef107ace23df59ba438aa81d47e'
   }     
 
   end

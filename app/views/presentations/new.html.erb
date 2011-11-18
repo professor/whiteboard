@@ -1,0 +1,9 @@
+<%= content_for :title, "New presentation" %>
+
+<h1>New Presentation</h1>
+
+<%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
+
+<%= link_to 'Cancel', my_presentations_path(@presentation.creator) %>
+<br/>
+<br/>

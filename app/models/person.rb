@@ -13,6 +13,8 @@ class Person < User
 
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
+  has_many :created_presentations, :class_name => "Presentation", :source => :creator
+  has_many :presentations
 
 # branch: register-students
 #    has-many :registered_courses

@@ -2,6 +2,7 @@ CMUEducation::Application.routes.draw do
   resources :search, :only => [:index]
   resources :deliverables
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
+  match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
   match '/sponsored_project_sponsors/:id/archive' => 'sponsored_project_sponsors#archive', :as => :archive_sponsored_project_sponsor
@@ -44,6 +45,8 @@ CMUEducation::Application.routes.draw do
       get :configure
     end
   end
+
+  resources :presentations
 
   match '/courses/:course_id/peer_evaluations' => 'peer_evaluation#index_for_course', :via => :get, :as => "peer_evaluations"
   match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"

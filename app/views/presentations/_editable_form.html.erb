@@ -1,0 +1,36 @@
+<%= form_for @presentation, :html => { :multipart => true } do |f| %>
+  <% if @presentation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@presentation.errors.count, "error") %> prohibited this presentation from being saved:</h2>
+
+      <ul>
+      <% @presentation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= f.label :name, "Presentation Name" %>
+    <%= f.text_field(:name) %>
+  </p>
+  <p>
+    <%= f.label :presentation, "Upload Presentation" %>
+    <%= f.file_field(:presentation) %>
+  </p>
+  <p>
+    <%= f.label :team_id, "Select Team" %>
+    <%= f.collection_select(:team_id, Team.all, :id, :name, :include_blank => true) %>
+  </p>
+  <p>
+    <%= f.label :user_id, "Select User" %>
+    <%= f.collection_select(:user_id, Person.where("is_student = true"), :id, :human_name, :include_blank => true) %>
+  </p>
+  <p>
+
+  </p>
+
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>

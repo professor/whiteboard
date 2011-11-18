@@ -1,0 +1,20 @@
+<h1>Listing Presentations</h1>
+
+  <% if current_user.is_staff %>
+    <% if !@created_presentations.blank? %>
+    <h2>Created Presentations</h2>
+    <%= render :partial => "presentation_listing", :locals => { :presentations => @created_presentations}%>
+    <br>
+    <% end %>
+  <% end %>
+
+  <% if !@presentations.blank? %>
+    <h2>My Presentations</h2>
+    <%= render :partial => "presentation_listing", :locals => { :presentations => @presentations}%>
+    <br>
+  <% end %>
+
+<br />
+<% if (current_user.is_staff? || current_user.is_admin?) %>
+    <%= link_to 'New presentation', new_presentation_path %>
+<% end %>
