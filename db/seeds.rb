@@ -143,8 +143,8 @@ Factory.define :your_name_here, :parent => :person do |p|
   p.first_name "First"
   p.last_name "Last"
   p.human_name "Your Name"
-  p.email "your.email@sv.cmu.edu"
-  p.webiso_account "your.name@andrew.cmu.edu"
+  p.email "kristoffer.pantic@sv.cmu.edu"
+  p.webiso_account "kpantic@andrew.cmu.edu"
 end
 
 

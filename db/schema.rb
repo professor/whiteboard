@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109050657) do
+ActiveRecord::Schema.define(:version => 20111118034652) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -248,6 +248,19 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
   add_index "peer_evaluation_reviews", ["author_id"], :name => "index_peer_evaluation_reviews_on_author_id"
   add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
   add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
+
+  create_table "presentations", :force => true do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.string   "presentation_file_name"
+    t.string   "presentation_content_type"
+    t.datetime "presentation_updated_at"
+    t.integer  "presentation_file_size"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
 
   create_table "project_types", :force => true do |t|
     t.string   "name"

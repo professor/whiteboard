@@ -147,3 +147,8 @@ Factory.define :user, :class => User do |p|
   p.password_salt "adasdsa"
   p.crypted_password "adasdsaf"
 end
+
+Factory.define :presentation, :class => Presentation do |p|
+  p.user { |user| user.association(:user)}
+  p.creator { |creator| creator.association(:faculty_frank)}
+end

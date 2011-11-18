@@ -1,0 +1,25 @@
+<% content_for :title, "Presentation by " + (@presentation.is_team_presentation?? @presentation.team.name : @presentation.user.human_name) %>
+
+<p>
+  <b><%=h @presentation.name %></b>
+</p>
+<p>
+  <% if @presentation.is_team_presentation? %>
+    Presentation by <%= @presentation.team.name -%>
+  <% else %>
+    Presentation by <%= @presentation.user.human_name -%>
+  <% end %>
+    
+</p>
+<h2>Link to File</h2>
+<%= link_to @presentation.presentation_file_name, @presentation.presentation.url %>
+
+<br/>
+<br/>
+<% if (current_user.is_staff || current_user.is_admin?) %>
+    <%= link_to 'Edit', edit_presentation_path(@presentation) %>
+    <%= link_to 'Destroy', @presentation, :confirm => 'Are you sure?', :method => :delete %>
+<% end %>
+<br/>
+<br/>
+
