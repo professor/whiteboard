@@ -14,19 +14,33 @@ describe Person do
   context "photo upload" do
 
     it "accepts PNG files" do
-      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures','sample_photo.png'))
+      @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
       @student_sam.should be_valid
     end
 
     it "accepts GIF files" do
-      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.gif"))
+      @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
       @student_sam.should be_valid
     end
 
     it "should update image_uri after photo is uploaded", :skip_on_build_machine => true do
-      @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.jpg"))
+      @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
       @student_sam.save!
       @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
+    end
+
+  end
+
+  context "webiso account" do
+
+    it "defaults to user.update_webiso_account if blank" do
+      user = User.new
+      person = Person.new
+
+      user.update_webiso_account
+      person.valid?
+
+      (Time.at(Float(person.webiso_account)) - Time.at(Float(user.webiso_account))).should be < 1.second
     end
 
   end
@@ -216,7 +230,7 @@ describe Person do
     # TODO: courses registered - as not tested in the course model
 
   end
-  
+
   context "twiki name parsing" do
     it "finds the correct first and last name" do
       twiki_names = {}
@@ -224,14 +238,14 @@ describe Person do
       twiki_names["TestUser4"] = ["Test", "User4"]
       twiki_names["DenaHaritosTsamitis"] = ["Dena", "HaritosTsamitis"]
       twiki_names["GordonMcCreight"] = ["Gordon", "McCreight"]
-            
+
       twiki_names.each do |twiki_name, expected_names|
         names = Person.parse_twiki(twiki_name)
         assert_equal(names[0], expected_names[0])
         assert_equal(names[1], expected_names[1])
       end
     end
-    
+
   end
 
   # More tests
