@@ -1,6 +1,17 @@
 require "spec_helper"
 
 describe PeopleController do
+  context "without logged in user" do
+    before do
+      controller.stub(:current_user).and_return(nil)
+    end
+
+    it "should flash an error" do
+      get :show_by_twiki
+      flash[:error].should eql "You don't have permissions to view this data."
+    end
+
+  end
   context "any user can" do
     before do
       @person1 = Factory(:student_sam)
