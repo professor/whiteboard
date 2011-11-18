@@ -144,7 +144,7 @@ module HubStudentImporter
   class Student
     attr_accessor :first_name, :last_name, :class, :college, :department, :g_o, :user_id, :units
 
-    META_STUDENT_INFO_MATCHER = /^(.+, .+)\s+(\w+) (\w+) (\w+)\s+(\w+)\s+(\d+\.\d) (\w+).*$/
+    META_STUDENT_INFO_MATCHER = /^(.+, .+)\s+(\w+) (\w+) (\w+)\s+(\w+)\s+(\d+\.\d)\s+(\w+).*$/
 
     def initialize(opts={})
       opts.each do |attr, val|
