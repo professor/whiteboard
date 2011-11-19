@@ -134,17 +134,19 @@ Factory.define :team_terrific, :class => Team do |t|
 end
 
 Factory.define :sheng_hao_tsao, :parent => :person do |p|
-  p.is_student 1
-  p.is_part_time 0
-  p.graduation_year "2012"
-  p.masters_program  "SE"
-  p.masters_track  "Tech"
-  p.twiki_name "ShengHaoTsao"
+  p.is_staff 1
+  p.is_teacher 1
+  #p.is_student 1
+  #p.is_part_time 0
+  #p.graduation_year "2012"
+  #p.masters_program  "SE"
+  #p.masters_track  "Tech"
+  #p.twiki_name "ShengHaoTsao"
   p.first_name "Sheng-Hao"
   p.last_name "Tsao"
   p.human_name "Sheng-Hao Tsao"
   p.email "sheng-hao.tsao@sv.cmu.edu"
-  p.webiso_account "shenghat@andrew.cmu.edu"
+  #p.webiso_account "shenghat@andrew.cmu.edu"
 end
 
 

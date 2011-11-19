@@ -13,6 +13,10 @@ class Presentation < ActiveRecord::Base
 
   default_scope :order => "updated_at DESC"
 
+  def to_s
+    name
+  end
+
   def is_team_presentation?
     !self.team.blank?
   end

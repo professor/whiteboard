@@ -1,4 +1,8 @@
 CMUEducation::Application.routes.draw do
+  resources :presentation_feedbacks
+  match '/presentations/index_for_feedback' => 'presentations#index_for_feedback', :as => :presentation_index_for_feedback
+  match '/presentation_feedbacks/:id/new' => 'presentation_feedbacks#new', :as => :new_presentation_feedback
+
   resources :search, :only => [:index]
   resources :deliverables
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables

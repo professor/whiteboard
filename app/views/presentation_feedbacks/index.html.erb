@@ -1,0 +1,43 @@
+<h1>Listing presentation_feedbacks</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Presentation</th>
+    <th>Content</th>
+    <th>Content comment</th>
+    <th>Organization</th>
+    <th>Organization comment</th>
+    <th>Visual</th>
+    <th>Visual comment</th>
+    <th>Delivery</th>
+    <th>Delivery comment</th>
+    <th>General comment</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @presentation_feedbacks.each do |presentation_feedback| %>
+  <tr>
+    <td><%= presentation_feedback.user_id %></td>
+    <td><%= presentation_feedback.presentation_id %></td>
+    <td><%= presentation_feedback.content %></td>
+    <td><%= presentation_feedback.content_comment %></td>
+    <td><%= presentation_feedback.organization %></td>
+    <td><%= presentation_feedback.organization_comment %></td>
+    <td><%= presentation_feedback.visual %></td>
+    <td><%= presentation_feedback.visual_comment %></td>
+    <td><%= presentation_feedback.delivery %></td>
+    <td><%= presentation_feedback.delivery_comment %></td>
+    <td><%= presentation_feedback.general_comment %></td>
+    <td><%= link_to 'Show', presentation_feedback %></td>
+    <td><%= link_to 'Edit', edit_presentation_feedback_path(presentation_feedback) %></td>
+    <td><%= link_to 'Destroy', presentation_feedback, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Presentation feedback', new_presentation_feedback_path %>

@@ -138,4 +138,16 @@ class PresentationsController < ApplicationController
     end
   end
 
+  def index_for_feedback
+    if current_user.is_student?
+      team_id = Team.find_by_person(current_user)
+      @presentations = Presentation.where(
+        "(team_id is Null AND user_id != :id) OR (team_id is not Null AND team_id != :team_id)",
+        {:id => current_user.id, :team_id => team_id})
+    else
+      @presentations = Presentation.all
+    end
+
+
+  end
 end

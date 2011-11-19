@@ -1,0 +1,112 @@
+<%= form_for(@presentation_feedback) do |f| %>
+  <% if @presentation_feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@presentation_feedback.errors.count, "error") %> prohibited this presentation_feedback from being saved:</h2>
+
+      <ul>
+      <% @presentation_feedback.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :presentation %>:<br />
+    <%= @presentation_feedback.presentation.name %>
+
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :presentation_id %>
+  </div>
+
+  <div class="field">
+
+
+    <div class="explanation">
+      <h3>Content</h3>
+      Did the talk cover all the content suggested on the checklist?
+      (project goals, progress, and the process for achieving the goals, outcomes)
+      (what went well and what didn’t, and why)
+      Was there continuity from previous presentations: actions on open issues; explanations of changes)
+
+    </div>
+
+    <% PresentationFeedback::GRADE.each_with_index do |text,index| %>
+        <%= radio_button_tag 'presentation_feedback[content]',index, index==@presentation_feedback.content %><%= text %>
+    <% end %>
+
+
+  </div>
+
+  <div class="field">
+    <h3>Comments</h3>
+    <%# f.label :comment %>
+    <%= f.text_area :content_comment %>
+  </div>
+
+
+
+
+  <div class="field">
+    <div class="explanation">
+      <h3>Organization/Clarity</h3>
+      How logical was the organization? How smooth were transactions between points and parts of the talk?
+      Was the talk focused? To the point?  Were the main points clearly stated? easy to find?
+    </div>
+
+    <% PresentationFeedback::GRADE.each_with_index do |text,index| %>
+        <%= radio_button_tag 'presentation_feedback[organization]',index, index==@presentation_feedback.organization %><%= text %>
+    <% end %>
+  </div>
+  <div class="field">
+    <h3>Comments</h3>
+    <%# f.label :comment %>
+    <%= f.text_area :organization_comment %>
+  </div>
+
+  <div class="field">
+    <div class="explanation">
+      <h3>Use of Visuals</h3>
+      Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?
+    </div>
+
+    <% PresentationFeedback::GRADE.each_with_index do |text,index| %>
+        <%= radio_button_tag 'presentation_feedback[visual]',index, index==@presentation_feedback.visual %><%= text %>
+    <% end %>
+  </div>
+  <div class="field">
+    <h3>Comments</h3>
+    <%# f.label :comment %>
+    <%= f.text_area :visual_comment %>
+  </div>
+
+  <div class="field">
+    <div class="explanation">
+      <h3>Delivery</h3>
+      Bodily delivery: (eye-contact, gestures, energy)  <br />
+      Vocal delivery: (loudness, rate, articulation)
+      Question handling (poise, tact, team support; did the team answer the question asked?)
+
+    </div>
+
+    <% PresentationFeedback::GRADE.each_with_index do |text,index| %>
+        <%= radio_button_tag 'presentation_feedback[delivery]',index, index==@presentation_feedback.delivery %><%= text %>
+    <% end %>
+  </div>
+  <div class="field">
+    <h3>Comments</h3>
+    <%# f.label :comment %>
+    <%= f.text_area :delivery_comment %>
+  </div>
+
+  <div class="field">
+    <h3>General comments</h3>
+    <%= f.text_area :general_comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

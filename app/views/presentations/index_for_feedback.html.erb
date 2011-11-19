@@ -1,0 +1,22 @@
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+  <tr>
+    <th>Presenter</th>
+    <th>Name</th>
+    <th>File</th>
+    <th>Action</th>
+  </tr>
+
+  <% @presentations.each do |presentation| %>
+    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+      <td><%=h (presentation.is_team_presentation?? presentation.team.name : presentation.user.human_name) %></td>
+      <td><%= presentation.name  %></td>
+      <td><%= link_to "File", presentation.presentation.url %></td>
+
+      <td>
+         <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
+
+      </td>
+
+    </tr>
+  <% end %>
+</table>

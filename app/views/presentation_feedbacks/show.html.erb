@@ -1,0 +1,54 @@
+
+<p>
+  <b>Presentation:</b>
+  <%= @presentation_feedback.presentation.name %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= PresentationFeedback::GRADE[@presentation_feedback.content] %>
+</p>
+
+<p>
+  <b>Content comment:</b>
+  <%= @presentation_feedback.content_comment %>
+</p>
+
+<p>
+  <b>Organization:</b>
+  <%= PresentationFeedback::GRADE[@presentation_feedback.organization] %>
+</p>
+
+<p>
+  <b>Organization comment:</b>
+  <%= @presentation_feedback.organization_comment %>
+</p>
+
+<p>
+  <b>Visual:</b>
+  <%= PresentationFeedback::GRADE[@presentation_feedback.visual] %>
+</p>
+
+<p>
+  <b>Visual comment:</b>
+  <%= @presentation_feedback.visual_comment %>
+</p>
+
+<p>
+  <b>Delivery:</b>
+  <%= PresentationFeedback::GRADE[@presentation_feedback.delivery] %>
+</p>
+
+<p>
+  <b>Delivery comment:</b>
+  <%= @presentation_feedback.delivery_comment %>
+</p>
+
+<p>
+  <b>General comment:</b>
+  <%= @presentation_feedback.general_comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_presentation_feedback_path(@presentation_feedback) %> |
+<%= link_to 'Back', presentation_index_for_feedback_path %>
