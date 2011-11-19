@@ -128,83 +128,82 @@ describe HubStudentImporter do
 	
 	describe "when source file is found" do
       describe "when given file with valid HTML format" do
-		describe "parsing the mfse class" do
-			let(:courses) do
-				HubStudentImporter.import_html("public/data_input_mfse_fall_2011.html")
-			end
-	  
-			it "should return one course" do
-				courses.length.should == 1
-			end
-			
-			it "should have only one instructor" do
-				courses[0].instructors.length.should == 1
-				courses[0].instructors[0].should == "SEDANO, A."
-			end
-			
-			it "should have twenty seven students" do
-				courses[0].students.size().should == 27
-			end
-			
-			it "should return the right attributes for the student Aaron James Cave" do
-				courses[0].students[3].last_name.should == "CAVE"
-				courses[0].students[3].first_name.should == "AARON JAMES"
-				courses[0].students[3].class.should == "Master"
-				courses[0].students[3].college.should == "CIT"
-				courses[0].students[3].department.should == "SV"
-				courses[0].students[3].g_o.should == "M"
-				courses[0].students[3].units.should == 12.0
-				courses[0].students[3].user_id.should == "acave"
-			end
-		end
-		
-	    describe "parsing the foundations class" do
-			let(:courses) do
-				HubStudentImporter.import_html("public/data_input_foundations_fall_2011.html")
-			end
-			
-			it "should return two courses" do
-				courses.length.should == 2
-			end
-			
-			it "should have two instructors" do
-				courses.each do |course|
-					course.instructors.length.should == 2
-				end
-				courses[0].instructors[0].should == "SEDANO, A."
-				courses[0].instructors[1].should == "KATZ, E."
-			end
-			
-			it "should contain eighteen students" do
-				courses[0].students.size().should == 18
-				courses[1].students.size().should == 18
-			end
-			
-			it "should find student located in section A only" do
-				courses[0].students[0].last_name.should == "AGGARWAL"
-				courses[0].students[0].first_name.should == "CHARU"
-				courses[0].students[0].class.should == "Master"
-				courses[0].students[0].college.should == "CIT"
-				courses[0].students[0].department.should == "SV"
-				courses[0].students[0].g_o.should == "M"
-				courses[0].students[0].units.should == 24.0
-				courses[0].students[0].user_id.should == "caggarwa"
-			end
-			
-			it "should find student located in section B only" do
-				courses[1].students[2].last_name.should == "BROWN"
-				courses[1].students[2].first_name.should == "MORGAN H.G."
-				courses[1].students[2].class.should == "Master"
-				courses[1].students[2].college.should == "CIT"
-				courses[1].students[2].department.should == "SV"
-				courses[1].students[2].g_o.should == "M"
-				courses[1].students[2].units.should == 24.0
-				courses[1].students[2].user_id.should == "mhbrown"
-			end
-		end
-		
-	  end
-	end
+        describe "parsing the mfse class" do
+          let(:courses) do
+            HubStudentImporter.import_html(("./public/data_input_mfse_fall_2011.html"))
+          end
+        
+          it "should return one course" do
+            courses.length.should == 1
+          end
+          
+          it "should have only one instructor" do
+            courses[0].instructors.length.should == 1
+            courses[0].instructors[0].should == "SEDANO, A."
+          end
+          
+          it "should have twenty seven students" do
+            courses[0].students.size().should == 27
+          end
+          
+          it "should return the right attributes for the student Aaron James Cave" do
+            courses[0].students[3].last_name.should == "CAVE"
+            courses[0].students[3].first_name.should == "AARON JAMES"
+            courses[0].students[3].class.should == "Master"
+            courses[0].students[3].college.should == "CIT"
+            courses[0].students[3].department.should == "SV"
+            courses[0].students[3].g_o.should == "M"
+            courses[0].students[3].units.should == 12.0
+            courses[0].students[3].user_id.should == "acave"
+          end
+        end
+    
+        describe "parsing the foundations class" do
+          let(:courses) do
+            HubStudentImporter.import_html(File.expand_path("./public/data_input_foundations_fall_2011.html"))
+          end
+          
+          it "should return two courses" do
+            courses.length.should == 2
+          end
+          
+          it "should have two instructors" do
+            courses.each do |course|
+              course.instructors.length.should == 2
+            end
+            courses[0].instructors[0].should == "SEDANO, A."
+            courses[0].instructors[1].should == "KATZ, E."
+          end
+          
+          it "should contain eighteen students" do
+            courses[0].students.size().should == 18
+            courses[1].students.size().should == 18
+          end
+          
+          it "should find student located in section A only" do
+            courses[0].students[0].last_name.should == "AGGARWAL"
+            courses[0].students[0].first_name.should == "CHARU"
+            courses[0].students[0].class.should == "Master"
+            courses[0].students[0].college.should == "CIT"
+            courses[0].students[0].department.should == "SV"
+            courses[0].students[0].g_o.should == "M"
+            courses[0].students[0].units.should == 24.0
+            courses[0].students[0].user_id.should == "caggarwa"
+          end
+          
+          it "should find student located in section B only" do
+            courses[1].students[2].last_name.should == "BROWN"
+            courses[1].students[2].first_name.should == "MORGAN H.G."
+            courses[1].students[2].class.should == "Master"
+            courses[1].students[2].college.should == "CIT"
+            courses[1].students[2].department.should == "SV"
+            courses[1].students[2].g_o.should == "M"
+            courses[1].students[2].units.should == 24.0
+            courses[1].students[2].user_id.should == "mhbrown"
+          end
+        end
+      end
+    end
   end
 end
 
