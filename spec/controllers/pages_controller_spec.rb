@@ -70,13 +70,13 @@ describe PagesController do
       end
     end
 
-   describe "POST update" do
+    describe "POST update" do
       it "but not for a page that is editable only by faculty" do
-      @page.is_editable_by_all = false
-      @page.save
-      post :update, :page => @page.attributes, :id => @page.to_param
-      response.should redirect_to(page_url)
-      flash[:error].should == "You don't have permission to do this action."
+        @page.is_editable_by_all = false
+        @page.save
+        post :update, :page => @page.attributes, :id => @page.to_param
+        response.should redirect_to(page_url)
+        flash[:error].should == "You don't have permission to do this action."
       end
 
       it "will update updated_by_user_id"
@@ -88,7 +88,6 @@ describe PagesController do
 
     before do
       login(Factory(:faculty_frank))
-
       @page = Factory(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
     end
 
@@ -108,6 +107,26 @@ describe PagesController do
         end
         it_should_behave_like "finding page"
       end
+    end
+
+    describe "POST update" do
+      context "with an attachment" do
+        before do
+          post :update, :id => @page.to_param, :page_attachment => {:attachment => "foobar.txt"}
+        end
+        it "uploads the attachment" do
+          @page.page_attachments.count.should == 1
+        end
+      end
+
+      context "without an attachment" do
+        before do
+          post :update, :id => @page.to_param, :page_attachment => {:attachment => nil}
+        end
+        it "does not upload the attachment" do
+          @page.page_attachments.count.should == 0
+        end
+      end
 
     end
   end
@@ -133,7 +152,7 @@ describe PagesController do
 
 
 
-  
+
 #  it "allows named pages in the url" do
 #     @ppm = Factory(:ppm)
 #       { :get => "/pages/#{@ppm.url}" }.should be_routable

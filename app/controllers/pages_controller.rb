@@ -115,6 +115,29 @@ class PagesController < ApplicationController
     #course = Course.with_course_name(params[:course_name]).first
     #@page.course = course
 
+    there_is_an_attachment = params[:page_attachment][:attachment]
+    if there_is_an_attachment
+      @attachment = PageAttachment.new(params[:page_attachment])
+      @attachment.owner = current_person
+      @page.page_attachments << @attachment
+      @attachment.page = @page
+      #
+      # if @attachment.valid? and @page.valid? and @page.update_attributes(params[:page])
+        # deliverable.send_deliverable_upload_email(url_for(@deliverable))
+        # flash[:notice] = 'Deliverable was successfully updated.'
+        # redirect_to(@deliverable)
+      # else
+      # render :action => "edit"
+      # end
+    # else
+      # if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+        # flash[:notice] = 'Deliverable was successfully updated.'
+        # redirect_to(@deliverable)
+      # else
+        # render :action => "edit"
+      # end
+    end
+
     @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.update_attributes(params[:page])
