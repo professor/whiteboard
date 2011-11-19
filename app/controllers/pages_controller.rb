@@ -87,8 +87,23 @@ class PagesController < ApplicationController
     @page = Page.new(params[:page])
 #    @courses = Course.all
     @courses = Course.unique_course_names
-
     @page.updated_by_user_id = current_user.id if current_user
+
+    there_is_an_attachment = params[:page_attachment][:attachment]
+    if there_is_an_attachment
+      @attachment = PageAttachment.new(params[:page_attachment])
+      @attachment.owner = current_person
+      @page.page_attachments << @attachment
+
+      if @attachment.valid? and @page.save
+        flash[:notice] = 'Attachment was successfully uploaded.'
+        render :action => "edit"
+      else
+        render :action => "new"
+      end
+      return
+    end
+
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
@@ -139,6 +154,19 @@ class PagesController < ApplicationController
         format.xml { render :xml => @page.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def delete_attachment
+    raise
+    page_attachment = PageAttachment.find(params[:id])
+    unless page_attachment.page.editable?(current_user)
+      flash[:error] = "You don't have permission to do this action."
+      redirect_to(pages_url) and return
+    end
+
+    page_attachment.destroy
+    flash[:notice] = 'Attachment was successfully deleted.'
+    render :action => "edit"
   end
 
   # DELETE /pages/1

@@ -32,6 +32,7 @@ CMUEducation::Application.routes.draw do
     resources :pages do
       collection do
         post :reposition
+        post :delete_attachment
       end
     end
   end
