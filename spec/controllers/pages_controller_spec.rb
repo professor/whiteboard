@@ -117,6 +117,14 @@ describe PagesController do
         it "uploads the attachment" do
           @page.page_attachments.count.should == 1
         end
+
+        it "renders the edit page" do
+          response.should render_template("edit")
+        end
+
+        it "sets the flash" do
+          flash.now[:notice].should_not be_nil
+        end
       end
 
       context "without an attachment" do
@@ -130,27 +138,6 @@ describe PagesController do
 
     end
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #  it "allows named pages in the url" do

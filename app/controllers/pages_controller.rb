@@ -120,22 +120,12 @@ class PagesController < ApplicationController
       @attachment = PageAttachment.new(params[:page_attachment])
       @attachment.owner = current_person
       @page.page_attachments << @attachment
-      @attachment.page = @page
-      #
-      # if @attachment.valid? and @page.valid? and @page.update_attributes(params[:page])
-        # deliverable.send_deliverable_upload_email(url_for(@deliverable))
-        # flash[:notice] = 'Deliverable was successfully updated.'
-        # redirect_to(@deliverable)
-      # else
-      # render :action => "edit"
-      # end
-    # else
-      # if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
-        # flash[:notice] = 'Deliverable was successfully updated.'
-        # redirect_to(@deliverable)
-      # else
-        # render :action => "edit"
-      # end
+
+      if @attachment.valid? and @page.valid? and @page.update_attributes(params[:page])
+        flash[:notice] = 'Attachment was successfully uploaded.'
+      end
+      render :action => "edit"
+      return
     end
 
     @page.updated_by_user_id = current_user.id if current_user

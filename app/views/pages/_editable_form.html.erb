@@ -4,70 +4,70 @@
 -->
 
 <script src="/javascripts/wymeditor/jquery.wymeditor.min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all"/>
 
 <%= javascript_include_tag 'jquery.cookie' %>
 
 <script type="text/javascript">
 
-    function enable_tabs(checkbox){
-            if (checkbox.prop('checked')) {
-                $tabs = $('#tabs').tabs();
-                $tabs.tabs( 'option', 'disabled', [] ); //enables the tabs
-                $tabs.tabs( 'option', 'selected', parseInt($.cookie('selected_tab')));
-                $('.ui-tabs-nav').css('display', 'block');
-                $('#email_header').css('display', 'block');
-            }
-            else {
-                $tabs = $('#tabs').tabs();
-                $tabs.tabs( 'option', 'selected', 0 );
-                $tabs.tabs( 'option', 'disabled', [1, 2, 3] );
-                $('.ui-tabs-nav').css('display', 'none');
-                $('#email_header').css('display', 'none');
-            }
-     }
+    function enable_tabs(checkbox) {
+        if (checkbox.prop('checked')) {
+            $tabs = $('#tabs').tabs();
+            $tabs.tabs('option', 'disabled', []); //enables the tabs
+            $tabs.tabs('option', 'selected', parseInt($.cookie('selected_tab')));
+            $('.ui-tabs-nav').css('display', 'block');
+            $('#email_header').css('display', 'block');
+        }
+        else {
+            $tabs = $('#tabs').tabs();
+            $tabs.tabs('option', 'selected', 0);
+            $tabs.tabs('option', 'disabled', [1, 2, 3]);
+            $('.ui-tabs-nav').css('display', 'none');
+            $('#email_header').css('display', 'none');
+        }
+    }
 
-	$(function() {
-    $('#tabs').tabs();
-    $( '.selector' ).tabs({ cookie: { name: 'selected_tab', expires: 30 } });
-    $('#page_is_task').change(function(){
-      enable_tabs($(this));
+    $(function() {
+        $('#tabs').tabs();
+        $('.selector').tabs({ cookie: { name: 'selected_tab', expires: 30 } });
+        $('#page_is_task').change(function() {
+            enable_tabs($(this));
         })
     });
 
-    $(document).ready(function(){                           
-	  enable_tabs($('#page_is_task'));
-      //enable_tabs($(this));  //does not seem to be required
+    $(document).ready(function() {
+        enable_tabs($('#page_is_task'));
+        //enable_tabs($(this));  //does not seem to be required
 
-      //select tab according to index saved in cookie
-      $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
-      $.cookie('selected_tab', null);   //clear cookie
+        //select tab according to index saved in cookie
+        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+        $.cookie('selected_tab', null);   //clear cookie
     });
 
 
-//    jQuery(function() {
-//        jQuery('#page_tab_one_contents').wymeditor();
-//    });
+    //    jQuery(function() {
+    //        jQuery('#page_tab_one_contents').wymeditor();
+    //    });
 
-//    jQuery(function() {
-//      jQuery('.wymeditor').addClass("Todd")
-//    });
+    //    jQuery(function() {
+    //      jQuery('.wymeditor').addClass("Todd")
+    //    });
 
 
     jQuery(function() {
-    jQuery('.wymeditor').wymeditor({
+        jQuery('.wymeditor').wymeditor({
 //        var wymeditor_boot_options = $.extend({
-        //Read http://trac.wymeditor.org/trac/wiki/0.5/Customization
+            //Read http://trac.wymeditor.org/trac/wiki/0.5/Customization
 
 //        logo: ''
             skin: 'refinery'
 //        skin: 'refinery'
 
-        //customize the tools menu with toolsItems option
-        //'name' is the name of the command which will be executed
-        //when the user clicks on the button
-        //'title' is the button's title (automagically localized)
-        //'css' is the button's class name
+            //customize the tools menu with toolsItems option
+            //'name' is the name of the command which will be executed
+            //when the user clicks on the button
+            //'title' is the button's title (automagically localized)
+            //'css' is the button's class name
 //        toolsItems: [
 //        {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'},
 //        {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
@@ -86,67 +86,81 @@
 //    ]
 
 
-  , cssSkinPath: "/stylesheets/wymeditor/skins/"
- // , skinPath: "/stylesheets/wymeditor/skins/"
+            , cssSkinPath: "/stylesheets/wymeditor/skins/"
+            // , skinPath: "/stylesheets/wymeditor/skins/"
 
-  , boxHtml:
-  "<div class='wym_box'>"
-    + "<div class='wym_area_top clearfix'>"
-      + WYMeditor.CONTAINERS
-      + WYMeditor.TOOLS
-    + "</div>"
-    + "<div class='wym_area_main'>"
-      + WYMeditor.HTML
-      + WYMeditor.IFRAME
-      + WYMeditor.STATUS
-    + "</div>"
-  + "</div>"        
+            , boxHtml:
+                    "<div class='wym_box'>"
+                            + "<div class='wym_area_top clearfix'>"
+                            + WYMeditor.CONTAINERS
+                            + WYMeditor.TOOLS
+                            + "</div>"
+                            + "<div class='wym_area_main'>"
+                            + WYMeditor.HTML
+                            + WYMeditor.IFRAME
+                            + WYMeditor.STATUS
+                            + "</div>"
+                            + "</div>"
 
-  , containersItems: [
-    {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
-    , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
-    , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
-    , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
-  ]
+            , containersItems: [
+                {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
+                ,
+                {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
+                ,
+                {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
+                ,
+                {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
+            ]
 
-  ,
-        toolsItems: [
-    {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
-    ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
-    ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
-    ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
-    ,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
-    ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
-/*    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
-    ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'} */
-    ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
-    ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
-    ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
-    ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
-    ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
-    ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
-  ]
+            ,
+            toolsItems: [
+                {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
+                ,
+                {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
+                ,
+                {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
+                ,
+                {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
+                ,
+                {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
+                ,
+                {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
+                /*    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
+                 ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'} */
+                ,
+                {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
+                ,
+                {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
+                ,
+                {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
+                ,
+                {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
+                ,
+                {'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
+                ,
+                {'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
+            ]
 
 
-    , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
+            , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
 
-    , containersItemHtml:
-        "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
-          + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
-        + "</li>"
+            , containersItemHtml:
+                    "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
+                            + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
+                            + "</li>"
 
-    ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
+            ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
 
-    ,toolsItemHtml:
-    "<li class='" + WYMeditor.TOOL_CLASS + "'>"
-      + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
-        + WYMeditor.TOOL_TITLE
-      + "</a>"
-    + "</li>"
+            ,toolsItemHtml:
+                    "<li class='" + WYMeditor.TOOL_CLASS + "'>"
+                            + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
+                            + WYMeditor.TOOL_TITLE
+                            + "</a>"
+                            + "</li>"
 
-    , classesHtml: ''
-        , classesItemHtml: ''
-        ,       classesItemHtmlMultiple: ''
+            , classesHtml: ''
+            , classesItemHtml: ''
+            ,       classesItemHtmlMultiple: ''
 
 //  , classesHtml: "<li class='wym_tools_class'>"
 //                 + "<a href='#' name='" + WYMeditor.APPLY_CLASS + "' title='"+ titleize(WYMeditor.APPLY_CLASS) +"'></a>"
@@ -159,191 +173,211 @@
 //                              + "<ul>{classesItemHtml}</ul>"
 //                            +"</li>"
 
+        });
     });
-  });        
 
-//    jQuery(function() {
-//        jQuery('.wymeditor').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_one_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_two_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_three_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('.wymeditor').wymeditor();        
-//        jQuery('#page_tab_one_contents').wymeditor();
-//        jQuery('#page_tab_three_contents').wymeditor();
-//    });
+    //    jQuery(function() {
+    //        jQuery('.wymeditor').wymeditor(wymeditor_boot_options);
+    //        jQuery('#page_tab_one_contents').wymeditor(wymeditor_boot_options);
+    //        jQuery('#page_tab_two_contents').wymeditor(wymeditor_boot_options);
+    //        jQuery('#page_tab_three_contents').wymeditor(wymeditor_boot_options);
+    //        jQuery('.wymeditor').wymeditor();
+    //        jQuery('#page_tab_one_contents').wymeditor();
+    //        jQuery('#page_tab_three_contents').wymeditor();
+    //    });
 
-//    jQuery(function() {    
-//    jQuery('.wymeditor').wymeditor({
-//        skin 'refinery_tmp',
-//
-//         cssSkinPath: "/stylesheets/wymeditor/skins/"
-//
-//
-//        , boxHtml:
-//        "<div class='wym_box'>"
-//          + "<div class='wym_area_top clearfix'>"
-//            + WYMeditor.CONTAINERS
-//            + WYMeditor.TOOLS
-//          + "</div>"
-//          + "<div class='wym_area_main'>"
-//            + WYMeditor.HTML
-//            + WYMeditor.IFRAME
-//            + WYMeditor.STATUS
-//          + "</div>"
-//        + "</div>"
-//
-//        , containersItems: [
-//          {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
-//          , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
-//          , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
-//          , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
-//        ]
-//
-//        ,
-//              toolsItems: [
-//          {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
-//          ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
-//          ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
-//          ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
-//          /*,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
-//          ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
-//          ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
-//          ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}*/
-//          ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
-//          ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
-//          ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
-//          ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
-//          ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
-//          ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
-//        ]
-//
-//
-//          , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
-//
-//          , containersItemHtml:
-//              "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
-//                + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
-//              + "</li>"
-//
-//          ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
-//
-//          ,toolsItemHtml:
-//          "<li class='" + WYMeditor.TOOL_CLASS + "'>"
-//            + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
-//              + WYMeditor.TOOL_TITLE
-//            + "</a>"
-//          + "</li>"
-//
-//          , classesHtml: ''
-//              , classesItemHtml: ''
-//              ,       classesItemHtmlMultiple: ''
-//
-//    });
-//
-//    });
+    //    jQuery(function() {
+    //    jQuery('.wymeditor').wymeditor({
+    //        skin 'refinery_tmp',
+    //
+    //         cssSkinPath: "/stylesheets/wymeditor/skins/"
+    //
+    //
+    //        , boxHtml:
+    //        "<div class='wym_box'>"
+    //          + "<div class='wym_area_top clearfix'>"
+    //            + WYMeditor.CONTAINERS
+    //            + WYMeditor.TOOLS
+    //          + "</div>"
+    //          + "<div class='wym_area_main'>"
+    //            + WYMeditor.HTML
+    //            + WYMeditor.IFRAME
+    //            + WYMeditor.STATUS
+    //          + "</div>"
+    //        + "</div>"
+    //
+    //        , containersItems: [
+    //          {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
+    //          , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
+    //          , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
+    //          , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
+    //        ]
+    //
+    //        ,
+    //              toolsItems: [
+    //          {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
+    //          ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
+    //          ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
+    //          ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
+    //          /*,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
+    //          ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
+    //          ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
+    //          ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}*/
+    //          ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
+    //          ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
+    //          ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
+    //          ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
+    //          ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
+    //          ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
+    //        ]
+    //
+    //
+    //          , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
+    //
+    //          , containersItemHtml:
+    //              "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
+    //                + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
+    //              + "</li>"
+    //
+    //          ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
+    //
+    //          ,toolsItemHtml:
+    //          "<li class='" + WYMeditor.TOOL_CLASS + "'>"
+    //            + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
+    //              + WYMeditor.TOOL_TITLE
+    //            + "</a>"
+    //          + "</li>"
+    //
+    //          , classesHtml: ''
+    //              , classesItemHtml: ''
+    //              ,       classesItemHtmlMultiple: ''
+    //
+    //    });
+    //
+    //    });
 
 
 </script>
 
 
 <%= form_for(@page) do |f| %>
-  <% if @page.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+    <% if @page.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
 
-      <ul>
-      <% @page.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
+          <ul>
+            <% @page.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
     <p>
-      <%# f.label :course_id %><br />
+      <%# f.label :course_id %><br/>
       <%# f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
     </p>
-  <p>
-    <%= f.label :course_name %><br />
-    <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
-    <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
-  </p>
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>(*)
-  </p>
     <p>
-      <%= f.label :url, "Named page" %><br />
+      <%= f.label :course_name %><br/>
+      <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
+      <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
+    </p>
+    <p>
+      <%= f.label :title %><br/>
+      <%= f.text_field :title %>(*)
+    </p>
+    <p>
+      <%= f.label :url, "Named page" %><br/>
       (Optional) http://rails.sv.cmu.edu/pages/<%= f.text_field :url %><br/>
       <span class="help_text">This must be unique for all pages in the system.</span>
     </p>
-<!--
+    <!--
   <p>
     <%= f.label :indentation_level %><br />
     <%= f.text_field :indentation_level %>
   </p>
 -->
-  <p>
-    <%= f.label :is_task, 'Is this a task page for a course?' %> 
-    <%= f.check_box :is_task %>
-  </p>
-
-<div id="tabs">
-	<ul class="none">
-		<li><a href="#tabs-1">Project requirements</a></li>
-		<li><a href="#tabs-2">Getting help</a></li>
-		<li><a href="#tabs-3">Submitting your work</a></li>
-<% if current_user.is_staff || current_user.is_admin %>
-        <li><a href="#tabs-4">Faculty notes</a></li>
-<% end %>
-	</ul>
-	<div id="tabs-1">
-      <div id="email_header">
-      <div id="email_from_header">From:</div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
-      <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
-      </div>
-      <div id="email_details">
-         <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
-      </div>
-	</div>
-	<div id="tabs-2">
-      <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
-	</div>
-	<div id="tabs-3"> 
-		
-      <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
-	</div>
-  <% if current_user.is_staff || current_user.is_admin %>
-	<div id="tabs-4">
-      <%= f.text_area :faculty_notes, :class => "wymeditor" %>
-	</div>
-  <% end %>    
-      </div>
-
-  <p>
-    <%= f.label :task_duration %><br />
-    <%= f.text_field :task_duration, :size => 2 %> weeks
-  </p>
-  <p>This page is editable by<br />
-     <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
-     <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
-  </p>
-    <p>This page is viewable by<br />
-       <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
-       <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
-    </p>
-  <p>
-
-  <div class="page_attachment">
-  <%= fields_for :page_attachment do |attachment_form| -%>
     <p>
-      <%= attachment_form.label :attachment, "File to upload" %>
-      <%= attachment_form.file_field :attachment %>
+      <%= f.label :is_task, 'Is this a task page for a course?' %>
+      <%= f.check_box :is_task %>
     </p>
-  <% end -%>
-  </div>
 
-    <%= f.submit button_name,  :class => "wymupdate"  %>
-  </p>
+    <div id="tabs">
+      <ul class="none">
+        <li><a href="#tabs-1">Project requirements</a></li>
+        <li><a href="#tabs-2">Getting help</a></li>
+        <li><a href="#tabs-3">Submitting your work</a></li>
+        <% if current_user.is_staff || current_user.is_admin %>
+            <li><a href="#tabs-4">Faculty notes</a></li>
+        <% end %>
+      </ul>
+      <div id="tabs-1">
+        <div id="email_header">
+          <div id="email_from_header">From:</div>
+          <div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+          <div id="email_subject_header">Subject:</div>
+          <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
+        </div>
+        <div id="email_details">
+          <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
+        </div>
+      </div>
+      <div id="tabs-2">
+        <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
+      </div>
+      <div id="tabs-3">
+
+        <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
+      </div>
+      <% if current_user.is_staff || current_user.is_admin %>
+          <div id="tabs-4">
+            <%= f.text_area :faculty_notes, :class => "wymeditor" %>
+          </div>
+      <% end %>
+    </div>
+
+    <p>
+      <%= f.label :task_duration %><br/>
+      <%= f.text_field :task_duration, :size => 2 %> weeks
+    </p>
+    <p>This page is editable by<br/>
+      <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
+      <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
+    </p>
+    <p>This page is viewable by<br/>
+      <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
+      <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
+    </p>
+    <p>
+
+    <div class="page_attachment">
+      <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+        <tr>
+          <th>Filename</th>
+          <th>Size</th>
+          <th>Type</th>
+          <th>Owner</th>
+          <th></th>
+        </tr>
+        <% @page.page_attachments.each do |file| %>
+            <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+              <td><%= link_to file.attachment_file_name, file.attachment.url %></td>
+              <td><%= file.attachment_file_size %></td>
+              <td><%= file.attachment_content_type %></td>
+              <td><%= file.owner.human_name %></td>
+              <td><%= link_to "Delete", :controller => "pages", :action => "delete_attachment", :id => file %></td>
+            </tr>
+        <% end %>
+      </table>
+      <%= fields_for :page_attachment do |attachment_form| -%>
+          <p>
+            <%= attachment_form.label :attachment, "File to upload" %>
+            <%= attachment_form.file_field :attachment %>
+          </p>
+      <% end -%>
+    </div>
+
+    <%= f.submit button_name, :class => "wymupdate" %>
+    </p>
 <% end %>
 
