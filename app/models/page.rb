@@ -10,6 +10,8 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :url, :allow_blank => true
   validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
 
+  has_many :page_attachments
+
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
 
   belongs_to :course
@@ -17,7 +19,7 @@ class Page < ActiveRecord::Base
 
   before_validation :update_url
 
-  after_save :update_search_index
+  # (RDL 11/17/2011) after_save :update_search_index
   before_destroy :delete_from_search
 
   def editable?(current_user)

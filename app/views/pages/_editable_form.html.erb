@@ -333,6 +333,16 @@
        <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
     </p>
   <p>
+
+  <div class="page_attachment">
+  <%= fields_for :page_attachment do |attachment_form| -%>
+    <p>
+      <%= attachment_form.label :attachment, "File to upload" %>
+      <%= attachment_form.file_field :attachment %>
+    </p>
+  <% end -%>
+  </div>
+
     <%= f.submit button_name,  :class => "wymupdate"  %>
   </p>
 <% end %>
