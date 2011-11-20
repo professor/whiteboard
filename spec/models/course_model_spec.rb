@@ -77,7 +77,16 @@ describe Course do
     course.course_start.should == AcademicCalendar.semester_start("Summer", 2010) + 6
 
   end
-
+  
+  it "should remind effort reports for a particular class with a valid Mini field" do
+	valid_course = Factory.build(:course, :semester => "Summer", :year => "2010", :mini => 'Both', :remind_about_effort=>true)
+	invalid_course = Factory.build(:course, :semester => "Summer", :year => "2010", :mini => 'both', :remind_about_effort=>true)
+    course_list = Course.remind_about_effort_course_list
+	
+	course_list.find_index(valid_course).should >= 0
+	course_list.find_index(invalid_course).should == nil
+  end
+  
   it "should be able to auto_generated_twiki_url" do
     course = Factory.build(:course, :semester => "Fall", :year => "2010", :name => "Foundations of Software Engineering")
     course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FoundationsofSoftwareEngineering/WebHome"
