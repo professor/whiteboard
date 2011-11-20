@@ -13,6 +13,9 @@ class Course < ActiveRecord::Base
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
   belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
+  has_many :registrations
+  has_many :students, :through => :registrations, :source => :person
+
 
 #  def to_param
 #    display_course_name
@@ -116,7 +119,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "both"])
+    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "Both"])
     courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini])
     return courses
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109050657) do
+ActiveRecord::Schema.define(:version => 20111118041807) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
+
+  create_table "courses_people", :id => false, :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "courses_people", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -153,7 +162,6 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.datetime "updated_at"
   end
 
-  # add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
 
   create_table "page_comment_types", :force => true do |t|
@@ -277,6 +285,16 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
   end
 
   add_index "registered_courses", ["course_id", "person_id"], :name => "index_registered_courses_on_course_id_and_person_id", :unique => true
+
+  create_table "registrations", :force => true do |t|
+    t.integer  "course_id",  :null => false
+    t.integer  "person_id",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["course_id"], :name => "index_registrations_on_course_id"
+  add_index "registrations", ["person_id"], :name => "index_registrations_on_person_id"
 
   create_table "rss_feeds", :force => true do |t|
     t.string   "title"
