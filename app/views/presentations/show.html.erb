@@ -16,7 +16,7 @@
 
 <br/>
 <br/>
-<% if (current_user.is_staff || current_user.is_admin?) %>
+<% if (current_user.is_staff? || current_user.is_admin?) %>
     <%= link_to 'Edit', edit_presentation_path(@presentation) %>
     <%= link_to 'Destroy', @presentation, :confirm => 'Are you sure?', :method => :delete %>
 <% end %>
