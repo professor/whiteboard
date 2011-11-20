@@ -1,0 +1,14 @@
+development:
+  access_key_id: AKIAICNJ2E4FNFFDNJEQ
+  secret_access_key: 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
+  bucket: cmusv-rails-mfse-development
+
+test:
+  access_key_id: AKIAICNJ2E4FNFFDNJEQ
+  secret_access_key: 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
+  bucket: cmusv-rails-mfse-test
+
+production:
+  access_key_id: AKIAICNJ2E4FNFFDNJEQ
+  secret_access_key: 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
+  bucket: cmusv-rails-mfse-production

@@ -1,0 +1,14 @@
+development:
+  username: fall.2010.mfse@sandbox.sv.cmu.edu
+  password: 5tgb6yhn
+  google_domain: sandbox.sv.cmu.edu
+
+test:
+  username: fall.2010.mfse@sandbox.sv.cmu.edu
+  password: 5tgb6yhn
+  google_domain: sandbox.sv.cmu.edu
+
+production:
+  username: fall.2010.mfse@sandbox.sv.cmu.edu
+  password: 5tgb6yhn
+  google_domain: sandbox.sv.cmu.edu
