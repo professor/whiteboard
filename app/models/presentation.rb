@@ -8,7 +8,7 @@ class Presentation < ActiveRecord::Base
                       :path => "presentation/:id/:filename"
 
   validates :team_id, :presence => {:unless => "user_id", :message => "You must select a team or user"}
-
+  validates_presence_of :name, :creator, :presentation_file_name
   validate :team_xor_user
 
   default_scope :order => "updated_at DESC"
@@ -43,7 +43,7 @@ class Presentation < ActiveRecord::Base
   end
 
   def editable?(user)
-    (self.creator == user || user.is_admin?)
+    (self.creator_id == user.id || user.is_admin?)
   end
 
   private
