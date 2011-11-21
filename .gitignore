@@ -35,3 +35,5 @@ cmusv*gz
 
 pull*.dat
 push*.dat
+
+db/seed.rb
