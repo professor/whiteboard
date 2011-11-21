@@ -5,10 +5,10 @@
     <th>Course</th>
     <% end %>
     <th>Task</th>
+    <th>Name</th>
     <th>Team/Individual Name</th>
     <th>Date</th>
     <th>Feedback Received?</th>
-    <th>Actions</th>
 <!--
     <th>File</th>
 -->
@@ -20,7 +20,8 @@
       <td><%= presentation.course.name %></td>
       <% end %>
       <td><%= presentation.task_number %></td>
-      <td><%= presentation.team.name %></td>
+      <td><%= presentation.name %></td>
+      <td><%= presentation.team.name unless presentation.team.nil? %></td>
       <td><%= presentation.present_date  %></td>
       <td><%="leave for feedback model"%> </td>
       <td><%=""%> </td>

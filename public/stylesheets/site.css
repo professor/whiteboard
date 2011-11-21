@@ -291,3 +291,14 @@ div.modified {
     border: 1px solid black;
     padding: 10px;
 }
+
+.ui-datepicker-trigger {
+	padding: 5px 0 0 5px;
+}
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+.ui-timepicker-div dl{ text-align: left; }
+.ui-timepicker-div dl dt{ height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
