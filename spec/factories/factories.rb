@@ -156,3 +156,7 @@ Factory.define :presentation do |p|
   p.association :course, :factory => :course
   p.association :team, :factory => :team
 end
+
+Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
+  p.is_deleted false
+end

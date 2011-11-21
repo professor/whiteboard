@@ -132,14 +132,9 @@ Factory.define :team_terrific, :class => Team do |t|
                          Factory(:charlie_moss, :teams => [team])
                          }
 
-
 end
+
 Factory.define :your_name_here, :parent => :person do |p|
-
-Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
-  p.is_deleted false
-end
-
   p.is_student 1
   p.is_part_time 0
   p.graduation_year "2012"
