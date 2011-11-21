@@ -37,6 +37,7 @@ Factory.create(:significance)
 Factory.create(:strategic)
 Factory.create(:woo)
 
+
 Factory.define :todd, :parent => :person  do |p|
   p.first_name "Todd"
   p.last_name "Sedano"
@@ -131,9 +132,14 @@ Factory.define :team_terrific, :class => Team do |t|
                          Factory(:charlie_moss, :teams => [team])
                          }
 
+
+end
+Factory.define :your_name_here, :parent => :person do |p|
+
+Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
+  p.is_deleted false
 end
 
-Factory.define :your_name_here, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 0
   p.graduation_year "2012"
@@ -161,3 +167,13 @@ Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and char
 
 
 
+Factory.create(:presentation_feedback_questions, :text => "Did the talk cover all the content suggested on the checklist?
+(project goals, progress, and the process for achieving the goals, outcomes)
+(what went well and what didn't, and why)
+Was there continuity from previous presentations: actions on open issues; explanations of changes)
+")
+Factory.create(:presentation_feedback_questions, :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
+Factory.create(:presentation_feedback_questions, :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
+Factory.create(:presentation_feedback_questions, :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation)
+Question handling (poise, tact, team support; did the team answer the question asked?)
+")
