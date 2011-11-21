@@ -148,6 +148,7 @@ class PresentationsController < ApplicationController
       @presentations = Presentation.all
     end
 
+    @current_user = current_user
 
   end
 end
