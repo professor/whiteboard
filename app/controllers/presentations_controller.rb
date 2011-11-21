@@ -20,14 +20,17 @@ class PresentationsController < ApplicationController
   end
 
   # GET /presentations/new
-  # GET /presentations/new.xml
   def new
-    @presentation = Presentation.new
-    @course =Course.find_by_id(params[:course_id])
+    @course = Course.find(params[:course_id])
+    if (current_person.is_admin? || @course.faculty.include?(current_person))
+      @presentation = Presentation.new
+      @course =Course.find_by_id(params[:course_id])
+    else
+       has_permissions_or_redirect(:admin, root_path)
+    end
   end
 
   # POST /presentations
-  # POST /presentations.xml
   def create
     owner_id = Person.find_by_human_name(params[:presentation][:owner]) unless params[:presentation][:owner].nil?
     @presentation= Presentation.new(:owner_id=>owner_id,

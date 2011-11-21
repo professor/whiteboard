@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Presentation do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'can be created' do
+    lambda {
+      Factory(:presentation)
+    }.should change(Presentation, :count).by(1)
+  end
 end
