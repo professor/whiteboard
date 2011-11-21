@@ -65,7 +65,6 @@ group :development, :test do
 
   gem 'shoulda'
 #  gem 'hanna'
-  gem 'rcov'
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec-rails'
   gem 'mocha'
@@ -82,5 +81,6 @@ group :development, :test do
 end
 
 
+gem 'simplecov', :require => false, :group => :test
 
 #gem 'gchartrb'
