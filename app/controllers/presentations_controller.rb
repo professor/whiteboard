@@ -70,19 +70,28 @@ class PresentationsController < ApplicationController
     @feedback = PresentationFeedback.new(params[:feedback])
     @feedback.evaluator = current_person
 
-    params[:evaluation].each do |key, value|
-      answer = PresentationFeedbackAnswer.new(value)
-      @feedback.answers << answer
-      answer.question_id = key
-    end
-
     # Necessary checkings here
 
     respond_to do |format|
-      if @feedback.save
+
+      is_successful = true
+
+      params[:evaluation].each do |key, value|
+        answer = PresentationFeedbackAnswer.new(value)
+        begin
+          question = PresentationQuestion.find(key)
+        rescue ActiveRecord::RecordNotFound => e
+          is_successful = false
+          break
+        end
+        @feedback.answers << answer
+        answer.question = question
+      end
+
+      if is_successful && @feedback.save
         format.html { redirect_to(@feedback) }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "new_feedback" }
       end
     end
 
