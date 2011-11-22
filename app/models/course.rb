@@ -63,7 +63,7 @@ class Course < ActiveRecord::Base
     return self.for_semester(AcademicCalendar.next_semester(),
                              AcademicCalendar.next_semester_year())
   end
-
+  
   # Course length now matches what is shown in AcademicCalendar, method self.current_mini
   def course_length
     if self.mini == "Both" then
@@ -71,17 +71,17 @@ class Course < ActiveRecord::Base
         return 12
       elsif semester == "Fall" then
         return 15
-	  else 
-	    return 16
+      else 
+        return 16
       end
     else
-	  if semester == "Summer" then
-		return 6
-	  else
+      if semester == "Summer" then
+        return 6
+      else
         return 7
-	  end
+      end
     end
-  end
+   end
 
   # Now modified to reflect AcademicCalendar, method self.current_mini
   def course_start
