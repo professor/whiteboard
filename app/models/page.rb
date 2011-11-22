@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
 
   before_validation :update_url
 
-  # (RDL 11/17/2011) after_save :update_search_index
+  # (RDL 11/17/2011 - commented because we didn't configure indextank) after_save :update_search_index
   before_destroy :delete_from_search
 
   def editable?(current_user)
