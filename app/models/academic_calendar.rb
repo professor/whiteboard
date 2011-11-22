@@ -83,7 +83,7 @@ class AcademicCalendar
         return true
       when self.semester_start("Summer", year)..(self.semester_start("Summer", year)+11)
         return true
-      when self.semester_start("Fall", year)..(self.semester_start("Fall", year)+15)
+      when self.semester_start("Fall", year)..(self.semester_start("Fall", year)+14)
         return true
       else
         return false
