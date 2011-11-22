@@ -13,7 +13,7 @@
   <% presentations.each do |presentation| %>
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
       <td><%=h (presentation.is_team_presentation?? presentation.team.name : presentation.user.human_name) %></td>
-      <td><%= presentation.name  %></td>
+      <td><%= link_to presentation.name, presentation_path(presentation)  %></td>
       <td><%= link_to "File", presentation.presentation.url %></td>
       <% if (current_user.is_staff? || current_user.is_admin?) %>
           <td>
