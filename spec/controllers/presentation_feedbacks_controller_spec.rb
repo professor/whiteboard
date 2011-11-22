@@ -26,7 +26,7 @@ describe PresentationFeedbacksController do
       @faculty_fagan = Factory(:faculty_fagan)
       @student_sam = Factory(:student_sam)
       @student_sally = Factory(:student_sally)
-      @presentation = Factory(:presentation, :user_id => @student_sally.id, :creator_id => @faculty_frank.id)
+      @presentation = Factory(:presentation, :user_id => @student_sally.id,   :creator_id => @faculty_frank.id)
     end
 
   # This should return the minimal set of attributes required to create a valid
