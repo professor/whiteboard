@@ -56,7 +56,7 @@ describe Course do
     course.course_start.should == AcademicCalendar.semester_start("Fall", 2010)
 
     course = Factory.build(:course, :semester => "Fall", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010) + 7
+    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010) + 8
 
     course = Factory.build(:course, :semester => "Spring", :year => "2010", :mini => 'Both')
     course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
@@ -65,7 +65,7 @@ describe Course do
     course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
 
     course = Factory.build(:course, :semester => "Spring", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010) + 7
+    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010) + 9
 
     course = Factory.build(:course, :semester => "Summer", :year => "2010", :mini => 'Both')
     course.course_start.should == AcademicCalendar.semester_start("Summer", 2010)
