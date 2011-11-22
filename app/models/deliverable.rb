@@ -6,6 +6,7 @@ class Deliverable < ActiveRecord::Base
 
   validates_presence_of :course, :creator
   validate :unique_course_task_owner?
+  validates_numericality_of :task_number, :allow_nil => true, :allow_blank => true
 
   has_attached_file :feedback,
                     :storage => :s3,

@@ -80,6 +80,11 @@ describe PagesController do
       end
 
       it "will update updated_by_user_id"
+
+      it "should fail if task_duration is not a number" do
+        @page.task_duration = 'aaa'
+        @page.save.should == false
+      end
     end
 
   end
