@@ -188,6 +188,10 @@ describe PagesController do
       it "deletes the attachment" do
         @page_with_attachment.page_attachments.count.should == 0
       end
+
+      it 'redirects to edit' do
+        response.should redirect_to edit_page_url(@page_with_attachment)
+      end
     end
   end
 

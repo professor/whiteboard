@@ -157,7 +157,6 @@ class PagesController < ApplicationController
   end
 
   def delete_attachment
-    raise
     page_attachment = PageAttachment.find(params[:id])
     unless page_attachment.page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
@@ -166,7 +165,8 @@ class PagesController < ApplicationController
 
     page_attachment.destroy
     flash[:notice] = 'Attachment was successfully deleted.'
-    render :action => "edit"
+
+    redirect_to :action => :edit, :id => page_attachment.page.to_param
   end
 
   # DELETE /pages/1

@@ -32,10 +32,10 @@ CMUEducation::Application.routes.draw do
     resources :pages do
       collection do
         post :reposition
-        post :delete_attachment
       end
     end
   end
+  match '/pages/delete_attachment' => 'pages#delete_attachment'
 
   resources :course_navigations
   resources :courses do

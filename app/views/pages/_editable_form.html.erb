@@ -362,7 +362,7 @@
               <td><%= link_to file.attachment_file_name, file.attachment.url %></td>
               <td><%= number_to_human_size file.attachment_file_size %></td>
               <td><%= file.owner.human_name %></td>
-              <td><%= link_to "Delete", :controller => "pages", :action => "delete_attachment", :id => file, :method => :post %></td>
+              <td><%= link_to "Delete", {:controller => "pages", :action => "delete_attachment", :id => file}, {:method => :post} %></td>
             </tr>
         <% end %>
       </table>
