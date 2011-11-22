@@ -27,13 +27,20 @@ describe PresentationFeedbacksController do
       @student_sam = Factory(:student_sam)
       @student_sally = Factory(:student_sally)
       @presentation = Factory(:presentation, :user_id => @student_sally.id,   :creator_id => @faculty_frank.id)
+
     end
 
   # This should return the minimal set of attributes required to create a valid
   # PresentationFeedback. As you add validations to PresentationFeedback, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {:content_comment => 'aaa'}
+    {:content_comment => 'aaa',
+     :content => 1,
+     :organization => 2,
+     :visual => 3,
+     :delivery => 0,
+     :presentation_id => @presentation.id,
+     :user_id => @faculty_frank.id}
   end
 
   describe "GET index" do
@@ -48,14 +55,8 @@ describe PresentationFeedbacksController do
     it "assigns the requested presentation_feedback as @presentation_feedback" do
       login(@faculty_frank)
 
-      presentation_feedback = PresentationFeedback.new
-      presentation_feedback.user_id = @faculty_frank.id
-      presentation_feedback.presentation_id = @presentation.id
-      presentation_feedback.content_comment = 'aaa'
-      presentation_feedback.save.should == true
-
+      presentation_feedback = PresentationFeedback.create! valid_attributes
       get :show, :id => presentation_feedback.id.to_s
-      #response.should have_content('aaa')
 
       assigns(:presentation_feedback).should eq(presentation_feedback)
     end

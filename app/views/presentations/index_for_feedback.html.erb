@@ -1,3 +1,5 @@
+<h1>Listing presentations that you can give feedback to</h1>
+
 <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
   <tr>
     <th>Presenter</th>
@@ -13,8 +15,11 @@
       <td><%= link_to "File", presentation.presentation.url %></td>
 
       <td>
-         <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
-
+        <% if presentation.hasGivenFeedback?(@current_user) %>
+            <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
+        <% else %>
+            <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
+        <% end %>
       </td>
 
     </tr>

@@ -30,7 +30,7 @@
       Did the talk cover all the content suggested on the checklist?
       (project goals, progress, and the process for achieving the goals, outcomes)
       (what went well and what didn’t, and why)
-      Was there continuity from previous presentations: actions on open issues; explanations of changes)
+      Was there continuity from previous presentations: actions on open issues; explanations of changes?
 
     </div>
 
@@ -44,7 +44,7 @@
   <div class="field">
     <h3>Comments</h3>
     <%# f.label :comment %>
-    <%= f.text_area :content_comment %>
+    <%= f.text_area :content_comment, :cols => 105, :rows => 5 %>
   </div>
 
 
@@ -54,7 +54,7 @@
     <div class="explanation">
       <h3>Organization/Clarity</h3>
       How logical was the organization? How smooth were transactions between points and parts of the talk?
-      Was the talk focused? To the point?  Were the main points clearly stated? easy to find?
+      Was the talk focused? To the point?  Were the main points clearly stated? Easy to find?
     </div>
 
     <% PresentationFeedback::GRADE.each_with_index do |text,index| %>
@@ -64,7 +64,7 @@
   <div class="field">
     <h3>Comments</h3>
     <%# f.label :comment %>
-    <%= f.text_area :organization_comment %>
+    <%= f.text_area :organization_comment, :cols => 105, :rows => 5 %>
   </div>
 
   <div class="field">
@@ -80,7 +80,7 @@
   <div class="field">
     <h3>Comments</h3>
     <%# f.label :comment %>
-    <%= f.text_area :visual_comment %>
+    <%= f.text_area :visual_comment, :cols => 105, :rows => 5 %>
   </div>
 
   <div class="field">
@@ -99,12 +99,12 @@
   <div class="field">
     <h3>Comments</h3>
     <%# f.label :comment %>
-    <%= f.text_area :delivery_comment %>
+    <%= f.text_area :delivery_comment, :cols => 105, :rows => 5 %>
   </div>
 
   <div class="field">
     <h3>General comments</h3>
-    <%= f.text_area :general_comment %>
+    <%= f.text_area :general_comment, :cols => 105, :rows => 5 %>
   </div>
   <div class="actions">
     <%= f.submit %>

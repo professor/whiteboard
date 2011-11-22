@@ -46,6 +46,17 @@ class Presentation < ActiveRecord::Base
     (self.creator_id == user.id || user.is_admin?)
   end
 
+  def hasGivenFeedback?(user)
+    @presentation_feedbacks = PresentationFeedback.where("user_id = :uid AND presentation_id = :pid",
+          {:uid => user.id, :pid => self.id})
+
+    if @presentation_feedbacks[0] == nil
+      return false
+    else
+      return true
+    end
+  end
+
   private
 
   def team_xor_user
@@ -53,5 +64,4 @@ class Presentation < ActiveRecord::Base
       errors.add("team_id","Specify a team or a user, not both")
     end
   end
-
 end

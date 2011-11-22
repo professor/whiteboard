@@ -1,51 +1,64 @@
+<h1>Feedback for <%= @presentation_feedback.presentation.name %></h1>
 
 <p>
-  <b>Presentation:</b>
-  <%= @presentation_feedback.presentation.name %>
+  <b>Content</b>
+  <table>
+    <tr>
+    <td>Grade:</td>
+    <td><%= PresentationFeedback::GRADE[@presentation_feedback.content] %></td>
+    </tr>
+    <tr>
+    <td>Comments:</td>
+    <td><%= @presentation_feedback.content_comment %></td>
+    </tr>
+  </table>
 </p>
 
 <p>
-  <b>Content:</b>
-  <%= PresentationFeedback::GRADE[@presentation_feedback.content] %>
+  <b>Organization</b>
+  <table>
+    <tr>
+    <td>Grade:</td>
+    <td><%= PresentationFeedback::GRADE[@presentation_feedback.organization] %></td>
+    </tr>
+    <tr>
+    <td>Comments:</td>
+    <td><%= @presentation_feedback.organization_comment %></td>
+    </tr>
+  </table>
 </p>
 
 <p>
-  <b>Content comment:</b>
-  <%= @presentation_feedback.content_comment %>
+  <b>Visuals</b>
+  <table>
+    <tr>
+    <td>Grade:</td>
+    <td><%= PresentationFeedback::GRADE[@presentation_feedback.visual] %></td>
+    </tr>
+    <tr>
+    <td>Comments:</td>
+    <td><%= @presentation_feedback.visual_comment %></td>
+    </tr>
+  </table>
 </p>
 
 <p>
-  <b>Organization:</b>
-  <%= PresentationFeedback::GRADE[@presentation_feedback.organization] %>
+  <b>Delivery</b>
+  <table>
+    <tr>
+    <td>Grade:</td>
+    <td><%= PresentationFeedback::GRADE[@presentation_feedback.delivery] %></td>
+    </tr>
+    <tr>
+    <td>Comments:</td>
+    <td><%= @presentation_feedback.delivery_comment %></td>
+    </tr>
+  </table>
 </p>
 
-<p>
-  <b>Organization comment:</b>
-  <%= @presentation_feedback.organization_comment %>
-</p>
 
 <p>
-  <b>Visual:</b>
-  <%= PresentationFeedback::GRADE[@presentation_feedback.visual] %>
-</p>
-
-<p>
-  <b>Visual comment:</b>
-  <%= @presentation_feedback.visual_comment %>
-</p>
-
-<p>
-  <b>Delivery:</b>
-  <%= PresentationFeedback::GRADE[@presentation_feedback.delivery] %>
-</p>
-
-<p>
-  <b>Delivery comment:</b>
-  <%= @presentation_feedback.delivery_comment %>
-</p>
-
-<p>
-  <b>General comment:</b>
+  <b>General comment:</b><br />
   <%= @presentation_feedback.general_comment %>
 </p>
 

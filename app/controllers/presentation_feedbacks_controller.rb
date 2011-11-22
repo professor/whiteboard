@@ -5,8 +5,14 @@ class PresentationFeedbacksController < ApplicationController
   # GET /presentation_feedbacks
   # GET /presentation_feedbacks.xml
   def index
-    redirect_to :controller => 'presentations', :action => 'index_for_feedback' and return
+    redirect_to :controller => 'presentations', :action => 'index_for_feedback'
 
+  end
+
+  def show_for_presentation
+    @presentation_feedback = PresentationFeedback.where("user_id = :uid AND presentation_id = :pid",
+        {:uid => current_user.id, :pid => params[:id]}).first
+    redirect_to :action => 'show', :id => @presentation_feedback.id
   end
 
   # GET /presentation_feedbacks/1
