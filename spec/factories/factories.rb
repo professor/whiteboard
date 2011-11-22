@@ -149,6 +149,8 @@ Factory.define :user, :class => User do |p|
 end
 
 Factory.define :presentation, :class => Presentation do |p|
+  p.sequence(:name) {|n| "Presentation #{n}"}
+  p.sequence(:presentation_file_name) {|n| "test_file_name#{n}.ppt"}
   p.user { |user| user.association(:user)}
   p.creator { |creator| creator.association(:faculty_frank)}
 end
