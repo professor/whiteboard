@@ -111,6 +111,11 @@ describe AcademicCalendar do
       AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Spring", year)).should == true
       AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Summer", year)).should == true
     end
+
+    it "should return false if week+15 in fall" do
+      year = Date.today.cwyear
+      AcademicCalendar.week_during_semester?(year, AcademicCalendar.semester_start("Fall", year) + 15).should == false
+    end
   end
 
   it 'should determine which Semester Mini it is' do
@@ -128,9 +133,12 @@ describe AcademicCalendar do
 
     Date.stub!(:today).and_return(Date.new(2011, 8, 29))
     AcademicCalendar.current_mini.should == "A"
-
-    Date.stub!(:today).and_return(Date.new(2011, 10, 17))
-    AcademicCalendar.current_mini.should == "B"
+	
+	Date.stub!(:today).and_return(Date.new(2011, 10, 17))
+	AcademicCalendar.current_mini.should == "Unknown"
+	
+	Date.stub!(:today).and_return(Date.new(2011, 10, 24))
+	AcademicCalendar.current_mini.should == "B"
   end
 
 

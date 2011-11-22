@@ -37,7 +37,7 @@ class AcademicCalendar
 
       when (fall_a)..(fall_a + 6) then
         "A"
-      when (fall_a + 7)..(fall_a + 13) then
+      when (fall_a + 8)..(fall_a + 14) then
         "B"
       else
         "Unknown"
@@ -83,7 +83,7 @@ class AcademicCalendar
         return true
       when self.semester_start("Summer", year)..(self.semester_start("Summer", year)+11)
         return true
-      when self.semester_start("Fall", year)..(self.semester_start("Fall", year)+15)
+      when self.semester_start("Fall", year)..(self.semester_start("Fall", year)+14)
         return true
       else
         return false
