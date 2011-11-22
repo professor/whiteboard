@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
-    t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -34,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
+    t.integer  "year"
     t.boolean  "configure_class_mailinglist",     :default => false
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "year"
     t.integer  "user_id"
     t.integer  "curriculum_comment_type_id"
-    t.string   "comment"
+    t.string   "comment",                    :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "human_name"
@@ -408,7 +408,6 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "email"
     t.string   "twiki_space"
     t.string   "tigris_space"
-    t.string   "course_id"
     t.integer  "primary_faculty_id"
     t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
@@ -418,6 +417,7 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
+    t.integer  "course_id"
     t.boolean  "updating_email"
   end
 
@@ -439,8 +439,6 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "email",                                 :limit => 100
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_token",                        :limit => 40
-    t.datetime "remember_token_expires_at"
     t.boolean  "is_staff",                                             :default => false
     t.boolean  "is_student",                                           :default => false
     t.boolean  "is_admin",                                             :default => false
@@ -492,14 +490,14 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
   end
@@ -549,7 +547,7 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "telephone4"
     t.string   "telephone4_label"
     t.integer  "updated_by_user_id"
-    t.string   "version"
+    t.integer  "version"
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
@@ -562,14 +560,14 @@ ActiveRecord::Schema.define(:version => 20111118213849) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
   end
