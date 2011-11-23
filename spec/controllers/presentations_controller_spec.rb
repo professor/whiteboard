@@ -135,4 +135,20 @@ describe PresentationsController do
       end
     end
 
+
+    describe "GET view_feedback" do
+      it "should show all received feedback" do
+        @presentation = Factory(:presentation2, :user_id => @student_sally.id, :creator_id => @faculty_frank.id)
+        @feedback = Factory(:presentation_feedback_from_student, :user_id => @student_sam.id, :presentation_id => @presentation.id)
+
+        #@presentation.user = @student_sally
+        #@presentation.save
+
+        #login(@presentation.user)
+        login(@faculty_frank)
+
+        get :view_feedback, :id => @presentation.id
+        assigns(:other_feedback).should eq(@presentation.presentation_feedbacks)
+      end
+    end
 end

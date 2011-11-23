@@ -1,0 +1,14 @@
+<h1>Feedback for <%= @presentation.name %></h1>
+
+<h2>Feedback from faculty</h2>
+<% if @faculty_feedback.count == 0 %>
+    No feedback is received.
+<% else %>
+    <%= render :partial => "feedback_listing", :locals => { :feedbacks => @faculty_feedback}%>
+<% end %>
+<h2>Feedback from Students/Staff</h2>
+<% if @other_feedback.count == 0 %>
+    No feedback is received.
+<% else %>
+    <%= render :partial => "feedback_listing", :locals => { :feedbacks => @other_feedback}%>
+<% end %>

@@ -1,0 +1,67 @@
+<% feedbacks.each_with_index do |feedback,index| %>
+        <h3>Feedback #<%= index+1 %> </h3>
+        <table  class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+          <tr>
+            <th>Content</th>
+            <th>Organization</th>
+            <th>Visuals</th>
+            <th>Delivery</th>
+          </tr>
+          <tr>
+            <td>
+              <%= PresentationFeedback::GRADE[feedback.content] %>
+            </td>
+            <td>
+              <%= PresentationFeedback::GRADE[feedback.organization] %>
+            </td>
+            <td>
+              <%= PresentationFeedback::GRADE[feedback.visual] %>
+            </td>
+            <td>
+              <%= PresentationFeedback::GRADE[feedback.delivery] %>
+            </td>
+          </tr>
+        </table>
+        <table cellpadding="3">
+          <tr>
+            <td>
+              <h4>
+              Comments for content:
+              </h4>
+            </td>
+            <td>
+              <%= feedback.content_comment.blank?? "--" : feedback.content_comment %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>
+              Comments for organization:
+              </h4>
+            </td>
+            <td>
+              <%= feedback.organization_comment.blank?? "--" : feedback.organization_comment %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>
+              Comments for visuals:
+              </h4>
+            </td>
+            <td>
+              <%= feedback.visual_comment.blank?? "--" : feedback.visual_comment %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>
+              Comments for delivery:
+              </h4>
+            </td>
+            <td>
+              <%= feedback.delivery_comment.blank?? "--" : feedback.delivery_comment %>
+            </td>
+          </tr>
+        </table>
+    <% end %>

@@ -2,6 +2,7 @@ class Presentation < ActiveRecord::Base
   belongs_to :team
   belongs_to :user, :class_name => "Person"
   belongs_to :creator, :class_name => "Person"
+  has_many :presentation_feedbacks
   has_attached_file :presentation,
                       :storage => :s3,
                       :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
@@ -55,6 +56,13 @@ class Presentation < ActiveRecord::Base
     else
       return true
     end
+  end
+
+  def canViewFeedback?(user)
+    if user == self.user || user.is_teacher? || user.is_admin
+      return true
+    end
+    return false
   end
 
   private

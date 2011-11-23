@@ -3,6 +3,7 @@ CMUEducation::Application.routes.draw do
   match '/presentations/index_for_feedback' => 'presentations#index_for_feedback', :as => :presentation_index_for_feedback
   match '/presentation_feedbacks/:id/new' => 'presentation_feedbacks#new', :as => :new_presentation_feedback
   match '/presentation_feedbacks/:id/show_for_presentation' => 'presentation_feedbacks#show_for_presentation', :as => :show_feedback_for_presentation
+  match '/presentations/:id/view_feedback' => 'presentations#view_feedback', :as => :view_presentation_feedback
 
   resources :search, :only => [:index]
   resources :deliverables

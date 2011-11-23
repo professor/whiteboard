@@ -19,6 +19,7 @@
           <td>
             <%= link_to 'Edit', edit_presentation_path(presentation) %>
             <%= link_to 'Destroy', presentation, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to 'View received feedback', view_presentation_feedback_path(presentation) %>
           </td>
       <% end %>
     </tr>

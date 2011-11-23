@@ -60,8 +60,8 @@ class Person < User
     semester = AcademicCalendar.current_semester()
 
     @sql_str = "select c.* FROM courses c,teams t
-              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in
-              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+              where t.course_id = c.id and c.year=#{Date.today.year} and c.semester = '#{semester}' and t.id in
+              (SELECT tp.team_id FROM teams_people tp, users u where u.id = tp.person_id and u.id = #{self.id})"
 
     @registered_courses = Course.find_by_sql(@sql_str)
   end

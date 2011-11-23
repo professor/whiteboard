@@ -151,4 +151,25 @@ class PresentationsController < ApplicationController
     @current_user = current_user
 
   end
+
+  def view_feedback
+    @presentation = Presentation.find(params[:id])
+    @faculty_feedback = []
+    @other_feedback = []
+
+    unless @presentation.canViewFeedback?(current_user)
+      flash[:error] = I18n.t(:not_your_presentation)
+      redirect_to root_path and return
+    end
+
+    @presentation.presentation_feedbacks.each do |feedback|
+      if feedback.user.is_teacher?
+        @faculty_feedback << feedback
+      else
+        @other_feedback << feedback
+      end
+    end
+
+  end
+
 end
