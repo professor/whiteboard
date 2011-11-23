@@ -25,6 +25,14 @@
 <p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
 
 
+All users:
+<table>
+	<tr><td>Id</td><td>Web ISO</td><td>Name</td><td>Track</td></tr>
+	<% @course.users.each do |user| %>
+	<tr><td><%=user.id%></td><td><%=user.webiso_account%></td><td><%=user.first_name%><%=user.last_name%></td><td><%=user.masters_track%></td></tr>
+	<% end %>
+</table>
+
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
     <p><%= link_to 'Deliverables', course_deliverables_path(@course) %></p>
     <p><%= link_to 'Team Formation Helper', past_teams_list_path(@course) %></p>

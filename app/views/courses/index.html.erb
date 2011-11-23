@@ -70,6 +70,11 @@ $(document).ready(function()
 
 <br />
 
+<% form_tag '/courses/upload', :multipart => true do %>
+	<label for="file">File to Upload</label> <%= file_field_tag "file" %>
+	<%= submit_tag %>
+<% end %>
+
 <% if current_user && current_user.is_admin? %>
 <%= link_to 'New course', new_course_path %>
 <br />

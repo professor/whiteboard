@@ -157,6 +157,44 @@ class CoursesController < ApplicationController
       end
     end
   end
+  
+  def upload
+    file_content = params[:file].read().gsub("\n", ' ')
+    parsed_courses = file_content.split('CLASS ROSTER')
+    parsed_courses.each do |parsed_course|
+      if /Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/.match(parsed_course)
+        #run_date = $1.strip
+        course_id = $2.strip
+        #sect = $3.strip
+        #semester = $4.strip
+        #college = $5.strip
+        #department = $6.strip
+        #instructors = $7.strip
+        student_ids = $8.scan(/\d+\.\d.*?(\w+)/)
+                
+        # find course in the database
+        Course.all.each do |course|
+          # if we find course, we need to replace '-'
+          if course.number.gsub('-', '').to_s.eql?(course_id)
+            course.users = []
+            student_ids.each do |student_id|
+              # if we find students by their andrew email account
+              student = User.find_by_webiso_account("#{student_id[0]}@andrew.cmu.edu")
+              if not student.nil?
+                course.users << student
+              end
+            end
+            course.save
+          end
+        end
+      end
+    end
+    
+    @all_courses = true
+    @courses = Course.order("year DESC, semester DESC, number ASC").all
+    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+    index_core
+  end
 
 
   private
