@@ -8,6 +8,7 @@ class RenameCoursePeopleToFacultyAssignments < ActiveRecord::Migration
       t.timestamps
     end
 
+    remove_index :courses_people, [ :course_id, :person_id ]
     add_index :registered_courses, [ :course_id, :person_id ], :unique => true
     add_index :faculty_assignments, [ :course_id, :person_id ], :unique => true
   end
@@ -19,5 +20,6 @@ class RenameCoursePeopleToFacultyAssignments < ActiveRecord::Migration
     drop_table :registered_courses
 
     rename_table :faculty_assignment, :courses_people
+    add_index :courses_people, [ :course_id, :person_id ], :unique => true
   end
 end
