@@ -35,14 +35,13 @@ CMUEducation::Application.routes.draw do
       end
     end
   end
+  resources :registrations
 
   resources :course_navigations
   resources :courses do
-    resources :teams do
-    end
-    member do
-      get :configure
-    end
+    resources :registrations
+    resources :teams
+    get :configure, :on => :member
   end
 
   match '/courses/:course_id/peer_evaluations' => 'peer_evaluation#index_for_course', :via => :get, :as => "peer_evaluations"
