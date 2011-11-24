@@ -61,14 +61,12 @@ group :development, :test do
   gem 'taps'
 #  gem 'rake'
   gem 'ruby-debug19'
-  gem 'ruby-debug-base19x'
-  gem 'ruby-debug-ide' #'0.4.6'
+  gem 'rspec-rails', '>= 2.7'
 
   gem 'shoulda'
 #  gem 'hanna'
   gem 'rcov'
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
-  gem 'rspec-rails'
   gem 'mocha'
   gem 'nokogiri', '1.5.0'
   gem 'factory_girl', '2.0.2'
