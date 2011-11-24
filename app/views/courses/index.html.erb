@@ -70,9 +70,11 @@ $(document).ready(function()
 
 <br />
 
+<% if current_user.is_teacher || current_user.is_staff || current_user.is_admin %>
 <% form_tag '/courses/upload', :multipart => true do %>
 	<label for="file">File to Upload</label> <%= file_field_tag "file" %>
 	<%= submit_tag %>
+<% end %>
 <% end %>
 
 <% if current_user && current_user.is_admin? %>

@@ -157,10 +157,19 @@ class CoursesController < ApplicationController
       end
     end
   end
-  
+
   def upload
     file_content = params[:file].read().gsub("\n", ' ')
     parsed_courses = file_content.split('CLASS ROSTER')
+
+    unless parsed_courses.any?
+      flash[:error] = "Could not read your file"
+      index_core and return
+    end
+
+    students_for_course = {}
+    old_students_for_course = {}
+
     parsed_courses.each do |parsed_course|
       if /Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/.match(parsed_course)
         #run_date = $1.strip
@@ -171,34 +180,114 @@ class CoursesController < ApplicationController
         #department = $6.strip
         #instructors = $7.strip
         student_ids = $8.scan(/\d+\.\d.*?(\w+)/)
-                
+
         # find course in the database
         Course.all.each do |course|
           # if we find course, we need to replace '-'
+          Rails.logger.debug("Student IDS:::: #{student_ids.inspect}")
           if course.number.gsub('-', '').to_s.eql?(course_id)
-            course.users = []
+            first_occurrence_of_course = old_students_for_course[course.id].nil?
+            old_students_for_course[course.id] = course.users.collect { |user| user.id }.to_set unless old_students_for_course[course.id]
+
+            if first_occurrence_of_course
+              course.users = []
+              Rails.logger.debug "Clearing course #{course.id}"
+              course.save
+            end
+
             student_ids.each do |student_id|
               # if we find students by their andrew email account
+              #arr =  arr+ #{student_id[0]}
               student = User.find_by_webiso_account("#{student_id[0]}@andrew.cmu.edu")
               if not student.nil?
-                course.users << student
+                students_for_course[course.id] = Set.new unless students_for_course[course.id]
+                students_for_course[course.id] << student.id
+                Rails.logger.debug("Added student #{student_id[0]} for course #{course.id}")
               end
             end
-            course.save
+            ## create array of newly added userids and dropped userids
+            #new_userids=[]
+            #dropped_userids=[]
+            #old_userlist.all.each do |old_userid|
+            #  if(course.users.find_by_webiso_account(old_userid.).nil?)
+            #    dropped_userids<<
+            #  end
+            #end
           end
         end
       end
     end
-    
-    @all_courses = true
-    @courses = Course.order("year DESC, semester DESC, number ASC").all
-    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+
+    Rails.logger.debug "Students for course::: #{students_for_course.inspect}"
+    students_for_course.each do |course_id, student_ids|
+      crs = Course.find(course_id)
+      student_ids.each do |stud_id|
+        crs.users << User.find(stud_id)
+      end
+      crs.save
+    end
+
+    unless students_for_course.any?
+      flash[:error] = "Could not read your file"
+      index_core and return
+    end
+    # make arrays for new user_ids and dropped user_ids
+    to_notify = {}
+    old_students_for_course.each do |old_course_id, old_student_ids|
+      new_student_ids = students_for_course[old_course_id]
+      added = (new_student_ids || Set.new) - (old_student_ids || Set.new)
+      Rails.logger.debug("Added for #{old_course_id}:::: #{added.inspect}")
+      dropped = (old_student_ids || Set.new) - (new_student_ids || Set.new)
+      Rails.logger.debug("Dropped for #{old_course_id}:::: #{dropped.inspect}")
+      to_notify[old_course_id] = {:added => added, :dropped => dropped}
+    end
+
+    to_notify.each do |course_id, info|
+      next if info[:added].blank? && info[:dropped].blank?
+
+      course = Course.find(course_id)
+
+      message = ""
+      if info[:added].present?
+        message += "New Students added to the course:\n"
+        i=1
+        info[:added].each do |student_id|
+          student = User.find(student_id)
+          message += i.to_s+". #{student.first_name}  #{student.last_name}\n"
+          i = i+1
+        end
+      end
+
+      if info[:dropped].present?
+        i=1
+        message += "Students dropped from the course:\n"
+        info[:dropped].each do |student_id|
+          student = User.find(student_id)
+          message += i.to_s+". #{student.first_name}  #{student.last_name}\n"
+          i = i+1
+        end
+      end
+
+      options = {:to => course.faculty.collect(&:email), :subject => "Roster change for your course #{course.name}",
+                 :message => message}
+      GenericMailer.email(options).deliver
+    end
+    #course.faculty.
+    #
+    #    end
+
+
     index_core
+
   end
 
 
   private
   def index_core
+    @all_courses = true unless @all_courses
+    @courses = Course.order("year DESC, semester DESC, number ASC").all unless @courses
+    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+
     respond_to do |format|
       format.html { render :action => "index" }
       format.xml { render :xml => @courses }

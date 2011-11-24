@@ -149,6 +149,20 @@ Factory.define :carina_zheng, :parent => :person do |p|
   p.is_teacher 1
 end
 
+# create more user accounts to verify working of register-students storycard
+Factory.define :charu_aggarwal, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 0
+  p.graduation_year "2012"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "CharuAggarwal"
+  p.first_name "Charu"
+  p.last_name "Aggarwal"
+  p.human_name "Charu Aggarwal"
+  p.email "charu.aggarwal@sv.cmu.edu"
+  p.webiso_account "caggarwa@andrew.cmu.edu"
+end
 
 Factory(:task_type, :name => "Working on deliverables")
 Factory(:task_type, :name => "Readings")
@@ -159,6 +173,7 @@ Factory(:task_type, :name => "Other")
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
 Factory.create(:carina_zheng)
+Factory.create(:charu_aggarwal)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
