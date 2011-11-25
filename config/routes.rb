@@ -35,11 +35,15 @@ CMUEducation::Application.routes.draw do
       end
     end
   end
-  resources :registrations
+  resources :registrations do
+    get :bulk_import, :on => :collection
+  end
 
   resources :course_navigations
   resources :courses do
-    resources :registrations
+    resources :registrations do
+      get :bulk_import, :on => :collection
+    end
     resources :teams
     get :configure, :on => :member
   end

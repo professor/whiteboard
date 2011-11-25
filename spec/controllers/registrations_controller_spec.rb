@@ -5,6 +5,7 @@ describe RegistrationsController do
   let(:staff) { Factory.create(:faculty_frank) }
   let(:course) { Factory.build(:course) }
   let(:registration) { Factory.build(:registration, :course => course, :person => student) }
+
   context "when not authenticated" do
     it "should be redirected to authorize path" do
       get :index
@@ -31,32 +32,65 @@ describe RegistrationsController do
   end
 
   context "when a course_id is not provided" do
+    before(:each) do
+      login(staff)
+    end
+
     describe "#index" do
       it "should respond to json" do
-        login(staff)
-
         get :index, { :format => 'json' }
         response.should be_success
       end
 
       it "should respond to html" do
-        login(staff)
-
-        get:index, { :format => 'html' }
+        get :index, { :format => 'html' }
         response.should be_success
       end
     end
   end
 
-  context "when there is a course_id" do
-    it "should return 404 if course with course_id is not found"
+  context "when course_id is provided" do
+    before(:each) do
+      login(staff)
+    end
+    it "should return 404 if not in DB" do
+      get :index, { :format => 'json', :course_id => 0 }
+      response.code.should == '404'
+    end
 
     describe "#index" do
-      it "should still succeed if there are no registrations for this course"
+      it "should succeed with 0 registrations" do
+        Registration.stub!(:scoped_by_params).once.with(hash_including(:course_id => 1)).and_return([])
 
-      it "should return empty array of registrations"
+        get :index, { :course_id => 1 }
+        response.should be_success
+      end
 
-      it "should return registrations if found"
+      it "should return empty array of registrations" do
+        Registration.stub!(:scoped_by_params).once.with(hash_including(:course_id => 1)).and_return([])
+
+        get :index, { :format => 'json', :course_id => 1 }
+        assigns(:registrations).should be_empty
+      end
+
+      it "should return registrations if found" do
+        Registration.stub!(:scoped_by_params).once.with(hash_including(:course_id => 1)).and_return([registration])
+
+        get :index, { :format => 'json', :course_id => 1 }
+        assigns(:registrations).should == [registration]
+      end
+    end
+  end
+
+  describe "#bulk_import" do
+    before(:each) do
+      login(staff)
+    end
+
+    it "should be success" do
+      get :bulk_import
+      
+      response.should be_success
     end
   end
 end
