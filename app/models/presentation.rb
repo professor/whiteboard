@@ -9,7 +9,7 @@ class Presentation < ActiveRecord::Base
                       :path => "presentation/:id/:filename"
 
   validates :team_id, :presence => {:unless => "user_id", :message => "You must select a team or user"}
-  validates_presence_of :name, :creator, :presentation_file_name
+  validates_presence_of :name, :creator
   validate :team_xor_user
 
   default_scope :order => "updated_at DESC"
@@ -35,10 +35,6 @@ class Presentation < ActiveRecord::Base
       team_condition = "team_id IN ("
       team_condition << teams.collect { |t| t.id }.join(',')
       team_condition << ") OR "
-
-#      team_condition = "(team_id IN ("
-#      team_condition << teams.collect{|t| t.id}.join(',')
-#      team_condition << "AND is_team_deliverable = 0) OR "
     end
     Presentation.where(team_condition + "(team_id IS NULL AND user_id = #{person.id})")
   end
@@ -68,7 +64,7 @@ class Presentation < ActiveRecord::Base
   private
 
   def team_xor_user
-    if !(team_id.blank? ^ user_id.blank?)
+    if !(team_id.blank? ^ user_id.blank?) && !( team_id.blank? && user_id.blank? )
       errors.add("team_id","Specify a team or a user, not both")
     end
   end

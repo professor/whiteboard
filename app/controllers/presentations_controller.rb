@@ -15,8 +15,7 @@ class PresentationsController < ApplicationController
     if (current_user.id != person.id)
       unless (current_person.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_presentation)
-        redirect_to root_path
-        return
+        redirect_to root_path and return
       end
     end
     @presentations = Presentation.find_by_person(person)
@@ -68,7 +67,7 @@ class PresentationsController < ApplicationController
 
     unless @presentation.editable?(current_user)
       flash[:error] = I18n.t(:not_your_presentation)
-      redirect_to root_path and return
+      redirect_to root_path
     end
   end
 
@@ -77,13 +76,10 @@ class PresentationsController < ApplicationController
   def create
     @presentation = Presentation.new(params[:presentation])
     @presentation.creator = current_person
-    if !params[:presentation][:presentation]
-      flash[:error] = 'Must specify a file to upload'
-      respond_to do |format|
-        format.html { render :action => "new" }
-        format.xml { render :xml => @presentation.errors, :status => :unprocessable_entity }
-      end
-      return
+
+    unless @presentation.editable?(current_user)
+      flash[:error] = I18n.t(:not_your_presentation)
+      redirect_to root_path
     end
 
     respond_to do |format|
