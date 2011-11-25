@@ -256,4 +256,35 @@ describe CoursesController do
     end
 
   end
+
+  context "upload action" do
+    describe "a teacher can " do
+      before :each do
+        login((Factory(:faculty_frank)))
+      end
+    end
+
+    describe "upload file on course page" do
+      it "should be able to read text file" do
+        lambda { post :upload, :file => "/public/testsamplefiles/student_dropall.txt" }.should_not raise_error
+      end
+
+      #it "should raise error for non-text file" do
+      #  post :upload, :file => "nonexistentfile.rtf"
+      #  flash[:error].should_eq("Could not read your file")
+      #end
+
+      #it "should be able to add two new records into the course.users database" do
+      #  Factory(:student_one)
+      #  Factory(:student_two)
+      #  Factory(:mfse_course)
+      #  @courseusers = Factory(:course, :users => [Factory(:student)])
+      #  lambda do
+      #    post :upload, :file => "/public/testsamplefiles/student_addnew.txt"
+      #  end.should change(@courseusers, :count)
+      #end
+    end
+
+  end
+
 end

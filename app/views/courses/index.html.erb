@@ -1,44 +1,43 @@
 <% content_for :tablesorter do %>
-  <%= javascript_include_tag 'tablesorter' %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
-<script type="text/javascript">
-$(document).ready(function() 
-    {
-       if ($("#filterBoxOne").prop("disabled") == true)
-       {
-         $('#filterBoxOne').val('');
-         $('#filterBoxOne').removeAttr("disabled");
-         $('#filterBoxOne').focus();
-        }
-        $("#courses_table").tablesorter({widgets: ['zebra']})
-            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
-                filterClearContainer: $("#filterClearOne"),
-                filterColumns: [0, 1, 2, 4],
-                filterCaseSensitive: false
-            });        
-<% if !@all_courses %>
-        $(".all_courses").hide();
-<% end %>
-    } 
-); 
-</script>
+    <%= javascript_include_tag 'tablesorter' %>
+    <%= javascript_include_tag 'tablesorter_filter' %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+                    if ($("#filterBoxOne").prop("disabled") == true) {
+                        $('#filterBoxOne').val('');
+                        $('#filterBoxOne').removeAttr("disabled");
+                        $('#filterBoxOne').focus();
+                    }
+                    $("#courses_table").tablesorter({widgets: ['zebra']})
+                            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                                filterClearContainer: $("#filterClearOne"),
+                                filterColumns: [0, 1, 2, 4],
+                                filterCaseSensitive: false
+                            });
+                    <% if !@all_courses %>
+                    $(".all_courses").hide();
+                    <% end %>
+                }
+        );
+    </script>
 <% end %>
 
 <% if @all_courses %>
-<% content_for :title, 'All courses' %>
-<h1>All Courses</h1>
-<div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
+    <% content_for :title, 'All courses' %>
+    <h1>All Courses</h1>
+    <div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
 <% else %>
-<% content_for :title, @semester + " " + @year.to_s + " Courses" %>
-<h1><%= @semester %> <%= @year %> Courses</h1>
-<div class="right_link"><%= link_to 'See all courses', courses_path %></div>
-    <p>For more information about your options see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
+    <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
+    <h1><%= @semester %> <%= @year %> Courses</h1>
+    <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
+    <p>For more information about your options
+      see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
 <% end %>
 <%= render :partial => "/people/tablesorter_filter_box" %>
 
 <table id="courses_table" class="tablesorter2">
   <thead>
-    <tr>
+  <tr>
     <th>Number</th>
     <th>Name</th>
     <th class="all_courses">Semester</th>
@@ -48,37 +47,37 @@ $(document).ready(function()
   </tr>
   </thead>
   <tbody>
-<% for course in @courses %>
-   <tr class="tablesorter">
-    <td><%=h course.number %></td>
-<% if course.curriculum_url.blank? %>
-    <td> <%=h course.display_name %></td>
-<% else %>
-    <td><a href='<%=course.curriculum_url %>'><%=h course.display_name %></a></td>
-<% end %>
-    <td class="all_courses"><%=h course.semester %></td>
-    <td><%=h course.mini %></td>
-    <td class="all_courses"><%=h course.year %></td>
-    <td><%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"Teams", :title=>"My Teams"), "/courses/#{course.id}/teams_photos" %></td>
-    <td><%= link_to 'More', course_path(course) %></td>
+  <% for course in @courses %>
+      <tr class="tablesorter">
+        <td><%= h course.number %></td>
+        <% if course.curriculum_url.blank? %>
+            <td> <%= h course.display_name %></td>
+        <% else %>
+            <td><a href='<%= course.curriculum_url %>'><%= h course.display_name %></a></td>
+        <% end %>
+        <td class="all_courses"><%= h course.semester %></td>
+        <td><%= h course.mini %></td>
+        <td class="all_courses"><%= h course.year %></td>
+        <td><%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width=>"16", :height=>"16", :alt=>"Teams", :title=>"My Teams"), "/courses/#{course.id}/teams_photos" %></td>
+        <td><%= link_to 'More', course_path(course) %></td>
 
-  </tr>
-<% end %>
-</tbody>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 
 
-<br />
+<br/>
 
 <% if current_user.is_teacher || current_user.is_staff || current_user.is_admin %>
-<% form_tag '/courses/upload', :multipart => true do %>
-	<label for="file">File to Upload</label> <%= file_field_tag "file" %>
-	<%= submit_tag %>
-<% end %>
+    <% form_tag '/courses/upload', :multipart => true do %>
+        <label for="file">File to Upload</label> <%= file_field_tag "file" %>
+        <%= submit_tag %>
+    <% end %>
 <% end %>
 
 <% if current_user && current_user.is_admin? %>
-<%= link_to 'New course', new_course_path %>
-<br />
-<br />
+    <%= link_to 'New course', new_course_path %>
+    <br/>
+    <br/>
 <% end %>
