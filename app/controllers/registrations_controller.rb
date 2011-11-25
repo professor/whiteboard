@@ -18,6 +18,21 @@ class RegistrationsController < ApplicationController
   def bulk_import
     
   end
+  
+  # Placeholder object for query regarding students not assigned to teams. We'll need to fix this.
+  def students_not_assigned_to_teams
+	@people = Person.find(:all, :conditions=>"is_student=false")
+  end
+  
+  	# GET /courses/:id/registrations/find_unregistered_students_for_course
+	def find_unregistered_students_for_course
+		registrations = Registration.find(:all, :conditions => ["id = ?",params[:id]])
+		registration_ids = Array.new
+		registrations.each do |registered_id|
+			registration_ids << registered_id.person_id
+		end
+		@nonregistered_users = Person.find(:all,:conditions => ["id not in (?)",registration_ids])
+	end
 
   # def new
   #   

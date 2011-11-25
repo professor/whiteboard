@@ -1,0 +1,42 @@
+<%= stylesheet_link_tag 'twiki' %>
+
+<style type="text/css" media="all">
+.patternTopic .twikiTable td a:hover {
+color:#666666;
+}
+
+.patternTopic .twikiTable th a:hover {
+color:#FFFFFF;
+background-color: #6B7F93;
+}
+</style>
+
+<table class="twikiTable" cellpadding="0" cellspacing="0">
+  <tr>
+    <th class="twikiFirstCol" bgcolor="#6b7f93">Login</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Courses, Number, Semester</th>
+  </tr>
+
+<% @people.each do |person|%>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+    <td class="twikiFirstCol"><%=h person.login %></td>
+    <td><%=h person.first_name %></td>
+    <td><%=h person.last_name %></td>
+    <% unless (person.email.blank?) %>
+        <td><a href='mailto:<%=h person.email %>' target='_top'><%= image_tag("/images/email.gif", :width=>"12", :height=>"9", :border=>0) %></a></td>
+    <% else %>
+        <td> &nbsp; </td>
+    <% end %>
+
+    <td>
+    <% person.registered_courses.each do |course| %>
+       <%=h course.name %> (<%=h course.short_name %>), <%=h course.number %>, <%=h course.semester %>
+	<br/>
+     </td>
+     <% end %>
+  </tr>
+<% end %>
+</table>
