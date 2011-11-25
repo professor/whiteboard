@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117004719) do
+ActiveRecord::Schema.define(:version => 20111124203719) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20111117004719) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "page_comment_types", :force => true do |t|

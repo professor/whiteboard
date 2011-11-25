@@ -1,0 +1,35 @@
+
+<%= form_for @page_attachment, :html => { :multipart => true } do |f| %>
+  <% if @page_attachment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page_attachment.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
+
+      <ul>
+      <% @@page_attachment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, :size => "50" %>
+  </p>
+
+  <div class="deliverable_attachment">
+
+    <p>
+      <%= f.label :attachment, "Attachment file to upload" %>
+      <%= f.file_field :attachment %>
+    </p>
+    <p>
+      <%= f.label :comment, "Comments" %>
+      <br>
+      <%= f.text_area :comment, :size=>"90x10" %>
+    </p>
+    <%= f.hidden_field :page_id %>
+  </div>
+  <p>
+    <%= f.submit button_name %>
+  </p>
+<% end %>

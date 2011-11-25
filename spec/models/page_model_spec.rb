@@ -26,8 +26,12 @@ describe Page do
     @page.updated_by_user_id = nil
     @page.should_not be_valid
   end
-
-  it "should allow faculty to upload attachments"
+  #tests related to uploading attachments
+  describe "should allow faculty to upload attachments" do
+    it "should respond to page attachments" do
+      @page.should respond_to(:page_attachments)
+    end
+  end
 
 
   context "can be a named url" do

@@ -1,0 +1,2 @@
+module PageAttachmentsHelper
+end

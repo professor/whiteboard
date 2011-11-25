@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
                   :url, :is_editable_by_all, :is_viewable_by_all, :version_comments, :course_name
 
   versioned
-
+  has_many :page_attachments
   validates_presence_of :title
   validates_presence_of :updated_by_user_id
   validates_uniqueness_of :url, :allow_blank => true

@@ -17,13 +17,14 @@
   });
 
   $(document).ready(function(){
-
     //Attach event to tab selection & save selected tab in cookie
     $('#tabs').bind('tabsselect', function(event, tab){
       $.cookie('selected_tab', tab.index);
      });
 
     $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+      $("#attachments").accordion({ collapsible: true },{active: 2});
+
    });
 
 </script>
@@ -85,6 +86,20 @@ $(document).ready(function(){
 </div>
 
 <% end %>
+<div id = "attachments">
+  <h3><a href="#">Attachments</a></h3>
+	<div>
+      <ul>
+          <% unless @page.page_attachments.nil? %>
+
+            <% @page.page_attachments.each do |attachments| %>
+             <li><%= link_to attachments.name,attachments.attachment.url %></li>
+            <% end %>
+          <% end %>
+      </ul>
+
+	</div>
+  </div>
 <div class="modified">Last modified by <% unless @page.updated_by.blank? %><%= @page.updated_by.human_name %><% end %></div>
 <div class="modified"><%= time_ago_in_words(@page.updated_at) %> ago</div>
 <div class="modified"> <!-- Version <%= @page.version %> | -->
@@ -99,6 +114,6 @@ $(document).ready(function(){
 <br/>
 
 <% if @page.editable?(current_user) %>
-Add Attachment | <%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Add Attachment', new_page_attachment_path(:page => @page.id) %> | <%= link_to 'Edit', edit_page_path(@page) %> |
 <% end %>
 <%= link_to 'Back', pages_path %> <br/>

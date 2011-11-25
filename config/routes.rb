@@ -35,6 +35,7 @@ CMUEducation::Application.routes.draw do
       end
     end
   end
+  resources :page_attachments
 
   resources :course_navigations
   resources :courses do
