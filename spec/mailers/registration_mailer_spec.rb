@@ -15,11 +15,7 @@ before(:each) do
 end
 
   describe "When students are added from course" do
-     it "should not deliver if no instructor is assigned" do
-	   RegistrationMailer.notify_faculty_of_added_students('',@students,@course).deliver
-	   ActionMailer::Base.deliveries.size == 0
-	 end
-	 
+    
 	 it "should deliver to one instructor" do
 	    email = RegistrationMailer.notify_faculty_of_added_students(@faculty_frank.email,@students,@course).deliver
 		faculty_list = Array.new()
@@ -42,10 +38,6 @@ end
   end
   
   describe "When students are dropped from course" do
-     it "should not deliver if no instructor is assigned" do
-	   RegistrationMailer.notify_faculty_of_dropped_students('',@students,@course).deliver
-	   ActionMailer::Base.deliveries.size == 0
-	 end
 	 
 	 it "should deliver to one instructor" do
 	    email = RegistrationMailer.notify_faculty_of_dropped_students(@faculty_frank.email,@students,@course).deliver
