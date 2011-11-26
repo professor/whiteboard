@@ -1,3 +1,34 @@
+# Course represents a course taught at CMU-SV.
+#
+# At present, there is no distinction between sections of a course. Each team can belong to a "section"
+# which is only a labeled text field.
+#
+# == Adding a Course Offering
+#
+# Sometime before a new semester starts, Gerry will create all the courses for the next semester. The HUB
+# has a deadline for updating their system with courses, once that deadline has passed, Gerry typically will
+# update the rails system. A course can be added/removed/modified after this deadline, and the information in
+# the rails system should be updated. When Gerry creates a course, its will the minimal necessary information.
+# When the course is created, certain information is copied from the previous offering of the same course, where as
+# other information must not be copied.
+#
+# The CMU-SV community typically does not refer to courses by their number, where as on the Pittsburgh campus,
+# most undergraduate courses are referred to by their number. 
+#
+# The system asks for the tuple (course_number, semester, and year) to create the course and then puts the user
+# in an edit mode prompting reasonable defaults from the last time the course was offered. If nothing has changed,
+# it's easy for Gerry to create the next course. If the instructor has changed then it's easy to edit that information
+#
+#
+# == Notifying instructors
+#
+# Whenever an instructor is added to a course, they are notified about the change, asking them to review the course
+# options. We ask that one of the instructors confirm the settings, when this happens we consider that the faculty
+# has "configured" the course. (Or verified it's settings.) If this doesn't happen, the system should periodically
+# remind faculty about the change.)
+#
+#
+
 class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
@@ -24,9 +55,8 @@ class Course < ActiveRecord::Base
     result.gsub(" ", "")
   end
 
-  #before_validation :set_updated_by_user
+  #before_validation :set_updated_by_user -- this needs to be done by the controller
   before_save :strip_whitespaces
-
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
@@ -41,19 +71,13 @@ class Course < ActiveRecord::Base
     Course.with_course_name(course_name).first
   end
 
-
-#  def self.for_semester(semester, year, mini)
-#    return Course.find(:all, :conditions => ["semester = ? and year = ? and mini = ?", semester, year, mini], :order => "name number")
-#  end
-
   def self.for_semester(semester, year)
-    return Course.find(:all, :conditions => ["semester = ? and year = ?", semester, year], :order => "name ASC")
+    return Course.where(:semester => semester, :year => year).order("name ASC")
   end
 
   def self.current_semester_courses()
     return self.for_semester(AcademicCalendar.current_semester(),
                              Date.today.year)
-
   end
 
   def self.next_semester_courses()
@@ -74,6 +98,7 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Return the week number of the year for the start of a course
   def course_start
     start = AcademicCalendar.semester_start(semester, year)
 
@@ -89,6 +114,7 @@ class Course < ActiveRecord::Base
     return 0 #If the semester field isn't set
   end
 
+  # Return the week number of the year for the end of a course
   def course_end
     self.course_start + self.course_length - 1
   end
@@ -138,6 +164,7 @@ class Course < ActiveRecord::Base
   #Todo - move to a higher class or try as a mixin
   #Todo - this code was copied to team.rb
   def update_faculty(members)
+    self.faculty_was = self.faculty
     self.faculty = []
     return "" if members.nil?
 
@@ -164,6 +191,7 @@ class Course < ActiveRecord::Base
     return new_course
   end
 
+  #Find the last time this course was offered
   def self.last_offering(course_number)
     #TODO: move this sorting into the database
     offerings = Course.find_all_by_number(course_number)
@@ -183,4 +211,5 @@ class Course < ActiveRecord::Base
       self[attr] = value.strip if value.is_a?(String)
     end
   end
+
 end

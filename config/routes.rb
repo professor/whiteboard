@@ -59,6 +59,7 @@ CMUEducation::Application.routes.draw do
   match '/people/class_profile' => 'people#class_profile'
   match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'
+  match '/people/:id/my_courses_verbose' => 'people#my_courses_verbose', :as => :my_courses
   match '/people/:id/my_courses' => 'people#my_courses', :as => :my_courses
   match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
   resources :people
