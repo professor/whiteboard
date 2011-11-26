@@ -97,4 +97,16 @@ describe RegistrationsController do
       response.should be_success
     end
   end
+
+  describe "#bulk_upload" do
+    before(:each) do
+      login(staff)
+    end
+
+    it "should be success" do
+      get :bulk_upload
+      
+      response.should be_success
+    end
+  end
 end
