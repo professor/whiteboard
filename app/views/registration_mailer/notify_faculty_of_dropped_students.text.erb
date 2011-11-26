@@ -1,0 +1,11 @@
+Hello,
+
+The following students have been dropped from the course <%= @course.name %><% unless @course.short_name.blank? %>(<%=h @course.short_name %>)<% end %>, Number = <%=h @course.number %>, Semester = <%=h @course.semester %>, Mini = <%=h @course.mini %>:
+
+Login:				First Name:		          		Last Name: 		                                  email:
+--------------------------	    	-----------------------------------		------------------------------------------              --------------------------------------
+<% @students.each do |student| %>
+<%=h student.login %>		<%=h student.first_name %>		<%=h student.last_name %>                         <%=h student.email %>
+<% end %>
+
+If you believe this is an error, please check with the HUB or contact the Rails administrator (which should be Todd Sedano (todd.sedano@sv.cmu.edu)).

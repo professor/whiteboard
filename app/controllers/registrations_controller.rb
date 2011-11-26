@@ -26,7 +26,7 @@ class RegistrationsController < ApplicationController
   
   	# GET /courses/:id/registrations/find_unregistered_students_for_course
 	def find_unregistered_students_for_course
-		registrations = Registration.find(:all, :conditions => ["id = ?",params[:id]])
+		registrations = Registration.find(:all, :conditions => ["id = ?",params[:course_id]])
 		registration_ids = Array.new
 		registrations.each do |registered_id|
 			registration_ids << registered_id.person_id

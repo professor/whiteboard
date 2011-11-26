@@ -43,6 +43,8 @@ CMUEducation::Application.routes.draw do
   resources :courses do
     resources :registrations do
       get :bulk_import, :on => :collection
+	  get :students_not_assigned_to_teams, :on => :collection
+	  get :find_unregistered_students_for_course, :on => :collection
     end
     resources :teams
     get :configure, :on => :member
