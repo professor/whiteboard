@@ -6,11 +6,21 @@ class Registration < ActiveRecord::Base
     where(:course_id => course_id) unless course_id.nil?
   }
 
-  def self.scoped_by_params(params={})
+  def self.scoped_by_params( params={} )
     # Raise record not found and let controller handle
     # response if provided course_id is invalid
     course = Course.find_by_id!(params[:course_id]) if params[:course_id].present?
 
     self.for_course(params[:course_id])
+  end
+
+  def self.process_import( courses_data )
+    result = {
+      :success  => 0,
+      :failed   => 0,
+      :noop     => 0,
+      :failures => [],
+      :noops    => []
+    }
   end
 end

@@ -1,0 +1,8 @@
+<div class="admin_ContentAreaPosition">
+  <h1>Upload registration data</h1>
+
+  <%= form_tag({ :action => :bulk_upload }, :multipart => true) do %>
+    <%= file_field_tag 'registrations_file' %><br /><br />
+    <%= submit_tag 'Upload' %>
+  <% end %>
+</div>
