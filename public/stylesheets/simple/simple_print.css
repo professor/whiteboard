@@ -2,7 +2,7 @@
     padding: 0;
 }
 
-.twikiTable tr > td:nth-child(2), th:nth-child(2) {
+.twikiTable tr > td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3){
     display: none;
 }
 
@@ -13,8 +13,11 @@
 .team_member_photo{
     margin-right: 5px;
     display: inline-block;
+    vertical-align: top;
+    width: 70px;
+    text-align: center;
 }
 
 .team_member_photo > a > img {
-    height: 90px;
+    height: 80px;
 } 
