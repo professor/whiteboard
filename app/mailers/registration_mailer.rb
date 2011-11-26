@@ -6,7 +6,7 @@ class RegistrationMailer < ActionMailer::Base
   # students: An array of the added students
   # course:   The Course object which the registration relates to.
   def notify_faculty_of_added_students(faculty_emails, students, course)
-     unless faculty_emails.blank?  #if there is no assigned faculty to the course, do nothing
+     unless faculty_emails.blank? || faculty_emails.empty? #if there is no assigned faculty to the course, do nothing
 	    @students = students
 		@course = course
 		mail(:to => faculty_emails, :subject => "Students added to course")
@@ -18,7 +18,7 @@ class RegistrationMailer < ActionMailer::Base
   # students: An array of the dropped students
   # course:   The Course object which the registration relates to.
   def notify_faculty_of_dropped_students(faculty_emails, students, course)
-     unless faculty_emails.blank?
+     unless faculty_emails.blank? || faculty_emails.empty?
 	    @students = students
 		@course = course
 		mail(:to => faculty_emails, :subject => "Students have been dropped from course")
