@@ -1,1 +1,8 @@
-#index
+<% @registrations.each do |registration| %>
+  Name: <%= registration.person.first_name %> <%= registration.person.last_name %><br />
+<% end %>
+
+<br />
+<br />
+
+<%= link_to "Import registrations", bulk_import_registrations_path(@course) %>

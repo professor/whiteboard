@@ -59,6 +59,10 @@ describe RegistrationsController do
     end
 
     describe "#index" do
+      before(:each) do
+        Course.stub!(:find_by_id!).once.with(1).and_return(course)
+      end
+
       it "should succeed with 0 registrations" do
         Registration.stub!(:scoped_by_params).once.with(hash_including(:course_id => 1)).and_return([])
 

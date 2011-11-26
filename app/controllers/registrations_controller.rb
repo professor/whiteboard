@@ -9,6 +9,8 @@ class RegistrationsController < ApplicationController
   layout 'cmu_sv_no_pad'
 
   def index
+    find_course if params[:course_id]
+
     @registrations = Registration.scoped_by_params(params)
 
     respond_with @registrations

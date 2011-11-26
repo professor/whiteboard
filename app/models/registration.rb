@@ -7,10 +7,6 @@ class Registration < ActiveRecord::Base
   }
 
   def self.scoped_by_params( params={} )
-    # Raise record not found and let controller handle
-    # response if provided course_id is invalid
-    course = Course.find_by_id!(params[:course_id]) if params[:course_id].present?
-
     self.for_course(params[:course_id])
   end
 
@@ -45,7 +41,7 @@ class Registration < ActiveRecord::Base
             else
               result[:success]    += 1
               result[:successes]  << result_hash
-              course.students << student
+              course.students |= [student]
             end
           end
         end
