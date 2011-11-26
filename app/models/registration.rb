@@ -35,7 +35,6 @@ class Registration < ActiveRecord::Base
           student     = Person.find_by_webiso_account(imported_student.user_id)
           result_hash = { imported_course.number => imported_student.user_id }
 
-
           if student.nil?
             result[:failed]   += 1
             result[:failures] << result_hash
