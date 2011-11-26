@@ -16,11 +16,43 @@ class Registration < ActiveRecord::Base
 
   def self.process_import( courses_data )
     result = {
-      :success  => 0,
-      :failed   => 0,
-      :noop     => 0,
-      :failures => [],
-      :noops    => []
+      :success    => 0,
+      :failed     => 0,
+      :noop       => 0,
+      :successes  => [],
+      :failures   => [],
+      :noops      => []
     }
+
+    courses_data.each do |imported_course|
+      course = Course.find_by_id(imported_course.number)
+
+      if course.nil?
+        result[:failed]   += imported_course.students.size
+        result[:failures] << { imported_course.number => imported_course.students.map(&:user_id) }
+      else
+        imported_course.students.each do |imported_student|
+          student     = Person.find_by_webiso_account(imported_student.user_id)
+          result_hash = { imported_course.number => imported_student.user_id }
+
+
+          if student.nil?
+            result[:failed]   += 1
+            result[:failures] << result_hash
+          else
+            if course.students.include?(student)
+              result[:noop]   += 1
+              result[:noops]  << result_hash
+            else
+              result[:success]    += 1
+              result[:successes]  << result_hash
+              course.students << student
+            end
+          end
+        end
+      end
+    end
+
+    result
   end
 end
