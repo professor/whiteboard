@@ -153,7 +153,7 @@ class PresentationsController < ApplicationController
     @faculty_feedback = []
     @other_feedback = []
 
-    unless @presentation.canViewFeedback?(current_user)
+    unless @presentation.can_view_feedback?(current_user)
       flash[:error] = I18n.t(:not_your_presentation)
       redirect_to root_path and return
     end

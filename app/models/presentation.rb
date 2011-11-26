@@ -43,7 +43,7 @@ class Presentation < ActiveRecord::Base
     (self.creator_id == user.id || user.is_admin?)
   end
 
-  def hasGivenFeedback?(user)
+  def has_given_feedback?(user)
     @presentation_feedbacks = PresentationFeedback.where("user_id = :uid AND presentation_id = :pid",
           {:uid => user.id, :pid => self.id})
 
@@ -54,8 +54,8 @@ class Presentation < ActiveRecord::Base
     end
   end
 
-  def canViewFeedback?(user)
-    if user == self.user || user.is_teacher? || user.is_admin
+  def can_view_feedback?(user)
+    if user == self.user || user.is_staff? || user.is_admin
       return true
     end
     return false

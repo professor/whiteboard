@@ -4,7 +4,7 @@
   <tr>
     <th>Presenter</th>
     <th>Name</th>
-    <th>File</th>
+
     <th>Action</th>
   </tr>
 
@@ -12,10 +12,10 @@
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
       <td><%=h (presentation.is_team_presentation?? presentation.team.name : presentation.user.human_name) %></td>
       <td><%= presentation.name  %></td>
-      <td><%= link_to "File", presentation.presentation.url %></td>
+
 
       <td>
-        <% if presentation.hasGivenFeedback?(@current_user) %>
+        <% if presentation.has_given_feedback?(@current_user) %>
             <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
         <% else %>
             <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
