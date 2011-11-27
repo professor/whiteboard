@@ -91,28 +91,30 @@ describe HubStudentImporter do
 end
 
 describe HubStudentImporter::Course do
-  before(:each) do
-    @course = HubStudentImporter::Course.new
-  end
+  let(:course) { HubStudentImporter::Course.new }
 
-  describe "#update_parse_step!" do
-    it "should increment by 1 on every call" do
-      expect {
-        @course.update_parse_step!
-      }.should change(@course, :current_parse_step).from(HubStudentImporter::Course::PARSE_STEPS[0]).to(HubStudentImporter::Course::PARSE_STEPS[1])
+  describe "regex patterns" do
+    describe "::META_COURSE_HEADER_MATCHER" do
+      
     end
 
-    it "should never exceed the max number of steps defined in PARSE_STEPS" do
-      10.times { @course.update_parse_step! }
-      @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS.values.last
+    describe "::META_DATA_LINE1_MATCHER" do
+
+    end
+
+    describe "::META_DATA_LINE2_MATCHER" do
+      
+    end
+
+    describe "::META_INSTRUCTOR_MATCHER" do
+      
+    end
+
+    describe "::META_INSTRUCTOR_NAME_MATCHER" do
     end
   end
 
-  describe "#current_parse_step" do
-    describe "when first initialized" do
-      it "should return PARSE_STEPS[0]" do
-        @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS[0]
-      end
+    describe "::META_TOTAL_STUDENTS_MATCHER" do
     end
   end
 end
@@ -120,3 +122,4 @@ end
 describe HubStudentImporter::Student do
   let(:student) { HubStudentImporter::Student.new }
 end
+
