@@ -24,7 +24,11 @@ class Registration < ActiveRecord::Base
 
     courses_data.each do |imported_course|
       course = Course.find_by_number(imported_course.number)
-
+	  #the following three lines are variables used for the RegistrationMailer notifications
+	  instructors_email_list = Array.new()
+	  added_students = Array.new()
+	  dropped_students = Array.new()
+	  
       # might be a parse error if this is not found
       if course.nil?
         result[:failures] += imported_course.students.size
@@ -44,7 +48,15 @@ class Registration < ActiveRecord::Base
         # ActiveRecord magic.
         registered_students = []
         current_course_roster = course.students
-
+		
+		#get the faculty's email distribution list
+		last_names = imported_course.instructors.map{|k| k.slice(/\w+/)}
+		last_names.each do |last_name|
+			faculty = User.find_by_last_name(last_name.capitalize)
+			instructors_email_list  << faculty.email
+		end
+		
+		#loop through students
         imported_course.students.each do |imported_student|
           student = Person.find_by_login(imported_student.user_id)
           result_hash = { imported_course.number => imported_student.user_id }
@@ -59,6 +71,7 @@ class Registration < ActiveRecord::Base
               result[:adds]       += 1
               result[:added]      << result_hash
               registered_students |= [student]
+			  added_students << student
             end
           else
             result[:failures]   += 1
@@ -69,10 +82,22 @@ class Registration < ActiveRecord::Base
         result[:drops] = current_course_roster.size
         current_course_roster.each do |student|
           result[:dropped] << { imported_course.number => student.login }
+		  dropped_students << student
         end
 
         course.registered_students = registered_students
       end
+	  
+	  #send the email notifications for added and dropped students
+	  unless instructors_email_list.blank? || instructors_email_list.empty?
+	        unless added_students.blank? || added_students.empty?
+			     RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,added_students,course).deliver
+			end
+			
+			unless dropped_students.blank? || dropped_students.empty?
+				 RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,dropped_students,course).deliver
+			end
+	  end
     end
 
     result
