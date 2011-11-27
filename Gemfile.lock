@@ -13,12 +13,6 @@ GIT
     webrobots (0.0.12)
       nokogiri (>= 1.4.4)
 
-GIT
-  remote: https://github.com/dj2/Ruby-RTF.git
-  revision: b7e1f7f2bcf6f7f94a5629ddf52950df490e260b
-  specs:
-    ruby-rtf (0.0.2)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -328,7 +322,6 @@ DEPENDENCIES
   ruby-debug-base19x
   ruby-debug-ide
   ruby-debug19
-  ruby-rtf!
   shoulda
   taps
   thin
