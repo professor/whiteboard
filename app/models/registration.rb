@@ -26,8 +26,6 @@ class Registration < ActiveRecord::Base
       course = Course.find_by_number(imported_course.number)
 	  #the following three lines are variables used for the RegistrationMailer notifications
 	  instructors_email_list = Array.new()
-	  added_students = Array.new()
-	  dropped_students = Array.new()
 	  
       # might be a parse error if this is not found
       if course.nil?
@@ -69,9 +67,8 @@ class Registration < ActiveRecord::Base
               current_course_roster.delete(student)
             else
               result[:adds]       += 1
-              result[:added]      << result_hash
+              result[:added]      << student
               registered_students |= [student]
-			  added_students << student
             end
           else
             result[:failures]   += 1
@@ -81,20 +78,19 @@ class Registration < ActiveRecord::Base
 
         result[:drops] = current_course_roster.size
         current_course_roster.each do |student|
-          result[:dropped] << { imported_course.number => student.login }
-		  dropped_students << student
+          result[:dropped] << student
         end
 
         course.registered_students = registered_students
       end
 	  
 	  #send the email notifications for added and dropped students
-	  unless instructors_email_list.blank? || instructors_email_list.empty?
-	        unless added_students.blank? || added_students.empty?
+	  unless instructors_email_list.present?
+	        unless result[:added].present?
 			     RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,added_students,course).deliver
 			end
 			
-			unless dropped_students.blank? || dropped_students.empty?
+			unless result[:dropped].present?
 				 RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,dropped_students,course).deliver
 			end
 	  end
