@@ -196,7 +196,7 @@ class Course < ActiveRecord::Base
   def unregistered_students_on_team
     teams = Team.where(:course_id => self.id).includes(:people)
 	team_students = teams.collect { |team| team.people }.flatten.compact.uniq
-	registered_students = self.registered_students
+	registered_students = self.students
 	unregistered_students = team_students.reject { |student| registered_students.include?(student) }
   end
 
