@@ -13,9 +13,6 @@ class Course < ActiveRecord::Base
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
   belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
-  has_many :registrations
-  has_many :students, :through => :registrations, :source => :person
-
 
 #  def to_param
 #    display_course_name
