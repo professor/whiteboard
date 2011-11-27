@@ -23,12 +23,14 @@ class Registration < ActiveRecord::Base
     }
 
     courses_data.each do |imported_course|
-      course = Course.find_by_id(imported_course.number)
+      course = Course.find_by_number(imported_course.number)
 
       # might be a parse error if this is not found
       if course.nil?
         result[:failures] += imported_course.students.size
-        result[:failed]   << { imported_course.number => imported_course.students.map(&:user_id) }
+        imported_course.students.each do |student|
+          result[:failed] << { imported_course.number => student.user_id }
+        end
       else
         # The logic here might be a little complicated
         # Basically, we want to iterate over each of the imported
@@ -44,7 +46,7 @@ class Registration < ActiveRecord::Base
         current_course_roster = course.students
 
         imported_course.students.each do |imported_student|
-          student = Person.find_by_webiso_account(imported_student.user_id)
+          student = Person.find_by_login(imported_student.user_id)
           result_hash = { imported_course.number => imported_student.user_id }
 
           if student.present?
@@ -66,7 +68,7 @@ class Registration < ActiveRecord::Base
 
         result[:drops] = current_course_roster.size
         current_course_roster.each do |student|
-          result[:dropped] << { imported_course.number => student.webiso_account }
+          result[:dropped] << { imported_course.number => student.login }
         end
 
         course.registered_students = registered_students
