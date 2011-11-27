@@ -87,11 +87,11 @@ class Registration < ActiveRecord::Base
 	  #send the email notifications for added and dropped students
 	  unless instructors_email_list.present?
 	        unless result[:added].present?
-			     RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,added_students,course).deliver
+			     RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,result[:added],course).deliver
 			end
 			
 			unless result[:dropped].present?
-				 RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,dropped_students,course).deliver
+				 RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,result[:dropped],course).deliver
 			end
 	  end
     end
