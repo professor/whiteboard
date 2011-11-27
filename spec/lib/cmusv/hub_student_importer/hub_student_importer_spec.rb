@@ -111,10 +111,12 @@ describe HubStudentImporter::Course do
     end
 
     describe "::META_INSTRUCTOR_NAME_MATCHER" do
+      
     end
   end
 
     describe "::META_TOTAL_STUDENTS_MATCHER" do
+      
     end
   end
 end
