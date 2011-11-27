@@ -47,41 +47,12 @@ describe HubStudentImporter do
     }"
   end
 
-  let(:rtf_file) { mock("foo.rtf") }
-
   let(:html_src) do
     # return some test html source code
   end
 
-  let(:html_file) { mock("foo.html") }
-
   describe "#import_rtf" do
-    describe "when source file is not found" do
-      it "should raise Errno::ENOENT" do
-        expect {
-          HubStudentImporter.import_rtf("")
-        }.should raise_error(Errno::ENOENT)
-      end
-    end
-
-    describe "when source file is found" do
-      describe "when given file with invalid RTF format" do
-        it "should raise invalid RTF format error" do
-          rtf_file.should_receive(:read).once.and_return("")
-          File.should_receive(:open).once.with("foo.rtf", "r").and_yield(rtf_file)
-
-          expect {
-            HubStudentImporter.import_rtf("foo.rtf")
-          }.should raise_error(RubyRTF::InvalidDocument)
-        end
-      end
-
-      describe "when given valid RTF file" do
-        it "should ..." do
-          
-        end
-      end
-    end
+    
   end
 
   describe "#import_html" do
