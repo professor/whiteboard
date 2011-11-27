@@ -188,17 +188,17 @@ class Course < ActiveRecord::Base
   end
 
   def registered_students_not_in_team
-    teams = Team.where(:course_id => self.id).includes(:people)
-    assigned_students = teams.collect { |team| team.people }.flatten.compact.uniq
-    students_not_on_team = self.students.reject { |student| assigned_students.include?(student) }
-  end
+	teams = Team.where(:course_id => self.id).includes(:people)
+	assigned_students = teams.collect { |team| team.people }.flatten.compact.uniq
+	students_not_on_team = self.students.reject { |student| assigned_students.include?(student) }
+  end
 
-  def unregistered_students_on_team
-    teams = Team.where(:course_id => self.id).includes(:people)
-    team_students = teams.collect { |team| team.people }.flatten.compact.uniq
-    registered_students = self.registered_students
-    unregistered_students = team_students.reject { |student| registered_students.include?(student) }
-  end
+  def unregistered_students_on_team
+    teams = Team.where(:course_id => self.id).includes(:people)
+	team_students = teams.collect { |team| team.people }.flatten.compact.uniq
+	registered_students = self.registered_students
+	unregistered_students = team_students.reject { |student| registered_students.include?(student) }
+  end
 
   protected
   def strip_whitespaces

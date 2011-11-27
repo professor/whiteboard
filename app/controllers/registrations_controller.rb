@@ -3,6 +3,7 @@ class RegistrationsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :require_authorization!
+  before_filter :find_course
 
   respond_to :html, :json
 
@@ -43,17 +44,12 @@ class RegistrationsController < ApplicationController
   
   # Placeholder object for query regarding students not assigned to teams. We'll need to fix this.
   def students_not_assigned_to_teams
-    @people = Person.find(:all, :conditions=>"is_student=false")
+	@people = @course.registered_students_not_in_team
   end
   
     # GET /courses/:id/registrations/find_unregistered_students_for_course
   def find_unregistered_students_for_course
-    registrations = Registration.find(:all, :conditions => ["id = ?",params[:course_id]])
-    registration_ids = Array.new
-    registrations.each do |registered_id|
-      registration_ids << registered_id.person_id
-    end
-    @nonregistered_users = Person.find(:all,:conditions => ["id not in (?)",registration_ids])
+    @nonregistered_users = @course.unregistered_students_on_team
   end
 
   # def new
@@ -84,5 +80,9 @@ class RegistrationsController < ApplicationController
 
   def require_authorization!
     render :nothing => true, :status => :unauthorized unless current_user.permission_level_of(:staff)
+  end
+  
+  def find_course
+     @course = Course.find(params[:course_id])
   end
 end
