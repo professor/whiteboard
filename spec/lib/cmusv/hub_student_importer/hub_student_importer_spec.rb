@@ -92,36 +92,8 @@ end
 
 describe HubStudentImporter::Course do
   let(:course) { HubStudentImporter::Course.new }
-
-  describe "regex patterns" do
-    describe "::META_COURSE_HEADER_MATCHER" do
-      
-    end
-
-    describe "::META_DATA_LINE1_MATCHER" do
-
-    end
-
-    describe "::META_DATA_LINE2_MATCHER" do
-      
-    end
-
-    describe "::META_INSTRUCTOR_MATCHER" do
-      
-    end
-
-    describe "::META_INSTRUCTOR_NAME_MATCHER" do
-      
-    end
-  end
-
-    describe "::META_TOTAL_STUDENTS_MATCHER" do
-      
-    end
-  end
 end
 
 describe HubStudentImporter::Student do
   let(:student) { HubStudentImporter::Student.new }
 end
-
