@@ -53,7 +53,7 @@ module HubStudentImporter
     courses
   end
 
-  #Similar logic flow for RTF parsing but for HTML instead
+	#Similar logic flow for RTF parsing but for HTML instead
   def import_html(src_file_path)
   	# Open file from src_file_path
   	# create the HTML parser from Nokogiri
