@@ -10,6 +10,7 @@ class PresentationsController < ApplicationController
       4 => "Outstanding"
   }
 
+  # GET /courses/:course_id/presentations
   def index_for_course
     @course = Course.find(params[:course_id])
     if (current_person.is_admin? || @course.faculty.include?(current_person))
@@ -19,7 +20,7 @@ class PresentationsController < ApplicationController
     end
   end
 
-  # GET /presentations/new
+  # GET /course/:owner_id/presentations/new
   def new
     @course = Course.find(params[:course_id])
     if (current_person.is_admin? || @course.faculty.include?(current_person))
@@ -30,7 +31,7 @@ class PresentationsController < ApplicationController
     end
   end
 
-  # POST /presentations
+  # POST /course/:owner_id/presentations
   def create
     owner_id = Person.find_by_human_name(params[:presentation][:owner]) unless params[:presentation][:owner].nil?
     @presentation= Presentation.new(:owner_id=>owner_id,
