@@ -1,3 +1,4 @@
+require 'spec_helper'
 require File.join(File.dirname(__FILE__), "../../../../lib/cmusv/hub_student_importer/hub_student_importer")
 
 describe HubStudentImporter do
@@ -90,92 +91,27 @@ describe HubStudentImporter do
 end
 
 describe HubStudentImporter::Course do
-  let(:course) { HubStudentImporter::Course.new }
+  before(:each) do
+    @course = HubStudentImporter::Course.new
+  end
 
-  describe "regex patterns" do
-    describe "::META_COURSE_HEADER_MATCHER" do
-      it "should match CLASS with padding space" do
-        "                CLASS ".should match(HubStudentImporter::Course::META_COURSE_HEADER_MATCHER)
-      end
-
-      it "should not match class in lower case" do
-        "                class ".should_not match(HubStudentImporter::Course::META_COURSE_HEADER_MATCHER)
-      end
+  describe "#update_parse_step!" do
+    it "should increment by 1 on every call" do
+      expect {
+        @course.update_parse_step!
+      }.should change(@course, :current_parse_step).from(HubStudentImporter::Course::PARSE_STEPS[0]).to(HubStudentImporter::Course::PARSE_STEPS[1])
     end
 
-    describe "::META_DATA_LINE1_MATCHER" do
-      it "should match valid course line 1 info" do
-        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A  FOUNDATNS SW ENG"
-        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
-      end
-
-      it "should match valid course line 1 info with multi-char section number" do
-        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A1  FOUNDATNS SW ENG"
-        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
-      end
-
-      it "should not match invalid course line 1 info" do
-        course_info_line = "Run Date: 18-jul-2011   Course: 96700 Sect: A  "
-        course_info_line.should match(HubStudentImporter::Course::META_DATA_LINE1_MATCHER)
-      end
+    it "should never exceed the max number of steps defined in PARSE_STEPS" do
+      10.times { @course.update_parse_step! }
+      @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS.values.last
     end
+  end
 
-    describe "::META_DATA_LINE2_MATCHER" do
-      it "should match valid course line 2 info" do
-        "Semester: F11       College: CIT Department: SV".should match(HubStudentImporter::Course::META_DATA_LINE2_MATCHER)
-      end
-
-      it "should not match invalid course line 2 info with missing semester" do
-        ": F11       College: CIT Department: SV".should_not match(HubStudentImporter::Course::META_DATA_LINE2_MATCHER)
-      end
-    end
-
-    describe "::META_INSTRUCTOR_MATCHER" do
-      it "should match simple instructor name" do
-        "             Instructor(s): SEDANO, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
-      end
-      
-      it "should match instructor name with '-' in last name" do
-        "             Instructor(s): Foo-Bar, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
-      end
-      
-      it "should match instructor name with space in last name" do
-        "             Instructor(s): Foo Bar, A.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
-      end
-
-      it "should match instructor name with first and middle name initials" do
-        "             Instructor(s): Baz, F. B.".should match(HubStudentImporter::Course::META_INSTRUCTOR_MATCHER)
-      end
-    end
-
-    describe "::META_INSTRUCTOR_NAME_MATCHER" do
-      it "should match simple instructor name" do
-        "                    KATZ, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
-      end
-      
-      it "should match instructor name with '-' in last name" do
-        "                    Foo-Bar, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
-      end
-      
-      it "should match instructor name with space in last name" do
-        "                    Foo Bar, E.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
-      end
-
-      it "should match instructor name with first and middle name initials" do
-        "                    Baz, F.B.".should match(HubStudentImporter::Course::META_INSTRUCTOR_NAME_MATCHER)
-      end
-
-    end
-
-    describe "::META_TOTAL_STUDENTS_MATCHER" do
-      it "should match valid total students line" do
-        total_students_line = "Total Number Of Students In Course 96700 Section A  is    21"
-        total_students_line.should match(HubStudentImporter::Course::META_TOTAL_STUDENTS_MATCHER)
-      end
-
-      it "should match valid total students line with multi-char section name" do
-        total_students_line = "Total Number Of Students In Course 96700 Section A1  is    21"
-        total_students_line.should match(HubStudentImporter::Course::META_TOTAL_STUDENTS_MATCHER)
+  describe "#current_parse_step" do
+    describe "when first initialized" do
+      it "should return PARSE_STEPS[0]" do
+        @course.current_parse_step.should == HubStudentImporter::Course::PARSE_STEPS[0]
       end
     end
   end
@@ -183,40 +119,4 @@ end
 
 describe HubStudentImporter::Student do
   let(:student) { HubStudentImporter::Student.new }
-
-  def student_record_string(name)
-    "#{name}      Master CIT SV  M  24.0 foobar"
-  end
-
-  describe "regex patterns" do
-    describe "::META_STUDENT_INFO_MATCHER" do
-      it "should not match empty string" do
-        "".should_not match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should not match invalid string" do
-        "asdfas asdfa aiiaidif foo bar 24a dsfasdf 11".should_not match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should match students with simple first last name" do
-        student_record_string("bar, foo").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should match students with '-' in their last names" do
-        student_record_string("bar-baz, foo").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should match students with '-' in their first names" do
-        student_record_string("baz, foo-bar").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should match students with middle names" do
-        student_record_string("baz, foo bar").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-
-      it "should match students with first name of 3+ words" do
-        student_record_string("qux, foo bar baz").should match(HubStudentImporter::Student::META_STUDENT_INFO_MATCHER)
-      end
-    end
-  end
 end
