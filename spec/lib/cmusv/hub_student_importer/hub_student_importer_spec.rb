@@ -3,47 +3,47 @@ require File.join(File.dirname(__FILE__), "../../../../lib/cmusv/hub_student_imp
 describe HubStudentImporter do
   let(:rtf_src) do
     # return some test rtf source code
-    "{\\rtf1\\ansi\\ansicpg1252\\cocoartf1138\\cocoasubrtf230
-    {\\fonttbl\\f0\\fswiss\\fcharset0 ArialMT;}
-    {\\colortbl;\\red255\\green255\\blue255;\\red26\\green26\\blue26;\\red255\\green252\\blue125;}
-    \\margl1440\\margr1440\\vieww27540\\viewh16600\\viewkind0
-    \\deftab720
-    \\pard\\pardeftab720
+    "{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf230
+    {\fonttbl\f0\fswiss\fcharset0 ArialMT;}
+    {\colortbl;\red255\green255\blue255;\red26\green26\blue26;\red255\green252\blue125;}
+    \margl1440\margr1440\vieww27540\viewh16600\viewkind0
+    \deftab720
+    \pard\pardeftab720
 
-    \\f0\\fs26 \\cf0 \\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0CLASS \\cf2 \\cb3 ROSTER\\cf0 \\cb1 \\
-    \\
-    Run Date: 18-jul-2011 \\'a0 \\'a0 \\'a0Course: 96700 \\'a0Sect: A \\'a0 FOUNDATNS SW ENG\\
-    Semester: F11 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0College: \\'a0CIT \\'a0Department: \\'a0SV\\
-    \\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Instructor(s): SEDANO, A.\\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0KATZ, E.\\
-    \\
-    Name \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0Class \\'a0Col Dept G/O \\'a0Units UserID \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Mid Fin Def\\
-    _______________________________________________________________________________________\\
-    \\
-    AGGARWAL, CHARU \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Master CIT SV \\'a0 M \\'a0 \\'a024.0 \\'a0caggarwa\\
-    \\
-    \\
-    Total Number Of Students In Course \\'a096700 \\'a0Section \\'a0A \\'a0 is \\'a0 \\'a0 \\'a0 \\'a01\\
-    \\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0CLASS \\cf2 \\cb3 ROSTER\\cf0 \\cb1 \\
-    \\
-    Run Date: 18-jul-2011 \\'a0 \\'a0 \\'a0Course: 96700 \\'a0Sect: B \\'a0 FOUNDATNS SW ENG\\
-    Semester: F11 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0College: \\'a0CIT \\'a0Department: \\'a0SV\\
-    \\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Instructor(s): SEDANO, A.\\
-    \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0KATZ, E.\\
-    \\
-    Name \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0Class \\'a0Col Dept G/O \\'a0Units UserID \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Mid Fin Def\\
-    _______________________________________________________________________________________\\
-    \\
-    BAILEY, BRIAN \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 \\'a0 Master CIT SV \\'a0 M \\'a0 \\'a024.0 \\'a0brianbai\\
-    \\
-    BOND, JOSHUA JAMES SACKET Master CIT SV \\'a0 M \\'a0 \\'a024.0 \\'a0jbond\\
-    \\
-    \\
-    Total Number Of Students In Course \\'a096700 \\'a0Section \\'a0B \\'a0 is \\'a0 \\'a0 \\'a0 \\'a02\\
+    \f0\fs26 \cf0 \
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0CLASS \cf2 \cb3 ROSTER\cf0 \cb1 \
+    \
+    Run Date: 18-jul-2011 \'a0 \'a0 \'a0Course: 96700 \'a0Sect: A \'a0 FOUNDATNS SW ENG\
+    Semester: F11 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0College: \'a0CIT \'a0Department: \'a0SV\
+    \
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 Instructor(s): SEDANO, A.\
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0KATZ, E.\
+    \
+    Name \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0Class \'a0Col Dept G/O \'a0Units UserID \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 Mid Fin Def\
+    _______________________________________________________________________________________\
+    \
+    AGGARWAL, CHARU \'a0 \'a0 \'a0 \'a0 \'a0 Master CIT SV \'a0 M \'a0 \'a024.0 \'a0caggarwa\
+    \
+    \
+    Total Number Of Students In Course \'a096700 \'a0Section \'a0A \'a0 is \'a0 \'a0 \'a0 \'a01\
+    \
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0CLASS \cf2 \cb3 ROSTER\cf0 \cb1 \
+    \
+    Run Date: 18-jul-2011 \'a0 \'a0 \'a0Course: 96700 \'a0Sect: B \'a0 FOUNDATNS SW ENG\
+    Semester: F11 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0College: \'a0CIT \'a0Department: \'a0SV\
+    \
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 Instructor(s): SEDANO, A.\
+    \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0KATZ, E.\
+    \
+    Name \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0Class \'a0Col Dept G/O \'a0Units UserID \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 Mid Fin Def\
+    _______________________________________________________________________________________\
+    \
+    BAILEY, BRIAN \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 Master CIT SV \'a0 M \'a0 \'a024.0 \'a0brianbai\
+    \
+    BOND, JOSHUA JAMES SACKET Master CIT SV \'a0 M \'a0 \'a024.0 \'a0jbond\
+    \
+    \
+    Total Number Of Students In Course \'a096700 \'a0Section \'a0B \'a0 is \'a0 \'a0 \'a0 \'a02\
     }"
   end
 
@@ -53,7 +53,7 @@ describe HubStudentImporter do
     # return some test html source code
   end
 
-  let(:html_file_path) { mock("foo.html") }
+  let(:html_file) { mock("foo.html") }
 
   describe "#import_rtf" do
     describe "when source file is not found" do
@@ -77,41 +77,8 @@ describe HubStudentImporter do
       end
 
       describe "when given valid RTF file" do
-        let(:courses) do
-          rtf_file.stub!(:read).once.and_return(rtf_src)
-          File.stub!(:open).once.with("foo.rtf", "r").and_yield(rtf_file)
-
-          HubStudentImporter.import_rtf("foo.rtf")
-        end
-
-        it "should return 2 courses" do
-          courses.size.should == 2
-        end
-
-        it "should return the right number of instructors" do
-          courses[0].instructors.size.should == 2
-        end
-
-        it "should parse the instructors correctly" do
-          ["KATZ, E.", "SEDANO, A."].each do |instructor|
-            courses[0].instructors.include?(instructor).should == true
-          end
-        end
-
-        it "should return the right number of students" do
-          courses[0].students.size.should == 1
-          courses[1].students.size.should == 2
-        end
-
-        it "should return the right attributes for the student" do
-          courses[0].students[0].last_name.should == "AGGARWAL"
-          courses[0].students[0].first_name.should == "CHARU"
-          courses[0].students[0].class.should == "Master"
-          courses[0].students[0].college.should == "CIT"
-          courses[0].students[0].department.should == "SV"
-          courses[0].students[0].g_o.should == "M"
-          courses[0].students[0].units.should == 24.0
-          courses[0].students[0].user_id.should == "caggarwa"
+        it "should ..." do
+          
         end
       end
     end
