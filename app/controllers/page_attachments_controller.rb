@@ -7,7 +7,7 @@ class PageAttachmentsController < ApplicationController
   def create
      @page_attachment = PageAttachment.new(params[:page_attachment])
 
-    if !params[:page_attachment][:attachment]
+    if @page_attachment.attachment.nil?
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
         format.html { render :action => "new" }
@@ -32,5 +32,32 @@ class PageAttachmentsController < ApplicationController
         format.xml { render :xml => @page_attachment.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def edit
+    @page_attachment = PageAttachment.find(params[:id])
+
+    unless @page_attachment.page.editable?(current_user)
+      flash[:error] = "You do not have the permission to edit this."
+      redirect_to @page_attachment.page and return
+    end
+
+  end
+
+  def update
+    @page_attachment = PageAttachment.find(params[:id])
+
+    unless @page_attachment.page.editable?(current_user)
+      flash[:error] = "You do not have the permission to edit this."
+      redirect_to @page_attachment.page and return
+    end
+
+
+    if @page_attachment.update_attributes(params[:page_attachment])
+        flash[:notice] = 'Attachment was successfully updated.'
+        redirect_to(@page_attachment.page)
+      else
+        render :action => "edit"
+      end
   end
 end

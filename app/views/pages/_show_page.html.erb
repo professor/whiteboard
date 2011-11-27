@@ -93,7 +93,11 @@ $(document).ready(function(){
           <% unless @page.page_attachments.nil? %>
 
             <% @page.page_attachments.each do |attachments| %>
-             <li><%= link_to attachments.name,attachments.attachment.url %></li>
+             <li><%= link_to attachments.name,attachments.attachment.url %>
+               <% if @page.editable?(current_user) %>
+               <%= link_to "Edit", edit_page_attachment_path(attachments) %>
+                <% end %>
+              </li>
             <% end %>
           <% end %>
       </ul>
