@@ -26,6 +26,7 @@ describe "teams" do
     end
 
     it "shows correct teams" do
+      Team.any_instance.stub(:show_addresses_for_mailing_list).and_return(["email"])
       page.should have_link("#{@team.name}")
       page.should have_link("Show")
       click_link "Show"
