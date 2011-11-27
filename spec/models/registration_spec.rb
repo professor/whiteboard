@@ -22,7 +22,7 @@ describe Registration do
     it "should return relevant stats" do
       import_course_data = [course] * 2
       results = Registration.process_import( import_course_data )
-      results[:failures].size.should == 2
+      results[:failed].size.should == 2
     end
   end
 end
