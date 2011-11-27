@@ -25,7 +25,7 @@ module HubStudentImporter
       unless text.match(Course::META_COURSE_HEADER_MATCHER)
         if text.match(Course::META_DATA_LINE1_MATCHER)
           course.run_date = Time.parse($1)
-          course.number = $2.to_i
+          course.number = $2
           course.section = $3
           course.name = $4
         elsif text.match(Course::META_DATA_LINE2_MATCHER)
@@ -58,16 +58,16 @@ module HubStudentImporter
     # Open file from src_file_path
     # create the HTML parser from Nokogiri
     # close the file stream
-   html_file = File.open(src_file_path) 
+      html_file = File.open(src_file_path)
    html_parser = Nokogiri::HTML(html_file)
    html_file.close()
 
    #define regular expression variables here;  These may be removed upon verification of logic used for RTF (leveraged RTF logic for HTML)
-   html_line1_matcher = Regexp.new(/^Run Date: (\d{2}-\w+-\d{4})\s*Course:\s*(\d+)\s+Sect:\s*(\w+)\s+(.*)$/)
+   html_line1_matcher = Regexp.new(/^Run Date: (\d{2}-\w+-\d{4})\s*Course:\s*(\d+)\s*Sect:\s*(\w+)\s*(.*)$/)
    html_line2_matcher = Regexp.new(/^Semester: (\w+)\s*College:\s*(\w+)\s*Department:\s*(\w+).*$/)
    html_instructor_line = Regexp.new(/^\s+Instructor\(s\): (.*)$/)
    html_instructor_name_line = Regexp.new(/(\S+, \S+)$/)
-   html_meta_student_info = Regexp.new(/^(.+, .+)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
+   html_meta_student_info = Regexp.new(/^(\w+\s?[a-zA-z|\.|-]*, \w+\s?[a-zA-z|\.|-]*)\s+(\w+) (\w+)\s*(\w+)\s+(\w+)\s+(\d+\.\d)\s*(\w+).*$/)
    html_meta_total_students = Regexp.new(/^Total Number Of Students In Course.*is\s+(\d+)$/)
    
    courses = []
@@ -79,8 +79,8 @@ module HubStudentImporter
    # In the case where a multi-set HTML document exists (e.g. Foundations has a A section and a B section), the <pre> tags easily
    # distinguish which Semester portion the students are registered for.
    
-   sections = html_parser.search("//pre")
-   sections.each do |search_section|
+   search_parser = html_parser.search("//pre")
+   search_parser.each do |search_section|
    
    # split the file by newline character to access data line by line
       file_array = search_section.to_s.split(/\n+/)
@@ -89,7 +89,7 @@ module HubStudentImporter
       unless string_line.match("</pre>")
         if string_line.match(html_line1_matcher)
           course.run_date = Time.parse($1)
-          course.number = $2.to_i
+          course.number = $2
           course.section = $3
           course.name = $4
         elsif string_line.match(html_line2_matcher)
