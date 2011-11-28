@@ -159,105 +159,23 @@ class CoursesController < ApplicationController
   end
 
   def upload
-    file_content = params[:file].read().gsub("\n", ' ')
-    parsed_courses = file_content.split('CLASS ROSTER')
+    file_content = params[:file].read()
 
-    unless parsed_courses.any?
-      flash[:error] = "Could not read your file"
-      index_core and return
-    end
-
-    students_for_course = {}
-    old_students_for_course = {}
-
-    parsed_courses.each do |parsed_course|
-      if /Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/.match(parsed_course)
-        #run_date = $1.strip
-        course_id = $2.strip
-        #sect = $3.strip
-        #semester = $4.strip
-        #college = $5.strip
-        #department = $6.strip
-        #instructors = $7.strip
-        student_ids = $8.scan(/\d+\.\d.*?(\w+)/)
-
-        # find course in the database
-        Course.all.each do |course|
-          # if we find course, we need to replace '-'
-          if course.number.gsub('-', '').to_s.eql?(course_id)
-            first_occurrence_of_course = old_students_for_course[course.id].nil?
-            old_students_for_course[course.id] = course.users.collect { |user| user.id }.to_set unless old_students_for_course[course.id]
-
-            if first_occurrence_of_course
-              course.users = []
-              course.save
-            end
-
-            student_ids.each do |student_id|
-              student = User.find_by_webiso_account("#{student_id[0]}@andrew.cmu.edu")
-              if not student.nil?
-                students_for_course[course.id] = Set.new unless students_for_course[course.id]
-                students_for_course[course.id] << student.id
-              end
-            end
-          end
-        end
+    begin
+      changes_applied = HUBClassRosterHandler::handle(file_content)
+      if changes_applied
+        flash[:notice] = 'Roster file was parsed and handled successfully.'
+      else
+        flash[:notice] = 'Roster file parsed successfully, but no changes made.'
       end
+    rescue Exception => ex
+      flash[:error] = "There was a problem parsing your roster file: #{ex.message}"
     end
 
-    students_for_course.each do |course_id, student_ids|
-      crs = Course.find(course_id)
-      student_ids.each do |stud_id|
-        crs.users << User.find(stud_id)
-      end
-      crs.save
+    respond_to do |format|
+      format.html { redirect_to courses_path }
     end
-
-    unless students_for_course.any?
-      flash[:error] = "Could not read your file"
-      index_core and return
-    end
-    # make arrays for new user_ids and dropped user_ids
-    to_notify = {}
-    old_students_for_course.each do |old_course_id, old_student_ids|
-      new_student_ids = students_for_course[old_course_id]
-      added = (new_student_ids || Set.new) - (old_student_ids || Set.new)
-      dropped = (old_student_ids || Set.new) - (new_student_ids || Set.new)
-      to_notify[old_course_id] = {:added => added, :dropped => dropped}
-    end
-
-    to_notify.each do |course_id, info|
-      next if info[:added].blank? && info[:dropped].blank?
-      course = Course.find(course_id)
-
-      message = ""
-      if info[:added].present?
-        message += "New Students added to the course:\n"
-        i=1
-        info[:added].each do |student_id|
-          student = User.find(student_id)
-          message += i.to_s+". #{student.first_name}  #{student.last_name}\n"
-          i = i+1
-        end
-      end
-
-      if info[:dropped].present?
-        i=1
-        message += "Students dropped from the course:\n"
-        info[:dropped].each do |student_id|
-          student = User.find(student_id)
-          message += i.to_s+". #{student.first_name}  #{student.last_name}\n"
-          i = i+1
-        end
-      end
-      options = {:to => course.faculty.collect(&:email), :subject => "Roster change for your course #{course.name}",
-                 :message => message}
-      GenericMailer.email(options).deliver
-    end
-
-    index_core
   end
-
 
   private
   def index_core
