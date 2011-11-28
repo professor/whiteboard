@@ -73,6 +73,7 @@ class PresentationsController < ApplicationController
 
     @feedback = PresentationFeedback.new(params[:feedback])
     @feedback.evaluator = current_person
+	@presentation = Presentation.find(params[:presentation_id])
 
     # Necessary checkings here
 
@@ -93,7 +94,8 @@ class PresentationsController < ApplicationController
       end
 
       if is_successful && @feedback.save
-        format.html { redirect_to(@feedback) }
+		@presentation.send_presentation_feedback_email( presentation_feedback_url(:id=> params[:presentation_id]))
+        format.html { redirect_to(root_path) }
       else
         format.html { render :action => "new_feedback" }
       end
@@ -101,14 +103,45 @@ class PresentationsController < ApplicationController
 
   end
 
-  def view_feedback
-    @feedback = PresentationFeedback.find(params[:id])
+  #def view_feedback
+  #  @feedback = PresentationFeedback.find(params[:id])
+  #
+  #  # Check abnormal routine here
+  #
+  #  respond_to do |format|
+  #    format.html
+  #  end
+  #end
 
-    # Check abnormal routine here
+  def show_feedback
+		@presentation = Presentation.find(params[:id])
+		@feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:presentation_id]})
 
-    respond_to do |format|
-      format.html
-    end
-  end
+		@faculty_feedbacks = []
+		@student_feedbacks = []
+
+		@questions= PresentationQuestion.find(:all, :conditions => {:is_deleted => false})
+
+		@feedbacks.each do |f|
+		  evaluator = User.find(f.evaluator_id)
+
+		  if evaluator.is_teacher? || evaluator.is_staff?
+			 @faculty_feedbacks << f
+		  elsif evaluator.is_student?
+			 @student_feedbacks << f
+		  end
+
+		end
+
+		@faculty_ratings = Presentation.find_ratings(@faculty_feedbacks, @questions)
+		@student_ratings = Presentation.find_ratings(@student_feedbacks, @questions)
+
+		@faculty_comments = Presentation.find_comments(@faculty_feedbacks, @questions)
+		@student_comments = Presentation.find_comments(@student_feedbacks, @questions)
+
+		respond_to do |format|
+		  format.html
+		end
+	  end
 
 end

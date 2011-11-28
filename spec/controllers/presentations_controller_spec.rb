@@ -51,13 +51,13 @@ describe PresentationsController do
         }
 
         start_date = DateTime.now
-        post :create_feedback, {:feedback => feedback, :evaluation => evaluation}
+        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :presentation_id => @presentation.id}
 
         feedback = PresentationFeedback.where("created_at >= ?", start_date)
         feedback.length.should == 1
         feedback = feedback[0]
         feedback.presentation_id.should == @presentation.id
-        response.should redirect_to(:action => "view_feedback", :id => feedback.id)
+        response.should redirect_to(root_path)
 
         answers = PresentationFeedbackAnswer.where("created_at >= ?", start_date)
         answers.length.should == 4
@@ -75,7 +75,7 @@ describe PresentationsController do
             1000 => {"rating" => 1, "comment" => "comment 1"}
         }
 
-        post :create_feedback, {:feedback => feedback, :evaluation => evaluation}
+        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :presentation_id => @presentation.id}
 
         response.should render_template('new_feedback')
       end

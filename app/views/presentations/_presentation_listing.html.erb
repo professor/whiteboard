@@ -23,7 +23,7 @@
       <td><%= presentation.name %></td>
       <td><%= presentation.team.name unless presentation.team.nil? %></td>
       <td><%= presentation.present_date  %></td>
-      <td><%="leave for feedback model"%> </td>
+      <td><%= link_to "view feedback", presentation_feedback_path(:id => presentation.id)  %> </td>
       <td><%=""%> </td>
 <!--      <td>
 
