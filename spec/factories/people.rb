@@ -59,33 +59,6 @@ Factory.define :faculty_fagan, :parent => :person do |p|
   p.twiki_name "FacultyFagan"
 end
 
-Factory.define :student_one, :parent => :person do |p|
-  p.is_student 1
-  p.is_part_time 0
-  p.graduation_year "2012"
-  p.masters_program  "SE"
-  p.masters_track  "Tech"
-  p.twiki_name "Student One"
-  p.first_name "Student"
-  p.last_name "One"
-  p.human_name "Student One"
-  p.email "student.one@sv.cmu.edu"
-  p.webiso_account "studone@andrew.cmu.edu"
-end
-
-Factory.define :student_two, :parent => :person do |p|
-  p.is_student 1
-  p.is_part_time 0
-  p.graduation_year "2012"
-  p.masters_program  "SE"
-  p.masters_track  "Tech"
-  p.twiki_name "Student Two"
-  p.first_name "Student"
-  p.last_name "One"
-  p.human_name "Student One"
-  p.email "student.two@sv.cmu.edu"
-  p.webiso_account "studtwo@andrew.cmu.edu"
-end
 Factory.define :strength_quest, :parent => :person do |p|
   p.association :strength1, :factory => :achiever
   p.association :strength2, :factory => :activator

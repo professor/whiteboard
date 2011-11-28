@@ -10,9 +10,9 @@ Semester: F11              College:  CIT  Department:  SV
 Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
 _______________________________________________________________________________________
 
-ONE, STUDENT         	  Master CIT SV   M    24.0  studone
+SAM, STUDENT         	  Master CIT SV   M    24.0  sam
 
-TWO, STUDENT              Master CIT SV   M    24.0  studtwo
+SALLY, STUDENT              Master CIT SV   M    24.0  sally
 
 BOYKO, BORYS              Master CIT SV   M    24.0  bboyko
 
