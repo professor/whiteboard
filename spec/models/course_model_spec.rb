@@ -222,4 +222,7 @@ describe Course do
   #  end
   #end
 
+  # Tests for has_and_belongs_to_many relationship
+  it { should have_and_belong_to_many(:users) }
+
 end

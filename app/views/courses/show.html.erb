@@ -1,7 +1,7 @@
 <% content_for :title, @course.name %>
 
-<h1><%=h @course.number %> <%=h @course.name %> (<%=h @course.short_name %>)</h1>
-<div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;" >
+<h1><%= h @course.number %> <%= h @course.name %> (<%= h @course.short_name %>)</h1>
+<div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;">
   <%= link_to 'Edit', edit_course_path(@course) %> |
   <%= link_to 'Back', :back %>
 </div>
@@ -9,21 +9,47 @@
 
 
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
-  <tr class="cmu_table_odd"><td>Semester:</td><td><%= @course.display_semester %></td></tr>
-  <tr class="cmu_table_even"><td>Instructors for this course:</td><td>
-    <% @course.faculty.each do |faculty| %>
-    <p><%= faculty.human_name %></p>
-    <% end %>
-    </td></tr>
+  <tr class="cmu_table_odd">
+    <td>Semester:</td>
+    <td><%= @course.display_semester %></td>
+  </tr>
+  <tr class="cmu_table_even">
+    <td>Instructors for this course:</td>
+    <td>
+      <% @course.faculty.each do |faculty| %>
+          <p><%= faculty.human_name %></p>
+      <% end %>
+    </td>
+  </tr>
 </table>
 <br/>
 
-<%= render :partial => "show_actions" ,:locals => { :course => @course } %>
+<%= render :partial => "show_actions", :locals => {:course => @course} %>
 
 <p><%= link_to "Course website", @course.curriculum_url %> </p>
-<p><a href="/courses/<%=@course.id%>/teams_photos">Teams</a></p>
-<p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
+<p><a href="/courses/<%= @course.id %>/teams_photos">Teams</a></p>
+<p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true %></p>
 
+
+<% if @course.users.any? && current_user && (current_user.is_teacher?|| current_user.is_staff? || current_user.is_admin?) %>
+    All users:
+    <table>
+      <tr>
+        <td>Id</td>
+        <td>Web ISO</td>
+        <td>Name</td>
+        <td>Track</td>
+      </tr>
+      <% @course.users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.webiso_account %></td>
+            <td><%= user.first_name %><%= user.last_name %></td>
+            <td><%= user.masters_track %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
 
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
     <p><%= link_to 'Deliverables', course_deliverables_path(@course) %></p>
@@ -36,37 +62,38 @@
 
 
 
-<br style="clear:both;" />
+<br style="clear:both;"/>
 <% if current_user && (current_user.is_admin) %>
-  <div class="rounded admin">
-  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
-<h2>Admin Helpers</h2>
-<p><b>Google Distribution Lists</b> Here are all the email addresses for the students assigned to teams.
-<% @emails.each do |name|  %>
- <div><%=h name %></div>
-<% end %>
-</p>
- <p><b>Pivotal Tracker accounts</b>
-<% @course.teams.each do |team| %>
-   <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
-     <div><%= project_name%></div>
-     <% team.people.each do |person| %>
-        <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
-        <div><%= person_entry %></div>
-     <% end %>
-        <% person = team.primary_faculty %>
-        <% unless person.nil? %>
-        <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
-        <div><%= person_entry %></div>
-        <% end %>
-        <br/>
-<% end %>
-  </div>
+    <div class="rounded admin">
+      <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+      <h2>Admin Helpers</h2>
+
+      <p><b>Google Distribution Lists</b> Here are all the email addresses for the students assigned to teams.
+        <% @emails.each do |name| %>
+          <div><%= h name %></div>
+      <% end %>
+      </p>
+      <p><b>Pivotal Tracker accounts</b>
+        <% @course.teams.each do |team| %>
+            <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
+          <div><%= project_name %></div>
+          <% team.people.each do |person| %>
+              <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+              <div><%= person_entry %></div>
+          <% end %>
+          <% person = team.primary_faculty %>
+          <% unless person.nil? %>
+              <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+              <div><%= person_entry %></div>
+          <% end %>
+          <br/>
+      <% end %>
+    </div>
 <% end %>
 
-    <% if current_user && current_user.is_admin? %>
+<% if current_user && current_user.is_admin? %>
     <p><%= link_to 'Destroy', @course, :confirm => 'Are you sure?', :method => :delete %></p>
-    <% end %>
+<% end %>
 
 <br><br>
 <%= link_to 'Edit', edit_course_path(@course) %> |

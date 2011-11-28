@@ -2,6 +2,7 @@ class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
+  has_and_belongs_to_many :users, :join_table=>"courses_users"
 
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
