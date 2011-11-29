@@ -179,10 +179,6 @@ class CoursesController < ApplicationController
 
   private
   def index_core
-    @all_courses = true unless @all_courses
-    @courses = Course.order("year DESC, semester DESC, number ASC").all unless @courses
-    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
-
     respond_to do |format|
       format.html { render :action => "index" }
       format.xml { render :xml => @courses }
