@@ -147,17 +147,3 @@ Factory.define :user, :class => User do |p|
   p.password_salt "adasdsa"
   p.crypted_password "adasdsaf"
 end
-
-Factory.define :student, :class => User do |p|
-  p.is_staff 0
-  p.is_student 1
-  p.is_admin 0
-  p.is_teacher 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
-  p.first_name "user"
-  p.last_name "student"
-  p.login "user_student"
-end
-
