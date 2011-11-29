@@ -69,7 +69,7 @@
 
 <br/>
 
-<% if current_user.is_teacher || current_user.is_staff || current_user.is_admin %>
+<% if current_user.present? && (current_user.is_teacher || current_user.is_staff || current_user.is_admin) %>
     <h2>Upload Roster File</h2>
     <% form_tag '/courses/upload', :multipart => true do %>
         <%= file_field_tag "file" %>
