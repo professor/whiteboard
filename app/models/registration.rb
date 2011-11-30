@@ -24,9 +24,9 @@ class Registration < ActiveRecord::Base
 
     courses_data.each do |imported_course|
       course = Course.find_by_number(imported_course.number)
-	  #the following three lines are variables used for the RegistrationMailer notifications
-	  instructors_email_list = Array.new()
-	  
+      #the following three lines are variables used for the RegistrationMailer notifications
+      instructors_email_list = Array.new()
+      
       # might be a parse error if this is not found
       if course.nil?
         result[:failures] += imported_course.students.size
@@ -34,6 +34,13 @@ class Registration < ActiveRecord::Base
           result[:failed] << { imported_course.number => student.user_id }
         end
       else
+        #get the faculty's email distribution list
+        last_names = imported_course.instructors.map{|k| k.slice(/\w+/)}
+        last_names.each do |last_name|
+          faculty = User.find_by_last_name(last_name.capitalize)
+          instructors_email_list  << faculty.email
+        end
+        
         # The logic here might be a little complicated
         # Basically, we want to iterate over each of the imported
         # registrations and check if they are already set in the DB.
@@ -45,16 +52,9 @@ class Registration < ActiveRecord::Base
         # course.registered_students array and old ones will be destroyed per
         # ActiveRecord magic.
         registered_students = []
-        current_course_roster = course.students
-		
-		#get the faculty's email distribution list
-		last_names = imported_course.instructors.map{|k| k.slice(/\w+/)}
-		last_names.each do |last_name|
-			faculty = User.find_by_last_name(last_name.capitalize)
-			instructors_email_list  << faculty.email
-		end
-		
-		#loop through students
+        current_course_roster = course.students.clone
+    
+        #loop through students
         imported_course.students.each do |imported_student|
           student = Person.find_by_login(imported_student.user_id)
           result_hash = { imported_course.number => imported_student.user_id }
@@ -83,17 +83,17 @@ class Registration < ActiveRecord::Base
 
         course.registered_students = registered_students
       end
-	  
-	  #send the email notifications for added and dropped students
-	  unless instructors_email_list.present?
-	        unless result[:added].present?
-			     RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,result[:added],course).deliver
-			end
-			
-			unless result[:dropped].present?
-				 RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,result[:dropped],course).deliver
-			end
-	  end
+    
+      #send the email notifications for added and dropped students
+      unless instructors_email_list.present?
+        unless result[:added].present?
+            RegistrationMailer.notify_faculty_of_added_students(instructors_email_list,result[:added],course).deliver
+        end
+        
+        unless result[:dropped].present?
+          RegistrationMailer.notify_faculty_of_dropped_students(instructors_email_list,result[:dropped],course).deliver
+        end
+      end
     end
 
     result
