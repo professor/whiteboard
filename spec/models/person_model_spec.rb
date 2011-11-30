@@ -234,6 +234,28 @@ describe Person do
     
   end
 
+
+  context "can create_google_email(password)" do
+    it " is successful" do
+      ProvisioningApi.any_instance.stub(:create_user).and_return(:some_value)
+      password = "just4now"
+      @student_sam.email = "student.sam@sandbox.sv.cmu.edu"
+      status = @student_sam.create_google_email(password)
+      status.should_not be_is_a(String) #If it is a string, should be error message
+    end
+
+    it " errors when no email is provided" do
+      ProvisioningApi.any_instance.stub(:create_user).and_return("Empty email address")
+      password = "just4now"
+      @student_sam.email = ""
+      status = @student_sam.create_google_email(password)
+      status.should == "Empty email address"
+      status.should be_is_a(String)
+    end
+  end
+
+
+
   # More tests
   # Effort log should only be set for person that is_student - tested in effort_log
   # Graduation_year should be set for person that is_student
