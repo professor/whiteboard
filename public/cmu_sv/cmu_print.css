@@ -1,4 +1,4 @@
-/* General Styles */
+ /* General Styles */
 body
 {
 margin:0px 0px 0px 0px;
@@ -830,7 +830,7 @@ input.admin_searchInput{display:none;}
 .admin_level_leftnav_UnitLogo_bg{background-color:#FFFFFF;}
 .admin_level_leftColumn{display:none;}
 
-.admin_UnitLogo{padding:0px 0px 0px 0px; width:214px; height: 220px;}
+.admin_UnitLogo{padding:0px 0px 0px 0px; width:214px; height: auto;}
 .admin_ContentAreaPosition {margin:0px; padding:0px;}
 
 #printleftcolumn{position:absolute; z-index:2;}
@@ -1045,3 +1045,7 @@ h2.newsHeadline {
 .eventCalendarListView .dayEnd {height: 10px;}
 
 .bioContactInfo {padding: 2px 0px 2px 0px;}
+
+.sv_main_contents{
+    padding-top: 55px;
+}
