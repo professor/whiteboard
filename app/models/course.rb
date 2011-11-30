@@ -164,7 +164,6 @@ class Course < ActiveRecord::Base
   #Todo - move to a higher class or try as a mixin
   #Todo - this code was copied to team.rb
   def update_faculty(members)
-    self.faculty_was = self.faculty
     self.faculty = []
     return "" if members.nil?
 
