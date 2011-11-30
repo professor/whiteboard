@@ -1,0 +1,23 @@
+.twikiTable td{
+    padding: 0;
+}
+
+.twikiTable tr > td:nth-child(2), td:nth-child(3), th:nth-child(2), th:nth-child(3){
+    display: none;
+}
+
+.twikiTable tr > td:last-child, th:last-child {
+    display: none;
+}
+
+.team_member_photo{
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: top;
+    width: 70px;
+    text-align: center;
+}
+
+.team_member_photo > a > img {
+    height: 80px;
+} 

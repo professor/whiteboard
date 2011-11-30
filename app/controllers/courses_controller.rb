@@ -129,9 +129,6 @@ class CoursesController < ApplicationController
         if @course.update_attributes(params[:course])
           if (params[:course][:is_configured]) #The previous page was configure action
             CourseMailer.configure_course_admin_email(@course).deliver
-                                               #            CourseMailer.configure_course_admin_email.deliver(@course)
-          else #email faculty to configure the course, unless it was already configured
-
           end
           flash[:notice] = 'Course was successfully updated.'
           format.html { redirect_to(@course) }

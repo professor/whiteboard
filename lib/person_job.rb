@@ -8,14 +8,14 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
        password = 'just4now' + Time.now.to_f.to_s[-4,4] # just4now0428
        status = person.create_google_email(password)
        if status.is_a?(String)
-         error_message += "Google account not created. " + status + " <br/>The password was " + password + "<br/><br/>"
+         error_message += "Google account not created for #{person.human_name}. " + status + " <br/>The password was " + password + "<br/><br/>"
        else
          PersonMailer.welcome_email(person, password).deliver
        end
     end
     if create_twiki_account && person.twiki_created.blank?
       status = person.create_twiki_account
-      error_message +=  'TWiki account was not created.<br/><br/>' unless status
+      error_message +=  "TWiki account #{person.twiki_name} was not created.<br/><br/>" unless status
       status = person.reset_twiki_password
       error_message +=  'TWiki account password was not reset.<br/>' unless status
     end

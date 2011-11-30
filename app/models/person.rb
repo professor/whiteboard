@@ -9,7 +9,10 @@
 class Person < User
   set_table_name "users"
   #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned :table_name => 'user_versions', :if => Proc.new { |user| !(user.effort_log_warning_email_changed? || user.sponsored_project_effort_last_emailed_changed?) }
+  acts_as_versioned :table_name => 'user_versions', :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
+      user.sponsored_project_effort_last_emailed_changed? ||
+      user.google_created_changed? ||
+      user.twiki_created?) }
 
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
@@ -67,11 +70,11 @@ class Person < User
 
   #
   # Creates a Google Apps for University account for the user. For legacy reasons,
-  # the accounts are with the domain west.cmu.edu even though the prefered way
+  # the accounts are with the domain west.cmu.edu even though the preferred way
   # of talking about the account is with the domain sv.cmu.edu
   #
   # Input is a password
-  # If this fails, it retuns an error message as a string
+  # If this fails, it returns an error message as a string
   #
   def create_google_email(password)
     return "Empty email address" if self.email.blank?
@@ -93,7 +96,7 @@ class Person < User
       return pretty_print_google_error(e)
     end
     self.google_created = Time.now()
-    self.save_without_session_maintenance
+    self.save
     return(user)
   end
 
@@ -127,7 +130,7 @@ class Person < User
         return false
       end
       self.twiki_created = Time.now()
-      self.save_without_session_maintenance
+      self.save
       return true
     end
 
@@ -165,7 +168,7 @@ class Person < User
     end
 
     self.yammer_created = Time.now()
-    self.save_without_session_maintenance
+    self.save
     return true
   end
 

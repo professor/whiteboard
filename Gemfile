@@ -51,7 +51,6 @@ group :production do
 
   #gem 'daemons 1.1.4' #this is used by heroku on 7/18/2011
   gem 'rack-google_analytics', :require => "rack/google_analytics"
-  gem 'rcov' #This should not be necessary, but it's used by the Rakefile and it needs to be removed
 end
 
 group :development, :test do
@@ -64,8 +63,8 @@ group :development, :test do
   gem 'ruby-debug-ide' #'0.4.6'
 
   gem 'shoulda'
-#  gem 'hanna'
-  gem 'rcov'
+  # gem 'hanna'
+  gem 'simplecov', :require => false
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec-rails'
   gem 'mocha'
