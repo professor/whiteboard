@@ -63,7 +63,7 @@ module HubStudentImporter
    html_file.close()
 
    #define regular expression variables here;  These may be removed upon verification of logic used for RTF (leveraged RTF logic for HTML)
-   html_line1_matcher = Regexp.new(/^Run Date: (\d{2}-\w+-\d{4})\s*Course:\s*(\d+)\s+Sect:\s*(\w+)\s+(.*)$/)
+   html_line1_matcher = Regexp.new(/^Run Date: (\d{2}-\w+-\d{4})\s*Course:\s*(\d+-\d+)\s+Sect:\s*(\w+)\s+(.*)$/)
    html_line2_matcher = Regexp.new(/^Semester: (\w+)\s*College:\s*(\w+)\s*Department:\s*(\w+).*$/)
    html_instructor_line = Regexp.new(/^\s+Instructor\(s\): (.*)$/)
    html_instructor_name_line = Regexp.new(/(\S+, \S+)$/)
