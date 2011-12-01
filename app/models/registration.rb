@@ -63,7 +63,7 @@ class Registration < ActiveRecord::Base
             if current_course_roster.include?(student)
               result[:noops]      += 1
               result[:noop]       << result_hash
-              registered_students |= student
+              registered_students |= [student]
               current_course_roster.delete(student)
             else
               result[:adds]       += 1
