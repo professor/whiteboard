@@ -23,7 +23,7 @@ class Registration < ActiveRecord::Base
     }
 
     courses_data.each do |imported_course|
-      course = Course.find_by_number(imported_course.number)
+      course = Course.find_by_number(imported_course.number.to_s)
       #the following three lines are variables used for the RegistrationMailer notifications
       instructors_email_list = Array.new()
       
@@ -81,8 +81,10 @@ class Registration < ActiveRecord::Base
           result[:dropped] << student
         end
 
-        course.registered_students = registered_students
+        course.students = registered_students
       end
+
+      logger.info "course: #{course.inspect}"
     
       #send the email notifications for added and dropped students
       unless instructors_email_list.present?
