@@ -10,7 +10,7 @@ class RegistrationMailer < ActionMailer::Base
      unless faculty_emails.blank? || faculty_emails.empty? #if there is no assigned faculty to the course, do nothing
 	    @students = students
 		@course = course
-		mail(:to => faculty_emails, :subject => "Students added to course")
+		mail(:to => "kang.chen@sv.cmu.edu", :subject => "Students added to course")
 	 else
 	    # This is a placeholder for the error notification email for when students are added to a course without instructors identified for the course
 	 end
@@ -25,7 +25,7 @@ class RegistrationMailer < ActionMailer::Base
      unless faculty_emails.blank? || faculty_emails.empty?
 	    @students = students
 		@course = course
-		mail(:to => faculty_emails, :subject => "Students have been dropped from course")
+		mail(:to => "kang.chen@sv.cmu.edu", :subject => "Students have been dropped from course")
 	 else
 	    # This is a placeholder for the error notification email for when students are added to a course without instructors identifed for the course.
 	 end

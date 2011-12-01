@@ -84,8 +84,6 @@ class Registration < ActiveRecord::Base
         course.students = registered_students
       end
 
-      logger.info "course: #{course.inspect}"
-    
       #send the email notifications for added and dropped students
       unless instructors_email_list.present?
         unless result[:added].present?
