@@ -84,6 +84,15 @@ class PresentationsController < ApplicationController
     @feedback = PresentationFeedback.new(params[:feedback])
     @feedback.evaluator = current_person
 	@presentation = Presentation.find(params[:presentation_id])
+	@feedback.presentation = @presentation
+
+	if @presentation.feedbacks.empty?
+	   @presentation.feedback_provided = false
+	else
+	   @presentation.feedback_provided = true
+	end
+	@presentation.save
+
 
     # Necessary checkings here
 
@@ -104,7 +113,9 @@ class PresentationsController < ApplicationController
       end
 
       if is_successful && @feedback.save
-		@presentation.send_presentation_feedback_email( presentation_feedback_url(:id=> params[:presentation_id]))
+		if !@presentation.feedback_provided?
+			@presentation.send_presentation_feedback_email( presentation_feedback_url(:id=> params[:presentation_id]))
+		end
         format.html { redirect_to(root_path) }
       else
         format.html { render :action => "new_feedback" }
