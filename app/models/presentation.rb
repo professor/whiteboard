@@ -80,7 +80,7 @@ class Presentation < ActiveRecord::Base
     options = {:to => mail_to,
                :subject => self.course.name + ": Feedback for presentation " +  self.name,
                :message => message,
-               :url_label => "View this presentation",
+               :url_label => "View feedback",
                :url => url
     }
     GenericMailer.email(options).deliver

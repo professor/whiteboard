@@ -24,9 +24,11 @@
           </div>
         <% end %>
         </div>
+        <br/>
         <div>
-          <span>Comment:</span><%= text_area_tag "evaluation[#{question.id.to_s}][comment]" %>
+          <span>Comments:</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
         </div>
+        <br/>
       </p>
   <% end %>
   <p>

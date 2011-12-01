@@ -17,15 +17,15 @@
     <%= f.text_field :name, :size => "50" %>
   </p>
   <p>
-    <%= f.label :course_id, "Course ID:" %>
-    <%= params[:course_id] %>
+    <%= f.label :course_id, "Course:" %>
+    <%= @course.name %>
   </p>
+  <p>Who is giving the presentation?</p>
   <p>
     <%= f.label :team_id, "Team:" %>
     <%= f.collection_select :team_id, Team.all,:id,:name, {:prompt => "Select a Team"}%>
-  </p>
-    <p>
-    <%= f.label :owner, "Seleted the Owner:" %>
+    or
+    <%= f.label :owner, "Individual:" %>
     <%= f.text_field :owner%>
   </p>
         <p>

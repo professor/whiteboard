@@ -1,6 +1,8 @@
-<h1> Presentation Feedback for <%= @presentation.name %> </h1>
-
-</br>
+<h1>Feedback for <%=@presenter %>
+<br/>
+<br/>
+<%= @presentation.name %> </h1>
+</h1>
 <% @questions.each_with_index do |q, n| %>
   <% unless q.is_deleted? %>
 
@@ -33,10 +35,10 @@
            <% average = avg/count %>
 
       	  <tr>
-        	<td><b> Poor<%#= @@eval_options[1] %> </b></th>
-         	<td><b> Minimally acceptable <%#= @@eval_options[2] %></b> </th>
-         	<td><b> Good <%#= @@eval_options[3] %> </b></th>
-         	<td><b> Outstanding <%#= @@eval_options[4] %> </b></th>
+        	<td><b> Poor </b></th>
+         	<td><b> Minimally acceptable </b> </th>
+         	<td><b> Good </b></th>
+         	<td><b> Outstanding </b></th>
          	<td><b> Rating Average</b></th>
             <td><b> Response count</b></th>
           </tr>
@@ -46,7 +48,7 @@
 			<td> <%= factor * values[1] %>% (<%= values[1] %>) </td>
 			<td> <%= factor * values[2] %>% (<%= values[2] %>) </td>
 			<td> <%= factor * values[3] %>% (<%= values[3] %>) </td>
-			<td> <%= average %> </td>
+			<td> <%= number_with_precision average, :precision => 2 %> </td>
 			<td> <%= count %> </td>
           </tr>
 
@@ -90,10 +92,10 @@
           	 <% factor = 100/count %>
              <% average = avg/count %>
           <tr>
-             <td><b> Poor<%#= @@eval_options[1] %> </b></th>
-             <td><b> Minimally acceptable <%#= @@eval_options[2] %></b> </th>
-             <td><b> Good <%#= @@eval_options[3] %> </b></th>
-             <td><b> Outstanding <%#= @@eval_options[4] %> </b></th>
+             <td><b> Poor </b></th>
+             <td><b> Minimally acceptable </b> </th>
+             <td><b> Good </b></th>
+             <td><b> Outstanding </b></th>
              <td><b> Rating Average</b></th>
              <td><b> Response count</b></th>
           </tr>
@@ -103,7 +105,7 @@
     		 <td> <%= factor * values[1] %>% (<%= values[1] %>) </td>
     		 <td> <%= factor * values[2] %>% (<%= values[2] %>) </td>
     		 <td> <%= factor * values[3] %>% (<%= values[3] %>) </td>
-    		 <td> <%= average %> </td>
+    		 <td> <%= number_with_precision average, :precision => 2 %> </td>
     		 <td> <%= count %> </td>
           </tr>
 

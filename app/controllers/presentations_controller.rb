@@ -33,7 +33,10 @@ class PresentationsController < ApplicationController
 
   # POST /course/:owner_id/presentations
   def create
-    owner_id = Person.find_by_human_name(params[:presentation][:owner]) unless params[:presentation][:owner].nil?
+	@course = Course.find(params[:course_id])
+	@owner = Person.find_by_human_name(params[:presentation][:owner]) unless params[:presentation][:owner].nil?
+    owner_id = @owner.id
+
     @presentation= Presentation.new(:owner_id=>owner_id,
                                     :name=>params[:presentation][:name],
                                     :team_id=>params[:presentation][:team_id],
@@ -58,6 +61,13 @@ class PresentationsController < ApplicationController
     @feedback.presentation_id = params[:presentation_id]
     @questions = PresentationQuestion.existing_questions
     @eval_options = @@eval_options
+	@presentation  = Presentation.find(params[:presentation_id])
+
+	if @presentation.team_id.nil?
+	    @presenter = @presentation.owner.human_name
+	 else
+	    @presenter = @presentation.team.name
+	 end
 
     # Check whether this user has already created a feedback
 
@@ -103,45 +113,39 @@ class PresentationsController < ApplicationController
 
   end
 
-  #def view_feedback
-  #  @feedback = PresentationFeedback.find(params[:id])
-  #
-  #  # Check abnormal routine here
-  #
-  #  respond_to do |format|
-  #    format.html
-  #  end
-  #end
-
   def show_feedback
-		@presentation = Presentation.find(params[:id])
-		@feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:presentation_id]})
+	 @presentation = Presentation.find(params[:id])
+	 @feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:presentation_id]})
 
-		@faculty_feedbacks = []
-		@student_feedbacks = []
+	 if @presentation.team_id.nil?
+	    @presenter = @presentation.owner.human_name
+	 else
+	    @presenter = @presentation.team.name
+	 end
 
-		@questions= PresentationQuestion.find(:all, :conditions => {:is_deleted => false})
+	 @faculty_feedbacks = []
+	 @student_feedbacks = []
 
-		@feedbacks.each do |f|
-		  evaluator = User.find(f.evaluator_id)
+	 @questions= PresentationQuestion.find(:all, :conditions => {:is_deleted => false})
 
-		  if evaluator.is_teacher? || evaluator.is_staff?
+	 @feedbacks.each do |f|
+	   evaluator = User.find(f.evaluator_id)
+	   if evaluator.is_teacher? || evaluator.is_staff?
 			 @faculty_feedbacks << f
-		  elsif evaluator.is_student?
+	   elsif evaluator.is_student?
 			 @student_feedbacks << f
-		  end
+	   end
+	 end
 
-		end
+	 @faculty_ratings = Presentation.find_ratings(@faculty_feedbacks, @questions)
+	 @student_ratings = Presentation.find_ratings(@student_feedbacks, @questions)
 
-		@faculty_ratings = Presentation.find_ratings(@faculty_feedbacks, @questions)
-		@student_ratings = Presentation.find_ratings(@student_feedbacks, @questions)
+	 @faculty_comments = Presentation.find_comments(@faculty_feedbacks, @questions)
+	 @student_comments = Presentation.find_comments(@student_feedbacks, @questions)
 
-		@faculty_comments = Presentation.find_comments(@faculty_feedbacks, @questions)
-		@student_comments = Presentation.find_comments(@student_feedbacks, @questions)
-
-		respond_to do |format|
-		  format.html
-		end
-	  end
+	 respond_to do |format|
+	 	  format.html
+	 end
+  end
 
 end
