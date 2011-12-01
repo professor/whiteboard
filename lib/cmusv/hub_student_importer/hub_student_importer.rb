@@ -25,7 +25,7 @@ module HubStudentImporter
       unless text.match(Course::META_COURSE_HEADER_MATCHER)
         if text.match(Course::META_DATA_LINE1_MATCHER)
           course.run_date = DateTime.parse($1).to_time
-          course.number = $2.to_i
+          course.number = $2
           course.section = $3
           course.name = $4
         elsif text.match(Course::META_DATA_LINE2_MATCHER)
@@ -89,7 +89,7 @@ module HubStudentImporter
       unless string_line.match("</pre>")
         if string_line.match(html_line1_matcher)
           course.run_date = DateTime.parse($1).to_time
-          course.number = $2.to_i
+          course.number = $2
           course.section = $3
           course.name = $4
         elsif string_line.match(html_line2_matcher)

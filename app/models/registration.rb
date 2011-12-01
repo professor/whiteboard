@@ -23,7 +23,7 @@ class Registration < ActiveRecord::Base
     }
 
     courses_data.each do |imported_course|
-      course = Course.find_by_number(imported_course.number.to_s)
+      course = Course.find_by_number(imported_course.number)
       #the following three lines are variables used for the RegistrationMailer notifications
       instructors_email_list = Array.new()
       
