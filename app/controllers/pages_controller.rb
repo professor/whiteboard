@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 
     if @page.blank?
         flash[:error] = "Page with an id of #{params[:id]} is not in this system."
-        redirect_to(pages_url)
+        redirect_to(pages_url) and return
     end
 
     unless @page.viewable?(current_user)
