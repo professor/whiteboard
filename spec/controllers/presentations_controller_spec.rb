@@ -118,7 +118,7 @@ describe PresentationsController do
         presentation = {
           :name => "test_pre",
           :team_id => 1,
-          :present_date =>"2011-11-21 05:00:00",
+          :presentation_date =>"2011-11-21 05:00:00",
           :task_number => 1,
           :owner => "jj"
         }
@@ -131,7 +131,7 @@ describe PresentationsController do
         presentation = {
           :name => nil,
           :team_id => 1,
-          :present_date =>nil,
+          :presentation_date =>nil,
           :task_number => 1,
           :owner => "jj"
         }

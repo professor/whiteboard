@@ -162,13 +162,7 @@ Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and char
 
 
 
-Factory.create(:presentation_feedback_questions, :text => "Did the talk cover all the content suggested on the checklist?
-(project goals, progress, and the process for achieving the goals, outcomes)
-(what went well and what didn't, and why)
-Was there continuity from previous presentations: actions on open issues; explanations of changes)
-")
+Factory.create(:presentation_feedback_questions, :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
 Factory.create(:presentation_feedback_questions, :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
 Factory.create(:presentation_feedback_questions, :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
-Factory.create(:presentation_feedback_questions, :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation)
-Question handling (poise, tact, team support; did the team answer the question asked?)
-")
+Factory.create(:presentation_feedback_questions, :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")

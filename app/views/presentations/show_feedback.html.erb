@@ -9,7 +9,7 @@
 	<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
   	  <thead>
   	  <tr>
-         <h2>Question <%=n+1 %> :</h2> <%= q.text %>
+         <h2>Question <%=n+1 %> :</h2><p><%= q.text %></p>
       </tr>
       </thead>
     </table>
@@ -20,114 +20,18 @@
       </tr>
     </table>
 
+    <%= render(:partial => "individual_feedback", :locals =>{:individual_ratings => @faculty_ratings,
+    														 :individual_comments => @faculty_comments, :q =>q }) %>
+
+
     <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
-      	<% count = 0 %>
-        <% avg = 0.0 %>
-        <% average = 0.0 %>
-        <% values = @faculty_ratings[q.id] %>
-        <% values.each_with_index do |r, n| %>
-      		<%	count = count + r  %>
-      		<%  avg += r * (n+1) %>
-      	<%end%>
-
-      	<% if count != 0 %>
-      	   <% factor = 100/count %>
-           <% average = avg/count %>
-
-      	  <tr>
-        	<td><b> Poor </b></th>
-         	<td><b> Minimally acceptable </b> </th>
-         	<td><b> Good </b></th>
-         	<td><b> Outstanding </b></th>
-         	<td><b> Rating Average</b></th>
-            <td><b> Response count</b></th>
-          </tr>
-
-          <tr>
-      	    <td> <%= factor * values[0] %>% (<%= values[0] %>) </td>
-			<td> <%= factor * values[1] %>% (<%= values[1] %>) </td>
-			<td> <%= factor * values[2] %>% (<%= values[2] %>) </td>
-			<td> <%= factor * values[3] %>% (<%= values[3] %>) </td>
-			<td> <%= number_with_precision average, :precision => 2 %> </td>
-			<td> <%= count %> </td>
-          </tr>
-
+      <tr>
+         <h2> Feedback From Students </h2>
+      </tr>
     </table>
+    <%= render(:partial => "individual_feedback", :locals =>{:individual_ratings => @student_ratings,
+    														 :individual_comments => @student_comments, :q =>q }) %>
 
-    <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
-      <% comm = "" %>
-      <% comments = @faculty_comments[q.id].split('*') %>
-        <tr>
-          Comments
-        </tr>
-
-      	<% comments.each do |c| %>
-      	 <tr>
-      	   <td><%= c %></td>
-      	 </tr>
-        <% end%>
-    </table>
-    <%else %>
-      No Feedback Available
-    <%end%>
-
-
-    <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
-      <thead>
-        <tr>
-          <h2> Feedback From Students </h2>
-        </tr>
-      </thead>
-
-          <% count = 0 %>
-          <% avg = 0.0 %>
-          <% average = 0.0 %>
-          <% values = @student_ratings[q.id] %>
-          <% values.each_with_index do |r, n|   %>
-             <%	count = count + r  %>
-             <%  avg += r * (n+1) %>
-          <%end%>
-
-      <% if count != 0 %>
-          	 <% factor = 100/count %>
-             <% average = avg/count %>
-          <tr>
-             <td><b> Poor </b></th>
-             <td><b> Minimally acceptable </b> </th>
-             <td><b> Good </b></th>
-             <td><b> Outstanding </b></th>
-             <td><b> Rating Average</b></th>
-             <td><b> Response count</b></th>
-          </tr>
-
-          <tr>
-          	 <td> <%= factor * values[0] %>% (<%= values[0] %>) </td>
-    		 <td> <%= factor * values[1] %>% (<%= values[1] %>) </td>
-    		 <td> <%= factor * values[2] %>% (<%= values[2] %>) </td>
-    		 <td> <%= factor * values[3] %>% (<%= values[3] %>) </td>
-    		 <td> <%= number_with_precision average, :precision => 2 %> </td>
-    		 <td> <%= count %> </td>
-          </tr>
-
-
-    </table>
-    <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
-
-
-          <% comm = "" %>
-          <% comments = @student_comments[q.id].split('*') %>
-           	<tr>
-          		 Comments
-          	</tr>
-          	<% comments.each do |c| %>
-          		<tr>
-          	 		<td><%= c %></td>
-          		</tr>
-          	<% end%>
-      </table>
-      <%else %>
-      No Feedback Available
-      <%end%>
   <%end%>
 <%end%>
 

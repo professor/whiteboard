@@ -131,7 +131,7 @@ class PresentationsController < ApplicationController
 
   def show_feedback
 	 @presentation = Presentation.find(params[:id])
-	 @feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:presentation_id]})
+	 @feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:id]})
 
 	 if @presentation.team_id.nil?
 	    @presenter = @presentation.person.human_name

@@ -1,4 +1,14 @@
-<%= javascript_include_tag "application","jquery-ui-timepicker-addon" %>
+<% content_for :javascript do %>
+   <%= javascript_tag do %>
+	$(function() {
+		$("#presentation_presentation_date").datepicker({
+            showButtonPanel: true,
+            dateFormat: 'yy-mm-dd'
+		});
+	});
+   <% end %>
+<% end %>
+<%# javascript_include_tag "application","jquery-ui-timepicker-addon" %>
 
 <%= form_for @presentation, :url=>course_presentations_new_path(params[:course_id]), :html => { :multipart => true} do |f| %>
   <% if @presentation.errors.any? %>

@@ -5,8 +5,8 @@ class Presentation < ActiveRecord::Base
 
   has_many :feedbacks, :class_name => 'PresentationFeedback', :foreign_key => :presentation_id
 
-  validates_presence_of :name, :presentation_date, :task_number
-
+  validates_presence_of :name, :presentation_date
+  
   accepts_nested_attributes_for :feedbacks
 
   def self.find_ratings (feedbacks, questions)

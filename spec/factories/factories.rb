@@ -152,7 +152,7 @@ Factory.define :presentation do |p|
   p.name "Test Presentation"
   p.description "Desc"
   p.task_number "1"
-  p.present_date DateTime.new(2011, 1, 1, 12, 0, 0)
+  p.presentation_date Date.new(2011, 1, 1)
   p.association :course, :factory => :course
   p.association :team, :factory => :team
 end

@@ -4,8 +4,7 @@
 
 	$(function() {
 		$("#presentation_presentation_date").datepicker({
-//            showSecond: true,
-//	        timeFormat: 'hh:mm:ss',
+            showButtonPanel: true,
             dateFormat: 'yy-mm-dd'
 		});
 	});
