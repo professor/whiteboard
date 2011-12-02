@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109050657) do
+ActiveRecord::Schema.define(:version => 20111117212432) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -155,6 +155,14 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
 
   # add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "page_attachments", :force => true do |t|
+    t.integer  "page_id"
+    t.string   "page_attachment_file_name"
+    t.string   "page_attachment_content_type"
+    t.integer  "page_attachment_file_size"
+    t.datetime "page_attachment_updated_at"
+  end
 
   create_table "page_comment_types", :force => true do |t|
     t.string   "name"
@@ -455,7 +463,7 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -471,6 +479,7 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                                        :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -525,7 +534,7 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count_old",                                    :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -541,6 +550,7 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                                        :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
