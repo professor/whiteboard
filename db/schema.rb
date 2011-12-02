@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109050657) do
+ActiveRecord::Schema.define(:version => 20111117013039) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
     t.datetime "updated_at"
   end
 
-  # add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
+  add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
 
   create_table "page_comment_types", :force => true do |t|
@@ -248,6 +248,50 @@ ActiveRecord::Schema.define(:version => 20111109050657) do
   add_index "peer_evaluation_reviews", ["author_id"], :name => "index_peer_evaluation_reviews_on_author_id"
   add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
   add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
+
+  create_table "presentation_feedback_answers", :force => true do |t|
+    t.integer  "feedback_id"
+    t.integer  "question_id"
+    t.integer  "rating"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presentation_feedback_answers", ["feedback_id", "question_id"], :name => "by_feedback_and_question", :unique => true
+
+  create_table "presentation_feedbacks", :force => true do |t|
+    t.integer  "evaluator_id"
+    t.integer  "presentation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presentation_feedbacks", ["evaluator_id", "presentation_id"], :name => "by_evaluator_and_presentation", :unique => true
+
+  create_table "presentation_questions", :force => true do |t|
+    t.text     "text"
+    t.boolean  "is_deleted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "presentations", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "team_id"
+    t.integer  "course_id"
+    t.string   "task_number"
+    t.integer  "creator_id"
+    t.date     "presentation_date"
+    t.integer  "person_id"
+    t.boolean  "feedback_email_sent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presentations", ["course_id"], :name => "index_presentations_on_course_id"
+  add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
 
   create_table "project_types", :force => true do |t|
     t.string   "name"

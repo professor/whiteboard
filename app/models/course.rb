@@ -37,6 +37,7 @@ class Course < ActiveRecord::Base
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
 
+  has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name
 

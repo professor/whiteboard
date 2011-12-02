@@ -1,0 +1,34 @@
+<% reset_cycle %>
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+  <tr>
+    <% unless skip_course_column %>
+    <th>Course</th>
+    <% end %>
+    <th>Sno.</th>
+    <th>Name</th>
+    <th>Task</th>
+    <th>Team/Individual Name</th>
+    <th>Date</th>
+    <th>Feedback Received?</th>
+  </tr>
+
+  <% presentations.each_with_index do |presentation, n| %>
+    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+      <% unless skip_course_column %>
+      <td><%= presentation.course.name %></td>
+      <% end %>
+      <td><%= n+1 %></td>
+      <td><%= presentation.name  %></td>
+      <td><%= presentation.task_number%></td>
+
+      <% if presentation.team.nil? %>
+        <td><%= presentation.person.human_name %>
+      <%else %>
+        <td><%= presentation.team.name %>
+      <%end%>
+
+      <td><%= presentation.presentation_date  %></td>
+      <td><%= link_to "view feedback", presentation_feedback_path(:id => presentation.id)  %> </td>
+    </tr>
+  <% end %>
+</table>

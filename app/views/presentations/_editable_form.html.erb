@@ -1,0 +1,44 @@
+<%= javascript_include_tag "application","jquery-ui-timepicker-addon" %>
+
+<%= form_for @presentation, :url=>course_presentations_new_path(params[:course_id]), :html => { :multipart => true} do |f| %>
+  <% if @presentation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@presentation.errors.count, "error") %> prohibited this Presentation from being saved:</h2>
+
+      <ul>
+      <% @presentation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %> 
+  <p>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, :size => "50" %>
+  </p>
+  <p>
+    <%= f.label :course_id, "Course:" %>
+    <%= @course.name %>
+  </p>
+  <p>Who is giving the presentation?</p>
+  <p>
+    <%= f.label :team_id, "Team:" %>
+    <%= f.collection_select :team_id, Team.all,:id,:name, {:prompt => "Select a Team"}%>
+    or
+    <%= f.label :person, "Individual:" %>
+    <%= f.text_field :person%>
+  </p>
+        <p>
+     <%= f.label :presentation_date, "Present Date:" %>
+
+    <%= f.text_field(:presentation_date, :size => 10, :value => 'yyyy-mm-dd') %>
+
+    </p>
+    <p>
+    <%= f.label :task_number, "Task Number" %>
+    <%= f.text_field :task_number, :size => "3" %>
+  </p>
+  <p>
+    <%= f.submit%>
+  </p>
+<% end %>
