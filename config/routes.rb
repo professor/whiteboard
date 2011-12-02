@@ -2,10 +2,13 @@ CMUEducation::Application.routes.draw do
   resources :search, :only => [:index]
   resources :deliverables
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
+  match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
+
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
-  match '/presentations/:presentation_id/feedback' => 'presentations#create_feedback', :via => :post
-  match '/presentations/:presentation_id/feedback' => 'presentations#new_feedback', :as => :presentation_feedbacks, :via => :get
-  match '/presentations/feedback/:id' => 'presentations#show_feedback', :as => :presentation_feedback, :via => :get
+  match '/presentations/:id/feedback' => 'presentations#create_feedback', :via => :post
+  match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
+  match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
+  match '/presentations/index_for_feedback' => 'presentations#index_for_feedback', :as => :presentation_index_for_feedback
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
   match '/sponsored_project_sponsors/:id/archive' => 'sponsored_project_sponsors#archive', :as => :archive_sponsored_project_sponsor
   match '/sponsored_project_allocations/:id/archive' => 'sponsored_project_allocations#archive', :as => :archive_sponsored_project_allocation
@@ -89,9 +92,9 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/past_teams_list' => 'teams#past_teams_list', :as => :past_teams_list
   match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'
   match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
-   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
-   match 'courses/:course_id/presentations/new' => 'presentations#create',:via => :post, :as => :course_presentations_new
-  match 'courses/:course_id/presentations/new' => 'presentations#new', :as => :course_presentations_new
+  match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
+  match 'courses/:course_id/presentations/new' => 'presentations#create',:via => :post, :as => :new_course_presentation
+  match 'courses/:course_id/presentations/new' => 'presentations#new', :as => :new_course_presentation
 
   match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
   match '/:controller(/:action(/:id))'

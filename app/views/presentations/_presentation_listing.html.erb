@@ -28,7 +28,7 @@
       <%end%>
 
       <td><%= presentation.presentation_date  %></td>
-      <td><%= link_to "view feedback", presentation_feedback_path(:id => presentation.id)  %> </td>
+      <td><%= link_to "view feedback", show_feedback_for_presentation_path(:id => presentation.id)  %> </td>
     </tr>
   <% end %>
 </table>

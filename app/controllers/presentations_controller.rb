@@ -9,6 +9,25 @@ class PresentationsController < ApplicationController
       3 => "Good",
       4 => "Outstanding"
   }
+  
+  def my_presentations
+    person = Person.find(params[:id])
+    if (current_user.id != person.id)
+      unless (current_person.is_staff?)||(current_user.is_admin?)
+        flash[:error] = I18n.t(:not_your_presentation)
+        redirect_to root_path and return
+      end
+    end
+    @presentations = Presentation.find_by_person(person)
+    if (person.is_staff? || person.is_admin?)
+      @created_presentations = Presentation.find_all_by_creator_id(person.id)
+    end
+
+    respond_to do |format|
+      format.html { render :action => "index" }
+      format.xml { render :xml => @presentations }
+    end
+  end
 
   # GET /courses/:course_id/presentations
   def index_for_course
@@ -63,10 +82,10 @@ class PresentationsController < ApplicationController
     # Check existence of requested presentation
 
     @feedback = PresentationFeedback.new
-    @feedback.presentation_id = params[:presentation_id]
+    @feedback.presentation_id = params[:id]
     @questions = PresentationQuestion.existing_questions
     @eval_options = @@eval_options
-	  @presentation  = Presentation.find(params[:presentation_id])
+	  @presentation  = Presentation.find(params[:id])
 
   	if @presentation.team_id.nil?
 	    @presenter = @presentation.person.human_name
@@ -88,7 +107,7 @@ class PresentationsController < ApplicationController
 
     @feedback = PresentationFeedback.new(params[:feedback])
     @feedback.evaluator = current_person
-	  @presentation = Presentation.find(params[:presentation_id])
+	  @presentation = Presentation.find(params[:id])
 	  @feedback.presentation = @presentation
 
 	  if @presentation.feedbacks.empty?
@@ -119,13 +138,28 @@ class PresentationsController < ApplicationController
 
       if is_successful && @feedback.save
 		if !@presentation.feedback_email_sent?
-			@presentation.send_presentation_feedback_email( presentation_feedback_url(:id=> params[:presentation_id]))
+			@presentation.send_presentation_feedback_email( show_feedback_for_presentation_url(:id=> params[:id]))
 		end
         format.html { redirect_to(root_path) }
       else
         format.html { render :action => "new_feedback" }
       end
     end
+
+  end
+
+  def index_for_feedback
+    if current_user.is_student?
+      team_id = Team.find_by_person(current_user)
+      #@presentations = Presentation.where(
+      #  "(team_id is Null AND person_id != :id) OR (team_id is not Null AND team_id != :team_id)",
+      #  {:id => current_user.id, :team_id => team_id})
+      @presentations = Presentation.order("presentation_date DESC")
+    else
+      @presentations = Presentation.order("presentation_date DESC")
+    end
+
+    @current_user = current_user
 
   end
 
