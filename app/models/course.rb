@@ -198,12 +198,6 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
-  def email_faculty_to_configure
-    unless self.is_configured?
-      CourseMailer.deliver_configure_course_faculty_email(self)
-    end
-  end
-
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
