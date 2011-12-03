@@ -1,27 +1,7 @@
-<h1>Listing presentations that you can give feedback to</h1>
+<h1>Today's presentations</h1>
 
-<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
-  <tr>
-    <th>Presenter</th>
-    <th>Name</th>
+<%= render :partial => "index", :locals => { :presentations => @presentations_today } %>
 
-    <th>Action</th>
-  </tr>
+<h1>Listing all presentations </h1>
 
-  <% @presentations.each do |presentation| %>
-    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-      <td><%=h (presentation.is_team_presentation?? presentation.team.name : presentation.user.human_name) %></td>
-      <td><%= presentation.name  %></td>
-
-
-      <td>
-        <% if presentation.has_given_feedback?(@current_user) %>
-            <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
-        <% else %>
-            <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
-        <% end %>
-      </td>
-
-    </tr>
-  <% end %>
-</table>
+<%= render :partial => "index", :locals => { :presentations => @presentations } %>

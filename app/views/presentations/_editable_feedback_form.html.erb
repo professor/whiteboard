@@ -1,5 +1,5 @@
 
-<%= form_for @feedback, :html => { :multipart => true } do |f| %>
+<%= form_for @feedback, :url => new_presentation_feedback_path, :html => { :multipart => true } do |f| %>
   <% if @feedback.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
@@ -15,6 +15,7 @@
   <%= f.hidden_field(:presentation_id) %>
 
   <% @questions.each do |question| %>
+      <h2><%= question.label %></h2>
       <p>
         <%= question.text %>
         <div>

@@ -11,7 +11,6 @@
     <th>Date</th>
     <th>Feedback Received?</th>
   </tr>
-
   <% presentations.each_with_index do |presentation, n| %>
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
       <% unless skip_course_column %>
@@ -20,13 +19,7 @@
       <td><%= n+1 %></td>
       <td><%= presentation.name  %></td>
       <td><%= presentation.task_number%></td>
-
-      <% if presentation.team.nil? %>
-        <td><%= presentation.person.human_name %>
-      <%else %>
-        <td><%= presentation.team.name %>
-      <%end%>
-
+      <td><%= presentation.presenter %>
       <td><%= presentation.presentation_date  %></td>
       <td><%= link_to "view feedback", show_feedback_for_presentation_path(:id => presentation.id)  %> </td>
     </tr>

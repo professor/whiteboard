@@ -270,8 +270,9 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
   add_index "presentation_feedbacks", ["evaluator_id", "presentation_id"], :name => "by_evaluator_and_presentation", :unique => true
 
   create_table "presentation_questions", :force => true do |t|
+    t.string   "label"
     t.text     "text"
-    t.boolean  "is_deleted"
+    t.boolean  "deleted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -284,7 +285,7 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
     t.string   "task_number"
     t.integer  "creator_id"
     t.date     "presentation_date"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.boolean  "feedback_email_sent"
     t.datetime "created_at"
     t.datetime "updated_at"

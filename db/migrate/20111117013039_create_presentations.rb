@@ -8,7 +8,7 @@ class CreatePresentations < ActiveRecord::Migration
       t.string   :task_number
       t.integer  :creator_id
       t.date     :presentation_date
-      t.integer  :person_id
+      t.integer  :user_id
       t.boolean  :feedback_email_sent
       t.timestamps
 
@@ -35,8 +35,9 @@ class CreatePresentations < ActiveRecord::Migration
               :name => 'by_feedback_and_question'
 
     create_table :presentation_questions do |t|
+      t.string :label
       t.text :text
-      t.boolean :is_deleted
+      t.boolean :deleted
       t.timestamps
     end
 

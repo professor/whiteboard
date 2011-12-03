@@ -158,5 +158,5 @@ Factory.define :presentation do |p|
 end
 
 Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
-  p.is_deleted false
+  p.deleted false
 end

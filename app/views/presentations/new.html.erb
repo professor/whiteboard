@@ -1,4 +1,4 @@
-<%= content_for :title, "Assign New Presentation" %>
+<%= content_for :title, "New Presentation" %>
 <%= content_for :head do %>
 <% end %>
 
@@ -7,6 +7,6 @@
 
 <%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
 
-<%= link_to 'Cancel', course_presentations_path(params[:course_id]) %>
+<p><%= link_to 'Cancel', course_presentations_path(params[:course_id]) %></p>
 <br/>
 <br/>

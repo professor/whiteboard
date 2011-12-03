@@ -1,15 +1,13 @@
-<h1>Feedback for <%=@presenter %>
-<br/>
-<br/>
-<%= @presentation.name %> </h1>
-</h1>
+<h1>Feedback for <%=@presentation.presenter %></h1>
+<p><%= @presentation.name %></p>
+
 <% @questions.each_with_index do |q, n| %>
-  <% unless q.is_deleted? %>
+  <% unless q.deleted? %>
 
 	<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
   	  <thead>
   	  <tr>
-         <h2>Question <%=n+1 %> :</h2><p><%= q.text %></p>
+         <h2><%=n+1 %>. <%= q.label%></h2><p><%= q.text %></p>
       </tr>
       </thead>
     </table>

@@ -1,6 +1,5 @@
-<h1>Feedback for <%= @presenter %></h1>
-
-<p><h2><%=@presentation.name %></h2></p>
+<h1>Feedback for <%= @presentation.presenter %></h1>
+<p><%=@presentation.name %></p>
 
 <%= render :partial => "editable_feedback_form", :locals => { :button_name => "Create" } %>
 

@@ -11,16 +11,16 @@ class PresentationsController < ApplicationController
   }
   
   def my_presentations
-    person = Person.find(params[:id])
-    if (current_user.id != person.id)
-      unless (current_person.is_staff?)||(current_user.is_admin?)
+    user = User.find(params[:id])
+    if (current_user.id != user.id)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_presentation)
         redirect_to root_path and return
       end
     end
-    @presentations = Presentation.find_by_person(person)
-    if (person.is_staff? || person.is_admin?)
-      @created_presentations = Presentation.find_all_by_creator_id(person.id)
+    @presentations = Presentation.find_by_user(user)
+    if (user.is_staff? || user.is_admin?)
+      @created_presentations = Presentation.find_all_by_creator_id(user.id)
     end
 
     respond_to do |format|
@@ -32,7 +32,7 @@ class PresentationsController < ApplicationController
   # GET /courses/:course_id/presentations
   def index_for_course
     @course = Course.find(params[:course_id])
-    if (current_person.is_admin? || @course.faculty.include?(current_person))
+    if (current_user.is_admin? || @course.faculty.include?(current_person))
       @presentations = Presentation.find_all_by_course_id(@course.id)
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -43,7 +43,7 @@ class PresentationsController < ApplicationController
   def new
     @course = Course.find(params[:course_id])
     if (current_person.is_admin? || @course.faculty.include?(current_person))
-      @presentation = Presentation.new
+      @presentation = Presentation.new(:presentation_date => Date.today)
       @course =Course.find_by_id(params[:course_id])
     else
        has_permissions_or_redirect(:admin, root_path)
@@ -53,15 +53,15 @@ class PresentationsController < ApplicationController
   # POST /course/:person_id/presentations
   def create
 	  @course = Course.find(params[:course_id])
-    if params[:presentation][:person].blank?
-      person_id = nil
+    if params[:presentation][:user].blank?
+      user_id = nil
     else
-      @person = Person.find_by_human_name(params[:presentation][:person])
-      person_id = @person.id
+      user = User.find_by_human_name(params[:presentation][:user])
+      user_id = user.id
     end
 
 
-    @presentation= Presentation.new(:person_id=>person_id,
+    @presentation= Presentation.new(:user_id=>user_id,
                                     :name=>params[:presentation][:name],
                                     :team_id=>params[:presentation][:team_id],
                                     :presentation_date=>params[:presentation][:presentation_date],
@@ -87,12 +87,6 @@ class PresentationsController < ApplicationController
     @eval_options = @@eval_options
 	  @presentation  = Presentation.find(params[:id])
 
-  	if @presentation.team_id.nil?
-	    @presenter = @presentation.person.human_name
-	  else
-	    @presenter = @presentation.team.name
-	  end
-
     # Check whether this user has already created a feedback
 
     respond_to do |format|
@@ -106,7 +100,7 @@ class PresentationsController < ApplicationController
     # Check existence of requested presentation
 
     @feedback = PresentationFeedback.new(params[:feedback])
-    @feedback.evaluator = current_person
+    @feedback.evaluator = current_user
 	  @presentation = Presentation.find(params[:id])
 	  @feedback.presentation = @presentation
 
@@ -150,33 +144,25 @@ class PresentationsController < ApplicationController
 
   def index_for_feedback
     if current_user.is_student?
-      team_id = Team.find_by_person(current_user)
+      team_id = Team.find_by_person(current_person)
       #@presentations = Presentation.where(
-      #  "(team_id is Null AND person_id != :id) OR (team_id is not Null AND team_id != :team_id)",
+      #  "(team_id is Null AND user_id != :id) OR (team_id is not Null AND team_id != :team_id)",
       #  {:id => current_user.id, :team_id => team_id})
       @presentations = Presentation.order("presentation_date DESC")
     else
       @presentations = Presentation.order("presentation_date DESC")
     end
-
-    @current_user = current_user
-
+    @presentations_today = Presentation.where(:presentation_date => Date.today)
   end
 
   def show_feedback
 	 @presentation = Presentation.find(params[:id])
 	 @feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:id]})
 
-	 if @presentation.team_id.nil?
-	    @presenter = @presentation.person.human_name
-	 else
-	    @presenter = @presentation.team.name
-	 end
-
 	 @faculty_feedbacks = []
 	 @student_feedbacks = []
 
-	 @questions= PresentationQuestion.find(:all, :conditions => {:is_deleted => false})
+	 @questions= PresentationQuestion.find(:all, :conditions => {:deleted => false})
 
 	 @feedbacks.each do |f|
 	   evaluator = User.find(f.evaluator_id)
