@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
 
   #  before_save :initialize_human_name
-  has_and_belongs_to_many :teams
+  has_and_belongs_to_many :teams, :join_table=>"teams_people", :foreign_key => "person_id"
 
   def emailed_recently(email_type)
     case email_type
