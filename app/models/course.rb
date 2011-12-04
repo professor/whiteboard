@@ -37,6 +37,7 @@ class Course < ActiveRecord::Base
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
 
+  has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name
 
@@ -196,12 +197,6 @@ class Course < ActiveRecord::Base
     offerings = Course.find_all_by_number(course_number)
     offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     return offerings.first
-  end
-
-  def email_faculty_to_configure
-    unless self.is_configured?
-      CourseMailer.deliver_configure_course_faculty_email(self)
-    end
   end
 
   protected

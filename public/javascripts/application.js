@@ -2,11 +2,19 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 
-<script type="text/javascript">
+	$(function() {
+		$("#presentation_presentation_date").datepicker({
+            showButtonPanel: true,
+            dateFormat: 'yy-mm-dd'
+		});
+	});
+
+
 	$(function() {
 		$("#add_person").click(function() {
             var a = $("<a></a>").attr('href','#').click(somefunction);
            $("#people_in_a_collection").append(a);
         });
  	});
-</script>
+
+

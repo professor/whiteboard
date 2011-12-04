@@ -49,10 +49,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  #Sets up the return to page when logging a user in
-  #def authenticate_user!
-  #  session[:return_to] = request.fullpath
-  #  super
+  # In development, if you want to pretend to be a different user, you can set it easily here
+  #def current_user
+  #  User.last
   #end
 
   def authenticate_user!

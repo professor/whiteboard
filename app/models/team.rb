@@ -4,6 +4,8 @@ class Team < ActiveRecord::Base
   belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
   has_and_belongs_to_many :people, :join_table=>"teams_people"
 
+  has_many :presentations
+
   validates_presence_of :course_id, :name
   validates_uniqueness_of :email, :allow_blank => true, :message => "The team name has already be used in this semester. Pick another name"
 

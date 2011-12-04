@@ -1,0 +1,8 @@
+<%= content_for :title, "Edit Presentation" %>
+<h1>Edit Presentation</h1>
+
+<%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
+
+<p><%= link_to 'Cancel', course_presentations_path(params[:course_id]) %></p>
+<br/>
+<br/>

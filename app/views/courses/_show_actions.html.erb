@@ -4,7 +4,7 @@
       <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
     </td>
      <td>
-       <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"),  course.curriculum_url %><br/>
+       <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Curriculum website", :title=>"Curriculum website"),  course.curriculum_url %><br/>
        <p><%= link_to "Course website", course.curriculum_url %> </p>
      </td>
      <td valign="bottom">
@@ -45,7 +45,9 @@
       <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"),  peer_evaluations_path(course) %><br/>
       <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
     </td>
-    <td>&nbsp;
+    <td>
+      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Presentations", :title=>"Presentations"),  course.curriculum_url %><br/>
+      <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
     </td>
     <td>&nbsp;
     </td>

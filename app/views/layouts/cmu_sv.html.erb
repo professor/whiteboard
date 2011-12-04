@@ -40,6 +40,7 @@
 <% if AcademicCalendar.next_semester_is_soon %>
 <div class="Lv1Nav"><a class="Lv1NavLink" href="/courses/next_semester"><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></div>
 <% end %>
+<div class="Lv1Nav"><%= link_to "Presentations", today_presentations_url, :class=>"Lv1NavLink" %></div>
 <% if current_user %>
 <div class="Lv1Nav"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class=>"Lv1NavLink" %></div>
 <div class="Lv1Nav"><%= link_to "My Teams", my_teams_path(current_user.id), :class=>"Lv1NavLink" %></div>

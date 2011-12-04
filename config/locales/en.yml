@@ -13,3 +13,4 @@ en:
   not_editable: You don't have permission to edit this object.
   no_person: This person doesn't exist in the system.
   not_your_deliverable: You don't have permission to see another person's deliverables.
+  not_your_presentation: You don't have permission to see another person's presentation feedback.

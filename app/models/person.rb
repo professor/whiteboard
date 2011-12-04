@@ -21,8 +21,6 @@ class Person < User
 #    has-many :registered_courses
 #    has_many :registered_for_these_courses, :through => :registered_courses, :source => :course
 
-  has_and_belongs_to_many :teams, :join_table=>"teams_people"
-
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
   belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"

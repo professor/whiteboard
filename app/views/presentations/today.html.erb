@@ -1,0 +1,17 @@
+<%= content_for :title, "Today's Presentations" %>
+<% if current_user.is_staff? || current_user.is_admin? %>
+<table cellspacing="0" width=100%>
+  <tr class="staff">
+    <td>
+      <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+    </td>
+    <td><p>Faculty, to create a new presentation, go to your course page. See <%= link_to "My Courses", root_path %></p></td>
+  </tr>
+</table>
+<% end %>
+
+<h1>Today's presentations</h1>
+<div class="right_link" ><%= link_to "My presentations", my_presentations_url(current_user) %><br/><%= link_to "All presentations", presentations_url %></div>
+
+<%= render :partial => "index", :locals => { :presentations => @presentations, :on_course_page => false } %>
+

@@ -147,3 +147,16 @@ Factory.define :user, :class => User do |p|
   p.password_salt "adasdsa"
   p.crypted_password "adasdsaf"
 end
+
+Factory.define :presentation do |p|
+  p.name "Test Presentation"
+  p.description "Desc"
+  p.task_number "1"
+  p.presentation_date Date.new(2011, 1, 1)
+  p.association :course, :factory => :course
+  p.association :team, :factory => :team
+end
+
+Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
+  p.deleted false
+end

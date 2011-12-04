@@ -1,0 +1,6 @@
+<%= content_for :title, "Feedback for #{@presentation.presenter}" %>
+<h1>Feedback for <%= @presentation.presenter %></h1>
+<p><%=@presentation.name %></p>
+
+<%= render :partial => "editable_feedback_form", :locals => { :button_name => "Create" } %>
+

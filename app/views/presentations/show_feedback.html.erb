@@ -1,0 +1,36 @@
+<%= content_for :title, "Feedback for #{@presentation.presenter}>" %>
+<h1>Feedback for <%=@presentation.presenter %></h1>
+<p><%= @presentation.name %></p>
+
+<% @questions.each_with_index do |q, n| %>
+  <% unless q.deleted? %>
+
+	<table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+  	  <thead>
+  	  <tr>
+         <h2><%=n+1 %>. <%= q.label%></h2><p><%= q.text %></p>
+      </tr>
+      </thead>
+    </table>
+
+    <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+      <tr>
+      	 <h2>Feedback From Faculty </h2>
+      </tr>
+    </table>
+
+    <%= render(:partial => "individual_feedback", :locals =>{:individual_ratings => @faculty_ratings,
+    														 :individual_comments => @faculty_comments, :q =>q }) %>
+
+
+    <table class="twikiTable" cellpadding="0" cellspacing="0" width="685">
+      <tr>
+         <h2> Feedback From Students </h2>
+      </tr>
+    </table>
+    <%= render(:partial => "individual_feedback", :locals =>{:individual_ratings => @student_ratings,
+    														 :individual_comments => @student_comments, :q =>q }) %>
+
+  <%end%>
+<%end%>
+
