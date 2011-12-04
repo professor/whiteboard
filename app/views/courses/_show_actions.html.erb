@@ -17,6 +17,10 @@
         <p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
 
       </td>
+    <td>
+      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Presentations", :title=>"Presentations"),  course_presentations_path(@course) %><br/>
+      <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
+    </td>
   </tr>
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
   <tr class="staff">
@@ -44,10 +48,6 @@
     <td>
       <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"),  peer_evaluations_path(course) %><br/>
       <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
-    </td>
-    <td>
-      <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Presentations", :title=>"Presentations"),  course.curriculum_url %><br/>
-      <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
     </td>
     <td>&nbsp;
     </td>
