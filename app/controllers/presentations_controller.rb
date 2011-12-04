@@ -9,7 +9,7 @@ class PresentationsController < ApplicationController
       3 => "Good",
       4 => "Outstanding"
   }
-  
+
   def my_presentations
     user = User.find(params[:id])
     if (current_user.id != user.id)
@@ -55,7 +55,7 @@ class PresentationsController < ApplicationController
       @presentation = Presentation.new(:presentation_date => Date.today)
       @course =Course.find_by_id(params[:course_id])
     else
-       has_permissions_or_redirect(:admin, root_path)
+      has_permissions_or_redirect(:admin, root_path)
     end
   end
 
@@ -72,7 +72,7 @@ class PresentationsController < ApplicationController
 
   # POST /course/:person_id/presentations
   def create
-	  @course = Course.find(params[:course_id])
+    @course = Course.find(params[:course_id])
 
     @presentation = Presentation.new(:name=>params[:presentation][:name],
                                      :team_id=>params[:presentation][:team_id],
@@ -85,33 +85,33 @@ class PresentationsController < ApplicationController
     unless human_name.blank?
       user = User.find_by_human_name(human_name)
       if user.nil?
-         flash[:error] = "Can't find person #{human_name}"
-         render :action => "new" and return
+        flash[:error] = "Can't find person #{human_name}"
+        render :action => "new" and return
       else
-         @presentation.user_id = user.id
+        @presentation.user_id = user.id
       end
     end
 
 
     respond_to do |format|
-       if @presentation.save
-            format.html { redirect_to( course_presentations_path, :course_id=>params[:course_id], :notice => 'Successfully created the presentation.') }
-       else
-           format.html { render :action => "new" }
-       end
+      if @presentation.save
+        format.html { redirect_to(course_presentations_path, :course_id=>params[:course_id], :notice => 'Successfully created the presentation.') }
+      else
+        format.html { render :action => "new" }
+      end
     end
   end
 
 
   def new_feedback
+    store_previous_location
 
     # Check existence of requested presentation
-
     @feedback = PresentationFeedback.new
     @feedback.presentation_id = params[:id]
     @questions = PresentationQuestion.existing_questions
     @eval_options = @@eval_options
-	  @presentation  = Presentation.find(params[:id])
+    @presentation = Presentation.find(params[:id])
 
     # Check whether this user has already created a feedback
 
@@ -122,20 +122,18 @@ class PresentationsController < ApplicationController
   end
 
   def create_feedback
-
     # Check existence of requested presentation
-
     @feedback = PresentationFeedback.new(params[:feedback])
     @feedback.evaluator = current_user
-	  @presentation = Presentation.find(params[:id])
-	  @feedback.presentation = @presentation
+    @presentation = Presentation.find(params[:id])
+    @feedback.presentation = @presentation
 
-	  if @presentation.feedbacks.empty?
-	    @presentation.feedback_email_sent = false
-  	else
-	    @presentation.feedback_email_sent = true
-	  end
-	  @presentation.save
+    if @presentation.feedbacks.empty?
+      @presentation.feedback_email_sent = false
+    else
+      @presentation.feedback_email_sent = true
+    end
+    @presentation.save
 
 
     # Necessary checks here
@@ -157,10 +155,10 @@ class PresentationsController < ApplicationController
       end
 
       if is_successful && @feedback.save
-		if !@presentation.feedback_email_sent?
-			@presentation.send_presentation_feedback_email( show_feedback_for_presentation_url(:id=> params[:id]))
-		end
-        format.html { redirect_to(root_path) }
+        if !@presentation.feedback_email_sent?
+          @presentation.send_presentation_feedback_email(show_feedback_for_presentation_url(:id=> params[:id]))
+        end
+        format.html { redirect_back_or_default(today_presentations_url) }
       else
         format.html { render :action => "new_feedback" }
       end
@@ -176,31 +174,31 @@ class PresentationsController < ApplicationController
       redirect_to root_path and return
     end
 
-	 @feedbacks = PresentationFeedback.find(:all,  :conditions => {:presentation_id => params[:id]})
+    @feedbacks = PresentationFeedback.where(:presentation_id => params[:id])
 
-	 @faculty_feedbacks = []
-	 @student_feedbacks = []
+    @faculty_feedbacks = []
+    @student_feedbacks = []
 
-	 @questions= PresentationQuestion.find(:all, :conditions => {:deleted => false})
+    @questions = PresentationQuestion.where(:deleted => false)
 
-	 @feedbacks.each do |f|
-	   evaluator = User.find(f.evaluator_id)
-	   if evaluator.is_teacher? || evaluator.is_staff?
-			 @faculty_feedbacks << f
-	   elsif evaluator.is_student?
-			 @student_feedbacks << f
-	   end
-	 end
+    @feedbacks.each do |f|
+      evaluator = User.find(f.evaluator_id)
+      if evaluator.is_teacher? || evaluator.is_staff?
+        @faculty_feedbacks << f
+      elsif evaluator.is_student?
+        @student_feedbacks << f
+      end
+    end
 
-	 @faculty_ratings = Presentation.find_ratings(@faculty_feedbacks, @questions)
-	 @student_ratings = Presentation.find_ratings(@student_feedbacks, @questions)
+    @faculty_ratings = Presentation.find_ratings(@faculty_feedbacks, @questions)
+    @student_ratings = Presentation.find_ratings(@student_feedbacks, @questions)
 
-	 @faculty_comments = Presentation.find_comments(@faculty_feedbacks, @questions)
-	 @student_comments = Presentation.find_comments(@student_feedbacks, @questions)
+    @faculty_comments = Presentation.find_comments(@faculty_feedbacks, @questions)
+    @student_comments = Presentation.find_comments(@student_feedbacks, @questions)
 
-	 respond_to do |format|
-	 	  format.html
-	 end
+    respond_to do |format|
+      format.html
+    end
   end
 
 end
