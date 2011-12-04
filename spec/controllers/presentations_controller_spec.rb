@@ -13,14 +13,14 @@ describe PresentationsController do
       end
 
       it "should pass its view a new feedback" do
-        get :new_feedback, :presentation_id => @presentation.id
+        get :new_feedback, :id => @presentation.id
         feedback = assigns :feedback
 
         feedback.presentation_id.should == @presentation.id
       end
 
       it "should pass its view a list of questions" do
-        get :new_feedback, :presentation_id => @presentation.id
+        get :new_feedback, :id => @presentation.id
         questions = assigns :questions
 
         questions.length.should == PresentationFeedback.count
@@ -51,7 +51,7 @@ describe PresentationsController do
         }
 
         start_date = DateTime.now
-        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :presentation_id => @presentation.id}
+        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :id => @presentation.id}
 
         feedback = PresentationFeedback.where("created_at >= ?", start_date)
         feedback.length.should == 1
@@ -75,7 +75,7 @@ describe PresentationsController do
             1000 => {"rating" => 1, "comment" => "comment 1"}
         }
 
-        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :presentation_id => @presentation.id}
+        post :create_feedback, {:feedback => feedback, :evaluation => evaluation, :id => @presentation.id}
 
         response.should render_template('new_feedback')
       end
