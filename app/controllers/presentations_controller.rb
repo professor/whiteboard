@@ -104,9 +104,9 @@ class PresentationsController < ApplicationController
 
 
   def new_feedback
+    store_previous_location
 
     # Check existence of requested presentation
-
     @feedback = PresentationFeedback.new
     @feedback.presentation_id = params[:id]
     @questions = PresentationQuestion.existing_questions
@@ -122,7 +122,7 @@ class PresentationsController < ApplicationController
   end
 
   def create_feedback
-
+    tmp = get_http_referer
     # Check existence of requested presentation
 
     @feedback = PresentationFeedback.new(params[:feedback])
@@ -160,7 +160,7 @@ class PresentationsController < ApplicationController
 		if !@presentation.feedback_email_sent?
 			@presentation.send_presentation_feedback_email( show_feedback_for_presentation_url(:id=> params[:id]))
 		end
-        format.html { redirect_to(root_path) }
+        format.html { redirect_back_or_default(today_presentations_url) }
       else
         format.html { render :action => "new_feedback" }
       end
