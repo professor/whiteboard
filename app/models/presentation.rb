@@ -132,11 +132,11 @@ class Presentation < ActiveRecord::Base
   def send_presentation_feedback_email(url)
 
     mail_to = self.user_email
-    message = "Feedback has been submitted for presentation"
+    message = "See feedback for your presentation "
     message += self.name + " for " + self.course.name
 
     options = {:to => mail_to,
-               :subject => self.course.name + ": Feedback for presentation " + self.name,
+               :subject => self.course.short_name + ": Feedback for presentation " + self.name,
                :message => message,
                :url_label => "View feedback",
                :url => url
