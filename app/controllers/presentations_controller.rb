@@ -59,6 +59,17 @@ class PresentationsController < ApplicationController
     end
   end
 
+  # GET /course/:person_id/presentations/:id/edit
+  #def edit
+  #  @presentation = Presentation.find(:course_id)
+  #  if (current_person.is_admin? || @course.faculty.include?(current_person))
+  #    @presentation = Presentation.new(:presentation_date => Date.today)
+  #    @course =Course.find_by_id(params[:course_id])
+  #  else
+  #     has_permissions_or_redirect(:admin, root_path)
+  #  end
+  #end
+
   # POST /course/:person_id/presentations
   def create
 	  @course = Course.find(params[:course_id])

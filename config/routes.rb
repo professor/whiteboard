@@ -9,10 +9,11 @@ CMUEducation::Application.routes.draw do
   match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
   match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
+  resources :presentations, :only => [:index]
+
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
   match '/sponsored_project_sponsors/:id/archive' => 'sponsored_project_sponsors#archive', :as => :archive_sponsored_project_sponsor
   match '/sponsored_project_allocations/:id/archive' => 'sponsored_project_allocations#archive', :as => :archive_sponsored_project_allocation
-  resources :presentations, :only => [:index]
   resources :sponsored_projects
   resources :sponsored_project_sponsors
   resources :sponsored_project_allocations
@@ -50,6 +51,7 @@ CMUEducation::Application.routes.draw do
     member do
       get :configure
     end
+    resources :presentations, :only => [:new, :edit, :create, :update]
   end
 
   match '/courses/:course_id/peer_evaluations' => 'peer_evaluation#index_for_course', :via => :get, :as => "peer_evaluations"
@@ -94,8 +96,11 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/export_to_csv' => 'teams#export_to_csv'
   match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
-  match 'courses/:course_id/presentations/new' => 'presentations#create',:via => :post, :as => :new_course_presentation
-  match 'courses/:course_id/presentations/new' => 'presentations#new', :as => :new_course_presentation
+
+  #match 'courses/:course_id/presentations/update' => 'presentations#create',:via => :post, :as => :new_course_presentation
+  #match 'courses/:course_id/presentations/edit' => 'presentations#edit', :as => :new_course_presentation
+  #match 'courses/:course_id/presentations/new' => 'presentations#create',:via => :post, :as => :new_course_presentation
+  #match 'courses/:course_id/presentations/new' => 'presentations#new', :as => :new_course_presentation
 
   match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
   match '/:controller(/:action(/:id))'

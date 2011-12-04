@@ -8,9 +8,10 @@
 	});
    <% end %>
 <% end %>
-<%# javascript_include_tag "application","jquery-ui-timepicker-addon" %>
 
-<%= form_for @presentation, :url=>new_course_presentation_path(params[:course_id]), :html => { :multipart => true} do |f| %>
+<!-- why is there a multipart =>true here Himani? -->
+<%# form_for @presentation, :url=>new_course_presentation_path(params[:course_id]), :html => { :multipart => true} do |f| %>
+<%= form_for([@course, @presentation]) do |f| %>
   <% if @presentation.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@presentation.errors.count, "error") %> prohibited this Presentation from being saved:</h2>
