@@ -9,8 +9,8 @@
 </table>
 <% end %>
 
-<h1>Listing Presentations</h1>
-<div class="right_link" ><%= link_to "My presentations", my_presentations_url(current_user) %><br/><%= link_to "Today's presentations", today_presentations_url %></div>
+<h1>My Presentations</h1>
+<div class="right_link" ><%= link_to "Today's presentations", today_presentations_url %><br/><%= link_to "All presentations", presentations_url %></div>
 
 <%= render :partial => "index", :locals => { :presentations => @presentations, :on_course_page => false } %>
 

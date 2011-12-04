@@ -11,7 +11,7 @@ class Presentation < ActiveRecord::Base
   accepts_nested_attributes_for :feedbacks
 
   def team_or_user_for_presenter?
-    if team.blank? || user.blank?
+    if team_id.blank? && user_id.blank?
       errors.add(:base, "Can't create a presentation without a team or person giving it")
     end
   end
@@ -43,10 +43,10 @@ class Presentation < ActiveRecord::Base
     end
   end
 
-  def self.find_by_user(current_user)
+  def self.find_by_presenter(current_user)
     # Find everything where the passed in person is either the assignee
     # or is on the presentation's team
-    teams = Team.find_by_user(current_user)
+    teams = Team.find_by_person(current_user)
     Presentation.find_by_user_and_teams(current_user, teams)
   end
 
