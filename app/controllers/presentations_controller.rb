@@ -4,10 +4,10 @@ class PresentationsController < ApplicationController
   before_filter :authenticate_user!
 
   @@eval_options = {
-      1 => "Poor",
-      2 => "Minimally Acceptable",
+      4 => "Outstanding",
       3 => "Good",
-      4 => "Outstanding"
+      2 => "Minimally Acceptable",
+      1 => "Poor"
   }
 
   def my_presentations
