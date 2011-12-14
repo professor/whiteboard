@@ -181,6 +181,15 @@ class Team < ActiveRecord::Base
     return "Action Required: please do this peer evaluation survey NOW. \n\n Today is your last day to do the peer evaluation."
   end
 
+  def clone_to_another_course(destination_course_id)
+      clone = self.clone
+      clone.person_ids = self.person_ids
+      clone.course_id = destinaton_course_id
+      clone.name = self.name + " - " + destination_course_id    
+      clone.save    
+  end
+                    
+
 
   protected
   def remove_google_group
