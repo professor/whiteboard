@@ -178,18 +178,12 @@ class TeamsController < ApplicationController
   # POST /courses/1/teams.xml
   def create
     if has_permissions_or_redirect(:staff, root_path)
+      params[:team][:members_override] = params[:people]
       @team = Team.new(params[:team])
 
       @team.course_id = params[:course_id]
       @course = Course.find(params[:course_id])
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
-
-      msg = @team.update_members(params[:people])
-      unless msg.blank?
-        flash.now[:error] = msg
-        render :action => 'new'
-        return
-      end
 
       update_course_faculty_label
 
@@ -210,24 +204,17 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1
   # PUT /courses/1/teams/1.xml
   def update
+    params[:team][:members_override] = params[:people]
     @team = Team.find(params[:id])
     @course = @team.course
     if has_permissions_or_redirect(:staff, course_team_path(@course, @team))
       @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
-      msg = @team.update_members(params[:people])
-      unless msg.blank?
-        flash.now[:error] = msg
-        render :action => 'edit'
-        return
-      end
-
-      #    handle_teams_people
-
       update_course_faculty_label
 
       respond_to do |format|
-        if @team.update_attributes(params[:team])
+        @team.attributes = params[:team]
+        if @team.save(params[:team])
           flash[:notice] = 'Team was successfully updated.'
           format.html { redirect_to(course_teams_path(@team.course)) }
           format.xml { head :ok }

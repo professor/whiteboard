@@ -6,14 +6,21 @@ class Team < ActiveRecord::Base
 
   has_many :presentations
 
+  validate :validate_members
   validates_presence_of :course_id, :name
   validates_uniqueness_of :email, :allow_blank => true, :message => "The team name has already be used in this semester. Pick another name"
 
   attr :team_members_list_changed, true
 
+  #When assigning faculty to a page, the user types in a series of strings that then need to be processed
+  #:members_override is a temporary variable that is used to do validation of the strings (to verify
+  # that they are people in the system) and then to save the people in the faculty association.
+  attr_accessor :members_override
+
+
   before_validation :clean_up_data
   after_save :update_mailing_list
-  before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email
+  before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email, :update_members
 
   before_destroy :remove_google_group
 
@@ -114,27 +121,29 @@ class Team < ActiveRecord::Base
   end
 
 
-  #Todo - create a test case for this
+  #When modifying validate_members or update_members, modify the same code in course.rb
   #Todo - move to a higher class or try as a mixin
-  #Todo - this code was copied to course.rb
-  def update_members(members)
-    self.people = []
-    return "" if members.nil?
-    members.delete("")
+  def validate_members
+    return "" if members_override.nil?
 
-    msg = ""
-    members.each do |name|
-      person = Person.find_by_human_name(name)
-      if person.nil?
-        all_valid_names = false
-        msg = msg + "'" + name + "' is not in the database. "
-        #This next line doesn't quite seem to work
-        self.errors.add(:person_name, "Person " + name + " not found")
-      else
-        self.people << person
+    self.members_override = members_override.select {|name| name != nil && name.strip != ""}
+    list = map_member_stings_to_persons(members_override)
+    list.each_with_index do |id, index|
+      if id.nil?
+        self.errors.add(:base, "Person " + members_override[index] + " not found")
       end
     end
-    return msg
+  end
+
+  def update_members
+    return "" if members_override.nil?
+    self.people = []
+
+    self.members_override = members_override.select {|name| name != nil && name.strip != ""}
+    list = map_member_stings_to_persons(self.members_override)
+    raise "Error converting members_override to IDs!" if list.include?(nil)
+    self.people = list
+    members_override = nil
   end
 
   def show_addresses_for_mailing_list
@@ -164,6 +173,7 @@ class Team < ActiveRecord::Base
   end
 
   def is_person_on_team?(person)
+    a = self.people
     self.people.include?(person)
   end
 
@@ -197,6 +207,10 @@ class Team < ActiveRecord::Base
     google_apps_connection.delete_group(self.email)
   rescue GDataError => e
     logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
+  end
+
+  def map_member_stings_to_persons(members_override_list)
+    members_override_list.map { |member_name| Person.find_by_human_name(member_name) }
   end
 
 end

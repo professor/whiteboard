@@ -35,11 +35,15 @@
     <%= f.text_field :year, :size => 4 %>
   </p>
 
-     <div id="people_in_a_collection">
+      <div id="people_in_a_collection">
        <p>Instructors for this course<br/>
          <span class="help_text">(Eventually) they will be notified to configure their course</span>
        </p>
-      <%= render :partial => '/people/person_in_a_collection', :collection =>@course.faculty, :locals => { :collection_form => f , :member_label => "Teacher"}   %>
+      <% if @course.faculty_assignments_override.nil? %>
+        <%= render :partial => '/people/person_in_a_collection', :collection =>@course.faculty.map(&:human_name), :as => :person, :locals => { :collection_form => f , :member_label => "Teacher"}   %>
+      <% else %>
+        <%= render :partial => '/people/person_in_a_collection', :collection =>@course.faculty_assignments_override, :as => :person, :locals => { :collection_form => f , :member_label => "Teacher"}   %>
+      <% end %>
     </div>
 
     <div class="formItem indented"><p><%= link_to "Add a teacher", "#", :id => "add_person" %></p></div>

@@ -135,8 +135,12 @@ class Presentation < ActiveRecord::Base
     message = "See feedback for your presentation "
     message += self.name + " for " + self.course.name
 
+    subject = ""
+    subject = subject + self.course.short_name unless self.course.short_name.nil?
+    subject = subject + "Feedback for presentation " + self.name
+
     options = {:to => mail_to,
-               :subject => self.course.short_name + ": Feedback for presentation " + self.name,
+               :subject => subject,
                :message => message,
                :url_label => "View feedback",
                :url => url
