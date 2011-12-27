@@ -7,9 +7,9 @@
 
 <div class="SecondaryNav">
   <% unless @current_semester_course.nil? %>
-  <%= link_to "Teams", course_teams_path(@current_semester_course), :class=>"SecondaryNav_Link" %>
+  <%= link_to "Course Tools", course_path(@current_semester_course), :class=>"SecondaryNav_Link" %>
   <% else %>
-  <%= link_to "Teams (This works when the course is offered this semester)", "", :class=>"SecondaryNav_Link", :title => "This course is not offered in the current semester." %>
+  <%= link_to "Course Tools (This works when the course is offered this semester)", "", :class=>"SecondaryNav_Link", :title => "This course is not offered in the current semester." %>
   <% end %>
 </div>
 
