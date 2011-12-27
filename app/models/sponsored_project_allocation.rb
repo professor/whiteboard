@@ -20,7 +20,7 @@ class SponsoredProjectAllocation < ActiveRecord::Base
 
 
   def self.monthly_copy_to_sponsored_project_effort
-    allocations = SponsoredProjectAllocation.find(:all)
+    allocations = SponsoredProjectAllocation.current
     allocations.each do |allocation|
       SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
     end

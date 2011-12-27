@@ -115,18 +115,13 @@ class CoursesController < ApplicationController
       if (params[:course][:is_configured]) #The previous page was configure action
         @course.twiki_url = params[:course][:curriculum_url] if params[:course][:configure_course_twiki]
         @course.configured_by_user_id = current_user.id
-      else
-        msg = @course.update_faculty(params[:people])
-        unless msg.blank?
-          flash.now[:error] = msg
-          render :action => 'edit'
-          return
-        end
       end
 
+      params[:course][:faculty_assignments_override] = params[:people]
       respond_to do |format|
         @course.updated_by_user_id = current_user.id if current_user
-        if @course.update_attributes(params[:course])
+        @course.attributes = params[:course]
+        if @course.save
           if (params[:course][:is_configured]) #The previous page was configure action
             CourseMailer.configure_course_admin_email(@course).deliver
           else

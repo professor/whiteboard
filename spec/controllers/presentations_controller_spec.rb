@@ -57,7 +57,7 @@ describe PresentationsController do
         feedback.length.should == 1
         feedback = feedback[0]
         feedback.presentation_id.should == @presentation.id
-        response.should redirect_to(root_path)
+        response.should redirect_to(today_presentations_url)
 
         answers = PresentationFeedbackAnswer.where("created_at >= ?", start_date)
         answers.length.should == 4

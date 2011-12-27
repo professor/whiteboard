@@ -1,14 +1,14 @@
 <%
- #Parameters: member_label
+ #Parameters: member_label, name
  member_label = local_assigns[:member_label].nil? ? "Person" : local_assigns[:member_label]
+ person = local_assigns[:person]
 %>
 
 <div class="person_in_a_collection">
-  <% prefix = "paper[people_attributes][]" %>
-  <%= fields_for :people do |author_form| -%>
-    <div class="formItem indented ui-widget"><p>
-      <%= member_label %>: <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%=  person_in_a_collection.human_name %>"/>
-
+  <div class="formItem indented ui-widget">
+    <p>
+      <%= member_label %>:
+      <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%= person %>"/>
 
 <script type="text/javascript">
   $( ".people_name" ).autocomplete({
@@ -21,6 +21,5 @@
 </script>
       <%= link_to "remove", "#", :class => "remove_person" %>
     </p>
-    </div>
-    <% end -%>
+  </div>
 </div>

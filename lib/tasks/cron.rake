@@ -18,7 +18,7 @@ task :cron do
  end
  
  if Date.today.wday == 1 # run on Mondays
-   puts "----Updating cmu:effort_log_midweek_warning_email"
+   puts "----Updating cmu:effort_log_endweek_faculty_email"
    Rake::Task['cmu:effort_log_endweek_faculty_email'].invoke
    puts "----done."
  end

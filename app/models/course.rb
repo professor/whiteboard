@@ -40,11 +40,22 @@ class Course < ActiveRecord::Base
   has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name
+  validate :validate_faculty
 
   versioned
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
   belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
+  #When assigning faculty to a page, the user types in a series of strings that then need to be processed
+  #:faculty_assignments_override is a temporary variable that is used to do validation of the strings (to verify
+  # that they are people in the system) and then to save the people in the faculty association.
+  attr_accessor :faculty_assignments_override
+
+  attr_accessible :course_number_id, :name, :number, :semester, :mini, :primary_faculty_label,
+    :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
+    :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
+    :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
+    :faculty_assignments_override
 
 #  def to_param
 #    display_course_name
@@ -57,7 +68,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
-  before_save :strip_whitespaces
+  before_save :strip_whitespaces, :update_faculty
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
@@ -160,27 +171,29 @@ class Course < ActiveRecord::Base
     return Date.commercial(self.year, self.course_start + 7)
   end
 
-
-  #Todo - create a test case for this
+  #When modifying validate_faculty or update_faculty, modify the same code in team.rb
   #Todo - move to a higher class or try as a mixin
-  #Todo - this code was copied to team.rb
-  def update_faculty(members)
-    self.faculty = []
-    return "" if members.nil?
+  def validate_faculty
+    return "" if faculty_assignments_override.nil?
 
-    msg = ""
-    members.each do |name|
-      person = Person.find_by_human_name(name)
+    self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
+    list = map_faculty_strings_to_persons(faculty_assignments_override)
+    list.each_with_index do |person, index|
       if person.nil?
-        all_valid_names = false
-        msg = msg + "'" + name + "' is not in the database. "
-        #This next line doesn't quite seem to work
-        self.errors.add(:person_name, "Person " + name + " not found")
-      else
-        self.faculty << person
+        self.errors.add(:base, "Person " + faculty_assignments_override[index] + " not found")
       end
     end
-    return msg
+  end
+
+  def update_faculty
+    return "" if faculty_assignments_override.nil?
+    self.faculty = []
+
+    self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
+    list = map_faculty_strings_to_persons(self.faculty_assignments_override)
+    raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
+    self.faculty = list
+    faculty_assignments_override = nil
   end
 
   def copy_as_new_course
@@ -204,6 +217,10 @@ class Course < ActiveRecord::Base
     @attributes.each do |attr, value|
       self[attr] = value.strip if value.is_a?(String)
     end
+  end
+
+  def map_faculty_strings_to_persons(faculty_assignments_override_list)
+    faculty_assignments_override_list.map { |member_name| Person.find_by_human_name(member_name) }
   end
 
 end
