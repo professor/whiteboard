@@ -112,7 +112,7 @@ class AcademicCalendar
   def self.semester_start(semester, year)
 
     case year
-      when 2012
+      when 2013
         case semester
           when "Spring"
             return 3
@@ -120,6 +120,15 @@ class AcademicCalendar
             return 21
           #when "Fall"
           #  return 35
+        end
+      when 2012
+        case semester
+          when "Spring"
+            return 3
+          when "Summer"
+            return 21
+          when "Fall"
+            return 35
         end
       when 2011
         case semester
