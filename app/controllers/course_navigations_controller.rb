@@ -1,7 +1,7 @@
 class CourseNavigationsController < ApplicationController
   layout 'cmu_sv_no_pad'
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :reposition
 
   #Inspiration for this technique comes from two sources
   # A: http://awesomeful.net/posts/47-sortable-lists-with-jquery-in-rails (yield javascript, jquery ui code)
