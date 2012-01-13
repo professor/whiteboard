@@ -33,7 +33,8 @@
   <table id="effort_log_line_items" border=0>
   <%= render :partial => 'effort_log_header' %>
     <%= render :partial => 'effort_log_line_item', :collection => @effort_log.effort_log_line_items %>
-  <tr id="add_line_item"><td colspan="3">&nbsp;</td><td colspan=7><%= link_to "Add another line", "#", :id => "add_line" %></td><td class="log_sum"><%= @effort_log.sum %> hrs</td><td>&nbsp;</td></tr>
+    <tr id="add_line_item"><td colspan="3">&nbsp;</td><td colspan=7><%= link_to "Add another line", "#", :id => "add_line" %></td><td class="log_sum"><%= @effort_log.sum %> hrs</td><td>&nbsp;</td></tr>
+
   </table>
 
 
@@ -42,7 +43,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#add_line").click(function() {
-           $("#add_line_item").before("<%= escape_javascript(render(:partial => 'effort_log_line_item', :object => EffortLogLineItem.new, :local=>@courses)) %>");
+           $("#addlineitem").html("<%= escape_javascript(render(:partial => 'effort_log_line_item', :object => EffortLogLineItem.new, :local=>@courses)) %>");
         });
 
  	});
