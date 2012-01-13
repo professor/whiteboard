@@ -79,6 +79,7 @@ $(document).ready(function(){
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
 	<div id="tabs-4">
+      <p>Students can not see the contents of this tab. Students do not see a Faculty Notes tab.</p>
       <p><%= sanitize_trusted(@page.faculty_notes) %></p>
 	</div>
   <% end %>
