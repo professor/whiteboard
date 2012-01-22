@@ -4,3 +4,10 @@
 #  :secret_access_key => ENV['S3_SECRET'] || 'thedefaultsecret',
 #  :bucket            => ENV['S3_BUCKET'] || 'thedefaultbucket'
 #)
+
+
+require 'aws'
+
+include AWS
+config_path = File.expand_path(File.dirname(__FILE__)+"/../aws.yml")
+AWS.config(YAML.load(File.read(config_path)))

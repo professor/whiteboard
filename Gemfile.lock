@@ -180,7 +180,7 @@ GEM
       oa-oauth (= 0.3.0.rc3)
       oa-openid (= 0.3.0.rc3)
     orm_adapter (0.0.5)
-    paperclip (2.4.3)
+    paperclip (2.5.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
