@@ -126,7 +126,6 @@ describe Page do
     end
   end
 
-  
-
+  it { should have_many :page_attachments }
   
 end

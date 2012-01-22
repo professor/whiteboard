@@ -1,49 +1,57 @@
 <% if @page.editable?(current_user) %>
-<div class="right_link">
-  <%= link_to 'Edit Page', edit_page_path(@page)%>
-</div>
+    <div class="right_link">
+      <%= link_to 'Edit Page', edit_page_path(@page) %>
+    </div>
 <% end %>
 
 <%= javascript_include_tag 'jquery.cookie' %>
 
 <script type="text/javascript">
+   function cleanup_filename(path) {
+     filename = path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
+     return filename.replace(/(.*)\.[^.]+$/, "$1"); //Remove file extension, ie .jpg
+  }
 
-  $(function() {
-    $('#tabs').tabs();
-    $('.selector').tabs({ cookie: { name: 'selected_tab', expires: 30} });
-    $("#error").error();
-    //$("#highlight").highlight();
-    
-  });
+   function replace_hyphens_dashes(string) {
+     return string.replace(/-/g, " ").replace(/_/g, " ");
+   }
 
-  $(document).ready(function(){
+    $(function() {
+        $('#tabs').tabs();
+        $('.selector').tabs({ cookie: { name: 'selected_tab', expires: 30} });
+        $("#error").error();
+        //$("#highlight").highlight();
 
-    //Attach event to tab selection & save selected tab in cookie
-    $('#tabs').bind('tabsselect', function(event, tab){
-      $.cookie('selected_tab', tab.index);
-     });
+    });
 
-    $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
-   });
+    $(document).ready(function() {
+
+        //Attach event to tab selection & save selected tab in cookie
+        $('#tabs').bind('tabsselect', function(event, tab) {
+            $.cookie('selected_tab', tab.index);
+        });
+
+        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+    });
 
 </script>
 
 <script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-    var url = location.pathname;
-    if (url.indexOf("intro_to_se") != -1) {
-		$(".courseTitle").text("Introduction to Software Engineering");
-		$(".taskHeaderDiv").text("Introduction to Software Engineering");
-                document.title = "Introduction to Software Engineering";
-                $(".title").text("Introduction to Software Engineering");
-		$(".foundations").hide();
-	}
-    if (url.indexOf("foundations") != -1) {
-		$(".intro_se").hide();
-	}
-});
-//]]>
+    //<![CDATA[
+    $(document).ready(function() {
+        var url = location.pathname;
+        if (url.indexOf("intro_to_se") != -1) {
+            $(".courseTitle").text("Introduction to Software Engineering");
+            $(".taskHeaderDiv").text("Introduction to Software Engineering");
+            document.title = "Introduction to Software Engineering";
+            $(".title").text("Introduction to Software Engineering");
+            $(".foundations").hide();
+        }
+        if (url.indexOf("foundations") != -1) {
+            $(".intro_se").hide();
+        }
+    });
+    //]]>
 </script>
 
 
@@ -52,54 +60,156 @@ $(document).ready(function(){
 
 <% else %>
 
-<div id="tabs">
-	<ul class="none">
-		<li><a href="#tabs-1">Project Requirements</a></li>
-		<li><a href="#tabs-2">Getting help</a></li>
-		<li><a href="#tabs-3">Submitting your work</a></li>
+    <div id="tabs">
+      <ul class="none">
+        <li><a href="#tabs-1">Project Requirements</a></li>
+        <li><a href="#tabs-2">Getting help</a></li>
+        <li><a href="#tabs-3">Submitting your work</a></li>
         <% if current_user.is_staff || current_user.is_admin %>
-        <li><a href="#tabs-4">Faculty notes</a></li>
+            <li><a href="#tabs-4">Faculty notes</a></li>
         <% end %>
-	</ul>
-	<div id="tabs-1">
-     <div id="email_from_header">From:</div><div id="email_from_contents"><%=h @page.tab_one_email_from %></div>
-      <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%=h @page.tab_one_email_subject %></div>
-      <div id="email_details">
-        <p><%= sanitize_trusted(@page.tab_one_contents) %></p>
+      </ul>
+      <div id="tabs-1">
+        <div id="email_from_header">From:</div>
+        <div id="email_from_contents"><%= h @page.tab_one_email_from %></div>
+        <div id="email_subject_header">Subject:</div>
+        <div id="email_subject_contents"><%= h @page.tab_one_email_subject %></div>
+        <div id="email_details">
+          <p><%= sanitize_trusted(@page.tab_one_contents) %></p>
+        </div>
       </div>
-	</div>
-	<div id="tabs-2">
-      <p><%= sanitize_trusted(@page.tab_two_contents) %></p>
-	</div>
-	<div id="tabs-3">   
-	   <p>Before submitting your work, take a few minutes to review the checklist of questions below. The checklist will help you determine if your deliverables are complete and ready to be submitted. Remember  <%= link_to "'Tying the Bow'", page_path(:id => "tying_the_bow") %></p>
-	   <p>When you are confident that your work on this task is complete,  	         		
+      <div id="tabs-2">
+        <p><%= sanitize_trusted(@page.tab_two_contents) %></p>
+      </div>
+      <div id="tabs-3">
+        <p>Before submitting your work, take a few minutes to review the checklist of questions below. The checklist
+          will help you determine if your deliverables are complete and ready to be submitted.
+          Remember  <%= link_to "'Tying the Bow'", page_path(:id => "tying_the_bow") %></p>
+
+        <p>When you are confident that your work on this task is complete,
           <%= link_to "submit your deliverable", new_deliverable_path(:task_number => @page.task_number, :course_id => @current_semester_course) %></p>
-      <p><%= sanitize_trusted(@page.tab_three_contents) %></p>
-	</div>
-  <% if current_user.is_staff || current_user.is_admin %>
-	<div id="tabs-4">
-      <p>Students can not see the contents of this tab. Students do not see a Faculty Notes tab.</p>
-      <p><%= sanitize_trusted(@page.faculty_notes) %></p>
-	</div>
-  <% end %>
-</div>
+
+        <p><%= sanitize_trusted(@page.tab_three_contents) %></p>
+      </div>
+      <% if current_user.is_staff || current_user.is_admin %>
+          <div id="tabs-4">
+            <p>Students can not see the contents of this tab. Students do not see a Faculty Notes tab.</p>
+            <p><%= sanitize_trusted(@page.faculty_notes) %></p>
+          </div>
+      <% end %>
+    </div>
 
 <% end %>
-<div class="modified">Last modified by <% unless @page.updated_by.blank? %><%= @page.updated_by.human_name %><% end %></div>
+
+
+
+
+<div id="page-attachments">
+
+</div>
+
+<h2>Attachments</h2>
+<% if @page.page_attachments.any? %>
+    <br/>
+    <div id="page-attachments">
+      <table>
+        <tbody>
+        <% @page.page_attachments.each do |pa| %>
+            <tr>
+              <td>
+                <div id="page-attachment-<%= pa.id %>">
+                  <%= link_to pa.readable_name, pa.page_attachment.url %>
+                </div>
+                <div id="page-attachment-<%= pa.id %>-replace" style="display:none;">
+                  <%= form_for(pa, :html => {:multipart => true}) do |f| %>
+                      <%= f.file_field :page_attachment %>
+                      <%= f.text_field :readable_name %>
+                      <%= f.submit "Upload" %>
+                  <% end %>
+                </div>
+              </td>
+              <% if @page.editable?(current_user) %>
+                  <td>
+                    <button class="replace-page-attachment"
+                            data-page-attachment-id="<%= pa.id %>">
+                      Replace
+                    </button>
+                    <button class="cancel-replace-page-attachment"
+                            data-page-attachment-id="<%= pa.id %>"
+                            style="display:none">
+                      Cancel
+                    </button>
+                  </td>
+                  <td>
+                    <%= form_for(pa, :html => {:method => 'delete'}) do |f| %>
+                        <%= f.submit "Delete", :confirm => 'Are you sure you want to delete this attachment?' %>
+                    <% end %>
+                  </td>
+              <% end %>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('button.replace-page-attachment').click(function() {
+                page_attachment_id = $(this).attr('data-page-attachment-id');
+                $('#page-attachment-' + page_attachment_id).hide();
+                $('#page-attachment-' + page_attachment_id + '-replace').show();
+                $(this).hide();
+                //show the submit button instead
+                $(this).next().show();
+            });
+            $('button.cancel-replace-page-attachment').click(function() {
+                page_attachment_id = $(this).attr('data-page-attachment-id');
+                $('#page-attachment-' + page_attachment_id + '-replace').hide();
+                $('#page-attachment-' + page_attachment_id).show();
+                $(this).hide();
+                //show the replace button instead
+                $(this).prev().show();
+            });
+        });
+    </script>
+<% else %>
+    <p>This page has no attachments.</p>
+<% end %>
+
+<% if @page.editable?(current_user) %>
+    <p>Add new attachment:</p>
+    <%= form_for(PageAttachment.new, :html => {:multipart => true}) do |f| %>
+        <%= f.hidden_field :page_id, :value => @page.id %>
+        <%= f.file_field :page_attachment %>
+        <%= f.text_field :readable_name, :placeholder => "Readable label (e.g. PPM Week 1)" %>
+        <%= f.submit "Upload" %>
+    <% end %>
+    <script>
+        $(document).ready(function() {
+            $('input[type=file]').change(function(e){
+                $in=$(this);
+                readable_name = replace_hyphens_dashes(cleanup_filename($in.val()));
+                $in.next().val(readable_name);
+            });
+        });
+    </script>
+<% end %>
+
+<div class="modified">Last modified by
+  <% unless @page.updated_by.blank? %><%= @page.updated_by.human_name %>
+  <% end %></div>
 <div class="modified"><%= time_ago_in_words(@page.updated_at) %> ago</div>
 <div class="modified"> <!-- Version <%= @page.version %> | -->
   <% if @page.version > 1 %>
-    <%= link_to "Previous version", :version => @page.version-1 %> |
+      <%= link_to "Previous version", :version => @page.version-1 %> |
   <% end %>
   <% if params[:version] %>
-    <%= link_to "Latest version", :version => nil %> |
+      <%= link_to "Latest version", :version => nil %> |
   <% end %>
-  <%= link_to "History", :history => true  %>
+  <%= link_to "History", :history => true %>
 </div>
 <br/>
 
 <% if @page.editable?(current_user) %>
-<%= link_to 'Edit', edit_page_path(@page) %> |
+    <%= link_to 'Edit', edit_page_path(@page) %> |
 <% end %>
 <%= link_to 'Back', pages_path %> <br/>
