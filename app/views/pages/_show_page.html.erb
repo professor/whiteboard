@@ -1,3 +1,27 @@
+<% content_for :javascript do %>
+    <%= javascript_tag do %>
+        $(function() {
+       $('#sortable').sortable(
+          {
+            cursor: 'hand',
+            dropOnEmpty:false,
+            opacity: 0.5,
+            update: function(){
+              $.ajax({
+                  type: 'post',
+                  data: $('#sortable').sortable('serialize') + '&id=<%=@page.id-%>',
+                  dataType: 'script',
+                  complete: function(request){
+                      $('#sortable').effect('highlight');
+                    },
+                  url: '/page_attachments/reposition'})
+              }
+            });
+        $("#sortable").disableSelection();
+        })
+      <% end %>
+<% end %>
+
 <% if @page.editable?(current_user) %>
     <div class="right_link">
       <%= link_to 'Edit Page', edit_page_path(@page) %>
@@ -8,6 +32,10 @@
 
 <script type="text/javascript">
    function cleanup_filename(path) {
+     return path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
+  }
+
+   function cleanup_filename_no_extension(path) {
      filename = path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
      return filename.replace(/(.*)\.[^.]+$/, "$1"); //Remove file extension, ie .jpg
   }
@@ -104,18 +132,37 @@
 
 
 
-<div id="page-attachments">
+<!--div id="page-attachments">
 
-</div>
+</div-->
+
+<!--style type="text/css">
+    #sortable td span.ui-icon-arrowthick-2-n-s { clear: both; }
+</style-->
+
+
 
 <h2>Attachments</h2>
 <% if @page.page_attachments.any? %>
-    <br/>
+    <div id="page_attachments_warning" class="ui-widget" style="display:none">
+        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+            <p><span id="page_attachment_warning_text" class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+        </div>
+    </div>
+
+    <% if @page.editable?(current_user) %>
+    <p>To reorder pages, drag them around. Changes are automatically saved.</p>
+    <% end %>
     <div id="page-attachments">
       <table>
-        <tbody>
+        <tbody id="sortable">
         <% @page.page_attachments.each do |pa| %>
-            <tr>
+            <tr id="page_attachment_<%= pa.id -%>">
+              <% if @page.editable?(current_user) %>
+                  <td>
+                    <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                  </td>
+              <% end %>
               <td>
                 <div id="page-attachment-<%= pa.id %>">
                   <%= link_to pa.readable_name, pa.page_attachment.url %>
@@ -124,7 +171,9 @@
                   <%= form_for(pa, :html => {:multipart => true}) do |f| %>
                       <%= f.file_field :page_attachment %>
                       <%= f.text_field :readable_name %>
+                      <div id="page-attachment-<%= pa.id %>-old-filename" style="display:none"><%= pa.page_attachment_file_name %></div>
                       <%= f.submit "Upload" %>
+                      <span class="page-attachment-warning-text"></span>
                   <% end %>
                 </div>
               </td>
@@ -151,6 +200,10 @@
         </tbody>
       </table>
     </div>
+
+
+
+
     <script>
         $(document).ready(function() {
             $('button.replace-page-attachment').click(function() {
@@ -169,6 +222,21 @@
                 //show the replace button instead
                 $(this).prev().show();
             });
+
+          $('.edit_page_attachment input[type=file]').change(function(e){
+              $in=$(this);
+              filename = cleanup_filename($in.val());
+              old_filename = $in.next().next().html();
+              if(filename != old_filename)
+              {  message = "The file you are uploading has a different name than the one you are replacing. This is fine. However, any links you have made to the old file will not work. The old links will point to a resource that no longer exists.";
+                 $in.siblings(".page-attachment-warning-text").text(message);
+              }
+              else
+              {
+                  $in.siblings(".page-attachment-warning-text").text("");
+              }
+
+          });
         });
     </script>
 <% else %>
@@ -179,15 +247,17 @@
     <p>Add new attachment:</p>
     <%= form_for(PageAttachment.new, :html => {:multipart => true}) do |f| %>
         <%= f.hidden_field :page_id, :value => @page.id %>
+        <%= f.hidden_field :tab, :value => 1 %>
         <%= f.file_field :page_attachment %>
         <%= f.text_field :readable_name, :placeholder => "Readable label (e.g. PPM Week 1)" %>
         <%= f.submit "Upload" %>
     <% end %>
     <script>
-        $(document).ready(function() {
-            $('input[type=file]').change(function(e){
+
+      $(document).ready(function() {
+            $('#new_page_attachment input[type=file]').change(function(e){ 
                 $in=$(this);
-                readable_name = replace_hyphens_dashes(cleanup_filename($in.val()));
+                readable_name = replace_hyphens_dashes(cleanup_filename_no_extension($in.val()));
                 $in.next().val(readable_name);
             });
         });

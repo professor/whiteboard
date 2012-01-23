@@ -1,7 +1,8 @@
-Factory.define :page_attachment do |pa|
+Factory.define :page_attachment, :class => PageAttachment do |pa|
   pa.page_attachment_file_name 'booo.jpg'
   pa.page_attachment_content_type 'image/jpg'
   pa.page_attachment_file_size 3231
+  pa.readable_name 'Booo'
 end
 
 Factory.define :blank_page_attachment, :class => PageAttachment do |pa|

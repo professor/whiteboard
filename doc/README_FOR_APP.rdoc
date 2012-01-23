@@ -69,7 +69,7 @@ reminders. (Ironically, this feature has never been needed.)
 
 === Amazon S3
 Newer parts of the system are beginning to use Amazon's S3 for file hosting.
-This is done with the aid of the PaperClip (file attachment) and aws-s3 gem.
+This is done with the aid of the PaperClip (file attachment) and aws-sdk gem.
 
 === Google Apps Integration
 * Mailing Lists - Until very recently, there was no way to know who was on which google mailing lists without asking IT to look it up. Now this application queries Google's provisitoning API to present to the user exactly who is on each mailing list.

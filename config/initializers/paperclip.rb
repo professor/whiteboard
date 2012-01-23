@@ -24,3 +24,7 @@ end
 Paperclip.interpolates('deliverable_course_year') do |attachment, style|
   attachment.instance.deliverable.course.year
 end
+
+Paperclip.interpolates('page_id') do |attachment, style|
+  attachment.instance.page.id
+end

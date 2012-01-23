@@ -12,7 +12,7 @@ class Page < ActiveRecord::Base
 
   belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
 
-  has_many :page_attachments
+  has_many :page_attachments, :order => "position"
   belongs_to :course
   acts_as_list :scope => :course
 

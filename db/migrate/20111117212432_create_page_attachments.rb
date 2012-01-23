@@ -4,7 +4,6 @@ class CreatePageAttachments < ActiveRecord::Migration
       t.integer :page_id
       t.integer :user_id
       t.integer :position
-      t.integer :tab
       t.boolean :is_active,  :default => true
       t.string :readable_name
       t.string :page_attachment_file_name
@@ -15,7 +14,6 @@ class CreatePageAttachments < ActiveRecord::Migration
 
     add_index :page_attachments, :page_id
     add_index :page_attachments, :position
-    add_index :page_attachments, :tab
     add_index :page_attachments, :is_active
   end
 

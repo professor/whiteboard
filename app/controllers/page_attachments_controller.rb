@@ -51,4 +51,10 @@ class PageAttachmentsController < ApplicationController
       redirect_to @pa.page
     end
   end
+
+  def reposition
+    order = params[:page_attachment]
+    PageAttachment.reposition(order)
+    render :text => order.inspect
+  end
 end
