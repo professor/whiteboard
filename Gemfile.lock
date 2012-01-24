@@ -58,6 +58,7 @@ GEM
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     builder (2.1.2)
+    cancan (1.6.7)
     capybara (1.1.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -299,6 +300,7 @@ DEPENDENCIES
   acts_as_versioned
   aws-sdk
   bundler
+  cancan
   capybara
   daemons (~> 1.1.4)
   delayed_job
