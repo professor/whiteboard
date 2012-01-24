@@ -150,7 +150,7 @@
         </div>
     </div>
 
-    <% if @page.editable?(current_user) %>
+    <% if @page.editable?(current_user) && (can? :update, PageAttachment) %>
     <p>To reorder pages, drag them around. Changes are automatically saved.</p>
     <% end %>
     <div id="page-attachments">
@@ -158,7 +158,7 @@
         <tbody id="sortable">
         <% @page.page_attachments.each do |pa| %>
             <tr id="page_attachment_<%= pa.id -%>">
-              <% if @page.editable?(current_user) %>
+              <% if @page.editable?(current_user) && (can? :update, pa) %>
                   <td>
                     <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
                   </td>
@@ -177,7 +177,7 @@
                   <% end %>
                 </div>
               </td>
-              <% if @page.editable?(current_user) %>
+              <% if @page.editable?(current_user) && (can? :update, pa) %>
                   <td>
                     <button class="replace-page-attachment"
                             data-page-attachment-id="<%= pa.id %>">
@@ -243,11 +243,10 @@
     <p>This page has no attachments.</p>
 <% end %>
 
-<% if @page.editable?(current_user) %>
+<% if @page.editable?(current_user) && (can? :update, PageAttachment) %>
     <p>Add new attachment:</p>
     <%= form_for(PageAttachment.new, :html => {:multipart => true}) do |f| %>
         <%= f.hidden_field :page_id, :value => @page.id %>
-        <%= f.hidden_field :tab, :value => 1 %>
         <%= f.file_field :page_attachment %>
         <%= f.text_field :readable_name, :placeholder => "Readable label (e.g. PPM Week 1)" %>
         <%= f.submit "Upload" %>
