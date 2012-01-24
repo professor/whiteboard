@@ -43,7 +43,7 @@ Students should
    1. rails server thin      (Note: On 9/18/2011 WebBrick was not working with OmniAuth)
    1. bundle exec rake spec  (Verify that all the tests pass)
    1. run the server in debug mode in an IDE.
-
+1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
 
 
 ==System configuration
