@@ -1,6 +1,7 @@
 class PageAttachmentsController < ApplicationController
   def update
     @pa = PageAttachment.find(params[:id])
+    @pa.user_id = current_user.id
 
     if @pa.page.editable?(current_user)
       respond_to do |format|
@@ -20,6 +21,7 @@ class PageAttachmentsController < ApplicationController
 
   def create
     @pa = PageAttachment.new params[:page_attachment]
+    @pa.user_id = current_user.id
 
     if @pa.page.editable?(current_user)
       respond_to do |format|

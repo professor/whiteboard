@@ -27,7 +27,8 @@ class PageAttachment < ActiveRecord::Base
   belongs_to :page
   belongs_to :user 
 
-#  validates_presense_of
+#  This causes the file upload to fail. See when we are setting these....maybe it will work now that we are setting user_id =)
+#  validates_presence_of :readable_name, :user_id, :page_id
 
   has_attached_file :page_attachment,
                     :storage => :s3,
