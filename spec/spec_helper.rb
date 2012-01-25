@@ -10,6 +10,7 @@ require 'rspec/rails'
 #include Capybara::DSL
 
 require 'shoulda'
+require 'paperclip/matchers'
 require 'helpers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -59,6 +60,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.include Devise::TestHelpers, :type => :view
 
+  config.include Paperclip::Shoulda::Matchers
 #  config.include Helpers
 end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117013039) do
+ActiveRecord::Schema.define(:version => 20111117212432) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -155,6 +155,22 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
 
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "page_attachments", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.integer  "position"
+    t.boolean  "is_active",                    :default => true
+    t.string   "readable_name"
+    t.string   "page_attachment_file_name"
+    t.string   "page_attachment_content_type"
+    t.integer  "page_attachment_file_size"
+    t.datetime "page_attachment_updated_at"
+  end
+
+  add_index "page_attachments", ["is_active"], :name => "index_page_attachments_on_is_active"
+  add_index "page_attachments", ["page_id"], :name => "index_page_attachments_on_page_id"
+  add_index "page_attachments", ["position"], :name => "index_page_attachments_on_position"
 
   create_table "page_comment_types", :force => true do |t|
     t.string   "name"

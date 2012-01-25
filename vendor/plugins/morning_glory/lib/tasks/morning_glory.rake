@@ -81,6 +81,7 @@ namespace :morning_glory do
 
     desc "Bump the revision, compile any Sass stylesheets, and deploy assets to S3 and Cloudfront"
     task :deploy => [:environment] do |t, args|
+#      require 'aws/sdk'
       require 'aws/s3'
       require 'fileutils'
       
