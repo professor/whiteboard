@@ -6,7 +6,7 @@ describe PageAttachmentsController do
       @user = Factory(:faculty_frank)
       login @user
       @page = Factory(:page, :is_editable_by_all => false)
-      @attachment = Factory(:page_attachment, :page => @page)
+      @attachment = Factory(:page_attachment, :page => @page, :user => @user)
     end
 
     describe "performing PUT update on a page attachment" do
