@@ -11,7 +11,7 @@ class Ability
     #     can :read, :all
     #   end
 
-    if (user.human_name == "Todd Sedano" || user.human_name == "Brian Drummond")
+    if (user.human_name == "Todd Sedano" || user.human_name == "Brian Drummond" || user.human_name == "Ed Katz" ||user.human_name == "Massood Mortazavi")
       can :update, PageAttachment
     #else
     #  cannot :update, PageAttachment
