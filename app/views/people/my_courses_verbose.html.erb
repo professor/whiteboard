@@ -5,7 +5,7 @@
 <% end %>
 <% @courses_registered_as_student.each do |course| %>
 <h2><%= course.name %></h2>
-<%= render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+<%= render :partial => "/courses/show_actions_icons",:locals => { :course => course } %>
 <% end %>
 
 <% unless @courses_teaching_as_faculty.empty? %>
@@ -13,7 +13,7 @@
 <% end %>
 <% @courses_teaching_as_faculty.each do |course| %>
 <h2><%= course.name %></h2>
-<%= render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+<%= render :partial => "/courses/show_actions_icons",:locals => { :course => course } %>
 <% end %>
 
 <br/>
