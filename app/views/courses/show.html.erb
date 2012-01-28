@@ -18,8 +18,34 @@
 </table>
 <br/>
 
-<%= render :partial => "show_actions_icons",:locals => { :course => @course } %>
-<%# render :partial => "show_actions_links",:locals => { :course => @course } %>
+<div align="right" >
+  <a href="#" id="course_tools_view" data-view-state="icons">Show as links</a>
+</div>
+<div id="course_tools_icons"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
+<div id="course_tools_links"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
+<script>
+    $(document).ready(function() {
+        $('#course_tools_view').click(function() {
+            old_state = $(this).attr('data-view-state');
+            if(old_state == "links")
+            {
+                $(this).attr('data-view-state', "icons");
+                $('#course_tools_view').html("Show as links");
+                $('#course_tools_links').hide();
+                $('#course_tools_icons').show();
+            }
+            else
+            {
+                $(this).attr('data-view-state', "links");
+                $('#course_tools_view').html("Show as icons");
+                $('#course_tools_icons').hide();
+                $('#course_tools_links').show();
+            }
+        });
+    });
+</script>
+
+
 
 
 <br style="clear:both;" />
