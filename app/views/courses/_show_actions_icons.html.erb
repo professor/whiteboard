@@ -5,23 +5,23 @@
     <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">
       <tr class="course_tools">
         <td>
-          <%= link_to image_tag("/images/curriculum_website.png", :id => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), course.curriculum_url %>
+          <%= link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), course.curriculum_url %>
           <br/>
           <p><%= link_to "Course website", course.curriculum_url %> </p>
         </td>
         <td valign="bottom">
-          <%= link_to image_tag("/images/teams_webpage.png", :id => "icon", :width=>"75", :height=>"75", :alt=>"My Teams", :title=>"My Teams"), "/courses/#{course.id}/teams_photos" %>
+          <%= link_to image_tag("/images/teams_webpage.png", :class => "icon", :width=>"75", :height=>"75", :alt=>"My Teams", :title=>"My Teams"), "/courses/#{course.id}/teams_photos" %>
           <br/>
           <p><a href="/courses/<%= course.id %>/teams_photos">Teams</a></p>
         </td>
         <td valign="bottom">
-          <%= link_to image_tag("/images/course_tools_effort_reports.png", :width => "78", :height => "75", :alt=>"Campus Semester View"),
+          <%= link_to image_tag("/images/course_tools_effort_reports.png", :class => "icon", :width => "78", :height => "75", :alt=>"Campus Semester View"),
                       :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true %>
           <br/>
           <p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true %></p>
         </td>
         <td>
-          <%= link_to image_tag("/images/presentations.png", :id => "icon", :size=>"90x75", :alt=>"Presentations", :title=>"Presentations"), course_presentations_path(@course) %>
+          <%= link_to image_tag("/images/presentations.png", :class => "icon", :size=>"90x75", :alt=>"Presentations", :title=>"Presentations"), course_presentations_path(@course) %>
           <br/>
           <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
         </td>
@@ -39,12 +39,12 @@
         <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">
           <tr class="course_tools">
             <td>
-              <%= link_to image_tag("/images/deliverables.png", :id => "icon", :size=>"75x75", :alt=>"Deliverables", :title=>"Deliverables"), course_deliverables_path(course) %>
+              <%= link_to image_tag("/images/deliverables.png", :class => "icon", :size=>"75x75", :alt=>"Deliverables", :title=>"Deliverables"), course_deliverables_path(course) %>
               <br/>
               <p><%= link_to 'Deliverables', course_deliverables_path(course) %></p>
             </td>
             <td>
-              <%= link_to image_tag("/images/peer_evaluation2.jpg", :id => "icon", :size=>"90x70", :alt=>"Peer evaluation", :title=>"Peer evaluation"), peer_evaluations_path(course) %>
+              <%= link_to image_tag("/images/peer_evaluation2.jpg", :class => "icon", :size=>"90x70", :alt=>"Peer evaluation", :title=>"Peer evaluation"), peer_evaluations_path(course) %>
               <br/>
               <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
             </td>
@@ -56,17 +56,17 @@
         <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">
           <tr class="course_tools">
             <td width=140>
-              <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"), configure_course_path(course) %>
+              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size=>"75x75", :alt=>"Configure course", :title=>"Configure course"), configure_course_path(course) %>
               <br/>
               <p><%= link_to 'Configure course', configure_course_path(course) %></p>
             </td>
             <td>
-              <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Team formation", :title=>"Team formation"), past_teams_list_path(course) %>
+              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size=>"75x75", :alt=>"Team formation", :title=>"Team formation"), past_teams_list_path(course) %>
               <br/>
               <p><%= link_to 'Team Formation', past_teams_list_path(course) %></p>
             </td>
             <td>
-              <%= link_to image_tag("/images/cmu_seal.jpg", :id => "icon", :size=>"75x75", :alt=>"Edit curriculum pages", :title=>"Edit curriculum pages"), course_navigation_path(Course.first_offering_for_course_name(course.name)) %>
+              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size=>"75x75", :alt=>"Edit curriculum pages", :title=>"Edit curriculum pages"), course_navigation_path(Course.first_offering_for_course_name(course.name)) %>
               <br/>
               <p><%= link_to "Curriculum Navigation", course_navigation_path(Course.first_offering_for_course_name(course.name)) %></p>
             </td>
