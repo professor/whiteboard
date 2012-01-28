@@ -204,7 +204,7 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
   </fieldset>
 
   <div class="rounded staff">
-<%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+<%= professor_image %>
   <span class="instructions">These fields can be edited by faculty.</span>
 
   <% if !(current_user.is_admin? || current_user.is_staff?)  %>
@@ -245,7 +245,7 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
 
   </div>
   <div class="rounded admin">
-  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <%= admin_image %>
   <span class="instructions">These fields can be edited by admin.</span>
   <% if !(current_user.is_admin?)  %>
   <%= render :partial => 'show_admin_fields', :locals=>{:f => f, :person => @person} %>

@@ -134,7 +134,7 @@ table.tablesorter tbody tr.hover td {
 div.student {
     padding: 5px;
     margin: 5px;
-    background-color: rgb(247, 225, 171);    
+/*    background-color: rgb(247, 225, 171); */
 }
 
 div.staff {
@@ -209,7 +209,9 @@ tr.staff {
     margin_left: 10px;
 }
 
-
+.cmu_table .course_tools td {
+    width: 140px;
+}
 
 
 #image_box {
