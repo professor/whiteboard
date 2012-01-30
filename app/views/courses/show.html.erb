@@ -18,17 +18,28 @@
 </table>
 <br/>
 
-<div align="right" >
-  <a href="#" id="course_tools_view" data-view-state="icons">Show as links</a>
-</div>
-<div id="course_tools_icons"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
-<div id="course_tools_links"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
-<script>
+<% if current_user.course_tools_view == "links" %>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="links">Show as icons</a></div>
+    <div id="course_tools_icons" style="display:none;"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
+    <div id="course_tools_links"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
+<% else %>
+    <%# This is the default option for those who have never hit the link %>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="icons">Show as links</a></div>
+    <div id="course_tools_icons"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
+    <div id="course_tools_links" style="display:none;"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
+
+<% end %>
+
+    <script>
+
+
+
     $(document).ready(function() {
         $('#course_tools_view').click(function() {
             old_state = $(this).attr('data-view-state');
             if(old_state == "links")
             {
+                new_state = "icons";
                 $(this).attr('data-view-state', "icons");
                 $('#course_tools_view').html("Show as links");
                 $('#course_tools_links').hide();
@@ -36,11 +47,18 @@
             }
             else
             {
+                new_state = "links";
                 $(this).attr('data-view-state', "links");
                 $('#course_tools_view').html("Show as icons");
                 $('#course_tools_icons').hide();
                 $('#course_tools_links').show();
             }
+            $.ajax({
+                type: 'post',
+                data: "model=User&id=<%=current_user.id%>&attribute=course_tools_view&value=" + new_state,
+                dataType: 'script',
+                url: '/generic_ajax/update_model_with_value'});
+
         });
     });
 </script>

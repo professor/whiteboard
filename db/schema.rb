@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117212432) do
+ActiveRecord::Schema.define(:version => 20120129043856) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -532,6 +532,7 @@ ActiveRecord::Schema.define(:version => 20111117212432) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.string   "course_tools_view"
   end
 
   create_table "users", :force => true do |t|
@@ -602,6 +603,7 @@ ActiveRecord::Schema.define(:version => 20111117212432) do
     t.string   "photo_content_type"
     t.string   "github"
     t.datetime "remember_created_at"
+    t.string   "course_tools_view"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
