@@ -18,7 +18,7 @@ class Page < ActiveRecord::Base
 
   before_validation :update_url
 
-  after_save :update_search_index
+#  after_save :update_search_index
   before_destroy :delete_from_search
 
   def editable?(current_user)
