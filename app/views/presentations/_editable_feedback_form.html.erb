@@ -2,7 +2,7 @@
 <%= form_for @feedback, :url => new_presentation_feedback_path, :html => { :multipart => true } do |f| %>
   <% if @feedback.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
+      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this page from being saved:</h2>
 
       <ul>
       <% @feedback.errors.full_messages.each do |msg| %>
@@ -27,7 +27,7 @@
         </div>
         <br/>
         <div>
-          <span>Comments:</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
+          <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
         </div>
         <br/>
       </p>
