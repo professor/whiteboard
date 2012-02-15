@@ -1,6 +1,16 @@
 Welcome to the CMU-SV rails project for the Education group.
 
 == System Modules
+* {Course Course}
+* {Deliverable Deliverable}
+* {PeerEvaluationReview Peer Evaluation}
+* {Person Person (aka User)}
+
+* {http://rubydoc.info/github/professor/cmusv/master/Course Course}
+* {http://rubydoc.info/github/professor/cmusv/master/Deliverable Deliverable}
+* {http://rubydoc.info/github/professor/cmusv/master/PeerEvaluationReview Peer Evaluation}
+* {http://rubydoc.info/github/professor/cmusv/master/Person Person (aka User)}
+
 * {Course}[link:classes/Course.html]
 * {Deliverable}[link:classes/Deliverable.html]
 * {Peer Evaluation}[link:classes/PeerEvaluationReview.html]
@@ -8,7 +18,7 @@ Welcome to the CMU-SV rails project for the Education group.
 
 
 == Conventions
-Please use JQuery instead of Prototype. Whenever possible, AJAX should degrade
+Please use JQuery and JQuery UI. Whenever possible, AJAX should degrade
 gracefully. Ie, there should be a way to do the same action without AJAX.
 
 Whenever referencing an image use an <%= image_tag %> ie <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
@@ -118,8 +128,7 @@ To learn about the table sorting, check out:
    * http://www.compulsivoco.com/2008/08/tablesorter-filter-results-based-on-search-string/
 
 To learn about the date picker code, check out:
-   * http://www.dynarch.com/projects/calendar/
-   * Confirm with Todd if we are switching to jquery UI's date picker.
+   * JQuery UI's date picker
 
 == Todos
 Perhaps alter the course and course_numbers model. If so, update effort_logs_controller and look for foundations in recent_foundations_or_course

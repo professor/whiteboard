@@ -8,6 +8,9 @@ Check out the design document inside docs
 
 {Welcome to the Project}[http://github.com/professor/cmusv/blob/master/doc/README_FOR_APP.rdoc]
 
+{file:doc/README_FOR_APP.rdoc Welcome to the Project}
+
+
 == Getting involved
 
 For individual maintainers, please fork the project on github, make your changes, and submit a pull request.
