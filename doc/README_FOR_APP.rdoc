@@ -1,6 +1,11 @@
 Welcome to the CMU-SV rails project for the Education group.
 
 == System Modules
+* {Course Course}
+* {Deliverable Deliverable}
+* {PeerEvaluationReview Peer Evaluation}
+* {Person Person (aka User)}
+
 * {Course}[link:classes/Course.html]
 * {Deliverable}[link:classes/Deliverable.html]
 * {Peer Evaluation}[link:classes/PeerEvaluationReview.html]
