@@ -1,17 +1,11 @@
 Welcome to the CMU-SV rails project for the Education group.
 
-== System Modules
+== Documentation
 
 * {Course Course1}
 * {Deliverable Deliverable1}
 * {PeerEvaluationReview Peer Evaluation}
 * {Person Person (aka User1)}
-
-* {Course 3}[link:/Course]
-* {Deliverable}[link:/Deliverable]
-* {Peer Evaluation}[link:PeerEvaluationReview]
-* {People aka User3}[link:Person]
-
 
 
 == Conventions
