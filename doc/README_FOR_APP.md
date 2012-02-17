@@ -1,17 +1,25 @@
 Welcome to the CMU-SV rails project for the Education group.
 
 == System Modules
-
-* {Course Course1}
-* {Deliverable Deliverable1}
+* {Course Course}
+* {Deliverable Deliverable}
 * {PeerEvaluationReview Peer Evaluation}
-* {Person Person (aka User1)}
+* {Person Person (aka User)}
 
-* {Course 3}[link:/Course]
+* {http://rubydoc.info/github/professor/cmusv/master/Course Course}
+* {http://rubydoc.info/github/professor/cmusv/master/Deliverable Deliverable}
+* {http://rubydoc.info/github/professor/cmusv/master/PeerEvaluationReview Peer Evaluation}
+* {http://rubydoc.info/github/professor/cmusv/master/Person Person (aka User)}
+
+* {Course 1}[link:/Course]
 * {Deliverable}[link:/Deliverable]
 * {Peer Evaluation}[link:PeerEvaluationReview]
-* {People aka User3}[link:Person]
+* {People}[link:Person]
 
+* {Course}[link:classes/Course.html]
+* {Deliverable}[link:classes/Deliverable.html]
+* {Peer Evaluation}[link:classes/PeerEvaluationReview.html]
+* {People}[link:classes/Person.html]
 
 
 == Conventions

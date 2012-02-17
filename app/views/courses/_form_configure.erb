@@ -25,6 +25,11 @@
 
 <% end %>
 
+<div class="rounded staff">
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <span class="instructions">Only faculty can see this information.</span>
+
+
 <% unless @course.configured_by_user_id.blank? %>
 <p>This information was configured last by <%= @course.configured_by.human_name %></p>
 <% end %>
@@ -92,4 +97,5 @@
 
 <% end %>
 
+</div>
 
