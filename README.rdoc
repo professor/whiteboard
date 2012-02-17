@@ -67,4 +67,4 @@ The criteria for code being accepted is as follows:
 
 == License
 This code is released under the TBD license -- Copyright 2010 Todd Sedano -- see "New Features" for a complete list
-of contributors
+of contributors.
