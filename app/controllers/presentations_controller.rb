@@ -124,6 +124,8 @@ class PresentationsController < ApplicationController
   def create_feedback
     # Check existence of requested presentation
     @feedback = PresentationFeedback.new(params[:feedback])
+	@questions = PresentationQuestion.existing_questions
+	@eval_options = @@eval_options
     @feedback.evaluator = current_user
     @presentation = Presentation.find(params[:id])
     @feedback.presentation = @presentation
