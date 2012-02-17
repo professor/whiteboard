@@ -1,4 +1,4 @@
-
+<%= javascript_include_tag 'warning' %>
 <%= form_for @feedback, :url => new_presentation_feedback_path, :html => { :multipart => true } do |f| %>
   <% if @feedback.errors.any? %>
     <div id="error_explanation">
@@ -33,7 +33,7 @@
       </p>
   <% end %>
   <p>
-    <%= f.submit button_name %>
+    <%= f.submit button_name,  :onclick=>"confirmation_needed = false;"  %>
   </p>
 <% end %>
 <br/>

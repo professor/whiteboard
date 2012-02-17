@@ -1,4 +1,5 @@
 <% content_for :title, 'Peer evaluation for ' + @team.name %>
+<%= javascript_include_tag 'warning' %>
 <h1>Peer evaluation form completed by <%= @author.human_name %></h1>
 
 
@@ -60,8 +61,8 @@
       <%end%>
 
   <% if @on_team %>
-  <%= f.submit 'Save' %>
+  <%= f.submit 'Save',  :onclick=>"confirmation_needed = false;" %>
   <% else %>
-  <%= f.submit 'Save', :disabled => true %>
+  <%= f.submit 'Save', :disabled => true,  :onclick=>"confirmation_needed = false;" %>
   <% end %>
 <% end %>
