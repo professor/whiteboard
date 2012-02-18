@@ -1,4 +1,21 @@
 <% content_for :title, 'New Suggestion' %>
+
+<h1>New Issue</h1>
+<p>To increase transparency of issues,  <%= link_to "please the issue here",  "https://github.com/professor/cmusv/issues" %>.
+</p>
+
+<br/>
+<br/>
+
+<p>Why?
+
+When we first launched the site, we added a mechanism for students and faculty to submit ideas for improving the site at the bottom of every page. While it successfully captures feedback from our users, it does not pomote an open dialog.
+Github.com provides a natural public discourse about feature requests and issue.
+</p>
+
+<br/>
+<br/>
+
 <h1>New Suggestion</h1>
 <%= form_for(@suggestion) do |f| %>
   <% if @suggestion.errors.any? %>

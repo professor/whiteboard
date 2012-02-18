@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'warning' %>
 <% content_for :title, 'Peer evaluation report for ' + @team.name %>
 <h1>Generate Report</h1>
 
@@ -21,7 +22,7 @@ Once you are done editing the reports, the last button allows you to email the r
   <%@people.each do |person|%>
     <%= person.human_name %><br />
     <%= f.text_area :feedback, :index => personcounter ,:value => @reportArray[personcounter], :size=>"95x20" %><br />
-    <%= f.submit 'Save All Reports' %><br /><br />
+    <%= f.submit 'Save All Reports', :onclick=>"confirmation_needed = false;" %><br /><br />
     <%personcounter += 1%>
   <% end %>
 
@@ -41,6 +42,6 @@ Once you are done editing the reports, the last button allows you to email the r
     </tbody>
   </table>
 
-  <%= f.submit 'Save And Email All' %>
+  <%= f.submit 'Save And Email All',  :onclick=>"confirmation_needed = false;" %>
 <% end %>
 <br/>

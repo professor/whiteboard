@@ -1,5 +1,9 @@
 <% content_for :title, 'Teams for ' + @course.name %>
 
+<div class="rounded staff">
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <span class="instructions">Only faculty can see this information.</span>
+
 <table class="twikiTable" cellpadding="0" cellspacing="0">
   <tr>
     <th class="twikiFirstCol">Team</th>
@@ -24,3 +28,5 @@
 
 <%= link_to 'Export Team Data', {:action=>'export_to_csv'}, {:target=>'_top'} %>
 &nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :target => '_top' %>
+
+</div>
