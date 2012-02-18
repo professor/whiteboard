@@ -1,6 +1,6 @@
 <% content_for :title, 'New Suggestion' %>
 
-<h1>New Issue</h1>
+<h1>New Suggestion</h1>
 <p>To increase transparency of issues,  <%= link_to "please the issue here",  "https://github.com/professor/cmusv/issues" %>.
 </p>
 
@@ -18,7 +18,8 @@ Please submit an issue for any missing documentation. If you want to enhance the
 <%= link_to "pull request", "http://rubydoc.info/github/professor/cmusv/file/doc/Git_Directions.rdoc" %></p>
 <br/>
 <br/>
-<h1>New Suggestion</h1>
+<h1>New Suggestion (Old Interface)</h1>
+<p>We are planning to retire this interface.</p>
 <%= form_for(@suggestion) do |f| %>
   <% if @suggestion.errors.any? %>
     <div id="error_explanation">
