@@ -3,55 +3,32 @@
 Welcome to the CMU-SV rails project for the Education group.
 
 
-=== Getting Started
-Check out the design document inside docs
+== Documentation
 
-{Welcome to the Project}[http://github.com/professor/cmusv/blob/master/doc/README_FOR_APP.rdoc]
+* {Course Course}
+* {Deliverable Deliverable}
+* {PeerEvaluationReview Peer Evaluation}
+* {Person Person (aka User)}
 
-{file:doc/README_FOR_APP.rdoc Welcome to the Project}
+=== Metrics for Software Engineers (MfSE) students
+
+For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
+a repository to work from. Each new feature should be done in its own branch.
+
+{MfSE Students}[http://github.com/professor/cmusv/blob/master/doc/MfSE_Students.rdoc]
+
+{file:doc/MfSE_Students.rdoc MfSE Students}
 
 
 == Getting involved
 
 For individual maintainers, please fork the project on github, make your changes, and submit a pull request.
 
-For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
-a repository to work from. Each new feature should be done in its own branch.
-
 === How do I submit a bug fix?
-
-I've enjoyed talking with various teams about your MfSE experience: the fun of hiding bugs and the frustration of the chase in trying to find bugs added by others. It almost reminds me of Easter Egg hunts. I get VERY excited about students finding bugs already present in the code. If you did find one, congratulations! I'm now inviting you to join the project and submit a bug fix.
-
-Not sure if you found an original bug, I'm here to help! Call me or email me.
 
 The process is pretty simple. If you have never used github, then follow the direction in the next section
 
 This is the same process you would use in working with any open source project. If you want detailed directions with screen snapshots, see http://help.github.com/forking/ -- Go to github and login with your account. Then click on "fork" this project. This will create your own personal repository that you can play with. On your own desktop, you will want to do a git clone of your repository url. Your url will look something like this: git@github.com:USERNAME/cmusv.git -- add in a test case that exposes the bug, fix the bug, see that the test case passes. Great, you are almost done. Do a "git add ." "git commit" and a "git push" to get your change onto your personal repository on github. You then will want to get your change into my repository. Do a "git pull request" -- that will send your new code to me and we can have a dialog about the change. 
-
-=== How do I install Git on my computer?
-
-Follow these directions: http://info.sv.cmu.edu/do/view/CurriculumLogistics/RubyOnRailsInstallation#Install_GIT_client_source_contro
-
-=== Why is Git so cool?
-Read: https://git.wiki.kernel.org/index.php/LinusTalk200705Transcript
-
-Here's my personal list
-   a) You have the complete repository on your system. If you are on a train/plane, you have access to the entire
-      history without going over the internet.
-   b) The hash compression technique makes operations very, very fast.
-   c) git simplifies the checkin process into different steps. You do commits against your own repository, then you
-      do a push of all your changes to a team repository. Because Git separates the checkin into two steps, I find that
-      I do a lot of micro commits for each push. My commit message are more meaningful. On other systems, I would only
-      do a "commit" when I was ready to deploy my code. Now I can do commits as I finish test cases and then do a push
-      when I have code to integrate with others.
-
-=== How do I use Git?
-Slides are here: https://curriculum.sv.cmu.edu/foundations_agile/classes/attachments/GitIntro.pdf
-
-This is an excellent firehose experience of learning about how Git works under the covers. Unfortunately the mac mini crashed and we lost about 15 minutes of audio near the end.
-https://admin.na6.acrobat.com/admin/meeting/sco/recordings/local/info?filter-rows=20&filter-start=0&page=true()&sco-id=1051911757&select-all=true&tab-id=832037793
-
-
 
 == Submitting code
 
@@ -63,8 +40,103 @@ The criteria for code being accepted is as follows:
    3. the code must be relatively well written
    4. if you are considering using new gems, run your ideas by the maintainers first
 
+== Documentation
+
+See http://rubydoc.info/github/professor/cmusv/frames or run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+
+== Conventions
+Please use JQuery and JQuery UI. Whenever possible, AJAX should degrade
+gracefully. Ie, there should be a way to do the same action without AJAX.
+
+Whenever referencing an image use an <%= image_tag %> ie <%= image_tag("/images/student_male.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a student role") %>
+On the production machine, images referenced with image_tag will be cached by apache for faster page renderings.
+See http://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html for more information.
+
+When evaluating third party code, find ones that are well maintained. If you want to use a new Gem, check in with Todd first
+
+Things to note...
+* for a while the code separated a user into two tables, user and person. The original idea was that user would contain all the fields generated by restful-authentication and people would contain all the columns that were specific to this application. After some code was auto-generated, that idea was scrapped. All user data is in the user table. However, a few aspects of the system were never cleaned up. For example, effort_log has a column called "person_id" which uses the person controller but really ends up pointing to the user table.
+* is_student and is_staff is mutually exclusive for the effort logging.
+
+==System configuration
+Ruby 1.9.2-p180
+see Gemfile for all other dependencies
+
+== System Architecture
+
+This application follows Ruby on Rails conventions whenever possible.
+In particular, newer modules have "thick" models and "thin" controllers.
+
+The code runs on a virtualized hosting provider specializing in Ruby on Rails
+application deployment. The software currently runs in one mongrel instance
+connected to a mysql database running on the same machine. Rails' asset host
+feature is enabled which increases performance by having apache (not mongrel)
+render most static files including images, css files, and javascript files.
+
+There are a series of crontabs that execute daily or once a week. These call
+various rake tasks which in turn call various controllers or models. Lengthy
+crontab actions track progress through the activity, and are designed, if
+executed again to only process the remaining data. ie weekly effort log
+reminders. (Ironically, this feature has never been needed.)
+
+=== Amazon S3
+Newer parts of the system are beginning to use Amazon's S3 for file hosting.
+This is done with the aid of the PaperClip (file attachment) and aws-sdk gem.
+
+=== Google Apps Integration
+* Mailing Lists - Until very recently, there was no way to know who was on which google mailing lists without asking IT to look it up. Now this application queries Google's provisitoning API to present to the user exactly who is on each mailing list.
+* When a new user is created, their google account can be auto created at the same time.
+* When people are added to a team, a mailing list for the team is created.
+
+=== TWiki Integration
+Some twiki information is better stored in a database. Also, we like to have
+key information stored only in one place. For this reason we found a way to
+do cross site scripting where information from one server is injected into
+the webpage on a different server. For more details, read this blog: (INSERT HERE)
+
+* User data shown on people's twiki pages comes from this application. On a user's twiki page (ie http://info.sv.cmu.edu/twiki/bin/view/Main/AndrewCarnegie)
+a bit of AJAX loads a rails page.
+* Team data shown on a coure's twiki page comes from this application.
+* When a new user is created, their twiki account can be auto created at the
+same time.
+
+=== Curriculum Website Integration
+* Comments post on the curriculum website are managed by the rails application.
+
+=== Delayed Job
+To run delayed jobs from a development environment, type "rake jobs:work"
+
+==Additional References
+To learn about unobtrusive javascript, check out:
+   * http://www.simonecarletti.com/blog/2010/06/unobtrusive-javascript-in-rails-3/
+
+ Working with jquery
+   * See if you have the right element selected by adding a .css("border", "2px red solid")
+
+To learn more about delayed job, check out:
+   * http://devcenter.heroku.com/articles/delayed-job
+   * http://blog.leetsoft.com/2008/2/17/delayed-job-dj
+
+To learn about acts_as_versioned, check out:
+   * http://duffsdevice.blogspot.com/2007/06/actsasversioned-simple-walkthrough.html
+   * http://blog.cornetdesign.com/2009/05/acts_as_versioned-getting-started/
+   * http://www.urbanhonking.com/ideasfordozens/archives/2006/02/learns_to_use_a_1.html
+
+To learn about Google Apps and Provisioning, check out:
+   * http://code.google.com/p/gdatav2rubyclientlib/
+
+To learn about the table sorting, check out:
+   * http://beckelman.net/post/2008/10/23/Client-Side-Table-Sorting-Paging-and-Filtering-with-jQuery-Demo.aspx
+   * http://www.compulsivoco.com/2008/08/tablesorter-filter-results-based-on-search-string/
+
+To learn about the date picker code, check out:
+   * JQuery UI's date picker
+
+== Todos
+Perhaps alter the course and course_numbers model. If so, update effort_logs_controller and look for foundations in recent_foundations_or_course
 
 
 == License
-This code is released under the TBD license -- Copyright 2010 Todd Sedano -- see "New Features" for a complete list
+This code is released under the TBD license -- Copyright 2008 - 2012 Todd Sedano -- see "New Features" for a complete list
 of contributors
