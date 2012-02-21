@@ -8,13 +8,3 @@
             dateFormat: 'yy-mm-dd'
 		});
 	});
-
-
-	$(function() {
-		$("#add_person").click(function() {
-            var a = $("<a></a>").attr('href','#').click(somefunction);
-           $("#people_in_a_collection").append(a);
-        });
- 	});
-
-
