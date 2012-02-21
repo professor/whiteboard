@@ -1,4 +1,7 @@
-<%= javascript_include_tag 'warning' %>
+<script type="text/javascript">
+	var confirmation_needed = true;
+	window.onbeforeunload = confirmExit;
+</script>
 <%= form_for @feedback, :url => new_presentation_feedback_path, :html => { :multipart => true } do |f| %>
   <% if @feedback.errors.any? %>
     <div id="error_explanation">
