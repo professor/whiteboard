@@ -1,12 +1,14 @@
 class CourseMailer < ActionMailer::Base
-  default :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
-          :bcc => "todd.sedano@sv.cmu.edu"
+  #default :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
+  #        :bcc => "todd.sedano@sv.cmu.edu"
 
   def configure_course_faculty_email(course, options = {})
     @course = course
     
     unless course.is_configured?
       mail(:to => options[:to] || course.faculty.collect { |person| person.email },
+           :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
+           :bcc => "todd.sedano@sv.cmu.edu",
            :subject => options[:subject] || "Please let us know about your course #{course.name} (#{course.semester} #{course.year})",
            :date => Time.now)
     end
@@ -16,6 +18,8 @@ class CourseMailer < ActionMailer::Base
     @course = course
 
     mail(:to => options[:to] || "help@sv.cmu.edu",
+         :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
+         :bcc => "todd.sedano@sv.cmu.edu",
          :subject => "Faculty has configured a course #{course.semester} #{course.year} #{course.name}",
          :date => Time.now)
   end
