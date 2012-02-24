@@ -1,4 +1,7 @@
-<%= javascript_include_tag 'warning' %>
+<script type="text/javascript">
+	var confirmation_needed = true;
+	window.onbeforeunload = confirmExit;
+</script>
 <% content_for :title, 'Peer evaluation report for ' + @team.name %>
 <h1>Generate Report</h1>
 
