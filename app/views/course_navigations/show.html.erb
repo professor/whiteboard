@@ -1,17 +1,13 @@
 <% content_for :title, @course.name %>
 
+<!--         url: '/course_navigations/reposition'})
+              url: '/generic_ajax/reposition'});
+
+ -->
+
+
 <% content_for :javascript do %>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
-
-    <style type="text/css">
-        #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-        #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-        #sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
-	</style>
-
-    <%= javascript_tag do %>
+<script type="text/javascript">
         $(function() {
        $('#sortable').sortable(
           {
@@ -26,12 +22,12 @@
                   complete: function(request){
                       $('#sortable').effect('highlight');
                     },
-                  url: '/course_navigations/reposition'})
+                  url: '/course_navigations/reposition'});
               }
             });
         $("#sortable").disableSelection();        
         })
-      <% end %>
+      </script>
 <% end %>
 
 

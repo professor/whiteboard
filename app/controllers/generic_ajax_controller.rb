@@ -1,7 +1,6 @@
 class GenericAjaxController < ApplicationController
 
-#  before_filter :authenticate_user!
-
+  before_filter :authenticate_user!
 
   def update_model_with_value
     model_name = params[:model]
