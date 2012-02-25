@@ -7,8 +7,9 @@
 <link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
 
 <%= javascript_include_tag 'jquery.cookie' %>
-<%= javascript_include_tag 'warning' %>
 <script type="text/javascript">
+	var confirmation_needed = true;
+	window.onbeforeunload = confirmExit;
 
     function enable_tabs(checkbox){
             if (checkbox.prop('checked')) {

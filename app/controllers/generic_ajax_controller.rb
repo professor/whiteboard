@@ -1,7 +1,6 @@
 class GenericAjaxController < ApplicationController
 
-#  before_filter :authenticate_user!
-
+  before_filter :authenticate_user!
 
   def update_model_with_value
     model_name = params[:model]
@@ -27,7 +26,7 @@ class GenericAjaxController < ApplicationController
       return render :text => "Do not have permission to modify #{model_name}"
     end
 
-    result = instance.update_attribute(attribute, update_value)
+    result = instance.update_attribute(attribute,update_value)
 
     if result
       return render :text => "Success"

@@ -6,7 +6,9 @@ describe GenericAjaxController do
 
     context "for a valid request" do
       before :each do
-        @instance = mock_model User
+        @user = Factory(:student_sam_user)
+        login(@user)
+        @instance = @user
         User.stub!(:find_by_id).and_return(@instance)
       end
 
@@ -16,17 +18,17 @@ describe GenericAjaxController do
         controller.stub!(:current_ability).and_return(ability)
         ability.should_receive(:can?)
 
-        post :update_model_with_value, :model => 'User', :id => '1', :attribute => 'course_tools_view', :value => 'links'
+        post :update_model_with_value, :model => 'User', :id => @user.id, :attribute => 'course_tools_view', :value => 'links'
       end
 
       it 'should update the value for a model ' do
-        @user = Factory(:faculty_frank)
-        login @user
+        #@user = Factory(:faculty_frank)
+        #login @user
 
         User.should_receive(:find_by_id)
-        @instance.should_receive(:course_tools_view=).with('links')
-        @instance.should_receive(:update_attribue)
-        post :update_model_with_value, :model => 'User', :id => '1', :attribute => 'course_tools_view', :value => 'links'
+#        @instance.should_receive(:course_tools_view=).with('links')
+        @instance.should_receive(:update_attribute).with('course_tools_view','links')
+        post :update_model_with_value, :model => 'User', :id => @user.id, :attribute => 'course_tools_view', :value => 'links'
       end
     end
 
