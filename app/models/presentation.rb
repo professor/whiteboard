@@ -1,3 +1,29 @@
+#
+# The overarching design goal of the presentation tool is to make it very easy to instantiate,
+# collect feedback, and distribute feedback to the presenters. At the beginning of a meeting,
+# if you decided you wanted to get feedback on a presentation, it should happen quickly.
+# (We've found that tools like survey monkey required too much hoop jumping to make it work quickly)
+#
+# Creating a presentation 
+# From the course tool page, any user can put a presentation into the system by clicking on
+# Presentations -> Assign new presentation. If a team is selected, then anyone on that team can see
+# feedback. If an individual is selected, then only that individual can see feedback. Faculty can
+# always see feedback for any presentation.
+#
+# Providing feedback
+# Any user can click on "Presentations" on the left navigation. The default view here is to show
+# presentations that are scheduled for today. (There is an All Presentations link on the right,
+# and students can see feedback from past presentations with "My Presentations.")
+# Then click on "Give Feedback" to provide detailed feedback.
+#
+# Receiving feedback
+# The presenter(s) are notified via email when they receive their first piece of feedback. Subsequent notifications are purposefully
+# turned off. The email contains a link for them to see their feedback. Faculty feedback is
+# separated out from student feedback. (I've noticed that students tend to be more blunt then faculty.)
+# Any presenter can also see their feedback from previous presentations by clicking on "My Presentations"
+
+
+
 class Presentation < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
