@@ -24,8 +24,6 @@ CMUEducation::Application.routes.draw do
   resources :page_comment_types
   resources :page_comments
   resources :scotty_dog_sayings
-  resources :project_types
-  resources :projects
   resources :task_types
   match '/effort_logs/update_task_type_select' => 'effort_logs#update_task_type_select', :as => :update_task_type_select
   match '/effort_logs/effort_for_unregistered_courses' => 'effort_logs#effort_for_unregistered_courses'
