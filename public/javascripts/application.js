@@ -13,7 +13,6 @@
             dateFormat: 'yy-mm-dd'
 		});
 	});
-<<<<<<< HEAD
 
 
 	$(function() {
@@ -49,5 +48,3 @@
 
 
   });
-=======
->>>>>>> master
