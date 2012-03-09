@@ -22,6 +22,13 @@ module ApplicationHelper
   #   current_semester() + " " + Date.today.year
   # end
 
+  def professor_image
+    image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role", :title => "Faculty role")
+  end
+
+  def admin_image
+    image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role", :title => "Admin role")
+  end
 
   #Do we need this, used on welcome page
   def current_semester

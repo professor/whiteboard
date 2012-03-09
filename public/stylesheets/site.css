@@ -134,7 +134,7 @@ table.tablesorter tbody tr.hover td {
 div.student {
     padding: 5px;
     margin: 5px;
-    background-color: rgb(247, 225, 171);    
+/*    background-color: rgb(247, 225, 171); */
 }
 
 div.staff {
@@ -209,7 +209,9 @@ tr.staff {
     margin_left: 10px;
 }
 
-
+.cmu_table .course_tools td {
+    width: 140px;
+}
 
 
 #image_box {
@@ -255,7 +257,7 @@ border-width:1px;
     background-color:#FbFbFb;
 }
 
-.cmu_table #icon {
+.cmu_table .icon {
     padding: 0px;
 }
 
@@ -302,3 +304,8 @@ div.modified {
 .ui-timepicker-div dl dt{ height: 25px; }
 .ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
 .ui-timepicker-div td { font-size: 90%; }
+
+
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+#sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }

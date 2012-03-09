@@ -1,4 +1,9 @@
 <% content_for :title, 'Peer evaluation for ' + @team.name %>
+<script type="text/javascript">
+	var confirmation_needed = true;
+	window.onbeforeunload = confirmExit;
+</script>
+
 <h1>Peer evaluation form completed by <%= @author.human_name %></h1>
 
 
@@ -60,8 +65,8 @@
       <%end%>
 
   <% if @on_team %>
-  <%= f.submit 'Save' %>
+  <%= f.submit 'Save',  :onclick=>"confirmation_needed = false;" %>
   <% else %>
-  <%= f.submit 'Save', :disabled => true %>
+  <%= f.submit 'Save', :disabled => true,  :onclick=>"confirmation_needed = false;" %>
   <% end %>
 <% end %>

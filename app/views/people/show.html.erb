@@ -90,13 +90,13 @@ Personal email: <%=h @person.personal_email %><br />
 
 <h1><%=h @person.human_name %></h1>    
   <div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>
+  <%= professor_image %>
   <span class="instructions">These fields can be edited by faculty.</span>
   <%= render :partial => 'show_faculty_fields', :locals=>{:f => f, :person => @person} %>
   </div>
 
   <div class="rounded admin">
-  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <%= admin_image %>
   <span class="instructions">These fields can be edited by admin.</span>
   <%= render :partial => 'show_admin_fields', :locals=>{:f => f, :person => @person} %>
   </div>

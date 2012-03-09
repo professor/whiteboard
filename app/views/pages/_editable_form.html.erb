@@ -7,8 +7,9 @@
 <link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
 
 <%= javascript_include_tag 'jquery.cookie' %>
-
 <script type="text/javascript">
+	var confirmation_needed = true;
+	window.onbeforeunload = confirmExit;
 
     function enable_tabs(checkbox){
             if (checkbox.prop('checked')) {
@@ -17,6 +18,7 @@
                 $tabs.tabs( 'option', 'selected', parseInt($.cookie('selected_tab')));
                 $('.ui-tabs-nav').css('display', 'block');
                 $('#email_header').css('display', 'block');
+                $('.page_or_task').html("task");
             }
             else {
                 $tabs = $('#tabs').tabs();
@@ -24,6 +26,7 @@
                 $tabs.tabs( 'option', 'disabled', [1, 2, 3] );
                 $('.ui-tabs-nav').css('display', 'none');
                 $('#email_header').css('display', 'none');
+                $('.page_or_task').html("page");
             }
      }
 
@@ -324,16 +327,17 @@
     <%= f.label :task_duration %><br />
     <%= f.text_field :task_duration, :size => 2 %> weeks
   </p>
-  <p>This page is editable by<br />
+  <p>This <span class="page_or_task">page</span> is editable by<br />
      <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
      <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
   </p>
-    <p>This page is viewable by<br />
+    <p>This <span class="page_or_task">page</span> is viewable by<br />
        <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
        <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
     </p>
   <p>
-    <%= f.submit button_name,  :class => "wymupdate"  %>
+
+    <%= f.submit button_name,  :class => "wymupdate",  :onclick=>"confirmation_needed = false;"   %>
   </p>
 <% end %>
 

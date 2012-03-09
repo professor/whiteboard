@@ -2,8 +2,6 @@
    <td>&nbsp;</td>
 <% if current_user && current_user.is_student? %>  
   <td>Course</td><td><%= link_to 'Type', task_types_path %></td><td>&nbsp;</td>
-<% else %>
-  <td><%= link_to 'Project', projects_path %></td><td><%= link_to 'Type', task_types_path %></td><td>&nbsp;</td>
 <% end %>
 <%= td_class_is_today(1) %> Mon</td>
 <%= td_class_is_today(2) %> Tues</td>

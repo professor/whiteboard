@@ -51,12 +51,14 @@ GEM
     addressable (2.2.6)
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
-    aws-s3 (0.6.2)
-      builder
-      mime-types
-      xml-simple
+    aws-sdk (1.3.2)
+      httparty (~> 0.7)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
     builder (2.1.2)
+    cancan (1.6.7)
     capybara (1.1.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -98,6 +100,9 @@ GEM
       rest-client (~> 1.6.1)
       rubyzip
       term-ansicolor (~> 1.0.5)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
     i18n (0.5.0)
     indextank (1.0.12)
       faraday-stack
@@ -176,7 +181,7 @@ GEM
       oa-oauth (= 0.3.0.rc3)
       oa-openid (= 0.3.0.rc3)
     orm_adapter (0.0.5)
-    paperclip (2.4.3)
+    paperclip (2.5.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
@@ -280,9 +285,9 @@ GEM
     tzinfo (0.3.30)
     uuid (2.3.4)
       macaddr (~> 1.0)
+    uuidtools (2.1.2)
     warden (1.0.6)
       rack (>= 1.0)
-    xml-simple (1.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
     yajl-ruby (1.0.0)
@@ -293,8 +298,9 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   acts_as_versioned
-  aws-s3
+  aws-sdk
   bundler
+  cancan
   capybara
   daemons (~> 1.1.4)
   delayed_job

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117013039) do
+ActiveRecord::Schema.define(:version => 20120308205647) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -128,7 +128,6 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
     t.float    "sum"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "project_id"
     t.integer  "position"
   end
 
@@ -155,6 +154,22 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
 
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "page_attachments", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.integer  "position"
+    t.boolean  "is_active",                    :default => true
+    t.string   "readable_name"
+    t.string   "page_attachment_file_name"
+    t.string   "page_attachment_content_type"
+    t.integer  "page_attachment_file_size"
+    t.datetime "page_attachment_updated_at"
+  end
+
+  add_index "page_attachments", ["is_active"], :name => "index_page_attachments_on_is_active"
+  add_index "page_attachments", ["page_id"], :name => "index_page_attachments_on_page_id"
+  add_index "page_attachments", ["position"], :name => "index_page_attachments_on_position"
 
   create_table "page_comment_types", :force => true do |t|
     t.string   "name"
@@ -293,26 +308,6 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
 
   add_index "presentations", ["course_id"], :name => "index_presentations_on_course_id"
   add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
-
-  create_table "project_types", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "project_types", ["name"], :name => "index_project_types_on_name"
-
-  create_table "projects", :force => true do |t|
-    t.string   "name"
-    t.integer  "project_type_id"
-    t.integer  "course_id"
-    t.boolean  "is_closed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "projects", ["name"], :name => "index_projects_on_name"
 
   create_table "registered_courses", :force => true do |t|
     t.integer  "course_id"
@@ -515,6 +510,8 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.string   "github"
+    t.string   "course_tools_view"
+    t.string   "remember_token"
     t.datetime "remember_created_at"
   end
 
@@ -585,6 +582,8 @@ ActiveRecord::Schema.define(:version => 20111117013039) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.string   "github"
+    t.string   "course_tools_view"
+    t.string   "remember_token"
     t.datetime "remember_created_at"
   end
 

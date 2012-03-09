@@ -74,25 +74,14 @@ describe SponsoredProjectAllocation do
   end
 
   context "creates monthly copy to sponsored project effort" do
-    before(:all) do
-      User.delete_all
-      SponsoredProject.delete_all
-      SponsoredProjectSponsor.delete_all
-      SponsoredProjectAllocation.delete_all
-      
+
+    before(:each) do
       @faculty_fagan = Factory(:faculty_fagan)
       @faculty_frank = Factory(:faculty_frank)
       @project_rover = Factory(:sponsored_project, :name => "Rover SW")
       @project_disaster = Factory(:sponsored_project, :name => "Disaster Response")
       @allocation_fagan_rover = Factory(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
       @allocation_fagan_disaster = Factory(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
-    end
-
-    after(:all) do
-      User.delete_all
-      SponsoredProject.delete_all
-      SponsoredProjectSponsor.delete_all
-      SponsoredProjectAllocation.delete_all
     end
 
     it 'responds to monthly_copy_to_sponsored_project_effort' do
@@ -102,7 +91,16 @@ describe SponsoredProjectAllocation do
     it 'of unique allocations even if it is executed twice in the same month' do
       lambda {
         SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
+        SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
         }.should change(SponsoredProjectEffort, :count).by(2) 
+    end
+
+    it 'does not copy archived allocations' do
+      @project_fading_shiny_newness = Factory(:sponsored_project, :name => "Last Year's Hot Thing'")
+      @allocation_fagan_archived = Factory(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :is_archived => true, :sponsored_project => @project_fading_shiny_newness)
+      lambda {
+        SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
+        }.should change(SponsoredProjectEffort, :count).by(2)
     end
   end
 

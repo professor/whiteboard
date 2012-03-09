@@ -6,6 +6,7 @@ class SearchController < ApplicationController
 
   def self.index_tank
     @api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || 'http://your_api_url')
+#    @api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || 'http://your_api_url')
     @index ||= @api.indexes('cmux')
     @index
   end

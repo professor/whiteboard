@@ -113,14 +113,14 @@ describe EffortLogsController do
     end
 
     it "it should not send any emails when it is not an effort log week" do
-      EffortLog.stub(:log_effort_week).and_return(false)
+      EffortLog.stub(:log_effort_week?).and_return(false)
       subject.should_not_receive(:create_midweek_warning_email_send_it)
       subject.create_midweek_warning_email
     end
 
     context "when it is an effort log week" do
       before do
-        EffortLog.stub(:log_effort_week).and_return(true)
+        EffortLog.stub(:log_effort_week?).and_return(true)
       end
 
       context "and there are courses that have students" do
@@ -133,6 +133,7 @@ describe EffortLogsController do
         context "and there are no effort logs" do
           before do
             EffortLog.stub(:where).and_return([])
+#            EffortLog.stub(:log_effort_week?).and_return(true)
           end
 
           it "it should send an email if the person has never been emailed" do

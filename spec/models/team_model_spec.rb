@@ -56,9 +56,41 @@ describe Team do
 
   end
 
+  #When modifying this test, please examine the same for course
+  context "when adding users to a team by providing their names as strings" do
+    before(:each) do
+       @team = Factory.build(:team)
+       @student_sam = Factory.build(:student_sam, :id => rand(100))
+       @student_sally = Factory.build(:student_sally, :id => rand(100) + 100)
+       Person.stub(:find_by_human_name).with(@student_sam .human_name).and_return(@student_sam )
+       Person.stub(:find_by_human_name).with(@student_sally.human_name).and_return(@student_sally)
+       Person.stub(:find_by_human_name).with("Someone not in the system").and_return(nil)
+  end
+
+    it "validates that the people are in the system" do
+      @team.members_override = [@student_sam .human_name, @student_sally.human_name]
+      @team.validate_members
+      @team.should be_valid
+    end
+
+    it "for people not in the system, it sets an error" do
+      @team.members_override = [@student_sam .human_name, "Someone not in the system", @student_sally.human_name]
+      @team.validate_members
+      @team.should_not be_valid
+      @team.errors[:base].should include("Person Someone not in the system not found")
+    end
+
+    it "assigns them to the people association" do
+      @team.members_override = [@student_sam.human_name, @student_sally.human_name]
+      @team.update_members
+      @team.people[0].should == @student_sam
+      @team.people[1].should == @student_sally
+    end
+  end
+
   context "is_person_on_team?" do
 
-   before do
+   before(:each) do
       @faculty_frank = Factory(:faculty_frank)
       @student_sam = Factory(:student_sam)
       @student_sally = Factory(:student_sally)
@@ -72,5 +104,6 @@ describe Team do
       @team.is_person_on_team?(@faculty_frank).should be_false
     end
   end
+
 
 end

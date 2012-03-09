@@ -5,7 +5,9 @@ module IndexTank
 
   def self.setup_indexes
     api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || '<API_URL>')
+#    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
 
+    indexes = ["cmux", "cmu_staffx"]
     indexes = ["cmux"]
 
     indexes.each do |name|

@@ -1,3 +1,36 @@
+# Deliverable is a zip or a file that the students submit for a course
+#
+# There are two ways for a student team to upload their deliverables.
+#
+# Way 1) On the curriculum pages for each task,  under the "Submitting Your Work" tab, there is a
+# "submit your deliverable link" -- this gives the student the ability to name their deliverable, and upload a
+# single attachment (i.e. one doc, ppt, or zip file) The student needs to mark whether this is an individual deliverable
+# or team deliverable. By default a task number and the course number is provided for the student.
+# If a faculty member tries to do this, they won't see any courses lists since they aren't taking the course as a student.
+# Students can submit only team deliverable and one individual deliverable per task, although they can update the
+# attachment as many times as they like.
+#
+# Every member of a team can see team deliverables, only the individual can see their individual deliverable.
+#
+# Way 2) A student team can upload their deliverable by clicking on "My Deliverables" on the left hand navigation and
+# select "New" at the bottom of the page. This is a little less efficient because the student needs to select a
+# course and task number. It is a quick way for a student to see everything they have submitted for their courses.
+#
+## If a student or team accidentally uploads the wrong file, they can upload additional files. All files are
+# kept in the system, but the convention is that the faculty will only examine the last uploaded file.
+#
+# The faculty assigned to that team will receive an email whenever a student submits a deliverable. The faculty
+# can click on the email and provide either written comments in an text area or provide a file attachment back.
+# If you annotate a word document you would upload the word document.
+# If you annotate multiple files then you would attach a zip, just like the students do.
+#
+# If the faculty needs to see who has provided feedback or if they loose the email sent by the system, there is a f
+# faculty interface for examining the deliverables. It is not perfect, it was developed by the students and they
+# didn't have a strong sense of how we would use it. It currently shows all the deliverables submitted
+# for a course sorted by recent changes first. There is no way to filter by faculty member, or sort by task,
+# or sort by team, or sort by whether feedback has been provided. Control F in the browser is a life saver.
+# It does show you which deliverables have been graded. In theory, just relying on the emails should be sufficient.
+
 class Deliverable < ActiveRecord::Base
   belongs_to :team
   belongs_to :course

@@ -18,21 +18,50 @@
 </table>
 <br/>
 
-<%= render :partial => "show_actions" ,:locals => { :course => @course } %>
+<% if current_user.course_tools_view == "links" %>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="links">Show as icons</a></div>
+    <div id="course_tools_icons" style="display:none;"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
+    <div id="course_tools_links"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
+<% else %>
+    <%# This is the default option for those who have never hit the link %>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="icons">Show as links</a></div>
+    <div id="course_tools_icons"><%= render :partial => "show_actions_icons",:locals => { :course => @course } %></div>
+    <div id="course_tools_links" style="display:none;"><%= render :partial => "show_actions_links",:locals => { :course => @course } %></div>
 
-<p><%= link_to "Course website", @course.curriculum_url %> </p>
-<p><a href="/courses/<%=@course.id%>/teams_photos">Teams</a></p>
-<p><%= link_to 'Effort Reports', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%></p>
-
-
-<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
-    <p><%= link_to 'Deliverables', course_deliverables_path(@course) %>
-    <p><%= link_to 'Presentations', course_presentations_path(@course) %></p>
-    <p><%= link_to 'Team Formation Helper', past_teams_list_path(@course) %></p>
-    <p><%= link_to 'Configure course', configure_course_path(@course) %></p>
-    <p><%= link_to "Edit Curriculum Website", course_navigation_path(Course.first_offering_for_course_name(@course.name)), :class=>"SecondaryNav_Link" %></p>
-    <p><%= link_to 'Peer Evaluations', peer_evaluations_path(@course) %></p>
 <% end %>
+
+    <script>
+
+
+
+    $(document).ready(function() {
+        $('#course_tools_view').click(function() {
+            old_state = $(this).attr('data-view-state');
+            if(old_state == "links")
+            {
+                new_state = "icons";
+                $(this).attr('data-view-state', "icons");
+                $('#course_tools_view').html("Show as links");
+                $('#course_tools_links').hide();
+                $('#course_tools_icons').show();
+            }
+            else
+            {
+                new_state = "links";
+                $(this).attr('data-view-state', "links");
+                $('#course_tools_view').html("Show as icons");
+                $('#course_tools_icons').hide();
+                $('#course_tools_links').show();
+            }
+            $.ajax({
+                type: 'post',
+                data: "model=User&id=<%=current_user.id%>&attribute=course_tools_view&value=" + new_state,
+                dataType: 'script',
+                url: '/generic_ajax/update_model_with_value'});
+
+        });
+    });
+</script>
 
 
 
@@ -40,7 +69,8 @@
 <br style="clear:both;" />
 <% if current_user && (current_user.is_admin) %>
   <div class="rounded admin">
-  <%= image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role") %>
+  <%= admin_image %>
+    <span class="instructions">Only admin can see this information.</span>
 <h2>Admin Helpers</h2>
 <p><b>Google Distribution Lists</b> Here are all the email addresses for the students assigned to teams.
 <% @emails.each do |name|  %>

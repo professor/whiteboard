@@ -24,8 +24,6 @@ CMUEducation::Application.routes.draw do
   resources :page_comment_types
   resources :page_comments
   resources :scotty_dog_sayings
-  resources :project_types
-  resources :projects
   resources :task_types
   match '/effort_logs/update_task_type_select' => 'effort_logs#update_task_type_select', :as => :update_task_type_select
   match '/effort_logs/effort_for_unregistered_courses' => 'effort_logs#effort_for_unregistered_courses'
@@ -43,6 +41,8 @@ CMUEducation::Application.routes.draw do
       end
     end
   end
+
+  resources :page_attachments
 
   resources :course_navigations
   resources :courses do
@@ -104,8 +104,11 @@ CMUEducation::Application.routes.draw do
 
   match 'effort_reports/:id/week/:week' => 'effort_reports#show_week'
   match '/:controller(/:action(/:id))'
+
+  match 'static/:action' => 'static#:action'
   match '/new_features' => 'welcome#new_features', :as => :new_features
   match '/config' => 'welcome#configuration', :as => :config
   match '/' => 'welcome#index', :as => :root
+
 end
 
