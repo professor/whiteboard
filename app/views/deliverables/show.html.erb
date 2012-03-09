@@ -69,7 +69,18 @@
 
   <% @deliverable.attachment_versions.each do |version| %>
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-    <td><%= format_timestamp(version.submission_date) %></td>
+	<td>
+		<%= format_timestamp(version.submission_date) %>
+		<%# icon_timestamp(version.submission_date) %>
+
+
+		<%=image_tag("/images/info_black.png", :width => "16", :height => "16", :class => "info_icon") -%>
+			<div class="info_dialog" id="tmp" style="display:none;">
+			  <%= display_timestamp(version.submission_date) -%>
+			</div>
+	</td>
+
+
     <td>
         <% unless version.attachment_file_name.nil? %>
             <%= link_to version.attachment_file_name, version.attachment.url %>
