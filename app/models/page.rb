@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  attr_accessible :course_id, :title, :position, :identation_levels, :is_task, :tab_one_contents, :tab_two_contents,
+  attr_accessible :course_id, :title, :position, :indentation_level, :is_task, :tab_one_contents, :tab_two_contents,
                   :tab_three_contents, :task_duration, :tab_one_email_from, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
                   :url, :is_editable_by_all, :is_viewable_by_all, :version_comments, :course_name
 
