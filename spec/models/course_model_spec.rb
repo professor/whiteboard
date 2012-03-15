@@ -38,26 +38,26 @@ describe Course do
   #  result.should ==  "MfSESpring2012"
   #end
 
-   #context "Display name" do
-   #  it "should display a no short name right" do
-   #    course = Factory(:course)
-   #    course.display_name.should == "Course"
-   #  end
-   #  it "should display with a short name correctly" do
-   #    course = Factory(:fse)
-   #    course.display_name.should == "Foundations of Software Engineering (FSE)"
-   #  end
-   # it "should show the short name if there is one" do
-   #   course = Factory(:fse)
-   #   course.short_or_full_name.should == "FSE"
-   # end
-   #  it "shouldn't show short name if there isn't" do
-   #    course = Factory(:course)
-   #    course.short_or_full_name.should == "Course"
-   #    course = Factory(:fse,:short_name => "")
-   #    course.short_or_full_name.should == "Foundations of Software Engineering"
-   #  end
-   #end
+  #context "Display name" do
+  #  it "should display a no short name right" do
+  #    course = Factory(:course)
+  #    course.display_name.should == "Course"
+  #  end
+  #  it "should display with a short name correctly" do
+  #    course = Factory(:fse)
+  #    course.display_name.should == "Foundations of Software Engineering (FSE)"
+  #  end
+  # it "should show the short name if there is one" do
+  #   course = Factory(:fse)
+  #   course.short_or_full_name.should == "FSE"
+  # end
+  #  it "shouldn't show short name if there isn't" do
+  #    course = Factory(:course)
+  #    course.short_or_full_name.should == "Course"
+  #    course = Factory(:fse,:short_name => "")
+  #    course.short_or_full_name.should == "Foundations of Software Engineering"
+  #  end
+  #end
   #
   #
   # context "display semester" do
@@ -83,15 +83,15 @@ describe Course do
   #    @first.should == @course
   #end
 
- # it "for semester should find courses by semester" do
- #   year = Date.today.year
- #   mfse = Factory(:mfse, :semester => "Fall", :year => year )
- #   fse = Factory(:fse, :semester => "Fall", :year => year)
- #   spring_course = Factory(:mfse_current_semester, :semester => "Spring", :year => year)
- #   Course.for_semester("Fall", year)[0].should == fse
- #   Course.for_semester("Fall", year)[1].should == mfse
- #   Course.for_semester("Spring", year)[0].should == spring_course
- #end
+  # it "for semester should find courses by semester" do
+  #   year = Date.today.year
+  #   mfse = Factory(:mfse, :semester => "Fall", :year => year )
+  #   fse = Factory(:fse, :semester => "Fall", :year => year)
+  #   spring_course = Factory(:mfse_current_semester, :semester => "Spring", :year => year)
+  #   Course.for_semester("Fall", year)[0].should == fse
+  #   Course.for_semester("Fall", year)[1].should == mfse
+  #   Course.for_semester("Spring", year)[0].should == spring_course
+  #end
 
 
   #it "should know which courses are offered this semester" do
@@ -117,7 +117,7 @@ describe Course do
     course.course_start.should == AcademicCalendar.semester_start("Fall", 2010)
 
     course = Factory.build(:course, :semester => "Fall", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010) + 7
+    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010) + 8
 
     course = Factory.build(:course, :semester => "Spring", :year => "2010", :mini => 'Both')
     course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
@@ -126,7 +126,7 @@ describe Course do
     course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
 
     course = Factory.build(:course, :semester => "Spring", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010) + 7
+    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010) + 9
 
     course = Factory.build(:course, :semester => "Summer", :year => "2010", :mini => 'Both')
     course.course_start.should == AcademicCalendar.semester_start("Summer", 2010)
@@ -137,6 +137,15 @@ describe Course do
     course = Factory.build(:course, :semester => "Summer", :year => "2010", :mini => 'B')
     course.course_start.should == AcademicCalendar.semester_start("Summer", 2010) + 6
 
+  end
+
+  it "should remind effort reports for a particular class with a valid Mini field" do
+    valid_course = Factory(:course, :semester => AcademicCalendar.current_semester, :year => Date.today.cwyear, :mini => 'Both', :remind_about_effort => true)
+    invalid_course = Factory(:course, :semester => AcademicCalendar.current_semester, :year => Date.today.cwyear, :mini => 'both', :remind_about_effort => true)
+    course_list = Course.remind_about_effort_course_list
+
+    course_list.find_index(valid_course).should >= 0
+    course_list.find_index(invalid_course).should == nil
   end
 
   it "should be able to auto_generated_twiki_url" do
@@ -208,13 +217,13 @@ describe Course do
   #When modifying this test, please examine the same for team
   context "when adding faculty to a course by providing their names as strings" do
     before(:each) do
-       @course = Factory.build(:course)
-       @faculty_frank = Factory.build(:faculty_frank, :id => rand(100))
-       @faculty_fagan = Factory.build(:faculty_fagan, :id => rand(100) + 100)
-       Person.stub(:find_by_human_name).with(@faculty_frank.human_name).and_return(@faculty_frank)
-       Person.stub(:find_by_human_name).with(@faculty_fagan.human_name).and_return(@faculty_fagan)
-       Person.stub(:find_by_human_name).with("Someone not in the system").and_return(nil)
-   end
+      @course = Factory.build(:course)
+      @faculty_frank = Factory.build(:faculty_frank, :id => rand(100))
+      @faculty_fagan = Factory.build(:faculty_fagan, :id => rand(100) + 100)
+      Person.stub(:find_by_human_name).with(@faculty_frank.human_name).and_return(@faculty_frank)
+      Person.stub(:find_by_human_name).with(@faculty_fagan.human_name).and_return(@faculty_fagan)
+      Person.stub(:find_by_human_name).with("Someone not in the system").and_return(nil)
+    end
 
     it "validates that the people are in the system" do
       @course.faculty_assignments_override = [@faculty_frank.human_name, @faculty_fagan.human_name]
