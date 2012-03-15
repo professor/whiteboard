@@ -13,3 +13,29 @@
             dateFormat: 'yy-mm-dd'
 		});
 	});
+
+  // The below link explains data
+  // http://stackoverflow.com/questions/4518889/jquery-ui-dialog-open-multiple-dialog-boxes-using-the-same-class-on-the-button-a
+   $(function(){
+	 $('.info_icon').each(function() {
+	 $.data(this, 'dialog',
+		  $(this).next().dialog({
+			  autoOpen: false,
+			  modal: true,
+			  height: 70,
+			  title: 'Submission date',
+			  overlay: {
+			  opacity: 0.2,
+			  background: "black"
+			  }
+
+		   })
+	);
+
+  }).click(function() {
+  $.data(this, 'dialog').dialog('open');
+  return false;
+  });
+
+
+  });

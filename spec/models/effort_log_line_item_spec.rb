@@ -26,7 +26,7 @@ describe EffortLogLineItem do
     end
 
     context "associations --" do
-      [:effort_log, :task_type, :project, :course].each do |attr|
+      [:effort_log, :task_type, :course].each do |attr|
         it "belongs to a/an #{attr}" do
           subject.should respond_to(attr)
         end

@@ -5,7 +5,6 @@ describe "effort_logs/new.html.erb" do
     assign(:day_labels, [1..7])
     course = Factory(:fse)
     assign(:courses, [course])
-    assign(:projects, [Project.create!(:course => course)])
     assign(:task_types, [TaskType.create!])
     assign(:today_column, 1)
   end

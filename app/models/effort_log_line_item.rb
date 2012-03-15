@@ -3,7 +3,6 @@ class EffortLogLineItem < ActiveRecord::Base
 
   belongs_to :effort_log
   belongs_to :task_type
-  belongs_to :project
   belongs_to :course
 
 #    before_save :determine_total_effort #this is not necessary since it is also called by the effort_log before a save

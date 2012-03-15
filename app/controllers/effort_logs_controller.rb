@@ -400,7 +400,6 @@ class EffortLogsController < ApplicationController
     end
 
     @courses = Course.where('year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester())
-    @projects = Project.where("is_closed = FALSE", :order => "name ASC")
 
     @task_types = TaskType.where('is_student = ?', true)
 

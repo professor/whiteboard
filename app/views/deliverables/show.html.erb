@@ -69,7 +69,12 @@
 
   <% @deliverable.attachment_versions.each do |version| %>
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-    <td><%= format_timestamp(version.submission_date) %></td>
+	<td>
+		<%= format_timestamp(version.submission_date) %>
+		<%= render :partial => "timestamp", :locals => {:submission_date => version.submission_date} %>
+	</td>
+
+
     <td>
         <% unless version.attachment_file_name.nil? %>
             <%= link_to version.attachment_file_name, version.attachment.url %>
