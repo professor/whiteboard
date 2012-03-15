@@ -79,8 +79,8 @@ class Team < ActiveRecord::Base
       logger.warn("The people on the google list isn't right")
       logger.warn("google list: #{google_list} ")
       logger.warn("team list: #{team_list} ")
+      raise Exception.new("The people on the google list isn't right")
     end
-    raise Exception.new("The people on the google list isn't right") unless google_list.eql?(team_list)
 
     ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
     logger.info "#{id} -- finished"
