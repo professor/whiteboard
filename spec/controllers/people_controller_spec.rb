@@ -58,24 +58,6 @@ describe PeopleController do
       end
     end
 
-    describe "GET show_by_twiki failed save" do
-      before do
-        person = stub_model(Person)
-        person.stub(:save).and_return(false)
-        Person.stub(:new).and_return(person)
-        Person.stub(:parse_twiki).and_return('')
-        get :show_by_twiki
-      end
-
-      it "should show flash error" do
-        flash[:error].should eql 'Person could not be saved.'
-      end
-
-      it "should redirect to people" do
-        assert_redirected_to people_url
-      end
-    end
-
     context "with a bad person id" do
       before do
         Person.stub(:find).and_return(nil)

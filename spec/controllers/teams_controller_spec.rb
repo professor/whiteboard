@@ -192,26 +192,6 @@ describe TeamsController do
 
     end
 
-    describe "GET twiki_new with failed save" do
-      before do
-        @url = 'http://sv.cmu.edu'
-        controller.stub(:get_twiki_http_referer).and_return(@url)
-        crs = stub_model(Course)
-        crs.stub(:save).and_return(false)
-        Course.stub(:new).and_return(crs)
-        get :twiki_new
-      end
-
-      it "should show flash error" do
-        flash[:error].should eql 'Course could not be created.'
-      end
-
-      it "should redirect to referrer" do
-        assert_redirected_to @url
-      end
-
-    end
-
     describe "not DELETE destroy" do
       before do
         delete :destroy, :id => team.to_param

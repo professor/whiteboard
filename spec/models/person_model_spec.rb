@@ -35,12 +35,8 @@ describe Person do
 
     it "defaults to user.update_webiso_account if blank" do
       user = User.new
-      person = Person.new
-
       user.update_webiso_account
-      person.valid?
-
-      (Time.at(Float(person.webiso_account)) - Time.at(Float(user.webiso_account))).should be < 1.second
+      (Time.at(Time.now.to_f) - Time.at(Float(user.webiso_account))).should be < 1.second
     end
 
   end
