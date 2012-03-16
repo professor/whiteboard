@@ -1,44 +1,43 @@
 <% content_for :tablesorter do %>
-  <%= javascript_include_tag 'tablesorter' %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
-<script type="text/javascript">
-$(document).ready(function() 
-    {
-       if ($("#filterBoxOne").prop("disabled") == true)
-       {
-         $('#filterBoxOne').val('');
-         $('#filterBoxOne').removeAttr("disabled");
-         $('#filterBoxOne').focus();
-        }
-        $("#courses_table").tablesorter({widgets: ['zebra']})
-            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
-                filterClearContainer: $("#filterClearOne"),
-                filterColumns: [0, 1, 2, 4],
-                filterCaseSensitive: false
-            });        
-<% if !@all_courses %>
-        $(".all_courses").hide();
-<% end %>
-    } 
-); 
-</script>
+    <%= javascript_include_tag 'tablesorter' %>
+    <%= javascript_include_tag 'tablesorter_filter' %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+                    if ($("#filterBoxOne").prop("disabled") == true) {
+                        $('#filterBoxOne').val('');
+                        $('#filterBoxOne').removeAttr("disabled");
+                        $('#filterBoxOne').focus();
+                    }
+                    $("#courses_table").tablesorter({widgets: ['zebra']})
+                            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
+                                filterClearContainer: $("#filterClearOne"),
+                                filterColumns: [0, 1, 2, 4],
+                                filterCaseSensitive: false
+                            });
+                    <% if !@all_courses %>
+                    $(".all_courses").hide();
+                    <% end %>
+                }
+        );
+    </script>
 <% end %>
 
 <% if @all_courses %>
-<% content_for :title, 'All courses' %>
-<h1>All Courses</h1>
-<div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
+    <% content_for :title, 'All courses' %>
+    <h1>All Courses</h1>
+    <div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
 <% else %>
-<% content_for :title, @semester + " " + @year.to_s + " Courses" %>
-<h1><%= @semester %> <%= @year %> Courses</h1>
-<div class="right_link"><%= link_to 'See all courses', courses_path %></div>
-    <p>For more information about your options see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
+    <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
+    <h1><%= @semester %> <%= @year %> Courses</h1>
+    <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
+    <p>For more information about your options
+      see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
 <% end %>
 <%= render :partial => "/people/tablesorter_filter_box" %>
 
 <table id="courses_table" class="tablesorter2">
   <thead>
-    <tr>
+  <tr>
     <th>Number</th>
     <th>Name</th>
     <th class="all_courses">Semester</th>
@@ -67,10 +66,19 @@ $(document).ready(function()
 </table>
 
 
-<br />
+<br/>
+
+<% if current_user.present? && (current_user.is_teacher || current_user.is_staff || current_user.is_admin) %>
+    <h2>Upload Roster File</h2>
+    <% form_tag '/courses/upload', :multipart => true do %>
+        <%= file_field_tag "file" %>
+        <%= submit_tag "Upload" %>
+    <% end %>
+    <br/>
+<% end %>
 
 <% if current_user && current_user.is_admin? %>
-<%= link_to 'New course', new_course_path %>
-<br />
-<br />
+    <%= link_to 'New course', new_course_path %>
+    <br/>
+    <br/>
 <% end %>

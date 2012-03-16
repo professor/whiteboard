@@ -51,6 +51,11 @@ ActiveRecord::Schema.define(:version => 20120308205647) do
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
 
+  create_table "courses_users", :id => false, :force => true do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+  end
+
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
     t.string   "background_color"

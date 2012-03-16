@@ -152,6 +152,24 @@ class CoursesController < ApplicationController
     end
   end
 
+  def upload
+    file_content = params[:file].read()
+
+    begin
+      changes_applied = HUBClassRosterHandler::handle(file_content)
+      if changes_applied
+        flash[:notice] = 'Roster file was parsed and handled successfully.'
+      else
+        flash[:notice] = 'Roster file parsed successfully, but no changes made.'
+      end
+    rescue Exception => ex
+      flash[:error] = "There was a problem parsing your roster file: #{ex.message}"
+    end
+
+    respond_to do |format|
+      format.html { redirect_to courses_path }
+    end
+  end
 
   private
   def index_core
