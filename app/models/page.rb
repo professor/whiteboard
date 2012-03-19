@@ -64,8 +64,7 @@ class Page < ActiveRecord::Base
   end
 
   def update_search_index
-    api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || '<API_URL>')
-#    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
+    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
     index = api.indexes 'cmux'
     options_hash = {:title => self.title, :type => "page"}
     if self.course
@@ -79,12 +78,12 @@ class Page < ActiveRecord::Base
           index.document(self.id.to_s + "-tabs-2").add(options_hash.merge!({:text => self.tab_three_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url + "?tab=tabs-3"}))
       end
     rescue Exception => e
-      logger.error("IndexTank issue: " + e.message)
+      logger.error("Searchify issue: " + e.message)
     end
   end
 
   def delete_from_search
-    api = IndexTank::Client.new(ENV['INDEXTANK_API_URL'] || '<API_URL>')
+    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
     index = api.indexes 'cmux'
     index.document(self.id.to_s).delete
   end
