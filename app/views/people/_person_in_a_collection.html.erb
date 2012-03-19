@@ -15,11 +15,8 @@
 			source: '/people.json',
 			minLength: 2
 		});
-    $(".remove_person").click(function() {
-        $(this).parents('div.person_in_a_collection').remove();
-    });
 </script>
-      <%= link_to "remove", "#", :class => "remove_person" %>
+	<a href="#" class="remove_person" onclick="$(this).parents('div.person_in_a_collection').remove();">remove</a>
     </p>
   </div>
 </div>

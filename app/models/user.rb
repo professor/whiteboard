@@ -120,7 +120,6 @@ class User < ActiveRecord::Base
   end
 
 
-  protected
   def initialize_human_name
     self.human_name = self.first_name + " " + self.last_name if self.human_name.nil?
   end
@@ -129,7 +128,7 @@ class User < ActiveRecord::Base
     self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
   end
 
-
+  protected
   def person_before_save
     # We populate some reasonable defaults, but this can be overridden in the database
     self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?

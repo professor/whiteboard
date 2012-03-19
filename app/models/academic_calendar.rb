@@ -37,7 +37,7 @@ class AcademicCalendar
 
       when (fall_a)..(fall_a + 6) then
         "A"
-      when (fall_a + 7)..(fall_a + 13) then
+      when (fall_a + 8)..(fall_a + 14) then
         "B"
       else
         "Unknown"
@@ -79,7 +79,7 @@ class AcademicCalendar
 
   def self.week_during_semester?(year, week_number)
     case week_number
-      when self.semester_start("Spring", year)..(self.semester_start("Spring", year)+15)
+      when self.semester_start("Spring", year)..(self.semester_start("Spring", year)+16)
         return true
       when self.semester_start("Summer", year)..(self.semester_start("Summer", year)+11)
         return true

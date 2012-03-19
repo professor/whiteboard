@@ -46,6 +46,13 @@ describe TeamsController do
       it_should_behave_like "permission denied"
     end
 
+    describe "not GET twiki_new" do
+      before do
+        post :twiki_new
+      end
+
+      it_should_behave_like "permission denied"
+    end
 
     describe "not POST create" do
       before do
@@ -109,7 +116,7 @@ describe TeamsController do
         it "saves a newly created project" do
           lambda {
             post :create, :team => @team.attributes, :course_id => @team.course.to_param
-          }.should change(Team,:count).by(1)
+          }.should change(Team, :count).by(1)
         end
 
         it "redirects to the index of teams" do

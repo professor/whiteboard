@@ -14,15 +14,6 @@
 		});
 	});
 
-
-	$(function() {
-		$("#add_person").click(function() {
-            var a = $("<a></a>").attr('href','#').click(somefunction);
-           $("#people_in_a_collection").append(a);
-        });
- 	});
-
-
   // The below link explains data
   // http://stackoverflow.com/questions/4518889/jquery-ui-dialog-open-multiple-dialog-boxes-using-the-same-class-on-the-button-a
    $(function(){

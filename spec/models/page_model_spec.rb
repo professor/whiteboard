@@ -12,7 +12,6 @@ describe Page do
     Page.any_instance.stub(:delete_from_search)
   end
 
-
   it "is valid with valid attributes" do
     @page.should be_valid
   end
@@ -61,6 +60,17 @@ describe Page do
       @page.url = ""
       @page.should be_valid
       @page.url.should == @page.title      
+    end
+
+    it "should able to update indentation level" do
+      @page = Page.new(:title => "Syllabus",
+                        :url => "url my_page",
+                        :indentation_level => 10,
+                        :updated_by_user_id => 10,
+                        :tab_one_contents => "As a student in this course, you have the opportunity to practice principled software development in the context of an authentic project using an agile method. You track your progress against a plan and manage risks along the way.")
+      @page.updated_by_user_id = 10
+      @page.indentation_level = 2
+      @page.should be_valid
     end
 
   end
