@@ -32,3 +32,19 @@ end
 #ruby-1.9.2-p180 > $stdout = File.new('console.out', 'w')
 #ruby-1.9.2-p180 > o2.versions.latest.read
 #ruby-1.9.2-p180 > $stdout = tmp
+
+
+# Here is how to undlete a deleted file
+#
+#  object = bucket.objects['people/photo/633/profile/TrevorUmeda.jpg']
+#  object.versions.latest.delete
+#
+# You probably want to verify the version history
+#  object.versions.each do |version| puts version.version_id end
+# vLG2iXXhzlJ14a6r3XqHiQqJQpmwTRYA
+# null
+#  => nil
+#  object.versions.each do |version| puts version.delete_marker? end
+#  true
+#  false
+# object.versions['null'].url_for(:read)   (and see in browser)
