@@ -44,7 +44,7 @@ describe EffortLogsController do
         before do
           @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12, :sum => 8),
                           EffortLog.new(:year => 2011, :week_number => 12, :sum => 8)]
-          EffortLog.stub(:where).and_return(@effort_logs)
+          EffortLog.stub(:find_effort_logs).and_return(@effort_logs)
         end
 
         it "and the effort logs are in the current period" do
@@ -83,7 +83,7 @@ describe EffortLogsController do
         before do
           @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12, :sum => 8),
                           EffortLog.new(:year => 2011, :week_number => 12, :sum => 8)]
-          EffortLog.stub(:where).and_return(@effort_logs)
+          EffortLog.stub(:find_effort_logs).and_return(@effort_logs)
         end
 
         it "and the effort logs are in the current period" do

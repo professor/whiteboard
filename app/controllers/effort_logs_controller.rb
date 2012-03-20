@@ -141,7 +141,7 @@ class EffortLogsController < ApplicationController
   # GET /effort_logs
   # GET /effort_logs.xml
   def index
-    @effort_logs = EffortLog.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC")
+    @effort_logs = EffortLog.find_effort_logs(current_user)
 
     if Date.today.cweek == 1 #If the first week of the year, then we set to the last week of previous year
       @prior_week_number = 52
