@@ -8,6 +8,11 @@ class EffortLog < ActiveRecord::Base
 
   before_save :determine_total_effort
 
+   def self.find_effort_logs(current_user)
+
+     where("person_id = '#{current_user.id}'").order("year DESC, week_number DESC")
+
+   end
 
   def editable_by(current_user)
     if (current_user && current_user.is_admin?)
