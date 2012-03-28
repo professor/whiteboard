@@ -33,11 +33,14 @@ class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
-  has_and_belongs_to_many :users, :join_table=>"courses_users"
+#  has_and_belongs_to_many :users, :join_table=>"courses_users"
 
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
 
+  has_many :registrations
+  has_many :registered_students, :through => :registrations, :source => :user
+  
   has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name
@@ -70,6 +73,7 @@ class Course < ActiveRecord::Base
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
   before_save :strip_whitespaces, :update_faculty
+  after_save :update_distribution_list
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
@@ -218,6 +222,22 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
+  def email
+    unless self.short_name.blank?
+      return "#{self.semester}-#{self.year}-#{self.short_name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    else
+      return "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    end
+  end
+
+  def invalidate_distribution_list
+    self.updating_email = true
+  end
+
+  def update_distribution_list
+    Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, self.registered_students, self.id, "courses")) if self.updating_email
+  end
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
@@ -228,5 +248,6 @@ class Course < ActiveRecord::Base
   def map_faculty_strings_to_persons(faculty_assignments_override_list)
     faculty_assignments_override_list.map { |member_name| Person.find_by_human_name(member_name) }
   end
+
 
 end

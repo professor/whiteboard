@@ -8,23 +8,28 @@ module HUBClassRosterHandler
       raise "Could not read your file, please check format."
     end
 
-    courses = Course.all :include => [:users]
+    courses = Course.all :include => [:registered_students]
     users = User.all
 
     students_for_course = {}
 
     parsed_courses.each do |parsed_course|
       if /Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/.match(parsed_course)
-        course_id = $2.strip
+        course_number = $2.strip
         student_webiso_accounts = $8.scan(/\d+\.\d.*?(\w+)/)
 
-        course = courses.select { |c| c.number.gsub('-', '').to_s == (course_id) }.first
+        course = courses.select { |c| c.number.gsub('-', '').to_s == (course_number) }.first
         next unless course
         students_for_course[course] = students_for_course[course] || Set.new
 
         student_webiso_accounts.each do |webiso_account|
           student = users.select { |u| u.webiso_account == ("#{webiso_account[0]}@andrew.cmu.edu") }.first
-          next unless student
+          #next
+          unless student
+#            UserMailer.email_help_about_missing_student(webiso_account, course)
+            self.email_help_about_missing_student(webiso_account[0], course)
+            next
+          end
           students_for_course[course] << student
         end
       end
@@ -38,22 +43,34 @@ module HUBClassRosterHandler
     changes = false
     students_for_course.each do |course, students|
       roster_changes[course] = {}
-      roster_changes[course][:added] = students.to_a - course.users
-      roster_changes[course][:dropped] = course.users - students.to_a
+      roster_changes[course][:added] = students.to_a - course.registered_students
+      roster_changes[course][:dropped] = course.registered_students - students.to_a
       Rails.logger.debug "Added: #{roster_changes[course][:added]}"
       Rails.logger.debug "Dropped: #{roster_changes[course][:dropped]}"
 
-      course.users = course.users - roster_changes[course][:dropped]
-      course.users = course.users + roster_changes[course][:added]
+      course.registered_students = course.registered_students - roster_changes[course][:dropped]
+      course.registered_students = course.registered_students + roster_changes[course][:added]
 
       if roster_changes[course][:added].any? || roster_changes[course][:dropped].any?
+        course.invalidate_distribution_list
         changes = true
       end
       course.save
     end
+    puts roster_changes
+    Rails.logger.debug roster_changes
     self.send_emails roster_changes
     return changes
   end
+
+  def self.email_help_about_missing_student webiso_account, course
+      options = {:to => "todd.sedano@sv.cmu.edu", :subject => "Need to add this user #{webiso_account}@andrew.cmu.edu",
+                 :message => "We were adding registered HUB users to the course #{course.name}, but they aren''t in the system.",
+                 :url => "http://rails.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&is_student=true",
+                 :url_label => "Add person"}
+      GenericMailer.email(options).deliver
+  end
+
 
   def self.send_emails roster_changes
     roster_changes.each do |course, info|
