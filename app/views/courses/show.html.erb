@@ -63,10 +63,7 @@
     });
 </script>
 
-
-
-
-<br style="clear:both;" />
+<br style="clear:both;"/>
 <% if current_user && (current_user.is_admin) %>
   <div class="rounded admin">
   <%= admin_image %>
@@ -95,9 +92,9 @@
   </div>
 <% end %>
 
-    <% if current_user && current_user.is_admin? %>
+<% if current_user && current_user.is_admin? %>
     <p><%= link_to 'Destroy', @course, :confirm => 'Are you sure?', :method => :delete %></p>
-    <% end %>
+<% end %>
 
 <br><br>
 <%= link_to 'Edit', edit_course_path(@course) %> |

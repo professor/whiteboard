@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120308205647) do
+ActiveRecord::Schema.define(:version => 20120326061853) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20120308205647) do
     t.boolean  "is_configured",                   :default => false
     t.integer  "updated_by_user_id"
     t.integer  "configured_by_user_id"
+    t.boolean  "updating_email"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
@@ -50,6 +51,11 @@ ActiveRecord::Schema.define(:version => 20120308205647) do
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
+
+  create_table "courses_users", :id => false, :force => true do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+  end
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -309,14 +315,35 @@ ActiveRecord::Schema.define(:version => 20120308205647) do
   add_index "presentations", ["course_id"], :name => "index_presentations_on_course_id"
   add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
 
-  create_table "registered_courses", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "person_id"
+  create_table "project_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "registered_courses", ["course_id", "person_id"], :name => "index_registered_courses_on_course_id_and_person_id", :unique => true
+  add_index "project_types", ["name"], :name => "index_project_types_on_name"
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.integer  "project_type_id"
+    t.integer  "course_id"
+    t.boolean  "is_closed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "projects", ["name"], :name => "index_projects_on_name"
+
+  create_table "registrations", :id => false, :force => true do |t|
+    t.integer  "course_id",  :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["course_id"], :name => "index_registrations_on_course_id"
+  add_index "registrations", ["user_id"], :name => "index_registrations_on_user_id"
 
   create_table "rss_feeds", :force => true do |t|
     t.string   "title"

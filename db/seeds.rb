@@ -1,7 +1,7 @@
 require 'factory_girl'
 
-require File.join(Rails.root,'spec','factories','strength_themes.rb')
-require File.join(Rails.root,'spec','factories','factories.rb')
+require File.join(Rails.root, 'spec', 'factories', 'strength_themes.rb')
+require File.join(Rails.root, 'spec', 'factories', 'factories.rb')
 Factory.create(:achiever)
 Factory.create(:activator)
 Factory.create(:adaptability)
@@ -37,8 +37,7 @@ Factory.create(:significance)
 Factory.create(:strategic)
 Factory.create(:woo)
 
-
-Factory.define :todd, :parent => :person  do |p|
+Factory.define :todd, :parent => :person do |p|
   p.first_name "Todd"
   p.last_name "Sedano"
   p.human_name "Todd Sedano"
@@ -64,8 +63,8 @@ Factory.define :awe_smith, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
   p.graduation_year "2021"
-  p.masters_program  "SE"
-  p.masters_track  "DM"
+  p.masters_program "SE"
+  p.masters_track "DM"
   p.twiki_name "AweSmith"
   p.first_name "Awe"
   p.last_name "Smith"
@@ -81,8 +80,8 @@ Factory.define :betty_ross, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
   p.graduation_year "2021"
-  p.masters_program  "SE"
-  p.masters_track  "DM"
+  p.masters_program "SE"
+  p.masters_track "DM"
   p.twiki_name "BettyRoss"
   p.first_name "Betty"
   p.last_name "Ross"
@@ -98,8 +97,8 @@ Factory.define :charlie_moss, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
   p.graduation_year "2021"
-  p.masters_program  "SE"
-  p.masters_track  "DM"
+  p.masters_program "SE"
+  p.masters_track "DM"
   p.twiki_name "CharlieMoss"
   p.first_name "Charlie"
   p.last_name "Moss"
@@ -138,8 +137,8 @@ Factory.define :your_name_here, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 0
   p.graduation_year "2012"
-  p.masters_program  "SE"
-  p.masters_track  "Tech"
+  p.masters_program "SE"
+  p.masters_track "Tech"
   p.twiki_name "FirstLast"
   p.first_name "First"
   p.last_name "Last"

@@ -129,6 +129,8 @@ class PeopleController < ApplicationController
 
     @person = Person.new
     @person.is_active = true
+    @person.webiso_account = params[:webiso_account]
+    @person.is_student = params[:is_student]
 
     if Rails.env.development?
       @domain = GOOGLE_DOMAIN

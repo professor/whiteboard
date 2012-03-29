@@ -18,7 +18,7 @@
   <% else %>
 
   <p>
-    <%= f.label :name %> (*)<br />
+    <%= f.label :name, "Team name" %> (*)<br />
     <%= f.text_field :name, :size => 40 %>
   </p>
 
@@ -30,12 +30,12 @@
 
   <table><tbody>
     <tr><td><%= f.label :primary_faculty_id, "Primary faculty" %><br /></td><td>&nbsp;</td><td>&nbsp;</td>
-  <td>Alter label for primary faculty (ie Coach, VP of Engineering)</td></tr>
-  <tr><td><%= f.collection_select(:primary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td>Label for primary faculty (ie Coach, VP of Engineering)</td></tr>
+  <tr><td><%= f.collection_select(:primary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td><%= link_to "Add Instructor", edit_course_path(@course) %></td><td>&nbsp;</td>
   <td><%= text_field_tag :primary_faculty_label, @course.primary_faculty_label, :size => 20 %> <i>(affects all teams in this course)</i></td></tr>
     <tr><td><%= f.label :secondary_faculty_id, "Secondary faculty" %><br /></td><td>&nbsp;</td><td>&nbsp;</td>
-  <td>Alter label for secondary faculty (ie Coach, VP of Engineering)</td></tr>
-  <tr><td><%= f.collection_select(:secondary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td>&nbsp;</td><td>&nbsp;</td>
+  <td>Label for secondary faculty (ie Coach, VP of Engineering)</td></tr>
+  <tr><td><%= f.collection_select(:secondary_faculty_id, @faculty, :id, :human_name, :include_blank => true) %></td><td><%= link_to "Add Instructor", edit_course_path(@course) %></td><td>&nbsp;</td>
   <td><%= text_field_tag :secondary_faculty_label, @course.secondary_faculty_label, :size => 20 %> <i>(affects all teams in this course)</i></td></tr>
 </tbody></table>
   <br />

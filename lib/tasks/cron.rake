@@ -11,6 +11,8 @@ require 'fileutils'
 desc "task for all cron tab entries"
 task :cron do
 
+ puts "---Running task :cron"
+
  if Date.today.wday == 5 # run on Fridays
    puts "----Updating cmu:effort_log_midweek_warning_email"
    Rake::Task['cmu:effort_log_midweek_warning_email'].invoke

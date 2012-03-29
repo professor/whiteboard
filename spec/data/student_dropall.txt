@@ -1,0 +1,718 @@
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96700  Sect: A   FOUNDATNS SW ENG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): SEDANO, A.
+                                         KATZ, E.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+
+Total Number Of Students In Course  96700  Section  A   is        21
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96700  Sect: B   FOUNDATNS SW ENG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): SEDANO, A.
+                                         KATZ, E.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+BAILEY, BRIAN             Master CIT SV   M    24.0  brianbai
+
+BOND, JOSHUA JAMES SACKET Master CIT SV   M    24.0  jbond
+
+BROWN, MORGAN H.G.        Master CIT SV   M    24.0  mhbrown
+
+CHAN, GARRY YIU CHU       Master CIT SV   M    24.0  gychan
+
+CHAUDHURI, SIONDEV        Master CIT SV   M    24.0  siondevc
+
+CHEN, CHAONAN Z           Master CIT SV   M    24.0  czc
+
+DEAN, GEORGE DAVID        Master CIT SV   M    24.0  gdd
+
+HAMILTON, BRIAN PATRICK   Master CIT SV   M    24.0  bhamilto
+
+HOKANSON, CRAIG           Master CIT SV   M    24.0  chokanso
+
+JESURAJ, DEIVAPRAKASH     Master CIT SV   M    24.0  djesuraj
+
+KLERIGA, DAVID            Master CIT SV   M    24.0  dkleriga
+
+KURILIN, ALEXANDR         Master CIT SV   M    24.0  alurilin
+
+KURUPACHERIL, FRANCIS ANT Master CIT SV   M    24.0  fkurupac
+
+LENG, JIJUN               Master CIT SV   M    24.0  jleng
+
+MARMOL, VICTOR MANUEL     Master CIT SV   M    24.0  vmarmol
+
+PEREZ, SAUL               Master CIT SV   M    24.0  sperez
+
+PHAM, MINH HOANG          Master CIT SV   M    24.0  mhpham
+
+RICKS, JAMES L            Master CIT SV   M    24.0  jricks
+
+SAMENFELD-SPECHT, SEAN EM Master CIT SV   M    24.0  ssamenfe
+
+TORRES, BRUNO             Master CIT SV   M    24.0  btorres
+
+VROOMAN, MICHAEL          Master CIT SV   M    24.0  mvrooman
+
+ZAITSEV, TIMOPHEY         Master CIT SV   M    24.0  asdasdad
+
+
+Total Number Of Students In Course  96700  Section  B   is        22
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96703  Sect: A   MTRCS SFTWR ENGINERS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): RADLEY, M.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96703  Sect: A   MTRCS SFTWR ENGINERS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): RADLEY, M.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+Total Number Of Students In Course  96703  Section  A   is        28
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96705  Sect: A   AVDG SW PROJ FAILURE
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): INSTRUCTOR TBA, .
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+
+Total Number Of Students In Course  96709  Section  A   is        20
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96709  Sect: B   AVDG SW PROJ FAILURE
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): INSTRUCTOR TBA, .
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+
+Total Number Of Students In Course  96709  Section  B   is        12
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96780  Sect: A1  ELEM OF SFTWRE MGMT
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): MERCIER, G.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96780  Sect: A1  ELEM OF SFTWRE MGMT
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): MERCIER, G.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+Total Number Of Students In Course  96780  Section  A1  is        28
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96781  Sect: A2  METRICS SFTWR MNGRS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): MERCIER, G.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96781  Sect: A2  METRICS SFTWR MNGRS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): MERCIER, G.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+Total Number Of Students In Course  96781  Section  A2  is        26
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96781  Sect: B2  METRICS SFTWR MNGRS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): ROOT, S.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+BENNETT, NATALIE MARION   Master CIT INI  M    12.0  nbennett
+
+SHAH, JAY                 Master CIT INI  M    12.0  jayshah
+
+
+Total Number Of Students In Course  96781  Section  B2  is         2
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96788  Sect: A1  SW PROD DEF
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): BAREISS, E.
+                                         WASSERMAN, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+AKSHINTALA, SUBBANARASAIA Master CIT SV   M    12.0  sakshint
+
+ANDERSON, DEREK           Master CIT SV   M    12.0  dereka
+
+ANTYPAS, PETER            Master CIT SV   M    12.0  pantypas
+
+ARYA, PUNIT               Master CIT SV   M    12.0  parya
+
+BHEEMANADHAM, KRISHNA MOH Master CIT SV   M    12.0  kbheeman
+
+BIACS, ZOLTAN FERENC      Master CIT SV   M    12.0  zfb
+
+CHAWLA, GURMEET           Master CIT SV   M    12.0  gchawla
+
+ESTIS, PAUL               Master CIT SV   M    12.0  paule
+
+GAO, TAN                  Master CIT SV   M    12.0  tangao
+
+HLAING, HTIN AUNG         Master CIT SV   M    12.0  hhlaing
+
+KANAGARATNAM, SENTHILKUMA Master CIT SV   M    12.0  skanagar
+
+KANDURI, SHYAM S          Master CIT SV   M    12.0  skanduri
+
+MURUGESAN, ILANGOVAN      Master CIT SV   M    12.0  imuruges
+
+OH, YOUNG DAVID           Master CIT SV   M    12.0  ydo
+
+PAY, GEOFFREY ALAN        Master CIT SV   M    12.0  gpay
+
+PRASAD, RAVI              Master CIT SV   M    12.0  rprasad
+
+PURWAR, PANKAJ            Master CIT SV   M    12.0  ppurwar
+
+PUTTA, ALWAL REDDY        Master CIT SV   M    12.0  arputta
+
+RAIKAR, MANOJ SURESH      Master CIT CIT  M    12.0  mraikar
+
+VIJAYAKUMAR, ASHOK KUMAR  Master CIT SV   M    12.0  ashokkuv
+
+ZOLOTUKHIN, YEVGENIY GLEB Master CIT SV   M    12.0  ygz
+
+
+Total Number Of Students In Course  96788  Section  A1  is        21
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96788  Sect: B1  SW PROD DEF
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): BAREISS, E.
+                                         WASSERMAN, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+CANALES, JEREL MATTHEW    Master CIT SV   M    12.0  jcanales
+
+GOLDSMITH, JASON JON      Master CIT SV   M    12.0  jjgoldsm
+
+GUO, YONG                 Master CIT SV   M    12.0  yongg
+
+HOFFMANN, TRISTAN E.      Master CIT SV   M    12.0  tristan
+
+LACHINGER, MARKUS MARIA   Master CIT SV   M    12.0  mmlachin
+
+MAITY, SUTAPA             Master CIT SV   M    12.0  sutapam
+
+OENTOJO, CHRISTOPHER LAUR Master CIT SV   M    12.0  coentojo
+
+POOTHATTA, ASHWIN ARUN    Master CIT SV   M    12.0  apoothat
+
+SUN-BASORUN, ADESEGUN ADE Master CIT SV   M    12.0  asunbaso
+
+
+Total Number Of Students In Course  96788  Section  B1  is         9
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96789  Sect: A2  REQUIRMENTS ANALYSIS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): BAREISS, E.
+                                         WASSERMAN, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+AKSHINTALA, SUBBANARASAIA Master CIT SV   M    12.0  sakshint
+
+ANDERSON, DEREK           Master CIT SV   M    12.0  dereka
+
+ANTYPAS, PETER            Master CIT SV   M    12.0  pantypas
+
+ARYA, PUNIT               Master CIT SV   M    12.0  parya
+
+BHEEMANADHAM, KRISHNA MOH Master CIT SV   M    12.0  kbheeman
+
+BIACS, ZOLTAN FERENC      Master CIT SV   M    12.0  zfb
+
+ESTIS, PAUL               Master CIT SV   M    12.0  paule
+
+GAO, TAN                  Master CIT SV   M    12.0  tangao
+
+HLAING, HTIN AUNG         Master CIT SV   M    12.0  hhlaing
+
+KANAGARATNAM, SENTHILKUMA Master CIT SV   M    12.0  skanagar
+
+KANDURI, SHYAM S          Master CIT SV   M    12.0  skanduri
+
+MURUGESAN, ILANGOVAN      Master CIT SV   M    12.0  imuruges
+
+OH, YOUNG DAVID           Master CIT SV   M    12.0  ydo
+
+PAY, GEOFFREY ALAN        Master CIT SV   M    12.0  gpay
+
+PRASAD, RAVI              Master CIT SV   M    12.0  rprasad
+
+PURWAR, PANKAJ            Master CIT SV   M    12.0  ppurwar
+
+PUTTA, ALWAL REDDY        Master CIT SV   M    12.0  arputta
+
+RAIKAR, MANOJ SURESH      Master CIT CIT  M    12.0  mraikar
+
+VIJAYAKUMAR, ASHOK KUMAR  Master CIT SV   M    12.0  ashokkuv
+
+ZOLOTUKHIN, YEVGENIY GLEB Master CIT SV   M    12.0  ygz
+
+
+Total Number Of Students In Course  96789  Section  A2  is        20
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96789  Sect: B2  REQUIRMENTS ANALYSIS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): BAREISS, E.
+                                         WASSERMAN, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+BENNETT, NATALIE MARION   Master CIT INI  M    12.0  nbennett
+
+CANALES, JEREL MATTHEW    Master CIT SV   M    12.0  jcanales
+
+CHAWLA, GURMEET           Master CIT SV   M    12.0  gchawla
+
+GOLDSMITH, JASON JON      Master CIT SV   M    12.0  jjgoldsm
+
+GUO, YONG                 Master CIT SV   M    12.0  yongg
+
+HOFFMANN, TRISTAN E.      Master CIT SV   M    12.0  tristan
+
+LACHINGER, MARKUS MARIA   Master CIT SV   M    12.0  mmlachin
+
+MAITY, SUTAPA             Master CIT SV   M    12.0  sutapam
+
+OENTOJO, CHRISTOPHER LAUR Master CIT SV   M    12.0  coentojo
+
+POOTHATTA, ASHWIN ARUN    Master CIT SV   M    12.0  apoothat
+
+SUN-BASORUN, ADESEGUN ADE Master CIT SV   M    12.0  asunbaso
+
+
+Total Number Of Students In Course  96789  Section  B2  is        11
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96800  Sect: A   REAL WLD SE ENTREP
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): SEDANO, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+ZHANG, YEBIN              Master CIT INI  M    12.0  yebinz
+
+
+Total Number Of Students In Course  96800  Section  A   is         1
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96815  Sect: A   INN & ENTREP SFT MNG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): EVANS, J.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+ARMENDARIZ, KEVIN         Master CMU IPD  M    12.0  karmenda
+
+CANALES, JEREL MATTHEW    Master CIT SV   M    12.0  jcanales
+
+CRESPIN, NATHAN H.        Master CMU IPD  M    12.0  ncrespin
+
+DEMPSEY, CONALL           Master CMU IPD  M    12.0  cdempsey
+
+DING, HONG                Master CMU IPD  M    12.0  hongd
+
+DUTTA, APOORV             Master CIT INI  M    12.0  apoorvd
+
+FISHER, SCOTT F.          Master CMU IPD  M    12.0  sfisher
+
+FRIAS, OSCAR G.           Master CMU IPD  M    12.0  ogf
+
+FROMOWITZ, LUKE NATHAN    Master CMU IPD  M    12.0  lfromowi
+
+GILLIGAN, MEGAN E.        Master CMU IPD  M    12.0  mgilliga
+
+GOLDSMITH, JASON JON      Master CIT SV   M    12.0  jjgoldsm
+
+GUO, YONG                 Master CIT SV   M    12.0  yongg
+
+HOFFMANN, TRISTAN E.      Master CIT SV   M    12.0  tristan
+
+HUANG, PO SHIN            Master CIT ECE  M    12.0  poshinh
+
+LACHINGER, MARKUS MARIA   Master CIT SV   M    12.0  mmlachin
+
+LI, YIFEI                 Master CMU IPD  M    12.0  yifeili
+
+LIN, ALICIA H.            Master CMU IPD  M    12.0  ahlin
+
+LOVELL, MATTHEW A.        Master CMU IPD  M    12.0  mlovell
+
+MAITY, SUTAPA             Master CIT SV   M    12.0  sutapam
+
+NEIMAN, RACHEL A.         Master CMU IPD  M    12.0  rneiman
+
+OENTOJO, CHRISTOPHER LAUR Master CIT SV   M    12.0  coentojo
+
+PINN, REBECCA H.          Master CMU IPD  M    12.0  rpinn
+
+POOTHATTA, ASHWIN ARUN    Master CIT SV   M    12.0  apoothat
+
+POPA, FABIAN              Master CIT INI  M    12.0  fpopa
+
+REED, JENNA D.            Master CMU IPD  M    12.0  jdreed
+
+SHAH, JAY                 Master CIT INI  M    12.0  jayshah
+
+SINGLA, ASEEM             Master CMU IPD  M    12.0  asingla
+
+SUN, TIANJIE              Master CMU IPD  M    12.0  tianjies
+
+SUN-BASORUN, ADESEGUN ADE Master CIT SV   M    12.0  asunbaso
+
+TARUN ABRAHAM,            Master CIT CIT  M    12.0  tarunabr
+
+TRUJILLO, JUAN DAVID      Master CIT INI  M    12.0  jdtrujil
+
+ZHANG, CHI                Master CIT CIT  M    12.0  chizhang
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96815  Sect: A   INN & ENTREP SFT MNG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): EVANS, J.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+Total Number Of Students In Course  96815  Section  A   is        32
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96821  Sect: A   INTRO SFTWR ENGNRNG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): ROSSO-LLOPART, M.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+ADHIKARLA, SHRIKANT       Master CIT INI  M    12.0  sadhikar
+
+AGRAWAL, PRADYUMNA        Master CIT INI  M    12.0  pradyuma
+
+ALJEDIA, BASMAH MOHAMMED  Master CIT INI  M    12.0  baljedia
+
+BACHANI, VANDANA          Master CIT INI  M    12.0  vbachani
+
+BAKSHI, SURAMYA           Master CIT INI  M    12.0  suramyab
+
+BANIK, ARNAB KUMAR        Master CIT INI  M    12.0  abanik
+
+CALI, JONIDA              Master CIT INI  M    12.0  jcali
+
+CANEY, RYAN DOUGLAS       Master CIT INI  M    12.0  rcaney
+
+CHEKURI, NAVEEN           Master CIT INI  M    12.0  nchekuri
+
+CHIKKERAHALLY GURURAJA, A Master CIT INI  M    12.0  achikker
+
+CHO, SUNGHO               Master CIT INI  M    12.0  sunghoc
+
+CHUAN, HUEY LING          Master CIT INI  M    12.0  hchuan
+
+DAS, DITAYA               Master CIT INI  M    12.0  ditayad
+
+DATLA, YUVA TARUN VARM    Master CIT INI  M    12.0  ydatla
+
+DORROS, CHRISTOPHER JOHN  Master CIT INI  M    12.0  cdorros
+
+FERNANDEZ COTO, MARCELA   Master CIT INI  M    12.0  marcelaf
+
+GADA, POOJA SRIPAD        Master CIT INI  M    12.0  pgada
+
+JAIN, AMOL                Master CIT INI  M    12.0  amolj
+
+JOHNSON, TRENTON JARARD   Master CIT INI  M    12.0  tjjohnso
+
+KANNAN, RAMYA             Master CIT INI  M    12.0  ramyakan
+
+KARABA, DOLLY WAMBUI      Master CIT INI  M    12.0  dkaraba
+
+KENNEDY, STUART EMERICK   Master CIT INI  M    12.0  sekenned
+
+KULKUMJON, ISARAPORN      Master CIT INI  M    12.0  ikulkumj
+
+KWAK, WOOKJONG            Master CIT INI  M    12.0  wkwak
+
+LEE, DER-NIEN             Master CIT INI  M    12.0  dernienl
+
+LIN, CHIA-JUN             Master CIT INI  M    12.0  chiajunl
+
+MALYALA, ARNO LENIN       Master CIT INI  M    12.0  amalyala
+
+NATESAN, DIVYA            Master CIT INI  M    12.0  dnatesan
+
+OWENS, GREGORY            Master CIT INI  M    12.0  gowens
+
+PARAB, SANJAY PANDURANG   Master CIT INI  M    12.0  sparab
+
+RAMANAN, VIJAY RAGHAVAN   Master CIT INI  M    12.0  vramanan
+
+RONG, DAN                 Master CIT INI  M    12.0  drong
+
+SCHLAU, MATTHEW RYAN      Master CIT INI  M    12.0  mschlau
+
+SHEN, YULAI               Master CIT INI  M    12.0  yulais
+
+SOORIYAN, SIVA VISAKAN    Master CIT INI  M    12.0  ssooriya
+
+SUNG, YUN-CHIAO           Master CIT INI  M    12.0  yunchias
+
+THOMAS, KATHRYN ROSE      Master CIT INI  M    12.0  krthomas
+
+WANG, CHUN                Master CIT INI  M    12.0  chunwang
+
+ZHANG, GONG               Master CIT INI  M    12.0  gongz
+
+ZHANG, YING               Master CIT INI  M    12.0  yingzha2
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96821  Sect: A   INTRO SFTWR ENGNRNG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): ROSSO-LLOPART, M.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+
+Total Number Of Students In Course  96821  Section  A   is        40
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96821  Sect: SV  INTRO SFTWR ENGNRNG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): SEDANO, A.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+CANALES, JEREL MATTHEW    Master CIT SV   M    12.0  jcanales
+
+GOLDSMITH, JASON JON      Master CIT SV   M    12.0  jjgoldsm
+
+GUO, YONG                 Master CIT SV   M    12.0  yongg
+
+HOFFMANN, TRISTAN E.      Master CIT SV   M    12.0  tristan
+
+LACHINGER, MARKUS MARIA   Master CIT SV   M    12.0  mmlachin
+
+MAITY, SUTAPA             Master CIT SV   M    12.0  sutapam
+
+OENTOJO, CHRISTOPHER LAUR Master CIT SV   M    12.0  coentojo
+
+POOTHATTA, ASHWIN ARUN    Master CIT SV   M    12.0  apoothat
+
+RAIKAR, MANOJ SURESH      Master CIT CIT  M    12.0  mraikar
+
+SUN-BASORUN, ADESEGUN ADE Master CIT SV   M    12.0  asunbaso
+
+
+Total Number Of Students In Course  96821  Section  SV  is        10
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96825  Sect: A   MOBL HRDW SW ENGNRS
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): ZHANG, P.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+APPALA, RAGHAVENDRA SANDE Master CIT INI  M    12.0  sappala
+
+CHIU, PO-KAI              Master CIT INI  M    12.0  pchiu
+
+GARDE, CHINMAY SUNIL      Master CIT INI  M    12.0  cgarde
+
+GUDLUR, DILIP             Master CIT INI  M    12.0  dgudlur
+
+KUNLONG, SARALEE          Master CIT INI  M    12.0  skunlong
+
+MOHAN, MANEESH            Master CIT INI  M    12.0  maneeshm
+
+POPA, FABIAN              Master CIT INI  M    12.0  fpopa
+
+STOLWYK, MICHELLE ERICA   Master CIT ECE  M    12.0  mstolwyk
+
+VAVILI, DIVYA             Master CIT INI  M    12.0  dvavili
+
+VYAS, PALLAV              Master CIT INI  M    12.0  pvyas
+
+XIA, JINGSHU              Master CIT INI  M    12.0  jingshux
+
+YING, KRYSTAL NADINE      Master CIT INI  M    12.0  kny
+
+ZHANG, YEBIN              Master CIT INI  M    12.0  yebinz
+
+ZHENG, QI                 Master CIT INI  M    12.0  qizheng
+
+
+Total Number Of Students In Course  96825  Section  A   is        14
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96834  Sect: A   SPEC TOPCS SECURITY
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): JACKSON, C.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+APPALA, RAGHAVENDRA SANDE Master CIT INI  M    12.0  sappala
+
+BERNADEL, BENOIT          Master CIT INI  M    12.0  bbernade
+
+CHEMMANY GOPALAKRISHNAN,  Master CIT INI  M    12.0  achemman
+
+DUTTA, APOORV             Master CIT INI  M    12.0  apoorvd
+
+GORBATY, SERGEY           Master CIT INI  M    12.0  sgorbaty
+
+GUDLUR, DILIP             Master CIT INI  M    12.0  dgudlur
+
+HAN, JUN                  Doct   CIT ECE  M    12.0  junhan
+
+KUMAR, NISHANT            Master CIT INI  M    12.0  nkumar1
+
+MARTINEZ, ANA CECILIA     Master CIT INI  M    12.0  acmartin
+
+PEREIRA, YOLANDO          Master CIT INI  M    12.0  ypereira
+
+SHOMALI, RAMI             Master CIT INI  M    12.0  rshomali
+
+
+Total Number Of Students In Course  96834  Section  A   is        11
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96835  Sect: A   SP TPCS: MBL SECRTY
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): TAGUE, P.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+APPALA, RAGHAVENDRA SANDE Master CIT INI  M    12.0  sappala
+
+CHEMMANY GOPALAKRISHNAN,  Master CIT INI  M    12.0  achemman
+
+CHIU, PO-KAI              Master CIT INI  M    12.0  pchiu
+
+GARDE, CHINMAY SUNIL      Master CIT INI  M    12.0  cgarde
+
+GORBATY, SERGEY           Master CIT INI  M    12.0  sgorbaty
+
+GUDLUR, DILIP             Master CIT INI  M    12.0  dgudlur
+
+JARAMILLO, LUZ ADRIANA    Master CIT INI  M    12.0  ljaramil
+
+KUNLONG, SARALEE          Master CIT INI  M    12.0  skunlong
+
+MOHAN, MANEESH            Master CIT INI  M    12.0  maneeshm
+
+TRUJILLO, JUAN DAVID      Master CIT INI  M    12.0  jdtrujil
+
+VYAS, PALLAV              Master CIT INI  M    12.0  pvyas
+
+XIA, JINGSHU              Master CIT INI  M    12.0  jingshux
+
+YING, KRYSTAL NADINE      Master CIT INI  M    12.0  kny
+
+ZHENG, QI                 Master CIT INI  M    12.0  qizheng
+
+
+Total Number Of Students In Course  96835  Section  A   is        14
