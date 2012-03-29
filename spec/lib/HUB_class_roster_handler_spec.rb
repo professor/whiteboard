@@ -22,7 +22,7 @@ describe HUBClassRosterHandler do
       end
 
       it "should notify profs only once" do
-        subject.should_receive(:send_emails).exactly(1).times
+        subject.should_receive(:email_professors_about_added_and_dropped_students).exactly(1).times
         subject.handle(@roster_file)
       end
 
@@ -51,7 +51,7 @@ describe HUBClassRosterHandler do
       end
 
       it "should not notify the profs" do
-        subject.should_receive(:send_emails).exactly(0).times
+        subject.should_receive(:email_professors_about_added_and_dropped_students).exactly(0).times
         subject.handle(@roster_file)
       end
 
@@ -83,7 +83,7 @@ describe HUBClassRosterHandler do
     end
 
     it "should notify the profs" do
-      subject.should_receive(:send_emails).exactly(1).times
+      subject.should_receive(:email_professors_about_added_and_dropped_students).exactly(1).times
       subject.handle(@roster_file)
     end
 

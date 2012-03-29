@@ -264,7 +264,7 @@ describe Course do
   #end
 
   # Tests for has_and_belongs_to_many relationship
-  it { should have_and_belong_to_many(:faculty) }
-  it { should have_and_belong_to_many(:registered_students) }
+  it { should have_many(:faculty) }
+  it { should have_many(:registered_students) }
 
 end

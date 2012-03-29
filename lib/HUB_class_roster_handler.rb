@@ -74,10 +74,14 @@ module HUBClassRosterHandler
   def self.send_emails roster_changes
     roster_changes.each do |course, info|
       next if info[:added].blank? && info[:dropped].blank?
-      options = {:to => course.faculty.collect(&:email), :subject => "Roster change for your course #{course.name}",
-                 :message => self.roster_change_message(info[:added], info[:dropped])}
-      GenericMailer.email(options).deliver
+      email_professors_about_added_and_dropped_students(course, info)
     end
+  end
+
+  def self.email_professors_about_added_and_dropped_students course, info
+    options = {:to => course.faculty.collect(&:email), :subject => "Roster change for your course #{course.name}",
+               :message => self.roster_change_message(info[:added], info[:dropped])}
+    GenericMailer.email(options).deliver
   end
 
   def self.roster_change_message added, dropped
