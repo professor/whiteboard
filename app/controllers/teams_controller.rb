@@ -157,7 +157,7 @@ class TeamsController < ApplicationController
       @team = Team.new()
       @team.course_id = params[:course_id]
       @course = Course.find(params[:course_id])
-      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+      @faculty = @course.faculty
       (1..5).each do
         @team.people << Person.new
       end
@@ -175,7 +175,7 @@ class TeamsController < ApplicationController
     @course = Course.find(params[:course_id])
     if has_permissions_or_redirect(:staff, course_team_path(@course, @team))
       @team.course_id = params[:course_id]
-      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+      @faculty = @course.faculty
     end
   end
 
