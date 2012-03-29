@@ -18,7 +18,7 @@ class Ability
     end
 
     if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
-      can :upload, HUBClassRosterHandler
+      can :upload, Course
     end
 
     can :manage, User, :id => user.id
