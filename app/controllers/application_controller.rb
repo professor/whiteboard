@@ -95,6 +95,11 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message #We can remove this line when we upgrade to Rails 3.2
+    redirect_to root_url, :error => exception.message
+  end
+  
   def american_date
     '%m/%d/%Y'
   end
