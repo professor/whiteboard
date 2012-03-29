@@ -68,13 +68,17 @@
 
 <br/>
 
-<% if current_user.present? && (current_user.is_teacher || current_user.is_staff || current_user.is_admin) %>
+<% if can? :upload, HUBClassRosterHandler %>
+  <div class="rounded admin">
+  <%= admin_image %>
+    <span class="instructions">Only certain admin roles can see this information.</span>
     <h2>Upload Roster File</h2>
     <% form_tag '/courses/upload', :multipart => true do %>
         <%= file_field_tag "file" %>
         <%= submit_tag "Upload" %>
     <% end %>
     <br/>
+  </div>
 <% end %>
 
 <% if current_user && current_user.is_admin? %>

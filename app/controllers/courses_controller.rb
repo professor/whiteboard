@@ -154,6 +154,8 @@ class CoursesController < ApplicationController
   end
 
   def upload
+    authorize! :upload, HUBClassRosterHandler
+    store_previous_location
     file_content = params[:file].read()
 
     begin
@@ -168,7 +170,7 @@ class CoursesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to courses_path }
+      format.html { redirect_back_or_default(courses_path) }
     end
   end
 

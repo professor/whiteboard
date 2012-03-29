@@ -57,7 +57,6 @@ module HUBClassRosterHandler
       end
       course.save
     end
-    puts roster_changes
     Rails.logger.debug roster_changes
     self.send_emails roster_changes
     return changes

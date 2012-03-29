@@ -17,6 +17,10 @@ class Ability
     #  cannot :update, PageAttachment
     end
 
+    if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
+      can :upload, HUBClassRosterHandler
+    end
+
     can :manage, User, :id => user.id
 
     # The first argument to `can` is the action you are giving the user permission to do.
