@@ -323,7 +323,7 @@ class PeerEvaluationController < ApplicationController
 
   private
   def send_email(team, faculty, to_address, message)
-    options = {:to => to_address, :cc => faculty, :bcc => "todd.sedano@sv.cmu.edu",
+    options = {:to => to_address, :cc => faculty, :bcc => "rails.app@sv.cmu.edu",
                :subject => "peer evaluation for team #{team.name}",
                :message => message, :url => "http://rails.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
                :url_label => "Complete the survey now"}
