@@ -64,6 +64,36 @@
 </script>
 
 <br style="clear:both;"/>
+
+<% if current_user && (current_user.is_staff) %>
+    <div class="rounded staff">
+    <%= professor_image %>
+      <span class="instructions">Only faculty can see this information.</span>
+<h2>Experimental feature</h2>
+      <p>The HUB does not provide us with registration information. Periodically, Gerry can upload HUB registrations so that
+we can compare HUB registrations with our student records. This is particularly useful if someone is registered for a
+course but hasn't been assigned a team. </p>
+
+<table class="cmu_table">
+<thead><tr><th>Cached HUB registrations</th><th>Team assignments</th></tr></thead>
+  <% @students.sort.each do |name, hash| %>
+   <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
+     <% if hash[:hub] %>
+         <td><%= name %></td>
+     <% else %>
+         <td>&nbsp;</td>
+     <% end %>
+     <% if hash[:team] %>
+         <td><%= name %> on <%= hash[:team_name] %></td>
+     <% else %>
+         <td>&nbsp;</td>
+     <% end %>
+    </tr>
+<% end %>
+</table>
+       </div>
+<% end %>
+
 <% if current_user && (current_user.is_admin) %>
   <div class="rounded admin">
   <%= admin_image %>
@@ -100,3 +130,4 @@
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Configure', configure_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
+

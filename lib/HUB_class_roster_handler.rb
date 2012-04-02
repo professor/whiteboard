@@ -85,7 +85,7 @@ module HUBClassRosterHandler
   end
 
   def self.roster_change_message added, dropped
-    message = ''
+    message = "Note: The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.\n\n"
     if added.any?
       message += "#{added.count} students added to the course:\n"
       added.each { |student| message += "\t#{student.first_name}  #{student.last_name}\n" }

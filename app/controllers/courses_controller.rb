@@ -43,6 +43,18 @@ class CoursesController < ApplicationController
       end
     end
 
+    @students = Hash.new
+    @course.registered_students.each do |student|
+      @students[student.human_name] = {:hub => true}
+    end
+    @course.teams.each do |team|
+      team.people.each do |person|
+        @students[person.human_name] = (@students[person.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
+      end
+    end
+    tmp = @students
+
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml { render :xml => @course }
