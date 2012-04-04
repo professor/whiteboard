@@ -8,7 +8,7 @@ class RemoveProjectsAndProjectTypes < ActiveRecord::Migration
   end
 
   def self.down
-#    add_column :effort_log_line_items, :project_id, :integer
+    add_column :effort_log_line_items, :project_id, :integer
 
     create_table :projects do |t|
       t.string :name

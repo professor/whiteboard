@@ -1,4 +1,4 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
+require File.join(Rails.root, 'spec', 'factories', 'factories.rb')
 Factory.define :fse, :parent => :course do |c|
   c.name 'Foundations of Software Engineering'
   c.short_name 'FSE'
@@ -9,6 +9,7 @@ Factory.define :mfse, :parent => :course do |c|
   c.short_name 'MfSE'
   c.semester AcademicCalendar.next_semester
   c.year AcademicCalendar.next_semester_year
+  c.number '96-700'
 end
 
 Factory.define :mfse_current_semester, :parent => :course do |c|

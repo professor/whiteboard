@@ -67,6 +67,7 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   def edit
     if has_permissions_or_redirect(:staff, root_path)
+      store_previous_location
       @course = Course.find(params[:id])
     end
   end
@@ -128,7 +129,7 @@ class CoursesController < ApplicationController
             CourseMailer.configure_course_faculty_email(@course).deliver #The previous page was edit action
           end
           flash[:notice] = 'Course was successfully updated.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_back_or_default(course_path(@course)) }
           format.xml { head :ok }
         else
           format.html { render :action => "edit" }
@@ -152,6 +153,26 @@ class CoursesController < ApplicationController
     end
   end
 
+  def upload
+    authorize! :upload, HUBClassRosterHandler
+    store_previous_location
+    file_content = params[:file].read()
+
+    begin
+      changes_applied = HUBClassRosterHandler::handle(file_content)
+      if changes_applied
+        flash[:notice] = 'Roster file was parsed and handled successfully.'
+      else
+        flash[:notice] = 'Roster file parsed successfully, but no changes made.'
+      end
+    rescue Exception => ex
+      flash[:error] = "There was a problem parsing your roster file: #{ex.message}"
+    end
+
+    respond_to do |format|
+      format.html { redirect_back_or_default(courses_path) }
+    end
+  end
 
   private
   def index_core
