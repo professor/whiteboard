@@ -5,12 +5,11 @@ class SponsoredProjectEffortsController < ApplicationController
   layout "cmu_sv"
 
   def index
-    if has_permissions_or_redirect(:admin, root_path)
-      @month = params[:date][:month].to_i unless params[:date].nil?
-      @month = @month ||= 1.month.ago.month
-      @year = params[:year] ||= 1.month.ago.year
-      @efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(@month, @year)
-    end
+    authorize! :read, SponsoredProjectEffort
+    @month = params[:date][:month].to_i unless params[:date].nil?
+    @month = @month ||= 1.month.ago.month
+    @year = params[:year] ||= 1.month.ago.year
+    @efforts = SponsoredProjectEffort.for_all_users_for_a_given_month(@month, @year)
   end
 
   def show
@@ -55,7 +54,7 @@ class SponsoredProjectEffortsController < ApplicationController
   end
 
   private
-  #Todo: refactor this method to use Application Controller's has_permissions_or_redirect
+  #Todo: refactor this method to use CanCan
   def authorized_or_redirect
     @person = Person.find_by_twiki_name(params[:id])
     if (@person.nil?)
@@ -64,7 +63,7 @@ class SponsoredProjectEffortsController < ApplicationController
       return false
     end
 
-    unless @person.id == current_user.id || current_user.is_admin
+    unless @person.id == current_user.id || can?(:update, SponsoredProjectEffort)
       flash[:error] = t(:no_permission)
       redirect_to(root_path)
       return false

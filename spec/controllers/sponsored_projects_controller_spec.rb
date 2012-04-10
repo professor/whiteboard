@@ -149,7 +149,6 @@ describe SponsoredProjectsController do
         it "can't access page" do
           get http_verb, :id => project.to_param
           response.should redirect_to(root_path)
-          flash[:error].should == I18n.t(:no_permission)
         end
       end
     end
@@ -158,7 +157,6 @@ describe SponsoredProjectsController do
       it "can't access page" do
         post :create, :sponsored_project => project.attributes
         response.should redirect_to(root_path)
-        flash[:error].should == I18n.t(:no_permission)
       end
     end
 
@@ -166,7 +164,6 @@ describe SponsoredProjectsController do
       it "can't access page" do
         put :update, :id => project.to_param, :sponsored_project => {:name => 'NNNNN'}
         response.should redirect_to(root_path)
-        flash[:error].should == I18n.t(:no_permission)
       end
     end
 

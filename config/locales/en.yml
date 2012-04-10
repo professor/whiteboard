@@ -16,5 +16,5 @@ en:
   not_your_presentation: You don't have permission to see another person's presentation feedback.
   unauthorized:
     manage:
-      all: "Not authorized to %{action} %{subject}."
+      all: "You don't have permission to %{action} %{subject}."
       user: "Not allowed to manage other user accounts."
