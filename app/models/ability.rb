@@ -19,6 +19,15 @@ class Ability
       can :upload, Course
     end
 
+    #Contracts manager
+    if (user.is_admin? || user.human_name == "Ngoc Ho" || user.human_name == "Hector Rastrullo")
+      can :manage, SponsoredProjectAllocation
+      can :manage, SponsoredProjectEffort
+      can :manage, SponsoredProjectSponsor
+      can :manage, SponsoredProject
+    end
+
+
     can :manage, User, :id => user.id
 
     # The first argument to `can` is the action you are giving the user permission to do.

@@ -59,3 +59,14 @@ Factory.define :faculty_fagan_user, :parent => :user do |p|
   p.twiki_name "FacultyFagan"
 end
 
+Factory.define :contracts_manager_user, :parent => :user do |p|
+  p.login "Ngoc Ho"
+  p.email "ngoc.ho@sv.cmu.edu"
+  p.webiso_account "ngocho@andrew.cmu.edu"
+  p.is_staff true
+  p.is_teacher true
+  p.first_name "Ngoc"
+  p.last_name "Ho"
+  p.human_name "Ngoc Ho"
+  p.twiki_name "NgocHo"
+end
