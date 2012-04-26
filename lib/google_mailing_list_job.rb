@@ -3,8 +3,6 @@ class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distributio
   def perform
     Rails.logger.info("#{table_name}.update_google_mailing_list(#{new_distribution_list}, #{old_distribution_list}, #{model_id}) executed")
 
-    logger.info("#{table_name}.update_google_mailing_list(#{new_distribution_list}, #{old_distribution_list}, #{model_id}) executed")
-
     new_group = new_distribution_list.split('@')[0] unless new_distribution_list.blank?
     old_group = old_distribution_list.split('@')[0] unless old_distribution_list.blank?
 
@@ -16,17 +14,17 @@ class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distributio
       new_group_exists = true if new_group == group_name
     end
     if old_group_exists
-      logger.info "Deleting #{old_group}"
+      Rails.logger.info "Deleting #{old_group}"
       google_apps_connection.delete_group(old_group)
       new_group_exists = false if old_group == new_group
     end
 
     if !new_group_exists
-      logger.info "Creating #{new_group}"
+      Rails.logger.info "Creating #{new_group}"
       google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
     end
     emails_array.each do |member|
-      logger.info "#{table_name}:adding #{member.email}"
+      Rails.logger.info "#{table_name}:adding #{member.email}"
       google_apps_connection.add_member_to_group(member.email, new_group)
     end
 
@@ -36,14 +34,14 @@ class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distributio
     google_list = all_team_members.map { |l| l.member_id }.sort
     team_list = emails_array.map { |l| l.email }.sort
     unless google_list.eql?(team_list)
-      logger.warn("The people on the google list isn't right")
-      logger.warn("google list: #{google_list} ")
-      logger.warn("rails list: #{team_list} ")
+      Rails.logger.warn("The people on the google list isn't right")
+      Rails.logger.warn("google list: #{google_list} ")
+      Rails.logger.warn("rails list: #{team_list} ")
       raise Exception.new("The people on the google list isn't right")
     end
 
     ActiveRecord::Base.connection.execute "UPDATE #{table_name} SET updating_email=false WHERE id=#{model_id}";
-    logger.info "#{model_id} -- finished"
+    Rails.logger.info "#{model_id} -- finished"
 
   end
 
