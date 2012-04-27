@@ -2,7 +2,7 @@ class DelayedSystemJobsController < ApplicationController
 
   before_filter :authenticate_user!
 
-  layout 'cmu_sv'
+  layout 'cmu_sv_no_pad'
 
 
   def index

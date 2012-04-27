@@ -7,4 +7,11 @@ namespace :cmu do
     IndexTank.setup_indexes
   end
 
+  desc 'Iterate through all page objects and store content in searchify'
+  task :update_search_index do |t, args|
+    Page.all.each do |page|
+      page.update_search_index
+    end
+  end
+
 end     
