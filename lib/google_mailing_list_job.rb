@@ -1,4 +1,4 @@
-class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distribution_list, :emails_array, :model_id, :table_name)
+class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distribution_list, :emails_array, :name, :description, :model_id, :table_name)
 
   def perform
     Rails.logger.info("#{table_name}.update_google_mailing_list(#{new_distribution_list}, #{old_distribution_list}, #{model_id}) executed")
@@ -21,7 +21,7 @@ class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distributio
 
     if !new_group_exists
       Rails.logger.info "Creating #{new_group}"
-      google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
+      google_apps_connection.create_group(new_group, [name, description, "Domain"])
     end
     emails_array.each do |member|
       Rails.logger.info "#{table_name}:adding #{member.email}"

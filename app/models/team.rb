@@ -90,7 +90,7 @@ class Team < ActiveRecord::Base
 #  handle_asynchronously :update_google_mailing_list
 
   def update_mailing_list
-    Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email_was, self.people, self.id, "tables"))
+    Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email_was, self.people, self.name, "#{self.name} for course #{self.course.name}", self.id, "tables"))
 #    self.delay.update_google_mailing_list self.email, self.email_was, self.id
   end
 
