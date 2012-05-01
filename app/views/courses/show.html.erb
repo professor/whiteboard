@@ -15,6 +15,13 @@
     <p><%= faculty.human_name %></p>
     <% end %>
     </td></tr>
+  <tr class="cmu_table_odd"><td>Email:</td><td>
+   <%= @course.email %>
+   <% if @course.updating_email %> (...updating...)
+   <% else %>
+     <%= link_to '(Who is on it?) ', mailing_list_path(@course.email) %>
+   <% end %>
+  </td></tr>
 </table>
 <br/>
 
