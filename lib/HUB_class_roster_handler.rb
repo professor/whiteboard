@@ -110,21 +110,21 @@ module HUBClassRosterHandler
 
     if not_in_system.any?
       message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:<br/>"
-      not_in_system.each { |student| message += "<&nbsp;><&nbsp;><&nbsp;>#{student}@andrew.cmu.edu<br/>" }
+      not_in_system.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student}@andrew.cmu.edu<br/>" }
       message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
     end
 
     if added.any?
       message += "#{added.count} students were added to the course:<br/>"
-      added.each { |student| message += "<&nbsp;><&nbsp;><&nbsp;>#{student.first_name} #{student.last_name}<br/>" }
+      added.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
     if dropped.any?
       message += "#{dropped.count} students were dropped from the course:<br/>"
-      dropped.each { |student| message += "<&nbsp;><&nbsp;><&nbsp;>#{student.first_name} #{student.last_name}<br/>" }
+      dropped.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
-    message += "\nThe system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
+    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
