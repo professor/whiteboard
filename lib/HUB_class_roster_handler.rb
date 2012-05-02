@@ -104,7 +104,7 @@ module HUBClassRosterHandler
   end
 
   def self.roster_change_message course, added, dropped, not_in_system
-    message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with this tool, then you can see who has not been assigned to a team. This does not currently track students on wait-lists.<br/><br/>"
+    message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with the rails system, then you can see who has not been assigned to a team. This does not currently track students on wait-lists.<br/><br/>"
     message += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.<br/><br/>"
     message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
 
@@ -124,7 +124,7 @@ module HUBClassRosterHandler
       dropped.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
-    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
+#    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
