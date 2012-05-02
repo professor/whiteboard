@@ -104,28 +104,28 @@ module HUBClassRosterHandler
   end
 
   def self.roster_change_message course, added, dropped, not_in_system
-    message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with this tool, then you can see who has not been assigned to a team. This does not currently track students on wait-lists.\n\n"
-    message += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.\n\n"
-    message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.\n\n"
+    message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with this tool, then you can see who has not been assigned to a team. This does not currently track students on wait-lists.<br/><br/>"
+    message += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.<br/><br/>"
+    message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
 
     if not_in_system.any?
-      message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:\n"
-      not_in_system.each { |student| message += "\t#{student}@andrew.cmu.edu\n" }
-      message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)\n\n"
+      message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:<br/>"
+      not_in_system.each { |student| message += "   #{student}@andrew.cmu.edu<br/>" }
+      message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
     end
 
     if added.any?
-      message += "#{added.count} students were added to the course:\n"
-      added.each { |student| message += "\t#{student.first_name} #{student.last_name}\n" }
+      message += "#{added.count} students were added to the course:<br/>"
+      added.each { |student| message += "   #{student.first_name} #{student.last_name}<br/>" }
     end
 
     if dropped.any?
-      message += "#{dropped.count} students were dropped from the course:\n"
-      dropped.each { |student| message += "\t#{student.first_name} #{student.last_name}\n" }
+      message += "#{dropped.count} students were dropped from the course:<br/>"
+      dropped.each { |student| message += "   #{student.first_name} #{student.last_name}<br/>" }
     end
 
-    message += "\nThe system will be updating your course mailing list (#{course.email})\n\n"
-    message += "For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a>\n\n"
+    message += "\nThe system will be updating your course mailing list (#{course.email})<br/><br/>"
+    message += "For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
