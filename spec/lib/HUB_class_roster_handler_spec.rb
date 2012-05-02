@@ -5,15 +5,24 @@ describe HUBClassRosterHandler do
     context "and they are not already in the course," do
       before :each do
         @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
+        @older_course = Factory(:mfse, :year => 1900)
         @course = Factory(:mfse)
         @student_sam = Factory(:student_sam)
         @student_sally = Factory(:student_sally)
       end
 
       it "should add them to the course" do
-        #expect { HUBClassRosterHandler.handle(@roster_file) }.to change { Course.find(@course.id).registered_students.count }.from(0).to(2)
         expect { HUBClassRosterHandler.handle(@roster_file) }.to change { @course.registered_students.reload.count }.from(0).to(2)
       end
+
+      it "should add them to the most recent course" do
+        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { @course.registered_students.reload.count }.from(0).to(2)
+      end
+
+      #it "should add them to the most recent course" do
+      #  @older_course = Factory(:mfse, :year => @course.year - 1)
+      #  expect { HUBClassRosterHandler.handle(@roster_file) }.to_not change { @older_course }
+      #end
 
 
       it "should notify help@sv.cmu.edu about missing students" do

@@ -209,6 +209,27 @@ describe AcademicCalendar do
 
   end
 
+  context 'HUB Data Parsing' do
+    context 'should parse out the semester' do
+      it 'for the fall' do
+        (semester, year) = AcademicCalendar.parse_HUB_semester('F12')
+        semester.should == "Fall"
+        year.should == "2012"
+      end
+
+      it 'for the spring' do
+        (semester, year) = AcademicCalendar.parse_HUB_semester('S12')
+        semester.should == "Spring"
+        year.should == "2012"
+      end
+
+      it 'for the summer' do
+        (semester, year) = AcademicCalendar.parse_HUB_semester('M12')
+        semester.should == "Summer"
+        year.should == "2012"
+      end
+    end
+  end
 
 
 end
