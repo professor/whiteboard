@@ -166,6 +166,8 @@ class CoursesController < ApplicationController
   end
 
   def upload
+    require 'HUBClassRosterHandler'
+
     authorize! :upload, Course
     store_previous_location
     file_content = params[:file].read()
