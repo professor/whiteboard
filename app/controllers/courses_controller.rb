@@ -166,7 +166,7 @@ class CoursesController < ApplicationController
   end
 
   def upload
-    require 'HUBClassRosterHandler'
+    require 'HUB_class_roster_handler'
 
     authorize! :upload, Course
     store_previous_location
