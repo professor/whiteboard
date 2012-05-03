@@ -224,10 +224,11 @@ class Course < ActiveRecord::Base
 
   def email
     unless self.short_name.blank?
-      return "#{self.semester}-#{self.year}-#{self.short_name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+      email = "#{self.semester}-#{self.year}-#{self.short_name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
     else
-      return "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+      email = "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
     end
+    email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
   def invalidate_distribution_list
