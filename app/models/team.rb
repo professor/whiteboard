@@ -2,7 +2,12 @@ class Team < ActiveRecord::Base
   belongs_to :course
   belongs_to :primary_faculty, :class_name=>'User', :foreign_key => "primary_faculty_id"
   belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
-  has_and_belongs_to_many :people, :join_table=>"teams_people"
+
+  has_and_belongs_to_many :people, :join_table=>"teams_people"  #Old code uses the people associations which returns an array of person
+  has_many :team_assignments
+  has_many :users, :through => :team_assignments, :source => :user #:join_table=>"teams_people", :class_name => "Person"
+
+
 
   has_many :presentations
 
