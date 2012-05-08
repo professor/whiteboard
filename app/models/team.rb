@@ -27,7 +27,6 @@ class Team < ActiveRecord::Base
   def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
     self.email = build_email unless self.name.blank?
-    self.email = self.email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
   def copy_peer_evaluation_dates_from_course
@@ -117,7 +116,8 @@ class Team < ActiveRecord::Base
   end
 
   def build_email
-    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
 
