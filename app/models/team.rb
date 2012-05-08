@@ -24,7 +24,7 @@ class Team < ActiveRecord::Base
 
 
   before_validation :clean_up_data
-  after_save :update_mailing_list
+  after_save :update_mailing_list, :update_course_mailing_list
   before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email, :update_members
 
   before_destroy :remove_google_group
@@ -98,6 +98,10 @@ class Team < ActiveRecord::Base
 #    self.delay.update_google_mailing_list self.email, self.email_was, self.id
   end
 
+  def update_course_mailing_list
+    self.course.update_distribution_list
+  end
+
   def google_group
     self.email.split('@')[0] #strips out @sv.cmu.edu
   end
@@ -149,8 +153,6 @@ class Team < ActiveRecord::Base
     raise "Error converting members_override to IDs!" if list.include?(nil)
     self.people = list
     members_override = nil
-
-    self.course.update_distribution_list
   end
 
   def show_addresses_for_mailing_list
