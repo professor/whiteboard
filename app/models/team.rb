@@ -24,7 +24,7 @@ class Team < ActiveRecord::Base
 
 
   before_validation :clean_up_data
-  after_save :update_mailing_list
+  after_save :update_mailing_list, :update_course_mailing_list
   before_save :copy_peer_evaluation_dates_from_course, :invalidate_team_email, :update_members
 
   before_destroy :remove_google_group
@@ -46,56 +46,60 @@ class Team < ActiveRecord::Base
 #    end
   end
 
-  def update_google_mailing_list(new_email, old_email, id)
-    logger.info("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
-
-    new_group = new_email.split('@')[0] unless new_email.blank?
-    old_group = old_email.split('@')[0] unless old_email.blank?
-
-    new_group_exists = false
-    old_group_exists = false
-    google_apps_connection.retrieve_all_groups.each do |list|
-      group_name = list.group_id.split('@')[0]
-      old_group_exists = true if old_group == group_name
-      new_group_exists = true if new_group == group_name
-    end
-    if old_group_exists
-      logger.info "Deleting #{old_group}"
-      google_apps_connection.delete_group(old_group)
-      new_group_exists = false if old_group == new_group
-    end
-
-    if !new_group_exists
-      logger.info "Creating #{new_group}"
-      google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
-    end
-    self.people.each do |member|
-      logger.info "Teams:adding #{member.email}"
-      google_apps_connection.add_member_to_group(member.email, new_group)
-    end
-
-
-    #verify that this method worked. If it didn't an error will be raised and it will be run again through delayed job
-    all_team_members = google_apps_connection.retrieve_all_members(new_group)
-    google_list = all_team_members.map { |l| l.member_id }.sort
-    team_list = self.people.map { |l| l.email }.sort
-    unless google_list.eql?(team_list)
-      logger.warn("The people on the google list isn't right")
-      logger.warn("google list: #{google_list} ")
-      logger.warn("team list: #{team_list} ")
-      raise Exception.new("The people on the google list isn't right")
-    end
-
-    ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
-    logger.info "#{id} -- finished"
-
-  end
-
-#  handle_asynchronously :update_google_mailing_list
+#  def update_google_mailing_list(new_email, old_email, id)
+#    logger.info("team.update_google_mailing_list(#{new_email}, #{old_email}, #{id}) executed")
+#
+#    new_group = new_email.split('@')[0] unless new_email.blank?
+#    old_group = old_email.split('@')[0] unless old_email.blank?
+#
+#    new_group_exists = false
+#    old_group_exists = false
+#    google_apps_connection.retrieve_all_groups.each do |list|
+#      group_name = list.group_id.split('@')[0]
+#      old_group_exists = true if old_group == group_name
+#      new_group_exists = true if new_group == group_name
+#    end
+#    if old_group_exists
+#      logger.info "Deleting #{old_group}"
+#      google_apps_connection.delete_group(old_group)
+#      new_group_exists = false if old_group == new_group
+#    end
+#
+#    if !new_group_exists
+#      logger.info "Creating #{new_group}"
+#      google_apps_connection.create_group(new_group, [self.name, "#{self.name} for course #{self.course.name}", "Domain"])
+#    end
+#    self.people.each do |member|
+#      logger.info "Teams:adding #{member.email}"
+#      google_apps_connection.add_member_to_group(member.email, new_group)
+#    end
+#
+#
+#    #verify that this method worked. If it didn't an error will be raised and it will be run again through delayed job
+#    all_team_members = google_apps_connection.retrieve_all_members(new_group)
+#    google_list = all_team_members.map { |l| l.member_id }.sort
+#    team_list = self.people.map { |l| l.email }.sort
+#    unless google_list.eql?(team_list)
+#      logger.warn("The people on the google list isn't right")
+#      logger.warn("google list: #{google_list} ")
+#      logger.warn("team list: #{team_list} ")
+#      raise Exception.new("The people on the google list isn't right")
+#    end
+#
+#    ActiveRecord::Base.connection.execute "UPDATE teams SET updating_email=false WHERE id=#{id}";
+#    logger.info "#{id} -- finished"
+#
+#  end
+#
+##  handle_asynchronously :update_google_mailing_list
 
   def update_mailing_list
     Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email_was, self.people, self.name, "#{self.name} for course #{self.course.name}", self.id, "teams"))
 #    self.delay.update_google_mailing_list self.email, self.email_was, self.id
+  end
+
+  def update_course_mailing_list
+    self.course.update_distribution_list
   end
 
   def google_group
