@@ -36,7 +36,7 @@ class Course < ActiveRecord::Base
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
 
   has_many :faculty_assignments
-  has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
+  has_many :faculty, :through => :faculty_assignments, :source => :person
 
   has_many :registrations
   has_many :registered_students, :through => :registrations, :source => :user
@@ -236,7 +236,7 @@ class Course < ActiveRecord::Base
   end
 
   def update_distribution_list
-    recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.people}.flatten
+    recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.users}.flatten
     Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, recipients, self.email, "Course distribution list", self.id, "courses")) if self.updating_email
   end
 

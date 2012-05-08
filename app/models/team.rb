@@ -2,7 +2,12 @@ class Team < ActiveRecord::Base
   belongs_to :course
   belongs_to :primary_faculty, :class_name=>'User', :foreign_key => "primary_faculty_id"
   belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
-  has_and_belongs_to_many :people, :join_table=>"teams_people"
+
+  has_and_belongs_to_many :people, :join_table=>"teams_people"  #Old code uses the people associations which returns an array of person
+  has_many :team_assignments
+  has_many :users, :through => :team_assignments, :source => :user #:join_table=>"teams_people", :class_name => "Person"
+
+
 
   has_many :presentations
 
@@ -27,7 +32,6 @@ class Team < ActiveRecord::Base
   def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
     self.email = build_email unless self.name.blank?
-    self.email = self.email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
   def copy_peer_evaluation_dates_from_course
@@ -117,7 +121,8 @@ class Team < ActiveRecord::Base
   end
 
   def build_email
-    return "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
 
