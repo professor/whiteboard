@@ -124,7 +124,7 @@ module HUBClassRosterHandler
       dropped.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
-#    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
+    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
