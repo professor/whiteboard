@@ -2,25 +2,68 @@ require 'spec_helper'
 
 describe Team do
 
-  it "should throw an error when a google distribution list was not created" do
-    ProvisioningApi.any_instance.stub(:create_group)
-    ProvisioningApi.any_instance.stub(:add_member_to_group)
-    ProvisioningApi.any_instance.stub(:delete_group)
-    ProvisioningApi.any_instance.stub(:retrieve_all_members)
-    ProvisioningApi.any_instance.stub(:retrieve_all_groups)
+  context 'updates google mailing list' do
+    before do
+      @team = Factory.create(:team_triumphant)
+      @team.updating_email = false
+      @count = Delayed::Job.count
+    end
 
-    team = Factory.create(:team_triumphant)
-    lambda { team.update_google_mailing_list("new", "old", 123) }.should raise_error()
+    context 'when the team name changes' do
+      before do
+        @team.name = "Team Awesome"
+        @team.save
+      end
+      it 'adds an asynchronous request' do
+        Delayed::Job.count.should > @count
+      end
+      it 'marks the state transition' do
+        @team.updating_email.should == true
+      end
+      it 'updates the course mailing list' do
+        @team.course.updating_email.should == true
+      end
+    end
 
+    context 'when the members changes' do
+      before do
+        @student = Factory(:student_sally)
+        @team.members_override = [@student.human_name]
+        @team.save
+      end
+      it 'adds an asynchronous request' do
+        Delayed::Job.count.should > @count
+      end
+      it 'marks the state transition' do
+        @team.updating_email.should == true
+      end
+      it 'updates the course mailing list' do
+        @team.course.updating_email.should == true
+      end
+    end
 
+    context 'but not when the faculty changes' do
+      before do
+        @team.primary_faculty_id = 1
+        @team.save
+      end
+      it 'does not add an asynchronous request' do
+        Delayed::Job.count.should == @count
+      end
+      it 'a state transition does not happen' do
+        @team.updating_email.should == false
+      end
+    end
   end
+
+
+
 
   it 'can be created' do
     lambda {
       Factory(:team)
     }.should change(Team, :count).by(1)
   end
-
 
   context "has peer evaluation date" do
     it "first email that is copied from the course's peer evaluation first email date if it exists" do
