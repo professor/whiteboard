@@ -188,6 +188,34 @@ class CoursesController < ApplicationController
     end
   end
 
+  def team_formation_tool
+    if has_permissions_or_redirect(:staff, root_path)
+      @course = Course.find(params[:course_id])
+
+      respond_to do |format|
+        format.html { render :html => @teams, :layout => "cmu_sv_no_pad" } # index.html.erb
+        format.xml { render :xml => @teams }
+      end
+    end
+  end
+
+
+  def export_to_csv
+    if has_permissions_or_redirect(:staff, root_path)
+      @course = Course.find(params[:course_id])
+      report = CSV.generate do |title|
+        title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
+        @course.registered_students.each do |user|
+            current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact
+            part_time = user.is_part_time ? "PT" : "FT"
+            title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
+        end
+      end
+      send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
+                :disposition =>'attachment', :encoding => 'utf8')
+    end
+  end
+
   private
   def index_core
     respond_to do |format|
