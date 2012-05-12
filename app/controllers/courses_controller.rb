@@ -202,9 +202,7 @@ class CoursesController < ApplicationController
 
   def export_to_csv
     if has_permissions_or_redirect(:staff, root_path)
-
       @course = Course.find(params[:course_id])
-
       report = CSV.generate do |title|
         title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
         @course.registered_students.each do |user|
