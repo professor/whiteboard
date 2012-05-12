@@ -135,24 +135,28 @@ div.student {
     padding: 5px;
     margin: 5px;
 /*    background-color: rgb(247, 225, 171); */
+    border-radius: 10px;
 }
 
 div.staff {
     padding: 5px;
     margin: 5px;
     background-color: rgb(224, 235, 235);
+    border-radius: 10px;
 }
 
 div.admin {
     padding: 5px;
     margin: 5px;
     background-color: rgb(221, 221, 204);
+    border-radius: 10px;
 }
 
 div.system {
     padding: 5px;
     margin: 5px;
     background-color: rgb(219, 232, 154);
+    border-radius: 10px;
 }
 
 tr.staff {

@@ -109,7 +109,7 @@ class TeamsController < ApplicationController
         @teams.each do |team|
           team.people.each do |person|
             part_time = person.is_part_time ? "PT" : "FT"
-            title << [team.name, person.human_name, person.formatted_past_teams, part_time, person.local_near_remote, person.work_state, person.organization_name]
+            title << [team.name, person.human_name, person.formatted(person.past_teams), part_time, person.local_near_remote, person.work_state, person.organization_name]
           end
         end
       end

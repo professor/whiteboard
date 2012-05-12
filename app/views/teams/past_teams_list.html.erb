@@ -19,14 +19,15 @@
     <% end %>
      </td>
     <td><% team.people.each do |person| %>
-        <%= person.formatted_past_teams %> <br/>
+        <%= person.formatted_teams(person.past_teams) %> <br/>
     <% end %>
     </td>
   </tr>
 <% end %>
 </table>
+<%= link_to 'Export Team Data', {:controller => 'courses', :action=>'export_to_csv'}, {:target=>'_top'} %>
 
-<%= link_to 'Export Team Data', {:action=>'export_to_csv'}, {:target=>'_top'} %>
+OLD (<%= link_to 'Export Team Data', {:action=>'export_to_csv_old'}, {:target=>'_top'} %>)
 &nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :target => '_top' %>
 
 </div>

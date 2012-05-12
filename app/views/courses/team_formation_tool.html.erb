@@ -1,0 +1,47 @@
+<% content_for :title, 'Teams for ' + @course.name %>
+
+<div class="rounded staff">
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <span class="instructions">Only faculty can see this information.</span>
+ <br/> <%= link_to 'Export Data to CSV', {:controller => 'courses', :action=>'export_to_csv'}, {:target=>'_top'} %>
+ <br/>
+ <br/>
+<table class="cmu_table" cellpadding="0" cellspacing="0">
+  <tr>
+    <th class="twikiFirstCol">Person</th>
+<!-- -->
+    <th>Current Team</th>
+    <th>Past Teams</th>
+    <!-- -->
+    <th>Part Time</th>
+    <th>Local / Near / Remote</th>
+    <th>Program</th>
+    <th>State</th>
+    <th>Company Name</th>
+  </tr>
+
+<% @course.registered_students.each do |user|%>
+  <% part_time = user.is_part_time ? "PT" : "FT" %>
+  <% current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact %>
+  <tr class=<%= cycle('cmu_table_odd', 'cmu_table_even')%> >
+    <td class="twikiFirstCol"><%= user.human_name %></td>
+<!-- -->
+    <td><%= user.formatted_teams(current_team) %></td>
+    <td><%= user.formatted_teams(user.past_teams) %></td>
+<!-- -->
+<!--     <td>Export</td> -->
+    <td><%= part_time %></td>
+    <td><%= user.local_near_remote %></td>
+    <td><%= user.masters_program + " " + user.masters_track %></td>
+    <td><%= user.work_state %></td>
+    <td><%= user.organization_name %></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+<%= link_to 'Export Data to CSV', {:controller => 'courses', :action=>'export_to_csv'}, {:target=>'_top'} %>
+
+OLD (<%= link_to 'Export Team Data', {:action=>'export_to_csv_old'}, {:target=>'_top'} %>)
+&nbsp;&nbsp;<%= link_to 'New team', new_course_team_path(@course), :target => '_top' %>
+
+</div>

@@ -130,6 +130,17 @@ class User < ActiveRecord::Base
     self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
   end
 
+  def past_teams
+    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", self.id, AcademicCalendar.current_semester(), Date.today.year])
+  end
+
+  # Given an array of team objects [Awesome, Devils, Alpha Omega]
+  # Returns "Awesome, Devils, Alpha Omega"
+  def formatted_teams(array)
+    array.map { |team| team.name } * ", "
+  end
+
+
   protected
   def person_before_save
     # We populate some reasonable defaults, but this can be overridden in the database
