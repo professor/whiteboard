@@ -228,15 +228,15 @@ class Course < ActiveRecord::Base
     self.updating_email = true
   end
 
+  def update_email_address
+    self.email = build_email
+  end
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
       self[attr] = value.strip if value.is_a?(String)
     end
-  end
-
-  def update_email_address
-    self.email = build_email
   end
 
   def build_email
@@ -245,6 +245,7 @@ class Course < ActiveRecord::Base
     else
       email = "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
     end
+    email = email.gsub('&','and')
     email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 

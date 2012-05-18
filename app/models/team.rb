@@ -23,15 +23,14 @@ class Team < ActiveRecord::Base
   attr_accessor :members_override
 
 
-  before_validation :clean_up_data
-  after_save :update_mailing_list
+  before_validation :clean_up_data, :update_email_address
   before_save :copy_peer_evaluation_dates_from_course, :need_to_update_google_list?, :update_members
+  after_save :update_mailing_list
 
   before_destroy :remove_google_group
 
   def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
-    self.email = build_email unless self.name.blank?
   end
 
   def copy_peer_evaluation_dates_from_course
@@ -77,9 +76,9 @@ class Team < ActiveRecord::Base
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, current_semester, current_year])
   end
 
-  def build_email
-    email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
-    email.sub('@west.cmu.edu', '@sv.cmu.edu')
+
+  def update_email_address
+    self.email = generate_email_name unless self.name.blank?
   end
 
 
@@ -167,6 +166,12 @@ class Team < ActiveRecord::Base
 
 
   protected
+  def generate_email_name
+      email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+      email = email.gsub('&','and')
+      email.sub('@west.cmu.edu', '@sv.cmu.edu')
+    end
+
   def remove_google_group
     logger.debug "trying before_destroy"
     google_apps_connection.delete_group(self.email)

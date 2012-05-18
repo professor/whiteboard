@@ -148,5 +148,21 @@ describe Team do
     end
   end
 
+#these tests are the same with course
+ context 'generated email address' do
+   it 'should use the short name if available' do
+     team = Factory.build(:team_triumphant, :course => Factory.build(:mfse_fall_2011))
+     team.update_email_address
+     team.email.should == "fall-2011-team-triumphant@" + GOOGLE_DOMAIN
+   end
+
+   it 'should convert unusual characters to ones that google can handle' do
+     team = Factory.build(:team_triumphant, :course => Factory.build(:mfse_fall_2011))
+     team.name = "A T & T"
+     team.update_email_address
+     team.email.should == "fall-2011-a-t-and-t@" + GOOGLE_DOMAIN
+   end
+ end
+
 
 end
