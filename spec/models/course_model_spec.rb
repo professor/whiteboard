@@ -323,6 +323,23 @@ describe Course do
   end
 
 
+#these tests are the same with team
+ context 'generated email address' do
+   it 'should use the short name if available' do
+     course = Factory.build(:mfse_fall_2011)
+     course.update_email_address
+     course.email.should == "fall-2011-mfse@" + GOOGLE_DOMAIN
+   end
+
+   it 'should convert unusual characters to ones that google can handle' do
+     course = Factory.build(:mfse_fall_2011)
+     course.short_name = "I & E"
+     course.update_email_address
+     course.email.should == "fall-2011-i-and-e@" + GOOGLE_DOMAIN
+
+   end
+ end
+
 
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
