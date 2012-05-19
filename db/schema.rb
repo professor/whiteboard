@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510050900) do
+ActiveRecord::Schema.define(:version => 20120518003101) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -490,7 +490,6 @@ ActiveRecord::Schema.define(:version => 20120510050900) do
     t.string   "masters_program"
     t.string   "masters_track"
     t.boolean  "is_part_time"
-    t.boolean  "is_teacher"
     t.boolean  "is_adobe_connect_host"
     t.datetime "effort_log_warning_email"
     t.boolean  "is_active"
@@ -561,7 +560,6 @@ ActiveRecord::Schema.define(:version => 20120510050900) do
     t.string   "masters_program"
     t.string   "masters_track"
     t.boolean  "is_part_time"
-    t.boolean  "is_teacher"
     t.boolean  "is_adobe_connect_host"
     t.datetime "effort_log_warning_email"
     t.boolean  "is_active"
@@ -620,7 +618,6 @@ ActiveRecord::Schema.define(:version => 20120510050900) do
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
   add_index "users", ["is_student"], :name => "index_users_on_is_student"
-  add_index "users", ["is_teacher"], :name => "index_users_on_is_teacher"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
 
