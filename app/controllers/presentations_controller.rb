@@ -185,7 +185,7 @@ class PresentationsController < ApplicationController
 
     @feedbacks.each do |f|
       evaluator = User.find(f.evaluator_id)
-      if evaluator.is_teacher? || evaluator.is_staff?
+      if evaluator.is_staff?
         @faculty_feedbacks << f
       elsif evaluator.is_student?
         @student_feedbacks << f

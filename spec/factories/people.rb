@@ -40,7 +40,6 @@ Factory.define :faculty_frank, :parent => :person do |p|
   p.email "faculty.frank@sv.cmu.edu"
   p.webiso_account "frank@andrew.cmu.edu"
   p.is_staff true
-  p.is_teacher true
   p.first_name "Faculty"
   p.last_name "Frank"
   p.human_name "Faculty Frank"
@@ -52,7 +51,6 @@ Factory.define :faculty_fagan, :parent => :person do |p|
   p.email "faculty.fagan@sv.cmu.edu"
   p.webiso_account "fagan@andrew.cmu.edu"
   p.is_staff true
-  p.is_teacher true
   p.first_name "Faculty"
   p.last_name "Fagan"
   p.human_name "Faculty Fagan"

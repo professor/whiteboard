@@ -116,10 +116,6 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= f.check_box :is_staff %>
   </p>
   <p>
-    <%= f.label :is_teacher, "Is teacher? - will be teaching a course?" %><br />
-    <%= f.check_box :is_teacher %><br />
-  </p>
-  <p>
     <%= f.label :is_student, "Is a student?" %><br />
     <%= f.check_box :is_student, :onchange => "update_student()" %>
   </p>

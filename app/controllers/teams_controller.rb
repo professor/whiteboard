@@ -10,7 +10,6 @@ class TeamsController < ApplicationController
     @show_teams_for_many_courses = false
     @machine_name = ""
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     @course = Course.find(params[:course_id])
 
     @show_section = false
@@ -77,7 +76,6 @@ class TeamsController < ApplicationController
 
   def index_photos
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
     @course = Course.find(params[:course_id])
 
     respond_to do |format|
@@ -188,7 +186,6 @@ class TeamsController < ApplicationController
 
       @team.course_id = params[:course_id]
       @course = Course.find(params[:course_id])
-      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
       update_course_faculty_label
 
@@ -198,7 +195,7 @@ class TeamsController < ApplicationController
           format.html { redirect_to(course_teams_path(@team.course_id)) }
           format.xml { render :xml => @team, :status => :created, :location => @team }
         else
-          @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+          @faculty = @course.faculty
           format.html { render :action => "new" }
           format.xml { render :xml => @team.errors, :status => :unprocessable_entity }
         end
@@ -213,7 +210,6 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     @course = @team.course
     if has_permissions_or_redirect(:staff, course_team_path(@course, @team))
-      @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
 
       update_course_faculty_label
 
@@ -224,7 +220,7 @@ class TeamsController < ApplicationController
           format.html { redirect_to(course_teams_path(@team.course)) }
           format.xml { head :ok }
         else
-          @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+          @faculty = @course.faculty
           format.html { render :action => "edit" }
           format.xml { render :xml => @team.errors, :status => :unprocessable_entity }
         end
