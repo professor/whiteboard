@@ -64,57 +64,52 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    if has_permissions_or_redirect(:staff, root_path)
-      @course = Course.new
-      @course.semester = AcademicCalendar.next_semester
-      @course.year = AcademicCalendar.next_semester_year
+    authorize! :create, Course
+    @course = Course.new
+    @course.semester = AcademicCalendar.next_semester
+    @course.year = AcademicCalendar.next_semester_year
 
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml { render :xml => @course }
-      end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml { render :xml => @course }
     end
   end
 
   # GET /courses/1/edit
   def edit
-    if has_permissions_or_redirect(:staff, root_path)
-      store_previous_location
-      @course = Course.find(params[:id])
-    end
+    store_previous_location
+    @course = Course.find(params[:id])
+    authorize! :update, @course
   end
 
   def configure
-    if has_permissions_or_redirect(:staff, root_path)
-      edit
-    end
+    edit
   end
 
   # POST /courses
   # POST /courses.xml
   def create
-    if has_permissions_or_redirect(:staff, root_path)
-      @last_offering = Course.last_offering(params[:course][:number])
-      if @last_offering.nil?
-        @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+    authorize! :create, Course
+    @last_offering = Course.last_offering(params[:course][:number])
+    if @last_offering.nil?
+      @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+    else
+      @course = @last_offering.copy_as_new_course
+    end
+
+    @course.year = params[:course][:year]
+    @course.semester = params[:course][:semester]
+
+    respond_to do |format|
+      @course.updated_by_user_id = current_user.id if current_user
+      if @course.save
+
+        flash[:notice] = 'Course was successfully created.'
+        format.html { redirect_to edit_course_path(@course) }
+        format.xml { render :xml => @course, :status => :created, :location => @course }
       else
-        @course = @last_offering.copy_as_new_course
-      end
-
-      @course.year = params[:course][:year]
-      @course.semester = params[:course][:semester]
-
-      respond_to do |format|
-        @course.updated_by_user_id = current_user.id if current_user
-        if @course.save
-
-          flash[:notice] = 'Course was successfully created.'
-          format.html { redirect_to edit_course_path(@course) }
-          format.xml { render :xml => @course, :status => :created, :location => @course }
-        else
-          format.html { render :action => "new" }
-          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
-        end
+        format.html { render :action => "new" }
+        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -122,33 +117,32 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    if has_permissions_or_redirect(:staff, root_path)
-      @course = Course.find(params[:id])
+    @course = Course.find(params[:id])
+    authorize! :update, @course
 
-      if (params[:course][:is_configured]) #The previous page was configure action
-        @course.twiki_url = params[:course][:curriculum_url] if params[:course][:configure_course_twiki]
-        @course.configured_by_user_id = current_user.id
-      end
+    if (params[:course][:is_configured]) #The previous page was configure action
+      @course.twiki_url = params[:course][:curriculum_url] if params[:course][:configure_course_twiki]
+      @course.configured_by_user_id = current_user.id
+    end
 
-      params[:course][:faculty_assignments_override] = params[:people]
-      respond_to do |format|
-        @course.updated_by_user_id = current_user.id if current_user
-        @course.attributes = params[:course]
-        if @course.save
-          if (params[:course][:is_configured])
-            #The previous page was configure action
-            CourseMailer.configure_course_admin_email(@course).deliver
-          else
-            #The previous page was edit action
-            CourseMailer.configure_course_faculty_email(@course).deliver unless @course.is_configured?
-          end
-          flash[:notice] = 'Course was successfully updated.'
-          format.html { redirect_back_or_default(course_path(@course)) }
-          format.xml { head :ok }
+    params[:course][:faculty_assignments_override] = params[:people]
+    respond_to do |format|
+      @course.updated_by_user_id = current_user.id if current_user
+      @course.attributes = params[:course]
+      if @course.save
+        if (params[:course][:is_configured])
+          #The previous page was configure action
+          CourseMailer.configure_course_admin_email(@course).deliver
         else
-          format.html { render :action => "edit" }
-          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
+          #The previous page was edit action
+          CourseMailer.configure_course_faculty_email(@course).deliver unless @course.is_configured?
         end
+        flash[:notice] = 'Course was successfully updated.'
+        format.html { redirect_back_or_default(course_path(@course)) }
+        format.xml { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -191,31 +185,30 @@ class CoursesController < ApplicationController
   end
 
   def team_formation_tool
-    if has_permissions_or_redirect(:staff, root_path)
-      @course = Course.find(params[:course_id])
+    @course = Course.find(params[:course_id])
+    authorize! :team_formation, @course
 
-      respond_to do |format|
-        format.html { render :html => @teams, :layout => "cmu_sv_no_pad" } # index.html.erb
-        format.xml { render :xml => @teams }
-      end
+    respond_to do |format|
+      format.html { render :html => @teams, :layout => "cmu_sv_no_pad" } # index.html.erb
+      format.xml { render :xml => @teams }
     end
   end
 
 
   def export_to_csv
-    if has_permissions_or_redirect(:staff, root_path)
-      @course = Course.find(params[:course_id])
-      report = CSV.generate do |title|
-        title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
-        @course.registered_students.each do |user|
-            current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact
-            part_time = user.is_part_time ? "PT" : "FT"
-            title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
-        end
+    @course = Course.find(params[:course_id])
+    authorize! :team_formation, @course
+
+    report = CSV.generate do |title|
+      title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
+      @course.registered_students.each do |user|
+          current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact
+          part_time = user.is_part_time ? "PT" : "FT"
+          title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
       end
-      send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
-                :disposition =>'attachment', :encoding => 'utf8')
     end
+    send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
+              :disposition =>'attachment', :encoding => 'utf8')
   end
 
   private

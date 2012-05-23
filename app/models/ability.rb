@@ -27,6 +27,14 @@ class Ability
       can :manage, SponsoredProject
     end
 
+    if (user.is_admin?)
+      can :manage, Course
+    end
+    if  (user.is_staff? )
+      can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
+    end
+    can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => { :id => user.id } #Useful for TAs.
+
 
     can :manage, User, :id => user.id
 

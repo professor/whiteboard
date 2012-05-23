@@ -30,10 +30,10 @@
   </fieldset>
 </div>
 
-<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
+<% if can? :teach, @course %>
     <div class="rounded staff">
-      <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
-      <span class="instructions">Only faculty can see this information.</span>
+      <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty and course instructors can see this information", :title => "Faculty Role") %>
+      <span class="instructions">Only faculty and course instructors can see this information.</span>
       <fieldset>
         <legend>Faculty tools</legend>
         <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">

@@ -12,6 +12,8 @@ class CourseNavigationsController < ApplicationController
   # GET /course_navigations/1.xml
   def show
     @course = Course.find(params[:id])
+    authorize! :update, @course
+
     @pages = @course.pages
 
     respond_to do |format|

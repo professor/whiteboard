@@ -72,10 +72,11 @@
 
 <br style="clear:both;"/>
 
-<% if current_user && (current_user.is_staff) %>
+
+<% if can? :teach, @course %>
     <div class="rounded staff">
     <%= professor_image %>
-      <span class="instructions">Only faculty can see this information.</span>
+      <span class="instructions">Only faculty and course instructors can see this information.</span>
 <h2>Experimental feature</h2>
       <p>The HUB does not provide us with registration information. Periodically, Gerry can upload HUB registrations so that
 we can compare HUB registrations with our student records. This is particularly useful if someone is registered for a
