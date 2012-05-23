@@ -12,6 +12,8 @@ class PeerEvaluationController < ApplicationController
 
   def index_for_course
     @course = Course.find(params[:course_id])
+    authorize! :peer_evaluation, @course
+
     @teams = Team.where(:course_id => params[:course_id])
   end
 
