@@ -6,6 +6,7 @@
   <meta content="index,follow" name="robots">
   <meta content="31 days" name="revisit-after">
 
+  <%# stylesheet_link_tag '/cmu_sv_standard_v4/reset.css', :media => "all", :rel => "stylesheet" %>
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
   <%= csrf_meta_tag %>
@@ -19,7 +20,6 @@
 
   <%= yield :tablesorter %>
 
-  <%= stylesheet_link_tag '/cmu_sv_standard_v4/reset.css', :media => "all", :rel => "stylesheet" %>
   <%= stylesheet_link_tag '/cmu_sv_standard_v4/screen' %>
   <!--[if gte IE 5.5000]><![if lt IE 7]>
  	        <%= stylesheet_link_tag '/cmu_sv_standard_v4/ie.css', :media => "screen", :rel => "stylesheet" %>
@@ -48,14 +48,9 @@
       <h2><a href="http://www.cmu.edu/" title="Carnegie Mellon University"><span>Carnegie Mellon University</span></a>
       </h2></div>
     <div id="search">
-      <form action="http://web-search.andrew.cmu.edu/search">
-        <input name="entqr" type="hidden" value="3"><input name="entsp" type="hidden" value="a"><input name="sort" type="hidden" value="date:D:L:d1">
-        <input name="output" type="hidden" value="xml_no_dtd"><input name="client" type="hidden" value="default_frontend"><input name="ud" type="hidden" value="1">
-        <input name="oe" type="hidden" value="UTF-8"><input name="ie" type="hidden" value="UTF-8">
-        <input name="proxystylesheet" type="hidden" value="default_frontend">
-        <input checked="checked" id="searchSite" name="site" type="checkbox" value="silicon-valley">
-        <label for="searchSite" id="searchSiteLabel">Search Only rails.sv.cmu.edu</label>
-        <input id="searchQuery" maxlength="100" name="q" onfocus="clear_search(this)" title="Enter keywords to search Carnegie Mellon University" type="text" value=" SEARCH">
+      <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
+        <label for="searchSite" id="searchSiteLabel">Search rails.sv.cmu.edu curriculum</label>
+        <input type="text" id="query" name="query" placeholder=" SEARCH">
         <button id="searchSubmit" title="Submit Carnegie Mellon University keyword search" type="submit">Submit Carnegie Mellon University Search
         </button>
       </form>
@@ -64,9 +59,12 @@
 
   <div id="main">
     <div id="navWrapper">
-      <a class="noDisplay" href="http://www.cmu.edu/silicon-valley/software-systems-management/#access">Skip navigation and jump directly to page content</a>
+      <a class="noDisplay" href="http://www.cmu.edu/silicon-valley/software-systems-management/#access">Skip navigation
+        and jump directly to page content</a>
+
       <div id="logo">
-        <a href="http://www.cmu.edu/silicon-valley/index.html"><%= image_tag("/cmu_sv_standard_v4/sv-cms.jpg", :alt=>"Silicon Valley Campus Home Page", :border=>"0", :src=>"cmu_sv_standard_v4/sv-cms.jpg", :title=>"Silicon Valley Campus Home Page") %></a>
+        <a href="http://www.cmu.edu/silicon-valley/index.html"><%= image_tag("/cmu_sv_standard_v4/sv-cms.jpg", :alt => "Silicon Valley Campus Home Page", :border => "0", :src => "cmu_sv_standard_v4/sv-cms.jpg", :title => "Silicon Valley Campus Home Page") %></a>
+
         <div class="hr">
           <hr>
         </div>
@@ -79,18 +77,18 @@
           <li class="standard"><a href="/courses/current_semester"><%= AcademicCalendar.current_semester() %> <%= Date.today.year %> Courses</a></li>
 
           <% if AcademicCalendar.next_semester_is_soon %>
-          <li class="standard"><a href="/courses/next_semester"><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></li>
-          <%end%>
+              <li class="standard"><a href="/courses/next_semester"><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></li>
+          <% end %>
 
-          <li class="standard"><%= link_to "Presentations", today_presentations_url, :class=>"Lv1NavLink" %></li>
+          <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
           <% if current_user %>
-          <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class=>"Lv1NavLink" %></li>
-          <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.id), :class=>"Lv1NavLink" %></li>
-          <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class=>"Lv1NavLink" %></li>
+              <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class => "Lv1NavLink" %></li>
+              <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.id), :class => "Lv1NavLink" %></li>
+              <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class => "Lv1NavLink" %></li>
           <% else %>
-          <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
-          <li class="standard"><font color="#626262">My Teams (Login required)</font></li>
-          <li class="standard"><%= link_to "Login ", user_omniauth_authorize_path(:google_apps), :class=>"Lv1NavLink" %></li>
+              <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
+              <li class="standard"><font color="#626262">My Teams (Login required)</font></li>
+              <li class="standard"><%= link_to "Login ", user_omniauth_authorize_path(:google_apps), :class => "Lv1NavLink" %></li>
           <% end %>
         </ul>
         <div class="hr">
@@ -118,14 +116,13 @@
       </div>
     </div>
     <div id="contentWrapper">
-      <div id="headerImage"><%= image_tag("/cmu_sv_standard_v4/pros_stds.jpg", :id=>"pageHeaderPhoto") %></div>
+      <div id="headerImage"><%= image_tag("/cmu_sv_standard_v4/pros_stds.jpg", :id => "pageHeaderPhoto") %></div>
       <div id="breadcrumbs">
-
         |<a class="home" href="http://www.cmu.edu/silicon-valley/index.html" title="Silicon Valley Campus Home Page">Silicon
         Valley Campus</a>|
 
-        <% if controller.controller_name  != "welcome" %>
-             <%= link_to "Rails Application", "/" %> |
+        <% if controller.controller_name != "welcome" %>
+            <%= link_to "Rails Application", "/" %> |
             &gt; <%= controller.controller_name.humanize %>
         <% else %>
             &gt; Rails Application
@@ -133,15 +130,45 @@
       </div>
       <a name="access"></a>
 
+
+      <% if @no_pad  %>
+          <%= render :partial => "layouts/no_pad" %>
+     <% else %>
+
       <div class="content2Column" id="mainContent">
         <div class="boxTop"></div>
         <div class="content">
-<% if flash[:notice] %><div id="success_explanation"><p style="color: green"><%= flash[:notice] %></p></div><% end %>
-<% if flash[:error] %><div id="error_explanation"><p style="color: red"><%= flash[:error] %></p></div><% end %>
+          <% if flash[:notice] %>
+              <div class="ui-widget">
+                <div class="ui-state-highlight ui-corner-all">
+                  <p style="color: green; margin-top: 5px;">
+                    <span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>
+                    <%= flash[:notice] %>
+                  </p>
+                </div>
+              </div>
+          <% end %>
+          <% if flash[:error] %>
+              <div class="ui-widget">
+                <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                  <p style="color: red; margin-top: 5px;">
+                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                    <%= flash[:error] %></p>
+                </div>
+              </div>
+          <% end %>
 
-<%= yield  %>
+          <%= yield %>
+
+          <br/>
+
+          <p style="padding:0">Do you have a <%= link_to 'suggestion', :controller => 'suggestions', :action => 'new' %>
+            ?</p>
+
         </div>
         <div class="boxBottom"></div>
+
+        <% end %>
       </div>
 
     </div>

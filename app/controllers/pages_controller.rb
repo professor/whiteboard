@@ -18,6 +18,7 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.xml
   def show
+    @no_pad = true
     @page = Page.find_by_url(params[:id])
     @page.revert_to(params[:version].to_i) if params[:version]
 

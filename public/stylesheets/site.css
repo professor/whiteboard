@@ -1,4 +1,10 @@
 
+body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+ }
+
 td.log_sum {
    padding-left: 10px;
    text-align: right;
