@@ -98,24 +98,6 @@ describe Person do
       staff[2].should == @faculty_frank
     end
 
-    it "should have a named scope teachers" do
-      Person.should respond_to(:teachers)
-    end
-
-    it 'finds all teachers' do
-      #Person.staff.should =~ [@faculty_frank]
-      teachers = Person.teachers
-      teachers.length.should == 2
-      teachers.include?(@faculty_fagan).should be_true
-      teachers.include?(@faculty_frank).should be_true
-    end
-
-    it 'ordered by human name' do
-      teachers = Person.teachers
-      teachers[0].should == @faculty_fagan
-      teachers[1].should == @faculty_frank
-    end
-
 
   end
 
@@ -216,19 +198,6 @@ describe Person do
       @student_sam.version.should == (@version_number)
     end
 
-  end
-
-  describe "person's teams" do
-     it "should format past teams" do
-       past_teams = []
-       @student_sam.stub!(:past_teams).and_return(past_teams)
-       @student_sam.formatted_past_teams.should == ""
-       @team_triumphant = Factory(:team_triumphant)
-       past_teams.push(@team_triumphant)
-       @student_sam.formatted_past_teams.should == "Team Triumphant"
-       past_teams.push(@team_triumphant)
-       @student_sam.formatted_past_teams.should == "Team Triumphant, Team Triumphant"
-     end
   end
 
   describe "person's registered courses" do

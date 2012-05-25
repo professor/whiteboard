@@ -11,15 +11,30 @@ class Ability
     #     can :read, :all
     #   end
 
-    if (user.human_name == "Todd Sedano" || user.human_name == "Brian Drummond" || user.human_name == "Cecile Peraire" || user.human_name == "Patricia Collins" || user.human_name == "Ed Katz" ||user.human_name == "Massood Mortazavi" || user.human_name == "Gladys Mercier")
-      can :update, PageAttachment
-    #else
-    #  cannot :update, PageAttachment
-    end
+
+    can :update, PageAttachment
+
 
     if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
-      can :upload, HUBClassRosterHandler
+      can :upload, Course
     end
+
+    #Contracts manager
+    if (user.is_admin? || user.human_name == "Ngoc Ho" || user.human_name == "Hector Rastrullo")
+      can :manage, SponsoredProjectAllocation
+      can :manage, SponsoredProjectEffort
+      can :manage, SponsoredProjectSponsor
+      can :manage, SponsoredProject
+    end
+
+    if (user.is_admin?)
+      can :manage, Course
+    end
+    if  (user.is_staff? )
+      can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
+    end
+    can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => { :id => user.id } #Useful for TAs.
+
 
     can :manage, User, :id => user.id
 

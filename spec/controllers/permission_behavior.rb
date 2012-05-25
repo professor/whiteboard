@@ -29,4 +29,15 @@
       end
       flash[:error].should == I18n.t(:not_your_deliverable)
     end
- end
+  end
+
+
+  shared_examples_for "cancan permission denied" do
+    it "can't access page" do
+      if @redirect_url.blank?
+        response.should redirect_to(root_path)
+      else
+        response.should redirect_to(@redirect_url)
+      end
+    end
+  end

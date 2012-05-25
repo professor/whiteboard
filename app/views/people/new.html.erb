@@ -16,12 +16,24 @@ return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g")
 return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g");
     }
 
+ function ends_with(str, suffix) {
+     return str.indexOf(suffix, str.length - suffix.length) !== -1;
+ }
+
 //TWiki - user names MJLee can be MjLee
  
  function update_twiki_and_email() {
    document.forms["new_person"].person_twiki_name.value=capitalise(remove_hyphens(document.forms["new_person"].person_first_name.value))+capitalise(remove_hyphens(document.forms["new_person"].person_last_name.value));
 
    document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
+ }
+
+ function add_at_andrew_dot_cmu_dot_edu() {
+   andrew_email = document.forms["new_person"].person_webiso_account.value
+   if (andrew_email != "" && !ends_with(andrew_email, "@andrew.cmu.edu"))
+   {
+       document.forms["new_person"].person_webiso_account.value = andrew_email + "@andrew.cmu.edu"
+   }
  }
 
  function update_student() {
@@ -62,7 +74,7 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
   <p>
     <%= f.label :legal_first_name %><br />
     <%= f.text_field :legal_first_name %><br />
-    <span class="help_text">Ok to leave blank</span>
+    <span class="help_text">(Ok to leave blank)</span>
   </p>
   <p>
     <%= f.label :last_name %><br />
@@ -90,22 +102,18 @@ return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g")
     <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
   </p>
   <p>
-    <%= f.label :personal_email %><br />
-    <%= f.text_field :personal_email %><br/>
-    <span class="help_text">(Necessary for google email account creation)</span>
-  </p>
-  <p>
     <%= f.label :webiso_account, "Andrew account" %><br />
-    <%= f.text_field :webiso_account %>
+    <%= f.text_field :webiso_account, :onblur => "add_at_andrew_dot_cmu_dot_edu()", :placeholder => "@andrew.cmu.edu" %>
   </p>
+    <p>
+      <%= f.label :personal_email %><br />
+      <%= f.text_field :personal_email %><br/>
+      <span class="help_text">(Necessary for google email account creation)</span>
+    </p>
 <h2>System Roles</h2>
   <p>
     <%= f.label :is_staff, "Is staff or faculty?" %><br />
     <%= f.check_box :is_staff %>
-  </p>
-  <p>
-    <%= f.label :is_teacher, "Is teacher? - will be teaching a course?" %><br />
-    <%= f.check_box :is_teacher %><br />
   </p>
   <p>
     <%= f.label :is_student, "Is a student?" %><br />

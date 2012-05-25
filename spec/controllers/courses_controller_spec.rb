@@ -60,7 +60,7 @@ describe CoursesController do
         get :new
       end
 
-      it_should_behave_like "permission denied"
+      it_should_behave_like "cancan permission denied"
     end
 
 
@@ -69,7 +69,7 @@ describe CoursesController do
         get :configure, :id => course.to_param
       end
 
-      it_should_behave_like "permission denied"
+      it_should_behave_like "cancan permission denied"
     end
 
     describe "not POST create" do
@@ -78,7 +78,7 @@ describe CoursesController do
         post :create, :course => @course.attributes
       end
 
-      it_should_behave_like "permission denied"
+      it_should_behave_like "cancan permission denied"
     end
 
     describe "not PUT update" do
@@ -86,7 +86,7 @@ describe CoursesController do
         put :update, :id => course.to_param, :course => {:name => 'NNNNN'}
       end
 
-      it_should_behave_like "permission denied"
+      it_should_behave_like "cancan permission denied"
     end
 
     describe "not DELETE destroy" do

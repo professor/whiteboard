@@ -123,11 +123,6 @@ describe TeamsController do
           post :create, :team => @team.attributes, :course_id => @team.course.to_param
           response.should redirect_to(course_teams_path(@team.course))
         end
-
-        it "assigns faculty as @faculty" do
-          post :create, :team => @team.attributes, :course_id => @team.course.to_param
-          assigns(:faculty).should_not be_nil
-        end
       end
 
       #Re-evaluate this when team CAN have an invalid parameter

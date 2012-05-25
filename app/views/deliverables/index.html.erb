@@ -5,6 +5,8 @@
       first select the course and then pick "deliverabes. See" <%=link_to "My courses", my_courses_path(current_user)%></p></div>
   <% end %>
 
+<%= link_to 'New deliverable', new_deliverable_path %>
+
   <% if !@current_deliverables.empty? %>
     <h2><%= @current_semester %> <%= @current_year %>Current Semester Deliverables</h2>
     <%= render :partial => "deliverable_listing", :locals => { :deliverables => @current_deliverables, :skip_course_column => false }%>

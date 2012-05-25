@@ -5,11 +5,9 @@ class CourseMailer < ActionMailer::Base
   def configure_course_faculty_email(course, options = {})
     @course = course
     
-    unless course.is_configured?
-      mail(:to => options[:to] || course.faculty.collect { |person| person.email },
+   mail(:to => options[:to] || course.faculty.collect { |person| person.email },
            :subject => options[:subject] || "Please let us know about your course #{course.name} (#{course.semester} #{course.year})",
            :date => Time.now)
-    end
   end
 
   def configure_course_admin_email(course, options = {})

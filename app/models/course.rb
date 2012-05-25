@@ -36,7 +36,7 @@ class Course < ActiveRecord::Base
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
 
   has_many :faculty_assignments
-  has_many :faculty, :through => :faculty_assignments, :source => :person #:join_table=>"courses_people", :class_name => "Person"
+  has_many :faculty, :through => :faculty_assignments, :source => :person
 
   has_many :registrations
   has_many :registered_students, :through => :registrations, :source => :user
@@ -72,7 +72,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
-  before_save :strip_whitespaces, :update_faculty
+  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
   after_save :update_distribution_list
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
@@ -204,6 +204,7 @@ class Course < ActiveRecord::Base
     raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
     self.faculty = list
     faculty_assignments_override = nil
+    self.updating_email = true
   end
 
   def copy_as_new_course
@@ -222,26 +223,42 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
-  def email
-    unless self.short_name.blank?
-      return "#{self.semester}-#{self.year}-#{self.short_name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
-    else
-      return "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
-    end
-  end
 
   def invalidate_distribution_list
     self.updating_email = true
   end
 
-  def update_distribution_list
-    Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, self.registered_students, self.id, "courses")) if self.updating_email
+  def update_email_address
+    self.email = build_email
   end
 
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
       self[attr] = value.strip if value.is_a?(String)
+    end
+  end
+
+  def build_email
+    unless self.short_name.blank?
+      email = "#{self.semester}-#{self.year}-#{self.short_name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    else
+      email = "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    end
+    email = email.gsub('&','and')
+    email.sub('@west.cmu.edu', '@sv.cmu.edu')
+  end
+
+  def need_to_update_google_list?
+    if self.email_changed?
+      self.updating_email = true
+    end
+  end
+
+  def update_distribution_list
+    if self.updating_email
+      recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.users}.flatten
+      Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, recipients, self.email, "Course distribution list", self.id, "courses"))
     end
   end
 

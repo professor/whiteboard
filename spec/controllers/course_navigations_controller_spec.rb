@@ -14,12 +14,30 @@ describe CourseNavigationsController do
         get :show, :id => course.to_param
       end
 
+      it "can't access page" do
+        response.should redirect_to(root_path)
+      end
+    end
+
+  end
+
+  context "any faculty can" do
+    before do
+      login(Factory(:faculty_frank))
+    end
+
+    describe "GET show" do
+      before do
+        get :show, :id => course.to_param
+      end
+
       specify { assigns(:course).should_not be_nil }
       specify { assigns(:pages).should_not be_nil }
 
     end
 
   end
+
 
 #  context "any faculty can" do
 #    before do

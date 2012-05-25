@@ -180,5 +180,19 @@ class AcademicCalendar
 
   end
 
+  def self.parse_HUB_semester(short_form)
+    case short_form[0]
+      when 'F'
+        semester = 'Fall'
+      when 'S'
+        semester = 'Spring'
+      when 'M'
+        semester = 'Summer'
+    end
+    year = '20' + short_form[1..2]
+
+    return semester, year
+  end
+
 
 end

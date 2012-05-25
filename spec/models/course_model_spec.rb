@@ -263,6 +263,84 @@ describe Course do
   #  end
   #end
 
+
+
+
+  context 'updates google mailing list' do
+    before do
+      @course = Factory.create(:mfse)
+      @course.updating_email = false
+      @count = Delayed::Job.count
+    end
+
+    context 'when the email name changes' do
+      before do
+        @course.short_name += "_NEW"
+        @course.save
+      end
+      it 'adds an asynchronous request' do
+        Delayed::Job.count.should > @count
+      end
+      it 'marks the state transition' do
+        @course.updating_email.should == true
+      end
+    end
+
+    context 'when the faculty change' do
+      before do
+        @faculty_frank = Factory(:faculty_frank)
+        @course.faculty_assignments_override = [@faculty_frank.human_name]
+        @course.save
+      end
+      it 'adds an asynchronous request' do
+        Delayed::Job.count.should > @count
+      end
+      it 'marks the state transition' do
+        @course.updating_email.should == true
+      end
+    end
+
+    context 'when the registered students change' do
+      #This needs to be tested in the HUB importer which manages this
+    end
+
+    context 'when the student teams change' do
+      #Should be tested by teams spec
+    end
+
+    context 'but not when the curriculum url changes' do
+      before do
+        @course.curriculum_url = "_new_url"
+        @course.save
+      end
+      it 'does not add an asynchronous request' do
+        Delayed::Job.count.should == @count
+      end
+      it 'a state transition does not happen' do
+        @course.updating_email.should == false
+      end
+    end
+  end
+
+
+#these tests are the same with team
+ context 'generated email address' do
+   it 'should use the short name if available' do
+     course = Factory.build(:mfse_fall_2011)
+     course.update_email_address
+     course.email.should == "fall-2011-mfse@" + GOOGLE_DOMAIN
+   end
+
+   it 'should convert unusual characters to ones that google can handle' do
+     course = Factory.build(:mfse_fall_2011)
+     course.short_name = "I & E"
+     course.update_email_address
+     course.email.should == "fall-2011-i-and-e@" + GOOGLE_DOMAIN
+
+   end
+ end
+
+
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
   it { should have_many(:registered_students) }

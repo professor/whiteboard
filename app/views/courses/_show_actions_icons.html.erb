@@ -30,10 +30,10 @@
   </fieldset>
 </div>
 
-<% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
+<% if can? :teach, @course %>
     <div class="rounded staff">
-      <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
-      <span class="instructions">Only faculty can see this information.</span>
+      <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty and course instructors can see this information", :title => "Faculty Role") %>
+      <span class="instructions">Only faculty and course instructors can see this information.</span>
       <fieldset>
         <legend>Faculty tools</legend>
         <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">
@@ -61,9 +61,14 @@
               <p><%= link_to 'Configure course', configure_course_path(course) %></p>
             </td>
             <td>
+              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size=>"75x75", :alt=>"Team formation", :title=>"Team formation"), team_formation_tool_path(course) %>
+              <br/>
+              <p><%= link_to 'Team Formation', team_formation_tool_path(course) %></p>
+            </td>
+            <td>
               <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size=>"75x75", :alt=>"Team formation", :title=>"Team formation"), past_teams_list_path(course) %>
               <br/>
-              <p><%= link_to 'Team Formation', past_teams_list_path(course) %></p>
+              <p><%= link_to 'Old (Team Formation)', past_teams_list_path(course) %></p>
             </td>
             <td>
               <%= link_to image_tag("/images/curriculum_navigation.png", :class => "icon", :size=>"75x75", :alt=>"Edit curriculum pages", :title=>"Edit curriculum pages"), course_navigation_path(Course.first_offering_for_course_name(course.name)) %>
