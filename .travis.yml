@@ -8,3 +8,5 @@ before_script:
   - cp config/systems.default.yml config/systems.yml
   - bundle exec rake db:schema:load RAILS_ENV='test'
                                                                                                                
+env:
+  - SEARCHIFY_API_URL=foo SEARCHIFY_INDEX=cmux_test SEARCHIFY_STAFF_INDEX=cmu_staffx_test
