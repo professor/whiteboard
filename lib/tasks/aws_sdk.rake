@@ -39,6 +39,9 @@ end
 #  object = bucket.objects['people/photo/633/profile/TrevorUmeda.jpg']
 #  object.versions.latest.delete
 #
+#  or
+#  bucket.objects['people/photo/589/profile/SionChaudhuri.jpg'].versions.latest.delete
+
 # You probably want to verify the version history
 #  object.versions.each do |version| puts version.version_id end
 # vLG2iXXhzlJ14a6r3XqHiQqJQpmwTRYA

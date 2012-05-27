@@ -64,8 +64,16 @@ class Page < ActiveRecord::Base
   end
 
   def update_search_index
+    if self.is_viewable_by_all
+      update_search_index_for_index(ENV['SEARCHIFY_INDEX'] || 'cmux')
+    end
+
+    update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
+  end
+
+  def update_search_index_for_index(index_name)
     api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
-    index = api.indexes 'cmux'
+    index = api.indexes(index_name)
     options_hash = {:title => self.title, :type => "page"}
     if self.course
       options_hash.merge!({:title => self.title + " (" + self.course.name + ")"})
@@ -84,7 +92,7 @@ class Page < ActiveRecord::Base
 
   def delete_from_search
     api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
-    index = api.indexes 'cmux'
+    index = api.indexes(ENV['SEARCHIFY_INDEX'] || 'cmux')
     index.document(self.id.to_s).delete
   end
 

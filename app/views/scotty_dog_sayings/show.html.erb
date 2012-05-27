@@ -12,7 +12,7 @@
 </table>
 
 <p>
-<% if @scotty_dog_saying.editable(current_user) %>
+<% if @scotty_dog_saying.editable?(current_user) %>
     <%= link_to 'Edit', edit_scotty_dog_saying_path(@scotty_dog_saying) %> |
 <% end %>
 <%= link_to 'Back', scotty_dog_sayings_path %>
