@@ -1,9 +1,9 @@
 <% content_for :title, 'Suggestions' %>
 <h1>Suggestions</h1>
 
-<table>
+<table class="cmu_table">
 <% for suggestion in @suggestions %>
-  <tr>
+  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
     <td><%=h suggestion.comment %></td>
     <td><%=h suggestion.created_at.to_s(:long)  %></td>
     <td><%= link_to 'Show', suggestion %></td>

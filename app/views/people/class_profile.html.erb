@@ -3,7 +3,7 @@
 
 <div>
 <%= form_for @class_profile_state, :as => :class_profile_state, :url => {:action => "class_profile", :id=> params[:id]} do |f| %>
-  <table width="100%" >
+  <table class="layout_table" width="100%" >
     <colgroup span="3" align="left"></colgroup>
     <colgroup align="right" style="color:#0000FF;"></colgroup>
   <tr>
@@ -28,7 +28,7 @@
 </div>
 
 <h1><%= @title %></h1>
-<table>
+<table class="layout_table">
 <% @students.each do |person| %>
    <tr valign="top"><td>
         <div class="user_photo"><%= link_to image_tag(person.image_uri), person_path(person) %></div>

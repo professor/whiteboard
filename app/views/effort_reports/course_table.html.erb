@@ -2,7 +2,7 @@
   <a href="<%=url_for :action=>"show", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
 </div>
 
-<table>
+<table class="layout_table">
 <tr>
 <% @report_header.each do |column| %>
     <th><%= column %></th>

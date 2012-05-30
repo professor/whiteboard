@@ -1,6 +1,6 @@
 <h1>Listing Task Types</h1>
 
-<table>
+<table class="cmu_table">
   <tr>
     <th width="150" >Name</th>
     <th>Description</th>
@@ -11,7 +11,7 @@
   </tr>
 
 <% for task_type in @task_types %>
-  <tr class="<%= cycle("odd", "even")%>">
+  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
     <td><%=h task_type.name %></td>
     <td><%=h task_type.description %></td>
 <!--

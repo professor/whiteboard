@@ -14,7 +14,9 @@ div#topnav ul {
     margin: 0px;
 }
 
-
+.content table.layout_table tbody td {
+    border: 0px;
+}
 
 
 

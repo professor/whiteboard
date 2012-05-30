@@ -542,7 +542,7 @@ ol.letterList{
 	color:#424545;
 }
 
-
+/*
 .content2Column table {
 	width: 673px;
 }
@@ -550,6 +550,7 @@ ol.letterList{
 .content3Column table {
 	width: 430px;
 }
+*/
 
 .content table {
 	border-collapse:collapse; 
@@ -558,13 +559,14 @@ ol.letterList{
 	background-color: transparent;
 }
 
+
 .content  tr {}
 
 .content tbody td {
 	font-size:12px; 
 	text-decoration:none; 
 	font-weight:normal; 
-	border: 1px solid #d4d4d4; 
+	border: 1px solid #d4d4d4;
 	padding: 5px 3px 11px 5px;  
 	margin: 0px; 
 	vertical-align: top;
