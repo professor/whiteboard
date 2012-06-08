@@ -1,0 +1,58 @@
+<% content_for :title, 'Status Reports' %>
+<h1>Listing Status Reports</h1>
+
+<table>
+  <tr>
+    <th>Week number</th>
+    <th></th>
+    <th>Starting on</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% if @show_new_link_for_current_week %>
+  <tr>
+  <td class="log_weeknumber">Week <%= @current_week_number %> of <%= @year %></td>
+  <td>starting on</td>
+  <td><%=h show_monday_for(@year, @current_week_number) %></td>
+  <td class="log_action"><%= link_to 'New Status Report', :controller => "status_reports", :action => "new", :prior => nil %></td>
+  </tr>
+<% end %>
+
+
+
+<% if @show_new_link_for_previous_week %>
+  <tr>
+  <td class="log_weeknumber">Week <%=h @previous_week_number %> of <%= @previous_week_year %></td>
+  <td>starting on</td>
+  <td><%=h show_monday_for(@previous_week_year, @previous_week_number) %></td>
+  <td class="log_action"><%= link_to 'New Status Report', :controller => "status_reports", :action => "new", :prior => "true" %></td>
+  </tr>
+<% end %>
+
+<% for status_report in @status_reports %>
+  <tr>
+    <td class="log_weeknumber">Week <%=h status_report.week_number %> of <%=h status_report.year%></td>
+    <td>starting on</td>
+    <td><%=h show_monday_for(status_report.year, status_report.week_number) %></td>
+    <td class="log_action"><%= link_to 'Show', status_report %></td>
+    <% if status_report.editable_by(current_user) %>
+    <td class="log_action"><%= link_to 'Edit', edit_status_report_path(status_report) %></td>
+    <% else %>
+    <td>&nbsp;</td>
+    <% end %>
+    <td>&nbsp;</td>
+<% if current_user && current_user.is_admin %>
+    <td class="log_action"><%= link_to 'Destroy', status_report, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p>Note: Every week, you'll be able to create a new Status Report entry. Status Reports are due each week on Sunday by midnight (Pacific Time).
+  Faculty will be reviewing status reports Monday morning. You have a 24 hour grace period. You will not be able to
+  create or edit after the grace period. We don't remember what we had for lunch yesterday and we don't think you'll remember what you were doing last week.</p>
+<br />
+<p><%= link_to 'Back', '/' %></p>
+<br/>
