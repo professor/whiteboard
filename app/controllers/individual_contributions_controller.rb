@@ -1,13 +1,13 @@
-class StatusReportsController < ApplicationController
+class IndividualContributionsController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!   #, :except => [:create_midweek_warning_email, :create_endweek_admin_email]
 
 
-  # GET /status_reports
-  # GET /status_reports.xml
+  # GET /individual_contributions
+  # GET /individual_contributions.xml
   def index
-    @status_reports = StatusReport.find_status_reports(current_user)
+    @individual_contributions = IndividualContribution.find_individual_contributions(current_user)
 
     @current_week_number = Date.today.cweek
     @year = Date.today.cwyear
@@ -20,21 +20,16 @@ class StatusReportsController < ApplicationController
       @previous_week_year = @year
     end
 
-    #current_week_report = StatusReport.where("year = ? AND week_number = ? AND user_id = ? " , @year, @current_week_number, @current_user).first
-    #previous_week_report = StatusReport.where("year = ? AND week_number = ? AND user_id = ? " , @previous_week_year, @previous_week_number, @current_user).first
-
-    current_week_report = StatusReport.find_by_week(@year, @current_week_number, current_user)
-    previous_week_report = StatusReport.find_by_week(@previous_week_year, @previous_week_number, current_user)
+    current_week = IndividualContribution.find_by_week(@year, @current_week_number, current_user)
+    previous_week = IndividualContribution.find_by_week(@previous_week_year, @previous_week_number, current_user)
 
 
-    @show_new_link_for_current_week = !current_week_report ? true : false
-    @show_new_link_for_previous_week = (Date.today.monday? && !previous_week_report) ? true : false
-
-    tmp = 1
+    @show_new_link_for_current_week = !current_week ? true : false
+    @show_new_link_for_previous_week = (Date.today.monday? && !previous_week) ? true : false
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render :xml => @status_reports }
+      format.xml { render :xml => @individual_contributions }
     end
   end
 
@@ -43,7 +38,7 @@ class StatusReportsController < ApplicationController
   # Todo: consider moving these email methods to the model(StatusReports) and update the rake task accordingly
   #
 #  def create_midweek_warning_email
-#    if (!StatusReport.log_effort_week?(Date.today.cwyear, Date.today.cweek))
+#    if (!IndividualContribution.log_effort_week?(Date.today.cwyear, Date.today.cweek))
 #      #We skip weeks that students aren't taking courses
 #      logger.info "There is no class this week, so we won't remind students to log effort"
 ##      flash[:error] = 'Students are taking courses this week'
@@ -90,7 +85,7 @@ class StatusReportsController < ApplicationController
 #      logger.debug "** team #{team.name}"
 #      team.people.each do |person|
 #        logger.debug "**    person #{person.human_name}"
-#        status_report = StatusReport.where("person_id = ? and week_number = ? and year = ?", person.id, week_number, year).first
+#        status_report = IndividualContribution.where("person_id = ? and week_number = ? and year = ?", person.id, week_number, year).first
 #        if (!person.emailed_recently(:status_report))
 #          if ((status_report.nil? || status_report.sum == 0)&&(!person.emailed_recently(:status_report)))
 #            #            logger.debug "**  sent email to #{person.human_name} (#{person.id}) for #{week_number} of #{year} in course #{course_id}"
@@ -114,7 +109,7 @@ class StatusReportsController < ApplicationController
 #    week_number = Date.today.cweek
 #    people = Person.where("masters_program = ? and is_active = true and is_alumnus = false", "SE")
 #    people.each do |person|
-#      status_report = StatusReport.latest_for_person(person.id, week_number, year)
+#      status_report = IndividualContribution.latest_for_person(person.id, week_number, year)
 #      if (!person.emailed_recently(:status_report))
 #        if ((status_report.nil? || status_report.sum == 0)&&(!person.emailed_recently(:status_report)))
 #          create_midweek_warning_email_send_it(random_scotty_saying, person.id)
@@ -144,7 +139,7 @@ class StatusReportsController < ApplicationController
 #    last_week = (Date.today - 7).cweek
 #    last_week_year = (Date.today -7).cwyear
 #
-#    if (!StatusReport.log_effort_week?(last_week_year, last_week))
+#    if (!IndividualContribution.log_effort_week?(last_week_year, last_week))
 #      logger.info "There was no class last week, so we won't remind students to log effort"
 #      return
 #    end
@@ -175,7 +170,7 @@ class StatusReportsController < ApplicationController
   # GET /status_reports/1
   # GET /status_reports/1.xml
   def show
-    @status_report = StatusReport.find(params[:id])
+    @status_report = IndividualContribution.find(params[:id])
     setup_required_datastructures(@status_report.year, @status_report.week_number)
 
     respond_to do |format|
@@ -204,11 +199,11 @@ class StatusReportsController < ApplicationController
     end
     setup_required_datastructures(year, week_number)
 
-    @status_report = StatusReport.new
+    @status_report = IndividualContribution.new
     @status_report.person_id = current_user.id
 
     #find the most recent status report to copy its structure, but not its effort data
-    recent_status_report = StatusReport.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC").first
+    recent_status_report = IndividualContribution.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC").first
 
     # We want to make sure that the user isn't accidentally creating two efforts for the same week.
     # Since students are only able to log effort for this week (or a previous week)
@@ -217,7 +212,7 @@ class StatusReportsController < ApplicationController
       duplicate_status_report = recent_status_report
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_status_report = StatusReport.where("person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}").first
+      duplicate_status_report = IndividualContribution.where("person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}").first
     end
 
     if duplicate_status_report
@@ -254,11 +249,11 @@ class StatusReportsController < ApplicationController
 
     respond_to do |format|
       if @status_report.save
-        flash[:notice] = 'StatusReport was successfully created.'
+        flash[:notice] = 'IndividualContribution was successfully created.'
         format.html { redirect_to(edit_status_report_url(@status_report.id)) }
         format.xml { render :xml => @status_report, :status => :created, :location => @status_report }
       else
-        flash[:notice] = 'Unable to create new StatusReport.'
+        flash[:notice] = 'Unable to create new IndividualContribution.'
         format.html { redirect_to(status_reports_url) }
         format.xml { render :xml => @status_report.errors, :status => :unprocessable_entity }
       end
@@ -267,7 +262,7 @@ class StatusReportsController < ApplicationController
 
   # GET /status_reports/1/edit
   def edit
-    @status_report = StatusReport.find(params[:id])
+    @status_report = IndividualContribution.find(params[:id])
 
 #    if @status_report.week_number != Date.today.cweek
     if !@status_report.editable_by(current_user)
@@ -284,7 +279,7 @@ class StatusReportsController < ApplicationController
   # POST /status_reports
   # POST /status_reports.xml
   def create
-    @status_report = StatusReport.new(params[:status_report])
+    @status_report = IndividualContribution.new(params[:status_report])
 
     setup_required_datastructures(@status_report.year, @status_report.week_number)
 
@@ -292,7 +287,7 @@ class StatusReportsController < ApplicationController
     respond_to do |format|
       if @status_report.save
         course_error_msg = @status_report.validate_effort_against_registered_courses()
-        flash[:notice] = 'StatusReport was successfully created.'
+        flash[:notice] = 'IndividualContribution was successfully created.'
         if (course_error_msg!="")
           flash[:error] = 'You are not on a team in the following course(s) ' + course_error_msg
         end
@@ -310,7 +305,7 @@ class StatusReportsController < ApplicationController
   def update
     params[:status_report][:existing_status_report_line_item_attributes] ||= {}
 
-    @status_report = StatusReport.find(params[:id])
+    @status_report = IndividualContribution.find(params[:id])
     if !@status_report.editable_by(current_user)
       flash[:error] = 'You do not have permission to edit the status report.'
       redirect_to(status_reports_url) and return
@@ -326,7 +321,7 @@ class StatusReportsController < ApplicationController
       if @status_report.update_attributes(params[:status_report])
         #check to see if user is logging effort for unregistered courses
         course_error_msg = @status_report.validate_effort_against_registered_courses()
-        flash[:notice] = 'StatusReport was successfully updated.'
+        flash[:notice] = 'IndividualContribution was successfully updated.'
         if (course_error_msg!="")
           flash[:error] = 'You are not on a team in the following course(s)<br/>' + course_error_msg
         end
@@ -342,7 +337,7 @@ class StatusReportsController < ApplicationController
   # DELETE /status_reports/1
   # DELETE /status_reports/1.xml
   def destroy
-    @status_report = StatusReport.find(params[:id])
+    @status_report = IndividualContribution.find(params[:id])
     @status_report.destroy
 
     respond_to do |format|
@@ -352,7 +347,7 @@ class StatusReportsController < ApplicationController
   end
 
   def effort_for_unregistered_courses
-    @error_status_reports_users = StatusReport.users_with_effort_against_unregistered_courses()
+    @error_status_reports_users = IndividualContribution.users_with_effort_against_unregistered_courses()
     respond_to do |format|
       format.html
       format.xml { render :xml => @error_status_reports_users }

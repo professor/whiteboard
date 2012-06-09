@@ -1,4 +1,4 @@
-class StatusReport < ActiveRecord::Base
+class IndividualContribution < ActiveRecord::Base
 #  has_many :effort_log_line_items, :dependent => :destroy
   belongs_to :user
 
@@ -7,7 +7,7 @@ class StatusReport < ActiveRecord::Base
   validates_presence_of :year
 
 
-   def self.find_status_reports(current_user)
+   def self.find_individual_contributions(current_user)
      where("user_id = ?", current_user.id).order("year DESC, week_number DESC")
    end
 

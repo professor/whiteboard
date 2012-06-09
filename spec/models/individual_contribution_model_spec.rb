@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StatusReport do
+describe IndividualContribution do
 
 
 
@@ -11,7 +11,7 @@ describe StatusReport do
     it 'can be created' do
       lambda {
         Factory(:status_report)
-      }.should change(StatusReport, :count).by(1)
+      }.should change(IndividualContribution, :count).by(1)
     end
   
     context "is not valid" do
@@ -56,23 +56,18 @@ describe StatusReport do
     #end
 
 
-   it "should be sorted" do
-      @oldest_week = Factory(:status_report, :year => 1983, :week_number => 52)
+    it "should be sorted" do
+      @oldest_week = Factory(:individual_contribution, :year => 1983, :week_number => 52)
       @this_week = @oldest_week.dup
       @this_week.update_attributes(:year => Date.today.cwyear, :week_number => Date.today.cweek)
       @old_week = @oldest_week.dup
-       @old_week.update_attributes(:year => 2000, :week_number =>1)
+      @old_week.update_attributes(:year => 2000, :week_number => 1)
 
-     @sorted = Status.reports.all
-     @sorted.first.should == @this_week
-     @sorted.second.should == @old_week
-     @sorted.third.should == @oldest_week
-   end
-
-
-
-
-  
+      @sorted = IndividualContribution.all
+      @sorted.first.should == @this_week
+      @sorted.second.should == @old_week
+      @sorted.third.should == @oldest_week
+    end
 
 
   #
