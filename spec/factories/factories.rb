@@ -38,6 +38,12 @@ Factory.define :effort_log, :class => EffortLog do |e|
   e.association :person, :factory => :student_sam
 end
 
+Factory.define :individual_contribution, :class => IndividualContribution do |e|
+  e.year Date.today.cwyear
+  e.week_number Date.today.cweek
+  e.association :user, :factory => :student_sam
+end
+
 Factory.define :page, :class => Page do |p|
   p.title "My page "
   p.url "my_page"

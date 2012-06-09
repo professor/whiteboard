@@ -6,11 +6,11 @@ describe IndividualContribution do
 
   # named scope
   # default sorting order
-  # foreign assocations with user, year, week_number
+  # foreign associations with user, year, week_number
  
     it 'can be created' do
       lambda {
-        Factory(:status_report)
+        Factory(:individual_contribution)
       }.should change(IndividualContribution, :count).by(1)
     end
   
@@ -36,21 +36,21 @@ describe IndividualContribution do
     #context " should update" do
     #
     #  it " student can update the status report for previous week on monday" do
-    #      report =  Factory(:status_report)
+    #      report =  Factory(:individual_contribution)
     #      Date.stub(:today).and_return(Date.parse("Jun 04, 2012")) # which is a Monday.
     #      report.should be_valid
     #
     #  end
     #
     #  it " student cannot update the status report for previous week on any other day" do
-    #      report =  Factory(:status_report)
+    #      report =  Factory(:individual_contribution)
     #      Date.stub(:today).and_return(Date.parse("Jun 05, 2012"))  # which is a Tuesday.
     #      report.should_not be_valid
     #  end
     #
     #
     #  it " Faculty can update the status report for any week on any day of the week" do
-    #      report =  Factory(:status_report)
+    #      report =  Factory(:individual_contribution)
     #      report.should be_valid
     #  end
     #end
