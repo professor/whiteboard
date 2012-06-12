@@ -1,5 +1,6 @@
 class RenameCoursePeopleToFacultyAssignments < ActiveRecord::Migration
   def self.up
+    remove_index :courses_people, [ :course_id, :person_id ]
     rename_table :courses_people, :faculty_assignments
 
     create_table "registered_courses" do |t|
@@ -8,7 +9,6 @@ class RenameCoursePeopleToFacultyAssignments < ActiveRecord::Migration
       t.timestamps
     end
 
-    remove_index :courses_people, [ :course_id, :person_id ]
     add_index :registered_courses, [ :course_id, :person_id ], :unique => true
     add_index :faculty_assignments, [ :course_id, :person_id ], :unique => true
   end
