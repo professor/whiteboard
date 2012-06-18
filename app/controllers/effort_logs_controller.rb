@@ -79,7 +79,8 @@ class EffortLogsController < ApplicationController
     people_with_effort = []
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    people = Person.where("masters_program = ? and is_active = true and is_alumnus = false", "SE")
+    people = Person.where("masters_program = SE AND is_active = true AND is_alumnus = false")
+
     people.each do |person|
       effort_log = EffortLog.latest_for_person(person.id, week_number, year)
       if (!person.emailed_recently(:effort_log))
@@ -233,7 +234,7 @@ class EffortLogsController < ApplicationController
     @effort_log.person_id = current_user.id
 
     #find the most recent effort log to copy its structure, but not its effort data
-    recent_effort_log = EffortLog.where("person_id = '#{current_user.id}'", :order => "year DESC, week_number DESC").first
+    recent_effort_log = EffortLog.where("person_id = ?", current_user.id).order("year DESC, week_number DESC").first
 
     # We want to make sure that the user isn't accidentally creating two efforts for the same week.
     # Since students are only able to log effort for this week (or a previous week)
@@ -242,7 +243,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.where("person_id = '#{current_user.id}' AND year = #{year} AND week_number = #{week_number}").first
+      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user..id, week_number, year).first
     end
 
     if duplicate_effort_log
