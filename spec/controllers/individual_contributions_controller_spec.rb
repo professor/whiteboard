@@ -135,6 +135,40 @@ describe IndividualContributionsController do
     end
   end
 
+  describe "#new" do
+
+    it "should have a list of questions" do
+      get(:new)
+      assigns(:questions)
+    end
+
+
+    context "it lists out each question, for each question it lists out course data" do
+      get(:new)
+      assigns(:answers)
+    end
+
+    context "when there is previous week data, then show the student's plan for the current week" do
+
+    end
+
+    context "courses shown should contain semester courses for the current semester" do
+
+    end
+
+    context "courses shown should contain mini courses for the mini semester" do
+
+    end
+
+    context "courses shown should not contain mini courses for the other mini in the semester" do
+
+    end
+
+
+  end
+
+
+
 #  describe "#create_midweek_warning_email" do
 #    before do
 #      ScottyDogSaying.stub(:all).and_return([ScottyDogSaying.new(:saying => "random saying")])

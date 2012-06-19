@@ -34,6 +34,12 @@ class IndividualContributionsController < ApplicationController
   end
 
 
+  def new
+
+    @questions = ["Helo", "heelo"]
+
+
+  end
 
   # Todo: consider moving these email methods to the model(StatusReports) and update the rake task accordingly
   #

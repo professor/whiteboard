@@ -34,4 +34,15 @@ Factory.define :mfse_current_semester, :parent => :course do |c|
   c.short_name 'MfSE'
   c.semester AcademicCalendar.current_semester
   c.year Date.today.cwyear
+  c.mini "A"
+end
+
+
+Factory.define :fse_current_semester, :parent => :course do |c|
+  c.name 'Foundations of Software Engineering'
+  c.short_name 'FSE'
+  c.semester AcademicCalendar.current_semester
+  c.year Date.today.cwyear
+  c.number '96-700'
+  c.mini "Both"
 end

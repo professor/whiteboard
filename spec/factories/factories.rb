@@ -38,10 +38,15 @@ Factory.define :effort_log, :class => EffortLog do |e|
   e.association :person, :factory => :student_sam
 end
 
-Factory.define :individual_contribution, :class => IndividualContribution do |e|
-  e.year Date.today.cwyear
-  e.week_number Date.today.cweek
-  e.association :user, :factory => :student_sam
+Factory.define :individual_contribution, :class => IndividualContribution do |ic|
+  ic.year Date.today.cwyear
+  ic.week_number Date.today.cweek
+  ic.association :user, :factory => :student_sam
+end
+
+Factory.define :individual_contribution_for_course, :class => IndividualContributionForCourse do |ic|
+  ic.association :individual_contribution, :factory => :individual_contribution
+  ic.association :course, :factory => :course
 end
 
 Factory.define :page, :class => Page do |p|

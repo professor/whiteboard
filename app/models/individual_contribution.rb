@@ -1,5 +1,5 @@
 class IndividualContribution < ActiveRecord::Base
-#  has_many :effort_log_line_items, :dependent => :destroy
+  has_many :individual_contribution_for_courses, :dependent => :destroy
   belongs_to :user
 
   validates_presence_of :user_id
@@ -17,6 +17,22 @@ class IndividualContribution < ActiveRecord::Base
 
 
   default_scope :order => "year DESC, week_number DESC"
+
+  def answers
+    answers_array = Array.new
+    5.each do |i|
+      answers_array[i] = Hash.new
+    end
+    individual_contribution_for_courses.each do |ic_course|
+        answers_array[0].store(ic_course.id, ic_course.answer1)
+        answers_array[1].store(ic_course.id, ic_course.answer2)
+        answers_array[2].store(ic_course.id, ic_course.answer3)
+        answers_array[3].store(ic_course.id, ic_course.answer4)
+        answers_array[4].store(ic_course.id, ic_course.answer5)
+    end
+    answers_array
+  end
+
 
   #def editable_by(current_user)
   #  if (current_user && current_user.is_admin?)

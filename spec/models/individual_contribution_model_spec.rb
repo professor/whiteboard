@@ -70,6 +70,41 @@ describe IndividualContribution do
     end
 
 
+  context " it shows the data in an array of arrays" do
+
+    it " shows gets the correct number of courses from the database" do
+
+    end
+
+    it " returns the data in an array of arrays" do
+    end
+  end
+
+
+
+  context "answers" do
+    #Given 3 courses in a smemester
+    before do
+      @mfse = Factory(:mfse_current_semester)
+      @fse = Factory(:fse_current_semester)
+      @this_week = Factory(:individual_contribution)
+      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week.id, :course => @mfse, :answer1 => "I did great")
+      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week.id, :course => @fse, :answer1 => "I finished it")
+
+    end
+    #When method name is called do
+
+    it "returns an array of arrays: question array of course answers" do
+
+      this_weeks_report = IndividualContribution.find_by_week(year, week_number, current_user).answers
+      answers[0].get_field(@mfse.id).should_equal "I did great"
+      answers[0].get_field(@fse.id).should_equal "I finished it"
+    end
+
+
+  end
+
+
   #
   #
   #
