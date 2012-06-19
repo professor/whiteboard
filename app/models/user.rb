@@ -99,6 +99,15 @@ class User < ActiveRecord::Base
     return phones
   end
 
+  def telephones_hash
+    phones = Hash.new
+    phones[self.telephone1_label] = self.telephone1 unless (self.telephone1_label.nil? || self.telephone1_label.empty?)
+    phones[self.telephone2_label] = self.telephone2 unless (self.telephone2_label.nil? || self.telephone2_label.empty?)
+    phones[self.telephone3_label] = self.telephone3 unless (self.telephone3_label.nil? || self.telephone3_label.empty?)
+    phones[self.telephone4_label] = self.telephone4 unless (self.telephone4_label.nil? || self.telephone4_label.empty?)
+    return phones
+  end
+
 
   def self.parse_twiki(username)
     # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]

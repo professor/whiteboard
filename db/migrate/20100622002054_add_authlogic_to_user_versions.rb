@@ -18,30 +18,29 @@ class AddAuthlogicToUserVersions < ActiveRecord::Migration
     t.string    :last_login_ip                                      # optional, see Authlogic::Session::MagicColumns
     end
 
-# Do these after the move
-#    remove_column :users, :salt
-#    remove_column :users, :remember_token
-#    remove_column :users, :remember_token_expires_at
+#    remove_column :user_versions, :salt
+    remove_column :user_versions, :remember_token
+    remove_column :user_versions, :remember_token_expires_at
 
   end
 
   def self.down
 
-#    add_column :users, :salt, :string
-#    add_column :users, :remember_token, :string
-#    add_column :users, :remember_token_expires_at, :string
+ #   add_column :user_versions, :salt, :string
+    add_column :user_versions, :remember_token, :string
+    add_column :user_versions, :remember_token_expires_at, :string
 
-    remove_column  :users,   :password_salt
-    remove_column  :users,   :persistence_token
-    remove_column  :users,   :single_access_token
-    remove_column  :users,   :perishable_token
+    remove_column  :user_versions, :password_salt
+    remove_column  :user_versions, :persistence_token
+    remove_column  :user_versions, :single_access_token
+    remove_column  :user_versions, :perishable_token
 
-    remove_column  :users,  :login_count
-    remove_column  :users,  :failed_login_count
-    remove_column  :users, :last_request_at
-    remove_column  :users, :current_login_at
-    remove_column  :users, :last_login_at
-    remove_column  :users, :current_login_ip
-    remove_column  :users, :last_login_ip
+    remove_column  :user_versions, :login_count
+    remove_column  :user_versions, :failed_login_count
+    remove_column  :user_versions, :last_request_at
+    remove_column  :user_versions, :current_login_at
+    remove_column  :user_versions, :last_login_at
+    remove_column  :user_versions, :current_login_ip
+    remove_column  :user_versions, :last_login_ip
   end
 end
