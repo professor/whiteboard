@@ -4,7 +4,7 @@ describe Course do
 
   it 'can be created' do
     lambda {
-      Factory(:course)
+      FactoryGirl(:course)
     }.should change(Course, :count).by(1)
   end
 
