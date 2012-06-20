@@ -4,7 +4,7 @@ describe "deliverables" do
 
   before do
    visit('/')
-   @user = Factory(:student_sam)
+   @user = FactoryGirl(:student_sam)
    login_with_oauth @user
    click_link "My Deliverables"
   end

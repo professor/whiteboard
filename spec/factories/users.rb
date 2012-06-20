@@ -1,5 +1,6 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
-Factory.define :admin_andy_user, :parent => :user do |p|
+FactoryGirl.define do
+
+factory :admin_andy_user, :parent => :user do |p|
   p.login "admin_andy"
   p.email "admin.andy@sv.cmu.edu"
   p.webiso_account "andy@andrew.cmu.edu"
@@ -11,7 +12,7 @@ Factory.define :admin_andy_user, :parent => :user do |p|
   p.twiki_name "AdminAndy"
 end
 
-Factory.define :student_sam_user, :parent => :user do |p|
+factory :student_sam_user, :parent => :user do |p|
   p.login "student_sam"
   p.email "student.sam@sv.cmu.edu"
   p.webiso_account "sam@andrew.cmu.edu"
@@ -23,7 +24,7 @@ Factory.define :student_sam_user, :parent => :user do |p|
   p.twiki_name "StudentSam"
 end
 
-Factory.define :student_sally_user, :parent => :user do |p|
+factory :student_sally_user, :parent => :user do |p|
   p.login "student_sally"
   p.email "student.sally@sv.cmu.edu"
   p.webiso_account "sally@andrew.cmu.edu"
@@ -35,7 +36,7 @@ Factory.define :student_sally_user, :parent => :user do |p|
   p.twiki_name "StudentSally"
 end
 
-Factory.define :faculty_frank_user, :parent => :user do |p|
+factory :faculty_frank_user, :parent => :user do |p|
   p.login "faculty_frank"
   p.email "faculty.frank@sv.cmu.edu"
   p.webiso_account "frank@andrew.cmu.edu"
@@ -46,7 +47,7 @@ Factory.define :faculty_frank_user, :parent => :user do |p|
   p.twiki_name "FacultyFrank"
 end
 
-Factory.define :faculty_fagan_user, :parent => :user do |p|
+factory :faculty_fagan_user, :parent => :user do |p|
   p.login "faculty_fagan"
   p.email "faculty.fagan@sv.cmu.edu"
   p.webiso_account "fagan@andrew.cmu.edu"
@@ -57,7 +58,7 @@ Factory.define :faculty_fagan_user, :parent => :user do |p|
   p.twiki_name "FacultyFagan"
 end
 
-Factory.define :contracts_manager_user, :parent => :user do |p|
+factory :contracts_manager_user, :parent => :user do |p|
   p.login "Ngoc Ho"
   p.email "ngoc.ho@sv.cmu.edu"
   p.webiso_account "ngocho@andrew.cmu.edu"
@@ -66,4 +67,6 @@ Factory.define :contracts_manager_user, :parent => :user do |p|
   p.last_name "Ho"
   p.human_name "Ngoc Ho"
   p.twiki_name "NgocHo"
+end
+
 end

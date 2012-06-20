@@ -5,7 +5,7 @@ describe ScottyDogSaying do
 
   it 'can be created' do
     lambda {
-      Factory(:scotty_dog_saying)
+      FactoryGirl(:scotty_dog_saying)
     }.should change(ScottyDogSaying, :count).by(1)
   end
 
@@ -21,10 +21,10 @@ describe ScottyDogSaying do
 
   context "is editable" do
     before(:each) do
-      @admin_andy = Factory(:admin_andy)
-      @faculty_frank = Factory(:faculty_frank)
-      @student_sam = Factory(:student_sam)
-      @saying = Factory(:scotty_dog_saying, :user => @student_sam)
+      @admin_andy = FactoryGirl(:admin_andy)
+      @faculty_frank = FactoryGirl(:faculty_frank)
+      @student_sam = FactoryGirl(:student_sam)
+      @saying = FactoryGirl(:scotty_dog_saying, :user => @student_sam)
     end
 
 

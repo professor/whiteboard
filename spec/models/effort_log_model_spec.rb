@@ -33,7 +33,7 @@ describe EffortLog do
 
   #context "has_permission_to_edit" do
   #  before(:each) do
-  #    @effort = Factory(:effort_log)
+  #    @effort = FactoryGirl(:effort_log)
   #  end
   #
   #  #it "for effort log owner" do
@@ -41,13 +41,13 @@ describe EffortLog do
   #  #end
   #
   #  it "for admin who is not effort owner" do
-  #    admin_andy = Factory(:admin_andy)
+  #    admin_andy = FactoryGirl(:admin_andy)
   #    @effort.person.should_not be_equal(admin_andy)
   #    @effort.editable_by(admin_andy).should be_true
   #  end
   #
   #  it "not for non admin and non effort log owner" do
-  #    faculty_frank = Factory(:faculty_frank)
+  #    faculty_frank = FactoryGirl(:faculty_frank)
   #    @effort.person.should_not be_equal(faculty_frank)
   #    @effort.editable_by(faculty_frank).should be_false
   #  end
@@ -55,12 +55,12 @@ describe EffortLog do
 
   context "has_permission_to_edit_period" do
     before(:each) do
-      @effort = Factory(:effort_log)
+      @effort = FactoryGirl(:effort_log)
     end
 
     context "within time period" do
       it "for admin who is not effort owner" do
-        admin_andy = Factory(:admin_andy)
+        admin_andy = FactoryGirl(:admin_andy)
         @effort.person.should_not be_equal(admin_andy)
         @effort.editable_by(admin_andy).should be_true
       end
@@ -71,7 +71,7 @@ describe EffortLog do
       end
 
       it "not for non admin and non effort log owner" do
-        faculty_frank = Factory(:faculty_frank)
+        faculty_frank = FactoryGirl(:faculty_frank)
         @effort.person.should_not be_equal(faculty_frank)
         @effort.editable_by(faculty_frank).should be_false
       end
@@ -85,7 +85,7 @@ describe EffortLog do
       end
 
       it "for admin who is not effort owner" do
-        admin_andy = Factory(:admin_andy)
+        admin_andy = FactoryGirl(:admin_andy)
         @effort.person.should_not be_equal(admin_andy)
         @effort.editable_by(admin_andy).should be_true
       end
@@ -95,7 +95,7 @@ describe EffortLog do
       end
 
       it "not for non admin and non effort log owner" do
-        faculty_frank = Factory(:faculty_frank)
+        faculty_frank = FactoryGirl(:faculty_frank)
         @effort.person.should_not be_equal(faculty_frank)
         @effort.editable_by(faculty_frank).should be_false
       end
@@ -104,8 +104,8 @@ describe EffortLog do
 
   context "validate_effort_against_registered_courses where person" do
     before(:each) do
-      @effort_log_line_item = Factory(:elli_line1)
-      @effort = Factory(:effort_log, :effort_log_line_items => [@effort_log_line_item])
+      @effort_log_line_item = FactoryGirl(:elli_line1)
+      @effort = FactoryGirl(:effort_log, :effort_log_line_items => [@effort_log_line_item])
     end
 
     it "is signed up for the course" #do
@@ -131,7 +131,7 @@ describe EffortLog do
 
 	describe '.users_with_effort_against_unregistered_courses' do
     before do
-      @effort = Factory(:effort_log, :effort_log_line_items => [Factory(:elli_line1)])
+      @effort = FactoryGirl(:effort_log, :effort_log_line_items => [FactoryGirl(:elli_line1)])
     end
 
     context 'with courses in error' do
@@ -155,7 +155,7 @@ describe EffortLog do
 
   describe '#determine_total_effort' do
     before do
-      @effort = Factory(:effort_log, :effort_log_line_items => [Factory(:elli_line1, :day6 => 10)])
+      @effort = FactoryGirl(:effort_log, :effort_log_line_items => [FactoryGirl(:elli_line1, :day6 => 10)])
       @effort.determine_total_effort
     end
     it 'sets the total effort sum' do

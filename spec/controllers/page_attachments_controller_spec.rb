@@ -3,10 +3,10 @@ require 'spec_helper'
 describe PageAttachmentsController do
   context "As a faculty member," do
     before :each do
-      @user = Factory(:faculty_frank)
+      @user = FactoryGirl(:faculty_frank)
       login @user
-      @page = Factory(:page, :is_editable_by_all => false)
-      @attachment = Factory(:page_attachment, :page => @page, :user => @user)
+      @page = FactoryGirl(:page, :is_editable_by_all => false)
+      @attachment = FactoryGirl(:page_attachment, :page => @page, :user => @user)
     end
 
     describe "performing PUT update on a page attachment" do
@@ -21,7 +21,7 @@ describe PageAttachmentsController do
 
     describe "POST create" do
       def do_post
-        post :create, :page_attachment => Factory.build(:page_attachment, :page_id => @page.id).attributes
+        post :create, :page_attachment => FactoryGirl.build(:page_attachment, :page_id => @page.id).attributes
       end
 
       it "should create the attachment" do
@@ -37,7 +37,7 @@ describe PageAttachmentsController do
 
       context "if there is no file" do
         def do_post
-          post :create, :page_attachment => Factory.build(:blank_page_attachment, :page_id => @page.id).attributes
+          post :create, :page_attachment => FactoryGirl.build(:blank_page_attachment, :page_id => @page.id).attributes
         end
 
         it "should not create the attachment" do
@@ -73,10 +73,10 @@ describe PageAttachmentsController do
 
   context "As a student, on a page that is not editable by everyone," do
     before :each do
-      @user = Factory(:student_sam)
+      @user = FactoryGirl(:student_sam)
       login @user
-      @page = Factory(:page, :is_editable_by_all => false)
-      @attachment = Factory(:page_attachment, :page => @page, :user_id => 1)
+      @page = FactoryGirl(:page, :is_editable_by_all => false)
+      @attachment = FactoryGirl(:page_attachment, :page => @page, :user_id => 1)
     end
 
     describe "performing PUT update on a page attachment" do
@@ -95,7 +95,7 @@ describe PageAttachmentsController do
 
     describe "POST create" do
       def do_post
-        post :create, :page_attachment => Factory.build(:page_attachment, :page_id => @page.id.to_s).attributes
+        post :create, :page_attachment => FactoryGirl.build(:page_attachment, :page_id => @page.id.to_s).attributes
       end
 
       it "should not create the attachment" do

@@ -10,8 +10,8 @@ describe PagesController do
   context "any user can" do
     before do
       Page.delete_all
-      login(Factory(:student_sam))
-      @page = Factory(:page)
+      login(FactoryGirl(:student_sam))
+      @page = FactoryGirl(:page)
     end
 
     shared_examples_for "finding page" do
@@ -52,8 +52,8 @@ describe PagesController do
   context "as a student can" do
     before do
       Page.delete_all
-      login(Factory(:student_sam))
-      @page = Factory(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+      login(FactoryGirl(:student_sam))
+      @page = FactoryGirl(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
     end
 
     describe "GET show" do
@@ -87,9 +87,9 @@ describe PagesController do
   context "as a faculty member can" do
 
     before do
-      login(Factory(:faculty_frank))
+      login(FactoryGirl(:faculty_frank))
 
-      @page = Factory(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+      @page = FactoryGirl(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
     end
 
     describe "GET show" do
@@ -135,7 +135,7 @@ describe PagesController do
 
   
 #  it "allows named pages in the url" do
-#     @ppm = Factory(:ppm)
+#     @ppm = FactoryGirl(:ppm)
 #       { :get => "/pages/#{@ppm.url}" }.should be_routable
 #       get "/pages/#{@ppm.url}"
 #       response.code.should == "302"

@@ -4,12 +4,12 @@ require 'controllers/permission_behavior'
 describe DelayedSystemJobsController do
 
 
-  let(:delayed_system_job) { Factory(:delayed_system_job) }
+  let(:delayed_system_job) { FactoryGirl(:delayed_system_job) }
 
 
   context "any user can" do
     before do
-      login(Factory(:student_sam))
+      login(FactoryGirl(:student_sam))
     end
 
     describe "GET index" do
@@ -33,7 +33,7 @@ describe DelayedSystemJobsController do
 
   context "any admin can" do
     before do
-      login(Factory(:admin_andy))
+      login(FactoryGirl(:admin_andy))
     end
 
     describe "GET index" do

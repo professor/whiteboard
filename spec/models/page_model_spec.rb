@@ -77,34 +77,34 @@ describe Page do
 
 
   it "is editable by staff or admin" do
-    @page.should be_editable(Factory(:faculty_frank))
+    @page.should be_editable(FactoryGirl(:faculty_frank))
    end
 
   it "is not editable unless they are staff or admin" do
-    @page.should_not be_editable(Factory(:student_sam))
+    @page.should_not be_editable(FactoryGirl(:student_sam))
   end
 
   it "should allow the creator to specify editable by faculty or any authenticated user" do
     @page.should respond_to(:is_editable_by_all)
     @page.is_editable_by_all = true
-    @page.should be_editable(Factory(:student_sam))    
+    @page.should be_editable(FactoryGirl(:student_sam))
   end
 
 
   it "is viewable by anyone if permissions are set that way" do
     @page.should respond_to(:is_viewable_by_all)
     @page.is_viewable_by_all = true
-    @page.should be_viewable(Factory(:student_sam))
+    @page.should be_viewable(FactoryGirl(:student_sam))
   end
 
   it "is not viewable by students when permissions are set that way " do
     @page.should respond_to(:is_viewable_by_all)
     @page.is_viewable_by_all = false
-    @page.should_not be_viewable(Factory(:student_sam))
+    @page.should_not be_viewable(FactoryGirl(:student_sam))
   end
 
   it "is always viewable by faculty and admins" do
-    @page.should be_viewable(Factory(:faculty_frank))
+    @page.should be_viewable(FactoryGirl(:faculty_frank))
   end
 
 
@@ -119,7 +119,7 @@ describe Page do
 
     it "should allow faculty to comment about the changes"
 #  do
-#      login(Factory(:faculty_frank))
+#      login(FactoryGirl(:faculty_frank))
 #      @page.version_comments = "A very simple change"
 #      @page.save
 ##This seems too simple

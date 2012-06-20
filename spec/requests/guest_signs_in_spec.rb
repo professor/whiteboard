@@ -11,7 +11,7 @@ describe 'A user visiting the site', :type => :request do
   
   context 'when logged in' do
      before do
-       @user = Factory(:student_sam)
+       @user = FactoryGirl(:student_sam)
        login_with_oauth @user
      end
 
@@ -34,7 +34,7 @@ describe 'A user visiting the site', :type => :request do
 
   context 'when logged in' do
      before do
-        @user =  Factory(:faculty_frank)
+        @user =  FactoryGirl(:faculty_frank)
         login_with_oauth @user
         visit my_teams_path(@user.id)
      end
@@ -46,7 +46,7 @@ describe 'A user visiting the site', :type => :request do
 
   context 'when logged in' do
      before do
-       login_with_oauth Factory(:admin_andy)
+       login_with_oauth FactoryGirl(:admin_andy)
      end
 
      it 'only shows content to a logged in user' do

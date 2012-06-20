@@ -29,7 +29,7 @@ it "once an attachment has been created, you can't change the name of the file. 
 it "an attachment is versioned recording who made the change and any comments"
 
   # it "is versioned" do
-  #  attachment =  Factory(:page_attachment)
+  #  attachment =  FactoryGirl(:page_attachment)
   #  attachment.should respond_to(:version)
   #  attachment.save
   #  version_number = attachment.version

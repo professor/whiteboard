@@ -5,10 +5,10 @@ describe EffortReportsController do
   it "should have the correct url for the google charting api" # do
 #    login(users(:student_sam))
 #
-#    foundations = Factory(:fse)
-#    line1 = Factory(:effort1)
-#    line2 = Factory(:effort2, :person => line1.person)
-#    line3 = Factory(:effort3, :person => line1.person)
+#    foundations = FactoryGirl(:fse)
+#    line1 = FactoryGirl(:effort1)
+#    line2 = FactoryGirl(:effort2, :person => line1.person)
+#    line3 = FactoryGirl(:effort3, :person => line1.person)
 #
 #    get :campus_week
 #    assert_response :success
@@ -59,7 +59,7 @@ describe EffortReportsController do
   end
 
   before(:each) do
-    login(Factory(:student_sam))
+    login(FactoryGirl(:student_sam))
   end
 
   describe "#index" do

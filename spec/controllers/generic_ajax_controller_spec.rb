@@ -6,7 +6,7 @@ describe GenericAjaxController do
 
     context "for a valid request" do
       before :each do
-        @user = Factory(:student_sam_user)
+        @user = FactoryGirl(:student_sam_user)
         login(@user)
         @instance = @user
         User.stub!(:find_by_id).and_return(@instance)
@@ -22,7 +22,7 @@ describe GenericAjaxController do
       end
 
       it 'should update the value for a model ' do
-        #@user = Factory(:faculty_frank)
+        #@user = FactoryGirl(:faculty_frank)
         #login @user
 
         User.should_receive(:find_by_id)

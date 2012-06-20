@@ -84,9 +84,9 @@ GEM
     eventmachine (0.12.10)
     exception_notification (2.5.2)
       actionmailer (>= 3.0.4)
-    factory_girl (2.0.2)
-    factory_girl_rails (1.1.0)
-      factory_girl (~> 2.0.0)
+    factory_girl (3.4.2)
+    factory_girl_rails (3.4.0)
+      factory_girl (~> 3.4.0)
       railties (>= 3.0.0)
     faraday (0.7.5)
       addressable (~> 2.2.6)
@@ -306,8 +306,8 @@ DEPENDENCIES
   delayed_job
   devise
   exception_notification
-  factory_girl (= 2.0.2)
-  factory_girl_rails (= 1.1.0)
+  factory_girl (= 3.4.2)
+  factory_girl_rails (= 3.4.0)
   heroku
   indextank
   jquery-rails (>= 1.0.3)

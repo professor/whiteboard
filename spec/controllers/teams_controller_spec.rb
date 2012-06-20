@@ -3,12 +3,12 @@ require 'controllers/permission_behavior'
 
 describe TeamsController do
 
-  let(:course) { Factory(:course) }
-  let(:team) { Factory(:team) }
+  let(:course) { FactoryGirl(:course) }
+  let(:team) { FactoryGirl(:team) }
 
   context "any user can" do
     before do
-      login(Factory(:student_sam))
+      login(FactoryGirl(:student_sam))
     end
 
     describe "GET show" do
@@ -56,7 +56,7 @@ describe TeamsController do
 
     describe "not POST create" do
       before do
-        @team = Factory.build(:team)
+        @team = FactoryGirl.build(:team)
         post :create, :team => @team.attributes
       end
 
@@ -85,7 +85,7 @@ describe TeamsController do
 
   context "any staff can" do
     before do
-      login(Factory(:faculty_frank))
+      login(FactoryGirl(:faculty_frank))
     end
 
     describe "GET new" do
@@ -110,7 +110,7 @@ describe TeamsController do
 
       describe "with valid params" do
         before(:each) do
-          @team = Factory.build(:team)
+          @team = FactoryGirl.build(:team)
         end
 
         it "saves a newly created project" do
@@ -200,7 +200,7 @@ describe TeamsController do
 
   context "any admin can" do
     before do
-      login(Factory(:admin_andy))
+      login(FactoryGirl(:admin_andy))
     end
 
     describe "DELETE destroy" do

@@ -4,7 +4,7 @@ describe PeerEvaluationLearningObjective do
 
   it 'can be created' do
     lambda {
-      Factory(:peer_evaluation_learning_objective)
+      FactoryGirl(:peer_evaluation_learning_objective)
     }.should change(PeerEvaluationLearningObjective, :count).by(1)
   end
 
@@ -19,7 +19,7 @@ describe PeerEvaluationLearningObjective do
     # end
   
     it 'with a learning objective longer than 255 characters' do
-      pelo = Factory.build(:peer_evaluation_learning_objective)
+      pelo = FactoryGirl.build(:peer_evaluation_learning_objective)
       new_learning_objective = ""
       256.times do |i|
         new_learning_objective += "1"

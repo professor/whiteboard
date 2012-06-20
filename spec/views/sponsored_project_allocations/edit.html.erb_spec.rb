@@ -3,8 +3,8 @@
 #describe "sponsored_project_allocations/edit.html.erb" do
 #  before(:each) do
 #    @allocation = assign(:allocation, stub_model(SponsoredProjectAllocation, :new_record? => false))
-#    assign(:projects, [Factory.build(:sponsored_project)])
-#    assign(:people, [Factory.build(:faculty_frank), Factory.build(:admin_andy)])
+#    assign(:projects, [FactoryGirl.build(:sponsored_project)])
+#    assign(:people, [FactoryGirl.build(:faculty_frank), FactoryGirl.build(:admin_andy)])
 #  end
 #
 #  it "renders edit allocation form" do

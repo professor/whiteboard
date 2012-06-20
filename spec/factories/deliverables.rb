@@ -1,11 +1,12 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
+FactoryGirl.define do
 
-Factory.define :team_deliverable, :parent => :deliverable do |d|
+factory :team_deliverable, :parent => :deliverable do |d|
   d.is_team_deliverable true
   d.association :team, :factory => :team_triumphant
 end
 
-Factory.define :individual_deliverable, :parent => :deliverable do |d|
+factory :individual_deliverable, :parent => :deliverable do |d|
   d.is_team_deliverable false
 end
 
+end

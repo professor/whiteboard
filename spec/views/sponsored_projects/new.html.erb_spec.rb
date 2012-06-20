@@ -4,7 +4,7 @@ describe "sponsored_projects/new.html.erb" do
   before(:each) do
     assign(:project, stub_model(SponsoredProject).as_new_record)
 
-    assign(:sponsors, [Factory.build(:sponsored_project_sponsor), Factory.build(:sponsored_project_sponsor)])
+    assign(:sponsors, [FactoryGirl.build(:sponsored_project_sponsor), FactoryGirl.build(:sponsored_project_sponsor)])
   end
 
   it "renders new project form" do

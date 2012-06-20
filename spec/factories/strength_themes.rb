@@ -1,73 +1,75 @@
 # coding: utf-8
 # This file is included in the db/seeds.rb file
 
-Factory.define :achiever, :class => StrengthTheme do |st|
+FactoryGirl.define do
+
+factory :achiever, :class => StrengthTheme do |st|
   st.theme "Achiever"
   st.brief_description "People who are especially talented in the Achiever theme have a great deal of stamina and work hard. They take great satisfaction from being busy and productive."
   st.long_description "Your Achiever theme helps explain your drive. Achiever describes a constant need for achievement. You feel as if every day starts at zero. By the end of the day you must achieve something tangible in order to feel good about yourself. And by “every day” you mean every single day — workdays, weekends, vacations. No matter how much you may feel you deserve a day of rest, if the day passes without some form of achievement, no matter how small, you will feel dissatisfied. You have an internal fire burning inside you. It pushes you to do more, to achieve more. After each accomplishment is reached, the fire dwindles for a moment, but very soon it rekindles itself, forcing you toward the next accomplishment. Your relentless need for achievement might not be logical. It might not even be focused. But it will always be with you. As an Achiever you must learn to live with this whisper of discontent. It does have its benefits. It brings you the energy you need to work long hours without burning out. It is the jolt you can always count on to get you started on new tasks, new challenges. It is the power supply that causes you to set the pace and define the levels of productivity for your work group. It is the theme that keeps you moving."
 end
 
-Factory.define :activator, :class => StrengthTheme do |st|
+factory :activator, :class => StrengthTheme do |st|
   st.theme "Activator"
   st.brief_description "People who are especially talented in the Activator theme can make things happen by turning thoughts into action. They are often impatient."
   st.long_description "“When can we start?“ This is a recurring question in your life. You are impatient for action. You may concede that analysis has its uses or that debate and discussion can occasionally yield some valuable insights, but deep down you know that only action is real. Only action can make things happen. Only action leads to performance. Once a decision is made, you cannot not act. Others may worry that “there are still some things we don’t know,” but this doesn’t seem to slow you. If the decision has been made to go across town, you know that the fastest way to get there is to go stoplight to stoplight. You are not going to sit around waiting until all the lights have turned green. Besides, in your view, action and thinking are not opposites. In fact, guided by your Activator theme, you believe that action is the best device for learning. You make a decision, you take action, you look at the result, and you learn. This learning informs your next action and your next. How can you grow if you have nothing to react to? Well, you believe you can’t. You must put yourself out there. You must take the next step. It is the only way to keep your thinking fresh and informed. The bottom line is this: You know you will be judged not by what you say, not by what you think, but by what you get done. This does not frighten you. It pleases you."
 end
 
-Factory.define :adaptability, :class => StrengthTheme do |st|
+factory :adaptability, :class => StrengthTheme do |st|
   st.theme "Adaptability"
   st.brief_description "People who are especially talented in the Adaptability theme prefer to “go with the flow.” They tend to be “now” people who take things as they come and discover the future one day at a time."
   st.long_description "You live in the moment. You don’t see the future as a fixed destination. Instead, you see it as a place that you create out of the choices that you make right now. And so you discover your future one choice at a time. This doesn’t mean that you don’t have plans. You probably do. But this theme of Adaptability does enable you to respond willingly to the demands of the moment even if they pull you away from your plans. Unlike some, you don’t resent sudden requests or unforeseen detours. You expect them. They are inevitable. Indeed, on some level you actually look forward to them. You are, at heart, a very flexible person who can stay productive when the demands of work are pulling you in many different directions at once."
 end
 
-Factory.define :analytical, :class => StrengthTheme do |st|
+factory :analytical, :class => StrengthTheme do |st|
   st.theme "Analytical"
   st.brief_description "People who are especially talented in the Analytical theme search for reasons and causes. They have the ability to think about all the factors that might affect a situation."
   st.long_description  "Your Analytical theme challenges other people: “Prove it. Show me why what you are claiming is true.” In the face of this kind of questioning some will find that their brilliant theories wither and die. For you, this is precisely the point. You do not necessarily want to destroy other people’s ideas, but you do insist that their theories be sound. You see yourself as objective and dispassionate. You like data because they are value free. They have no agenda. Armed with these data, you search for patterns and connections. You want to understand how certain patterns affect one another. How do they combine? What is their outcome? Does this outcome fit with the theory being offered or the situation being confronted? These are your questions. You peel the layers back until, gradually, the root cause or causes are revealed. Others see you as logical and rigorous. Over time they will come to you in order to expose someone’s “wishful thinking” or “clumsy thinking” to your refining mind. It is hoped that your analysis is never delivered too harshly. Otherwise, others may avoid you when that “wishful thinking” is their own."
 end
 
-Factory.define :arranger, :class => StrengthTheme do |st|
+factory :arranger, :class => StrengthTheme do |st|
   st.theme "Arranger"
   st.brief_description "People who are especially talented in the Arranger theme can organize, but they also have a flexibility that complements this ability. They like to figure out how all of the pieces and resources can be arranged for maximum productivity."
   st.long_description  "You are a conductor. When faced with a complex situation involving many factors, you enjoy managing all of the variables, aligning and realigning them until you are sure you have arranged them in the most productive configuration possible. In your mind there is nothing special about what you are doing. You are simply trying to figure out the best way to get things done. But others, lacking this theme, will be in awe of your ability. “How can you keep so many things in your head at once?” they will ask. “How can you stay so flexible, so willing to shelve well-laid plans in favor of some brand-new configuration that has just occurred to you?” But you cannot imagine behaving in any other way. You are a shining example of effective flexibility, whether you are changing travel schedules at the last minute because a better fare has popped up or mulling over just the right combination of people and resources to accomplish a new project. From the mundane to the complex, you are always looking for the perfect configuration. Of course, you are at your best in dynamic situations. Confronted with the unexpected, some complain that plans devised with such care cannot be changed, while others take refuge in the existing rules or procedures. You don’t do either. Instead, you jump into the confusion, devising new options, hunting for new paths of least resistance, and figuring out new partnerships — because, after all, there might just be a better way."
 end
 
-Factory.define :belief, :class => StrengthTheme do |st|
+factory :belief, :class => StrengthTheme do |st|
   st.theme "Belief"
   st.brief_description "People who are especially talented in the Belief theme have certain core values that are unchanging. Out of these values emerges a defined purpose for their life."
   st.long_description  "If you possess a strong Belief theme, you have certain core values that are enduring. These values vary from one person to another, but ordinarily your Belief theme causes you to be family-oriented, altruistic, even spiritual, and to value responsibility and high ethics — both in yourself and others. These core values affect your behavior in many ways. They give your life meaning and satisfaction; in your view, success is more than money and prestige. They provide you with direction, guiding you through the temptations and distractions of life toward a consistent set of priorities. This consistency is the foundation for all your relationships. Your friends call you dependable. “I know where you stand,” they say. Your Belief makes you easy to trust. It also demands that you find work that meshes with your values. Your work must be meaningful; it must matter to you. And guided by your Belief theme it will matter only if it gives you a chance to live out your values."
 end
 
-Factory.define :command, :class => StrengthTheme do |st|
+factory :command, :class => StrengthTheme do |st|
   st.theme "Command"
   st.brief_description "People who are especially talented in the Command theme have presence. They can take control of a situation and make decisions."
   st.long_description  "Command leads you to take charge. Unlike some people, you feel no discomfort with imposing your views on others. On the contrary, once your opinion is formed, you need to share it with others. Once your goal is set, you feel restless until you have aligned others with you. You are not frightened by confrontation; rather, you know that confrontation is the first step toward resolution. Whereas others may avoid facing up to life’s unpleasantness, you feel compelled to present the facts or the truth, no matter how unpleasant it may be. You need things to be clear between people and challenge them to be clear-eyed and honest. You push them to take risks. You may even intimidate them. And while some may resent this, labeling you opinionated, they often willingly hand you the reins. People are drawn toward those who take a stance and ask them to move in a certain direction. Therefore, people will be drawn to you. You have presence. You have Command."
 end
 
-Factory.define :communication, :class => StrengthTheme do |st|
+factory :communication, :class => StrengthTheme do |st|
   st.theme "Communication"
   st.brief_description "People who are especially talented in the Communication theme generally find it easy to put their thoughts into words. They are good conversationalists and presenters."
   st.long_description  "You like to explain, to describe, to host, to speak in public, and to write. This is your Communication theme at work. Ideas are a dry beginning. Events are static. You feel a need to bring them to life, to energize them, to make them exciting and vivid. And so you turn events into stories and practice telling them. You take the dry idea and enliven it with images and examples and metaphors. You believe that most people have a very short attention span. They are bombarded by information, but very little of it survives. You want your information — whether an idea, an event, a product’s features and benefits, a discovery, or a lesson — to survive. You want to divert their attention toward you and then capture it, lock it in. This is what drives your hunt for the perfect phrase. This is what draws you toward dramatic words and powerful word combinations. This is why people like to listen to you. Your word pictures pique their interest, sharpen their world, and inspire them to act."
 end
 
-Factory.define :competition, :class => StrengthTheme do |st|
+factory :competition, :class => StrengthTheme do |st|
   st.theme "Competition"
   st.brief_description "People who are especially talented in the Competition theme measure their progress against the performance of others. They strive to win first place and revel in contests."
   st.long_description  "Competition is rooted in comparison. When you look at the world, you are instinctively aware of other people’s performance. Their performance is the ultimate yardstick. No matter how hard you tried, no matter how worthy your intentions, if you reached your goal but did not outperform your peers, the achievement feels hollow. Like all competitors, you need other people. You need to compare. If you can compare, you can compete, and if you can compete, you can win. And when you win, there is no feeling quite like it. You like measurement because it facilitates comparisons. You like other competitors because they invigorate you. You like contests because they must produce a winner. You particularly like contests where you know you have the inside track to be the winner. Although you are gracious to your fellow competitors and even stoic in defeat, you don’t compete for the fun of competing. You compete to win. Over time you will come to avoid contests where winning seems unlikely. "
 end
 
-Factory.define :connectedness, :class => StrengthTheme do |st|
+factory :connectedness, :class => StrengthTheme do |st|
   st.theme "Connectedness"
   st.brief_description "People who are especially talented in the Connectedness theme have faith in the links between all things. They believe there are few coincidences and that almost every event has a reason."
   st.long_description  "Things happen for a reason. You are sure of it. You are sure of it because in your soul you know that we are all connected. Yes, we are individuals, responsible for our own judgments and in possession of our own free will, but nonetheless we are part of something larger. Some may call it the collective unconscious. Others may label it spirit or life force. But whatever your word of choice, you gain confidence from knowing that we are not isolated from one another or from the earth and the life on it. This feeling of Connectedness implies certain responsibilities. If we are all part of a larger picture, then we must not harm others because we will be harming ourselves. We must not exploit because we will be exploiting ourselves. Your awareness of these responsibilities creates your value system. You are considerate, caring, and accepting. Certain of the unity of humankind, you are a bridge builder for people of different cultures. Sensitive to the invisible hand, you can give others comfort that there is a purpose beyond our humdrum lives. The exact articles of your faith will depend on your upbringing and your culture, but your faith is strong. It sustains you and your close friends in the face of life’s mysteries."
 end
 
-Factory.define :consistency, :class => StrengthTheme do |st|
+factory :consistency, :class => StrengthTheme do |st|
   st.theme "Consistency"
   st.brief_description "People who are especially talented in the Consistency theme are keenly aware of the need to treat people the same. They try to treat everyone in the world with consistency by setting up clear rules and adhering to them."
   st.long_description  "Balance is important to you. You are keenly aware of the need to treat people the same, no matter what their station in life, so you do not want to see the scales tipped too far in any one person’s favor. In your view this leads to selfishness and individualism. It leads to a world where some people gain an unfair advantage because of their connections or their background or their greasing of the wheels. This is truly offensive to you. You see yourself as a guardian against it. In direct contrast to this world of special favors, you believe that people function best in a consistent environment where the rules are clear and are applied to everyone equally. This is an environment where people know what is expected. It is predictable and evenhanded. It is fair. Here each person has an even chance to show his or her worth."
 end
 
-Factory.define :context, :class => StrengthTheme do |st|
+factory :context, :class => StrengthTheme do |st|
   st.theme "Context"
   st.brief_description "People who are especially talented in the Context theme enjoy thinking about the past. They understand the present by researching its history."
   st.long_description  <<LONG_DESCRIPTION
@@ -88,7 +90,7 @@ LONG_DESCRIPTION
 
 end
 
-Factory.define :deliberative, :class => StrengthTheme do |st|
+factory :deliberative, :class => StrengthTheme do |st|
   st.theme "Deliberative"
   st.brief_description "People who are especially talented in the Deliberative theme are best described by the serious care they take in making decisions or choices. They anticipate the obstacles."
   st.long_description  <<LONG_DESCRIPTION
@@ -105,7 +107,7 @@ then place your feet deliberately. You walk with care.
 LONG_DESCRIPTION
 end
 
-Factory.define :developer, :class => StrengthTheme do |st|
+factory :developer, :class => StrengthTheme do |st|
   st.theme "Developer"
   st.brief_description "People who are especially talented in the Developer theme recognize and cultivate the potential in others. They spot the signs of each small improvement and derive satisfaction from these improvements."
   st.long_description  <<LONG_DESCRIPTION
@@ -122,7 +124,7 @@ fulfilling to you.
 LONG_DESCRIPTION
 end
 
-Factory.define :discipline, :class => StrengthTheme do |st|
+factory :discipline, :class => StrengthTheme do |st|
   st.theme "Discipline"
   st.brief_description "People who are especially talented in the Discipline theme enjoy routine and structure. Their world is best described by the order they create."
   st.long_description  <<LONG_DESCRIPTION
@@ -140,7 +142,7 @@ for maintaining your progress and your productivity in the face of life’s many
 LONG_DESCRIPTION
 end
 
-Factory.define :empathy, :class => StrengthTheme do |st|
+factory :empathy, :class => StrengthTheme do |st|
   st.theme "Empathy"
   st.brief_description "People who are especially talented in the Empathy theme can sense the feelings of other people by imagining themselves in others’ lives or others’ situations."
   st.long_description  <<LONG_DESCRIPTION
@@ -155,7 +157,7 @@ help them give voice to their emotional life. For all these reasons other people
 LONG_DESCRIPTION
 end
 
-Factory.define :focus, :class => StrengthTheme do |st|
+factory :focus, :class => StrengthTheme do |st|
   st.theme "Focus"
   st.brief_description "People who are especially talented in the Focus theme can take a direction, follow through, and make the corrections necessary to stay on track. They prioritize, then act."
   st.long_description  <<LONG_DESCRIPTION
@@ -173,7 +175,7 @@ important, then it is not worth your time. You keep everyone on point.
 LONG_DESCRIPTION
 end
 
-Factory.define :futuristic, :class => StrengthTheme do |st|
+factory :futuristic, :class => StrengthTheme do |st|
   st.theme "Futuristic"
   st.brief_description "People who are especially talented in the Futuristic theme are inspired by the future and what could be. They inspire others with their visions of the future."
   st.long_description  <<LONG_DESCRIPTION
@@ -190,7 +192,7 @@ will want to latch on to the hope you bring.
 LONG_DESCRIPTION
 end
 
-Factory.define :harmony, :class => StrengthTheme do |st|
+factory :harmony, :class => StrengthTheme do |st|
   st.theme "Harmony"
   st.brief_description "People who are especially talented in the Harmony theme look for consensus. They don’t enjoy conflict; rather, they seek areas of agreement."
   st.long_description  <<LONG_DESCRIPTION
@@ -209,7 +211,7 @@ boat. There is no need to rock it just to show that you can.
 LONG_DESCRIPTION
 end
 
-Factory.define :ideation, :class => StrengthTheme do |st|
+factory :ideation, :class => StrengthTheme do |st|
   st.theme "Ideation"
   st.brief_description "People who are especially talented in the Ideation theme are fascinated by ideas. They are able to find connections between seemingly disparate phenomena."
   st.long_description  <<LONG_DESCRIPTION
@@ -226,7 +228,7 @@ be sure? What you are sure of is that ideas are thrilling. And on most days this
 LONG_DESCRIPTION
 end
 
-Factory.define :includer, :class => StrengthTheme do |st|
+factory :includer, :class => StrengthTheme do |st|
   st.theme "Includer"
   st.brief_description "People who are especially talented in the Includer theme are accepting of others. They show awareness of those who feel left out, and make an effort to include them."
   st.long_description  <<LONG_DESCRIPTION
@@ -243,7 +245,7 @@ be included. It is the least we all deserve.
 LONG_DESCRIPTION
 end
 
-Factory.define :individualization, :class => StrengthTheme do |st|
+factory :individualization, :class => StrengthTheme do |st|
   st.theme "Individualization"
   st.brief_description "People who are especially talented in the Individualization theme are intrigued with the unique qualities of each person. They have a gift for figuring out how people who are different can work together productively."
   st.long_description  <<LONG_DESCRIPTION
@@ -261,7 +263,7 @@ so that everyone can do a lot of what they do well.
 LONG_DESCRIPTION
 end
 
-Factory.define :input, :class => StrengthTheme do |st|
+factory :input, :class => StrengthTheme do |st|
   st.theme "Input"
   st.brief_description "People who are especially talented in the Input theme have a craving to know more. Often they like to collect and archive all kinds of information."
   st.long_description  <<LONG_DESCRIPTION
@@ -278,7 +280,7 @@ filing stuff away. It’s interesting. It keeps your mind fresh. And perhaps one
 LONG_DESCRIPTION
 end
 
-Factory.define :intellection, :class => StrengthTheme do |st|
+factory :intellection, :class => StrengthTheme do |st|
   st.theme "Intellection"
   st.brief_description "People who are especially talented in the Intellection theme are characterized by their intellectual activity. They are introspective and appreciate intellectual discussions."
   st.long_description  <<LONG_DESCRIPTION
@@ -296,7 +298,7 @@ Wherever it leads you, this mental hum is one of the constants of your life.
 LONG_DESCRIPTION
 end
 
-Factory.define :learner, :class => StrengthTheme do |st|
+factory :learner, :class => StrengthTheme do |st|
   st.theme "Learner"
   st.brief_description "People who are especially talented in the Learner theme have a great desire to learn and want to continuously improve. In particular, the process of learning, rather than the outcome, excites them."
   st.long_description  <<LONG_DESCRIPTION
@@ -314,7 +316,7 @@ the learning is less significant than the “getting there.”
 LONG_DESCRIPTION
 end
 
-Factory.define :maximizer, :class => StrengthTheme do |st|
+factory :maximizer, :class => StrengthTheme do |st|
   st.theme "Maximizer"
   st.brief_description "People who are especially talented in the Maximizer theme focus on strengths as a way to stimulate personal and group excellence. They seek to transform something strong into something superb."
   st.long_description  <<LONG_DESCRIPTION
@@ -333,7 +335,7 @@ It’s more productive. And, counterintuitively, it is more demanding.
 LONG_DESCRIPTION
 end
 
-Factory.define :positivity, :class => StrengthTheme do |st|
+factory :positivity, :class => StrengthTheme do |st|
   st.theme "Positivity"
   st.brief_description "People who are especially talented in the Positivity theme have an enthusiasm that is contagious. They are upbeat and can get others excited about what they are going to do."
   st.long_description  <<LONG_DESCRIPTION
@@ -349,7 +351,7 @@ one’s sense of humor.
 LONG_DESCRIPTION
 end
 
-Factory.define :relator, :class => StrengthTheme do |st|
+factory :relator, :class => StrengthTheme do |st|
   st.theme "Relator"
   st.brief_description "People who are especially talented in the Relator theme enjoy close relationships with others. They find deep satisfaction in working hard with friends to achieve a goal."
   st.long_description  <<LONG_DESCRIPTION
@@ -367,7 +369,7 @@ steps toward real friendship, and you take them willingly.
 LONG_DESCRIPTION
 end
 
-Factory.define :responsibility, :class => StrengthTheme do |st|
+factory :responsibility, :class => StrengthTheme do |st|
   st.theme "Responsibility"
   st.brief_description "People who are especially talented in the Responsibility theme take psychological ownership of what they say they will do. They are committed to stable values such as honesty and loyalty."
   st.long_description  <<LONG_DESCRIPTION
@@ -383,7 +385,7 @@ sometimes lead you to take on more than you should.
 LONG_DESCRIPTION
 end
 
-Factory.define :restorative, :class => StrengthTheme do |st|
+factory :restorative, :class => StrengthTheme do |st|
   st.theme "Restorative"
   st.brief_description "People who are especially talented in the Restorative theme are adept at dealing with problems. They are good at
 figuring out what is wrong and resolving it."
@@ -401,7 +403,7 @@ Phrasing it the way you might, you saved it.
 LONG_DESCRIPTION
 end
 
-Factory.define :self_assurance, :class => StrengthTheme do |st|
+factory :self_assurance, :class => StrengthTheme do |st|
   st.theme "Self-Assurance"
   st.brief_description "People who are especially talented in the Self-Assurance theme feel confident in their ability to manage their own lives. They possess an inner compass that gives them confidence that their decisions are right."
   st.long_description  <<LONG_DESCRIPTION
@@ -420,7 +422,7 @@ strong. Like the keel of a ship, it withstands many different pressures and keep
 LONG_DESCRIPTION
 end
 
-Factory.define :significance, :class => StrengthTheme do |st|
+factory :significance, :class => StrengthTheme do |st|
   st.theme "Significance"
   st.brief_description "People who are especially talented in the Significance theme want to be very important in the eyes of others. They are independent and want to be recognized."
   st.long_description  <<LONG_DESCRIPTION
@@ -437,7 +439,7 @@ the exceptional. It is the theme that keeps you reaching.
 LONG_DESCRIPTION
 end
 
-Factory.define :strategic, :class => StrengthTheme do |st|
+factory :strategic, :class => StrengthTheme do |st|
   st.theme "Strategic"
   st.brief_description "People who are especially talented in the Strategic theme create alternative ways to proceed. Faced with any given scenario, they can quickly spot the relevant patterns and issues."
   st.long_description  <<LONG_DESCRIPTION
@@ -453,7 +455,7 @@ forward. This is your Strategic theme at work: “What if?” Select. Strike.
 LONG_DESCRIPTION
 end
 
-Factory.define :woo, :class => StrengthTheme do |st|
+factory :woo, :class => StrengthTheme do |st|
   st.theme "Woo"
   st.brief_description "People who are especially talented in the Woo theme love the challenge of meeting new people and winning them over. They derive satisfaction from breaking the ice and making a connection with another person."
   st.long_description  <<LONG_DESCRIPTION
@@ -468,3 +470,5 @@ to meet, new rooms to work, new crowds to mingle in. In your world there are no 
 haven’t met yet — lots of them.
 LONG_DESCRIPTION
 end
+
+  end

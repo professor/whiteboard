@@ -3,12 +3,12 @@ require 'spec_helper'
 describe SponsoredProjectSponsorsController do
 
 
-  let(:sponsor) { Factory(:sponsored_project_sponsor) }
+  let(:sponsor) { FactoryGirl(:sponsored_project_sponsor) }
 
   context "as admin do " do
 
     before do
-      @admin_andy = Factory(:admin_andy)
+      @admin_andy = FactoryGirl(:admin_andy)
       login(@admin_andy)
     end
     
@@ -33,7 +33,7 @@ describe SponsoredProjectSponsorsController do
 
       describe "with valid params" do
         before(:each) do
-          @sponsor = Factory.build(:sponsored_project_sponsor)
+          @sponsor = FactoryGirl.build(:sponsored_project_sponsor)
         end
 
         it "saves a newly created sponsor" do
@@ -112,7 +112,7 @@ describe SponsoredProjectSponsorsController do
   context "as faculty do " do
 
     before do
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = FactoryGirl(:faculty_frank)
       login(@faculty_frank)
     end
 

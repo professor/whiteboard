@@ -5,8 +5,8 @@ describe "sponsored_project_allocations/new" do
   before(:each) do
     assign(:allocation, stub_model(SponsoredProjectAllocation).as_new_record)
 
-    assign(:projects, [Factory.build(:sponsored_project)])
-    assign(:people, [Factory.build(:faculty_frank), Factory.build(:admin_andy)])
+    assign(:projects, [FactoryGirl.build(:sponsored_project)])
+    assign(:people, [FactoryGirl.build(:faculty_frank), FactoryGirl.build(:admin_andy)])
   end
 
   it "renders new allocation form" do

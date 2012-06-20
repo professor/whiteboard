@@ -4,7 +4,7 @@ describe EffortLogLineItem do
 
   it 'can be created' do
     lambda {
-      Factory(:effort_log_line_item)
+      FactoryGirl(:effort_log_line_item)
       }.should change(EffortLogLineItem, :count).by(1)
     end
 
@@ -12,14 +12,14 @@ describe EffortLogLineItem do
     context "is not valid" do    
       [:day1, :day2, :day3, :day4, :day5, :day6, :day7].each do |attr|
         it "when #{attr} is non-numerical" do
-          effort_log_line_item = Factory.build(:effort_log_line_item, attr => "test")
+          effort_log_line_item = FactoryGirl.build(:effort_log_line_item, attr => "test")
           effort_log_line_item.should_not be_valid
         end
       end
 
       [:day1, :day2, :day3, :day4, :day5, :day6, :day7].each do |attr|
         it "when #{attr} is a negative number" do
-          effort_log_line_item = Factory.build(:effort_log_line_item, attr => -1)
+          effort_log_line_item = FactoryGirl.build(:effort_log_line_item, attr => -1)
           effort_log_line_item.should_not be_valid
         end
       end
@@ -35,9 +35,9 @@ describe EffortLogLineItem do
 
     context "are ordered" do
       it "should be returned in the same order as inserted" do
-        effort_log = Factory(:effort1)
+        effort_log = FactoryGirl(:effort1)
         for i in 0..5
-          Factory(:elli_line1, :task_type_id => i, :effort_log => effort_log)
+          FactoryGirl(:elli_line1, :task_type_id => i, :effort_log => effort_log)
         end
         
         i = 0

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe CourseNumbersController do
 
-  let(:course) { Factory(:course) }
+  let(:course) { FactoryGirl(:course) }
 
   context "any user can" do
     before do
-      login Factory(:student_sam)
+      login FactoryGirl(:student_sam)
     end
 
     describe "GET index" do
