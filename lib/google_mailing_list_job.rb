@@ -37,7 +37,7 @@ class GoogleMailingListJob < Struct.new(:new_distribution_list, :old_distributio
       Rails.logger.warn("The people on the google list isn't right")
       Rails.logger.warn("google list: #{google_list} ")
       Rails.logger.warn("rails list: #{team_list} ")
-      raise Exception.new("The people on the google list isn't right")
+      raise Exception.new("The people on the google list isn't right" + "google list: #{google_list} " + "rails list: #{team_list} ")
     end
 
     ActiveRecord::Base.connection.execute "UPDATE #{table_name} SET updating_email=false WHERE id=#{model_id}";
