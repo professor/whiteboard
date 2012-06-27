@@ -8,24 +8,26 @@
 
  function capitalise(string) {
 //    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
-return string.charAt(0).toUpperCase() + string.substring(1).replace(" ","", "g");
+    return string.charAt(0).toUpperCase() + string.substring(1).replace(/ /g,"");
     }
 
- function lower_case(string) {
+ //Seok-Jeong Lee => seok.jeong.lee@sv.cmu.edu
+ function prepare_for_google(string) {
 //    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
-return string.charAt(0).toLowerCase() + string.substring(1).replace(" ","", "g");
+      return string.toLowerCase().replace(/ /g,".").replace(/-/g,".");
     }
 
  function ends_with(str, suffix) {
      return str.indexOf(suffix, str.length - suffix.length) !== -1;
  }
 
-//TWiki - user names MJLee can be MjLee
+//TWiki - user names MJLee must be renamed to MjLee
  
  function update_twiki_and_email() {
    document.forms["new_person"].person_twiki_name.value=capitalise(remove_hyphens(document.forms["new_person"].person_first_name.value))+capitalise(remove_hyphens(document.forms["new_person"].person_last_name.value));
 
-   document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
+  // document.forms["new_person"].person_email.value=lower_case(document.forms["new_person"].person_first_name.value)+"."+lower_case(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
+   document.forms["new_person"].person_email.value=prepare_for_google(document.forms["new_person"].person_first_name.value) +"."+prepare_for_google(document.forms["new_person"].person_last_name.value)+"@<%=@domain%>";
  }
 
  function add_at_andrew_dot_cmu_dot_edu() {
