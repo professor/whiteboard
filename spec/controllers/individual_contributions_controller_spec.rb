@@ -139,17 +139,23 @@ describe IndividualContributionsController do
 
     it "should have a list of questions" do
       get(:new)
-      assigns(:questions)
+      assigns(:questions).should be
+    end
+
+    it "should have a list of courses" do
+      #login(Factory(:student_sam_user_with_registered_courses))
+      #get(:new)
+      #assigns(:courses).should be_true
     end
 
 
-    context "it lists out each question, for each question it lists out course data" do
+    it "when there is previous week data, then show the student's plan for the current week" do
+      @previous_week = Factory(:individual_contribution, :user => @student_sam_user, :cweek => Date.today.cweek - 1, :year => Date.today.cyear)
+      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
+      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
       get(:new)
-      assigns(:answers)
-    end
 
-    context "when there is previous week data, then show the student's plan for the current week" do
-
+      assigns(:plans_from_previous_week).should == {@mfse_answers1.id => "I did great", @fse_answers1 => "I finished it"}
     end
 
     context "courses shown should contain semester courses for the current semester" do

@@ -36,8 +36,17 @@ class IndividualContributionsController < ApplicationController
 
   def new
 
-    @questions = ["Helo", "heelo"]
+    @questions = ["What did you individually accomplish this last week? (e.g. I wrote the introduction to the architecture document.)",
+                  "How many hours did you spend on this course during the last week?",
+                  "What obstacles are impeding your progress?",
+                  "How will you overcome these obstacles?",
+                  "What will you individually do this week?"]
 
+    @courses = current_user.registered_courses.keep_if { |course| course.current_mini? }
+
+    @plans_from_previous_week =  Hash.new()
+    previous_week = IndividualContribution.find_by_week(@previous_week_year, @previous_week_number, current_user)
+    previous_week.individual_contribution_for_courses.each { |ic| @plans_from_previous_week[ic.course_id] = ic.answer5 }
 
   end
 
@@ -188,7 +197,7 @@ class IndividualContributionsController < ApplicationController
 
   # GET /status_reports/new
   # GET /status_reports/new.xml
-  def new
+  def new_original
     if params[:previous] == 'true' then
       if Date.today.cweek == 1
         week_number = 52
@@ -267,7 +276,7 @@ class IndividualContributionsController < ApplicationController
   end
 
   # GET /status_reports/1/edit
-  def edit
+  def edit_original
     @status_report = IndividualContribution.find(params[:id])
 
 #    if @status_report.week_number != Date.today.cweek

@@ -18,17 +18,17 @@ class IndividualContribution < ActiveRecord::Base
 
   default_scope :order => "year DESC, week_number DESC"
 
-  def answers
+  def combined_answers_for_courses
     answers_array = Array.new
-    5.each do |i|
+    5.times.each do |i|
       answers_array[i] = Hash.new
     end
     individual_contribution_for_courses.each do |ic_course|
-        answers_array[0].store(ic_course.id, ic_course.answer1)
-        answers_array[1].store(ic_course.id, ic_course.answer2)
-        answers_array[2].store(ic_course.id, ic_course.answer3)
-        answers_array[3].store(ic_course.id, ic_course.answer4)
-        answers_array[4].store(ic_course.id, ic_course.answer5)
+        answers_array[0].store(ic_course.course_id, ic_course.answer1)
+        answers_array[1].store(ic_course.course_id, ic_course.answer2)
+        answers_array[2].store(ic_course.course_id, ic_course.answer3)
+        answers_array[3].store(ic_course.course_id, ic_course.answer4)
+        answers_array[4].store(ic_course.course_id, ic_course.answer5)
     end
     answers_array
   end

@@ -82,23 +82,21 @@ describe IndividualContribution do
 
 
 
-  context "answers" do
-    #Given 3 courses in a smemester
+  context "combined_answers_for_courses" do
+    #Given 3 courses in a semester
     before do
+      @student_sam_user = Factory(:student_sam_user)
       @mfse = Factory(:mfse_current_semester)
       @fse = Factory(:fse_current_semester)
-      @this_week = Factory(:individual_contribution)
-      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week.id, :course => @mfse, :answer1 => "I did great")
-      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week.id, :course => @fse, :answer1 => "I finished it")
+      @this_week = Factory(:individual_contribution, :user => @student_sam_user)
+      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @mfse, :answer1 => "I did great")
+      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @fse, :answer1 => "I finished it")
 
     end
-    #When method name is called do
-
-    it "returns an array of arrays: question array of course answers" do
-
-      this_weeks_report = IndividualContribution.find_by_week(year, week_number, current_user).answers
-      answers[0].get_field(@mfse.id).should_equal "I did great"
-      answers[0].get_field(@fse.id).should_equal "I finished it"
+    it "returns an array of hashes. The array corresponds to each question. The hash corresponds to the answer for each course for that question" do
+      this_weeks_report = IndividualContribution.find_by_week(@this_week.year, @this_week.week_number, @student_sam_user).combined_answers_for_courses
+      this_weeks_report[0].fetch(@mfse.id).should == "I did great"
+      this_weeks_report[0].fetch(@fse.id).should == "I finished it"
     end
 
 

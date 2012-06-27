@@ -340,6 +340,34 @@ describe Course do
    end
  end
 
+  context 'current_mini?' do
+    before do
+      @summer_semester = Factory.build(:course, :semester => "Summer",  :mini => "Both", :year => 2012)
+      @summer_current_mini = Factory.build(:course, :semester => "Summer", :mini => "A", :year => 2012)
+      @summer_other_mini = Factory.build(:course, :semester => "Summer", :mini => "B", :year => 2012)
+      @fall_course = Factory.build(:course, :semester => "Fall", :year => 2012)
+      Date.stub!(:today).and_return(Date.new(2012, 6, 20))
+    end
+
+    it 'is true when a mini course is offered during the current mini' do
+      @summer_current_mini.current_mini?.should be_true
+    end
+
+    it 'is true when a semester course is offered during the current semester' do
+      @summer_semester.current_mini?.should be_true
+    end
+
+    it 'is false if a mini course is offered during a different mini' do
+      @summer_other_mini.current_mini?.should be_false
+    end
+
+    it 'is false is a semester course is offered during a different semester' do
+      @fall_course.current_mini?.should be_false
+    end
+
+
+  end
+
 
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
