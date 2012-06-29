@@ -51,16 +51,23 @@ class Person < User
 
   def registered_for_these_courses_during_current_semester
 # New code...for register-students branch
-#    registered_for_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+   hub_registered_courses =  registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
 
-# Old code...register-students branch
-    semester = AcademicCalendar.current_semester()
-
-    @sql_str = "select c.* FROM courses c,teams t
-              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in
+    sql_str = "select c.* FROM courses c,teams t
+              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
               (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+   courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
-    @registered_courses = Course.find_by_sql(@sql_str)
+   @registered_courses = hub_registered_courses | courses_assigned_on_teams
+
+#Old code...register-students branch
+#    semester = AcademicCalendar.current_semester()
+#
+#    @sql_str = "select c.* FROM courses c,teams t
+#              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in
+#              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+#
+#    @registered_courses = Course.find_by_sql(@sql_str)
   end
 
 
