@@ -243,7 +243,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user..id, week_number, year).first
+      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user.id, week_number, year).first
     end
 
     if duplicate_effort_log
