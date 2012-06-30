@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'HUB_class_roster_handler'
 
 describe HUBClassRosterHandler do
   context "When processing a roster file that lists Sam and Sally as participants in a course," do
