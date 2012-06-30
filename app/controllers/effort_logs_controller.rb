@@ -79,7 +79,7 @@ class EffortLogsController < ApplicationController
     people_with_effort = []
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    people = Person.where("masters_program = SE AND is_active = true AND is_alumnus = false")
+    people = Person.where(:masters_program => "SE", :is_active => true, :is_alumnus => false)
 
     people.each do |person|
       effort_log = EffortLog.latest_for_person(person.id, week_number, year)

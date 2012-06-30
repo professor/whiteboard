@@ -5,7 +5,7 @@ class CreateTeams < ActiveRecord::Migration
       t.string :email
       t.string :twiki_space
       t.string :tigris_space
-      t.string :course_id
+      t.integer :course_id
       t.integer :primary_faculty_id
       t.integer :secondary_faculty_id
       t.string :livemeeting
