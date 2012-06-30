@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20120518003101) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
-    t.string   "year"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
