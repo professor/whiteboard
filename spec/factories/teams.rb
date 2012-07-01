@@ -7,8 +7,8 @@ factory :team_triumphant, :parent => :team do |t|
  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
  t.updating_email false
  t.association :course, :factory => :course
- t.after_create { |t| FactoryGirl(:student_sam, :teams => [t], :login => "student_sam_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
-# t.after(:create) { |team| FactoryGirl(:student_sam, :teams => [team], :login => "student_sam_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
+ t.after_create { |t| FactoryGirl.create(:student_sam, :teams => [t], :login => "student_sam_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
+# t.after(:create) { |team| FactoryGirl.create(:student_sam, :teams => [team], :login => "student_sam_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
 end
 
   end

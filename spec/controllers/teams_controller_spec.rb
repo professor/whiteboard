@@ -3,12 +3,12 @@ require 'controllers/permission_behavior'
 
 describe TeamsController do
 
-  let(:course) { FactoryGirl(:course) }
-  let(:team) { FactoryGirl(:team) }
+  let(:course) { FactoryGirl.create(:course) }
+  let(:team) { FactoryGirl.create(:team) }
 
   context "any user can" do
     before do
-      login(FactoryGirl(:student_sam))
+      login(FactoryGirl.create(:student_sam))
     end
 
     describe "GET show" do
@@ -85,7 +85,7 @@ describe TeamsController do
 
   context "any staff can" do
     before do
-      login(FactoryGirl(:faculty_frank))
+      login(FactoryGirl.create(:faculty_frank))
     end
 
     describe "GET new" do
@@ -200,7 +200,7 @@ describe TeamsController do
 
   context "any admin can" do
     before do
-      login(FactoryGirl(:admin_andy))
+      login(FactoryGirl.create(:admin_andy))
     end
 
     describe "DELETE destroy" do

@@ -3,7 +3,7 @@
 #describe "sponsored_project_efforts/edit.html.erb" do
 #  before(:each) do
 #
-#    @efforts = assign(:efforts, [FactoryGirl(:sponsored_project_effort)])
+#    @efforts = assign(:efforts, [FactoryGirl.create(:sponsored_project_effort)])
 #    @person = @efforts[0].sponsored_project_allocation.person
 ##    @effort = assign(:effort, stub_model(SponsoredProjectEffort, :new_record? => false))
 #  end

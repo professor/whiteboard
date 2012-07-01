@@ -27,7 +27,7 @@ describe Team do
 
     context 'when the members changes' do
       before do
-        @student = FactoryGirl(:student_sally)
+        @student = FactoryGirl.create(:student_sally)
         @team.members_override = [@student.human_name]
         @team.save
       end
@@ -61,36 +61,36 @@ describe Team do
 
   it 'can be created' do
     lambda {
-      FactoryGirl(:team)
+      FactoryGirl.create(:team)
     }.should change(Team, :count).by(1)
   end
 
   context "has peer evaluation date" do
     it "first email that is copied from the course's peer evaluation first email date if it exists" do
-      course = FactoryGirl(:course, :peer_evaluation_first_email => Date.today)
-      team = FactoryGirl(:team, :course_id => course.id)
+      course = FactoryGirl.create(:course, :peer_evaluation_first_email => Date.today)
+      team = FactoryGirl.create(:team, :course_id => course.id)
 
       team.peer_evaluation_first_email.to_date.should == course.peer_evaluation_first_email
     end
 
     it "first email that is not overwritten if the faculty has already specified a peer evaluation date" do
-      course = FactoryGirl(:course, :peer_evaluation_first_email => Date.today)
-      team = FactoryGirl(:team, :course_id => course.id, :peer_evaluation_first_email => 4.hours.from_now)
+      course = FactoryGirl.create(:course, :peer_evaluation_first_email => Date.today)
+      team = FactoryGirl.create(:team, :course_id => course.id, :peer_evaluation_first_email => 4.hours.from_now)
       course.peer_evaluation_first_email = 1.day.ago
       team.save
       team.peer_evaluation_first_email == 4.hours.from_now
     end
 
     it "second email that is copied from the course's peer evaluation second email date if it exists" do
-      course = FactoryGirl(:course, :peer_evaluation_second_email => Date.today)
-      team = FactoryGirl(:team, :course_id => course.id)
+      course = FactoryGirl.create(:course, :peer_evaluation_second_email => Date.today)
+      team = FactoryGirl.create(:team, :course_id => course.id)
 
       team.peer_evaluation_second_email.to_date.should == course.peer_evaluation_second_email
     end
 
     it "second email that is not overwritten if the faculty has already specified a peer evaluation date" do
-      course = FactoryGirl(:course, :peer_evaluation_second_email => Date.today)
-      team = FactoryGirl(:team, :course_id => course.id, :peer_evaluation_second_email => 4.hours.from_now)
+      course = FactoryGirl.create(:course, :peer_evaluation_second_email => Date.today)
+      team = FactoryGirl.create(:team, :course_id => course.id, :peer_evaluation_second_email => 4.hours.from_now)
       course.peer_evaluation_second_email = 1.day.ago
       team.save
       team.peer_evaluation_second_email == 4.hours.from_now
@@ -134,11 +134,11 @@ describe Team do
   context "is_person_on_team?" do
 
    before(:each) do
-      @faculty_frank = FactoryGirl(:faculty_frank)
-      @student_sam = FactoryGirl(:student_sam)
-      @student_sally = FactoryGirl(:student_sally)
-      @course = FactoryGirl(:course, :configure_teams_name_themselves => false)
-      @team = FactoryGirl(:team, :course_id => @course.id, :name => "Dracula", :people => [@student_sam, @student_sally])
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @student_sam = FactoryGirl.create(:student_sam)
+      @student_sally = FactoryGirl.create(:student_sally)
+      @course = FactoryGirl.create(:course, :configure_teams_name_themselves => false)
+      @team = FactoryGirl.create(:team, :course_id => @course.id, :name => "Dracula", :people => [@student_sam, @student_sally])
     end
 
     it "correctly determines whether a person is on the team" do

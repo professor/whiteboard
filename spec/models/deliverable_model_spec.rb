@@ -4,7 +4,7 @@ describe Deliverable do
 
   it 'can be created' do
     lambda {
-      FactoryGirl(:deliverable)
+      FactoryGirl.create(:deliverable)
     }.should change(Deliverable, :count).by(1)
   end
 
@@ -44,7 +44,7 @@ describe Deliverable do
   end
 
     it "should return person name for a individual deliverable" do
-    deliverable = FactoryGirl(:individual_deliverable)
+    deliverable = FactoryGirl.create(:individual_deliverable)
     deliverable.owner_name.should be_equal(deliverable.creator.human_name)
   end
 
@@ -56,7 +56,7 @@ describe Deliverable do
   end
 
   it "should return person email for a individual deliverable" do
-    deliverable = FactoryGirl(:individual_deliverable)
+    deliverable = FactoryGirl.create(:individual_deliverable)
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
 
@@ -87,11 +87,11 @@ describe Deliverable do
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(FactoryGirl(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
     end
 
     it "is editable by staff or admin" do
-      @deliverable.editable?(FactoryGirl(:faculty_frank)).should be_true
+      @deliverable.editable?(FactoryGirl.create(:faculty_frank)).should be_true
      end
 
     it "is editable by a team member" do
@@ -106,11 +106,11 @@ describe Deliverable do
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(FactoryGirl(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
     end
 
     it "is editable by staff or admin" do
-      @deliverable.editable?(FactoryGirl(:faculty_frank)).should be_true
+      @deliverable.editable?(FactoryGirl.create(:faculty_frank)).should be_true
      end
 
     it "is editable by its owner" do

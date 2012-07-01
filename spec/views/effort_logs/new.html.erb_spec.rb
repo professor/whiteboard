@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "effort_logs/new.html.erb" do
   before do
     assign(:day_labels, [1..7])
-    course = FactoryGirl(:fse)
+    course = FactoryGirl.create(:fse)
     assign(:courses, [course])
     assign(:task_types, [TaskType.create!])
     assign(:today_column, 1)

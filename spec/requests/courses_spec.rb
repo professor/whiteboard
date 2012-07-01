@@ -4,7 +4,7 @@ describe "courses" do
 
    before do
    visit('/')
-   @user = FactoryGirl(:student_sam)
+   @user = FactoryGirl.create(:student_sam)
    @semester = AcademicCalendar.current_semester()
    @year = Date.today.year
    login_with_oauth @user

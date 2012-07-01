@@ -3,10 +3,10 @@ require 'spec_helper'
 describe PageAttachmentsController do
   context "As a faculty member," do
     before :each do
-      @user = FactoryGirl(:faculty_frank)
+      @user = FactoryGirl.create(:faculty_frank)
       login @user
-      @page = FactoryGirl(:page, :is_editable_by_all => false)
-      @attachment = FactoryGirl(:page_attachment, :page => @page, :user => @user)
+      @page = FactoryGirl.create(:page, :is_editable_by_all => false)
+      @attachment = FactoryGirl.create(:page_attachment, :page => @page, :user => @user)
     end
 
     describe "performing PUT update on a page attachment" do
@@ -73,10 +73,10 @@ describe PageAttachmentsController do
 
   context "As a student, on a page that is not editable by everyone," do
     before :each do
-      @user = FactoryGirl(:student_sam)
+      @user = FactoryGirl.create(:student_sam)
       login @user
-      @page = FactoryGirl(:page, :is_editable_by_all => false)
-      @attachment = FactoryGirl(:page_attachment, :page => @page, :user_id => 1)
+      @page = FactoryGirl.create(:page, :is_editable_by_all => false)
+      @attachment = FactoryGirl.create(:page_attachment, :page => @page, :user_id => 1)
     end
 
     describe "performing PUT update on a page attachment" do

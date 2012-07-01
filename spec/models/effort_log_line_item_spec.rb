@@ -4,7 +4,7 @@ describe EffortLogLineItem do
 
   it 'can be created' do
     lambda {
-      FactoryGirl(:effort_log_line_item)
+      FactoryGirl.create(:effort_log_line_item)
       }.should change(EffortLogLineItem, :count).by(1)
     end
 
@@ -35,9 +35,9 @@ describe EffortLogLineItem do
 
     context "are ordered" do
       it "should be returned in the same order as inserted" do
-        effort_log = FactoryGirl(:effort1)
+        effort_log = FactoryGirl.create(:effort1)
         for i in 0..5
-          FactoryGirl(:elli_line1, :task_type_id => i, :effort_log => effort_log)
+          FactoryGirl.create(:elli_line1, :task_type_id => i, :effort_log => effort_log)
         end
         
         i = 0

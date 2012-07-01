@@ -5,7 +5,7 @@ describe SponsoredProjectSponsor do
 
   it 'can be created' do
     lambda {
-      FactoryGirl(:sponsored_project_sponsor)
+      FactoryGirl.create(:sponsored_project_sponsor)
     }.should change(SponsoredProjectSponsor, :count).by(1)
   end
 
@@ -26,7 +26,7 @@ describe SponsoredProjectSponsor do
   end
 
   it 'name must be unique' do
-    sponsor = FactoryGirl(:sponsored_project_sponsor)
+    sponsor = FactoryGirl.create(:sponsored_project_sponsor)
     non_unique_project = SponsoredProjectSponsor.new(:name => sponsor.name)
     non_unique_project.should_not be_valid
   end
@@ -34,8 +34,8 @@ describe SponsoredProjectSponsor do
 
   describe "objects" do
     before(:each) do
-       @archived =  FactoryGirl(:sponsored_project_sponsor, :is_archived => true)
-       @current =  FactoryGirl(:sponsored_project_sponsor, :is_archived => false)
+       @archived =  FactoryGirl.create(:sponsored_project_sponsor, :is_archived => true)
+       @current =  FactoryGirl.create(:sponsored_project_sponsor, :is_archived => false)
     end
 
     it_should_behave_like "archived objects"

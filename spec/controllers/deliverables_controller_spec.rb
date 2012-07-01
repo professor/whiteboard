@@ -4,11 +4,11 @@ require 'controllers/permission_behavior'
 describe DeliverablesController do
 
     before do
-      @admin_andy = FactoryGirl(:admin_andy)
-      @faculty_frank = FactoryGirl(:faculty_frank)
-      @faculty_fagan = FactoryGirl(:faculty_fagan)
-      @student_sam = FactoryGirl(:student_sam)
-      @student_sally = FactoryGirl(:student_sally)
+      @admin_andy = FactoryGirl.create(:admin_andy)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @student_sam = FactoryGirl.create(:student_sam)
+      @student_sally = FactoryGirl.create(:student_sally)
     end
 
     describe "GET index for course" do

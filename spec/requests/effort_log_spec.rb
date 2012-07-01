@@ -4,9 +4,9 @@ describe "effort logs" do
 
   before do
    visit('/')
-#   @effort_log = FactoryGirl(:effort_log)
+#   @effort_log = FactoryGirl.create(:effort_log)
 #   @user = @effort_log.person
-   @user = FactoryGirl(:student_sam)
+   @user = FactoryGirl.create(:student_sam)
    login_with_oauth @user
    click_link "Effort Logs"
   end

@@ -3,12 +3,12 @@ require 'spec_helper'
 describe SponsoredProjectSponsorsController do
 
 
-  let(:sponsor) { FactoryGirl(:sponsored_project_sponsor) }
+  let(:sponsor) { FactoryGirl.create(:sponsored_project_sponsor) }
 
   context "as admin do " do
 
     before do
-      @admin_andy = FactoryGirl(:admin_andy)
+      @admin_andy = FactoryGirl.create(:admin_andy)
       login(@admin_andy)
     end
     
@@ -112,7 +112,7 @@ describe SponsoredProjectSponsorsController do
   context "as faculty do " do
 
     before do
-      @faculty_frank = FactoryGirl(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
       login(@faculty_frank)
     end
 

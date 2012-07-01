@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "people/show.html.erb" do
   before(:each) do
-    person = FactoryGirl(:student_sam)
+    person = FactoryGirl.create(:student_sam)
     login(person)
     assign(:person, person)
   end

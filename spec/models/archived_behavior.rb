@@ -1,5 +1,5 @@
-# @current =  FactoryGirl(:sponsored_project_sponsor, :is_archived => false)
-# @archive =  FactoryGirl(:sponsored_project_sponsor, :is_archived => true)
+# @current =  FactoryGirl.create(:sponsored_project_sponsor, :is_archived => false)
+# @archive =  FactoryGirl.create(:sponsored_project_sponsor, :is_archived => true)
 
   shared_examples_for "archived objects" do
     it "should respond to current" do

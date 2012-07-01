@@ -5,7 +5,7 @@ describe SponsoredProjectAllocation do
 
   it 'can be created' do
     lambda {
-      FactoryGirl(:sponsored_project_allocation)
+      FactoryGirl.create(:sponsored_project_allocation)
     }.should change(SponsoredProjectAllocation, :count).by(1)
   end
 
@@ -35,7 +35,7 @@ describe SponsoredProjectAllocation do
     end
 
     it "when a duplicate allocation exists for the same person to project" do
-      original = FactoryGirl(:sponsored_project_allocation)
+      original = FactoryGirl.create(:sponsored_project_allocation)
       duplicate = FactoryGirl.build(:sponsored_project_allocation, :person => original.person, :sponsored_project => original.sponsored_project)
       duplicate.should_not be_valid
     end
@@ -47,7 +47,7 @@ describe SponsoredProjectAllocation do
     end
 
     it 'belongs to a sponsored project name' do
-      sponsored_project_person = FactoryGirl(:sponsored_project_allocation)
+      sponsored_project_person = FactoryGirl.create(:sponsored_project_allocation)
       sponsored_project_person.sponsored_project.name.should_not be_empty
     end
 
@@ -56,7 +56,7 @@ describe SponsoredProjectAllocation do
     end
 
     it 'belongs to a person human_name' do
-      sponsored_project_person = FactoryGirl(:sponsored_project_allocation)
+      sponsored_project_person = FactoryGirl.create(:sponsored_project_allocation)
       sponsored_project_person.person.human_name.should_not be_empty
     end
 
@@ -66,8 +66,8 @@ describe SponsoredProjectAllocation do
 
   describe "objects" do
     before(:each) do
-      @archived = FactoryGirl(:sponsored_project_allocation, :is_archived => true)
-      @current = FactoryGirl(:sponsored_project_allocation, :is_archived => false, :person => @archived.person)
+      @archived = FactoryGirl.create(:sponsored_project_allocation, :is_archived => true)
+      @current = FactoryGirl.create(:sponsored_project_allocation, :is_archived => false, :person => @archived.person)
     end
 
     it_should_behave_like "archived objects"
@@ -76,12 +76,12 @@ describe SponsoredProjectAllocation do
   context "creates monthly copy to sponsored project effort" do
 
     before(:each) do
-      @faculty_fagan = FactoryGirl(:faculty_fagan)
-      @faculty_frank = FactoryGirl(:faculty_frank)
-      @project_rover = FactoryGirl(:sponsored_project, :name => "Rover SW")
-      @project_disaster = FactoryGirl(:sponsored_project, :name => "Disaster Response")
-      @allocation_fagan_rover = FactoryGirl(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
-      @allocation_fagan_disaster = FactoryGirl(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @project_rover = FactoryGirl.create(:sponsored_project, :name => "Rover SW")
+      @project_disaster = FactoryGirl.create(:sponsored_project, :name => "Disaster Response")
+      @allocation_fagan_rover = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
+      @allocation_fagan_disaster = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
     end
 
     it 'responds to monthly_copy_to_sponsored_project_effort' do
@@ -96,8 +96,8 @@ describe SponsoredProjectAllocation do
     end
 
     it 'does not copy archived allocations' do
-      @project_fading_shiny_newness = FactoryGirl(:sponsored_project, :name => "Last Year's Hot Thing'")
-      @allocation_fagan_archived = FactoryGirl(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :is_archived => true, :sponsored_project => @project_fading_shiny_newness)
+      @project_fading_shiny_newness = FactoryGirl.create(:sponsored_project, :name => "Last Year's Hot Thing'")
+      @allocation_fagan_archived = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :is_archived => true, :sponsored_project => @project_fading_shiny_newness)
       lambda {
         SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
         }.should change(SponsoredProjectEffort, :count).by(2)
@@ -107,14 +107,14 @@ describe SponsoredProjectAllocation do
   context "emails staff to confirm their effort for current month" do
 
     before do
-      @faculty_frank = FactoryGirl(:faculty_frank)
-      @faculty_fagan = FactoryGirl(:faculty_fagan)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
 
-      @allocation_frank = FactoryGirl(:sponsored_project_allocation, :person => @faculty_frank)
-      @allocation_fagan = FactoryGirl(:sponsored_project_allocation, :person => @faculty_fagan)
+      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_frank)
+      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan)
 
-      @effort_frank = FactoryGirl(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
-      @effort_fagan = FactoryGirl(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
+      @effort_frank = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
+      @effort_fagan = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
     end
 
     specify { SponsoredProjectAllocation.should respond_to(:emails_staff_requesting_confirmation_for_allocations)}

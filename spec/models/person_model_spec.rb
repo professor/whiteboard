@@ -5,10 +5,10 @@ describe Person do
   before do
     User.delete_all
     # this list must not be sorted alphabetically
-    @faculty_frank = FactoryGirl(:faculty_frank)
-    @faculty_fagan = FactoryGirl(:faculty_fagan)
-    @admin_andy = FactoryGirl(:admin_andy)
-    @student_sam = FactoryGirl(:student_sam)
+    @faculty_frank = FactoryGirl.create(:faculty_frank)
+    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+    @admin_andy = FactoryGirl.create(:admin_andy)
+    @student_sam = FactoryGirl.create(:student_sam)
   end
 
   context "photo upload" do
@@ -66,7 +66,7 @@ describe Person do
 #    end
 #
 #    it "when a duplicate effort for the same month, year and project allocation" do
-#      original = FactoryGirl(:sponsored_project_effort)
+#      original = FactoryGirl.create(:sponsored_project_effort)
 #      duplicate = SponsoredProjectEffort.new()
 #      duplicate.month = original.month
 #      duplicate.year = original.year

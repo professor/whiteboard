@@ -6,10 +6,10 @@ describe HUBClassRosterHandler do
     context "and they are not already in the course," do
       before :each do
         @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
-        @older_course = FactoryGirl(:fse_fall_2011, :year => 1900)
+        @older_course = FactoryGirl.create(:fse_fall_2011, :year => 1900)
         @course = FactoryGirl.create(:fse_fall_2011)
-        @student_sam = FactoryGirl(:student_sam)
-        @student_sally = FactoryGirl(:student_sally)
+        @student_sam = FactoryGirl.create(:student_sam)
+        @student_sally = FactoryGirl.create(:student_sally)
       end
 
       it "should add them to the course" do
@@ -21,7 +21,7 @@ describe HUBClassRosterHandler do
       end
 
       #it "should add them to the most recent course" do
-      #  @older_course = FactoryGirl(:mfse, :year => @course.year - 1)
+      #  @older_course = FactoryGirl.create(:mfse, :year => @course.year - 1)
       #  expect { HUBClassRosterHandler.handle(@roster_file) }.to_not change { @older_course }
       #end
 
@@ -46,8 +46,8 @@ describe HUBClassRosterHandler do
       before :each do
         @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
         @course = FactoryGirl.create(:fse_fall_2011)
-        @course.registered_students << @student_sam = FactoryGirl(:student_sam_user)
-        @course.registered_students << @student_sally = FactoryGirl(:student_sally_user)
+        @course.registered_students << @student_sam = FactoryGirl.create(:student_sam_user)
+        @course.registered_students << @student_sally = FactoryGirl.create(:student_sally_user)
         @course.save
       end
 
@@ -75,10 +75,10 @@ describe HUBClassRosterHandler do
     before :each do
       @roster_file = File.read("#{Rails.root}/spec/data/student_dropall.txt")
       @course = FactoryGirl.create(:fse_fall_2011)
-      @course.registered_students << @student_sam = FactoryGirl(:student_sam_user)
-      @course.registered_students << @student_sally = FactoryGirl(:student_sally_user)
-      @course.faculty << @faculty_frank = FactoryGirl(:faculty_frank)
-      @course.faculty << @faculty_fagan = FactoryGirl(:faculty_fagan)
+      @course.registered_students << @student_sam = FactoryGirl.create(:student_sam_user)
+      @course.registered_students << @student_sally = FactoryGirl.create(:student_sally_user)
+      @course.faculty << @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @course.faculty << @faculty_fagan = FactoryGirl.create(:faculty_fagan)
       @course.save
     end
 
