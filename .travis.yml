@@ -9,7 +9,7 @@ before_script:
   - bundle exec rake db:schema:load RAILS_ENV='test' --trace
   - echo "hello"
 
-script: bundle exec rake --verbose and --trace
+script: bundle exec rake --verbose --trace
 
 
 env:
