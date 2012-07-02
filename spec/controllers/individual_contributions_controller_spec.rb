@@ -8,7 +8,7 @@ describe IndividualContributionsController do
       before do
         Date.any_instance.stub(:cweek).and_return(1)
         Date.any_instance.stub(:cwyear).and_return(2011)
-        login(Factory(:student_sam))
+        login(FactoryGirl.create(:student_sam))
         get(:index)
       end
 
@@ -22,7 +22,7 @@ describe IndividualContributionsController do
       before do
         Date.any_instance.stub(:cweek).and_return(32)
         Date.any_instance.stub(:cwyear).and_return(2011)
-        login(Factory(:student_sam))
+        login(FactoryGirl.create(:student_sam))
         get(:index)
       end
 
@@ -42,7 +42,7 @@ describe IndividualContributionsController do
       end
       context "and there is no individual contribution" do
         before do
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
         end
         specify { assigns(:show_new_link_for_current_week).should be }
@@ -69,7 +69,7 @@ describe IndividualContributionsController do
         it "and individual contributions are in the current period" do
           Date.any_instance.stub(:cwyear).and_return(@individual_contributions[0].year)
           Date.any_instance.stub(:cweek).and_return(@individual_contributions[0].week_number)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link_for_current_week).should_not be
           assigns(:show_new_link_for_previous_week).should_not be
@@ -77,7 +77,7 @@ describe IndividualContributionsController do
 
         it "and individual contributions are not in the current period" do
           Date.any_instance.stub(:cweek).and_return(@individual_contributions[0].week_number + 1)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link_for_current_week).should be
           assigns(:show_new_link_for_previous_week).should_not be
@@ -91,7 +91,7 @@ describe IndividualContributionsController do
       end
       context "and there is no individual contribution" do
         before do
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
         end
         specify { assigns(:show_new_link_for_current_week).should be }
@@ -118,7 +118,7 @@ describe IndividualContributionsController do
         it "and the individual contributions are in the current period" do
           Date.any_instance.stub(:cwyear).and_return(@individual_contributions[0].year)
           Date.any_instance.stub(:cweek).and_return(@individual_contributions[0].week_number)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link_for_current_week).should_not be
           assigns(:show_new_link_for_previous_week).should_not be
@@ -126,7 +126,7 @@ describe IndividualContributionsController do
 
         it "and the individual contributions are not in the current period" do
           Date.any_instance.stub(:cweek).and_return(@individual_contributions[0].week_number + 1)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link_for_current_week).should be
           assigns(:show_new_link_for_previous_week).should_not be
@@ -143,16 +143,16 @@ describe IndividualContributionsController do
     end
 
     it "should have a list of courses" do
-      #login(Factory(:student_sam_user_with_registered_courses))
+      #login(FactoryGirl.create(:student_sam_user_with_registered_courses))
       #get(:new)
       #assigns(:courses).should be_true
     end
 
 
     it "when there is previous week data, then show the student's plan for the current week" do
-      @previous_week = Factory(:individual_contribution, :user => @student_sam_user, :cweek => Date.today.cweek - 1, :year => Date.today.cyear)
-      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
-      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
+      @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :cweek => Date.today.cweek - 1, :year => Date.today.cwyear)
+      @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
+      @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
       get(:new)
 
       assigns(:plans_from_previous_week).should == {@mfse_answers1.id => "I did great", @fse_answers1 => "I finished it"}
@@ -194,7 +194,7 @@ describe IndividualContributionsController do
 #
 #      context "and there are courses that have students" do
 #        before do
-#          Course.stub(:remind_about_effort_course_list).and_return([Factory(:mfse)])
+#          Course.stub(:remind_about_effort_course_list).and_return([FactoryGirl.create(:mfse)])
 #          @person = Person.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "")
 #          Team.stub(:where).and_return([Team.new(:people => [@person])])
 #        end
@@ -227,7 +227,7 @@ describe IndividualContributionsController do
 #        context "and there are individual contributions" do
 #          context "and the first individual contributions sums to 0" do
 #            before do
-#              IndividualContribution.stub(:where).and_return([IndividualContribution.new(:sum => 0), Factory(:effort2)])
+#              IndividualContribution.stub(:where).and_return([IndividualContribution.new(:sum => 0), FactoryGirl.create(:effort2)])
 #            end
 #
 #          it "it should send an email if the person has never been emailed" do
@@ -259,13 +259,13 @@ describe IndividualContributionsController do
 #    end
 #
 #    it "it should not throw an error for nil Scotty dog saying" do
-#      subject.create_midweek_warning_email_for_course(nil, Factory(:mfse).id)
+#      subject.create_midweek_warning_email_for_course(nil, FactoryGirl.create(:mfse).id)
 #    end
 #  end
 #
 #  context "it should send midweekly reminder email to SE students" do
 #    it "who have not logged effort" do
-#      person_who_needs_reminder = Factory(:student_sam, :effort_log_warning_email => Date.today - 1.day)
+#      person_who_needs_reminder = FactoryGirl.create(:student_sam, :effort_log_warning_email => Date.today - 1.day)
 #      Person.stub(:where).and_return([person_who_needs_reminder])
 #      IndividualContribution.stub!(:latest_for_person).and_return(nil)
 #
@@ -275,7 +275,7 @@ describe IndividualContributionsController do
 #    end
 #
 #    it "but skip those who have already been emailed" do
-#      person_whose_been_reminded = Factory(:faculty_frank, :effort_log_warning_email => Date.today)
+#      person_whose_been_reminded = FactoryGirl.create(:faculty_frank, :effort_log_warning_email => Date.today)
 #      Person.stub(:where).and_return([person_whose_been_reminded])
 #      IndividualContribution.stub!(:latest_for_person).and_return(nil)
 #
@@ -285,7 +285,7 @@ describe IndividualContributionsController do
 #    end
 #
 #    it "and not bother people who have logged effort" do
-#      person_who_has_logged_effort = Factory(:admin_andy, :effort_log_warning_email => Date.today - 7.days)
+#      person_who_has_logged_effort = FactoryGirl.create(:admin_andy, :effort_log_warning_email => Date.today - 7.days)
 #      Person.stub(:where).and_return([person_who_has_logged_effort])
 #      IndividualContribution.stub(:latest_for_person).and_return(mock_model(IndividualContribution, :sum => 1))
 #

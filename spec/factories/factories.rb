@@ -95,6 +95,18 @@ FactoryGirl.define do
 #  remember_created_at Time.now.to_f.to_s
   end
 
+  factory :presentation do
+    name "Test Presentation"
+    description "Desc"
+    task_number "1"
+    presentation_date Date.new(2011, 1, 1)
+    association :course, :factory => :course
+    association :team, :factory => :team
+  end
+
+  factory :presentation_feedback_questions, class: PresentationQuestion do
+    deleted false
+  end
 
   factory :scotty_dog_saying, class: ScottyDogSaying do
     association :user, :factory => :student_sam
@@ -155,19 +167,4 @@ FactoryGirl.define do
     email Time.now.to_f.to_s + "@andrew.cmu.edu"
 #  remember_created_at Time.now.to_f.to_s
   end
-
-
-  factory :presentation do
-    name "Test Presentation"
-    description "Desc"
-    task_number "1"
-    presentation_date Date.new(2011, 1, 1)
-    association :course, :factory => :course
-    association :team, :factory => :team
-  end
-
-  factory :presentation_feedback_questions, class: PresentationQuestion do
-    deleted false
-  end
-
 end

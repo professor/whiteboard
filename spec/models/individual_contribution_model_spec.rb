@@ -10,7 +10,7 @@ describe IndividualContribution do
  
     it 'can be created' do
       lambda {
-        Factory(:individual_contribution)
+        FactoryGirl.create(:individual_contribution)
       }.should change(IndividualContribution, :count).by(1)
     end
   
@@ -36,33 +36,30 @@ describe IndividualContribution do
     #context " should update" do
     #
     #  it " student can update the status report for previous week on monday" do
-    #      report =  Factory(:individual_contribution)
+    #      report =  FactoryGirl.create(:individual_contribution)
     #      Date.stub(:today).and_return(Date.parse("Jun 04, 2012")) # which is a Monday.
     #      report.should be_valid
     #
     #  end
     #
     #  it " student cannot update the status report for previous week on any other day" do
-    #      report =  Factory(:individual_contribution)
+    #      report =  FactoryGirl.create(:individual_contribution)
     #      Date.stub(:today).and_return(Date.parse("Jun 05, 2012"))  # which is a Tuesday.
     #      report.should_not be_valid
     #  end
     #
     #
     #  it " Faculty can update the status report for any week on any day of the week" do
-    #      report =  Factory(:individual_contribution)
+    #      report =  FactoryGirl.create(:individual_contribution)
     #      report.should be_valid
     #  end
     #end
 
 
     it "should be sorted" do
-      @oldest_week = Factory(:individual_contribution, :year => 1983, :week_number => 52)
-      @this_week = @oldest_week.dup
-      @this_week.update_attributes(:year => Date.today.cwyear, :week_number => Date.today.cweek)
-      @old_week = @oldest_week.dup
-      @old_week.update_attributes(:year => 2000, :week_number => 1)
-
+      @oldest_week = FactoryGirl.create(:individual_contribution, :year => 1983, :week_number => 52)
+      @this_week = FactoryGirl.create(:individual_contribution, :user => @oldest_week.user, :year => Date.today.cwyear, :week_number => Date.today.cweek)
+      @old_week = FactoryGirl.create(:individual_contribution, :user => @oldest_week.user, :year => 2000, :week_number => 1)
       @sorted = IndividualContribution.all
       @sorted.first.should == @this_week
       @sorted.second.should == @old_week
@@ -85,12 +82,12 @@ describe IndividualContribution do
   context "combined_answers_for_courses" do
     #Given 3 courses in a semester
     before do
-      @student_sam_user = Factory(:student_sam_user)
-      @mfse = Factory(:mfse_current_semester)
-      @fse = Factory(:fse_current_semester)
-      @this_week = Factory(:individual_contribution, :user => @student_sam_user)
-      @mfse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @mfse, :answer1 => "I did great")
-      @fse_answers1 = Factory(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @fse, :answer1 => "I finished it")
+      @student_sam_user = FactoryGirl.create(:student_sam_user)
+      @mfse = FactoryGirl.create(:mfse_current_semester)
+      @fse = FactoryGirl.create(:fse_current_semester)
+      @this_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user)
+      @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @mfse, :answer1 => "I did great")
+      @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @fse, :answer1 => "I finished it")
 
     end
     it "returns an array of hashes. The array corresponds to each question. The hash corresponds to the answer for each course for that question" do
@@ -128,7 +125,7 @@ describe IndividualContribution do
   #
   ##context "has_permission_to_edit" do
   ##  before(:each) do
-  ##    @effort = Factory(:effort_log)
+  ##    @effort = FactoryGirl.create(:effort_log)
   ##  end
   ##
   ##  #it "for effort log owner" do
@@ -136,13 +133,13 @@ describe IndividualContribution do
   ##  #end
   ##
   ##  it "for admin who is not effort owner" do
-  ##    admin_andy = Factory(:admin_andy)
+  ##    admin_andy = FactoryGirl.create(:admin_andy)
   ##    @effort.person.should_not be_equal(admin_andy)
   ##    @effort.editable_by(admin_andy).should be_true
   ##  end
   ##
   ##  it "not for non admin and non effort log owner" do
-  ##    faculty_frank = Factory(:faculty_frank)
+  ##    faculty_frank = FactoryGirl.create(:faculty_frank)
   ##    @effort.person.should_not be_equal(faculty_frank)
   ##    @effort.editable_by(faculty_frank).should be_false
   ##  end
@@ -150,12 +147,12 @@ describe IndividualContribution do
   #
   #context "has_permission_to_edit_period" do
   #  before(:each) do
-  #    @effort = Factory(:effort_log)
+  #    @effort = FactoryGirl.create(:effort_log)
   #  end
   #
   #  context "within time period" do
   #    it "for admin who is not effort owner" do
-  #      admin_andy = Factory(:admin_andy)
+  #      admin_andy = FactoryGirl.create(:admin_andy)
   #      @effort.person.should_not be_equal(admin_andy)
   #      @effort.editable_by(admin_andy).should be_true
   #    end
@@ -166,7 +163,7 @@ describe IndividualContribution do
   #    end
   #
   #    it "not for non admin and non effort log owner" do
-  #      faculty_frank = Factory(:faculty_frank)
+  #      faculty_frank = FactoryGirl.create(:faculty_frank)
   #      @effort.person.should_not be_equal(faculty_frank)
   #      @effort.editable_by(faculty_frank).should be_false
   #    end
@@ -180,7 +177,7 @@ describe IndividualContribution do
   #    end
   #
   #    it "for admin who is not effort owner" do
-  #      admin_andy = Factory(:admin_andy)
+  #      admin_andy = FactoryGirl.create(:admin_andy)
   #      @effort.person.should_not be_equal(admin_andy)
   #      @effort.editable_by(admin_andy).should be_true
   #    end
@@ -190,7 +187,7 @@ describe IndividualContribution do
   #    end
   #
   #    it "not for non admin and non effort log owner" do
-  #      faculty_frank = Factory(:faculty_frank)
+  #      faculty_frank = FactoryGirl.create(:faculty_frank)
   #      @effort.person.should_not be_equal(faculty_frank)
   #      @effort.editable_by(faculty_frank).should be_false
   #    end
