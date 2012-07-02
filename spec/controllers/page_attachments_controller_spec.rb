@@ -65,6 +65,7 @@ describe PageAttachmentsController do
       end
 
       it "should flash a notice" do
+        PageAttachment.stub(:destroy)
         do_delete
         flash[:notice].should_not be_nil
       end
