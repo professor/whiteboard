@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe CourseNavigationsController do
 
-  let(:course) { Factory(:course) }
+  let(:course) { FactoryGirl.create(:course) }
 
   context "any user can" do
     before do
-      login(Factory(:student_sam))
+      login(FactoryGirl.create(:student_sam))
     end
 
     describe "GET show" do
@@ -23,7 +23,7 @@ describe CourseNavigationsController do
 
   context "any faculty can" do
     before do
-      login(Factory(:faculty_frank))
+      login(FactoryGirl.create(:faculty_frank))
     end
 
     describe "GET show" do
@@ -41,7 +41,7 @@ describe CourseNavigationsController do
 
 #  context "any faculty can" do
 #    before do
-#      login(Factory(:faculty_frank))
+#      login(FactoryGirl.create(:faculty_frank))
 #    end
 #
 #    describe "GET reposition" do

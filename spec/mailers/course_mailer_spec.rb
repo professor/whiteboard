@@ -7,7 +7,7 @@ describe CourseMailer do
     ActionMailer::Base.deliveries = []
   end
   it "should send IT email" do
-    course = Factory(:course, :configure_course_twiki => true)
+    course = FactoryGirl.create(:course, :configure_course_twiki => true)
     mail = CourseMailer.configure_course_admin_email(course).deliver
     ActionMailer::Base.deliveries.size.should == 1
     mail.subject.should match(Regexp.new(course.name))
@@ -15,7 +15,7 @@ describe CourseMailer do
   end
 
   it "should send faculty email" do
-    course = Factory(:course, :configure_course_twiki => true)
+    course = FactoryGirl.create(:course, :configure_course_twiki => true)
     mail = CourseMailer.configure_course_faculty_email(course).deliver
     ActionMailer::Base.deliveries.size.should == 1
     mail.subject.should match(Regexp.new(course.name))

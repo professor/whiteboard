@@ -1,166 +1,173 @@
 #puts "....factories loaded....."
 #puts caller.join("\n")
 
-Factory.define :course, :class => Course do |c|
-  c.name 'Course'
-  c.semester AcademicCalendar.current_semester
-  c.year Date.today.year
-  c.mini 'Both'
-  c.number '96-700'
-  c.updated_by_user_id 10
-end
+
+FactoryGirl.define do
+
+  factory :course, class: Course do
+    name 'Course'
+    semester AcademicCalendar.current_semester
+    year Date.today.year
+    mini 'Both'
+    number '96-700'
+    updated_by_user_id 10
+  end
 
 
-Factory.define :delayed_system_job do |c|
-end
+  factory :delayed_system_job do
+  end
 
-Factory.define :deliverable do |d|
-  d.association :course, :factory => :course
-  d.association :creator, :factory => :student_sam
-end
+  factory :deliverable do
+    association :course, :factory => :course
+    association :creator, :factory => :student_sam
+  end
 
-Factory.define :deliverable_attachment do |d|
-  d.association :deliverable, :factory => :deliverable
-end
-
-
-Factory.define :effort_log_line_item, :class => EffortLogLineItem do |e|
-  e.association :course, :factory => :fse
-  e.task_type_id 1
-  e.effort_log_id 60
-end
-
-today = Date.today
-monday_of_this_week = Date.commercial(today.year, today.cweek, 1)
-Factory.define :effort_log, :class => EffortLog do |e|
-  e.year monday_of_this_week.cwyear
-  e.week_number monday_of_this_week.cweek
-  e.association :person, :factory => :student_sam
-end
-
-Factory.define :individual_contribution, :class => IndividualContribution do |ic|
-  ic.year Date.today.cwyear
-  ic.week_number Date.today.cweek
-  ic.association :user, :factory => :student_sam
-end
-
-Factory.define :individual_contribution_for_course, :class => IndividualContributionForCourse do |ic|
-  ic.association :individual_contribution, :factory => :individual_contribution
-  ic.association :course, :factory => :course
-end
-
-Factory.define :page, :class => Page do |p|
-  p.title "My page "
-  p.url "my_page"
-  p.updated_by_user_id 10
-  p.tab_one_contents "Lorem Ipsum"
-end
-
-Factory.define :page_comment do |p|
-  p.association :page, :factory => :page
-#  p.association :person, :factory => :student_sam
-  p.comment 'This page has a broken link'
-end
-
-Factory.define :page_comment_type do |c|
-  c.name 'Comment'
-  c.background_color "#FFF499"
-end
-
-Factory.define :peer_evaluation_learning_objective, :class => PeerEvaluationLearningObjective do |p|
-  p.learning_objective "this is my learning objective"
-end
-
-Factory.define :peer_evaluation_review, :class => PeerEvaluationReview do |p|
-  p.association :team, :factory => :team_triumphant
-  p.association :author, :factory => :student_sam
-  p.association :recipient, :factory => :student_sally
-  p.question "What was this team member's most significant positive contribution to the team?"
-  p.answer "Sally was always on time in meetings."
-  p.sequence_number 0
-end
-
-Factory.define :person, :class => Person do |p|
-  p.is_staff 0
-  p.is_student 0
-  p.is_admin 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
-#  p.remember_created_at Time.now.to_f.to_s
-end
+  factory :deliverable_attachment do
+    association :deliverable, :factory => :deliverable
+  end
 
 
-Factory.define :scotty_dog_saying, :class => ScottyDogSaying do |sds|
-  sds.association :user, :factory => :student_sam
-  sds.saying "Tartan is my favorite color"
-end
+  factory :effort_log_line_item, class: EffortLogLineItem do
+    association :course, :factory => :fse
+    task_type_id 1
+    effort_log_id 60
+  end
 
-Factory.define :sponsored_project_effort, :class => SponsoredProjectEffort do |spe|
-  spe.association :sponsored_project_allocation, :factory => :sponsored_project_allocation
-  spe.current_allocation 10
-  spe.year {1.month.ago.year}
-  spe.month {1.month.ago.month}
-  spe.confirmed false
-end
-
-Factory.define :sponsored_project_sponsor, :class => SponsoredProjectSponsor do |sp|
-  sp.sequence(:name) {|n| "Sponsor #{n}"}
-end
-
-Factory.define :sponsored_project, :class => SponsoredProject do |sp|
-  sp.sequence(:name) {|n| "Project #{n}"}
-  sp.association :sponsor, :factory => :sponsored_project_sponsor
-end
-
-Factory.define :sponsored_project_allocation, :class => SponsoredProjectAllocation do |sp|
-  sp.current_allocation 10
-  sp.association :person, :factory => :faculty_frank
-  sp.association :sponsored_project, :factory => :sponsored_project
-  sp.is_archived false
-end
-
-Factory.define :suggestion do |sds|
-  sds.page "http://rails.sv.cmu.edu"
-  sds.comment "This is the best website ever"
-end
-
-Factory.define :task_type do |t|
-  t.is_staff 0
-  t.name "Task name"
-  t.is_student 1
-  t.description "Task description"
-end
-
-Factory.define :team, :class => Team do |t|
-t.name "Team"
-t.email "team@sv.cmu.edu"
-t.tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
-t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-t.people {|people| [people.association(:team_member)]}
-t.association :course, :factory => :course
-end
-
-Factory.define :user, :class => User do |p|
-  p.is_staff 0
-  p.is_student 0
-  p.is_admin 0
-  p.is_active 1
-  p.image_uri "/images/mascot.jpg"
-  p.email Time.now.to_f.to_s + "@andrew.cmu.edu"
-#  p.remember_created_at Time.now.to_f.to_s
-end
+  today = Date.today
+  monday_of_this_week = Date.commercial(today.year, today.cweek, 1)
+  factory :effort_log, class: EffortLog do
+    year monday_of_this_week.cwyear
+    week_number monday_of_this_week.cweek
+    association :person, :factory => :student_sam
+  end
 
 
-Factory.define :presentation do |p|
-  p.name "Test Presentation"
-  p.description "Desc"
-  p.task_number "1"
-  p.presentation_date Date.new(2011, 1, 1)
-  p.association :course, :factory => :course
-  p.association :team, :factory => :team
-end
+  factory :individual_contribution, :class => IndividualContribution do
+     year Date.today.cwyear
+     week_number Date.today.cweek
+     association :user, :factory => :student_sam
+   end
 
-Factory.define :presentation_feedback_questions, :class => PresentationQuestion do |p|
-  p.deleted false
+    factory :individual_contribution_for_course, :class => IndividualContributionForCourse do
+     association :individual_contribution, :factory => :individual_contribution
+     association :course, :factory => :course
+   end
+
+
+  factory :page, class: Page do
+    title "My page "
+    url "my_page"
+    updated_by_user_id 10
+    tab_one_contents "Lorem Ipsum"
+  end
+
+  factory :page_comment do
+    association :page, :factory => :page
+#  association :person, :factory => :student_sam
+    comment 'This page has a broken link'
+  end
+
+  factory :page_comment_type do
+    name 'Comment'
+    background_color "#FFF499"
+  end
+
+  factory :peer_evaluation_learning_objective, class: PeerEvaluationLearningObjective do
+    learning_objective "this is my learning objective"
+  end
+
+  factory :peer_evaluation_review, class: PeerEvaluationReview do
+    association :team, :factory => :team_triumphant
+    association :author, :factory => :student_sam
+    association :recipient, :factory => :student_sally
+    question "What was this team member's most significant positive contribution to the team?"
+    answer "Sally was always on time in meetings."
+    sequence_number 0
+  end
+
+  factory :person, class: Person do
+    is_staff 0
+    is_student 0
+    is_admin 0
+    is_active 1
+    image_uri "/images/mascot.jpg"
+    email Time.now.to_f.to_s + "@andrew.cmu.edu"
+#  remember_created_at Time.now.to_f.to_s
+  end
+
+
+  factory :scotty_dog_saying, class: ScottyDogSaying do
+    association :user, :factory => :student_sam
+    saying "Tartan is my favorite color"
+  end
+
+  factory :sponsored_project_effort, class: SponsoredProjectEffort do
+    association :sponsored_project_allocation, :factory => :sponsored_project_allocation
+    current_allocation 10
+    year { 1.month.ago.year }
+    month { 1.month.ago.month }
+    confirmed false
+  end
+
+  factory :sponsored_project_sponsor, class: SponsoredProjectSponsor do
+    sequence(:name) { |n| "Sponsor #{n}" }
+  end
+
+  factory :sponsored_project, class: SponsoredProject do
+    sequence(:name) { |n| "Project #{n}" }
+    association :sponsor, :factory => :sponsored_project_sponsor
+  end
+
+  factory :sponsored_project_allocation, class: SponsoredProjectAllocation do
+    current_allocation 10
+    association :person, :factory => :faculty_frank
+    association :sponsored_project, :factory => :sponsored_project
+    is_archived false
+  end
+
+  factory :suggestion do
+    page "http://rails.sv.cmu.edu"
+    comment "This is the best website ever"
+  end
+
+  factory :task_type do
+    is_staff 0
+    name "Task name"
+    is_student 1
+    description "Task description"
+  end
+
+  factory :team, class: Team do
+    name "Team"
+    email "team@sv.cmu.edu"
+    tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+    people { |people| [people.association(:team_member)] }
+    association :course, :factory => :course
+  end
+
+  factory :user, class: User do
+    is_staff 0
+    is_student 0
+    is_admin 0
+    is_active 1
+    image_uri "/images/mascot.jpg"
+    email Time.now.to_f.to_s + "@andrew.cmu.edu"
+#  remember_created_at Time.now.to_f.to_s
+  end
+
+
+  factory :presentation do
+    name "Test Presentation"
+    description "Desc"
+    task_number "1"
+    presentation_date Date.new(2011, 1, 1)
+    association :course, :factory => :course
+    association :team, :factory => :team
+  end
+
+  factory :presentation_feedback_questions, class: PresentationQuestion do
+    deleted false
+  end
+
 end

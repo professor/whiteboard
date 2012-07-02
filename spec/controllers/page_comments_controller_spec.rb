@@ -4,12 +4,12 @@
 #describe PageCommentsController do
 #
 #
-#  let(:page_comment) { Factory(:page_comment) }
+#  let(:page_comment) { FactoryGirl.create(:page_comment) }
 #
 #
 #  context "any user can" do
 #    before do
-#      login(Factory(:student_sam))
+#      login(FactoryGirl.create(:student_sam))
 #    end
 #
 #    describe "GET index" do
@@ -51,7 +51,7 @@
 #
 #      describe "with valid params" do
 #        before(:each) do
-#          @page_comment = Factory.build(:page_comment)
+#          @page_comment = FactoryGirl.build(:page_comment)
 #        end
 #
 #        it "saves a newly created" do
@@ -108,7 +108,7 @@
 #
 #  context "the author can" do
 #    before do
-#      login(Factory(:faculty_frank))
+#      login(FactoryGirl.create(:faculty_frank))
 #    end
 #
 #
@@ -158,7 +158,7 @@
 #
 #  context "any admin can" do
 ##    before do
-##      login(Factory(:admin_andy))
+##      login(FactoryGirl.create(:admin_andy))
 ##    end
 #
 #    describe "DELETE destroy" do

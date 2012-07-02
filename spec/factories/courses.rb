@@ -1,10 +1,11 @@
-require File.join(Rails.root, 'spec', 'factories', 'factories.rb')
-Factory.define :fse, :parent => :course do |c|
+FactoryGirl.define do
+
+factory :fse, :parent => :course do |c|
   c.name 'Foundations of Software Engineering'
   c.short_name 'FSE'
 end
 
-Factory.define :mfse, :parent => :course do |c|
+factory :mfse, :parent => :course do |c|
   c.name 'Metrics for Software Engineers'
   c.short_name 'MfSE'
   c.semester AcademicCalendar.next_semester
@@ -12,7 +13,7 @@ Factory.define :mfse, :parent => :course do |c|
   c.number '96-700'
 end
 
-Factory.define :mfse_fall_2011, :parent => :course do |c|
+factory :mfse_fall_2011, :parent => :course do |c|
   c.name 'Metrics for Software Engineers'
   c.short_name 'MfSE'
   c.semester "Fall"
@@ -20,7 +21,7 @@ Factory.define :mfse_fall_2011, :parent => :course do |c|
   c.number '96-703'
 end
 
-Factory.define :fse_fall_2011, :parent => :course do |c|
+factory :fse_fall_2011, :parent => :course do |c|
   c.name 'Foundations of Software Engineering'
   c.short_name 'FSE'
   c.semester "Fall"
@@ -29,7 +30,7 @@ Factory.define :fse_fall_2011, :parent => :course do |c|
 end
 
 
-Factory.define :mfse_current_semester, :parent => :course do |c|
+factory :mfse_current_semester, :parent => :course do |c|
   c.name 'Metrics for Software Engineers'
   c.short_name 'MfSE'
   c.semester AcademicCalendar.current_semester
@@ -38,11 +39,13 @@ Factory.define :mfse_current_semester, :parent => :course do |c|
 end
 
 
-Factory.define :fse_current_semester, :parent => :course do |c|
+factory :fse_current_semester, :parent => :course do |c|
   c.name 'Foundations of Software Engineering'
   c.short_name 'FSE'
   c.semester AcademicCalendar.current_semester
   c.year Date.today.cwyear
   c.number '96-700'
   c.mini "Both"
+end
+
 end

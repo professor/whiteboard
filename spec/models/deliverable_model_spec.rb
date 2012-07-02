@@ -4,7 +4,7 @@ describe Deliverable do
 
   it 'can be created' do
     lambda {
-      Factory(:deliverable)
+      FactoryGirl.create(:deliverable)
     }.should change(Deliverable, :count).by(1)
   end
 
@@ -20,7 +20,7 @@ describe Deliverable do
     context "when a duplicate deliverable for the same course, task and owner" do
       [:team_deliverable, :individual_deliverable].each do |symbol|
         it "for a team/individual deliverable" do
-          original = Factory.build(symbol)
+          original = FactoryGirl.build(symbol)
           original.stub(:update_team)
           original.save
           duplicate = Deliverable.new()
@@ -37,26 +37,26 @@ describe Deliverable do
   end
 
   it "should return team name for a team deliverable" do
-    deliverable = Factory.build(:team_deliverable)
+    deliverable = FactoryGirl.build(:team_deliverable)
     deliverable.stub(:update_team)
     deliverable.save
     deliverable.owner_name.should be_equal(deliverable.team.name)
   end
 
     it "should return person name for a individual deliverable" do
-    deliverable = Factory(:individual_deliverable)
+    deliverable = FactoryGirl.create(:individual_deliverable)
     deliverable.owner_name.should be_equal(deliverable.creator.human_name)
   end
 
   it "should return team email for a team deliverable" do
-    deliverable = Factory.build(:team_deliverable)
+    deliverable = FactoryGirl.build(:team_deliverable)
     deliverable.stub(:update_team)
     deliverable.save
     deliverable.owner_email.should be_equal(deliverable.team.email)
   end
 
   it "should return person email for a individual deliverable" do
-    deliverable = Factory(:individual_deliverable)
+    deliverable = FactoryGirl.create(:individual_deliverable)
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
 
@@ -82,16 +82,16 @@ describe Deliverable do
 
   context "for a team" do
     before(:each) do
-      @deliverable = Factory.build(:team_deliverable)
+      @deliverable = FactoryGirl.build(:team_deliverable)
       @team_member = @deliverable.team.people[0]
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(Factory(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
     end
 
     it "is editable by staff or admin" do
-      @deliverable.editable?(Factory(:faculty_frank)).should be_true
+      @deliverable.editable?(FactoryGirl.create(:faculty_frank)).should be_true
      end
 
     it "is editable by a team member" do
@@ -101,16 +101,16 @@ describe Deliverable do
 
   context "for an individual deliverable" do
     before(:each) do
-      @deliverable = Factory.build(:individual_deliverable)
+      @deliverable = FactoryGirl.build(:individual_deliverable)
       @individual = @deliverable.creator
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(Factory(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
     end
 
     it "is editable by staff or admin" do
-      @deliverable.editable?(Factory(:faculty_frank)).should be_true
+      @deliverable.editable?(FactoryGirl.create(:faculty_frank)).should be_true
      end
 
     it "is editable by its owner" do

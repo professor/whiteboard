@@ -28,7 +28,7 @@ describe SuggestionsController do
 #      before(:each) do
 #        @attr = { :comment => "This is a suggestion", :page => "http://rails.sv.cmu.edu",
 #        :email => "" }
-#        @suggestion = Factory(:suggestion, @attr)
+#        @suggestion = FactoryGirl.create(:suggestion, @attr)
 #        Suggestion.stub!(:new).and_return(@suggestion)
 #        @suggestion.should_receive(:save).and_return(true)
 #      end

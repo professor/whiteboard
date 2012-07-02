@@ -4,7 +4,7 @@ describe SponsoredProjectEffort do
 
   it 'can be created' do
     lambda {
-      Factory(:sponsored_project_effort)
+      FactoryGirl.create(:sponsored_project_effort)
     }.should change(SponsoredProjectEffort, :count).by(1)
   end
 
@@ -20,20 +20,20 @@ describe SponsoredProjectEffort do
 
     [:actual_allocation, :current_allocation, :year, :month].each do |attr|
       it "when #{attr} is non-numerical" do
-        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => "test")
+        sponsored_project_effort = FactoryGirl.build(:sponsored_project_effort, attr => "test")
         sponsored_project_effort.should_not be_valid
       end
     end
 
     [:actual_allocation, :current_allocation, :year, :month].each do |attr|
       it "when #{attr} is a negative number" do
-        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => -1)
+        sponsored_project_effort = FactoryGirl.build(:sponsored_project_effort, attr => -1)
         sponsored_project_effort.should_not be_valid
       end
     end
 
     it "when a duplicate effort for the same month, year and project allocation" do
-      original = Factory(:sponsored_project_effort)
+      original = FactoryGirl.create(:sponsored_project_effort)
       duplicate = SponsoredProjectEffort.new()
       duplicate.month = original.month
       duplicate.year = original.year
@@ -48,7 +48,7 @@ describe SponsoredProjectEffort do
     end
 
     it 'belongs to a sponsored project current allocation' do
-      sponsored_project_people = Factory(:sponsored_project_allocation)
+      sponsored_project_people = FactoryGirl.create(:sponsored_project_allocation)
       sponsored_project_people.current_allocation.should_not be_nil
     end
   end
@@ -59,7 +59,7 @@ describe SponsoredProjectEffort do
     end
 
     it "creates new from sponsored project allocation" do
-      allocation = Factory(:sponsored_project_allocation)
+      allocation = FactoryGirl.create(:sponsored_project_allocation)
       sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
 
       sponsored_project_effort.current_allocation.should == allocation.current_allocation
@@ -71,7 +71,7 @@ describe SponsoredProjectEffort do
     end
 
     it "won't create a duplicate for same month and allocation" do
-      allocation = Factory(:sponsored_project_allocation)
+      allocation = FactoryGirl.create(:sponsored_project_allocation)
       successful_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
       failed_sponsored_project_effort = SponsoredProjectEffort.new_from_sponsored_project_allocation(allocation)
 
@@ -82,14 +82,14 @@ describe SponsoredProjectEffort do
 
   context "with named scopes" do
     before(:each) do
-      @faculty_frank = Factory(:faculty_frank)
-      @faculty_fagan = Factory(:faculty_fagan)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
 
-      @allocation_frank = Factory(:sponsored_project_allocation, :person => @faculty_frank)
-      @allocation_fagan = Factory(:sponsored_project_allocation, :person => @faculty_fagan)
+      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_frank)
+      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan)
 
-      @effort_frank = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
-      @effort_fagan = Factory(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
+      @effort_frank = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
+      @effort_fagan = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
     end
 
     it "responds to month_under_inspection_for_a_given_user" do
@@ -117,7 +117,7 @@ describe SponsoredProjectEffort do
     specify { SponsoredProjectEffort.should respond_to(:emails_business_manager)}
 
     it "successfully" do
-      @effort = Factory(:sponsored_project_effort)
+      @effort = FactoryGirl.create(:sponsored_project_effort)
       SponsoredProjectEffortMailer.should_receive(:deliver_changed_allocation_email_to_business_manager)
       SponsoredProjectEffort.emails_business_manager(@effort.id)
     end

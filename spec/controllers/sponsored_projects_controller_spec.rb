@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe SponsoredProjectsController do
 
-  let(:project) { Factory(:sponsored_project) }  # This is similar to setting an @project in a before block
+  let(:project) { FactoryGirl.create(:sponsored_project) }  # This is similar to setting an @project in a before block
                                                  # let(:project) makes a user method available
 
   context "as admin do " do
 
     before do
-      @admin_andy = Factory(:admin_andy)
+      @admin_andy = FactoryGirl.create(:admin_andy)
       login(@admin_andy)
     end
 
@@ -46,7 +46,7 @@ describe SponsoredProjectsController do
 
       describe "with valid params" do
         before(:each) do
-          @project = Factory.build(:sponsored_project)
+          @project = FactoryGirl.build(:sponsored_project)
         end
 
         it "saves a newly created project" do
@@ -140,7 +140,7 @@ describe SponsoredProjectsController do
   context "as faculty do " do
 
     before do
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
       login(@faculty_frank)
     end
 

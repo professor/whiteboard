@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe SponsoredProjectAllocationsController do
 
-  let(:allocation) { Factory(:sponsored_project_allocation) }
+  let(:allocation) { FactoryGirl.create(:sponsored_project_allocation) }
 
   context "as admin do" do
 
     before do
-      @admin_andy = Factory(:admin_andy)
+      @admin_andy = FactoryGirl.create(:admin_andy)
       login(@admin_andy)
     end
 
@@ -60,7 +60,7 @@ describe SponsoredProjectAllocationsController do
 
       describe "with valid params" do
         before(:each) do
-          @allocation = Factory.build(:sponsored_project_allocation)
+          @allocation = FactoryGirl.build(:sponsored_project_allocation)
         end
 
         it "saves a newly created allocation" do

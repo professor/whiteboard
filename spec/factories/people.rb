@@ -1,5 +1,6 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
-Factory.define :admin_andy, :parent => :person do |p|
+FactoryGirl.define do
+
+  factory :admin_andy, :parent => :person do |p|
   p.login "admin_andy"
   p.email "admin.andy@sv.cmu.edu"
   p.webiso_account "andy@andrew.cmu.edu"
@@ -11,7 +12,7 @@ Factory.define :admin_andy, :parent => :person do |p|
   p.twiki_name "AdminAndy"
 end
 
-Factory.define :student_sam, :parent => :person do |p|
+factory :student_sam, :parent => :person do |p|
   p.login "student_sam"
   p.email "student.sam@sv.cmu.edu"
   p.webiso_account "sam@andrew.cmu.edu"
@@ -23,7 +24,7 @@ Factory.define :student_sam, :parent => :person do |p|
   p.twiki_name "StudentSam"
 end
 
-Factory.define :student_sally, :parent => :person do |p|
+factory :student_sally, :parent => :person do |p|
   p.login "student_sally"
   p.email "student.sally@sv.cmu.edu"
   p.webiso_account "sally@andrew.cmu.edu"
@@ -35,7 +36,7 @@ Factory.define :student_sally, :parent => :person do |p|
   p.twiki_name "StudentSally"
 end
 
-Factory.define :faculty_frank, :parent => :person do |p|
+factory :faculty_frank, :parent => :person do |p|
   p.login "faculty_frank"
   p.email "faculty.frank@sv.cmu.edu"
   p.webiso_account "frank@andrew.cmu.edu"
@@ -46,7 +47,7 @@ Factory.define :faculty_frank, :parent => :person do |p|
   p.twiki_name "FacultyFrank"
 end
 
-Factory.define :faculty_fagan, :parent => :person do |p|
+factory :faculty_fagan, :parent => :person do |p|
   p.login "faculty_fagan"
   p.email "faculty.fagan@sv.cmu.edu"
   p.webiso_account "fagan@andrew.cmu.edu"
@@ -57,7 +58,7 @@ Factory.define :faculty_fagan, :parent => :person do |p|
   p.twiki_name "FacultyFagan"
 end
 
-Factory.define :strength_quest, :parent => :person do |p|
+factory :strength_quest, :parent => :person do |p|
   p.association :strength1, :factory => :achiever
   p.association :strength2, :factory => :activator
   p.association :strength3, :factory => :adaptability
@@ -65,7 +66,7 @@ Factory.define :strength_quest, :parent => :person do |p|
   p.association :strength5, :factory => :arranger
 end
 
-Factory.define :team_member, :parent => :person do |p|
+factory :team_member, :parent => :person do |p|
   p.login "team_member"
   p.email "team.member@sv.cmu.edu"
   p.webiso_account "teammember@andrew.cmu.edu"
@@ -76,3 +77,5 @@ Factory.define :team_member, :parent => :person do |p|
   p.human_name "Team Member"
   p.twiki_name "TeamMember"
 end
+
+  end

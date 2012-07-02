@@ -46,10 +46,10 @@ module ApplicationHelper
     end
   end
 
-  def display_timestamp(timestamp)
+  def display_timestamp(timestamp, options = {})
 
 	  return "" if timestamp.nil?
-	  content_tag(:span, "#{timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p Pacific Time')}" )
+	  content_tag(:span, "#{timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p (Pacific)')}", options )
 
   end
 

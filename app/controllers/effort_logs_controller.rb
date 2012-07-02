@@ -79,7 +79,7 @@ class EffortLogsController < ApplicationController
     people_with_effort = []
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    people = Person.where("masters_program = SE AND is_active = true AND is_alumnus = false")
+    people = Person.where(:masters_program => "SE", :is_active => true, :is_alumnus => false)
 
     people.each do |person|
       effort_log = EffortLog.latest_for_person(person.id, week_number, year)
@@ -243,7 +243,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user..id, week_number, year).first
+      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user.id, week_number, year).first
     end
 
     if duplicate_effort_log
