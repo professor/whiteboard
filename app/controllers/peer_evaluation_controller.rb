@@ -26,7 +26,7 @@ class PeerEvaluationController < ApplicationController
 
       @objectives = []
       @team.people.each do |member|
-        objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
+        objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first
         if objective.nil?
           @objectives << PeerEvaluationLearningObjective.new
         else
@@ -43,14 +43,14 @@ class PeerEvaluationController < ApplicationController
       counter = 0
 
       @team.people.each do |member|
-        if (PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id}).nil?)
+        if (PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first.nil?)
           @objective = PeerEvaluationLearningObjective.new(
               :team_id => params[:id],
               :person_id => member.id,
               :learning_objective => params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
           )
         else
-          @objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:team_id => @team.id, :person_id => member.id})
+          @objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first
           @objective.learning_objective = params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
         end
 
@@ -95,7 +95,7 @@ class PeerEvaluationController < ApplicationController
 
     @people.each do |person|
       @questions.each do |question|
-        evaluation = PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question})
+        evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question).first
         if (evaluation.nil?)
           @answers << ""
         else
@@ -108,7 +108,7 @@ class PeerEvaluationController < ApplicationController
       questioncounter = 0
     end
 
-    allocation = PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation})
+    allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
     unless allocation.nil? || allocation.answer.nil?
       match_array = allocation.answer.scan /((\w| )*):(\d*)\s*/
       match_array.each do |match|
@@ -134,7 +134,7 @@ class PeerEvaluationController < ApplicationController
 
     @people.each do |person|
       @questions.each do |question|
-        @evaluation = PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question})
+        @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question).first
         if (@evaluation.nil?)
           @evaluation = PeerEvaluationReview.new(
               :author_id => @author.id,
@@ -161,7 +161,7 @@ class PeerEvaluationController < ApplicationController
       alloccounter += 1
     end
 
-    allocation = PeerEvaluationReview.find(:first, :conditions => {:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation})
+    allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
     if (allocation.nil?)
       allocation = PeerEvaluationReview.new(
           :author_id => @author.id,
@@ -204,7 +204,7 @@ class PeerEvaluationController < ApplicationController
       @point_allocations = Hash.new { |hash, key| hash[key] = {} } #two dimensional hash
       @people.each do |person|
         tmp = person.human_name
-        allocation = PeerEvaluationReview.find(:first, :conditions => {:author_id => person.id, :team_id => @team.id, :question => @@point_allocation})
+        allocation = PeerEvaluationReview.where(:author_id => person.id, :team_id => @team.id, :question => @@point_allocation).first
         unless allocation.nil?
           @report_allocations[person.human_name] = allocation.answer
 
@@ -235,7 +235,7 @@ class PeerEvaluationController < ApplicationController
       @people.each do |person|
         #Step 1 save feedback
         feedback = params[:peer_evaluation_report][personcounter.to_s][:feedback]
-        report = PeerEvaluationReport.find(:first, :conditions => {:recipient_id => person.id, :team_id => @team.id})
+        report = PeerEvaluationReport.where(:recipient_id => person.id, :team_id => @team.id).first
         if report.nil?
           report = PeerEvaluationReport.new(:recipient_id => person.id, :team_id => @team.id, :feedback => feedback)
         else
@@ -334,7 +334,7 @@ class PeerEvaluationController < ApplicationController
 
 
   def generate_report_for_student(person_id, team_id)
-    report = PeerEvaluationReport.find(:first, :conditions => {:recipient_id => person_id, :team_id => team_id})
+    report = PeerEvaluationReport.where(:recipient_id => person_id, :team_id => team_id).first
     if report.nil?
       report_string = ""
       #report_string += "{" + person.human_name + "}\n"
@@ -342,10 +342,10 @@ class PeerEvaluationController < ApplicationController
       @@questions.each do |question|
         report_string += question + "\n"
         if questioncounter == @@questions.size - 1
-          learning_objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person_id})
+          learning_objective = PeerEvaluationLearningObjective.where(:person_id => person_id).first
           report_string += "\"" + learning_objective.learning_objective + "\"\n" unless (learning_objective.nil? || learning_objective.learning_objective.nil? || learning_objective.learning_objective.empty?)
         end
-        data = PeerEvaluationReview.find(:all, :conditions => {:team_id => team_id, :recipient_id => person_id, :question => question})
+        data = PeerEvaluationReview.where(:team_id => team_id, :recipient_id => person_id, :question => question).all
         data.each do |answer|
           author = Person.find(answer.author_id).human_name
           report_string += "[" + author + "]\n"
