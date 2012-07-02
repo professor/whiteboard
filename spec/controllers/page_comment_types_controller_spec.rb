@@ -3,11 +3,11 @@ require 'controllers/permission_behavior'
 
 describe PageCommentTypesController do
 
-  let(:page_comment_type) { Factory(:page_comment_type) }
+  let(:page_comment_type) { FactoryGirl.create(:page_comment_type) }
 
   context "any user can" do
     before do
-      login(Factory(:student_sam))
+      login(FactoryGirl.create(:student_sam))
       @redirect_url = page_comment_types_url
     end
 
@@ -38,7 +38,7 @@ describe PageCommentTypesController do
 
     describe "POST create" do
       before do
-        @page_comment_type = Factory.build(:page_comment_type)
+        @page_comment_type = FactoryGirl.build(:page_comment_type)
         post :create, :page_comment_type => @page_comment_type.attributes
       end
 
@@ -65,7 +65,7 @@ describe PageCommentTypesController do
 
   context "any staff can" do
     before do
-      login(Factory(:faculty_frank))
+      login(FactoryGirl.create(:faculty_frank))
       @redirect_url = page_comment_types_url
     end
 
@@ -90,7 +90,7 @@ describe PageCommentTypesController do
 
       describe "with valid params" do
         before(:each) do
-          @page_comment_type = Factory.build(:page_comment_type)
+          @page_comment_type = FactoryGirl.build(:page_comment_type)
         end
 
         it "saves a newly created" do
@@ -170,7 +170,7 @@ describe PageCommentTypesController do
 
   context "any admin can" do
 #    before do
-#      login(Factory(:admin_andy))
+#      login(FactoryGirl.create(:admin_andy))
 #    end
 
     describe "DELETE destroy" do

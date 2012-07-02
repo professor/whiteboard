@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "sponsored_projects/index.html.erb" do
   before(:each) do
-    sponsored_project = Factory.build(:sponsored_project, :id => 1)
+    sponsored_project = FactoryGirl.build(:sponsored_project, :id => 1)
     
     assign(:projects, [
       sponsored_project,

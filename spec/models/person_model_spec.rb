@@ -5,10 +5,10 @@ describe Person do
   before do
     User.delete_all
     # this list must not be sorted alphabetically
-    @faculty_frank = Factory(:faculty_frank)
-    @faculty_fagan = Factory(:faculty_fagan)
-    @admin_andy = Factory(:admin_andy)
-    @student_sam = Factory(:student_sam)
+    @faculty_frank = FactoryGirl.create(:faculty_frank)
+    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+    @admin_andy = FactoryGirl.create(:admin_andy)
+    @student_sam = FactoryGirl.create(:student_sam)
   end
 
   context "photo upload" do
@@ -53,20 +53,20 @@ describe Person do
 #
 #    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
 #      it "when #{attr} is non-numerical" do
-#        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => "test")
+#        sponsored_project_effort = FactoryGirl.build(:sponsored_project_effort, attr => "test")
 #        sponsored_project_effort.should_not be_valid
 #      end
 #    end
 #
 #    [:actual_allocation, :current_allocation, :year, :month].each do |attr|
 #      it "when #{attr} is a negative number" do
-#        sponsored_project_effort = Factory.build(:sponsored_project_effort, attr => -1)
+#        sponsored_project_effort = FactoryGirl.build(:sponsored_project_effort, attr => -1)
 #        sponsored_project_effort.should_not be_valid
 #      end
 #    end
 #
 #    it "when a duplicate effort for the same month, year and project allocation" do
-#      original = Factory(:sponsored_project_effort)
+#      original = FactoryGirl.create(:sponsored_project_effort)
 #      duplicate = SponsoredProjectEffort.new()
 #      duplicate.month = original.month
 #      duplicate.year = original.year
@@ -109,7 +109,7 @@ describe Person do
     subject.should respond_to(:strength4)
     subject.should respond_to(:strength5)
 
-    user = Factory.build(:strength_quest)
+    user = FactoryGirl.build(:strength_quest)
     user.strength1.theme.should be_kind_of(String)
   end
 

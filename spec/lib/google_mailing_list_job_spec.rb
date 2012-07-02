@@ -12,7 +12,7 @@ it "should throw an error when a google distribution list was not created" do
   ProvisioningApi.any_instance.stub(:retrieve_all_members)
   ProvisioningApi.any_instance.stub(:retrieve_all_groups)
 
-  team = Factory.create(:team_triumphant)
+  team = FactoryGirl.create(:team_triumphant)
   lambda { team.update_google_mailing_list("new", "old", 123) }.should raise_error()
 end
 

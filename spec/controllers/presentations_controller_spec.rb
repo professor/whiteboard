@@ -3,8 +3,8 @@ require 'spec_helper'
 describe PresentationsController do
   context "any user can" do
     before do
-      login(Factory(:student_sam))
-      @presentation = Factory(:presentation)
+      login(FactoryGirl.create(:student_sam))
+      @presentation = FactoryGirl.create(:presentation)
     end
 
     describe "GET new_feedback" do
@@ -33,10 +33,10 @@ describe PresentationsController do
     describe "POST create_feedback" do
 
       before do
-        @q1 = Factory(:presentation_feedback_questions, :text => "q1")
-        @q2 = Factory(:presentation_feedback_questions, :text => "q2")
-        @q3 = Factory(:presentation_feedback_questions, :text => "q3")
-        @q4 = Factory(:presentation_feedback_questions, :text => "q4")
+        @q1 = FactoryGirl.create(:presentation_feedback_questions, :text => "q1")
+        @q2 = FactoryGirl.create(:presentation_feedback_questions, :text => "q2")
+        @q3 = FactoryGirl.create(:presentation_feedback_questions, :text => "q3")
+        @q4 = FactoryGirl.create(:presentation_feedback_questions, :text => "q4")
       end
 
       it "record the returned feedback" do
@@ -85,13 +85,13 @@ describe PresentationsController do
 
   context "Faculty can" do
     before do
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
       @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
       @presentation = stub_model(Presentation, :course_id => @course.id)
       Presentation.stub(:find_all_by_course_id).and_return([@presentation, @presentation])
       Course.stub(:find).and_return(@course)
 
-      login(Factory(:admin_andy))
+      login(FactoryGirl.create(:admin_andy))
     end
 
     describe "GET index_for_course" do
@@ -147,9 +147,9 @@ describe PresentationsController do
 
   context "Student Can NOT" do
      before do
-       login(Factory(:student_sally))
+       login(FactoryGirl.create(:student_sally))
 
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
       @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
       @presentation = stub_model(Presentation, :course_id => @course.id)
       Course.stub(:find).and_return(@course)

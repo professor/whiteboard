@@ -4,7 +4,7 @@ describe Suggestion do
 
   it 'can be created' do
     lambda {
-      Factory(:suggestion)
+      FactoryGirl.create(:suggestion)
     }.should change(Suggestion, :count).by(1)
   end
 
@@ -20,10 +20,10 @@ describe Suggestion do
 
   context "is editable" do
     before(:each) do
-      @admin_andy = Factory(:admin_andy)
-      @faculty_frank = Factory(:faculty_frank)
-      @student_sam = Factory(:student_sam)
-      @saying = Factory(:suggestion, :user => @student_sam)
+      @admin_andy = FactoryGirl.create(:admin_andy)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @student_sam = FactoryGirl.create(:student_sam)
+      @saying = FactoryGirl.create(:suggestion, :user => @student_sam)
     end
 
 

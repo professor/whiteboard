@@ -69,8 +69,7 @@ group :development, :test do
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec-rails'
   gem 'mocha'
-  gem 'factory_girl', '2.0.2'
-  gem 'factory_girl_rails', '1.1.0'
+  gem 'factory_girl_rails', '3.4.0'
   gem 'capybara'
 #  gem 'morning_glory'
 

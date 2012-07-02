@@ -5,7 +5,7 @@ describe SponsoredProjectEffortsController do
 
   context "as admin do" do
     before do
-      @admin_andy= Factory(:admin_andy)
+      @admin_andy= FactoryGirl.create(:admin_andy)
       login(@admin_andy)
     end
 
@@ -25,7 +25,7 @@ describe SponsoredProjectEffortsController do
   context "as faculty do" do
 
     before do
-      @faculty_frank = Factory(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
       login(@faculty_frank)
     end
 
@@ -49,7 +49,7 @@ describe SponsoredProjectEffortsController do
       end
 
       it "can't access page for a different user" do
-        @faculty_fagan = Factory(:faculty_fagan)
+        @faculty_fagan = FactoryGirl.create(:faculty_fagan)
         get :edit, :id => @faculty_fagan.twiki_name
         response.should redirect_to(root_path)
       end
@@ -126,7 +126,7 @@ describe SponsoredProjectEffortsController do
 
     describe "PUT update (unauthorized)" do
       it "can't access page for a different user" do
-        @faculty_fagan = Factory(:faculty_fagan)
+        @faculty_fagan = FactoryGirl.create(:faculty_fagan)
         put :update, :id => @faculty_fagan.twiki_name, :effort_id_values => {"0" => "25", "1" => "75"}
         response.should redirect_to(root_path)
       end

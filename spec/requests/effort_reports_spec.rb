@@ -4,7 +4,7 @@ describe "effort reports" do
 
   before do
     visit('/')
-    @user = Factory(:student_sam)
+    @user = FactoryGirl.create(:student_sam)
     login_with_oauth @user
     click_link "Effort Reports"
   end
