@@ -58,13 +58,13 @@ describe PageAttachmentsController do
         delete :destroy, :id => @attachment.id
       end
 
-      it "should delete the attachment" do
+      it "should delete the attachment", :skip_on_build_machine => true  do
         expect do
           do_delete
         end.to change { PageAttachment.count }.by(-1)
       end
 
-      it "should flash a notice" do
+      it "should flash a notice", :skip_on_build_machine => true do
         PageAttachment.stub(:destroy)
         do_delete
         flash[:notice].should_not be_nil
