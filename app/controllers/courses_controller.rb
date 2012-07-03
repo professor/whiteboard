@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
 
-    teams = Team.where("course_id = ?", params[:id])
+    teams = Team.where(:course_id => params[:id])
 
     @emails = []
     teams.each do |team|
