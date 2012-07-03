@@ -135,27 +135,40 @@ describe IndividualContributionsController do
     end
   end
 
-  describe "#new" do
+  describe "#edit" do
 
     it "should have a list of questions" do
-      get(:new)
-      assigns(:questions).should be
+      login(FactoryGirl.create(:student_sam_user))
+      get(:edit)
+      assigns(:questions).should be_a_kind_of(Array)
     end
 
-    it "should have a list of courses" do
-      #login(FactoryGirl.create(:student_sam_user_with_registered_courses))
-      #get(:new)
-      #assigns(:courses).should be_true
+    it "should have a list of the user's registered courses for the current mini" do
+      login(FactoryGirl.create(:student_sam_user_with_registered_courses))
+      get(:edit)
+      courses = assigns(:courses)
+      courses.each {|course| course.current_mini?.should be_true }
     end
+
+
+    it "should have a list of input types telling the ui whether to use an input text area or an input field" do
+       login(FactoryGirl.create(:student_sam_user))
+       get(:edit)
+       assigns(:answer_input_types).should be_a_kind_of(Array)
+     end
 
 
     it "when there is previous week data, then show the student's plan for the current week" do
-      @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :cweek => Date.today.cweek - 1, :year => Date.today.cwyear)
+      @student_sam_user = FactoryGirl.create(:student_sam_user)
+      login(@student_sam_user)
+      @fse = FactoryGirl.create(:fse_current_semester)
+      @mfse = FactoryGirl.create(:mfse_current_semester)
+      @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek - 1, :year => Date.today.cwyear)
       @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
       @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
-      get(:new)
+      get(:edit)
 
-      assigns(:plans_from_previous_week).should == {@mfse_answers1.id => "I did great", @fse_answers1 => "I finished it"}
+      assigns(:plans_from_previous_week).should == {@mfse.id => "I did great", @fse.id => "I finished it"}
     end
 
     context "courses shown should contain semester courses for the current semester" do

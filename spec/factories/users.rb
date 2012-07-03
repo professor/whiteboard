@@ -24,6 +24,14 @@ factory :student_sam_user, :parent => :user do |p|
   p.twiki_name "StudentSam"
 end
 
+
+factory :student_sam_user_with_registered_courses, :parent => :student_sam_user do
+  registered_courses {|registered_courses| [registered_courses.association(:fse), registered_courses.association(:mfse_current_semester)]}
+#  after(:build) do
+#     registered_courses = [FactoryGirl.build(:fse), FactoryGirl.build(:mfse)]
+#   end
+end
+
 factory :student_sally_user, :parent => :user do |p|
   p.login "student_sally"
   p.email "student.sally@sv.cmu.edu"

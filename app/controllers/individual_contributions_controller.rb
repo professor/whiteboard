@@ -9,16 +9,7 @@ class IndividualContributionsController < ApplicationController
   def index
     @individual_contributions = IndividualContribution.find_individual_contributions(current_user)
 
-    @current_week_number = Date.today.cweek
-    @year = Date.today.cwyear
-
-    if @current_week_number == 1 #If the first week of the year, then we set to the last week of previous year
-      @previous_week_number = 52
-      @previous_week_year = @year - 1
-    else
-      @previous_week_number = @current_week_number - 1
-      @previous_week_year = @year
-    end
+    setup_current_and_previous_week
 
     current_week = IndividualContribution.find_by_week(@year, @current_week_number, current_user)
     previous_week = IndividualContribution.find_by_week(@previous_week_year, @previous_week_number, current_user)
@@ -34,19 +25,26 @@ class IndividualContributionsController < ApplicationController
   end
 
 
-  def new
+  def edit
 
     @questions = ["What did you individually accomplish this last week? (e.g. I wrote the introduction to the architecture document.)",
-                  "How many hours did you spend on this course during the last week?",
-                  "What obstacles are impeding your progress?",
-                  "How will you overcome these obstacles?",
-                  "What will you individually do this week?"]
+                                    "How many hours did you spend on this course during the last week?",
+                                    "What obstacles are impeding your progress?",
+                                    "How will you overcome these obstacles?",
+                                    "What will you individually do this week?"]
 
+    @answer_input_types = [:text_area,
+                           :text_field,
+                           :text_area,
+                           :text_area,
+                           :text_area]
+
+    setup_current_and_previous_week
     @courses = current_user.registered_courses.keep_if { |course| course.current_mini? }
 
     @plans_from_previous_week =  Hash.new()
     previous_week = IndividualContribution.find_by_week(@previous_week_year, @previous_week_number, current_user)
-    previous_week.individual_contribution_for_courses.each { |ic| @plans_from_previous_week[ic.course_id] = ic.answer5 }
+    previous_week.individual_contribution_for_courses.each { |ic| @plans_from_previous_week[ic.course_id] = ic.answer5 } if previous_week
 
   end
 
@@ -406,6 +404,21 @@ class IndividualContributionsController < ApplicationController
 #      return recent_foundations
 #    end
     Course.order("id DESC").first
+  end
+
+  private
+
+  def setup_current_and_previous_week
+    @current_week_number = Date.today.cweek
+    @year = Date.today.cwyear
+
+    if @current_week_number == 1 #If the first week of the year, then we set to the last week of previous year
+      @previous_week_number = 52
+      @previous_week_year = @year - 1
+    else
+      @previous_week_number = @current_week_number - 1
+      @previous_week_year = @year
+    end
   end
 
 
