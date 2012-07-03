@@ -37,7 +37,7 @@ describe "effort_logs/new.html.erb" do
 
   context 'when the current user is an admin' do
     before do
-      @current_user = Factory :admin_andy
+      @current_user = FactoryGirl.create(:admin_andy)
       login(@current_user)
       effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :person_id => @current_user.id)
       assign(:effort_log, effort_log)
