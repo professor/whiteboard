@@ -29,6 +29,7 @@ class Ability
 
     if (user.is_admin?)
       can :manage, Course
+      can :manage, IndividualContribution
     end
     if  (user.is_staff? )
       can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
@@ -37,6 +38,8 @@ class Ability
 
 
     can :manage, User, :id => user.id
+    can :manage, IndividualContribution, :id => user.id
+
 
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are

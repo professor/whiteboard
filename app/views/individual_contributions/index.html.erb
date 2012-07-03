@@ -35,7 +35,7 @@
     <td>starting on</td>
     <td><%=h show_monday_for(individual_contribution.year, individual_contribution.week_number) %></td>
     <td class="log_action"><%= link_to 'Show', individual_contribution %></td>
-    <% if individual_contribution.editable_by(current_user) %>
+    <% if can? :edit, individual_contribution %>
     <td class="log_action"><%= link_to 'Edit', edit_individual_contribution_path(individual_contribution) %></td>
     <% else %>
     <td>&nbsp;</td>

@@ -167,8 +167,8 @@ describe IndividualContributionsController do
 
       it "when there is previous week data, then assigns the student's plan for the current week" do
         @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek - 1, :year => Date.today.cwyear)
-        @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
-        @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
+        @mfse_previous_answers = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
+        @fse_previous_answers = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
         get(:edit)
 
         assigns(:plans_from_previous_week).should == {@mfse.id => "I did great", @fse.id => "I finished it"}
@@ -178,14 +178,14 @@ describe IndividualContributionsController do
       # [ { course_id => answer 1, course_id => answer 1}, {course_id => answer 2, course_id => answer 2}]
       #
       it "assigns an array of hashes for each student" do
-        @this_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek, :year => Date.today.cwyear)
-        @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @mfse,
+        @current_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek, :year => Date.today.cwyear)
+        @mfse_current_answers = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @current_week, :course => @mfse,
                                             :answer1 => "I dreamed a dream",
                                             :answer2 => "40.5",
                                             :answer3 => "Only the speed of light is my obstacle",
                                             :answer4 => "Get really really small",
                                             :answer5 => "I will take over the world")
-        @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @fse,
+        @fse_current_answers = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @current_week, :course => @fse,
                                            :answer1 => "I want a job",
                                            :answer2 => "30.5",
                                            :answer3 => "Algorithms is my obstacle",
