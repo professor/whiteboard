@@ -14,14 +14,7 @@ class PeopleController < ApplicationController
 # GET /people
 # GET /people.xml
   def index
-    if params[:term] #Ajax call for autocomplete
-                     #if database is mysql
-                     #@people = Person.where("human_name LIKE ?", "%#{params[:term]}%").all
-      @people = Person.where("human_name ILIKE ?", "%#{params[:term]}%").all
-    else
-      @people = Person.where(:is_active => true).order("first_name ASC, last_name ASC").all
-    end
-
+    @people = Person.where(:is_active => true).order("first_name ASC, last_name ASC").all
 
     respond_to do |format|
       format.html { render :html => @people }
@@ -30,6 +23,18 @@ class PeopleController < ApplicationController
                                                                     "last_name" => person.last_name,
                                                                     "image_uri" => person.image_uri,
                                                                     "email" => person.email ].merge(person.telephones_hash) }, :layout => false }
+    end
+  end
+
+ #Ajax call for autocomplete using params[:term]
+  def index_autocomplete
+                     #if database is mysql
+                     #@people = Person.where("human_name LIKE ?", "%#{params[:term]}%").all
+    @people = Person.where("human_name ILIKE ?", "%#{params[:term]}%").all
+
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json { render :json => @people.collect { |person| person.human_name}, :layout => false }
     end
   end
 
