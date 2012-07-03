@@ -13,10 +13,12 @@ require 'shoulda'
 require 'paperclip/matchers'
 require 'helpers'
 
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-Dir[Rails.root.join("spec/factories/**/*.rb")].each {|f| require f}
+#Dir[Rails.root.join("spec/factories/**/*.rb")].each {|f| require f}
 
 module ControllerMacros
   def login person

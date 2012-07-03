@@ -7,7 +7,7 @@ describe EffortLogsController do
       before do
         Date.any_instance.stub(:cweek).and_return(1)
         Date.any_instance.stub(:cwyear).and_return(2011)
-        login(Factory(:student_sam))
+        login(FactoryGirl.create(:student_sam))
         get(:index)
       end
 
@@ -19,7 +19,7 @@ describe EffortLogsController do
       before do
         Date.any_instance.stub(:cweek).and_return(32)
         Date.any_instance.stub(:cwyear).and_return(2011)
-        login(Factory(:student_sam))
+        login(FactoryGirl.create(:student_sam))
         get(:index)
       end
 
@@ -33,7 +33,7 @@ describe EffortLogsController do
       end
       context "and there is no effort log" do
         before do
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
         end
         specify { assigns(:show_new_link).should be }
@@ -50,7 +50,7 @@ describe EffortLogsController do
         it "and the effort logs are in the current period" do
           Date.any_instance.stub(:cwyear).and_return(@effort_logs[0].year)
           Date.any_instance.stub(:cweek).and_return(@effort_logs[0].week_number)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link).should_not be
           assigns(:show_prior_week).should_not be
@@ -58,7 +58,7 @@ describe EffortLogsController do
 
         it "and the effort logs are not in the current period" do
           Date.any_instance.stub(:cweek).and_return(@effort_logs[0].week_number - 1)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link).should be
           assigns(:show_prior_week).should_not be
@@ -72,7 +72,7 @@ describe EffortLogsController do
       end
       context "and there is no effort log" do
         before do
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
         end
         specify { assigns(:show_new_link).should be }
@@ -89,7 +89,7 @@ describe EffortLogsController do
         it "and the effort logs are in the current period" do
           Date.any_instance.stub(:cwyear).and_return(@effort_logs[0].year)
           Date.any_instance.stub(:cweek).and_return(@effort_logs[0].week_number)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link).should_not be
           assigns(:show_prior_week).should_not be
@@ -97,7 +97,7 @@ describe EffortLogsController do
 
         it "and the effort logs are not in the current period" do
           Date.any_instance.stub(:cweek).and_return(@effort_logs[0].week_number - 1)
-          login(Factory(:student_sam))
+          login(FactoryGirl.create(:student_sam))
           get(:index)
           assigns(:show_new_link).should be
           assigns(:show_prior_week).should_not be
@@ -125,7 +125,7 @@ describe EffortLogsController do
 
       context "and there are courses that have students" do
         before do
-          Course.stub(:remind_about_effort_course_list).and_return([Factory(:mfse)])
+          Course.stub(:remind_about_effort_course_list).and_return([FactoryGirl.create(:mfse)])
           @person = Person.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "")
           Team.stub(:where).and_return([Team.new(:people => [@person])])
         end
@@ -158,7 +158,7 @@ describe EffortLogsController do
         context "and there are effort logs" do
           context "and the first effort logs sums to 0" do
             before do
-              EffortLog.stub(:where).and_return([EffortLog.new(:sum => 0), Factory(:effort2)])
+              EffortLog.stub(:where).and_return([EffortLog.new(:sum => 0), FactoryGirl.create(:effort2)])
             end
 
           it "it should send an email if the person has never been emailed" do
@@ -190,13 +190,13 @@ describe EffortLogsController do
     end
 
     it "it should not throw an error for nil Scotty dog saying" do
-      subject.create_midweek_warning_email_for_course(nil, Factory(:mfse).id)
+      subject.create_midweek_warning_email_for_course(nil, FactoryGirl.create(:mfse).id)
     end
   end
 
   context "it should send midweekly reminder email to SE students" do
     it "who have not logged effort" do
-      person_who_needs_reminder = Factory(:student_sam, :effort_log_warning_email => Date.today - 1.day)
+      person_who_needs_reminder = FactoryGirl.create(:student_sam, :effort_log_warning_email => Date.today - 1.day)
       Person.stub(:where).and_return([person_who_needs_reminder])
       EffortLog.stub!(:latest_for_person).and_return(nil)
 
@@ -206,7 +206,7 @@ describe EffortLogsController do
     end
 
     it "but skip those who have already been emailed" do
-      person_whose_been_reminded = Factory(:faculty_frank, :effort_log_warning_email => Date.today)
+      person_whose_been_reminded = FactoryGirl.create(:faculty_frank, :effort_log_warning_email => Date.today)
       Person.stub(:where).and_return([person_whose_been_reminded])
       EffortLog.stub!(:latest_for_person).and_return(nil)
 
@@ -216,7 +216,7 @@ describe EffortLogsController do
     end
 
     it "and not bother people who have logged effort" do
-      person_who_has_logged_effort = Factory(:admin_andy, :effort_log_warning_email => Date.today - 7.days)
+      person_who_has_logged_effort = FactoryGirl.create(:admin_andy, :effort_log_warning_email => Date.today - 7.days)
       Person.stub(:where).and_return([person_who_has_logged_effort])
       EffortLog.stub(:latest_for_person).and_return(mock_model(EffortLog, :sum => 1))
 

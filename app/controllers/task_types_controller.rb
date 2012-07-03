@@ -116,13 +116,13 @@ class TaskTypesController < ApplicationController
   private
   def locate_appropriate_by_user_type
     if current_user.is_student? && current_user.is_staff?
-      task_types = TaskType.find(:all)
+      task_types = TaskType.all
     end
     if current_user.is_student? && !current_user.is_staff?
-      task_types = TaskType.find(:all, :conditions => ['is_student = ?', true])
+      task_types = TaskType.where(:is_student => true).all
     end
     if !current_user.is_student? && current_user.is_staff?
-      task_types = TaskType.find(:all, :conditions => ['is_staff = ?', true])
+      task_types = TaskType.where(:is_staff => true).all
     end
     if !current_user.is_student? && !current_user.is_staff?
       task_types = TaskType.all

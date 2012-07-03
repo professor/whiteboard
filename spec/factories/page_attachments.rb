@@ -1,14 +1,18 @@
-Factory.define :page_attachment, :class => PageAttachment do |pa|
-  pa.page_attachment_file_name 'booo.jpg'
-  pa.page_attachment_content_type 'image/jpg'
-  pa.page_attachment_file_size 3231
-#  pa.association :user, :factory => :faculty_frank
-  pa.readable_name 'Booo'
-end
+FactoryGirl.define do
 
-Factory.define :blank_page_attachment, :class => PageAttachment do |pa|
-  pa.page_attachment_file_name ''
-  pa.page_attachment_content_type ''
-  pa.page_attachment_file_size 0
-  pa.readable_name ''
+  factory :page_attachment, :class => PageAttachment do
+    page_attachment_file_name 'booo.jpg'
+    page_attachment_content_type 'image/jpg'
+    page_attachment_file_size 3231
+#  association :user, :factory => :faculty_frank
+    readable_name 'Booo'
+  end
+
+  factory :blank_page_attachment, :class => PageAttachment do
+    page_attachment_file_name ''
+    page_attachment_content_type ''
+    page_attachment_file_size 0
+    readable_name ''
+  end
+
 end

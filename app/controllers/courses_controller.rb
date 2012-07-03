@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
 
-    teams = Team.where("course_id = ?", params[:id])
+    teams = Team.where(:course_id => params[:id])
 
     @emails = []
     teams.each do |team|
@@ -42,6 +42,8 @@ class CoursesController < ApplicationController
         @emails << person.email
       end
     end
+
+    @registered =
 
     @students = Hash.new
     @course.registered_students.each do |student|

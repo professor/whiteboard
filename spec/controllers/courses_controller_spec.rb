@@ -4,7 +4,7 @@ require 'controllers/permission_behavior'
 describe CoursesController do
 
 
-  let(:course) { Factory(:course) }
+  let(:course) { FactoryGirl.create(:course) }
 
   shared_examples_for "courses_for_a_given_semester" do
     specify { assigns(:courses).should_not be_nil }
@@ -15,7 +15,7 @@ describe CoursesController do
 
   context "any user can" do
     before do
-      login(Factory(:student_sam))
+      login(FactoryGirl.create(:student_sam))
     end
 
     describe "GET current semester" do
@@ -74,7 +74,7 @@ describe CoursesController do
 
     describe "not POST create" do
       before do
-        @course = Factory.build(:course)
+        @course = FactoryGirl.build(:course)
         post :create, :course => @course.attributes
       end
 
@@ -101,7 +101,7 @@ describe CoursesController do
 
   context "any staff can" do
     before do
-      login(Factory(:faculty_frank))
+      login(FactoryGirl.create(:faculty_frank))
     end
 
     describe "GET new" do
@@ -133,7 +133,7 @@ describe CoursesController do
 
       describe "with valid params for new course number" do
         before(:each) do
-          @course = Factory.build(:course)
+          @course = FactoryGirl.build(:course)
         end
 
         it "saves a newly created item" do
@@ -153,7 +153,7 @@ describe CoursesController do
 
         before(:each) do
           @number = "96-700"
-          @course = Factory(:course, :number => @number)
+          @course = FactoryGirl.create(:course, :number => @number)
         end
 
         it "saves a newly created item" do
@@ -236,7 +236,7 @@ describe CoursesController do
 
   context "any admin can" do
 #    before do
-#      login(Factory(:admin_andy))
+#      login(FactoryGirl.create(:admin_andy))
 #    end
 
     describe "DELETE destroy" do

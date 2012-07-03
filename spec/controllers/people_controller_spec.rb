@@ -3,9 +3,9 @@ require "spec_helper"
 describe PeopleController do
   context "any user can" do
     before do
-      @person1 = Factory(:student_sam)
+      @person1 = FactoryGirl.create(:student_sam)
       login(@person1)
-      @inactive_person = Factory(:student_sally, :is_active => false)
+      @inactive_person = FactoryGirl.create(:student_sally, :is_active => false)
     end
 
     describe "GET index" do
@@ -34,7 +34,7 @@ describe PeopleController do
 
     describe "POST create" do
       it "should not be allowed" do
-        expect { new_person = Factory.build(:faculty_frank)
+        expect { new_person = FactoryGirl.build(:faculty_frank)
         post :create, :person => new_person }.should_not change { Person.count }
 
       end

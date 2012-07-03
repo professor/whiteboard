@@ -1,1 +1,0 @@
-require File.join(Rails.root,'spec','factories','factories.rb')

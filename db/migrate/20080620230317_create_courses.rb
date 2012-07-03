@@ -6,7 +6,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :number
       t.string :semester
       t.string :mini
-      t.string :year
+      t.integer :year
       t.timestamps
     end
     

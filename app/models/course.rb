@@ -164,8 +164,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    courses = Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), "Both"])
-    courses = courses + Course.find(:all, :conditions => ['remind_about_effort = true and year = ? and semester = ? and mini = ?', Date.today.cwyear, AcademicCalendar.current_semester(), AcademicCalendar.current_mini])
+    courses = Course.where(:remind_about_effort => true,  :year => Date.today.cwyear, :semester =>  AcademicCalendar.current_semester(), :mini => "Both").all
+    courses = courses + Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => AcademicCalendar.current_mini).all
     return courses
   end
 
@@ -223,6 +223,14 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
+  def current_mini?
+    case self.mini
+      when "Both"
+        self.year == Date.today.year && self.semester == AcademicCalendar.current_semester()
+      else
+        self.year == Date.today.year && self.mini == AcademicCalendar.current_mini()
+    end
+  end
 
   def invalidate_distribution_list
     self.updating_email = true

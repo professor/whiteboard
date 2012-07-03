@@ -1,78 +1,81 @@
-require File.join(Rails.root,'spec','factories','factories.rb')
-Factory.define :admin_andy, :parent => :person do |p|
-  p.login "admin_andy"
-  p.email "admin.andy@sv.cmu.edu"
-  p.webiso_account "andy@andrew.cmu.edu"
-  p.is_staff true
-  p.is_admin true
-  p.first_name "Admin"
-  p.last_name "Andy"
-  p.human_name "Admin Andy"
-  p.twiki_name "AdminAndy"
-end
+FactoryGirl.define do
 
-Factory.define :student_sam, :parent => :person do |p|
-  p.login "student_sam"
-  p.email "student.sam@sv.cmu.edu"
-  p.webiso_account "sam@andrew.cmu.edu"
-  p.is_student true
-  p.is_alumnus false
-  p.first_name "Student"
-  p.last_name "Sam"
-  p.human_name "Student Sam"
-  p.twiki_name "StudentSam"
-end
+  factory :admin_andy, :parent => :person do
+    login "admin_andy"
+    email "admin.andy@sv.cmu.edu"
+    webiso_account "andy@andrew.cmu.edu"
+    is_staff true
+    is_admin true
+    first_name "Admin"
+    last_name "Andy"
+    human_name "Admin Andy"
+    twiki_name "AdminAndy"
+  end
 
-Factory.define :student_sally, :parent => :person do |p|
-  p.login "student_sally"
-  p.email "student.sally@sv.cmu.edu"
-  p.webiso_account "sally@andrew.cmu.edu"
-  p.is_student true
-  p.is_alumnus false
-  p.first_name "Student"
-  p.last_name "Sally"
-  p.human_name "Student Sally"
-  p.twiki_name "StudentSally"
-end
+  factory :student_sam, :parent => :person do
+    login "student_sam"
+    email "student.sam@sv.cmu.edu"
+    webiso_account "sam@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Sam"
+    human_name "Student Sam"
+    twiki_name "StudentSam"
+  end
 
-Factory.define :faculty_frank, :parent => :person do |p|
-  p.login "faculty_frank"
-  p.email "faculty.frank@sv.cmu.edu"
-  p.webiso_account "frank@andrew.cmu.edu"
-  p.is_staff true
-  p.first_name "Faculty"
-  p.last_name "Frank"
-  p.human_name "Faculty Frank"
-  p.twiki_name "FacultyFrank"
-end
+  factory :student_sally, :parent => :person do
+    login "student_sally"
+    email "student.sally@sv.cmu.edu"
+    webiso_account "sally@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Sally"
+    human_name "Student Sally"
+    twiki_name "StudentSally"
+  end
 
-Factory.define :faculty_fagan, :parent => :person do |p|
-  p.login "faculty_fagan"
-  p.email "faculty.fagan@sv.cmu.edu"
-  p.webiso_account "fagan@andrew.cmu.edu"
-  p.is_staff true
-  p.first_name "Faculty"
-  p.last_name "Fagan"
-  p.human_name "Faculty Fagan"
-  p.twiki_name "FacultyFagan"
-end
+  factory :faculty_frank, :parent => :person do
+    login "faculty_frank"
+    email "faculty.frank@sv.cmu.edu"
+    webiso_account "frank@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Frank"
+    human_name "Faculty Frank"
+    twiki_name "FacultyFrank"
+  end
 
-Factory.define :strength_quest, :parent => :person do |p|
-  p.association :strength1, :factory => :achiever
-  p.association :strength2, :factory => :activator
-  p.association :strength3, :factory => :adaptability
-  p.association :strength4, :factory => :analytical
-  p.association :strength5, :factory => :arranger
-end
+  factory :faculty_fagan, :parent => :person do
+    login "faculty_fagan"
+    email "faculty.fagan@sv.cmu.edu"
+    webiso_account "fagan@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Fagan"
+    human_name "Faculty Fagan"
+    twiki_name "FacultyFagan"
+  end
 
-Factory.define :team_member, :parent => :person do |p|
-  p.login "team_member"
-  p.email "team.member@sv.cmu.edu"
-  p.webiso_account "teammember@andrew.cmu.edu"
-  p.is_student true
-  p.is_alumnus false
-  p.first_name "Team"
-  p.last_name "Member"
-  p.human_name "Team Member"
-  p.twiki_name "TeamMember"
+  factory :strength_quest, :parent => :person do
+    association :strength1, :factory => :achiever
+    association :strength2, :factory => :activator
+    association :strength3, :factory => :adaptability
+    association :strength4, :factory => :analytical
+    association :strength5, :factory => :arranger
+  end
+
+  factory :team_member, :parent => :person do
+    login "team_member"
+    email "team.member@sv.cmu.edu"
+    webiso_account "teammember@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Team"
+    last_name "Member"
+    human_name "Team Member"
+    twiki_name "TeamMember"
+  end
+
 end

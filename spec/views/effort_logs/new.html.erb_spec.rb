@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "effort_logs/new.html.erb" do
   before do
     assign(:day_labels, [1..7])
-    course = Factory(:fse)
+    course = FactoryGirl.create(:fse)
     assign(:courses, [course])
     assign(:task_types, [TaskType.create!])
     assign(:today_column, 1)
@@ -11,7 +11,7 @@ describe "effort_logs/new.html.erb" do
 
   context 'with errors' do
     before do
-	  @current_user = Factory.build(:faculty_frank)
+	  @current_user = FactoryGirl.build(:faculty_frank)
       effort_log = EffortLog.new(:year => nil, :week_number => 12, :sum => 8, :person => @current_user)
       assign(:effort_log, effort_log)
       effort_log.valid?
@@ -24,7 +24,7 @@ describe "effort_logs/new.html.erb" do
 
   context 'without errors' do
     before do
-	  @current_user = Factory.build(:faculty_frank)
+	  @current_user = FactoryGirl.build(:faculty_frank)
       effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :person => @current_user)
       assign(:effort_log, effort_log)
       effort_log.valid?
@@ -37,7 +37,7 @@ describe "effort_logs/new.html.erb" do
 
   context 'when the current user is an admin' do
     before do
-      @current_user = Factory :admin_andy
+      @current_user = FactoryGirl.create(:admin_andy)
       login(@current_user)
       effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :person_id => @current_user.id)
       assign(:effort_log, effort_log)

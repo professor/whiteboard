@@ -52,12 +52,12 @@ class EffortLogsController < ApplicationController
   def create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    teams = Team.where("course_id = ? ", course_id)
+    teams = Team.where(:course_id => course_id)
     teams.each do |team|
       logger.debug "** team #{team.name}"
       team.people.each do |person|
         logger.debug "**    person #{person.human_name}"
-        effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", person.id, week_number, year).first
+        effort_log = EffortLog.where(:person_id => person.id, :week_number => week_number, :year => year).first
         if (!person.emailed_recently(:effort_log))
           if ((effort_log.nil? || effort_log.sum == 0)&&(!person.emailed_recently(:effort_log)))
             #            logger.debug "**  sent email to #{person.human_name} (#{person.id}) for #{week_number} of #{year} in course #{course_id}"
@@ -79,7 +79,7 @@ class EffortLogsController < ApplicationController
     people_with_effort = []
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    people = Person.where("masters_program = SE AND is_active = true AND is_alumnus = false")
+    people = Person.where(:masters_program => "SE", :is_active => true, :is_alumnus => false)
 
     people.each do |person|
       effort_log = EffortLog.latest_for_person(person.id, week_number, year)
@@ -119,7 +119,7 @@ class EffortLogsController < ApplicationController
 
     notify_course_list.each do |course|
       faculty = {}
-      teams = Team.where("course_id = ? ", course.id)
+      teams = Team.where(:course_id => course.id)
       teams.each do |team|
         faculty[team.primary_faculty_id] = 1 unless team.primary_faculty_id.nil?
         faculty[team.secondary_faculty_id] = 1 unless team.secondary_faculty_id.nil?
@@ -234,7 +234,7 @@ class EffortLogsController < ApplicationController
     @effort_log.person_id = current_user.id
 
     #find the most recent effort log to copy its structure, but not its effort data
-    recent_effort_log = EffortLog.where("person_id = ?", current_user.id).order("year DESC, week_number DESC").first
+    recent_effort_log = EffortLog.where(:person_id => current_user.id).order("year DESC, week_number DESC").first
 
     # We want to make sure that the user isn't accidentally creating two efforts for the same week.
     # Since students are only able to log effort for this week (or a previous week)
@@ -243,7 +243,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.where("person_id = ? and week_number = ? and year = ?", current_user.id, week_number, year).first
+      duplicate_effort_log = EffortLog.where(:person_id => current_user.id,:week_number => week_number, :year => year).first
     end
 
     if duplicate_effort_log
@@ -400,9 +400,9 @@ class EffortLogsController < ApplicationController
       Date.commercial(year, week_number, day).strftime "%b %d" # Jul 01
     end
 
-    @courses = Course.where('year = ? and semester = ?', Date.today.cwyear, AcademicCalendar.current_semester())
+    @courses = Course.where(:year => Date.today.cwyear, :semester => AcademicCalendar.current_semester())
 
-    @task_types = TaskType.where('is_student = ?', true)
+    @task_types = TaskType.where(:is_student => true)
 
     @today_column = which_column_is_today(year, week_number)
   end

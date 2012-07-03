@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PeerEvaluationReview do
 
   it 'is_completed_for? returns true for people who have done it' do
-    review = Factory(:peer_evaluation_review)
+    review = FactoryGirl.create(:peer_evaluation_review)
     PeerEvaluationReview.is_completed_for?(review.author_id, review.team.id).should be_true
   end
 
