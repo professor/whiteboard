@@ -1,72 +1,72 @@
 FactoryGirl.define do
 
-factory :admin_andy_user, :parent => :user do |p|
-  p.login "admin_andy"
-  p.email "admin.andy@sv.cmu.edu"
-  p.webiso_account "andy@andrew.cmu.edu"
-  p.is_staff true
-  p.is_admin true
-  p.first_name "Admin"
-  p.last_name "Andy"
-  p.human_name "Admin Andy"
-  p.twiki_name "AdminAndy"
-end
+  factory :admin_andy_user, :parent => :user do
+    login "admin_andy"
+    email "admin.andy@sv.cmu.edu"
+    webiso_account "andy@andrew.cmu.edu"
+    is_staff true
+    is_admin true
+    first_name "Admin"
+    last_name "Andy"
+    human_name "Admin Andy"
+    twiki_name "AdminAndy"
+  end
 
-factory :student_sam_user, :parent => :user do |p|
-  p.login "student_sam"
-  p.email "student.sam@sv.cmu.edu"
-  p.webiso_account "sam@andrew.cmu.edu"
-  p.is_student true
-  p.is_alumnus false
-  p.first_name "Student"
-  p.last_name "Sam"
-  p.human_name "Student Sam"
-  p.twiki_name "StudentSam"
-end
+  factory :student_sam_user, :parent => :user do
+    login "student_sam"
+    email "student.sam@sv.cmu.edu"
+    webiso_account "sam@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Sam"
+    human_name "Student Sam"
+    twiki_name "StudentSam"
+  end
 
-factory :student_sally_user, :parent => :user do |p|
-  p.login "student_sally"
-  p.email "student.sally@sv.cmu.edu"
-  p.webiso_account "sally@andrew.cmu.edu"
-  p.is_student true
-  p.is_alumnus false
-  p.first_name "Student"
-  p.last_name "Sally"
-  p.human_name "Student Sally"
-  p.twiki_name "StudentSally"
-end
+  factory :student_sally_user, :parent => :user do
+    login "student_sally"
+    email "student.sally@sv.cmu.edu"
+    webiso_account "sally@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Sally"
+    human_name "Student Sally"
+    twiki_name "StudentSally"
+  end
 
-factory :faculty_frank_user, :parent => :user do |p|
-  p.login "faculty_frank"
-  p.email "faculty.frank@sv.cmu.edu"
-  p.webiso_account "frank@andrew.cmu.edu"
-  p.is_staff true
-  p.first_name "Faculty"
-  p.last_name "Frank"
-  p.human_name "Faculty Frank"
-  p.twiki_name "FacultyFrank"
-end
+  factory :faculty_frank_user, :parent => :user do
+    login "faculty_frank"
+    email "faculty.frank@sv.cmu.edu"
+    webiso_account "frank@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Frank"
+    human_name "Faculty Frank"
+    twiki_name "FacultyFrank"
+  end
 
-factory :faculty_fagan_user, :parent => :user do |p|
-  p.login "faculty_fagan"
-  p.email "faculty.fagan@sv.cmu.edu"
-  p.webiso_account "fagan@andrew.cmu.edu"
-  p.is_staff true
-  p.first_name "Faculty"
-  p.last_name "Fagan"
-  p.human_name "Faculty Fagan"
-  p.twiki_name "FacultyFagan"
-end
+  factory :faculty_fagan_user, :parent => :user do
+    login "faculty_fagan"
+    email "faculty.fagan@sv.cmu.edu"
+    webiso_account "fagan@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Fagan"
+    human_name "Faculty Fagan"
+    twiki_name "FacultyFagan"
+  end
 
-factory :contracts_manager_user, :parent => :user do |p|
-  p.login "Ngoc Ho"
-  p.email "ngoc.ho@sv.cmu.edu"
-  p.webiso_account "ngocho@andrew.cmu.edu"
-  p.is_staff true
-  p.first_name "Ngoc"
-  p.last_name "Ho"
-  p.human_name "Ngoc Ho"
-  p.twiki_name "NgocHo"
-end
+  factory :contracts_manager_user, :parent => :user do
+    login "Ngoc Ho"
+    email "ngoc.ho@sv.cmu.edu"
+    webiso_account "ngocho@andrew.cmu.edu"
+    is_staff true
+    first_name "Ngoc"
+    last_name "Ho"
+    human_name "Ngoc Ho"
+    twiki_name "NgocHo"
+  end
 
 end
