@@ -58,7 +58,7 @@ class EffortReportsController < ApplicationController
 
 
   def get_campus_week_data(year, week_number)
-    effort_logs = EffortLog.where("week_number=? AND year=? AND sum > 0", week_number.to_i, year.to_i)
+    effort_logs = EffortLog.where(:week_number => week_number.to_i, :year => year.to_i, :sum.gt => 0)
 
     course_id_to_value_array_hash = {}
     effort_logs.each do |effort_log|
@@ -261,11 +261,11 @@ class EffortReportsController < ApplicationController
     end
 
     if current_user.is_staff || current_user.is_admin
-      @students = Person.where('is_student = ?', true).order("first_name ASC, last_name ASC")
+      @students = Person.where(:is_student => true).order("first_name ASC, last_name ASC")
     else
       @students = [current_user]
     end
-    @courses = Course.where("semester = ? and year = ?", @semester_panel.semester, @semester_panel.year).order("name ASC")
+    @courses = Course.where(:semester => @semester_panel.semester, :year => @semester_panel.year).order("name ASC")
     @programs = []
 
     ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result|
@@ -323,7 +323,7 @@ class EffortReportsController < ApplicationController
 
 
   def generate_course_chart(year, week_number, course_id)
-    course = Course.where('id = ?', course_id).first
+    course = Course.where(:id => course_id).first
     if course
       title = course.name
     else
