@@ -32,6 +32,7 @@ class IndividualContributionsController < ApplicationController
                                     "What obstacles are impeding your progress?",
                                     "How will you overcome these obstacles?",
                                     "What will you individually do this week?"]
+    number_of_questions = @questions.length
 
     @answer_input_types = [:text_area,
                            :text_field,
@@ -46,6 +47,16 @@ class IndividualContributionsController < ApplicationController
     previous_week = IndividualContribution.find_by_week(@previous_week_year, @previous_week_number, current_user)
     previous_week.individual_contribution_for_courses.each { |ic| @plans_from_previous_week[ic.course_id] = ic.answer5 } if previous_week
 
+    @answers_for_this_week = Array.new
+    number_of_questions.times { @answers_for_this_week << Hash.new }
+    this_week = IndividualContribution.find_by_week(@year, @current_week_number, current_user)
+    this_week.individual_contribution_for_courses.each{ |ic|
+        @answers_for_this_week[0].merge!({ic.course_id => ic.answer1})
+        @answers_for_this_week[1].merge!({ic.course_id => ic.answer2})
+        @answers_for_this_week[2].merge!({ic.course_id => ic.answer3})
+        @answers_for_this_week[3].merge!({ic.course_id => ic.answer4})
+        @answers_for_this_week[4].merge!({ic.course_id => ic.answer5})
+      } if this_week
   end
 
   # Todo: consider moving these email methods to the model(StatusReports) and update the rake task accordingly

@@ -52,7 +52,7 @@ describe IndividualContributionsController do
       context "and there are individual contributions" do
         before do
           @individual_contributions = [IndividualContribution.new(:year => 2011, :week_number => 12),
-                             IndividualContribution.new(:year => 2011, :week_number => 11)]
+                                       IndividualContribution.new(:year => 2011, :week_number => 11)]
           IndividualContribution.stub(:find_individual_contributions).and_return(@individual_contributions)
           IndividualContribution.stub(:find_by_week) do |arg1, arg2, arg3|
             case arg2
@@ -101,7 +101,7 @@ describe IndividualContributionsController do
       context "and there are individual contributions" do
         before do
           @individual_contributions = [IndividualContribution.new(:year => 2011, :week_number => 12),
-                             IndividualContribution.new(:year => 2011, :week_number => 11)]
+                                       IndividualContribution.new(:year => 2011, :week_number => 11)]
           IndividualContribution.stub(:find_individual_contributions).and_return(@individual_contributions)
           IndividualContribution.stub(:find_by_week) do |arg1, arg2, arg3|
             case arg2
@@ -137,55 +137,74 @@ describe IndividualContributionsController do
 
   describe "#edit" do
 
-    it "should have a list of questions" do
+    it "assigns a list of questions" do
       login(FactoryGirl.create(:student_sam_user))
       get(:edit)
       assigns(:questions).should be_a_kind_of(Array)
     end
 
-    it "should have a list of the user's registered courses for the current mini" do
+    it "assigns a list of the user's registered courses for the current mini" do
       login(FactoryGirl.create(:student_sam_user_with_registered_courses))
       get(:edit)
       courses = assigns(:courses)
-      courses.each {|course| course.current_mini?.should be_true }
+      courses.each { |course| course.current_mini?.should be_true }
     end
 
 
-    it "should have a list of input types telling the ui whether to use an input text area or an input field" do
-       login(FactoryGirl.create(:student_sam_user))
-       get(:edit)
-       assigns(:answer_input_types).should be_a_kind_of(Array)
-     end
-
-
-    it "when there is previous week data, then show the student's plan for the current week" do
-      @student_sam_user = FactoryGirl.create(:student_sam_user)
-      login(@student_sam_user)
-      @fse = FactoryGirl.create(:fse_current_semester)
-      @mfse = FactoryGirl.create(:mfse_current_semester)
-      @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek - 1, :year => Date.today.cwyear)
-      @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
-      @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
+    it "assigns a list of input types telling the ui whether to use an input text area or an input field" do
+      login(FactoryGirl.create(:student_sam_user))
       get(:edit)
-
-      assigns(:plans_from_previous_week).should == {@mfse.id => "I did great", @fse.id => "I finished it"}
+      assigns(:answer_input_types).should be_a_kind_of(Array)
     end
 
-    context "courses shown should contain semester courses for the current semester" do
+    context "for a user" do
+      before do
+        @student_sam_user = FactoryGirl.create(:student_sam_user)
+        login(@student_sam_user)
+        @fse = FactoryGirl.create(:fse_current_semester)
+        @mfse = FactoryGirl.create(:mfse_current_semester)
+      end
+
+      it "when there is previous week data, then assigns the student's plan for the current week" do
+        @previous_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek - 1, :year => Date.today.cwyear)
+        @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @mfse, :answer5 => "I did great")
+        @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @previous_week, :course => @fse, :answer5 => "I finished it")
+        get(:edit)
+
+        assigns(:plans_from_previous_week).should == {@mfse.id => "I did great", @fse.id => "I finished it"}
+      end
+
+      # As an example, if there were only two questions, the data structure would look like this:
+      # [ { course_id => answer 1, course_id => answer 1}, {course_id => answer 2, course_id => answer 2}]
+      #
+      it "assigns an array of hashes for each student" do
+        @this_week = FactoryGirl.create(:individual_contribution, :user => @student_sam_user, :week_number => Date.today.cweek, :year => Date.today.cwyear)
+        @mfse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @mfse,
+                                            :answer1 => "I dreamed a dream",
+                                            :answer2 => "40.5",
+                                            :answer3 => "Only the speed of light is my obstacle",
+                                            :answer4 => "Get really really small",
+                                            :answer5 => "I will take over the world")
+        @fse_answers1 = FactoryGirl.create(:individual_contribution_for_course, :individual_contribution => @this_week, :course => @fse,
+                                           :answer1 => "I want a job",
+                                           :answer2 => "30.5",
+                                           :answer3 => "Algorithms is my obstacle",
+                                           :answer4 => "study study and study",
+                                           :answer5 => "take a vacation")
+        get(:edit)
+
+        assigns(:answers_for_this_week).should == [{@mfse.id => "I dreamed a dream", @fse.id => "I want a job"},
+                                                   {@mfse.id => 40.5, @fse.id => 30.5},
+                                                   {@mfse.id => "Only the speed of light is my obstacle", @fse.id => "Algorithms is my obstacle"},
+                                                   {@mfse.id => "Get really really small", @fse.id => "study study and study"},
+                                                   {@mfse.id => "I will take over the world", @fse.id => "take a vacation"}]
+
+
+      end
 
     end
-
-    context "courses shown should contain mini courses for the mini semester" do
-
-    end
-
-    context "courses shown should not contain mini courses for the other mini in the semester" do
-
-    end
-
 
   end
-
 
 
 #  describe "#create_midweek_warning_email" do
