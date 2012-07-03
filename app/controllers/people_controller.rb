@@ -16,10 +16,10 @@ class PeopleController < ApplicationController
   def index
     if params[:term] #Ajax call for autocomplete
                      #if database is mysql
-                     #@people = Person.find(:all, :conditions => ['human_name LIKE ?', "%#{params[:term]}%"])
-      @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:term]}%"])
+                     #@people = Person.where("human_name LIKE ?", "%#{params[:term]}%").all
+      @people = Person.where("human_name ILIKE ?", "%#{params[:term]}%").all
     else
-      @people = Person.find(:all, :conditions => ['is_active = ?', true], :order => "first_name ASC, last_name ASC")
+      @people = Person.where(:is_active => true).order("first_name ASC, last_name ASC").all
     end
 
 

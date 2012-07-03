@@ -43,6 +43,8 @@ class CoursesController < ApplicationController
       end
     end
 
+    @registered =
+
     @students = Hash.new
     @course.registered_students.each do |student|
       @students[student.human_name] = {:hub => true}

@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   def index
     @show_teams_for_many_courses = false
     @machine_name = ""
-    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    @teams = Team.where(:course_id => params[:course_id]).order("id").all unless params[:course_id].empty?
     @course = Course.find(params[:course_id])
 
     @show_section = false
@@ -30,7 +30,7 @@ class TeamsController < ApplicationController
       # http://info.sv.cmu.edu/twiki/bin/view/Fall2008/Foundations/StudentTeams
       # http://info.sv.cmu.edu/twiki/bin/view/Fall2009/Foundations/WebHome
       url = get_twiki_http_referer()
-      @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
+      @course = Course.where(:twiki_url => url).first
       if (@course.nil?)
         parts = url.split('/')
         @course = Course.new()
@@ -56,7 +56,7 @@ class TeamsController < ApplicationController
     @machine_name = "http://rails.sv.cmu.edu"
 
     url = get_twiki_http_referer()
-    @course = Course.find(:first, :conditions => ["twiki_url = ?", url])
+    @course = Course.where(:twiki_url => url).first
 
     @show_create_course = false
     if (@course.nil?)
@@ -64,7 +64,7 @@ class TeamsController < ApplicationController
       render :partial => "twiki_index", :layout => false, :locals => {:teams => @teams, :show_new_teams_link => true, :show_photo_view_link => true, :show_student_photos => false, :show_course => false}
       return
     end
-    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", @course.id]) unless @course.nil?
+    @teams = Team.where(:course_id => @course.id).order("id").all unless @course.nil?
 
     @show_section = false
     @teams.each do |team|
@@ -75,7 +75,7 @@ class TeamsController < ApplicationController
   end
 
   def index_photos
-    @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+    @teams = Team.where(:course_id => params[:course_id]).order("id").all unless params[:course_id].empty?
     @course = Course.find(params[:course_id])
 
     respond_to do |format|
@@ -86,7 +86,7 @@ class TeamsController < ApplicationController
 
   def past_teams_list
     if has_permissions_or_redirect(:staff, root_path)
-      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      @teams = Team.where(:course_id => params[:course_id]).order("id").all unless params[:course_id].empty?
       @course = Course.find(params[:course_id])
 
       respond_to do |format|
@@ -100,7 +100,7 @@ class TeamsController < ApplicationController
     if has_permissions_or_redirect(:staff, root_path)
 
       @course = Course.find(params[:course_id])
-      @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
+      @teams = Team.where(:course_id => params[:course_id]).order("id").all unless params[:course_id].empty?
 
       report = CSV.generate do |title|
         title << ['Team Name', 'Team Member', 'Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
@@ -126,7 +126,7 @@ class TeamsController < ApplicationController
     @machine_name = ""
 
     #If possible, we would prefer to do an order by in sql to sort latest semester alphabetical by course name.
-    @teams = Team.find(:all, :order => "course_id DESC")
+    @teams = Team.order("course_id DESC").all
     #    @teams = @teams.sort_by {|team| team.course.year + team.course.semester + team.course.name }.reverse
 
     respond_to do |format|
