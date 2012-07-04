@@ -56,8 +56,6 @@ class TeamsController < ApplicationController
     @machine_name = "http://rails.sv.cmu.edu"
 
     url = get_twiki_http_referer()
-    logger.error("url:#{url}")
-    puts("url_: #{url}")
     @course = Course.where(:twiki_url => url).first
 
     @show_create_course = false
