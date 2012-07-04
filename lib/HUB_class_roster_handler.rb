@@ -12,9 +12,11 @@ module HUBClassRosterHandler
 
     students_for_course = {}
     students_not_in_system_hash = {}
+    no_courses_parsed = true
 
     parsed_courses.each do |parsed_course|
       if /Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/.match(parsed_course)
+        no_courses_parsed = false
         course_number = $2.strip
         (semester, year) = AcademicCalendar.parse_HUB_semester($4.strip)
 
@@ -37,6 +39,11 @@ module HUBClassRosterHandler
         end
       end
     end
+
+    if no_courses_parsed
+      raise "Could not read your file, please check format."
+    end
+
     Rails.logger.debug "Students_for_course::: #{students_for_course}"
     return self.handle_roster_changes students_for_course, students_not_in_system_hash
 #    return self.handle_roster_changes students_for_course
