@@ -123,7 +123,9 @@ class CoursesController < ApplicationController
     authorize! :update, @course
 
     if (params[:course][:is_configured]) #The previous page was configure action
-      @course.twiki_url = params[:course][:curriculum_url] if params[:course][:configure_course_twiki]
+      if params[:course][:curriculum_url].include?("info.sv.cmu.edu")
+        @course.twiki_url = params[:course][:curriculum_url].sub("https", "http")
+      end
       @course.configured_by_user_id = current_user.id
     end
 
