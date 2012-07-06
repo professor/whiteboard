@@ -235,6 +235,8 @@ class PeopleController < ApplicationController
     respond_to do |format|
       @person.attributes = params[:person]
       @person.photo = params[:person][:photo] if current_user.is_admin?
+      @person.expires_at = params[:person][:expires_at] if current_user.is_admin?
+
       if @person.save
         flash[:notice] = 'Person was successfully updated.'
         format.html { redirect_to(@person) }

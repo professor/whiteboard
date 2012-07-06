@@ -1,6 +1,17 @@
 <% content_for :title, "New person" %>
 <h1>New person</h1>
 
+<% content_for :javascript do %>
+
+    <%= javascript_tag do %>
+ 	$(function() {
+ 		$("#person_expires_at").datepicker({
+           showButtonPanel: true,
+           dateFormat: 'yy-mm-dd'
+         });
+  	});
+    <% end %>
+
 <script type="text/javascript">
  function remove_hyphens(string) {
      return string.replace(/-/g, "");
@@ -55,6 +66,8 @@
 
 
 </script>
+
+<% end %>
 
 <%= form_for(@person) do |f| %>
   <% if @person.errors.any? %>
@@ -144,7 +157,15 @@
     <%= f.text_field :masters_track %><br />
     <span class="help_text">Tech DM IS MOB SM</span>
   </p>
-  <p>
+    <h2>Account Termination</h2>
+    <p>
+        <%= f.label "Expires at" %>
+        <%= f.text_field :expires_at, :size => 10 %><br/>
+      <% help_text = AcademicCalendar.next_semester + " semester starts on " + AcademicCalendar.date_for_semester_start(AcademicCalendar.next_semester, AcademicCalendar.next_semester_year).to_s %>
+      <span class="help_text">(<%=help_text%>)</span>
+    </p>
+
+
     <%= f.submit "Create" %>
   </p>
 <% end %>

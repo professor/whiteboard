@@ -2,6 +2,16 @@
 
 
 <% content_for :javascript do %>
+
+   <%= javascript_tag do %>
+	$(function() {
+		$("#person_expires_at").datepicker({
+          showButtonPanel: true,
+          dateFormat: 'yy-mm-dd'
+        });
+ 	});
+   <% end %>
+
     <%= javascript_include_tag 'tiny_mce/tiny_mce.js' %>
 
   <script type="text/javascript">
@@ -303,6 +313,10 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
   <div class="formItem">
     <%= f.label "Display name" %>
     <%= f.text_field :human_name %>
+  </div>
+  <div class="formItem">
+      <%= f.label "Expires at" %>
+      <%= f.text_field :expires_at, :size => 10 %>
   </div>
   </fieldset>
   <% end %>
