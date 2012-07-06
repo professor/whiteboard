@@ -79,6 +79,9 @@ function updateImage(uri,label)
 <div class="right_link" ><%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %><br/>
 <%= link_to 'See photo book', :action=>'photo_book' %></div>
 
+<% if can? :create, User %>
+<%= link_to 'New person', new_person_path %>
+<% end %>
 
 <div style="float:none"><%= render :partial => "tablesorter_filter_box" %><label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked" />
   <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" />
@@ -115,4 +118,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
 <br />
 
+<% if can? :create, User %>
 <%= link_to 'New person', new_person_path %>
+<% end %>

@@ -32,11 +32,6 @@ describe "phone book" do
       @user = FactoryGirl.create(:admin_andy)
       login_with_oauth @user
       click_link "Users"
-      if  @user.is_admin?
-          page.should have_link("New person")
-          click_link "New person"
-          page.should have_content("New person")
-      end
     end
 
   end

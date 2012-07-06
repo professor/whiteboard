@@ -134,10 +134,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   # GET /people/new.xml
   def new
-    if !(current_user.is_admin? || current_user.is_staff?)
-      flash[:error] = "You don't have permission to do this action."
-      redirect_to(people_url) and return
-    end
+    authorize! :create, User
 
     @person = Person.new
     @person.is_active = true
@@ -173,10 +170,7 @@ class PeopleController < ApplicationController
   # POST /people
   # POST /people.xml
   def create
-    if !(current_user.is_admin? || current_user.is_staff?)
-      flash[:error] = "You don't have permission to do this action."
-      redirect_to(people_url) and return
-    end
+    authorize! :create, User
 
     @person = Person.new(params[:person])
     @person.updated_by_user_id = current_user.id

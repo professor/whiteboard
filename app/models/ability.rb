@@ -11,12 +11,19 @@ class Ability
     #     can :read, :all
     #   end
 
+    can :manage, User, :id => user.id
 
     can :update, PageAttachment
 
 
     if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
       can :upload, Course
+    end
+
+    if (user.human_name == "Jazz Ayvazyan" || user.human_name == "Stacy Marshall")
+      can :create, User
+    else
+      cannot :create, User
     end
 
     #Contracts manager
@@ -36,7 +43,6 @@ class Ability
     can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => { :id => user.id } #Useful for TAs.
 
 
-    can :manage, User, :id => user.id
 
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
