@@ -158,12 +158,9 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-#    if !(current_user.is_admin? || current_user.is_staff?)
-#      flash[:error] = "You don't have permission to do this action."
-#      redirect_to(people_url) and return
-#    end
-
     @person = Person.find(params[:id])
+#    authorize! :update, @person
+
     @strength_themes = StrengthTheme.all
   end
 
@@ -223,18 +220,17 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-#    if !(current_user.is_admin? || current_user.is_staff?)
-#      flash[:error] = 'You don''t have permission to do this action.'
-#      redirect_to(people_url) and return
-#    end
-
     @person = Person.find(params[:id])
+#    authorize! :update, @person
+
     @person.updated_by_user_id = current_user.id
     @strength_themes = StrengthTheme.all
 
     respond_to do |format|
       @person.attributes = params[:person]
       @person.photo = params[:person][:photo] if current_user.is_admin?
+      @person.expires_at = params[:person][:expires_at] if current_user.is_admin?
+
       if @person.save
         flash[:notice] = 'Person was successfully updated.'
         format.html { redirect_to(@person) }

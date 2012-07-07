@@ -180,6 +180,11 @@ class AcademicCalendar
 
   end
 
+  def self.date_for_semester_start(semester, year)
+    cweek = semester_start(semester, year)
+    Date.commercial(year, cweek)
+  end
+
   def self.parse_HUB_semester(short_form)
     case short_form[0]
       when 'F'

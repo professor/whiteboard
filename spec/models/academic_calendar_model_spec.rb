@@ -209,6 +209,12 @@ describe AcademicCalendar do
 
   end
 
+  context "date_for_semester_start" do
+    it 'should provide a Ruby Date for a semester start' do
+      AcademicCalendar.date_for_semester_start("Fall", 2012).should == Date.new(2012, 8, 27)
+    end
+  end
+
   context 'HUB Data Parsing' do
     context 'should parse out the semester' do
       it 'for the fall' do
