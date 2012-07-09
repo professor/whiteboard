@@ -140,14 +140,8 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
         <%= f.text_field :telephone4 %>
     </td>
 </tr>
-<tr class="cmu_table_even"><td class="field_label"><%= f.label :email, "CMU-SV email address" %>:</td>
-    <td>
-        <%= f.text_field :email %>
-    </td>
-</tr>
-
 <% if @person.is_student %>
-<tr class="cmu_table_odd"><td class="field_label"><%= f.label :local_near_remote %>:</td>
+<tr class="cmu_table_even"><td class="field_label"><%= f.label :local_near_remote %>:</td>
     <td>
         <%= f.select :local_near_remote, %w{ Unknown Local Near Remote }  %><br />
         <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br />
