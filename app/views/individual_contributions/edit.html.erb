@@ -1,0 +1,37 @@
+<% content_for :title, "Edit Individual Contribution" %>
+
+<h1>Edit Individual Contribution </h1>
+
+<p> This was your plan for this week.</p>
+
+<table class="cmu_table">
+  <% @plans_from_previous_week.each_pair do |course_id, answer| %>
+      <tr class="<%= cycle("cmu_table_odd","cmu_table_even") %>">
+        <td><p><%= course_id %><br/><%= answer %></p></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+
+<%= form_tag :action => :update do %>
+    <% @questions.each_with_index do |question, index| %>
+        <div><p><%= question %></p>
+          <% if @answer_input_types[index] == :text_field %>
+              <table class="layout_table">
+                <% @courses.each do |course| %>
+                    <tr><td><p><%= course.id %></p></td>
+                      <td><p><%= text_field_tag("answer[" + (index+1).to_s + "]course_id[" + course.id.to_s + "]", @answers_for_this_week[index][course.id], :size => "5") %> hours</p></td>
+                    </tr>
+                <% end %>
+              </table>
+          <% else %>
+              <% @courses.each do |course| %>
+                  <%= text_area_tag("answer[" + (index+1).to_s + "]course_id[" + course.id.to_s + "]", @answers_for_this_week[index][course.id], :cols => "95", :rows => "7") %>
+              <% end %>
+          <% end %>
+        </div><br/>
+    <% end %>
+<% end %>
+

@@ -57,6 +57,7 @@ class IndividualContributionsController < ApplicationController
         @answers_for_this_week[3].merge!({ic.course_id => ic.answer4})
         @answers_for_this_week[4].merge!({ic.course_id => ic.answer5})
       } if this_week
+    tmp = 1
   end
 
   # Todo: consider moving these email methods to the model(StatusReports) and update the rake task accordingly
