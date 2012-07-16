@@ -45,7 +45,7 @@ class Deliverable < ActiveRecord::Base
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
                     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
-  default_scope :order => "updated_at DESC"
+  default_scope :order => "created_at DESC"
 
   before_validation :update_team, :sanitize_data
 
