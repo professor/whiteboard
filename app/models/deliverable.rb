@@ -47,20 +47,23 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "updated_at DESC"
 
-  before_validation :update_team, :sanitize_data
+  before_validation :sanitize_data
 
 
   def unique_course_task_owner?
     if self.is_team_deliverable?
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :is_team_deliverable => true, :team_id => self.team_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :is_team_deliverable => false, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :creator_id => self.creator_id).first
     end
     if duplicate && duplicate.id != self.id
       errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
     end
   end
 
+  def is_team_deliverable?
+    team ? true : false
+  end
 
   def current_attachment
     attachment_versions.find(:first)
@@ -102,10 +105,6 @@ class Deliverable < ActiveRecord::Base
       team_condition = "team_id IN ("
       team_condition << teams.collect { |t| t.id }.join(',')
       team_condition << ") OR "
-
-#      team_condition = "(team_id IN ("
-#      team_condition << teams.collect{|t| t.id}.join(',')
-#      team_condition << "AND is_team_deliverable = 0) OR "
     end
     Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{person.id})")
   end
@@ -184,7 +183,7 @@ class Deliverable < ActiveRecord::Base
   protected
   def update_team
     # Look up the team this person is on if it is a team deliverable
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id]) if self.is_team_deliverable?
+    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id])
   end
 
   def sanitize_data

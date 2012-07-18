@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706232203) do
+ActiveRecord::Schema.define(:version => 20120718230225) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
-    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -34,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
+    t.integer  "year"
     t.boolean  "configure_class_mailinglist",     :default => false
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
@@ -53,6 +53,11 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
 
+  create_table "courses_users", :id => false, :force => true do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+  end
+
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
     t.string   "background_color"
@@ -66,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "year"
     t.integer  "user_id"
     t.integer  "curriculum_comment_type_id"
-    t.string   "comment"
+    t.string   "comment",                    :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "human_name"
@@ -105,7 +110,6 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.integer  "team_id"
     t.integer  "course_id"
     t.string   "task_number"
-    t.integer  "is_team_deliverable"
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -154,7 +158,33 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.datetime "updated_at"
   end
 
+  add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "individual_contribution_for_courses", :force => true do |t|
+    t.integer "individual_contribution_id"
+    t.integer "course_id"
+    t.text    "answer1"
+    t.float   "answer2"
+    t.text    "answer3"
+    t.text    "answer4"
+    t.text    "answer5"
+  end
+
+  add_index "individual_contribution_for_courses", ["course_id"], :name => "index_individual_contribution_for_courses_on_course_id"
+  add_index "individual_contribution_for_courses", ["individual_contribution_id"], :name => "individual_contribution_for_courses_icid"
+
+  create_table "individual_contributions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "year"
+    t.integer  "week_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "individual_contributions", ["user_id"], :name => "index_individual_contributions_on_user_id"
+  add_index "individual_contributions", ["week_number"], :name => "index_individual_contributions_on_week_number"
+  add_index "individual_contributions", ["year"], :name => "index_individual_contributions_on_year"
 
   create_table "page_attachments", :force => true do |t|
     t.integer  "page_id"
@@ -310,6 +340,26 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
   add_index "presentations", ["course_id"], :name => "index_presentations_on_course_id"
   add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
 
+  create_table "project_types", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_types", ["name"], :name => "index_project_types_on_name"
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.integer  "project_type_id"
+    t.integer  "course_id"
+    t.boolean  "is_closed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "projects", ["name"], :name => "index_projects_on_name"
+
   create_table "registrations", :id => false, :force => true do |t|
     t.integer  "course_id",  :null => false
     t.integer  "user_id",    :null => false
@@ -421,7 +471,6 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "email"
     t.string   "twiki_space"
     t.string   "tigris_space"
-    t.integer  "course_id"
     t.integer  "primary_faculty_id"
     t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
@@ -431,6 +480,7 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
+    t.integer  "course_id"
     t.boolean  "updating_email"
   end
 
@@ -502,14 +552,14 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"
@@ -561,7 +611,7 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "telephone4"
     t.string   "telephone4_label"
     t.integer  "updated_by_user_id"
-    t.string   "version"
+    t.integer  "version"
     t.boolean  "is_alumnus"
     t.string   "pronunciation"
     t.datetime "google_created"
@@ -574,14 +624,14 @@ ActiveRecord::Schema.define(:version => 20120706232203) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"
