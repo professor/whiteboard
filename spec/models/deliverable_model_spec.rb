@@ -28,7 +28,6 @@ describe Deliverable do
           duplicate.creator_id = original.creator_id
           duplicate.course = original.course
           duplicate.task_number = original.task_number
-          duplicate.is_team_deliverable = original.is_team_deliverable
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid
         end
@@ -60,7 +59,7 @@ describe Deliverable do
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
 
-  context "has_feeback?" do
+  context "has_feedback?" do
   it "returns false when there is no feedback" do
     subject.has_feedback?.should be_false
 

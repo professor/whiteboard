@@ -34,7 +34,7 @@ class PeerEvaluationReview < ActiveRecord::Base
   belongs_to :recipient, :class_name => "Person"
 
   def self.is_completed_for?(person_id, team_id)
-    !PeerEvaluationReview.find(:first, :conditions => {:team_id => team_id, :author_id => person_id}).nil?
+    !PeerEvaluationReview.where({:team_id => team_id, :author_id => person_id}).empty?
   end
 
 

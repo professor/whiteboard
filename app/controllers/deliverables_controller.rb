@@ -88,6 +88,9 @@ class DeliverablesController < ApplicationController
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_person
+
+    @deliverable.update_team if params[:deliverable][:is_team_deliverable]
+
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
@@ -125,6 +128,8 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
+
+    @deliverable.update_team if params[:deliverable][:is_team_deliverable]
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
