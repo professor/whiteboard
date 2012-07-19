@@ -223,6 +223,16 @@ class Course < ActiveRecord::Base
     return offerings.first
   end
 
+  def self.copy_courses_in_a_semester_for_next_year(semester, year)
+    Course.for_semester(semester, year).each do |last_year_course|
+      this_year_course = last_year_course.copy_as_new_course
+      this_year_course.year = year + 1
+      #this_year_course.planning = true
+      this_year_course.save
+    end
+  end
+
+
   def current_mini?
     case self.mini
       when "Both"
