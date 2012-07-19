@@ -9,7 +9,6 @@ describe Person do
     @faculty_frank = FactoryGirl.create(:faculty_frank)
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     @admin_andy = FactoryGirl.create(:admin_andy)
-    @student_sam = FactoryGirl.create(:student_sam)
   end
 
 #  describe "abilities" do
