@@ -40,8 +40,10 @@ describe CoursesController do
       end
 
       specify { assigns(:courses).should_not be_nil }
+      specify { assigns(:semester_length_courses).should_not be_nil }
+      specify { assigns(:mini_a_courses).should_not be_nil }
+      specify { assigns(:mini_b_courses).should_not be_nil }
       specify { assigns(:all_courses).should == true }
-
     end
 
 
