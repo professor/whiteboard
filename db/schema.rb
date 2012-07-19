@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120718230225) do
+ActiveRecord::Schema.define(:version => 20120718230557) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -498,7 +498,6 @@ ActiveRecord::Schema.define(:version => 20120718230225) do
     t.integer  "person_id"
     t.integer  "version"
     t.string   "webiso_account"
-    t.string   "login",                                 :limit => 40
     t.string   "email",                                 :limit => 100
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -569,7 +568,6 @@ ActiveRecord::Schema.define(:version => 20120718230225) do
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
-    t.string   "login",                                 :limit => 40
     t.string   "email",                                 :limit => 100
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -645,7 +643,6 @@ ActiveRecord::Schema.define(:version => 20120718230225) do
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
   add_index "users", ["is_student"], :name => "index_users_on_is_student"
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
 
   create_table "versions", :force => true do |t|

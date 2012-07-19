@@ -25,8 +25,9 @@ class Person < User
   belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
   belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
 
-  validates_uniqueness_of :login, :case_sensitive => false, :allow_nil => true
+#  validates_uniqueness_of :login, :case_sensitive => false, :allow_nil => true
   validates_uniqueness_of :webiso_account, :case_sensitive => false
+#  validates_uniqueness_of :email, :case_sensitive => false
 
 #  def to_param
 #    if twiki_name.blank?
