@@ -264,8 +264,6 @@ describe Course do
   #end
 
 
-
-
   context 'updates google mailing list' do
     before do
       @course = FactoryGirl.create(:mfse)
@@ -324,21 +322,64 @@ describe Course do
 
 
 #these tests are the same with team
- context 'generated email address' do
-   it 'should use the short name if available' do
-     course = FactoryGirl.build(:mfse_fall_2011)
-     course.update_email_address
-     course.email.should == "fall-2011-mfse@" + GOOGLE_DOMAIN
-   end
+  context 'generated email address' do
+    it 'should use the short name if available' do
+      course = FactoryGirl.build(:mfse_fall_2011)
+      course.update_email_address
+      course.email.should == "fall-2011-mfse@" + GOOGLE_DOMAIN
+    end
 
-   it 'should convert unusual characters to ones that google can handle' do
-     course = FactoryGirl.build(:mfse_fall_2011)
-     course.short_name = "I & E"
-     course.update_email_address
-     course.email.should == "fall-2011-i-and-e@" + GOOGLE_DOMAIN
+    it 'should convert unusual characters to ones that google can handle' do
+      course = FactoryGirl.build(:mfse_fall_2011)
+      course.short_name = "I & E"
+      course.update_email_address
+      course.email.should == "fall-2011-i-and-e@" + GOOGLE_DOMAIN
 
-   end
- end
+    end
+  end
+
+
+  context 'scenario: copy courses from one semester to the next year' do
+
+    context 'given a semesters worth of courses' do
+      before(:each) do
+        @current_semester_courses = [FactoryGirl.create(:fse_current_semester),
+                                     FactoryGirl.create(:mfse_current_semester)]
+      end
+
+      context "and there are no courses in the destination semester" do
+        context 'when copying the courses in one semester to the next year' do
+          before(:each) do
+            Course.copy_courses_from_a_semester_to_next_year(AcademicCalendar.current_semester, Date.today.year)
+          end
+
+          it 'then the courses are duplicated' do
+            future_courses = Course.for_semester(AcademicCalendar.current_semester, Date.today.year + 1)
+            future_courses.length.should == @current_semester_courses.length
+          end
+        end
+      end
+
+      context 'and there already exists course' do
+        before(:each) do
+          next_year = Date.today.year + 1
+          @next_year_semester_courses = [FactoryGirl.create(:fse_current_semester, :year => next_year),
+                                         FactoryGirl.create(:mfse_current_semester, :year => next_year)]
+        end
+
+        it 'then it should not copy over the courses and throws an error' do
+          lambda  {
+            Course.copy_courses_from_a_semester_to_next_year(AcademicCalendar.current_semester, Date.today.year)
+          }.should raise_error
+
+          future_courses = Course.for_semester(AcademicCalendar.current_semester, Date.today.year + 1)
+          future_courses.length.should == @next_year_semester_courses.length
+          future_courses.length.should_not == @next_year_semester_courses.length + @current_semester_courses.length
+        end
+      end
+
+    end
+  end
 
 
   # Tests for has_and_belongs_to_many relationship
