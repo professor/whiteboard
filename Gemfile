@@ -15,6 +15,8 @@ gem 'omniauth', '0.3.0.rc3'
 gem 'devise'
 
 
+gem "ckeditor", "3.6.3"
+
 #gem 'ruby-openid'
 #gem 'ruby-openid-apps-discovery'
 #gem 'rack-openid'

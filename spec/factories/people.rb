@@ -1,7 +1,6 @@
 FactoryGirl.define do
 
   factory :admin_andy, :parent => :person do
-    login "admin_andy"
     email "admin.andy@sv.cmu.edu"
     webiso_account "andy@andrew.cmu.edu"
     is_staff true
@@ -13,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :student_sam, :parent => :person do
-    login "student_sam"
+#    id 42
     email "student.sam@sv.cmu.edu"
     webiso_account "sam@andrew.cmu.edu"
     is_student true
@@ -22,10 +21,10 @@ FactoryGirl.define do
     last_name "Sam"
     human_name "Student Sam"
     twiki_name "StudentSam"
+#    initialize_with { Person.find_or_create_by_id(id)}
   end
 
   factory :student_sally, :parent => :person do
-    login "student_sally"
     email "student.sally@sv.cmu.edu"
     webiso_account "sally@andrew.cmu.edu"
     is_student true
@@ -37,7 +36,6 @@ FactoryGirl.define do
   end
 
   factory :faculty_frank, :parent => :person do
-    login "faculty_frank"
     email "faculty.frank@sv.cmu.edu"
     webiso_account "frank@andrew.cmu.edu"
     is_staff true
@@ -48,7 +46,6 @@ FactoryGirl.define do
   end
 
   factory :faculty_fagan, :parent => :person do
-    login "faculty_fagan"
     email "faculty.fagan@sv.cmu.edu"
     webiso_account "fagan@andrew.cmu.edu"
     is_staff true
@@ -67,7 +64,6 @@ FactoryGirl.define do
   end
 
   factory :team_member, :parent => :person do
-    login "team_member"
     email "team.member@sv.cmu.edu"
     webiso_account "teammember@andrew.cmu.edu"
     is_student true

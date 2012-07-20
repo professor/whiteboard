@@ -86,7 +86,7 @@ describe Deliverable do
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally, :email=>"student.sally2@sv.cmu.edu", :webiso_account =>"ss2@andrew.cmu.edu")).should be_false
     end
 
     it "is editable by staff or admin" do
@@ -105,7 +105,7 @@ describe Deliverable do
     end
 
     it "is not editable by any random student" do
-      @deliverable.editable?(FactoryGirl.create(:student_sally)).should be_false
+      @deliverable.editable?(FactoryGirl.create(:student_sally, :email=>"student.sally2@sv.cmu.edu", :webiso_account =>"ss2@andrew.cmu.edu")).should be_false
     end
 
     it "is editable by staff or admin" do

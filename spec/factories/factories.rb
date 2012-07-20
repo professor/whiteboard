@@ -18,7 +18,7 @@ FactoryGirl.define do
 
   factory :deliverable do
     association :course, :factory => :course
-    association :creator, :factory => :student_sam
+    association :creator, :factory => :student_sally
   end
 
   factory :deliverable_attachment do
@@ -64,7 +64,7 @@ FactoryGirl.define do
 
   factory :peer_evaluation_review, class: PeerEvaluationReview do
     association :team, :factory => :team_triumphant
-    association :author, :factory => :student_sam
+    association :author, :factory => :student_sam, :email => "student.sam2@sv.cmu.edu", :webiso_account => "ss2@andrew.cmu.edu"
     association :recipient, :factory => :student_sally
     question "What was this team member's most significant positive contribution to the team?"
     answer "Sally was always on time in meetings."

@@ -30,9 +30,12 @@ FactoryGirl.define do
   end
 
 
-  factory :mfse_current_semester, :parent => :course do
-    name 'Metrics for Software Engineers'
-    short_name 'MfSE'
+  factory :mfse_current_semester, :parent => :mfse do
+    semester AcademicCalendar.current_semester
+    year Date.today.cwyear
+  end
+
+  factory :fse_current_semester, :parent => :fse do
     semester AcademicCalendar.current_semester
     year Date.today.cwyear
   end

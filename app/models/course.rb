@@ -89,7 +89,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.for_semester(semester, year)
-    return Course.where(:semester => semester, :year => year).order("name ASC")
+    return Course.where(:semester => semester, :year => year).order("name ASC").all
   end
 
   def self.current_semester_courses()
@@ -222,6 +222,20 @@ class Course < ActiveRecord::Base
     offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     return offerings.first
   end
+
+  def self.copy_courses_from_a_semester_to_next_year(semester, year)
+    next_year = year + 1
+    if Course.for_semester(semester, next_year).empty?
+      Course.for_semester(semester, year).each do |last_year_course|
+        next_year_course = last_year_course.copy_as_new_course
+        next_year_course.year = next_year
+        next_year_course.save
+      end
+    else
+      raise "There are already courses in semester #{semester} #{next_year}"
+    end
+  end
+
 
   def current_mini?
     case self.mini

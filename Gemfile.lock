@@ -68,6 +68,9 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
+    ckeditor (3.6.3)
+      mime-types (~> 1.16)
+      orm_adapter (~> 0.0.5)
     cocaine (0.2.0)
     columnize (0.3.4)
     daemons (1.1.4)
@@ -298,6 +301,7 @@ DEPENDENCIES
   bundler
   cancan
   capybara
+  ckeditor (= 3.6.3)
   daemons (~> 1.1.4)
   delayed_job
   devise

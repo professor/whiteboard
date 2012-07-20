@@ -3,6 +3,10 @@
 <%= stylesheet_link_tag "wymeditor/skins/refinery/skin", :media => "all" %>
 -->
 
+<% if @show_ckeditor %>
+<%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
+<% end %>
+
 <script src="/javascripts/wymeditor/jquery.wymeditor.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
 
@@ -306,19 +310,35 @@
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
       </div>
       <div id="email_details">
-         <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
+        <% if @show_ckeditor %>
+          <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
+        <% else %>
+          <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
+        <% end %>
       </div>
 	</div>
 	<div id="tabs-2">
-      <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
+      <% if @show_ckeditor %>
+          <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
+      <% else %>
+          <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
+      <% end %>
 	</div>
-	<div id="tabs-3"> 
-		
-      <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
+	<div id="tabs-3">
+      <% if @show_ckeditor %>
+          <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
+      <% else %>
+          <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
+      <% end %>
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
 	<div id="tabs-4">
-      <%= f.text_area :faculty_notes, :class => "wymeditor" %>
+      <% if @show_ckeditor %>
+          <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
+      <% else %>
+          <%= f.text_area :faculty_notes, :class => "wymeditor" %>
+      <% end %>
+
 	</div>
   <% end %>    
       </div>

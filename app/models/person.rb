@@ -25,8 +25,8 @@ class Person < User
   belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
   belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
 
-  validates_uniqueness_of :login, :case_sensitive => false, :allow_nil => true
   validates_uniqueness_of :webiso_account, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
 
 #  def to_param
 #    if twiki_name.blank?
@@ -50,7 +50,6 @@ class Person < User
   end
 
   def registered_for_these_courses_during_current_semester
-# New code...for register-students branch
    hub_registered_courses =  registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
 
     sql_str = "select c.* FROM courses c,teams t
@@ -59,15 +58,6 @@ class Person < User
    courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
    @registered_courses = hub_registered_courses | courses_assigned_on_teams
-
-#Old code...register-students branch
-#    semester = AcademicCalendar.current_semester()
-#
-#    @sql_str = "select c.* FROM courses c,teams t
-#              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{semester}' and t.id in
-#              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
-#
-#    @registered_courses = Course.find_by_sql(@sql_str)
   end
 
 
