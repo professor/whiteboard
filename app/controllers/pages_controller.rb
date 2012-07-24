@@ -95,6 +95,8 @@ class PagesController < ApplicationController
         @show_ckeditor = true
       when "sample_task1"
         @show_ckeditor = true
+      when "orientation"
+        @show_ckeditor = true
     end
   end
 
