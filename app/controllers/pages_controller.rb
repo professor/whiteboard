@@ -98,6 +98,8 @@ class PagesController < ApplicationController
       when "orientation"
         @show_ckeditor = true
     end
+@show_ckeditor = true  if @page.url.start_with?("orientation")
+
   end
 
   # POST /pages
