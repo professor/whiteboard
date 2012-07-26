@@ -38,24 +38,24 @@ describe "courses/index.html.erb" do
   context "renders a visual representation of courses" do
 
     it "in a div" do
-      render
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
       rendered.should have_selector("#courses_by_length")
     end
 
     it "contains a list of semester courses" do
-      render
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
       rendered.should have_content("semester1")
       rendered.should have_content("semester2")
     end
 
     it "contains a list of mini a courses" do
-      render
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
       rendered.should have_content("mini_a_1")
       rendered.should have_content("mini_a_2")
     end
 
     it "contains a list of mini b courses" do
-      render
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
       rendered.should have_content("mini_b_1")
       rendered.should have_content("mini_b_2")
     end

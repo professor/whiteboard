@@ -26,6 +26,8 @@
     <% content_for :title, 'All courses' %>
     <h1>All Courses</h1>
     <div class="right_link"><%= link_to 'See current semester', :action => "current_semester" %></div>
+    <%= render :partial => "index_courses_for_a_semester", :locals => { :style => nil } %>
+
 <% else %>
     <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
     <div>
@@ -33,13 +35,10 @@
       <p>For more information about your options
         see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
     </div>
+    <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
     <!--
       <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), "url" %></div>
       -->
-<% end %>
-
-
-
 
 <% if current_user.course_tools_view != "semester" %>
     <%# This is the default option for those who have never hit the link %>
@@ -82,6 +81,7 @@ $(document).ready(function() {
     });
 });
 </script>
+<% end %>
 
 <br/>
 

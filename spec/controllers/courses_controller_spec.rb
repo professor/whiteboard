@@ -9,7 +9,7 @@ describe CoursesController do
   shared_examples_for "courses_for_a_given_semester" do
     specify { assigns(:courses).should_not be_nil }
     specify { assigns(:semester).should_not be_nil }
-    specify { assigns(:semester).should_not be_nil }
+    specify { assigns(:year).should_not be_nil }
     specify { assigns(:all_courses).should == false }
   end
 
@@ -20,8 +20,15 @@ describe CoursesController do
 
     describe "GET current semester" do
       before do
+        FactoryGirl.create(:course, :mini => "A")
+        FactoryGirl.create(:course, :mini => "B")
+        FactoryGirl.create(:course, :mini => "Both")
         get :current_semester
       end
+
+      specify { assigns(:semester_length_courses).should_not be_nil }
+      specify { assigns(:mini_a_courses).should_not be_nil }
+      specify { assigns(:mini_b_courses).should_not be_nil }
 
       it_should_behave_like "courses_for_a_given_semester"
     end
@@ -40,9 +47,6 @@ describe CoursesController do
       end
 
       specify { assigns(:courses).should_not be_nil }
-      specify { assigns(:semester_length_courses).should_not be_nil }
-      specify { assigns(:mini_a_courses).should_not be_nil }
-      specify { assigns(:mini_b_courses).should_not be_nil }
       specify { assigns(:all_courses).should == true }
     end
 
