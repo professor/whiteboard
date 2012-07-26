@@ -205,16 +205,7 @@ describe Course do
             new_course.attributes[key].should_not == value
           when "updated_at"
             new_course.attributes[key].should_not == value
-          when "peer_evaluation_first_email", "peer_evaluation_second_email"
-            if value.nil?
-              new_course.attributes[key].should be_nil
-            else
-              new_course.attributes[key].should == value + 1.year
-            end
           else
-            tmp = key
-            tmp2 = value
-            tmp3 = new_course.attributes[key]
             new_course.attributes[key].should == value
         end
       end
@@ -376,6 +367,14 @@ describe Course do
           end
         end
       end
+
+      it 'should update the peer_evaluation dates, if they are present'
+          #when "peer_evaluation_first_email", "peer_evaluation_second_email"
+          #  if value.nil?
+          #    new_course.attributes[key].should be_nil
+          #  else
+          #    new_course.attributes[key].should == value + 1.year
+          #  end
 
       context 'and there already exists course' do
         before(:each) do

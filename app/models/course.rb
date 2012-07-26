@@ -214,8 +214,6 @@ class Course < ActiveRecord::Base
     new_course.updated_by = nil
     new_course.created_at = Time.now
     new_course.updated_at = Time.now
-    new_course.peer_evaluation_first_email += 1.year if self.peer_evaluation_first_email
-    new_course.peer_evaluation_second_email += 1.year if self.peer_evaluation_second_email
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
     return new_course
@@ -234,6 +232,8 @@ class Course < ActiveRecord::Base
     if Course.for_semester(semester, next_year).empty?
       Course.for_semester(semester, year).each do |last_year_course|
         next_year_course = last_year_course.copy_as_new_course
+        next_year_course.peer_evaluation_first_email += 1.year if next_year_course.peer_evaluation_first_email
+        next_year_course.peer_evaluation_second_email += 1.year if next_year_course.peer_evaluation_second_email
         next_year_course.year = next_year
         next_year_course.save
       end
