@@ -18,25 +18,17 @@ describe CoursesController do
       login(FactoryGirl.create(:student_sam))
     end
 
-    describe "GET current semester" do
+    describe "GET index for semester" do
       before do
         FactoryGirl.create(:course, :mini => "A")
         FactoryGirl.create(:course, :mini => "B")
         FactoryGirl.create(:course, :mini => "Both")
-        get :current_semester
+        get :index_for_semester, :semester => "Fall2012"
       end
 
       specify { assigns(:semester_length_courses).should_not be_nil }
       specify { assigns(:mini_a_courses).should_not be_nil }
       specify { assigns(:mini_b_courses).should_not be_nil }
-
-      it_should_behave_like "courses_for_a_given_semester"
-    end
-
-    describe "GET next semester" do
-      before do
-        get :next_semester
-      end
 
       it_should_behave_like "courses_for_a_given_semester"
     end
@@ -49,7 +41,6 @@ describe CoursesController do
       specify { assigns(:courses).should_not be_nil }
       specify { assigns(:all_courses).should == true }
     end
-
 
     describe "GET show" do
       before do

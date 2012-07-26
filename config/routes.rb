@@ -31,8 +31,10 @@ CMUEducation::Application.routes.draw do
   resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
-  match '/courses/current_semester' => 'courses#current_semester', :as => :current_semester
-  match '/courses/next_semester' => 'courses#next_semester', :as => :next_semester
+  match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
+  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
+
+
   constraints({:id => /.*/}) do
     resources :mailing_lists
     resources :pages do
@@ -54,6 +56,8 @@ CMUEducation::Application.routes.draw do
     resources :presentations, :only => [:new, :edit, :create, :update]
   end
 
+
+  match 'courses/semester/:semester' => 'courses#index_for_semester', :as => "semester_courses"
   match '/courses/:course_id/peer_evaluations' => 'peer_evaluation#index_for_course', :via => :get, :as => "peer_evaluations"
   match '/courses/:course_id/teams/:id/peer_evaluation' => 'teams#peer_evaluation', :via => :get, :as => "peer_evaluation"
   match '/courses/:course_id/teams/:id/peer_evaluation_update' => 'teams#peer_evaluation_update', :via => :post, :as => "peer_evaluation_update"
