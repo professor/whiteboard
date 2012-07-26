@@ -210,6 +210,12 @@ class Course < ActiveRecord::Base
   def copy_as_new_course
     new_course = self.clone
     new_course.is_configured = false
+    new_course.configured_by = nil
+    new_course.updated_by = nil
+    new_course.created_at = Time.now
+    new_course.updated_at = Time.now
+    new_course.peer_evaluation_first_email += 1.year if self.peer_evaluation_first_email
+    new_course.peer_evaluation_second_email += 1.year if self.peer_evaluation_second_email
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
     return new_course
