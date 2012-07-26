@@ -237,5 +237,24 @@ describe AcademicCalendar do
     end
   end
 
+  context 'parse_semester_and_year' do
+    it 'works for the fall' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('Fall2012')
+      semester.should == "Fall"
+      year.should == "2012"
+    end
+
+    it 'works for the fall' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('Spring2013')
+      semester.should == "Spring"
+      year.should == "2013"
+    end
+
+    it 'works for the fall' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('Summer2013')
+      semester.should == "Summer"
+      year.should == "2013"
+    end
+  end
 
 end

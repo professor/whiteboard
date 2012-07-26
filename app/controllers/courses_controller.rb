@@ -12,12 +12,11 @@ class CoursesController < ApplicationController
 
   end
 
-  def current_semester
+  def index_for_semester
     @all_courses = false
-    @semester = AcademicCalendar.current_semester()
-    @year = Date.today.year
-    @courses = Course.for_semester(@semester, @year)
+    (@semester, @year) = AcademicCalendar.semester_and_year(params[:semester])
 
+    @courses = Course.for_semester(@semester, @year)
     @semester_length_courses = @courses.select {|course| course.mini == "Both"}
     @mini_a_courses = @courses.select {|course| course.mini == "A"}
     @mini_b_courses = @courses.select {|course| course.mini == "B"}
@@ -25,13 +24,33 @@ class CoursesController < ApplicationController
     index_core
   end
 
-  def next_semester
-    @all_courses = false
-    @semester = AcademicCalendar.next_semester()
-    @year = AcademicCalendar.next_semester_year()
-    @courses = Course.for_semester(@semester, @year)
-    index_core
-  end
+  #def current_semester
+  #  #@all_courses = false
+  #  @semester = AcademicCalendar.current_semester()
+  #  @year = Date.today.year
+  #  params[:semester] = "#{@semester}#{@year}"
+  #
+  #  #@courses = Course.for_semester(@semester, @year)
+  #  #@semester_length_courses = @courses.select {|course| course.mini == "Both"}
+  #  #@mini_a_courses = @courses.select {|course| course.mini == "A"}
+  #  #@mini_b_courses = @courses.select {|course| course.mini == "B"}
+  #  #
+  #  #index_core
+  #  index_for_semester
+  #end
+  #
+  #def next_semester
+  #  @all_courses = false
+  #  @semester = AcademicCalendar.next_semester()
+  #  @year = AcademicCalendar.next_semester_year()
+  #
+  #  @courses = Course.for_semester(@semester, @year)
+  #  @semester_length_courses = @courses.select {|course| course.mini == "Both"}
+  #  @mini_a_courses = @courses.select {|course| course.mini == "A"}
+  #  @mini_b_courses = @courses.select {|course| course.mini == "B"}
+  #
+  #  index_core
+  #end
 
   # GET /courses/1
   # GET /courses/1.xml

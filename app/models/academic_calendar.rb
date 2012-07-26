@@ -199,5 +199,17 @@ class AcademicCalendar
     return semester, year
   end
 
+  def self.parse_semester_and_year(semester_year_string)
+    semester = semester_year_string[0..-5]
+    year = semester_year_string[-4..-1]
+    return semester, year
+  end
+
+
+  def self.semester_and_year(string)
+    (semester, year) = self.parse_semester_and_year(string)
+    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year.empty?)
+    return semester, year
+  end
 
 end
