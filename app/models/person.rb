@@ -12,6 +12,7 @@ class Person < User
   acts_as_versioned :table_name => 'user_versions', :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
       user.sponsored_project_effort_last_emailed_changed? ||
       user.course_tools_view_changed? ||
+      user.course_index_view_changed? ||
       user.google_created_changed? ||
       user.twiki_created?) }
 

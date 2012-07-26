@@ -10,7 +10,6 @@ class CoursesController < ApplicationController
     @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
-    index_core
   end
 
   def current_semester
@@ -18,6 +17,11 @@ class CoursesController < ApplicationController
     @semester = AcademicCalendar.current_semester()
     @year = Date.today.year
     @courses = Course.for_semester(@semester, @year)
+
+    @semester_length_courses = @courses.select {|course| course.mini == "Both"}
+    @mini_a_courses = @courses.select {|course| course.mini == "A"}
+    @mini_b_courses = @courses.select {|course| course.mini == "B"}
+
     index_core
   end
 

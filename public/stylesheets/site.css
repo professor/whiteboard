@@ -217,6 +217,13 @@ tr.staff {
     width: 140px;
 }
 
+#semester_length_courses_table {
+    width: 100%;
+}
+
+#mini_b_courses_table {
+    float: right;
+}
 
 #image_box {
 position: absolute;

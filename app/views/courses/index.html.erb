@@ -2,17 +2,17 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
                     if ($("#filterBoxOne").prop("disabled") == true) {
                         $('#filterBoxOne').val('');
                         $('#filterBoxOne').removeAttr("disabled");
                         $('#filterBoxOne').focus();
                     }
-                    $("#courses_table").tablesorter({widgets: ['zebra']})
-                            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
-                                filterClearContainer: $("#filterClearOne"),
-                                filterColumns: [0, 1, 2, 4],
-                                filterCaseSensitive: false
+                    $("#courses_table").tablesorter({widgets:['zebra']})
+                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                                filterClearContainer:$("#filterClearOne"),
+                                filterColumns:[0, 1, 2, 4],
+                                filterCaseSensitive:false
                             });
                     <% if !@all_courses %>
                     $(".all_courses").hide();
@@ -25,60 +25,78 @@
 <% if @all_courses %>
     <% content_for :title, 'All courses' %>
     <h1>All Courses</h1>
-    <div class="right_link"><%= link_to 'See current semester', :action=>"current_semester" %></div>
+    <div class="right_link"><%= link_to 'See current semester', :action => "current_semester" %></div>
+    <%= render :partial => "index_courses_for_a_semester", :locals => { :style => nil } %>
+
 <% else %>
     <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
+    <div>
     <h1><%= @semester %> <%= @year %> Courses</h1>
+      <p>For more information about your options
+        see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
+    </div>
     <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
-    <p>For more information about your options
-      see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
-<% end %>
-<%= render :partial => "/people/tablesorter_filter_box" %>
+    <!--
+      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), "url" %></div>
+      -->
 
-<table id="courses_table" class="tablesorter2">
-  <thead>
-  <tr>
-    <th>Number</th>
-    <th>Name</th>
-    <th class="all_courses">Semester</th>
-    <th>Mini</th>
-    <th class="all_courses">Year</th>
-    <th>&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-<% for course in @courses %>
-   <tr class="tablesorter">
-    <td><%=h course.number %></td>
-<% if course.curriculum_url.blank? %>
-    <td> <%=h course.display_name %></td>
+<% if current_user.course_tools_view != "semester" %>
+    <%# This is the default option for those who have never hit the link %>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="semester">Show by length</a></div>
+    <%= render :partial => "index_courses_for_a_semester", :locals => { :style => nil } %>
+    <%= render :partial => "index_courses_by_length", :locals => { :style => "display:none;"} %>
 <% else %>
-    <td><a href='<%=course.curriculum_url %>'><%=h course.display_name %></a></td>
+    <div align="right" ><a href="#" id="course_tools_view" data-view-state="length">Show by semester</a></div>
+    <%= render :partial => "index_courses_for_a_semester", :locals => {  :style => "display:none;"} %>
+    <%= render :partial => "index_courses_by_length", :locals => { :style => nil} %>
 <% end %>
-    <td class="all_courses"><%=h course.semester %></td>
-    <td><%=h course.mini %></td>
-    <td class="all_courses"><%=h course.year %></td>
-    <td><%= link_to 'Course Tools', course_path(course) %></td>
 
-  </tr>
+
+<script>
+$(document).ready(function() {
+    $('#course_tools_view').click(function() {
+        old_state = $(this).attr('data-view-state');
+        if(old_state == "semester")
+        {
+            new_state = "length";
+            $(this).attr('data-view-state', "length");
+            $('#course_tools_view').html("Show as semester");
+            $('#courses_for_a_semester').hide();
+            $('#courses_by_length').show();
+        }
+        else
+        {
+            new_state = "semester";
+            $(this).attr('data-view-state', "semester");
+            $('#course_tools_view').html("Show as length");
+            $('#courses_by_length').hide();
+            $('#courses_for_a_semester').show();
+        }
+        $.ajax({
+            type: 'post',
+            data: "model=User&id=<%=current_user.id%>&attribute=course_index_view&value=" + new_state,
+            dataType: 'script',
+            url: '/generic_ajax/update_model_with_value'});
+
+    });
+});
+</script>
 <% end %>
-</tbody>
-</table>
-
 
 <br/>
 
 <% if can? :upload, Course %>
-  <div class="rounded admin">
-  <%= admin_image %>
-    <span class="instructions">Only certain admin roles can see this information.</span>
-    <h2>Upload Roster File</h2>
-    <% form_tag '/courses/upload', :multipart => true do %>
-        <%= file_field_tag "file" %>
-        <%= submit_tag "Upload" %>
-    <% end %>
-    <br/>
-  </div>
+    <div class="rounded admin">
+      <%= admin_image %>
+      <span class="instructions">Only certain admin roles can see this information.</span>
+
+      <h2>Upload Roster File</h2>
+      <% form_tag '/courses/upload', :multipart => true do %>
+          <%= file_field_tag "file" %>
+          <%= submit_tag "Upload" %>
+      <% end %>
+      <br/>
+    </div>
 <% end %>
 
 <% if current_user && current_user.is_admin? %>
