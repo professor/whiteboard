@@ -43,7 +43,9 @@ module CMUEducation
     config.filter_parameters += [:password]
 
     OpenID.fetcher.ca_file = "#{Rails.root}/config/ca-bundle.crt"
-    
+
+#    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
   # Make sure the secret is at least 30 characters and all random,
