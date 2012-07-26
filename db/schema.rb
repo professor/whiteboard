@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120718230557) do
+ActiveRecord::Schema.define(:version => 20120726001651) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -564,6 +564,7 @@ ActiveRecord::Schema.define(:version => 20120718230557) do
     t.string   "remember_token"
     t.datetime "remember_created_at"
     t.date     "expires_at"
+    t.string   "course_index_view"
   end
 
   create_table "users", :force => true do |t|
@@ -635,6 +636,7 @@ ActiveRecord::Schema.define(:version => 20120718230557) do
     t.string   "remember_token"
     t.datetime "remember_created_at"
     t.date     "expires_at"
+    t.string   "course_index_view"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

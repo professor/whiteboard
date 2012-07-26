@@ -1,0 +1,65 @@
+<div id="courses_by_length" style="<%= style %>">
+  <br/><br/>
+  <div class="right_link"><%# link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), "url" %></div>
+  <div id="semester_length_courses">
+    <table id="semester_length_courses_table" class="cmu_table">
+      <thead>
+      <tr>
+        <th>Semester</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for course in @semester_length_courses %>
+          <tr class="tablesorter">
+            <% if course.curriculum_url.blank? %>
+                <td><%= course.name %></td>
+            <% else %>
+                <td><%= link_to course.name, course.curriculum_url %></td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br/>
+
+  <div id="mini_length_courses">
+    <table id="mini_b_courses_table" class="cmu_table">
+      <thead>
+      <tr>
+        <th>Mini B</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for course in @mini_b_courses %>
+          <tr class="tablesorter">
+            <% if course.curriculum_url.blank? %>
+                <td><%= course.name %></td>
+            <% else %>
+                <td><%= link_to course.name, course.curriculum_url %></td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <table id="mini_a_courses_table" class="cmu_table">
+      <thead>
+      <tr>
+        <th>Mini A</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for course in @mini_a_courses %>
+          <tr class="tablesorter">
+            <% if course.curriculum_url.blank? %>
+                <td><%= course.name %></td>
+            <% else %>
+                <td><%= link_to course.name, course.curriculum_url %></td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
