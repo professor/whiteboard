@@ -181,8 +181,8 @@ describe Course do
       subject.should respond_to(:copy_as_new_course)
     end
 
-    it "all attributes are copied except 'is_configured'" do
-      course = FactoryGirl.create(:course)
+    it "many attributes are copied except 'is_configured' and a few others!" do
+      course = FactoryGirl.create(:course, :peer_evaluation_first_email => Date.today)
       new_course = course.copy_as_new_course
       new_course.save
       course.attributes.each do |key, value|
@@ -197,7 +197,24 @@ describe Course do
             else
               new_course.curriculum_url.should == value
             end
+          when "updated_by_user_id"
+            new_course.attributes[key].should be_nil
+          when "configured_by_user_id"
+            new_course.attributes[key].should be_nil
+          when "created_at"
+            new_course.attributes[key].should_not == value
+          when "updated_at"
+            new_course.attributes[key].should_not == value
+          when "peer_evaluation_first_email", "peer_evaluation_second_email"
+            if value.nil?
+              new_course.attributes[key].should be_nil
+            else
+              new_course.attributes[key].should == value + 1.year
+            end
           else
+            tmp = key
+            tmp2 = value
+            tmp3 = new_course.attributes[key]
             new_course.attributes[key].should == value
         end
       end
