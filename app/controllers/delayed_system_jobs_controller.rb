@@ -2,10 +2,11 @@ class DelayedSystemJobsController < ApplicationController
 
   before_filter :authenticate_user!
 
-  layout 'cmu_sv_no_pad'
+  layout 'cmu_sv'
 
 
   def index
+    @no_pad = true
     if has_permissions_or_redirect(:admin, root_path)
 
       @delayed_system_jobs = DelayedSystemJob.all

@@ -5,7 +5,7 @@ describe 'A user visiting the site', :type => :request do
   context 'when not logged in' do
     it 'welcomes the user' do
       visit root_path
-      page.should have_content('CARNEGIE MELLON SILICON VALLEY')
+      page.should have_content('Silicon Valley Campus')
     end
   end
   

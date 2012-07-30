@@ -12,7 +12,7 @@
 
 
   <div>
-    <table><tr><td>
+    <table class="layout_table"><tr><td>
   <a href="<%=url_for :action=>"index", :id => params[:id], :week => nil, :only_path=>true%>">Back to Effort Reports main page</a>
 
               </td>
@@ -22,7 +22,7 @@
   <br/>
 <div>
 <%= form_for @panel_state, :as => :panel_state, :url => {:action => "campus_week", :id=> params[:id]} do |f| %>
-  <table><tr>
+  <table class="layout_table"><tr>
       <td>
   Date
 <%= f.text_field :date, :size => 10 %>

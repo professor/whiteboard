@@ -11,12 +11,12 @@ $(document).ready(function()
          $('#filterBoxOne').removeAttr("disabled");
          $('#filterBoxOne').focus();
         }
-        $("#people_table").tablesorter({widgets: ['zebra'],         
-                                        headers: {2: {sorter: false}  },
+        $("#people_table").tablesorter({widgets: ['zebra'],
+                                        headers: {2: {sorter: false}, 3: {sorter: false}  },
                                         sortList: [[0,0], [1,0]]})
             .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
                 filterClearContainer: $("#filterClearOne"),
-                filterColumns: [0, 1, 5, 6, 7],
+                filterColumns: [0, 1, 2],
                 filterCaseSensitive: false
             });
         //scroll the message box to the top offset of browser's scrool bar
@@ -91,10 +91,12 @@ function updateImage(uri,label)
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
+<% content_for :image_box do %>
 <div id="image_box">
   <%= image_tag("/images/mascot.jpg", :width=>"150", :alt=>"Temporary Picture", :id=>"image_box_image")%><%= image_tag("/images/tablesorter/cross.png", :width=>"16", :height=>"16", :alt=>"Close Me", :style=>"float:right;cursor:pointer", :id=>"close_image_box") %>
   <div id='image_box_label'></div>
 </div>
+<% end %>
 
 <table id="people_table" class="tablesorter">
   <thead>
@@ -102,6 +104,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
     <th>First name</th>
     <th>Last name</th>
     <th>Phone</th>
+    <th>&nbsp;</th>
   </tr>
 </thead>
 <tbody>

@@ -2,14 +2,14 @@
 
 <h1>Listing pages</h1>
 
-<table>
+<table class="cmu_table">
   <tr>
     <th>Title</th>
     <th>Course</th>
   </tr>
 
 <% for page in @pages %>
-  <tr>
+  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
     <td><%=h page.title %></td>
 <% unless page.course_id.blank?  %>
     <td>(<%=h page.course.name %>)</td>

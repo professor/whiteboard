@@ -6,6 +6,12 @@
 
 <%= render :partial => "left_nav" %>
 
+<!-- necessary for the left navigation li items not to interfer with the height of the four tab interface -->
+<style type="text/css">
+    #tabs {
+        overflow: hidden;
+    }
+</style>
 
 <% if @page.course.blank? %>
     <h1 name="page">  <%=h @page.title %></h1>
