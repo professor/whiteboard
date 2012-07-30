@@ -8,9 +8,22 @@ class User < ActiveRecord::Base
   attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
-#   has_and_belongs_to_many :courses, :join_table=>"courses_users"
   has_many :registrations
   has_many :registered_courses, :through => :registrations, :source => :course
+
+  has_many :faculty_assignments, :foreign_key => :person_id  #Todo: rename column to be user_id
+  has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
+
+  validates_uniqueness_of :webiso_account, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
+
+
+
+  belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
+  belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
+  belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
+  belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
+  belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
 
 
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'

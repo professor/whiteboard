@@ -16,19 +16,6 @@ class Person < User
       user.google_created_changed? ||
       user.twiki_created?) }
 
-  has_many :faculty_assignments
-  has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
-
-
-  belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
-  belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
-  belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
-  belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
-  belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
-
-  validates_uniqueness_of :webiso_account, :case_sensitive => false
-  validates_uniqueness_of :email, :case_sensitive => false
-
 #  def to_param
 #    if twiki_name.blank?
 #      id.to_s
