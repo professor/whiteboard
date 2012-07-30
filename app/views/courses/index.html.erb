@@ -40,6 +40,15 @@
       <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), "url" %></div>
       -->
 
+
+    <div>Mini A + B: <%= AcademicCalendar.date_for_semester_start(@semester, @year) %> - <%= AcademicCalendar.date_for_semester_end(@semester, @year) %> (<%= AcademicCalendar.term_length(@semester, "Both") %> weeks)</div>
+    <div>Mini A: <%= AcademicCalendar.date_for_mini_start(@semester, "A", @year) %> - <%= AcademicCalendar.date_for_mini_end(@semester, "A", @year) %>  (<%= AcademicCalendar.term_length(@semester, "A") %> weeks)</div>
+    <div>Mini B:  <%= AcademicCalendar.date_for_mini_start(@semester, "B", @year) %>  - <%= AcademicCalendar.date_for_mini_end(@semester, "B", @year) %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks) </div>
+
+
+
+
+
 <% if current_user.course_tools_view != "semester" %>
     <%# This is the default option for those who have never hit the link %>
     <div align="right" ><a href="#" id="course_tools_view" data-view-state="semester">Show by length</a></div>
