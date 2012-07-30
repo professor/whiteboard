@@ -8,16 +8,19 @@ class User < ActiveRecord::Base
   attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
+  #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
+  acts_as_versioned :table_name => 'user_versions', :foreign_key => :person_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
+      user.sponsored_project_effort_last_emailed_changed? ||
+      user.course_tools_view_changed? ||
+      user.course_index_view_changed? ||
+      user.google_created_changed? ||
+      user.twiki_created?) }
+
   has_many :registrations
   has_many :registered_courses, :through => :registrations, :source => :course
 
   has_many :faculty_assignments, :foreign_key => :person_id  #Todo: rename column to be user_id
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
-
-  validates_uniqueness_of :webiso_account, :case_sensitive => false
-  validates_uniqueness_of :email, :case_sensitive => false
-
-
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
@@ -26,16 +29,41 @@ class User < ActiveRecord::Base
   belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
 
 
+  before_validation :update_webiso_account
+  before_save :person_before_save
+
+  validates_uniqueness_of :webiso_account, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
+
+  has_attached_file :photo, :storage => :s3, :styles => {:original =>"", :profile => "133x200>"},
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
+  validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
+
+
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
 
   scope :part_time_class_of, lambda { |program, year|
     where("is_part_time is TRUE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
-#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
   }
   scope :full_time_class_of, lambda { |program, year|
     where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
-#    where("masters_program = ? and graduation_year = ?",program, year.to_s).order("human_name ASC")
   }
+
+  def teaching_these_courses_during_current_semester
+    teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+  end
+
+  def registered_for_these_courses_during_current_semester
+   hub_registered_courses =  registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
+
+    sql_str = "select c.* FROM courses c,teams t
+              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
+              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+   courses_assigned_on_teams = Course.find_by_sql(sql_str)
+
+   @registered_courses = hub_registered_courses | courses_assigned_on_teams
+  end
+
 
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
     data = access_token['user_info']

@@ -252,6 +252,20 @@ describe User do
     end
 
 
+  context "registered_for_these_courses_during_current_semester" do
+
+    it "a student is 'registered' if we have data from the HUB"
+
+    #it "a student is 'registered' if the faculty has put the student on a team" do
+    #  @team_triumphant = FactoryGirl.create(:team_triumphant)
+    #  @course = @team_triumphant.course
+    #  @student = @team_triumphant.students[0]
+    #  @student.registered_for_these_courses_during_current_semester.should == @course
+    #end
+
+
+  end
+
 
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log

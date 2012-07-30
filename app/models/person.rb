@@ -8,13 +8,7 @@
 #
 class Person < User
   set_table_name "users"
-  #We version the user table unless the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned :table_name => 'user_versions', :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
-      user.sponsored_project_effort_last_emailed_changed? ||
-      user.course_tools_view_changed? ||
-      user.course_index_view_changed? ||
-      user.google_created_changed? ||
-      user.twiki_created?) }
+
 
 #  def to_param
 #    if twiki_name.blank?
@@ -25,28 +19,8 @@ class Person < User
 #  end
 
 
-  has_attached_file :photo, :storage => :s3, :styles => {:original =>"", :profile => "133x200>"},
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
-  validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
-  before_validation :update_webiso_account
 
-  before_save :person_before_save
-
-  def teaching_these_courses_during_current_semester
-    teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
-  end
-
-  def registered_for_these_courses_during_current_semester
-   hub_registered_courses =  registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
-
-    sql_str = "select c.* FROM courses c,teams t
-              where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
-              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
-   courses_assigned_on_teams = Course.find_by_sql(sql_str)
-
-   @registered_courses = hub_registered_courses | courses_assigned_on_teams
-  end
 
 
   #
