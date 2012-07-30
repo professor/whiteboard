@@ -76,10 +76,10 @@
           <li class="standard"><a href="/people">Users</a></li>
           <li class="standard"><a href="/courses">Courses</a></li>
           <ul>
-          <li class="standard"><a href="/courses/current_semester"><%= AcademicCalendar.current_semester() %> <%= Date.today.year %> Courses</a></li>
+          <li class="standard"><a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"%>><%= AcademicCalendar.current_semester() %> <%= Date.today.year %> Courses</a></li>
 
           <% if AcademicCalendar.next_semester_is_soon %>
-              <li class="standard"><a href="/courses/next_semester"><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></li>
+              <li class="standard"><a href=<%= "/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"%>><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></li>
           <% end %>
           </ul>
           <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
