@@ -2,7 +2,7 @@
 
 
 <h1>Members of <%= @mailing_list.sub('@west.cmu.edu','@sv.cmu.edu') %></h1>
-<table>
+<table class="layout_table">
 <% for member in @members %>
 <tr><td><%= member.sub('@west.cmu.edu','@sv.cmu.edu') %></td></tr>
 <% end %>

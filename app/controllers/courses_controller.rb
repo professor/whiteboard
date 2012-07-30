@@ -216,7 +216,7 @@ class CoursesController < ApplicationController
     authorize! :team_formation, @course
 
     respond_to do |format|
-      format.html { render :html => @teams, :layout => "cmu_sv_no_pad" } # index.html.erb
+      format.html { render :html => @teams, :layout => "cmu_sv" } # index.html.erb
       format.xml { render :xml => @teams }
     end
   end

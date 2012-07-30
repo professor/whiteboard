@@ -154,7 +154,7 @@
     <p>To reorder pages, drag them around. Changes are automatically saved.</p>
     <% end %>
     <div id="page-attachments">
-      <table>
+        <table class="cmu_table">
         <tbody id="sortable">
         <% @page.page_attachments.each do |pa| %>
             <tr id="page_attachment_<%= pa.id -%>">
@@ -244,6 +244,7 @@
 <% end %>
 
 <% if @page.editable?(current_user) && (can? :update, PageAttachment) %>
+    <br/>
     <p>Add new attachment:</p>
     <%= form_for(PageAttachment.new, :html => {:multipart => true}) do |f| %>
         <%= f.hidden_field :page_id, :value => @page.id %>

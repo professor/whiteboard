@@ -1,5 +1,5 @@
 class CourseNavigationsController < ApplicationController
-  layout 'cmu_sv_no_pad'
+  layout 'cmu_sv'
 
   before_filter :authenticate_user!
   
@@ -11,6 +11,7 @@ class CourseNavigationsController < ApplicationController
   # GET /course_navigations/1
   # GET /course_navigations/1.xml
   def show
+    @no_pad = true
     @course = Course.find(params[:id])
     authorize! :update, @course
 

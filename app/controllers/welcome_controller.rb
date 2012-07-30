@@ -1,5 +1,4 @@
 class WelcomeController < ApplicationController
-#  layout 'cmu_sv_simple'
   layout 'cmu_sv'
 
   def index

@@ -1,0 +1,41 @@
+.content2Column {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/2col_bg.gif); background-repeat: repeat-y;
+}
+
+.content2Column .boxTop {
+	height: 10px;
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/2col_top.gif);
+	background-repeat:no-repeat;
+	margin:0px;
+	padding:0px;
+}
+.content2Column .boxBottom {
+	height: 10px;
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/2col_bot.gif);
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+.content2Column .content {
+}
+
+.content3Column {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/3col_bg.gif); background-repeat: repeat-y;
+}
+
+.content3Column .boxTop {
+	height: 10px;
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/3col_top.gif);
+	background-repeat:no-repeat;
+	margin:0px;
+	padding:0px;
+}
+.content3Column .boxBottom {
+	height: 10px;
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/3col_bot.gif);
+	background-repeat:no-repeat;
+}
+.content3Column .content {
+}
+
+.content tr.alternateRow td, .content tr.odd td {background-color: #dbdede;}
+

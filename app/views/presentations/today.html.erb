@@ -1,6 +1,6 @@
 <%= content_for :title, "Today's Presentations" %>
 <% if current_user.is_staff? || current_user.is_admin? %>
-<table cellspacing="0" width=100%>
+<table class="layout_table" cellspacing="0" width=100%>
   <tr class="staff">
     <td>
       <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role") %>

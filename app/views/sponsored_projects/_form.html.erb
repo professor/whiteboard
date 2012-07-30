@@ -11,7 +11,7 @@
     </div>
   <% end %> 
 
-  <table>
+  <table class="layout_table">
     <tr><td><%= f.label :name %></td><td><%= f.text_field :name, :size => "95"%></td></tr>
     <tr><td><%= f.label :sponsor %></td><td><%= f.select :sponsor_id, @sponsors.collect{|item| [item.name, item.id]} %></td></tr>
   </table>

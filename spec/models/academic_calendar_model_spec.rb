@@ -215,24 +215,40 @@ describe AcademicCalendar do
     end
   end
 
+  context "date_for_mini_start" do
+    it 'should provide a Ruby Date for a mini B start' do
+      AcademicCalendar.date_for_mini_start("Summer", "B", 2012).should == Date.new(2012, 7, 2)
+    end
+  end
+
+  context "date_for_mini_end" do
+    it 'should provide a Ruby Date for a mini A end' do
+      AcademicCalendar.date_for_mini_end("Summer", "A", 2012).should == Date.new(2012, 6, 29)
+    end
+    it 'should provide a Ruby Date for a mini B end' do
+      AcademicCalendar.date_for_mini_end("Summer", "B", 2012).should == Date.new(2012, 8, 10)
+    end
+
+  end
+
   context 'HUB Data Parsing' do
     context 'should parse out the semester' do
       it 'for the fall' do
         (semester, year) = AcademicCalendar.parse_HUB_semester('F12')
         semester.should == "Fall"
-        year.should == "2012"
+        year.should == 2012
       end
 
       it 'for the spring' do
         (semester, year) = AcademicCalendar.parse_HUB_semester('S12')
         semester.should == "Spring"
-        year.should == "2012"
+        year.should == 2012
       end
 
       it 'for the summer' do
         (semester, year) = AcademicCalendar.parse_HUB_semester('M12')
         semester.should == "Summer"
-        year.should == "2012"
+        year.should == 2012
       end
     end
   end
@@ -241,19 +257,19 @@ describe AcademicCalendar do
     it 'works for the fall' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Fall2012')
       semester.should == "Fall"
-      year.should == "2012"
+      year.should == 2012
     end
 
     it 'works for the fall' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Spring2013')
       semester.should == "Spring"
-      year.should == "2013"
+      year.should == 2013
     end
 
     it 'works for the fall' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Summer2013')
       semester.should == "Summer"
-      year.should == "2013"
+      year.should == 2013
     end
   end
 

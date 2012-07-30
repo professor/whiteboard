@@ -111,6 +111,49 @@ class AcademicCalendar
   end
 
 
+  def self.term_length(semester, mini)
+    case semester
+      when "Fall"
+        case mini
+          when "A"
+            7
+          when "B"
+            7
+          when "Both"
+            15
+        end
+      when "Spring"
+        case mini
+          when "A"
+            7
+          when "B"
+            7
+          when "Both"
+            16
+        end
+      when "Summer"
+        case mini
+          when "A"
+            6
+          when "B"
+            6
+          when "Both"
+            12
+        end
+    end
+  end
+
+  def self.break_length_between_minis(semester)
+    case semester
+      when "Fall"
+        1
+      when "Spring"
+        2
+      when "Summer"
+        0
+    end
+  end
+
   def self.semester_start(semester, year)
 
     case year
@@ -185,6 +228,32 @@ class AcademicCalendar
     Date.commercial(year, cweek)
   end
 
+  def self.date_for_semester_end(semester, year)
+    cweek = semester_start(semester, year)
+    cweek += self.term_length(semester, "Both")
+    Date.commercial(year, cweek, 5) #Friday
+  end
+
+  def self.date_for_mini_start(semester, mini, year)
+    cweek = semester_start(semester, year)
+    if mini == "B"
+      cweek += self.term_length(semester, mini) - 1
+      cweek += self.break_length_between_minis(semester) + 1
+    end
+    Date.commercial(year, cweek, 1)
+  end
+
+ def self.date_for_mini_end(semester, mini, year)
+    cweek = semester_start(semester, year)
+    cweek += self.term_length(semester, "A") - 1
+    if mini == "B"
+      cweek += self.break_length_between_minis(semester)
+      cweek += self.term_length(semester, mini)
+    end
+    Date.commercial(year, cweek, 5) #Friday
+ end
+
+
   def self.parse_HUB_semester(short_form)
     case short_form[0]
       when 'F'
@@ -196,19 +265,19 @@ class AcademicCalendar
     end
     year = '20' + short_form[1..2]
 
-    return semester, year
+    return semester, year.to_i
   end
 
   def self.parse_semester_and_year(semester_year_string)
     semester = semester_year_string[0..-5]
-    year = semester_year_string[-4..-1]
+    year = semester_year_string[-4..-1].to_i
     return semester, year
   end
 
 
   def self.semester_and_year(string)
     (semester, year) = self.parse_semester_and_year(string)
-    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year.empty?)
+    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year == 0)
     return semester, year
   end
 

@@ -1,6 +1,6 @@
 <% content_for :title, 'Show Suggestion' %>
 
-<table><tr><td>Comment: </td><td><%=h @suggestion.comment %></td></tr>
+<table class="cmu_table"><tr><td>Comment: </td><td><%=h @suggestion.comment %></td></tr>
 <% if !@suggestion.page.nil? %>
 <tr><td>Page:</td><td><%= link_to @suggestion.page, @suggestion.page%> </td></tr>
 <% end %>
