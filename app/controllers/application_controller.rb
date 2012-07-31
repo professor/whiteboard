@@ -99,10 +99,11 @@ class ApplicationController < ActionController::Base
     flash[:error] = exception.message #We can remove this line when we upgrade to Rails 3.2
     redirect_to root_url, :error => exception.message
   end
-  
-  def american_date
-    '%m/%d/%Y'
-  end
+
+  # Now in locales
+  #def american_date
+  #  '%m/%d/%Y'
+  #end
 
   protected
   def make_available_for_exception_notification
