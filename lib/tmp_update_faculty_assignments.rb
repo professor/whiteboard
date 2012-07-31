@@ -9,7 +9,12 @@ def self.connect(db, user, pw)
  end
 
 def self.connect_database_url(url)
-   PGconn.new(url)
+  parts = /(.*)\:\/\/(.*)\:(.*)\@(.*)\/(.*)/.match(url)
+  puts "parts 4: #{parts[4]}"
+  puts "parts 5: #{parts[5]}"
+  puts "parts 2: #{parts[2]}"
+  puts "parts 3: #{parts[3]}"
+  PGconn.new(parts[4], 5432, '', '', parts[5], parts[2], parts[3])
  end
 
 
