@@ -41,12 +41,9 @@
       -->
 
 
-    <div>Mini A + B: <%= AcademicCalendar.date_for_semester_start(@semester, @year) %> - <%= AcademicCalendar.date_for_semester_end(@semester, @year) %> (<%= AcademicCalendar.term_length(@semester, "Both") %> weeks)</div>
-    <div>Mini A: <%= AcademicCalendar.date_for_mini_start(@semester, "A", @year) %> - <%= AcademicCalendar.date_for_mini_end(@semester, "A", @year) %>  (<%= AcademicCalendar.term_length(@semester, "A") %> weeks)</div>
-    <div>Mini B:  <%= AcademicCalendar.date_for_mini_start(@semester, "B", @year) %>  - <%= AcademicCalendar.date_for_mini_end(@semester, "B", @year) %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks) </div>
-
-
-
+    <div>Mini A + B: <%= l AcademicCalendar.date_for_semester_start(@semester, @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_semester_end(@semester, @year), :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "Both") %> weeks)</div>
+    <div>Mini A: <%= l AcademicCalendar.date_for_mini_start(@semester, "A", @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_mini_end(@semester, "A", @year), :format => :month_day %>  (<%= AcademicCalendar.term_length(@semester, "A") %> weeks)</div>
+    <div>Mini B:  <%= l AcademicCalendar.date_for_mini_start(@semester, "B", @year),  :format => :month_day %>  - <%= l AcademicCalendar.date_for_mini_end(@semester, "B", @year),  :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks) </div>
 
 
 <% if current_user.course_tools_view != "semester" %>

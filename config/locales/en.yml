@@ -9,6 +9,7 @@ en:
   date:
     formats:
       american: "%m/%d/%Y"
+      month_day: "%b %d"
   no_permission: You don't have permission to access this page.
   not_editable: You don't have permission to edit this object.
   no_person: This person doesn't exist in the system.
