@@ -8,6 +8,10 @@ def self.connect(db, user, pw)
    PGconn.new('localhost', 5432, '', '', db, user, pw)
  end
 
+def self.connect_database_url(url)
+   PGconn.new(url)
+ end
+
 
 
 
@@ -61,7 +65,8 @@ end
 # Query
 #def self.update_faculty_assignments_table
   begin
-    conn = TmpUpdateFacultyAssignments.connect('cmu_education', 'cruise', 'c0ntr0l')
+#    conn = TmpUpdateFacultyAssignments.connect('cmu_education', 'cruise', 'c0ntr0l')
+    conn = TmpUpdateFacultyAssignments.connect_database_url(ENV['DATABASE_URL'])
     puts "Connected to #{conn.db} at #{conn.host}"
     TmpUpdateFacultyAssignments.query_table(conn)
   rescue PGError => e
