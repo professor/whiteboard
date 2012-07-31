@@ -58,8 +58,8 @@ describe DeliverablesController do
       before(:each) do
         @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
-        Deliverable.stub(:find_current_by_person).and_return([@deliverable, @deliverable])
-        Deliverable.stub(:find_past_by_person).and_return([@deliverable, @deliverable])
+        Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
+        Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
         Course.stub(:find).and_return(@course)
       end
 
@@ -113,28 +113,28 @@ describe DeliverablesController do
 
         it 'the owner can see it' do
           login(@student_sam)
-          @team.stub(:is_person_on_team?).and_return(true)
+          @team.stub(:is_user_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "someone else on the team can see it" do
           login(@student_sam)
-          @team.stub(:is_person_on_team?).and_return(true)
+          @team.stub(:is_user_on_team?).and_return(true)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         it "any faculty can see it" do
           login(@faculty_frank)
-          @team.stub(:is_person_on_team?).and_return(false)
+          @team.stub(:is_user_on_team?).and_return(false)
           get :show, :id => @deliverable.id
           assigns(:deliverable).should == @deliverable
         end
 
         context "no other student can see it" do
           before do
-            @team.stub(:is_person_on_team?).and_return(false)
+            @team.stub(:is_user_on_team?).and_return(false)
             login(@student_sally)
             get :show, :id => @deliverable.id
           end
