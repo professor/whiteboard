@@ -37,7 +37,7 @@ FactoryGirl.define do
   factory :effort_log, class: EffortLog do
     year monday_of_this_week.cwyear
     week_number monday_of_this_week.cweek
-    association :person, :factory => :student_sam
+    association :user, :factory => :student_sam_user
   end
 
   factory :page, class: Page do

@@ -1,8 +1,8 @@
 class EffortLog < ActiveRecord::Base
   has_many :effort_log_line_items, :dependent => :destroy
-  belongs_to :person
+  belongs_to :user
 
-  validates_presence_of :person
+  validates_presence_of :user
   validates_presence_of :week_number
   validates_presence_of :year
 
@@ -10,7 +10,7 @@ class EffortLog < ActiveRecord::Base
 
    def self.find_effort_logs(current_user)
 
-     where("person_id = '#{current_user.id}'").order("year DESC, week_number DESC")
+     where("user_id = '#{current_user.id}'").order("year DESC, week_number DESC")
 
    end
 
@@ -18,7 +18,7 @@ class EffortLog < ActiveRecord::Base
     if (current_user && current_user.is_admin?)
       return true
     end
-    if (current_user && current_user.id == person_id)
+    if (current_user && current_user.id == user_id)
       a = Date.today
       b = Date.commercial(self.year, self.week_number, 1)
       c = (Date.commercial(self.year, self.week_number, 7) + 1.day)
@@ -31,7 +31,7 @@ class EffortLog < ActiveRecord::Base
 
   def validate_effort_against_registered_courses
     course_error_msg = ""
-    registered_courses = self.person.registered_for_these_courses_during_current_semester()
+    registered_courses = self.user.registered_for_these_courses_during_current_semester()
 
     unregistered_courses = {}
     self.effort_log_line_items.each do |log_line_item|
@@ -51,7 +51,7 @@ class EffortLog < ActiveRecord::Base
     cweek = Date.today.cweek
     cyear = Date.today.cwyear
 
-    sql_effort_logs_this_week = "SELECT e.* FROM effort_logs e,users u where e.week_number=#{cweek} and e.year=#{cyear} and u.id=e.person_id and u.is_student IS TRUE"
+    sql_effort_logs_this_week = "SELECT e.* FROM effort_logs e,users u where e.week_number=#{cweek} and e.year=#{cyear} and u.id=e.user_id and u.is_student IS TRUE"
 
     effort_logs_this_week = EffortLog.find_by_sql(sql_effort_logs_this_week)
     @error_effort_logs_users = {}
@@ -59,7 +59,7 @@ class EffortLog < ActiveRecord::Base
     effort_logs_this_week.each do |effort_log|
       courses_in_error = effort_log.validate_effort_against_registered_courses()
       if (courses_in_error!="")
-        @error_effort_logs_users[effort_log.person] = courses_in_error
+        @error_effort_logs_users[effort_log.user] = courses_in_error
       end
     end
     @error_effort_logs_users
@@ -109,8 +109,8 @@ class EffortLog < ActiveRecord::Base
     end
   end
 
-  def self.latest_for_person(person_id, week_number, year)
-    EffortLog.where("person_id = ? and week_number = ? and year = ?", person_id, week_number, year).first
+  def self.latest_for_user(user_id, week_number, year)
+    EffortLog.where("user_id = ? and week_number = ? and year = ?", user_id, week_number, year).first
   end
 
 end

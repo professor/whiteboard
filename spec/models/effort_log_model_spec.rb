@@ -23,7 +23,7 @@ describe EffortLog do
   end
 
   context "is not valid" do
-    [:person, :week_number, :year].each do |attr|
+    [:user, :week_number, :year].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -37,18 +37,18 @@ describe EffortLog do
   #  end
   #
   #  #it "for effort log owner" do
-  #  #  @effort.editable_by(@effort.person).should be_true
+  #  #  @effort.editable_by(@effort.user).should be_true
   #  #end
   #
   #  it "for admin who is not effort owner" do
   #    admin_andy = FactoryGirl.create(:admin_andy)
-  #    @effort.person.should_not be_equal(admin_andy)
+  #    @effort.user.should_not be_equal(admin_andy)
   #    @effort.editable_by(admin_andy).should be_true
   #  end
   #
   #  it "not for non admin and non effort log owner" do
   #    faculty_frank = FactoryGirl.create(:faculty_frank)
-  #    @effort.person.should_not be_equal(faculty_frank)
+  #    @effort.user.should_not be_equal(faculty_frank)
   #    @effort.editable_by(faculty_frank).should be_false
   #  end
   #end
@@ -61,18 +61,18 @@ describe EffortLog do
     context "within time period" do
       it "for admin who is not effort owner" do
         admin_andy = FactoryGirl.create(:admin_andy)
-        @effort.person.should_not be_equal(admin_andy)
+        @effort.user.should_not be_equal(admin_andy)
         @effort.editable_by(admin_andy).should be_true
       end
 
       it "for effort log owner" do
 
-        @effort.editable_by(@effort.person).should be_true
+        @effort.editable_by(@effort.user).should be_true
       end
 
       it "not for non admin and non effort log owner" do
         faculty_frank = FactoryGirl.create(:faculty_frank)
-        @effort.person.should_not be_equal(faculty_frank)
+        @effort.user.should_not be_equal(faculty_frank)
         @effort.editable_by(faculty_frank).should be_false
       end
     end
@@ -86,32 +86,32 @@ describe EffortLog do
 
       it "for admin who is not effort owner" do
         admin_andy = FactoryGirl.create(:admin_andy)
-        @effort.person.should_not be_equal(admin_andy)
+        @effort.user.should_not be_equal(admin_andy)
         @effort.editable_by(admin_andy).should be_true
       end
 
       it "for effort log owner" do
-        @effort.editable_by(@effort.person).should be_false
+        @effort.editable_by(@effort.user).should be_false
       end
 
       it "not for non admin and non effort log owner" do
         faculty_frank = FactoryGirl.create(:faculty_frank)
-        @effort.person.should_not be_equal(faculty_frank)
+        @effort.user.should_not be_equal(faculty_frank)
         @effort.editable_by(faculty_frank).should be_false
       end
     end
   end
 
-  context "validate_effort_against_registered_courses where person" do
+  context "validate_effort_against_registered_courses where user" do
     before(:each) do
       @effort_log_line_item = FactoryGirl.create(:elli_line1)
       @effort = FactoryGirl.create(:effort_log, :effort_log_line_items => [@effort_log_line_item])
     end
 
     it "is signed up for the course" #do
-#      person = @effort.person
+#      user = @effort.user
 #      courses = [@effort_log_line_item.course]
-#      person.should_receive(:get_registered_courses).and_return(courses)
+#      user.should_receive(:get_registered_courses).and_return(courses)
 #
 #      error_message = @effort.validate_effort_against_registered_courses
 #      puts error_message
@@ -119,9 +119,9 @@ describe EffortLog do
 #    end
 
     it "is not signed up for the course" #do
-#      person = @effort.person
+#      user = @effort.user
 #      courses = []
-#      person.should_receive(:get_registered_courses).and_return(courses)
+#      user.should_receive(:get_registered_courses).and_return(courses)
 #
 #      error_message = @effort.validate_effort_against_registered_courses
 #      error_message.should == @effort_log_line_item.course.name
@@ -139,7 +139,7 @@ describe EffortLog do
         EffortLog.any_instance.stub(:validate_effort_against_registered_courses).and_return("No course selected")
       end
       it 'returns the errors for each user' do
-        EffortLog.users_with_effort_against_unregistered_courses.should == {@effort.person => "No course selected"}
+        EffortLog.users_with_effort_against_unregistered_courses.should == {@effort.user => "No course selected"}
       end
     end
 
