@@ -89,18 +89,20 @@ class PagesController < ApplicationController
   end
 
   def show_ckeditor
-    @show_ckeditor = false
-    case @page.url
-      when "se_staff_meeting"
-        @show_ckeditor = true
-      when "sample_task"
-        @show_ckeditor = true
-      when "sample_task1"
-        @show_ckeditor = true
-      when "orientation"
-        @show_ckeditor = true
-    end
-@show_ckeditor = true  if @page.url.start_with?("orientation")
+    @show_ckeditor = true
+
+#    @show_ckeditor = false
+#    case @page.url
+#      when "se_staff_meeting"
+#        @show_ckeditor = true
+#      when "sample_task"
+#        @show_ckeditor = true
+#      when "sample_task1"
+#        @show_ckeditor = true
+#      when "orientation"
+#        @show_ckeditor = true
+#    end
+#@show_ckeditor = true  if @page.url.start_with?("orientation")
 
   end
 
