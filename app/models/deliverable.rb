@@ -34,7 +34,7 @@
 class Deliverable < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
-  belongs_to :creator, :class_name => "Person"
+  belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
   validates_presence_of :course, :creator
@@ -85,28 +85,28 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
-  def self.find_current_by_person(person)
+  def self.find_current_by_user(user)
     # Find everything where the passed in person is either the creator
     # or is on the deliverable's team
-    current_teams = Team.find_current_by_person(person)
-    Deliverable.find_by_person_and_teams(person, current_teams)
+    current_teams = Team.find_current_by_person(user)
+    Deliverable.find_by_user_and_teams(user, current_teams)
   end
 
-  def self.find_past_by_person(person)
+  def self.find_past_by_user(user)
     # Find everything where the passed in person is either the creator
     # or is on the deliverable's team
-    past_teams = Team.find_past_by_person(person)
-    Deliverable.find_by_person_and_teams(person, past_teams)
+    past_teams = Team.find_past_by_person(user)
+    Deliverable.find_by_user_and_teams(user, past_teams)
   end
 
-  def self.find_by_person_and_teams(person, teams)
+  def self.find_by_user_and_teams(user, teams)
     team_condition = ""
     if !teams.empty?
       team_condition = "team_id IN ("
       team_condition << teams.collect { |t| t.id }.join(',')
       team_condition << ") OR "
     end
-    Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{person.id})")
+    Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{user.id})")
   end
 
   def has_feedback?
@@ -161,16 +161,15 @@ class Deliverable < ActiveRecord::Base
   end
 
   def editable?(current_user)
-    person = Person.find(current_user.id)
     if self.is_team_deliverable?
-      unless self.team.is_person_on_team?(person)
+      unless self.team.is_user_on_team?(current_user)
         unless (current_user.is_staff?)||(current_user.is_admin?)
           return false
         end
       end
     end
     if !self.is_team_deliverable?
-      unless person == self.creator
+      unless current_user == self.creator
         unless (current_user.is_staff?)||(current_user.is_admin?)
           return false
         end
@@ -182,7 +181,7 @@ class Deliverable < ActiveRecord::Base
 
   protected
   def update_team
-    # Look up the team this person is on if it is a team deliverable
+    # Look up the team this user is on if it is a team deliverable
     self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id])
   end
 

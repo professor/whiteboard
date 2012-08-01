@@ -1,5 +1,13 @@
 require 'pg'
 
+# To run this file on production
+#
+# heroku console
+#  `ruby lib/tmp_update_faculty_assignments.rb`
+#
+#
+# This code isn't pretty, but it works.
+
 
 module TmpUpdateFacultyAssignments
 

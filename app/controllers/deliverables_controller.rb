@@ -20,16 +20,16 @@ class DeliverablesController < ApplicationController
   end
 
   def my_deliverables
-    person = Person.find(params[:id])
-    if (current_user.id != person.id)
-      unless (current_person.is_staff?)||(current_user.is_admin?)
+    user = User.find(params[:id])
+    if (current_user.id != user.id)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
         redirect_to root_path
         return
       end
     end
-    @current_deliverables = Deliverable.find_current_by_person(person)
-    @past_deliverables = Deliverable.find_past_by_person(person)
+    @current_deliverables = Deliverable.find_current_by_user(user)
+    @past_deliverables = Deliverable.find_past_by_user(user)
 
     respond_to do |format|
       format.html { render :action => "index" }
@@ -57,7 +57,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/new.xml
   def new
     # If we aren't on this deliverable's team, you can't see it.
-    @deliverable = Deliverable.new(:creator => current_person)
+    @deliverable = Deliverable.new(:creator => current_user)
 
     unless params[:course_id].nil?
       @deliverable.course_id = params[:course_id]
@@ -87,7 +87,7 @@ class DeliverablesController < ApplicationController
   def create
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
-    @deliverable.creator = current_person
+    @deliverable.creator = current_user
 
     @deliverable.update_team if params[:deliverable][:is_team_deliverable]
 
@@ -140,7 +140,7 @@ class DeliverablesController < ApplicationController
     if there_is_an_attachment
 
       @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
-      @attachment.submitter = current_person
+      @attachment.submitter = current_user
       @deliverable.attachment_versions << @attachment
       @attachment.deliverable = @deliverable
 
