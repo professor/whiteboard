@@ -1,7 +1,7 @@
 class DeliverableAttachment < ActiveRecord::Base
   set_table_name "deliverable_attachment_versions"
 
-  belongs_to :submitter, :class_name => "Person", :foreign_key => "submitter_id"
+  belongs_to :submitter, :class_name => "User", :foreign_key => "submitter_id"
   belongs_to :deliverable
 
   has_attached_file :attachment,
