@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :registrations
   has_many :registered_courses, :through => :registrations, :source => :course
 
-  has_many :faculty_assignments, :foreign_key => :person_id  #Todo: rename column to be user_id
+  has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"

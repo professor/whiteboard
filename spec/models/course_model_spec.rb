@@ -228,9 +228,9 @@ describe Course do
       @course = FactoryGirl.build(:course)
       @faculty_frank = FactoryGirl.build(:faculty_frank, :id => rand(100))
       @faculty_fagan = FactoryGirl.build(:faculty_fagan, :id => rand(100) + 100)
-      Person.stub(:find_by_human_name).with(@faculty_frank.human_name).and_return(@faculty_frank)
-      Person.stub(:find_by_human_name).with(@faculty_fagan.human_name).and_return(@faculty_fagan)
-      Person.stub(:find_by_human_name).with("Someone not in the system").and_return(nil)
+      User.stub(:find_by_human_name).with(@faculty_frank.human_name).and_return(@faculty_frank)
+      User.stub(:find_by_human_name).with(@faculty_fagan.human_name).and_return(@faculty_fagan)
+      User.stub(:find_by_human_name).with("Someone not in the system").and_return(nil)
     end
 
     it "validates that the people are in the system" do

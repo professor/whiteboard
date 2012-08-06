@@ -5,7 +5,7 @@ describe DeliverablesController do
 
     before do
       @admin_andy = FactoryGirl.create(:admin_andy)
-      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
       @faculty_fagan = FactoryGirl.create(:faculty_fagan)
       @student_sam = FactoryGirl.create(:student_sam)
       @student_sally = FactoryGirl.create(:student_sally)

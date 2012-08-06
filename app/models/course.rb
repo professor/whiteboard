@@ -36,7 +36,7 @@ class Course < ActiveRecord::Base
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
 
   has_many :faculty_assignments
-  has_many :faculty, :through => :faculty_assignments, :source => :person
+  has_many :faculty, :through => :faculty_assignments, :source => :user
 
   has_many :registrations
   has_many :registered_students, :through => :registrations, :source => :user
@@ -187,9 +187,9 @@ class Course < ActiveRecord::Base
     return "" if faculty_assignments_override.nil?
 
     self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
-    list = map_faculty_strings_to_persons(faculty_assignments_override)
-    list.each_with_index do |person, index|
-      if person.nil?
+    list = map_faculty_strings_to_users(faculty_assignments_override)
+    list.each_with_index do |user, index|
+      if user.nil?
         self.errors.add(:base, "Person " + faculty_assignments_override[index] + " not found")
       end
     end
@@ -200,7 +200,7 @@ class Course < ActiveRecord::Base
     self.faculty = []
 
     self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
-    list = map_faculty_strings_to_persons(self.faculty_assignments_override)
+    list = map_faculty_strings_to_users(self.faculty_assignments_override)
     raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
     self.faculty = list
     faculty_assignments_override = nil
@@ -290,8 +290,8 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def map_faculty_strings_to_persons(faculty_assignments_override_list)
-    faculty_assignments_override_list.map { |member_name| Person.find_by_human_name(member_name) }
+  def map_faculty_strings_to_users(faculty_assignments_override_list)
+    faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
 
