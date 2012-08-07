@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned :table_name => 'user_versions', :foreign_key => :person_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
+  acts_as_versioned :table_name => 'user_versions', :foreign_key => :user_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
       user.sponsored_project_effort_last_emailed_changed? ||
       user.course_tools_view_changed? ||
       user.course_index_view_changed? ||

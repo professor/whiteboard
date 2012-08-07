@@ -495,7 +495,7 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
   add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
 
   create_table "user_versions", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "version"
     t.string   "webiso_account"
     t.string   "email",                                 :limit => 100
