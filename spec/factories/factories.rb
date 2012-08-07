@@ -106,7 +106,7 @@ FactoryGirl.define do
 
   factory :sponsored_project_allocation, class: SponsoredProjectAllocation do
     current_allocation 10
-    association :person, :factory => :faculty_frank
+    association :user, :factory => :faculty_frank_user
     association :sponsored_project, :factory => :sponsored_project
     is_archived false
   end

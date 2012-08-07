@@ -17,10 +17,8 @@ class SponsoredProjectEffort < ActiveRecord::Base
         lambda { |month, year| {:conditions => ["month = ? and year = ?", month, year]} }
 
   scope :month_under_inspection_for_a_given_user,
-        lambda { |person_id| {:include => :sponsored_project_allocation,
-                              :conditions => ["month = ? and year = ? and sponsored_project_allocations.person_id = ?", 1.month.ago.month, 1.month.ago.year, person_id]} }
-
-#  default_scope :include => :sponsored_project_allocation,:order => 'sponsored_project_allocations.person_id ASC'
+        lambda { |user_id| {:include => :sponsored_project_allocation,
+                              :conditions => ["month = ? and year = ? and sponsored_project_allocations.user_id = ?", 1.month.ago.month, 1.month.ago.year, user_id]} }
 
 
   def self.new_from_sponsored_project_allocation(allocation)
@@ -34,7 +32,7 @@ class SponsoredProjectEffort < ActiveRecord::Base
 
   def self.emails_business_manager(an_effort_id)
     effort = SponsoredProjectEffort.find(an_effort_id)
-    SponsoredProjectEffortMailer.deliver_changed_allocation_email_to_business_manager(effort.sponsored_project_allocation.person,
+    SponsoredProjectEffortMailer.deliver_changed_allocation_email_to_business_manager(effort.sponsored_project_allocation.user,
                                                                                       effort.month, effort.year)
   end
 

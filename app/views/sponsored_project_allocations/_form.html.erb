@@ -20,7 +20,7 @@
 </tr>
 </thead>
 <tbody>
-    <tr><td><%= f.select :person_id, @people.collect{|item| [item.human_name, item.id]} %></td>
+    <tr><td><%= f.select :user_id, @users.collect{|item| [item.human_name, item.id]} %></td>
         <td><%= f.select :sponsored_project_id, @projects.collect{|item| [item.sponsor.name + " - " + item.name[0..60], item.id]} %></td>
         <td><%= f.text_field :current_allocation, :size => 2 %> %</td></tr>
     <tr><td>&nbsp;</td><td><%= link_to 'New sponsor', new_sponsored_project_sponsor_path %>

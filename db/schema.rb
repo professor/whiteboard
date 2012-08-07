@@ -390,7 +390,7 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
 
   create_table "sponsored_project_allocations", :force => true do |t|
     t.integer  "sponsored_project_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "current_allocation"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -398,8 +398,8 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
   end
 
   add_index "sponsored_project_allocations", ["is_archived"], :name => "index_sponsored_project_allocation_on_is_archived"
-  add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocation_on_person_id"
   add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocation_on_sponsored_project_id"
+  add_index "sponsored_project_allocations", ["user_id"], :name => "index_sponsored_project_allocation_on_person_id"
 
   create_table "sponsored_project_efforts", :force => true do |t|
     t.integer  "sponsored_project_allocation_id"

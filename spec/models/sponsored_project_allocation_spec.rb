@@ -11,7 +11,7 @@ describe SponsoredProjectAllocation do
 
   context "is not valid" do
 
-    [:person_id, :sponsored_project_id, :current_allocation].each do |attr|
+    [:user_id, :sponsored_project_id, :current_allocation].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -25,18 +25,18 @@ describe SponsoredProjectAllocation do
     end
 
     it "when current_allocation is non-numerical" do
-      sponsored_project_person = FactoryGirl.build(:sponsored_project_allocation, :current_allocation => "test")
-      sponsored_project_person.should_not be_valid
+      sponsored_project_user = FactoryGirl.build(:sponsored_project_allocation, :current_allocation => "test")
+      sponsored_project_user.should_not be_valid
     end
 
     it "when current_allocation is a negative number" do
-      sponsored_project_person = FactoryGirl.build(:sponsored_project_allocation, :current_allocation => -1)
-      sponsored_project_person.should_not be_valid
+      sponsored_project_user = FactoryGirl.build(:sponsored_project_allocation, :current_allocation => -1)
+      sponsored_project_user.should_not be_valid
     end
 
-    it "when a duplicate allocation exists for the same person to project" do
+    it "when a duplicate allocation exists for the same user to project" do
       original = FactoryGirl.create(:sponsored_project_allocation)
-      duplicate = FactoryGirl.build(:sponsored_project_allocation, :person => original.person, :sponsored_project => original.sponsored_project)
+      duplicate = FactoryGirl.build(:sponsored_project_allocation, :user => original.user, :sponsored_project => original.sponsored_project)
       duplicate.should_not be_valid
     end
   end
@@ -47,17 +47,17 @@ describe SponsoredProjectAllocation do
     end
 
     it 'belongs to a sponsored project name' do
-      sponsored_project_person = FactoryGirl.create(:sponsored_project_allocation)
-      sponsored_project_person.sponsored_project.name.should_not be_empty
+      sponsored_project_user = FactoryGirl.create(:sponsored_project_allocation)
+      sponsored_project_user.sponsored_project.name.should_not be_empty
     end
 
-    it 'belongs to a person' do
-      subject.should respond_to(:person)
+    it 'belongs to a user' do
+      subject.should respond_to(:user)
     end
 
-    it 'belongs to a person human_name' do
-      sponsored_project_person = FactoryGirl.create(:sponsored_project_allocation)
-      sponsored_project_person.person.human_name.should_not be_empty
+    it 'belongs to a user human_name' do
+      sponsored_project_user = FactoryGirl.create(:sponsored_project_allocation)
+      sponsored_project_user.user.human_name.should_not be_empty
     end
 
 
@@ -67,7 +67,7 @@ describe SponsoredProjectAllocation do
   describe "objects" do
     before(:each) do
       @archived = FactoryGirl.create(:sponsored_project_allocation, :is_archived => true)
-      @current = FactoryGirl.create(:sponsored_project_allocation, :is_archived => false, :person => @archived.person)
+      @current = FactoryGirl.create(:sponsored_project_allocation, :is_archived => false, :user => @archived.user)
     end
 
     it_should_behave_like "archived objects"
@@ -80,8 +80,8 @@ describe SponsoredProjectAllocation do
       @faculty_frank = FactoryGirl.create(:faculty_frank)
       @project_rover = FactoryGirl.create(:sponsored_project, :name => "Rover SW")
       @project_disaster = FactoryGirl.create(:sponsored_project, :name => "Disaster Response")
-      @allocation_fagan_rover = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
-      @allocation_fagan_disaster = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
+      @allocation_fagan_rover = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_rover)
+      @allocation_fagan_disaster = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_fagan, :current_allocation => 50, :sponsored_project => @project_disaster)
     end
 
     it 'responds to monthly_copy_to_sponsored_project_effort' do
@@ -97,7 +97,7 @@ describe SponsoredProjectAllocation do
 
     it 'does not copy archived allocations' do
       @project_fading_shiny_newness = FactoryGirl.create(:sponsored_project, :name => "Last Year's Hot Thing'")
-      @allocation_fagan_archived = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan, :current_allocation => 50, :is_archived => true, :sponsored_project => @project_fading_shiny_newness)
+      @allocation_fagan_archived = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_fagan, :current_allocation => 50, :is_archived => true, :sponsored_project => @project_fading_shiny_newness)
       lambda {
         SponsoredProjectAllocation.monthly_copy_to_sponsored_project_effort
         }.should change(SponsoredProjectEffort, :count).by(2)
@@ -107,11 +107,11 @@ describe SponsoredProjectAllocation do
   context "emails staff to confirm their effort for current month" do
 
     before do
-      @faculty_frank = FactoryGirl.create(:faculty_frank)
-      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan_user)
 
-      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_frank)
-      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan)
+      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_frank)
+      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_fagan)
 
       @effort_frank = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
       @effort_fagan = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)

@@ -60,12 +60,12 @@ $(document).ready(function()
 <tbody>
 <% @efforts.each do |effort| %>
     <tr class="tablesorter">
-      <td><%= effort.sponsored_project_allocation.person.human_name %></td>
+      <td><%= effort.sponsored_project_allocation.user.human_name %></td>
       <td><%= effort.sponsored_project_allocation.sponsored_project.sponsor.name %></td>
       <td><%= effort.sponsored_project_allocation.sponsored_project.name %></td>
       <td><%= effort.current_allocation %> % <%= link_to 'Edit', edit_sponsored_project_allocation_path(effort.sponsored_project_allocation) %>
       </td>
-      <td><%= effort.actual_allocation %> % <%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.person.twiki_name) %>
+      <td><%= effort.actual_allocation %> % <%= link_to 'Edit', edit_sponsored_project_effort_path(effort.sponsored_project_allocation.user.twiki_name) %>
       </td>
       <td><%= effort.confirmed %></td>
     </tr>

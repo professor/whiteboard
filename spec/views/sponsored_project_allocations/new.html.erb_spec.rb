@@ -6,7 +6,7 @@ describe "sponsored_project_allocations/new" do
     assign(:allocation, stub_model(SponsoredProjectAllocation).as_new_record)
 
     assign(:projects, [FactoryGirl.build(:sponsored_project)])
-    assign(:people, [FactoryGirl.build(:faculty_frank), FactoryGirl.build(:admin_andy)])
+    assign(:users, [FactoryGirl.build(:faculty_frank_user), FactoryGirl.build(:admin_andy_user)])
   end
 
   it "renders new allocation form" do
