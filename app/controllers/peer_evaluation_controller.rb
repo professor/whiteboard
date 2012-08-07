@@ -20,13 +20,13 @@ class PeerEvaluationController < ApplicationController
   def edit_setup
     if has_permissions_or_redirect(:staff, root_path)
       @team = Team.find(params[:id])
-      @people = @team.people
+      @users = @team.users
 
       @objective = PeerEvaluationLearningObjective.new
 
       @objectives = []
-      @team.people.each do |member|
-        objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first
+      @team.users.each do |member|
+        objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :user_id => member.id).first
         if objective.nil?
           @objectives << PeerEvaluationLearningObjective.new
         else
@@ -41,16 +41,15 @@ class PeerEvaluationController < ApplicationController
       @team = Team.find(params[:id])
 
       counter = 0
-
-      @team.people.each do |member|
-        if (PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first.nil?)
+      @team.users.each do |member|
+        if (PeerEvaluationLearningObjective.where(:team_id => @team.id, :user_id => member.id).first.nil?)
           @objective = PeerEvaluationLearningObjective.new(
               :team_id => params[:id],
-              :person_id => member.id,
+              :user_id => member.id,
               :learning_objective => params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
           )
         else
-          @objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :person_id => member.id).first
+          @objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :user_id => member.id).first
           @objective.learning_objective = params[:peer_evaluation_learning_objective][counter.to_s][:learning_objective]
         end
 
@@ -67,15 +66,15 @@ class PeerEvaluationController < ApplicationController
   def edit_evaluation
     @questions = @@questions
     @team = Team.find(params[:id])
-    @people = @team.people
-    @author = Person.find(current_user.id)
+    @users = @team.users
+    @author = User.find(current_user.id)
     @answers = []
     @point_allocations = {}
     @review = PeerEvaluationReview.new
 
     @on_team = false
-    @people.each do |person|
-      if (person.human_name == current_user.human_name)
+    @users.each do |user|
+      if (user.human_name == current_user.human_name)
         @on_team = true
       end
     end
@@ -89,23 +88,15 @@ class PeerEvaluationController < ApplicationController
       return
     end
 
-    personcounter = 0
-    questioncounter = 0
-    alloccounter = 0
-
-    @people.each do |person|
+    @users.each do |user|
       @questions.each do |question|
-        evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question).first
+        evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => user.id, :team_id => @team.id, :question => question).first
         if (evaluation.nil?)
           @answers << ""
         else
           @answers << evaluation.answer
         end
-        questioncounter += 1
       end
-
-      personcounter += 1
-      questioncounter = 0
     end
 
     allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
@@ -124,41 +115,40 @@ class PeerEvaluationController < ApplicationController
     @questions = @@questions
 
     @team = Team.find(params[:id])
-    @people = @team.people
+    @users = @team.users
 
-    @author = Person.find(current_user.id)
+    @author = User.find(current_user.id)
 
-    personcounter = 0
-    questioncounter = 0
-    alloccounter = 0
-
-    @people.each do |person|
+    user_counter = 0
+    question_counter = 0
+    @users.each do |user|
       @questions.each do |question|
-        @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => person.id, :team_id => @team.id, :question => question).first
+        @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => user.id, :team_id => @team.id, :question => question).first
         if (@evaluation.nil?)
           @evaluation = PeerEvaluationReview.new(
               :author_id => @author.id,
-              :recipient_id => person.id,
+              :recipient_id => user.id,
               :team_id => @team.id,
               :question => question,
-              :answer => params[:peer_evaluation_review][(@questions.size*personcounter + questioncounter).to_s][:answer],
-              :sequence_number => questioncounter
+              :answer => params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer],
+              :sequence_number => question_counter
           )
         else
-          @evaluation.answer = params[:peer_evaluation_review][(@questions.size*personcounter + questioncounter).to_s][:answer]
+          @evaluation.answer = params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer]
         end
         @evaluation.save!
-        questioncounter += 1
+        question_counter += 1
       end
 
-      personcounter += 1
-      questioncounter = 0
+      user_counter += 1
+      question_counter = 0
     end
 
-    allocAnswer = ""
-    @people.each do |person|
-      allocAnswer << person.human_name + ":" + params[:allocations][alloccounter] + " "
-      alloccounter += 1
+    alloc_counter = 0
+    alloc_answer = ""
+    @users.each do |user|
+      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter] + " "
+      alloc_counter += 1
     end
 
     allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
@@ -167,11 +157,11 @@ class PeerEvaluationController < ApplicationController
           :author_id => @author.id,
           :team_id => @team.id,
           :question => @@point_allocation,
-          :answer => allocAnswer,
-          :sequence_number => questioncounter
+          :answer => alloc_answer,
+          :sequence_number => question_counter
       )
     else
-      allocation.answer = allocAnswer
+      allocation.answer = alloc_answer
     end
     allocation.save!
 
@@ -182,37 +172,36 @@ class PeerEvaluationController < ApplicationController
   def edit_report
     if has_permissions_or_redirect(:staff, root_path)
       @team = Team.find(params[:id])
-      @people = @team.people
+      @users = @team.users
 
       @report = PeerEvaluationReport.new
 
       @incompletes = Array.new
-      @team.people.each do |member|
+      @team.users.each do |member|
         unless PeerEvaluationReview.is_completed_for?(member.id, @team.id)
           @incompletes << (member)
         end
       end
 
-      @reportArray = Array.new(@people.size)
-      personcounter = 0
-      @people.each do |person|
-        @reportArray[personcounter] = generate_report_for_student(person.id, @team.id)
-        personcounter += 1
+      @reportArray = Array.new(@users.size)
+      user_counter = 0
+      @users.each do |user|
+        @reportArray[user_counter] = generate_report_for_student(user.id, @team.id)
+        user_counter += 1
       end
 
       @report_allocations = {}
       @point_allocations = Hash.new { |hash, key| hash[key] = {} } #two dimensional hash
-      @people.each do |person|
-        tmp = person.human_name
-        allocation = PeerEvaluationReview.where(:author_id => person.id, :team_id => @team.id, :question => @@point_allocation).first
+      @users.each do |user|
+        allocation = PeerEvaluationReview.where(:author_id => user.id, :team_id => @team.id, :question => @@point_allocation).first
         unless allocation.nil?
-          @report_allocations[person.human_name] = allocation.answer
+          @report_allocations[user.human_name] = allocation.answer
 
           match_array = allocation.answer.scan /((\w| )*):(\d*)\s*/
           match_array.each do |match|
             name = match[0]
             points = match[2]
-            @point_allocations[person.human_name][name] = points
+            @point_allocations[user.human_name][name] = points
           end
         end
       end
@@ -227,17 +216,14 @@ class PeerEvaluationController < ApplicationController
         send_email = false
       end
 
-
       @team = Team.find(params[:id])
-      @people = @team.people
-      personcounter = 0
-
-      @people.each do |person|
+      @users = @team.users
+      @users.each do |user|
         #Step 1 save feedback
-        feedback = params[:peer_evaluation_report][personcounter.to_s][:feedback]
-        report = PeerEvaluationReport.where(:recipient_id => person.id, :team_id => @team.id).first
+        feedback = params[:peer_evaluation_report][user.to_s][:feedback]
+        report = PeerEvaluationReport.where(:recipient_id => user.id, :team_id => @team.id).first
         if report.nil?
-          report = PeerEvaluationReport.new(:recipient_id => person.id, :team_id => @team.id, :feedback => feedback)
+          report = PeerEvaluationReport.new(:recipient_id => user.id, :team_id => @team.id, :feedback => feedback)
         else
           report.feedback = feedback
         end
@@ -246,14 +232,12 @@ class PeerEvaluationController < ApplicationController
         faculty = @team.faculty_email_addresses()
         #Step 2 email feedback
         if send_email
-          options = {:to => person.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
+          options = {:to => user.email, :cc => faculty, :subject => "Peer evaluation feedback from team #{@team.name}",
                      :message => feedback.gsub("\n", "<br/>"), :url => "", :url_label => ""}
           GenericMailer.email(options).deliver
           report.email_date = Time.now
           report.save!
         end
-
-        personcounter += 1
       end
 
       flash[:notice] = "Reports have been successfully saved."
@@ -295,19 +279,19 @@ class PeerEvaluationController < ApplicationController
           if first_date_p
             to_address = team.email
             to_address = []
-            team.people.each do |person|
-              to_address << person.email
+            team.users.each do |user|
+              to_address << user.email
             end
             send_email(team, faculty, to_address, team.peer_evaluation_message_one)
             emails_sent += 1
           elsif second_date_p
             to_address_done = []
             to_address_incomplete = []
-            team.people.each do |person|
-              if PeerEvaluationReview.is_complete_for?(person_id, team_id)
-                to_address_done << person.email
+            team.users.each do |user|
+              if PeerEvaluationReview.is_complete_for?(user_id, team_id)
+                to_address_done << user.email
               else
-                to_address_incomplete << person.email
+                to_address_incomplete << user.email
               end
             end
             send_email(team, faculty, to_address_done, team.peer_evaluation_message_two_done)
@@ -333,26 +317,26 @@ class PeerEvaluationController < ApplicationController
   end
 
 
-  def generate_report_for_student(person_id, team_id)
-    report = PeerEvaluationReport.where(:recipient_id => person_id, :team_id => team_id).first
+  def generate_report_for_student(user_id, team_id)
+    report = PeerEvaluationReport.where(:recipient_id => user_id, :team_id => team_id).first
     if report.nil?
       report_string = ""
-      #report_string += "{" + person.human_name + "}\n"
-      questioncounter = 0
+      #report_string += "{" + user.human_name + "}\n"
+      question_counter = 0
       @@questions.each do |question|
         report_string += question + "\n"
-        if questioncounter == @@questions.size - 1
-          learning_objective = PeerEvaluationLearningObjective.where(:person_id => person_id).first
+        if question_counter == @@questions.size - 1
+          learning_objective = PeerEvaluationLearningObjective.where(:user_id => user_id).first
           report_string += "\"" + learning_objective.learning_objective + "\"\n" unless (learning_objective.nil? || learning_objective.learning_objective.nil? || learning_objective.learning_objective.empty?)
         end
-        data = PeerEvaluationReview.where(:team_id => team_id, :recipient_id => person_id, :question => question).all
+        data = PeerEvaluationReview.where(:team_id => team_id, :recipient_id => user_id, :question => question).all
         data.each do |answer|
-          author = Person.find(answer.author_id).human_name
+          author = User.find(answer.author_id).human_name
           report_string += "[" + author + "]\n"
           report_string += " - " + answer.answer + "\n"
         end
         report_string += "\n"
-        questioncounter += 1
+        question_counter += 1
       end
       return report_string
     else

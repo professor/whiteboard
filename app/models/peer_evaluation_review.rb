@@ -30,11 +30,11 @@
 class PeerEvaluationReview < ActiveRecord::Base
 
   belongs_to :team
-  belongs_to :author, :class_name => "Person"
-  belongs_to :recipient, :class_name => "Person"
+  belongs_to :author, :class_name => "User"
+  belongs_to :recipient, :class_name => "User"
 
-  def self.is_completed_for?(person_id, team_id)
-    !PeerEvaluationReview.where({:team_id => team_id, :author_id => person_id}).empty?
+  def self.is_completed_for?(user_id, team_id)
+    !PeerEvaluationReview.where({:team_id => team_id, :author_id => user_id}).empty?
   end
 
 

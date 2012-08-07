@@ -258,15 +258,15 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
   add_index "pages", ["url"], :name => "index_pages_on_url"
 
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "team_id"
     t.string   "learning_objective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "peer_evaluation_learning_objectives", ["person_id"], :name => "index_peer_evaluation_learning_objectives_on_person_id"
   add_index "peer_evaluation_learning_objectives", ["team_id"], :name => "index_peer_evaluation_learning_objectives_on_team_id"
+  add_index "peer_evaluation_learning_objectives", ["user_id"], :name => "index_peer_evaluation_learning_objectives_on_person_id"
 
   create_table "peer_evaluation_reports", :force => true do |t|
     t.integer  "team_id"
