@@ -55,7 +55,7 @@ class EffortLogsController < ApplicationController
     teams = Team.where(:course_id => course_id)
     teams.each do |team|
       logger.debug "** team #{team.name}"
-      team.people.each do |user|
+      team.members.each do |user|
         logger.debug "**    user #{user.human_name}"
         effort_log = EffortLog.where(:user_id => user.id, :week_number => week_number, :year => year).first
         if (!user.emailed_recently(:effort_log))

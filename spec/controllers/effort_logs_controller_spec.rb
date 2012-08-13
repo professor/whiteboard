@@ -127,7 +127,7 @@ describe EffortLogsController do
         before do
           Course.stub(:remind_about_effort_course_list).and_return([FactoryGirl.create(:mfse)])
           @person = Person.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "")
-          Team.stub(:where).and_return([Team.new(:people => [@person])])
+          Team.stub(:where).and_return([Team.new(:members => [@person])])
         end
 
         context "and there are no effort logs" do

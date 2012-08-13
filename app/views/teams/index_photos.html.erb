@@ -52,8 +52,8 @@
     <% end %>
 
     <td>
-    <% team.people.each do |person| %>
-    <%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %>
+    <% team.members.each do |user| %>
+    <%= render :partial=>'people/twiki_photo_link', :locals => {:person => user} %>
     <% end %>
      </td>
 

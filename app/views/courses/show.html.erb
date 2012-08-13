@@ -116,8 +116,8 @@ course but hasn't been assigned a team. </p>
 <% @course.teams.each do |team| %>
    <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
      <div><%= project_name%></div>
-     <% team.people.each do |person| %>
-        <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+     <% team.members.each do |user| %>
+        <% person_entry = "#{user.human_name} (#{user.first_name[0]}#{user.last_name[0]}) <#{user.email}>" %>
         <div><%= person_entry %></div>
      <% end %>
         <% person = team.primary_faculty %>

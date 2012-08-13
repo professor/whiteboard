@@ -113,7 +113,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
     <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
     <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>
     <td><% person.telephones.each { |phone| %><%=h phone %><br/><% } %></td>
-    <td><%= link_to 'Show', person %></td>
+    <td><%= link_to 'Show', person_path(person) %></td>
   </tr>
 <% end %>
 </tbody>

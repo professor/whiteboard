@@ -20,12 +20,12 @@ class PeerEvaluationController < ApplicationController
   def edit_setup
     if has_permissions_or_redirect(:staff, root_path)
       @team = Team.find(params[:id])
-      @users = @team.users
+      @users = @team.members
 
       @objective = PeerEvaluationLearningObjective.new
 
       @objectives = []
-      @team.users.each do |member|
+      @team.members.each do |member|
         objective = PeerEvaluationLearningObjective.where(:team_id => @team.id, :user_id => member.id).first
         if objective.nil?
           @objectives << PeerEvaluationLearningObjective.new
@@ -41,7 +41,7 @@ class PeerEvaluationController < ApplicationController
       @team = Team.find(params[:id])
 
       counter = 0
-      @team.users.each do |member|
+      @team.members.each do |member|
         if (PeerEvaluationLearningObjective.where(:team_id => @team.id, :user_id => member.id).first.nil?)
           @objective = PeerEvaluationLearningObjective.new(
               :team_id => params[:id],
@@ -66,7 +66,7 @@ class PeerEvaluationController < ApplicationController
   def edit_evaluation
     @questions = @@questions
     @team = Team.find(params[:id])
-    @users = @team.users
+    @users = @team.members
     @author = User.find(current_user.id)
     @answers = []
     @point_allocations = {}
@@ -115,7 +115,7 @@ class PeerEvaluationController < ApplicationController
     @questions = @@questions
 
     @team = Team.find(params[:id])
-    @users = @team.users
+    @users = @team.members
 
     @author = User.find(current_user.id)
 
@@ -172,12 +172,12 @@ class PeerEvaluationController < ApplicationController
   def edit_report
     if has_permissions_or_redirect(:staff, root_path)
       @team = Team.find(params[:id])
-      @users = @team.users
+      @users = @team.members
 
       @report = PeerEvaluationReport.new
 
       @incompletes = Array.new
-      @team.users.each do |member|
+      @team.members.each do |member|
         unless PeerEvaluationReview.is_completed_for?(member.id, @team.id)
           @incompletes << (member)
         end
@@ -217,7 +217,7 @@ class PeerEvaluationController < ApplicationController
       end
 
       @team = Team.find(params[:id])
-      @users = @team.users
+      @users = @team.members
       @users.each do |user|
         #Step 1 save feedback
         feedback = params[:peer_evaluation_report][user.to_s][:feedback]
@@ -279,7 +279,7 @@ class PeerEvaluationController < ApplicationController
           if first_date_p
             to_address = team.email
             to_address = []
-            team.users.each do |user|
+            team.members.each do |user|
               to_address << user.email
             end
             send_email(team, faculty, to_address, team.peer_evaluation_message_one)
@@ -287,7 +287,7 @@ class PeerEvaluationController < ApplicationController
           elsif second_date_p
             to_address_done = []
             to_address_incomplete = []
-            team.users.each do |user|
+            team.members.each do |user|
               if PeerEvaluationReview.is_complete_for?(user_id, team_id)
                 to_address_done << user.email
               else

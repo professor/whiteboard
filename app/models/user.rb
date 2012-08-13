@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
 
+  has_many :team_assignments
+  has_many :teams, :through => :team_assignments, :source => :user
+
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
   belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
@@ -58,7 +61,7 @@ class User < ActiveRecord::Base
 
     sql_str = "select c.* FROM courses c,teams t
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
-              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+              (SELECT ta.team_id FROM team_assignments ta, users u where u.id=ta.user_id and u.id=#{self.id})"
    courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
    @registered_courses = hub_registered_courses | courses_assigned_on_teams
@@ -80,8 +83,6 @@ class User < ActiveRecord::Base
   end
 
 
-  #  before_save :initialize_human_name
-  has_and_belongs_to_many :teams, :join_table=>"teams_people", :foreign_key => "person_id"
 
   def emailed_recently(email_type)
     case email_type
@@ -108,7 +109,7 @@ class User < ActiveRecord::Base
         teams_students_map[team.course.year][team.course.semester.downcase] = 0
       end
       teams_map[team.course.year][team.course.semester.downcase].push(team)
-      teams_students_map[team.course.year][team.course.semester.downcase] += team.people.count
+      teams_students_map[team.course.year][team.course.semester.downcase] += team.members.count
     end
     # teams_map is a two dimentional hash holding arrays of courses
     # teams_students_map is a two dimentional hash holding an integer count

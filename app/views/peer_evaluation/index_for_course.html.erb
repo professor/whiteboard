@@ -13,7 +13,7 @@
   <td>
 <p><%= link_to team.name, peer_evaluation_path(@course.id, team.id) %></p></td>
 <td>
-  <% team.users.each do |user| %>
+  <% team.members.each do |user| %>
      <% unless PeerEvaluationReview.is_completed_for?(user.id, team.id) %>
         <%= twiki_user_link(user.twiki_name, user.human_name) %>
      <% end %>

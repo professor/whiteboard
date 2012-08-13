@@ -105,9 +105,9 @@ class TeamsController < ApplicationController
       report = CSV.generate do |title|
         title << ['Team Name', 'Team Member', 'Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
         @teams.each do |team|
-          team.people.each do |person|
-            part_time = person.is_part_time ? "PT" : "FT"
-            title << [team.name, person.human_name, person.formatted(person.past_teams), part_time, person.local_near_remote, person.work_state, person.organization_name]
+          team.members.each do |user|
+            part_time = user.is_part_time ? "PT" : "FT"
+            title << [team.name, user.human_name, user.formatted(user.past_teams), part_time, user.local_near_remote, user.work_state, user.organization_name]
           end
         end
       end
@@ -157,7 +157,7 @@ class TeamsController < ApplicationController
       @course = Course.find(params[:course_id])
       @faculty = @course.faculty
       (1..5).each do
-        @team.people << Person.new
+        @team.members << User.new
       end
 
       respond_to do |format|
@@ -255,11 +255,11 @@ class TeamsController < ApplicationController
     @first_names = []
     @full_names = []
     @ids = []
-    @team.people.each do |person|
-      @emails << person.email
-      @first_names << person.first_name
-      @full_names << person.human_name
-      @ids << person.id
+    @team.members.each do |user|
+      @emails << user.email
+      @first_names << user.first_name
+      @full_names << user.human_name
+      @ids << user.id
     end
 
     if (@team.peer_evaluation_first_email.nil?)
@@ -289,21 +289,6 @@ class TeamsController < ApplicationController
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
-
-#  private
-#  def handle_teams_people
-#    logger.debug("handle_teams_people()")
-#    if params['person_ids']
-#      logger.debug("**************")
-#      @team.people.clear
-#      people = params['person_ids'].map { |id| Person.find(id) }
-#      logger.debug("part 2")
-#      logger.debug(people)
-#      @team.people << people
-#    end
-##  rescue
-##    logger.debug "record not found"
-#  end
 
   def update_course_faculty_label
     @course = Course.find(params[:course_id])

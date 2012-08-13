@@ -285,7 +285,7 @@ class Course < ActiveRecord::Base
 
   def update_distribution_list
     if self.updating_email
-      recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.users}.flatten
+      recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.members}.flatten
       Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, recipients, self.email, "Course distribution list", self.id, "courses"))
     end
   end

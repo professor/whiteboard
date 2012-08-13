@@ -82,7 +82,7 @@ describe Deliverable do
   context "for a team" do
     before(:each) do
       @deliverable = FactoryGirl.build(:team_deliverable)
-      @team_member = @deliverable.team.people[0]
+      @team_member = @deliverable.team.members[0]
     end
 
     it "is not editable by any random student" do

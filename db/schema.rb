@@ -466,6 +466,14 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
     t.datetime "updated_at"
   end
 
+  create_table "team_assignments", :id => false, :force => true do |t|
+    t.integer "team_id"
+    t.integer "user_id"
+  end
+
+  add_index "team_assignments", ["team_id"], :name => "index_teams_people_on_team_id"
+  add_index "team_assignments", ["user_id"], :name => "index_teams_people_on_person_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -485,14 +493,6 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
   end
 
   add_index "teams", ["course_id"], :name => "index_teams_on_course_id"
-
-  create_table "teams_people", :id => false, :force => true do |t|
-    t.integer "team_id"
-    t.integer "person_id"
-  end
-
-  add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
-  add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
 
   create_table "user_versions", :force => true do |t|
     t.integer  "user_id"

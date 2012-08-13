@@ -128,7 +128,7 @@ FactoryGirl.define do
     email "team@sv.cmu.edu"
     tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-    people { |people| [people.association(:team_member)] }
+    members { |members| [members.association(:team_member)] }
     association :course, :factory => :course
   end
 
