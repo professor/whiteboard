@@ -12,7 +12,7 @@ class AcademicCalendar
   def self.current_semester
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
-    return "Summer" if cweek < AcademicCalendar.semester_start("Fall", Date.today.cwyear) - 2
+    return "Summer" if cweek < AcademicCalendar.semester_start("Fall", Date.today.cwyear) - 1
     return "Fall"
   end
 

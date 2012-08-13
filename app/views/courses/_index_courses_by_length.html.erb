@@ -1,13 +1,17 @@
-<div id="courses_by_length" style="<%= style %>">
+<div><b style="font-size:11px;">SEMESTER:</b> <%= l AcademicCalendar.date_for_semester_start(@semester, @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_semester_end(@semester, @year), :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "Both") %> weeks)
+  &nbsp;
+  <% if state == "semester" %>
+      <a href="#" id="course_tools_view" data-view-state="semester">Show courses by minis</a>
+  <% else %>
+      <a href="#" id="course_tools_view" data-view-state="length">Show course listing</a>
+  <% end %>
+</div>
+
+<div id="courses_by_length">
   <br/><br/>
   <div class="right_link"><%# link_to image_tag("/images/curriculum_website.png", :class => "icon", :size=>"108x75", :alt=>"Curriculum website", :title=>"Curriculum website"), "url" %></div>
-  <div id="semester_length_courses">
+  <div id="semester_length_courses" style="<%= style %>">
     <table id="semester_length_courses_table" class="cmu_table">
-      <thead>
-      <tr>
-        <th>Semester</th>
-      </tr>
-      </thead>
       <tbody>
       <% for course in @semester_length_courses %>
           <tr class="tablesorter">
@@ -20,16 +24,11 @@
       <% end %>
       </tbody>
     </table>
+    <br/>
   </div>
-  <br/>
-
   <div id="mini_length_courses">
-    <table id="mini_b_courses_table" class="cmu_table">
-      <thead>
-      <tr>
-        <th>Mini B</th>
-      </tr>
-      </thead>
+    <div id="mini_b_courses"><b style="font-size:11px;">MINI B:</b> <%= l AcademicCalendar.date_for_mini_start(@semester, "B", @year),  :format => :month_day %>  - <%= l AcademicCalendar.date_for_mini_end(@semester, "B", @year),  :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks)
+    <table id="mini_b_courses_table" class="cmu_table" style="<%= style %>">
       <tbody>
       <% for course in @mini_b_courses %>
           <tr class="tablesorter">
@@ -42,12 +41,9 @@
       <% end %>
       </tbody>
     </table>
-    <table id="mini_a_courses_table" class="cmu_table">
-      <thead>
-      <tr>
-        <th>Mini A</th>
-      </tr>
-      </thead>
+    </div>
+    <div id="mini_a_courses"><b style="font-size:11px;">MINI A:</b> <%= l AcademicCalendar.date_for_mini_start(@semester, "A", @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_mini_end(@semester, "A", @year), :format => :month_day %>  (<%= AcademicCalendar.term_length(@semester, "A") %> weeks)
+    <table id="mini_a_courses_table" class="cmu_table" style="<%= style %>">
       <tbody>
       <% for course in @mini_a_courses %>
           <tr class="tablesorter">
@@ -60,6 +56,8 @@
       <% end %>
       </tbody>
     </table>
+      </div>
+
   </div>
 
 </div>
