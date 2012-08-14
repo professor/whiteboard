@@ -77,6 +77,7 @@ CMUEducation::Application.routes.draw do
   match '/people/:id/my_courses' => 'people#my_courses', :as => :my_courses
   match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
   resources :people
+  resources :users
   resources :suggestions
   match '/teams' => 'teams#index_all', :as => :teams
 
