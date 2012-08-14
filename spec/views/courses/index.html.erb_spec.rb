@@ -37,25 +37,30 @@ describe "courses/index.html.erb" do
 
   context "renders a visual representation of courses" do
 
+    before(:each) do
+      assign(:semester, AcademicCalendar.current_semester)
+      assign(:year, Date.today.year)
+    end
+
     it "in a div" do
-      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil, :state => "length"}
       rendered.should have_selector("#courses_by_length")
     end
 
     it "contains a list of semester courses" do
-      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil, :state => "length"}
       rendered.should have_content("semester1")
       rendered.should have_content("semester2")
     end
 
     it "contains a list of mini a courses" do
-      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil, :state => "length"}
       rendered.should have_content("mini_a_1")
       rendered.should have_content("mini_a_2")
     end
 
     it "contains a list of mini b courses" do
-      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil}
+      render :partial => "courses/index_courses_by_length.html.erb", :locals => {:style => nil, :state => "length"}
       rendered.should have_content("mini_b_1")
       rendered.should have_content("mini_b_2")
     end
