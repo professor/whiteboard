@@ -169,7 +169,7 @@ class PeopleController < ApplicationController
   def create
     authorize! :create, User
 
-    @person = User.new(params[:person])
+    @person = User.new(params[:user])
     @person.updated_by_user_id = current_user.id
     @person.image_uri = "/images/mascot.jpg"
     @person.biography = "<p>I was raised by sheepherders on the hills of BoingBoing while they were selling chunky bacon. Because I have a ring, I need help with putting on my clothes. After working hard they promoted me to garbage man. They told me the reason for this new responsibility was show me the money. I looked for a treasure map and tools, but I never did find the fourteen minutes. People's trash clearly isn't multitudinous. I hope to put my real biography here one day.</p>"
@@ -227,9 +227,9 @@ class PeopleController < ApplicationController
     @strength_themes = StrengthTheme.all
 
     respond_to do |format|
-      @person.attributes = params[:person]
-      @person.photo = params[:person][:photo] if current_user.is_admin?
-      @person.expires_at = params[:person][:expires_at] if current_user.is_admin?
+      @person.attributes = params[:user]
+      @person.photo = params[:user][:photo] if current_user.is_admin?
+      @person.expires_at = params[:user][:expires_at] if current_user.is_admin?
 
       if @person.save
         flash[:notice] = 'Person was successfully updated.'

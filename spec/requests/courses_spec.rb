@@ -17,10 +17,6 @@ describe "courses" do
       page.should have_content("#{@semester} #{@year}" " Courses")
       page.should have_selector("input#filterBoxOne")
       page.should have_link("course selections")
-      page.should have_link("See all courses")
-      click_link  "See all courses"
-      page.should have_content("All Courses")
-      page.should have_link("See current semester")
     end
 
     it "defaults to a listing of all courses in the semester" do
@@ -28,9 +24,18 @@ describe "courses" do
     end
 
     it "toggles to a visual representation of courses" do
-      click_link "Show by length"
+      click_link "Show courses by minis"
       page.should have_selector("#courses_by_length")
     end
+
+  end
+
+  context "all courses" do
+    it 'renders all courses' do
+      click_link "Courses"
+      page.should have_content("All Courses")
+      page.should have_link("See current semester")
+   end
 
   end
 
