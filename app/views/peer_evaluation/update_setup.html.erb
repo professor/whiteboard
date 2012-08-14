@@ -4,12 +4,12 @@
 
 <input type="hidden" name="id" value="<%=params[:id]%>">
 
-<% personcounter = 0 %>
+<% usercounter = 0 %>
 
-  <% @people.each do |person| %>
-    <%= person.human_name %>  <br />
-    <%= f.text_field :learning_objective, :value => PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person.id, :team_id => params[:id]}).learning_objective, :index => personcounter %><br />
-    <% personcounter += 1 %>
+  <% @users.each do |user| %>
+    <%= user.human_name %>  <br />
+    <%= f.text_field :learning_objective, :value => PeerEvaluationLearningObjective.where({:user_id => user.id, :team_id => params[:id]}).first.learning_objective, :index => usercounter %><br />
+    <% usercounter += 1 %>
   <%end%>
 
   <%= f.submit 'Create Learning Objectives' %>

@@ -12,7 +12,7 @@ describe "effort_logs/new.html.erb" do
   context 'with errors' do
     before do
 	  @current_user = FactoryGirl.build(:faculty_frank)
-      effort_log = EffortLog.new(:year => nil, :week_number => 12, :sum => 8, :person => @current_user)
+      effort_log = EffortLog.new(:year => nil, :week_number => 12, :sum => 8, :user => @current_user)
       assign(:effort_log, effort_log)
       effort_log.valid?
     end
@@ -25,7 +25,7 @@ describe "effort_logs/new.html.erb" do
   context 'without errors' do
     before do
 	  @current_user = FactoryGirl.build(:faculty_frank)
-      effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :person => @current_user)
+      effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :user => @current_user)
       assign(:effort_log, effort_log)
       effort_log.valid?
     end
@@ -39,12 +39,12 @@ describe "effort_logs/new.html.erb" do
     before do
       @current_user = FactoryGirl.create(:admin_andy)
       login(@current_user)
-      effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :person_id => @current_user.id)
+      effort_log = EffortLog.new(:year => 2011, :week_number => 12, :sum => 8, :user_id => @current_user.id)
       assign(:effort_log, effort_log)
     end
     it 'allows editing the person' do
       render
-      rendered.should have_selector("input#effort_log_person_id")
+      rendered.should have_selector("input#effort_log_user_id")
     end
   end
 end

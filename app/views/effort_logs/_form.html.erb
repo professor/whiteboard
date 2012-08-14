@@ -14,11 +14,11 @@
 
   <% if current_user && current_user.is_admin %>
   <p>
-    <%= f.label :person_id %><br />
-    <%= f.text_field :person_id %>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
   </p>
   <% else %>
-    <p> <%= f.label :person_id %>: <%= @effort_log.person.human_name %> </p>
+    <p> <%= f.label :user_id %>: <%= @effort_log.user.human_name %> </p>
 
   <% end  %>
   <% if current_user && current_user.is_admin %>

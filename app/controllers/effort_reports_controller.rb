@@ -413,9 +413,9 @@ class EffortReportsController < ApplicationController
 
 
     @course.teams.each do |team|
-      team.people.each do |person|
-        person_result = report_person_effort_for_course(person, @course)
-        @report_lines << {:team_name => team.name, :person_name => person.human_name, :effort => person_result}
+      team.members.each do |user|
+        person_result = report_person_effort_for_course(user, @course)
+        @report_lines << {:team_name => team.name, :person_name => user.human_name, :effort => person_result}
         min_effort = update_min(min_effort, person_result)
         max_effort = update_max(max_effort, person_result)
         total_effort = update_total(total_effort, person_result)

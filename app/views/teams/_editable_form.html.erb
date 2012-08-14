@@ -43,7 +43,7 @@
         <div id="people_in_a_collection">
           <p>Team members</p>
           <% if @team.members_override.nil? %>
-            <%= render :partial => '/people/person_in_a_collection', :collection =>@team.people.map(&:human_name), :as => :person, :locals => { :collection_form => f , :member_label => "Person"}   %>
+            <%= render :partial => '/people/person_in_a_collection', :collection =>@team.members.map(&:human_name), :as => :person, :locals => { :collection_form => f , :member_label => "Person"}   %>
           <% else %>
             <%= render :partial => '/people/person_in_a_collection', :collection =>@team.members_override, :as => :person, :locals => { :collection_form => f , :member_label => "Person"}   %>
           <% end %>

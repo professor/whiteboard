@@ -31,9 +31,9 @@ describe SponsoredProjectAllocationsController do
         assigns(:projects).should_not be_nil
       end
 
-      it 'assigns @people' do
+      it 'assigns @users' do
         get :new
-        assigns(:people).should_not be_nil
+        assigns(:users).should_not be_nil
       end
 
     end
@@ -52,7 +52,7 @@ describe SponsoredProjectAllocationsController do
       end
 
       it 'assigns @people' do
-        assigns(:people).should_not be_nil
+        assigns(:users).should_not be_nil
       end
     end
 
@@ -138,7 +138,7 @@ describe SponsoredProjectAllocationsController do
   context "as faculty do " do
 
     before do
-      @faculty_frank = allocation.person
+      @faculty_frank = allocation.user
       @faculty_frank.is_admin = false
       login(@faculty_frank)
     end

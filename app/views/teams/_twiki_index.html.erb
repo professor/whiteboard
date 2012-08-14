@@ -78,13 +78,13 @@
     <% end %>
 
     <td>
-    <% team.people.each do |person| %>
+    <% team.members.each do |user| %>
       <% if show_student_photos %>
-         <%= render :partial=>'people/twiki_photo_link', :locals => {:person => person} %>
+         <%= render :partial=>'people/twiki_photo_link', :locals => {:person => user} %>
       <% else %>
-         <%=  twiki_user_link(person.twiki_name, person.human_name) %>
+         <%=  twiki_user_link(user.twiki_name, user.human_name) %>
       <% end  %>
-    <% if @show_teams_for_many_courses  && person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
+    <% if @show_teams_for_many_courses  && user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
     <% end %>
      </td>
 

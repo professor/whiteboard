@@ -265,7 +265,7 @@ describe User do
     it "a student is 'registered' if the faculty has put the student on a team" do
       @team_triumphant = FactoryGirl.create(:team_triumphant)
       @course = @team_triumphant.course
-      @student = @team_triumphant.people[0]
+      @student = @team_triumphant.members[0]
       @student.registered_for_these_courses_during_current_semester.should == [@course]
     end
 

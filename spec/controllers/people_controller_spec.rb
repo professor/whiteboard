@@ -3,9 +3,9 @@ require "spec_helper"
 describe PeopleController do
   context "any user can" do
     before do
-      @person1 = FactoryGirl.create(:student_sam)
+      @person1 = FactoryGirl.create(:student_sam_user)
       login(@person1)
-      @inactive_person = FactoryGirl.create(:student_sally, :is_active => false)
+      @inactive_person = FactoryGirl.create(:student_sally_user, :is_active => false)
     end
 
     describe "GET index" do
@@ -34,8 +34,8 @@ describe PeopleController do
 
     describe "POST create" do
       it "should not be allowed" do
-        expect { new_person = FactoryGirl.build(:faculty_frank)
-        post :create, :person => new_person }.should_not change { Person.count }
+        expect { new_person = FactoryGirl.build(:faculty_frank_user)
+        post :create, :person => new_person }.should_not change { User.count }
 
       end
     end
@@ -59,7 +59,7 @@ describe PeopleController do
 
     context "with a bad person id" do
       before do
-        Person.stub(:find).and_return(nil)
+        User.stub(:find).and_return(nil)
         @id = 2
       end
 

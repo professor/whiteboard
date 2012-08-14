@@ -3,11 +3,8 @@ class Team < ActiveRecord::Base
   belongs_to :primary_faculty, :class_name=>'User', :foreign_key => "primary_faculty_id"
   belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
 
-  has_and_belongs_to_many :people, :join_table=>"teams_people"  #Old code uses the people associations which returns an array of person
   has_many :team_assignments
-  has_many :users, :through => :team_assignments, :source => :user #:join_table=>"teams_people", :class_name => "Person"
-
-
+  has_many :members, :through => :team_assignments, :source => :user
 
   has_many :presentations
 
@@ -47,7 +44,7 @@ class Team < ActiveRecord::Base
   def update_mailing_list
     tmp = self.updating_email
     if self.updating_email
-      Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email_was, self.people, self.name, "#{self.name} for course #{self.course.name}", self.id, "teams"))
+      Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email_was, self.members, self.name, "#{self.name} for course #{self.course.name}", self.id, "teams"))
       self.course.updating_email = true
       self.course.save
     end
@@ -58,22 +55,20 @@ class Team < ActiveRecord::Base
     self.email.split('@')[0] #strips out @sv.cmu.edu
   end
 
-  def self.find_by_person(person)
-    person_id = person.id
-    Team.find_by_sql("SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) WHERE tp.person_id = #{person_id}")
+  def self.find_by_person(user)
+    Team.find_by_sql("SELECT t.* FROM  teams t INNER JOIN team_assignments ta ON ( t.id = ta.team_id) WHERE ta.user_id = #{user.id}")
   end
 
-  def self.find_current_by_person(person)
-    person_id = person.id
+  def self.find_current_by_person(user)
     current_year = Date.today.year()
     current_semester = AcademicCalendar.current_semester()
-    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND c.semester = ? AND c.year = ?", person_id, current_semester, current_year])
+    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN team_assignments ta ON ( t.id = ta.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE ta.user_id = ? AND c.semester = ? AND c.year = ?", user.id, current_semester, current_year])
   end
 
-  def self.find_past_by_person(person)
+  def self.find_past_by_person(user)
     current_year = Date.today.year()
     current_semester = AcademicCalendar.current_semester()
-    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE tp.person_id = ? AND (c.semester <> ? OR c.year <> ?)", person.id, current_semester, current_year])
+    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN team_assignments ta ON ( t.id = ta.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE ta.user_id = ? AND (c.semester <> ? OR c.year <> ?)", user.id, current_semester, current_year])
   end
 
 
@@ -88,7 +83,7 @@ class Team < ActiveRecord::Base
     return "" if members_override.nil?
 
     self.members_override = members_override.select {|name| name != nil && name.strip != ""}
-    list = map_member_stings_to_persons(members_override)
+    list = map_member_stings_to_users(members_override)
     list.each_with_index do |id, index|
       if id.nil?
         self.errors.add(:base, "Person " + members_override[index] + " not found")
@@ -101,11 +96,11 @@ class Team < ActiveRecord::Base
 
     self.members_override = members_override.select {|name| name != nil && name.strip != ""}
     #if the list has changed
-    if(self.members_override.sort != self.people.collect{|person| person.human_name}.sort)
+    if(self.members_override.sort != self.members.collect{|person| person.human_name}.sort)
       self.updating_email = true
-      list = map_member_stings_to_persons(self.members_override)
+      list = map_member_stings_to_users(self.members_override)
       raise "Error converting members_override to IDs!" if list.include?(nil)
-      self.people = list
+      self.members = list
     end
     members_override = nil
   end
@@ -137,14 +132,12 @@ class Team < ActiveRecord::Base
   end
 
   def is_person_on_team?(person)
-    a = self.people
-    self.people.include?(person)
+    user = User.find(person.id)
+    self.members.include?(user)
   end
 
   def is_user_on_team?(user)
-    person = Person.find(user.id)
-    a = self.people
-    self.people.include?(person)
+    self.members.include?(user)
   end
 
   def peer_evaluation_message_one
@@ -162,7 +155,7 @@ class Team < ActiveRecord::Base
 
   def clone_to_another_course(destination_course_id)
       clone = self.clone
-      clone.person_ids = self.person_ids
+      clone.member_ids = self.member_ids
       clone.course_id = destinaton_course_id
       clone.name = self.name + " - " + destination_course_id    
       clone.save    
@@ -184,8 +177,8 @@ class Team < ActiveRecord::Base
     logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
   end
 
-  def map_member_stings_to_persons(members_override_list)
-    members_override_list.map { |member_name| Person.find_by_human_name(member_name) }
+  def map_member_stings_to_users(members_override_list)
+    members_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
 end

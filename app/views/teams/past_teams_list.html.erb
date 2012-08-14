@@ -14,12 +14,12 @@
 <% @teams.each do |team|%>
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
     <td class="twikiFirstCol"><%=h team.name %></td>
-    <td><% team.people.each do |person| %>
-        <%= person.human_name %> <br/>
+    <td><% team.members.each do |user| %>
+        <%= user.human_name %> <br/>
     <% end %>
      </td>
-    <td><% team.people.each do |person| %>
-        <%= person.formatted_teams(person.past_teams) %> <br/>
+    <td><% team.members.each do |user| %>
+        <%= user.formatted_teams(user.past_teams) %> <br/>
     <% end %>
     </td>
   </tr>

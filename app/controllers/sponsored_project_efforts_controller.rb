@@ -56,14 +56,14 @@ class SponsoredProjectEffortsController < ApplicationController
   private
   #Todo: refactor this method to use CanCan
   def authorized_or_redirect
-    @person = Person.find_by_twiki_name(params[:id])
-    if (@person.nil?)
+    @user = User.find_by_twiki_name(params[:id])
+    if (@user.nil?)
       flash[:error] = t(:no_person)
       redirect_to(root_path)
       return false
     end
 
-    unless @person.id == current_user.id || can?(:update, SponsoredProjectEffort)
+    unless @user.id == current_user.id || can?(:update, SponsoredProjectEffort)
       flash[:error] = t(:no_permission)
       redirect_to(root_path)
       return false
@@ -72,7 +72,7 @@ class SponsoredProjectEffortsController < ApplicationController
   end
 
   def setup_edit
-    @efforts = SponsoredProjectEffort.month_under_inspection_for_a_given_user(@person.id)
+    @efforts = SponsoredProjectEffort.month_under_inspection_for_a_given_user(@user.id)
     @month = !@efforts.empty? ? @efforts[0].month : 1.month.ago.month
     @year = !@efforts.empty? ? @efforts[0].year : 1.month.ago.year
   end

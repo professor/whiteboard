@@ -56,7 +56,7 @@ $(document).ready(function()
 <tbody>
 <% @allocations.each do |allocation| %>
     <tr class="tablesorter">
-      <td><%= allocation.person.human_name %></td>
+      <td><%= allocation.user.human_name %></td>
       <td><%= allocation.sponsored_project.sponsor.name %></td>
       <td><%= allocation.sponsored_project.name %></td>
       <td align="right"><%= allocation.current_allocation %> %</td>

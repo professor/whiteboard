@@ -85,8 +85,8 @@ describe SponsoredProjectEffort do
       @faculty_frank = FactoryGirl.create(:faculty_frank)
       @faculty_fagan = FactoryGirl.create(:faculty_fagan)
 
-      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_frank)
-      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :person => @faculty_fagan)
+      @allocation_frank = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_frank)
+      @allocation_fagan = FactoryGirl.create(:sponsored_project_allocation, :user => @faculty_fagan)
 
       @effort_frank = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_frank)
       @effort_fagan = FactoryGirl.create(:sponsored_project_effort, :sponsored_project_allocation => @allocation_fagan)
