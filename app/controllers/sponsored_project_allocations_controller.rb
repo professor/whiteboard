@@ -12,21 +12,21 @@ class SponsoredProjectAllocationsController < ApplicationController
   def new
     authorize! :create, SponsoredProjectAllocation
     @allocation = SponsoredProjectAllocation.new
-    @people = Person.staff
+    @users = User.staff
     @projects = SponsoredProject.current
   end
 
   def edit
     authorize! :update, SponsoredProjectAllocation
     @allocation = SponsoredProjectAllocation.find(params[:id])
-    @people = Person.staff
+    @users = User.staff
     @projects = SponsoredProject.current
   end
 
   def create
     authorize! :create, SponsoredProjectAllocation
     @allocation = SponsoredProjectAllocation.new(params[:sponsored_project_allocation])
-    @people = Person.staff
+    @users = User.staff
     @projects = SponsoredProject.current
 
     if @allocation.save
@@ -40,7 +40,7 @@ class SponsoredProjectAllocationsController < ApplicationController
   def update
     authorize! :update, SponsoredProjectAllocation
     @allocation = SponsoredProjectAllocation.find(params[:id])
-    @people = Person.staff
+    @users = User.staff
     @projects = SponsoredProject.current
 
     if @allocation.update_attributes(params[:sponsored_project_allocation])

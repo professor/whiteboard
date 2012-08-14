@@ -16,19 +16,19 @@
 
 <%= form_for @review, :url => {:action => "complete_evaluation"} do |f| %>
 
-  <% personcounter = 0 %>
+  <% usercounter = 0 %>
   <% questioncounter = 0 %>
 
   <input type="hidden" name="id" value="<%=params[:id]%>">
-  <input type="hidden" name="person_id" value="<%=params[:person_id]%>">
+  <input type="hidden" name="user_id" value="<%=params[:user_id]%>">
 
-  <% @people.each do |person| %>
+  <% @users.each do |user| %>
 
-    <h2>Feedback for <%= person.human_name %> </h2>
+    <h2>Feedback for <%= user.human_name %> </h2>
     <% @questions.each do |question| %>
       <p><%= question %></p>
       <%if questioncounter == @questions.size - 1%>
-        <% learning_objective = PeerEvaluationLearningObjective.find(:first, :conditions => {:person_id => person.id}) %>
+        <% learning_objective = PeerEvaluationLearningObjective.where({:user_id => user.id}).first %>
         <% if learning_objective.nil? || learning_objective.learning_objective.nil?%>
           <p>Please skip this question as no learning objective was provided.</p>
         <% else %>
@@ -36,14 +36,14 @@
         <% end %>
       <%end%>
       <% if @on_team %>
-      <%= f.text_area :answer, :index => (@questions.size*personcounter) + questioncounter , :value=> @answers[(@questions.size*personcounter) + questioncounter], :size => "95x20"%><br /><br />
+      <%= f.text_area :answer, :index => (@questions.size*usercounter) + questioncounter , :value=> @answers[(@questions.size*usercounter) + questioncounter], :size => "95x20"%><br /><br />
       <% else %>
-      <%= f.text_area :answer, :disabled => true, :index => (@questions.size*personcounter) + questioncounter , :value=> @answers[(@questions.size*personcounter) + questioncounter], :size => "95x20"%><br /><br />
+      <%= f.text_area :answer, :disabled => true, :index => (@questions.size*usercounter) + questioncounter , :value=> @answers[(@questions.size*usercounter) + questioncounter], :size => "95x20"%><br /><br />
       <% end  %>
       <% questioncounter += 1 %>
     <%end%>
       
-      <% personcounter += 1 %>
+      <% usercounter += 1 %>
       <% questioncounter = 0 %>
   <%end%>
 
@@ -52,9 +52,9 @@
 <p>Note that we are not interested in the amount of material produced. We are interested in quality contributions to the team. If a team member provided significant amount of material that needed to be reworked, then feel free to score accordingly.</p>
 <p>Taking or adding a few points to anyone's score will not substantially affect their grade. Therefore, if a member did not contribute, you must clearly denote it by deducting an amount of points commensurate with the lack of participation.</p>
 <br/>
-<p>There are <%=@people.size%> members on this team. On average, each team member will receive <%=100 / @people.size unless @people.size == 0%> points. Please use whole numbers.</p>
+<p>There are <%=@users.size%> members on this team. On average, each team member will receive <%=100 / @users.size unless @users.size == 0%> points. Please use whole numbers.</p>
       <%membercounter = 0%>
-      <%@people.each do |member| %>
+      <%@users.each do |member| %>
         <p><%= member.human_name %></p>
         <% if @on_team %>
         <input type="text" name="allocations[<%membercounter%>]" value="<%= @point_allocations[member.human_name]%>"><br />

@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
 # GET /people
 # GET /people.xml
   def index
-    @people = Person.where(:is_active => true).order("first_name ASC, last_name ASC").all
+    @people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
 
     respond_to do |format|
       format.html { render :html => @people }
@@ -29,8 +29,8 @@ class PeopleController < ApplicationController
  #Ajax call for autocomplete using params[:term]
   def index_autocomplete
                      #if database is mysql
-                     #@people = Person.where("human_name LIKE ?", "%#{params[:term]}%").all
-    @people = Person.where("human_name ILIKE ?", "%#{params[:term]}%").all
+                     #@people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    @people = User.where("human_name ILIKE ?", "%#{params[:term]}%").all
 
     respond_to do |format|
       format.html { render :html => @people }
@@ -53,9 +53,9 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie.xml
   def show
     if (params[:id].to_i == 0) #This is a string
-      @person = Person.find_by_twiki_name(params[:id])
+      @person = User.find_by_twiki_name(params[:id])
     else #This is a number
-      @person = Person.find(params[:id])
+      @person = User.find(params[:id])
     end
     @person.revert_to params[:version_id] if params[:version_id]
 
@@ -87,15 +87,15 @@ class PeopleController < ApplicationController
     @machine_name = "http://rails.sv.cmu.edu"
 
     twiki_name = params[:twiki_name]
-    @person = Person.find_by_twiki_name(twiki_name)
+    @person = User.find_by_twiki_name(twiki_name)
 
     if @person.nil?
-      @person = Person.new
+      @person = User.new
       @person.twiki_name = twiki_name
-      names = Person.parse_twiki(twiki_name)
+      names = User.parse_twiki(twiki_name)
       @person.first_name = names[0] unless names.nil?
       @person.last_name = names[1] unless names.nil?
-      @person.webiso_account = Time.now.to_f.to_s #This line probably not necessary since I added it to Person.before_validation
+      @person.webiso_account = Time.now.to_f.to_s #This line probably not necessary since I added it to User.before_validation
       @person.is_active = true
       @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/mascot.jpg"
@@ -103,7 +103,7 @@ class PeopleController < ApplicationController
 
       if !@person.save
         respond_to do |format|
-          flash[:error] = 'Person could not be saved.'
+          flash[:error] = 'User could not be saved.'
           format.html { redirect_to(people_url) and return }
           format.xml { render :xml => @person.errors, :status => :unprocessable_entity and return }
         end
@@ -136,7 +136,7 @@ class PeopleController < ApplicationController
   def new
     authorize! :create, User
 
-    @person = Person.new
+    @person = User.new
     @person.is_active = true
     @person.webiso_account = params[:webiso_account]
     @person.is_student = params[:is_student]
@@ -158,7 +158,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
 #    authorize! :update, @person
 
     @strength_themes = StrengthTheme.all
@@ -169,7 +169,7 @@ class PeopleController < ApplicationController
   def create
     authorize! :create, User
 
-    @person = Person.new(params[:person])
+    @person = User.new(params[:person])
     @person.updated_by_user_id = current_user.id
     @person.image_uri = "/images/mascot.jpg"
     @person.biography = "<p>I was raised by sheepherders on the hills of BoingBoing while they were selling chunky bacon. Because I have a ring, I need help with putting on my clothes. After working hard they promoted me to garbage man. They told me the reason for this new responsibility was show me the money. I looked for a treasure map and tools, but I never did find the fourteen minutes. People's trash clearly isn't multitudinous. I hope to put my real biography here one day.</p>"
@@ -220,7 +220,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
 #    authorize! :update, @person
 
     @person.updated_by_user_id = current_user.id
@@ -243,7 +243,7 @@ class PeopleController < ApplicationController
   end
 
   def revert_to_version
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
@@ -261,7 +261,7 @@ class PeopleController < ApplicationController
       redirect_to(people_url) and return
     end
 
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
     @person.destroy
 
     respond_to do |format|
@@ -272,7 +272,7 @@ class PeopleController < ApplicationController
 
 
   def my_teams
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -299,7 +299,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -317,7 +317,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses_verbose
-    @person = Person.find(params[:id])
+    @person = User.find(params[:id])
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
@@ -350,9 +350,9 @@ class PeopleController < ApplicationController
 
     case @class_profile_state.is_part_time
       when "PT"
-        @students = Person.part_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+        @students = User.part_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
       when "FT"
-        @students = Person.full_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
+        @students = User.full_time_class_of(@class_profile_state.program, @class_profile_state.graduation_year.to_s)
     end
     @programs = []
     ActiveRecord::Base.connection.execute("SELECT distinct masters_program FROM users u;").each do |result|

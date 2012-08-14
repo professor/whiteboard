@@ -5,7 +5,7 @@ describe "teams" do
    before do
    visit('/')
    @team = FactoryGirl.create(:team_triumphant)
-   @user = @team.people[0]
+   @user = @team.members[0]
    login_with_oauth @user
    click_link "My Teams"
    end

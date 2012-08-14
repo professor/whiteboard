@@ -37,7 +37,7 @@ FactoryGirl.define do
   factory :effort_log, class: EffortLog do
     year monday_of_this_week.cwyear
     week_number monday_of_this_week.cweek
-    association :person, :factory => :student_sam
+    association :user, :factory => :student_sam_user
   end
 
   factory :page, class: Page do
@@ -106,7 +106,7 @@ FactoryGirl.define do
 
   factory :sponsored_project_allocation, class: SponsoredProjectAllocation do
     current_allocation 10
-    association :person, :factory => :faculty_frank
+    association :user, :factory => :faculty_frank_user
     association :sponsored_project, :factory => :sponsored_project
     is_archived false
   end
@@ -128,7 +128,7 @@ FactoryGirl.define do
     email "team@sv.cmu.edu"
     tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
-    people { |people| [people.association(:team_member)] }
+    members { |members| [members.association(:team_member)] }
     association :course, :factory => :course
   end
 

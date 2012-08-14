@@ -55,9 +55,9 @@
     <% else %>
     <td>&nbsp;</td>     
     <% end %>
-    <td> <% team.people.each do |person| %>
-    <%=  twiki_user_link(person.twiki_name, person.human_name) %>
-    <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
+    <td> <% team.members.each do |user| %>
+    <%=  twiki_user_link(user.twiki_name, user.human_name) %>
+    <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
     <% end %> </td>
     <td><%= link_to 'Show', course_team_path(team.course_id, team) %></td>
     <td><%= link_to 'Edit', edit_course_team_path(team.course_id, team) %></td>

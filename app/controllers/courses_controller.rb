@@ -61,8 +61,8 @@ class CoursesController < ApplicationController
 
     @emails = []
     teams.each do |team|
-      team.people.each do |person|
-        @emails << person.email
+      team.members.each do |user|
+        @emails << user.email
       end
     end
 
@@ -73,8 +73,8 @@ class CoursesController < ApplicationController
       @students[student.human_name] = {:hub => true}
     end
     @course.teams.each do |team|
-      team.people.each do |person|
-        @students[person.human_name] = (@students[person.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
+      team.members.each do |user|
+        @students[user.human_name] = (@students[user.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
       end
     end
     tmp = @students
@@ -229,7 +229,7 @@ class CoursesController < ApplicationController
     report = CSV.generate do |title|
       title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
       @course.registered_students.each do |user|
-          current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact
+          current_team = @course.teams.collect {|team| team if team.members.include?(user) }.compact
           part_time = user.is_part_time ? "PT" : "FT"
           title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726001651) do
+ActiveRecord::Schema.define(:version => 20120801031314) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
   add_index "effort_log_line_items", ["effort_log_id"], :name => "index_effort_log_line_items_on_effort_log_id"
 
   create_table "effort_logs", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "week_number"
     t.integer  "year"
     t.datetime "created_at"
@@ -148,18 +148,18 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
     t.float    "sum"
   end
 
-  add_index "effort_logs", ["person_id"], :name => "index_effort_logs_on_person_id"
+  add_index "effort_logs", ["user_id"], :name => "index_effort_logs_on_person_id"
   add_index "effort_logs", ["week_number"], :name => "index_effort_logs_on_week_number"
 
   create_table "faculty_assignments", :id => false, :force => true do |t|
     t.integer  "course_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
-  add_index "faculty_assignments", ["course_id", "person_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+  add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
+  add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
 
   create_table "individual_contribution_for_courses", :force => true do |t|
     t.integer "individual_contribution_id"
@@ -258,15 +258,15 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
   add_index "pages", ["url"], :name => "index_pages_on_url"
 
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "team_id"
     t.string   "learning_objective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "peer_evaluation_learning_objectives", ["person_id"], :name => "index_peer_evaluation_learning_objectives_on_person_id"
   add_index "peer_evaluation_learning_objectives", ["team_id"], :name => "index_peer_evaluation_learning_objectives_on_team_id"
+  add_index "peer_evaluation_learning_objectives", ["user_id"], :name => "index_peer_evaluation_learning_objectives_on_person_id"
 
   create_table "peer_evaluation_reports", :force => true do |t|
     t.integer  "team_id"
@@ -390,7 +390,7 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
 
   create_table "sponsored_project_allocations", :force => true do |t|
     t.integer  "sponsored_project_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "current_allocation"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -398,8 +398,8 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
   end
 
   add_index "sponsored_project_allocations", ["is_archived"], :name => "index_sponsored_project_allocation_on_is_archived"
-  add_index "sponsored_project_allocations", ["person_id"], :name => "index_sponsored_project_allocation_on_person_id"
   add_index "sponsored_project_allocations", ["sponsored_project_id"], :name => "index_sponsored_project_allocation_on_sponsored_project_id"
+  add_index "sponsored_project_allocations", ["user_id"], :name => "index_sponsored_project_allocation_on_person_id"
 
   create_table "sponsored_project_efforts", :force => true do |t|
     t.integer  "sponsored_project_allocation_id"
@@ -466,6 +466,14 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
     t.datetime "updated_at"
   end
 
+  create_table "team_assignments", :id => false, :force => true do |t|
+    t.integer "team_id"
+    t.integer "user_id"
+  end
+
+  add_index "team_assignments", ["team_id"], :name => "index_teams_people_on_team_id"
+  add_index "team_assignments", ["user_id"], :name => "index_teams_people_on_person_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -486,16 +494,8 @@ ActiveRecord::Schema.define(:version => 20120726001651) do
 
   add_index "teams", ["course_id"], :name => "index_teams_on_course_id"
 
-  create_table "teams_people", :id => false, :force => true do |t|
-    t.integer "team_id"
-    t.integer "person_id"
-  end
-
-  add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
-  add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
-
   create_table "user_versions", :force => true do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "version"
     t.string   "webiso_account"
     t.string   "email",                                 :limit => 100

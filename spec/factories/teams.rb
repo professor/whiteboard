@@ -7,7 +7,9 @@ FactoryGirl.define do
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
     updating_email false
     association :course, :factory => :course
-    after(:create) { |team| FactoryGirl.create(:student_sam, :teams => [team], :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
+#    after(:create) { |team| FactoryGirl.create(:student_sam, :teams => [team], :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
+#    after(:create) { |team| FactoryGirl.create(:student_sam_user, :teams => [team], :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
+    after(:create) { |team| FactoryGirl.create(:student_sam_user, :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
 end

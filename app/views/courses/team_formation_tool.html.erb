@@ -22,7 +22,7 @@
 
 <% @course.registered_students.each do |user|%>
   <% part_time = user.is_part_time ? "PT" : "FT" %>
-  <% current_team = @course.teams.collect {|team| team if team.users.include?(user) }.compact %>
+  <% current_team = @course.teams.collect {|team| team if team.members.include?(user) }.compact %>
   <tr class=<%= cycle('cmu_table_odd', 'cmu_table_even')%> >
     <td class="twikiFirstCol"><%= user.human_name %></td>
 <!-- -->

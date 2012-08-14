@@ -19,11 +19,11 @@
   <br />
   <h3> Team members </h3>
 <table class="layout_table">
-  <% @team.people.each do |person| %>
-  <tr id="person<%= person.id%>">
+  <% @team.members.each do |user| %>
+  <tr id="person<%= user.id%>">
     <td>
-    <%=h person.human_name %>
-    <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
+    <%=h user.human_name %>
+    <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
   </td><td>&nbsp;
 </td>
 </tr>

@@ -5,12 +5,12 @@
 
 <input type="hidden" name="id" value="<%=params[:id]%>">
 
-<% personcounter = 0 %>
+<% usercounter = 0 %>
 
-  <% @people.each do |person| %>
-    <%= person.human_name %><br />
-    <%= f.text_area :learning_objective, :index => personcounter,  :size=>"80x5", :value=> @objectives[personcounter].learning_objective %><br />
-    <% personcounter += 1 %>
+  <% @users.each do |user| %>
+    <%= user.human_name %><br />
+    <%= f.text_area :learning_objective, :index => usercounter,  :size=>"80x5", :value=> @objectives[usercounter].learning_objective %><br />
+    <% usercounter += 1 %>
     <br/>
   <%end%>
   <%= f.submit 'Create Learning Objectives' %>

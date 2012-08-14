@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
-  acts_as_versioned :table_name => 'user_versions', :foreign_key => :person_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
+  acts_as_versioned :table_name => 'user_versions', :foreign_key => :user_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
       user.sponsored_project_effort_last_emailed_changed? ||
       user.course_tools_view_changed? ||
       user.course_index_view_changed? ||
@@ -19,8 +19,11 @@ class User < ActiveRecord::Base
   has_many :registrations
   has_many :registered_courses, :through => :registrations, :source => :course
 
-  has_many :faculty_assignments, :foreign_key => :person_id  #Todo: rename column to be user_id
+  has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
+
+  has_many :team_assignments
+  has_many :teams, :through => :team_assignments, :source => :user
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
@@ -58,7 +61,7 @@ class User < ActiveRecord::Base
 
     sql_str = "select c.* FROM courses c,teams t
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
-              (SELECT tp.team_id FROM teams_people tp, users u where u.id=tp.person_id and u.id=#{self.id})"
+              (SELECT ta.team_id FROM team_assignments ta, users u where u.id=ta.user_id and u.id=#{self.id})"
    courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
    @registered_courses = hub_registered_courses | courses_assigned_on_teams
@@ -80,8 +83,6 @@ class User < ActiveRecord::Base
   end
 
 
-  #  before_save :initialize_human_name
-  has_and_belongs_to_many :teams, :join_table=>"teams_people", :foreign_key => "person_id"
 
   def emailed_recently(email_type)
     case email_type
@@ -108,7 +109,7 @@ class User < ActiveRecord::Base
         teams_students_map[team.course.year][team.course.semester.downcase] = 0
       end
       teams_map[team.course.year][team.course.semester.downcase].push(team)
-      teams_students_map[team.course.year][team.course.semester.downcase] += team.people.count
+      teams_students_map[team.course.year][team.course.semester.downcase] += team.members.count
     end
     # teams_map is a two dimentional hash holding arrays of courses
     # teams_students_map is a two dimentional hash holding an integer count

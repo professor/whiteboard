@@ -5,7 +5,7 @@ class CourseMailer < ActionMailer::Base
   def configure_course_faculty_email(course, options = {})
     @course = course
     
-   mail(:to => options[:to] || course.faculty.collect { |person| person.email },
+   mail(:to => options[:to] || course.faculty.collect { |user| user.email },
            :subject => options[:subject] || "Please let us know about your course #{course.name} (#{course.semester} #{course.year})",
            :date => Time.now)
   end
