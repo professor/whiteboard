@@ -13,17 +13,17 @@ task :cron do
 
  puts "---Running task :cron"
 
- if Date.today.wday == 5 # run on Fridays
-   puts "----Updating cmu:effort_log_midweek_warning_email"
-   Rake::Task['cmu:effort_log_midweek_warning_email'].invoke
-   puts "----done."
- end
- 
- if Date.today.wday == 1 # run on Mondays
-   puts "----Updating cmu:effort_log_endweek_faculty_email"
-   Rake::Task['cmu:effort_log_endweek_faculty_email'].invoke
-   puts "----done."
- end
+ #if Date.today.wday == 5 # run on Fridays
+ #  puts "----Updating cmu:effort_log_midweek_warning_email"
+ #  Rake::Task['cmu:effort_log_midweek_warning_email'].invoke
+ #  puts "----done."
+ #end
+ #
+ #if Date.today.wday == 1 # run on Mondays
+ #  puts "----Updating cmu:effort_log_endweek_faculty_email"
+ #  Rake::Task['cmu:effort_log_endweek_faculty_email'].invoke
+ #  puts "----done."
+ #end
 
  if Date.today.day == 1 # run on the first on the month
    puts "----Copy cmu:sponsored_projects efforts and email"
