@@ -180,8 +180,9 @@ class User < ActiveRecord::Base
     self.webiso_account = Time.now.to_f.to_s if self.webiso_account.blank?
   end
 
+  #Todo: This method looks similiar to one in helpers/teams_helper.rb -- if so DRY!
   def past_teams
-    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_people tp ON ( t.id = tp.team_id) INNER JOIN users u ON (tp.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", self.id, AcademicCalendar.current_semester(), Date.today.year])
+    Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN teams_assignments ta ON ( t.id = ta.team_id) INNER JOIN users u ON (ta.person_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester <> ? OR c.year <> ?)", self.id, AcademicCalendar.current_semester(), Date.today.year])
   end
 
   # Given an array of team objects [Awesome, Devils, Alpha Omega]
