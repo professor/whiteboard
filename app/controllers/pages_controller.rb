@@ -15,6 +15,16 @@ class PagesController < ApplicationController
     end
   end
 
+  def changed
+    @pages = Page.order("created_at DESC").all
+    @no_pad = true
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @pages }
+    end
+  end
+
   # GET /pages/1
   # GET /pages/1.xml
   def show
@@ -79,31 +89,10 @@ class PagesController < ApplicationController
       redirect_to(page_url) and return
     end
 
-    show_ckeditor
-
-#    @courses = Course.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @page }
     end
-  end
-
-  def show_ckeditor
-    @show_ckeditor = true
-
-#    @show_ckeditor = false
-#    case @page.url
-#      when "se_staff_meeting"
-#        @show_ckeditor = true
-#      when "sample_task"
-#        @show_ckeditor = true
-#      when "sample_task1"
-#        @show_ckeditor = true
-#      when "orientation"
-#        @show_ckeditor = true
-#    end
-#@show_ckeditor = true  if @page.url.start_with?("orientation")
-
   end
 
   # POST /pages

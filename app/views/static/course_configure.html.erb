@@ -1,0 +1,66 @@
+<% @course = Course.new %>
+<% @course.curriculum_url = "http://rails.sv.cmu.edu/pages/ppm" %>
+
+<% content_for :javascript do %>
+
+    <%= javascript_tag do %>
+ 	$(function() {
+ 		$("#course_peer_evaluation_first_email").datepicker({
+           showButtonPanel: true,
+           dateFormat: 'yy-mm-dd'
+         });
+        $("#course_peer_evaluation_second_email").datepicker({
+                showButtonPanel: true,
+                dateFormat: 'yy-mm-dd'
+              });
+  	});
+    <% end %>
+<% end %>
+
+
+<div class="rounded staff" xmlns="http://www.w3.org/1999/html">
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <span class="instructions">Only faculty can see this information.</span>
+
+
+<p>This information was configured last by Faculty Frank</p>
+
+<%= form_for(@course) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+      <% @course.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<ul><li>
+  <p>
+    We use a variety of systems to host our curriculum including<ul><li>rails curriculum website (http://rails.sv.cmu.edu),</li>
+  <li>blackboard (http://www.cmu.edu/blackboard),</li><li>or your own web site.</li></ul>
+    </p>
+    <p>
+      <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:" %><br/>
+      <%= f.text_field :curriculum_url, :size => 100 %><br />
+    </p>
+</li>
+  <br/>
+  <li>I plan on using the Peer Evaluation Tool
+    <p>
+      "Heads up" email date: <%= f.text_field :peer_evaluation_first_email, :size => 11 %>  <br/>
+      "Do it today" email date:<%= f.text_field :peer_evaluation_second_email, :size => 11 %>
+    </p>
+    <p>
+      <%= f.hidden_field :is_configured, :value => true %>
+      <%= f.submit "Update" %>
+    </p>
+  </li>
+</ul>
+
+<% end %>
+
+</div>
+

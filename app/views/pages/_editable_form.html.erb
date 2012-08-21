@@ -1,14 +1,4 @@
-<!-- turned off since can't css to amzon s3
-<%= javascript_include_tag 'wymeditor/jquery.wymeditor.min' %>
-<%= stylesheet_link_tag "wymeditor/skins/refinery/skin", :media => "all" %>
--->
-
-<% if @show_ckeditor %>
 <%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
-<% end %>
-
-<script src="/javascripts/wymeditor/jquery.wymeditor.min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/stylesheets/wymeditor/skins/refinery/skin.css" type="text/css" media="all" />
 
 <%= javascript_include_tag 'jquery.cookie' %>
 <script type="text/javascript">
@@ -50,206 +40,6 @@
       $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
       $.cookie('selected_tab', null);   //clear cookie
     });
-
-
-//    jQuery(function() {
-//        jQuery('#page_tab_one_contents').wymeditor();
-//    });
-
-//    jQuery(function() {
-//      jQuery('.wymeditor').addClass("Todd")
-//    });
-
-
-    jQuery(function() {
-    jQuery('.wymeditor').wymeditor({
-//        var wymeditor_boot_options = $.extend({
-        //Read http://trac.wymeditor.org/trac/wiki/0.5/Customization
-
-//        logo: ''
-            skin: 'refinery'
-//        skin: 'refinery'
-
-        //customize the tools menu with toolsItems option
-        //'name' is the name of the command which will be executed
-        //when the user clicks on the button
-        //'title' is the button's title (automagically localized)
-        //'css' is the button's class name
-//        toolsItems: [
-//        {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'},
-//        {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
-//        {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
-//        {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
-//        {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
-//        {'name': 'InsertOrderedList', 'title': 'Ordered_List',
-//            'css': 'wym_tools_ordered_list'},
-//        {'name': 'InsertUnorderedList', 'title': 'Unordered_List',
-//            'css': 'wym_tools_unordered_list'},
-//        {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
-//        {'name': 'Paste', 'title': 'Paste_From_Word',
-//            'css': 'wym_tools_paste'},
-//        {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
-//        {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}
-//    ]
-
-
-  , cssSkinPath: "/stylesheets/wymeditor/skins/"
- // , skinPath: "/stylesheets/wymeditor/skins/"
-
-  , boxHtml:
-  "<div class='wym_box'>"
-    + "<div class='wym_area_top clearfix'>"
-      + WYMeditor.CONTAINERS
-      + WYMeditor.TOOLS
-    + "</div>"
-    + "<div class='wym_area_main'>"
-      + WYMeditor.HTML
-      + WYMeditor.IFRAME
-      + WYMeditor.STATUS
-    + "</div>"
-  + "</div>"        
-
-  , containersItems: [
-    {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
-    , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
-    , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
-    , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
-  ]
-
-  ,
-        toolsItems: [
-    {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
-    ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
-    ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
-    ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
-    ,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
-    ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
-/*    ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
-    ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'} */
-    ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
-    ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
-    ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
-    ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
-    ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
-    ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
-  ]
-
-
-    , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
-
-    , containersItemHtml:
-        "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
-          + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
-        + "</li>"
-
-    ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
-
-    ,toolsItemHtml:
-    "<li class='" + WYMeditor.TOOL_CLASS + "'>"
-      + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
-        + WYMeditor.TOOL_TITLE
-      + "</a>"
-    + "</li>"
-
-    , classesHtml: ''
-        , classesItemHtml: ''
-        ,       classesItemHtmlMultiple: ''
-
-//  , classesHtml: "<li class='wym_tools_class'>"
-//                 + "<a href='#' name='" + WYMeditor.APPLY_CLASS + "' title='"+ titleize(WYMeditor.APPLY_CLASS) +"'></a>"
-//                 + "<ul class='wym_classes wym_classes_hidden'>" + WYMeditor.CLASSES_ITEMS + "</ul>"
-//                + "</li>"
-
-//  , classesItemHtml: "<li><a href='#' name='"+ WYMeditor.CLASS_NAME + "'>"+ WYMeditor.CLASS_TITLE+ "</a></li>"
-//  , classesItemHtmlMultiple: "<li class='wym_tools_class_multiple_rules'>"
-//                              + "<span>" + WYMeditor.CLASS_TITLE + "</span>"
-//                              + "<ul>{classesItemHtml}</ul>"
-//                            +"</li>"
-
-    });
-  });        
-
-//    jQuery(function() {
-//        jQuery('.wymeditor').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_one_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_two_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('#page_tab_three_contents').wymeditor(wymeditor_boot_options);
-//        jQuery('.wymeditor').wymeditor();        
-//        jQuery('#page_tab_one_contents').wymeditor();
-//        jQuery('#page_tab_three_contents').wymeditor();
-//    });
-
-//    jQuery(function() {    
-//    jQuery('.wymeditor').wymeditor({
-//        skin 'refinery_tmp',
-//
-//         cssSkinPath: "/stylesheets/wymeditor/skins/"
-//
-//
-//        , boxHtml:
-//        "<div class='wym_box'>"
-//          + "<div class='wym_area_top clearfix'>"
-//            + WYMeditor.CONTAINERS
-//            + WYMeditor.TOOLS
-//          + "</div>"
-//          + "<div class='wym_area_main'>"
-//            + WYMeditor.HTML
-//            + WYMeditor.IFRAME
-//            + WYMeditor.STATUS
-//          + "</div>"
-//        + "</div>"
-//
-//        , containersItems: [
-//          {'name': 'h1', 'title':'Heading_1', 'css':'wym_containers_h1'}
-//          , {'name': 'h2', 'title':'Heading_2', 'css':'wym_containers_h2'}
-//          , {'name': 'h3', 'title':'Heading_3', 'css':'wym_containers_h3'}
-//          , {'name': 'p', 'title':'Paragraph', 'css':'wym_containers_p'}
-//        ]
-//
-//        ,
-//              toolsItems: [
-//          {'name': 'Bold', 'title': 'Bold', 'css': 'wym_tools_strong'}
-//          ,{'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'}
-//          ,{'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'}
-//          ,{'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'}
-//          /*,{'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'}
-//          ,{'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'}
-//          ,{'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'}
-//          ,{'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'}*/
-//          ,{'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'}
-//          ,{'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'}
-//          ,{'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'}
-//          ,{'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'}
-//          ,{'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'}
-//          ,{'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'}
-//        ]
-//
-//
-//          , containersHtml: "<ul class='wym_containers wym_section'>" + WYMeditor.CONTAINERS_ITEMS + "</ul>"
-//
-//          , containersItemHtml:
-//              "<li class='" + WYMeditor.CONTAINER_CLASS + "'>"
-//                + "<a href='#' name='" + WYMeditor.CONTAINER_NAME + "' title='" + WYMeditor.CONTAINER_TITLE + "'></a>"
-//              + "</li>"
-//
-//          ,toolsHtml: "<ul class='wym_tools wym_section wym_buttons'>" + WYMeditor.TOOLS_ITEMS + WYMeditor.CLASSES + "</ul>"
-//
-//          ,toolsItemHtml:
-//          "<li class='" + WYMeditor.TOOL_CLASS + "'>"
-//            + "<a href='#' name='" + WYMeditor.TOOL_NAME + "' title='" + WYMeditor.TOOL_TITLE + "'>"
-//              + WYMeditor.TOOL_TITLE
-//            + "</a>"
-//          + "</li>"
-//
-//          , classesHtml: ''
-//              , classesItemHtml: ''
-//              ,       classesItemHtmlMultiple: ''
-//
-//    });
-//
-//    });
-
-
 </script>
 
 
@@ -310,35 +100,18 @@
       <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
       </div>
       <div id="email_details">
-        <% if @show_ckeditor %>
-          <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
-        <% else %>
-          <%= f.text_area :tab_one_contents, :class => "wymeditor" %>
-        <% end %>
+         <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
       </div>
 	</div>
 	<div id="tabs-2">
-      <% if @show_ckeditor %>
-          <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
-      <% else %>
-          <%= f.text_area :tab_two_contents, :class => "wymeditor" %>
-      <% end %>
+       <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
 	</div>
 	<div id="tabs-3">
-      <% if @show_ckeditor %>
-          <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
-      <% else %>
-          <%= f.text_area :tab_three_contents, :class => "wymeditor" %>
-      <% end %>
+       <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
 	</div>
   <% if current_user.is_staff || current_user.is_admin %>
 	<div id="tabs-4">
-      <% if @show_ckeditor %>
-          <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
-      <% else %>
-          <%= f.text_area :faculty_notes, :class => "wymeditor" %>
-      <% end %>
-
+       <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
 	</div>
   <% end %>    
       </div>
@@ -357,7 +130,7 @@
     </p>
   <p>
 
-    <%= f.submit button_name,  :class => "wymupdate",  :onclick=>"confirmation_needed = false;"   %>
+    <%= f.submit button_name, :onclick=>"confirmation_needed = false;"   %>
   </p>
 <% end %>
 

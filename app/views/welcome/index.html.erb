@@ -2,18 +2,6 @@
 
 <%# render :partial=>'rss_feeds/index', :locals => {:rss_feeds => @rss_feeds} %>
 
-<% if current_user %>
-  <h1>My courses</h1>
-  <% @registered_for_these_courses_during_current_semester.each do |course| %>
-    <p><%= link_to course.name, course_path(course) %></p>
-    <%# render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
-  <% end %>
-  <% @teaching_these_courses_during_current_semester .each do |course| %>
-     <p><%= link_to course.name, course_path(course) %></p>
-     <%# render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
-  <% end %>
-<% end  %>
-
 <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
 <div>
                     <label for="s" class="screen-reader-text">Search for:</label>
@@ -22,6 +10,29 @@
     (Note: only searches through curriculum pages)
 </div>
             </form>
+
+<% if current_user %>
+    <table class="layout_table">
+      <tr>
+        <td>
+          <h1>My courses</h1>
+          <% @registered_for_these_courses_during_current_semester.each do |course| %>
+            <p><%= link_to course.name, course_path(course) %></p>
+            <%# render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+          <% end %>
+          <% @teaching_these_courses_during_current_semester .each do |course| %>
+             <p><%= link_to course.name, course_path(course) %></p>
+             <%# render :partial => "/courses/show_actions" ,:locals => { :course => course } %>
+          <% end %>
+        </td>
+        <td>
+          <h1>Pages</h1>
+            <%=  link_to "Orientation", "/pages/orientation" %>
+        </td>
+      </tr>
+    </table>
+<% end  %>
+
 
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
 <h2>Faculty views</h2>

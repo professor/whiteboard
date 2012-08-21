@@ -40,6 +40,7 @@ CMUEducation::Application.routes.draw do
     resources :pages do
       collection do
         post :reposition
+        get :changed
       end
     end
   end
