@@ -1,21 +1,23 @@
 <% content_for :title, "Listing pages" %>
 
-<h1>Listing pages</h1>
+<h1>Recently changed pages</h1>
 
 <table class="cmu_table">
   <tr>
     <th>Title</th>
-    <th>Course</th>
+    <th>When</th>
+    <th>Who</th>
   </tr>
 
 <% for page in @pages %>
   <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-    <td><%= link_to page.title, page %></td>
+    <td><%= link_to page.title, page %>
 <% unless page.course_id.blank?  %>
-    <td>(<%=h page.course.name %>)</td>
-<% else %>
-    <td>&nbsp;</td>
+   (<%=h page.course.name %>)
 <% end %>
+    </td>
+    <td><%=l page.updated_at, :format => :detailed %></td>
+    <td><%= page.updated_by.human_name %></td>
   </tr>
 <% end %>
 </table>

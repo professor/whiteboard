@@ -15,6 +15,16 @@ class PagesController < ApplicationController
     end
   end
 
+  def changed
+    @pages = Page.order("created_at DESC").all
+    @no_pad = true
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @pages }
+    end
+  end
+
   # GET /pages/1
   # GET /pages/1.xml
   def show
