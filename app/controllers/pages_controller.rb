@@ -129,8 +129,6 @@ class PagesController < ApplicationController
     #course = Course.with_course_name(params[:course_name]).first
     #@page.course = course
 
-    show_ckeditor
-
     @page.updated_by_user_id = current_user.id if current_user
     respond_to do |format|
       if @page.update_attributes(params[:page])
