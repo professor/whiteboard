@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
 
-  has_attached_file :photo, :storage => :s3, :styles => {:original =>"", :profile => "133x200>"},
+  has_attached_file :photo, :storage => :s3, :styles => {:original =>"", :profile => "150x200>"},
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
   validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
