@@ -20,7 +20,7 @@ class Ability
       can :upload, Course
     end
 
-    if (user.human_name == "Jazz Sabian" || user.human_name == "Stacy Marshall")
+    if (user.human_name == "Jazz Sabian" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
       can :create, User
     else
       cannot :create, User
