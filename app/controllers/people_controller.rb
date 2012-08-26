@@ -130,6 +130,7 @@ class PeopleController < ApplicationController
     end
   end
 
+  #http://localhost:3000/people/new?first_name=Todd&last_name=Sedano&webiso_account=at33@andrew.cmu.edu&is_student=true&program=ECE&expires_at=2013-01-01
 
   # GET /people/new
   # GET /people/new.xml
@@ -139,7 +140,12 @@ class PeopleController < ApplicationController
     @person = User.new
     @person.is_active = true
     @person.webiso_account = params[:webiso_account]
+    @person.personal_email = params[:personal_email]
     @person.is_student = params[:is_student]
+    @person.first_name = params[:first_name]
+    @person.last_name = params[:last_name]
+    @person.masters_program = params[:program]
+    @person.expires_at = params[:expires_at]
 
     if Rails.env.development?
       @domain = GOOGLE_DOMAIN
