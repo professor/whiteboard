@@ -11,6 +11,12 @@ Welcome to the CMU-SV rails project for the Education group.
 * {Person Person (aka User)}
 * {Presentation Presentation}
 
+* [Course](Course)
+* [Deliverable](http://rubydoc.info/github/professor/cmusv/Deliverable)
+* [PeerEvaluationReview](Peer Evaluation)
+* [Person](Person (aka User))
+* [Presentation](Presentation)
+
 See http://rubydoc.info/github/professor/cmusv/frames or run "rake doc:app" or run "yard" to generate API documentation for your models, controllers, helpers, and libraries.
 
 == Metrics for Software Engineers (MfSE) students
