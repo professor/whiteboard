@@ -27,9 +27,10 @@ class EffortLogsController < ApplicationController
       create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end
 
-    (with_effort, without_effort) = create_midweek_warning_email_for_se_students(random_scotty_saying)
-    @people_with_effort = @people_with_effort + with_effort
-    @people_without_effort = @people_without_effort + without_effort
+    #No longer required for all SE students
+    #(with_effort, without_effort) = create_midweek_warning_email_for_se_students(random_scotty_saying)
+    #@people_with_effort = @people_with_effort + with_effort
+    #@people_without_effort = @people_without_effort + without_effort
 
     EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
 
