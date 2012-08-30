@@ -50,7 +50,7 @@ namespace :cmu do
 
     urls = ["foundations", "foundations_calendar", "foundations_announcements", "foundations_class_notes",
             "foundations_rails_faq",
-            "foundations_task1", "foundations_task2", "foundations_task2b", "foundations_task3", "foundations_task4",
+            "foundations_task1", "foundations_task2", "foundations_task3", "foundations_task4",
             "foundations_task5", "foundations_task6", ]
     urls.each do |url|
       update_intro_from_foundations(url)
