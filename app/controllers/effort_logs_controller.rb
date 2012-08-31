@@ -53,10 +53,10 @@ class EffortLogsController < ApplicationController
   def create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     year = Date.today.cwyear
     week_number = Date.today.cweek
-    teams = Team.where(:course_id => course_id)
-    teams.each do |team|
-      logger.debug "** team #{team.name}"
-      team.members.each do |user|
+
+    course = Course.find(course_id)
+    users = course.registered_students | course.teams.collect {|team| team.members}.flatten
+      users.each do |user|
         logger.debug "**    user #{user.human_name}"
         effort_log = EffortLog.where(:user_id => user.id, :week_number => week_number, :year => year).first
         if (!user.emailed_recently(:effort_log))
@@ -72,7 +72,6 @@ class EffortLogsController < ApplicationController
           user.save
         end
       end
-    end
   end
 
   def create_midweek_warning_email_for_se_students(random_scotty_saying)
