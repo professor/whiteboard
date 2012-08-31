@@ -55,23 +55,23 @@ class EffortLogsController < ApplicationController
     week_number = Date.today.cweek
 
     course = Course.find(course_id)
-    users = course.registered_students | course.teams.collect {|team| team.members}.flatten
-      users.each do |user|
-        logger.debug "**    user #{user.human_name}"
-        effort_log = EffortLog.where(:user_id => user.id, :week_number => week_number, :year => year).first
-        if (!user.emailed_recently(:effort_log))
-          if ((effort_log.nil? || effort_log.sum == 0)&&(!user.emailed_recently(:effort_log)))
-            #            logger.debug "**  sent email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
-            create_midweek_warning_email_send_it(random_scotty_saying, user.id)
-            @people_without_effort << user.human_name
-          else
-            logger.debug "**  no   email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
-            @people_with_effort << user.human_name
-          end
-          user.effort_log_warning_email = Time.now
-          user.save
+    users = course.registered_students | course.teams.collect { |team| team.members }.flatten
+    users.each do |user|
+      logger.debug "**    user #{user.human_name}"
+      effort_log = EffortLog.where(:user_id => user.id, :week_number => week_number, :year => year).first
+      if (!user.emailed_recently(:effort_log))
+        if ((effort_log.nil? || effort_log.sum == 0)&&(!user.emailed_recently(:effort_log)))
+          #            logger.debug "**  sent email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
+          create_midweek_warning_email_send_it(random_scotty_saying, user.id)
+          @people_without_effort << user.human_name
+        else
+          logger.debug "**  no   email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
+          @people_with_effort << user.human_name
         end
+        user.effort_log_warning_email = Time.now
+        user.save
       end
+    end
   end
 
   def create_midweek_warning_email_for_se_students(random_scotty_saying)
@@ -243,7 +243,7 @@ class EffortLogsController < ApplicationController
       duplicate_effort_log = recent_effort_log
     else
       #Do we already have effort for the week we are trying to log effort against?
-      duplicate_effort_log = EffortLog.where(:user_id => current_user.id,:week_number => week_number, :year => year).first
+      duplicate_effort_log = EffortLog.where(:user_id => current_user.id, :week_number => week_number, :year => year).first
     end
 
     if duplicate_effort_log
