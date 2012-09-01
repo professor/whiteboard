@@ -89,7 +89,7 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 
-    @deliverable.update_team if params[:deliverable][:is_team_deliverable]
+    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -129,7 +129,7 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable = Deliverable.find(params[:id])
 
-    @deliverable.update_team if params[:deliverable][:is_team_deliverable]
+    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
