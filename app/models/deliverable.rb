@@ -53,11 +53,13 @@ class Deliverable < ActiveRecord::Base
   def unique_course_task_owner?
     if self.is_team_deliverable?
       duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+      type = "team"
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => nil, :creator_id => self.creator_id).first
+      type = "individual"
     end
     if duplicate && duplicate.id != self.id
-      errors.add(:base, "Can't create another deliverable for the same course and task. Please edit the existing one.")
+      errors.add(:base, "Can't create another #{type} deliverable for the same course and task. Please edit the existing one.")
     end
   end
 
@@ -178,13 +180,14 @@ class Deliverable < ActiveRecord::Base
     return true
   end
 
-
-  protected
   def update_team
     # Look up the team this user is on if it is a team deliverable
-    self.team = creator.teams.find(:first, :conditions => ['course_id = ?', course_id])
-  end
+    Team.where(:course_id => self.course_id).each do |team|
+      answer = team.members.include?(self.creator)
+      self.team = team if team.members.include?(self.creator)
+    end  end
 
+  protected
   def sanitize_data
     self.name = self.name.titleize unless self.name.blank?
   end
