@@ -1,4 +1,4 @@
-= CMU-SV
+= Whiteboard for CMU-SV
 
 Welcome to the CMU-SV rails project for the Education group.
 
