@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: PeerEvaluationReview</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,40 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/peer_evaluation_review.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-is_completed_for-3F">::is_completed_for?</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +333,110 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class PeerEvaluationReview</h1>
+
+  <div id="description" class="description">
+    
+<p>Peer Evaluations are done by student teams at the request of a faculty
+member. Usually, the faculty member will setup the peer evaluation and will
+need to know the following information</p>
+<ul><li>
+<p>Start date - when to email the student team about the evaluation. Teams can
+start before this</p>
+</li><li>
+<p>End date - when to email the student team Teams can end after this provided
+the faculty hasn’t created the report.</p>
+</li><li>
+<p>Learning Ojbectives for each team member (optional)</p>
+</li></ul>
+
+<h2 id="label-Related+classes">Related classes</h2>
+
+<p><a href="classes/PeerEvaluationController.html">Peer Evaluation
+Controller</a></p>
+
+<p><a href="classes/PeerEvaluationLearningObjective.html">Peer Evaluation
+Learning Objective</a></p>
+
+<p><a href="classes/PeerEvaluationReport.html">Peer Evaluation Report</a></p>
+
+<h2 id="label-Assumptions">Assumptions</h2>
+<ul><li>
+<p>The peer evaluation for a team is always ready, theoretically a team could
+start one on their own</p>
+</li><li>
+<p>A team would not need to do a peer evaluation twice. If they had to, a
+system admin would clean out the data or alter the foreign keys to appear
+as if a peer evaluation had not been done for that team</p>
+</li></ul>
+
+<h2 id="label-Security">Security</h2>
+<ul><li>
+<p>Students should not be able to see the peer evaluations for other students</p>
+</li><li>
+<p>Any faculty can see the peer evaluation for a team</p>
+</li></ul>
+
+<p>This component was originally written by Russel Reed (Class of 2010) and
+integrated by Todd Sedano. Student teams can provide 360 review feedback
+when prompted by the faculty.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-is_completed_for-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_completed_for?</span><span
+            class="method-args">(user_id, team_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_completed_for-3F-source">
+            <pre><span class="ruby-comment"># File app/models/peer_evaluation_review.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_completed_for?</span>(<span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">team_id</span>)
+  <span class="ruby-operator">!</span><span class="ruby-constant">PeerEvaluationReview</span>.<span class="ruby-identifier">where</span>({<span class="ruby-value">:team_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">team_id</span>, <span class="ruby-value">:author_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user_id</span>}).<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_completed_for-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_completed_for-3F-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

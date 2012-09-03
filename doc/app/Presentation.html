@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: Presentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/presentation.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-find_by_presenter">::find_by_presenter</a>
+    
+    <li><a href="#method-c-find_by_user_and_teams">::find_by_user_and_teams</a>
+    
+    <li><a href="#method-c-find_comments">::find_comments</a>
+    
+    <li><a href="#method-c-find_ratings">::find_ratings</a>
+    
+    <li><a href="#method-i-can_view_feedback-3F">#can_view_feedback?</a>
+    
+    <li><a href="#method-i-has_given_feedback-3F">#has_given_feedback?</a>
+    
+    <li><a href="#method-i-is_team_presentation-3F">#is_team_presentation?</a>
+    
+    <li><a href="#method-i-presenter">#presenter</a>
+    
+    <li><a href="#method-i-presenter-3F">#presenter?</a>
+    
+    <li><a href="#method-i-send_presentation_feedback_email">#send_presentation_feedback_email</a>
+    
+    <li><a href="#method-i-team_or_user_for_presenter-3F">#team_or_user_for_presenter?</a>
+    
+    <li><a href="#method-i-user_email">#user_email</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GAppsProvisioning.html">GAppsProvisioning</a>
+  
+    <li><a href="./GAppsProvisioning/Connection.html">GAppsProvisioning::Connection</a>
+  
+    <li><a href="./GAppsProvisioning/GDataError.html">GAppsProvisioning::GDataError</a>
+  
+    <li><a href="./GAppsProvisioning/GroupEntry.html">GAppsProvisioning::GroupEntry</a>
+  
+    <li><a href="./GAppsProvisioning/MemberEntry.html">GAppsProvisioning::MemberEntry</a>
+  
+    <li><a href="./GAppsProvisioning/NicknameEntry.html">GAppsProvisioning::NicknameEntry</a>
+  
+    <li><a href="./GAppsProvisioning/OwnerEntry.html">GAppsProvisioning::OwnerEntry</a>
+  
+    <li><a href="./GAppsProvisioning/ProvisioningApi.html">GAppsProvisioning::ProvisioningApi</a>
+  
+    <li><a href="./GAppsProvisioning/UserEntry.html">GAppsProvisioning::UserEntry</a>
+  
+    <li><a href="./EffortReportsController.html">EffortReportsController</a>
+  
+    <li><a href="./EffortReportsController/PanelState.html">EffortReportsController::PanelState</a>
+  
+    <li><a href="./EffortReportsController/SemesterPanel.html">EffortReportsController::SemesterPanel</a>
+  
+    <li><a href="./TimeMachine.html">TimeMachine</a>
+  
+    <li><a href="./TimeMachine/Date.html">TimeMachine::Date</a>
+  
+    <li><a href="./TimeMachine/Time.html">TimeMachine::Time</a>
+  
+    <li><a href="./PeopleController.html">PeopleController</a>
+  
+    <li><a href="./PeopleController/ClassProfileState.html">PeopleController::ClassProfileState</a>
+  
+    <li><a href="./Rails.html">Rails</a>
+  
+    <li><a href="./Rails/GemDependency.html">Rails::GemDependency</a>
+  
+    <li><a href="./Users.html">Users</a>
+  
+    <li><a href="./Users/OmniauthCallbacksController.html">Users::OmniauthCallbacksController</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./AcademicCalendar.html">AcademicCalendar</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Course.html">Course</a>
+  
+    <li><a href="./CourseMailer.html">CourseMailer</a>
+  
+    <li><a href="./CourseNavigationsController.html">CourseNavigationsController</a>
+  
+    <li><a href="./CourseNumber.html">CourseNumber</a>
+  
+    <li><a href="./CourseNumbersController.html">CourseNumbersController</a>
+  
+    <li><a href="./CourseNumbersHelper.html">CourseNumbersHelper</a>
+  
+    <li><a href="./CoursesController.html">CoursesController</a>
+  
+    <li><a href="./CoursesHelper.html">CoursesHelper</a>
+  
+    <li><a href="./DelayedSystemJob.html">DelayedSystemJob</a>
+  
+    <li><a href="./DelayedSystemJobsController.html">DelayedSystemJobsController</a>
+  
+    <li><a href="./Deliverable.html">Deliverable</a>
+  
+    <li><a href="./DeliverableAttachment.html">DeliverableAttachment</a>
+  
+    <li><a href="./DeliverablesController.html">DeliverablesController</a>
+  
+    <li><a href="./DeliverablesHelper.html">DeliverablesHelper</a>
+  
+    <li><a href="./EffortLog.html">EffortLog</a>
+  
+    <li><a href="./EffortLogLineItem.html">EffortLogLineItem</a>
+  
+    <li><a href="./EffortLogLineItemsController.html">EffortLogLineItemsController</a>
+  
+    <li><a href="./EffortLogLineItemsHelper.html">EffortLogLineItemsHelper</a>
+  
+    <li><a href="./EffortLogMailer.html">EffortLogMailer</a>
+  
+    <li><a href="./EffortLogsController.html">EffortLogsController</a>
+  
+    <li><a href="./EffortLogsHelper.html">EffortLogsHelper</a>
+  
+    <li><a href="./FacultyAssignment.html">FacultyAssignment</a>
+  
+    <li><a href="./Gem.html">Gem</a>
+  
+    <li><a href="./GenericAjaxController.html">GenericAjaxController</a>
+  
+    <li><a href="./GenericMailer.html">GenericMailer</a>
+  
+    <li><a href="./GoogleMailingListJob.html">GoogleMailingListJob</a>
+  
+    <li><a href="./HUBClassRosterHandler.html">HUBClassRosterHandler</a>
+  
+    <li><a href="./IndexTank.html">IndexTank</a>
+  
+    <li><a href="./MailingListsController.html">MailingListsController</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./Page.html">Page</a>
+  
+    <li><a href="./PageAttachment.html">PageAttachment</a>
+  
+    <li><a href="./PageAttachmentsController.html">PageAttachmentsController</a>
+  
+    <li><a href="./PageComment.html">PageComment</a>
+  
+    <li><a href="./PageCommentMailer.html">PageCommentMailer</a>
+  
+    <li><a href="./PageCommentType.html">PageCommentType</a>
+  
+    <li><a href="./PageCommentTypesController.html">PageCommentTypesController</a>
+  
+    <li><a href="./PageCommentTypesHelper.html">PageCommentTypesHelper</a>
+  
+    <li><a href="./PageCommentsHelper.html">PageCommentsHelper</a>
+  
+    <li><a href="./PagesController.html">PagesController</a>
+  
+    <li><a href="./PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="./PeerEvaluationController.html">PeerEvaluationController</a>
+  
+    <li><a href="./PeerEvaluationLearningObjective.html">PeerEvaluationLearningObjective</a>
+  
+    <li><a href="./PeerEvaluationReport.html">PeerEvaluationReport</a>
+  
+    <li><a href="./PeerEvaluationReview.html">PeerEvaluationReview</a>
+  
+    <li><a href="./PeopleHelper.html">PeopleHelper</a>
+  
+    <li><a href="./Person.html">Person</a>
+  
+    <li><a href="./PersonJob.html">PersonJob</a>
+  
+    <li><a href="./PersonMailer.html">PersonMailer</a>
+  
+    <li><a href="./Presentation.html">Presentation</a>
+  
+    <li><a href="./PresentationFeedback.html">PresentationFeedback</a>
+  
+    <li><a href="./PresentationFeedbackAnswer.html">PresentationFeedbackAnswer</a>
+  
+    <li><a href="./PresentationQuestion.html">PresentationQuestion</a>
+  
+    <li><a href="./PresentationsController.html">PresentationsController</a>
+  
+    <li><a href="./PresentationsHelper.html">PresentationsHelper</a>
+  
+    <li><a href="./RegisteredCourse.html">RegisteredCourse</a>
+  
+    <li><a href="./Registration.html">Registration</a>
+  
+    <li><a href="./RssFeed.html">RssFeed</a>
+  
+    <li><a href="./RssFeedsController.html">RssFeedsController</a>
+  
+    <li><a href="./RssFeedsHelper.html">RssFeedsHelper</a>
+  
+    <li><a href="./ScottyDogSaying.html">ScottyDogSaying</a>
+  
+    <li><a href="./ScottyDogSayingsController.html">ScottyDogSayingsController</a>
+  
+    <li><a href="./ScottyDogSayingsHelper.html">ScottyDogSayingsHelper</a>
+  
+    <li><a href="./SearchController.html">SearchController</a>
+  
+    <li><a href="./SponsoredProject.html">SponsoredProject</a>
+  
+    <li><a href="./SponsoredProjectAllocation.html">SponsoredProjectAllocation</a>
+  
+    <li><a href="./SponsoredProjectAllocationsController.html">SponsoredProjectAllocationsController</a>
+  
+    <li><a href="./SponsoredProjectEffort.html">SponsoredProjectEffort</a>
+  
+    <li><a href="./SponsoredProjectEffortMailer.html">SponsoredProjectEffortMailer</a>
+  
+    <li><a href="./SponsoredProjectEffortsController.html">SponsoredProjectEffortsController</a>
+  
+    <li><a href="./SponsoredProjectSponsor.html">SponsoredProjectSponsor</a>
+  
+    <li><a href="./SponsoredProjectSponsorsController.html">SponsoredProjectSponsorsController</a>
+  
+    <li><a href="./SponsoredProjectsController.html">SponsoredProjectsController</a>
+  
+    <li><a href="./StaticController.html">StaticController</a>
+  
+    <li><a href="./StrengthTheme.html">StrengthTheme</a>
+  
+    <li><a href="./Suggestion.html">Suggestion</a>
+  
+    <li><a href="./SuggestionsController.html">SuggestionsController</a>
+  
+    <li><a href="./SystemController.html">SystemController</a>
+  
+    <li><a href="./SystemHelper.html">SystemHelper</a>
+  
+    <li><a href="./TaskType.html">TaskType</a>
+  
+    <li><a href="./TaskTypesController.html">TaskTypesController</a>
+  
+    <li><a href="./TaskTypesHelper.html">TaskTypesHelper</a>
+  
+    <li><a href="./Team.html">Team</a>
+  
+    <li><a href="./TeamAssignment.html">TeamAssignment</a>
+  
+    <li><a href="./TeamsController.html">TeamsController</a>
+  
+    <li><a href="./TeamsHelper.html">TeamsHelper</a>
+  
+    <li><a href="./TmpUpdateFacultyAssignments.html">TmpUpdateFacultyAssignments</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserPreference.html">UserPreference</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./WelcomeController.html">WelcomeController</a>
+  
+    <li><a href="./WelcomeHelper.html">WelcomeHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Presentation</h1>
+
+  <div id="description" class="description">
+    
+<p>The overarching design goal of the presentation tool is to make it very
+easy to instantiate, collect feedback, and distribute feedback to the
+presenters. At the beginning of a meeting, if you decided you wanted to get
+feedback on a presentation, it should happen quickly. (We’ve found that
+tools like survey monkey required too much hoop jumping to make it work
+quickly)</p>
+
+<p>Creating a presentation  From the course tool page, any user can put a
+presentation into the system by clicking on Presentations -&gt; Assign new
+presentation. If a team is selected, then anyone on that team can see
+feedback. If an individual is selected, then only that individual can see
+feedback. Faculty can always see feedback for any presentation.</p>
+
+<p>Providing feedback Any user can click on “Presentations” on the left
+navigation. The default view here is to show presentations that are
+scheduled for today. (There is an All Presentations link on the right, and
+students can see feedback from past presentations with “My Presentations.”)
+Then click on “Give Feedback” to provide detailed feedback.</p>
+
+<p>Receiving feedback The presenter(s) are notified via email when they
+receive their first piece of feedback. Subsequent notifications are
+purposefully turned off. The email contains a link for them to see their
+feedback. Faculty feedback is separated out from student feedback. (I’ve
+noticed that students tend to be more blunt then faculty.) Any presenter
+can also see their feedback from previous presentations by clicking on “My
+Presentations”</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-find_by_presenter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_by_presenter</span><span
+            class="method-args">(current_user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_by_presenter-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_presenter</span>(<span class="ruby-identifier">current_user</span>)
+  <span class="ruby-comment"># Find everything where the passed in person is either the assignee</span>
+  <span class="ruby-comment"># or is on the presentation's team</span>
+  <span class="ruby-identifier">teams</span> = <span class="ruby-constant">Team</span>.<span class="ruby-identifier">find_by_person</span>(<span class="ruby-identifier">current_user</span>)
+  <span class="ruby-constant">Presentation</span>.<span class="ruby-identifier">find_by_user_and_teams</span>(<span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">teams</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_by_presenter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_by_presenter-method -->
+
+    
+      <div id="method-c-find_by_user_and_teams" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_by_user_and_teams</span><span
+            class="method-args">(current_user, teams)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_by_user_and_teams-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_user_and_teams</span>(<span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">teams</span>)
+  <span class="ruby-identifier">team_condition</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">teams</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">team_condition</span> = <span class="ruby-string">&quot;team_id IN (&quot;</span>
+    <span class="ruby-identifier">team_condition</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">teams</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">id</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-string">','</span>)
+    <span class="ruby-identifier">team_condition</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;) OR &quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">Presentation</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">team_condition</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;(team_id IS NULL AND user_id = #{current_user.id})&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_by_user_and_teams-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_by_user_and_teams-method -->
+
+    
+      <div id="method-c-find_comments" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_comments</span><span
+            class="method-args">(feedbacks, questions)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_comments-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_comments</span> (<span class="ruby-identifier">feedbacks</span>, <span class="ruby-identifier">questions</span>)
+
+  <span class="ruby-comment"># code for comments</span>
+
+  <span class="ruby-identifier">feedback_ids</span> = []
+  <span class="ruby-identifier">question_comments</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-identifier">feedbacks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">feedback_ids</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">questions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">q</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">deleted?</span>
+
+      <span class="ruby-identifier">comments</span> = <span class="ruby-string">&quot; &quot;</span>
+      <span class="ruby-identifier">found_answers</span> = <span class="ruby-constant">PresentationFeedbackAnswer</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:feedback_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">feedback_ids</span>, <span class="ruby-value">:question_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">id</span>)
+      <span class="ruby-identifier">found_answers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">f</span>.<span class="ruby-identifier">comment</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">f</span>.<span class="ruby-identifier">comment</span>.<span class="ruby-identifier">nil?</span>)
+          <span class="ruby-identifier">comments</span> = <span class="ruby-identifier">comments</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;*- &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">comment</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">question_comments</span>[<span class="ruby-identifier">q</span>.<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">comments</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">question_comments</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_comments-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_comments-method -->
+
+    
+      <div id="method-c-find_ratings" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_ratings</span><span
+            class="method-args">(feedbacks, questions)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_ratings-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_ratings</span> (<span class="ruby-identifier">feedbacks</span>, <span class="ruby-identifier">questions</span>)
+
+  <span class="ruby-comment">#code for ratings</span>
+  <span class="ruby-identifier">presentation_answers</span> = []
+  <span class="ruby-identifier">question_ratings</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">ratings</span>= []
+
+  <span class="ruby-identifier">feedbacks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">feedback_answers</span> = <span class="ruby-constant">PresentationFeedbackAnswer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:feedback_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">id</span>})
+    <span class="ruby-identifier">presentation_answers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">feedback_answers</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">questions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">q</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">deleted?</span>
+      <span class="ruby-identifier">question_ratings</span>[<span class="ruby-identifier">q</span>.<span class="ruby-identifier">id</span>] = [<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">presentation_answers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">a</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ans</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">ratings</span> = <span class="ruby-identifier">question_ratings</span>[<span class="ruby-identifier">ans</span>.<span class="ruby-identifier">question_id</span>]
+      <span class="ruby-identifier">ratings</span>[<span class="ruby-identifier">ans</span>.<span class="ruby-identifier">rating</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">question_ratings</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_ratings-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_ratings-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-can_view_feedback-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">can_view_feedback?</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="can_view_feedback-3F-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">can_view_feedback?</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">presenter?</span>(<span class="ruby-identifier">user</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- can_view_feedback-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- can_view_feedback-3F-method -->
+
+    
+      <div id="method-i-has_given_feedback-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">has_given_feedback?</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="has_given_feedback-3F-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">has_given_feedback?</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-ivar">@presentation_feedbacks</span> = <span class="ruby-constant">PresentationFeedback</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;evaluator_id = :uid AND presentation_id = :pid&quot;</span>,
+        {<span class="ruby-value">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:pid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>})
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@presentation_feedbacks</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- has_given_feedback-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- has_given_feedback-3F-method -->
+
+    
+      <div id="method-i-is_team_presentation-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_team_presentation?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_team_presentation-3F-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_team_presentation?</span>
+  <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">team</span>.<span class="ruby-identifier">blank?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_team_presentation-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_team_presentation-3F-method -->
+
+    
+      <div id="method-i-presenter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">presenter</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="presenter-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">presenter</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_team_presentation?</span>
+    <span class="ruby-identifier">team</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- presenter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- presenter-method -->
+
+    
+      <div id="method-i-presenter-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">presenter?</span><span
+            class="method-args">(current_user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="presenter-3F-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">presenter?</span>(<span class="ruby-identifier">current_user</span>)
+  <span class="ruby-identifier">current_user</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">team</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- presenter-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- presenter-3F-method -->
+
+    
+      <div id="method-i-send_presentation_feedback_email" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_presentation_feedback_email</span><span
+            class="method-args">(url)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="send_presentation_feedback_email-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_presentation_feedback_email</span>(<span class="ruby-identifier">url</span>)
+
+  <span class="ruby-identifier">mail_to</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_email</span>
+  <span class="ruby-identifier">message</span> = <span class="ruby-string">&quot;See feedback for your presentation &quot;</span>
+  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; for &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">name</span>
+
+  <span class="ruby-identifier">subject</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">subject</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">short_name</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">short_name</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">subject</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;Feedback for presentation &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span>
+
+  <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">mail_to</span>,
+             <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">subject</span>,
+             <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span>,
+             <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;View feedback&quot;</span>,
+             <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>
+  }
+  <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_presentation_feedback_email-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_presentation_feedback_email-method -->
+
+    
+      <div id="method-i-team_or_user_for_presenter-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">team_or_user_for_presenter?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="team_or_user_for_presenter-3F-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">team_or_user_for_presenter?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">team_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">user_id</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:base</span>, <span class="ruby-string">&quot;Can't create a presentation without a team or person giving it&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- team_or_user_for_presenter-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- team_or_user_for_presenter-3F-method -->
+
+    
+      <div id="method-i-user_email" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">user_email</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="user_email-source">
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user_email</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">team_id</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">team</span>.<span class="ruby-identifier">email</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- user_email-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- user_email-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

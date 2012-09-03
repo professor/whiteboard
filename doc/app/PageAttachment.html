@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: PageAttachment</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,40 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/page_attachment.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-reposition">::reposition</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +333,92 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class PageAttachment</h1>
+
+  <div id="description" class="description">
+    
+<p>Any user who can edit a <a href="classes/Page.html">Page</a> can also
+upload attachments to that page. (Note: in this system a <a
+href="Page.html">Page</a> is the CMS pages that represent curriculum
+materials. A user can not upload an attachment to a team or a person page
+through this code.)</p>
+
+<p>The attachments are stored on Amazon S3. S3 allows us to revision all
+documents. All old versions are still stored on the filesystem even though
+the user can only actively access the latest one.</p>
+
+<p>When uploading a file, the user is asked for a “readable name” for the
+file: a label for the link to the file.</p>
+
+<p>After uploading a file, the file’s “readable name” can be updated or the
+file can be replaced. If the user replaces the an existing file (e.g.
+‘ppm_week1.ppt’) with a different file name (e.g. ‘ppm_week1_ts.ppt’) then
+a warning appears. Any user who tries to access the original file name will
+not be able to do so. Under normal workflow, this isn’t a big deal. It is
+possible for the user to create a link on the page to the old file and
+system will not automatically update it.</p>
+
+<p>The system records who uploads and replaces the file and when this happens,
+and versions this information.</p>
+
+<p>AWS S3 allows</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-reposition" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reposition</span><span
+            class="method-args">(ids)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Re-position: change the sequence of attachments for a given page</p>
+          
+
+          
+          <div class="method-source-code" id="reposition-source">
+            <pre><span class="ruby-comment"># File app/models/page_attachment.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">reposition</span>(<span class="ruby-identifier">ids</span>)
+  <span class="ruby-identifier">update_all</span>([<span class="ruby-string">&quot;position = STRPOS(?, ','||id||',')&quot;</span>, <span class="ruby-node">&quot;,#{ids.join(',')},&quot;</span>], {<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ids</span>})
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- reposition-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- reposition-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

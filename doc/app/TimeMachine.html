@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Module: TimeMachine</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="module">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,38 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/time_machine.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-now">#now</a>
+    
+    <li><a href="#method-i-now_as">#now_as</a>
+    
+    <li><a href="#method-i-today">#today</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +331,158 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="module">module TimeMachine</h1>
+
+  <div id="description" class="description">
+    
+<p>class Test::Unit::TestCase                    # 1</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-now" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">now</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="now-source">
+            <pre><span class="ruby-comment"># File lib/time_machine.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now</span>
+  <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">dup</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- now-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- now-method -->
+
+    
+      <div id="method-i-now_as" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">now_as</span><span
+            class="method-args">(time) { || ... }</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="now_as-source">
+            <pre><span class="ruby-comment"># File lib/time_machine.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now_as</span>(<span class="ruby-identifier">time</span>)
+  <span class="ruby-identifier">time_class</span> = <span class="ruby-keyword">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Time</span>; <span class="ruby-keyword">self</span>; <span class="ruby-keyword">end</span>   <span class="ruby-comment"># 5</span>
+  <span class="ruby-identifier">date_class</span> = <span class="ruby-keyword">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Date</span>; <span class="ruby-keyword">self</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span> 
+      <span class="ruby-ivar">@now_stack</span> <span class="ruby-operator">||=</span> []
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">empty?</span>                <span class="ruby-comment"># 10</span>
+        <span class="ruby-identifier">time_class</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
+          <span class="ruby-identifier">alias_method</span> <span class="ruby-value">:old_now</span>, <span class="ruby-value">:now</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">now</span>
+            <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">dup</span>
+          <span class="ruby-keyword">end</span>                             <span class="ruby-comment"># 15</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">date_class</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
+          <span class="ruby-identifier">alias_method</span> <span class="ruby-value">:old_today</span>, <span class="ruby-value">:today</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">today</span>
+            <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_date</span>              <span class="ruby-comment"># 20</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">time</span>.<span class="ruby-identifier">dup</span>)
+    <span class="ruby-keyword">end</span>                                   <span class="ruby-comment"># 25 </span>
+    <span class="ruby-keyword">yield</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span> 
+      <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">pop</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@now_stack</span>.<span class="ruby-identifier">empty?</span>                <span class="ruby-comment"># 30</span>
+        <span class="ruby-identifier">date_class</span>.<span class="ruby-identifier">class_eval</span> {<span class="ruby-identifier">alias_method</span> <span class="ruby-value">:today</span>, <span class="ruby-value">:old_today</span>}
+        <span class="ruby-identifier">time_class</span>.<span class="ruby-identifier">class_eval</span> {<span class="ruby-identifier">alias_method</span> <span class="ruby-value">:now</span>, <span class="ruby-value">:old_now</span>}
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>                                     <span class="ruby-comment"># 35</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- now_as-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- now_as-method -->
+
+    
+      <div id="method-i-today" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">today</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="today-source">
+            <pre><span class="ruby-comment"># File lib/time_machine.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">today</span>
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_date</span>              <span class="ruby-comment"># 20</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- today-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- today-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

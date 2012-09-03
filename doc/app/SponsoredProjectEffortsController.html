@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: SponsoredProjectEffortsController</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,46 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/sponsored_project_efforts_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-edit">#edit</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-update">#update</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +339,189 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class SponsoredProjectEffortsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">authorized_or_redirect</span>
+    <span class="ruby-identifier">setup_edit</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- edit-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">SponsoredProjectEffort</span>
+  <span class="ruby-ivar">@month</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:date</span>][<span class="ruby-value">:month</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:date</span>].<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@month</span> = <span class="ruby-ivar">@month</span> <span class="ruby-operator">||=</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">month</span>
+  <span class="ruby-ivar">@year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:year</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">year</span>
+  <span class="ruby-ivar">@efforts</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">for_all_users_for_a_given_month</span>(<span class="ruby-ivar">@month</span>, <span class="ruby-ivar">@year</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">edit_sponsored_project_effort_path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">authorized_or_redirect</span>
+    <span class="ruby-identifier">effort_id_values</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:effort_id_values</span>]
+
+    <span class="ruby-ivar">@failed</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-ivar">@changed_allocation</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">effort_id_values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">effort</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">key</span>)
+      <span class="ruby-comment">#      @changed_allocation = true if effort.actual_allocation != value</span>
+      <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">actual_allocation</span> = <span class="ruby-identifier">value</span>
+      <span class="ruby-ivar">@changed_allocation</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">actual_allocation_changed?</span>
+      <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">confirmed</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-ivar">@failed</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@changed_allocation</span>
+      <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">emails_business_manager</span>(<span class="ruby-identifier">effort_id_values</span>.<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>])
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@failed</span>
+      <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">'Your allocations did not save.'</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-string">'Your allocations are confirmed.'</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">setup_edit</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-string">'edit'</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

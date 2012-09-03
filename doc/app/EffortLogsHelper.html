@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Module: EffortLogsHelper</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="module">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,38 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/helpers/effort_logs_helper.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-show_monday_for">#show_monday_for</a>
+    
+    <li><a href="#method-i-show_week_of_year_text">#show_week_of_year_text</a>
+    
+    <li><a href="#method-i-td_class_is_today">#td_class_is_today</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +331,126 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="module">module EffortLogsHelper</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-show_monday_for" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_monday_for</span><span
+            class="method-args">(cwyear, week_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_monday_for-source">
+            <pre><span class="ruby-comment"># File app/helpers/effort_logs_helper.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_monday_for</span>(<span class="ruby-identifier">cwyear</span>, <span class="ruby-identifier">week_number</span>)
+  <span class="ruby-constant">Date</span>.<span class="ruby-identifier">commercial</span>(<span class="ruby-identifier">cwyear</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">strftime</span> <span class="ruby-string">&quot;%b %d, %Y&quot;</span> <span class="ruby-comment"># Jul 01, 2008</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_monday_for-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_monday_for-method -->
+
+    
+      <div id="method-i-show_week_of_year_text" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_week_of_year_text</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_week_of_year_text-source">
+            <pre><span class="ruby-comment"># File app/helpers/effort_logs_helper.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_week_of_year_text</span>
+  <span class="ruby-string">&quot;Week &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@effort_log</span>.<span class="ruby-identifier">week_number</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; of &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@effort_log</span>.<span class="ruby-identifier">year</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_week_of_year_text-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_week_of_year_text-method -->
+
+    
+      <div id="method-i-td_class_is_today" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">td_class_is_today</span><span
+            class="method-args">(day_of_week)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="td_class_is_today-source">
+            <pre><span class="ruby-comment"># File app/helpers/effort_logs_helper.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">td_class_is_today</span>(<span class="ruby-identifier">day_of_week</span>)
+  <span class="ruby-ivar">@today_column</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">day_of_week</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;&lt;td class='today'&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;&lt;td&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- td_class_is_today-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- td_class_is_today-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

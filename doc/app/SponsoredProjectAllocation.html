@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: SponsoredProjectAllocation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,44 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/sponsored_project_allocation.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-emails_staff_requesting_confirmation_for_allocations">::emails_staff_requesting_confirmation_for_allocations</a>
+    
+    <li><a href="#method-c-monthly_copy_to_sponsored_project_effort">::monthly_copy_to_sponsored_project_effort</a>
+    
+    <li><a href="#method-i-unique_user_to_project_allocation-3F">#unique_user_to_project_allocation?</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +337,147 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class SponsoredProjectAllocation</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-emails_staff_requesting_confirmation_for_allocations" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">emails_staff_requesting_confirmation_for_allocations</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="emails_staff_requesting_confirmation_for_allocations-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_allocation.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">emails_staff_requesting_confirmation_for_allocations</span>
+  <span class="ruby-identifier">efforts</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">for_all_users_for_a_given_month</span>(<span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">month</span>, <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">year</span>)
+  <span class="ruby-identifier">efforts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">user</span> = <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">sponsored_project_allocation</span>.<span class="ruby-identifier">user</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">confirmed</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">emailed_recently</span>(<span class="ruby-value">:sponsored_project_effort</span>)
+      <span class="ruby-constant">SponsoredProjectEffortMailer</span>.<span class="ruby-identifier">monthly_staff_email</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">month</span>, <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">year</span>).<span class="ruby-identifier">deliver</span>
+      <span class="ruby-identifier">user</span>.<span class="ruby-identifier">sponsored_project_effort_last_emailed</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+      <span class="ruby-identifier">user</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- emails_staff_requesting_confirmation_for_allocations-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- emails_staff_requesting_confirmation_for_allocations-method -->
+
+    
+      <div id="method-c-monthly_copy_to_sponsored_project_effort" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">monthly_copy_to_sponsored_project_effort</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="monthly_copy_to_sponsored_project_effort-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_allocation.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">monthly_copy_to_sponsored_project_effort</span>
+  <span class="ruby-identifier">allocations</span> = <span class="ruby-constant">SponsoredProjectAllocation</span>.<span class="ruby-identifier">current</span>
+  <span class="ruby-identifier">allocations</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">allocation</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">new_from_sponsored_project_allocation</span>(<span class="ruby-identifier">allocation</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- monthly_copy_to_sponsored_project_effort-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- monthly_copy_to_sponsored_project_effort-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-unique_user_to_project_allocation-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unique_user_to_project_allocation?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unique_user_to_project_allocation-3F-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_allocation.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unique_user_to_project_allocation?</span>
+  <span class="ruby-identifier">duplicate</span> = <span class="ruby-constant">SponsoredProjectAllocation</span>.<span class="ruby-identifier">find_by_user_id_and_sponsored_project_id</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_id</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sponsored_project_id</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">duplicate</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">duplicate</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:base</span>, <span class="ruby-string">&quot;Can't create duplicate allocation for the same person to project.&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unique_user_to_project_allocation-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unique_user_to_project_allocation-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: GoogleMailingListJob</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,40 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/google_mailing_list_job.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Struct.new(:new_distribution_list, :old_distribution_list, :emails_array, :name, :description, :model_id, :table_name)
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-perform">#perform</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +333,107 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class GoogleMailingListJob</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-perform" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">perform</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="perform-source">
+            <pre><span class="ruby-comment"># File lib/google_mailing_list_job.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">perform</span>
+  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;#{table_name}.update_google_mailing_list(#{new_distribution_list}, #{old_distribution_list}, #{model_id}) executed&quot;</span>)
+
+  <span class="ruby-identifier">new_group</span> = <span class="ruby-identifier">new_distribution_list</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'@'</span>)[<span class="ruby-value">0</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">new_distribution_list</span>.<span class="ruby-identifier">blank?</span>
+  <span class="ruby-identifier">old_group</span> = <span class="ruby-identifier">old_distribution_list</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'@'</span>)[<span class="ruby-value">0</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">old_distribution_list</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">new_group_exists</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">old_group_exists</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">retrieve_all_groups</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">list</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">group_name</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">group_id</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'@'</span>)[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">old_group_exists</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_group</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">group_name</span>
+    <span class="ruby-identifier">new_group_exists</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_group</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">group_name</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_group_exists</span>
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Deleting #{old_group}&quot;</span>
+    <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">delete_group</span>(<span class="ruby-identifier">old_group</span>)
+    <span class="ruby-identifier">new_group_exists</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_group</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">new_group</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_group_exists</span>
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Creating #{new_group}&quot;</span>
+    <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">create_group</span>(<span class="ruby-identifier">new_group</span>, [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">description</span>, <span class="ruby-string">&quot;Domain&quot;</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">emails_array</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">member</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{table_name}:adding #{member.email}&quot;</span>
+    <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">add_member_to_group</span>(<span class="ruby-identifier">member</span>.<span class="ruby-identifier">email</span>, <span class="ruby-identifier">new_group</span>)
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-comment">#verify that this method worked. If it didn't an error will be raised and it will be run again through delayed job</span>
+  <span class="ruby-identifier">all_team_members</span> = <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">retrieve_all_members</span>(<span class="ruby-identifier">new_group</span>)
+  <span class="ruby-identifier">google_list</span> = <span class="ruby-identifier">all_team_members</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">member_id</span> }.<span class="ruby-identifier">sort</span>
+  <span class="ruby-identifier">team_list</span> = <span class="ruby-identifier">emails_array</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">email</span> }.<span class="ruby-identifier">sort</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">google_list</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">team_list</span>)
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-string">&quot;The people on the google list isn't right&quot;</span>)
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;google list: #{google_list} &quot;</span>)
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;rails list: #{team_list} &quot;</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;The people on the google list isn't right \n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;google list: #{google_list} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;\n rails list: #{team_list} \n&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-node">&quot;UPDATE #{table_name} SET updating_email=false WHERE id=#{model_id}&quot;</span>;
+  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{model_id} -- finished&quot;</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- perform-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- perform-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

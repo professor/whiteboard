@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: Ability</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,52 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/ability.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">CanCan::Ability</span>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +345,126 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class Ability</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-comment"># Define abilities for the passed in user here. For example:</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment">#   user ||= User.new # guest user (not logged in)</span>
+  <span class="ruby-comment">#   if user.admin?</span>
+  <span class="ruby-comment">#     can :manage, :all</span>
+  <span class="ruby-comment">#   else</span>
+  <span class="ruby-comment">#     can :read, :all</span>
+  <span class="ruby-comment">#   end</span>
+
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">User</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>
+
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:update</span>, <span class="ruby-constant">PageAttachment</span>
+
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span> <span class="ruby-operator">||</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Chris Zeise&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Gerry Elizondo&quot;</span>)
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:upload</span>, <span class="ruby-constant">Course</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Jazz Sabian&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stacy Marshall&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span>)
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">cannot</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Kaushik Gopal&quot;</span>)
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:upload_photo</span>, <span class="ruby-constant">User</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">cannot</span> <span class="ruby-value">:upload_photo</span>, <span class="ruby-constant">User</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#Contracts manager</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Ngoc Ho&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Hector Rastrullo&quot;</span>)
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">SponsoredProjectAllocation</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">SponsoredProjectEffort</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">SponsoredProjectSponsor</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">SponsoredProject</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin?</span>)
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Course</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span>  (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span> )
+    <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:create</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>, <span class="ruby-value">:faculty</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span> } <span class="ruby-comment">#Useful for TAs.</span>
+
+
+
+  <span class="ruby-comment"># The first argument to `can` is the action you are giving the user permission to do.</span>
+  <span class="ruby-comment"># If you pass :manage it will apply to every action. Other common actions here are</span>
+  <span class="ruby-comment"># :read, :create, :update and :destroy.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># The second argument is the resource the user can perform the action on. If you pass</span>
+  <span class="ruby-comment"># :all it will apply to every resource. Otherwise pass a Ruby class of the resource.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># The third argument is an optional hash of conditions to further filter the objects.</span>
+  <span class="ruby-comment"># For example, here the user can only update published articles.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment">#   can :update, Article, :published =&gt; true</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

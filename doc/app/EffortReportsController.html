@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: EffortReportsController</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/effort_reports_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-campus_semester">#campus_semester</a>
+    
+    <li><a href="#method-i-campus_week">#campus_week</a>
+    
+    <li><a href="#method-i-course">#course</a>
+    
+    <li><a href="#method-i-course_ranges_array">#course_ranges_array</a>
+    
+    <li><a href="#method-i-course_table">#course_table</a>
+    
+    <li><a href="#method-i-determine_panel_state">#determine_panel_state</a>
+    
+    <li><a href="#method-i-generate_course_chart">#generate_course_chart</a>
+    
+    <li><a href="#method-i-generate_google_box_chart">#generate_google_box_chart</a>
+    
+    <li><a href="#method-i-get_campus_semester_data">#get_campus_semester_data</a>
+    
+    <li><a href="#method-i-get_campus_week_data">#get_campus_week_data</a>
+    
+    <li><a href="#method-i-get_course_data">#get_course_data</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-median">#median</a>
+    
+    <li><a href="#method-i-raw_data">#raw_data</a>
+    
+    <li><a href="#method-i-report_person_effort_for_course">#report_person_effort_for_course</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-show_week">#show_week</a>
+    
+    <li><a href="#method-i-update_average">#update_average</a>
+    
+    <li><a href="#method-i-update_count">#update_count</a>
+    
+    <li><a href="#method-i-update_max">#update_max</a>
+    
+    <li><a href="#method-i-update_min">#update_min</a>
+    
+    <li><a href="#method-i-update_total">#update_total</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GAppsProvisioning.html">GAppsProvisioning</a>
+  
+    <li><a href="./GAppsProvisioning/Connection.html">GAppsProvisioning::Connection</a>
+  
+    <li><a href="./GAppsProvisioning/GDataError.html">GAppsProvisioning::GDataError</a>
+  
+    <li><a href="./GAppsProvisioning/GroupEntry.html">GAppsProvisioning::GroupEntry</a>
+  
+    <li><a href="./GAppsProvisioning/MemberEntry.html">GAppsProvisioning::MemberEntry</a>
+  
+    <li><a href="./GAppsProvisioning/NicknameEntry.html">GAppsProvisioning::NicknameEntry</a>
+  
+    <li><a href="./GAppsProvisioning/OwnerEntry.html">GAppsProvisioning::OwnerEntry</a>
+  
+    <li><a href="./GAppsProvisioning/ProvisioningApi.html">GAppsProvisioning::ProvisioningApi</a>
+  
+    <li><a href="./GAppsProvisioning/UserEntry.html">GAppsProvisioning::UserEntry</a>
+  
+    <li><a href="./EffortReportsController.html">EffortReportsController</a>
+  
+    <li><a href="./EffortReportsController/PanelState.html">EffortReportsController::PanelState</a>
+  
+    <li><a href="./EffortReportsController/SemesterPanel.html">EffortReportsController::SemesterPanel</a>
+  
+    <li><a href="./TimeMachine.html">TimeMachine</a>
+  
+    <li><a href="./TimeMachine/Date.html">TimeMachine::Date</a>
+  
+    <li><a href="./TimeMachine/Time.html">TimeMachine::Time</a>
+  
+    <li><a href="./PeopleController.html">PeopleController</a>
+  
+    <li><a href="./PeopleController/ClassProfileState.html">PeopleController::ClassProfileState</a>
+  
+    <li><a href="./Rails.html">Rails</a>
+  
+    <li><a href="./Rails/GemDependency.html">Rails::GemDependency</a>
+  
+    <li><a href="./Users.html">Users</a>
+  
+    <li><a href="./Users/OmniauthCallbacksController.html">Users::OmniauthCallbacksController</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./AcademicCalendar.html">AcademicCalendar</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Course.html">Course</a>
+  
+    <li><a href="./CourseMailer.html">CourseMailer</a>
+  
+    <li><a href="./CourseNavigationsController.html">CourseNavigationsController</a>
+  
+    <li><a href="./CourseNumber.html">CourseNumber</a>
+  
+    <li><a href="./CourseNumbersController.html">CourseNumbersController</a>
+  
+    <li><a href="./CourseNumbersHelper.html">CourseNumbersHelper</a>
+  
+    <li><a href="./CoursesController.html">CoursesController</a>
+  
+    <li><a href="./CoursesHelper.html">CoursesHelper</a>
+  
+    <li><a href="./DelayedSystemJob.html">DelayedSystemJob</a>
+  
+    <li><a href="./DelayedSystemJobsController.html">DelayedSystemJobsController</a>
+  
+    <li><a href="./Deliverable.html">Deliverable</a>
+  
+    <li><a href="./DeliverableAttachment.html">DeliverableAttachment</a>
+  
+    <li><a href="./DeliverablesController.html">DeliverablesController</a>
+  
+    <li><a href="./DeliverablesHelper.html">DeliverablesHelper</a>
+  
+    <li><a href="./EffortLog.html">EffortLog</a>
+  
+    <li><a href="./EffortLogLineItem.html">EffortLogLineItem</a>
+  
+    <li><a href="./EffortLogLineItemsController.html">EffortLogLineItemsController</a>
+  
+    <li><a href="./EffortLogLineItemsHelper.html">EffortLogLineItemsHelper</a>
+  
+    <li><a href="./EffortLogMailer.html">EffortLogMailer</a>
+  
+    <li><a href="./EffortLogsController.html">EffortLogsController</a>
+  
+    <li><a href="./EffortLogsHelper.html">EffortLogsHelper</a>
+  
+    <li><a href="./FacultyAssignment.html">FacultyAssignment</a>
+  
+    <li><a href="./Gem.html">Gem</a>
+  
+    <li><a href="./GenericAjaxController.html">GenericAjaxController</a>
+  
+    <li><a href="./GenericMailer.html">GenericMailer</a>
+  
+    <li><a href="./GoogleMailingListJob.html">GoogleMailingListJob</a>
+  
+    <li><a href="./HUBClassRosterHandler.html">HUBClassRosterHandler</a>
+  
+    <li><a href="./IndexTank.html">IndexTank</a>
+  
+    <li><a href="./MailingListsController.html">MailingListsController</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./Page.html">Page</a>
+  
+    <li><a href="./PageAttachment.html">PageAttachment</a>
+  
+    <li><a href="./PageAttachmentsController.html">PageAttachmentsController</a>
+  
+    <li><a href="./PageComment.html">PageComment</a>
+  
+    <li><a href="./PageCommentMailer.html">PageCommentMailer</a>
+  
+    <li><a href="./PageCommentType.html">PageCommentType</a>
+  
+    <li><a href="./PageCommentTypesController.html">PageCommentTypesController</a>
+  
+    <li><a href="./PageCommentTypesHelper.html">PageCommentTypesHelper</a>
+  
+    <li><a href="./PageCommentsHelper.html">PageCommentsHelper</a>
+  
+    <li><a href="./PagesController.html">PagesController</a>
+  
+    <li><a href="./PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="./PeerEvaluationController.html">PeerEvaluationController</a>
+  
+    <li><a href="./PeerEvaluationLearningObjective.html">PeerEvaluationLearningObjective</a>
+  
+    <li><a href="./PeerEvaluationReport.html">PeerEvaluationReport</a>
+  
+    <li><a href="./PeerEvaluationReview.html">PeerEvaluationReview</a>
+  
+    <li><a href="./PeopleHelper.html">PeopleHelper</a>
+  
+    <li><a href="./Person.html">Person</a>
+  
+    <li><a href="./PersonJob.html">PersonJob</a>
+  
+    <li><a href="./PersonMailer.html">PersonMailer</a>
+  
+    <li><a href="./Presentation.html">Presentation</a>
+  
+    <li><a href="./PresentationFeedback.html">PresentationFeedback</a>
+  
+    <li><a href="./PresentationFeedbackAnswer.html">PresentationFeedbackAnswer</a>
+  
+    <li><a href="./PresentationQuestion.html">PresentationQuestion</a>
+  
+    <li><a href="./PresentationsController.html">PresentationsController</a>
+  
+    <li><a href="./PresentationsHelper.html">PresentationsHelper</a>
+  
+    <li><a href="./RegisteredCourse.html">RegisteredCourse</a>
+  
+    <li><a href="./Registration.html">Registration</a>
+  
+    <li><a href="./RssFeed.html">RssFeed</a>
+  
+    <li><a href="./RssFeedsController.html">RssFeedsController</a>
+  
+    <li><a href="./RssFeedsHelper.html">RssFeedsHelper</a>
+  
+    <li><a href="./ScottyDogSaying.html">ScottyDogSaying</a>
+  
+    <li><a href="./ScottyDogSayingsController.html">ScottyDogSayingsController</a>
+  
+    <li><a href="./ScottyDogSayingsHelper.html">ScottyDogSayingsHelper</a>
+  
+    <li><a href="./SearchController.html">SearchController</a>
+  
+    <li><a href="./SponsoredProject.html">SponsoredProject</a>
+  
+    <li><a href="./SponsoredProjectAllocation.html">SponsoredProjectAllocation</a>
+  
+    <li><a href="./SponsoredProjectAllocationsController.html">SponsoredProjectAllocationsController</a>
+  
+    <li><a href="./SponsoredProjectEffort.html">SponsoredProjectEffort</a>
+  
+    <li><a href="./SponsoredProjectEffortMailer.html">SponsoredProjectEffortMailer</a>
+  
+    <li><a href="./SponsoredProjectEffortsController.html">SponsoredProjectEffortsController</a>
+  
+    <li><a href="./SponsoredProjectSponsor.html">SponsoredProjectSponsor</a>
+  
+    <li><a href="./SponsoredProjectSponsorsController.html">SponsoredProjectSponsorsController</a>
+  
+    <li><a href="./SponsoredProjectsController.html">SponsoredProjectsController</a>
+  
+    <li><a href="./StaticController.html">StaticController</a>
+  
+    <li><a href="./StrengthTheme.html">StrengthTheme</a>
+  
+    <li><a href="./Suggestion.html">Suggestion</a>
+  
+    <li><a href="./SuggestionsController.html">SuggestionsController</a>
+  
+    <li><a href="./SystemController.html">SystemController</a>
+  
+    <li><a href="./SystemHelper.html">SystemHelper</a>
+  
+    <li><a href="./TaskType.html">TaskType</a>
+  
+    <li><a href="./TaskTypesController.html">TaskTypesController</a>
+  
+    <li><a href="./TaskTypesHelper.html">TaskTypesHelper</a>
+  
+    <li><a href="./Team.html">Team</a>
+  
+    <li><a href="./TeamAssignment.html">TeamAssignment</a>
+  
+    <li><a href="./TeamsController.html">TeamsController</a>
+  
+    <li><a href="./TeamsHelper.html">TeamsHelper</a>
+  
+    <li><a href="./TmpUpdateFacultyAssignments.html">TmpUpdateFacultyAssignments</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserPreference.html">UserPreference</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./WelcomeController.html">WelcomeController</a>
+  
+    <li><a href="./WelcomeHelper.html">WelcomeHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class EffortReportsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-campus_semester" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">campus_semester</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="campus_semester-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 240</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">campus_semester</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>]
+    <span class="ruby-ivar">@semester_panel</span> = <span class="ruby-constant">SemesterPanel</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">program</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:program</span>]
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">track</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:track</span>]
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">graduation_year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:graduation_year</span>]
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">is_part_time</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:is_part_time</span>]
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">person_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:person_id</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:person_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:course_id</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:course_id</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">semester</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:semester</span>]
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:semester_panel</span>][<span class="ruby-value">:year</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@semester_panel</span> = <span class="ruby-constant">SemesterPanel</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">program</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_student</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">masters_program</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;SE&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">track</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">graduation_year</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">is_part_time</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_student</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_part_time</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;FT&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;PT&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">person_id</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_student</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">semester</span> = <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>
+    <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">year</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_staff</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_admin</span>
+    <span class="ruby-ivar">@students</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:is_student</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;first_name ASC, last_name ASC&quot;</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@students</span> = [<span class="ruby-identifier">current_user</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@courses</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">semester</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">year</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;name ASC&quot;</span>)
+  <span class="ruby-ivar">@programs</span> = []
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-string">&quot;SELECT distinct masters_program FROM users u;&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@programs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">result</span>[<span class="ruby-string">&quot;masters_program&quot;</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@tracks</span> = []
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-string">&quot;SELECT distinct masters_track FROM users u;&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@tracks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">result</span>[<span class="ruby-string">&quot;masters_track&quot;</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">title</span> = <span class="ruby-string">&quot;Campus View - &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">semester</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@semester_panel</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">reports</span> = <span class="ruby-identifier">get_campus_semester_data</span>(<span class="ruby-ivar">@semester_panel</span>)
+  <span class="ruby-ivar">@chart_url</span> = <span class="ruby-identifier">generate_google_box_chart</span>(<span class="ruby-identifier">title</span>, <span class="ruby-identifier">reports</span>)
+
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:layout</span>]
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span> } <span class="ruby-comment"># index.html.erb</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;cmu_sv&quot;</span> } <span class="ruby-comment"># index.html.erb</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- campus_semester-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- campus_semester-method -->
+
+    
+      <div id="method-i-campus_week" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">campus_week</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="campus_week-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 294</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">campus_week</span>
+  <span class="ruby-identifier">determine_panel_state</span>()
+  <span class="ruby-identifier">title</span> = <span class="ruby-string">&quot;Campus View - Week &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; of &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">course_data</span> = <span class="ruby-identifier">get_campus_week_data</span>(<span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span>, <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span>)
+  <span class="ruby-ivar">@chart_url</span> = <span class="ruby-identifier">generate_google_box_chart</span>(<span class="ruby-identifier">title</span>, <span class="ruby-identifier">course_data</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- campus_week-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- campus_week-method -->
+
+    
+      <div id="method-i-course" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">course</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="course-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 302</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">course</span>
+  <span class="ruby-identifier">determine_panel_state</span>()
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>]
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>][<span class="ruby-value">:course_id</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>]
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span>.<span class="ruby-identifier">blank?</span>
+      <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">blank?</span>
+      <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cweek</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:course_id]}&quot;</span>
+  <span class="ruby-ivar">@chart_url</span> = <span class="ruby-identifier">generate_course_chart</span>(<span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span>, <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span>, <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">course_id</span>)
+
+  <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- course-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- course-method -->
+
+    
+      <div id="method-i-course_ranges_array" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">course_ranges_array</span><span
+            class="method-args">(data_set)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="course_ranges_array-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 479</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">course_ranges_array</span>(<span class="ruby-identifier">data_set</span>) <span class="ruby-comment"># data_set is an array of Numeric objects</span>
+  <span class="ruby-keyword">return</span> [<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">blank?</span>
+  <span class="ruby-identifier">data_set</span> = <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-identifier">maximum</span> = <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">minimum</span> = <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">median</span> = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">lower25</span> = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span>((<span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>).<span class="ruby-identifier">ceil</span>)], <span class="ruby-value">0.25</span>)
+    <span class="ruby-identifier">upper25</span> = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>[((<span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>).<span class="ruby-identifier">floor</span>)<span class="ruby-operator">..</span><span class="ruby-value">-1</span>], <span class="ruby-value">0.75</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">lower25</span> = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span>(<span class="ruby-value">1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)], <span class="ruby-value">0.25</span>)
+    <span class="ruby-identifier">upper25</span> = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>[(<span class="ruby-value">-1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)<span class="ruby-operator">..</span><span class="ruby-value">-1</span>], <span class="ruby-value">0.75</span>)
+  <span class="ruby-keyword">end</span>
+
+  [<span class="ruby-identifier">minimum</span>, <span class="ruby-identifier">lower25</span>, <span class="ruby-identifier">median</span>, <span class="ruby-identifier">upper25</span>, <span class="ruby-identifier">maximum</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- course_ranges_array-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- course_ranges_array-method -->
+
+    
+      <div id="method-i-course_table" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">course_table</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="course_table-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 389</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">course_table</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_admin?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_staff?</span>)
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">'You don'</span> <span class="ruby-string">'t have permissions to view this data.'</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">effort_reports_url</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+
+  <span class="ruby-comment">#given the course id, determine the start week and the end week of the semester</span>
+
+  <span class="ruby-ivar">@report_header</span> = [<span class="ruby-string">&quot;Team&quot;</span>, <span class="ruby-string">&quot;Person&quot;</span>]
+  (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">week</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@report_header</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;Wk #{week} &quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-comment">#    @course.course_length.times do @report_header &lt;&lt; &quot;Wk  &quot;  end</span>
+
+  <span class="ruby-ivar">@report_lines</span> = []
+
+  <span class="ruby-identifier">blank_line</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-string">&quot;-&quot;</span>)
+  <span class="ruby-identifier">min_effort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-value">100</span>)
+  <span class="ruby-identifier">max_effort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">total_effort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">count_effort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">average_effort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>, <span class="ruby-value">0</span>)
+
+
+  <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">person_result</span> = <span class="ruby-identifier">report_person_effort_for_course</span>(<span class="ruby-identifier">user</span>, <span class="ruby-ivar">@course</span>)
+      <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person_result</span>}
+      <span class="ruby-identifier">min_effort</span> = <span class="ruby-identifier">update_min</span>(<span class="ruby-identifier">min_effort</span>, <span class="ruby-identifier">person_result</span>)
+      <span class="ruby-identifier">max_effort</span> = <span class="ruby-identifier">update_max</span>(<span class="ruby-identifier">max_effort</span>, <span class="ruby-identifier">person_result</span>)
+      <span class="ruby-identifier">total_effort</span> = <span class="ruby-identifier">update_total</span>(<span class="ruby-identifier">total_effort</span>, <span class="ruby-identifier">person_result</span>)
+      <span class="ruby-identifier">count_effort</span> = <span class="ruby-identifier">update_count</span>(<span class="ruby-identifier">count_effort</span>, <span class="ruby-identifier">person_result</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">update_average</span>(<span class="ruby-identifier">average_effort</span>, <span class="ruby-identifier">total_effort</span>, <span class="ruby-identifier">count_effort</span>)
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">blank_line</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Summary&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Min&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">min_effort</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Summary&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Avg&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">average_effort</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Summary&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Max&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">max_effort</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">blank_line</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Summary&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Total&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_effort</span>}
+  <span class="ruby-ivar">@report_lines</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Summary&quot;</span>, <span class="ruby-value">:person_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Count&quot;</span>, <span class="ruby-value">:effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count_effort</span>}
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- course_table-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- course_table-method -->
+
+    
+      <div id="method-i-determine_panel_state" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">determine_panel_state</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="determine_panel_state-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 220</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">determine_panel_state</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>]
+    <span class="ruby-ivar">@panel_state</span> = <span class="ruby-constant">PanelState</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>][<span class="ruby-value">:year</span>]
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>][<span class="ruby-value">:week_number</span>]
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">date</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>][<span class="ruby-value">:date</span>]
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:panel_state</span>][<span class="ruby-value">:date</span>])
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">date</span>.<span class="ruby-identifier">blank?</span>
+      <span class="ruby-identifier">panel_date</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">date</span>)
+      <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span> = <span class="ruby-identifier">panel_date</span>.<span class="ruby-identifier">cwyear</span>
+      <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span> = <span class="ruby-identifier">panel_date</span>.<span class="ruby-identifier">cweek</span>
+
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@panel_state</span> = <span class="ruby-constant">PanelState</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">year</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>
+    <span class="ruby-ivar">@panel_state</span>.<span class="ruby-identifier">week_number</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cweek</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- determine_panel_state-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- determine_panel_state-method -->
+
+    
+      <div id="method-i-generate_course_chart" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_course_chart</span><span
+            class="method-args">(year, week_number, course_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="generate_course_chart-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 325</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_course_chart</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-identifier">course_id</span>)
+  <span class="ruby-identifier">course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">course_id</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">course</span>
+    <span class="ruby-identifier">title</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">title</span> = <span class="ruby-string">&quot;Course Does Not Exist&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">reports</span> = <span class="ruby-identifier">get_course_data</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-identifier">course_id</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">generate_google_box_chart</span>(<span class="ruby-identifier">title</span>, <span class="ruby-identifier">reports</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- generate_course_chart-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- generate_course_chart-method -->
+
+    
+      <div id="method-i-generate_google_box_chart" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_google_box_chart</span><span
+            class="method-args">(title, reports)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>def box_chart_helper(reports, multiplier)</p>
+
+<pre class="ruby">     <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;-1,&quot;</span><span class="ruby-operator">+</span> <span class="ruby-identifier">values</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">v</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;%.2f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">v</span>*<span class="ruby-identifier">multiplier</span>)<span class="ruby-operator">:</span><span class="ruby-value">0</span>)}.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,-1&quot;</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)
+<span class="ruby-identifier">str</span> = <span class="ruby-string">&quot;-1,&quot;</span>
+<span class="ruby-identifier">reports</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">v</span> = <span class="ruby-identifier">reports</span>[<span class="ruby-identifier">key</span>]
+  <span class="ruby-comment">#puts &quot;LENNNNNNNNNNNN %d&quot; % v.length</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">v</span>
+    <span class="ruby-comment">#str = str + (!v.nil? ? (&quot;%.2f&quot; % (v*multiplier)) : 0.0).to_s  + &quot;,&quot;</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%.2f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">v</span>*<span class="ruby-identifier">multiplier</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;=EMPTY=&quot;</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;0,&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;-1&quot;</span>
+<span class="ruby-keyword">return</span> <span class="ruby-identifier">str</span>
+</pre>
+
+<p>end</p>
+          
+
+          
+          <div class="method-source-code" id="generate_google_box_chart-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_google_box_chart</span>(<span class="ruby-identifier">title</span>, <span class="ruby-identifier">reports</span>)
+  <span class="ruby-identifier">title_str</span> = <span class="ruby-identifier">title</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">' '</span>, <span class="ruby-string">'+'</span>)
+
+  <span class="ruby-comment"># Datastructure of the reports</span>
+  <span class="ruby-comment"># array: [course_name, min, 25, median, 75, max]</span>
+  <span class="ruby-comment"># array: [course_name, min, 25, median, 75, max, student_data] #used in campus semester view</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">reports</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">max_value</span> = <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>[<span class="ruby-value">5</span>] }.<span class="ruby-identifier">max</span>
+
+    <span class="ruby-identifier">multiplier</span> = <span class="ruby-value">100.0</span><span class="ruby-operator">/</span>(<span class="ruby-identifier">max_value</span>)
+    <span class="ruby-identifier">multiplier</span> = <span class="ruby-value">1</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">max_value</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0.0</span>
+
+    <span class="ruby-identifier">minimums_str</span> = <span class="ruby-string">&quot;-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">1</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-identifier">lower25_str</span> = <span class="ruby-string">&quot;-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">2</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-identifier">medians_str</span> = <span class="ruby-string">&quot;-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">3</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-identifier">upper25_str</span> = <span class="ruby-string">&quot;-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">4</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-identifier">maximums_str</span> = <span class="ruby-string">&quot;-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">5</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">first</span>[<span class="ruby-value">6</span>].<span class="ruby-identifier">blank?</span>
+      <span class="ruby-identifier">outliers_str</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">outliers_str</span> = <span class="ruby-string">&quot;|-1,&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-string">&quot;%.2f&quot;</span><span class="ruby-operator">%</span>(<span class="ruby-identifier">r</span>[<span class="ruby-value">6</span>]*<span class="ruby-identifier">multiplier</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;,-1&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">labels_str</span> = <span class="ruby-string">&quot;|&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">reports</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>[<span class="ruby-value">0</span>] }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;|&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;|&quot;</span>
+
+    <span class="ruby-identifier">url</span> = <span class="ruby-string">&quot;http://chart.apis.google.com/chart?chtt=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">title_str</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;&amp;chxt=x,y&amp;chs=700x400&amp;cht=lc&amp;chd=t0:&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-identifier">minimums_str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;|&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">lower25_str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;|&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">upper25_str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;|&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">maximums_str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;|&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">medians_str</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">outliers_str</span> <span class="ruby-operator">+</span>
+        <span class="ruby-string">&quot;&amp;chl=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">labels_str</span> <span class="ruby-operator">+</span> <span class="ruby-comment">#get course_id and course_name from DB</span>
+        <span class="ruby-string">&quot;&amp;chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-string">&quot;|o,FF0000,5,-1,7|o,FF0000,6,-1,7&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-string">&quot;&amp;chxr=1,0,&quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">max_value</span>).<span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">url</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;http://chart.apis.google.com/chart?chtt=&quot;</span><span class="ruby-operator">+</span> <span class="ruby-identifier">title_str</span><span class="ruby-operator">+</span> <span class="ruby-string">&quot;&amp;chxt=x,y&amp;chs=700x400&amp;cht=lc&amp;chd=t0:-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1|-1,0,0,0,-1&amp;chm=F,FF9900,0,-1,25|H,0CBF0B,0,-1,1:10|H,000000,4,-1,1:25|H,0000FF,3,-1,1:10&amp;chxr=1,0,15&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- generate_google_box_chart-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- generate_google_box_chart-method -->
+
+    
+      <div id="method-i-get_campus_semester_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_campus_semester_data</span><span
+            class="method-args">(panel)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_campus_semester_data-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_campus_semester_data</span>(<span class="ruby-identifier">panel</span>)
+  <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-identifier">panel</span>.<span class="ruby-identifier">generate_sql</span>()
+
+  <span class="ruby-identifier">effort_logs</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">find_by_sql</span>(<span class="ruby-identifier">panel</span>.<span class="ruby-identifier">generate_sql</span>())
+
+  <span class="ruby-comment">#The data we get is not sorted by week number and it is indexed by the commercial week of the year</span>
+  <span class="ruby-comment">#At the beginning of a semester we want to show all the weeks in a semester</span>
+  <span class="ruby-comment">#So we need to do a little calculation to figure out which week to start and end.</span>
+
+  <span class="ruby-comment">#The code is not adding multiple entries per student together. Ie meetings and working on deliverables for a course</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">first_dataset_week_number</span> = <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">week_number</span>
+    <span class="ruby-identifier">last_dataset_week_number</span> = <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">week_number</span>
+    <span class="ruby-identifier">weeks_in_semester</span> = <span class="ruby-value">15</span>
+    <span class="ruby-identifier">weeks_in_report</span> = [<span class="ruby-identifier">weeks_in_semester</span>, (<span class="ruby-identifier">last_dataset_week_number</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">first_dataset_week_number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)].<span class="ruby-identifier">max</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">weeks_in_report</span> = <span class="ruby-value">15</span>
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-comment"># When the view is for only one course, a student will have logged effort for different types (meetings, deliverable)</span>
+  <span class="ruby-comment"># Each of these is a row in the returnset, so we need to add up all the effort the student did for that course for</span>
+  <span class="ruby-comment"># a given week</span>
+  <span class="ruby-identifier">student_effort_accumulator</span> = {}
+  <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">key</span> = [<span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">week_number</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">first_dataset_week_number</span>, <span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">user_id</span>]
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">student_effort</span>.<span class="ruby-identifier">to_f</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">student_effort_accumulator</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">student_effort_accumulator</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">student_effort_accumulator</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">student_effort_accumulator</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">week_number_to_value_array_array</span> = []
+  <span class="ruby-identifier">person_hours</span> = []
+  <span class="ruby-identifier">weeks_in_report</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">week_number_to_value_array_array</span>[<span class="ruby-identifier">i</span>] = []
+    <span class="ruby-identifier">person_hours</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">student_effort_accumulator</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">array</span>, <span class="ruby-identifier">hours</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">key</span> = <span class="ruby-identifier">array</span>[<span class="ruby-value">0</span>] <span class="ruby-comment">#week_number</span>
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">hours</span>
+    <span class="ruby-identifier">week_number_to_value_array_array</span>[<span class="ruby-identifier">key</span>] = [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">week_number_to_value_array_array</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">week_number_to_value_array_array</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#Determine the effort for a particular, selected student</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">panel</span>.<span class="ruby-identifier">person_id</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-identifier">panel</span>.<span class="ruby-identifier">person_id</span>
+    <span class="ruby-identifier">student_effort_accumulator</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">array</span>, <span class="ruby-identifier">hours</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">week_number</span> = <span class="ruby-identifier">array</span>[<span class="ruby-value">0</span>]
+      <span class="ruby-identifier">person_id</span> = <span class="ruby-identifier">array</span>[<span class="ruby-value">1</span>]
+      <span class="ruby-identifier">person_hours</span>[<span class="ruby-identifier">week_number</span>] = <span class="ruby-identifier">hours</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">panel</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">person_id</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">values_array</span> = []
+  <span class="ruby-identifier">week_number_to_value_array_array</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">week_number</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">values</span> = <span class="ruby-identifier">week_number_to_value_array_array</span>[<span class="ruby-identifier">week_number</span>]
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">panel</span>.<span class="ruby-identifier">person_id</span>.<span class="ruby-identifier">blank?</span>
+      <span class="ruby-identifier">values_array</span> <span class="ruby-operator">&lt;&lt;</span> ([<span class="ruby-identifier">week_number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">course_ranges_array</span>(<span class="ruby-identifier">values</span>) <span class="ruby-operator">+</span> [<span class="ruby-identifier">person_hours</span>[<span class="ruby-identifier">week_number</span>]])
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">values_array</span> <span class="ruby-operator">&lt;&lt;</span> ([<span class="ruby-identifier">week_number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">course_ranges_array</span>(<span class="ruby-identifier">values</span>))
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">values_array</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_campus_semester_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_campus_semester_data-method -->
+
+    
+      <div id="method-i-get_campus_week_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_campus_week_data</span><span
+            class="method-args">(year, week_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_campus_week_data-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_campus_week_data</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>)
+  <span class="ruby-identifier">effort_logs</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:week_number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:sum</span>.<span class="ruby-identifier">gt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+
+  <span class="ruby-identifier">course_id_to_value_array_hash</span> = {}
+  <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">course_to_person_hash</span> = {}
+    <span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">effort_log_line_items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line_item</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">line_item</span>.<span class="ruby-identifier">course_id</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-identifier">course_to_person_hash</span>[<span class="ruby-identifier">line_item</span>.<span class="ruby-identifier">course_id</span>] = <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">course_to_person_hash</span>[<span class="ruby-identifier">line_item</span>.<span class="ruby-identifier">course_id</span>].<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">course_to_person_hash</span>[<span class="ruby-identifier">line_item</span>.<span class="ruby-identifier">course_id</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">line_item</span>.<span class="ruby-identifier">sum</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">course_to_person_hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_id</span>, <span class="ruby-identifier">sum</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">course_id_to_value_array_hash</span>[<span class="ruby-identifier">course_id</span>] = [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">course_id_to_value_array_hash</span>[<span class="ruby-identifier">course_id</span>].<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">course_id_to_value_array_hash</span>[<span class="ruby-identifier">course_id</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sum</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">values_array</span> = []
+  <span class="ruby-identifier">course_id_to_value_array_hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_id</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">values_array</span> <span class="ruby-operator">&lt;&lt;</span> ([<span class="ruby-constant">Course</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">course_id</span>).<span class="ruby-identifier">short_or_full_name</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">course_ranges_array</span>(<span class="ruby-identifier">values</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">values_array</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_campus_week_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_campus_week_data-method -->
+
+    
+      <div id="method-i-get_course_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_course_data</span><span
+            class="method-args">(year, week_number, course_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_course_data-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_course_data</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-identifier">course_id</span>)
+  <span class="ruby-identifier">effort_logs</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">find_by_sql</span>(<span class="ruby-node">&quot;select task_type_id, t.name, e.sum as student_effort from effort_log_line_items e,effort_logs el,task_types t where e.sum&gt;0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{year} and el.week_number=#{week_number} AND e.course_id=#{course_id} order by task_type_id;&quot;</span>)
+
+  <span class="ruby-identifier">task_type_id_to_value_array_hash</span> = {}
+  <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">key</span> = <span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">task_type_id</span>
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">effort_log</span>.<span class="ruby-identifier">student_effort</span>.<span class="ruby-identifier">to_f</span>
+    <span class="ruby-identifier">task_type_id_to_value_array_hash</span>[<span class="ruby-identifier">key</span>] = [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">task_type_id_to_value_array_hash</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">task_type_id_to_value_array_hash</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">values_array</span> = []
+  <span class="ruby-identifier">task_type_id_to_value_array_hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">task_type_id</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">values_array</span> <span class="ruby-operator">&lt;&lt;</span> ([<span class="ruby-constant">TaskType</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">task_type_id</span>).<span class="ruby-identifier">name</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">course_ranges_array</span>(<span class="ruby-identifier">values</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">values_array</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_course_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_course_data-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 337</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-median" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">median</span><span
+            class="method-args">(data_set, pct = 0.5)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="median-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 496</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">median</span>(<span class="ruby-identifier">data_set</span>, <span class="ruby-identifier">pct</span> = <span class="ruby-value">0.5</span>)
+  <span class="ruby-identifier">middle</span> = (<span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">/</span><span class="ruby-value">2.0</span>
+  <span class="ruby-identifier">middle</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> <span class="ruby-comment"># convert from set index to array index (count from 0)</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">data_set</span>[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">data_set</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">data_set</span>[<span class="ruby-identifier">middle</span>.<span class="ruby-identifier">floor</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">data_set</span>[<span class="ruby-identifier">middle</span>.<span class="ruby-identifier">floor</span>] <span class="ruby-operator">+</span> (<span class="ruby-identifier">pct</span> * (<span class="ruby-identifier">data_set</span>[<span class="ruby-identifier">middle</span>.<span class="ruby-identifier">ceil</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">data_set</span>[<span class="ruby-identifier">middle</span>.<span class="ruby-identifier">floor</span>]))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- median-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- median-method -->
+
+    
+      <div id="method-i-raw_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">raw_data</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>def load_google_chart</p>
+
+<pre class="ruby"><span class="ruby-constant">GoogleChart</span><span class="ruby-operator">::</span><span class="ruby-constant">BoxChart</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'800x200'</span>, <span class="ruby-string">&quot;Box Chart&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">bc</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s1&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">5</span>,<span class="ruby-value">10</span>,<span class="ruby-value">7</span>,<span class="ruby-value">12</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s2&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">25</span>,<span class="ruby-value">30</span>,<span class="ruby-value">27</span>,<span class="ruby-value">24</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s3&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">40</span>,<span class="ruby-value">45</span>,<span class="ruby-value">47</span>,<span class="ruby-value">39</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s4&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">55</span>,<span class="ruby-value">63</span>,<span class="ruby-value">59</span>,<span class="ruby-value">80</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s5&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">30</span>,<span class="ruby-value">40</span>,<span class="ruby-value">35</span>,<span class="ruby-value">30</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s6&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">-1</span>,<span class="ruby-value">5</span>,<span class="ruby-value">70</span>,<span class="ruby-value">90</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data</span> <span class="ruby-string">&quot;s7&quot;</span>,[<span class="ruby-value">-1</span>,<span class="ruby-value">-1</span>,<span class="ruby-value">-1</span>,<span class="ruby-value">80</span>,<span class="ruby-value">5</span>,<span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">data_encoding</span> = :<span class="ruby-identifier">text</span>
+  <span class="ruby-ivar">@chart</span> = <span class="ruby-identifier">bc</span>.<span class="ruby-identifier">to_url</span>(:<span class="ruby-identifier">chm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20|o,FF0000,5,-1,7|o,FF0000,6,-1,7&quot;</span>)
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+          
+
+          
+          <div class="method-source-code" id="raw_data-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 379</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">raw_data</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_admin?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_staff?</span>)
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">'You don'</span> <span class="ruby-string">'t have permissions to view this data.'</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">effort_reports_url</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@report_lines</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">find_by_sql</span>([<span class="ruby-string">&quot;SELECT effort_logs.year, effort_logs.week_number, users.human_name, task_types.name, effort_log_line_items.sum, effort_log_line_items.course_id FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = user_id inner join task_types on task_type_id = task_types.id where course_id = ?  order by week_number &quot;</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- raw_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- raw_data-method -->
+
+    
+      <div id="method-i-report_person_effort_for_course" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">report_person_effort_for_course</span><span
+            class="method-args">(person, course)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>helper method for <a
+href="EffortReportsController.html#method-i-course_table">#course_table</a></p>
+          
+
+          
+          <div class="method-source-code" id="report_person_effort_for_course-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 459</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">report_person_effort_for_course</span>(<span class="ruby-identifier">person</span>, <span class="ruby-identifier">course</span>)
+  <span class="ruby-identifier">person_effort_log_lines</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">find_by_sql</span>([<span class="ruby-string">&quot;SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.user_id = ? order by effort_logs.week_number&quot;</span>, <span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">person</span>.<span class="ruby-identifier">id</span>])
+
+  <span class="ruby-identifier">person_result</span> = []
+  <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">person_result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">person_effort_log_lines</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">person_effort_log_lines</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">person_effort_log_lines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">week</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">week</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_start</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">week</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_end</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">week</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_start</span> <span class="ruby-operator">+</span> <span class="ruby-value">0</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">sum</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-comment">#add two to skip the team and person label at the front of the array</span>
+      <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">person_result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- report_person_effort_for_course-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- report_person_effort_for_course-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 358</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-show_week" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_week</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_week-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 340</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_week</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:week</span>]
+    <span class="ruby-ivar">@week_number</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:week</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@week_number</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cweek</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@week_number</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@week_number</span> = <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@week_number</span> <span class="ruby-operator">&gt;</span><span class="ruby-value">52</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@week_number</span> = <span class="ruby-ivar">@week_number</span> <span class="ruby-operator">-</span> <span class="ruby-value">52</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@next_week_number</span> = <span class="ruby-ivar">@week_number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+  <span class="ruby-ivar">@prev_week_number</span> = <span class="ruby-ivar">@week_number</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show_week-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_week-method -->
+
+    
+      <div id="method-i-update_average" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_average</span><span
+            class="method-args">(average_effort, total_effort, count_effort)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_average-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 453</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_average</span>(<span class="ruby-identifier">average_effort</span>, <span class="ruby-identifier">total_effort</span>, <span class="ruby-identifier">count_effort</span>)
+  <span class="ruby-identifier">average_effort</span>.<span class="ruby-identifier">each_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">average_effort</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">total_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">/</span> <span class="ruby-identifier">count_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">count_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_average-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_average-method -->
+
+    
+      <div id="method-i-update_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_count</span><span
+            class="method-args">(count_effort, person_result)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_count-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 449</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_count</span>(<span class="ruby-identifier">count_effort</span>, <span class="ruby-identifier">person_result</span>)
+  <span class="ruby-identifier">count_effort</span>.<span class="ruby-identifier">each_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">count_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_count-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_count-method -->
+
+    
+      <div id="method-i-update_max" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_max</span><span
+            class="method-args">(max_effort, person_result)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>helper method for <a
+href="EffortReportsController.html#method-i-course_table">#course_table</a></p>
+          
+
+          
+          <div class="method-source-code" id="update_max-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 437</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_max</span>(<span class="ruby-identifier">max_effort</span>, <span class="ruby-identifier">person_result</span>)
+  <span class="ruby-identifier">max_effort</span>.<span class="ruby-identifier">each_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">max_effort</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">max_effort</span>[<span class="ruby-identifier">i</span>] }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_max-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_max-method -->
+
+    
+      <div id="method-i-update_min" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_min</span><span
+            class="method-args">(min_effort, person_result)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_min-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 441</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_min</span>(<span class="ruby-identifier">min_effort</span>, <span class="ruby-identifier">person_result</span>)
+  <span class="ruby-identifier">min_effort</span>.<span class="ruby-identifier">each_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">min_effort</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">min_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_min-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_min-method -->
+
+    
+      <div id="method-i-update_total" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_total</span><span
+            class="method-args">(total_effort, person_result)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update_total-source">
+            <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 445</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_total</span>(<span class="ruby-identifier">total_effort</span>, <span class="ruby-identifier">person_result</span>)
+  <span class="ruby-identifier">total_effort</span>.<span class="ruby-identifier">each_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">total_effort</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">person_result</span>[<span class="ruby-identifier">i</span>] }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_total-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_total-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

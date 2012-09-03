@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Module: HUBClassRosterHandler</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/HUB_class_roster_handler.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-email_help_about_missing_student">::email_help_about_missing_student</a>
+    
+    <li><a href="#method-c-email_professors_about_added_and_dropped_students">::email_professors_about_added_and_dropped_students</a>
+    
+    <li><a href="#method-c-handle">::handle</a>
+    
+    <li><a href="#method-c-handle_roster_changes">::handle_roster_changes</a>
+    
+    <li><a href="#method-c-roster_change_message">::roster_change_message</a>
+    
+    <li><a href="#method-c-send_emails">::send_emails</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GAppsProvisioning.html">GAppsProvisioning</a>
+  
+    <li><a href="./GAppsProvisioning/Connection.html">GAppsProvisioning::Connection</a>
+  
+    <li><a href="./GAppsProvisioning/GDataError.html">GAppsProvisioning::GDataError</a>
+  
+    <li><a href="./GAppsProvisioning/GroupEntry.html">GAppsProvisioning::GroupEntry</a>
+  
+    <li><a href="./GAppsProvisioning/MemberEntry.html">GAppsProvisioning::MemberEntry</a>
+  
+    <li><a href="./GAppsProvisioning/NicknameEntry.html">GAppsProvisioning::NicknameEntry</a>
+  
+    <li><a href="./GAppsProvisioning/OwnerEntry.html">GAppsProvisioning::OwnerEntry</a>
+  
+    <li><a href="./GAppsProvisioning/ProvisioningApi.html">GAppsProvisioning::ProvisioningApi</a>
+  
+    <li><a href="./GAppsProvisioning/UserEntry.html">GAppsProvisioning::UserEntry</a>
+  
+    <li><a href="./EffortReportsController.html">EffortReportsController</a>
+  
+    <li><a href="./EffortReportsController/PanelState.html">EffortReportsController::PanelState</a>
+  
+    <li><a href="./EffortReportsController/SemesterPanel.html">EffortReportsController::SemesterPanel</a>
+  
+    <li><a href="./TimeMachine.html">TimeMachine</a>
+  
+    <li><a href="./TimeMachine/Date.html">TimeMachine::Date</a>
+  
+    <li><a href="./TimeMachine/Time.html">TimeMachine::Time</a>
+  
+    <li><a href="./PeopleController.html">PeopleController</a>
+  
+    <li><a href="./PeopleController/ClassProfileState.html">PeopleController::ClassProfileState</a>
+  
+    <li><a href="./Rails.html">Rails</a>
+  
+    <li><a href="./Rails/GemDependency.html">Rails::GemDependency</a>
+  
+    <li><a href="./Users.html">Users</a>
+  
+    <li><a href="./Users/OmniauthCallbacksController.html">Users::OmniauthCallbacksController</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./AcademicCalendar.html">AcademicCalendar</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Course.html">Course</a>
+  
+    <li><a href="./CourseMailer.html">CourseMailer</a>
+  
+    <li><a href="./CourseNavigationsController.html">CourseNavigationsController</a>
+  
+    <li><a href="./CourseNumber.html">CourseNumber</a>
+  
+    <li><a href="./CourseNumbersController.html">CourseNumbersController</a>
+  
+    <li><a href="./CourseNumbersHelper.html">CourseNumbersHelper</a>
+  
+    <li><a href="./CoursesController.html">CoursesController</a>
+  
+    <li><a href="./CoursesHelper.html">CoursesHelper</a>
+  
+    <li><a href="./DelayedSystemJob.html">DelayedSystemJob</a>
+  
+    <li><a href="./DelayedSystemJobsController.html">DelayedSystemJobsController</a>
+  
+    <li><a href="./Deliverable.html">Deliverable</a>
+  
+    <li><a href="./DeliverableAttachment.html">DeliverableAttachment</a>
+  
+    <li><a href="./DeliverablesController.html">DeliverablesController</a>
+  
+    <li><a href="./DeliverablesHelper.html">DeliverablesHelper</a>
+  
+    <li><a href="./EffortLog.html">EffortLog</a>
+  
+    <li><a href="./EffortLogLineItem.html">EffortLogLineItem</a>
+  
+    <li><a href="./EffortLogLineItemsController.html">EffortLogLineItemsController</a>
+  
+    <li><a href="./EffortLogLineItemsHelper.html">EffortLogLineItemsHelper</a>
+  
+    <li><a href="./EffortLogMailer.html">EffortLogMailer</a>
+  
+    <li><a href="./EffortLogsController.html">EffortLogsController</a>
+  
+    <li><a href="./EffortLogsHelper.html">EffortLogsHelper</a>
+  
+    <li><a href="./FacultyAssignment.html">FacultyAssignment</a>
+  
+    <li><a href="./Gem.html">Gem</a>
+  
+    <li><a href="./GenericAjaxController.html">GenericAjaxController</a>
+  
+    <li><a href="./GenericMailer.html">GenericMailer</a>
+  
+    <li><a href="./GoogleMailingListJob.html">GoogleMailingListJob</a>
+  
+    <li><a href="./HUBClassRosterHandler.html">HUBClassRosterHandler</a>
+  
+    <li><a href="./IndexTank.html">IndexTank</a>
+  
+    <li><a href="./MailingListsController.html">MailingListsController</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./Page.html">Page</a>
+  
+    <li><a href="./PageAttachment.html">PageAttachment</a>
+  
+    <li><a href="./PageAttachmentsController.html">PageAttachmentsController</a>
+  
+    <li><a href="./PageComment.html">PageComment</a>
+  
+    <li><a href="./PageCommentMailer.html">PageCommentMailer</a>
+  
+    <li><a href="./PageCommentType.html">PageCommentType</a>
+  
+    <li><a href="./PageCommentTypesController.html">PageCommentTypesController</a>
+  
+    <li><a href="./PageCommentTypesHelper.html">PageCommentTypesHelper</a>
+  
+    <li><a href="./PageCommentsHelper.html">PageCommentsHelper</a>
+  
+    <li><a href="./PagesController.html">PagesController</a>
+  
+    <li><a href="./PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="./PeerEvaluationController.html">PeerEvaluationController</a>
+  
+    <li><a href="./PeerEvaluationLearningObjective.html">PeerEvaluationLearningObjective</a>
+  
+    <li><a href="./PeerEvaluationReport.html">PeerEvaluationReport</a>
+  
+    <li><a href="./PeerEvaluationReview.html">PeerEvaluationReview</a>
+  
+    <li><a href="./PeopleHelper.html">PeopleHelper</a>
+  
+    <li><a href="./Person.html">Person</a>
+  
+    <li><a href="./PersonJob.html">PersonJob</a>
+  
+    <li><a href="./PersonMailer.html">PersonMailer</a>
+  
+    <li><a href="./Presentation.html">Presentation</a>
+  
+    <li><a href="./PresentationFeedback.html">PresentationFeedback</a>
+  
+    <li><a href="./PresentationFeedbackAnswer.html">PresentationFeedbackAnswer</a>
+  
+    <li><a href="./PresentationQuestion.html">PresentationQuestion</a>
+  
+    <li><a href="./PresentationsController.html">PresentationsController</a>
+  
+    <li><a href="./PresentationsHelper.html">PresentationsHelper</a>
+  
+    <li><a href="./RegisteredCourse.html">RegisteredCourse</a>
+  
+    <li><a href="./Registration.html">Registration</a>
+  
+    <li><a href="./RssFeed.html">RssFeed</a>
+  
+    <li><a href="./RssFeedsController.html">RssFeedsController</a>
+  
+    <li><a href="./RssFeedsHelper.html">RssFeedsHelper</a>
+  
+    <li><a href="./ScottyDogSaying.html">ScottyDogSaying</a>
+  
+    <li><a href="./ScottyDogSayingsController.html">ScottyDogSayingsController</a>
+  
+    <li><a href="./ScottyDogSayingsHelper.html">ScottyDogSayingsHelper</a>
+  
+    <li><a href="./SearchController.html">SearchController</a>
+  
+    <li><a href="./SponsoredProject.html">SponsoredProject</a>
+  
+    <li><a href="./SponsoredProjectAllocation.html">SponsoredProjectAllocation</a>
+  
+    <li><a href="./SponsoredProjectAllocationsController.html">SponsoredProjectAllocationsController</a>
+  
+    <li><a href="./SponsoredProjectEffort.html">SponsoredProjectEffort</a>
+  
+    <li><a href="./SponsoredProjectEffortMailer.html">SponsoredProjectEffortMailer</a>
+  
+    <li><a href="./SponsoredProjectEffortsController.html">SponsoredProjectEffortsController</a>
+  
+    <li><a href="./SponsoredProjectSponsor.html">SponsoredProjectSponsor</a>
+  
+    <li><a href="./SponsoredProjectSponsorsController.html">SponsoredProjectSponsorsController</a>
+  
+    <li><a href="./SponsoredProjectsController.html">SponsoredProjectsController</a>
+  
+    <li><a href="./StaticController.html">StaticController</a>
+  
+    <li><a href="./StrengthTheme.html">StrengthTheme</a>
+  
+    <li><a href="./Suggestion.html">Suggestion</a>
+  
+    <li><a href="./SuggestionsController.html">SuggestionsController</a>
+  
+    <li><a href="./SystemController.html">SystemController</a>
+  
+    <li><a href="./SystemHelper.html">SystemHelper</a>
+  
+    <li><a href="./TaskType.html">TaskType</a>
+  
+    <li><a href="./TaskTypesController.html">TaskTypesController</a>
+  
+    <li><a href="./TaskTypesHelper.html">TaskTypesHelper</a>
+  
+    <li><a href="./Team.html">Team</a>
+  
+    <li><a href="./TeamAssignment.html">TeamAssignment</a>
+  
+    <li><a href="./TeamsController.html">TeamsController</a>
+  
+    <li><a href="./TeamsHelper.html">TeamsHelper</a>
+  
+    <li><a href="./TmpUpdateFacultyAssignments.html">TmpUpdateFacultyAssignments</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserPreference.html">UserPreference</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./WelcomeController.html">WelcomeController</a>
+  
+    <li><a href="./WelcomeHelper.html">WelcomeHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module HUBClassRosterHandler</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-email_help_about_missing_student" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">email_help_about_missing_student</span><span
+            class="method-args">(webiso_account, course)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="email_help_about_missing_student-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email_help_about_missing_student</span> <span class="ruby-identifier">webiso_account</span>, <span class="ruby-identifier">course</span>
+    <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;todd.sedano@sv.cmu.edu&quot;</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Need to add this user #{webiso_account}@andrew.cmu.edu&quot;</span>,
+               <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;We were adding registered HUB users to the course #{course.name}, but they are not in the system.&quot;</span>,
+               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://rails.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&amp;is_student=true&quot;</span>,
+               <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Add person&quot;</span>}
+    <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- email_help_about_missing_student-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- email_help_about_missing_student-method -->
+
+    
+      <div id="method-c-email_professors_about_added_and_dropped_students" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">email_professors_about_added_and_dropped_students</span><span
+            class="method-args">(course, info)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="email_professors_about_added_and_dropped_students-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 95</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email_professors_about_added_and_dropped_students</span> <span class="ruby-identifier">course</span>, <span class="ruby-identifier">info</span>
+    <span class="ruby-identifier">faculty_emails</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">faculty</span>.<span class="ruby-identifier">collect</span>(&amp;<span class="ruby-value">:email</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">faculty_emails</span>
+      <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">faculty_emails</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Roster change for your course #{course.name}&quot;</span>,
+                 <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">roster_change_message</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">info</span>[<span class="ruby-value">:added</span>], <span class="ruby-identifier">info</span>[<span class="ruby-value">:dropped</span>], <span class="ruby-identifier">info</span>[<span class="ruby-value">:not_in_system</span>])}
+<span class="ruby-comment"># The message handles this well...</span>
+<span class="ruby-comment">#                 :url_label =&gt; &quot;Your course: &quot; + course.number + &quot; &quot; + course.short_or_full_name,</span>
+<span class="ruby-comment">#                 :url =&gt; &quot;http://rails.sv.cmu.edu/courses/#{course.id}&quot; }</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;chris.ziese@sv.cmu.edu&quot;</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please add faculty to this course&quot;</span>,
+                   <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;The HUB importer code was just run, however this course no faculty assigned to it. Thus I could not email them.&quot;</span>,
+                   <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;The course: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">number</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">short_or_full_name</span>,
+                   <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://rails.sv.cmu.edu/courses/#{course.id}&quot;</span> }
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- email_professors_about_added_and_dropped_students-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- email_professors_about_added_and_dropped_students-method -->
+
+    
+      <div id="method-c-handle" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle</span><span
+            class="method-args">(roster_text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="handle-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 2</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">handle</span> <span class="ruby-identifier">roster_text</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">roster_text</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">roster_text</span> = <span class="ruby-identifier">roster_text</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;\n&quot;</span>, <span class="ruby-string">' '</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;\r&quot;</span>, <span class="ruby-string">' '</span>)
+    <span class="ruby-identifier">parsed_courses</span> = <span class="ruby-identifier">roster_text</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'CLASS ROSTER'</span>)
+
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">parsed_courses</span>.<span class="ruby-identifier">any?</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Could not read your file, please check format.&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">users</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">all</span>
+
+    <span class="ruby-identifier">students_for_course</span> = {}
+    <span class="ruby-identifier">students_not_in_system_hash</span> = {}
+    <span class="ruby-identifier">no_courses_parsed</span> = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">parsed_courses</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">parsed_course</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/Run Date: (.*) Course: (.*) Sect:\s*(\w+).*Semester: (.*)College:(.*)Department:(.*)Instructor\(s\): (.*)Name.*?_+(.*)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">parsed_course</span>)
+        <span class="ruby-identifier">no_courses_parsed</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-identifier">course_number</span> = <span class="ruby-node">$2</span>.<span class="ruby-identifier">strip</span>
+        (<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>) = <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">parse_HUB_semester</span>(<span class="ruby-node">$4</span>.<span class="ruby-identifier">strip</span>)
+
+        <span class="ruby-identifier">student_webiso_accounts</span> = <span class="ruby-node">$8</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\d+\.\d.*?(\w+)/</span>)
+
+        <span class="ruby-identifier">course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">semester</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">year</span>, <span class="ruby-value">:number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">course_number</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-string">'-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course_number</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>]).<span class="ruby-identifier">first</span> <span class="ruby-value">:include</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:registered_students</span>]
+        <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">course</span>
+        <span class="ruby-identifier">students_for_course</span>[<span class="ruby-identifier">course</span>] = <span class="ruby-identifier">students_for_course</span>[<span class="ruby-identifier">course</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">students_not_in_system_hash</span>[<span class="ruby-identifier">course</span>] = <span class="ruby-identifier">students_not_in_system_hash</span>[<span class="ruby-identifier">course</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+
+        <span class="ruby-identifier">student_webiso_accounts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">webiso_account</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">student</span> = <span class="ruby-identifier">users</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">u</span><span class="ruby-operator">|</span> <span class="ruby-identifier">u</span>.<span class="ruby-identifier">webiso_account</span> <span class="ruby-operator">==</span> (<span class="ruby-node">&quot;#{webiso_account[0]}@andrew.cmu.edu&quot;</span>) }.<span class="ruby-identifier">first</span>
+          <span class="ruby-comment">#next</span>
+          <span class="ruby-keyword">unless</span> <span class="ruby-identifier">student</span>
+            <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email_help_about_missing_student</span>(<span class="ruby-identifier">webiso_account</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">course</span>)
+            <span class="ruby-identifier">students_not_in_system_hash</span>[<span class="ruby-identifier">course</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">webiso_account</span>[<span class="ruby-value">0</span>]
+            <span class="ruby-keyword">next</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">students_for_course</span>[<span class="ruby-identifier">course</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">student</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">no_courses_parsed</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Could not read your file, please check format.&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Students_for_course::: #{students_for_course}&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">handle_roster_changes</span> <span class="ruby-identifier">students_for_course</span>, <span class="ruby-identifier">students_not_in_system_hash</span>
+<span class="ruby-comment">#    return self.handle_roster_changes students_for_course</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- handle-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle-method -->
+
+    
+      <div id="method-c-handle_roster_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_roster_changes</span><span
+            class="method-args">(students_for_course, students_not_in_system_hash)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="handle_roster_changes-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 52</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">handle_roster_changes</span> <span class="ruby-identifier">students_for_course</span>, <span class="ruby-identifier">students_not_in_system_hash</span>
+<span class="ruby-comment">#  def self.handle_roster_changes students_for_course</span>
+    <span class="ruby-identifier">roster_changes</span> = {}
+    <span class="ruby-identifier">changes</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">students_for_course</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course</span>, <span class="ruby-identifier">students</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>] = {}
+      <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:added</span>] = <span class="ruby-identifier">students</span>.<span class="ruby-identifier">to_a</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span>
+      <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:dropped</span>] = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">students</span>.<span class="ruby-identifier">to_a</span>
+      <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:not_in_system</span>] = <span class="ruby-identifier">students_not_in_system_hash</span>[<span class="ruby-identifier">course</span>]
+
+      <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Added: #{roster_changes[course][:added]}&quot;</span>
+      <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Dropped: #{roster_changes[course][:dropped]}&quot;</span>
+
+      <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:dropped</span>]
+      <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">registered_students</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:added</span>]
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:added</span>].<span class="ruby-identifier">any?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">roster_changes</span>[<span class="ruby-identifier">course</span>][<span class="ruby-value">:dropped</span>].<span class="ruby-identifier">any?</span>
+        <span class="ruby-identifier">course</span>.<span class="ruby-identifier">invalidate_distribution_list</span>
+        <span class="ruby-identifier">changes</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">course</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-identifier">roster_changes</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send_emails</span> <span class="ruby-identifier">roster_changes</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_roster_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_roster_changes-method -->
+
+    
+      <div id="method-c-roster_change_message" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">roster_change_message</span><span
+            class="method-args">(course, added, dropped, not_in_system)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="roster_change_message-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">roster_change_message</span> <span class="ruby-identifier">course</span>, <span class="ruby-identifier">added</span>, <span class="ruby-identifier">dropped</span>, <span class="ruby-identifier">not_in_system</span>
+  <span class="ruby-identifier">message</span> = <span class="ruby-string">&quot;** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with the rails system, then you can see who has not been assigned to a team. This does not currently track students on wait-lists. We only have access to students registered in 96-xxx courses.&lt;br/&gt;&lt;br/&gt;&quot;</span>
+  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;The official registration list for your course can be &lt;a href='https://acis.as.cmu.edu/grades/'&gt;found here&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;&quot;</span>
+  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.&lt;br/&gt;&lt;br/&gt;&quot;</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">not_in_system</span>.<span class="ruby-identifier">any?</span>
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;There are #{not_in_system.count} registered students that are not in any of our SV systems:&lt;br/&gt;&quot;</span>
+    <span class="ruby-identifier">not_in_system</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;#{student}@andrew.cmu.edu&lt;br/&gt;&quot;</span> }
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)&lt;br/&gt;&lt;br/&gt;&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">added</span>.<span class="ruby-identifier">any?</span>
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{added.count} students were added to the course:&lt;br/&gt;&quot;</span>
+    <span class="ruby-identifier">added</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;#{student.first_name} #{student.last_name}&lt;br/&gt;&quot;</span> }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">dropped</span>.<span class="ruby-identifier">any?</span>
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{dropped.count} students were dropped from the course:&lt;br/&gt;&quot;</span>
+    <span class="ruby-identifier">dropped</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;#{student.first_name} #{student.last_name}&lt;br/&gt;&quot;</span> }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;br/&gt;The system will be updating your course mailing list (#{course.email}) For more information, see your &lt;a href='http://rails.sv.cmu.edu/courses/#{course.id}'&gt;course tools&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>
+
+  <span class="ruby-identifier">message</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- roster_change_message-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- roster_change_message-method -->
+
+    
+      <div id="method-c-send_emails" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_emails</span><span
+            class="method-args">(roster_changes)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="send_emails-source">
+            <pre><span class="ruby-comment"># File lib/HUB_class_roster_handler.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send_emails</span> <span class="ruby-identifier">roster_changes</span>
+  <span class="ruby-identifier">roster_changes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course</span>, <span class="ruby-identifier">info</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">info</span>[<span class="ruby-value">:added</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">info</span>[<span class="ruby-value">:dropped</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">email_professors_about_added_and_dropped_students</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">info</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_emails-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_emails-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

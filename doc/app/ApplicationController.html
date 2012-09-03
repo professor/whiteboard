@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: ApplicationController</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,42 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/application_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActionController::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-make_available_for_exception_notification">#make_available_for_exception_notification</a>
+    
+    <li><a href="#method-i-robot-3F">#robot?</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +335,111 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class ApplicationController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-robot-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">robot?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return true if the user agent is a bot.</p>
+          
+
+          
+          <div class="method-source-code" id="robot-3F-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">robot?</span>
+  <span class="ruby-identifier">bot</span> = <span class="ruby-regexp">/(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/</span>
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">user_agent</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">bot</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- robot-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- robot-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Protected Instance Methods</h3>
+
+    
+      <div id="method-i-make_available_for_exception_notification" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">make_available_for_exception_notification</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <pre>Now in locales</pre>
+
+<p>def american_date</p>
+
+<pre>'%m/%d/%Y'</pre>
+
+<p>end</p>
+          
+
+          
+          <div class="method-source-code" id="make_available_for_exception_notification-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">make_available_for_exception_notification</span>
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-string">&quot;exception_notifier.exception_data&quot;</span>] = {
+      <span class="ruby-value">:current_user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">current_user</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- make_available_for_exception_notification-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- make_available_for_exception_notification-method -->
+
+    
+    </section><!-- protected-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

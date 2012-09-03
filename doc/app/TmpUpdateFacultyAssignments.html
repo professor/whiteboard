@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Module: TmpUpdateFacultyAssignments</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="module">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,38 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/tmp_update_faculty_assignments.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-connect">::connect</a>
+    
+    <li><a href="#method-c-connect_database_url">::connect_database_url</a>
+    
+    <li><a href="#method-c-query_table">::query_table</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +331,179 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="module">module TmpUpdateFacultyAssignments</h1>
+
+  <div id="description" class="description">
+    
+<p>To run this file on production</p>
+
+<p>heroku console</p>
+
+<pre>`ruby lib/tmp_update_faculty_assignments.rb`</pre>
+
+<p>This code isn’t pretty, but it works.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-connect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">connect</span><span
+            class="method-args">(db, user, pw)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="connect-source">
+            <pre><span class="ruby-comment"># File lib/tmp_update_faculty_assignments.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">db</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">pw</span>)
+   <span class="ruby-constant">PGconn</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'localhost'</span>, <span class="ruby-value">5432</span>, <span class="ruby-string">''</span>, <span class="ruby-string">''</span>, <span class="ruby-identifier">db</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">pw</span>)
+ <span class="ruby-keyword">end</span></pre>
+          </div><!-- connect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- connect-method -->
+
+    
+      <div id="method-c-connect_database_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">connect_database_url</span><span
+            class="method-args">(url)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="connect_database_url-source">
+            <pre><span class="ruby-comment"># File lib/tmp_update_faculty_assignments.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">connect_database_url</span>(<span class="ruby-identifier">url</span>)
+  <span class="ruby-identifier">parts</span> = <span class="ruby-regexp">/(.*)\:\/\/(.*)\:(.*)\@(.*)\/(.*)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">url</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;parts 4: #{parts[4]}&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;parts 5: #{parts[5]}&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;parts 2: #{parts[2]}&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;parts 3: #{parts[3]}&quot;</span>
+  <span class="ruby-constant">PGconn</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">parts</span>[<span class="ruby-value">4</span>], <span class="ruby-value">5432</span>, <span class="ruby-string">''</span>, <span class="ruby-string">''</span>, <span class="ruby-identifier">parts</span>[<span class="ruby-value">5</span>], <span class="ruby-identifier">parts</span>[<span class="ruby-value">2</span>], <span class="ruby-identifier">parts</span>[<span class="ruby-value">3</span>])
+ <span class="ruby-keyword">end</span></pre>
+          </div><!-- connect_database_url-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- connect_database_url-method -->
+
+    
+      <div id="method-c-query_table" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">query_table</span><span
+            class="method-args">(conn)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="query_table-source">
+            <pre><span class="ruby-comment"># File lib/tmp_update_faculty_assignments.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">query_table</span>(<span class="ruby-identifier">conn</span>)
+
+  <span class="ruby-identifier">sql</span> = <span class="ruby-string">&quot;SELECT courses.id , primary_faculty_id as faculty_id
+                      FROM courses, teams
+                      WHERE courses.id = teams.course_id
+                      UNION
+                      SELECT courses.id, Secondary_faculty_id as faculty_id
+                      FROM courses, teams
+                      WHERE courses.id = teams.course_id&quot;</span>
+
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">sql</span>)
+
+  <span class="ruby-identifier">n</span>=<span class="ruby-value">0</span>
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">row</span>[<span class="ruby-string">'id'</span>]
+    <span class="ruby-identifier">faculty_id</span> = <span class="ruby-identifier">row</span>[<span class="ruby-string">'faculty_id'</span>]
+
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">faculty_id</span>.<span class="ruby-identifier">nil?</span>
+
+    <span class="ruby-identifier">sql2</span> = <span class="ruby-node">&quot;SELECT * FROM faculty_assignments WHERE faculty_assignments.course_id = #{course_id} AND faculty_assignments.person_id = #{faculty_id}&quot;</span>
+    <span class="ruby-identifier">result2</span> = <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">sql2</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">result2</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Course_id =&gt; #{course_id} and faculty_id =&gt; #{faculty_id} present in faculty assignments&quot;</span>
+
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Course_id =&gt; #{course_id} and faculty_id =&gt; #{faculty_id} not present in faculty assignments&quot;</span>
+      <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+      <span class="ruby-identifier">sql3</span> = <span class="ruby-node">&quot;INSERT INTO faculty_assignments (course_id, person_id, created_at, updated_at)
+                               VALUES ('#{course_id}','#{faculty_id}','#{now}','#{now}')&quot;</span>
+      <span class="ruby-identifier">result3</span> = <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">sql3</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">result3</span>
+        <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;successfully added #{n} records&quot;</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;oops couldn't write&quot;</span>
+      <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">clear</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- query_table-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- query_table-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

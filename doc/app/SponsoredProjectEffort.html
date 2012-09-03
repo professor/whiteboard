@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: SponsoredProjectEffort</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,44 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/sponsored_project_effort.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-emails_business_manager">::emails_business_manager</a>
+    
+    <li><a href="#method-c-new_from_sponsored_project_allocation">::new_from_sponsored_project_allocation</a>
+    
+    <li><a href="#method-i-unique_month_year_allocation_id-3F">#unique_month_year_allocation_id?</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +337,142 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class SponsoredProjectEffort</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-emails_business_manager" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">emails_business_manager</span><span
+            class="method-args">(an_effort_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="emails_business_manager-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_effort.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">emails_business_manager</span>(<span class="ruby-identifier">an_effort_id</span>)
+  <span class="ruby-identifier">effort</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">an_effort_id</span>)
+  <span class="ruby-constant">SponsoredProjectEffortMailer</span>.<span class="ruby-identifier">deliver_changed_allocation_email_to_business_manager</span>(<span class="ruby-identifier">effort</span>.<span class="ruby-identifier">sponsored_project_allocation</span>.<span class="ruby-identifier">user</span>,
+                                                                                    <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">month</span>, <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">year</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- emails_business_manager-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- emails_business_manager-method -->
+
+    
+      <div id="method-c-new_from_sponsored_project_allocation" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new_from_sponsored_project_allocation</span><span
+            class="method-args">(allocation)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new_from_sponsored_project_allocation-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_effort.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_from_sponsored_project_allocation</span>(<span class="ruby-identifier">allocation</span>)
+
+  <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">month</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">year</span>,
+                                <span class="ruby-value">:sponsored_project_allocation_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">allocation</span>.<span class="ruby-identifier">id</span>,
+                                <span class="ruby-value">:current_allocation</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">allocation</span>.<span class="ruby-identifier">current_allocation</span>,
+                                <span class="ruby-value">:actual_allocation</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">allocation</span>.<span class="ruby-identifier">current_allocation</span>,
+                                <span class="ruby-value">:confirmed</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new_from_sponsored_project_allocation-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new_from_sponsored_project_allocation-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-unique_month_year_allocation_id-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unique_month_year_allocation_id?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unique_month_year_allocation_id-3F-source">
+            <pre><span class="ruby-comment"># File app/models/sponsored_project_effort.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unique_month_year_allocation_id?</span>
+  <span class="ruby-identifier">duplicate</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">find_by_month_and_year_and_sponsored_project_allocation_id</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">month</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">year</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sponsored_project_allocation_id</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">duplicate</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">duplicate</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:base</span>, <span class="ruby-string">&quot;Can't create duplicate effort for the same month, year, and allocation.&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unique_month_year_allocation_id-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unique_month_year_allocation_id-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

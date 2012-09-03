@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Class: EffortLogMailer</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="class">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,44 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/mailers/effort_log_mailer.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActionMailer::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-endweek_admin_report">#endweek_admin_report</a>
+    
+    <li><a href="#method-i-midweek_warning">#midweek_warning</a>
+    
+    <li><a href="#method-i-midweek_warning_admin_report">#midweek_warning_admin_report</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +337,140 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="class">class EffortLogMailer</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-endweek_admin_report" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">endweek_admin_report</span><span
+            class="method-args">(course_id, course_name, faculty_emails)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="endweek_admin_report-source">
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">endweek_admin_report</span>(<span class="ruby-identifier">course_id</span>, <span class="ruby-identifier">course_name</span>, <span class="ruby-identifier">faculty_emails</span>)
+  <span class="ruby-ivar">@course_id</span> = <span class="ruby-identifier">course_id</span>
+  <span class="ruby-ivar">@course_name</span> = <span class="ruby-identifier">course_name</span>
+
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">faculty_emails</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Effort log data updated for #{course_name}&quot;</span>, <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- endweek_admin_report-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- endweek_admin_report-method -->
+
+    
+      <div id="method-i-midweek_warning" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">midweek_warning</span><span
+            class="method-args">(saying, user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="midweek_warning-source">
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">midweek_warning</span>(<span class="ruby-identifier">saying</span>, <span class="ruby-identifier">user</span>)
+  <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">' &lt;'</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&gt;'</span>
+
+  <span class="ruby-identifier">attachments</span>[<span class="ruby-string">&quot;ScottyDogLandscape.jpg&quot;</span>] = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-node">&quot;#{Rails.root}/public/images/ScottyDogLandscape.jpg&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Scotty Dog says: #{saying}&quot;</span>, <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- midweek_warning-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- midweek_warning-method -->
+
+    
+      <div id="method-i-midweek_warning_admin_report" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">midweek_warning_admin_report</span><span
+            class="method-args">(saying, people_without_effort, people_with_effort)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="midweek_warning_admin_report-source">
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">midweek_warning_admin_report</span>(<span class="ruby-identifier">saying</span>, <span class="ruby-identifier">people_without_effort</span>, <span class="ruby-identifier">people_with_effort</span>)
+  <span class="ruby-ivar">@saying</span> = <span class="ruby-identifier">saying</span>
+  <span class="ruby-ivar">@people_without_effort</span> = <span class="ruby-identifier">people_without_effort</span>
+  <span class="ruby-ivar">@people_with_effort</span> = <span class="ruby-identifier">people_with_effort</span>
+  <span class="ruby-comment">#consider using an list array for this up e.g EmailsArray.all.map(&amp;:email).join(&quot;, &quot;)</span>
+  <span class="ruby-identifier">faculty</span> = [<span class="ruby-string">'todd.sedano@sv.cmu.edu'</span>, <span class="ruby-string">'ed.katz@sv.cmu.edu'</span>, <span class="ruby-string">'mel.rosso-llopart@sv.cmu.edu'</span>]
+
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">faculty</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Scotty Dog Midweek Warning Email Summary&quot;</span>, <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- midweek_warning_admin_report-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- midweek_warning_admin_report-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">

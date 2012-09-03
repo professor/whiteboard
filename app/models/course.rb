@@ -51,7 +51,7 @@ class Course < ActiveRecord::Base
   belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
 
   #When assigning faculty to a page, the user types in a series of strings that then need to be processed
-  #:faculty_assignments_override is a temporary variable that is used to do validation of the strings (to verify
+  # :faculty_assignments_override is a temporary variable that is used to do validation of the strings (to verify
   # that they are people in the system) and then to save the people in the faculty association.
   attr_accessor :faculty_assignments_override
 

@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Rails Application Documentation</title>
+<title>Module: IndexTank</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
 
-<body>
+<body id="top" class="module">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -42,6 +42,34 @@
   <ul id="search-results" class="initially-hidden"></ul>
 </nav>
 
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/index_tank.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-setup_indexes">::setup_indexes</a>
+    
+  </ul>
+</nav>
+
+  </div>
 
   <div id="project-metadata">
     <nav id="fileindex-section" class="section project-section">
@@ -299,7 +327,93 @@
   </div>
 </nav>
 
-<p>This is the API documentation for Rails Application Documentation.
+<div id="documentation">
+  <h1 class="module">module IndexTank</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-setup_indexes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setup_indexes</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="setup_indexes-source">
+            <pre><span class="ruby-comment"># File lib/index_tank.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">setup_indexes</span>
+  <span class="ruby-identifier">api</span> = <span class="ruby-constant">IndexTank</span><span class="ruby-operator">::</span><span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_API_URL'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'&lt;API_URL&gt;'</span>)
+
+  <span class="ruby-identifier">index_name_for_all_users</span> = (<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_INDEX'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'cmux'</span>)
+  <span class="ruby-identifier">index</span> = <span class="ruby-identifier">api</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-identifier">index_name_for_all_users</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">exists?</span>
+    <span class="ruby-identifier">index</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:public_search</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;created index #{index_name_for_all_users}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">index_name_for_staff</span> = (<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_STAFF_INDEX'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'cmu_staffx'</span>)
+  <span class="ruby-identifier">index</span> = <span class="ruby-identifier">api</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-identifier">index_name_for_staff</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">exists?</span>
+    <span class="ruby-identifier">index</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:public_search</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;created index #{index_name_for_staff}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">indexes</span> = [<span class="ruby-identifier">index_name_for_all_users</span>, <span class="ruby-identifier">index_name_for_staff</span> ]
+
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;waiting for indexes to startup&quot;</span>
+  <span class="ruby-identifier">indexes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-#{name}&quot;</span>
+    <span class="ruby-identifier">index</span> = <span class="ruby-identifier">api</span>.<span class="ruby-identifier">indexes</span> <span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">running?</span>
+      <span class="ruby-identifier">sleep</span> <span class="ruby-value">0.5</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;all indexes are running&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- setup_indexes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- setup_indexes-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
 
 
 <footer id="validator-badges">
