@@ -234,7 +234,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       @person.attributes = params[:user]
-      @person.photo = params[:user][:photo] if current_user.is_admin?
+      @person.photo = params[:user][:photo] if can? :upload_photo, User
       @person.expires_at = params[:user][:expires_at] if current_user.is_admin?
 
       if @person.save

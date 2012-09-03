@@ -26,6 +26,12 @@ class Ability
       cannot :create, User
     end
 
+    if (user.is_admin? || user.human_name == "Kaushik Gopal")
+      can :upload_photo, User
+    else
+      cannot :upload_photo, User
+    end
+
     #Contracts manager
     if (user.is_admin? || user.human_name == "Ngoc Ho" || user.human_name == "Hector Rastrullo")
       can :manage, SponsoredProjectAllocation
