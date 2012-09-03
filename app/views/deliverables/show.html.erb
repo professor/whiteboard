@@ -1,5 +1,10 @@
-<% content_for :title, "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
-<h1><%= "Deliverable for " + @deliverable.course.name + ", Task " + @deliverable.task_number -%></h1>
+<% if @deliverable.course  %>
+  <% title = "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
+<% else %>
+  <% title = "Deliverable for " + "(missing) course" + " Task " + @deliverable.task_number %>
+<% end %>
+<% content_for :title, title %>
+<h1><%= title %></h1>
 
 <p>
   <b><%=h @deliverable.name %></b>
