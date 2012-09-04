@@ -1,6 +1,11 @@
 <% content_for :title, "Provide Feedback" %>
 
-<h1>Provide Deliverable Feedback</h1>
+<% if @deliverable.is_team_deliverable? %>
+  <h1>Provide Team Feedback for <%= @deliverable.team.name -%></h1>
+<% else %>
+  <h1>Provide Individual Feedback for <%= @deliverable.creator.human_name -%></h1>
+<% end %>
+
 
 <%= form_for @deliverable, :html => { :multipart => true }, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <p>
