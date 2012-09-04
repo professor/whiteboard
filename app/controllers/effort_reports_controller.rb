@@ -13,12 +13,12 @@ class EffortReportsController < ApplicationController
     def generate_sql(just_student = nil)
 
       if (self.course_id.blank?)
-        sql_statement = "select distinct el.week_number, el.sum as student_effort, el.person_id "
+        sql_statement = "select distinct el.week_number, el.sum as student_effort, el.user_id "
       else
-        sql_statement = "select el.week_number, e.sum as student_effort, el.person_id "
+        sql_statement = "select el.week_number, e.sum as student_effort, el.user_id "
       end
       sql_statement = sql_statement + "from effort_log_line_items e, effort_logs el,courses c, users u
-      where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.person_id= u.id and el.year=c.year"
+      where e.sum>0 and e.course_id=c.id and e.effort_log_id=el.id and el.user_id= u.id and el.year=c.year"
       sql_statement = sql_statement + " AND el.year=#{self.year}"
       sql_statement = sql_statement + " and e.course_id=#{self.course_id}" unless self.course_id.blank?
       sql_statement = sql_statement + " and c.semester='#{self.semester}'"
@@ -31,7 +31,7 @@ class EffortReportsController < ApplicationController
         when "FT"
           sql_statement = sql_statement + " and u.is_part_time is false"
       end
-      sql_statement = sql_statement + " and el.person_id=#{self.person_id}" if just_student && !self.person_id.blank?
+      sql_statement = sql_statement + " and el.user_id=#{self.person_id}" if just_student && !self.person_id.blank?
 
       sql_statement = sql_statement + " order by el.week_number"
       return sql_statement
@@ -109,7 +109,7 @@ class EffortReportsController < ApplicationController
     # a given week
     student_effort_accumulator = {}
     effort_logs.each do |effort_log|
-      key = [effort_log.week_number - first_dataset_week_number, effort_log.person_id]
+      key = [effort_log.week_number - first_dataset_week_number, effort_log.user_id]
       value = effort_log.student_effort.to_f
       if student_effort_accumulator[key].nil?
         student_effort_accumulator[key] = value
@@ -382,7 +382,7 @@ class EffortReportsController < ApplicationController
       redirect_to(effort_reports_url)
       return
     end
-    @report_lines = EffortLog.find_by_sql(["SELECT effort_logs.year, effort_logs.week_number, users.human_name, task_types.name, effort_log_line_items.sum, effort_log_line_items.course_id FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = person_id inner join task_types on task_type_id = task_types.id where course_id = ?  order by week_number ", params[:id]])
+    @report_lines = EffortLog.find_by_sql(["SELECT effort_logs.year, effort_logs.week_number, users.human_name, task_types.name, effort_log_line_items.sum, effort_log_line_items.course_id FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id inner join users on users.id = user_id inner join task_types on task_type_id = task_types.id where course_id = ?  order by week_number ", params[:id]])
   end
 
 
@@ -457,7 +457,7 @@ class EffortReportsController < ApplicationController
 
   # helper method for course_table
   def report_person_effort_for_course(person, course)
-    person_effort_log_lines = EffortLog.find_by_sql(["SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.person_id = ? order by effort_logs.week_number", course.id, person.id])
+    person_effort_log_lines = EffortLog.find_by_sql(["SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.user_id = ? order by effort_logs.week_number", course.id, person.id])
 
     person_result = []
     @course.course_length.times do

@@ -16,7 +16,7 @@
 # select "New" at the bottom of the page. This is a little less efficient because the student needs to select a
 # course and task number. It is a quick way for a student to see everything they have submitted for their courses.
 #
-## If a student or team accidentally uploads the wrong file, they can upload additional files. All files are
+# If a student or team accidentally uploads the wrong file, they can upload additional files. All files are
 # kept in the system, but the convention is that the faculty will only examine the last uploaded file.
 #
 # The faculty assigned to that team will receive an email whenever a student submits a deliverable. The faculty

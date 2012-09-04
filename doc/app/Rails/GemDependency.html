@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: Rails::GemDependency</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rails/gem_dependency.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Gem::Dependency
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-add_frozen_gem_path">::add_frozen_gem_path</a>
+    
+    <li><a href="#method-c-from_directory_name">::from_directory_name</a>
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-c-unpacked_path">::unpacked_path</a>
+    
+    <li><a href="#method-i-3D-3D">#==</a>
+    
+    <li><a href="#method-i-add_load_paths">#add_load_paths</a>
+    
+    <li><a href="#method-i-build">#build</a>
+    
+    <li><a href="#method-i-built-3F">#built?</a>
+    
+    <li><a href="#method-i-dependencies">#dependencies</a>
+    
+    <li><a href="#method-i-framework_gem-3F">#framework_gem?</a>
+    
+    <li><a href="#method-i-frozen-3F">#frozen?</a>
+    
+    <li><a href="#method-i-install">#install</a>
+    
+    <li><a href="#method-i-installed-3F">#installed?</a>
+    
+    <li><a href="#method-i-load">#load</a>
+    
+    <li><a href="#method-i-load_paths_added-3F">#load_paths_added?</a>
+    
+    <li><a href="#method-i-loaded-3F">#loaded?</a>
+    
+    <li><a href="#method-i-refresh">#refresh</a>
+    
+    <li><a href="#method-i-requirement">#requirement</a>
+    
+    <li><a href="#method-i-specification">#specification</a>
+    
+    <li><a href="#method-i-specification-3D">#specification=</a>
+    
+    <li><a href="#method-i-unpack">#unpack</a>
+    
+    <li><a href="#method-i-vendor_gem-3F">#vendor_gem?</a>
+    
+    <li><a href="#method-i-vendor_rails-3F">#vendor_rails?</a>
+    
+    <li><a href="#method-i-write_specification">#write_specification</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../GAppsProvisioning.html">GAppsProvisioning</a>
+  
+    <li><a href="../GAppsProvisioning/Connection.html">GAppsProvisioning::Connection</a>
+  
+    <li><a href="../GAppsProvisioning/GDataError.html">GAppsProvisioning::GDataError</a>
+  
+    <li><a href="../GAppsProvisioning/GroupEntry.html">GAppsProvisioning::GroupEntry</a>
+  
+    <li><a href="../GAppsProvisioning/MemberEntry.html">GAppsProvisioning::MemberEntry</a>
+  
+    <li><a href="../GAppsProvisioning/NicknameEntry.html">GAppsProvisioning::NicknameEntry</a>
+  
+    <li><a href="../GAppsProvisioning/OwnerEntry.html">GAppsProvisioning::OwnerEntry</a>
+  
+    <li><a href="../GAppsProvisioning/ProvisioningApi.html">GAppsProvisioning::ProvisioningApi</a>
+  
+    <li><a href="../GAppsProvisioning/UserEntry.html">GAppsProvisioning::UserEntry</a>
+  
+    <li><a href="../EffortReportsController.html">EffortReportsController</a>
+  
+    <li><a href="../EffortReportsController/PanelState.html">EffortReportsController::PanelState</a>
+  
+    <li><a href="../EffortReportsController/SemesterPanel.html">EffortReportsController::SemesterPanel</a>
+  
+    <li><a href="../TimeMachine.html">TimeMachine</a>
+  
+    <li><a href="../TimeMachine/Date.html">TimeMachine::Date</a>
+  
+    <li><a href="../TimeMachine/Time.html">TimeMachine::Time</a>
+  
+    <li><a href="../PeopleController.html">PeopleController</a>
+  
+    <li><a href="../PeopleController/ClassProfileState.html">PeopleController::ClassProfileState</a>
+  
+    <li><a href="../Rails.html">Rails</a>
+  
+    <li><a href="../Rails/GemDependency.html">Rails::GemDependency</a>
+  
+    <li><a href="../Users.html">Users</a>
+  
+    <li><a href="../Users/OmniauthCallbacksController.html">Users::OmniauthCallbacksController</a>
+  
+    <li><a href="../Ability.html">Ability</a>
+  
+    <li><a href="../AcademicCalendar.html">AcademicCalendar</a>
+  
+    <li><a href="../ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="../ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="../Course.html">Course</a>
+  
+    <li><a href="../CourseMailer.html">CourseMailer</a>
+  
+    <li><a href="../CourseNavigationsController.html">CourseNavigationsController</a>
+  
+    <li><a href="../CourseNumber.html">CourseNumber</a>
+  
+    <li><a href="../CourseNumbersController.html">CourseNumbersController</a>
+  
+    <li><a href="../CourseNumbersHelper.html">CourseNumbersHelper</a>
+  
+    <li><a href="../CoursesController.html">CoursesController</a>
+  
+    <li><a href="../CoursesHelper.html">CoursesHelper</a>
+  
+    <li><a href="../DelayedSystemJob.html">DelayedSystemJob</a>
+  
+    <li><a href="../DelayedSystemJobsController.html">DelayedSystemJobsController</a>
+  
+    <li><a href="../Deliverable.html">Deliverable</a>
+  
+    <li><a href="../DeliverableAttachment.html">DeliverableAttachment</a>
+  
+    <li><a href="../DeliverablesController.html">DeliverablesController</a>
+  
+    <li><a href="../DeliverablesHelper.html">DeliverablesHelper</a>
+  
+    <li><a href="../EffortLog.html">EffortLog</a>
+  
+    <li><a href="../EffortLogLineItem.html">EffortLogLineItem</a>
+  
+    <li><a href="../EffortLogLineItemsController.html">EffortLogLineItemsController</a>
+  
+    <li><a href="../EffortLogLineItemsHelper.html">EffortLogLineItemsHelper</a>
+  
+    <li><a href="../EffortLogMailer.html">EffortLogMailer</a>
+  
+    <li><a href="../EffortLogsController.html">EffortLogsController</a>
+  
+    <li><a href="../EffortLogsHelper.html">EffortLogsHelper</a>
+  
+    <li><a href="../FacultyAssignment.html">FacultyAssignment</a>
+  
+    <li><a href="../Gem.html">Gem</a>
+  
+    <li><a href="../GenericAjaxController.html">GenericAjaxController</a>
+  
+    <li><a href="../GenericMailer.html">GenericMailer</a>
+  
+    <li><a href="../GoogleMailingListJob.html">GoogleMailingListJob</a>
+  
+    <li><a href="../HUBClassRosterHandler.html">HUBClassRosterHandler</a>
+  
+    <li><a href="../IndexTank.html">IndexTank</a>
+  
+    <li><a href="../MailingListsController.html">MailingListsController</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../Page.html">Page</a>
+  
+    <li><a href="../PageAttachment.html">PageAttachment</a>
+  
+    <li><a href="../PageAttachmentsController.html">PageAttachmentsController</a>
+  
+    <li><a href="../PageComment.html">PageComment</a>
+  
+    <li><a href="../PageCommentMailer.html">PageCommentMailer</a>
+  
+    <li><a href="../PageCommentType.html">PageCommentType</a>
+  
+    <li><a href="../PageCommentTypesController.html">PageCommentTypesController</a>
+  
+    <li><a href="../PageCommentTypesHelper.html">PageCommentTypesHelper</a>
+  
+    <li><a href="../PageCommentsHelper.html">PageCommentsHelper</a>
+  
+    <li><a href="../PagesController.html">PagesController</a>
+  
+    <li><a href="../PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="../PeerEvaluationController.html">PeerEvaluationController</a>
+  
+    <li><a href="../PeerEvaluationLearningObjective.html">PeerEvaluationLearningObjective</a>
+  
+    <li><a href="../PeerEvaluationReport.html">PeerEvaluationReport</a>
+  
+    <li><a href="../PeerEvaluationReview.html">PeerEvaluationReview</a>
+  
+    <li><a href="../PeopleHelper.html">PeopleHelper</a>
+  
+    <li><a href="../Person.html">Person</a>
+  
+    <li><a href="../PersonJob.html">PersonJob</a>
+  
+    <li><a href="../PersonMailer.html">PersonMailer</a>
+  
+    <li><a href="../Presentation.html">Presentation</a>
+  
+    <li><a href="../PresentationFeedback.html">PresentationFeedback</a>
+  
+    <li><a href="../PresentationFeedbackAnswer.html">PresentationFeedbackAnswer</a>
+  
+    <li><a href="../PresentationQuestion.html">PresentationQuestion</a>
+  
+    <li><a href="../PresentationsController.html">PresentationsController</a>
+  
+    <li><a href="../PresentationsHelper.html">PresentationsHelper</a>
+  
+    <li><a href="../RegisteredCourse.html">RegisteredCourse</a>
+  
+    <li><a href="../Registration.html">Registration</a>
+  
+    <li><a href="../RssFeed.html">RssFeed</a>
+  
+    <li><a href="../RssFeedsController.html">RssFeedsController</a>
+  
+    <li><a href="../RssFeedsHelper.html">RssFeedsHelper</a>
+  
+    <li><a href="../ScottyDogSaying.html">ScottyDogSaying</a>
+  
+    <li><a href="../ScottyDogSayingsController.html">ScottyDogSayingsController</a>
+  
+    <li><a href="../ScottyDogSayingsHelper.html">ScottyDogSayingsHelper</a>
+  
+    <li><a href="../SearchController.html">SearchController</a>
+  
+    <li><a href="../SponsoredProject.html">SponsoredProject</a>
+  
+    <li><a href="../SponsoredProjectAllocation.html">SponsoredProjectAllocation</a>
+  
+    <li><a href="../SponsoredProjectAllocationsController.html">SponsoredProjectAllocationsController</a>
+  
+    <li><a href="../SponsoredProjectEffort.html">SponsoredProjectEffort</a>
+  
+    <li><a href="../SponsoredProjectEffortMailer.html">SponsoredProjectEffortMailer</a>
+  
+    <li><a href="../SponsoredProjectEffortsController.html">SponsoredProjectEffortsController</a>
+  
+    <li><a href="../SponsoredProjectSponsor.html">SponsoredProjectSponsor</a>
+  
+    <li><a href="../SponsoredProjectSponsorsController.html">SponsoredProjectSponsorsController</a>
+  
+    <li><a href="../SponsoredProjectsController.html">SponsoredProjectsController</a>
+  
+    <li><a href="../StaticController.html">StaticController</a>
+  
+    <li><a href="../StrengthTheme.html">StrengthTheme</a>
+  
+    <li><a href="../Suggestion.html">Suggestion</a>
+  
+    <li><a href="../SuggestionsController.html">SuggestionsController</a>
+  
+    <li><a href="../SystemController.html">SystemController</a>
+  
+    <li><a href="../SystemHelper.html">SystemHelper</a>
+  
+    <li><a href="../TaskType.html">TaskType</a>
+  
+    <li><a href="../TaskTypesController.html">TaskTypesController</a>
+  
+    <li><a href="../TaskTypesHelper.html">TaskTypesHelper</a>
+  
+    <li><a href="../Team.html">Team</a>
+  
+    <li><a href="../TeamAssignment.html">TeamAssignment</a>
+  
+    <li><a href="../TeamsController.html">TeamsController</a>
+  
+    <li><a href="../TeamsHelper.html">TeamsHelper</a>
+  
+    <li><a href="../TmpUpdateFacultyAssignments.html">TmpUpdateFacultyAssignments</a>
+  
+    <li><a href="../User.html">User</a>
+  
+    <li><a href="../UserPreference.html">UserPreference</a>
+  
+    <li><a href="../UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="../WelcomeController.html">WelcomeController</a>
+  
+    <li><a href="../WelcomeHelper.html">WelcomeHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Rails::GemDependency</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-dep" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dep</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-lib" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">lib</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-source" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">source</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-add_frozen_gem_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_frozen_gem_path</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_frozen_gem_path-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">add_frozen_gem_path</span>
+  <span class="ruby-identifier">@@paths_loaded</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">source_index</span> = <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">VendorGemSourceIndex</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Gem</span>.<span class="ruby-identifier">source_index</span>)
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">clear_paths</span>
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">source_index</span> = <span class="ruby-identifier">source_index</span>
+    <span class="ruby-comment"># loaded before us - we can't change them, so mark them</span>
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">@@framework_gems</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_frozen_gem_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_frozen_gem_path-method -->
+
+    
+      <div id="method-c-from_directory_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_directory_name</span><span
+            class="method-args">(directory_name, load_spec=true)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_directory_name-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_directory_name</span>(<span class="ruby-identifier">directory_name</span>, <span class="ruby-identifier">load_spec</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">directory_name_parts</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">directory_name</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">'-'</span>)
+  <span class="ruby-identifier">name</span>    = <span class="ruby-identifier">directory_name_parts</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">'-'</span>)
+  <span class="ruby-identifier">version</span> = <span class="ruby-identifier">directory_name_parts</span>.<span class="ruby-identifier">last</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-value">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>)
+  <span class="ruby-identifier">spec_filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">directory_name</span>, <span class="ruby-string">'.specification'</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">load_spec</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Missing specification file in #{File.dirname(spec_filename)}. Perhaps you need to do a 'rake gems:refresh_specs'?&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">spec_filename</span>)
+    <span class="ruby-identifier">spec</span> = <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">spec_filename</span>)
+    <span class="ruby-identifier">result</span>.<span class="ruby-identifier">specification</span> = <span class="ruby-identifier">spec</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unable to determine gem name and version from '#{directory_name}'&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_directory_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_directory_name-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(name, options = {})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'rubygems'</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-value">:Gem</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:requirement</span>]
+    <span class="ruby-identifier">req</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:requirement</span>]
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>]
+    <span class="ruby-identifier">req</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">req</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@lib</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-value">:lib</span>]
+  <span class="ruby-ivar">@source</span>   = <span class="ruby-identifier">options</span>[<span class="ruby-value">:source</span>]
+  <span class="ruby-ivar">@loaded</span>   = <span class="ruby-ivar">@frozen</span> = <span class="ruby-ivar">@load_paths_added</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">req</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-unpacked_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpacked_path</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpacked_path-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpacked_path</span>
+  <span class="ruby-ivar">@unpacked_path</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>, <span class="ruby-string">'vendor'</span>, <span class="ruby-string">'gems'</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpacked_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpacked_path-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-3D-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">==</span><span
+            class="method-args">(other)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="3D-3D-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 286</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">requirement</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">requirement</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 3D-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 3D-3D-method -->
+
+    
+      <div id="method-i-add_load_paths" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_load_paths</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_load_paths-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_load_paths</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">add_frozen_gem_path</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@loaded</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@load_paths_added</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">framework_gem?</span>
+    <span class="ruby-ivar">@load_paths_added</span> = <span class="ruby-ivar">@loaded</span> = <span class="ruby-ivar">@frozen</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">gem</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-ivar">@spec</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>[<span class="ruby-identifier">name</span>]
+  <span class="ruby-ivar">@frozen</span> = <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">loaded_from</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">unpacked_path</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@spec</span>
+  <span class="ruby-ivar">@load_paths_added</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">LoadError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_load_paths-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_load_paths-method -->
+
+    
+      <div id="method-i-build" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build</span><span
+            class="method-args">(options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="build-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build</span>(<span class="ruby-identifier">options</span>={})
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'rails/gem_builder'</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">specification</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:force</span>] <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">built?</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">unpacked_specification_filename</span>)
+    <span class="ruby-identifier">spec</span> = <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">unpacked_specification_filename</span>)
+    <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">GemBuilder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">spec</span>, <span class="ruby-identifier">unpacked_gem_directory</span>).<span class="ruby-identifier">build_extensions</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Built gem: '#{unpacked_gem_directory}'&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">options</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build-method -->
+
+    
+      <div id="method-i-built-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">built?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="built-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">built?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">frozen?</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">vendor_gem?</span>
+    <span class="ruby-identifier">specification</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">makefile</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">unpacked_gem_directory</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">ext</span>), <span class="ruby-string">'Makefile'</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">makefile</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- built-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- built-3F-method -->
+
+    
+      <div id="method-i-dependencies" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dependencies</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dependencies-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 84</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">dependencies</span>
+      <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">framework_gem?</span>
+      <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">installed?</span>
+      <span class="ruby-identifier">specification</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">reject</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dependency</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:development</span>
+      <span class="ruby-keyword">end</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dependency</span><span class="ruby-operator">|</span>
+<span class="ruby-comment"># Source: http://github.com/rails/rails/commit/268c9040d5c3c7ed30f3923eee71a78eeece8a8a        </span>
+<span class="ruby-comment">#        GemDependency.new(dependency.name, :requirement =&gt; dependency.version_requirements)</span>
+        <span class="ruby-constant">GemDependency</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">name</span>, <span class="ruby-value">:requirement</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:requirement</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">requirement</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">version_requirements</span>))
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- dependencies-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- dependencies-method -->
+
+    
+      <div id="method-i-framework_gem-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">framework_gem?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="framework_gem-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 155</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">framework_gem?</span>
+  <span class="ruby-identifier">@@framework_gems</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- framework_gem-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- framework_gem-3F-method -->
+
+    
+      <div id="method-i-frozen-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">frozen?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="frozen-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">frozen?</span>
+  <span class="ruby-ivar">@frozen</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">vendor_rails?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">vendor_gem?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- frozen-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- frozen-3F-method -->
+
+    
+      <div id="method-i-install" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">install</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="install-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">install</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">installed?</span>
+    <span class="ruby-identifier">cmd</span> = <span class="ruby-node">&quot;#{gem_command} #{install_command.join(' ')}&quot;</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">cmd</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">%x(#{cmd})</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- install-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- install-method -->
+
+    
+      <div id="method-i-installed-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">installed?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="installed-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">installed?</span>
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- installed-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- installed-3F-method -->
+
+    
+      <div id="method-i-load" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="load-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 225</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@loaded</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@load_paths_added</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">require</span>(<span class="ruby-ivar">@lib</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">name</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@lib</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">LoadError</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-identifier">b</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load-method -->
+
+    
+      <div id="method-i-load_paths_added-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_paths_added?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="load_paths_added-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_paths_added?</span>
+  <span class="ruby-comment"># always try to add load paths - even if a gem is loaded, it may not</span>
+  <span class="ruby-comment"># be a compatible version (ie random_gem 0.4 is loaded and a later spec</span>
+  <span class="ruby-comment"># needs &gt;= 0.5 - gem 'random_gem' will catch this and error out)</span>
+  <span class="ruby-ivar">@load_paths_added</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_paths_added-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_paths_added-3F-method -->
+
+    
+      <div id="method-i-loaded-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">loaded?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="loaded-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">loaded?</span>
+  <span class="ruby-ivar">@loaded</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">vendor_rails?</span>
+      <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">specification</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-comment"># check if the gem is loaded by inspecting $&quot;</span>
+      <span class="ruby-comment"># specification.files lists all the files contained in the gem</span>
+      <span class="ruby-identifier">gem_files</span> = <span class="ruby-identifier">specification</span>.<span class="ruby-identifier">files</span>
+      <span class="ruby-comment"># select only the files contained in require_paths - typically in bin and lib</span>
+      <span class="ruby-identifier">require_paths_regexp</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;^(#{specification.require_paths*'|'})/&quot;</span>)
+      <span class="ruby-identifier">gem_lib_files</span> = <span class="ruby-identifier">gem_files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require_paths_regexp</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">f</span>) }
+      <span class="ruby-comment"># chop the leading directory off - a typical file might be in</span>
+      <span class="ruby-comment"># lib/gem_name/file_name.rb, but it will be 'require'd as gem_name/file_name.rb</span>
+      <span class="ruby-identifier">gem_lib_files</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'/'</span>, <span class="ruby-value">2</span>)[<span class="ruby-value">1</span>] }
+      <span class="ruby-comment"># if any of the files from the above list appear in $&quot;, the gem is assumed to</span>
+      <span class="ruby-comment"># have been loaded</span>
+      <span class="ruby-operator">!</span>(<span class="ruby-identifier">gem_lib_files</span> &amp; <span class="ruby-identifier">$&quot;</span>).<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- loaded-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- loaded-3F-method -->
+
+    
+      <div id="method-i-refresh" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">refresh</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="refresh-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 234</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh</span>
+  <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">VendorGemSourceIndex</span>.<span class="ruby-identifier">silence_spec_warnings</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">real_gems</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">source_index</span>.<span class="ruby-identifier">installed_source_index</span>
+  <span class="ruby-identifier">exact_dep</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-node">&quot;= #{specification.version}&quot;</span>)
+  <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">real_gems</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">exact_dep</span>)
+  <span class="ruby-identifier">installed_spec</span> = <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">frozen?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">installed_spec</span>
+      <span class="ruby-comment"># we have a real copy</span>
+      <span class="ruby-comment"># get a fresh spec - matches should only have one element</span>
+      <span class="ruby-comment"># note that there is no reliable method to check that the loaded</span>
+      <span class="ruby-comment"># spec is the same as the copy from real_gems - Gem.activate changes</span>
+      <span class="ruby-comment"># some of the fields</span>
+      <span class="ruby-identifier">real_spec</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">matches</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">loaded_from</span>)
+      <span class="ruby-identifier">write_specification</span>(<span class="ruby-identifier">real_spec</span>)
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Reloaded specification for #{name} from installed gems.&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-comment"># the gem isn't installed locally - write out our current specs</span>
+      <span class="ruby-identifier">write_specification</span>(<span class="ruby-identifier">specification</span>)
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Gem #{name} not loaded locally - writing out current spec.&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">framework_gem?</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Gem directory for #{name} not found - check if it's loading before rails.&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Something bad is going on - gem directory not found for #{name}.&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- refresh-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- refresh-method -->
+
+    
+      <div id="method-i-requirement" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">requirement</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="requirement-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">requirement</span>
+  <span class="ruby-identifier">req</span> = <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">req</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">req</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- requirement-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- requirement-method -->
+
+    
+      <div id="method-i-specification" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">specification</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="specification-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">specification</span>
+  <span class="ruby-comment"># code repeated from Gem.activate. Find a matching spec, or the currently loaded version.</span>
+  <span class="ruby-comment"># error out if loaded version and requested version are incompatible.</span>
+  <span class="ruby-ivar">@spec</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">matches</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">source_index</span>.<span class="ruby-identifier">search</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">matches</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">@@framework_gems</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">framework_gem?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-comment"># This gem is already loaded.  If the currently loaded gem is not in the</span>
+      <span class="ruby-comment"># list of candidate gems, then we have a version conflict.</span>
+      <span class="ruby-identifier">existing_spec</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>[<span class="ruby-identifier">name</span>]
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">existing_spec</span>.<span class="ruby-identifier">version</span> } <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>,
+              <span class="ruby-node">&quot;can't activate #{@dep}, already activated #{existing_spec.full_name}&quot;</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-comment"># we're stuck with it, so change to match</span>
+      <span class="ruby-identifier">version_requirements</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">create</span>(<span class="ruby-node">&quot;=#{existing_spec.version}&quot;</span>)
+      <span class="ruby-identifier">existing_spec</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-comment"># new load</span>
+      <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- specification-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- specification-method -->
+
+    
+      <div id="method-i-specification-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">specification=</span><span
+            class="method-args">(s)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="specification-3D-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">specification=</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-ivar">@spec</span> = <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- specification-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- specification-3D-method -->
+
+    
+      <div id="method-i-unpack" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack</span><span
+            class="method-args">(options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 264</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">options</span>={})
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">frozen?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">framework_gem?</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-identifier">unpack_base</span>
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-identifier">unpack_base</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">GemRunner</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">unpack_command</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Gem.activate changes the spec - get the original</span>
+    <span class="ruby-identifier">real_spec</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">specification</span>.<span class="ruby-identifier">loaded_from</span>)
+    <span class="ruby-identifier">write_specification</span>(<span class="ruby-identifier">real_spec</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">options</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:recursive</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack-method -->
+
+    
+      <div id="method-i-vendor_gem-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">vendor_gem?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="vendor_gem-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 201</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">vendor_gem?</span>
+  <span class="ruby-identifier">specification</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">unpacked_gem_directory</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- vendor_gem-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- vendor_gem-3F-method -->
+
+    
+      <div id="method-i-vendor_rails-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">vendor_rails?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="vendor_rails-3F-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 197</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">vendor_rails?</span>
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">loaded_specs</span>[<span class="ruby-identifier">name</span>].<span class="ruby-identifier">loaded_from</span>.<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- vendor_rails-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- vendor_rails-3F-method -->
+
+    
+      <div id="method-i-write_specification" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">write_specification</span><span
+            class="method-args">(spec)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="write_specification-source">
+            <pre><span class="ruby-comment"># File lib/rails/gem_dependency.rb, line 277</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">write_specification</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-comment"># copy the gem's specification into GEMDIR/.specification so that</span>
+  <span class="ruby-comment"># we can access information about the gem on deployment systems</span>
+  <span class="ruby-comment"># without having the gem installed</span>
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">unpacked_specification_filename</span>, <span class="ruby-string">'w'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">file</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">to_yaml</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- write_specification-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- write_specification-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

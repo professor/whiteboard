@@ -17,5 +17,6 @@ development:
 #   timeout: 5000
 test:
     adapter: postgresql 
-    database: myapp_test
-    username: postgres
+    database: cmu_education_test
+    username: you_can_choose
+    password: whatever_you_like

@@ -6,7 +6,7 @@
     <% end %>
     <th>Task</th>
     <th>Owner</th>
-    <th>Name</th>
+    <th>Latest Deliverable</th>
     <th>Feedback Received?</th>
     <th>Actions</th>
 <!--
@@ -17,11 +17,21 @@
   <% deliverables.each do |deliverable| %>
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
       <% unless skip_course_column %>
-      <td><%=h deliverable.course.name %></td>
+          <% if deliverable.course %>
+          <td><%=h deliverable.course.name %></td>
+          <% else %>
+          <td>&nbsp;</td>
+          <% end %>
       <% end %>
       <td><%=h deliverable.task_number %></td>
       <td><%= deliverable.owner_name  %></td>
-      <td><%= deliverable.name  %></td>
+      <% latest_attachment = deliverable.attachment_versions.last %>
+      <% unless latest_attachment.attachment_file_name.nil? %>
+          <td><%= link_to deliverable.name, latest_attachment.attachment.url %></td>
+      <% else %>
+          <td><%= deliverable.name  %></td>
+      <% end %>
+
       <td>
           <% if deliverable.has_feedback? %>
             Yes

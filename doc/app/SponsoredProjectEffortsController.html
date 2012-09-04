@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: SponsoredProjectEffortsController</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/sponsored_project_efforts_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-edit">#edit</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-update">#update</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GAppsProvisioning.html">GAppsProvisioning</a>
+  
+    <li><a href="./GAppsProvisioning/Connection.html">GAppsProvisioning::Connection</a>
+  
+    <li><a href="./GAppsProvisioning/GDataError.html">GAppsProvisioning::GDataError</a>
+  
+    <li><a href="./GAppsProvisioning/GroupEntry.html">GAppsProvisioning::GroupEntry</a>
+  
+    <li><a href="./GAppsProvisioning/MemberEntry.html">GAppsProvisioning::MemberEntry</a>
+  
+    <li><a href="./GAppsProvisioning/NicknameEntry.html">GAppsProvisioning::NicknameEntry</a>
+  
+    <li><a href="./GAppsProvisioning/OwnerEntry.html">GAppsProvisioning::OwnerEntry</a>
+  
+    <li><a href="./GAppsProvisioning/ProvisioningApi.html">GAppsProvisioning::ProvisioningApi</a>
+  
+    <li><a href="./GAppsProvisioning/UserEntry.html">GAppsProvisioning::UserEntry</a>
+  
+    <li><a href="./EffortReportsController.html">EffortReportsController</a>
+  
+    <li><a href="./EffortReportsController/PanelState.html">EffortReportsController::PanelState</a>
+  
+    <li><a href="./EffortReportsController/SemesterPanel.html">EffortReportsController::SemesterPanel</a>
+  
+    <li><a href="./TimeMachine.html">TimeMachine</a>
+  
+    <li><a href="./TimeMachine/Date.html">TimeMachine::Date</a>
+  
+    <li><a href="./TimeMachine/Time.html">TimeMachine::Time</a>
+  
+    <li><a href="./PeopleController.html">PeopleController</a>
+  
+    <li><a href="./PeopleController/ClassProfileState.html">PeopleController::ClassProfileState</a>
+  
+    <li><a href="./Rails.html">Rails</a>
+  
+    <li><a href="./Rails/GemDependency.html">Rails::GemDependency</a>
+  
+    <li><a href="./Users.html">Users</a>
+  
+    <li><a href="./Users/OmniauthCallbacksController.html">Users::OmniauthCallbacksController</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./AcademicCalendar.html">AcademicCalendar</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Course.html">Course</a>
+  
+    <li><a href="./CourseMailer.html">CourseMailer</a>
+  
+    <li><a href="./CourseNavigationsController.html">CourseNavigationsController</a>
+  
+    <li><a href="./CourseNumber.html">CourseNumber</a>
+  
+    <li><a href="./CourseNumbersController.html">CourseNumbersController</a>
+  
+    <li><a href="./CourseNumbersHelper.html">CourseNumbersHelper</a>
+  
+    <li><a href="./CoursesController.html">CoursesController</a>
+  
+    <li><a href="./CoursesHelper.html">CoursesHelper</a>
+  
+    <li><a href="./DelayedSystemJob.html">DelayedSystemJob</a>
+  
+    <li><a href="./DelayedSystemJobsController.html">DelayedSystemJobsController</a>
+  
+    <li><a href="./Deliverable.html">Deliverable</a>
+  
+    <li><a href="./DeliverableAttachment.html">DeliverableAttachment</a>
+  
+    <li><a href="./DeliverablesController.html">DeliverablesController</a>
+  
+    <li><a href="./DeliverablesHelper.html">DeliverablesHelper</a>
+  
+    <li><a href="./EffortLog.html">EffortLog</a>
+  
+    <li><a href="./EffortLogLineItem.html">EffortLogLineItem</a>
+  
+    <li><a href="./EffortLogLineItemsController.html">EffortLogLineItemsController</a>
+  
+    <li><a href="./EffortLogLineItemsHelper.html">EffortLogLineItemsHelper</a>
+  
+    <li><a href="./EffortLogMailer.html">EffortLogMailer</a>
+  
+    <li><a href="./EffortLogsController.html">EffortLogsController</a>
+  
+    <li><a href="./EffortLogsHelper.html">EffortLogsHelper</a>
+  
+    <li><a href="./FacultyAssignment.html">FacultyAssignment</a>
+  
+    <li><a href="./Gem.html">Gem</a>
+  
+    <li><a href="./GenericAjaxController.html">GenericAjaxController</a>
+  
+    <li><a href="./GenericMailer.html">GenericMailer</a>
+  
+    <li><a href="./GoogleMailingListJob.html">GoogleMailingListJob</a>
+  
+    <li><a href="./HUBClassRosterHandler.html">HUBClassRosterHandler</a>
+  
+    <li><a href="./IndexTank.html">IndexTank</a>
+  
+    <li><a href="./MailingListsController.html">MailingListsController</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./Page.html">Page</a>
+  
+    <li><a href="./PageAttachment.html">PageAttachment</a>
+  
+    <li><a href="./PageAttachmentsController.html">PageAttachmentsController</a>
+  
+    <li><a href="./PageComment.html">PageComment</a>
+  
+    <li><a href="./PageCommentMailer.html">PageCommentMailer</a>
+  
+    <li><a href="./PageCommentType.html">PageCommentType</a>
+  
+    <li><a href="./PageCommentTypesController.html">PageCommentTypesController</a>
+  
+    <li><a href="./PageCommentTypesHelper.html">PageCommentTypesHelper</a>
+  
+    <li><a href="./PageCommentsHelper.html">PageCommentsHelper</a>
+  
+    <li><a href="./PagesController.html">PagesController</a>
+  
+    <li><a href="./PagesHelper.html">PagesHelper</a>
+  
+    <li><a href="./PeerEvaluationController.html">PeerEvaluationController</a>
+  
+    <li><a href="./PeerEvaluationLearningObjective.html">PeerEvaluationLearningObjective</a>
+  
+    <li><a href="./PeerEvaluationReport.html">PeerEvaluationReport</a>
+  
+    <li><a href="./PeerEvaluationReview.html">PeerEvaluationReview</a>
+  
+    <li><a href="./PeopleHelper.html">PeopleHelper</a>
+  
+    <li><a href="./Person.html">Person</a>
+  
+    <li><a href="./PersonJob.html">PersonJob</a>
+  
+    <li><a href="./PersonMailer.html">PersonMailer</a>
+  
+    <li><a href="./Presentation.html">Presentation</a>
+  
+    <li><a href="./PresentationFeedback.html">PresentationFeedback</a>
+  
+    <li><a href="./PresentationFeedbackAnswer.html">PresentationFeedbackAnswer</a>
+  
+    <li><a href="./PresentationQuestion.html">PresentationQuestion</a>
+  
+    <li><a href="./PresentationsController.html">PresentationsController</a>
+  
+    <li><a href="./PresentationsHelper.html">PresentationsHelper</a>
+  
+    <li><a href="./RegisteredCourse.html">RegisteredCourse</a>
+  
+    <li><a href="./Registration.html">Registration</a>
+  
+    <li><a href="./RssFeed.html">RssFeed</a>
+  
+    <li><a href="./RssFeedsController.html">RssFeedsController</a>
+  
+    <li><a href="./RssFeedsHelper.html">RssFeedsHelper</a>
+  
+    <li><a href="./ScottyDogSaying.html">ScottyDogSaying</a>
+  
+    <li><a href="./ScottyDogSayingsController.html">ScottyDogSayingsController</a>
+  
+    <li><a href="./ScottyDogSayingsHelper.html">ScottyDogSayingsHelper</a>
+  
+    <li><a href="./SearchController.html">SearchController</a>
+  
+    <li><a href="./SponsoredProject.html">SponsoredProject</a>
+  
+    <li><a href="./SponsoredProjectAllocation.html">SponsoredProjectAllocation</a>
+  
+    <li><a href="./SponsoredProjectAllocationsController.html">SponsoredProjectAllocationsController</a>
+  
+    <li><a href="./SponsoredProjectEffort.html">SponsoredProjectEffort</a>
+  
+    <li><a href="./SponsoredProjectEffortMailer.html">SponsoredProjectEffortMailer</a>
+  
+    <li><a href="./SponsoredProjectEffortsController.html">SponsoredProjectEffortsController</a>
+  
+    <li><a href="./SponsoredProjectSponsor.html">SponsoredProjectSponsor</a>
+  
+    <li><a href="./SponsoredProjectSponsorsController.html">SponsoredProjectSponsorsController</a>
+  
+    <li><a href="./SponsoredProjectsController.html">SponsoredProjectsController</a>
+  
+    <li><a href="./StaticController.html">StaticController</a>
+  
+    <li><a href="./StrengthTheme.html">StrengthTheme</a>
+  
+    <li><a href="./Suggestion.html">Suggestion</a>
+  
+    <li><a href="./SuggestionsController.html">SuggestionsController</a>
+  
+    <li><a href="./SystemController.html">SystemController</a>
+  
+    <li><a href="./SystemHelper.html">SystemHelper</a>
+  
+    <li><a href="./TaskType.html">TaskType</a>
+  
+    <li><a href="./TaskTypesController.html">TaskTypesController</a>
+  
+    <li><a href="./TaskTypesHelper.html">TaskTypesHelper</a>
+  
+    <li><a href="./Team.html">Team</a>
+  
+    <li><a href="./TeamAssignment.html">TeamAssignment</a>
+  
+    <li><a href="./TeamsController.html">TeamsController</a>
+  
+    <li><a href="./TeamsHelper.html">TeamsHelper</a>
+  
+    <li><a href="./TmpUpdateFacultyAssignments.html">TmpUpdateFacultyAssignments</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserPreference.html">UserPreference</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./WelcomeController.html">WelcomeController</a>
+  
+    <li><a href="./WelcomeHelper.html">WelcomeHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class SponsoredProjectEffortsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">authorized_or_redirect</span>
+    <span class="ruby-identifier">setup_edit</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- edit-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">SponsoredProjectEffort</span>
+  <span class="ruby-ivar">@month</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:date</span>][<span class="ruby-value">:month</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:date</span>].<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@month</span> = <span class="ruby-ivar">@month</span> <span class="ruby-operator">||=</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">month</span>
+  <span class="ruby-ivar">@year</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:year</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">month</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">year</span>
+  <span class="ruby-ivar">@efforts</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">for_all_users_for_a_given_month</span>(<span class="ruby-ivar">@month</span>, <span class="ruby-ivar">@year</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">edit_sponsored_project_effort_path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/sponsored_project_efforts_controller.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">authorized_or_redirect</span>
+    <span class="ruby-identifier">effort_id_values</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:effort_id_values</span>]
+
+    <span class="ruby-ivar">@failed</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-ivar">@changed_allocation</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">effort_id_values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">effort</span> = <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">key</span>)
+      <span class="ruby-comment">#      @changed_allocation = true if effort.actual_allocation != value</span>
+      <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">actual_allocation</span> = <span class="ruby-identifier">value</span>
+      <span class="ruby-ivar">@changed_allocation</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">actual_allocation_changed?</span>
+      <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">confirmed</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">effort</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-ivar">@failed</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@changed_allocation</span>
+      <span class="ruby-constant">SponsoredProjectEffort</span>.<span class="ruby-identifier">emails_business_manager</span>(<span class="ruby-identifier">effort_id_values</span>.<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>])
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@failed</span>
+      <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">'Your allocations did not save.'</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">flash</span>.<span class="ruby-identifier">now</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-string">'Your allocations are confirmed.'</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">setup_edit</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-string">'edit'</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

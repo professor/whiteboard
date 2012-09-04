@@ -281,10 +281,6 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
   <fieldset>
     <legend>Account information</legend>
   <div class="formItem">
-    <%= f.label :upload_photo %>
-    <%= f.file_field :photo %>
-  </div>
-  <div class="formItem">
     <%= f.label :is_adobe_connect_host %>
     <%= f.check_box :is_adobe_connect_host %>
   </div>
@@ -314,6 +310,15 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty  %
   </div>
   </fieldset>
   <% end %>
+    <% if can? :upload_photo, User %>
+        <fieldset>
+          <legend>Actions</legend>
+    <div class="formItem">
+      <%= f.label :upload_photo %>
+      <%= f.file_field :photo %>
+    </div>
+            </fieldset>
+    <% end %>
   </div>
   <p>
     <%= f.submit "Update" %>
