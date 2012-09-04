@@ -30,6 +30,7 @@ Students should
 1. bundle install
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
+1. bundle exec rake RAILS_ENV="test" db:schema:load
 1. verify your configuration
    1. rails server thin  (Note: On 9/18/2011 WebBrick was not working with OmniAuth)
    1. bundle exec rake spec  (Verify that all the tests pass)
@@ -53,5 +54,5 @@ Run installer, accept license agreement, accept default installation directory, 
 All users, from the terminal window or the command line, execute these commands but put in your own name and email address
 git config --global user.name "Andrew Carnegie"
 git config --global user.email andrew.carnegie@sv.cmu.edu
-Create a user account on GitHub and let the faculty know what your user id is here GitHubUserAccountsFall2011
+Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://rails.sv.cmu.edu/people/AndrewCarnegie)
 Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect
