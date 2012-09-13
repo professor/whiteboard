@@ -4,7 +4,9 @@
 
 == MfSE - Getting Started for Students
 Students should
-1. install rails using railsinstaller.org
+1. install rails using railsinstaller.org        
+1. rvm install ruby-1.9.2-p180
+1. rvm --default use ruby-1.9.2-p180  ()
 1. fork the project on github,
 1. $ git clone http://github.com/URL/cmusv # to get the code
 1. read {file:doc/Git_Directions.rdoc Git Directions}
@@ -27,7 +29,8 @@ Students should
    1. (Directions for a mac)
    1. install brew see http://mxcl.github.com/homebrew/  
    1. brew install imagemagick
-1. bundle install
+1. bundle install      
+   1. If this doesn't work see note below
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
 1. bundle exec rake RAILS_ENV="test" db:schema:load
@@ -40,8 +43,8 @@ Students should
 
 
 
-Installing Git
-   1. If you installed rails using railsinstaller.org, you should ....
+=== Installing Git
+   1. If you installed rails using railsinstaller.org, you should have git installed. 
 
 Mac users, Lion ships with 1.7.5.4 which is good enough.
 PC users,
@@ -55,4 +58,28 @@ All users, from the terminal window or the command line, execute these commands 
 git config --global user.name "Andrew Carnegie"
 git config --global user.email andrew.carnegie@sv.cmu.edu
 Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://rails.sv.cmu.edu/people/AndrewCarnegie)
-Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect
+Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect       
+
+
+==== Nokogiri issues
+
+When i ran the bundle install, i got a strange error: 
+
+Installing nokogiri (1.5.0) with native extensions 
+Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+
+/usr/local/rvm/rubies/ruby-1.9.2-p180/bin/ruby extconf.rb 
+checking for libxml/parser.h... yes
+checking for libxslt/xslt.h... yes
+checking for libexslt/exslt.h... yes
+checking for iconv_open() in iconv.h... no
+checking for iconv_open() in -liconv... no
+
+ 
+libiconv is missing.  please visit http://nokogiri.org/tutorials/installing_nokogiri.html for help with installing dependencies.
+-----
+
+Followed steps on  http://nokogiri.org/tutorials/installing_nokogiri.html, but had to make sure the version of nokogiri gem being installed was '1.5.0'. So instead of the last command in the instructions page, I had to run this:
+
+gem install nokogiri -v '1.5.0' -- --with-xml2-include=/usr/local/Cellar/libxml2/2.7.8/include/libxml2 --with-xml2-lib=/usr/local/Cellar/libxml2/2.7.8/lib --with-xslt-dir=/usr/local/Cellar/libxslt/1.1.26 --with-iconv-include=/usr/local/Cellar/libiconv/1.13.1/include --with-iconv-lib=/usr/local/Cellar/libiconv/1.13.1/lib
+
