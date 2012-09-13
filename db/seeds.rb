@@ -52,7 +52,6 @@ Factory.define :todd, :parent => :person do |p|
   p.human_name "Todd Sedano"
   p.email "todd.sedano@sv.cmu.edu"
   p.is_staff 1
-  p.is_teacher 1
 end
 
 sleep(0.02)
@@ -63,7 +62,6 @@ Factory.define :ed, :parent => :person do |p|
   p.human_name "Ed Katz"
   p.email "ed.katz@sv.cmu.edu"
   p.is_staff 1
-  p.is_teacher 1
 end
 
 sleep(0.02)
