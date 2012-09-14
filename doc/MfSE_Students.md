@@ -39,8 +39,7 @@ CMU-SV Students
    1. run the server in debug mode in an IDE.
 1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
 1. bundle exec rake doc:app (Generates API documentation for your models, controllers, helpers, and libraries.)
-
-
+1. modify RubyMine to use thin instead of webbrick. On the tool bar, Run -> Edit Configurations. Instead of default server, pick thin.
 
 ### Installing Git
 If you installed rails using railsinstaller.org, you should have git installed. 
