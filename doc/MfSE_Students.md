@@ -1,5 +1,5 @@
-Metrics for Software Engineers (MfSE)
-=====================================
+CMU-SV Students
+===============
 
 
 ## MfSE - Getting Started for Students
