@@ -2,7 +2,7 @@ CMU-SV Students
 ===============
 
 
-## MfSE - Getting Started for Students
+## Getting Started for Students
 1. install rails using railsinstaller.org        
 1. rvm install ruby-1.9.2-p180
 1. rvm --default use ruby-1.9.2-p180  ()
