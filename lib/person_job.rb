@@ -10,6 +10,9 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
        if status.is_a?(String)
          error_message += "Google account not created for #{person.human_name}. " + status + " <br/>The password was " + password + "<br/><br/>"
        else
+         # If we immediately send the email, google may say the account doesn't exist
+         # Then send grid puts the user account on a black likst
+         sleep 5
          PersonMailer.welcome_email(person, password).deliver
        end
     end

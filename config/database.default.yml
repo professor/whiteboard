@@ -15,8 +15,15 @@ development:
 #   database: db/test.sqlite3
 #   pool: 5
 #   timeout: 5000
+
+#test:
+#    adapter: postgresql
+#    database: cmu_education_test
+#    username: you_can_choose
+#    password: whatever_you_like
+
+# This is set for travis to work....
 test:
-    adapter: postgresql 
-    database: cmu_education_test
-    username: you_can_choose
-    password: whatever_you_like
+    adapter: postgresql
+    database: myapp_test
+    username: postgres

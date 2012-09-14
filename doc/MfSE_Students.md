@@ -1,9 +1,8 @@
-= Metrics for Software Engineers (MfSE)
+CMU-SV Students
+===============
 
 
-
-== MfSE - Getting Started for Students
-Students should
+## Getting Started for Students
 1. install rails using railsinstaller.org        
 1. rvm install ruby-1.9.2-p180
 1. rvm --default use ruby-1.9.2-p180  ()
@@ -40,46 +39,42 @@ Students should
    1. run the server in debug mode in an IDE.
 1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
 1. bundle exec rake doc:app (Generates API documentation for your models, controllers, helpers, and libraries.)
+1. modify RubyMine to use thin instead of webbrick. On the tool bar, Run -> Edit Configurations. Instead of default server, pick thin.
 
+### Installing Git
+If you installed rails using railsinstaller.org, you should have git installed. 
 
-
-=== Installing Git
-   1. If you installed rails using railsinstaller.org, you should have git installed. 
-
-Mac users, Lion ships with 1.7.5.4 which is good enough.
-PC users,
-Download "Full installer for official Git 1.7.6" here: http://code.google.com/p/msysgit/downloads/list (filename is Git-1.7.6-preview20110708.exe )
+* Mac users, Mountain Lion ships with 1.7.5.4 which is good enough.
+* PC users,
+   * Download "Full installer for official Git 1.7.6" here: http://code.google.com/p/msysgit/downloads/list (filename is Git-1.7.6-preview20110708.exe )
 Run installer, accept license agreement, accept default installation directory, accept default shortcut options, keep all checkboxes checked
-"Use Git Bash Only" radio button should be selected (per this article, avoids path conflicts)
-"Use OpenSSH"
-"Use Unix-style line endings"
-(Note, these directions are from http://www.wiki.devchix.com)
-All users, from the terminal window or the command line, execute these commands but put in your own name and email address
-git config --global user.name "Andrew Carnegie"
-git config --global user.email andrew.carnegie@sv.cmu.edu
-Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://rails.sv.cmu.edu/people/AndrewCarnegie)
-Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect       
+   * "Use Git Bash Only" radio button should be selected (per this article, avoids path conflicts)
+   * "Use OpenSSH"
+   * "Use Unix-style line endings"
+   * (Note, these directions are from http://www.wiki.devchix.com)
+* All users, from the terminal window or the command line, execute these commands but put in your own name and email address
+   * git config --global user.name "Andrew Carnegie"
+   * git config --global user.email andrew.carnegie@sv.cmu.edu
+   * Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://rails.sv.cmu.edu/people/AndrewCarnegie)
+   * Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect       
 
-
-==== Nokogiri issues
+#### Nokogiri issues
 
 When i ran the bundle install, i got a strange error: 
 
 Installing nokogiri (1.5.0) with native extensions 
 Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
 
-/usr/local/rvm/rubies/ruby-1.9.2-p180/bin/ruby extconf.rb 
-checking for libxml/parser.h... yes
-checking for libxslt/xslt.h... yes
-checking for libexslt/exslt.h... yes
-checking for iconv_open() in iconv.h... no
-checking for iconv_open() in -liconv... no
-
+    /usr/local/rvm/rubies/ruby-1.9.2-p180/bin/ruby extconf.rb 
+    checking for libxml/parser.h... yes
+    checking for libxslt/xslt.h... yes
+    checking for libexslt/exslt.h... yes
+    checking for iconv_open() in iconv.h... no
+    checking for iconv_open() in -liconv... no
  
-libiconv is missing.  please visit http://nokogiri.org/tutorials/installing_nokogiri.html for help with installing dependencies.
------
+    libiconv is missing.  please visit http://nokogiri.org/tutorials/installing_nokogiri.html for help with installing dependencies.
 
-Followed steps on  http://nokogiri.org/tutorials/installing_nokogiri.html, but had to make sure the version of nokogiri gem being installed was '1.5.0'. So instead of the last command in the instructions page, I had to run this:
+    Followed steps on  http://nokogiri.org/tutorials/installing_nokogiri.html, but had to make sure the version of nokogiri gem being installed was '1.5.0'. So instead of the last command in the instructions page, I had to run this:
 
-gem install nokogiri -v '1.5.0' -- --with-xml2-include=/usr/local/Cellar/libxml2/2.7.8/include/libxml2 --with-xml2-lib=/usr/local/Cellar/libxml2/2.7.8/lib --with-xslt-dir=/usr/local/Cellar/libxslt/1.1.26 --with-iconv-include=/usr/local/Cellar/libiconv/1.13.1/include --with-iconv-lib=/usr/local/Cellar/libiconv/1.13.1/lib
+    gem install nokogiri -v '1.5.0' -- --with-xml2-include=/usr/local/Cellar/libxml2/2.7.8/include/libxml2 --with-xml2-lib=/usr/local/Cellar/libxml2/2.7.8/lib --with-xslt-dir=/usr/local/Cellar/libxslt/1.1.26 --with-iconv-include=/usr/local/Cellar/libiconv/1.13.1/include --with-iconv-lib=/usr/local/Cellar/libiconv/1.13.1/lib
 

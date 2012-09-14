@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
 
   has_many :team_assignments
-  has_many :teams, :through => :team_assignments, :source => :user
+  has_many :teams, :through => :team_assignments, :source => :team
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"

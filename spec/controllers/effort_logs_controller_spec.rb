@@ -109,7 +109,7 @@ describe EffortLogsController do
   describe "#create_midweek_warning_email" do
     before do
       ScottyDogSaying.stub(:all).and_return([ScottyDogSaying.new(:saying => "random saying")])
-      Person.any_instance.stub(:save).and_return(true)
+      User.any_instance.stub(:save).and_return(true)
     end
 
     it "it should not send any emails when it is not an effort log week" do
@@ -126,14 +126,13 @@ describe EffortLogsController do
       context "and there are courses that have students" do
         before do
           Course.stub(:remind_about_effort_course_list).and_return([FactoryGirl.create(:mfse)])
-          @person = Person.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "")
-          Team.stub(:where).and_return([Team.new(:members => [@person])])
+          @person = User.new(:first_name => "Frodo", :last_name => "Baggins", :human_name => "")
+          Course.any_instance.stub(:registered_students).and_return([@person])
         end
 
         context "and there are no effort logs" do
           before do
             EffortLog.stub(:where).and_return([])
-#            EffortLog.stub(:log_effort_week?).and_return(true)
           end
 
           it "it should send an email if the person has never been emailed" do
@@ -185,10 +184,6 @@ describe EffortLogsController do
   end
 
   describe "#create_midweek_warning_email_for_course" do
-    it "it should not throw an error for nil course_id" do
-      subject.create_midweek_warning_email_for_course("random saying", nil)
-    end
-
     it "it should not throw an error for nil Scotty dog saying" do
       subject.create_midweek_warning_email_for_course(nil, FactoryGirl.create(:mfse).id)
     end
