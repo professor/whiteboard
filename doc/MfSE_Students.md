@@ -3,7 +3,9 @@
 
 
 == MfSE - Getting Started for Students
+
 Students should
+
 1. install rails using railsinstaller.org        
 1. rvm install ruby-1.9.2-p180
 1. rvm --default use ruby-1.9.2-p180  ()
@@ -23,6 +25,7 @@ Students should
       1. SEARCHIFY_INDEX=cmux_dev
       1. SEARCHIFY_STAFF_INDEX=cmu_staffx_dev
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
+    * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
 1. install postgres see http://rails.sv.cmu.edu/pages/postgres_rails
 1. install a postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
 1. install imagemagick
