@@ -1,8 +1,7 @@
 class EffortLogMailer < ActionMailer::Base
 
   default :from => 'scotty.dog@sv.cmu.edu',
-          :bcc => 'todd.sedano@sv.cmu.edu'
-
+          :bcc => "rails.app@sv.cmu.edu"
 
   def midweek_warning(saying, user)
     @user = user
@@ -12,7 +11,6 @@ class EffortLogMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => "Scotty Dog says: #{saying}", :date => Time.now)
 
   end
-
 
   def midweek_warning_admin_report(saying, people_without_effort, people_with_effort)
     @saying = saying
