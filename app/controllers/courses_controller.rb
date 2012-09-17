@@ -15,14 +15,15 @@ class CoursesController < ApplicationController
   def index_for_semester
     @all_courses = false
     (@semester, @year) = AcademicCalendar.semester_and_year(params[:semester])
-    @semester=@semester.capitalize
-    if @semester.nil? || !(["Fall", "Summer", "Spring"].include?@semester)
+    
+    if  @semester.nil? || !(["Fall", "Summer", "Spring"].include?@semester.capitalize) || @year.nil? || !(@year > 2007 and @year < (Date.today.year + 1))
       current_semester = "#{AcademicCalendar.current_semester()}#{Date.today.year}"
       flash[:notice] = "The requested url #{request.path} does not look like /courses/semester/#{current_semester} -- Thus we brought you to the current semester."
       redirect_to("/courses/semester/#{current_semester}")
       return false
     end
-
+    @semester = @semester.capitalize
+    
     @courses = Course.for_semester(@semester, @year)
     @semester_length_courses = @courses.select {|course| course.mini == "Both"}
     @mini_a_courses = @courses.select {|course| course.mini == "A"}
