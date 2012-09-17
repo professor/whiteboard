@@ -2,7 +2,7 @@
 <br/>
 <br/>
 <%=  h('curl -H "X-TrackerToken: $TOKEN" -X POST -H "Content-type: application/xml"') %>
-<%=  h("  -d \"<project><name>#{@project_name}</name><iteration_length type=\\\"integer\\\">3</iteration_length><point_scale>0,1,2,3,5,8</point_scale></project>\"  ") %>
+<%=  h("  -d \"<project><name>#{project_name}</name><iteration_length type=\\\"integer\\\">3</iteration_length><point_scale>0,1,2,3,5,8</point_scale></project>\"  ") %>
 <%=  h(' http://www.pivotaltracker.com/services/v3/projects') %>
 <br/>
 $PROJECT_ID=_______
