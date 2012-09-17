@@ -1,0 +1,5 @@
+<%=  h('curl -H "X-TrackerToken: $TOKEN" -X POST -H "Content-type: application/xml"') %>
+<%=  h("  -d \"<membership><role>Owner</role><person><name>#{user.human_name}</name><initials>#{user.first_name[0]}#{user.last_name[0]}</initials><email>#{user.email}</email></person></membership>\"  ") %>
+<%=  h(' http://www.pivotaltracker.com/services/v3/projects/$PROJECT_ID/memberships') %>
+<br/>
+<br/>
