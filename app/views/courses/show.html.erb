@@ -131,8 +131,8 @@ course but hasn't been assigned a team. </p>
     <p><b>Pivotal Tracker accounts V2</b></p>
    <% @course.teams.each do |team| %>
       <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
-        <%= render :partial => "pivotal_new_project", :locals => { :project_name => project_name } %>
         <div><%= project_name%></div>
+        <%= render :partial => "pivotal_new_project", :locals => { :project_name => project_name } %>
         <% team.members.each do |user| %>
             <%= render :partial => "pivotal_add_membership", :locals => { :user => user } %>
         <% end %>
