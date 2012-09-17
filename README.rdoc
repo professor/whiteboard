@@ -19,12 +19,12 @@ Welcome to the CMU-SV rails project for the Education group.
 
 See http://rubydoc.info/github/professor/cmusv/frames or run "rake doc:app" or run "yard" to generate API documentation for your models, controllers, helpers, and libraries.
 
-== Metrics for Software Engineers (MfSE) students
+== CMU-SV students (e.g. Metrics for Software Engineers (MfSE) students)
 
 For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
 a repository to work from. Each new feature should be done in its own branch.
 
-{MfSE Students}[http://github.com/professor/cmusv/blob/master/doc/MfSE_Students.rdoc]
+{MfSE Students}[http://github.com/professor/cmusv/blob/master/doc/CMUSV_Students.rdoc]
 
 {file:doc/MfSE_Students.rdoc MfSE Students}
 
