@@ -14,8 +14,9 @@ class CoursesController < ApplicationController
 
   def index_for_semester
     @all_courses = false
-    (@semester, @year) = AcademicCalendar.semester_and_year(params[:semester])
-    if @semester.nil?
+    (@semester, @year) = AcademicCalendar.valid_semester_and_year(params[:semester])
+
+    if @semester.blank? || @year.blank?
       current_semester = "#{AcademicCalendar.current_semester()}#{Date.today.year}"
       flash[:notice] = "The requested url #{request.path} does not look like /courses/semester/#{current_semester} -- Thus we brought you to the current semester."
       redirect_to("/courses/semester/#{current_semester}")

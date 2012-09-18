@@ -253,8 +253,10 @@ class AcademicCalendar
     Date.commercial(year, cweek, 5) #Friday
  end
 
-
+  # F12, S12, M12
   def self.parse_HUB_semester(short_form)
+    return "", "" if short_form.blank?
+
     case short_form[0]
       when 'F'
         semester = 'Fall'
@@ -262,22 +264,35 @@ class AcademicCalendar
         semester = 'Spring'
       when 'M'
         semester = 'Summer'
+      else
+        semester = ""
     end
-    year = '20' + short_form[1..2]
 
-    return semester, year.to_i
+     year = '20' + short_form[1..2]
+     year = year.to_i
+     year = "" if year == 20
+
+    return semester, year
   end
 
   def self.parse_semester_and_year(semester_year_string)
     semester = semester_year_string[0..-5]
+    semester = semester.capitalize if semester
     year = semester_year_string[-4..-1].to_i
+    year = "" if year == 0
     return semester, year
   end
 
 
-  def self.semester_and_year(string)
+  def self.valid_semester_and_year(string)
     (semester, year) = self.parse_semester_and_year(string)
-    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year == 0)
+    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year.is_a?(String))
+
+    semester = "" unless ["Fall", "Summer", "Spring"].include?(semester)
+    if year.is_a?(Fixnum)
+      year = "" unless year > 2007 && year < (Date.today.year + 1)
+    end
+
     return semester, year
   end
 

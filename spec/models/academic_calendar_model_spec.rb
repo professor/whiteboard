@@ -250,27 +250,93 @@ describe AcademicCalendar do
         semester.should == "Summer"
         year.should == 2012
       end
+
+      it 'returns ("","") for junk input' do
+        (semester, year) = AcademicCalendar.parse_HUB_semester('junk')
+        semester.should == ""
+        year.should == ""
+      end
+
+      it 'returns ("","") for no input' do
+        (semester, year) = AcademicCalendar.parse_HUB_semester('')
+        semester.should == ""
+        year.should == ""
+      end
+
     end
   end
 
   context 'parse_semester_and_year' do
-    it 'works for the fall' do
+    it 'works for the Fall' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Fall2012')
       semester.should == "Fall"
       year.should == 2012
     end
 
-    it 'works for the fall' do
+    it 'works for the Spring' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Spring2013')
       semester.should == "Spring"
       year.should == 2013
     end
 
-    it 'works for the fall' do
+    it 'works for the Summer' do
       (semester, year) = AcademicCalendar.parse_semester_and_year('Summer2013')
       semester.should == "Summer"
       year.should == 2013
     end
+
+    it 'works for the lowercase semesters' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('fall2012')
+      semester.should == "Fall"
+      year.should == 2012
+    end
+
+    it 'returns ("","") for junk input' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('junk')
+      semester.should == ""
+      year.should == ""
+    end
+
+    it 'returns ("","") for no input' do
+      (semester, year) = AcademicCalendar.parse_semester_and_year('')
+      semester.should == ""
+      year.should == ""
+    end
+
   end
+
+  context 'valid_semester_and_year' do
+    it 'works for the Fall' do
+      (semester, year) = AcademicCalendar.valid_semester_and_year('Fall2012')
+      semester.should == "Fall"
+      year.should == 2012
+    end
+
+    it 'works for the lowercase semesters' do
+      (semester, year) = AcademicCalendar.valid_semester_and_year('fall2012')
+      semester.should == "Fall"
+      year.should == 2012
+    end
+
+    it 'works for the nonexistant semesters' do
+      (semester, year) = AcademicCalendar.valid_semester_and_year('march2012')
+      semester.should == ""
+      year.should == 2012
+    end
+
+    it 'returns ("","") for junk input' do
+      (semester, year) = AcademicCalendar.valid_semester_and_year('junk')
+      semester.should == ""
+      year.should == ""
+    end
+
+    it 'returns ("","") for no input' do
+      (semester, year) = AcademicCalendar.valid_semester_and_year('')
+      semester.should == ""
+      year.should == ""
+    end
+
+  end
+
 
 end

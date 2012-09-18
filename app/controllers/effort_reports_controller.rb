@@ -58,7 +58,7 @@ class EffortReportsController < ApplicationController
 
 
   def get_campus_week_data(year, week_number)
-    effort_logs = EffortLog.where(:week_number => week_number.to_i, :year => year.to_i, :sum.gt => 0)
+    effort_logs = EffortLog.where("week_number=? AND year=? AND sum>0", week_number.to_i, year.to_i)
 
     course_id_to_value_array_hash = {}
     effort_logs.each do |effort_log|
