@@ -153,7 +153,7 @@ course but hasn't been assigned a team. </p>
       <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
         <tr><td colspan=3><%= project_name%></td></tr>
         <% team.members.each do |user| %>
-           <% if user.github.empty? %>
+           <% if user.github.blank? %>
              <% style = "style=font-color=red" %>
            <% end %>
            <tr><td <%=style %>> <%= user.github %></td><td><%= user.human_name %></td><td><%= user.email %></td></tr>
