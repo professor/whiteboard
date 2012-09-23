@@ -318,7 +318,19 @@ class User < ActiveRecord::Base
 #   end
 
 
-
+  # attribute :github
+  # If the user has not set this attribute, then ask the user to do so
+  def notify_about_missing_field(attribute, message)
+    if self.send(attribute).blank?
+      options = {:to => self.email,
+                 :subject => "Your user account needs updating",
+                 :message => message,
+                 :url_label => "Modify your profile",
+                 :url => user_path(self)
+      }
+      GenericMailer.email(options).deliver
+    end
+  end
 
 
   protected
