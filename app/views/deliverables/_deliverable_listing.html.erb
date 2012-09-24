@@ -25,7 +25,7 @@
       <% end %>
       <td><%=h deliverable.task_number %></td>
       <td><%= deliverable.owner_name  %></td>
-      <% latest_attachment = deliverable.attachment_versions.last %>
+      <% latest_attachment = deliverable.attachment_versions.first %>
       <% unless latest_attachment.attachment_file_name.nil? %>
           <td><%= link_to deliverable.name, latest_attachment.attachment.url %></td>
       <% else %>
