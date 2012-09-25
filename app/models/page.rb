@@ -10,7 +10,7 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :url, :allow_blank => true
   validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
 
-  belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
+  belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
 
   has_many :page_attachments, :order => "position"
   belongs_to :course
@@ -35,7 +35,6 @@ class Page < ActiveRecord::Base
   def to_param
     url
   end
-
 
 
   #Re-position: change the sequence of pages for a given course
@@ -82,8 +81,8 @@ class Page < ActiveRecord::Base
     begin
       index.document(self.id.to_s).add(options_hash.merge!({:text => self.tab_one_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url}))
       if self.is_task?
-          index.document(self.id.to_s + "-tabs-1").add(options_hash.merge!({:text => self.tab_two_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url + "?tab=tabs-2"}))
-          index.document(self.id.to_s + "-tabs-2").add(options_hash.merge!({:text => self.tab_three_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url + "?tab=tabs-3"}))
+        index.document(self.id.to_s + "-tabs-1").add(options_hash.merge!({:text => self.tab_two_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url + "?tab=tabs-2"}))
+        index.document(self.id.to_s + "-tabs-2").add(options_hash.merge!({:text => self.tab_three_contents.gsub(/<\/?[^>]*>/, ""), :url => "pages/" + self.url + "?tab=tabs-3"}))
       end
     rescue Exception => e
       logger.error("Searchify issue: " + e.message)

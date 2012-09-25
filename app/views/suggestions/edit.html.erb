@@ -2,35 +2,35 @@
 <h1>Editing Suggestion</h1>
 
 <%= form_for([@suggestion]) do |f| %>
-  <% if @suggestion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@suggestion.errors.count, "error") %> prohibited this suggestion from being saved:</h2>
+    <% if @suggestion.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@suggestion.errors.count, "error") %> prohibited this suggestion from being saved:</h2>
 
-      <ul>
-      <% @suggestion.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
-    
-  <p>
-    <%= f.label :comment %><br />
-    <%= f.text_area :comment, :size => "80x10"  %>
-  </p>
-  <% if !current_user  %>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <% end %>
+          <ul>
+            <% @suggestion.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+    <p>
+      <%= f.label :comment %><br/>
+      <%= f.text_area :comment, :size => "80x10" %>
+    </p>
+    <% if !current_user %>
+        <p>
+          <%= f.label :email %><br/>
+          <%= f.text_field :email %>
+        </p>
+    <% end %>
+
+    <p>
+      <%= f.submit "Update" %>
+    </p>
 <% end %>
 
 <p>
-<%= link_to 'Show', :action => 'show', :id => @suggestion %> |
-<%= link_to 'Back', suggestions_path %>
+  <%= link_to 'Show', :action => 'show', :id => @suggestion %> |
+  <%= link_to 'Back', suggestions_path %>
 </p>

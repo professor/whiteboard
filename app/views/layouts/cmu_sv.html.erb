@@ -42,7 +42,7 @@
   Software Systems and Management-Silicon Valley Campus - Carnegie Mellon University
 </h1>
 -->
-<%=  yield :image_box %>
+<%= yield :image_box %>
 <div id="wrapper">
   <div id="pageHeader">
     <div id="wordmark">
@@ -52,7 +52,8 @@
       <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
         <label for="searchSite" id="searchSiteLabel">Search rails.sv.cmu.edu curriculum</label>
         <input type="text" id="query" name="query" placeholder=" SEARCH">
-        <button id="searchSubmit" title="Submit Carnegie Mellon University keyword search" type="submit">Submit Carnegie Mellon University Search
+        <button id="searchSubmit" title="Submit Carnegie Mellon University keyword search" type="submit">Submit Carnegie
+          Mellon University Search
         </button>
       </form>
     </div>
@@ -65,6 +66,7 @@
 
       <div id="logo">
         <a href="http://www.cmu.edu/silicon-valley/index.html"><%= image_tag("/cmu_sv_standard_v4/sv_nocm.jpg", :alt => "Silicon Valley Campus Home Page", :border => "0", :src => "cmu_sv_standard_v4/sv_nocm.jpg", :title => "Silicon Valley Campus Home Page") %></a>
+
         <div class="hr">
           <hr>
         </div>
@@ -74,11 +76,15 @@
           <li class="standard"><a href="/people">Users</a></li>
           <li class="standard"><a href="/courses">Courses</a></li>
           <ul>
-          <li class="standard"><a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"%>><%= AcademicCalendar.current_semester() %> <%= Date.today.year %> Courses</a></li>
+            <li class="standard">
+              <a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}" %>><%= AcademicCalendar.current_semester() %> <%= Date.today.year %>
+                Courses</a></li>
 
-          <% if AcademicCalendar.next_semester_is_soon %>
-              <li class="standard"><a href=<%= "/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"%>><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %> Courses</a></li>
-          <% end %>
+            <% if AcademicCalendar.next_semester_is_soon %>
+                <li class="standard">
+                  <a href=<%= "/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}" %>><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %>
+                    Courses</a></li>
+            <% end %>
           </ul>
           <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
           <% if current_user %>
@@ -118,7 +124,8 @@
     <div id="contentWrapper">
       <div id="headerImage"><%= image_tag("/cmu_sv_standard_v4/pros_stds.jpg", :id => "pageHeaderPhoto") %></div>
       <div id="breadcrumbs">
-        |<a class="home" href="http://www.cmu.edu/silicon-valley/index.html" title="Silicon Valley Campus Home Page">Silicon Valley Campus</a>|
+        |<a class="home" href="http://www.cmu.edu/silicon-valley/index.html" title="Silicon Valley Campus Home Page">Silicon
+        Valley Campus</a>|
 
         <% if controller.controller_name != "welcome" %>
             <%= link_to "Rails Application", "/" %> |
@@ -130,44 +137,45 @@
       <a name="access"></a>
 
 
-      <% if @no_pad  %>
+      <% if @no_pad %>
           <%= render :partial => "layouts/no_pad" %>
-     <% else %>
+      <% else %>
 
-      <div class="content2Column" id="mainContent">
-        <div class="boxTop"></div>
-        <div class="content">
-          <% if flash[:notice] %>
-              <div class="ui-widget">
-                <div class="ui-state-highlight ui-corner-all">
-                  <p style="color: green; margin-top: 5px;">
-                    <span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>
-                    <%= flash[:notice] %>
-                  </p>
-                </div>
-              </div>
-          <% end %>
-          <% if flash[:error] %>
-              <div class="ui-widget">
-                <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
-                  <p style="color: red; margin-top: 5px;">
-                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                    <%= flash[:error] %></p>
-                </div>
-              </div>
-          <% end %>
+          <div class="content2Column" id="mainContent">
+            <div class="boxTop"></div>
+            <div class="content">
+              <% if flash[:notice] %>
+                  <div class="ui-widget">
+                    <div class="ui-state-highlight ui-corner-all">
+                      <p style="color: green; margin-top: 5px;">
+                        <span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>
+                        <%= flash[:notice] %>
+                      </p>
+                    </div>
+                  </div>
+              <% end %>
+              <% if flash[:error] %>
+                  <div class="ui-widget">
+                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                      <p style="color: red; margin-top: 5px;">
+                        <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                        <%= flash[:error] %></p>
+                    </div>
+                  </div>
+              <% end %>
 
-          <%= yield %>
+              <%= yield %>
 
-          <br/>
+              <br/>
 
-          <p style="padding:0">Do you have a <%= link_to 'suggestion', :controller => 'suggestions', :action => 'new' %>
-            ?</p>
+              <p style="padding:0">Do you have
+                a <%= link_to 'suggestion', :controller => 'suggestions', :action => 'new' %>
+                ?</p>
 
-        </div>
-        <div class="boxBottom"></div>
+            </div>
+            <div class="boxBottom"></div>
 
-        <% end %>
+      <% end %>
       </div>
 
     </div>

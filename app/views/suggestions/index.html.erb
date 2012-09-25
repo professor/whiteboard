@@ -2,25 +2,25 @@
 <h1>Suggestions</h1>
 
 <table class="cmu_table">
-<% for suggestion in @suggestions %>
-  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-    <td><%=h suggestion.comment %></td>
-    <td><%=h suggestion.created_at.to_s(:long)  %></td>
-    <td><%= link_to 'Show', suggestion %></td>
-    <% if suggestion.editable?(current_user) %>
-      <td><%= link_to 'Edit', edit_suggestion_path(suggestion) %></td>
-    <% else %>
-      <td>&nbsp;</td>
-    <% end %>
-    <% if current_user && current_user.is_admin %>
-      <td><%= link_to 'Destroy', suggestion, :confirm => 'Are you sure?', :method => :delete %></td>
-    <% else %>
-      <td>&nbsp;</td>
-    <% end %>
-  </tr>
-<% end %>
+  <% for suggestion in @suggestions %>
+      <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+        <td><%= h suggestion.comment %></td>
+        <td><%= h suggestion.created_at.to_s(:long) %></td>
+        <td><%= link_to 'Show', suggestion %></td>
+        <% if suggestion.editable?(current_user) %>
+            <td><%= link_to 'Edit', edit_suggestion_path(suggestion) %></td>
+        <% else %>
+            <td>&nbsp;</td>
+        <% end %>
+        <% if current_user && current_user.is_admin %>
+            <td><%= link_to 'Destroy', suggestion, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% else %>
+            <td>&nbsp;</td>
+        <% end %>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <p><%= link_to 'New suggestion', new_suggestion_path %></p>

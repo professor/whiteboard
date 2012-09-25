@@ -185,7 +185,8 @@ class Deliverable < ActiveRecord::Base
     Team.where(:course_id => self.course_id).each do |team|
       answer = team.members.include?(self.creator)
       self.team = team if team.members.include?(self.creator)
-    end  end
+    end
+  end
 
   protected
   def sanitize_data

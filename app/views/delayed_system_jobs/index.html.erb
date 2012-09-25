@@ -12,17 +12,17 @@
     <th>created_at</th>
     <th>&nbsp;</th>
   </tr>
-<% for job in @delayed_system_jobs %>
-  <tr valign="top">
-    <td><%=h job.id %></td>
-    <td><%=h job.priority  %></td>
-    <td><%=h job.attempts  %></td>
-    <td><%=h job.handler  %></td>
-    <td><%=h job.last_error  %></td>
-    <td><%=h job.run_at  %></td>
-    <td><%=h job.created_at  %></td>
-    <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% for job in @delayed_system_jobs %>
+      <tr valign="top">
+        <td><%= h job.id %></td>
+        <td><%= h job.priority %></td>
+        <td><%= h job.attempts %></td>
+        <td><%= h job.handler %></td>
+        <td><%= h job.last_error %></td>
+        <td><%= h job.run_at %></td>
+        <td><%= h job.created_at %></td>
+        <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+  <% end %>
 </table>
 <br/>

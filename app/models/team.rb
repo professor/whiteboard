@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
   belongs_to :course
-  belongs_to :primary_faculty, :class_name=>'User', :foreign_key => "primary_faculty_id"
-  belongs_to :secondary_faculty, :class_name=>'User', :foreign_key => "secondary_faculty_id"
+  belongs_to :primary_faculty, :class_name => 'User', :foreign_key => "primary_faculty_id"
+  belongs_to :secondary_faculty, :class_name => 'User', :foreign_key => "secondary_faculty_id"
 
   has_many :team_assignments
   has_many :members, :through => :team_assignments, :source => :user
@@ -82,7 +82,7 @@ class Team < ActiveRecord::Base
   def validate_members
     return "" if members_override.nil?
 
-    self.members_override = members_override.select {|name| name != nil && name.strip != ""}
+    self.members_override = members_override.select { |name| name != nil && name.strip != "" }
     list = map_member_stings_to_users(members_override)
     list.each_with_index do |id, index|
       if id.nil?
@@ -94,9 +94,9 @@ class Team < ActiveRecord::Base
   def update_members
     return "" if members_override.nil?
 
-    self.members_override = members_override.select {|name| name != nil && name.strip != ""}
+    self.members_override = members_override.select { |name| name != nil && name.strip != "" }
     #if the list has changed
-    if(self.members_override.sort != self.members.collect{|person| person.human_name}.sort)
+    if (self.members_override.sort != self.members.collect { |person| person.human_name }.sort)
       self.updating_email = true
       list = map_member_stings_to_users(self.members_override)
       raise "Error converting members_override to IDs!" if list.include?(nil)
@@ -154,21 +154,20 @@ class Team < ActiveRecord::Base
   end
 
   def clone_to_another_course(destination_course_id)
-      clone = self.clone
-      clone.member_ids = self.member_ids
-      clone.course_id = destinaton_course_id
-      clone.name = self.name + " - " + destination_course_id    
-      clone.save    
+    clone = self.clone
+    clone.member_ids = self.member_ids
+    clone.course_id = destinaton_course_id
+    clone.name = self.name + " - " + destination_course_id
+    clone.save
   end
-                    
 
 
   protected
   def generate_email_name
-      email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
-      email = email.gsub('&','and')
-      email.sub('@west.cmu.edu', '@sv.cmu.edu')
-    end
+    email = "#{self.course.semester}-#{self.course.year}-#{self.name}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
+    email = email.gsub('&', 'and')
+    email.sub('@west.cmu.edu', '@sv.cmu.edu')
+  end
 
   def remove_google_group
     logger.debug "trying before_destroy"

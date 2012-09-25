@@ -1,9 +1,9 @@
 <h1><%= monthname(@month) %> <%= @year %></h1>
 
-<%= render :partial => "form", :locals => { :button_name => "Update" } %>
+<%= render :partial => "form", :locals => {:button_name => "Update"} %>
 
 <% if current_user.permission_level_of(:admin) %>
-<%= link_to 'Back', sponsored_project_efforts_path %>
+    <%= link_to 'Back', sponsored_project_efforts_path %>
 <% end %>
 <br/>
 <br/>

@@ -2,16 +2,16 @@
 <h1>Course Numbers</h1>
 
 <table>
-<% for course in @courses %>
-  <tr>
-    <td><%=h course.number %></td>
-    <td><%=h course.name %></td>
-  </tr>
-<% end %>
+  <% for course in @courses %>
+      <tr>
+        <td><%= h course.number %></td>
+        <td><%= h course.name %></td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <% if current_user && current_user.is_admin? %>
-<%= link_to 'New course', new_course_path %>
+    <%= link_to 'New course', new_course_path %>
 <% end %>

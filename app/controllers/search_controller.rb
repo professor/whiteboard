@@ -12,7 +12,7 @@ class SearchController < ApplicationController
 
   # retrieve docs from IndexTank
   def self.search(query)
-    index_tank.search("#{query} OR title:#{query}", :fetch=>'timestamp,url,text,title', :snippet => 'text')
+    index_tank.search("#{query} OR title:#{query}", :fetch => 'timestamp,url,text,title', :snippet => 'text')
   end
 
   def index

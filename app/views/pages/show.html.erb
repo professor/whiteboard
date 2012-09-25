@@ -14,10 +14,10 @@
 </style>
 
 <% if @page.course.blank? %>
-    <h1 name="page">  <%=h @page.title %></h1>
+    <h1 name="page">  <%= h @page.title %></h1>
 <% else %>
-    <h1 name="course"><%=h @page.course.name %></h1>
-    <h2 name="page">  <%=h @page.title %></h2>
+    <h1 name="course"><%= h @page.course.name %></h1>
+    <h2 name="page">  <%= h @page.title %></h2>
 <% end %>
 
 <% if params[:history] %>

@@ -1,9 +1,9 @@
 <h1>Submitted Deliverables for <%= @course.display_name %></h1>
 
 <div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
 </div>
 
-    <%= render :partial => "deliverable_listing", :locals => { :deliverables => @deliverables, :skip_course_column => true }%>
-<br />
+<%= render :partial => "deliverable_listing", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+<br/>

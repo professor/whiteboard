@@ -1,25 +1,25 @@
 <% content_for :javascript do %>
     <%= javascript_tag do %>
         $(function() {
-       $('#sortable').sortable(
-          {
-            cursor: 'hand',
-            dropOnEmpty:false,
-            opacity: 0.5,
-            update: function(){
-              $.ajax({
-                  type: 'post',
-                  data: $('#sortable').sortable('serialize') + '&id=<%=@page.id-%>',
-                  dataType: 'script',
-                  complete: function(request){
-                      $('#sortable').effect('highlight');
-                    },
-                  url: '/page_attachments/reposition'})
-              }
-            });
+        $('#sortable').sortable(
+        {
+        cursor: 'hand',
+        dropOnEmpty:false,
+        opacity: 0.5,
+        update: function(){
+        $.ajax({
+        type: 'post',
+        data: $('#sortable').sortable('serialize') + '&id=<%= @page.id -%>',
+        dataType: 'script',
+        complete: function(request){
+        $('#sortable').effect('highlight');
+        },
+        url: '/page_attachments/reposition'})
+        }
+        });
         $("#sortable").disableSelection();
         })
-      <% end %>
+    <% end %>
 <% end %>
 
 <% if @page.editable?(current_user) %>
@@ -31,31 +31,31 @@
 <%= javascript_include_tag 'jquery.cookie' %>
 
 <script type="text/javascript">
-   function cleanup_filename(path) {
-     return path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
-  }
+    function cleanup_filename(path) {
+        return path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
+    }
 
-   function cleanup_filename_no_extension(path) {
-     filename = path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
-     return filename.replace(/(.*)\.[^.]+$/, "$1"); //Remove file extension, ie .jpg
-  }
+    function cleanup_filename_no_extension(path) {
+        filename = path.replace("C:\\fakepath\\", ""); //Remove html5 fakepath
+        return filename.replace(/(.*)\.[^.]+$/, "$1"); //Remove file extension, ie .jpg
+    }
 
-   function replace_hyphens_dashes(string) {
-     return string.replace(/-/g, " ").replace(/_/g, " ");
-   }
+    function replace_hyphens_dashes(string) {
+        return string.replace(/-/g, " ").replace(/_/g, " ");
+    }
 
-    $(function() {
+    $(function () {
         $('#tabs').tabs();
-        $('.selector').tabs({ cookie: { name: 'selected_tab', expires: 30} });
+        $('.selector').tabs({ cookie:{ name:'selected_tab', expires:30} });
         $("#error").error();
         //$("#highlight").highlight();
 
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         //Attach event to tab selection & save selected tab in cookie
-        $('#tabs').bind('tabsselect', function(event, tab) {
+        $('#tabs').bind('tabsselect', function (event, tab) {
             $.cookie('selected_tab', tab.index);
         });
 
@@ -66,7 +66,7 @@
 
 <script type="text/javascript">
     //<![CDATA[
-    $(document).ready(function() {
+    $(document).ready(function () {
         var url = location.pathname;
         if (url.indexOf("intro_to_se") != -1) {
             $(".courseTitle").text("Introduction to Software Engineering");
@@ -122,6 +122,7 @@
       <% if current_user.is_staff || current_user.is_admin %>
           <div id="tabs-4">
             <p>Students can not see the contents of this tab. Students do not see a Faculty Notes tab.</p>
+
             <p><%= sanitize_trusted(@page.faculty_notes) %></p>
           </div>
       <% end %>
@@ -145,16 +146,17 @@
 <h2>Attachments</h2>
 <% if @page.page_attachments.any? %>
     <div id="page_attachments_warning" class="ui-widget" style="display:none">
-        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
-            <p><span id="page_attachment_warning_text" class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-        </div>
+      <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+        <p>
+          <span id="page_attachment_warning_text" class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+      </div>
     </div>
 
     <% if @page.editable?(current_user) && (can? :update, PageAttachment) %>
-    <p>To reorder pages, drag them around. Changes are automatically saved.</p>
+        <p>To reorder pages, drag them around. Changes are automatically saved.</p>
     <% end %>
     <div id="page-attachments">
-        <table class="cmu_table">
+      <table class="cmu_table">
         <tbody id="sortable">
         <% @page.page_attachments.each do |pa| %>
             <tr id="page_attachment_<%= pa.id -%>">
@@ -205,8 +207,8 @@
 
 
     <script>
-        $(document).ready(function() {
-            $('button.replace-page-attachment').click(function() {
+        $(document).ready(function () {
+            $('button.replace-page-attachment').click(function () {
                 page_attachment_id = $(this).attr('data-page-attachment-id');
                 $('#page-attachment-' + page_attachment_id).hide();
                 $('#page-attachment-' + page_attachment_id + '-replace').show();
@@ -214,7 +216,7 @@
                 //show the submit button instead
                 $(this).next().show();
             });
-            $('button.cancel-replace-page-attachment').click(function() {
+            $('button.cancel-replace-page-attachment').click(function () {
                 page_attachment_id = $(this).attr('data-page-attachment-id');
                 $('#page-attachment-' + page_attachment_id + '-replace').hide();
                 $('#page-attachment-' + page_attachment_id).show();
@@ -223,20 +225,19 @@
                 $(this).prev().show();
             });
 
-          $('.edit_page_attachment input[type=file]').change(function(e){
-              $in=$(this);
-              filename = cleanup_filename($in.val());
-              old_filename = $in.next().next().html();
-              if(filename != old_filename)
-              {  message = "The file you are uploading has a different name than the one you are replacing. This is fine. However, any links you have made to the old file will not work. The old links will point to a resource that no longer exists.";
-                 $in.siblings(".page-attachment-warning-text").text(message);
-              }
-              else
-              {
-                  $in.siblings(".page-attachment-warning-text").text("");
-              }
+            $('.edit_page_attachment input[type=file]').change(function (e) {
+                $in = $(this);
+                filename = cleanup_filename($in.val());
+                old_filename = $in.next().next().html();
+                if (filename != old_filename) {
+                    message = "The file you are uploading has a different name than the one you are replacing. This is fine. However, any links you have made to the old file will not work. The old links will point to a resource that no longer exists.";
+                    $in.siblings(".page-attachment-warning-text").text(message);
+                }
+                else {
+                    $in.siblings(".page-attachment-warning-text").text("");
+                }
 
-          });
+            });
         });
     </script>
 <% else %>
@@ -254,9 +255,9 @@
     <% end %>
     <script>
 
-      $(document).ready(function() {
-            $('#new_page_attachment input[type=file]').change(function(e){ 
-                $in=$(this);
+        $(document).ready(function () {
+            $('#new_page_attachment input[type=file]').change(function (e) {
+                $in = $(this);
                 readable_name = replace_hyphens_dashes(cleanup_filename_no_extension($in.val()));
                 $in.next().val(readable_name);
             });

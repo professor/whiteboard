@@ -40,15 +40,15 @@ class Course < ActiveRecord::Base
 
   has_many :registrations
   has_many :registered_students, :through => :registrations, :source => :user
-  
+
   has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty
 
   versioned
-  belongs_to :updated_by, :class_name=>'User', :foreign_key => 'updated_by_user_id'
-  belongs_to :configured_by, :class_name=>'User', :foreign_key => 'configured_by_user_id'
+  belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
+  belongs_to :configured_by, :class_name => 'User', :foreign_key => 'configured_by_user_id'
 
   #When assigning faculty to a page, the user types in a series of strings that then need to be processed
   # :faculty_assignments_override is a temporary variable that is used to do validation of the strings (to verify
@@ -56,10 +56,10 @@ class Course < ActiveRecord::Base
   attr_accessor :faculty_assignments_override
 
   attr_accessible :course_number_id, :name, :number, :semester, :mini, :primary_faculty_label,
-    :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
-    :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
-    :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
-    :faculty_assignments_override
+                  :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
+                  :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
+                  :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
+                  :faculty_assignments_override
 
 #  def to_param
 #    display_course_name
@@ -101,14 +101,14 @@ class Course < ActiveRecord::Base
     return self.for_semester(AcademicCalendar.next_semester(),
                              AcademicCalendar.next_semester_year())
   end
-  
+
   def course_length
     if self.mini == "Both" then
       if semester == "Summer" then
         return 12
       elsif semester == "Fall" then
         return 15
-      else 
+      else
         return 16
       end
     else
@@ -118,7 +118,7 @@ class Course < ActiveRecord::Base
         return 7
       end
     end
-   end
+  end
 
   # Return the week number of the year for the start of a course
   def course_start
@@ -164,7 +164,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.remind_about_effort_course_list
-    courses = Course.where(:remind_about_effort => true,  :year => Date.today.cwyear, :semester =>  AcademicCalendar.current_semester(), :mini => "Both").all
+    courses = Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => "Both").all
     courses = courses + Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => AcademicCalendar.current_mini).all
     return courses
   end
@@ -186,7 +186,7 @@ class Course < ActiveRecord::Base
   def validate_faculty
     return "" if faculty_assignments_override.nil?
 
-    self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
+    self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
     list = map_faculty_strings_to_users(faculty_assignments_override)
     list.each_with_index do |user, index|
       if user.nil?
@@ -199,7 +199,7 @@ class Course < ActiveRecord::Base
     return "" if faculty_assignments_override.nil?
     self.faculty = []
 
-    self.faculty_assignments_override = faculty_assignments_override.select {|name| name != nil && name.strip != ""}
+    self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
     list = map_faculty_strings_to_users(self.faculty_assignments_override)
     raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
     self.faculty = list
@@ -273,7 +273,7 @@ class Course < ActiveRecord::Base
     else
       email = "#{self.semester}-#{self.year}-#{self.number}".chomp.downcase.gsub(/ /, '-') + "@" + GOOGLE_DOMAIN
     end
-    email = email.gsub('&','and')
+    email = email.gsub('&', 'and')
     email.sub('@west.cmu.edu', '@sv.cmu.edu')
   end
 
@@ -285,7 +285,7 @@ class Course < ActiveRecord::Base
 
   def update_distribution_list
     if self.updating_email
-      recipients = self.faculty | self.registered_students | self.teams.collect {|team| team.members}.flatten
+      recipients = self.faculty | self.registered_students | self.teams.collect { |team| team.members }.flatten
       Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, recipients, self.email, "Course distribution list", self.id, "courses"))
     end
   end

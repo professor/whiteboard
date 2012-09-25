@@ -2,34 +2,49 @@
 
 <div class="user_header">
   <div class="user_header_photo"><%= image_tag(@person.image_uri) %></div>
-<h1><%=h @person.human_name %></h1>
-<table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="twikiTable">
-<tr class="twikiTableOdd"><td>Organization:</td>
-    <td><% if @person.organization_name %><% if @person.title %><b><%=h @person.title%></b><br/><%end%><b><%=h @person.organization_name %></b><%else%>&nbsp;<%end%></td>
-    <td>Location:</td>
-    <td><% if display_location(@person) %><b><%=h display_location(@person) %></b><%else%>&nbsp;<%end%></td></tr>
-<tr class="twikiTableEven"><td>Telephone:</td>
-    <td><b><%= render :partial => 'show_telephones' %></b></td>
-    <td>E-mail:</td>
-    <td><b><%=h @person.email %></b></td></tr>
+  <h1><%= h @person.human_name %></h1>
+  <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="twikiTable">
+    <tr class="twikiTableOdd">
+      <td>Organization:</td>
+      <td>
+        <% if @person.organization_name %>
+            <% if @person.title %>
+                <b><%= h @person.title %></b><br/>
+            <% end %>
+            <b><%= h @person.organization_name %></b>
+        <% else %>&nbsp;
+        <% end %></td>
+      <td>Location:</td>
+      <td>
+        <% if display_location(@person) %>
+            <b><%= h display_location(@person) %></b>
+        <% else %>&nbsp;
+        <% end %></td>
+    </tr>
+    <tr class="twikiTableEven">
+      <td>Telephone:</td>
+      <td><b><%= render :partial => 'show_telephones' %></b></td>
+      <td>E-mail:</td>
+      <td><b><%= h @person.email %></b></td>
+    </tr>
 
-</table>
+  </table>
 </div>
 
 <!--
 <table><tr valign="top"><td>
   <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
   </td><td>&nbsp;</td><td>
-<h1><%=h @person.human_name %></h1>
+<h1><%= h @person.human_name %></h1>
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="twikiTable">
 <tr class="twikiTableOdd"><td>Organization:</td>
-    <td><b><%=h @person.organization_name %></b></td>
+    <td><b><%= h @person.organization_name %></b></td>
     <td>Location:</td>
-    <td><b><%=h display_location(@person) %></b></td></tr>
+    <td><b><%= h display_location(@person) %></b></td></tr>
 <tr class="twikiTableEven"><td>Telephone:</td>
     <td><b><%= render :partial => 'show_telephones' %></b></td>
     <td>E-mail:</td>
-    <td><b><%=h @person.email %></b></td></tr>
+    <td><b><%= h @person.email %></b></td></tr>
 
 </table>
 </td></tr></table>
@@ -37,23 +52,29 @@
 
 <% if @person.is_student %>
 
-  <p>
-    <% if !(@person.graduation_year.nil? || @person.graduation_year.empty?) %>
-      <h3>Class of <%=h @person.graduation_year %></h3>
+    <p>
+      <% if !(@person.graduation_year.nil? || @person.graduation_year.empty?) %>
+        <h3>Class of <%= h @person.graduation_year %></h3>
     <% end %>
-    I am a <% if @person.is_part_time %> part time <% else %> full time <% end %> student in the <%=h @person.masters_program %> program<% if !(@person.masters_track.nil? || @person.masters_track.empty?) %> (<%=h @person.masters_track %> Track)<% end %>.
-<% if !@person.local_near_remote=="Unknown" %> I am a  <%=h @person.local_near_remote %> student.<% end %>
-  </p>
+    I am a
+    <% if @person.is_part_time %> part time
+    <% else %> full time
+    <% end %> student in the <%= h @person.masters_program %> program
+    <% if !(@person.masters_track.nil? || @person.masters_track.empty?) %> (<%= h @person.masters_track %> Track)
+    <% end %>.
+    <% if !@person.local_near_remote=="Unknown" %> I am a  <%= h @person.local_near_remote %> student.
+    <% end %>
+    </p>
 <% end %>
 
 <% if @person.is_staff %>
 
-  <p>
-    Office: <%=h @person.office %>
-  </p>
-  <p>
-    Office hours: <%=h @person.office_hours %>
-  </p>
+    <p>
+      Office: <%= h @person.office %>
+    </p>
+    <p>
+      Office hours: <%= h @person.office_hours %>
+    </p>
 
 <% end %>
 
@@ -62,16 +83,16 @@
 <%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 <h2>Helpful info</h2>
-Skype: <%=h @person.skype %><br />
-Tigris: <%=h @person.tigris %><br />
-Personal email: <%=h @person.personal_email %><br />
+Skype: <%= h @person.skype %><br />
+Tigris: <%= h @person.tigris %><br />
+Personal email: <%= h @person.personal_email %><br />
 
 <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
 
 
 <!-- <%= link_to 'Edit', edit_person_path(@person) %> | -->
 <p>
-<a href="<%=@machine_name%>/people/<%=@person.id%>/edit" target="_top">Edit my information</a> |
-<a href="<%=@machine_name%>/people/<%=@person.id%>" target="_top">More information</a>
+  <a href="<%= @machine_name %>/people/<%= @person.id %>/edit" target="_top">Edit my information</a> |
+  <a href="<%= @machine_name %>/people/<%= @person.id %>" target="_top">More information</a>
 </p>
 

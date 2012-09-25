@@ -1,6 +1,11 @@
 class PeopleController < ApplicationController
   include ActionView::Helpers::AssetTagHelper
-  def controller;self;end;private(:controller)
+
+  def controller;
+    self;
+  end
+
+  ; private(:controller)
 
   before_filter :authenticate_user!, :except => [:show_by_twiki]
 
@@ -22,19 +27,19 @@ class PeopleController < ApplicationController
                                                                     "first_name" => person.first_name,
                                                                     "last_name" => person.last_name,
                                                                     "image_uri" => person.image_uri,
-                                                                    "email" => person.email ].merge(person.telephones_hash) }, :layout => false }
+                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
     end
   end
 
- #Ajax call for autocomplete using params[:term]
+  #Ajax call for autocomplete using params[:term]
   def index_autocomplete
-                     #if database is mysql
-                     #@people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    #if database is mysql
+    #@people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
     @people = User.where("human_name ILIKE ?", "%#{params[:term]}%").all
 
     respond_to do |format|
       format.html { render :html => @people }
-      format.json { render :json => @people.collect { |person| person.human_name}, :layout => false }
+      format.json { render :json => @people.collect { |person| person.human_name }, :layout => false }
     end
   end
 

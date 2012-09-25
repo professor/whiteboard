@@ -1,38 +1,38 @@
 <% content_for :title, 'Google Mailing Lists' %>
 
 <% content_for :tablesorter do %>
-  <%= javascript_include_tag 'tablesorter' %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
-<script type="text/javascript">
-$(document).ready(function()
-    {
-       if ($("#filterBoxOne").prop("disabled") == true)
-       {
-         $('#filterBoxOne').val('');
-         $('#filterBoxOne').removeAttr("disabled");
-         $('#filterBoxOne').focus();
-        }
-        $("#mailing_list_table").tablesorter({widgets: ['zebra'],
-                                        headers: {2: {sorter: false}  },
-                                        sortList: [[0,0]]})
-            .tablesorterFilter({ filterContainer: $("#filterBoxOne"),
-                filterClearContainer: $("#filterClearOne"),
-                filterColumns: [0],
-                filterCaseSensitive: false
-            });
+    <%= javascript_include_tag 'tablesorter' %>
+    <%= javascript_include_tag 'tablesorter_filter' %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                    if ($("#filterBoxOne").prop("disabled") == true) {
+                        $('#filterBoxOne').val('');
+                        $('#filterBoxOne').removeAttr("disabled");
+                        $('#filterBoxOne').focus();
+                    }
+                    $("#mailing_list_table").tablesorter({widgets:['zebra'],
+                        headers:{2:{sorter:false}  },
+                        sortList:[
+                            [0, 0]
+                        ]})
+                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                                filterClearContainer:$("#filterClearOne"),
+                                filterColumns:[0],
+                                filterCaseSensitive:false
+                            });
 
-        //hoving over a line selects it
-        $("tr").hover(
-        function () {
-          $(this).addClass("hover");
-        },
-        function () {
-          $(this).removeClass("hover");
-        });
-      }
-);
+                    //hoving over a line selects it
+                    $("tr").hover(
+                            function () {
+                                $(this).addClass("hover");
+                            },
+                            function () {
+                                $(this).removeClass("hover");
+                            });
+                }
+        );
 
-</script>
+    </script>
 <% end %>
 
 <h1>Mailing lists</h1>
@@ -44,25 +44,25 @@ $(document).ready(function()
   <tr>
     <th>Mailing List</th>
     <th>Actions</th>
-  <% if current_user.is_admin? %>
-    <th>Admin</th>
-  <% end %>
-  </tr>
-</thead>
-<tbody>
-<% @mailing_lists.each do |mailing_list| %>
-<tr class="tablesorter">
-    <td><%= mailing_list.sub('@west.cmu.edu','@sv.cmu.edu') %></td>
-    <td><%= link_to 'Show', mailing_list_path(mailing_list) %></td>
     <% if current_user.is_admin? %>
-    <% url_mailing_list = mailing_list.gsub(/@/,'%40') %>
-    <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{ENV['GOOGLE_DOMAIN']}/Group?groupId=#{mailing_list}" %></td>
+        <th>Admin</th>
     <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @mailing_lists.each do |mailing_list| %>
+      <tr class="tablesorter">
+        <td><%= mailing_list.sub('@west.cmu.edu', '@sv.cmu.edu') %></td>
+        <td><%= link_to 'Show', mailing_list_path(mailing_list) %></td>
+        <% if current_user.is_admin? %>
+            <% url_mailing_list = mailing_list.gsub(/@/, '%40') %>
+            <td><%= link_to 'Edit', "https://www.google.com/a/cpanel/#{ENV['GOOGLE_DOMAIN']}/Group?groupId=#{mailing_list}" %></td>
+        <% end %>
 
-</tr>
-<% end %>
-</tbody>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 <p>There are <%= @mailing_lists.size %> mailing lists.</p>
 
-<br />
+<br/>

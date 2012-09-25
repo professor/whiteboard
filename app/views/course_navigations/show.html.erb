@@ -7,27 +7,26 @@
 
 
 <% content_for :javascript do %>
-<script type="text/javascript">
-        $(function() {
-       $('#sortable').sortable(
-          {
-            cursor: 'hand',
-            dropOnEmpty:false,
-            opacity: 0.5,
-            update: function(){
-              $.ajax({
-                  type: 'post',
-                  data: $('#sortable').sortable('serialize') + '&id=<%=@course.id-%>',
-                  dataType: 'script',
-                  complete: function(request){
-                      $('#sortable').effect('highlight');
-                    },
-                  url: '/course_navigations/reposition'});
-              }
+    <script type="text/javascript">
+        $(function () {
+            $('#sortable').sortable({
+                cursor:'hand',
+                dropOnEmpty:false,
+                opacity:0.5,
+                update:function () {
+                    $.ajax({
+                        type:'post',
+                        data:$('#sortable').sortable('serialize') + '&id=<%=@course.id-%>',
+                        dataType:'script',
+                        complete:function (request) {
+                            $('#sortable').effect('highlight');
+                        },
+                        url:'/course_navigations/reposition'});
+                }
             });
-        $("#sortable").disableSelection();        
+            $("#sortable").disableSelection();
         })
-      </script>
+    </script>
 <% end %>
 
 
@@ -39,14 +38,14 @@
 <p>To reorder pages, drag them around. Changes are automatically saved.</p>
 <ul id="sortable">
   <% for page in @pages %>
-    <li id="page_<%= page.id-%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-    <%= link_to page.title, page, :class=>"SecondaryNav_Link" %>
-     </li>
+      <li id="page_<%= page.id -%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+        <%= link_to page.title, page, :class => "SecondaryNav_Link" %>
+      </li>
   <% end %>
 
 </ul>
-<%= link_to 'New page', new_page_path(:course_id => @course.id)  %>
+<%= link_to 'New page', new_page_path(:course_id => @course.id) %>
 
-<br />
+<br/>
 <!--This is a test <span class="ui-icon ui-icon-arrowthick-1-w"></span>-->
 <!--This is a test <span class="ui-icon ui-icon-arrowthick-1-e"></span>-->

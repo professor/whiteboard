@@ -1,62 +1,63 @@
-  <fieldset>
-    <legend>User Roles</legend>
+<fieldset>
+  <legend>User Roles</legend>
   <div class="formItem">
     <%= f.label :is_student %>
-    <%= f.check_box :is_student, :disabled=>'disabled' %>
+    <%= f.check_box :is_student, :disabled => 'disabled' %>
   </div>
-    <div class="formItem">
+  <div class="formItem">
     <%= f.label :is_alumnus %>
-    <%= f.check_box :is_alumnus, :disabled=>'disabled'  %>
+    <%= f.check_box :is_alumnus, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :is_staff %>
-    <%= f.check_box :is_staff, :disabled=>'disabled' %>
+    <%= f.check_box :is_staff, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :is_active %>
-    <%= f.check_box :is_active, :disabled=>'disabled' %>
+    <%= f.check_box :is_active, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
-    <%= f.label :is_admin %><%= f.check_box :is_admin, :disabled=>'disabled' %><br />
+    <%= f.label :is_admin %><%= f.check_box :is_admin, :disabled => 'disabled' %>
+    <br/>
     <span class="help_text">Admin accounts can only be granted through SQL</span>
   </div>
-  </fieldset>
-  <fieldset>
-    <legend>Account information</legend>
+</fieldset>
+<fieldset>
+  <legend>Account information</legend>
   <div class="formItem">
     <%= f.label :is_adobe_connect_host %>
-    <%= f.check_box :is_adobe_connect_host, :disabled=>'disabled' %>
+    <%= f.check_box :is_adobe_connect_host, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :image_uri %>
-    <%= f.text_field :image_uri, :disabled=>'disabled' %>
+    <%= f.text_field :image_uri, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :email, "CMU-SV email address" %>
-    <%= f.text_field :email, :disabled=>'disabled' %>
+    <%= f.text_field :email, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :webiso_account %>
-    <%= f.text_field :webiso_account, :disabled=>'disabled' %>
+    <%= f.text_field :webiso_account, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label :twiki_name, "TWiki name" %>
-    <%= f.text_field :twiki_name, :disabled=>'disabled' %>
+    <%= f.text_field :twiki_name, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
     <%= f.label "Display name" %>
-    <%= f.text_field :human_name, :disabled=>'disabled' %>
+    <%= f.text_field :human_name, :disabled => 'disabled' %>
   </div>
   <div class="formItem">
-      <%= f.label "Expires at" %>
-      <%= f.text_field :expires_at, :disabled=>'disabled' %>
+    <%= f.label "Expires at" %>
+    <%= f.text_field :expires_at, :disabled => 'disabled' %>
   </div>
-  </fieldset>
-  <fieldset>
-    <legend>Debugging information</legend>
-    <% if @person.effort_log_warning_email.nil? %>
-An effort log warning email has never been sent
-<% else %>
-An effort log warning email was last sent on <%=l @person.effort_log_warning_email, :format => :chatty %>
-<% end %> 
-  </fieldset>
+</fieldset>
+<fieldset>
+  <legend>Debugging information</legend>
+  <% if @person.effort_log_warning_email.nil? %>
+      An effort log warning email has never been sent
+  <% else %>
+      An effort log warning email was last sent on <%= l @person.effort_log_warning_email, :format => :chatty %>
+  <% end %>
+</fieldset>

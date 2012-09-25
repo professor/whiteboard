@@ -1,5 +1,5 @@
 class Suggestion < ActiveRecord::Base
-  belongs_to :user, :class_name=>"Person", :foreign_key=>"user_id"
+  belongs_to :user, :class_name => "Person", :foreign_key => "user_id"
 
   validates_presence_of :comment
 

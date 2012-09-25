@@ -19,6 +19,4 @@ class Person < User
 #  end
 
 
-
-
 end

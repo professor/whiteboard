@@ -18,7 +18,7 @@ class SponsoredProjectEffort < ActiveRecord::Base
 
   scope :month_under_inspection_for_a_given_user,
         lambda { |user_id| {:include => :sponsored_project_allocation,
-                              :conditions => ["month = ? and year = ? and sponsored_project_allocations.user_id = ?", 1.month.ago.month, 1.month.ago.year, user_id]} }
+                            :conditions => ["month = ? and year = ? and sponsored_project_allocations.user_id = ?", 1.month.ago.month, 1.month.ago.year, user_id]} }
 
 
   def self.new_from_sponsored_project_allocation(allocation)

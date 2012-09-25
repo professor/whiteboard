@@ -1,90 +1,105 @@
 <% content_for :javascript do %>
-<script type="text/javascript">
-  $(document).ready(function()
-    {
-    $('#course_configure_course_twiki').change(function() {
-        if ($(this).is(':checked')) {
-        $('#course_curriculum_url').val("<%= @course.auto_generated_twiki_url %>");
-        $('#course_curriculum_url_notice').text("Because you want a twiki course web, we assume you want your students to start there in accessing your materials. If you don't agree, feel free to alter this default value.");
-        }
-        else
-        {
-            $('#course_curriculum_url_notice').text("");
-        }
-     });
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#course_configure_course_twiki').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#course_curriculum_url').val("<%= @course.auto_generated_twiki_url %>");
+                    $('#course_curriculum_url_notice').text("Because you want a twiki course web, we assume you want your students to start there in accessing your materials. If you don't agree, feel free to alter this default value.");
+                }
+                else {
+                    $('#course_curriculum_url_notice').text("");
+                }
+            });
 
-    $('#course_configure_peer_evaluation').change(function() {
-        if ($(this).is(':checked')) {
-        $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
-        $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
-        }
-     });
+            $('#course_configure_peer_evaluation').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
+                    $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
+                }
+            });
 
-   });
- </script>
+        });
+    </script>
 
 <% end %>
 
 <div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"Only faculty can see this information", :title => "Faculty Role") %>
+  <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
 
 
-<% unless @course.configured_by_user_id.blank? %>
-<p>This information was configured last by <%= @course.configured_by.human_name %></p>
-<% end %>
-
-<%= form_for(@course) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-      <ul>
-      <% @course.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <% unless @course.configured_by_user_id.blank? %>
+      <p>This information was configured last by <%= @course.configured_by.human_name %></p>
   <% end %>
-    <p>
-      <%= f.check_box :configure_course_twiki %>
-      <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
-    </p>
 
-   <p>
-     <input type="checkbox" disabled="true" checked="checked">
-    We use a variety of systems to host our curriculum including<div class="checkboxed_form"><ul><li>the twiki (http://info.sv.cmu.edu),</li>
-  <li>curriculum website (http://curriculum.sv.cmu.edu),</li><li>rails curriculum website (http://rails.sv.cmu.edu),</li>
-  <li>blackboard (http://www.cmu.edu/blackboard),</li><li>or your own web site.</li></ul></div>
-    </p>
-    <p>
-      <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:", :class => "checkboxed_form"  %><br/>
-      <%= f.text_field :curriculum_url, :size => 100, :class => "checkboxed_form" %><br />
-      <div class = "checkboxed_form" ><p id="course_curriculum_url_notice" style="color: green"></p></div>
-    </p>
-    <p>
-      <%= f.check_box :configure_class_mailinglist %>
-      <%= f.label :configure_class_mailinglist, "I want a class mailing list" %>
-    </p>
-    <p>
-      <%= f.check_box :configure_teams_name_themselves %>   
-      <%= f.label :configure_teams_name_themselves, "I will allow teams to name themselves" %>
-    </p>
-    <p>
-      <%= f.check_box(:remind_about_effort) %>
-      <%= f.label :remind_about_effort, "I will be using the Effort Logging Tool (note, all SE students are required to log effort)" %><br/>
-    </p>
-    <p>
-      <input type="checkbox" id="course_configure_peer_evaluation">
-      I plan on using the Peer Evaluation Tool <br/>
-      <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email the teams telling them about the peer evaluation. <br/>
-      <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email reminder will be sent on this date)
-    </p>
-    <p>
-      <%= f.hidden_field :is_configured, :value => true %>
-      <%= f.submit button_name %>
-    </p>
-<!--
+  <%= form_for(@course) do |f| %>
+      <% if @course.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+            <ul>
+              <% @course.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <p>
+        <%= f.check_box :configure_course_twiki %>
+        <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
+      </p>
+
+      <p>
+        <input type="checkbox" disabled="true" checked="checked">
+        We use a variety of systems to host our curriculum including
+
+      <div class="checkboxed_form">
+        <ul>
+          <li>the twiki (http://info.sv.cmu.edu),</li>
+          <li>curriculum website (http://curriculum.sv.cmu.edu),</li>
+          <li>rails curriculum website (http://rails.sv.cmu.edu),</li>
+          <li>blackboard (http://www.cmu.edu/blackboard),</li>
+          <li>or your own web site.</li>
+        </ul>
+      </div>
+      </p>
+      <p>
+        <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:", :class => "checkboxed_form" %>
+        <br/>
+        <%= f.text_field :curriculum_url, :size => 100, :class => "checkboxed_form" %><br/>
+
+      <div class="checkboxed_form"><p id="course_curriculum_url_notice" style="color: green"></p></div>
+      </p>
+      <p>
+        <%= f.check_box :configure_class_mailinglist %>
+        <%= f.label :configure_class_mailinglist, "I want a class mailing list" %>
+      </p>
+
+      <p>
+        <%= f.check_box :configure_teams_name_themselves %>
+        <%= f.label :configure_teams_name_themselves, "I will allow teams to name themselves" %>
+      </p>
+
+      <p>
+        <%= f.check_box(:remind_about_effort) %>
+        <%= f.label :remind_about_effort, "I will be using the Effort Logging Tool (note, all SE students are required to log effort)" %>
+        <br/>
+      </p>
+
+      <p>
+        <input type="checkbox" id="course_configure_peer_evaluation">
+        I plan on using the Peer Evaluation Tool <br/>
+        <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email
+        the teams telling them about the peer evaluation. <br/>
+        <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email
+        reminder will be sent on this date)
+      </p>
+
+      <p>
+        <%= f.hidden_field :is_configured, :value => true %>
+        <%= f.submit button_name %>
+      </p>
+      <!--
     <p>
       <%= f.label :primary_faculty_label %><br/>
       <%= f.text_field(:primary_faculty_label, :size => 40) %>
@@ -95,7 +110,7 @@
     </p>
 -->
 
-<% end %>
+  <% end %>
 
 </div>
 

@@ -43,11 +43,10 @@ class Ability
     if (user.is_admin?)
       can :manage, Course
     end
-    if  (user.is_staff? )
+    if  (user.is_staff?)
       can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
     end
-    can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => { :id => user.id } #Useful for TAs.
-
+    can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => {:id => user.id} #Useful for TAs.
 
 
     # The first argument to `can` is the action you are giving the user permission to do.

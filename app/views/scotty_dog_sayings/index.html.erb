@@ -9,29 +9,29 @@ Indeed, Scotty Dog's bark is worse than his bite, but now you have control over 
     <th>Timestamp</th>
     <th colspan=3>&nbsp;</th>
   </tr>
-<% for scotty_dog_saying in @scotty_dog_sayings %>
-  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-    <td><%=h scotty_dog_saying.saying %></td>
-    <td><%=h scotty_dog_saying.user.human_name %></td>
-    <td><%=h scotty_dog_saying.created_at.to_s(:long)  %></td>
-    <td><%= link_to 'Show', scotty_dog_saying %></td>
-    <% if scotty_dog_saying.editable?(current_user) %>
-      <td><%= link_to 'Edit', edit_scotty_dog_saying_path(scotty_dog_saying) %></td>
-    <% else %>
-      <td>&nbsp;</td>
-    <% end %>
-    <% if current_user && current_user.is_admin %>
-      <td><%= link_to 'Destroy', scotty_dog_saying, :confirm => 'Are you sure?', :method => :delete %></td>
-    <% else %>
-      <td>&nbsp;</td>
-    <% end %>
-  </tr>
-<% end %>
+  <% for scotty_dog_saying in @scotty_dog_sayings %>
+      <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+        <td><%= h scotty_dog_saying.saying %></td>
+        <td><%= h scotty_dog_saying.user.human_name %></td>
+        <td><%= h scotty_dog_saying.created_at.to_s(:long) %></td>
+        <td><%= link_to 'Show', scotty_dog_saying %></td>
+        <% if scotty_dog_saying.editable?(current_user) %>
+            <td><%= link_to 'Edit', edit_scotty_dog_saying_path(scotty_dog_saying) %></td>
+        <% else %>
+            <td>&nbsp;</td>
+        <% end %>
+        <% if current_user && current_user.is_admin %>
+            <td><%= link_to 'Destroy', scotty_dog_saying, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% else %>
+            <td>&nbsp;</td>
+        <% end %>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <%= link_to 'New Scotty Dog Saying', new_scotty_dog_saying_path %>
 
 
-<br /><br /><%= image_tag("/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69") %> 
+<br/><br/><%= image_tag("/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69") %>

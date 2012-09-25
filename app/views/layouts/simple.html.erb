@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-              	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-	<meta content="Carnegie Mellon University" name="author">
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="Carnegie Mellon University" name="author">
 
 
-	<meta content="index,follow" name="robots">
-	<meta content="31 days" name="revisit-after">
+  <meta content="index,follow" name="robots">
+  <meta content="31 days" name="revisit-after">
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
   <%= stylesheet_link_tag 'scaffold' %>
@@ -14,17 +14,17 @@
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js",
                              "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
                              "jquery_ujs.js",
-                              "tablesorter",
-                              "tablesorter_filter",
-                              "application" %>
+                             "tablesorter",
+                             "tablesorter_filter",
+                             "application" %>
   <%= csrf_meta_tag %>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all"/>
 
   <%= yield :tablesorter %>
 
-        <title><%= (title = yield :title) ? title : 'Carnegie Mellon Silicon Valley'%></title>
-        <%# yield :javascript %>
-        <%= yield :head %>
+  <title><%= (title = yield :title) ? title : 'Carnegie Mellon Silicon Valley' %></title>
+  <%# yield :javascript %>
+  <%= yield :head %>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
 <div id="success_explanation"><p style="color: green"><%= flash[:notice] %></p></div>
 <div id="error_explanation"><p style="color: red"><%= flash[:error] %></p></div>
 
-<%= yield  %>
+<%= yield %>
 
 </body>
 </html>

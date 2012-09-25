@@ -2,31 +2,32 @@
 
 <table class="cmu_table">
   <tr>
-    <th width="150" >Name</th>
+    <th width="150">Name</th>
     <th>Description</th>
-<!--
+    <!--
     <th>Is staff</th>
     <th>Is student</th>
     -->
   </tr>
 
-<% for task_type in @task_types %>
-  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-    <td><%=h task_type.name %></td>
-    <td><%=h task_type.description %></td>
-<!--
-    <td><%=h "x" if task_type.is_staff %></td>
-    <td><%=h "x" if task_type.is_student %></td>
+  <% for task_type in @task_types %>
+      <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+        <td><%= h task_type.name %></td>
+        <td><%= h task_type.description %></td>
+        <!--
+    <td><%= h "x" if task_type.is_staff %></td>
+    <td><%= h "x" if task_type.is_student %></td>
 -->
-<% if current_user.is_admin? %>
-    <td><%= link_to 'Show', task_type %></td>
-    <td><%= link_to 'Edit', edit_task_type_path(task_type) %></td>
-    <td><%= link_to 'Destroy', task_type, :confirm => 'Are you sure?', :method => :delete %></td>
-<% end %>
-  </tr>
-<% end %>
+        <% if current_user.is_admin? %>
+            <td><%= link_to 'Show', task_type %></td>
+            <td><%= link_to 'Edit', edit_task_type_path(task_type) %></td>
+            <td><%= link_to 'Destroy', task_type, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
-<% if current_user.is_admin? %> <p><%= link_to 'New task_type', new_task_type_path %></p> <% end %>
+<% if current_user.is_admin? %> <p><%= link_to 'New task_type', new_task_type_path %></p>
+<% end %>

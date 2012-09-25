@@ -23,7 +23,6 @@
 # Any presenter can also see their feedback from previous presentations by clicking on "My Presentations"
 
 
-
 class Presentation < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
@@ -53,14 +52,14 @@ class Presentation < ActiveRecord::Base
       user.human_name
     end
   end
-  
+
   def presenter?(current_user)
     current_user == self.user || current_user.teams.include?(team)
   end
 
   def has_given_feedback?(user)
     @presentation_feedbacks = PresentationFeedback.where("evaluator_id = :uid AND presentation_id = :pid",
-          {:uid => user.id, :pid => self.id})
+                                                         {:uid => user.id, :pid => self.id})
 
     if @presentation_feedbacks[0] == nil
       return false
@@ -84,14 +83,14 @@ class Presentation < ActiveRecord::Base
       team_condition << ") OR "
     end
     Presentation.where(team_condition + "(team_id IS NULL AND user_id = #{current_user.id})")
-  end    
+  end
 
   def can_view_feedback?(user)
     if presenter?(user) || user.is_staff? || user.is_admin
       return true
     end
     return false
-  end    
+  end
 
   def self.find_ratings (feedbacks, questions)
 

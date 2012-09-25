@@ -2,135 +2,137 @@
 
 <%= javascript_include_tag 'jquery.cookie' %>
 <script type="text/javascript">
-	var confirmation_needed = true;
-	window.onbeforeunload = confirmExit;
+    var confirmation_needed = true;
+    window.onbeforeunload = confirmExit;
 
-    function enable_tabs(checkbox){
-            if (checkbox.prop('checked')) {
-                $tabs = $('#tabs').tabs();
-                $tabs.tabs( 'option', 'disabled', [] ); //enables the tabs
-                $tabs.tabs( 'option', 'selected', parseInt($.cookie('selected_tab')));
-                $('.ui-tabs-nav').css('display', 'block');
-                $('#email_header').css('display', 'block');
-                $('.page_or_task').html("task");
-            }
-            else {
-                $tabs = $('#tabs').tabs();
-                $tabs.tabs( 'option', 'selected', 0 );
-                $tabs.tabs( 'option', 'disabled', [1, 2, 3] );
-                $('.ui-tabs-nav').css('display', 'none');
-                $('#email_header').css('display', 'none');
-                $('.page_or_task').html("page");
-            }
-     }
+    function enable_tabs(checkbox) {
+        if (checkbox.prop('checked')) {
+            $tabs = $('#tabs').tabs();
+            $tabs.tabs('option', 'disabled', []); //enables the tabs
+            $tabs.tabs('option', 'selected', parseInt($.cookie('selected_tab')));
+            $('.ui-tabs-nav').css('display', 'block');
+            $('#email_header').css('display', 'block');
+            $('.page_or_task').html("task");
+        }
+        else {
+            $tabs = $('#tabs').tabs();
+            $tabs.tabs('option', 'selected', 0);
+            $tabs.tabs('option', 'disabled', [1, 2, 3]);
+            $('.ui-tabs-nav').css('display', 'none');
+            $('#email_header').css('display', 'none');
+            $('.page_or_task').html("page");
+        }
+    }
 
-	$(function() {
-    $('#tabs').tabs();
-    $( '.selector' ).tabs({ cookie: { name: 'selected_tab', expires: 30 } });
-    $('#page_is_task').change(function(){
-      enable_tabs($(this));
+    $(function () {
+        $('#tabs').tabs();
+        $('.selector').tabs({ cookie:{ name:'selected_tab', expires:30 } });
+        $('#page_is_task').change(function () {
+            enable_tabs($(this));
         })
     });
 
-    $(document).ready(function(){                           
-	  enable_tabs($('#page_is_task'));
-      //enable_tabs($(this));  //does not seem to be required
+    $(document).ready(function () {
+        enable_tabs($('#page_is_task'));
+        //enable_tabs($(this));  //does not seem to be required
 
-      //select tab according to index saved in cookie
-      $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
-      $.cookie('selected_tab', null);   //clear cookie
+        //select tab according to index saved in cookie
+        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+        $.cookie('selected_tab', null);   //clear cookie
     });
 </script>
 
 
 <%= form_for(@page) do |f| %>
-  <% if @page.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+    <% if @page.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
 
-      <ul>
-      <% @page.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
+          <ul>
+            <% @page.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
     <p>
-      <%# f.label :course_id %><br />
+      <%# f.label :course_id %><br/>
       <%# f.collection_select(:course_id, @courses, :id, :name, :include_blank => true) %>
     </p>
-  <p>
-    <%= f.label :course_name %><br />
-    <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
-    <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
-  </p>
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>(*)
-  </p>
     <p>
-      <%= f.label :url, "Named page" %><br />
+      <%= f.label :course_name %><br/>
+      <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
+      <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
+    </p>
+    <p>
+      <%= f.label :title %><br/>
+      <%= f.text_field :title %>(*)
+    </p>
+    <p>
+      <%= f.label :url, "Named page" %><br/>
       (Optional) http://rails.sv.cmu.edu/pages/<%= f.text_field :url %><br/>
       <span class="help_text">This must be unique for all pages in the system.</span>
     </p>
-<!--
+    <!--
   <p>
     <%= f.label :indentation_level %><br />
     <%= f.text_field :indentation_level %>
   </p>
 -->
-  <p>
-    <%= f.label :is_task, 'Is this a task page for a course?' %> 
-    <%= f.check_box :is_task %>
-  </p>
-
-<div id="tabs">
-	<ul class="none">
-		<li><a href="#tabs-1">Project requirements</a></li>
-		<li><a href="#tabs-2">Getting help</a></li>
-		<li><a href="#tabs-3">Submitting your work</a></li>
-<% if current_user.is_staff || current_user.is_admin %>
-        <li><a href="#tabs-4">Faculty notes</a></li>
-<% end %>
-	</ul>
-	<div id="tabs-1">
-      <div id="email_header">
-      <div id="email_from_header">From:</div><div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
-      <div id="email_subject_header">Subject:</div><div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
-      </div>
-      <div id="email_details">
-         <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
-      </div>
-	</div>
-	<div id="tabs-2">
-       <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
-	</div>
-	<div id="tabs-3">
-       <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
-	</div>
-  <% if current_user.is_staff || current_user.is_admin %>
-	<div id="tabs-4">
-       <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
-	</div>
-  <% end %>    
-      </div>
-
-  <p>
-    <%= f.label :task_duration %><br />
-    <%= f.text_field :task_duration, :size => 2 %> weeks
-  </p>
-  <p>This <span class="page_or_task">page</span> is editable by<br />
-     <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
-     <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
-  </p>
-    <p>This <span class="page_or_task">page</span> is viewable by<br />
-       <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
-       <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
+    <p>
+      <%= f.label :is_task, 'Is this a task page for a course?' %>
+      <%= f.check_box :is_task %>
     </p>
-  <p>
 
-    <%= f.submit button_name, :onclick=>"confirmation_needed = false;"   %>
-  </p>
+    <div id="tabs">
+      <ul class="none">
+        <li><a href="#tabs-1">Project requirements</a></li>
+        <li><a href="#tabs-2">Getting help</a></li>
+        <li><a href="#tabs-3">Submitting your work</a></li>
+        <% if current_user.is_staff || current_user.is_admin %>
+            <li><a href="#tabs-4">Faculty notes</a></li>
+        <% end %>
+      </ul>
+      <div id="tabs-1">
+        <div id="email_header">
+          <div id="email_from_header">From:</div>
+          <div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+          <div id="email_subject_header">Subject:</div>
+          <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
+        </div>
+        <div id="email_details">
+          <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
+        </div>
+      </div>
+      <div id="tabs-2">
+        <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
+      </div>
+      <div id="tabs-3">
+        <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
+      </div>
+      <% if current_user.is_staff || current_user.is_admin %>
+          <div id="tabs-4">
+            <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
+          </div>
+      <% end %>
+    </div>
+
+    <p>
+      <%= f.label :task_duration %><br/>
+      <%= f.text_field :task_duration, :size => 2 %> weeks
+    </p>
+    <p>This <span class="page_or_task">page</span> is editable by<br/>
+      <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
+      <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
+    </p>
+    <p>This <span class="page_or_task">page</span> is viewable by<br/>
+      <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
+      <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
+    </p>
+    <p>
+
+      <%= f.submit button_name, :onclick => "confirmation_needed = false;" %>
+    </p>
 <% end %>
 

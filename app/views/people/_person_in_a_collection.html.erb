@@ -1,7 +1,7 @@
 <%
- #Parameters: member_label, name
- member_label = local_assigns[:member_label].nil? ? "Person" : local_assigns[:member_label]
- person = local_assigns[:person]
+   #Parameters: member_label, name
+   member_label = local_assigns[:member_label].nil? ? "Person" : local_assigns[:member_label]
+   person = local_assigns[:person]
 %>
 
 <div class="person_in_a_collection">
@@ -10,13 +10,13 @@
       <%= member_label %>:
       <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%= person %>"/>
 
-<script type="text/javascript">
-  $( ".people_name" ).autocomplete({
-			source: '/people_autocomplete.json',
-			minLength: 2
-		});
-</script>
-	<a href="#" class="remove_person" onclick="$(this).parents('div.person_in_a_collection').remove();">remove</a>
+      <script type="text/javascript">
+          $(".people_name").autocomplete({
+              source:'/people_autocomplete.json',
+              minLength:2
+          });
+      </script>
+      <a href="#" class="remove_person" onclick="$(this).parents('div.person_in_a_collection').remove();">remove</a>
     </p>
   </div>
 </div>

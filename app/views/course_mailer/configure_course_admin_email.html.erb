@@ -3,18 +3,20 @@ The course <%= @course.name %> for the <%= @course.semester %> <%= @course.year 
 <br/>
 <br/>
 <table border=1 cellspacing="5">
-<tr valign="top">
-  <td><%= "Please create a twiki web for my course" %><br/>
-  User says: <%= @course.configure_course_twiki ? "Yes" : "No" %>
-<% if @course.configure_course_twiki %>
-  <br/>System says: we'd expect the url to be <br/><%= @course.auto_generated_twiki_url %>
-<% end %>
-  </td>
-</tr>
+  <tr valign="top">
+    <td><%= "Please create a twiki web for my course" %>
+      <br/>
+      User says: <%= @course.configure_course_twiki ? "Yes" : "No" %>
+      <% if @course.configure_course_twiki %>
+          <br/>System says: we'd expect the url to be <br/><%= @course.auto_generated_twiki_url %>
+      <% end %>
+    </td>
+  </tr>
 
   <tr valign="top">
-    <td><%= "I want a class mailing list" %><br/>
-    User says: <%= @course.configure_class_mailinglist ? "Yes" : "No" %></td>
+    <td><%= "I want a class mailing list" %>
+      <br/>
+      User says: <%= @course.configure_class_mailinglist ? "Yes" : "No" %></td>
   </tr>
 
 
