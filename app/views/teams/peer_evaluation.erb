@@ -1,67 +1,71 @@
 <% content_for :title, "Peer Evaluation Tool" %>
 <% content_for :javascript do %>
-   <%= javascript_tag do %>
-	$(function() {
-		$("#team_peer_evaluation_first_email").datepicker({
-          showButtonPanel: true,
-          dateFormat: 'yy-mm-dd'
+    <%= javascript_tag do %>
+        $(function() {
+        $("#team_peer_evaluation_first_email").datepicker({
+        showButtonPanel: true,
+        dateFormat: 'yy-mm-dd'
         });
         $("#team_peer_evaluation_second_email").datepicker({
-          showButtonPanel: true,
-          dateFormat: 'yy-mm-dd'
+        showButtonPanel: true,
+        dateFormat: 'yy-mm-dd'
         });
- 	});
-   <% end %>
+        });
+    <% end %>
 <% end %>
 <h1>Peer Evaluation Tool</h1>
 
-<%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border=>"0") %>
+<%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border => "0") %>
 
-    <p>
+<p>
   <b>Name:</b>
-  <%=h @team.name %>
+  <%= h @team.name %>
 </p>
 
 <p>
   <b>Email:</b>
-  <%=h @team.email %>
+  <%= h @team.email %>
 </p>
 
-<%if current_user && !current_user.is_student %>
-<h2>Step 0: See what the student will see</h2>
-<%end%>
+<% if current_user && !current_user.is_student %>
+    <h2>Step 0: See what the student will see</h2>
+<% end %>
 
 <p><%= link_to "Complete the peer evaluation", :action => "edit_evaluation", :id => params[:id], :controller => "peer_evaluation" %>
 </p>
 
-<%if current_user && (current_user.is_staff || current_user.is_admin)%>
+<% if current_user && (current_user.is_staff || current_user.is_admin) %>
     <h2>Step 1: Setup the tool for this team</h2>
-<p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
+    <p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
 
-<p>The tool will send out two reminder emails to the students. Select the dates here.</p>
-<%= form_for :team, :url => peer_evaluation_update_path(@course, @team) do |f| %>
-<table class="layout_table">
-        <tr>
-          <td valign="top">First Email Date:<br/>"Heads up" notification</td>
-          <td align="left" style="padding-left:1.5em">
-            <%= f.text_field :peer_evaluation_first_email, :size => 10 %>
-          </td>
-        </tr>
-        <tr><td>&nbsp</td><td>&nbsp;</td></tr>
-        <tr>
-          <td valign="top">Second Email Date:<br/>"Do it today" reminder</td>
-          <td align="left" style="padding-left:1.5em">
-            <%= f.text_field :peer_evaluation_second_email, :size => 10 %>
-          </td></tr>
-</table>
+    <p>The tool will send out two reminder emails to the students. Select the dates here.</p>
+    <%= form_for :team, :url => peer_evaluation_update_path(@course, @team) do |f| %>
+        <table class="layout_table">
+          <tr>
+            <td valign="top">First Email Date:<br/>"Heads up" notification</td>
+            <td align="left" style="padding-left:1.5em">
+              <%= f.text_field :peer_evaluation_first_email, :size => 10 %>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top">Second Email Date:<br/>"Do it today" reminder</td>
+            <td align="left" style="padding-left:1.5em">
+              <%= f.text_field :peer_evaluation_second_email, :size => 10 %>
+            </td>
+          </tr>
+        </table>
 
-<%= submit_tag 'Save Dates' %><br/><br/>
+        <%= submit_tag 'Save Dates' %><br/><br/>
+    <% end %>
+
+    <h2>Step 2: Generate feedback for these students</h2>
+    <p><%= link_to "Edit the peer evaluation reports", :action => "edit_report", :id => params[:id], :controller => "peer_evaluation" %></p>
+
 <% end %>
-
-<h2>Step 2: Generate feedback for these students</h2>
-<p><%= link_to "Edit the peer evaluation reports", :action => "edit_report", :id => params[:id], :controller => "peer_evaluation" %></p>
-
-<%end%>
 <br/>
 
 <%= link_to 'Back', peer_evaluations_path(@team.course_id) %>

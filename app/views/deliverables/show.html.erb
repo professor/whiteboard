@@ -1,60 +1,60 @@
-<% if @deliverable.course  %>
-  <% title = "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
+<% if @deliverable.course %>
+    <% title = "Deliverable for " + @deliverable.course.name + " Task " + @deliverable.task_number %>
 <% else %>
-  <% title = "Deliverable for " + "(missing) course" + " Task " + @deliverable.task_number %>
+    <% title = "Deliverable for " + "(missing) course" + " Task " + @deliverable.task_number %>
 <% end %>
 <% content_for :title, title %>
 <h1><%= title %></h1>
 
 <p>
-  <b><%=h @deliverable.name %></b>
+  <b><%= h @deliverable.name %></b>
 </p>
 <p>
   <% if @deliverable.is_team_deliverable? %>
-    Team Deliverable for Team <%= @deliverable.team.name -%>
+      Team Deliverable for Team <%= @deliverable.team.name -%>
   <% else %>
-    Individual Deliverable for <%= @deliverable.creator.human_name -%>
+      Individual Deliverable for <%= @deliverable.creator.human_name -%>
   <% end %>
- (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
-    
+  (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
+
 </p>
 
 <br/>
 <h1>Attachment Version History</h1>
 
-<table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <th>Submission Date</th>
     <th>Deliverable File</th>
     <th>Comments</th>
   </tr>
 
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-  <td>(<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
-  </td>
-  <td colspan="2">&nbsp;</td>
-    </tr>
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+    <td>(<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
+    </td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
 
   <% @deliverable.attachment_versions.each_with_index do |version, index| %>
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-	<td>
-      <% if index == 0 %>
-          <%= display_timestamp(version.submission_date, :class => "latest") -%>
-      <% else %>
-          <%= display_timestamp(version.submission_date) -%>
-      <% end %>
-	</td>
+      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+        <td>
+          <% if index == 0 %>
+              <%= display_timestamp(version.submission_date, :class => "latest") -%>
+          <% else %>
+              <%= display_timestamp(version.submission_date) -%>
+          <% end %>
+        </td>
 
 
-    <td>
-        <% unless version.attachment_file_name.nil? %>
-            <%= link_to version.attachment_file_name, version.attachment.url %>
-        <% end %>
-    </td>
-    <td>
-      <%=h version.comment -%>
-    </td>
-  </tr>
+        <td>
+          <% unless version.attachment_file_name.nil? %>
+              <%= link_to version.attachment_file_name, version.attachment.url %>
+          <% end %>
+        </td>
+        <td>
+          <%= h version.comment -%>
+        </td>
+      </tr>
   <% end %>
 </table>
 <% if current_user.is_staff %>
@@ -69,7 +69,7 @@
 <br/>
 
 <h1>Feedback</h1>
-<table  class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <th>Date</th>
     <th>File</th>
@@ -77,13 +77,13 @@
   </tr>
 
   <% if @current_user.is_staff? %>
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
         <td>(<%= link_to 'Alter Feedback', deliverable_feedback_path(@deliverable) %>)</td>
         <td colspan="2">&nbsp;</td>
-  </tr>
+      </tr>
   <% end %>
 
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
     <td><%= format_timestamp(@deliverable.feedback_updated_at) %></td>
     <td>
       <% unless @deliverable.feedback_file_name.nil? %>
@@ -94,7 +94,7 @@
     </td>
     <td>
       <% if @deliverable.feedback_comment.blank? %>
-         None
+          None
       <% else %>
           <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %>
       <% end %>

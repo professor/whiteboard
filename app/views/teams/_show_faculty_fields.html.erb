@@ -1,32 +1,36 @@
 <p>
   Name: <%= @team.name %>
 </p>
- <p>
-   Section: <%=h @team.section %>
- </p>
- <p>
-   <%=h @course.primary_faculty_label %>
-   <% @faculty.each { |person| if person.id == @team.primary_faculty_id %>
-   : <%=h person.human_name %>
-  <% end } %>
+<p>
+  Section: <%= h @team.section %>
 </p>
- <p>
-   <%=h @course.secondary_faculty_label %>
-  <% @faculty.each { |person| if person.id == @team.secondary_faculty_id %>
-  : <%=h person.human_name %>
-  <% end } %>
- </p>
-  <br />
-  <h3> Team members </h3>
+<p>
+  <%= h @course.primary_faculty_label %>
+  <% @faculty.each { |person|
+    if person.id == @team.primary_faculty_id %>
+          : <%= h person.human_name %>
+      <% end } %>
+</p>
+<p>
+  <%= h @course.secondary_faculty_label %>
+  <% @faculty.each { |person|
+    if person.id == @team.secondary_faculty_id %>
+          : <%= h person.human_name %>
+      <% end } %>
+</p>
+<br/>
+<h3> Team members </h3>
 <table class="layout_table">
   <% @team.members.each do |user| %>
-  <tr id="person<%= user.id%>">
-    <td>
-    <%=h user.human_name %>
-    <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host") %><% end %>
-  </td><td>&nbsp;
-</td>
-</tr>
+      <tr id="person<%= user.id %>">
+        <td>
+          <%= h user.human_name %>
+          <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
+          <% end %>
+        </td>
+        <td>&nbsp;
+        </td>
+      </tr>
   <% end %>
 </table>
 

@@ -1,14 +1,16 @@
 <% content_for :title, 'Members of ' + @mailing_list %>
 
 
-<h1>Members of <%= @mailing_list.sub('@west.cmu.edu','@sv.cmu.edu') %></h1>
+<h1>Members of <%= @mailing_list.sub('@west.cmu.edu', '@sv.cmu.edu') %></h1>
 <table class="layout_table">
-<% for member in @members %>
-<tr><td><%= member.sub('@west.cmu.edu','@sv.cmu.edu') %></td></tr>
-<% end %>
+  <% for member in @members %>
+      <tr>
+        <td><%= member.sub('@west.cmu.edu', '@sv.cmu.edu') %></td>
+      </tr>
+  <% end %>
 </table>
 <br/>
-<p>There are <%=  @members.size %> people in this group.</p>
+<p>There are <%= @members.size %> people in this group.</p>
 <br/>
 <p><%= link_to 'Back', mailing_lists_path %></p>
 <br/>

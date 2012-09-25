@@ -1,10 +1,10 @@
 <% content_for :title, 'Edit Team' %>
 <h1>Edit team</h1>
 
-<%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
+<%= render :partial => "editable_form", :locals => {:button_name => "Update"} %>
 
 <% if current_user && current_user.is_admin %>
-<%= link_to 'Show', course_team_path(@team.course_id, @team) %> |
+    <%= link_to 'Show', course_team_path(@team.course_id, @team) %> |
 <% end %>
 <%= link_to 'Back', course_teams_path(@team.course_id) %>
 

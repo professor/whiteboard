@@ -1,36 +1,42 @@
 <%= form_for(@allocation) do |f| %>
-  <% if @allocation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@allocation.errors.count, "error") %> prohibited this allocation from being saved:</h2>
+    <% if @allocation.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@allocation.errors.count, "error") %> prohibited this allocation from being saved:</h2>
 
-      <ul>
-      <% @allocation.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
+          <ul>
+            <% @allocation.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-<table id="allocation_table" class="tablesorter" cellpadding="3">
-  <thead>
-<tr>
-  <th>Person</th>
-  <th>Sponsor - Project</th>
-  <th>Allocation</th>
-</tr>
-</thead>
-<tbody>
-    <tr><td><%= f.select :user_id, @users.collect{|item| [item.human_name, item.id]} %></td>
-        <td><%= f.select :sponsored_project_id, @projects.collect{|item| [item.sponsor.name + " - " + item.name[0..50], item.id]} %></td>
-        <td><%= f.text_field :current_allocation, :size => 2 %> %</td></tr>
-    <tr><td>&nbsp;</td><td><%= link_to 'New sponsor', new_sponsored_project_sponsor_path %>
-                        <%= link_to 'New project', new_sponsored_project_path %></td><td>&nbsp;</td></tr>
-</tbody>
-</table>
+    <table id="allocation_table" class="tablesorter" cellpadding="3">
+      <thead>
+      <tr>
+        <th>Person</th>
+        <th>Sponsor - Project</th>
+        <th>Allocation</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= f.select :user_id, @users.collect { |item| [item.human_name, item.id] } %></td>
+        <td><%= f.select :sponsored_project_id, @projects.collect { |item| [item.sponsor.name + " - " + item.name[0..50], item.id] } %></td>
+        <td><%= f.text_field :current_allocation, :size => 2 %> %</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= link_to 'New sponsor', new_sponsored_project_sponsor_path %>
+          <%= link_to 'New project', new_sponsored_project_path %></td>
+        <td>&nbsp;</td>
+      </tr>
+      </tbody>
+    </table>
 
-  <br />
-  <%= f.submit button_name %>
-  <br/>
-  <br/>
+    <br/>
+    <%= f.submit button_name %>
+    <br/>
+    <br/>
 <% end %>
 

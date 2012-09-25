@@ -4,34 +4,34 @@
 <%# render :partial => "form_create", :locals => { :button_name => "Create" } %>
 
 <%= form_for(@course) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+    <% if @course.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
 
-      <ul>
-      <% @course.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>   <p>
-    <%= f.label :number %><br />
-    <%= f.text_field :number, :size => "7" %>
-  </p>
+          <ul>
+            <% @course.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>   <p>
+  <%= f.label :number %><br/>
+  <%= f.text_field :number, :size => "7" %>
+</p>
     Example: 96-700
 
     <p>
-      <%= f.label :semester %><br />
+      <%= f.label :semester %><br/>
       <%= f.select(:semester, ['Fall', 'Spring', 'Summer']) %>
     </p>
     <p>
-      <%= f.label :year %><br />
+      <%= f.label :year %><br/>
       <%= f.text_field :year, :size => 4 %>
     </p>
 
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+    <p>
+      <%= f.submit "Create" %>
+    </p>
 <% end %>
 
 

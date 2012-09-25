@@ -1,54 +1,54 @@
 <% content_for :javascript do %>
-   <%= javascript_tag do %>
-	$(function() {
-		$("#presentation_presentation_date").datepicker({
-            showButtonPanel: true,
-            dateFormat: 'yy-mm-dd'
-		});
-	});
-   <% end %>
+    <%= javascript_tag do %>
+        $(function() {
+        $("#presentation_presentation_date").datepicker({
+        showButtonPanel: true,
+        dateFormat: 'yy-mm-dd'
+        });
+        });
+    <% end %>
 <% end %>
 
 <!-- why is there a multipart =>true here Himani? -->
 <%# form_for @presentation, :url=>new_course_presentation_path(params[:course_id]), :html => { :multipart => true} do |f| %>
 <%= form_for([@course, @presentation]) do |f| %>
-  <% if @presentation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@presentation.errors.count, "error") %> prohibited this Presentation from being saved:</h2>
+    <% if @presentation.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@presentation.errors.count, "error") %> prohibited this Presentation from being saved:</h2>
 
-      <ul>
-      <% @presentation.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
-  <p>
-    <%= f.label :name, "Name" %>
-    <%= f.text_field :name, :size => "50" %>
-  </p>
-  <p>
-    <%= f.label :course_id, "Course:" %>
-    <%= @course.name %>
-  </p>
-  <p>Who is giving the presentation?</p>
-  <p>
-    <%= f.label :team_id, "Team" %>
-    <%= f.collection_select :team_id, @course.teams,:id,:name, {:prompt => "Select a Team"}%>
-    or
-    <%= f.label :user, "Individual" %>
-    <%= f.text_field :user%>
-  </p>
-        <p>
-     <%= f.label :presentation_date, "Date" %>
-
-    <%= f.text_field(:presentation_date, :size => 10) %>
+          <ul>
+            <% @presentation.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <p>
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name, :size => "50" %>
     </p>
     <p>
-    <%= f.label :task_number, "Task Number" %>
-    <%= f.text_field :task_number, :size => "3" %> (Optional)
-  </p>
-  <p>
-    <%= f.submit%>
-  </p>
+      <%= f.label :course_id, "Course:" %>
+      <%= @course.name %>
+    </p>
+    <p>Who is giving the presentation?</p>
+    <p>
+      <%= f.label :team_id, "Team" %>
+      <%= f.collection_select :team_id, @course.teams, :id, :name, {:prompt => "Select a Team"} %>
+      or
+      <%= f.label :user, "Individual" %>
+      <%= f.text_field :user %>
+    </p>
+    <p>
+      <%= f.label :presentation_date, "Date" %>
+
+      <%= f.text_field(:presentation_date, :size => 10) %>
+    </p>
+    <p>
+      <%= f.label :task_number, "Task Number" %>
+      <%= f.text_field :task_number, :size => "3" %> (Optional)
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
 <% end %>

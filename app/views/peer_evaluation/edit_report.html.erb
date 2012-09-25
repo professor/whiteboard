@@ -1,50 +1,57 @@
 <script type="text/javascript">
-	var confirmation_needed = true;
-	window.onbeforeunload = confirmExit;
+    var confirmation_needed = true;
+    window.onbeforeunload = confirmExit;
 </script>
 <% content_for :title, 'Peer evaluation report for ' + @team.name %>
 <h1>Generate Report</h1>
 
-<%if !@incompletes.empty?%>
-  <%  @incompletes.each do |user| %>
-    <span style="color:red"><%=  user.human_name  %> has not completed the survey.</span> <br />
-  <%end%>
-   <br /><span style="color:red">Do not press "Save All Reports" until everyone has completed the survey.</span><br />
+<% if !@incompletes.empty? %>
+    <% @incompletes.each do |user| %>
+        <span style="color:red"><%= user.human_name %> has not completed the survey.</span> <br/>
+    <% end %>
+    <br/><span style="color:red">Do not press "Save All Reports" until everyone has completed the survey.</span><br/>
 <% else %>
-    <span style="color:green">Everyone has done the reports.</span><br />
-<%end%><br />
+    <span style="color:green">Everyone has done the reports.</span><br/>
+<% end %><br />
 
 We've included who said what, so you'll want to remove people's names. Keep an eye out for unhelpful comments.
-Once you are done editing the reports, the last button allows you to email the results back to each individual.<br />
+Once you are done editing the reports, the last button allows you to email the results back to each individual.<br/>
 
-<br />
+<br/>
 <%= form_for @report, :url => {:action => "complete_report"} do |f| %>
-<input type="hidden" name="id" value="<%=params[:id]%>">
-<%usercounter = 0%>
+    <input type="hidden" name="id" value="<%= params[:id] %>">
+    <% usercounter = 0 %>
 
-  <%@users.each do |user|%>
-    <%= user.human_name %><br />
-    <%= f.text_area :feedback, :index => usercounter ,:value => @reportArray[usercounter], :size=>"95x20" %><br />
-    <%= f.submit 'Save All Reports', :onclick=>"confirmation_needed = false;" %><br /><br />
-    <%usercounter += 1%>
-  <% end %>
+    <% @users.each do |user| %>
+        <%= user.human_name %><br />
+        <%= f.text_area :feedback, :index => usercounter, :value => @reportArray[usercounter], :size => "95x20" %><br />
+        <%= f.submit 'Save All Reports', :onclick => "confirmation_needed = false;" %><br /><br/>
+        <% usercounter += 1 %>
+    <% end %>
 
-  <h2>Point Allocation</h2>
+    <h2>Point Allocation</h2>
     This information will not be given to the student. This is an indicator to help determine if a team
     has issues with everyone contributing equally.
-  <table class="tablesorter">
-    <thead><tr><td>&nbsp;</td><%@users.each do |user| %><td><%= user.human_name %></td><% end %></tr></thead>
-    <tbody>
-    <%@users.each do |reviewer| %>
-      <tr><td><%= reviewer.human_name %> says:</td>
-      <%@users.each do |reviewee|%>
-        <td><%= @point_allocations[reviewer.human_name][reviewee.human_name] %></td>
+    <table class="tablesorter">
+      <thead>
+      <tr>
+        <td>&nbsp;</td>
+        <% @users.each do |user| %>
+            <td><%= user.human_name %></td>
+        <% end %></tr>
+      </thead>
+      <tbody>
+      <% @users.each do |reviewer| %>
+          <tr>
+            <td><%= reviewer.human_name %> says:</td>
+            <% @users.each do |reviewee| %>
+                <td><%= @point_allocations[reviewer.human_name][reviewee.human_name] %></td>
+            <% end %>
+          </tr>
       <% end %>
-    </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <%= f.submit 'Save And Email All',  :onclick=>"confirmation_needed = false;" %>
+    <%= f.submit 'Save And Email All', :onclick => "confirmation_needed = false;" %>
 <% end %>
 <br/>

@@ -2,48 +2,57 @@
 
 
 <div>
-<%= form_for @class_profile_state, :as => :class_profile_state, :url => {:action => "class_profile", :id=> params[:id]} do |f| %>
-  <table class="layout_table" width="100%" >
-    <colgroup span="3" align="left"></colgroup>
-    <colgroup align="right" style="color:#0000FF;"></colgroup>
-  <tr>
-      <td>
-        Program:
-        <%= f.select(:program, @programs, :include_blank => true) %>
-      </td>
-    <td>
-      PT/FT:
-      <%= f.select(:is_part_time, %w{FT PT}) %>
-    </td>
-    <td>
-      Class of
-      <%= f.select(:graduation_year, %w{2006 2007 2008 2009 2010 2011 2012 2013}, :include_blank => true) %>
-    </td>
-     <td>
-           <%= f.submit "Update" %>
-     </td>
-    </tr>
-  </table>
+  <%= form_for @class_profile_state, :as => :class_profile_state, :url => {:action => "class_profile", :id => params[:id]} do |f| %>
+      <table class="layout_table" width="100%">
+        <colgroup span="3" align="left"></colgroup>
+        <colgroup align="right" style="color:#0000FF;"></colgroup>
+        <tr>
+          <td>
+            Program:
+            <%= f.select(:program, @programs, :include_blank => true) %>
+          </td>
+          <td>
+            PT/FT:
+            <%= f.select(:is_part_time, %w{FT PT}) %>
+          </td>
+          <td>
+            Class of
+            <%= f.select(:graduation_year, %w{2006 2007 2008 2009 2010 2011 2012 2013}, :include_blank => true) %>
+          </td>
+          <td>
+            <%= f.submit "Update" %>
+          </td>
+        </tr>
+      </table>
   <% end %>
 </div>
 
 <h1><%= @title %></h1>
 <table class="layout_table">
-<% @students.each do |person| %>
-   <tr valign="top"><td>
-        <div class="user_photo"><%= link_to image_tag(person.image_uri), person_path(person) %></div>
-        </td><td>&nbsp;</td><td>
-      <h1><%=h person.human_name %></h1>
-        <% unless person.organization_name.blank? %><% unless person.title.blank? %><%=h person.title%> - <%end%><%=h person.organization_name %><br/><%end%>
-        <% if display_location(person) %><%=h display_location(person) %><%end%>
-        <div align="right" valign="top" style="position:relative;top:280px;left:890px;font-size:11px;" >
-          <%= link_to 'Edit', edit_person_path(person) %> |
-          <%= link_to 'Back', people_path %>
-        </div>
+  <% @students.each do |person| %>
+      <tr valign="top">
+        <td>
+          <div class="user_photo"><%= link_to image_tag(person.image_uri), person_path(person) %></div>
+        </td>
+        <td>&nbsp;</td>
+        <td>
+          <h1><%= h person.human_name %></h1>
+          <% unless person.organization_name.blank? %>
+              <% unless person.title.blank? %><%= h person.title %> -
+                  <% end %><%= h person.organization_name %>
+              <br/>
+          <% end %>
+          <% if display_location(person) %><%= h display_location(person) %>
+          <% end %>
+          <div align="right" valign="top" style="position:relative;top:280px;left:890px;font-size:11px;">
+            <%= link_to 'Edit', edit_person_path(person) %> |
+            <%= link_to 'Back', people_path %>
+          </div>
 
-        <% unless person.biography.blank? %>
-        <%= person.biography.html_safe %>
-        <% end %>
-    </td>
-  </tr><% end %>
+          <% unless person.biography.blank? %>
+              <%= person.biography.html_safe %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
 </table>

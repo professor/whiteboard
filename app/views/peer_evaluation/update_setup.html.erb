@@ -2,15 +2,15 @@
 
 <%= form_for @objectives, :url => {:action => "complete_setup_update"} do |f| %>
 
-<input type="hidden" name="id" value="<%=params[:id]%>">
+    <input type="hidden" name="id" value="<%= params[:id] %>">
 
-<% usercounter = 0 %>
+    <% usercounter = 0 %>
 
-  <% @users.each do |user| %>
-    <%= user.human_name %>  <br />
-    <%= f.text_field :learning_objective, :value => PeerEvaluationLearningObjective.where({:user_id => user.id, :team_id => params[:id]}).first.learning_objective, :index => usercounter %><br />
-    <% usercounter += 1 %>
-  <%end%>
+    <% @users.each do |user| %>
+        <%= user.human_name %>  <br/>
+        <%= f.text_field :learning_objective, :value => PeerEvaluationLearningObjective.where({:user_id => user.id, :team_id => params[:id]}).first.learning_objective, :index => usercounter %><br />
+        <% usercounter += 1 %>
+    <% end %>
 
-  <%= f.submit 'Create Learning Objectives' %>
-<%end%>
+    <%= f.submit 'Create Learning Objectives' %>
+<% end %>

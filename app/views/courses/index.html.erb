@@ -26,82 +26,82 @@
     <% content_for :title, 'All courses' %>
     <h1>All Courses</h1>
     <div class="right_link"><%= link_to 'See current semester', :action => "current_semester" %></div>
-    <%= render :partial => "index_courses_for_a_semester", :locals => { :style => nil } %>
+    <%= render :partial => "index_courses_for_a_semester", :locals => {:style => nil} %>
 
 <% else %>
     <% content_for :title, @semester + " " + @year.to_s + " Courses" %>
     <div>
-    <h1><%= @semester %> <%= @year %> Courses</h1>
+      <h1><%= @semester %> <%= @year %> Courses</h1>
+
       <p>For more information about your options
         see <%= link_to "course selections", "http://info.sv.cmu.edu/do/view/#{@semester}#{@year}" %></p>
     </div>
-<!--
+    <!--
     <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
     -->
     <!--
-      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list.png", :class => "icon", :size=>"90x55", :alt=>"Courses in semester", :title=>"Courses in semester"), "url" %></div>
-      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list_by_mini.png", :class => "icon", :size=>"90x55", :alt=>"Courses in semester", :title=>"Courses in semester"), "url" %></div>
+      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
+      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list_by_mini.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
       -->
 
 
-<!--
+    <!--
     <div>Mini A + B: <%= l AcademicCalendar.date_for_semester_start(@semester, @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_semester_end(@semester, @year), :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "Both") %> weeks)</div>
     <div>Mini A: <%= l AcademicCalendar.date_for_mini_start(@semester, "A", @year), :format => :month_day %> - <%= l AcademicCalendar.date_for_mini_end(@semester, "A", @year), :format => :month_day %>  (<%= AcademicCalendar.term_length(@semester, "A") %> weeks)</div>
-    <div>Mini B:  <%= l AcademicCalendar.date_for_mini_start(@semester, "B", @year),  :format => :month_day %>  - <%= l AcademicCalendar.date_for_mini_end(@semester, "B", @year),  :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks) </div>
+    <div>Mini B:  <%= l AcademicCalendar.date_for_mini_start(@semester, "B", @year), :format => :month_day %>  - <%= l AcademicCalendar.date_for_mini_end(@semester, "B", @year), :format => :month_day %> (<%= AcademicCalendar.term_length(@semester, "B") %> weeks) </div>
 -->
 
-<% if current_user.course_tools_view == "length" || params[:view] == "length" %>
-        <div class="right_link"><%= link_to image_tag("/images/courses_list_by_mini.png", :id => "course_tools_view_image", :class => "icon", :size=>"90x55", :alt=>"Courses in semester", :title=>"Courses in semester"), "#" %></div>
-    <%= render :partial => "index_courses_by_length", :locals => { :style => nil, :state => "length"} %> <br/>
-    <%= render :partial => "index_courses_for_a_semester", :locals => {  :style => "display:none;"} %>
-<% else %>
-    <%# This is the default option for those who have never hit the link %>
-        <div class="right_link"><%= link_to image_tag("/images/courses_list.png", :id => "course_tools_view_image", :class => "icon", :size=>"90x55", :alt=>"Courses in semester", :title=>"Courses in semester"), "#" %></div>
-    <%= render :partial => "index_courses_by_length", :locals => { :style => "display:none;", :state => "semester"} %> <br/>
-    <%= render :partial => "index_courses_for_a_semester", :locals => { :style => nil } %>
-<% end %>
+    <% if current_user.course_tools_view == "length" || params[:view] == "length" %>
+        <div class="right_link"><%= link_to image_tag("/images/courses_list_by_mini.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
+        <%= render :partial => "index_courses_by_length", :locals => {:style => nil, :state => "length"} %> <br/>
+        <%= render :partial => "index_courses_for_a_semester", :locals => {:style => "display:none;"} %>
+    <% else %>
+        <%# This is the default option for those who have never hit the link %>
+        <div class="right_link"><%= link_to image_tag("/images/courses_list.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
+        <%= render :partial => "index_courses_by_length", :locals => {:style => "display:none;", :state => "semester"} %>
+        <br/>
+        <%= render :partial => "index_courses_for_a_semester", :locals => {:style => nil} %>
+    <% end %>
 
 
-<script>
-$(document).ready(function() {
-    $('#course_tools_view_image').click(function() {
-        $('#course_tools_view').click();
-    });
-    $('#course_tools_view').click(function() {
-        old_state = $(this).attr('data-view-state');
-        if(old_state == "semester")
-        {
-            new_state = "length";
-            $(this).attr('data-view-state', "length");
-            $('#course_tools_view').html("Show course listing");
+    <script>
+        $(document).ready(function () {
+            $('#course_tools_view_image').click(function () {
+                $('#course_tools_view').click();
+            });
+            $('#course_tools_view').click(function () {
+                old_state = $(this).attr('data-view-state');
+                if (old_state == "semester") {
+                    new_state = "length";
+                    $(this).attr('data-view-state', "length");
+                    $('#course_tools_view').html("Show course listing");
 //            $('#courses_for_a_semester').hide();
 //            $('#courses_by_length').show();
-            $('#semester_length_courses').show('slow');
-            $('#mini_b_courses_table').show('slow');
-            $('#mini_a_courses_table').show('slow');
-            $('#course_tools_view_image').attr("src", '/images/courses_list_by_mini.png');
-        }
-        else
-        {
-            new_state = "semester";
-            $(this).attr('data-view-state', "semester");
-            $('#course_tools_view').html("Show courses by minis");
+                    $('#semester_length_courses').show('slow');
+                    $('#mini_b_courses_table').show('slow');
+                    $('#mini_a_courses_table').show('slow');
+                    $('#course_tools_view_image').attr("src", '/images/courses_list_by_mini.png');
+                }
+                else {
+                    new_state = "semester";
+                    $(this).attr('data-view-state', "semester");
+                    $('#course_tools_view').html("Show courses by minis");
 //            $('#courses_for_a_semester').show();
 //            $('#courses_by_length').hide();
-            $('#semester_length_courses').hide('slow');
-            $('#mini_b_courses_table').hide('slow');
-            $('#mini_a_courses_table').hide('slow');
-            $('#course_tools_view_image').attr("src", '/images/courses_list.png');
-        }
-        $.ajax({
-            type: 'post',
-            data: "model=User&id=<%=current_user.id%>&attribute=course_index_view&value=" + new_state,
-            dataType: 'script',
-            url: '/generic_ajax/update_model_with_value'});
+                    $('#semester_length_courses').hide('slow');
+                    $('#mini_b_courses_table').hide('slow');
+                    $('#mini_a_courses_table').hide('slow');
+                    $('#course_tools_view_image').attr("src", '/images/courses_list.png');
+                }
+                $.ajax({
+                    type:'post',
+                    data:"model=User&id=<%=current_user.id%>&attribute=course_index_view&value=" + new_state,
+                    dataType:'script',
+                    url:'/generic_ajax/update_model_with_value'});
 
-    });
-});
-</script>
+            });
+        });
+    </script>
 <% end %>
 
 <br/>

@@ -2,27 +2,7 @@
 
 <h1>Edit Deliverable or Upload a New Attachment</h1>
 
-<%= render :partial => "editable_form",:locals => { :button_name => "Update" } %>
-
-<!--
-
-<%= form_for @deliverable, :html => { :multipart => true } do |f| %>
-    <%= fields_for :deliverable_attachment do |attachment_form| -%>
-      <p>
-        <%= attachment_form.label :attachment, "Deliverable file to upload" %>
-        <%= attachment_form.file_field :attachment %>
-      </p>
-      <p>
-        <%= attachment_form.label :comment, "Comments" %>
-        <br>
-        <%= attachment_form.text_area :comment, :size => "90x10" %>
-      </p>
-    <% end -%>
-    <p>
-      <%= f.submit "Upload" %>
-    </p>    
-<% end %>
--->
+<%= render :partial => "editable_form", :locals => {:button_name => "Update"} %>
 
 <%= link_to 'Cancel', deliverable_path(@deliverable) %>
 

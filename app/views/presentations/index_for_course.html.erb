@@ -1,7 +1,8 @@
 <h1>Presentations for <%= @course.display_name %></h1>
-<div class="right_link" ><%= link_to "Today's presentations", today_presentations_url %><br/><%= link_to "All presentations", presentations_url %></div>
+<div class="right_link"><%= link_to "Today's presentations", today_presentations_url %>
+  <br/><%= link_to "All presentations", presentations_url %></div>
 
-    <%= render :partial => "index", :locals => { :presentations => @presentations, :on_course_page => true }%>
-    <p><%= link_to "Assign new presentation",new_course_presentation_path(@course.id)%></p>
+<%= render :partial => "index", :locals => {:presentations => @presentations, :on_course_page => true} %>
+<p><%= link_to "Assign new presentation", new_course_presentation_path(@course.id) %></p>
 <br/>
 <br/>

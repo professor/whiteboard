@@ -16,32 +16,35 @@
   </tr>
 
   <% presentations.each_with_index do |presentation, n| %>
-    <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-      <% if on_course_page %>
-          <td><%= n+1 %></td>
-      <% else %>
-          <td><%= link_to presentation.course.short_name[0..6], course_presentations_path(presentation.course) unless presentation.course.blank? %></td>
-      <% end %>
-      <td><%= presentation.presenter %></td>
-      <td><%= presentation.name  %></td>
-      <% if on_course_page %>
-      <td><%= presentation.task_number%></td>
-      <td><%= presentation.presentation_date  %></td>
-      <% end %>
+      <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+        <% if on_course_page %>
+            <td><%= n+1 %></td>
+        <% else %>
+            <td><%= link_to presentation.course.short_name[0..6], course_presentations_path(presentation.course) unless presentation.course.blank? %></td>
+        <% end %>
+        <td><%= presentation.presenter %></td>
+        <td><%= presentation.name %></td>
+        <% if on_course_page %>
+            <td><%= presentation.task_number %></td>
+            <td><%= presentation.presentation_date %></td>
+        <% end %>
 
 
-      <td>
-        <% if presentation.presenter?(current_user) || current_user.is_staff? ||current_user.is_admin? %>
-            <%= link_to "View feedback", show_feedback_for_presentation_path(:id => presentation.id)  %> <% if on_course_page %><br/><% end %>
-        <% end %>
-        <% unless presentation.presenter?(current_user)%>
-            <% if presentation.has_given_feedback?(current_user) %>
-                <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
-            <% else %>
-                <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
-            <% end %>
-        <% end %>
-      </td>
-    </tr>
+        <td>
+          <% if presentation.presenter?(current_user) || current_user.is_staff? ||current_user.is_admin? %>
+              <%= link_to "View feedback", show_feedback_for_presentation_path(:id => presentation.id) %>
+              <% if on_course_page %>
+                  <br/>
+              <% end %>
+          <% end %>
+          <% unless presentation.presenter?(current_user) %>
+              <% if presentation.has_given_feedback?(current_user) %>
+                  <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
+              <% else %>
+                  <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
 </table>

@@ -1,7 +1,6 @@
-
 "<%= @page_comment.comment %>"
 <% if !@page_comment.user_id.nil? %>
-by <%=h User.find(@page_comment.user_id).human_name %>
+    by <%= h User.find(@page_comment.user_id).human_name %>
 <% end %>
 
 

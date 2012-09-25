@@ -6,12 +6,13 @@
 
 <% unless current_user.is_student %>
     <br/>
-   <strong>(This page only works for students. If you aren't on a team for a course, you can't upload a deliverable)</strong>
-   <br/><br/>
+    <strong>(This page only works for students. If you aren't on a team for a course, you can't upload a
+      deliverable)</strong>
+    <br/><br/>
 <% end %>
 
 
-<%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
+<%= render :partial => "editable_form", :locals => {:button_name => "Create"} %>
 
 <%= link_to 'Cancel', my_deliverables_path(@deliverable.creator) %>
 <br/>

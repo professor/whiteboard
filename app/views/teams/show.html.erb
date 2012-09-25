@@ -1,68 +1,69 @@
 <% content_for :title, 'Team' + @team.name %>
 <p>
   <b>Name:</b>
-  <%=h @team.name %>
+  <%= h @team.name %>
 </p>
 
 <p>
   <b>Email:</b>
-  <%=h @team.email %> 
-  <% if @team.updating_email %> (...updating...)<% end %>
+  <%= h @team.email %>
+  <% if @team.updating_email %> (...updating...)
+  <% end %>
   <br/><br/>
   <% unless @team.email.blank? %>
       According to Google Apps for Education, this mailing list contains:<br/>
       <% for member in @team.show_addresses_for_mailing_list() %>
-      <%= member %><br/>
+          <%= member %><br/>
       <% end %>
   <% end %>
 </p>
 
 <p>
   <b>Twiki space:</b>
-  <a href="<%=h @team.twiki_space %>"><%=h @team.twiki_space %></a>
+  <a href="<%= h @team.twiki_space %>"><%= h @team.twiki_space %></a>
 </p>
 
 <% unless @team.tigris_space.blank? %>
-<p>
-  <b>Tigris space:</b>
-  <a href="<%=h @team.tigris_space %>"><%=h @team.tigris_space %></a>
-</p>
+    <p>
+      <b>Tigris space:</b>
+      <a href="<%= h @team.tigris_space %>"><%= h @team.tigris_space %></a>
+    </p>
 <% end %>
 
 <p>
   <b>Course Name:</b>
-  <%=h @team.course.number %>
-  <%=h @team.course.name %>
+  <%= h @team.course.number %>
+  <%= h @team.course.name %>
 </p>
 
 <p>
-   <b><%=h @course.primary_faculty_label%></b>
-   <% if @team.primary_faculty %>
-   <%= twiki_user_link(@team.primary_faculty.twiki_name, @team.primary_faculty.human_name) %>
+  <b><%= h @course.primary_faculty_label %></b>
+  <% if @team.primary_faculty %>
+      <%= twiki_user_link(@team.primary_faculty.twiki_name, @team.primary_faculty.human_name) %>
   <% end %>
 </p>
 
 <p>
-  <b><%=h @course.secondary_faculty_label%></b>
+  <b><%= h @course.secondary_faculty_label %></b>
   <% if @team.secondary_faculty %>
-  <%= twiki_user_link(@team.secondary_faculty.twiki_name, @team.secondary_faculty.human_name) %>
+      <%= twiki_user_link(@team.secondary_faculty.twiki_name, @team.secondary_faculty.human_name) %>
   <% end %>
 </p>
 
-    <p>
-      <b>Team Members: </b>
-    <% @team.members.each do |user| %>
-    <%= render :partial=>'people/twiki_photo_link', :locals => {:person => user} %>
-    <% end %>
-  </p>
-<br style="clear:both;" />
+<p>
+  <b>Team Members: </b>
+  <% @team.members.each do |user| %>
+      <%= render :partial => 'people/twiki_photo_link', :locals => {:person => user} %>
+  <% end %>
+</p>
+<br style="clear:both;"/>
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
-<h2>Faculty Helpers</h2>
-<a href="<%=url_for :action=>"peer_evaluation", :id => params[:id], :course_id => params[:course_id], :only_path=>true%>">
-<%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border=>"0") %><p>Peer Evaluation Tool</p></a>
+    <h2>Faculty Helpers</h2>
+    <a href="<%= url_for :action => "peer_evaluation", :id => params[:id], :course_id => params[:course_id], :only_path => true %>">
+      <%= image_tag("/images/peer_evaluation2.jpg", :size => "99x71", :border => "0") %><p>Peer Evaluation Tool</p></a>
 
 <% end %>
-<br style="clear:both;" />
+<br style="clear:both;"/>
 
 <%= link_to 'Edit', edit_course_team_path(@team.course_id, @team) %> |
 <%= link_to 'Back', course_teams_path(@team.course_id) %>

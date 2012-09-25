@@ -10,53 +10,54 @@
     <th>&nbsp;</th>
   </tr>
 
-<% if @show_new_link %>
-  <tr>
-  <td class="log_weeknumber">Week <%=h Date.today.cweek %> of <%=h Date.today.year%></td>
-  <td>starting on</td>
-  <td><%=h show_monday_for(Date.today.year, Date.today.cweek) %></td>
-  <td class="log_sum">&nbsp;</td>
-  <td class="log_action"><%= link_to 'New effort log', :controller => "effort_logs", :action => "new", :prior => nil %></td>
-  </tr>
-<% end %>
+  <% if @show_new_link %>
+      <tr>
+        <td class="log_weeknumber">Week <%= h Date.today.cweek %> of <%= h Date.today.year %></td>
+        <td>starting on</td>
+        <td><%= h show_monday_for(Date.today.year, Date.today.cweek) %></td>
+        <td class="log_sum">&nbsp;</td>
+        <td class="log_action"><%= link_to 'New effort log', :controller => "effort_logs", :action => "new", :prior => nil %></td>
+      </tr>
+  <% end %>
 
 
 
-<% if @show_prior_week %>
-  <tr>
-  <td class="log_weeknumber">Week <%=h @prior_week_number %> of <%=h Date.today.year%></td>
-  <td>starting on</td>
-  <td><%=h show_monday_for(Date.today.year, @prior_week_number) %></td>
-  <td class="log_sum">&nbsp;</td>
-  <td class="log_action"><%= link_to 'New effort log', :controller => "effort_logs", :action => "new", :prior => "true" %></td>
-  </tr>
-<% end %>
+  <% if @show_prior_week %>
+      <tr>
+        <td class="log_weeknumber">Week <%= h @prior_week_number %> of <%= h Date.today.year %></td>
+        <td>starting on</td>
+        <td><%= h show_monday_for(Date.today.year, @prior_week_number) %></td>
+        <td class="log_sum">&nbsp;</td>
+        <td class="log_action"><%= link_to 'New effort log', :controller => "effort_logs", :action => "new", :prior => "true" %></td>
+      </tr>
+  <% end %>
 
-<% for effort_log in @effort_logs %>
-  <tr>
-    <td class="log_weeknumber">Week <%=h effort_log.week_number %> of <%=h effort_log.year%></td>
-    <td>starting on</td>
-    <td><%=h show_monday_for(effort_log.year, effort_log.week_number) %></td>
-    <td class="log_sum"><%=h effort_log.sum %> hrs</td>
-    <td class="log_action"><%= link_to 'Show', effort_log %></td>
-    <% if effort_log.editable_by(current_user) %>
-    <td class="log_action"><%= link_to 'Edit', edit_effort_log_path(effort_log) %></td>
-    <% else %>
-    <td>&nbsp;</td>
-    <% end %>
-    <td>&nbsp;</td>
-<% if current_user && current_user.is_admin %>
-    <td class="log_action"><%= link_to 'Destroy', effort_log, :confirm => 'Are you sure?', :method => :delete %></td>
-<% end %>
-  </tr>
-<% end %>
+  <% for effort_log in @effort_logs %>
+      <tr>
+        <td class="log_weeknumber">Week <%= h effort_log.week_number %> of <%= h effort_log.year %></td>
+        <td>starting on</td>
+        <td><%= h show_monday_for(effort_log.year, effort_log.week_number) %></td>
+        <td class="log_sum"><%= h effort_log.sum %> hrs</td>
+        <td class="log_action"><%= link_to 'Show', effort_log %></td>
+        <% if effort_log.editable_by(current_user) %>
+            <td class="log_action"><%= link_to 'Edit', edit_effort_log_path(effort_log) %></td>
+        <% else %>
+            <td>&nbsp;</td>
+        <% end %>
+        <td>&nbsp;</td>
+        <% if current_user && current_user.is_admin %>
+            <td class="log_action"><%= link_to 'Destroy', effort_log, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
-<p>Note: Every week, you'll be able to create a new effort log entry. Effort logs are due each week on Sunday by midnight (Pacific Time).
- You have a 24 hour grace period. You will not be able to create or edit after logs after the grace period. We don't
-remember what we had for lunch yesterday and we don't think you'll remember what you were doing last week.</p>
-<br />
+<p>Note: Every week, you'll be able to create a new effort log entry. Effort logs are due each week on Sunday by
+  midnight (Pacific Time).
+  You have a 24 hour grace period. You will not be able to create or edit after logs after the grace period. We don't
+  remember what we had for lunch yesterday and we don't think you'll remember what you were doing last week.</p>
+<br/>
 <p><%= link_to 'Back', '/' %></p>
 <br/>

@@ -9,19 +9,19 @@
     <th>Who</th>
   </tr>
 
-<% for page in @pages %>
-  <tr class="<%= cycle('cmu_table_odd','cmu_table_even')%>">
-    <td><%= link_to page.title, page %>
-<% unless page.course_id.blank?  %>
-   (<%=h page.course.name %>)
-<% end %>
-    </td>
-    <td><%=l page.updated_at, :format => :detailed %></td>
-    <td><%= page.updated_by.human_name %></td>
-  </tr>
-<% end %>
+  <% for page in @pages %>
+      <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+        <td><%= link_to page.title, page %>
+          <% unless page.course_id.blank? %>
+              (<%= h page.course.name %>)
+          <% end %>
+        </td>
+        <td><%= l page.updated_at, :format => :detailed %></td>
+        <td><%= page.updated_by.human_name %></td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <%= link_to 'New page', new_page_path %>

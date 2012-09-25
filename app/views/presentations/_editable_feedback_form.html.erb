@@ -1,43 +1,44 @@
 <script type="text/javascript">
-	var confirmation_needed = true;
-	window.onbeforeunload = confirmExit;
+    var confirmation_needed = true;
+    window.onbeforeunload = confirmExit;
 </script>
-<%= form_for @feedback, :url => new_presentation_feedback_path, :html => { :multipart => true } do |f| %>
-  <% if @feedback.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this page from being saved:</h2>
+<%= form_for @feedback, :url => new_presentation_feedback_path, :html => {:multipart => true} do |f| %>
+    <% if @feedback.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this page from being saved:</h2>
 
-      <ul>
-      <% @feedback.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% @feedback.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <%= f.hidden_field(:presentation_id) %>
+    <%= f.hidden_field(:presentation_id) %>
 
-  <% @questions.each do |question| %>
-      <h2><%= question.label %></h2>
-      <p>
-        <%= question.text %>
+    <% @questions.each do |question| %>
+        <h2><%= question.label %></h2>
+        <p>
+          <%= question.text %>
         <div>
-        <% @eval_options.each do |key, value| %>
-          <div>
-            <%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key %><span><%= value %></span>
-          </div>
-        <% end %>
+          <% @eval_options.each do |key, value| %>
+              <div>
+                <%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key %>
+                <span><%= value %></span>
+              </div>
+          <% end %>
         </div>
         <br/>
         <div>
           <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
         </div>
         <br/>
-      </p>
-  <% end %>
-  <p>
-    <%= f.submit button_name,  :onclick=>"confirmation_needed = false;"  %>
-  </p>
+        </p>
+    <% end %>
+    <p>
+      <%= f.submit button_name, :onclick => "confirmation_needed = false;" %>
+    </p>
 <% end %>
 <br/>
 <br/>

@@ -1,23 +1,26 @@
 <%= form_for(@sponsor) do |f| %>
-  <% if @sponsor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sponsor.errors.count, "error") %> prohibited this sponsor from being saved:</h2>
+    <% if @sponsor.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@sponsor.errors.count, "error") %> prohibited this sponsor from being saved:</h2>
 
-      <ul>
-      <% @sponsor.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
+          <ul>
+            <% @sponsor.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <table class="layout_table">
-    <tr><td><%= f.label :name %></td><td><%= f.text_field :name %></td></tr>
-  </table>
+    <table class="layout_table">
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+    </table>
 
-  <br />
-  <%= f.submit button_name %>
-  <br/>
-  <br/>
+    <br/>
+    <%= f.submit button_name %>
+    <br/>
+    <br/>
 <% end %>
 

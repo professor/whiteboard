@@ -1,37 +1,37 @@
 <h1>New Task Type</h1>
 
 <%= form_for(@task_type) do |f| %>
-  <% if @task_type.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task_type.errors.count, "error") %> prohibited this task type from being saved:</h2>
+    <% if @task_type.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@task_type.errors.count, "error") %> prohibited this task type from being saved:</h2>
 
-      <ul>
-      <% @task_type.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %> 
-    
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description,  :size => "80x10" %>
-  </p>
-  <p>
-    <%= f.label :is_staff %><br />
-    <%= f.check_box :is_staff %>
-  </p>
-  <p>
-    <%= f.label :is_student %><br />
-    <%= f.check_box :is_student %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+          <ul>
+            <% @task_type.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :description %><br/>
+      <%= f.text_area :description, :size => "80x10" %>
+    </p>
+    <p>
+      <%= f.label :is_staff %><br/>
+      <%= f.check_box :is_staff %>
+    </p>
+    <p>
+      <%= f.label :is_student %><br/>
+      <%= f.check_box :is_student %>
+    </p>
+    <p>
+      <%= f.submit "Create" %>
+    </p>
 <% end %>
 
 <p><%= link_to 'Back', task_types_path %></p>

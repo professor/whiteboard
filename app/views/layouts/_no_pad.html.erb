@@ -1,23 +1,25 @@
 <div class="sv_main_contents">
-<a name="access" shape="rect"></a>
+  <a name="access" shape="rect"></a>
   <% if flash[:notice] %>
-  <div class="ui-widget">
-      <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+      <div class="ui-widget">
+        <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
           <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-          <%= flash[:notice] %>
+            <%= flash[:notice] %>
+        </div>
       </div>
-  </div>
   <% end %>
   <% if flash[:error] %>
       <div class="ui-widget">
-      <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
           <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-          <%= flash[:error] %>
+            <%= flash[:error] %>
+        </div>
       </div>
-  </div>
   <% end %>
 
-<%= yield  %>
+  <%= yield %>
 
-<br/><p style="padding:0">Do you have a <%= link_to 'suggestion', :controller => 'suggestions', :action => 'new'  %> ?</p>
+  <br/>
+
+  <p style="padding:0">Do you have a <%= link_to 'suggestion', :controller => 'suggestions', :action => 'new' %> ?</p>
 </div>

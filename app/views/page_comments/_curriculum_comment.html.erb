@@ -1,29 +1,29 @@
 <% if !curriculum_comment.type.nil? %>
-<div class="rounded comment comment_type_<%=h curriculum_comment.type.name %>" style="width: 248px; padding: 5px; margin-right: 5px; margin-bottom: 5px; background-color: <%=h curriculum_comment.type.background_color %>;">
+    <div class="rounded comment comment_type_<%= h curriculum_comment.type.name %>" style="width: 248px; padding: 5px; margin-right: 5px; margin-bottom: 5px; background-color: <%=h curriculum_comment.type.background_color %>;">
 <% else %>
-<div class="rounded comment comment_type_none" style="padding: 5px; margin-right: 5px;">
+    <div class="rounded comment comment_type_none" style="padding: 5px; margin-right: 5px;">
 <% end %>
 <div class="comment_text" style="font-size: 12px;">
-<%=h curriculum_comment.comment %>
+  <%= h curriculum_comment.comment %>
 </div>
 
 <% if !curriculum_comment.user_id.nil? %>
-<div class="comment_author" style="text-align: right; font-style: italic; font-size: 12px;">
-<%=h User.find(curriculum_comment.user_id).human_name %>
-</div>
+    <div class="comment_author" style="text-align: right; font-style: italic; font-size: 12px;">
+      <%= h User.find(curriculum_comment.user_id).human_name %>
+    </div>
 <% end %>
 <% if !curriculum_comment.human_name.nil? %>
-<div class="comment_author" style="text-align: right; font-style: italic; font-size: 12px;">
-<%=h curriculum_comment.human_name %>
-</div>
+    <div class="comment_author" style="text-align: right; font-style: italic; font-size: 12px;">
+      <%= h curriculum_comment.human_name %>
+    </div>
 <% end %>
 
 
 
 <% if curriculum_comment.editable?(current_user) %>
-<div class="comment_edit" style="font-size: 12px;">
-    <%= link_to 'Edit', edit_curriculum_comment_path(curriculum_comment) %>
-</div>
+    <div class="comment_edit" style="font-size: 12px;">
+      <%= link_to 'Edit', edit_curriculum_comment_path(curriculum_comment) %>
+    </div>
 <% end %>
 
 </div>

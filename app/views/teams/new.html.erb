@@ -1,7 +1,7 @@
 <% content_for :title, 'New Team' %>
 <h1>New team</h1>
 
-<%= render :partial => "editable_form",:locals => { :button_name => "Create" } %>
+<%= render :partial => "editable_form", :locals => {:button_name => "Create"} %>
 <%= link_to 'Back', course_teams_path(@team.course_id) %>
 
 

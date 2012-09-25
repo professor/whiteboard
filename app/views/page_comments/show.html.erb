@@ -1,7 +1,7 @@
- <%= render :partial => 'curriculum_comment', :locals=>{:page_comment => @page_comment} %>
+<%= render :partial => 'curriculum_comment', :locals => {:page_comment => @page_comment} %>
 
 <p>
-<%= link_to 'Back', curriculum_comments_path %>
+  <%= link_to 'Back', curriculum_comments_path %>
 </p>
 
-Url: <%=h @page_comment.url %>
+Url: <%= h @page_comment.url %>
