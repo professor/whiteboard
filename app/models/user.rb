@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
 
-  has_attached_file :photo, :storage => :s3, :styles => {:original =>"", :profile => "150x200>"},
+  has_attached_file :photo, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
   validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
 
@@ -57,14 +57,14 @@ class User < ActiveRecord::Base
   end
 
   def registered_for_these_courses_during_current_semester
-   hub_registered_courses =  registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
+    hub_registered_courses = registered_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year).all
 
     sql_str = "select c.* FROM courses c,teams t
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
               (SELECT ta.team_id FROM team_assignments ta, users u where u.id=ta.user_id and u.id=#{self.id})"
-   courses_assigned_on_teams = Course.find_by_sql(sql_str)
+    courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
-   @registered_courses = hub_registered_courses | courses_assigned_on_teams
+    @registered_courses = hub_registered_courses | courses_assigned_on_teams
   end
 
 
@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
       end
     end
   end
-
 
 
   def emailed_recently(email_type)
@@ -190,9 +189,6 @@ class User < ActiveRecord::Base
   def formatted_teams(array)
     array.map { |team| team.name } * ", "
   end
-
-
-
 
 
   #
@@ -318,8 +314,8 @@ class User < ActiveRecord::Base
 #   end
 
 
-  # attribute :github
-  # If the user has not set this attribute, then ask the user to do so
+# attribute :github
+# If the user has not set this attribute, then ask the user to do so
   def notify_about_missing_field(attribute, message)
     if self.send(attribute).blank?
       options = {:to => self.email,

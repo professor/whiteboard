@@ -74,12 +74,12 @@ class PresentationsController < ApplicationController
   def create
     @course = Course.find(params[:course_id])
 
-    @presentation = Presentation.new(:name=>params[:presentation][:name],
-                                     :team_id=>params[:presentation][:team_id],
-                                     :presentation_date=>params[:presentation][:presentation_date],
-                                     :task_number=>params[:presentation][:task_number],
-                                     :course_id=>params[:course_id],
-                                     :creator_id=>current_user.id)
+    @presentation = Presentation.new(:name => params[:presentation][:name],
+                                     :team_id => params[:presentation][:team_id],
+                                     :presentation_date => params[:presentation][:presentation_date],
+                                     :task_number => params[:presentation][:task_number],
+                                     :course_id => params[:course_id],
+                                     :creator_id => current_user.id)
 
     human_name = params[:presentation][:user]
     unless human_name.blank?
@@ -95,7 +95,7 @@ class PresentationsController < ApplicationController
 
     respond_to do |format|
       if @presentation.save
-        format.html { redirect_to(course_presentations_path, :course_id=>params[:course_id], :notice => 'Successfully created the presentation.') }
+        format.html { redirect_to(course_presentations_path, :course_id => params[:course_id], :notice => 'Successfully created the presentation.') }
       else
         format.html { render :action => "new" }
       end
@@ -124,8 +124,8 @@ class PresentationsController < ApplicationController
   def create_feedback
     # Check existence of requested presentation
     @feedback = PresentationFeedback.new(params[:feedback])
-	@questions = PresentationQuestion.existing_questions
-	@eval_options = @@eval_options
+    @questions = PresentationQuestion.existing_questions
+    @eval_options = @@eval_options
     @feedback.evaluator = current_user
     @presentation = Presentation.find(params[:id])
     @feedback.presentation = @presentation
@@ -158,7 +158,7 @@ class PresentationsController < ApplicationController
 
       if is_successful && @feedback.save
         if !@presentation.feedback_email_sent?
-          @presentation.send_presentation_feedback_email(show_feedback_for_presentation_url(:id=> params[:id]))
+          @presentation.send_presentation_feedback_email(show_feedback_for_presentation_url(:id => params[:id]))
         end
         format.html { redirect_back_or_default(today_presentations_url) }
       else

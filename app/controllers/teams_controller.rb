@@ -111,8 +111,8 @@ class TeamsController < ApplicationController
           end
         end
       end
-      send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
-                :disposition =>'attachment', :encoding => 'utf8')
+      send_data(report, :type => 'text/csv;charset=iso-8859-1;', :filename => "past_teams_for_#{@course.display_course_name}.csv",
+                :disposition => 'attachment', :encoding => 'utf8')
     end
   end
 

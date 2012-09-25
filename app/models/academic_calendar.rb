@@ -163,7 +163,7 @@ class AcademicCalendar
             return 3
           when "Summer"
             return 21
-          when "Fall"  #Not official yet (1/2/2012)
+          when "Fall" #Not official yet (1/2/2012)
             return 35
         end
       when 2012
@@ -243,7 +243,7 @@ class AcademicCalendar
     Date.commercial(year, cweek, 1)
   end
 
- def self.date_for_mini_end(semester, mini, year)
+  def self.date_for_mini_end(semester, mini, year)
     cweek = semester_start(semester, year)
     cweek += self.term_length(semester, "A") - 1
     if mini == "B"
@@ -251,7 +251,7 @@ class AcademicCalendar
       cweek += self.term_length(semester, mini)
     end
     Date.commercial(year, cweek, 5) #Friday
- end
+  end
 
   # F12, S12, M12
   def self.parse_HUB_semester(short_form)
@@ -268,9 +268,9 @@ class AcademicCalendar
         semester = ""
     end
 
-     year = '20' + short_form[1..2]
-     year = year.to_i
-     year = "" if year == 20
+    year = '20' + short_form[1..2]
+    year = year.to_i
+    year = "" if year == 20
 
     return semester, year
   end
@@ -286,7 +286,7 @@ class AcademicCalendar
 
   def self.valid_semester_and_year(string)
     (semester, year) = self.parse_semester_and_year(string)
-    (semester, year) = self.parse_HUB_semester(string) if(semester.empty? || year.is_a?(String))
+    (semester, year) = self.parse_HUB_semester(string) if (semester.empty? || year.is_a?(String))
 
     semester = "" unless ["Fall", "Summer", "Spring"].include?(semester)
     if year.is_a?(Fixnum)

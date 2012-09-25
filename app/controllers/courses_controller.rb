@@ -24,9 +24,9 @@ class CoursesController < ApplicationController
     end
 
     @courses = Course.for_semester(@semester, @year)
-    @semester_length_courses = @courses.select {|course| course.mini == "Both"}
-    @mini_a_courses = @courses.select {|course| course.mini == "A"}
-    @mini_b_courses = @courses.select {|course| course.mini == "B"}
+    @semester_length_courses = @courses.select { |course| course.mini == "Both" }
+    @mini_a_courses = @courses.select { |course| course.mini == "A" }
+    @mini_b_courses = @courses.select { |course| course.mini == "B" }
 
     index_core
   end
@@ -73,8 +73,6 @@ class CoursesController < ApplicationController
       end
     end
 
-    @registered =
-
     @students = Hash.new
     @course.registered_students.each do |student|
       @students[student.human_name] = {:hub => true}
@@ -84,8 +82,6 @@ class CoursesController < ApplicationController
         @students[user.human_name] = (@students[user.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
       end
     end
-    tmp = @students
-
 
     respond_to do |format|
       format.html # show.html.erb
@@ -236,13 +232,13 @@ class CoursesController < ApplicationController
     report = CSV.generate do |title|
       title << ['Person', 'Current Team', 'Past Teams', "Part Time", "Local/Near/Remote", "Program", "State", "Company Name"]
       @course.registered_students.each do |user|
-          current_team = @course.teams.collect {|team| team if team.members.include?(user) }.compact
-          part_time = user.is_part_time ? "PT" : "FT"
-          title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
+        current_team = @course.teams.collect { |team| team if team.members.include?(user) }.compact
+        part_time = user.is_part_time ? "PT" : "FT"
+        title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
       end
     end
-    send_data(report, :type=>'text/csv;charset=iso-8859-1;', :filename=>"past_teams_for_#{@course.display_course_name}.csv",
-              :disposition =>'attachment', :encoding => 'utf8')
+    send_data(report, :type => 'text/csv;charset=iso-8859-1;', :filename => "past_teams_for_#{@course.display_course_name}.csv",
+              :disposition => 'attachment', :encoding => 'utf8')
   end
 
   private

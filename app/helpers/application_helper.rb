@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def image_spacer(width)
-    image_tag("/cmu_sv/spacer.gif", :border=>"0", :height=>"1", :width=>width, :alt=>"")
+    image_tag("/cmu_sv/spacer.gif", :border => "0", :height => "1", :width => width, :alt => "")
   end
 
   # def left_nav_current_semester_courses
@@ -23,11 +23,11 @@ module ApplicationHelper
   # end
 
   def professor_image
-    image_tag("/images/professor.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by a faculty role", :title => "Faculty role")
+    image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by a faculty role", :title => "Faculty role")
   end
 
   def admin_image
-    image_tag("/images/admin.jpg", :size => "50x50", :border=>"0", :alt=>"These fields can be edited by an admin role", :title => "Admin role")
+    image_tag("/images/admin.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by an admin role", :title => "Admin role")
   end
 
   #Do we need this, used on welcome page
@@ -48,8 +48,8 @@ module ApplicationHelper
 
   def display_timestamp(timestamp, options = {})
 
-	  return "" if timestamp.nil?
-	  content_tag(:span, "#{timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p (Pacific)')}", options )
+    return "" if timestamp.nil?
+    content_tag(:span, "#{timestamp.in_time_zone('Pacific Time (US & Canada)').strftime('%a %b %d %Y, %I:%M %p (Pacific)')}", options)
 
   end
 

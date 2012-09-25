@@ -26,7 +26,7 @@ class GenericAjaxController < ApplicationController
       return render :text => "Do not have permission to modify #{model_name}"
     end
 
-    result = instance.update_attribute(attribute,update_value)
+    result = instance.update_attribute(attribute, update_value)
 
     if result
       return render :text => "Success"

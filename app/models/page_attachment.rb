@@ -25,7 +25,7 @@
 
 class PageAttachment < ActiveRecord::Base
   belongs_to :page
-  belongs_to :user 
+  belongs_to :user
 
   validates_presence_of :readable_name, :user_id, :page_id
 

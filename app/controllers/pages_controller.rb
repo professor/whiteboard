@@ -33,8 +33,8 @@ class PagesController < ApplicationController
     @page.revert_to(params[:version].to_i) if params[:version]
 
     if @page.blank?
-        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
-        redirect_to(pages_url) and return
+      flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+      redirect_to(pages_url) and return
     end
 
     unless @page.viewable?(current_user)
@@ -80,10 +80,10 @@ class PagesController < ApplicationController
     @courses = Course.unique_course_names
 
     if @page.blank?
-        flash[:error] = "Page with an id of #{params[:id]} is not in this system."
-        redirect_to(pages_url) and return
+      flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+      redirect_to(pages_url) and return
     end
-    
+
     unless @page.editable?(current_user)
       flash[:error] = "You don't have permission to do this action."
       redirect_to(page_url) and return
