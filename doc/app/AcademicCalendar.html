@@ -94,13 +94,13 @@
     
     <li><a href="#method-c-parse_semester_and_year">::parse_semester_and_year</a>
     
-    <li><a href="#method-c-semester_and_year">::semester_and_year</a>
-    
     <li><a href="#method-c-semester_start">::semester_start</a>
     
     <li><a href="#method-c-spring_break">::spring_break</a>
     
     <li><a href="#method-c-term_length">::term_length</a>
+    
+    <li><a href="#method-c-valid_semester_and_year">::valid_semester_and_year</a>
     
     <li><a href="#method-c-week_during_semester-3F">::week_during_semester?</a>
     
@@ -537,13 +537,13 @@ Christmas</p>
           <div class="method-source-code" id="date_for_mini_end-source">
             <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 246</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">date_for_mini_end</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">mini</span>, <span class="ruby-identifier">year</span>)
-   <span class="ruby-identifier">cweek</span> = <span class="ruby-identifier">semester_start</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>)
-   <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">term_length</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-string">&quot;A&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
-   <span class="ruby-keyword">if</span> <span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;B&quot;</span>
-     <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">break_length_between_minis</span>(<span class="ruby-identifier">semester</span>)
-     <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">term_length</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">mini</span>)
-   <span class="ruby-keyword">end</span>
-   <span class="ruby-constant">Date</span>.<span class="ruby-identifier">commercial</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">cweek</span>, <span class="ruby-value">5</span>) <span class="ruby-comment">#Friday</span>
+  <span class="ruby-identifier">cweek</span> = <span class="ruby-identifier">semester_start</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>)
+  <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">term_length</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-string">&quot;A&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;B&quot;</span>
+    <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">break_length_between_minis</span>(<span class="ruby-identifier">semester</span>)
+    <span class="ruby-identifier">cweek</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">term_length</span>(<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">mini</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">Date</span>.<span class="ruby-identifier">commercial</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">cweek</span>, <span class="ruby-value">5</span>) <span class="ruby-comment">#Friday</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- date_for_mini_end-source -->
           
@@ -775,13 +775,15 @@ Christmas</p>
 
         <div class="method-description">
           
-          
+          <p>F12, S12, M12</p>
           
 
           
           <div class="method-source-code" id="parse_HUB_semester-source">
             <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 257</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_HUB_semester</span>(<span class="ruby-identifier">short_form</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">short_form</span>.<span class="ruby-identifier">blank?</span>
+
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">short_form</span>[<span class="ruby-value">0</span>]
     <span class="ruby-keyword">when</span> <span class="ruby-string">'F'</span>
       <span class="ruby-identifier">semester</span> = <span class="ruby-string">'Fall'</span>
@@ -789,10 +791,15 @@ Christmas</p>
       <span class="ruby-identifier">semester</span> = <span class="ruby-string">'Spring'</span>
     <span class="ruby-keyword">when</span> <span class="ruby-string">'M'</span>
       <span class="ruby-identifier">semester</span> = <span class="ruby-string">'Summer'</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">semester</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">year</span> = <span class="ruby-string">'20'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">short_form</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>]
 
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">year</span> = <span class="ruby-string">'20'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">short_form</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>]
+  <span class="ruby-identifier">year</span> = <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">year</span> = <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">==</span> <span class="ruby-value">20</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- parse_HUB_semester-source -->
           
@@ -820,10 +827,12 @@ Christmas</p>
 
           
           <div class="method-source-code" id="parse_semester_and_year-source">
-            <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 271</span>
+            <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 278</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_semester_and_year</span>(<span class="ruby-identifier">semester_year_string</span>)
   <span class="ruby-identifier">semester</span> = <span class="ruby-identifier">semester_year_string</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-5</span>]
+  <span class="ruby-identifier">semester</span> = <span class="ruby-identifier">semester</span>.<span class="ruby-identifier">capitalize</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">semester</span>
   <span class="ruby-identifier">year</span> = <span class="ruby-identifier">semester_year_string</span>[<span class="ruby-value">-4</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">year</span> = <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- parse_semester_and_year-source -->
@@ -834,38 +843,6 @@ Christmas</p>
 
         
       </div><!-- parse_semester_and_year-method -->
-
-    
-      <div id="method-c-semester_and_year" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">semester_and_year</span><span
-            class="method-args">(string)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="semester_and_year-source">
-            <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 278</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">semester_and_year</span>(<span class="ruby-identifier">string</span>)
-  (<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>) = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_semester_and_year</span>(<span class="ruby-identifier">string</span>)
-  (<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>) = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_HUB_semester</span>(<span class="ruby-identifier">string</span>) <span class="ruby-keyword">if</span>(<span class="ruby-identifier">semester</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- semester_and_year-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- semester_and_year-method -->
 
     
       <div id="method-c-semester_start" class="method-detail ">
@@ -894,7 +871,7 @@ Christmas</p>
           <span class="ruby-keyword">return</span> <span class="ruby-value">3</span>
         <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Summer&quot;</span>
           <span class="ruby-keyword">return</span> <span class="ruby-value">21</span>
-        <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Fall&quot;</span>  <span class="ruby-comment">#Not official yet (1/2/2012)</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Fall&quot;</span> <span class="ruby-comment">#Not official yet (1/2/2012)</span>
           <span class="ruby-keyword">return</span> <span class="ruby-value">35</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">2012</span>
@@ -1065,6 +1042,44 @@ Christmas</p>
 
         
       </div><!-- term_length-method -->
+
+    
+      <div id="method-c-valid_semester_and_year" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid_semester_and_year</span><span
+            class="method-args">(string)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="valid_semester_and_year-source">
+            <pre><span class="ruby-comment"># File app/models/academic_calendar.rb, line 287</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">valid_semester_and_year</span>(<span class="ruby-identifier">string</span>)
+  (<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>) = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_semester_and_year</span>(<span class="ruby-identifier">string</span>)
+  (<span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>) = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_HUB_semester</span>(<span class="ruby-identifier">string</span>) <span class="ruby-keyword">if</span> (<span class="ruby-identifier">semester</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>))
+
+  <span class="ruby-identifier">semester</span> = <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">unless</span> [<span class="ruby-string">&quot;Fall&quot;</span>, <span class="ruby-string">&quot;Summer&quot;</span>, <span class="ruby-string">&quot;Spring&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">semester</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Fixnum</span>)
+    <span class="ruby-identifier">year</span> = <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">2007</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&lt;</span> (<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">year</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">semester</span>, <span class="ruby-identifier">year</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- valid_semester_and_year-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- valid_semester_and_year-method -->
 
     
       <div id="method-c-week_during_semester-3F" class="method-detail ">

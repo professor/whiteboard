@@ -92,6 +92,8 @@
     
     <li><a href="#method-i-initialize_human_name">#initialize_human_name</a>
     
+    <li><a href="#method-i-notify_about_missing_field">#notify_about_missing_field</a>
+    
     <li><a href="#method-i-past_teams">#past_teams</a>
     
     <li><a href="#method-i-permission_level_of">#permission_level_of</a>
@@ -526,7 +528,7 @@
 
           
           <div class="method-source-code" id="parse_twiki-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 154</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 153</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_twiki</span>(<span class="ruby-identifier">username</span>)
   <span class="ruby-comment"># The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array [&quot;Alice&quot;, &quot;SmithJones&quot;]</span>
   <span class="ruby-comment"># This does not work with numbers or characters in the firstname field</span>
@@ -574,7 +576,7 @@ preferred way of talking about the account is with the domain sv.cmu.edu</p>
 
           
           <div class="method-source-code" id="create_google_email-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 206</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_google_email</span>(<span class="ruby-identifier">password</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;Empty email address&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>.<span class="ruby-identifier">blank?</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-string">&quot;Attempting to create google email account for &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>)
@@ -627,7 +629,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="create_twiki_account-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 235</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 231</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_twiki_account</span>
   <span class="ruby-identifier">require</span> <span class="ruby-string">'mechanize'</span>
   <span class="ruby-identifier">agent</span> = <span class="ruby-constant">Mechanize</span>.<span class="ruby-identifier">new</span>
@@ -685,7 +687,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="create_yammer_account-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 283</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_yammer_account</span>
   <span class="ruby-comment">#See lib/yammer.rb for code that would create the user account.</span>
   <span class="ruby-comment">#We can't use the yammer API until we upgrade the service</span>
@@ -730,7 +732,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="emailed_recently-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 87</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">emailed_recently</span>(<span class="ruby-identifier">email_type</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">email_type</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:effort_log</span>
@@ -765,7 +767,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="faculty_teams_map-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 97</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">faculty_teams_map</span>(<span class="ruby-identifier">person_id</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">faculty_teams</span> = <span class="ruby-constant">Team</span>.<span class="ruby-identifier">find_by_sql</span>([<span class="ruby-string">&quot;SELECT t.* FROM  teams t WHERE t.primary_faculty_id = ? OR t.secondary_faculty_id = ?&quot;</span>, <span class="ruby-identifier">person_id</span>, <span class="ruby-identifier">person_id</span>])
 
@@ -814,7 +816,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="find_teams_by_semester-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 166</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 165</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_teams_by_semester</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">semester</span>)
   <span class="ruby-identifier">s_teams</span> = []
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span>
@@ -849,7 +851,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="formatted_teams-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 190</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 189</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">formatted_teams</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-identifier">array</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">name</span> } * <span class="ruby-string">&quot;, &quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -879,7 +881,7 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
           
           <div class="method-source-code" id="initialize_human_name-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 175</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 174</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_human_name</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">human_name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">human_name</span>.<span class="ruby-identifier">nil?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -891,6 +893,45 @@ href="http://github.com/eric/mechanize/commit/7fd877c60cbb3855652c390c980df1dedf
 
         
       </div><!-- initialize_human_name-method -->
+
+    
+      <div id="method-i-notify_about_missing_field" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">notify_about_missing_field</span><span
+            class="method-args">(attribute, message)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>attribute :github If the user has not set this attribute, then ask the user
+to do so</p>
+          
+
+          
+          <div class="method-source-code" id="notify_about_missing_field-source">
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 319</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">notify_about_missing_field</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">message</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">attribute</span>).<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>,
+               <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Your user account needs updating&quot;</span>,
+               <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span>,
+               <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Modify your profile&quot;</span>,
+               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">url_helpers</span>.<span class="ruby-identifier">edit_user_url</span>(<span class="ruby-keyword">self</span>, <span class="ruby-value">:host</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;rails.sv.cmu.edu&quot;</span>)
+    }
+    <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- notify_about_missing_field-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- notify_about_missing_field-method -->
 
     
       <div id="method-i-past_teams" class="method-detail ">
@@ -910,7 +951,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="past_teams-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 184</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">past_teams</span>
   <span class="ruby-constant">Team</span>.<span class="ruby-identifier">find_by_sql</span>([<span class="ruby-string">&quot;SELECT t.* FROM  teams t INNER JOIN team_assignments ta ON ( t.id = ta.team_id) INNER JOIN users u ON (ta.user_id = u.id) INNER JOIN courses c ON (t.course_id = c.id) WHERE u.id = ? AND (c.semester &lt;&gt; ? OR c.year &lt;&gt; ?)&quot;</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>, <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>(), <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">year</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -940,7 +981,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="permission_level_of-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 121</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 120</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">permission_level_of</span>(<span class="ruby-identifier">role</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">role</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:student</span>
@@ -981,14 +1022,14 @@ DRY!</p>
           <div class="method-source-code" id="registered_for_these_courses_during_current_semester-source">
             <pre><span class="ruby-comment"># File app/models/user.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">registered_for_these_courses_during_current_semester</span>
- <span class="ruby-identifier">hub_registered_courses</span> =  <span class="ruby-identifier">registered_courses</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">year</span>).<span class="ruby-identifier">all</span>
+  <span class="ruby-identifier">hub_registered_courses</span> = <span class="ruby-identifier">registered_courses</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">year</span>).<span class="ruby-identifier">all</span>
 
   <span class="ruby-identifier">sql_str</span> = <span class="ruby-node">&quot;select c.* FROM courses c,teams t
             where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
             (SELECT ta.team_id FROM team_assignments ta, users u where u.id=ta.user_id and u.id=#{self.id})&quot;</span>
- <span class="ruby-identifier">courses_assigned_on_teams</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find_by_sql</span>(<span class="ruby-identifier">sql_str</span>)
+  <span class="ruby-identifier">courses_assigned_on_teams</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find_by_sql</span>(<span class="ruby-identifier">sql_str</span>)
 
- <span class="ruby-ivar">@registered_courses</span> = <span class="ruby-identifier">hub_registered_courses</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">courses_assigned_on_teams</span>
+  <span class="ruby-ivar">@registered_courses</span> = <span class="ruby-identifier">hub_registered_courses</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">courses_assigned_on_teams</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- registered_for_these_courses_during_current_semester-source -->
           
@@ -1016,7 +1057,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="reset_twiki_password-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 267</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 263</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset_twiki_password</span>
   <span class="ruby-identifier">require</span> <span class="ruby-string">'mechanize'</span>
   <span class="ruby-identifier">agent</span> = <span class="ruby-constant">Mechanize</span>.<span class="ruby-identifier">new</span>
@@ -1088,7 +1129,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="telephones-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 135</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">telephones</span>
   <span class="ruby-identifier">phones</span> = []
   <span class="ruby-identifier">phones</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{self.telephone1_label}: #{self.telephone1}&quot;</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1_label</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1_label</span>.<span class="ruby-identifier">empty?</span>)
@@ -1123,7 +1164,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="telephones_hash-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 144</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">telephones_hash</span>
   <span class="ruby-identifier">phones</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">phones</span>[<span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1_label</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1</span> <span class="ruby-keyword">unless</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1_label</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">telephone1_label</span>.<span class="ruby-identifier">empty?</span>)
@@ -1158,7 +1199,7 @@ DRY!</p>
 
           
           <div class="method-source-code" id="update_webiso_account-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 179</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_webiso_account</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">webiso_account</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_f</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">webiso_account</span>.<span class="ruby-identifier">blank?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1189,30 +1230,12 @@ DRY!</p>
 
         <div class="method-description">
           
-          <p>def create_adobe_connect</p>
-
-<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'mechanize'</span>
-<span class="ruby-identifier">agent</span> = <span class="ruby-constant">Mechanize</span>.<span class="ruby-identifier">new</span>
-<span class="ruby-identifier">agent</span>.<span class="ruby-identifier">get</span>(<span class="ruby-constant">ADOBE_CONNECT_NEW_USER_URL</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">login_page</span><span class="ruby-operator">|</span>
-  <span class="ruby-identifier">login_page</span>.<span class="ruby-identifier">login</span> = <span class="ruby-constant">ADOBE_CONNECT_USERNAME</span>
-  <span class="ruby-identifier">login_page</span>.<span class="ruby-identifier">password</span> = <span class="ruby-constant">ADOBE_CONNECT_PASSWORD</span>
-  <span class="ruby-identifier">reset_result_page</span> = <span class="ruby-identifier">page</span>.<span class="ruby-identifier">form_with</span>(:<span class="ruby-identifier">action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'/do/resetpasswd/Main/WebHome'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">reset_page</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">reset_page</span>.<span class="ruby-constant">LoginName</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">twiki_name</span>
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">submit</span>
-
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">reset_result_page</span>.<span class="ruby-identifier">parser</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">'.patternTopic h3'</span>).<span class="ruby-identifier">text</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot; Password reset failed &quot;</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">reset_result_page</span>.<span class="ruby-identifier">link_with</span>(:<span class="ruby-identifier">text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'change password'</span>)
-
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
-<span class="ruby-keyword">end</span>
-</pre>
-
-<p>end</p>
+          
           
 
           
           <div class="method-source-code" id="person_before_save-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 325</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 333</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">person_before_save</span>
   <span class="ruby-comment"># We populate some reasonable defaults, but this can be overridden in the database</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">human_name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">first_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_name</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">human_name</span>.<span class="ruby-identifier">blank?</span>
