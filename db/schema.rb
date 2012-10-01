@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801031314) do
+ActiveRecord::Schema.define(:version => 20121001195400) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
     t.integer  "configured_by_user_id"
     t.boolean  "updating_email"
     t.string   "email"
+    t.string   "grading_nomenclature"
+    t.string   "grading_criteria"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"

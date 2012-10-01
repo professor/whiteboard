@@ -14,7 +14,8 @@ describe "courses/configure.html.erb" do
 
   it "renders the configure course form" do
     render
-
     rendered.should have_selector("form", :action => course_path(@course), :method => "post")
+    rendered.should have_selector("label", text: "Grading nomenclature")
+    rendered.should have_selector("label", text: "Grading criteria")
   end
 end
