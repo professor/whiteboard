@@ -114,6 +114,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
         <% end %>
         <% if person.is_staff %>staff
         <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+        <td>image should be here</td>
         <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
         <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>
         <td>
