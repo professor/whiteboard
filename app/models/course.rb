@@ -59,7 +59,7 @@ class Course < ActiveRecord::Base
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
                   :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
-                  :faculty_assignments_override
+                  :faculty_assignments_override   ,:grading_nomenclature ,:grading_criteria
 
 #  def to_param
 #    display_course_name
