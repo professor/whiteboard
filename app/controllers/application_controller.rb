@@ -50,9 +50,9 @@ class ApplicationController < ActionController::Base
   end
 
   # In development, if you want to pretend to be a different user, you can set it easily here
-  #def current_user
-  #  User.last
-  #end
+  def current_user
+    User.find_by_first_name("Todd")
+  end
 
   def authenticate_user!
     if !current_user
