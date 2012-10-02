@@ -96,6 +96,16 @@
       </p>
 
       <p>
+        <%= f.label :grading_nomenclature  %>
+        <%= f.select(:grading_nomenclature, options_for_select([["Assignments", "Assignments"], ["Tasks/Deliverables", "Tasks"]], @course.grading_nomenclature)) %>
+       </p>
+
+      <p>
+        <%= f.label :grading_criteria  %>
+        <%= f.select :grading_criteria, options_for_select([["Points"], ["Percentage"]],  @course.grading_criteria)  %>
+      </p>
+
+      <p>
         <%= f.hidden_field :is_configured, :value => true %>
         <%= f.submit button_name %>
       </p>
@@ -110,7 +120,7 @@
     </p>
 -->
 
-  <% end %>
 
+  <% end %>
 </div>
 

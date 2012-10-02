@@ -36,7 +36,8 @@ describe "courses" do
       page.should have_content("All Courses")
       page.should have_link("See current semester")
    end
-
   end
+
+
 
 end

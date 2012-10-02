@@ -429,11 +429,10 @@
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin?</span>)
     <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Course</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span>  (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span> )
+  <span class="ruby-keyword">if</span>  (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span>)
     <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:create</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>, <span class="ruby-value">:faculty</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span> } <span class="ruby-comment">#Useful for TAs.</span>
-
+  <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>, <span class="ruby-value">:faculty</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>} <span class="ruby-comment">#Useful for TAs.</span>
 
 
   <span class="ruby-comment"># The first argument to `can` is the action you are giving the user permission to do.</span>

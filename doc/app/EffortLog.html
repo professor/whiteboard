@@ -394,9 +394,7 @@
           <div class="method-source-code" id="find_effort_logs-source">
             <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_effort_logs</span>(<span class="ruby-identifier">current_user</span>)
-
   <span class="ruby-identifier">where</span>(<span class="ruby-node">&quot;user_id = '#{current_user.id}'&quot;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;year DESC, week_number DESC&quot;</span>)
-
 <span class="ruby-keyword">end</span></pre>
           </div><!-- find_effort_logs-source -->
           
@@ -424,7 +422,7 @@
 
           
           <div class="method-source-code" id="latest_for_user-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 112</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">latest_for_user</span>(<span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-identifier">year</span>)
   <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;user_id = ? and week_number = ? and year = ?&quot;</span>, <span class="ruby-identifier">user_id</span>, <span class="ruby-identifier">week_number</span>, <span class="ruby-identifier">year</span>).<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -454,7 +452,7 @@
 
           
           <div class="method-source-code" id="log_effort_week-3F-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">log_effort_week?</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">spring_break</span>(<span class="ruby-identifier">year</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">week_number</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
@@ -488,7 +486,7 @@
 
           
           <div class="method-source-code" id="users_with_effort_against_unregistered_courses-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 50</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">users_with_effort_against_unregistered_courses</span>
   <span class="ruby-identifier">cweek</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cweek</span>
   <span class="ruby-identifier">cyear</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>
@@ -538,7 +536,7 @@
 
           
           <div class="method-source-code" id="determine_total_effort-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 69</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">determine_total_effort</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sum</span> = <span class="ruby-value">0</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">effort_log_line_items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
@@ -572,7 +570,7 @@
 
           
           <div class="method-source-code" id="editable_by-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">editable_by</span>(<span class="ruby-identifier">current_user</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">current_user</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_admin?</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
@@ -613,7 +611,7 @@
 
           
           <div class="method-source-code" id="existing_effort_log_line_item_attributes-3D-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 87</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">existing_effort_log_line_item_attributes=</span>(<span class="ruby-identifier">effort_log_line_item_attributes</span>)
   <span class="ruby-identifier">effort_log_line_items</span>.<span class="ruby-identifier">reject</span>(&amp;<span class="ruby-value">:new_record?</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log_line_item</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">effort_log_line_item_attributes</span>[<span class="ruby-identifier">effort_log_line_item</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>]
@@ -650,7 +648,7 @@
 
           
           <div class="method-source-code" id="new_effort_log_line_item_attributes-3D-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 78</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 76</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new_effort_log_line_item_attributes=</span>(<span class="ruby-identifier">line_item_attributes</span>)
   <span class="ruby-identifier">line_item_attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">effort_log_line_items</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">attributes</span>)
@@ -682,7 +680,7 @@
 
           
           <div class="method-source-code" id="save_effort_log_line_items-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 98</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_effort_log_line_items</span>
   <span class="ruby-identifier">effort_log_line_items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log_line_item</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">effort_log_line_item</span>.<span class="ruby-identifier">save</span>(<span class="ruby-keyword">false</span>)
@@ -714,7 +712,7 @@
 
           
           <div class="method-source-code" id="validate_effort_against_registered_courses-source">
-            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/models/effort_log.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_effort_against_registered_courses</span>
   <span class="ruby-identifier">course_error_msg</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-identifier">registered_courses</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span>.<span class="ruby-identifier">registered_for_these_courses_during_current_semester</span>()
