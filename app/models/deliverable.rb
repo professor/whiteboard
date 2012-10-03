@@ -34,11 +34,13 @@
 class Deliverable < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
+  belongs_to :assignment
   belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
-  validates_presence_of :course, :creator
+  validates_presence_of :course, :creator, :assignment_id
   validate :unique_course_task_owner?
+  validates :score, :numericality => {:greater_than_or_equal_to => 0}, :allow_nil => true, :allow_blank => true
 
   has_attached_file :feedback,
                     :storage => :s3,

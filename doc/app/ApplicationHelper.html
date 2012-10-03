@@ -388,7 +388,7 @@
           <div class="method-source-code" id="admin_image-source">
             <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">admin_image</span>
-  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/images/admin.jpg&quot;</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;50x50&quot;</span>, <span class="ruby-value">:border=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:alt=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;These fields can be edited by an admin role&quot;</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Admin role&quot;</span>)
+  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/images/admin.jpg&quot;</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;50x50&quot;</span>, <span class="ruby-value">:border</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;These fields can be edited by an admin role&quot;</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Admin role&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- admin_image-source -->
           
@@ -449,8 +449,8 @@
             <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">display_timestamp</span>(<span class="ruby-identifier">timestamp</span>, <span class="ruby-identifier">options</span> = {})
 
-        <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">timestamp</span>.<span class="ruby-identifier">nil?</span>
-        <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-node">&quot;#{timestamp.in_time_zone('Pacific Time (US &amp; Canada)').strftime('%a %b %d %Y, %I:%M %p (Pacific)')}&quot;</span>, <span class="ruby-identifier">options</span> )
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">timestamp</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">content_tag</span>(<span class="ruby-value">:span</span>, <span class="ruby-node">&quot;#{timestamp.in_time_zone('Pacific Time (US &amp; Canada)').strftime('%a %b %d %Y, %I:%M %p (Pacific)')}&quot;</span>, <span class="ruby-identifier">options</span>)
 
 <span class="ruby-keyword">end</span></pre>
           </div><!-- display_timestamp-source -->
@@ -512,7 +512,7 @@
           <div class="method-source-code" id="image_spacer-source">
             <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">image_spacer</span>(<span class="ruby-identifier">width</span>)
-  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/cmu_sv/spacer.gif&quot;</span>, <span class="ruby-value">:border=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:height=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;1&quot;</span>, <span class="ruby-value">:width=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">width</span>, <span class="ruby-value">:alt=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/cmu_sv/spacer.gif&quot;</span>, <span class="ruby-value">:border</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:height</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;1&quot;</span>, <span class="ruby-value">:width</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">width</span>, <span class="ruby-value">:alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- image_spacer-source -->
           
@@ -578,7 +578,7 @@
           <div class="method-source-code" id="professor_image-source">
             <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">professor_image</span>
-  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/images/professor.jpg&quot;</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;50x50&quot;</span>, <span class="ruby-value">:border=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:alt=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;These fields can be edited by a faculty role&quot;</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Faculty role&quot;</span>)
+  <span class="ruby-identifier">image_tag</span>(<span class="ruby-string">&quot;/images/professor.jpg&quot;</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;50x50&quot;</span>, <span class="ruby-value">:border</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;0&quot;</span>, <span class="ruby-value">:alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;These fields can be edited by a faculty role&quot;</span>, <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Faculty role&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- professor_image-source -->
           

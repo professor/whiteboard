@@ -8,14 +8,43 @@ describe Deliverable do
     }.should change(Deliverable, :count).by(1)
   end
 
+  context "is valid" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:deliverable)
+    end
+    it "when score is nil" do
+      @deliverable.score = nil
+      @deliverable.should be_valid
+    end
+
+    it "when score is blank" do 
+      @deliverable.score = ''
+      @deliverable.should be_valid
+    end
+
+  end
+
   context "is not valid" do
 
-    [:course, :creator].each do |attr|
+    [:course, :creator, :assignment_id].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
       end
     end
+    
+    it "when score is string" do
+      @deliverable = FactoryGirl.build(:deliverable)
+      @deliverable.score = 'not_a number'
+      @deliverable.should_not be_valid
+    end
+    
+    it "when score is a negative number" do
+      @deliverable = FactoryGirl.build(:deliverable)
+      @deliverable.score = -1
+      @deliverable.should_not be_valid
+    end
+
 
     context "when a duplicate deliverable for the same course, task and owner" do
       [:team_deliverable, :individual_deliverable].each do |symbol|

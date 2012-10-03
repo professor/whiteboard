@@ -394,7 +394,7 @@
 
           
           <div class="method-source-code" id="reposition-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 42</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">reposition</span>(<span class="ruby-identifier">ids</span>)
   <span class="ruby-comment">#if database is mysql</span>
   <span class="ruby-comment">#    update_all(</span>
@@ -435,7 +435,7 @@
 
           
           <div class="method-source-code" id="course_name-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 51</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">course_name</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -465,7 +465,7 @@
 
           
           <div class="method-source-code" id="course_name-3D-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">course_name=</span>(<span class="ruby-identifier">course_name</span>)
   <span class="ruby-identifier">course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">first_offering_for_course_name</span>(<span class="ruby-identifier">course_name</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span> = <span class="ruby-identifier">course</span>
@@ -496,7 +496,7 @@
 
           
           <div class="method-source-code" id="delete_from_search-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 93</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_from_search</span>
   <span class="ruby-identifier">api</span> = <span class="ruby-constant">IndexTank</span><span class="ruby-operator">::</span><span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_API_URL'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'&lt;API_URL&gt;'</span>)
   <span class="ruby-identifier">index</span> = <span class="ruby-identifier">api</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_INDEX'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'cmux'</span>)
@@ -560,7 +560,7 @@
 
           
           <div class="method-source-code" id="task_number-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 61</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">task_number</span>
   <span class="ruby-identifier">match</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">title</span>.<span class="ruby-identifier">match</span> <span class="ruby-regexp">/\d/</span>
   <span class="ruby-identifier">match</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">match</span>[<span class="ruby-value">0</span>]
@@ -621,7 +621,7 @@
 
           
           <div class="method-source-code" id="update_search_index-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 66</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_search_index</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_viewable_by_all</span>
     <span class="ruby-identifier">update_search_index_for_index</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_INDEX'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'cmux'</span>)
@@ -655,7 +655,7 @@
 
           
           <div class="method-source-code" id="update_search_index_for_index-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 74</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_search_index_for_index</span>(<span class="ruby-identifier">index_name</span>)
   <span class="ruby-identifier">api</span> = <span class="ruby-constant">IndexTank</span><span class="ruby-operator">::</span><span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">'SEARCHIFY_API_URL'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'&lt;API_URL&gt;'</span>)
   <span class="ruby-identifier">index</span> = <span class="ruby-identifier">api</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-identifier">index_name</span>)
@@ -667,8 +667,8 @@
   <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">index</span>.<span class="ruby-identifier">document</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">options_hash</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-value">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">tab_one_contents</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&quot;&quot;</span>), <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;pages/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>}))
     <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_task?</span>
-        <span class="ruby-identifier">index</span>.<span class="ruby-identifier">document</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-tabs-1&quot;</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">options_hash</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-value">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">tab_two_contents</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&quot;&quot;</span>), <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;pages/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;?tab=tabs-2&quot;</span>}))
-        <span class="ruby-identifier">index</span>.<span class="ruby-identifier">document</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-tabs-2&quot;</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">options_hash</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-value">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">tab_three_contents</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&quot;&quot;</span>), <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;pages/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;?tab=tabs-3&quot;</span>}))
+      <span class="ruby-identifier">index</span>.<span class="ruby-identifier">document</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-tabs-1&quot;</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">options_hash</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-value">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">tab_two_contents</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&quot;&quot;</span>), <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;pages/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;?tab=tabs-2&quot;</span>}))
+      <span class="ruby-identifier">index</span>.<span class="ruby-identifier">document</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-tabs-2&quot;</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">options_hash</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-value">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">tab_three_contents</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/&lt;\/?[^&gt;]*&gt;/</span>, <span class="ruby-string">&quot;&quot;</span>), <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;pages/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;?tab=tabs-3&quot;</span>}))
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-string">&quot;Searchify issue: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>)
@@ -737,7 +737,7 @@
 
           
           <div class="method-source-code" id="update_url-source">
-            <pre><span class="ruby-comment"># File app/models/page.rb, line 100</span>
+            <pre><span class="ruby-comment"># File app/models/page.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_url</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">title</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">blank?</span>
 <span class="ruby-keyword">end</span></pre>
