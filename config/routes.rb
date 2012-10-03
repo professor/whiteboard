@@ -31,8 +31,12 @@ CMUEducation::Application.routes.draw do
   resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
+  #resources :courses do
+    resources :assignments
+  #end
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
   match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
+
 
 
   constraints({:id => /.*/}) do
@@ -105,6 +109,8 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/team_formation_tool' => 'courses#team_formation_tool', :as => :team_formation_tool
   match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
+
+
 
   #match 'courses/:course_id/presentations/update' => 'presentations#create',:via => :post, :as => :new_course_presentation
   #match 'courses/:course_id/presentations/edit' => 'presentations#edit', :as => :new_course_presentation
