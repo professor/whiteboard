@@ -197,7 +197,7 @@
               }
  
               var timerCallback = function() {
-                  console.log("tablesorter_filter triggered");
+                  //console.log("tablesorter_filter triggered");
                 checkInputBox(inputBox, overrideBool);
 
                   // test function

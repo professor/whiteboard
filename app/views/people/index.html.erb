@@ -10,7 +10,7 @@
                   document.getElementById("hidden_field").value = "off";
 
                   var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
-                  console.log(rows_list.length);
+                  //console.log(rows_list.length);
                   if (rows_list.length > 1){
 
                       var loadImageForRow = function(row) {
@@ -19,8 +19,8 @@
                           img.width = 40;
                           img.height = 55;
 
-                          console.log(typeof row);
-                          console.log(typeof img);
+                          //console.log(typeof row);
+                          //console.log(typeof img);
                           //console.log(row.find('.url_cell').value);
 
                           img.onload = function() {
@@ -32,7 +32,7 @@
                                           //row.getElementsByTagName('td').appendChild(img);
                                       }
                                   }
-                          console.log(row.find(".image_cell"));
+                          //console.log(row.find(".image_cell"));
                           img.src = row.find(".url_cell").html();
 
                       }
@@ -263,7 +263,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
 
 
-<table id="people_table" class="tablesorter" hidden="true">
+<table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
     <th>Pic</th>
