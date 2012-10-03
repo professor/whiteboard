@@ -135,7 +135,7 @@ describe CoursesController do
 
         it "saves a newly created item" do
           lambda {
-            post :create, :course => {"number"=>"96-NEW", "semester"=>"Summer", "year"=>"2011"}
+            post :create, :course => {"number"=>"96-NEW", "semester"=>"Summer", "year"=>"2011", "grading_nomenclature"=>"Tasks", "grading_criteria"=>"Points"}
           }.should change(Course, :count).by(1)
         end
 
@@ -155,7 +155,7 @@ describe CoursesController do
 
         it "saves a newly created item" do
           lambda {
-            post :create, :course => {"number"=>@number, "semester"=>"Summer", "year"=>"2011"}
+            post :create, :course => {"number"=>@number, "semester"=>"Summer", "year"=>"2011", "grading_nomenclature"=>"Tasks", "grading_criteria"=>"Points"}
           }.should change(Course, :count).by(1)
         end
 

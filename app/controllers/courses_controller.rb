@@ -127,6 +127,8 @@ class CoursesController < ApplicationController
 
     @course.year = params[:course][:year]
     @course.semester = params[:course][:semester]
+    @course.grading_nomenclature = params[:course][:grading_nomenclature]
+    @course.grading_criteria = params[:course][:grading_criteria]
 
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
