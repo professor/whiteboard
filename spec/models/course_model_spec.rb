@@ -10,7 +10,7 @@ describe Course do
 
   context "is not valid" do
 
-    [:semester, :year, :mini, :name].each do |attr|
+    [:semester, :year, :mini, :name, :grading_nomenclature, :grading_criteria].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -397,6 +397,23 @@ describe Course do
     end
   end
 
+  context 'grading setup' do
+    before(:each) do
+      @course = FactoryGirl.create(:course)
+    end
+
+    it 'should have valid nomenclature setting' do
+      @course.grading_nomenclature = "blah"
+      @course.should be_invalid
+      @course.errors[:grading_nomenclature].should_not be_empty
+    end
+
+    it 'should have valid criteria setting' do
+      @course.grading_criteria = "blah"
+      @course.should be_invalid
+      @course.errors[:grading_criteria].should_not be_empty
+    end
+  end
 
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
