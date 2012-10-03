@@ -22,13 +22,14 @@
     .null_input { color: #aaa; }
 
     #qBox, #qBox2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
-    #qText { border: none; }
+    #qText { border: none; width: 128px;}
 
     select .select-hint { color: #ccc;}
 
 
     #cu_box, #dialog_close, #export_box { float:right; }
     #modal_card { margin-left: auto; margin-right: auto; }
+    #results_box {width: 100%;}
     .data_card {
         float: left;
         margin: 8px 8px;
@@ -155,8 +156,6 @@
             if($('#qBox2 .qTag').last().find('.inner_text').length != 0 && $('#qBox2 .qTag').last().css('display') != 'none'){
                 $('#qBox2 .qTag').last().find('.inner_text')[0].focus();
             }
-            //if($('qBox2 .qTag').last().find('.inner_text').length != 0){ $('.qTag').last().find('.inner_text')[0].focus(); }
-
 
             $(this).val('default');
         });
@@ -195,6 +194,7 @@
                 data: {last_name: $("#qText").val() },
                 success: function(data){
                     console.log(data);
+                    $("#results_box").html("");
                     $.each(data, function(){
                        var card_html = '<div class="data_card">';
                        card_html += '<img src='+this.image_uri+'><br>';
