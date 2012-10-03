@@ -115,7 +115,6 @@
                 case "student":
                     criteria_ids = [0, 2, 3, 4, 5, 6];
                     break;
-                case "faculty":
                 case "staff":
                     criteria_ids = [0, 4, 5];
                     break;
@@ -181,10 +180,34 @@
                 $(this).html('x');
             }
         });
+
         $('#qBox2').on("click", ".qTag a", function(){
             ext_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeOut();
         });
+
+        // Send last_name query and get results
+        $('#submit_btn').click( function(){
+            console.log("btn pressed");
+            $.ajax({
+                url: 'people.json',
+                dataType: 'json',
+                data: {last_name: $("#qText").val() },
+                success: function(data){
+                    console.log(data);
+                    $.each(data, function(){
+                       var card_html = '<div class="data_card">';
+                       card_html += '<img src='+this.image_uri+'><br>';
+                       card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
+                       card_html += 'Email: '+this.email;
+                       card_html += '</div>';
+                       $("#results_box").append(card_html);
+                    });
+                }
+            });
+
+        });
+
     });
 </script>
 <!-- End of CSS/JS Migration -->
@@ -200,7 +223,7 @@
 <a id='dialog_close' href='#'>[x]</a><br><br>
     <div id="modal_card" class="data_card">
         <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
-        <img src="mascot.jpg"><br>
+        <img src="images/mascot.jpg"><br>
         <input checked type="checkbox" name="Name" value="cu_name" /> Name: ? <br>
         <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
         <input checked type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
@@ -221,9 +244,8 @@
 </div>
 <select id="catGroup" class="criterias">
   <option value="all">All</option>
-  <option value="faculty"> Faculty </option>
   <option value="student"> Student </option>
-  <option value="staff"> Staff </option>
+  <option value="staff"> Staff/Faculty </option>
   <option value="alumni"> Alumni </option>
 </select>
 
@@ -285,6 +307,7 @@
 <a id="cu_box" href="#">Customization</a><br>
 <a id="export_box" href="#">Export Results</a>
 
+<div id="results_box"></div><br>
 
 <!-- End of HTML Migration -->
 

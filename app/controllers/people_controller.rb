@@ -19,7 +19,40 @@ class PeopleController < ApplicationController
 # GET /people
 # GET /people.xml
   def index
-    @people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
+
+    @people = User.where(:is_active => true)
+
+    # Define allowed text criteria
+    allowed_text_criteria = ['email', 'first_name', 'last_name', 'organization_name']
+
+    # Apply text filters
+    allowed_text_criteria.each { |key|
+      if (params[key] != nil)
+        # Exact Match
+        # @people = @people.where(key => params[key])
+        # Partial Match
+        @people = @people.where("#{key} LIKE ?", "%#{params[key]}%")
+      end
+    }
+
+    # Apply limit criteria
+    if (params[:limit] != nil)
+      @people = @people.limit(params[:limit])
+    end
+
+    # DEPRECATED: Iterate through parameters and apply filters
+    #params.each { |key, value|
+    #  if ( allowed_text_criteria.include?(key) )
+    #    @people = @people.where("#{key} LIKE ?", "%#{value}%")
+    #  elsif ( key == 'limit' )
+    #    @people = @people.limit(value)
+    #  end
+    #}
+
+    # By default order by name
+    @people = @people.order("first_name ASC, last_name ASC").all
+
+    #@people.first.mas
 
     respond_to do |format|
       format.html { render :html => @people }
@@ -27,6 +60,7 @@ class PeopleController < ApplicationController
                                                                     "first_name" => person.first_name,
                                                                     "last_name" => person.last_name,
                                                                     "image_uri" => person.image_uri,
+                                                                    "masters_program" => person.masters_program,
                                                                     "email" => person.email].merge(person.telephones_hash) }, :layout => false }
     end
   end
