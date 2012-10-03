@@ -596,6 +596,9 @@ ol.letterList{
     padding: 5px;
     font-size: 1.3em;
 }
+#filterClearOne{
+    display:none;
+}
 #filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
     float: right;
 }
