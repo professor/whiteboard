@@ -43,8 +43,11 @@ class Course < ActiveRecord::Base
 
   has_many :presentations
 
-  validates_presence_of :semester, :year, :mini, :name
+  validates_presence_of :semester, :year, :mini, :name, :grading_nomenclature, :grading_criteria
   validate :validate_faculty
+
+  validates_inclusion_of :grading_nomenclature, :in => %w( Tasks Assignments ), :message => "The nomenclature %s is not valid"
+  validates_inclusion_of :grading_criteria, :in => %w( Points Percentage ), :message => "The criteria %s is not valid"
 
   versioned
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'

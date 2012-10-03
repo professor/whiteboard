@@ -10,6 +10,8 @@ FactoryGirl.define do
     mini 'Both'
     number '96-700'
     updated_by_user_id 10
+    grading_nomenclature 'Tasks'
+    grading_criteria 'Points'
   end
 
 
