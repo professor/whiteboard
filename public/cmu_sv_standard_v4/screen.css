@@ -584,6 +584,23 @@ ol.letterList{
 }
 .content table p {padding:0px 0px 5px 0px !important;margin:0px !important;}
 
+#filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne{
+    width: 80%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
+
+
 
 table.sortable thead tr .header, table.sortableAlternatingRows thead tr .header {
 	background-image: url(http://www.cmu.edu/common/standard-v4/images/tablehead-bg.gif);

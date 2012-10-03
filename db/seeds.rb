@@ -144,13 +144,13 @@ FactoryGirl.define do
     is_part_time 0
     graduation_year "2012"
     masters_program "SE"
-    masters_track "Tech"
-    twiki_name "FirstLast"
-    first_name "First"
-    last_name "Last"
-    human_name "Your Name"
-    email "your.email@sv.cmu.edu"
-    webiso_account "your.name@andrew.cmu.edu"
+    masters_track "DM"
+    twiki_name "KaushikGopal"
+    first_name "Kaushik"
+    last_name "Gopal"
+    human_name "Kaushik Gopal"
+    email "kaushik.gopal@sv.cmu.edu"
+    webiso_account "kgopal@andrew.cmu.edu"
   end
 
 end
