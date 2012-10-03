@@ -21,21 +21,15 @@
                         $('#filterBoxOne').focus();
                     }
                     
-                    // TODO: there's a javascript error thrown below. fix it.
-                    $("#people_table")
-                        .tablesorter({  widgets:['zebra']
-                                        ,headers:{0:{sorter:false}, 3:{sorter:false}  }
-                                        ,sortList:[
-                                            [0, 0],
-                                            [1, 0]
-                                        ]
-                                    })
-                        .tablesorterFilter({    filterContainer:$("#filterBoxOne"),
-                                                filterClearContainer:$("#filterClearOne"),
-                                                filterColumns:[0, 1, 2],
-                                                filterCaseSensitive:false
-                        })
-                        ;
+                    $("#people_table").tablesorter({widgets:['zebra'],
+                        headers:{0:{sorter:false}, 3:{sorter:false}  }
+                    })
+                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                                filterClearContainer:$("#filterClearOne"),
+                                filterColumns:[0, 1, 2],
+                                filterCaseSensitive:false
+                            })
+                            ;
 
                     //scroll the message box to the top offset of browser's scrool bar
                     $(window).scroll(function () {
