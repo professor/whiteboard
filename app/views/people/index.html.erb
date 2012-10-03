@@ -2,7 +2,168 @@
 <% content_for :tablesorter do %>
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
-    <script type="text/javascript">
+    <script type="text/javascript" >
+      var image_array = new Array();
+        setInterval(function(){
+              if(document.getElementById("hidden_field").value == "on"){
+                  console.log("turn off");
+                  document.getElementById("hidden_field").value = "off";
+
+                  var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
+                  console.log(rows_list.length);
+                  if (rows_list.length > 1){
+
+                      var loadImageForRow = function(row) {
+                          //var img = $("<img />").attr('src', row.find('.url_cell').value);
+                          var img = new Image();
+                          img.width = 40;
+                          img.height = 55;
+
+                          console.log(typeof row);
+                          console.log(typeof img);
+                          //console.log(row.find('.url_cell').value);
+
+                          img.onload = function() {
+                                      //console.log(row.find('.url_cell').value);
+                                      if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
+                                          // handle broken image
+                                      } else {
+                                          row.find('.image_cell').append(img);
+                                          //row.getElementsByTagName('td').appendChild(img);
+                                      }
+                                  }
+                          console.log(row.find(".image_cell"));
+                          img.src = row.find(".url_cell").html();
+
+                      }
+
+                      var rows = [];
+                      //var ary = [];
+                      for(var i=1; i<rows_list.length; i++){
+                          rows.push(rows_list[i]);
+                      }
+                      //console.log(rows.length);
+                      $.each(rows,function(){
+                      //rows.each(function(){
+                          if (this.getElementsByTagName('td')[0].childElementCount<1 ){
+                                       console.log("each hit");
+                            loadImageForRow($(this));
+                          }
+                      });
+                  }
+                  //console.log(rows.length.toString());
+                  //if (rows.length<1){
+                  //    image_array = new Array();
+                    //  for(var count=1;count<rows.length;count++){
+                      //    if (count<10){
+                        //      var row_tds = rows[count].getElementsByTagName("td");
+                          //    if (row_tds[0].childElementCount < 1){
+
+                                  //row_tds[0].id = "image"+count.toString();
+                            //      console.log("image"+count.toString());
+                              //    console.log(row_tds[5].innerText);
+
+                                //  image_array[count] = new Image();
+
+                                //  image_array[count].width = 40;
+                                 // image_array[count].height = 55;
+                                 // image_array[count].alt = row_tds[5].innerText;
+
+                                  //row_td.innerText = "";
+                                  //row_tds[0].appendChild(img);
+
+
+
+
+                                  //var img = $("<img />").attr('src', 'http://localhost:3000'+row_tds[5].innerText)
+                                    //      .load(function() {
+                                      //        if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                                        //          alert('broken image!');
+                                          //    } else {
+                                            //      $("#something").append(img);
+                                              //}
+                                         // });
+
+                                  //image_array[count].src = row_tds[5].innerText;
+
+                                  //var img = $("<img />").attr('src', row_tds[5].innerText)
+                                  //        .load(function() {
+                                  //            if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                                  //                alert('broken image!');
+                                  //            } else {
+                                  //                $("image"+count.toString()).append(img);
+                                  //                console.log("image"+count.toString());
+                                  //            }
+                                  //        });
+                                  //var img = new Image();
+
+                                  //img.width = 40;
+                                  //img.height = 55;
+                                  //row_td.innerText = "";
+                                  //row_tds[0].appendChild(img);
+
+
+                                  //img.onload=function(){
+                                    //  var image_div = row_tds[0];
+                                      //row_tds[0].appendChild(img);
+                                      // document.getElementById("image"+count.toString()).appendChild(img);
+                                      //image_div.appendChild(img);
+                                      //console.log(count.toString());
+                                  //}
+                                  //img.src = row_tds[5].innerText;
+                                  //row_tds[0].removeAttribute("hidden");
+
+                                  // console.log("before image loading");
+                                  //console.log(typeof $)
+                                  //var img = new Image();
+
+                                  //var img = jQuery("<img />").attr('src', 'http://localhost:3000'+row_tds[5].innerText).load(function() {
+                                  //      if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                                  //alert('broken image!');
+                                  //        console.log("http://localhost:3000"+row_tds[5].innerText);
+                                  //  } else {
+                                  //$("#something").append(img);
+                                  //        row_tds[0].appendChild(img);
+                                  //        console.log("here");
+                                  //    }
+                                  // });
+
+                             // }
+
+                        //  }
+                        //  else{
+                        //      rows[count].setAttribute("visible","false");
+                        //  }
+
+                          //document.body.appendChild( img );
+                          //rows[count].getElementsByTagName("td")[0].removeAttribute("hidden");
+                     // }
+
+                      //image_array[1].onload=function(){
+                      //    document.getElementById("image1").appendChild(image_array[1]);
+                      //    console.log("onload hit");
+                      //}
+
+                      //var code_string = "image_array[1].onload=function(){document.getElementById('image1').appendChild(image_array[1]);}";
+                      //eval(code_string);
+                      //console.log('onload hit');
+
+
+                      //image_array[1].src = image_array[1].alt;
+                      //console.log("image array 1"+image_array[1].alt);
+
+                      // console.log(rows[1].getElementsByTagName("td")[0].innerText);
+                //  }
+
+
+              }
+        },1000);
+        //$("tr").livequery(function() {
+          //  console.log($(this) + " was added");
+        //}, function() {
+         //   console.log($(this) + " was removed");
+        //});
+
         $(document).ready(function () {
                     if ($("#filterBoxOne").prop("disabled") == true) {
                         $('#filterBoxOne').val('');
@@ -42,6 +203,10 @@
                 }
         );
 
+        $(document).load(function(){
+            alert("document load");
+        });
+
         function toggleStudents() {
             /* we don't use .toggle since the state may be inaccurate from a page reload */
             if ($('#student_checkbox').is(':checked')) {
@@ -67,6 +232,9 @@
             $('#image_box_label').text(label);
         }
 
+        function key_up(){
+            console.log("tr_loaded");
+        }
 
     </script>
 <% end %>
@@ -91,16 +259,14 @@
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
-<% content_for :image_box do %>
-    <div id="image_box">
-      <%= image_tag("/images/mascot.jpg", :width => "150", :alt => "Temporary Picture", :id => "image_box_image") %><%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :alt => "Close Me", :style => "float:right;cursor:pointer", :id => "close_image_box") %>
-      <div id='image_box_label'></div>
-    </div>
-<% end %>
 
-<table id="people_table" class="tablesorter">
+
+
+
+<table id="people_table" class="tablesorter" hidden="true">
   <thead>
   <tr>
+    <th>Pic</th>
     <th>First name</th>
     <th>Last name</th>
     <th>Phone</th>
@@ -108,13 +274,19 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-  <% for person in @people %>
+  <% for person in @people  %>
       <tr class="tablesorter
         <% if person.is_student %>student
         <% end %>
         <% if person.is_staff %>staff
-        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-        <td>image should be here</td>
+        <% end %>" >
+        <td class="image_cell">
+
+          <!--<%= image_tag(person.image_uri, :width => "150", :alt => "Temporary Picture", :id => "image_box_image") %>
+          -->
+
+
+        </td>
         <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
         <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>
         <td>
@@ -122,6 +294,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
               <br/>
           <% } %></td>
         <td><%= link_to 'Show', person_path(person) %></td>
+        <td hidden="true" class="url_cell">  <%= person.image_uri %></td>
       </tr>
   <% end %>
   </tbody>
@@ -132,3 +305,5 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
+
+<input type="hidden" id="hidden_field" value="off">

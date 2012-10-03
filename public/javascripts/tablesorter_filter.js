@@ -181,6 +181,7 @@
             if(container.length)
               container[0].filterIndex = i;
             container.keyup(function(e, phrase) {
+
               var index = this.filterIndex;
               if(undefined !== phrase)
                 $(this).val(phrase);
@@ -196,13 +197,89 @@
               }
  
               var timerCallback = function() {
+                  console.log("tablesorter_filter triggered");
                 checkInputBox(inputBox, overrideBool);
+
+                  // test function
+
+                  //window.onload = new function(){
+                  //    alert("window onload!");
+                  //}
+
+                  var rows = document.getElementById("people_table").getElementsByTagName("TR");
+                  if (rows.length>1){
+                     for(var count=1;count<rows.length;count++){
+                        if (count<10){
+                         var row_tds = rows[count].getElementsByTagName("td");
+                         if (row_tds[0].childElementCount < 1){
+
+                         row_tds[0].id = "image"+count.toString();
+                         var img = new Image();
+
+                         img.width = 40;
+                         img.height = 55;
+                         //row_td.innerText = "";
+                         //row_tds[0].appendChild(img);
+
+
+                         img.onload=function(){
+                             var image_div = row_tds[0];
+                             //row_tds[0].appendChild(img);
+                            // document.getElementById("image"+count.toString()).appendChild(img);
+                            //image_div.appendChild(img);
+                             //console.log(count.toString());
+                         }
+                             img.src = row_tds[5].innerText;
+                             row_tds[0].removeAttribute("hidden");
+
+                            // console.log("before image loading");
+                             //console.log(typeof $)
+                             //var img = new Image();
+
+                             //var img = jQuery("<img />").attr('src', 'http://localhost:3000'+row_tds[5].innerText).load(function() {
+                               //      if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                                         //alert('broken image!');
+                                 //        console.log("http://localhost:3000"+row_tds[5].innerText);
+                                   //  } else {
+                                         //$("#something").append(img);
+                                 //        row_tds[0].appendChild(img);
+                                 //        console.log("here");
+                                 //    }
+                                // });
+
+                         }
+
+                        }
+                         else{
+                            rows[count].setAttribute("visible","false");
+                        }
+
+                         //document.body.appendChild( img );
+                         //rows[count].getElementsByTagName("td")[0].removeAttribute("hidden");
+                     }
+
+                     // console.log(rows[1].getElementsByTagName("td")[0].innerText);
+                  }
+
+                  document.getElementById("people_table").removeAttribute("hidden");
+
+                  //window.onload=new function(){
+                      //alert("image ready!");
+                  //}
+                  // test function
+                  document.getElementById("hidden_field").value="on";
               }
  
               // Reset the timer
               clearTimeout(timer[index]);
               timer[index] = setTimeout(timerCallback, timerWait);
- 
+
+              //test function
+              //alert("Key up triggered!");
+               // var rowCount = document.getElementById("people_table").getElementsByTagName("TR").length;
+               // alert(rowCount);
+              //test
+
               return false;
             });
  
