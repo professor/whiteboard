@@ -26,7 +26,7 @@ describe Deliverable do
 
   context "is not valid" do
 
-    [:course, :creator, :assignment_id].each do |attr|
+    [:creator, :assignment_id].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -55,7 +55,7 @@ describe Deliverable do
           duplicate = Deliverable.new()
           duplicate.stub(:update_team)
           duplicate.creator_id = original.creator_id
-          duplicate.course = original.course
+          duplicate.assignment = original.assignment
           duplicate.task_number = original.task_number
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid

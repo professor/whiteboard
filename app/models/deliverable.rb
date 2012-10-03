@@ -33,13 +33,12 @@
 
 class Deliverable < ActiveRecord::Base
   belongs_to :team
-  belongs_to :course
   belongs_to :assignment
   belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
-  validates_presence_of :course, :creator, :assignment_id
-  validate :unique_course_task_owner?
+  validates_presence_of :creator, :assignment_id
+  validate :unique_assignment_owner?
   validates :score, :numericality => {:greater_than_or_equal_to => 0}, :allow_nil => true, :allow_blank => true
 
   has_attached_file :feedback,
@@ -52,16 +51,16 @@ class Deliverable < ActiveRecord::Base
   before_validation :sanitize_data
 
 
-  def unique_course_task_owner?
+  def unique_assignment_owner?
     if self.is_team_deliverable?
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+      duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => self.team_id).first
       type = "team"
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => nil, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => nil, :creator_id => self.creator_id).first
       type = "individual"
     end
     if duplicate && duplicate.id != self.id
-      errors.add(:base, "Can't create another #{type} deliverable for the same course and task. Please edit the existing one.")
+      errors.add(:base, "Can't create another #{type} deliverable for the same assignment. Please edit the existing one.")
     end
   end
 
@@ -133,12 +132,12 @@ class Deliverable < ActiveRecord::Base
 
     message = self.owner_name + " has submitted a deliverable for "
     if !self.task_number.nil? and self.task_number != ""
-      message += "task " + self.task_number + " of "
+      message += "task " + self.assignment.task_number + " of "
     end
-    message += self.course.name
+    message += self.assignment.name
 
     options = {:to => mail_to,
-               :subject => "Deliverable submitted for " + self.course.name + " by " + self.owner_name,
+               :subject => "Deliverable submitted for " + self.assignment.course.name + " by " + self.owner_name,
                :message => message,
                :url_label => "View this deliverable",
                :url => url
@@ -153,10 +152,10 @@ class Deliverable < ActiveRecord::Base
     if !self.task_number.nil? and self.task_number != ""
       message += "task " + self.task_number + " of "
     end
-    message += self.course.name
+    message += self.assignment.course.name
 
     options = {:to => mail_to,
-               :subject => "Feedback for " + self.course.name,
+               :subject => "Feedback for " + self.assignment.course.name,
                :message => message,
                :url_label => "View this deliverable",
                :url => url
@@ -184,7 +183,7 @@ class Deliverable < ActiveRecord::Base
 
   def update_team
     # Look up the team this user is on if it is a team deliverable
-    Team.where(:course_id => self.course_id).each do |team|
+    Team.where(:course_id => self.assignment.course_id).each do |team|
       answer = team.members.include?(self.creator)
       self.team = team if team.members.include?(self.creator)
     end
