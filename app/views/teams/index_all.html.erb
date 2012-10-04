@@ -50,18 +50,18 @@
         <td><%= h team.course.year %></td>
 
         <% if team.primary_faculty %>
-            <td><%= twiki_user_link(team.primary_faculty.twiki_name, team.primary_faculty.human_name) %></td>
+            <td><%= link_to team.primary_faculty.human_name, person_path(team.primary_faculty.twiki_name) %></td>
         <% else %>
             <td>&nbsp;</td>
         <% end %>
         <% if team.secondary_faculty %>
-            <td><%= twiki_user_link(team.secondary_faculty.twiki_name, team.secondary_faculty.human_name) %></td>
+            <td><%= link_to team.secondary_faculty.human_name, person_path(team.secondary_faculty.twiki_name) %></td>
         <% else %>
             <td>&nbsp;</td>
         <% end %>
         <td>
           <% team.members.each do |user| %>
-              <%= twiki_user_link(user.twiki_name, user.human_name) %>
+              <%= link_to user.human_name, person_path(user.twiki_name) %>
               <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
               <% end %>
           <% end %> </td>
