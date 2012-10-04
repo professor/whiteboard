@@ -44,7 +44,7 @@ class Course < ActiveRecord::Base
   has_many :presentations
 
   validates_presence_of :semester, :year, :mini, :name, :grading_nomenclature, :grading_criteria
-  validate :validate_faculty
+  validate :validate_faculty, :validate_grading_range
 
   validates_inclusion_of :grading_nomenclature, :in => %w( Tasks Assignments ), :message => "The nomenclature %s is not valid"
   validates_inclusion_of :grading_criteria, :in => %w( Points Percentage ), :message => "The criteria %s is not valid"
@@ -62,7 +62,7 @@ class Course < ActiveRecord::Base
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
                   :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
-                  :faculty_assignments_override, :grading_nomenclature, :grading_criteria
+                  :faculty_assignments_override, :grading_nomenclature, :grading_criteria, :grading_range
 
 #  def to_param
 #    display_course_name
@@ -75,7 +75,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
-  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
+  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty, :update_grading_range
   after_save :update_distribution_list
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
@@ -297,5 +297,32 @@ class Course < ActiveRecord::Base
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
+  #Set grading range defaults and sanitizing json
+  def update_grading_range
+    #Default value if blank
+    if self.grading_range.blank?
+      self.grading_range = '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
+    end
 
+    #Dedupe values
+    self.grading_range = ActiveSupport::JSON.encode(JSON.parse(self.grading_range))
+  end
+
+  def validate_grading_range
+    if !self.grading_range.blank?
+      begin
+        @grading_range = JSON.parse(self.grading_range)
+        if @grading_range.size < 2
+          self.errors.add(:grading_range, "There has to be more than 1 grade for this course.")
+        end
+        @grading_range.each do |grade, value|
+          if !value['minimum'].is_a? Integer
+            self.errors.add(:grading_range, "The grade " << grade << " is not an integer.")
+          end
+        end
+      rescue
+        self.errors.add(:grading_range, "Grading range is invalid")
+      end
+    end
+  end
 end

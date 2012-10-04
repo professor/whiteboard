@@ -413,6 +413,37 @@ describe Course do
       @course.should be_invalid
       @course.errors[:grading_criteria].should_not be_empty
     end
+
+    it 'should have valid grading range' do
+      @course.grading_range = "blah"
+      @course.should be_invalid
+      @course.errors[:grading_range].should_not be_empty
+    end
+
+    it 'should have default grade range values if left blank' do
+      @course.grading_range = nil
+      @course.save
+      @course.grading_range.should == '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
+      @course.errors[:grading_range].should be_empty
+    end
+
+    it 'should have minimum of size 2' do
+      @course.grading_range = '{"A":{"minimum":90}}'
+      @course.should be_invalid
+      @course.errors[:grading_range].should_not be_empty
+    end
+
+    it 'should have grading range with number values' do
+      @course.grading_range = '{"A":{"minimum":"bad"},"B":{"minimum":"bad"}}'
+      @course.should be_invalid
+      @course.errors[:grading_range].should_not be_empty
+    end
+
+    it 'should have unique grade ranges' do
+      @course.grading_range = '{"A":{"minimum":50},"A":{"minimum":100},"B":{"minimum":80}}'
+      @course.save
+      @course.grading_range.should == '{"A":{"minimum":100},"B":{"minimum":80}}'
+    end
   end
 
   # Tests for has_and_belongs_to_many relationship

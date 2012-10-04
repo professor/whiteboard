@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20121001195400) do
     t.string   "email"
     t.string   "grading_nomenclature"
     t.string   "grading_criteria"
+    t.string   "grading_range"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
