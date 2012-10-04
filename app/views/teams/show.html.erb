@@ -39,14 +39,14 @@
 <p>
   <b><%= h @course.primary_faculty_label %></b>
   <% if @team.primary_faculty %>
-      <%= twiki_user_link(@team.primary_faculty.twiki_name, @team.primary_faculty.human_name) %>
+      <%= link_to @team.primary_faculty.human_name, person_path(@team.primary_faculty.twiki_name) %>
   <% end %>
 </p>
 
 <p>
   <b><%= h @course.secondary_faculty_label %></b>
   <% if @team.secondary_faculty %>
-      <%= twiki_user_link(@team.secondary_faculty.twiki_name, @team.secondary_faculty.human_name) %>
+    <%= link_to @team.secondary_faculty.human_name, person_path(@team.secondary_faculty.twiki_name) %>
   <% end %>
 </p>
 

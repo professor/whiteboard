@@ -73,7 +73,7 @@
       </div>
       <div id="nav">
         <ul>
-          <li class="standard"><a href="/people">Users</a></li>
+          <li class="standard"><a href="/people">People</a></li>
           <li class="standard"><a href="/courses">Courses</a></li>
           <ul>
             <li class="standard">
@@ -88,8 +88,8 @@
           </ul>
           <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
           <% if current_user %>
-              <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class => "Lv1NavLink" %></li>
-              <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.id), :class => "Lv1NavLink" %></li>
+              <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.twiki_name), :class => "Lv1NavLink" %></li>
+              <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.twiki_name), :class => "Lv1NavLink" %></li>
               <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class => "Lv1NavLink" %></li>
           <% else %>
               <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
