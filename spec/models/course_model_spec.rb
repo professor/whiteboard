@@ -402,47 +402,73 @@ describe Course do
       @course = FactoryGirl.create(:course)
     end
 
-    it 'should have valid nomenclature setting' do
+    it 'should not allow invalid nomenclature setting' do
       @course.grading_nomenclature = "blah"
       @course.should be_invalid
       @course.errors[:grading_nomenclature].should_not be_empty
     end
 
-    it 'should have valid criteria setting' do
+    it 'should not allow invalid criteria setting' do
       @course.grading_criteria = "blah"
       @course.should be_invalid
       @course.errors[:grading_criteria].should_not be_empty
     end
 
-    it 'should have valid grading range' do
+    it 'should not allow invalid grading range' do
       @course.grading_range = "blah"
       @course.should be_invalid
       @course.errors[:grading_range].should_not be_empty
     end
 
-    it 'should have default grade range values if left blank' do
-      @course.grading_range = nil
-      @course.save
-      @course.grading_range.should == '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
-      @course.errors[:grading_range].should be_empty
-    end
+    context 'grading range' do
+      it 'should have values if left blank' do
+        @course.grading_range = nil
+        @course.save
+        @course.grading_range.should == '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
+        @course.errors[:grading_range].should be_empty
+      end
 
-    it 'should have minimum of size 2' do
-      @course.grading_range = '{"A":{"minimum":90}}'
-      @course.should be_invalid
-      @course.errors[:grading_range].should_not be_empty
-    end
+      it 'should not have size less than 2' do
+        @course.grading_range = '{"A":{"minimum":90}}'
+        @course.should be_invalid
+        @course.errors[:grading_range].should_not be_empty
+      end
 
-    it 'should have grading range with number values' do
-      @course.grading_range = '{"A":{"minimum":"bad"},"B":{"minimum":"bad"}}'
-      @course.should be_invalid
-      @course.errors[:grading_range].should_not be_empty
-    end
+      it 'should not have non-number values' do
+        @course.grading_range = '{"A":{"minimum":"bad"},"B":{"minimum":"bad"}}'
+        @course.should be_invalid
+        @course.errors[:grading_range].should_not be_empty
+      end
 
-    it 'should have unique grade ranges' do
-      @course.grading_range = '{"A":{"minimum":50},"A":{"minimum":100},"B":{"minimum":80}}'
-      @course.save
-      @course.grading_range.should == '{"A":{"minimum":100},"B":{"minimum":80}}'
+      it 'should have unique letter grades' do
+        @course.grading_range = '{"A":{"minimum":50},"A":{"minimum":100},"B":{"minimum":80}}'
+        @course.save
+        @course.grading_range.should == '{"A":{"minimum":100},"B":{"minimum":80}}'
+      end
+
+      it 'should sort the grade range on letter grade' do
+        @course.grading_range = '{"A":{"minimum":95},"C":{"minimum":70},"A-":{"minimum":92},"B":{"minimum":85},"B+":{"minimum":88},"B-":{"minimum":82}}'
+        @sorted_grading_range = @course.get_sorted_grading_range
+        @sorted_grading_range.should == '{"A":{"minimum":95},"A-":{"minimum":92},"B+":{"minimum":88},"B":{"minimum":85},"B-":{"minimum":82},"C":{"minimum":70}}'
+      end
+
+      it 'should not allow a grade with a minimum value above a minimum value of a higher grade' do
+        @course.grading_range = '{"A":{"minimum":90},"C":{"minimum":80},"B":{"minimum":80}}'
+        @course.should be_invalid
+        @course.errors[:grading_range].should_not be_empty
+      end
+
+      it 'should not have grading range values over 100' do
+        @course.grading_range = '{"A":{"minimum":101},"B+":{"minimum":88},"C":{"minimum":70}}'
+        @course.should be_invalid
+        @course.errors[:grading_range].should_not be_empty
+      end
+
+      it 'should not have grading range values under 0' do
+        @course.grading_range = '{"A":{"minimum":98},"B+":{"minimum":88},"C":{"minimum":-1}}'
+        @course.should be_invalid
+        @course.errors[:grading_range].should_not be_empty
+      end
     end
   end
 

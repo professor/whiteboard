@@ -263,6 +263,30 @@ class Course < ActiveRecord::Base
     self.email = build_email
   end
 
+  def get_sorted_grading_range
+    grading_range = JSON.parse(self.grading_range)
+
+    letter_grades = grading_range.keys()
+    letter_grades.sort! do |a, b|
+      grade_order = a[0] <=> b[0]
+      if grade_order == 0
+        if !a[1].blank?
+          a[1] == '-' ? 1 : -1
+        else
+          b[1] == '-' ? -1 : 1
+        end
+      else
+        grade_order
+      end
+    end
+
+    sorted_grading_json = {}
+    letter_grades.each do |letter|
+      sorted_grading_json[letter] = grading_range[letter]
+    end
+    ActiveSupport::JSON.encode(sorted_grading_json)
+  end
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
@@ -297,28 +321,39 @@ class Course < ActiveRecord::Base
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
-  #Set grading range defaults and sanitizing json
+  # Set grading range defaults and sanitizing json
   def update_grading_range
-    #Default value if blank
+    # Default value if blank
     if self.grading_range.blank?
       self.grading_range = '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
     end
 
-    #Dedupe values
+    # Dedupe values
     self.grading_range = ActiveSupport::JSON.encode(JSON.parse(self.grading_range))
   end
 
   def validate_grading_range
     if !self.grading_range.blank?
       begin
-        @grading_range = JSON.parse(self.grading_range)
-        if @grading_range.size < 2
+        grading_range = JSON.parse(self.get_sorted_grading_range)
+        if grading_range.size < 2
           self.errors.add(:grading_range, "There has to be more than 1 grade for this course.")
         end
-        @grading_range.each do |grade, value|
+        prev_number_grade = 200
+        grading_range.each do |grade, value|
           if !value['minimum'].is_a? Integer
             self.errors.add(:grading_range, "The grade " << grade << " is not an integer.")
           end
+          if value['minimum'] >= prev_number_grade
+            self.errors.add(:grading_range, "The grade " << grade << " is greater than the previous one.")
+          end
+          if value['minimum'] > 100
+            self.errors.add(:grading_range, "The grade " << grade << " is greater than 100.")
+          end
+          if value['minimum'] < 0
+            self.errors.add(:grading_range, "The grade " << grade << " is less than 0.")
+          end
+          prev_number_grade = value['minimum']
         end
       rescue
         self.errors.add(:grading_range, "Grading range is invalid")
