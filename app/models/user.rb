@@ -52,6 +52,24 @@ class User < ActiveRecord::Base
     where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
   }
 
+
+  def to_param
+    if twiki_name.blank?
+      id.to_s
+    else
+      twiki_name
+    end
+  end
+
+  def self.find_by_param(param)
+    if param.to_i == 0 #This is a string
+      User.find_by_twiki_name(param)
+    else #This is a number
+      User.find(param)
+    end
+  end
+
+
   def teaching_these_courses_during_current_semester
     teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
   end

@@ -57,11 +57,7 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    if (params[:id].to_i == 0) #This is a string
-      @person = User.find_by_twiki_name(params[:id])
-    else #This is a number
-      @person = User.find(params[:id])
-    end
+    @person = User.find_by_param(params[:id]) 
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|
@@ -169,7 +165,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
 #    authorize! :update, @person
 
     @strength_themes = StrengthTheme.all
@@ -231,7 +227,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
 #    authorize! :update, @person
 
     @person.updated_by_user_id = current_user.id
@@ -254,7 +250,7 @@ class PeopleController < ApplicationController
   end
 
   def revert_to_version
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
@@ -272,7 +268,7 @@ class PeopleController < ApplicationController
       redirect_to(people_url) and return
     end
 
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
     @person.destroy
 
     respond_to do |format|
@@ -283,7 +279,7 @@ class PeopleController < ApplicationController
 
 
   def my_teams
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -310,7 +306,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -328,7 +324,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses_verbose
-    @person = User.find(params[:id])
+    @person = User.find_by_param(params[:id]) 
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)

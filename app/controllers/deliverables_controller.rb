@@ -20,7 +20,7 @@ class DeliverablesController < ApplicationController
   end
 
   def my_deliverables
-    user = User.find(params[:id])
+    user = User.find_by_param(params[:id])
     if (current_user.id != user.id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)

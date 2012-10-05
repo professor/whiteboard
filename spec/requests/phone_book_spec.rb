@@ -6,7 +6,7 @@ describe "phone book" do
    visit('/')
    @user = FactoryGirl.create(:student_sam)
    login_with_oauth @user
-   click_link "Users"
+   click_link "People"
   end
 
   context "shows phone book" do
@@ -31,7 +31,7 @@ describe "phone book" do
     it "lets the admin create a new person" do
       @user = FactoryGirl.create(:admin_andy)
       login_with_oauth @user
-      click_link "Users"
+      click_link "People"
     end
 
   end
