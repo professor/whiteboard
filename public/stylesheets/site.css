@@ -101,6 +101,14 @@ table.tablesorter tbody td {
 	background-color: #FFF;
 	vertical-align: top;
 }
+table.tablesorter tbody td.photobook-img {
+    padding: 0px;
+    margin: 0px;    
+    width: 60px; 
+}
+table.tablesorter tbody td.photobook-img img {
+    padding:0;
+}
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
