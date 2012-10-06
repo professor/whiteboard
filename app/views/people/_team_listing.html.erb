@@ -36,12 +36,12 @@
         <td><%= h team.course.semester %></td>
         <td><%= h team.course.year %></td>
         <% if team.primary_faculty %>
-            <td><%= twiki_user_link(team.primary_faculty.twiki_name, team.primary_faculty.human_name) %></td>
+            <td><%= link_to team.primary_faculty.human_name, person_path(team.primary_faculty.twiki_name) %></td>
         <% else %>
             <td>&nbsp;</td>
         <% end %>
         <% if team.secondary_faculty %>
-            <td><%= twiki_user_link(team.secondary_faculty.twiki_name, team.secondary_faculty.human_name) %></td>
+            <td><%= link_to team.secondary_faculty.human_name, person_path(team.secondary_faculty.twiki_name) %></td>
         <% else %>
             <td>&nbsp;</td>
         <% end %>
