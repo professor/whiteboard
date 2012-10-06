@@ -1,5 +1,6 @@
 FactoryGirl.define do
 
+
   factory :admin_andy_user, :parent => :user do
     email "admin.andy@sv.cmu.edu"
     webiso_account "andy@andrew.cmu.edu"
@@ -117,5 +118,6 @@ FactoryGirl.define do
     human_name "Vidya Pissaye"
     twiki_name "VidyaPissaye"
   end
+
 
 end

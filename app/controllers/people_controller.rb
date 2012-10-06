@@ -22,19 +22,6 @@ class PeopleController < ApplicationController
 
     @people = User.where(:is_active => true)
 
-    # Define allowed text criteria
-    #allowed_text_criteria = ['email', 'first_name', 'last_name', 'organization_name']
-
-    # Apply text filters
-    #allowed_text_criteria.each { |key|
-    #  if (params[key] != nil)
-        # Exact Match
-        # @people = @people.where(key => params[key])
-        # Partial Match
-    #    @people = @people.where("#{key} LIKE ?", "%#{params[key]}%")
-    #  end
-    #}
-
     # Apply limit criteria
     if (params[:limit] != nil)
       @people = @people.limit(params[:limit])
@@ -52,7 +39,7 @@ class PeopleController < ApplicationController
     # By default order by name
     @people = @people.order("first_name ASC, last_name ASC").all
 
-    #@people.first.mas
+    #@people.first.tea``
 
     respond_to do |format|
       format.html { render :html => @people }
@@ -60,6 +47,7 @@ class PeopleController < ApplicationController
                                                                     "first_name" => person.first_name,
                                                                     "last_name" => person.last_name,
                                                                     "image_uri" => person.image_uri,
+                                                                    "team_names" => person.teams,
                                                                     "masters_program" => person.masters_program,
                                                                     "email" => person.email].merge(person.telephones_hash) }, :layout => false }
     end

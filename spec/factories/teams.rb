@@ -12,4 +12,33 @@ FactoryGirl.define do
     after(:create) { |team| FactoryGirl.create(:student_sam_user, :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
+  # factories added by team maverick
+  factory :team_maverick, :parent => :team do
+    name "Team Maverick"
+    email "team.maverick@sv.cmu.edu"
+    updating_email false
+    association :course, :factory => :course
+  end
+
+  factory :team_amigos, :parent => :team do
+    name "Team Amigos"
+    email "team.amigos@sv.cmu.edu"
+    updating_email false
+    association :course, :factory => :course
+  end
+
+  factory :team_cooper, :parent => :team do
+    name "Team Cooper"
+    email "team.cooper@sv.cmu.edu"
+    updating_email false
+    association :course, :factory => :course
+  end
+
+  factory :team_leffingwell, :parent => :team do
+    name "Team Leffingwell"
+    email "team.leffingwell@sv.cmu.edu"
+    updating_email false
+    association :course, :factory => :course
+  end
+
 end

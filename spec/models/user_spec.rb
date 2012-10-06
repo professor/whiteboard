@@ -19,6 +19,8 @@ describe User do
       @student_shama  = FactoryGirl.create(:student_shama)
       @student_rashmi  = FactoryGirl.create(:student_rashmi)
       @student_clyde  = FactoryGirl.create(:student_clyde)
+      @student_vidya  = FactoryGirl.create(:student_vidya)
+
     end
     it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }

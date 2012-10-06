@@ -29,6 +29,24 @@ FactoryGirl.define do
     number '96-700'
   end
 
+  # factories added by team maverick
+  factory :fse_fall_2012, :parent => :course do
+    name 'Foundations of Software Engineering'
+    short_name 'FSE'
+    semester "Fall"
+    year 2012
+    number '97-700'
+  end
+
+  factory :rse_fall_2012, :parent => :course do
+    name 'Requirementss of Software Engineering'
+    short_name 'RSE'
+    semester "Fall"
+    year 2012
+    number '97-701'
+  end
+
+
 
   factory :mfse_current_semester, :parent => :mfse do
     semester AcademicCalendar.current_semester
