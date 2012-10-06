@@ -18,33 +18,48 @@ describe User do
       @faculty_allen= FactoryGirl.create(:faculty_allen)
       @student_shama  = FactoryGirl.create(:student_shama)
       @student_rashmi  = FactoryGirl.create(:student_rashmi)
+      @student_clyde  = FactoryGirl.create(:student_clyde)
     end
-    it "should do partial search case1" do
+    it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama, @student_rashmi]
     end
-    it "should do partial search case2" do
+    it "should do partial search case - only first name" do
       params_hash = {'main_search_text' => 'sha', 'first_name' => true }
-      @users=User.testSearch(params_hash)
-      @users.should == []
-    end
-    it "should do partial search case3" do
-      params_hash = {'main_search_text' => 'sha', 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama]
     end
-    it "should do partial search case4" do
-      params_hash = {'main_search_text' => 'clyde', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+    it "should do partial search case - first name disabled" do
+      params_hash = {'main_search_text' => 'hoq', 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@student_shama]
+    end
+    it "should do partial search case - no match" do
+      params_hash = {'main_search_text' => 'abc', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
       @users.should == []
     end
 
-    it "should do partial search case4" do
-      params_hash = {'main_search_text' => 'clyde', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+    it "should only search in andrew ID" do
+      params_hash = {'main_search_text' => 'clyde', 'andrew_id' => true }
       @users=User.testSearch(params_hash)
       @users.should == []
     end
+
+    it "should search in andrew ID - default" do
+      params_hash = {'main_search_text' => 'ali', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@student_clyde]
+    end
+
+
+    it "should do exact match search case - default" do
+      params_hash = {'main_search_text' => 'Alle', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'exact_match' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == []
+    end
+
 
   end
 

@@ -79,9 +79,9 @@ FactoryGirl.define do
     webiso_account "student.shama@andrew.cmu.edu"
     is_student true
     is_admin true
-    first_name "Student"
-    last_name "Shama"
-    human_name "Student Shama"
+    first_name "Shama"
+    last_name "Hoque"
+    human_name "Shama Hoque"
     twiki_name "StudentShama"
   end
 

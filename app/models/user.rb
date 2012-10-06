@@ -372,25 +372,31 @@ class User < ActiveRecord::Base
 
 
     if(criteria['main_search_text'] != nil)
+
+      main_search_string = "%"+criteria['main_search_text']+"%"
+      if(criteria['exact_match'])
+        main_search_string = criteria['main_search_text']
+      end
+
       query_string = ""
 
       # check first name and add to query string
-      if (criteria['first_name'] != nil)
-        query_string += "first_name ILIKE '%"+criteria['main_search_text']+"%'"
+      if (criteria['first_name'])
+        query_string += "first_name ILIKE '"+main_search_string+"'"
       end
       # check last name and add to query string
-      if (criteria['last_name'] != nil)
+      if (criteria['last_name'])
         if( query_string != "")
           query_string += " OR "
         end
-        query_string += "last_name ILIKE '%"+criteria['main_search_text']+"%'"
+        query_string += "last_name ILIKE '"+main_search_string+"'"
       end
       # check andrew id and add to query string
-      if (criteria['andrew_id'] != nil)
+      if (criteria['andrew_id'])
         if( query_string != "")
           query_string += " OR "
         end
-        query_string += "webiso_account ILIKE '%"+criteria['main_search_text']+"%'"
+        query_string += "webiso_account ILIKE '"+main_search_string+"'"
       end
 
       where(query_string)
@@ -401,7 +407,7 @@ class User < ActiveRecord::Base
 
 
     # Define allowed text criteria
-    allowed_text_criteria = ['people_type', 'organization_name']
+    #allowed_text_criteria = ['people_type', 'organization_name']
     #str1=[]
     #if (criteria['first_name'] != nil)
     #  str1 = "first_name ILIKE? :search"

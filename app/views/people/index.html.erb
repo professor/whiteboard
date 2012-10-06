@@ -712,7 +712,39 @@
 
 <div id="results_box"></div><br>
 
+<<<<<<< HEAD
 <!-- End of HTML Migration -->
+=======
+<table id="people_table" class="tablesorter">
+  <thead>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Phone</th>
+    <th>&nbsp;</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% for person in @people %>
+      <tr class="tablesorter
+        <% if person.is_student %>student
+        <% end %>
+        <% if person.is_staff %>staff
+        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+        <td><%= link_to person.first_name, person_path(person.twiki_name) %></td>
+        <td><%= link_to person.last_name, person_path(person.twiki_name) %></td>
+        <td>
+          <% person.telephones.each { |phone| %><%= h phone %>
+              <br/>
+          <% } %></td>
+        <td><%= link_to 'Show', person_path(person) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br/>
+>>>>>>> 5672530757e5200770c299995c958e03f4efb078
 
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
