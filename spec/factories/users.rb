@@ -63,4 +63,59 @@ FactoryGirl.define do
     twiki_name "NgocHo"
   end
 
+  # factories added by Team Maverick
+  factory :faculty_allen, :parent => :user do
+    email "faculty.allen@sv.cmu.edu"
+    webiso_account "allen@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Allen"
+    human_name "Faculty Allen"
+    twiki_name "FacultyAllen"
+  end
+
+  factory :student_shama, :parent => :user do
+    email "student.shama@sv.cmu.edu"
+    webiso_account "student.shama@andrew.cmu.edu"
+    is_student true
+    is_admin true
+    first_name "Student"
+    last_name "Shama"
+    human_name "Student Shama"
+    twiki_name "StudentShama"
+  end
+
+  factory :student_rashmi, :parent => :user do
+    email "student.rashmi@sv.cmu.edu"
+    webiso_account "student.rashmi@andrew.cmu.edu"
+    is_student true
+    is_admin true
+    first_name "Student"
+    last_name "Rashmi"
+    human_name "Student Rashmi"
+    twiki_name "StudentRashmi"
+  end
+
+  factory :student_clyde, :parent => :user do
+    email "clyde.li@sv.cmu.edu"
+    webiso_account "ali@andrew.cmu.edu"
+    is_student true
+    is_admin false
+    first_name "Clyde"
+    last_name "Li"
+    human_name "Clyde Li"
+    twiki_name "ClydeLi"
+  end
+
+  factory :student_vidya, :parent => :user do
+    email "vidya.pissaye@sv.cmu.edu"
+    webiso_account "vpissaye@andrew.cmu.edu"
+    is_student true
+    is_admin true
+    first_name "Vidya"
+    last_name "Pissaye"
+    human_name "Vidya Pissaye"
+    twiki_name "VidyaPissaye"
+  end
+
 end

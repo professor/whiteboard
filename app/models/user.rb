@@ -52,6 +52,24 @@ class User < ActiveRecord::Base
     where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
   }
 
+
+  def to_param
+    if twiki_name.blank?
+      id.to_s
+    else
+      twiki_name
+    end
+  end
+
+  def self.find_by_param(param)
+    if param.to_i == 0 #This is a string
+      User.find_by_twiki_name(param)
+    else #This is a number
+      User.find(param)
+    end
+  end
+
+
   def teaching_these_courses_during_current_semester
     teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
   end
@@ -339,6 +357,74 @@ class User < ActiveRecord::Base
     logger.debug("photo.url #{photo.url}")
     # update the image_uri if a photo was uploaded
     self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+  end
+
+  #People search method
+
+  def self.search(text)
+    where("human_name ILIKE ?", "%#{text}%")
+
+  end
+
+  #People search with criteria
+  def self.testSearch(criteria)
+
+
+    if(criteria['main_search_text'] != nil)
+      query_string = ""
+
+      # check first name and add to query string
+      if (criteria['first_name'] != nil)
+        query_string += "first_name ILIKE '%"+criteria['main_search_text']+"%'"
+      end
+      # check last name and add to query string
+      if (criteria['last_name'] != nil)
+        if( query_string != "")
+          query_string += " OR "
+        end
+        query_string += "last_name ILIKE '%"+criteria['main_search_text']+"%'"
+      end
+      # check andrew id and add to query string
+      if (criteria['andrew_id'] != nil)
+        if( query_string != "")
+          query_string += " OR "
+        end
+        query_string += "webiso_account ILIKE '%"+criteria['main_search_text']+"%'"
+      end
+
+      where(query_string)
+    end
+
+
+
+
+
+    # Define allowed text criteria
+    allowed_text_criteria = ['people_type', 'organization_name']
+    #str1=[]
+    #if (criteria['first_name'] != nil)
+    #  str1 = "first_name ILIKE? :search"
+    #end
+    #if (criteria['last_name'] != nil)
+    #  str1+="last_name ILIKE ?"
+    #end
+
+    #@users=@users.where("first_name ILIKE ? OR last_name ILIKE ? OR websio_account ILIKE ?", "%#{criteria['first_name']}%", "%#{criteria['last_name']}%","%#{criteria['websio_account']}%")
+
+
+    # Apply text filters
+    #allowed_text_criteria.each { |key|
+      #if (criteria[key] != nil)
+        #if (criteria[key]=='first_name')
+          #@users=@users.where("first_name ILIKE ? OR last_name ILIKE ? OR websio_account ILIKE ?", "%#{criteria['first_name']}%", "%#{criteria['last_name']}%","%#{criteria['websio_account']}%")
+        #end
+        # Exact Match
+        # @people = @people.where(key => params[key])
+        # Partial Match
+        #@users = @users.where("#{key} ILIKE ?", "%#{criteria[key]}%")
+      #end
+    #}
 
   end
 

@@ -1,40 +1,37 @@
 <% content_for :title, 'People - Search' %>
-
 <!-- UI Mockup CSS/JS Migration -->
 <style media="screen" type="text/css">
 
-    .noTitle {margin-top: 64px;}
-    .noTitle .ui-dialog-titlebar {display:none}
+    .customization_dialog {margin-top: 64px;}
+    .customization_dialog .ui-dialog-titlebar {display:none}
 
     .criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
     .criterias ul { display: inline; list-style:none; padding-left: 0px; }
     .criterias ul li{ display: inline; margin-left: 0px; border: 1px solid #666; border-radius: 2px; padding: 0px 2px; margin: 0px 2px;}
 
-    .qTag input, .qTag select{ height: 12px;}
-    .qTag a {
+    .criteria_tag input, .criteria_tag select{ height: 12px;}
+    .criteria_tag a {
         opacity: 0.4; color: #000; text-decoration: none;
         font-weight: 700; padding-left: 3px;
     }
-    .qTag a:hover { opacity: 1; }
+    .criteria_tag a:hover { opacity: 1; }
 
-    .inner_text { border: 0; width: 72px; font-weight: 700;}
+    .criteria_text { border: 0; width: 72px; font-weight: 700;}
+    .null_search_text { color: #aaa; }
 
-    .null_input { color: #aaa; }
-
-    #qBox, #qBox2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
-    #qText { border: none; width: 128px;}
+    #criteria_box, #criteria_box2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
+    #search_text_box { border: none; width: 128px;}
 
     select .select-hint { color: #ccc;}
 
 
-    #cu_box, #dialog_close, #export_box { float:right; }
-    #modal_card { margin-left: auto; margin-right: auto; }
+    #customization_link, #customization_dialog_close, #export_link { float:right; }
+    #customization_modal_card  { margin-left: auto; margin-right: auto; }
     #results_box {width: 100%;}
     .data_card {
         float: left;
-        margin: 8px 8px;
+        margin: 8px 8px; padding: 2px 6px;
         background-color: #eee;
-        padding: 2px 6px;
         width: 174px; min-height: 260px;
         border: 1px solid #333; border-radius: 2px;
     }
@@ -45,17 +42,17 @@
 
 <script type="text/javascript">
 
-    var cri_text_hash = new Object();
-    cri_text_hash["first_name"] = "First Name";
-    cri_text_hash["last_name"] = "Last Name";
-    cri_text_hash["andrew_id"] = "Andrew ID";
-    cri_text_hash["company"] = "Company";
-    cri_text_hash["class_year"] = "Class Year";
-    cri_text_hash["team"] = "Team";
-    cri_text_hash["project"] = "Project";
-    cri_text_hash["course"] = "Course";
-    cri_text_hash["program"] = "Program";
-    cri_text_hash["ft_pt"] = "Full/Part Time";
+    var criteria_name_hash = new Object();
+    criteria_name_hash["first_name"] = "First Name";
+    criteria_name_hash["last_name"] = "Last Name";
+    criteria_name_hash["andrew_id"] = "Andrew ID";
+    criteria_name_hash["company"] = "Company";
+    criteria_name_hash["class_year"] = "Class Year";
+    criteria_name_hash["team"] = "Team";
+    criteria_name_hash["project"] = "Project";
+    criteria_name_hash["course"] = "Course";
+    criteria_name_hash["program"] = "Program";
+    criteria_name_hash["ft_pt"] = "Full/Part Time";
 
 
     var criterias_array = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
@@ -76,35 +73,35 @@
 
         // Initialize dialog
         $('#dialog_modal').dialog({
-            dialogClass: 'noTitle', position: 'top',
+            dialogClass: 'customization_dialog', position: 'top',
             width: 220, height: 450,
             autoOpen: false, show: 'fold', hide: 'fold',
             modal: true
         });
-        $('#cu_box').click(function() {  $('#dialog_modal').dialog("open");  });
-        $('#dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
+        $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
+        $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
 
         // Class Year Options
         for (i=2013; i>2001; --i){
-            $('#cri_class_year select').append('<option value="'+i+'">'+i+'</option>');
+            $('#criteria_class_year select').append('<option value="'+i+'">'+i+'</option>');
         }
-        // qBox2 qTag Hide
-        $('#qBox2 .qTag').hide();
+        // criteria_box2 criteria_tag Hide
+        $('#criteria_box2 .criteria_tag').hide();
 
 
-        $('#qText').val("Search Text").addClass("null_input");
+        $('#search_text_box').val("Search Text").addClass("null_search_text");
 
         $("input").focus( function(){
             if ($(this).val() == $(this)[0].title){
-                $(this).removeClass("null_input");
+                $(this).removeClass("null_search_text");
                 $(this).val("");
             }
         }).blur(function(){
-            if ($(this).val() == ""){
-                $(this).addClass("null_input");
-                $(this).val($(this)[0].title);
-            }
-        });
+                    if ($(this).val() == ""){
+                        $(this).addClass("null_search_text");
+                        $(this).val($(this)[0].title);
+                    }
+                });
 
 
         // add criteria change event
@@ -126,13 +123,13 @@
 
             $('#criPicker').append('<option value="default" class="select-hint">Add Criteria</option>');
             for (var i=0; i<criteria_ids.length; ++i){
-                var cri_name = criterias_array[criteria_ids[i]];
-                $('#criPicker').append('<option value="'+cri_name+'">'+cri_text_hash[cri_name]+'</option>');
+                var criteria_name = criterias_array[criteria_ids[i]];
+                $('#criPicker').append('<option value="'+criteria_name+'">'+criteria_name_hash[criteria_name]+'</option>');
             }
-            $('#qBox2 .qTag').each( function(){
+            $('#criteria_box2 .criteria_tag').each( function(){
                 var to_be_hide = true;
                 for (var i=0; i<criteria_ids.length; ++i){
-                    if( $(this)[0].title == cri_text_hash[criterias_array[criteria_ids[i]]]){
+                    if( $(this)[0].title == criteria_name_hash[criterias_array[criteria_ids[i]]]){
                         to_be_hide = false;
                         break;
                     }
@@ -148,13 +145,13 @@
 
 
         $('#criPicker').change(function() {
-            var tag_text = cri_text_hash[$(this)[0].value];
+            var tag_text = criteria_name_hash[$(this)[0].value];
             ext_criteria_hash[tag_text] = true;
-            $('#'+'cri_'+$(this)[0].value).appendTo('#qBox2 .qTags');
-            $('#'+'cri_'+$(this)[0].value).show();
+            $('#'+'criteria_'+$(this)[0].value).appendTo('#criteria_box2 .criteria_tags');
+            $('#'+'criteria_'+$(this)[0].value).show();
 
-            if($('#qBox2 .qTag').last().find('.inner_text').length != 0 && $('#qBox2 .qTag').last().css('display') != 'none'){
-                $('#qBox2 .qTag').last().find('.inner_text')[0].focus();
+            if($('#criteria_box2 .criteria_tag').last().find('.criteria_text').length != 0 && $('#criteria_box2 .criteria_tag').last().css('display') != 'none'){
+                $('#criteria_box2 .criteria_tag').last().find('.criteria_text')[0].focus();
             }
 
             $(this).val('default');
@@ -162,7 +159,7 @@
 
 
         // Remove tag when click on x
-        $('#qBox').on("click", ".qTag a", function(){
+        $('#criteria_box').on("click", ".criteria_tag a", function(){
             if($(this).parent().css('opacity') == '1'){
                 ext_criteria_hash[$(this).parent()[0].title] = false;
                 $(this).parent().fadeTo("fast", 0.55);
@@ -180,7 +177,7 @@
             }
         });
 
-        $('#qBox2').on("click", ".qTag a", function(){
+        $('#criteria_box2').on("click", ".criteria_tag a", function(){
             ext_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeOut();
         });
@@ -191,17 +188,17 @@
             $.ajax({
                 url: 'people.json',
                 dataType: 'json',
-                data: {last_name: $("#qText").val() },
+                data: {last_name: $("#search_text_box").val() },
                 success: function(data){
                     console.log(data);
                     $("#results_box").html("");
                     $.each(data, function(){
-                       var card_html = '<div class="data_card">';
-                       card_html += '<img src='+this.image_uri+'><br>';
-                       card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
-                       card_html += 'Email: '+this.email;
-                       card_html += '</div>';
-                       $("#results_box").append(card_html);
+                        var card_html = '<div class="data_card">';
+                        card_html += '<img src='+this.image_uri+'><br>';
+                        card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
+                        card_html += 'Email: '+this.email;
+                        card_html += '</div>';
+                        $("#results_box").append(card_html);
                     });
                 }
             });
@@ -211,6 +208,412 @@
     });
 </script>
 <!-- End of CSS/JS Migration -->
+
+<h1>People Search</h1>
+<div class="right_link">
+  <%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
+</div>
+
+
+<!-- UI Mockup HTML Migration -->
+<div id="dialog_modal" title="Customization">
+  <a id='customization_dialog_close' href='#'>[x]</a><br><br>
+  <div id="modal_card" class="data_card">
+    <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
+    <img src="images/mascot.jpg"><br>
+    <input checked type="checkbox" name="Name" value="cu_name" /> Name: ? <br>
+    <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
+    <input checked type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
+    <input checked type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
+    <input type="checkbox" name="Team" value="cu_team" /> Team: ? <br>
+    <input type="checkbox" name="Company" value="cu_company" /> Company: ? <br>
+  </div>
+</div>
+
+
+<div id="criteria_box" class="criterias">
+  <input type="text" title="Search Text" id="search_text_box" style="background-color: #f3f0e9;"/> in
+  <ul class="criteria_tags">
+    <li class="criteria_tag" id="criteria_first_name" title="First Name" style="background-color: LightBlue;">First Name <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_last_name" title="Last Name" style="background-color: LightGoldenRodYellow;">Last Name <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_andrew_id" title="Andrew ID" style="background-color: Pink;">Andrew ID <a href="#">x</a> </li>
+  </ul>
+</div>
+<select id="catGroup" class="criterias">
+  <option value="all">All</option>
+  <option value="student"> Student </option>
+  <option value="staff"> Staff/Faculty </option>
+  <option value="alumni"> Alumni </option>
+</select>
+
+<select id="criPicker" class="criterias">
+  <option value="default" class="select-hint">Add Criteria</option>
+  <option value="company">Company</option>
+  <option value="class_year">Class Year</option>
+  <option value="program">Program</option>
+  <option value="ft_pt">Full/Part Time</option>
+  <option value="course">Course</option>
+  <option value="project">Project</option>
+  <option value="team">Team</option>
+</select>
+
+<button type="button" id="submit_btn" class="criterias">Go</button><br>
+
+<div id="criteria_box2" class="criterias">
+  <ul class="criteria_tags">
+    <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: Orange;">
+      Company: <input type="text" class="criteria_text" style="background-color: Orange;"/><a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_class_year" title="Class Year" style="background-color: Moccasin;">
+      Class Year:
+      <select class="criteria_text" style="background-color: Moccasin; width:56px;">
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
+      Program:
+      <select class="criteria_text" style="background-color: Beige; width: 80px;">
+        <option value="se_tech">SE-Tech</option>
+        <option value="se_dm">SE-DM</option>
+        <option value="sm">SM</option>
+        <option value="ece">ECE</option>
+        <option value="ini">INI</option>
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_ft_pt" title="Full/Part Time" style="background-color: LightBlue;">
+      <select class="criteria_text" style="background-color: LightBlue; width: 86px;">
+        <option value="ft">Full Time</option>
+        <option value="pt">Part Time</option>
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_course" title="Course" style="background-color: PaleGreen;">
+      Course: <input type="text" class="criteria_text" style="background-color: PaleGreen;"/> <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_project" title="Project" style="background-color: LightGoldenRodYellow;">
+      Project: <input type="text" class="criteria_text" style="background-color: LightGoldenRodYellow;"/> <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_team" title="Team" style="background-color: Lavender;">
+      Team: <input type="text" class="criteria_text" style="background-color: Lavender;"/> <a href="#">x</a> </li>
+  </ul>
+</div>
+
+<input type="checkbox" name="exact_match" value="exact_match" /> Exact Match?
+
+
+
+<br>
+<a id="customization_link" href="#">Customization</a><br>
+<a id="export_link" href="#">Export Results</a>
+
+<div id="results_box"></div><br>
+
+<!-- End of HTML Migration --><!-- UI Mockup CSS/JS Migration -->
+<style media="screen" type="text/css">
+
+    .customization_dialog {margin-top: 64px;}
+    .customization_dialog .ui-dialog-titlebar {display:none}
+
+    .criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
+    .criterias ul { display: inline; list-style:none; padding-left: 0px; }
+    .criterias ul li{ display: inline; margin-left: 0px; border: 1px solid #666; border-radius: 2px; padding: 0px 2px; margin: 0px 2px;}
+
+    .criteria_tag input, .criteria_tag select{ height: 12px;}
+    .criteria_tag a {
+        opacity: 0.4; color: #000; text-decoration: none;
+        font-weight: 700; padding-left: 3px;
+    }
+    .criteria_tag a:hover { opacity: 1; }
+
+    .criteria_text { border: 0; width: 72px; font-weight: 700;}
+    .null_search_text { color: #aaa; }
+
+    #criteria_box, #criteria_box2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
+    #search_text_box { border: none; width: 128px;}
+
+    select .select-hint { color: #ccc;}
+
+
+    #customization_link, #customization_dialog_close, #export_link { float:right; }
+    #customization_modal_card  { margin-left: auto; margin-right: auto; }
+    #results_box {width: 100%;}
+    .data_card {
+        float: left;
+        margin: 8px 8px; padding: 2px 6px;
+        background-color: #eee;
+        width: 174px; min-height: 260px;
+        border: 1px solid #333; border-radius: 2px;
+    }
+    .data_card img{
+        width: 150px; margin-top: 12px; margin-bottom: 6px; margin-left:10px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    var criteria_name_hash = new Object();
+    criteria_name_hash["first_name"] = "First Name";
+    criteria_name_hash["last_name"] = "Last Name";
+    criteria_name_hash["andrew_id"] = "Andrew ID";
+    criteria_name_hash["company"] = "Company";
+    criteria_name_hash["class_year"] = "Class Year";
+    criteria_name_hash["team"] = "Team";
+    criteria_name_hash["project"] = "Project";
+    criteria_name_hash["course"] = "Course";
+    criteria_name_hash["program"] = "Program";
+    criteria_name_hash["ft_pt"] = "Full/Part Time";
+
+
+    var criterias_array = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
+    var ext_criteria_hash = new Object();
+    ext_criteria_hash["First Name"] = true;
+    ext_criteria_hash["Last Name"] = true;
+    ext_criteria_hash["Andrew ID"] = true;
+    ext_criteria_hash["Company"] = false;
+    ext_criteria_hash["Class Year"] = false;
+    ext_criteria_hash["Team"] = false;
+    ext_criteria_hash["Project"] = false;
+    ext_criteria_hash["Course"] = false;
+    ext_criteria_hash["Program"] = false;
+    ext_criteria_hash["Full/Part Time"] = false;
+
+
+    $(document).ready(function(){
+
+        // Initialize dialog
+        $('#dialog_modal').dialog({
+            dialogClass: 'customization_dialog', position: 'top',
+            width: 220, height: 450,
+            autoOpen: false, show: 'fold', hide: 'fold',
+            modal: true
+        });
+        $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
+        $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
+
+        // Class Year Options
+        for (i=2013; i>2001; --i){
+            $('#criteria_class_year select').append('<option value="'+i+'">'+i+'</option>');
+        }
+        // criteria_box2 criteria_tag Hide
+        $('#criteria_box2 .criteria_tag').hide();
+
+
+        $('#search_text_box').val("Search Text").addClass("null_search_text");
+
+        $("input").focus( function(){
+            if ($(this).val() == $(this)[0].title){
+                $(this).removeClass("null_search_text");
+                $(this).val("");
+            }
+        }).blur(function(){
+                    if ($(this).val() == ""){
+                        $(this).addClass("null_search_text");
+                        $(this).val($(this)[0].title);
+                    }
+                });
+
+
+        // add criteria change event
+        $('#catGroup').change(function() {
+            $('#criPicker').html("");
+            var criteria_ids;
+            switch($(this)[0].value){
+                case "all":
+                case "student":
+                    criteria_ids = [0, 2, 3, 4, 5, 6];
+                    break;
+                case "staff":
+                    criteria_ids = [0, 4, 5];
+                    break;
+                case "alumni":
+                    criteria_ids = [0, 1, 2, 3];
+                    break;
+            }
+
+            $('#criPicker').append('<option value="default" class="select-hint">Add Criteria</option>');
+            for (var i=0; i<criteria_ids.length; ++i){
+                var criteria_name = criterias_array[criteria_ids[i]];
+                $('#criPicker').append('<option value="'+criteria_name+'">'+criteria_name_hash[criteria_name]+'</option>');
+            }
+            $('#criteria_box2 .criteria_tag').each( function(){
+                var to_be_hide = true;
+                for (var i=0; i<criteria_ids.length; ++i){
+                    if( $(this)[0].title == criteria_name_hash[criterias_array[criteria_ids[i]]]){
+                        to_be_hide = false;
+                        break;
+                    }
+                }
+                if(to_be_hide && $(this).css('display') != 'none') {
+                    ext_criteria_hash[$(this)[0].title] = false;
+                    alert($(this)[0].title +" is not related to the user type selected.");
+                    $(this).fadeOut();
+                }
+            });
+
+        });
+
+
+        $('#criPicker').change(function() {
+            var tag_text = criteria_name_hash[$(this)[0].value];
+            ext_criteria_hash[tag_text] = true;
+            $('#'+'criteria_'+$(this)[0].value).appendTo('#criteria_box2 .criteria_tags');
+            $('#'+'criteria_'+$(this)[0].value).show();
+
+            if($('#criteria_box2 .criteria_tag').last().find('.criteria_text').length != 0 && $('#criteria_box2 .criteria_tag').last().css('display') != 'none'){
+                $('#criteria_box2 .criteria_tag').last().find('.criteria_text')[0].focus();
+            }
+
+            $(this).val('default');
+        });
+
+
+        // Remove tag when click on x
+        $('#criteria_box').on("click", ".criteria_tag a", function(){
+            if($(this).parent().css('opacity') == '1'){
+                ext_criteria_hash[$(this).parent()[0].title] = false;
+                $(this).parent().fadeTo("fast", 0.55);
+                $(this).html('+');
+                // check if all are faded
+                if(!(ext_criteria_hash["First Name"] || ext_criteria_hash["Last Name"] || ext_criteria_hash["Andrew ID"])) {
+                    $(this).parent().fadeTo("fast", 1);
+                    $(this).html('x');
+                    alert("Sorry, but you can not discard all three criterias.");
+                }
+            } else {
+                ext_criteria_hash[$(this).parent()[0].title] = true;
+                $(this).parent().fadeTo("fast", 1);
+                $(this).html('x');
+            }
+        });
+
+        $('#criteria_box2').on("click", ".criteria_tag a", function(){
+            ext_criteria_hash[$(this).parent()[0].title] = false;
+            $(this).parent().fadeOut();
+        });
+
+        // Send last_name query and get results
+        $('#submit_btn').click( function(){
+            console.log("btn pressed");
+            $.ajax({
+                url: 'people.json',
+                dataType: 'json',
+                data: {last_name: $("#search_text_box").val() },
+                success: function(data){
+                    console.log(data);
+                    $("#results_box").html("");
+                    $.each(data, function(){
+                        var card_html = '<div class="data_card">';
+                        card_html += '<img src='+this.image_uri+'><br>';
+                        card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
+                        card_html += 'Email: '+this.email;
+                        card_html += '</div>';
+                        $("#results_box").append(card_html);
+                    });
+                }
+            });
+
+        });
+
+    });
+</script>
+<!-- End of CSS/JS Migration -->
+
+<h1>People Search</h1>
+<div class="right_link">
+  <%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
+</div>
+
+
+<!-- UI Mockup HTML Migration -->
+<div id="dialog_modal" title="Customization">
+  <a id='customization_dialog_close' href='#'>[x]</a><br><br>
+  <div id="modal_card" class="data_card">
+    <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
+    <img src="images/mascot.jpg"><br>
+    <input checked type="checkbox" name="Name" value="cu_name" /> Name: ? <br>
+    <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
+    <input checked type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
+    <input checked type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
+    <input type="checkbox" name="Team" value="cu_team" /> Team: ? <br>
+    <input type="checkbox" name="Company" value="cu_company" /> Company: ? <br>
+  </div>
+</div>
+
+
+<div id="criteria_box" class="criterias">
+  <input type="text" title="Search Text" id="search_text_box" style="background-color: #f3f0e9;"/> in
+  <ul class="criteria_tags">
+    <li class="criteria_tag" id="criteria_first_name" title="First Name" style="background-color: LightBlue;">First Name <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_last_name" title="Last Name" style="background-color: LightGoldenRodYellow;">Last Name <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_andrew_id" title="Andrew ID" style="background-color: Pink;">Andrew ID <a href="#">x</a> </li>
+  </ul>
+</div>
+<select id="catGroup" class="criterias">
+  <option value="all">All</option>
+  <option value="student"> Student </option>
+  <option value="staff"> Staff/Faculty </option>
+  <option value="alumni"> Alumni </option>
+</select>
+
+<select id="criPicker" class="criterias">
+  <option value="default" class="select-hint">Add Criteria</option>
+  <option value="company">Company</option>
+  <option value="class_year">Class Year</option>
+  <option value="program">Program</option>
+  <option value="ft_pt">Full/Part Time</option>
+  <option value="course">Course</option>
+  <option value="project">Project</option>
+  <option value="team">Team</option>
+</select>
+
+<button type="button" id="submit_btn" class="criterias">Go</button><br>
+
+<div id="criteria_box2" class="criterias">
+  <ul class="criteria_tags">
+    <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: Orange;">
+      Company: <input type="text" class="criteria_text" style="background-color: Orange;"/><a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_class_year" title="Class Year" style="background-color: Moccasin;">
+      Class Year:
+      <select class="criteria_text" style="background-color: Moccasin; width:56px;">
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
+      Program:
+      <select class="criteria_text" style="background-color: Beige; width: 80px;">
+        <option value="se_tech">SE-Tech</option>
+        <option value="se_dm">SE-DM</option>
+        <option value="sm">SM</option>
+        <option value="ece">ECE</option>
+        <option value="ini">INI</option>
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_ft_pt" title="Full/Part Time" style="background-color: LightBlue;">
+      <select class="criteria_text" style="background-color: LightBlue; width: 86px;">
+        <option value="ft">Full Time</option>
+        <option value="pt">Part Time</option>
+      </select>
+      <a href="#">x</a>
+    </li>
+    <li class="criteria_tag" id="criteria_course" title="Course" style="background-color: PaleGreen;">
+      Course: <input type="text" class="criteria_text" style="background-color: PaleGreen;"/> <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_project" title="Project" style="background-color: LightGoldenRodYellow;">
+      Project: <input type="text" class="criteria_text" style="background-color: LightGoldenRodYellow;"/> <a href="#">x</a> </li>
+    <li class="criteria_tag" id="criteria_team" title="Team" style="background-color: Lavender;">
+      Team: <input type="text" class="criteria_text" style="background-color: Lavender;"/> <a href="#">x</a> </li>
+  </ul>
+</div>
+
+<input type="checkbox" name="exact_match" value="exact_match" /> Exact Match?
+
+
+
+<br>
+<a id="customization_link" href="#">Customization</a><br>
+<a id="export_link" href="#">Export Results</a>
+
+<div id="results_box"></div><br>
+
+<!-- End of HTML Migration -->
 
 <h1>People Search</h1>
 <div class="right_link">

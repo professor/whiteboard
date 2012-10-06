@@ -23,17 +23,17 @@ class PeopleController < ApplicationController
     @people = User.where(:is_active => true)
 
     # Define allowed text criteria
-    allowed_text_criteria = ['email', 'first_name', 'last_name', 'organization_name']
+    #allowed_text_criteria = ['email', 'first_name', 'last_name', 'organization_name']
 
     # Apply text filters
-    allowed_text_criteria.each { |key|
-      if (params[key] != nil)
+    #allowed_text_criteria.each { |key|
+    #  if (params[key] != nil)
         # Exact Match
         # @people = @people.where(key => params[key])
         # Partial Match
-        @people = @people.where("#{key} LIKE ?", "%#{params[key]}%")
-      end
-    }
+    #    @people = @people.where("#{key} LIKE ?", "%#{params[key]}%")
+    #  end
+    #}
 
     # Apply limit criteria
     if (params[:limit] != nil)

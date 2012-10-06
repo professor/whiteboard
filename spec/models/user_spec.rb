@@ -11,6 +11,46 @@ describe User do
     @admin_andy = FactoryGirl.create(:admin_andy)
   end
 
+  # People search tests by Team Maverick
+
+  context "People Search" do
+    before do
+      @faculty_allen= FactoryGirl.create(:faculty_allen)
+      @student_shama  = FactoryGirl.create(:student_shama)
+      @student_rashmi  = FactoryGirl.create(:student_rashmi)
+    end
+    it "should do partial search case1" do
+      params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@student_shama, @student_rashmi]
+    end
+    it "should do partial search case2" do
+      params_hash = {'main_search_text' => 'sha', 'first_name' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == []
+    end
+    it "should do partial search case3" do
+      params_hash = {'main_search_text' => 'sha', 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@student_shama]
+    end
+    it "should do partial search case4" do
+      params_hash = {'main_search_text' => 'clyde', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == []
+    end
+
+    it "should do partial search case4" do
+      params_hash = {'main_search_text' => 'clyde', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == []
+    end
+
+  end
+
+  # end of Team Maverick's test
+
+
   describe "abilities" do
     subject { ability }
     let(:ability){ Ability.new(user) }
@@ -271,7 +311,6 @@ describe User do
 
 
   end
-
 
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log
