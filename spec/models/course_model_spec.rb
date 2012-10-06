@@ -414,12 +414,15 @@ describe Course do
       @course.errors[:grading_criteria].should_not be_empty
     end
 
+=begin
     it 'should not allow invalid grading range' do
       @course.grading_range = "blah"
       @course.should be_invalid
       @course.errors[:grading_range].should_not be_empty
     end
+=end
 
+=begin
     context 'grading range' do
       it 'should have values if left blank' do
         @course.grading_range = nil
@@ -470,6 +473,7 @@ describe Course do
         @course.errors[:grading_range].should_not be_empty
       end
     end
+=end
   end
 
   # Tests for has_and_belongs_to_many relationship

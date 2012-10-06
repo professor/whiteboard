@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001195400) do
+ActiveRecord::Schema.define(:version => 20121006182227) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(:version => 20121001195400) do
     t.string   "email"
     t.string   "grading_nomenclature"
     t.string   "grading_criteria"
-    t.string   "grading_range"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
@@ -163,6 +162,17 @@ ActiveRecord::Schema.define(:version => 20121001195400) do
 
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "grading_ranges", :force => true do |t|
+    t.string   "grade"
+    t.integer  "minimum_value"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "active"
+  end
+
+  add_index "grading_ranges", ["course_id"], :name => "index_grading_ranges_on_course_id"
 
   create_table "individual_contribution_for_courses", :force => true do |t|
     t.integer "individual_contribution_id"

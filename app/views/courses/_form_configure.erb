@@ -106,24 +106,6 @@
         <%= f.select :grading_criteria, options_for_select([["Points"], ["Percentage"]],  @course.grading_criteria)  %>
       </p>
 
-      <table id="grading_range">
-        <thead>
-          <tr>
-            <td>Value</td>
-            <td>Letter</td>
-          </tr>
-        </thead>
-        <tbody>
-          <% parsed_grading_range = JSON.parse(@course.grading_range) %>
-          <% parsed_grading_range.each_with_index do |(letter, value), index| %>
-            <tr>
-              <td><%= f.text_field "grading_range_values", name: "course[grading_range_values][]", size: 11, value: value['minimum'], id: "grading_range_value_#{index}" %></td>
-              <td><%= select nil, "grading_range_letters", options_for_select(parsed_grading_range.keys, letter), {}, name: "course[grading_range_letters][]", id: "grading_range_letter_#{index}" %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
       <p>
         <%= f.hidden_field :is_configured, :value => true %>
         <%= f.submit button_name %>

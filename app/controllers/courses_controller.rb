@@ -160,31 +160,8 @@ class CoursesController < ApplicationController
 
     params[:course][:faculty_assignments_override] = params[:people]
     respond_to do |format|
-      grading_range_values = params[:course][:grading_range_values]
-      grading_range_letters = params[:course][:grading_range_letters]
-      params[:course].delete(:grading_range_values)
-      params[:course].delete(:grading_range_letters)
-      STDERR.puts params.inspect
-
       @course.updated_by_user_id = current_user.id if current_user
       @course.attributes = params[:course]
-
-      grading_range = {}
-
-      # check params[:course][:grading_range_values].size == params[:course][:grading_range_letters]
-
-      grading_range_letters.each_with_index do |letter, index|
-        grading_range[letter] = { "minimum" => grading_range_values[index] }
-      end
-
-      # {"utf8"=>"✓", "_method"=>"put", "course"=>{"configure_course_twiki"=>"0", "curriculum_url"=>"", "configure_class_mailinglist"=>"0", "configure_teams_name_themselves"=>"1", "remind_about_effort"=>"0", "peer_evaluation_first_email"=>"", "peer_evaluation_second_email"=>"", "grading_nomenclature"=>"Tasks", "grading_criteria"=>"Points", "grading_range_values"=>["91", "81", "71", "61", "51"], "grading_range_letters"=>["A", "B", "C", "D", "F"], "is_configured"=>"true"}, "commit"=>"Update", "action"=>"update", "controller"=>"courses", "id"=>"1045"}
-
-      STDERR.puts ActiveSupport::JSON.encode(grading_range)
-
-      @course.grading_range = ActiveSupport::JSON.encode(grading_range)
-
-      STDERR.puts "Saved: #{@course.inspect}"
-      STDERR.puts @course.valid?
 
       if @course.save
         STDERR.puts "Saved: #{@course.inspect}"

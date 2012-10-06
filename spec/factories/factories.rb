@@ -12,7 +12,6 @@ FactoryGirl.define do
     updated_by_user_id 10
     grading_nomenclature 'Tasks'
     grading_criteria 'Points'
-    grading_range '{"A":{"minimum":90},"B":{"minimum":80},"C":{"minimum":70},"D":{"minimum":60},"F":{"minimum":50}}'
   end
 
 
