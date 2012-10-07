@@ -3,6 +3,13 @@
 
 FactoryGirl.define do
 
+  factory :grading_range do
+    grade "A"
+    minimum 95
+    course_id 1
+    active true
+  end
+
   factory :course, class: Course do
     name 'Course'
     semester AcademicCalendar.current_semester
@@ -12,8 +19,12 @@ FactoryGirl.define do
     updated_by_user_id 10
     grading_nomenclature 'Tasks'
     grading_criteria 'Points'
+    grading_ranges {
+      GradingRange.possible_grades.map do |grade, value|
+        FactoryGirl.create(:grading_range, grade: grade, minimum: value, active: true)
+      end
+    }
   end
-
 
   factory :delayed_system_job do
   end

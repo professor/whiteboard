@@ -45,7 +45,7 @@ class Course < ActiveRecord::Base
   has_many :grading_ranges
 
   validates_presence_of :semester, :year, :mini, :name, :grading_nomenclature, :grading_criteria
-  validate :validate_faculty
+  validate :validate_faculty, :validate_grading_ranges
 
   validates_inclusion_of :grading_nomenclature, :in => %w( Tasks Assignments ), :message => "The nomenclature %s is not valid"
   validates_inclusion_of :grading_criteria, :in => %w( Points Percentage ), :message => "The criteria %s is not valid"
@@ -76,7 +76,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
-  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty, :populate_default_grading_ranges
+  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
   after_save :update_distribution_list
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
@@ -209,6 +209,29 @@ class Course < ActiveRecord::Base
     self.faculty = list
     faculty_assignments_override = nil
     self.updating_email = true
+  end
+
+  def validate_grading_ranges
+    if self.grading_ranges.select { |grading_range| grading_range.active }.count < 2
+      self.errors.add(:grading_ranges, "Less than 2 active ranges")
+    end
+
+    previous_active_grade_minimum = nil
+    self.grading_ranges.each do |grading_range|
+      next if !grading_range.active
+
+      if previous_active_grade_minimum.nil?
+        previous_active_grade_minimum = grading_range.minimum
+        next
+      end
+
+      if grading_range.minimum >= previous_active_grade_minimum
+        self.errors.add(:grading_ranges, "Number values must be descending by descending grades")
+        break
+      end
+
+      previous_active_grade_minimum = grading_range.minimum
+    end
   end
 
   def copy_as_new_course

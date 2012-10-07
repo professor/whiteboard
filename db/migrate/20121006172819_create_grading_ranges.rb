@@ -2,9 +2,8 @@ class CreateGradingRanges < ActiveRecord::Migration
   def self.up
     create_table :grading_ranges do |t|
       t.string :grade
-      t.integer :minimum_value
+      t.integer :minimum
       t.integer :course_id
-
 
       t.timestamps
     end
