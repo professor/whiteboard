@@ -400,8 +400,7 @@ class EffortLogsController < ApplicationController
       Date.commercial(year, week_number, day).strftime "%b %d" # Jul 01
     end
 
-#    @courses = Course.where(:year => Date.today.cwyear, :semester => AcademicCalendar.current_semester())
-    @courses = current_user.registered_for_these_courses_during_current_semester
+    @courses = Course.where(:year => Date.today.cwyear, :semester => AcademicCalendar.current_semester())
 
     @task_types = TaskType.where(:is_student => true)
 
