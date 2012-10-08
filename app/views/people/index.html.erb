@@ -16,8 +16,7 @@
                       var loadImageForRow = function(row) {
 
                           var img = new Image();
-                          img.width = 40;
-                          img.height = 55;
+                          img.width = 60;
 
                           img.onload = function() {
                                       //console.log(row.find('.url_cell').value);
@@ -101,10 +100,6 @@
 
         });
 
-        $(document).load(function(){
-            alert("document load");
-        });
-
         function toggleStudents() {
             /* we don't use .toggle since the state may be inaccurate from a page reload */
             if ($('#student_checkbox').is(':checked')) {
@@ -173,17 +168,17 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
         <% if person.is_staff %>staff
 
         <% end %>" >
-        <td class="image_cell">
+        <td class="image_cell photobook-img">
 
         </td>
         <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
         <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
         <td>
-          <% person.telephones_hash.each { |key, value| %>
+          <% person.telephones_hash.each do |key, value| %>
 
               <%= "#{key}: #{value}" %> <br />
 
-          <% } %>
+          <% end %>
           Email: <%=mail_to person.email %>
         </td>
         <td>
