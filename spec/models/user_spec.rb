@@ -20,8 +20,8 @@ describe User do
       @student_rashmi  = FactoryGirl.create(:student_rashmi)
       @student_clyde  = FactoryGirl.create(:student_clyde)
       @student_vidya  = FactoryGirl.create(:student_vidya)
-
     end
+
     it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
@@ -62,8 +62,24 @@ describe User do
       @users.should == []
     end
 
+  end
+
+  context "When people belong to teams" do
+    before do
+      @faculty_allen= FactoryGirl.create(:faculty_allen)
+      @student_shama  = FactoryGirl.create(:student_shama)
+      @student_rashmi  = FactoryGirl.create(:student_rashmi)
+      @student_clyde  = FactoryGirl.create(:student_clyde)
+      @student_vidya  = FactoryGirl.create(:student_vidya)
+      @team_maverick = FactoryGirl.create(:team_maverick)
+      @team_maverick.members_override = [@student_shama.human_name, @student_rashmi, @student_clyde, @student_vidya]
+      @team_cooper = FactoryGirl.create(:team_cooper)
+      @team_cooper.members_override = [@student_clyde]
+    end
+
 
   end
+
 
   # end of Team Maverick's test
 
