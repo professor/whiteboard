@@ -2,7 +2,54 @@
 <% content_for :tablesorter do %>
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
-    <script type="text/javascript">
+    <script type="text/javascript" >
+      //var image_array = new Array();
+        setInterval(function(){
+              if(document.getElementById("hidden_field").value == "on"){
+
+                  document.getElementById("hidden_field").value = "off";
+
+                  var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
+
+                  if (rows_list.length > 1){
+
+                      var loadImageForRow = function(row) {
+
+                          var img = new Image();
+                          img.width = 40;
+                          img.height = 55;
+
+                          img.onload = function() {
+                                      //console.log(row.find('.url_cell').value);
+                                      if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
+                                          // handle broken image
+                                      } else {
+                                          row.find('.image_cell').append(img);
+                                          //row.getElementsByTagName('td').appendChild(img);
+                                      }
+                                  }
+                          //console.log(row.find(".image_cell"));
+                          img.src = row.find(".url_cell").html();
+
+                      }
+
+                      var rows = [];
+                      //var ary = [];
+                      for(var i=1; i<rows_list.length; i++){
+                          rows.push(rows_list[i]);
+                      }
+
+                      $.each(rows,function(){
+                      //rows.each(function(){
+                          if (this.getElementsByTagName('td')[0].childElementCount<1 ){
+                                       console.log("each hit");
+                            loadImageForRow($(this));
+                          }
+                      });
+                  }
+              }
+        },1000);
+
         $(document).ready(function () {
 
                     // $("#people_table").hide();
@@ -54,6 +101,10 @@
 
         });
 
+        $(document).load(function(){
+            alert("document load");
+        });
+
         function toggleStudents() {
             // /* we don't use .toggle since the state may be inaccurate from a page reload */
             // if ($('#student_checkbox').is(':checked')) {
@@ -79,6 +130,7 @@
             // $('#image_box_label').text(label);
         }
 
+
     </script>
 <% end %>
 
@@ -97,10 +149,16 @@
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
-<table id="people_table" class="tablesorter">
+
+
+
+
+
+<table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
-    <th>&nbsp;</th>
+    <th>Pic</th>
+
     <th>First name</th>
     <th>Last name</th>
     <th>Contact Details</th>
@@ -108,38 +166,41 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-  <% for person in @people %>
+  <% for person in @people  %>
       <tr class="tablesorter
         <% if person.is_student %>student
         <% end %>
         <% if person.is_staff %>staff
-        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-        
-        
+
+        <% end %>" >
+        <td class="image_cell">
+
+        </td>
         <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
         <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
-        
         <td>
-              <% person.telephones_hash.each { |key, value| %>
-             
-                <%= "#{key}: #{value}" %> <br />
-             
-              <% } %>
-               Email: <%=mail_to person.email %>
+          <% person.telephones_hash.each { |key, value| %>
+
+              <%= "#{key}: #{value}" %> <br />
+
+          <% } %>
+          Email: <%=mail_to person.email %>
         </td>
         <td>
-            <% if person.is_student %>
-                <%= person.masters_program unless person.masters_program.blank? %>
-                <%= person.masters_track unless person.masters_track.blank? %>
-                <% if person.is_part_time %>
-                    (PT)
-                <% else %>
-                    (FT)
-                <% end %>
-            <% elsif person.is_staff %>
-                Staff
-            <% end %>
+          <% if person.is_student %>
+              <%= person.masters_program unless person.masters_program.blank? %>
+              <%= person.masters_track unless person.masters_track.blank? %>
+              <% if person.is_part_time %>
+                  (PT)
+              <% else %>
+                  (FT)
+              <% end %>
+          <% elsif person.is_staff %>
+              Staff
+          <% end %>
         </td>
+        <td hidden="true" class="url_cell">  <%= person.image_uri %></td>
+
       </tr>
   <% end %>
 
@@ -152,3 +213,5 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
+
+<input type="hidden" id="hidden_field" value="off">
