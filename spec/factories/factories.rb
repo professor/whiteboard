@@ -38,6 +38,16 @@ FactoryGirl.define do
     association :deliverable, :factory => :deliverable
   end
 
+  factory :assignment do
+    task_number 1
+    title 'Just an assignment'
+    team_deliverable false
+    due_date DateTime.now + 30
+    max_score 100
+    weight 20
+    can_submit true
+    association :course, :factory => :course
+  end
 
   factory :effort_log_line_item, class: EffortLogLineItem do
     association :course, :factory => :fse

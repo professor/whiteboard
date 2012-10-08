@@ -186,6 +186,19 @@ div.staff {
     border-radius: 10px;
 }
 
+#tabs {
+    background-color: rgb(224, 235, 235);
+    padding: 0;
+}
+
+#tabs .ui-state-active a {
+    background-color: rgb(224, 235, 235);
+}
+
+#tabs .tab-element {
+    background-color: rgb(224, 235, 235);
+}
+
 div.admin {
     padding: 5px;
     margin: 5px;

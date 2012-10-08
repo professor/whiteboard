@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006182227) do
+ActiveRecord::Schema.define(:version => 20121008204736) do
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "task_number"
+    t.string   "title"
+    t.boolean  "team_deliverable"
+    t.datetime "due_date"
+    t.integer  "max_score"
+    t.integer  "weight"
+    t.boolean  "can_submit"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignments", ["course_id"], :name => "index_assignments_on_course_id"
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
