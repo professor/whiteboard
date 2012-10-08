@@ -5,78 +5,78 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-                    $("#people_table").hide();
-                    $("#filterBoxOne").keyup(function() {
-                        if(this.value.length > 0){
-                            $("#people_table").show();
-                        }
-                        else{
-                            $("#people_table").hide();
-                        }                                
-                    });
+                    // $("#people_table").hide();
+                    // $("#filterBoxOne").keyup(function() {
+                    //     if(this.value.length > 0){
+                    //         $("#people_table").show();
+                    //     }
+                    //     else{
+                    //         $("#people_table").hide();
+                    //     }                                
+                    // });
 
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
+                    // if ($("#filterBoxOne").prop("disabled") == true) {
+                    //     $('#filterBoxOne').val('');
+                    //     $('#filterBoxOne').removeAttr("disabled");
+                    //     $('#filterBoxOne').focus();
+                    // }
                     
-                    $("#people_table").tablesorter({widgets:['zebra'],
-                        headers:{0:{sorter:false}, 3:{sorter:false}  }
-                    })
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2],
-                                filterCaseSensitive:false
-                            })
-                            ;
+                    // $("#people_table").tablesorter({widgets:['zebra'],
+                    //     headers:{0:{sorter:false}, 3:{sorter:false}  }
+                    // })
+                    //         .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                    //             filterClearContainer:$("#filterClearOne"),
+                    //             filterColumns:[0, 1, 2],
+                    //             filterCaseSensitive:false
+                    //         })
+                    //         ;
 
-                    //scroll the message box to the top offset of browser's scrool bar
-                    $(window).scroll(function () {
-                        $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
-                    });
-                    //when the close button at right corner of the message box is clicked
-                    $('#close_image_box').click(function () {
-                        //the messagebox gets scrool down with top property and gets hidden with zero opacity
-                        $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
-                    });
+                    // //scroll the message box to the top offset of browser's scrool bar
+                    // $(window).scroll(function () {
+                    //     $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
+                    // });
+                    // //when the close button at right corner of the message box is clicked
+                    // $('#close_image_box').click(function () {
+                    //     //the messagebox gets scrool down with top property and gets hidden with zero opacity
+                    //     $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
+                    // });
 
-                    //hoving over a line selects it
-                    $("tr").hover(
-                            function () {
-                                $(this).addClass("hover");
-                            },
-                            function () {
-                                $(this).removeClass("hover");
-                            });
+                    // //hoving over a line selects it
+                    // $("tr").hover(
+                    //         function () {
+                    //             $(this).addClass("hover");
+                    //         },
+                    //         function () {
+                    //             $(this).removeClass("hover");
+                    //         });
 
                     
 
         });
 
         function toggleStudents() {
-            /* we don't use .toggle since the state may be inaccurate from a page reload */
-            if ($('#student_checkbox').is(':checked')) {
-                $(".student").show();
-            } else {
-                $(".student").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
+            // /* we don't use .toggle since the state may be inaccurate from a page reload */
+            // if ($('#student_checkbox').is(':checked')) {
+            //     $(".student").show();
+            // } else {
+            //     $(".student").hide();
+            // }
+            // $("#filterBoxOne").trigger("keyup");
         }
 
         function toggleStaff() {
-            if ($('#staff_checkbox').is(':checked')) {
-                $(".staff").show();
-            } else {
-                $(".staff").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
+            // if ($('#staff_checkbox').is(':checked')) {
+            //     $(".staff").show();
+            // } else {
+            //     $(".staff").hide();
+            // }
+            // $("#filterBoxOne").trigger("keyup");
         }
 
         function updateImage(uri, label) {
-            $('#image_box_image').prop("src", uri);
+            // $('#image_box_image').prop("src", uri);
 
-            $('#image_box_label').text(label);
+            // $('#image_box_label').text(label);
         }
 
     </script>

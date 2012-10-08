@@ -31,6 +31,41 @@ class PeopleController < ApplicationController
     end
   end
 
+  def search
+    @people = User.where("human_name ILIKE ?", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
+
+
+
+    # @ppl = []
+    # @people.collect do |p|
+    #     myHash = Hash.new
+    #     myHash.merge!(:fn => p.first_name)
+    #     myHash.merge!(:ln => p.last_name)
+    #     myHash.merge!(:fn => p.telephones_hash) unless p.first_name.blank?
+    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
+    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
+    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
+    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
+    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
+    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
+    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
+    #     @ppl << myHash
+    # end     
+
+    #     {  
+    #        fn: person.first_name unless person.first_name == "Todd"
+    #        ln: person.last_name
+    #    } 
+    respond_to do |format|
+      #format.json { render :json => @ppl, :layout => false }
+            format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
+                                                                    "first_name" => person.first_name,
+                                                                    "last_name" => person.last_name,
+                                                                    "image_uri" => person.image_uri,
+                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+    end
+  end
+
   #Ajax call for autocomplete using params[:term]
   def index_autocomplete
     #if database is mysql
