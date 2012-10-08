@@ -106,6 +106,25 @@
         <%= f.select :grading_criteria, options_for_select([["Points"], ["Percentage"]],  @course.grading_criteria)  %>
       </p>
 
+      <table id="grading_range">
+        <thead>
+          <tr>
+            <th>Grades</th>
+            <th>Minimum Value</th>
+            <th>Enable</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        <%= f.fields_for :grading_ranges do |builder| %>
+          <tr>
+            <td><%= builder.label builder.object.grade %></td>
+            <td><%= builder.text_field :minimum, size: 4 %></td>
+            <td><%= builder.check_box :active %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
       <p>
         <%= f.hidden_field :is_configured, :value => true %>
         <%= f.submit button_name %>

@@ -1,4 +1,5 @@
 class GradingRange < ActiveRecord::Base
+  attr_accessible :grade, :minimum, :active, :course_id
   belongs_to :course
   validates :minimum, numericality: { less_than_or_equal_to: 100, greater_than_or_equal_to: 0 }
 

@@ -36,7 +36,6 @@ describe "courses" do
     end
   end
 
-=begin
   context "configuring grading range" do
     before do
       visit('/')
@@ -49,30 +48,27 @@ describe "courses" do
       visit configure_course_path(@course)
     end
 
-
     it "should reach the right course configuration page" do
       page.should have_content("Configure your course, #{@course.name}")
     end
+
     it "should have grading range table" do
-      page.should have_selector("table#grading_range > tbody > tr", count: 5)
-      page.should have_selector("table#grading_range > tbody > tr:first > td", count: 2)
+      page.should have_selector("table#grading_range > tbody > tr", count: 13)
+      page.should have_selector("table#grading_range > tbody > tr:first > td", count: 3)
     end
 
     it 'should save when numerical values are entered' do
-      saved_grading_range = {}
-      JSON.parse(@course.grading_range).each_with_index do |(letter, value), index|
-        STDERR.puts letter.inspect, value.inspect, index.inspect
-        select letter, from: "grading_range_letter_#{index}"
-        STDERR.puts "hi madhok"
-        fill_in "grading_range_value_#{index}", with: value["minimum"] + 1
-        STDERR.puts "...."
-        saved_grading_range[letter] = {"minimum" => value["minimum"] + 1}
-        STDERR.puts "hi david"
+      @course.grading_ranges.each_with_index do |grading_range, index|
+        fill_in "course_grading_ranges_attributes_#{index}_minimum", with: grading_range['minimum'] + 1
       end
+
       click_button "Update"
+
       @course.reload
-      @course.get_sorted_grading_range.should == ActiveSupport::JSON.encode(saved_grading_range)
+
+      GradingRange.possible_grades.each_with_index do |(grade, value), index|
+        @course.grading_ranges[index][:minimum].should == value + 1
+      end
     end
   end
-=end
 end

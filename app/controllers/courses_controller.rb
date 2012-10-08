@@ -147,7 +147,7 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    STDERR.puts params.inspect
+    STDERR.puts params[:course].inspect
     @course = Course.find(params[:id])
     authorize! :update, @course
 
