@@ -63,12 +63,33 @@ describe "courses" do
       end
 
       click_button "Update"
-
       @course.reload
-
       GradingRange.possible_grades.each_with_index do |(grade, value), index|
         @course.grading_ranges[index][:minimum].should == value + 1
       end
+    end
+
+    it 'should not save when less than 2 grades are enabled' do
+      @course.grading_ranges.each_with_index do |grading_range, index|
+        find(:css, "#course_grading_ranges_attributes_#{index}_active").set(false)
+      end
+
+      click_button "Update"
+      page.should have_selector("#error_explanation", content: "Less than 2 active ranges")
+    end
+
+    it 'should not save when grades are not descending' do
+      @course.grading_ranges.each_with_index do |grading_range, index|
+        find(:css, "#course_grading_ranges_attributes_#{index}_active").set(false)
+      end
+
+      find(:css, "#course_grading_ranges_attributes_0_active").set(true)
+      fill_in "course_grading_ranges_attributes_0_minimum", with: 90
+      find(:css, "#course_grading_ranges_attributes_1_active").set(true)
+      fill_in "course_grading_ranges_attributes_1_minimum", with: 95
+      click_button "Update"
+
+      page.should have_selector("#error_explanation", content: "Number values must be descending by descending grades")
     end
   end
 end
