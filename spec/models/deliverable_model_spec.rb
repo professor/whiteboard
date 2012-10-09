@@ -26,7 +26,7 @@ describe Deliverable do
 
   context "is not valid" do
 
-    [:creator, :assignment_id].each do |attr|
+    [:course, :creator].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty

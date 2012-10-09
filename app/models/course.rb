@@ -36,6 +36,10 @@ class Course < ActiveRecord::Base
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
   has_many :assignments
 
+
+ #----- delete this when implementing deliverable-----#
+  has_many :deliverables
+
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :user
 

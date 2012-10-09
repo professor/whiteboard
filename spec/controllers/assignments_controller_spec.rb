@@ -24,7 +24,7 @@ describe AssignmentsController do
   # Assignment. As you add validations to Assignment, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {:maximum_score=>100, :course_id=>1,:assignment_order=>1, :task_number=>1}
   end
 
   describe "GET index" do
@@ -38,7 +38,7 @@ describe AssignmentsController do
   describe "GET show" do
     it "assigns the requested assignment as @assignment" do
       assignment = Assignment.create! valid_attributes
-      get :show, :id => assignment.id.to_s
+      get :show, :course_id=>1,:id => assignment.id.to_s
       assigns(:assignment).should eq(assignment)
     end
   end
