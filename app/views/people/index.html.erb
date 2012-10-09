@@ -3,6 +3,7 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <script type="text/javascript" >
+    var tmpVal = "";
       //var image_array = new Array();
         setInterval(function(){
               if(document.getElementById("hidden_field").value == "on"){
@@ -16,8 +17,8 @@
                       var loadImageForRow = function(row) {
 
                           var img = new Image();
-                          img.width = 40;
-                          img.height = 55;
+                          img.width = 60;
+                          // img.height = 55;
 
                           img.onload = function() {
                                       //console.log(row.find('.url_cell').value);
@@ -52,57 +53,116 @@
 
         $(document).ready(function () {
 
-                    // $("#people_table").hide();
-                    // $("#filterBoxOne").keyup(function() {
-                    //     if(this.value.length > 0){
-                    //         $("#people_table").show();
-                    //     }
-                    //     else{
-                    //         $("#people_table").hide();
-                    //     }                                
-                    // });
+                    $("#people_table").hide();
+                    $("#filterBoxOne").keyup(function() {
+                        if(this.value.length > 0){
+                            $("#people_table").show();
+                        }
+                        else{
+                            $("#people_table").hide();
+                        }                                
+                    });
 
-                    // if ($("#filterBoxOne").prop("disabled") == true) {
-                    //     $('#filterBoxOne').val('');
-                    //     $('#filterBoxOne').removeAttr("disabled");
-                    //     $('#filterBoxOne').focus();
-                    // }
+                    if ($("#filterBoxOne").prop("disabled") == true) {
+                        $('#filterBoxOne').val('');
+                        $('#filterBoxOne').removeAttr("disabled");
+                        $('#filterBoxOne').focus();
+                    }
                     
-                    // $("#people_table").tablesorter({widgets:['zebra'],
-                    //     headers:{0:{sorter:false}, 3:{sorter:false}  }
-                    // })
-                    //         .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                    //             filterClearContainer:$("#filterClearOne"),
-                    //             filterColumns:[0, 1, 2],
-                    //             filterCaseSensitive:false
-                    //         })
-                    //         ;
+                    $("#people_table").tablesorter({widgets:['zebra'],
+                        headers:{0:{sorter:false}, 3:{sorter:false}  }
+                    })
+                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                                filterClearContainer:$("#filterClearOne"),
+                                filterColumns:[0, 1, 2],
+                                filterCaseSensitive:false
+                            })
+                            ;
 
-                    // //scroll the message box to the top offset of browser's scrool bar
-                    // $(window).scroll(function () {
-                    //     $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
-                    // });
-                    // //when the close button at right corner of the message box is clicked
-                    // $('#close_image_box').click(function () {
-                    //     //the messagebox gets scrool down with top property and gets hidden with zero opacity
-                    //     $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
-                    // });
+                    //scroll the message box to the top offset of browser's scrool bar
+                    $(window).scroll(function () {
+                        $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
+                    });
+                    //when the close button at right corner of the message box is clicked
+                    $('#close_image_box').click(function () {
+                        //the messagebox gets scrool down with top property and gets hidden with zero opacity
+                        $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
+                    });
 
-                    // //hoving over a line selects it
-                    // $("tr").hover(
-                    //         function () {
-                    //             $(this).addClass("hover");
-                    //         },
-                    //         function () {
-                    //             $(this).removeClass("hover");
-                    //         });
+                    //hoving over a line selects it
+                    $("tr").hover(
+                            function () {
+                                $(this).addClass("hover");
+                            },
+                            function () {
+                                $(this).removeClass("hover");
+                            });
 
                     
 
-        });
+                    searchBox = $("#filterBoxOne");
+                    searchBox.keyup(function() {
+                        if(searchBox.val() != tmpVal && searchBox.length>0){
+                            tmpVal=searchBox.val();
+                            $.ajax({
+                              // the URL for the request
+                              url : 'people_search',
+                          
+                              // the data to send  (will be converted to a query string)
+                              data : { filterBoxOne : searchBox.val(), ajaxCall : true },
+                              
+                              // whether this is a POST or GET request
+                              method : 'GET',
+                          
+                              // the type of data we expect back
+                              dataType : 'json',
+                              contentType: "application/json; charset=utf-8",
+                          
+                              // code to run if the request succeeds;
+                              // the response is passed to the function
+                              success : function(json) {
+                                    buildSearchResults(json);
+                                  // var markup = '', len = json.department.length;
+                                  // for(var i = 0; i < len; i++) {
+                                  //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
+                                  // }
+                                  // $("#DeptNo").append(markup);
+                              },
+                          
+                              // code to run if the request fails;
+                              // the raw request and status codes are 
+                              // passed to the function
+                              error : function(xhr, status) {
+                                  alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
+                              },
+                              /* code to run regardless of success or failure
+                              complete : function(xhr, status) {
+                                  // alert('The request is complete!');
+                              }*/
+                           });
+                        }
+                    });
 
-        $(document).load(function(){
-            alert("document load");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         });
 
         function toggleStudents() {
@@ -129,6 +189,12 @@
 
             // $('#image_box_label').text(label);
         }
+
+        function buildSearchResults(json) {
+            alert(json[0].last_name);
+        }
+
+
 
 
     </script>
@@ -157,8 +223,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
-    <th>Pic</th>
-
+    <th>&nbsp;</th>
     <th>First name</th>
     <th>Last name</th>
     <th>Contact Details</th>
@@ -166,44 +231,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-  <% for person in @people  %>
-      <tr class="tablesorter
-        <% if person.is_student %>student
-        <% end %>
-        <% if person.is_staff %>staff
-
-        <% end %>" >
-        <td class="image_cell">
-
-        </td>
-        <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
-        <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
-        <td>
-          <% person.telephones_hash.each { |key, value| %>
-
-              <%= "#{key}: #{value}" %> <br />
-
-          <% } %>
-          Email: <%=mail_to person.email %>
-        </td>
-        <td>
-          <% if person.is_student %>
-              <%= person.masters_program unless person.masters_program.blank? %>
-              <%= person.masters_track unless person.masters_track.blank? %>
-              <% if person.is_part_time %>
-                  (PT)
-              <% else %>
-                  (FT)
-              <% end %>
-          <% elsif person.is_staff %>
-              Staff
-          <% end %>
-        </td>
-        <td hidden="true" class="url_cell">  <%= person.image_uri %></td>
-
-      </tr>
-  <% end %>
-
 
   </tbody>
 </table>
