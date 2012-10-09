@@ -1,11 +1,11 @@
 class PeopleController < ApplicationController
   include ActionView::Helpers::AssetTagHelper
 
-  def controller;
-    self;
+  def controller
+    self
   end
 
-  ; private(:controller)
+  private(:controller)
 
   before_filter :authenticate_user!, :except => [:show_by_twiki]
 
@@ -20,12 +20,21 @@ class PeopleController < ApplicationController
 # GET /people.xml
   def index
 
-    @people = User.where(:is_active => true)
+
+
+
+    #@people = User.where(:is_active => true)
+
+    @people = User.testSearch(params)
 
     # Apply limit criteria
-    if (params[:limit] != nil)
-      @people = @people.limit(params[:limit])
-    end
+    #if (params[:limit] != nil)
+    #  @people = @people.limit(params[:limit])
+    #end
+
+    # By default order by name
+    #@people = @people.order("first_name ASC, last_name ASC").all
+
 
     # DEPRECATED: Iterate through parameters and apply filters
     #params.each { |key, value|
@@ -36,10 +45,6 @@ class PeopleController < ApplicationController
     #  end
     #}
 
-    # By default order by name
-    @people = @people.order("first_name ASC, last_name ASC").all
-
-    #@people.first.tea``
 
     respond_to do |format|
       format.html { render :html => @people }

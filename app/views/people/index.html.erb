@@ -1,5 +1,6 @@
 <% content_for :title, 'People - Search' %>
 
+
 <!-- UI Mockup CSS/JS Migration -->
 <style media="screen" type="text/css">
 
@@ -28,13 +29,14 @@
 
     #customization_link, #customization_dialog_close, #export_link { float:right; }
     #customization_modal_card  { margin-left: auto; margin-right: auto; }
-    #results_box {width: 100%;}
+    #results_box { display: block; min-height: 16px;}
     .data_card {
         float: left;
         margin: 8px 8px; padding: 2px 6px;
         background-color: #eee;
-        width: 174px; min-height: 260px;
+        width: 174px; height: 260px;
         border: 1px solid #333; border-radius: 2px;
+        font-size: 10px;
     }
     .data_card img{
         width: 150px; margin-top: 12px; margin-bottom: 6px; margin-left:10px;
@@ -68,6 +70,44 @@
     ext_criteria_hash["Course"] = false;
     ext_criteria_hash["Program"] = false;
     ext_criteria_hash["Full/Part Time"] = false;
+
+    function execute_search(){
+        console.log("search executed");
+            var request_url_with_params = 'people.json?page=1';
+            if($("#search_text_box").val() != ""){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
+            if(ext_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
+            if(ext_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
+            if(ext_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
+            if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
+
+            $.ajax({
+                url: request_url_with_params,
+                dataType: 'json',
+                /*data: {
+                    main_search_text: $("#search_text_box").val(),
+                    first_name: ext_criteria_hash["First Name"],
+                    last_name: ext_criteria_hash["Last Name"],
+                    andrew_id: ext_criteria_hash["Andrew ID"],
+                    exact_match: ($('#exact_match_checkbox')[0].checked)? true:false
+                },*/
+                success: function(data){
+                    console.log(data);
+                    $("#results_box").html("");
+                    $.each(data, function(){
+                        var card_html = '<div class="data_card">';
+                        card_html += '<img src='+this.image_uri+'><br>';
+                        card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
+                        card_html += 'Email: '+this.email;
+                        card_html += '</div>';
+                        $("#results_box").append(card_html);
+                    });
+                    //console.log(260*data.length/3);
+                    $("#results_box").css('height', 260*Math.ceil(data.length/3)+16+"px");
+                    
+                }
+            });
+
+    };
 
 
     $(document).ready(function(){
@@ -176,20 +216,45 @@
                 $(this).parent().fadeTo("fast", 1);
                 $(this).html('x');
             }
+            return false; // avoid anchor action
         });
 
         $('#criteria_box2').on("click", ".criteria_tag a", function(){
             ext_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeOut();
+            return false;
         });
 
-        // Send last_name query and get results
+        // Send query and get results
+        // Defining key up event for main search text box
+        $('#search_text_box').keyup(function(e) {
+            if(e.which == 13){ // If ENTER
+                //$('#submit_btn').trigger('click');
+                execute_search();
+            } else {
+                //clearTimeout(b);b=setTimeout("execute_search()",390)
+            }
+        });
+
         $('#submit_btn').click( function(){
             console.log("btn pressed");
+            var request_url_with_params = 'people.json?page=1';
+            if($("#search_text_box").val() != ""){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
+            if(ext_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
+            if(ext_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
+            if(ext_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
+            if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
+
             $.ajax({
-                url: 'people.json',
+                url: request_url_with_params,
                 dataType: 'json',
-                data: {last_name: $("#search_text_box").val() },
+                /*data: {
+                    main_search_text: $("#search_text_box").val(),
+                    first_name: ext_criteria_hash["First Name"],
+                    last_name: ext_criteria_hash["Last Name"],
+                    andrew_id: ext_criteria_hash["Andrew ID"],
+                    exact_match: ($('#exact_match_checkbox')[0].checked)? true:false
+                },*/
                 success: function(data){
                     console.log(data);
                     $("#results_box").html("");
@@ -201,6 +266,9 @@
                         card_html += '</div>';
                         $("#results_box").append(card_html);
                     });
+                    //console.log(260*data.length/3);
+                    $("#results_box").css('height', 260*Math.ceil(data.length/3)+16+"px");
+                    
                 }
             });
 
@@ -224,8 +292,8 @@
     <img src="images/mascot.jpg"><br>
     <input checked type="checkbox" name="Name" value="cu_name" /> Name: ? <br>
     <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
-    <input checked type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
-    <input checked type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
+    <input type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
+    <input type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
     <input type="checkbox" name="Team" value="cu_team" /> Team: ? <br>
     <input type="checkbox" name="Company" value="cu_company" /> Company: ? <br>
   </div>
@@ -297,14 +365,14 @@
   </ul>
 </div>
 
-<input type="checkbox" name="exact_match" value="exact_match" /> Exact Match?
+<input type="checkbox" id="exact_match_checkbox" name="exact_match" value="exact_match" /> Exact Match?
 
 
 
 <br>
 <a id="customization_link" href="#">Customization</a><br>
 <a id="export_link" href="#">Export Results</a>
-
+<br>
 <div id="results_box"></div><br>
 
 <!-- End of HTML Migration -->

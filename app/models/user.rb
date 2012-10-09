@@ -360,6 +360,8 @@ class User < ActiveRecord::Base
 
   end
 
+
+
   #People search method
 
   def self.search(text)
@@ -370,38 +372,49 @@ class User < ActiveRecord::Base
   #People search with criteria
   def self.testSearch(criteria)
 
+    @results_set = []
 
     if(criteria['main_search_text'] != nil)
 
       main_search_string = "%"+criteria['main_search_text']+"%"
-      if(criteria['exact_match'])
+      if(criteria['exact_match'] == "true")
         main_search_string = criteria['main_search_text']
       end
 
+      # declare an empty query string
       query_string = ""
 
       # check first name and add to query string
-      if (criteria['first_name'])
+      if (criteria['first_name'] == "true")
         query_string += "first_name ILIKE '"+main_search_string+"'"
       end
       # check last name and add to query string
-      if (criteria['last_name'])
+      if (criteria['last_name'] == "true")
         if( query_string != "")
           query_string += " OR "
         end
         query_string += "last_name ILIKE '"+main_search_string+"'"
       end
       # check andrew id and add to query string
-      if (criteria['andrew_id'])
+      if (criteria['andrew_id'] == "true")
         if( query_string != "")
           query_string += " OR "
         end
         query_string += "webiso_account ILIKE '"+main_search_string+"'"
       end
 
-      where(query_string)
+      @results_set = where(query_string)
     end
 
+      return @results_set
+
+    # Apply limit criteria
+    #if (criteria[:limit] != nil)
+      #limit(params[:limit])
+    #end
+
+    # By default order by name
+    #order("first_name ASC, last_name ASC").all
 
 
 

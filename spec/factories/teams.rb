@@ -18,6 +18,8 @@ FactoryGirl.define do
     email "team.maverick@sv.cmu.edu"
     updating_email false
     association :course, :factory => :course
+    #webiso_account "team.maverick@andrew.cmu.edu"
+    after(:create) { |team| FactoryGirl.create(:webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
   factory :team_amigos, :parent => :team do
@@ -25,6 +27,8 @@ FactoryGirl.define do
     email "team.amigos@sv.cmu.edu"
     updating_email false
     association :course, :factory => :course
+    #webiso_account "team.amigos@andrew.cmu.edu"
+    after(:create) { |team| FactoryGirl.create(:webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
   factory :team_cooper, :parent => :team do
@@ -32,6 +36,8 @@ FactoryGirl.define do
     email "team.cooper@sv.cmu.edu"
     updating_email false
     association :course, :factory => :course
+    #webiso_account "team.cooper@andrew.cmu.edu"
+    after(:create) { |team| FactoryGirl.create(:webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
   factory :team_leffingwell, :parent => :team do
@@ -39,6 +45,8 @@ FactoryGirl.define do
     email "team.leffingwell@sv.cmu.edu"
     updating_email false
     association :course, :factory => :course
+    #webiso_account "team.leffingwell@andrew.cmu.edu"
+    after(:create) { |team| FactoryGirl.create(:webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
   end
 
 end
