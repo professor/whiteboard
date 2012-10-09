@@ -377,7 +377,7 @@ class User < ActiveRecord::Base
     if(criteria['main_search_text'] != nil)
 
       main_search_string = "%"+criteria['main_search_text']+"%"
-      if(criteria['exact_match'] == "true")
+      if(criteria['exact_match'] !=nil)
         main_search_string = criteria['main_search_text']
       end
 
@@ -385,18 +385,18 @@ class User < ActiveRecord::Base
       query_string = ""
 
       # check first name and add to query string
-      if (criteria['first_name'] == "true")
+      if (criteria['first_name'] !=nil)
         query_string += "first_name ILIKE '"+main_search_string+"'"
       end
       # check last name and add to query string
-      if (criteria['last_name'] == "true")
+      if (criteria['last_name'] !=nil)
         if( query_string != "")
           query_string += " OR "
         end
         query_string += "last_name ILIKE '"+main_search_string+"'"
       end
       # check andrew id and add to query string
-      if (criteria['andrew_id'] == "true")
+      if (criteria['andrew_id']!=nil)
         if( query_string != "")
           query_string += " OR "
         end

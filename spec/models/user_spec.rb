@@ -62,7 +62,7 @@ describe User do
       @users.should == []
     end
 
-  end
+
 
   context "When people belong to teams" do
     before do
@@ -87,9 +87,58 @@ describe User do
     end
 
   end
+  #program
+  it "should search by program - all students in program" do
+    params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should == [@student_shama, @student_rashmi]
+  end
 
 
-  # end of Team Maverick's test
+  it "should not return people in other programs" do
+    params_hash = {'main_search_text' => "", 'masters_program' => "SM", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should_not include @student_shama, @student_rashmi
+  end
+
+  #company_name
+  it "should search by company name" do
+    params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should == [@student_clyde, @faculty_allen]
+  end
+
+  it "should not include people at other companies" do
+    params_hash = {'main_search_text' => "", 'organization_name' => "HP", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should_not include @student_clyde, @faculty_allen
+  end
+
+
+  #course  registrations - for students, faculty_assignments -for faculty
+
+  it "should search for students registered in a course along with faculty teaching the course" do
+    params_hash = {'main_search_text' => "",'course_name' => "Foundations", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should == [@student_shama, @student_rashmi, @faculty_allen]
+  end
+
+  it "should search for all students registered in a course" do
+    params_hash = {'main_search_text' => "", 'user_type' => "Student",'course_name' => "Foundations", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should == [@student_shama, @student_rashmi]
+  end
+
+  it "should search all faculty teaching a course " do
+    params_hash = {'main_search_text' => "", 'user_type' => "Faculty",'course_name' => "Foundations", 'first_name' => true }
+    @users=User.testSearch(params_hash)
+    @users.should == [@faculty_allen]
+  end
+
+end
+
+
+# end of Team Maverick's test
 
 
   describe "abilities" do

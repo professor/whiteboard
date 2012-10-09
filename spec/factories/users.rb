@@ -64,7 +64,7 @@ FactoryGirl.define do
     twiki_name "NgocHo"
   end
 
-  # factories added by Team Maverick
+# factories added by Team Maverick
   factory :faculty_allen, :parent => :user do
     email "faculty.allen@sv.cmu.edu"
     webiso_account "allen@andrew.cmu.edu"
@@ -73,6 +73,8 @@ FactoryGirl.define do
     last_name "Allen"
     human_name "Faculty Allen"
     twiki_name "FacultyAllen"
+    organization_name "google"
+    teaching_these_courses = [:fse]
   end
 
   factory :student_shama, :parent => :user do
@@ -84,6 +86,10 @@ FactoryGirl.define do
     last_name "Hoque"
     human_name "Shama Hoque"
     twiki_name "StudentShama"
+    masters_program "SE"
+    organization_name "NestLabs"
+    registered_courses = [:fse]
+
   end
 
   factory :student_rashmi, :parent => :user do
@@ -95,6 +101,9 @@ FactoryGirl.define do
     last_name "Rashmi"
     human_name "Student Rashmi"
     twiki_name "StudentRashmi"
+    masters_program "SE"
+    organization_name "HP"
+    registered_courses = [:fse]
   end
 
   factory :student_clyde, :parent => :user do
@@ -106,6 +115,8 @@ FactoryGirl.define do
     last_name "Li"
     human_name "Clyde Li"
     twiki_name "ClydeLi"
+    masters_program "SM"
+    organization_name "Google"
   end
 
   factory :student_vidya, :parent => :user do
@@ -117,7 +128,10 @@ FactoryGirl.define do
     last_name "Pissaye"
     human_name "Vidya Pissaye"
     twiki_name "VidyaPissaye"
+    masters_program "ECE"
+    organization_name "LinkedIn"
   end
+
 
 
 end
