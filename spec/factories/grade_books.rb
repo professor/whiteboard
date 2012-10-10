@@ -7,4 +7,11 @@ FactoryGirl.define do
     assignment_id 1
     score 1.5
   end
+  
+ factory :grade_book_with_course, :parent=>:grade_book do
+    course_id 1
+    student_id 999
+    assignment
+    score 100.0
+  end
 end

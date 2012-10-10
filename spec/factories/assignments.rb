@@ -10,4 +10,15 @@ FactoryGirl.define do
     task_number 1
     association :course, :factory => :course
   end
+
+  factory :assignment_fse, :parent=>:assignment do
+    name "fse assignment 1"
+    association :course, :factory => :fse
+  end
+
+  factory :assignment_many, :parent=>:assignment do
+    sequence(:name) {|i| "Assignment #{i}"}
+    sequence(:assignment_order) {|i| i}
+    course
+  end
 end

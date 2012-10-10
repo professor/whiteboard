@@ -1,6 +1,3 @@
-#puts "....factories loaded....."
-#puts caller.join("\n")
-
 FactoryGirl.define do
 
   factory :course, class: Course do
@@ -156,6 +153,16 @@ FactoryGirl.define do
 
   factory :presentation_feedback_questions, class: PresentationQuestion do
     deleted false
+  end
+
+  factory :registration do
+    course_id 1
+    user_id 999 
+  end
+
+  factory :course_fse_with_students, :parent=>:fse do  |c|
+    registered_students { |registered_students| [registered_students.association(:team_member)] }
+    c.after(:build) {|c| c.registered_students.each  { |s|  FactoryGirl.build(:registration, :course_id=>c.id, :user_id => s.id) } }
   end
 
 end
