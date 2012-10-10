@@ -3,65 +3,67 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <script type="text/javascript" >
-    var tmpVal = "";
+    var tmpVal = '';
+    var tmpAjax;
+    var tmpAjaxStatus = false;
       //var image_array = new Array();
-        setInterval(function(){
-              if(document.getElementById("hidden_field").value == "on"){
+        // setInterval(function(){
+        //       if(document.getElementById("hidden_field").value == "on"){
 
-                  document.getElementById("hidden_field").value = "off";
+        //           document.getElementById("hidden_field").value = "off";
 
-                  var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
+        //           var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
 
-                  if (rows_list.length > 1){
+        //           if (rows_list.length > 1){
 
-                      var loadImageForRow = function(row) {
+        //               var loadImageForRow = function(row) {
 
-                          var img = new Image();
-                          img.width = 60;
-                          // img.height = 55;
+        //                   var img = new Image();
+        //                   img.width = 60;
+        //                   // img.height = 55;
 
-                          img.onload = function() {
-                                      //console.log(row.find('.url_cell').value);
-                                      if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
-                                          // handle broken image
-                                      } else {
-                                          row.find('.image_cell').append(img);
-                                          //row.getElementsByTagName('td').appendChild(img);
-                                      }
-                                  }
-                          //console.log(row.find(".image_cell"));
-                          img.src = row.find(".url_cell").html();
+        //                   img.onload = function() {
+        //                               //console.log(row.find('.url_cell').value);
+        //                               if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
+        //                                   // handle broken image
+        //                               } else {
+        //                                   row.find('.image_cell').append(img);
+        //                                   //row.getElementsByTagName('td').appendChild(img);
+        //                               }
+        //                           }
+        //                   //console.log(row.find(".image_cell"));
+        //                   img.src = row.find(".url_cell").html();
 
-                      }
+        //               }
 
-                      var rows = [];
-                      //var ary = [];
-                      for(var i=1; i<rows_list.length; i++){
-                          rows.push(rows_list[i]);
-                      }
+        //               var rows = [];
+        //               //var ary = [];
+        //               for(var i=1; i<rows_list.length; i++){
+        //                   rows.push(rows_list[i]);
+        //               }
 
-                      $.each(rows,function(){
-                      //rows.each(function(){
-                          if (this.getElementsByTagName('td')[0].childElementCount<1 ){
-                                       console.log("each hit");
-                            loadImageForRow($(this));
-                          }
-                      });
-                  }
-              }
-        },1000);
+        //               $.each(rows,function(){
+        //               //rows.each(function(){
+        //                   if (this.getElementsByTagName('td')[0].childElementCount<1 ){
+        //                                console.log("each hit");
+        //                     loadImageForRow($(this));
+        //                   }
+        //               });
+        //           }
+        //       }
+        // },1000);
 
         $(document).ready(function () {
 
                     $("#people_table").hide();
-                    $("#filterBoxOne").keyup(function() {
-                        if(this.value.length > 0){
-                            $("#people_table").show();
-                        }
-                        else{
-                            $("#people_table").hide();
-                        }                                
-                    });
+                    // $("#filterBoxOne").keyup(function() {
+                    //     if(this.value.length > 0){
+                    //         $("#people_table").show();
+                    //     }
+                    //     else{
+                    //         $("#people_table").hide();
+                    //     }                                
+                    // });
 
                     if ($("#filterBoxOne").prop("disabled") == true) {
                         $('#filterBoxOne').val('');
@@ -102,65 +104,60 @@
 
                     searchBox = $("#filterBoxOne");
                     searchBox.keyup(function() {
-                        if(searchBox.val() != tmpVal && searchBox.length>0){
+                        if(searchBox.val() != tmpVal){
                             tmpVal=searchBox.val();
-                            $.ajax({
-                              // the URL for the request
-                              url : 'people_search',
-                          
-                              // the data to send  (will be converted to a query string)
-                              data : { filterBoxOne : searchBox.val(), ajaxCall : true },
+                            if($.trim(searchBox.val())){
+                                if(tmpAjaxStatus)
+                                    tmpAjax.abort();
+                                tmpAjax = $.ajax({
+                                  // the URL for the request
+                                  url : 'people_search',
                               
-                              // whether this is a POST or GET request
-                              method : 'GET',
-                          
-                              // the type of data we expect back
-                              dataType : 'json',
-                              contentType: "application/json; charset=utf-8",
-                          
-                              // code to run if the request succeeds;
-                              // the response is passed to the function
-                              success : function(json) {
-                                    buildSearchResults(json);
-                                  // var markup = '', len = json.department.length;
-                                  // for(var i = 0; i < len; i++) {
-                                  //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
-                                  // }
-                                  // $("#DeptNo").append(markup);
-                              },
-                          
-                              // code to run if the request fails;
-                              // the raw request and status codes are 
-                              // passed to the function
-                              error : function(xhr, status) {
-                                  alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
-                              },
-                              /* code to run regardless of success or failure
-                              complete : function(xhr, status) {
-                                  // alert('The request is complete!');
-                              }*/
-                           });
+                                  // the data to send  (will be converted to a query string)
+                                  data : { filterBoxOne : searchBox.val(), ajaxCall : true },
+                                  
+                                  // whether this is a POST or GET request
+                                  method : 'GET',
+                              
+                                  // the type of data we expect back
+                                  dataType : 'json',
+                                  contentType: "application/json; charset=utf-8",
+                              
+                                  // code to run if the request succeeds;
+                                  // the response is passed to the function
+                                  beforeSend: function() {
+                                    tmpAjaxStatus = true;
+                                  },
+                                  complete: function() {
+                                    tmpAjaxStatus = false;
+                                  },
+                                  success : function(json) {
+                                        buildSearchResults(json);
+                                      // var markup = '', len = json.department.length;
+                                      // for(var i = 0; i < len; i++) {
+                                      //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
+                                      // }
+                                      // $("#DeptNo").append(markup);
+                                  },
+                              
+                                  // code to run if the request fails;
+                                  // the raw request and status codes are 
+                                  // passed to the function
+                                  //error : function(xhr, status) {
+                                      //alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
+                                  //},
+                                  /* code to run regardless of success or failure
+                                  complete : function(xhr, status) {
+                                      // alert('The request is complete!');
+                                  }*/
+                               });
+                            }else{
+                                if(tmpAjaxStatus)
+                                    tmpAjax.abort();
+                                $("#people_table").hide();
+                            }
                         }
                     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         });
@@ -191,10 +188,67 @@
         }
 
         function buildSearchResults(json) {
-            alert(json[0].last_name);
+            for (var i in json){
+                buildRow(json[i]);
+            }
+            $("#people_table").show();
         }
 
+        function buildRow(json){
+            row = document.createElement('tr');
+            picTd = document.createElement('td');
+            picTd.setAttribute('class','photobook-img');
+            pic = loadImage(json.image_uri);
+            picTd.appendChild(pic);
+            first = document.createElement('td');
+            var a = document.createElement('a');
+            a.href = json.path;
+            a.appendChild(document.createTextNode(json.first_name));
 
+            first.appendChild(a);
+            last = document.createElement('td');
+            
+            b = document.createElement('a');
+            b.href = json.path;
+            b.innerHTML = json.last_name;
+            last.appendChild(b);
+
+            contact_dtls = document.createElement('td');
+            var str = '';
+            for(var i in json.contact_dtls){
+                str += json.contact_dtls[i] + "<br />";
+            }
+            str += json.email
+            contact_dtls.innerHTML = str;
+            program = document.createElement('td');
+            program.appendChild(document.createTextNode(json.program)); 
+            row.appendChild(picTd);
+            row.appendChild(first);
+            row.appendChild(last);
+            row.appendChild(contact_dtls);
+            row.appendChild(program);
+            $('#people_table tbody').append(row);
+        }
+
+        function loadImage(image_uri){
+
+          var img = new Image();
+          img.width = 60;
+          // img.height = 55;
+
+          img.onload = function() {
+              //console.log(row.find('.url_cell').value);
+              if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
+                  // handle broken image
+              } else {
+                  //row.find('.image_cell').append(img);
+                  //row.getElementsByTagName('td').appendChild(img);
+              }
+          }
+          //console.log(row.find(".image_cell"));
+          img.src = image_uri;
+          return img;
+        }
 
 
     </script>

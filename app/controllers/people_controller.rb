@@ -32,37 +32,38 @@ class PeopleController < ApplicationController
   end
 
   def search
-    @people = User.where("human_name ILIKE ?", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
+    #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
+    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
+    puts "done"
+    @ppl = @people.collect do |person| 
+            program = '';
+            if person.is_student
+                program += (person.masters_program + ' ') unless person.masters_program.blank?
+                program += person.masters_track unless person.masters_track.blank?
+                if person.is_part_time
+                    program += ' (PT)'
+                else
+                    program += ' (FT)'
+                end
+            elsif person.is_staff
+                program += 'Staff'
+            end
+
+            Hash["id" => person.twiki_name,
+                "first_name" => person.first_name,
+                "last_name" => person.last_name,
+                "image_uri" => person.image_uri,
+                "program" => program,
+                "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
+                "email" => person.email,
+                "path" => person_path(person)
+            ]
+        end
 
 
-
-    # @ppl = []
-    # @people.collect do |p|
-    #     myHash = Hash.new
-    #     myHash.merge!(:fn => p.first_name)
-    #     myHash.merge!(:ln => p.last_name)
-    #     myHash.merge!(:fn => p.telephones_hash) unless p.first_name.blank?
-    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
-    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
-    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
-    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
-    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
-    #     myHash.merge!(:fn => p.first_name) unless p.first_name.blank?
-    #     myHash.merge!(:ln => p.last_name) unless p.last_name.blank?
-    #     @ppl << myHash
-    # end     
-
-    #     {  
-    #        fn: person.first_name unless person.first_name == "Todd"
-    #        ln: person.last_name
-    #    } 
     respond_to do |format|
       #format.json { render :json => @ppl, :layout => false }
-            format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-                                                                    "first_name" => person.first_name,
-                                                                    "last_name" => person.last_name,
-                                                                    "image_uri" => person.image_uri,
-                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+            format.json { render :json =>  @ppl, :layout => false }
     end
   end
 
