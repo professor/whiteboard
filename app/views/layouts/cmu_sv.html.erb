@@ -31,6 +31,7 @@
   <%= stylesheet_link_tag '/cmu_sv_standard_v4/print.css', :media => "print" %>
   <%= stylesheet_link_tag 'scaffold' %>
 
+  <%= yield :people_search if content_for :people_search %>
 
   <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
   <%= yield :javascript %>
