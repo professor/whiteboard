@@ -14,7 +14,69 @@
         </div>
     <% end %>
 
+ <!-- begin -->
 
+  <div class="user_profile_content">
+     <div class="user_profile_photo_social">
+        <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+      
+     </div>
+
+    <div class="user_profile_title">
+      <h1><%= h @person.human_name %></h1>
+      <% if @person.is_student %>
+            <%= h @person.masters_program %>
+              <% if !(@person.masters_track.nil? || @person.masters_track.empty?) %>
+                  (<%= h @person.masters_track %> )
+              <% end %><br/>
+
+          <% if @person.is_part_time %> Part Time
+          <% else %> Full Time
+          <% end %>
+
+      <% end %>
+
+    </div>
+
+    <div class="user_profile_bio">
+      <%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+    </div>
+
+    <div class="user_profile_about">
+      <h2>About Me:</h2>
+      <div>
+      <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+       </div>
+      <div class="user_profile_org">
+        <% if @person.organization_name %>
+            <% if @person.title %><%= h @person.title %>
+                <br/>
+                <% end %><%= h @person.organization_name %>
+        <% else %>&nbsp;
+        <% end %>
+      </div>
+     </div>
+    </div>
+
+    <div class="user_profile_contact_details">
+      <%= render :partial => 'show_telephones' %>
+      <%= h @person.email %>
+    </div>
+
+  </div>
+
+  <div style="clear: both;"> -- </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- end -->
     <table class="layout_table">
       <tr valign="top">
         <td>

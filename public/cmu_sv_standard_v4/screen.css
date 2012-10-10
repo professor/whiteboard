@@ -1150,3 +1150,38 @@ form .instructions {
         margin-bottom: 5px;
         font-style: italic;     
 }
+
+.user_profile_photo_social{
+	border:1px solid red;
+	float:left;
+}
+
+.user_profile_title{
+	border:1px solid blue;
+	float:left;
+	width:80%;
+}
+.user_profile_bio{
+	border:1px solid green;
+		float:left;
+		width:80%;
+}
+.user_profile_about, .user_profile_org{
+	border:1px solid yellow;
+	float:left;
+	width:80%;
+}
+.user_profile_contact_details{
+	border:1px solid black;
+	float:left;
+	width:80%;
+}
+
+.user_profile_photo{
+	width:120px;	
+	float:left;
+}
+
+
+
+
