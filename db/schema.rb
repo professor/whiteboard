@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20121003205917) do
     t.integer  "task_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_submittable"
   end
 
   create_table "course_numbers", :force => true do |t|

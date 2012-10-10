@@ -1,4 +1,4 @@
-<%= form_for(@assignment) do |f| %>
+<%= form_for([@course,@assignment]) do |f| %>
   <% if @assignment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
@@ -10,6 +10,39 @@
       </ul>
     </div>
   <% end %>
+
+
+    <table>
+      <tr>
+        <th><%= f.label(:task_number) %></th>
+        <td><%= f.select(:task_number,[1,2,3]) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:name) %></th>
+        <td><%= f.text_field(:name) %></td>
+      </tr>
+
+      <tr>
+        <th><%= f.label(:is_team_deliverable) %></th>
+        <td><%= f.check_box(:is_team_deliverable) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:is_submittable) %></th>
+        <td><%= f.check_box(:is_submittable) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:maximum_score) %></th>
+        <td><%= f.text_field(:maximum_score) %></td>
+      </tr>
+      <tr>
+        <th><%= f.label(:due_date) %></th>
+        <td><%= f.datetime_select(:due_date) %></td>
+      </tr>
+
+
+    </table>
+
+
 
   <div class="actions">
     <%= f.submit %>

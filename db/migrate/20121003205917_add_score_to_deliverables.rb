@@ -3,7 +3,6 @@ class AddScoreToDeliverables < ActiveRecord::Migration
     add_column :deliverables, :score, :float
     add_column :deliverables, :assignment_id, :integer
     add_column :deliverables, :private_note, :string
-    
     add_index :deliverables, :assignment_id
   end
 
@@ -11,6 +10,6 @@ class AddScoreToDeliverables < ActiveRecord::Migration
     remove_column :deliverables, :private_note
     remove_column :deliverables, :assignment_id
     remove_column :deliverables, :score
-    remove_index :deliverables, :assignment_id
+    #remove_index :deliverables, :assignment_id
   end
 end

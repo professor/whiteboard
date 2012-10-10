@@ -1,6 +1,16 @@
 class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.xml
+
+
+  before_filter :get_course
+
+  layout 'cmu_sv'
+  def get_course
+    @course=Course.find(params[:course_id])
+  end
+
+
   def index
     @assignments = Assignment.all
 
@@ -40,11 +50,10 @@ class AssignmentsController < ApplicationController
   # POST /assignments
   # POST /assignments.xml
   def create
-    @assignment = Assignment.new(params[:assignment])
-
+    @assignment = @course.assignments.new(params[:assignment])
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to(@assignment, :notice => 'Assignment was successfully created.') }
+        format.html { redirect_to(course_assignments_path, :notice => "Assignment  #{@assignment.name} was successfully created.") }
         format.xml  { render :xml => @assignment, :status => :created, :location => @assignment }
       else
         format.html { render :action => "new" }
@@ -60,7 +69,7 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       if @assignment.update_attributes(params[:assignment])
-        format.html { redirect_to(@assignment, :notice => 'Assignment was successfully updated.') }
+        format.html { redirect_to(course_assignments_path, :notice => "Assignment #{@assignment.name} was successfully updated.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -76,7 +85,8 @@ class AssignmentsController < ApplicationController
     @assignment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(assignments_url) }
+      format.js
+      format.html { redirect_to(course_assignments_path) }
       format.xml  { head :ok }
     end
   end

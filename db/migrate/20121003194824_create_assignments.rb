@@ -8,6 +8,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.integer :course_id
       t.integer :assignment_order
       t.integer :task_number
+      t.boolean :is_submittable
 
       t.timestamps
     end

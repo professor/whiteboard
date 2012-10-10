@@ -23,38 +23,38 @@ describe AssignmentsController do
   # This should return the minimal set of attributes required to create a valid
   # Assignment. As you add validations to Assignment, be sure to
   # update the return value of this method accordingly.
+
+  before do
+
+    @assignment = FactoryGirl.create(:assignment)
+    @course = @assignment.course
+  end
   def valid_attributes
-    {:maximum_score=>100, :course_id=>1,:assignment_order=>1, :task_number=>1}
+    {:maximum_score=>100, :course_id=>@course.id,:assignment_order=>1, :task_number=>1}
   end
 
   describe "GET index" do
     it "assigns all assignments as @assignments" do
-      assignment = Assignment.create! valid_attributes
-      get :index
-      assigns(:assignments).should eq([assignment])
+      #assignment = @course.assignments.create! valid_attributes
+      get :index, :course_id => @course.id
+      assigns(:assignments).should eq([@assignment])
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested assignment as @assignment" do
-      assignment = Assignment.create! valid_attributes
-      get :show, :course_id=>1,:id => assignment.id.to_s
-      assigns(:assignment).should eq(assignment)
-    end
-  end
+
 
   describe "GET new" do
     it "assigns a new assignment as @assignment" do
-      get :new
+      get :new, :course_id => @course.id
       assigns(:assignment).should be_a_new(Assignment)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested assignment as @assignment" do
-      assignment = Assignment.create! valid_attributes
-      get :edit, :id => assignment.id.to_s
-      assigns(:assignment).should eq(assignment)
+     # assignment = Assignment.create! valid_attributes
+      get :edit, :id => @assignment.id.to_s  , :course_id => @course.id
+      assigns(:assignment).should eq(@assignment)
     end
   end
 
@@ -62,19 +62,19 @@ describe AssignmentsController do
     describe "with valid params" do
       it "creates a new Assignment" do
         expect {
-          post :create, :assignment => valid_attributes
+          post :create,:course_id => @course, :assignment => valid_attributes
         }.to change(Assignment, :count).by(1)
       end
 
       it "assigns a newly created assignment as @assignment" do
-        post :create, :assignment => valid_attributes
+        post :create, :course_id => @course, :assignment => valid_attributes
         assigns(:assignment).should be_a(Assignment)
         assigns(:assignment).should be_persisted
       end
 
       it "redirects to the created assignment" do
-        post :create, :assignment => valid_attributes
-        response.should redirect_to(Assignment.last)
+        post :create,:course_id => @course, :assignment => valid_attributes
+        response.should redirect_to(course_assignments_path)
       end
     end
 
@@ -82,14 +82,14 @@ describe AssignmentsController do
       it "assigns a newly created but unsaved assignment as @assignment" do
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        post :create, :assignment => {}
+        post :create, :course_id => @course,:assignment => {}
         assigns(:assignment).should be_a_new(Assignment)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        post :create, :assignment => {}
+        post :create,:course_id => @course, :assignment => {}
         response.should render_template("new")
       end
     end
@@ -104,19 +104,19 @@ describe AssignmentsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Assignment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => assignment.id, :assignment => {'these' => 'params'}
+        put :update,:course_id => @course, :id => assignment.id, :assignment => {'these' => 'params'}
       end
 
       it "assigns the requested assignment as @assignment" do
         assignment = Assignment.create! valid_attributes
-        put :update, :id => assignment.id, :assignment => valid_attributes
+        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes
         assigns(:assignment).should eq(assignment)
       end
 
       it "redirects to the assignment" do
         assignment = Assignment.create! valid_attributes
-        put :update, :id => assignment.id, :assignment => valid_attributes
-        response.should redirect_to(assignment)
+        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes
+        response.should redirect_to(course_assignments_path)
       end
     end
 
@@ -125,7 +125,7 @@ describe AssignmentsController do
         assignment = Assignment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        put :update, :id => assignment.id.to_s, :assignment => {}
+        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}
         assigns(:assignment).should eq(assignment)
       end
 
@@ -133,7 +133,7 @@ describe AssignmentsController do
         assignment = Assignment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        put :update, :id => assignment.id.to_s, :assignment => {}
+        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}
         response.should render_template("edit")
       end
     end
@@ -143,14 +143,14 @@ describe AssignmentsController do
     it "destroys the requested assignment" do
       assignment = Assignment.create! valid_attributes
       expect {
-        delete :destroy, :id => assignment.id.to_s
+        delete :destroy, :course_id => @course,:id => assignment.id.to_s
       }.to change(Assignment, :count).by(-1)
     end
 
     it "redirects to the assignments list" do
       assignment = Assignment.create! valid_attributes
-      delete :destroy, :id => assignment.id.to_s
-      response.should redirect_to(assignments_url)
+      delete :destroy,:course_id => @course, :id => assignment.id.to_s
+      response.should redirect_to(course_assignments_url)
     end
   end
 
