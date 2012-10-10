@@ -1,4 +1,10 @@
 CMUEducation::Application.routes.draw do
+
+  #temporary for Mel
+  match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course'
+  match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course'
+
+
   resources :search, :only => [:index]
   resources :deliverables
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
