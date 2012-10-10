@@ -19,6 +19,26 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  #temporary for mel
+  def team_index_for_course
+    @course = Course.find(params[:course_id])
+    if (current_user.is_admin? || @course.faculty.include?(current_user))
+      @deliverables = Deliverable.where("team_id is not null").find_all_by_course_id(@course.id)
+    else
+      has_permissions_or_redirect(:admin, root_path)
+    end
+  end
+
+  #temporary for mel
+  def individual_index_for_course
+    @course = Course.find(params[:course_id])
+    if (current_user.is_admin? || @course.faculty.include?(current_user))
+      @deliverables = Deliverable.where("team_id is null").find_all_by_course_id(@course.id)
+    else
+      has_permissions_or_redirect(:admin, root_path)
+    end
+  end
+
   def my_deliverables
     user = User.find_by_param(params[:id])
     if (current_user.id != user.id)
