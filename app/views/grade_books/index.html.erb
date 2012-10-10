@@ -2,8 +2,8 @@
  <% @students.each do |student| %>
      <tr>
         <td><%=student.human_name%></td>
-        <% GradeBook.get_scores(@course, student).each do |gradebook| %>
-          <td><input value='<%= gradebook.score %>'/></td>
+        <% GradeBook.get_scores(@course, student).each do |grade_book| %>
+          <td><input value='<%= grade_book.score %>'/></td>
         <% end %>
     </tr>
   <%end%>

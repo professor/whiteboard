@@ -25,26 +25,26 @@ describe GradeBook do
   #its (:student) {should == @student_sam}
   #its (:assignment) {should == @assignment_fse}
 
-  #gradebook.scores  => {:assignment1=>1, :assignment2=>2 }
+  #grade_book.scores  => {:assignment1=>1, :assignment2=>2 }
   it "can get all students score"
 
-  #gradebook.get_score(:assignment)
+  #grade_book.get_score(:assignment)
   it "can get a student's specific assignment score"
 
-  #gradebook.student.name
+  #grade_book.student.name
   it "can get a single student name"
 
 
-  #gradebook.get_score(:student) => {:course =>{:assignment1 =>1 ,...}}
+  #grade_book.get_score(:student) => {:course =>{:assignment1 =>1 ,...}}
   it "can get a student's all score"
 
-  #gradebook.course.teams
+  #grade_book.course.teams
   it "can get all teams in a course"
 
-  # gradebook.student.team
+  # grade_book.student.team
   it "can get a student team"
 
-  # gradebook.final_score
+  # grade_book.final_score
   it "can get a student final score"
 
   it "can get task number"
