@@ -1,0 +1,39 @@
+/* UI Mockup CSS Migration */
+
+.customization_dialog {margin-top: 64px;}
+.customization_dialog .ui-dialog-titlebar {display:none}
+
+.criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
+.criterias ul { display: inline; list-style:none; padding-left: 0px; }
+.criterias ul li{ display: inline; margin-left: 0px; border: 1px solid #666; border-radius: 2px; padding: 0px 2px; margin: 0px 2px;}
+
+.criteria_tag input, .criteria_tag select{ height: 12px;}
+.criteria_tag a {
+    opacity: 0.4; color: #000; text-decoration: none;
+    font-weight: 700; padding-left: 3px;
+}
+.criteria_tag a:hover { opacity: 1; }
+
+.criteria_text { border: 0; width: 72px; font-weight: 700;}
+.null_search_text { color: #aaa; }
+
+#criteria_box, #criteria_box2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
+#search_text_box { border: none; width: 128px;}
+
+select .select-hint { color: #ccc;}
+
+
+#customization_link, #customization_dialog_close, #export_link { float:right; }
+#customization_modal_card  { margin-left: auto; margin-right: auto; }
+#results_box { display: block; min-height: 16px;}
+.data_card {
+    float: left;
+    margin: 8px 8px; padding: 2px 6px;
+    background-color: #eee;
+    width: 174px; height: 260px;
+    border: 1px solid #333; border-radius: 2px;
+    font-size: 10px;
+}
+.data_card img{
+    width: 150px; margin-top: 12px; margin-bottom: 6px; margin-left:10px;
+}
