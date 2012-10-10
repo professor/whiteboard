@@ -91,6 +91,7 @@ FactoryGirl.define do
     organization_name "NestLabs"
     registered_courses = [:fse]
 
+
   end
 
   factory :student_rashmi, :parent => :user do
@@ -106,6 +107,7 @@ FactoryGirl.define do
     masters_track "DM"
     organization_name "HP"
     registered_courses = [:fse]
+
   end
 
   factory :student_clyde, :parent => :user do

@@ -362,12 +362,7 @@ class User < ActiveRecord::Base
 
 
 
-  #People search method
 
-  def self.search(text)
-    where("human_name ILIKE ?", "%#{text}%")
-
-  end
 
   #People search with criteria
   def self.testSearch(criteria)
@@ -403,11 +398,38 @@ class User < ActiveRecord::Base
         query_string += "webiso_account ILIKE '"+main_search_string+"'"
       end
 
+
       @results_set = where(query_string)
     end
 
+    query_string=""
 
+    #search by company
+    if (criteria['organization_name']!=nil)
+      if( query_string != "")
+        query_string += " AND "
+      end
+      query_string += "organization_name ILIKE '"+criteria['organization_name']+"'"
+    end
 
+    #search by program
+    if (criteria['masters_program']!=nil)
+      if( query_string != "")
+        query_string += " AND "
+      end
+      query_string += "masters_program ILIKE '"+criteria['masters_program']+"'"
+    end
+
+    #search by program track
+    if (criteria['masters_track']!=nil)
+      if( query_string != "")
+        query_string += " AND "
+      end
+      query_string += "masters_track ILIKE '"+criteria['masters_track']+"'"
+    end
+
+    @results_set = @results_set.where(query_string)
+     end
 
     # Apply limit criteria
     #if (criteria[:limit] != nil)
@@ -427,16 +449,16 @@ class User < ActiveRecord::Base
 
 
     # Apply text filters
-    allowed_text_criteria.each { |key|
-      if (criteria[key] != nil)
+    #allowed_text_criteria.each { |key|
+     # if (criteria[key] != nil)
         # Exact Match
         # @people = @people.where(key => params[key])
         # Partial Match
-        @results_set = @results_set.where("#{key} ILIKE ?", "%#{criteria[key]}%")
-      end
-    }
-    return @results_set
-  end
+      #  @results_set = @results_set.where("#{key} ILIKE ?", "%#{criteria[key]}%")
+      #end
+   # }
+   # return @results_set
+  #end
 
 
 end
