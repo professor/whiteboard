@@ -101,12 +101,6 @@ table.tablesorter tbody td {
 	background-color: #FFF;
 	vertical-align: top;
 }
-table.tablesorter tbody td.photobook-img {
-    padding: 0px;
-    margin: 0px;    
-    width: 60px; 
-    height: 82px;
-}
 table.tablesorter tbody td.photobook-img img {
     padding:0;
 }
@@ -126,6 +120,25 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 table.tablesorter tbody tr.hover td {
     background-color: #FFFFCC;
 }
+
+#people_table .photobook-img {
+    padding: 0px;
+    margin: 0px;    
+    width: 60px; 
+    height: 82px;
+}
+#people_table .first_name {
+    width: 100px;
+}
+#people_table .last_name {
+    width: 100px;
+}
+#people_table .contact_dtls {
+    width: 290px;
+}
+#people_table .program {
+}
+
 
 
 .comment_text {

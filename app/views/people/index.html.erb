@@ -145,19 +145,14 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
 
-
-
-
-
 <table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
-    <th>Pic</th>
-
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Contact Details</th>
-    <th>Program</th>
+    <th>&nbsp;</th>
+    <th class="first_name">First name</th>
+    <th class="last_name">Last name</th>
+    <th class="contact_dtls">Contact Details</th>
+    <th class="program">Program</th>
   </tr>
   </thead>
   <tbody>
@@ -169,10 +164,9 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
         <% end %>" >
         <td class="image_cell photobook-img">
-
         </td>
-        <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
-        <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
+        <td><%= link_to person.first_name, person_path(person.twiki_name) %></td>
+        <td><%= link_to person.last_name, person_path(person.twiki_name) %></td>
         <td>
           <% person.telephones_hash.each do |key, value| %>
 
