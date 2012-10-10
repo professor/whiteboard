@@ -406,7 +406,8 @@ class User < ActiveRecord::Base
       @results_set = where(query_string)
     end
 
-      return @results_set
+
+
 
     # Apply limit criteria
     #if (criteria[:limit] != nil)
@@ -416,35 +417,25 @@ class User < ActiveRecord::Base
     # By default order by name
     #order("first_name ASC, last_name ASC").all
 
+    ##....Filter Code by people type should go here ....##
 
-
+  ###Code for Company search and Program type
 
     # Define allowed text criteria
-    #allowed_text_criteria = ['people_type', 'organization_name']
-    #str1=[]
-    #if (criteria['first_name'] != nil)
-    #  str1 = "first_name ILIKE? :search"
-    #end
-    #if (criteria['last_name'] != nil)
-    #  str1+="last_name ILIKE ?"
-    #end
+    allowed_text_criteria = ['organization_name','masters_program', 'masters_track']
 
-    #@users=@users.where("first_name ILIKE ? OR last_name ILIKE ? OR websio_account ILIKE ?", "%#{criteria['first_name']}%", "%#{criteria['last_name']}%","%#{criteria['websio_account']}%")
 
 
     # Apply text filters
-    #allowed_text_criteria.each { |key|
-      #if (criteria[key] != nil)
-        #if (criteria[key]=='first_name')
-          #@users=@users.where("first_name ILIKE ? OR last_name ILIKE ? OR websio_account ILIKE ?", "%#{criteria['first_name']}%", "%#{criteria['last_name']}%","%#{criteria['websio_account']}%")
-        #end
+    allowed_text_criteria.each { |key|
+      if (criteria[key] != nil)
         # Exact Match
         # @people = @people.where(key => params[key])
         # Partial Match
-        #@users = @users.where("#{key} ILIKE ?", "%#{criteria[key]}%")
-      #end
-    #}
-
+        @results_set = @results_set.where("#{key} ILIKE ?", "%#{criteria[key]}%")
+      end
+    }
+    return @results_set
   end
 
 

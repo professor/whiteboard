@@ -87,6 +87,7 @@ FactoryGirl.define do
     human_name "Shama Hoque"
     twiki_name "StudentShama"
     masters_program "SE"
+    masters_track "Tech"
     organization_name "NestLabs"
     registered_courses = [:fse]
 
@@ -102,6 +103,7 @@ FactoryGirl.define do
     human_name "Student Rashmi"
     twiki_name "StudentRashmi"
     masters_program "SE"
+    masters_track "DM"
     organization_name "HP"
     registered_courses = [:fse]
   end

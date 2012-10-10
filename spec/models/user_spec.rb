@@ -89,9 +89,9 @@ describe User do
   end
   #program
   it "should search by program - all students in program" do
-    params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'first_name' => true }
+    params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'masters_track' => "Tech",'first_name' => true }
     @users=User.testSearch(params_hash)
-    @users.should == [@student_shama, @student_rashmi]
+    @users.should == [@student_shama]
   end
 
 
@@ -105,7 +105,7 @@ describe User do
   it "should search by company name" do
     params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true }
     @users=User.testSearch(params_hash)
-    @users.should == [@student_clyde, @faculty_allen]
+    @users.should == [@faculty_allen, @student_clyde ]
   end
 
   it "should not include people at other companies" do
