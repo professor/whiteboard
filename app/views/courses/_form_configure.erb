@@ -140,9 +140,69 @@
           </div>
 
           <div id="tabs-assignment" class="tab-element">
-            test
+            <table id="assignment_page">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Task Title</th>
+                  <th><%= @course.grading_criteria %></th>
+                  <th>Due Date</th>
+                  <th>Actions</th>
+                  <th>Team/ Individual</th>
+                  <th>Can student submit?</th>
+                </tr>
+              </thead>
+              <tbody>
+              <div id="add_deliverable">
+                <%= link_to "Add Deliverable", "#" %>
+              </div>
+              <% if !@course.assignments.empty? %>
+                <%= f.fields_for :assignments do |assignment| %>
+                  <tr>
+                    <td><%= assignment.label assignment.object.task_number %></td>
+                    <td><%= assignment.label assignment.object.title %></td>
+                    <td><%= assignment.label assignment.object.weight %></td>
+                    <td><%= assignment.label assignment.object.due_date %></td>
+                    <td><%= assignment.label "Actions" %></td>
+                    <td><%= assignment.label assignment.object.team_deliverable ? "Team" : "Individual"%></td>
+                    <td><%= assignment.label assignment.object.can_submit ? "Yes" : "No" %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+              </tbody>
+              </table>
+              <div id="add_new_deliverable">
+                <%= f.fields_for :assignments do |assignment| %>
+                  <p>
+                    <%= assignment.label :task_number %>
+                    <%= assignment.text_field :task_number, size: 4 %>
+                  </p>
+                  <p>
+                    <%= assignment.label :title %>
+                    <%= assignment.text_field :title %>
+                  </p>
+                   <p>
+                     <%= assignment.label :weight %>
+                     <%= assignment.text_field :weight %>
+                   </p>
+                   <p>
+                     <%= assignment.label :due_date %>
+                     <%= assignment.text_field :due_date %>
+                   </p>
+                   <p>
+                     <%= assignment.radio_button :team_deliverable, true %> <%= assignment.label :team_deliverable, "Team Deliverable" %>
+                     <%= assignment.radio_button :team_deliverable, false %> <%= assignment.label :team_deliverable, "Individual Deliverable" %>
+                   </p>
+                   <p>
+                     <%= assignment.label :can_submit %>
+                     <%= assignment.check_box :can_submit %>
+                   </p>
+                  <p>
+                    <%= button_to "Save task", { :controller=> 'courses', :action=>'save_task' } %>
+                  </p>
+                <% end %>
+              </div>
           </div>
-
           <p>
             <%= f.hidden_field :is_configured, :value => true %>
             <%= f.submit button_name %>

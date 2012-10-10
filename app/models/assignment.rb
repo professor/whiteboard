@@ -2,7 +2,6 @@ class Assignment < ActiveRecord::Base
   belongs_to :course
 
   validates_presence_of :title
-  validates :max_score, numericality: { greater_than_or_equal_to: 0 }, presence: true
   validates :weight,    numericality: { greater_than_or_equal_to: 0 }, presence: true
   validate :validate_due_date
 

@@ -246,6 +246,10 @@ class CoursesController < ApplicationController
               :disposition => 'attachment', :encoding => 'utf8')
   end
 
+  def save_task
+    @course.assignments.save
+  end
+
   private
   def index_core
     respond_to do |format|

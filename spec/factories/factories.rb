@@ -43,7 +43,6 @@ FactoryGirl.define do
     title 'Just an assignment'
     team_deliverable false
     due_date DateTime.now + 30
-    max_score 100
     weight 20
     can_submit true
     association :course, :factory => :course

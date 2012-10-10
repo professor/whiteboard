@@ -46,6 +46,7 @@ class Course < ActiveRecord::Base
   has_many :assignments
 
   accepts_nested_attributes_for :grading_ranges, allow_destroy: true
+  accepts_nested_attributes_for :assignments, allow_destroy: true
 
   validates_presence_of :semester, :year, :mini, :name, :grading_nomenclature, :grading_criteria
   validate :validate_faculty, :validate_grading_ranges
@@ -66,7 +67,7 @@ class Course < ActiveRecord::Base
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
                   :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
-                  :faculty_assignments_override, :grading_nomenclature, :grading_criteria, :grading_ranges_attributes
+                  :faculty_assignments_override, :grading_nomenclature, :grading_criteria, :grading_ranges_attributes, :assignments_attributes
 
 #  def to_param
 #    display_course_name

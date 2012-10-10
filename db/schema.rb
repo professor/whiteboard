@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(:version => 20121008204736) do
     t.string   "title"
     t.boolean  "team_deliverable"
     t.datetime "due_date"
-    t.integer  "max_score"
     t.integer  "weight"
     t.boolean  "can_submit"
     t.integer  "course_id"
