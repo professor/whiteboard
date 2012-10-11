@@ -33,8 +33,7 @@ class PeopleController < ApplicationController
 
   def search
     #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
-    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
-    puts "done"
+    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
     @ppl = @people.collect do |person| 
             program = '';
             if person.is_student

@@ -6,6 +6,7 @@
     var tmpVal = '';
     var tmpAjax;
     var tmpAjaxStatus = false;
+    var my_timeout = null;
       //var image_array = new Array();
         // setInterval(function(){
         //       if(document.getElementById("hidden_field").value == "on"){
@@ -54,7 +55,6 @@
         // },1000);
 
         $(document).ready(function () {
-
                     $("#people_table").hide();
                     // $("#filterBoxOne").keyup(function() {
                     //     if(this.value.length > 0){
@@ -100,67 +100,69 @@
                                 $(this).removeClass("hover");
                             });
 
-                    
-
-                    searchBox = $("#filterBoxOne");
-                    searchBox.keyup(function() {
-                        if(searchBox.val() != tmpVal){
-                            tmpVal=searchBox.val();
-                            if($.trim(searchBox.val())){
-                                if(tmpAjaxStatus)
-                                    tmpAjax.abort();
-                                tmpAjax = $.ajax({
-                                  // the URL for the request
-                                  url : 'people_search',
-                              
-                                  // the data to send  (will be converted to a query string)
-                                  data : { filterBoxOne : searchBox.val(), ajaxCall : true },
-                                  
-                                  // whether this is a POST or GET request
-                                  method : 'GET',
-                              
-                                  // the type of data we expect back
-                                  dataType : 'json',
-                                  contentType: "application/json; charset=utf-8",
-                              
-                                  // code to run if the request succeeds;
-                                  // the response is passed to the function
-                                  beforeSend: function() {
-                                    tmpAjaxStatus = true;
-                                  },
-                                  complete: function() {
-                                    tmpAjaxStatus = false;
-                                  },
-                                  success : function(json) {
-                                        buildSearchResults(json);
-                                      // var markup = '', len = json.department.length;
-                                      // for(var i = 0; i < len; i++) {
-                                      //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
-                                      // }
-                                      // $("#DeptNo").append(markup);
-                                  },
-                              
-                                  // code to run if the request fails;
-                                  // the raw request and status codes are 
-                                  // passed to the function
-                                  //error : function(xhr, status) {
-                                      //alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
-                                  //},
-                                  /* code to run regardless of success or failure
-                                  complete : function(xhr, status) {
-                                      // alert('The request is complete!');
-                                  }*/
-                               });
-                            }else{
-                                if(tmpAjaxStatus)
-                                    tmpAjax.abort();
-                                $("#people_table").hide();
-                            }
-                        }
+                    $("#filterBoxOne").keyup(function() {
+                        if(my_timeout != null)
+                            clearTimeout(my_timeout);
+                        my_timeout = setTimeout('queryDatabase()', 500);
                     });
-
-
         });
+
+        function queryDatabase(){
+         searchBox = $("#filterBoxOne");
+         if(searchBox.val() != tmpVal){
+                tmpVal=searchBox.val();
+                if($.trim(searchBox.val())){
+                    if(tmpAjaxStatus)
+                        tmpAjax.abort();
+                    tmpAjax = $.ajax({
+                      // the URL for the request
+                      url : 'people_search',
+                  
+                      // the data to send  (will be converted to a query string)
+                      data : { filterBoxOne : searchBox.val(), ajaxCall : true },
+                      
+                      // whether this is a POST or GET request
+                      method : 'GET',
+                  
+                      // the type of data we expect back
+                      dataType : 'json',
+                      contentType: "application/json; charset=utf-8",
+                  
+                      // code to run if the request succeeds;
+                      // the response is passed to the function
+                      beforeSend: function() {
+                        tmpAjaxStatus = true;
+                      },
+                      complete: function() {
+                        tmpAjaxStatus = false;
+                      },
+                      success : function(json) {
+                            buildSearchResults(json);
+                          // var markup = '', len = json.department.length;
+                          // for(var i = 0; i < len; i++) {
+                          //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
+                          // }
+                          // $("#DeptNo").append(markup);
+                      },
+                  
+                      // code to run if the request fails;
+                      // the raw request and status codes are 
+                      // passed to the function
+                      //error : function(xhr, status) {
+                          //alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
+                      //},
+                      /* code to run regardless of success or failure
+                      complete : function(xhr, status) {
+                          // alert('The request is complete!');
+                      }*/
+                   });
+                }else{
+                    if(tmpAjaxStatus)
+                        tmpAjax.abort();
+                    $("#people_table").hide();
+                }
+            }
+        }
 
         function toggleStudents() {
             // /* we don't use .toggle since the state may be inaccurate from a page reload */
