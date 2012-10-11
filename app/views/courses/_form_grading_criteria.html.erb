@@ -1,0 +1,48 @@
+<%= form_for(@course, url: {action: 'update_grading_criteria', id: @course.id}) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% @course.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :is_configured, :value => true %>
+
+  <p>
+    <%= f.label :grading_nomenclature  %>
+    <%= f.select(:grading_nomenclature, options_for_select([["Assignments", "Assignments"], ["Tasks/Deliverables", "Tasks"]], @course.grading_nomenclature)) %>
+  </p>
+
+  <p>
+    <%= f.label :grading_criteria  %>
+    <%= f.select :grading_criteria, options_for_select([["Points"], ["Percentage"]],  @course.grading_criteria)  %>
+  </p>
+
+  <table id="grading_range">
+    <thead>
+    <tr>
+      <th>Grades</th>
+      <th>Minimum Value</th>
+      <th>Enable</th>
+    </tr>
+    </thead>
+    <tbody>
+
+      <%= f.fields_for :grading_ranges do |builder| %>
+        <tr>
+          <td><%= builder.label builder.object.grade %></td>
+          <td><%= builder.text_field :minimum, size: 4 %></td>
+          <td><%= builder.check_box :active %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p>
+    <%= f.submit "Update Grading Criteria" %>
+  </p>
+<% end %>

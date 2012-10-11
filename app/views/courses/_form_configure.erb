@@ -39,180 +39,51 @@
       <li><a href="#tabs-grading-criteria">Grading Criteria</a></li>
       <li><a href="#tabs-assignment">Assignments</a></li>
     </ul>
-    <%= form_for(@course) do |f| %>
-      <% if @course.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
 
-            <ul>
-              <% @course.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-      <% end %>
+    <div id="tabs-course-home" class="tab-element">
+      <%= render :partial => "courses/form_preferences", :locals => {:button_name => button_name} %>
+    </div>
 
-          <div id="tabs-course-home" class="tab-element">
-            <p>
-              <%= f.check_box :configure_course_twiki %>
-              <%= f.label :configure_course_twiki, "Please create a twiki web for my course" %>
-            </p>
+    <div id="tabs-grading-criteria" class="tab-element">
+      <%= render "courses/form_grading_criteria" %>
+    </div>
 
-            <p>
-              <input type="checkbox" disabled="true" checked="checked">
-              We use a variety of systems to host our curriculum including
-
-            <div class="checkboxed_form">
-              <ul>
-                <li>the twiki (http://info.sv.cmu.edu),</li>
-                <li>curriculum website (http://curriculum.sv.cmu.edu),</li>
-                <li>rails curriculum website (http://rails.sv.cmu.edu),</li>
-                <li>blackboard (http://www.cmu.edu/blackboard),</li>
-                <li>or your own web site.</li>
-              </ul>
-            </div>
-            </p>
-            <p>
-              <%= f.label :curriculum_url, "I plan on putting my curriculum materials at this url:", :class => "checkboxed_form" %>
-              <br/>
-              <%= f.text_field :curriculum_url, :size => 90, :class => "checkboxed_form" %><br/>
-
-            <div class="checkboxed_form"><p id="course_curriculum_url_notice" style="color: green"></p></div>
-            </p>
-            <p>
-              <%= f.check_box :configure_class_mailinglist %>
-              <%= f.label :configure_class_mailinglist, "I want a class mailing list" %>
-            </p>
-
-            <p>
-              <%= f.check_box :configure_teams_name_themselves %>
-              <%= f.label :configure_teams_name_themselves, "I will allow teams to name themselves" %>
-            </p>
-
-            <p>
-              <%= f.check_box(:remind_about_effort) %>
-              <%= f.label :remind_about_effort, "I will be using the Effort Logging Tool (note, all SE students are required to log effort)" %>
-              <br/>
-            </p>
-
-            <p>
-              <input type="checkbox" id="course_configure_peer_evaluation">
-              I plan on using the Peer Evaluation Tool <br/>
-              <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email
-              the teams telling them about the peer evaluation. <br/>
-              <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email
-              reminder will be sent on this date)
-            </p>
-            <p>
-              <%= f.submit button_name %>
-            </p>
-          </div>
-
-          <div id="tabs-grading-criteria" class="tab-element">
-            <h3>Grading Setup</h3>
-            <p>
-              <%= f.label :grading_nomenclature  %>
-              <%= f.select(:grading_nomenclature, options_for_select([["Assignments", "Assignments"], ["Tasks/Deliverables", "Tasks"]], @course.grading_nomenclature)) %>
-            </p>
-
-            <p>
-              <%= f.label :grading_criteria  %>
-              <%= f.select :grading_criteria, options_for_select([["Points"], ["Percentage"]],  @course.grading_criteria)  %>
-            </p>
-
-            <table id="grading_range">
-              <thead>
+    <div id="tabs-assignment" class="tab-element">
+      <div id="add_deliverable">
+        <%= link_to "Add Deliverable", "#" %>
+      </div>
+      <% if !@course.assignments.count %>
+        <table id="assignment_page">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Task Title</th>
+              <th><%= @course.grading_criteria %></th>
+              <th>Due Date</th>
+              <th>Actions</th>
+              <th>Team/ Individual</th>
+              <th>Can student submit?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @course.assignments.each do |assignment| %>
               <tr>
-                <th>Grades</th>
-                <th>Minimum Value</th>
-                <th>Enable</th>
+                <td><%= assignment.task_number %></td>
+                <td><%= assignment.title %></td>
+                <td><%= assignment.weight %></td>
+                <td><%= assignment.due_date %></td>
+                <td><%= "Actions" %></td>
+                <td><%= assignment.team_deliverable ? "Team" : "Individual"%></td>
+                <td><%= assignment.can_submit ? "Yes" : "No" %></td>
               </tr>
-              </thead>
-              <tbody>
-
-              <%= f.fields_for :grading_ranges do |builder| %>
-                  <tr>
-                    <td><%= builder.label builder.object.grade %></td>
-                    <td><%= builder.text_field :minimum, size: 4 %></td>
-                    <td><%= builder.check_box :active %></td>
-                  </tr>
-              <% end %>
-              </tbody>
-            </table>
-            <p>
-              <%= f.hidden_field :is_configured, :value => true %>
-              <%= f.submit button_name %>
-            </p>
-          </div>
-
-          <div id="tabs-assignment" class="tab-element">
-            <div id="add_deliverable">
-              <%= link_to "Add Deliverable", "#" %>
-            </div>
-            <table id="assignment_page">
-              <thead>
-                <tr>
-                  <th>Task</th>
-                  <th>Task Title</th>
-                  <th><%= @course.grading_criteria %></th>
-                  <th>Due Date</th>
-                  <th>Actions</th>
-                  <th>Team/ Individual</th>
-                  <th>Can student submit?</th>
-                </tr>
-              </thead>
-              <tbody>
-              <% if !@course.assignments.empty? %>
-                <%= f.fields_for :assignments do |assignment| %>
-                  <tr>
-                    <td><%= assignment.label assignment.object.task_number %></td>
-                    <td><%= assignment.label assignment.object.title %></td>
-                    <td><%= assignment.label assignment.object.weight %></td>
-                    <td><%= assignment.label assignment.object.due_date %></td>
-                    <td><%= assignment.label "Actions" %></td>
-                    <td><%= assignment.label assignment.object.team_deliverable ? "Team" : "Individual"%></td>
-                    <td><%= assignment.label assignment.object.can_submit ? "Yes" : "No" %></td>
-                  </tr>
-                <% end %>
-              <% end %>
-              </tbody>
-            </table>
-              <p>
-                <%= f.hidden_field :is_configured, :value => true %>
-                <% end %>
-              </p>
-              <div id="add_new_deliverable">
-                <%= form_for(@assignment) do |assignment| %>
-                  <p>
-                    <%= assignment.label :task_number %>
-                    <%= assignment.text_field :task_number, size: 4 %>
-                  </p>
-                  <p>
-                    <%= assignment.label :title %>
-                    <%= assignment.text_field :title %>
-                  </p>
-                   <p>
-                     <%= assignment.label :weight %>
-                     <%= assignment.text_field :weight %>
-                   </p>
-                   <p>
-                     <%= assignment.label :due_date %>
-                     <%= assignment.text_field :due_date %>
-                   </p>
-                   <p>
-                     <%= assignment.radio_button :team_deliverable, true %> <%= assignment.label :team_deliverable, "Team Deliverable" %>
-                     <%= assignment.radio_button :team_deliverable, false %> <%= assignment.label :team_deliverable, "Individual Deliverable" %>
-                   </p>
-                   <p>
-                     <%= assignment.label :can_submit %>
-                     <%= assignment.check_box :can_submit %>
-                   </p>
-                  <p>
-                    <%= assignment.submit "Save task" %>
-                  </p>
-                <% end %>
-              </div>
-          </div>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <div id="add_new_deliverable">
+        <%= render 'assignments/form_create' %>
+      </div>
+    </div>
   </div>
 </div>
 

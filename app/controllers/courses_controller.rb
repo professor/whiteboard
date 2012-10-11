@@ -128,8 +128,12 @@ class CoursesController < ApplicationController
 
     @course.year = params[:course][:year]
     @course.semester = params[:course][:semester]
-    @course.grading_nomenclature = params[:course][:grading_nomenclature]
-    @course.grading_criteria = params[:course][:grading_criteria]
+    @course.grading_nomenclature = "Tasks"
+    @course.grading_criteria = "Points"
+
+    GradingRange.possible_grades.each do |grade, minimum|
+      @course.grading_ranges.build(grade: grade, minimum: minimum, active: true)
+    end
 
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
@@ -148,7 +152,6 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    STDERR.puts params[:course].inspect
     @course = Course.find(params[:id])
     authorize! :update, @course
 
@@ -160,27 +163,15 @@ class CoursesController < ApplicationController
     end
 
     params[:course][:faculty_assignments_override] = params[:people]
-    respond_to do |format|
-      @course.updated_by_user_id = current_user.id if current_user
-      @course.attributes = params[:course]
 
-      if @course.save
-        STDERR.puts "Saved: #{@course.inspect}"
-        if (params[:course][:is_configured])
-          #The previous page was configure action
-          CourseMailer.configure_course_admin_email(@course).deliver
-        else
-          #The previous page was edit action
-          CourseMailer.configure_course_faculty_email(@course).deliver unless @course.is_configured?
-        end
-        flash[:notice] = 'Course was successfully updated.'
-        format.html { redirect_back_or_default(course_path(@course)) }
-        format.xml { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
-      end
-    end
+    update_core
+  end
+
+  def update_grading_criteria
+    @course = Course.find(params[:id])
+    authorize! :update, @course
+
+    update_core
   end
 
   # DELETE /courses/1
@@ -256,6 +247,29 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { render :action => "index" }
       format.xml { render :xml => @courses }
+    end
+  end
+
+  def update_core
+    respond_to do |format|
+      @course.updated_by_user_id = current_user.id if current_user
+      @course.attributes = params[:course]
+
+      if @course.save
+        if (params[:course][:is_configured])
+          #The previous page was configure action
+          CourseMailer.configure_course_admin_email(@course).deliver
+        else
+          #The previous page was edit action
+          CourseMailer.configure_course_faculty_email(@course).deliver unless @course.is_configured?
+        end
+        flash[:notice] = 'Course was successfully updated.'
+        format.html { redirect_back_or_default(course_path(@course)) }
+        format.xml { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
+      end
     end
   end
 end

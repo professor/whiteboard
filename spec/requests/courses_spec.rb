@@ -62,7 +62,7 @@ describe "courses" do
         fill_in "course_grading_ranges_attributes_#{index}_minimum", with: grading_range['minimum'] + 1
       end
 
-      click_button "Update"
+      click_button "Update Grading Criteria"
       @course.reload
       GradingRange.possible_grades.each_with_index do |(grade, value), index|
         @course.grading_ranges[index][:minimum].should == value + 1
@@ -74,7 +74,7 @@ describe "courses" do
         find(:css, "#course_grading_ranges_attributes_#{index}_active").set(false)
       end
 
-      click_button "Update"
+      click_button "Update Grading Criteria"
       page.should have_selector("#error_explanation", content: "Less than 2 active ranges")
     end
 
@@ -87,7 +87,7 @@ describe "courses" do
       fill_in "course_grading_ranges_attributes_0_minimum", with: 90
       find(:css, "#course_grading_ranges_attributes_1_active").set(true)
       fill_in "course_grading_ranges_attributes_1_minimum", with: 95
-      click_button "Update"
+      click_button "Update Grading Criteria"
 
       page.should have_selector("#error_explanation", content: "Number values must be descending by descending grades")
     end

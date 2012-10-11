@@ -1,0 +1,34 @@
+<%= form_for(@assignment) do |assignment| %>
+  <p>
+    <%= assignment.label :task_number %>
+    <%= assignment.text_field :task_number, size: 4 %>
+  </p>
+
+  <p>
+    <%= assignment.label :title %>
+    <%= assignment.text_field :title %>
+  </p>
+  <p>
+    <%= assignment.label :weight %>
+    <%= assignment.text_field :weight %>
+  </p>
+
+  <p>
+    <%= assignment.label :due_date %>
+    <%= assignment.text_field :due_date %>
+  </p>
+
+  <p>
+    <%= assignment.radio_button :team_deliverable, true, checked: true %> <%= assignment.label :team_deliverable, "Team Deliverable" %>
+    <%= assignment.radio_button :team_deliverable, false %> <%= assignment.label :team_deliverable, "Individual Deliverable" %>
+  </p>
+
+  <p>
+    <%= assignment.label :can_submit %>
+    <%= assignment.check_box :can_submit, checked: true %>
+  </p>
+
+  <p>
+    <%= assignment.submit "Save Assignment" %>
+  </p>
+<% end %>
