@@ -146,14 +146,35 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
 
 
+<table id="key_contacts_table" class="tablesorter">
+  <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Role</th>
+    <th>Name</th>
+    <th>Contact Details</th>
+  </tr>
+  </thead>
+  <tbody>
 
-
+  <% @people.each do |person| %>
+    <tr>
+      <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
+      <td><%= person[:title] %></td>
+      <td><%= link_to(person[:human_name], person[:path]) %></td>
+      <td><% person[:contact_dtls].each do |k, v| %>
+        <%= "#{k}: #{v}" %>
+        <%end %><br />
+        <%= mail_to person[:email] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
 <table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
-    <th>Pic</th>
-
+    <th></th>
     <th>First name</th>
     <th>Last name</th>
     <th>Contact Details</th>
@@ -161,45 +182,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-  <% for person in @people  %>
-      <tr class="tablesorter
-        <% if person.is_student %>student
-        <% end %>
-        <% if person.is_staff %>staff
-
-        <% end %>" >
-        <td class="image_cell photobook-img">
-
-        </td>
-        <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
-        <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
-        <td>
-          <% person.telephones_hash.each do |key, value| %>
-
-              <%= "#{key}: #{value}" %> <br />
-
-          <% end %>
-          Email: <%=mail_to person.email %>
-        </td>
-        <td>
-          <% if person.is_student %>
-              <%= person.masters_program unless person.masters_program.blank? %>
-              <%= person.masters_track unless person.masters_track.blank? %>
-              <% if person.is_part_time %>
-                  (PT)
-              <% else %>
-                  (FT)
-              <% end %>
-          <% elsif person.is_staff %>
-              Staff
-          <% end %>
-        </td>
-        <td hidden="true" class="url_cell">  <%= person.image_uri %></td>
-
-      </tr>
-  <% end %>
-
-
   </tbody>
 </table>
 
