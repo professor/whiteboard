@@ -7,7 +7,7 @@ describe "Assignments" do
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     login_with_oauth @faculty_fagan
     #@course = FactoryGirl.create(:fse)
-    @assignment=FactoryGirl.create(:assignment)
+    @assignment=FactoryGirl.create(:assignment_fse)
     @course = @assignment.course
 
   end

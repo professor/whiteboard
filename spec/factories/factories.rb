@@ -15,7 +15,7 @@ FactoryGirl.define do
 
   factory :deliverable do
     sequence(:score) {|n| n % 100 }
-    association :assignment, :factory => :assignment
+    #association :assignment, :factory => :assignment
     association :course, :factory => :course
     association :creator, :factory => :student_sally
   end

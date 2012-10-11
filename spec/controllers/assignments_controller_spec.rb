@@ -26,7 +26,7 @@ describe AssignmentsController do
 
   before do
 
-    @assignment = FactoryGirl.create(:assignment)
+    @assignment = FactoryGirl.create(:assignment_fse)
     @course = @assignment.course
     login(FactoryGirl.create(:faculty_frank))
 
