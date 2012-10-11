@@ -358,6 +358,9 @@ class User < ActiveRecord::Base
     # update the image_uri if a photo was uploaded
     self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
 
+    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
+    Rails.logger.info(caller[0])
+    Rails.logger.info(caller[1])
   end
 
 

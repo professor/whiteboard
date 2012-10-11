@@ -230,6 +230,8 @@ class PeopleController < ApplicationController
     @person = User.find_by_param(params[:id]) 
 #    authorize! :update, @person
 
+    Rails.logger.info("People#update #{request.env["REQUEST_PATH"]} #{current_user.human_name} #{params}")
+
     @person.updated_by_user_id = current_user.id
     @strength_themes = StrengthTheme.all
 
