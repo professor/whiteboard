@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
       user.course_tools_view_changed? ||
       user.course_index_view_changed? ||
       user.google_created_changed? ||
+      user.remember_token_changed? ||
+      user.remember_created_at_changed? ||
+      user.last_sign_in_at_changed? ||
+      user.current_sign_in_at_changed? ||
+      user.sign_in_count_changed? ||
       user.twiki_created?) }
 
   has_many :registrations
