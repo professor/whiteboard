@@ -1,5 +1,5 @@
 class GradeBook < ActiveRecord::Base
-  attr_accessible :course, :student, :assignment
+  attr_accessible :course_id, :student_id, :assignment_id, :is_student_visible, :score
   belongs_to :course
   belongs_to :student, :class_name => "User"
   #has_many :studnets, :source => :user

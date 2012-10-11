@@ -1,5 +1,10 @@
 <h1><%=@course.name %></h1>
 <div style='width:100%;overflow:scroll'>
+
+  <%= javascript_include_tag "grade_books.js" %>
+
+  <div id="result"></div>
+  <div class="score">
 <table>
 <tr>
   <th> Name </th>
@@ -7,13 +12,25 @@
     <th><%=assignment.name%></th>
   <%end %>
 </tr>
+
+
+   <input type="hidden" id="course_id" value=<%=@course.id%> />
+
   <% @grade_books.each do |student, gbooks| %>
      <tr>
         <td><%=student.human_name%></td>
         <% gbooks.each do |assignment_id, gbook| %>
-          <td><input id='<%=gbook.id%>' value='<%= gbook.score %>'/></td>
+          <td><input id="<%= @course.id %>_<%=assignment_id%>_<%=student.id%>" value='<%= gbook.score %>' type="text"/></td>
         <% end %>
     </tr>
   <%end%>
+
+  <tr>
+ <td> <button type="button" id="gradebook_submit">Submit</button></td>
+    <td> <button type="button" id="gradebook_save_draft">Save as Draft</button></td>
+  </tr>
+
+
 </table>
+</div>
 </div>

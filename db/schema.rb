@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010050315) do
+ActiveRecord::Schema.define(:version => 20121011192927) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20121010050315) do
     t.float    "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_student_visible"
   end
 
   create_table "individual_contribution_for_courses", :force => true do |t|
