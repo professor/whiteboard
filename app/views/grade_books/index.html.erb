@@ -15,18 +15,18 @@
 
 
    <input type="hidden" id="course_id" value=<%=@course.id%> />
-
   <% @grade_books.each do |student, gbooks| %>
      <tr>
         <td><%=student.human_name%></td>
-        <% gbooks.each do |assignment_id, gbook| %>
-          <td><input id="<%= @course.id %>_<%=assignment_id%>_<%=student.id%>" value='<%= gbook.score %>' type="text"/></td>
+        <% @assignments.each do |assignment|%>
+          <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%= (gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text"/>
+          </td>
         <% end %>
     </tr>
   <%end%>
 
   <tr>
- <td> <button type="button" id="gradebook_submit">Submit</button></td>
+    <td> <button type="button" id="gradebook_submit">Submit</button></td>
     <td> <button type="button" id="gradebook_save_draft">Save as Draft</button></td>
   </tr>
 
