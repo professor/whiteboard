@@ -108,6 +108,7 @@ class CoursesController < ApplicationController
     store_previous_location
     @course = Course.find(params[:id])
     authorize! :update, @course
+    @assignment = @course.assignments.build
   end
 
   def configure

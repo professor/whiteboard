@@ -34,24 +34,23 @@
   <% end %>
 
   <div id="tabs">
-      <ul>
-        <li><a href="#tabs-course-home">Course Home</a></li>
-        <li><a href="#tabs-grading-criteria">Grading Criteria</a></li>
-        <li><a href="#tabs-assignment">Assignments</a></li>
-      </ul>
+    <ul>
+      <li><a href="#tabs-course-home">Course Home</a></li>
+      <li><a href="#tabs-grading-criteria">Grading Criteria</a></li>
+      <li><a href="#tabs-assignment">Assignments</a></li>
+    </ul>
+    <%= form_for(@course) do |f| %>
+      <% if @course.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
 
-      <%= form_for(@course) do |f| %>
-          <% if @course.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-                <ul>
-                  <% @course.errors.full_messages.each do |msg| %>
-                      <li><%= msg %></li>
-                  <% end %>
-                </ul>
-              </div>
-          <% end %>
+            <ul>
+              <% @course.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
 
           <div id="tabs-course-home" class="tab-element">
             <p>
@@ -104,6 +103,9 @@
               <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email
               reminder will be sent on this date)
             </p>
+            <p>
+              <%= f.submit button_name %>
+            </p>
           </div>
 
           <div id="tabs-grading-criteria" class="tab-element">
@@ -137,9 +139,16 @@
               <% end %>
               </tbody>
             </table>
+            <p>
+              <%= f.hidden_field :is_configured, :value => true %>
+              <%= f.submit button_name %>
+            </p>
           </div>
 
           <div id="tabs-assignment" class="tab-element">
+            <div id="add_deliverable">
+              <%= link_to "Add Deliverable", "#" %>
+            </div>
             <table id="assignment_page">
               <thead>
                 <tr>
@@ -153,9 +162,6 @@
                 </tr>
               </thead>
               <tbody>
-              <div id="add_deliverable">
-                <%= link_to "Add Deliverable", "#" %>
-              </div>
               <% if !@course.assignments.empty? %>
                 <%= f.fields_for :assignments do |assignment| %>
                   <tr>
@@ -170,9 +176,13 @@
                 <% end %>
               <% end %>
               </tbody>
-              </table>
+            </table>
+              <p>
+                <%= f.hidden_field :is_configured, :value => true %>
+                <% end %>
+              </p>
               <div id="add_new_deliverable">
-                <%= f.fields_for :assignments do |assignment| %>
+                <%= form_for(@assignment) do |assignment| %>
                   <p>
                     <%= assignment.label :task_number %>
                     <%= assignment.text_field :task_number, size: 4 %>
@@ -198,28 +208,11 @@
                      <%= assignment.check_box :can_submit %>
                    </p>
                   <p>
-                    <%= button_to "Save task", { :controller=> 'courses', :action=>'save_task' } %>
+                    <%= assignment.submit "Save task" %>
                   </p>
                 <% end %>
               </div>
           </div>
-          <p>
-            <%= f.hidden_field :is_configured, :value => true %>
-            <%= f.submit button_name %>
-          </p>
-          <!--
-        <p>
-          <%= f.label :primary_faculty_label %><br/>
-          <%= f.text_field(:primary_faculty_label, :size => 40) %>
-        </p>
-        <p>
-          <%= f.label :secondary_faculty_label %><br/>
-          <%= f.text_field(:secondary_faculty_label, :size => 40) %>
-        </p>
-    -->
-
-
-      <% end %>
   </div>
 </div>
 
