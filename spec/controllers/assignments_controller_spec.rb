@@ -28,6 +28,8 @@ describe AssignmentsController do
 
     @assignment = FactoryGirl.create(:assignment)
     @course = @assignment.course
+    login(FactoryGirl.create(:faculty_frank))
+
   end
   def valid_attributes
     {:maximum_score=>100, :course_id=>@course.id,:assignment_order=>1, :task_number=>1}

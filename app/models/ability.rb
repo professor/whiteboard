@@ -45,6 +45,7 @@ class Ability
     end
     if  (user.is_staff?)
       can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
+      can [:manage ], Assignment
     end
     can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => {:id => user.id} #Useful for TAs.
 

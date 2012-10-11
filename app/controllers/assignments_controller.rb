@@ -1,9 +1,11 @@
 class AssignmentsController < ApplicationController
   # GET /assignments
   # GET /assignments.xml
-
-
+  before_filter :authenticate_user!
   before_filter :get_course
+  load_and_authorize_resource
+
+
 
   layout 'cmu_sv'
   def get_course
