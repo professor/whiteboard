@@ -43,8 +43,6 @@ Factory.create(:self_assurance)
 Factory.create(:significance)
 Factory.create(:strategic)
 Factory.create(:woo)
-Factory.create(:registration)
-assignments = Factory.create(:assignment_many)
 
 FactoryGirl.define do
   factory :todd, :parent => :person do
@@ -140,6 +138,21 @@ FactoryGirl.define do
     }
 
   end
+  factory :lydian, :parent => :person do
+    id 998
+    is_student 1
+    is_part_time 0
+    graduation_year "2012"
+    masters_program "SE"
+    masters_track "Tech"
+    twiki_name "FirstLast"
+    first_name "First"
+    last_name "Last"
+    human_name "Lydian Lee"
+    email "lydian.lee@sv.cmu.edu"
+    webiso_account "tingyenl@andrew.cmu.edu"
+  end
+
 
   factory :kate, :parent => :person do
     id 999
@@ -166,7 +179,9 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:kate)
+kate = Factory.create(:kate)
+lydian = Factory.create(:lydian)
+students = [kate, lydian]
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
@@ -175,5 +190,10 @@ Factory.create(:presentation_feedback_questions, :label => "Organization", :text
 Factory.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
 Factory.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
 
-assignment_fse = Factory.create(:assignment_fse)
-Factory.create(:grade_book_with_course, :assignment => assignment_fse)
+students.each{|s| Factory.create(:registration, :user => s)}
+10.times do 
+  assignment = Factory.create(:assignment_many)
+  [998, 999].each do |s|
+    Factory.create(:grade_book_with_course, :assignment => assignment, :student_id => s)
+  end
+end

@@ -6,8 +6,12 @@ class GradeBook < ActiveRecord::Base
   belongs_to :assignment
   #has_many :assignments
 
-  def self.get_scores (course, student)
-    GradeBook.where(course_id: course.id).where(student_id: student.id)
+  def self.get_gradebooks (course, student)
+    gradebooks = {}
+    GradeBook.where(course_id: course.id).where(student_id: student.id).each do |gradebook|
+      gradebooks[gradebook.assignment.id] = gradebook 
+    end
+    gradebooks 
   end
 end
 

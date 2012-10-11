@@ -157,7 +157,7 @@ FactoryGirl.define do
 
   factory :registration do
     course_id 1
-    user_id 999 
+    user  
   end
 
   factory :course_fse_with_students, :parent=>:fse do  |c|

@@ -1,10 +1,19 @@
+<h1><%=@course.name %></h1>
+<div style='width:100%;overflow:scroll'>
 <table>
- <% @students.each do |student| %>
+<tr>
+  <th> Name </th>
+  <% @assignments.each do |assignment| %>
+    <th><%=assignment.name%></th>
+  <%end %>
+</tr>
+  <% @grade_books.each do |student, gbooks| %>
      <tr>
         <td><%=student.human_name%></td>
-        <% GradeBook.get_scores(@course, student).each do |grade_book| %>
-          <td><input value='<%= grade_book.score %>'/></td>
+        <% gbooks.each do |assignment_id, gbook| %>
+          <td><input id='<%=gbook.id%>' value='<%= gbook.score %>'/></td>
         <% end %>
     </tr>
   <%end%>
 </table>
+</div>
