@@ -15,11 +15,18 @@ describe User do
 
   context "People Search" do
     before do
-      @faculty_allen= FactoryGirl.create(:faculty_allen)
+      @faculty_allen = FactoryGirl.create(:faculty_allen)
+      @faculty_ed = FactoryGirl.create(:faculty_ed)
+      @faculty_todd = FactoryGirl.create(:faculty_todd)
       @student_shama  = FactoryGirl.create(:student_shama)
       @student_rashmi  = FactoryGirl.create(:student_rashmi)
       @student_clyde  = FactoryGirl.create(:student_clyde)
       @student_vidya  = FactoryGirl.create(:student_vidya)
+      @student_sally_user = FactoryGirl.create(:student_sally_user)
+      @student_sam_user = FactoryGirl.create(:student_sam_user)
+      @alumnus_sunil = FactoryGirl.create(:alumnus_sunil)
+      @alumnus_memo = FactoryGirl.create(:alumnus_memo)
+      @alumnus_sean = FactoryGirl.create(:alumnus_sean)
     end
 
     it "should do partial search case - default" do
@@ -58,10 +65,11 @@ describe User do
 
     it "should do exact match search case - default" do
       params_hash = {'main_search_text' => 'Alle', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'exact_match' => true }
-      @users=User.testSearch(params_hash)
+      @users = User.testSearch(params_hash)
       @users.should == []
     end
 
+<<<<<<< HEAD
 
 
   context "When people belong to teams" do
@@ -75,12 +83,27 @@ describe User do
       @team_leffingwell = FactoryGirl.create(:team_leffingwell)
       @team_leffingwell.members_override = [@student_vidya.human_name]
       @team_leffingwell.save
+=======
+    it "should search students by class year" do
+      params_hash = {'class_year' => '2013'}
+      @users = User.testSearch(params_hash)
+      @users.should == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
     end
 
-    it "clyde should belongs to Team Maverick and Team Cooper" do
-      @student_clyde.teams.should == [:team_maverick, :team_cooper]
+    it "should not search students by class year other than given year" do
+      params_hash = {'class_year' => '2014'}
+      @users = User.testSearch(params_hash)
+      @users.should_not =~ [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+>>>>>>> class_year
     end
 
+    it "should search all students" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.testSearch(params_hash)
+      @users.should =~ [@student_sam_user, @student_sally_user, @student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    end
+
+<<<<<<< HEAD
   end
   #program
   it "should search by program - all students in program" do
@@ -133,7 +156,52 @@ describe User do
 =end
 
 end
+=======
+    it "should search alumni" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.testSearch(params_hash)
+      @users.should =~ [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+    end
+>>>>>>> class_year
 
+    it "should search staff" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.testSearch(params_hash)
+      @users.should =~ [@faculty_allen, @faculty_ed, @faculty_todd]
+    end
+
+    it "should not search alumni if staff is selected" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.testSearch(params_hash)
+      @users.should_not =~ [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+    end
+
+    it "should not search staff if student is selected" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.testSearch(params_hash)
+      @users.should_not =~ [@faculty_allen, @faculty_ed, @faculty_todd]
+    end
+
+    it "should not search students if alumni is selected" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.testSearch(params_hash)
+      @users.should_not =~ [@student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user]
+    end
+
+    context "When people belong to teams" do
+      before do
+        @team_maverick = FactoryGirl.create(:team_maverick)
+        @team_cooper = FactoryGirl.create(:team_cooper)
+        @team_leffingwell = FactoryGirl.create(:team_leffingwell)
+      end
+
+      it "clyde should belongs to Team Maverick and Team Cooper" do
+        @student_clyde.teams.should == [:team_maverick, :team_cooper]
+      end
+
+    end
+
+  end
 
 # end of Team Maverick's test
 
