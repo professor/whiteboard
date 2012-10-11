@@ -375,51 +375,33 @@ class User < ActiveRecord::Base
     if(criteria['main_search_text'] != nil)
 
       main_search_string = "%"+criteria['main_search_text']+"%"
-<<<<<<< HEAD
-      if(criteria['exact_match'] !=nil)
-=======
+
       if(criteria['exact_match'] != nil)
->>>>>>> class_year
         main_search_string = criteria['main_search_text']
       end
 
       # check first name and add to query string
-<<<<<<< HEAD
-      if (criteria['first_name'] !=nil)
-        query_string += "first_name ILIKE '"+main_search_string+"'"
-      end
-      # check last name and add to query string
-      if (criteria['last_name'] !=nil)
-=======
       if (criteria['first_name'] != nil)
         query_string += "first_name ILIKE '"+main_search_string+"'"
       end
       # check last name and add to query string
       if (criteria['last_name'] != nil)
->>>>>>> class_year
         if( query_string != "")
           query_string += " OR "
         end
         query_string += "last_name ILIKE '"+main_search_string+"'"
       end
+
       # check andrew id and add to query string
-<<<<<<< HEAD
-      if (criteria['andrew_id']!=nil)
-=======
       if (criteria['andrew_id'] != nil)
->>>>>>> class_year
         if( query_string != "")
           query_string += " OR "
         end
         query_string += "webiso_account ILIKE '"+main_search_string+"'"
       end
 
-<<<<<<< HEAD
-
       @results_set = where(query_string)
     end
-
-    query_string=""
 
     #search by company
     if (criteria['organization_name']!=nil)
@@ -443,11 +425,6 @@ class User < ActiveRecord::Base
         query_string += " AND "
       end
       query_string += "masters_track ILIKE '"+criteria['masters_track']+"'"
-    end
-
-    @results_set = @results_set.where(query_string)
-     end
-=======
     end
 
 
@@ -474,7 +451,7 @@ class User < ActiveRecord::Base
     @results_set = where(query_string)
 
     return @results_set
->>>>>>> class_year
+  end
 
     # Apply limit criteria
     #if (criteria[:limit] != nil)

@@ -5,10 +5,7 @@ describe User do
 
   before do
     User.delete_all
-    # this list must not be sorted alphabetically
-    @faculty_frank = FactoryGirl.create(:faculty_frank)
-    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
-    @admin_andy = FactoryGirl.create(:admin_andy)
+
   end
 
   # People search tests by Team Maverick
@@ -34,16 +31,19 @@ describe User do
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama, @student_rashmi]
     end
+
     it "should do partial search case - only first name" do
       params_hash = {'main_search_text' => 'sha', 'first_name' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama]
     end
+
     it "should do partial search case - first name disabled" do
       params_hash = {'main_search_text' => 'hoq', 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama]
     end
+
     it "should do partial search case - no match" do
       params_hash = {'main_search_text' => 'abc', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.testSearch(params_hash)
@@ -69,68 +69,32 @@ describe User do
       @users.should == []
     end
 
-<<<<<<< HEAD
-
-
-  context "When people belong to teams" do
-    before do
-      @team_maverick = FactoryGirl.create(:team_maverick)
-      @team_maverick.members_override = [@student_shama.human_name, @student_rashmi.human_name, @student_clyde.human_name, @student_vidya.human_name]
-      @team_maverick.save
-      @team_cooper = FactoryGirl.create(:team_cooper)
-      @team_cooper.members_override = [@student_clyde.human_name]
-      @team_cooper.save
-      @team_leffingwell = FactoryGirl.create(:team_leffingwell)
-      @team_leffingwell.members_override = [@student_vidya.human_name]
-      @team_leffingwell.save
-=======
-    it "should search students by class year" do
-      params_hash = {'class_year' => '2013'}
-      @users = User.testSearch(params_hash)
-      @users.should == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    #program
+    it "should search by program - all students in program" do
+      params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'masters_track' => "Tech",'first_name' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@student_shama]
     end
 
-    it "should not search students by class year other than given year" do
-      params_hash = {'class_year' => '2014'}
-      @users = User.testSearch(params_hash)
-      @users.should_not =~ [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
->>>>>>> class_year
+
+    it "should not return people in other programs" do
+      params_hash = {'main_search_text' => "", 'masters_program' => "SM", 'first_name' => true }
+      @users=User.testSearch(params_hash)
+      @users.should_not include @student_shama, @student_rashmi
     end
 
-    it "should search all students" do
-      params_hash = {'people_type' => 'student'}
-      @users = User.testSearch(params_hash)
-      @users.should =~ [@student_sam_user, @student_sally_user, @student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    #company_name
+    it "should search by company name" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true }
+      @users=User.testSearch(params_hash)
+      @users.should == [@faculty_allen, @student_clyde ]
     end
 
-<<<<<<< HEAD
-  end
-  #program
-  it "should search by program - all students in program" do
-    params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'masters_track' => "Tech",'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should == [@student_shama]
-  end
-
-
-  it "should not return people in other programs" do
-    params_hash = {'main_search_text' => "", 'masters_program' => "SM", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should_not include @student_shama, @student_rashmi
-  end
-
-  #company_name
-  it "should search by company name" do
-    params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should == [@faculty_allen, @student_clyde ]
-  end
-
-  it "should not include people at other companies" do
-    params_hash = {'main_search_text' => "", 'organization_name' => "HP", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should_not include @student_clyde, @faculty_allen
-  end
+    it "should not include people at other companies" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "HP", 'first_name' => true }
+      @users=User.testSearch(params_hash)
+      @users.should_not include @student_clyde, @faculty_allen
+    end
 
 
 =begin
@@ -155,37 +119,52 @@ describe User do
   end
 =end
 
-end
-=======
+    it "should search students by class year" do
+      params_hash = {'class_year' => '2013'}
+      @users = User.testSearch(params_hash)
+      @users.should == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    end
+
+    it "should not search students by class year other than given year" do
+      params_hash = {'class_year' => '2014'}
+      @users = User.testSearch(params_hash)
+      @users.should_not == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    end
+
+    it "should search all students" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.testSearch(params_hash)
+      @users.should == [@student_sam_user, @student_sally_user, @student_vidya, @student_clyde,  @student_rashmi, @student_shama]
+    end
+
     it "should search alumni" do
       params_hash = {'people_type' => 'alumnus'}
       @users = User.testSearch(params_hash)
-      @users.should =~ [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+      @users.should == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
     end
->>>>>>> class_year
 
     it "should search staff" do
       params_hash = {'people_type' => 'staff'}
       @users = User.testSearch(params_hash)
-      @users.should =~ [@faculty_allen, @faculty_ed, @faculty_todd]
+      @users.should == [@faculty_todd, @faculty_ed, @faculty_allen]
     end
 
     it "should not search alumni if staff is selected" do
       params_hash = {'people_type' => 'staff'}
       @users = User.testSearch(params_hash)
-      @users.should_not =~ [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+      @users.should_not == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
     end
 
     it "should not search staff if student is selected" do
       params_hash = {'people_type' => 'student'}
       @users = User.testSearch(params_hash)
-      @users.should_not =~ [@faculty_allen, @faculty_ed, @faculty_todd]
+      @users.should_not == [@faculty_allen, @faculty_ed, @faculty_todd]
     end
 
     it "should not search students if alumni is selected" do
       params_hash = {'people_type' => 'alumnus'}
       @users = User.testSearch(params_hash)
-      @users.should_not =~ [@student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user]
+      @users.should_not == [@student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user]
     end
 
     context "When people belong to teams" do
@@ -204,7 +183,13 @@ end
   end
 
 # end of Team Maverick's test
-
+  context "Other tests" do
+    before do
+      # this list must not be sorted alphabetically
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @admin_andy = FactoryGirl.create(:admin_andy)
+    end
 
   describe "abilities" do
     subject { ability }
@@ -471,4 +456,5 @@ end
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student
 
+    end
 end

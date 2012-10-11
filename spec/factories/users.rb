@@ -109,17 +109,12 @@ FactoryGirl.define do
     last_name "Hoque"
     human_name "Shama Hoque"
     twiki_name "StudentShama"
-<<<<<<< HEAD
     masters_program "SE"
     masters_track "Tech"
     organization_name "NestLabs"
     registered_courses = [:fse]
-
-
-=======
     graduation_year "2013"
     team = [:team_maverick]
->>>>>>> class_year
   end
 
   factory :student_rashmi, :parent => :user do
@@ -132,16 +127,12 @@ FactoryGirl.define do
     last_name "Rashmi"
     human_name "Student Rashmi"
     twiki_name "StudentRashmi"
-<<<<<<< HEAD
     masters_program "SE"
     masters_track "DM"
     organization_name "HP"
     registered_courses = [:fse]
-
-=======
     graduation_year "2013"
     team = [:team_maverick]
->>>>>>> class_year
   end
 
   factory :student_clyde, :parent => :user do
@@ -154,13 +145,10 @@ FactoryGirl.define do
     last_name "Li"
     human_name "Clyde Li"
     twiki_name "ClydeLi"
-<<<<<<< HEAD
     masters_program "SM"
     organization_name "Google"
-=======
     graduation_year "2013"
     team = [:team_maverick, :team_cooper]
->>>>>>> class_year
   end
 
   factory :student_vidya, :parent => :user do
@@ -173,10 +161,8 @@ FactoryGirl.define do
     last_name "Pissaye"
     human_name "Vidya Pissaye"
     twiki_name "VidyaPissaye"
-<<<<<<< HEAD
     masters_program "ECE"
     organization_name "LinkedIn"
-=======
     graduation_year "2013"
     team = [:team_maverick, :team_leffingwell]
   end
@@ -192,7 +178,6 @@ FactoryGirl.define do
     human_name "Sunil Pissaye"
     twiki_name "SunilPissaye"
     graduation_year "2010"
->>>>>>> class_year
   end
 
   factory :alumnus_memo, :parent => :user do
