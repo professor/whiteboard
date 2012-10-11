@@ -33,6 +33,7 @@ CMUEducation::Application.routes.draw do
   resources :course_configurations
   resources :courses do
     resources :assignments
+    resources :grade_books
   end
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
   match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester

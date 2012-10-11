@@ -1,2 +1,0 @@
-class GradebookController < ApplicationController
-end

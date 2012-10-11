@@ -4,6 +4,9 @@ class Assignment < ActiveRecord::Base
   validates_presence_of :course_id  , :task_number
 
   belongs_to :course
+
+  has_many :grade_books
+
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
 
 
