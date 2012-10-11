@@ -3,13 +3,11 @@
 <table>
   <tr>
     <th>Task Number</th>
-    <th>Assignment Order</th>
     <th>Name</th>
     <th>Due Date</th>
     <th>Team Deliverable</th>
     <th>Is Submittable</th>
     <th>Max Score</th>
-    <th>Show</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -18,13 +16,20 @@
 <% content_tag_for(:tr, assignment) do %>
 
     <td><%=assignment.task_number  %> </td>
-    <td><%=assignment.assignment_order  %> </td>
     <td><%=assignment.name  %> </td>
-    <td><%=assignment.due_date  %> </td>
-    <td><%=assignment.is_team_deliverable  %> </td>
-    <td><%=assignment.is_submittable  %> </td>
+
+    <td><%=assignment.due_date.to_date %> at <%=assignment.due_date.strftime("%I:%M%p")  %></td>
+     <% if assignment.is_team_deliverable==true %>
+        <td><input type="checkbox" disabled="disabled" checked="checked"></td>
+     <% else%>
+        <td><input type="checkbox" disabled="disabled" ></td>
+     <% end  %>
+     <% if assignment.is_submittable==true %>
+        <td><input type="checkbox" disabled="disabled" checked="checked"></td>
+     <% else%>
+        <td><input type="checkbox" disabled="disabled" ></td>
+     <% end  %>
     <td><%=assignment.maximum_score  %> </td>
-    <td><%= link_to 'Show',[@course,assignment] %></td>
     <td><%= link_to 'Edit', edit_course_assignment_path(@course,assignment) %></td>
     <td><%= link_to 'Destroy', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
   </tr>
