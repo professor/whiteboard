@@ -29,11 +29,16 @@ ext_criteria_hash["Full/Part Time"] = false;
 function execute_search(){
     console.log("search executed");
     var request_url_with_params = 'people.json?page=1';
-    if($("#search_text_box").val() != ""){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
+    // main criteria
+    if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
+    else { request_url_with_params += "&main_search_text="; }
     if(ext_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
     if(ext_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
     if(ext_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
     if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
+    // extra criteria
+    if(ext_criteria_hash["Company"]){ request_url_with_params += "&organization_name="+$('#criteria_company input').val(); }
+    //console.log(request_url_with_params);
 
     $.ajax({
         url: request_url_with_params,
@@ -43,7 +48,8 @@ function execute_search(){
             $("#results_box").html("");
             $.each(data, function(){
                 var card_html = '<div class="data_card">';
-                card_html += '<img src='+this.image_uri+'><br>';
+                card_html += '<a href="people/'+this.id+'">'
+                card_html += '<img src='+this.image_uri+'></a><br>';
                 card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
                 card_html += 'Email: '+this.email;
                 card_html += '</div>';
@@ -61,10 +67,8 @@ $(document).ready(function(){
 
     // Initialize dialog
     $('#dialog_modal').dialog({
-        dialogClass: 'customization_dialog', position: 'top',
-        width: 220, height: 450,
-        autoOpen: false, show: 'fold', hide: 'fold',
-        modal: true
+        dialogClass: 'customization_dialog', position: 'top', width: 220, height: 450,
+        autoOpen: false, show: 'fold', hide: 'fold', modal: true
     });
     $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
     $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
@@ -73,8 +77,8 @@ $(document).ready(function(){
     for (i=2013; i>2001; --i){
         $('#criteria_class_year select').append('<option value="'+i+'">'+i+'</option>');
     }
-    // criteria_box2 criteria_tag Hide
-    $('#criteria_box2 .criteria_tag').hide();
+    // extra_criteria_box criteria_tag Hide
+    $('#extra_criteria_box .criteria_tag').hide();
 
 
     $('#search_text_box').val("Search Text").addClass("null_search_text");
@@ -93,8 +97,8 @@ $(document).ready(function(){
 
 
     // add criteria change event
-    $('#catGroup').change(function() {
-        $('#criPicker').html("");
+    $('#people_type_picker').change(function() {
+        $('#extra_criteria_picker').html("");
         var criteria_ids;
         switch($(this)[0].value){
             case "all":
@@ -109,12 +113,12 @@ $(document).ready(function(){
                 break;
         }
 
-        $('#criPicker').append('<option value="default" class="select-hint">Add Criteria</option>');
+        $('#extra_criteria_picker').append('<option value="default" class="select-hint">Add Criteria</option>');
         for (var i=0; i<criteria_ids.length; ++i){
             var criteria_name = criterias_array[criteria_ids[i]];
-            $('#criPicker').append('<option value="'+criteria_name+'">'+criteria_name_hash[criteria_name]+'</option>');
+            $('#extra_criteria_picker').append('<option value="'+criteria_name+'">'+criteria_name_hash[criteria_name]+'</option>');
         }
-        $('#criteria_box2 .criteria_tag').each( function(){
+        $('#extra_criteria_box .criteria_tag').each( function(){
             var to_be_hide = true;
             for (var i=0; i<criteria_ids.length; ++i){
                 if( $(this)[0].title == criteria_name_hash[criterias_array[criteria_ids[i]]]){
@@ -132,14 +136,14 @@ $(document).ready(function(){
     });
 
 
-    $('#criPicker').change(function() {
+    $('#extra_criteria_picker').change(function() {
         var tag_text = criteria_name_hash[$(this)[0].value];
         ext_criteria_hash[tag_text] = true;
-        $('#'+'criteria_'+$(this)[0].value).appendTo('#criteria_box2 .criteria_tags');
+        $('#'+'criteria_'+$(this)[0].value).appendTo('#extra_criteria_box .criteria_tags');
         $('#'+'criteria_'+$(this)[0].value).show();
 
-        if($('#criteria_box2 .criteria_tag').last().find('.criteria_text').length != 0 && $('#criteria_box2 .criteria_tag').last().css('display') != 'none'){
-            $('#criteria_box2 .criteria_tag').last().find('.criteria_text')[0].focus();
+        if($('#extra_criteria_box .criteria_tag').last().find('.criteria_text').length != 0 && $('#extra_criteria_box .criteria_tag').last().css('display') != 'none'){
+            $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
 
         $(this).val('default');
@@ -147,12 +151,12 @@ $(document).ready(function(){
 
 
     // Remove tag when click on x
-    $('#criteria_box').on("click", ".criteria_tag a", function(){
+    $('#main_criteria_box').on("click", ".criteria_tag a", function(){
         if($(this).parent().css('opacity') == '1'){
             ext_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeTo("fast", 0.55);
             $(this).html('+');
-            // check if all are faded
+            // check if all main criteria is faded
             if(!(ext_criteria_hash["First Name"] || ext_criteria_hash["Last Name"] || ext_criteria_hash["Andrew ID"])) {
                 $(this).parent().fadeTo("fast", 1);
                 $(this).html('x');
@@ -166,24 +170,20 @@ $(document).ready(function(){
         return false; // avoid anchor action
     });
 
-    $('#criteria_box2').on("click", ".criteria_tag a", function(){
+    $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
         ext_criteria_hash[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
         return false;
     });
 
+
     // Send query and get results
     $('#search_text_box').keyup(function(e) {
         if(e.which == 13){ // If ENTER
-            //$('#submit_btn').trigger('click');
             execute_search();
-        } else {
-            //clearTimeout(b);b=setTimeout("execute_search()",390)
         }
     });
 
-    $('#submit_btn').click( function(){
-        execute_search();
-    });
+    $('#submit_btn').click( function(){ execute_search(); });
 
 });

@@ -17,8 +17,11 @@
 .criteria_text { border: 0; width: 72px; font-weight: 700;}
 .null_search_text { color: #aaa; }
 
-#criteria_box, #criteria_box2 { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
-#search_text_box { border: none; width: 128px;}
+#main_criteria_box, #extra_criteria_box { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
+#search_text_box { 
+	border: none; width: 128px; margin-left: 5px;
+	background-color: #f3f0e9;
+}
 
 select .select-hint { color: #ccc;}
 

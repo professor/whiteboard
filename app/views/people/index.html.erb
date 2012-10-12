@@ -13,6 +13,8 @@
 
 
 <!-- UI Mockup HTML Migration -->
+
+<!-- Dialog Box for Customization -->
 <div id="dialog_modal" title="Customization">
   <a id='customization_dialog_close' href='#'>[x]</a><br><br>
   <div id="modal_card" class="data_card">
@@ -28,7 +30,7 @@
 </div>
 
 
-<div id="criteria_box" class="criterias">
+<div id="main_criteria_box" class="criterias">
   <input type="text" title="Search Text" id="search_text_box" style="background-color: #f3f0e9;"/> in
   <ul class="criteria_tags">
     <li class="criteria_tag" id="criteria_first_name" title="First Name" style="background-color: LightBlue;">First Name <a href="#">x</a> </li>
@@ -36,27 +38,24 @@
     <li class="criteria_tag" id="criteria_andrew_id" title="Andrew ID" style="background-color: Pink;">Andrew ID <a href="#">x</a> </li>
   </ul>
 </div>
-<select id="catGroup" class="criterias">
+<select id="people_type_picker" class="criterias">
   <option value="all">All</option>
   <option value="student"> Student </option>
   <option value="staff"> Staff/Faculty </option>
-  <option value="alumni"> Alumni </option>
+  <option value="alumnus"> Alumni </option>
 </select>
 
-<select id="criPicker" class="criterias">
+<select id="extra_criteria_picker" class="criterias">
   <option value="default" class="select-hint">Add Criteria</option>
   <option value="company">Company</option>
   <option value="class_year">Class Year</option>
   <option value="program">Program</option>
   <option value="ft_pt">Full/Part Time</option>
-  <option value="course">Course</option>
-  <option value="project">Project</option>
-  <option value="team">Team</option>
 </select>
 
 <button type="button" id="submit_btn" class="criterias">Go</button><br>
 
-<div id="criteria_box2" class="criterias">
+<div id="extra_criteria_box" class="criterias">
   <ul class="criteria_tags">
     <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: Orange;">
       Company: <input type="text" class="criteria_text" style="background-color: Orange;"/><a href="#">x</a> </li>
@@ -69,11 +68,12 @@
     <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
       Program:
       <select class="criteria_text" style="background-color: Beige; width: 80px;">
-        <option value="se_tech">SE-Tech</option>
-        <option value="se_dm">SE-DM</option>
-        <option value="sm">SM</option>
-        <option value="ece">ECE</option>
-        <option value="ini">INI</option>
+        <option value="SE">SE</option>
+        <option value="SE_TECH">SE-Tech</option>
+        <option value="SE_DM">SE-DM</option>
+        <option value="SM">SM</option>
+        <option value="ECE">ECE</option>
+        <option value="INI">INI</option>
       </select>
       <a href="#">x</a>
     </li>
@@ -84,12 +84,6 @@
       </select>
       <a href="#">x</a>
     </li>
-    <li class="criteria_tag" id="criteria_course" title="Course" style="background-color: PaleGreen;">
-      Course: <input type="text" class="criteria_text" style="background-color: PaleGreen;"/> <a href="#">x</a> </li>
-    <li class="criteria_tag" id="criteria_project" title="Project" style="background-color: LightGoldenRodYellow;">
-      Project: <input type="text" class="criteria_text" style="background-color: LightGoldenRodYellow;"/> <a href="#">x</a> </li>
-    <li class="criteria_tag" id="criteria_team" title="Team" style="background-color: Lavender;">
-      Team: <input type="text" class="criteria_text" style="background-color: Lavender;"/> <a href="#">x</a> </li>
   </ul>
 </div>
 
