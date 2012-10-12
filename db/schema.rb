@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008204736) do
+ActiveRecord::Schema.define(:version => 20121012153209) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -124,8 +124,6 @@ ActiveRecord::Schema.define(:version => 20121008204736) do
   create_table "deliverables", :force => true do |t|
     t.text     "name"
     t.integer  "team_id"
-    t.integer  "course_id"
-    t.string   "task_number"
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -134,7 +132,10 @@ ActiveRecord::Schema.define(:version => 20121008204736) do
     t.string   "feedback_content_type"
     t.integer  "feedback_file_size"
     t.datetime "feedback_updated_at"
+    t.integer  "assignment_id"
   end
+
+  add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
 
   create_table "effort_log_line_items", :force => true do |t|
     t.integer  "effort_log_id"

@@ -30,8 +30,8 @@ FactoryGirl.define do
   end
 
   factory :deliverable do
-    association :course, :factory => :course
     association :creator, :factory => :student_sally
+    association :assignment, :factory => :assignment
   end
 
   factory :deliverable_attachment do

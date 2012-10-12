@@ -443,6 +443,24 @@ describe Course do
     end
   end
 
+  context "assignments" do
+    before(:each) do
+      @course = FactoryGirl.create(:course)
+      @assignment1 = FactoryGirl.create(:assignment, course: @course)
+      # Create an assignment with invalid due date
+      @assignment2 = FactoryGirl.build(:assignment, course: @course, due_date: DateTime.now)
+      @assignment2.stub(:validate_due_date)
+      @assignment2.save
+      @assignment3 = FactoryGirl.create(:assignment, course: @course)
+      @assignment4 = FactoryGirl.create(:assignment, course: @course, can_submit: false)
+    end
+
+    it "should get all submittable assignments" do
+      @course.submittable_assignments.count.should == 2
+      @course.submittable_assignments.should include(@assignment1, @assignment3)
+    end
+  end
+
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
   it { should have_many(:registered_students) }

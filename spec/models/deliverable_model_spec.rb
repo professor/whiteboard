@@ -10,7 +10,7 @@ describe Deliverable do
 
   context "is not valid" do
 
-    [:course, :creator].each do |attr|
+    [:creator, :assignment].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
@@ -26,8 +26,6 @@ describe Deliverable do
           duplicate = Deliverable.new()
           duplicate.stub(:update_team)
           duplicate.creator_id = original.creator_id
-          duplicate.course = original.course
-          duplicate.task_number = original.task_number
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid
         end
@@ -117,12 +115,17 @@ describe Deliverable do
     end
   end
 
+  context "assignment" do
+    before { @deliverable = FactoryGirl.build(:team_deliverable) }
+    subject { @deliverable }
 
+    it { should be_valid }
 
-
-
-
-
+    it "should be invalid without an assignment" do
+      @deliverable.assignment = nil
+      @deliverable.should_not be_valid
+    end
+  end
 end
 
 

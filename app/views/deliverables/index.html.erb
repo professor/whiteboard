@@ -21,4 +21,6 @@
 
 <br/>
 
-<%= link_to 'New deliverable', new_deliverable_path %>
+<% if !@current_deliverables.empty? %>
+  <%= link_to 'New deliverable', new_deliverable_path %>
+<% end %>

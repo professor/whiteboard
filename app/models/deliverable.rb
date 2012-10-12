@@ -33,11 +33,11 @@
 
 class Deliverable < ActiveRecord::Base
   belongs_to :team
-  belongs_to :course
   belongs_to :creator, :class_name => "User"
+  belongs_to :assignment
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
 
-  validates_presence_of :course, :creator
+  validates_presence_of :creator, :assignment
   validate :unique_course_task_owner?
 
   has_attached_file :feedback,
@@ -49,17 +49,28 @@ class Deliverable < ActiveRecord::Base
 
   before_validation :sanitize_data
 
+  def course
+    self.assignment.nil? ? nil : self.assignment.course
+  end
+
+  def course_id
+    self.assignment.nil? ? nil : self.assignment.course_id
+  end
+
+  def task_number
+    self.assignment.nil? ? nil : self.assignment.task_number
+  end
 
   def unique_course_task_owner?
     if self.is_team_deliverable?
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+      duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => self.team_id).first
       type = "team"
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => nil, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => nil, :creator_id => self.creator_id).first
       type = "individual"
     end
     if duplicate && duplicate.id != self.id
-      errors.add(:base, "Can't create another #{type} deliverable for the same course and task. Please edit the existing one.")
+      errors.add(:base, "Can't create another #{type} deliverable for the same assignment. Please edit the existing one.")
     end
   end
 

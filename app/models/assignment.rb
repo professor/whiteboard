@@ -1,11 +1,16 @@
 class Assignment < ActiveRecord::Base
   belongs_to :course
+  has_many :deliverables
 
   validates_presence_of :title
   validates :weight, numericality: { greater_than: 0, less_than_or_equal_to: 100 }, presence: true
   validate :validate_due_date, :validate_total_weights
 
-  default_scope order: "task_number ASC, created_at ASC"
+  default_scope order: "task_number ASC, due_date ASC"
+
+  def submittable?
+    self.can_submit && self.due_date > DateTime.now
+  end
 
   private
     def validate_due_date

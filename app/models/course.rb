@@ -274,7 +274,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-
   def current_mini?
     case self.mini
       when "Both"
@@ -290,6 +289,18 @@ class Course < ActiveRecord::Base
 
   def update_email_address
     self.email = build_email
+  end
+
+  def submittable_assignments
+    self.assignments.select { |assignment| assignment.submittable? }
+  end
+
+  def deliverables
+    @deliverables = []
+    self.assignments.each do |assignment|
+      @deliverables.concat(assignment.deliverables)
+    end
+    @deliverables
   end
 
   protected

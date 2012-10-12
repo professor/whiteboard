@@ -13,7 +13,7 @@ class DeliverablesController < ApplicationController
   def index_for_course
     @course = Course.find(params[:course_id])
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.find_all_by_course_id(@course.id)
+      @deliverables = @course.deliverables
     else
       has_permissions_or_redirect(:admin, root_path)
     end
@@ -59,13 +59,6 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
 
-    unless params[:course_id].nil?
-      @deliverable.course_id = params[:course_id]
-    end
-    unless params[:task_number].nil?
-      @deliverable.task_number = params[:task_number]
-    end
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @deliverable }
@@ -86,6 +79,7 @@ class DeliverablesController < ApplicationController
   # POST /deliverables.xml
   def create
     # Make sure that a file was specified
+    params[:deliverable].delete(:course_id)
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 

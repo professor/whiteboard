@@ -14,8 +14,8 @@ describe DeliverablesController do
     describe "GET index for course" do
       before(:each) do
         @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id)
-        Deliverable.stub(:find_all_by_course_id).and_return([@deliverable, @deliverable])
+        @deliverable = Deliverable.new
+        @course.stub(:deliverables).and_return([@deliverable, @deliverable])
         Course.stub(:find).and_return(@course)
       end
 

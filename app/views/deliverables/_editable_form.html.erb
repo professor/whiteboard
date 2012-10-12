@@ -1,6 +1,7 @@
 <p>Submit team deliverables and individual deliverables separately. Any person on the team can submit your team
   deliverables.</p>
 <p>If your deliverable contains more than one file, then create a zip file.</p>
+<% courses = @deliverable.creator.registered_for_these_courses_during_current_semester %>
 
 <%= form_for @deliverable, :html => {:multipart => true} do |f| %>
     <% if @deliverable.errors.any? %>
@@ -20,15 +21,11 @@
     </p>
     <p>
       <%= f.label :course_id, "Select Course" %>
-      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => true) %>
+      <%= f.collection_select(:course_id, courses, :id, :name, :include_blank => true) %>
     </p>
     <p>
-      <%= f.label :task_number, "Task Number" %>
-      <%= f.text_field :task_number, :size => "3" %>
-    </p>
-    <p>
-      <%= label_tag :is_team_deliverable, "Team Deliverable?" %>
-      <%= check_box_tag :is_team_deliverable, 1, @deliverable.is_team_deliverable? %>
+      <%= f.label :assignment_id, "Select Assignment" %>
+      <%= f.collection_select(:assignment_id, [], :id, :name, :include_blank => true) %>
     </p>
     <div class="deliverable_attachment">
       <%= fields_for :deliverable_attachment do |attachment_form| -%>
@@ -48,3 +45,17 @@
       <%= f.submit button_name %>
     </p>
 <% end %>
+
+<script>
+  assignment_options = {};
+  <% courses.each do |course| %>
+    assignment_options[<%= course.id %>] = "";
+    <% course.submittable_assignments.each do |assignment| %>
+      assignment_options[<%= course.id %>] += "<option value='<%= assignment.id %>'>Task <%= assignment.task_number %>: <%= assignment.title %></option>";
+    <% end %>
+  <% end %>
+
+  $('#deliverable_course_id').change(function() {
+    $('#deliverable_assignment_id').html(assignment_options[$('#deliverable_course_id').val()]);
+  })
+</script>
