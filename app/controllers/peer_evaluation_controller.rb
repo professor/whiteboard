@@ -147,7 +147,7 @@ class PeerEvaluationController < ApplicationController
     alloc_counter = 0
     alloc_answer = ""
     @users.each do |user|
-      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter] + " "
+      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter.to_s] + " "
       alloc_counter += 1
     end
 

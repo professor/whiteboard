@@ -70,11 +70,9 @@
     <% @users.each do |member| %>
         <p><%= member.human_name %></p>
         <% if @on_team %>
-            <input type="text" name="allocations[
-              <% membercounter %>]" value="<%= @point_allocations[member.human_name] %>"><br/>
+            <input type="text" name="allocations[<%= membercounter %>]" value="<%= @point_allocations[member.human_name] %>"><br/>
         <% else %>
-            <input type="text" disabled name="allocations[
-              <% membercounter %>]" value="<%= @point_allocations[member.human_name] %>"><br/>
+            <input type="text" disabled name="allocations[<%= membercounter %>]" value="<%= @point_allocations[member.human_name] %>"><br/>
         <% end %>
         <% membercounter += 1 %>
     <% end %>
