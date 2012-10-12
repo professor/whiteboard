@@ -20,10 +20,13 @@
         <td><%= f.label :sponsor %></td>
         <td><%= f.select :sponsor_id, @sponsors.collect { |item| [item.name, item.id] } %></td>
       </tr>
+      <tr><td></td></tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit button_name %></td>
+      </tr>
     </table>
 
-    <br/>
-    <%= f.submit button_name %>
     <br/>
     <br/>
 <% end %>
