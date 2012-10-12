@@ -50,7 +50,7 @@
       </h2></div>
     <div id="search">
       <form action="<%= search_index_path %>" id="searchform" method="get" role="search">
-        <label for="searchSite" id="searchSiteLabel">Search rails.sv.cmu.edu curriculum</label>
+        <label for="searchSite" id="searchSiteLabel">Search whiteboard.sv.cmu.edu curriculum</label>
         <input type="text" id="query" name="query" placeholder=" SEARCH">
         <button id="searchSubmit" title="Submit Carnegie Mellon University keyword search" type="submit">Submit Carnegie
           Mellon University Search
@@ -130,10 +130,10 @@
         Valley Campus</a>|
 
         <% if controller.controller_name != "welcome" %>
-            <%= link_to "Rails Application", "/" %> |
+            <%= link_to "Whiteboard LMS", "/" %> |
             &gt; <%= controller.controller_name.humanize %>
         <% else %>
-            &gt; Rails Application
+            &gt; Whiteboard LMS
         <% end %>
       </div>
       <a name="access"></a>
