@@ -1151,35 +1151,81 @@ form .instructions {
         font-style: italic;     
 }
 
+.user_profile_content{
+    overflow: auto;
+    margin-top: 5px;
+    widows: 700px;
+}
+.user_profile_content h2{
+    padding-top: 5px;
+}
 .user_profile_photo_social{
-	border:1px solid red;
 	float:left;
+    margin-left: 5px;
 }
 
 .user_profile_title{
-	border:1px solid blue;
 	float:left;
-	width:80%;
+	width:60%;
+    margin: 0 0 0 15px;
+    padding: 0px 20px;
 }
 .user_profile_bio{
-	border:1px solid green;
-		float:left;
-		width:80%;
-}
-.user_profile_about, .user_profile_org{
-	border:1px solid yellow;
 	float:left;
-	width:80%;
+	width:60%;
+    margin: 15px 0 0 15px;
+    padding: 0px 20px;
 }
-.user_profile_contact_details{
-	border:1px solid black;
-	float:left;
-	width:80%;
+.user_profile_about, .user_profile_contact_details {
+	widows: 630px;
+    float:left;
+    margin: 15px 0 0 15px;
+    padding: 0px 20px;
 }
 
-.user_profile_photo{
-	width:120px;	
+.user_profile_about_header, .user_profile_contact_details_header{
+    text-align: right;
+    float: left;
+    width: 20%;    
+}
+.user_profile_org, .user_profile_contact_details_content {
+    width: 65%;
+    float: right;
+    margin: 10px 65px 0 0;
+}
+
+.user_profile_about_me_text {
+    width: 435px;
+    /*border: 1px solid #D4D4D4;*/
+    /*padding: 10px;*/
+    float: right;
+    margin: 20px 20px 0 0;
+}
+
+
+.user_profile_org table,
+.user_profile_contact_details_content table{
+    width: 450px;
+}
+.user_profile_org table tr td:first-child,
+.user_profile_contact_details_content table tr td:first-child {
+    width: 30%;
+}
+
+
+    
+
+/*.user_profile_contact_details{
+	border:1px solid black;
 	float:left;
+	width:60%;
+    padding: 0px 20px;
+}
+*/
+.user_profile_photo{
+	width:155px;	
+	float:left;
+    margin-bottom: 5px;
 }
 
 
