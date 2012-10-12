@@ -22,7 +22,7 @@ class GradeBooksController < ApplicationController
     error=false
     unless scoreArrayList.blank?
       scoreArrayList.each do|scoreValue|
-        grade_book = GradeBook.where(:course_id =>scoreValue["course_id"],:assignment_id => scoreValue["assignment_id"],:student_id => scoreValue["student_id"]).limit(1)[0]
+      grade_book = GradeBook.get_grade_books(scoreValue)
         if  grade_book.blank?
           grade_book_entry=GradeBook.new(scoreValue)
           unless grade_book_entry.save
@@ -43,11 +43,8 @@ class GradeBooksController < ApplicationController
 
     scoreSubmitted=params["scoreSubmitted"]
      if (scoreSubmitted==true)
-       puts "score submitted"
        courseAssignment=params["courseAssignment"]
-       puts ""
-       GradeBook.update_all({:is_student_visible=>true},{:course_id=>courseAssignment["course_id"],:assignment_id=>courseAssignment["assignment_id"],:is_student_visible=>false})
-
+       GradeBook.update_gradebook(courseAssignment)   
      end
     if error==false
       render :json => ({"success"=> "true","message"=>"Success" })
