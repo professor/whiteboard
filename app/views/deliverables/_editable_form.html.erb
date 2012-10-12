@@ -51,7 +51,7 @@
   <% courses.each do |course| %>
     assignment_options[<%= course.id %>] = "";
     <% course.submittable_assignments.each do |assignment| %>
-      assignment_options[<%= course.id %>] += "<option value='<%= assignment.id %>'>Task <%= assignment.task_number %>: <%= assignment.title %></option>";
+      assignment_options[<%= course.id %>] += "<option value='<%= assignment.id %>'>Task <%= assignment.task_number %>: <%= assignment.title %> <%= assignment.team_deliverable ? "(Team deliverable)" : "" %></option>";
     <% end %>
   <% end %>
 

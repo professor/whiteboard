@@ -1,1 +1,32 @@
 <h1>My Gradebooks</h1>
+
+<% if !@courses_teaching_as_faculty.empty? %>
+  <table id="grading_queue">
+    <thead>
+    <tr>
+      <th>Course</th>
+      <th>Assignment</th>
+      <th>Deliverable</th>
+      <th>Submitted By</th>
+      <th>Time Submitted</th>
+      <th>Assign Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @courses_teaching_as_faculty.each do |course| %>
+      <% course.assignments.each do |assignment| %>
+        <% assignment.deliverables.each do |deliverable| %>
+          <tr>
+            <td><%= course.name %></td>
+            <td><%= assignment.title %></td>
+            <td><%= deliverable.name %></td>
+            <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
+            <td><%= deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date %></td>
+            <td><%= link_to "Grade", "#" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

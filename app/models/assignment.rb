@@ -10,6 +10,7 @@ class Assignment < ActiveRecord::Base
 
   def submittable?
     self.can_submit && self.due_date > DateTime.now
+
   end
 
   private
@@ -33,8 +34,10 @@ class Assignment < ActiveRecord::Base
         sum += assignment.weight
       end
 
-      if sum + self.weight > 100
-        self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
+      sum += self.weight if !assignments.include?(self)
+
+      if sum > 100
+       self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
       end
     end
 end
