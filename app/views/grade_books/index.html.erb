@@ -4,29 +4,36 @@
 
   <div id="result"></div>
   <div class="score">
-<table>
-<tr>
+  <table class="cmu_table">
+  <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
   <th> Name </th>
   <% @assignments.each do |assignment| %>
     <th><%=assignment.name%></th>
+  <%end %>
+  <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+  <th> Maximum Scores </th>
+  <% @assignments.each do |assignment| %>
+    <th><%=assignment.maximum_score%></th>
   <%end %>
 </tr>
 
 
    <input type="hidden" id="course_id" value=<%=@course.id%> />
   <% @grade_books.each do |student, gbooks| %>
-     <tr>
+     <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
         <td><%=student.human_name%></td>
         <% @assignments.each do |assignment|%>
-          <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%= (gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text"/>
+          <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%= (gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text" size="4"/>
           </td>
         <% end %>
     </tr>
   <%end%>
 
   <tr>
-    <td> <button type="button" id="gradebook_submit">Submit</button></td>
-    <td> <button type="button" id="gradebook_save_draft">Save as Draft</button></td>
+    <td colspan="<%=@assignments.count+1%>">
+      <button type="button" id="gradebook_submit">Submit</button>
+      <button type="button" id="gradebook_save_draft">Save as Draft</button>
+    </td>
   </tr>
 
 

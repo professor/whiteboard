@@ -7,6 +7,7 @@ class GradeBooksController < ApplicationController
   end
   
   def index
+    #@no_pad = true
     @students = @course.registered_students
     @assignments = @course.assignments
     @grade_books = {}
@@ -49,6 +50,7 @@ class GradeBooksController < ApplicationController
     if error==false
       render :json => ({"success"=> "true","message"=>"Success" })
     else
+      flash[:error] = "input format is wrong"
       render :json => ({"success"=> "false"})
     end
   end
