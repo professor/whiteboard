@@ -42,11 +42,9 @@ describe Assignment do
   context "when creating course assignments" do
     before {
       @assignment.save
-      #@course = @assignment.course
     }
 
     it "should not create an assignment that puts the total weight of all assignments of this course greater than 100" do
-      #another_assignment = FactoryGirl.build(:assignment, course: @course, weight: 100 - @assignment.weight + 1)
       another_assignment = @assignment.clone
       another_assignment.weight = 100 - @assignment.weight + 1
       another_assignment.save
