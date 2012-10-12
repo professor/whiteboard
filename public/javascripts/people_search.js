@@ -38,15 +38,16 @@ function execute_search(){
     if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
     // extra criteria
     if(ext_criteria_hash["Company"]){ request_url_with_params += "&organization_name="+$('#criteria_company input').val(); }
-    //console.log(request_url_with_params);
+    console.log(request_url_with_params);
 
     $.ajax({
         url: request_url_with_params,
         dataType: 'json',
         success: function(data){
-            console.log(data);
+            //console.log(this.first_name +" "+this.last_name );
             $("#results_box").html("");
             $.each(data, function(){
+                console.log(this.first_name +" "+this.last_name );
                 var card_html = '<div class="data_card">';
                 card_html += '<a href="people/'+this.id+'">'
                 card_html += '<img src='+this.image_uri+'></a><br>';

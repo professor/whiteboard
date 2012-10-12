@@ -373,7 +373,7 @@ class User < ActiveRecord::Base
     query_string = ""
 
     if(criteria['main_search_text'] != nil)
-
+      query_string = "("
       main_search_string = "%"+criteria['main_search_text']+"%"
 
       if(criteria['exact_match'] != nil)
@@ -386,7 +386,7 @@ class User < ActiveRecord::Base
       end
       # check last name and add to query string
       if (criteria['last_name'] != nil)
-        if( query_string != "")
+        if( query_string != "(")
           query_string += " OR "
         end
         query_string += "last_name ILIKE '"+main_search_string+"'"
@@ -394,21 +394,23 @@ class User < ActiveRecord::Base
 
       # check andrew id and add to query string
       if (criteria['andrew_id'] != nil)
-        if( query_string != "")
+        if( query_string != "(")
           query_string += " OR "
         end
         query_string += "webiso_account ILIKE '"+main_search_string+"'"
       end
-
-      @results_set = where(query_string)
+      query_string += ")"
+      #@results_set = where(query_string)
     end
+
+
 
     #search by company
     if (criteria['organization_name']!=nil)
       if( query_string != "")
         query_string += " AND "
       end
-      query_string += "organization_name ILIKE '"+criteria['organization_name']+"'"
+      query_string += "organization_name ILIKE '%"+criteria['organization_name']+"%'"
     end
 
     #search by program

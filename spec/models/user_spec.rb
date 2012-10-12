@@ -85,7 +85,7 @@ describe User do
 
     #company_name
     it "should search by company name" do
-      params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true }
+      params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true, 'last_name' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@faculty_allen, @student_clyde ]
     end
@@ -134,7 +134,7 @@ describe User do
     it "should search all students" do
       params_hash = {'people_type' => 'student'}
       @users = User.testSearch(params_hash)
-      @users.should == [@student_sam_user, @student_sally_user, @student_vidya, @student_clyde,  @student_rashmi, @student_shama]
+      @users.should include @student_sam_user, @student_sally_user, @student_vidya, @student_clyde,  @student_rashmi, @student_shama
     end
 
     it "should search alumni" do

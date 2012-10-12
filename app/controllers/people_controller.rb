@@ -26,6 +26,8 @@ class PeopleController < ApplicationController
     #@people = User.where(:is_active => true)
 
     @people = User.testSearch(params)
+    #logger.debug(params)
+
 
     # Apply limit criteria
     #if (params[:limit] != nil)

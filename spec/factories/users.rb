@@ -33,6 +33,7 @@ FactoryGirl.define do
     last_name "Sally"
     human_name "Student Sally"
     twiki_name "StudentSally"
+    masters_program "SM"
     graduation_year "2014"
   end
 
@@ -87,6 +88,7 @@ FactoryGirl.define do
     last_name "Ed"
     human_name "Faculty Ed"
     twiki_name "FacultyEd"
+    organization_name "yahoo"
   end
 
   factory :faculty_todd, :parent => :user do
@@ -97,6 +99,7 @@ FactoryGirl.define do
     last_name "Todd"
     human_name "Faculty Todd"
     twiki_name "FacultyTodd"
+    organization_name "yahoo"
   end
 
   factory :student_shama, :parent => :user do
@@ -151,6 +154,20 @@ FactoryGirl.define do
     team = [:team_maverick, :team_cooper]
   end
 
+  factory :student_charlie, :parent => :user do
+    email "charlie.li@sv.cmu.edu"
+    webiso_account "cli@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    is_admin false
+    first_name "Charlie"
+    last_name "Li"
+    human_name "Charlie Li"
+    twiki_name "CharlieLi"
+    masters_program "INI"
+    graduation_year "2013"
+  end
+
   factory :student_vidya, :parent => :user do
     email "vidya.pissaye@sv.cmu.edu"
     webiso_account "vpissaye@andrew.cmu.edu"
@@ -191,6 +208,7 @@ FactoryGirl.define do
     human_name "Memo Giordano"
     twiki_name "Memo Giordano"
     graduation_year "2010"
+    organization_name "yahoo"
   end
 
   factory :alumnus_sean, :parent => :user do
