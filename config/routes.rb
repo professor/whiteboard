@@ -4,6 +4,9 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course'
   match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course'
 
+  constraints(:host => /rails.sv.cmu.edu/) do
+    match "/*path" => redirect {|params, req| "http://whiteboard.sv.cmu.edu/#{params[:path]}"}
+  end
 
   resources :search, :only => [:index]
   resources :deliverables
