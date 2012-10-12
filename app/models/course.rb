@@ -80,6 +80,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
+  before_validation :set_grading_ranges
   before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
   after_save :update_distribution_list
 
@@ -292,6 +293,14 @@ class Course < ActiveRecord::Base
   end
 
   protected
+  def set_grading_ranges
+    if self.grading_ranges.empty?
+      GradingRange.possible_grades.each do |grade, minimum|
+        self.grading_ranges.build(grade: grade, minimum: minimum, active: true)
+      end
+    end
+  end
+
   def strip_whitespaces
     @attributes.each do |attr, value|
       self[attr] = value.strip if value.is_a?(String)

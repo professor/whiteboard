@@ -1,0 +1,29 @@
+<h1>Assignments for <%= @course.name %></h1>
+<%= link_to "New Assignment", new_course_assignment_path(@course.id) %>
+
+<% if !@assignments.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Task Number</th>
+        <th>Title</th>
+        <th>Team<br/>Individual</th>
+        <th>Due Date</th>
+        <th>Weight</th>
+        <th>Can Submit?</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td><%= assignment.task_number %></td>
+        <td><%= assignment.title %></td>
+        <td><%= assignment.team_deliverable %></td>
+        <td><%= assignment.due_date %></td>
+        <td><%= assignment.weight %></td>
+        <td><%= assignment.can_submit %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

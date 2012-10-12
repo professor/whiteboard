@@ -131,10 +131,6 @@ class CoursesController < ApplicationController
     @course.grading_nomenclature = "Tasks"
     @course.grading_criteria = "Points"
 
-    GradingRange.possible_grades.each do |grade, minimum|
-      @course.grading_ranges.build(grade: grade, minimum: minimum, active: true)
-    end
-
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       if @course.save

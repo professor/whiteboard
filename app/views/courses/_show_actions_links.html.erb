@@ -22,6 +22,8 @@
         <legend>Initial Course Configuration</legend>
         <p><%= link_to 'Configure course', configure_course_path(course) %></p>
 
+        <p><%= link_to 'Assignments', course_assignments_path(@course.id) %></p>
+
         <p><%= link_to 'Team Formation', past_teams_list_path(course) %></p>
 
         <p><%= link_to "Edit Curriculum Navigation", course_navigation_path(Course.first_offering_for_course_name(course.name)) %></p>

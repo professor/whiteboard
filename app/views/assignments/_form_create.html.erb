@@ -1,4 +1,5 @@
 <%= form_for(@assignment) do |assignment| %>
+  <%= assignment.hidden_field :course_id %>
   <p>
     <%= assignment.label :task_number %>
     <%= assignment.text_field :task_number, size: 4 %>
