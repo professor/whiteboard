@@ -31,15 +31,15 @@
     </tr>
 
     <tr>
-      <td><%= f.label(:is_team_deliverable, "Deliverable Type") %> *</td>
+      <td><%= f.label(:is_team_deliverable, "Deliverable Type") %></td>
       <td>
         <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
       </td>
     </tr>
     <tr>
-      <td><%= f.label(:is_submittable, "Student can submit for this assignment?") %> *</td>
+      <td><%= f.label(:is_submittable, "Student can submit for this assignment?") %></td>
       <td>
-        <%= f.check_box(:is_submittable) %><%= label :is_submittable, 'Yes' %>
+      <%=f.check_box(:is_submittable)%>
       </td>
     </tr>
     <tr>

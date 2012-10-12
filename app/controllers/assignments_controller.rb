@@ -51,7 +51,7 @@ class AssignmentsController < ApplicationController
   end
 
   def set_due_date
-    params[:assignment][:due_date] = params[:due_date][:date] + " " + params[:due_date][:hour] + ":" + params[:due_date][:minute]
+    params[:assignment][:due_date] = params[:due_date][:date] + " " + params[:due_date][:hour] + ":" + params[:due_date][:minute] if params.has_key?(:due_date)
   end
   
   # POST /assignments
