@@ -4,12 +4,12 @@ class AssignmentsController < ApplicationController
   layout 'cmu_sv'
 
   def course_assignments
-    @assignments = Assignment.find_all_by_course_id(params[:id])
-    @course = Course.find(params[:id])
+    @assignments = Assignment.find_all_by_course_id(params[:course_id])
+    @course = Course.find(params[:course_id])
   end
 
   def new_course_assignment
-    @assignment = Course.find(params[:id]).assignments.build
+    @assignment = Course.find(params[:course_id]).assignments.build
   end
 
   def create

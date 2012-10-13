@@ -19,50 +19,53 @@
       <tr>
         <td><%= assignment.task_number %></td>
         <td><%= assignment.title %></td>
-        <td><%= assignment.team_deliverable %></td>
+        <td><%= assignment.team_deliverable ? 'Yes' : 'No' %></td>
         <td><%= assignment.due_date %></td>
         <td><%= assignment.weight %></td>
-        <td><%= assignment.can_submit %></td>
+        <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>
         <td><%= link_to 'Edit', edit_assignment_path(assignment.id) %>
         <%= link_to 'Delete', assignment, method: :delete, confirm: "Are you sure you want to delete: #{assignment.title}?" %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
+
+  <!--Div that will hold the pie chart-->
+  <div id="chart_div" style='text-align: left;'></div>
+
+  <% assignment_array = @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"} %>
+  <% if 100 - @assignments.to_a.sum(&:weight) then assignment_array << "['Unassigned', #{100 - @assignments.to_a.sum(&:weight)}]" end %>
+
+  <!--Load the AJAX API-->
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Assignment');
+      data.addColumn('number', 'Weight');
+      data.addRows([<%= assignment_array.join.html_safe %>]);
+
+      // Set chart options
+      var options = {'title':'Assignment Weight Distribution',
+        'width':696,
+        'height':300,
+        'backgroundColor':'transparent'};
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
 <% end %>
-
-<!--Div that will hold the pie chart-->
-<div id="chart_div"></div>
-
-<!--Load the AJAX API-->
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-
-  // Load the Visualization API and the piechart package.
-  google.load('visualization', '1.0', {'packages':['corechart']});
-
-  // Set a callback to run when the Google Visualization API is loaded.
-  google.setOnLoadCallback(drawChart);
-
-  // Callback that creates and populates a data table,
-  // instantiates the pie chart, passes in the data and
-  // draws it.
-  function drawChart() {
-
-    // Create the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Assignment');
-    data.addColumn('number', 'Weight');
-    data.addRows([<%= @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"}.join.html_safe %>]);
-
-    // Set chart options
-    var options = {'title':'Assignment Weight Distribution',
-      'width':696,
-      'height':300,
-      'backgroundColor':'transparent'};
-
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
-  }
-</script>
