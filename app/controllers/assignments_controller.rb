@@ -1,4 +1,6 @@
 class AssignmentsController < ApplicationController
+  load_and_authorize_resource
+
   layout 'cmu_sv'
 
   def course_assignments
