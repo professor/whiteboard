@@ -20,15 +20,9 @@ class PeopleController < ApplicationController
 # GET /people.xml
   def index
 
-
-
-
     #@people = User.where(:is_active => true)
 
-    @people = User.testSearch(params)
-
-    #logger.debug(params)
-
+    @people = User.Search(params)
 
     # Apply limit criteria
     #if (params[:limit] != nil)
@@ -37,16 +31,6 @@ class PeopleController < ApplicationController
 
     # By default order by name
     #@people = @people.order("first_name ASC, last_name ASC").all
-
-
-    # DEPRECATED: Iterate through parameters and apply filters
-    #params.each { |key, value|
-    #  if ( allowed_text_criteria.include?(key) )
-    #    @people = @people.where("#{key} LIKE ?", "%#{value}%")
-    #  elsif ( key == 'limit' )
-    #    @people = @people.limit(value)
-    #  end
-    #}
 
 
     respond_to do |format|

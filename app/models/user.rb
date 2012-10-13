@@ -1,8 +1,12 @@
+require 'user_search'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable, :rememberable, :trackable, :timeoutable
   #, :database_authenticatable, :registerable,
+
+  extend UserSearch
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state
@@ -365,166 +369,22 @@ class User < ActiveRecord::Base
 
 
   #People search with criteria
-  def self.testSearch(criteria)
+  def self.Search(criteria)
 
     @results_set = []
-
-    # declare an empty query string
-    query_string = ""
-
-    if(criteria['main_search_text'] != nil)
-      query_string = "("
-      main_search_string = "%"+criteria['main_search_text']+"%"
-
-      if(criteria['exact_match'] != nil)
-        main_search_string = criteria['main_search_text']
-      end
-
-      # check first name and add to query string
-      if (criteria['first_name'] != nil)
-        query_string += "first_name ILIKE '"+main_search_string+"'"
-      end
-      # check last name and add to query string
-      if (criteria['last_name'] != nil)
-        if( query_string != "(")
-          query_string += " OR "
-        end
-        query_string += "last_name ILIKE '"+main_search_string+"'"
-      end
-
-      # check andrew id and add to query string
-      if (criteria['andrew_id'] != nil)
-        if( query_string != "(")
-          query_string += " OR "
-        end
-        query_string += "webiso_account ILIKE '"+main_search_string+"'"
-      end
-      query_string += ")"
-      #@results_set = where(query_string)
-    end
-
-
-
-    #search by company
-    if (criteria['organization_name']!=nil)
-      if( query_string != "")
-        query_string += " AND "
-      end
-      query_string += "organization_name ILIKE '%"+criteria['organization_name']+"%'"
-    end
-
-
-    #search by program
-    program_hash = { "masters_program" => nil, "masters_track" => nil }
-    if (criteria['program']!=nil)
-      if (criteria['program'] == "SE_DM")
-        program_hash['masters_program'] = "SE"
-        program_hash['masters_track'] = "DM"
-
-      elsif (criteria['program'] == "SE_TECH")
-        program_hash['masters_program'] = "SE"
-        program_hash['masters_track'] = "TECH"
-
-      else
-        program_hash['masters_program'] = criteria['program']
-      end
-    end
-
-
-
-    if (program_hash['masters_program']!=nil)
-      if( query_string != "")
-        query_string += " AND "
-      end
-      query_string += "masters_program ILIKE '"+program_hash['masters_program']+"'"
-    end
-
-
-    if (program_hash['masters_track']!=nil)
-      if( query_string != "")
-        query_string += " AND "
-      end
-      query_string += "masters_track ILIKE '"+program_hash['masters_track']+"'"
-    end
-
-
-
-    if (criteria['people_type'] != nil)
-
-      if( query_string != "")
-        query_string += " AND "
-      end
-
-      query_string += "is_"+criteria['people_type']+" IS true"
-
-    end
-
-    if (criteria['class_year'] != nil)
-      if( query_string != "")
-        query_string += " AND "
-      end
-
-      query_string += "graduation_year='"+criteria['class_year']+"'"
-
-    end
-
-    if (criteria['is_part_time'] != nil)
-
-      if( query_string != "")
-        query_string += " AND "
-      end
-      
-      # Convert String to Boolean
-      if(criteria['is_part_time'].is_a?(String))
-        if(criteria['is_part_time'] == 'true')
-          criteria['is_part_time'] = true
-        elsif(criteria['is_part_time'] == 'false')
-          criteria['is_part_time'] = false
-        end 
-      end
-      
-      if(criteria['is_part_time'])
-        query_string += "is_part_time IS true"
-      else
-        query_string += "is_part_time IS NOT true"
-      end
-
-    end
-
-
-    @results_set = where(query_string)
-
+    @results_set = where(self.construct_query_string(criteria))
     return @results_set
-  end
 
     # Apply limit criteria
     #if (criteria[:limit] != nil)
-      #limit(params[:limit])
+    #limit(params[:limit])
     #end
 
     # By default order by name
     #order("first_name ASC, last_name ASC").all
 
-    ##....Filter Code by people type should go here ....##
+  end
 
-  ###Code for Company search and Program type
-
-    # Define allowed text criteria
-    allowed_text_criteria = ['organization_name','masters_program', 'masters_track']
-
-
-
-    # Apply text filters
-    #allowed_text_criteria.each { |key|
-     # if (criteria[key] != nil)
-        # Exact Match
-        # @people = @people.where(key => params[key])
-        # Partial Match
-      #  @results_set = @results_set.where("#{key} ILIKE ?", "%#{criteria[key]}%")
-      #end
-   # }
-   # return @results_set
-  #end
 
 
 end
