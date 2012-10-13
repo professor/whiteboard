@@ -88,10 +88,13 @@
           </ul>
           <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
           <% if current_user %>
+            <% if current_user.is_staff || current_user.is_admin %>
+              <li class="standard"><%= link_to "My Deliverables", professor_deliverables_path(current_user.id), :class => "Lv1NavLink" %></li>
+            <% else %>
               <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.id), :class => "Lv1NavLink" %></li>
-              <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.id), :class => "Lv1NavLink" %></li>
-              <li class="standard"><%= link_to "My Gradebooks", my_gradebooks_path(current_user.id), :class => "Lv1NavLink" %></li>
-              <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class => "Lv1NavLink" %></li>
+            <% end %>
+            <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.id), :class => "Lv1NavLink" %></li>
+            <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class => "Lv1NavLink" %></li>
           <% else %>
               <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
               <li class="standard"><font color="#626262">My Teams (Login required)</font></li>

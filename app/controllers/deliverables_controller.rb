@@ -37,6 +37,18 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  def professor_deliverables
+    @person = User.find(params[:id])
+    person_id = @person.id.to_i
+    if (current_user.id != person_id)
+      unless (current_user.is_staff?)||(current_user.is_admin?)
+        flash[:error] = 'You don' 't have permission to see gradebooks.'
+        redirect_to(people_url) and return
+      end
+    end
+    @courses_teaching_as_faculty = @person.teaching_these_courses
+  end
+
   # GET /deliverables/1
   # GET /deliverables/1.xml
   def show

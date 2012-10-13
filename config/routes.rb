@@ -6,6 +6,7 @@ CMUEducation::Application.routes.draw do
   match '/course_assignments/:id' => 'assignments#course_assignments', :as => :course_assignments
   match '/new_course_assignment/:id' => 'assignments#new_course_assignment', :as => :new_course_assignment
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
+  match '/people/:id/my_gradebooks' => 'deliverables#professor_deliverables', :as => :professor_deliverables
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
@@ -81,7 +82,6 @@ CMUEducation::Application.routes.draw do
   match '/people/:id/my_courses_verbose' => 'people#my_courses_verbose', :as => :my_courses
   match '/people/:id/my_courses' => 'people#my_courses', :as => :my_courses
   match '/people/:id/my_teams' => 'people#my_teams', :as => :my_teams
-  match '/people/:id/my_gradebooks' => 'people#my_gradebooks', :as => :my_gradebooks
 
   resources :people
   resources :users, :controller => 'people'
