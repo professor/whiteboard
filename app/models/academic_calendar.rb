@@ -55,6 +55,15 @@ class AcademicCalendar
     end
   end
 
+  def self.school_year_semesters
+    current_semester = self.current_semester
+    if current_semester == 'Fall'
+      return ["Fall-#{Date.today.year}", "Spring-#{Date.today.year + 1}", "Summer-#{Date.today.year + 1}"]
+    else
+      return ["Fall-#{Date.today.year - 1}", "Spring-#{Date.today.year}", "Summer-#{Date.today.year}"]
+    end
+  end
+
   def self.next_semester_year
     case AcademicCalendar.next_semester
       when "Spring"

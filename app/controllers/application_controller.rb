@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   # In development, if you want to pretend to be a different user, you can set it easily here
   def current_user
     User.find_by_first_name("Todd")
-    #User.find_by_first_name("Madhok")
+  #  #User.find_by_first_name("Madhok")
   end
 
   def authenticate_user!

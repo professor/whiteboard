@@ -39,6 +39,7 @@ class DeliverablesController < ApplicationController
 
   def professor_deliverables
     @person = User.find(params[:id])
+    @semesters = AcademicCalendar.school_year_semesters
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
@@ -47,6 +48,16 @@ class DeliverablesController < ApplicationController
       end
     end
     @courses_teaching_as_faculty = @person.teaching_these_courses
+    @assignments = []
+    @deliverable_users = {}
+    @courses_teaching_as_faculty.each do |course|
+      @assignments.concat(course.assignments)
+      course.assignments.each do |assignment|
+        assignment.deliverables.each do |deliverable|
+          @deliverable_users[deliverable.creator.id] = deliverable.creator
+        end
+      end
+    end
   end
 
   # GET /deliverables/1

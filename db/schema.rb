@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121012153209) do
+ActiveRecord::Schema.define(:version => 20121013182138) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20121012153209) do
     t.integer  "feedback_file_size"
     t.datetime "feedback_updated_at"
     t.integer  "assignment_id"
+    t.string   "status"
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"

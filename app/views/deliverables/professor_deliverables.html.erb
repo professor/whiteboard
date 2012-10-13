@@ -1,6 +1,21 @@
 <h1>My Deliverables</h1>
 
 <% if !@courses_teaching_as_faculty.empty? %>
+  <div id="filters">
+    <%= form_for(:filter) do |f| %>
+      <%=  f.label :semester %>
+      <%=  f.select :semester, @semesters %>
+      <%=  f.label :course %>
+      <%=  f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, :include_blank => 'All')  %><br />
+      <%=  f.label :assignment %>
+      <%=  f.collection_select(:assignment_id, @assignments, :id, :title, :include_blank => 'All') %>
+      <%=  f.label :submitted_by %>
+      <%=  f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, :include_blank => 'All' %>
+      <%=  f.label :status %>
+      <%=  f.select :status, ['Ungraded', 'Graded'] %><br />
+    <% end %>
+
+  </div>
   <table id="grading_queue">
     <thead>
     <tr>
