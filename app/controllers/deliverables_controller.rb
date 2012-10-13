@@ -79,7 +79,6 @@ class DeliverablesController < ApplicationController
   # POST /deliverables.xml
   def create
     # Make sure that a file was specified
-    params[:deliverable].delete(:course_id)
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 

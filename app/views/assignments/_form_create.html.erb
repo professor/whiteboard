@@ -26,7 +26,7 @@
 
   <p>
     <%= assignment.label :can_submit %>
-    <%= assignment.check_box :can_submit, checked: true %>
+    <%= assignment.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %>
   </p>
 
   <p>
