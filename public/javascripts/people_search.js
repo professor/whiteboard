@@ -32,12 +32,22 @@ function execute_search(){
     // main criteria
     if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
     else { request_url_with_params += "&main_search_text="; }
+    // people_type
+    if($('#people_type_picker').val() != "all") {request_url_with_params += "&people_type="+$('#people_type_picker').val();}
+    
     if(ext_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
     if(ext_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
     if(ext_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
     if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
     // extra criteria
     if(ext_criteria_hash["Company"]){ request_url_with_params += "&organization_name="+$('#criteria_company input').val(); }
+    if(ext_criteria_hash["Class Year"]){ request_url_with_params += "&class_year="+$('#criteria_class_year select').val(); }
+    if(ext_criteria_hash["Program"]){ request_url_with_params += "&program="+$('#criteria_program select').val(); }
+    if(ext_criteria_hash["Full/Part Time"]){
+      if($('#criteria_ft_pt select').val() == "ft") { request_url_with_params += "&is_part_time=false"; }
+      else { request_url_with_params += "&is_part_time=true"; }
+    }
+    
     console.log(request_url_with_params);
 
     $.ajax({
@@ -104,12 +114,12 @@ $(document).ready(function(){
         switch($(this)[0].value){
             case "all":
             case "student":
-                criteria_ids = [0, 2, 3, 4, 5, 6];
+                criteria_ids = [0, 2, 3];
                 break;
             case "staff":
-                criteria_ids = [0, 4, 5];
+                criteria_ids = [0, 3];
                 break;
-            case "alumni":
+            case "alumnus":
                 criteria_ids = [0, 1, 2, 3];
                 break;
         }

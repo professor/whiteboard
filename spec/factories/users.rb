@@ -22,6 +22,7 @@ FactoryGirl.define do
     human_name "Student Sam"
     twiki_name "StudentSam"
     graduation_year "2014"
+    is_part_time true
   end
 
   factory :student_sally_user, :parent => :user do
@@ -35,6 +36,7 @@ FactoryGirl.define do
     twiki_name "StudentSally"
     masters_program "SM"
     graduation_year "2014"
+    is_part_time true
   end
 
   factory :faculty_frank_user, :parent => :user do
@@ -78,6 +80,7 @@ FactoryGirl.define do
     twiki_name "FacultyAllen"
     organization_name "google"
     teaching_these_courses = [:fse]
+    is_part_time true
   end
 
   factory :faculty_ed, :parent => :user do

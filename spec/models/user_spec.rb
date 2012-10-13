@@ -71,15 +71,16 @@ describe User do
 
     #program
     it "should search by program - all students in program" do
-      params_hash = {'main_search_text' => "", 'masters_program' => "SE", 'masters_track' => "Tech",'first_name' => true }
+      params_hash = {'main_search_text' => "", 'program' => "SE_TECH",'first_name' => true }
       @users=User.testSearch(params_hash)
       @users.should == [@student_shama]
     end
 
 
     it "should not return people in other programs" do
-      params_hash = {'main_search_text' => "", 'masters_program' => "SM", 'first_name' => true }
+      params_hash = {'main_search_text' => "", 'program' => "SM", 'first_name' => true }
       @users=User.testSearch(params_hash)
+      @users.should include @student_clyde
       @users.should_not include @student_shama, @student_rashmi
     end
 
@@ -95,29 +96,6 @@ describe User do
       @users=User.testSearch(params_hash)
       @users.should_not include @student_clyde, @faculty_allen
     end
-
-
-=begin
-  #course  registrations - for students, faculty_assignments -for faculty
-
-  it "should search for students registered in a course along with faculty teaching the course" do
-    params_hash = {'main_search_text' => "",'course_name' => "Foundations", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should == [@student_shama, @student_rashmi, @faculty_allen]
-  end
-
-  it "should search for all students registered in a course" do
-    params_hash = {'main_search_text' => "", 'user_type' => "Student",'course_name' => "Foundations", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should == [@student_shama, @student_rashmi]
-  end
-
-  it "should search all faculty teaching a course " do
-    params_hash = {'main_search_text' => "", 'user_type' => "Faculty",'course_name' => "Foundations", 'first_name' => true }
-    @users=User.testSearch(params_hash)
-    @users.should == [@faculty_allen]
-  end
-=end
 
     it "should search students by class year" do
       params_hash = {'class_year' => '2013'}
@@ -161,12 +139,30 @@ describe User do
       @users.should_not == [@faculty_allen, @faculty_ed, @faculty_todd]
     end
 
-    it "should not search students if alumni is selected" do
+    it "should not search students/staff if alumni is selected" do
       params_hash = {'people_type' => 'alumnus'}
       @users = User.testSearch(params_hash)
-      @users.should_not == [@student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user]
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user, @faculty_allen
     end
 
+
+    it "should search students by part time" do
+      params_hash = {'is_part_time' => true}
+      @users = User.testSearch(params_hash)
+      @users.should include @student_sally_user, @student_sam_user, @faculty_allen
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+    end
+
+    it "should search students by full time" do
+      params_hash = {'is_part_time' => false}
+      @users = User.testSearch(params_hash)
+      @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+      @users.should_not include @student_sally_user, @student_sam_user, @faculty_allen
+    end
+
+
+# for iteration 2 Team Maverick
+=begin
     context "When people belong to teams" do
       before do
         @team_maverick = FactoryGirl.create(:team_maverick)
@@ -179,6 +175,7 @@ describe User do
       end
 
     end
+=end
 
   end
 

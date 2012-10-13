@@ -158,6 +158,36 @@ describe "people search" do
       page.should_not have_content("Sean")
     end
 
+    it "Search by Part Time / Staff", :js => true do
+      select 'Staff', :from => 'people_type_picker'
+      select 'Full/Part Time', :from => 'extra_criteria_picker'
+      page.find(:css, '#criteria_ft_pt select').select('Part Time')
+      click_button "submit_btn"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :content => "Allen")
+      page.should_not have_content("Sam")
+      page.should_not have_content("Sally")
+      page.should_not have_content("Clyde")
+      page.should_not have_content("Ed")
+      page.should_not have_content("Todd")
+    end
+
+    it "Search by Full Time / Student", :js => true do
+      select 'Student', :from => 'people_type_picker'
+      select 'Full/Part Time', :from => 'extra_criteria_picker'
+      page.find(:css, '#criteria_ft_pt select').select('Full Time')
+      click_button "submit_btn"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :content => "Clyde")
+      page.should have_selector('#results_box .data_card', :content => "Rashmi")
+      page.should have_selector('#results_box .data_card', :content => "Shama")
+      page.should have_selector('#results_box .data_card', :content => "Vidya")
+      page.should_not have_content("Sam")
+      page.should_not have_content("Sally")
+      page.should_not have_content("Allen")
+    end
+
+
   end
 
 

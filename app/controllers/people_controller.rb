@@ -26,6 +26,7 @@ class PeopleController < ApplicationController
     #@people = User.where(:is_active => true)
 
     @people = User.testSearch(params)
+
     #logger.debug(params)
 
 

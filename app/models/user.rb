@@ -413,21 +413,40 @@ class User < ActiveRecord::Base
       query_string += "organization_name ILIKE '%"+criteria['organization_name']+"%'"
     end
 
+
     #search by program
-    if (criteria['masters_program']!=nil)
-      if( query_string != "")
-        query_string += " AND "
+    program_hash = { "masters_program" => nil, "masters_track" => nil }
+    if (criteria['program']!=nil)
+      if (criteria['program'] == "SE_DM")
+        program_hash['masters_program'] = "SE"
+        program_hash['masters_track'] = "DM"
+
+      elsif (criteria['program'] == "SE_TECH")
+        program_hash['masters_program'] = "SE"
+        program_hash['masters_track'] = "TECH"
+
+      else
+        program_hash['masters_program'] = criteria['program']
       end
-      query_string += "masters_program ILIKE '"+criteria['masters_program']+"'"
     end
 
-    #search by program track
-    if (criteria['masters_track']!=nil)
+
+
+    if (program_hash['masters_program']!=nil)
       if( query_string != "")
         query_string += " AND "
       end
-      query_string += "masters_track ILIKE '"+criteria['masters_track']+"'"
+      query_string += "masters_program ILIKE '"+program_hash['masters_program']+"'"
     end
+
+
+    if (program_hash['masters_track']!=nil)
+      if( query_string != "")
+        query_string += " AND "
+      end
+      query_string += "masters_track ILIKE '"+program_hash['masters_track']+"'"
+    end
+
 
 
     if (criteria['people_type'] != nil)
@@ -436,7 +455,7 @@ class User < ActiveRecord::Base
         query_string += " AND "
       end
 
-      query_string += "is_"+criteria['people_type']+" = true"
+      query_string += "is_"+criteria['people_type']+" IS true"
 
     end
 
@@ -446,6 +465,29 @@ class User < ActiveRecord::Base
       end
 
       query_string += "graduation_year='"+criteria['class_year']+"'"
+
+    end
+
+    if (criteria['is_part_time'] != nil)
+
+      if( query_string != "")
+        query_string += " AND "
+      end
+      
+      # Convert String to Boolean
+      if(criteria['is_part_time'].is_a?(String))
+        if(criteria['is_part_time'] == 'true')
+          criteria['is_part_time'] = true
+        elsif(criteria['is_part_time'] == 'false')
+          criteria['is_part_time'] = false
+        end 
+      end
+      
+      if(criteria['is_part_time'])
+        query_string += "is_part_time IS true"
+      else
+        query_string += "is_part_time IS NOT true"
+      end
 
     end
 
