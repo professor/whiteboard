@@ -3,255 +3,162 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <script type="text/javascript" >
-    var tmpVal = '';
-    var tmpAjax;
-    var tmpAjaxStatus = false;
-    var my_timeout = null;
-      //var image_array = new Array();
-        // setInterval(function(){
-        //       if(document.getElementById("hidden_field").value == "on"){
-
-        //           document.getElementById("hidden_field").value = "off";
-
-        //           var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
-
-        //           if (rows_list.length > 1){
-
-        //               var loadImageForRow = function(row) {
-
-        //                   var img = new Image();
-        //                   img.width = 60;
-        //                   // img.height = 55;
-
-        //                   img.onload = function() {
-        //                               //console.log(row.find('.url_cell').value);
-        //                               if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
-        //                                   // handle broken image
-        //                               } else {
-        //                                   row.find('.image_cell').append(img);
-        //                                   //row.getElementsByTagName('td').appendChild(img);
-        //                               }
-        //                           }
-        //                   //console.log(row.find(".image_cell"));
-        //                   img.src = row.find(".url_cell").html();
-
-        //               }
-
-        //               var rows = [];
-        //               //var ary = [];
-        //               for(var i=1; i<rows_list.length; i++){
-        //                   rows.push(rows_list[i]);
-        //               }
-
-        //               $.each(rows,function(){
-        //               //rows.each(function(){
-        //                   if (this.getElementsByTagName('td')[0].childElementCount<1 ){
-        //                                console.log("each hit");
-        //                     loadImageForRow($(this));
-        //                   }
-        //               });
-        //           }
-        //       }
-        // },1000);
+    
+        var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
+        var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
+        var ajax_req_issued = false;            // object that 
+        var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 
         $(document).ready(function () {
-                    $("#people_table").hide();
-                    // $("#filterBoxOne").keyup(function() {
-                    //     if(this.value.length > 0){
-                    //         $("#people_table").show();
-                    //     }
-                    //     else{
-                    //         $("#people_table").hide();
-                    //     }                                
-                    // });
 
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
-                    
-                    $("#people_table").tablesorter({widgets:['zebra'],
-                        headers:{0:{sorter:false}, 3:{sorter:false}  }
-                    })
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2],
-                                filterCaseSensitive:false
-                            })
-                            ;
+            if ($("#filterBoxOne").prop("disabled") == true) {
+                $('#filterBoxOne').val('');
+                $('#filterBoxOne').removeAttr("disabled");
+                $('#filterBoxOne').focus();
+            }
 
-                    //scroll the message box to the top offset of browser's scrool bar
-                    $(window).scroll(function () {
-                        $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
-                    });
-                    //when the close button at right corner of the message box is clicked
-                    $('#close_image_box').click(function () {
-                        //the messagebox gets scrool down with top property and gets hidden with zero opacity
-                        $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
-                    });
+            // Hide the search results table by default. We'll pull the results manually and populate through js.
+            $("#people_table").hide();
+            $("#people_table").tablesorter({
+                // add zebra striping style
+                widgets:['zebra'],
+                // don't allow sorting on the picture and contact details columns
+                headers:{0:{sorter:false}, 3:{sorter:false}}
+            })
+            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
+                filterClearContainer:$("#filterClearOne"),
+                filterColumns:[0, 1, 2],
+                filterCaseSensitive:false
+            });
 
-                    //hoving over a line selects it
-                    $("tr").hover(
-                            function () {
-                                $(this).addClass("hover");
-                            },
-                            function () {
-                                $(this).removeClass("hover");
-                            });
-
-                    $("#filterBoxOne").keyup(function() {
-                        if(my_timeout != null)
-                            clearTimeout(my_timeout);
-                        my_timeout = setTimeout('queryDatabase()', 500);
-                    });
+            // on entering some key in the search box "filterBoxOne"
+            $("#filterBoxOne").keyup(function() {
+                if(sendQueryToServer_timer != null){
+                    // there's a previous timer running, clear it and set a new one for the new keystrokes of the user
+                    clearTimeout(sendQueryToServer_timer);
+                }
+                // set timer for the keystrokes entered by user
+                sendQueryToServer_timer = setTimeout(queryDatabase, 500);
+            });
         });
 
         function queryDatabase(){
-         searchBox = $("#filterBoxOne");
-         if(searchBox.val() != tmpVal){
-                tmpVal=searchBox.val();
+            searchBox = $("#filterBoxOne");
+            if(searchBox.val() != searchBox_old_val ){
+                
+                searchBox_old_val =searchBox.val();
+                
                 if($.trim(searchBox.val())){
-                    if(tmpAjaxStatus)
-                        tmpAjax.abort();
-                    tmpAjax = $.ajax({
-                      // the URL for the request
-                      url : 'people_search',
-                  
-                      // the data to send  (will be converted to a query string)
-                      data : { filterBoxOne : searchBox.val(), ajaxCall : true },
+                    if(ajax_req_issued){
+                        // an ajax request was already issued, abort them
+                        jq_xhr.abort();
+                        // Note: only instructs browser to stop listening for old request, if request already issued to server, cannot force server to stop processing.
+                    }
+
+                    // send ajax request and assign the XHML HTTP request object returned to jq_xhr
+                    jq_xhr = $.ajax({
                       
-                      // whether this is a POST or GET request
-                      method : 'GET',
-                  
-                      // the type of data we expect back
-                      dataType : 'json',
+                      url : 'people_search',  // the URL for the request
+                      data : { filterBoxOne : searchBox.val(), ajaxCall : true },  // the data to send  (will be converted to a query string)
+                      method : 'GET', 
+                      dataType : 'json',  // the type of data we expect back
                       contentType: "application/json; charset=utf-8",
-                  
-                      // code to run if the request succeeds;
-                      // the response is passed to the function
                       beforeSend: function() {
-                        tmpAjaxStatus = true;
+                        ajax_req_issued = true;
                       },
                       complete: function() {
-                        tmpAjaxStatus = false;
+                        ajax_req_issued = false;
                       },
                       success : function(json) {
                             buildSearchResults(json);
-                          // var markup = '', len = json.department.length;
-                          // for(var i = 0; i < len; i++) {
-                          //     markup += "<option value="+json.department[i].deptNo+">" + json.department[i].deptName + "</option>";
-                          // }
-                          // $("#DeptNo").append(markup);
                       },
-                  
-                      // code to run if the request fails;
-                      // the raw request and status codes are 
-                      // passed to the function
-                      //error : function(xhr, status) {
-                          //alert('Sorry, there was a problem while placing your ajax request. Contact Admin!');
-                      //},
-                      /* code to run regardless of success or failure
-                      complete : function(xhr, status) {
-                          // alert('The request is complete!');
-                      }*/
                    });
+                
                 }else{
-                    if(tmpAjaxStatus)
-                        tmpAjax.abort();
+                // user has not entered any string
+                    if(ajax_req_issued){
+                        jq_xhr.abort();
+                    }
+                    // hide the results table
                     $("#people_table").hide();
                 }
             }
         }
 
-        function toggleStudents() {
-            // /* we don't use .toggle since the state may be inaccurate from a page reload */
-            // if ($('#student_checkbox').is(':checked')) {
-            //     $(".student").show();
-            // } else {
-            //     $(".student").hide();
-            // }
-            // $("#filterBoxOne").trigger("keyup");
-        }
-
-        function toggleStaff() {
-            // if ($('#staff_checkbox').is(':checked')) {
-            //     $(".staff").show();
-            // } else {
-            //     $(".staff").hide();
-            // }
-            // $("#filterBoxOne").trigger("keyup");
-        }
-
-        function updateImage(uri, label) {
-            // $('#image_box_image').prop("src", uri);
-
-            // $('#image_box_label').text(label);
-        }
-
+        /* helper function to build the table results in #people_table */
         function buildSearchResults(json) {
             for (var i in json){
+                // build row number i
                 buildRow(json[i]);
             }
+            // after all rows built, show #people_table
             $("#people_table").show();
         }
 
+        /* helper function to build the result row */
         function buildRow(json){
-            row = document.createElement('tr');
-            picTd = document.createElement('td');
-            picTd.setAttribute('class','photobook-img');
-            pic = loadImage(json.image_uri);
-            picTd.appendChild(pic);
-            first = document.createElement('td');
-            var a = document.createElement('a');
-            a.href = json.path;
-            a.appendChild(document.createTextNode(json.first_name));
-
-            first.appendChild(a);
-            last = document.createElement('td');
             
-            b = document.createElement('a');
-            b.href = json.path;
-            b.innerHTML = json.last_name;
-            last.appendChild(b);
+            row = document.createElement('tr');
+            
+            // image data
+            photo_td = document.createElement('td');
+            photo_td.setAttribute('class','photobook-img');
+            image_uri_link = json.image_uri;
+            photo_td.appendChild(loadImage(image_uri_link));
+            
+            // first_name data
+            firstName_td = document.createElement('td');
+            firstName_anchorLink = document.createElement('a');
+            firstName_anchorLink.href = json.path;
+            firstName_anchorLink.appendChild(document.createTextNode(json.first_name));
+            firstName_td.appendChild(firstName_anchorLink);
+            
+            // last_name data
+            lastName_td = document.createElement('td');
+            lastName_anchorLink = document.createElement('a');
+            lastName_anchorLink.href = json.path;
+            lastName_anchorLink.innerHTML = json.last_name;
+            lastName_td.appendChild(lastName_anchorLink);
 
-            contact_dtls = document.createElement('td');
-            var str = '';
+            // contact details data
+            contactDtls_td = document.createElement('td');
+            var contactDtls_string = '';
             for(var i in json.contact_dtls){
-                str += json.contact_dtls[i] + "<br />";
+                contactDtls_string += json.contact_dtls[i] + "<br />";
             }
-            str += json.email
-            contact_dtls.innerHTML = str;
+            contactDtls_string += json.email
+            contactDtls_td.innerHTML = contactDtls_string;
+            
+            // Program Data
             program = document.createElement('td');
             program.appendChild(document.createTextNode(json.program)); 
-            row.appendChild(picTd);
-            row.appendChild(first);
-            row.appendChild(last);
-            row.appendChild(contact_dtls);
+            
+            // append each data element to the row
+            row.appendChild(photo_td);
+            row.appendChild(firstName_td);
+            row.appendChild(lastName_td);
+            row.appendChild(contactDtls_td);
             row.appendChild(program);
+            
+            // append the row to the table
             $('#people_table tbody').append(row);
         }
 
+        /* helper function to build the photo image form the uri */
         function loadImage(image_uri){
-
-          var img = new Image();
-          img.width = 60;
-          // img.height = 55;
-
-          img.onload = function() {
-              //console.log(row.find('.url_cell').value);
-              if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
-                  // handle broken image
-              } else {
-                  //row.find('.image_cell').append(img);
-                  //row.getElementsByTagName('td').appendChild(img);
-              }
-          }
-          //console.log(row.find(".image_cell"));
-          img.src = image_uri;
-          return img;
+            var img = new Image();
+            img.width = 60;
+            img.src = image_uri;
+            $(img).bind({
+                error: function() {
+                    // alert('404 on image');
+                    // if there's some error in loading the image, load scotty dog instead
+                    img.src = "/images/mascot.jpg";
+                }
+            });
+            $(img).attr('src',image_uri);
+            return img;
         }
-
 
     </script>
 <% end %>
@@ -270,10 +177,6 @@
 <!-- conference room url
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
-
-
-
-
 
 
 <table id="people_table" class="tablesorter" hidden="true" >
