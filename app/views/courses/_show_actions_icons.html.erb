@@ -9,6 +9,7 @@
           <br/>
 
           <p><%= link_to "Course website", course.curriculum_url %> </p>
+
         </td>
         <td valign="bottom">
           <%= link_to image_tag("/images/teams_webpage.png", :class => "icon", :width => "75", :height => "75", :alt => "My Teams", :title => "My Teams"), "/courses/#{course.id}/teams_photos" %>
@@ -47,6 +48,14 @@
               <br/>
 
               <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
+            </td>
+            <td>
+              <%= link_to image_tag("/images/assignment_icon.jpeg", :class => "icon", :size => "108x75", :alt => "Curriculum website", :title => "Manage Assignment"), course_assignments_path(course) %>
+              <p><%= link_to "Manage Assignments", course_assignments_path(@course) %> </p>
+            </td>
+            <td>
+              <%= link_to image_tag("/images/gradebook_icon.png", :class => "icon", :size => "108x75", :alt => "Curriculum website", :title => "Grade Book"), course_grade_books_path(course) %>
+              <p><%= link_to "Grade Book", course_grade_books_path(@course) %> </p>
             </td>
           </tr>
         </table>
