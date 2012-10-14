@@ -5,7 +5,7 @@
 # The assignment is ordered based on task number as well as assignment order. 
 # The assignment order is automatically generated when professor created the assignment.  
 # For each assignment, professor should give a maximum score for each assignment.  
-# The professor could also indicate whether the assignment required studetn submission. 
+# The professor could also indicate whether the assignment required student submission. 
 # 
 # Generally, a course has many assignments, and each assignments contains many student grades(grade_books)
 #
