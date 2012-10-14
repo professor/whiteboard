@@ -51,8 +51,6 @@ function updateScore(visible_to_student) {
 ////    var scoreList= $(".score [type=hidden]")[0];
 ////    var attrId = scoreList.getAttribute('id');
 
-
-
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
