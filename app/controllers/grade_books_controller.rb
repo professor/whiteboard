@@ -7,7 +7,7 @@ class GradeBooksController < ApplicationController
   end
   
   def index
-    #@no_pad = true
+    @no_pad = true
     @students = @course.registered_students
     @assignments = @course.assignments
     @grade_books = {}
