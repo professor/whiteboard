@@ -181,7 +181,6 @@
             if(container.length)
               container[0].filterIndex = i;
             container.keyup(function(e, phrase) {
-
               var index = this.filterIndex;
               if(undefined !== phrase)
                 $(this).val(phrase);
@@ -197,23 +196,13 @@
               }
  
               var timerCallback = function() {
-
                 checkInputBox(inputBox, overrideBool);
-
-                  // test function
-
-                  document.getElementById("people_table").removeAttribute("hidden");
-
-                  document.getElementById("hidden_field").value="on";
-
-                  // test function
               }
  
               // Reset the timer
               clearTimeout(timer[index]);
               timer[index] = setTimeout(timerCallback, timerWait);
-
-
+ 
               return false;
             });
  
