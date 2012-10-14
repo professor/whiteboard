@@ -13,7 +13,7 @@
   </tr>
 
 <% @assignments.each do |assignment| %>
-  <% content_tag_for(:tr, assignment) do %>
+  <%= content_tag_for(:tr, assignment) do %>
 
     <td><%=assignment.task_number  %> </td>
     <td><%=assignment.name  %> </td>

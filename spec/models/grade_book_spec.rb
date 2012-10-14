@@ -20,6 +20,12 @@ describe GradeBook do
 
   subject { @grade_book }
 
+  context "GradeBook" do
+    it { should belong_to(:course)}
+    it { should belong_to(:student)}
+    it { should belong_to(:assignment)}
+  end
+  
   context "course_id" do
     its (:course_id) { should == @course_fse.id }
     
