@@ -31,38 +31,42 @@ class PeopleController < ApplicationController
     end
   end
 
+
+# Ajax call for people search results using params[:filterBoxOne]
+# json object with search results (from database) sent back
+# Number of requesting coming in here is controlled through a javascript timer
+# see app/views/people/index.html.erb for more details.
+
+# GET /people_search.json
   def search
-    #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
     @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
     @ppl = @people.collect do |person| 
-            program = '';
-            if person.is_student
-                program += (person.masters_program + ' ') unless person.masters_program.blank?
-                program += person.masters_track unless person.masters_track.blank?
-                if person.is_part_time
-                    program += ' (PT)'
-                else
-                    program += ' (FT)'
-                end
-            elsif person.is_staff
-                program += 'Staff'
+        # program the user is enrolled in
+        program = ''
+        if person.is_student
+            program += (person.masters_program + ' ') unless person.masters_program.blank?
+            program += person.masters_track unless person.masters_track.blank?
+            if person.is_part_time
+                program += ' (PT)'
+            else
+                program += ' (FT)'
             end
-
-            Hash["id" => person.twiki_name,
-                "first_name" => person.first_name,
-                "last_name" => person.last_name,
-                "image_uri" => person.image_uri,
-                "program" => program,
-                "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
-                "email" => person.email,
-                "path" => person_path(person)
-            ]
+        elsif person.is_staff
+            program += 'Staff'
         end
-
-
+        # constructing Hash/json containing results
+        Hash["id" => person.twiki_name,
+            "first_name" => person.first_name,
+            "last_name" => person.last_name,
+            "image_uri" => person.image_uri,
+            "program" => program,
+            "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
+            "email" => person.email,
+            "path" => person_path(person)
+        ]
+    end
     respond_to do |format|
-      #format.json { render :json => @ppl, :layout => false }
-            format.json { render :json =>  @ppl, :layout => false }
+        format.json { render :json =>  @ppl, :layout => false }
     end
   end
 
