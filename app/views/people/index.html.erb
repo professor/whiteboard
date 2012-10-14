@@ -160,7 +160,8 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   <% @people.each do |person| %>
     <tr>
       <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
-      <td><%= person[:title] %></td>
+      <td><b><%= person[:title] %></b><br />
+        <%= "See me for: #{person[:job_function]}" unless person[:job_function].blank? %></td>
       <td><%= link_to(person[:human_name], person[:path]) %></td>
       <td><% person[:contact_dtls].each do |k, v| %>
         <%= "#{k}: #{v}" %>

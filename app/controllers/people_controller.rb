@@ -36,7 +36,8 @@ class PeopleController < ApplicationController
     #.all(:conditions => {:program_track => [current_user.masters_track, 'All']})
     @people = @job_functions.collect { |jf| Hash[
         :image_uri => jf.user.image_uri,
-        :title => jf.title,
+        :job_function => jf.title,
+        :title => jf.user.title,
         :human_name => jf.user.human_name,
         :contact_dtls => jf.user.telephones_hash,
         :email => jf.user.email,
