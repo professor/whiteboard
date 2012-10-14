@@ -103,9 +103,8 @@ table.tablesorter tbody td {
 	vertical-align: top;
 }
 
-#people_table th:first-child {
+#people_table th:first-child, #people_table td {
 /* this is required for making sure cells with too much data don't throw the layout for a toss */
-    white-space:nowrap;
     overflow: auto;
 }
 #people_table th:first-child {
