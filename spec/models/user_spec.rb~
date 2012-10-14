@@ -29,19 +29,19 @@ describe User do
     it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.Search(params_hash)
-      @users.should include @student_shama, @student_rashmi
+      @users.should == [@student_shama, @student_rashmi]
     end
 
     it "should do partial search case - only first name" do
       params_hash = {'main_search_text' => 'sha', 'first_name' => true }
       @users=User.Search(params_hash)
-      @users.should include @student_shama
+      @users.should == [@student_shama]
     end
 
     it "should do partial search case - first name disabled" do
       params_hash = {'main_search_text' => 'hoq', 'last_name' => true, 'andrew_id' => true }
       @users=User.Search(params_hash)
-      @users.should include @student_shama
+      @users.should == [@student_shama]
     end
 
     it "should do partial search case - no match" do
@@ -73,7 +73,7 @@ describe User do
     it "should search by program - all students in program" do
       params_hash = {'main_search_text' => "", 'program' => "SE_TECH",'first_name' => true }
       @users=User.Search(params_hash)
-      @users.should include @student_shama
+      @users.should == [@student_shama]
     end
 
 
@@ -88,7 +88,7 @@ describe User do
     it "should search by company name" do
       params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true, 'last_name' => true }
       @users=User.Search(params_hash)
-      @users.should include @faculty_allen, @student_clyde
+      @users.should == [@faculty_allen, @student_clyde ]
     end
 
     it "should not include people at other companies" do
@@ -100,13 +100,13 @@ describe User do
     it "should search students by class year" do
       params_hash = {'class_year' => '2013'}
       @users = User.Search(params_hash)
-      @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+      @users.should == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
     end
 
     it "should not search students by class year other than given year" do
       params_hash = {'class_year' => '2014'}
       @users = User.Search(params_hash)
-      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+      @users.should_not == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
     end
 
     it "should search all students" do
@@ -118,25 +118,25 @@ describe User do
     it "should search alumni" do
       params_hash = {'people_type' => 'alumnus'}
       @users = User.Search(params_hash)
-      @users.should include @alumnus_sunil, @alumnus_memo, @alumnus_sean
+      @users.should == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
     end
 
     it "should search staff" do
       params_hash = {'people_type' => 'staff'}
       @users = User.Search(params_hash)
-      @users.should include @faculty_todd, @faculty_ed, @faculty_allen
+      @users.should == [@faculty_todd, @faculty_ed, @faculty_allen]
     end
 
     it "should not search alumni if staff is selected" do
       params_hash = {'people_type' => 'staff'}
       @users = User.Search(params_hash)
-      @users.should_not include @alumnus_sunil, @alumnus_memo, @alumnus_sean
+      @users.should_not == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
     end
 
     it "should not search staff if student is selected" do
       params_hash = {'people_type' => 'student'}
       @users = User.Search(params_hash)
-      @users.should_not include @faculty_allen, @faculty_ed, @faculty_todd
+      @users.should_not == [@faculty_allen, @faculty_ed, @faculty_todd]
     end
 
     it "should not search students/staff if alumni is selected" do

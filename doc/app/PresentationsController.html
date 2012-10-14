@@ -337,6 +337,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -394,12 +396,12 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>])
 
-  <span class="ruby-ivar">@presentation</span> = <span class="ruby-constant">Presentation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:name</span>],
-                                   <span class="ruby-value">:team_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:team_id</span>],
-                                   <span class="ruby-value">:presentation_date=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:presentation_date</span>],
-                                   <span class="ruby-value">:task_number=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:task_number</span>],
-                                   <span class="ruby-value">:course_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>],
-                                   <span class="ruby-value">:creator_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">id</span>)
+  <span class="ruby-ivar">@presentation</span> = <span class="ruby-constant">Presentation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:name</span>],
+                                   <span class="ruby-value">:team_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:team_id</span>],
+                                   <span class="ruby-value">:presentation_date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:presentation_date</span>],
+                                   <span class="ruby-value">:task_number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:task_number</span>],
+                                   <span class="ruby-value">:course_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>],
+                                   <span class="ruby-value">:creator_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">id</span>)
 
   <span class="ruby-identifier">human_name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:presentation</span>][<span class="ruby-value">:user</span>]
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">human_name</span>.<span class="ruby-identifier">blank?</span>
@@ -415,7 +417,7 @@
 
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@presentation</span>.<span class="ruby-identifier">save</span>
-      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">course_presentations_path</span>, <span class="ruby-value">:course_id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>], <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Successfully created the presentation.'</span>) }
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">course_presentations_path</span>, <span class="ruby-value">:course_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>], <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Successfully created the presentation.'</span>) }
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;new&quot;</span> }
     <span class="ruby-keyword">end</span>
@@ -451,8 +453,8 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_feedback</span>
   <span class="ruby-comment"># Check existence of requested presentation</span>
   <span class="ruby-ivar">@feedback</span> = <span class="ruby-constant">PresentationFeedback</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:feedback</span>])
-      <span class="ruby-ivar">@questions</span> = <span class="ruby-constant">PresentationQuestion</span>.<span class="ruby-identifier">existing_questions</span>
-      <span class="ruby-ivar">@eval_options</span> = <span class="ruby-identifier">@@eval_options</span>
+  <span class="ruby-ivar">@questions</span> = <span class="ruby-constant">PresentationQuestion</span>.<span class="ruby-identifier">existing_questions</span>
+  <span class="ruby-ivar">@eval_options</span> = <span class="ruby-identifier">@@eval_options</span>
   <span class="ruby-ivar">@feedback</span>.<span class="ruby-identifier">evaluator</span> = <span class="ruby-identifier">current_user</span>
   <span class="ruby-ivar">@presentation</span> = <span class="ruby-constant">Presentation</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
   <span class="ruby-ivar">@feedback</span>.<span class="ruby-identifier">presentation</span> = <span class="ruby-ivar">@presentation</span>
@@ -485,7 +487,7 @@
 
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_successful</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@feedback</span>.<span class="ruby-identifier">save</span>
       <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@presentation</span>.<span class="ruby-identifier">feedback_email_sent?</span>
-        <span class="ruby-ivar">@presentation</span>.<span class="ruby-identifier">send_presentation_feedback_email</span>(<span class="ruby-identifier">show_feedback_for_presentation_url</span>(<span class="ruby-value">:id=</span><span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]))
+        <span class="ruby-ivar">@presentation</span>.<span class="ruby-identifier">send_presentation_feedback_email</span>(<span class="ruby-identifier">show_feedback_for_presentation_url</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]))
       <span class="ruby-keyword">end</span>
       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">today_presentations_url</span>) }
     <span class="ruby-keyword">else</span>

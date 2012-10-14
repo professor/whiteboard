@@ -1,63 +1,63 @@
 /* UI Mockup JS Migration */
 
+var criterias_array = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
+
 var criteria_name_hash = new Object();
 criteria_name_hash["first_name"] = "First Name";
 criteria_name_hash["last_name"] = "Last Name";
 criteria_name_hash["andrew_id"] = "Andrew ID";
 criteria_name_hash["company"] = "Company";
 criteria_name_hash["class_year"] = "Class Year";
-criteria_name_hash["team"] = "Team";
-criteria_name_hash["project"] = "Project";
-criteria_name_hash["course"] = "Course";
 criteria_name_hash["program"] = "Program";
 criteria_name_hash["ft_pt"] = "Full/Part Time";
 
+var selected_criteria_hash = new Object();
+selected_criteria_hash["First Name"] = true;
+selected_criteria_hash["Last Name"] = true;
+selected_criteria_hash["Andrew ID"] = true;
+selected_criteria_hash["Company"] = false;
+selected_criteria_hash["Class Year"] = false;
+selected_criteria_hash["Program"] = false;
+selected_criteria_hash["Full/Part Time"] = false;
 
-var criterias_array = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
-var ext_criteria_hash = new Object();
-ext_criteria_hash["First Name"] = true;
-ext_criteria_hash["Last Name"] = true;
-ext_criteria_hash["Andrew ID"] = true;
-ext_criteria_hash["Company"] = false;
-ext_criteria_hash["Class Year"] = false;
-ext_criteria_hash["Team"] = false;
-ext_criteria_hash["Project"] = false;
-ext_criteria_hash["Course"] = false;
-ext_criteria_hash["Program"] = false;
-ext_criteria_hash["Full/Part Time"] = false;
+// reserved for future iteration 
+//criteria_name_hash["team"] = "Team";
+//criteria_name_hash["project"] = "Project";
+//criteria_name_hash["course"] = "Course";
+//selected_criteria_hash["Team"] = false;
+//selected_criteria_hash["Project"] = false;
+//selected_criteria_hash["Course"] = false;
+
 
 function execute_search(){
-    console.log("search executed");
+    // DEBUG console.log("search executed");
     var request_url_with_params = 'people.json?page=1';
-    // main criteria
+    // add main criteria to query string
     if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
     else { request_url_with_params += "&main_search_text="; }
-    // people_type
-    if($('#people_type_picker').val() != "all") {request_url_with_params += "&people_type="+$('#people_type_picker').val();}
-    
-    if(ext_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
-    if(ext_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
-    if(ext_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
+    if(selected_criteria_hash["First Name"]){ request_url_with_params += "&first_name=true"; }
+    if(selected_criteria_hash["Last Name"]){ request_url_with_params += "&last_name=true"; }
+    if(selected_criteria_hash["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
     if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
-    // extra criteria
-    if(ext_criteria_hash["Company"]){ request_url_with_params += "&organization_name="+$('#criteria_company input').val(); }
-    if(ext_criteria_hash["Class Year"]){ request_url_with_params += "&class_year="+$('#criteria_class_year select').val(); }
-    if(ext_criteria_hash["Program"]){ request_url_with_params += "&program="+$('#criteria_program select').val(); }
-    if(ext_criteria_hash["Full/Part Time"]){
+    // add people_type to query string 
+    if($('#people_type_picker').val() != "all") {request_url_with_params += "&people_type="+$('#people_type_picker').val();}
+    // add extra criteria to query string
+    if(selected_criteria_hash["Company"]){ request_url_with_params += "&organization_name="+$('#criteria_company input').val(); }
+    if(selected_criteria_hash["Class Year"]){ request_url_with_params += "&class_year="+$('#criteria_class_year select').val(); }
+    if(selected_criteria_hash["Program"]){ request_url_with_params += "&program="+$('#criteria_program select').val(); }
+    if(selected_criteria_hash["Full/Part Time"]){
       if($('#criteria_ft_pt select').val() == "ft") { request_url_with_params += "&is_part_time=false"; }
       else { request_url_with_params += "&is_part_time=true"; }
     }
     
-    console.log(request_url_with_params);
+    // DEBUG console.log(request_url_with_params);
 
     $.ajax({
-        url: request_url_with_params,
-        dataType: 'json',
+        url: request_url_with_params, dataType: 'json',
         success: function(data){
-            //console.log(this.first_name +" "+this.last_name );
             $("#results_box").html("");
             $.each(data, function(){
-                console.log(this.first_name +" "+this.last_name );
+                // DEBUG console.log(this.first_name +" "+this.last_name );
                 var card_html = '<div class="data_card">';
                 card_html += '<a href="people/'+this.id+'">'
                 card_html += '<img src='+this.image_uri+'></a><br>';
@@ -76,7 +76,7 @@ function execute_search(){
 
 $(document).ready(function(){
 
-    // Initialize dialog
+    // Initialize the customization dialog box
     $('#dialog_modal').dialog({
         dialogClass: 'customization_dialog', position: 'top', width: 220, height: 450,
         autoOpen: false, show: 'fold', hide: 'fold', modal: true
@@ -84,37 +84,42 @@ $(document).ready(function(){
     $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
     $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
 
-    // Class Year Options
-    for (i=2013; i>2001; --i){
+    // add Class Year options
+    var current_date = new Date();
+    var default_class_year = current_date.getFullYear();
+    if (current_date.getMonth() > 8) { default_class_year += 1; }
+    for (i=default_class_year; i>2001; --i){
         $('#criteria_class_year select').append('<option value="'+i+'">'+i+'</option>');
     }
-    // extra_criteria_box criteria_tag Hide
+
+    // hide criteria_tag in the extra_criteria_box 
     $('#extra_criteria_box .criteria_tag').hide();
 
 
+    // display "Seartch Text" in the main search text if no text is inputed
     $('#search_text_box').val("Search Text").addClass("null_search_text");
-
     $("input").focus( function(){
         if ($(this).val() == $(this)[0].title){
             $(this).removeClass("null_search_text");
             $(this).val("");
         }
     }).blur(function(){
-            if ($(this).val() == ""){
-                $(this).addClass("null_search_text");
-                $(this).val($(this)[0].title);
-            }
-        });
+        if ($(this).val() == ""){
+            $(this).addClass("null_search_text");
+            $(this).val($(this)[0].title);
+        }
+    });
 
 
-    // add criteria change event
+    // when user change the people type
     $('#people_type_picker').change(function() {
+        // clean up the extra criteria options
         $('#extra_criteria_picker').html("");
-        var criteria_ids;
+        var criteria_ids; // the applied index numbers of criterias_array
         switch($(this)[0].value){
             case "all":
             case "student":
-                criteria_ids = [0, 2, 3];
+                criteria_ids = [0, 1, 2, 3];
                 break;
             case "staff":
                 criteria_ids = [0, 3];
@@ -123,12 +128,13 @@ $(document).ready(function(){
                 criteria_ids = [0, 1, 2, 3];
                 break;
         }
-
+        // add extra criteria options according to criteria_ids
         $('#extra_criteria_picker').append('<option value="default" class="select-hint">Add Criteria</option>');
         for (var i=0; i<criteria_ids.length; ++i){
             var criteria_name = criterias_array[criteria_ids[i]];
             $('#extra_criteria_picker').append('<option value="'+criteria_name+'">'+criteria_name_hash[criteria_name]+'</option>');
         }
+        // iterate through every extra criteria to determine if it should be hidden
         $('#extra_criteria_box .criteria_tag').each( function(){
             var to_be_hide = true;
             for (var i=0; i<criteria_ids.length; ++i){
@@ -137,52 +143,53 @@ $(document).ready(function(){
                     break;
                 }
             }
+            // check if added extra criteria not valid to selected people type
             if(to_be_hide && $(this).css('display') != 'none') {
-                ext_criteria_hash[$(this)[0].title] = false;
+                selected_criteria_hash[$(this)[0].title] = false;
                 alert($(this)[0].title +" is not related to the user type selected.");
                 $(this).fadeOut();
             }
         });
-
     });
 
 
+    // when user select something from the extra criteria menu
     $('#extra_criteria_picker').change(function() {
-        var tag_text = criteria_name_hash[$(this)[0].value];
-        ext_criteria_hash[tag_text] = true;
+        var tag_text = criteria_name_hash[$(this)[0].value]; // fetch the tag screen text for later use
+        selected_criteria_hash[tag_text] = true;
         $('#'+'criteria_'+$(this)[0].value).appendTo('#extra_criteria_box .criteria_tags');
         $('#'+'criteria_'+$(this)[0].value).show();
-
+        // focus on the last added extra criteria
         if($('#extra_criteria_box .criteria_tag').last().find('.criteria_text').length != 0 && $('#extra_criteria_box .criteria_tag').last().css('display') != 'none'){
             $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
-
         $(this).val('default');
     });
 
 
-    // Remove tag when click on x
+    // fade out main criteria tag when click on x
     $('#main_criteria_box').on("click", ".criteria_tag a", function(){
         if($(this).parent().css('opacity') == '1'){
-            ext_criteria_hash[$(this).parent()[0].title] = false;
+            selected_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeTo("fast", 0.55);
             $(this).html('+');
             // check if all main criteria is faded
-            if(!(ext_criteria_hash["First Name"] || ext_criteria_hash["Last Name"] || ext_criteria_hash["Andrew ID"])) {
+            if(!(selected_criteria_hash["First Name"] || selected_criteria_hash["Last Name"] || selected_criteria_hash["Andrew ID"])) {
                 $(this).parent().fadeTo("fast", 1);
                 $(this).html('x');
                 alert("Sorry, but you can not discard all three criterias.");
             }
-        } else {
-            ext_criteria_hash[$(this).parent()[0].title] = true;
+        } else { // fade in when click on +
+            selected_criteria_hash[$(this).parent()[0].title] = true;
             $(this).parent().fadeTo("fast", 1);
             $(this).html('x');
         }
         return false; // avoid anchor action
     });
 
+    // Remove extra criteria tag when click on x
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
-        ext_criteria_hash[$(this).parent()[0].title] = false;
+        selected_criteria_hash[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
         return false;
     });
