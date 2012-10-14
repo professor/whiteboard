@@ -32,12 +32,13 @@ class PeopleController < ApplicationController
   end
 
 
-# Ajax call for people search results using params[:filterBoxOne]
-# json object with search results (from database) sent back
-# Number of requesting coming in here is controlled through a javascript timer
-# see app/views/people/index.html.erb for more details.
-
-# GET /people_search.json
+  # GET /people_search.json
+  # 
+  # Ajax call for people search results using params[:filterBoxOne]. 
+  # Sends back json object with search results (from database)
+  #
+  # Number of requesting coming in here is controlled through a javascript timer
+  # (see js in views/people/index.html.erb for more details.)
   def search
     @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
     @ppl = @people.collect do |person| 
