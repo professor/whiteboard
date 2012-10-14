@@ -334,6 +334,11 @@
 
   <div id="description" class="description">
     
+<p>This module encapsulates the search functionality and is being extended by
+the <a href="User.html">User</a> model. This makes sure the controller
+remains thin and the model does not get fatter. This has a method that
+constructs the query string depending on the search criteria.</p>
+
   </div><!-- description -->
 
   
@@ -370,7 +375,7 @@
 
           
           <div class="method-source-code" id="construct_query_string-source">
-            <pre><span class="ruby-comment"># File lib/user_search.rb, line 3</span>
+            <pre><span class="ruby-comment"># File lib/user_search.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">construct_query_string</span>(<span class="ruby-identifier">criteria</span>)
 
   <span class="ruby-comment"># declare an empty query string</span>

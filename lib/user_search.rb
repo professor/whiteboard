@@ -1,3 +1,7 @@
+# This module encapsulates the search functionality and is being extended by the User model.
+# This makes sure the controller remains thin and the model does not get fatter.
+# This has a method that constructs the query string depending on the search criteria.
+
 module UserSearch
 
   def construct_query_string(criteria)
