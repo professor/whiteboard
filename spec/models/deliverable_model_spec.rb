@@ -126,6 +126,38 @@ describe Deliverable do
       @deliverable.should_not be_valid
     end
   end
+
+  context 'filtering' do
+    before {
+      @course1 = FactoryGirl.create(:course, name: "Course 1", semester: 'Fall', year: 2012)
+      @course2 = FactoryGirl.create(:course, name: "Course 2", semester: 'Spring', year: 2012)
+      @student1 = FactoryGirl.create(:student_sally)
+      @student2 = FactoryGirl.create(:student_sam)
+
+      @assign1 = FactoryGirl.create(:assignment, course: @course1, title: "Assignment 1")
+      @assign2 = FactoryGirl.create(:assignment, course: @course2, title: "Assignment 2")
+      @assign3 = FactoryGirl.create(:assignment, course: @course1, title: "Assignment 3")
+      @assign4 = FactoryGirl.create(:assignment, course: @course2, title: "Assignment 4")
+
+      @deliverable1 = FactoryGirl.create(:deliverable, assignment: @assign1, creator: @student1)
+      @deliverable2 = FactoryGirl.create(:deliverable, assignment: @assign2, creator: @student2)
+      @deliverable3 = FactoryGirl.create(:deliverable, assignment: @assign3, creator: @student1)
+      @deliverable4 = FactoryGirl.create(:deliverable, assignment: @assign4, creator: @student2)
+    }
+
+    it "should return the correct number of deliverables" do
+      filter_params = {semester_year: 'Spring-2012', course_id: @course2.id, assignment_id: '', submitted_by: '', status: 'Ungraded'}
+      deliverables = Deliverable.filter(filter_params)
+      deliverables.size.should == 2
+      deliverables.should include(@deliverable2, @deliverable4)
+
+      @deliverable4.status = "Graded"
+      @deliverable4.save
+      deliverables = Deliverable.filter(filter_params)
+      deliverables.size.should == 1
+      deliverables.should include(@deliverable2)
+    end
+  end
 end
 
 

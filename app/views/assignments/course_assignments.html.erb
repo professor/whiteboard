@@ -33,8 +33,13 @@
   <!--Div that will hold the pie chart-->
   <div id="chart_div" style='text-align: left;'></div>
 
-  <% assignment_array = @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"} %>
-  <% if 100 - @assignments.to_a.sum(&:weight) then assignment_array << "['Unassigned', #{100 - @assignments.to_a.sum(&:weight)}]" end %>
+  <%
+    assignment_array = @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"}
+
+    if 100 - @assignments.to_a.sum(&:weight)
+      assignment_array << "['Unassigned', #{100 - @assignments.to_a.sum(&:weight)}]"
+    end
+  %>
 
   <!--Load the AJAX API-->
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>

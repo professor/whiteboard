@@ -48,6 +48,7 @@ class Deliverable < ActiveRecord::Base
   default_scope :order => "created_at DESC"
 
   before_validation :sanitize_data
+  before_save :populate_status
 
   def course
     self.assignment.nil? ? nil : self.assignment.course
@@ -122,10 +123,41 @@ class Deliverable < ActiveRecord::Base
     Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{user.id})")
   end
 
+  def self.filter(filter_params = {})
+    semester, year = filter_params[:semester_year].split('-')
+    filter_criteria = {semester: semester, year: year, id: filter_params[:course_id]}
+    courses = Course.where(filter_criteria)
+
+    deliverables = []
+    courses.each do |course|
+      assignments =
+        course.assignments.select do |assignment|
+          filter_params[:assignment_id].blank? ? true : (assignment.id == filter_params[:assignment_id].to_i)
+        end
+      assignments.each do |assignment|
+        deliverables.concat(
+          assignment.deliverables.select do |deliverable|
+            if filter_params[:submitted_by].blank?
+              filter_params[:status] == deliverable.status
+            else
+              deliverable.creator.id == filter_params[:submitted_by].to_i && filter_params[:status] == deliverable.status
+            end
+          end
+        )
+      end
+    end
+    deliverables
+  end
+
   def has_feedback?
     !self.feedback_comment.blank? or !self.feedback_file_name.blank?
   end
 
+  def populate_status
+    if self.status.nil?
+      self.status = "Ungraded"
+    end
+  end
 
   def send_deliverable_upload_email(url)
     mail_to = []

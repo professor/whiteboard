@@ -2,46 +2,27 @@
 
 <% if !@courses_teaching_as_faculty.empty? %>
   <div id="filters">
-    <%= form_for(:filter) do |f| %>
-      <%=  f.label :semester %>
-      <%=  f.select :semester, @semesters %>
-      <%=  f.label :course %>
-      <%=  f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, :include_blank => 'All')  %><br />
-      <%=  f.label :assignment %>
-      <%=  f.collection_select(:assignment_id, @assignments, :id, :title, :include_blank => 'All') %>
-      <%=  f.label :submitted_by %>
-      <%=  f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, :include_blank => 'All' %>
-      <%=  f.label :status %>
-      <%=  f.select :status, ['Ungraded', 'Graded'] %><br />
+    <%= form_for(:filter, remote: true) do |f| %>
+      <%= f.label :semester_year %>
+      <%= f.select :semester_year, @semester_years, {}, {class: 'deliverable-filter'} %>
+      <%= f.label :course_id %>
+      <%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All'}, {class: 'deliverable-filter'})  %><br />
+      <%= f.label :assignment_id %>
+      <%= f.collection_select(:assignment_id, @assignments, :id, :title, {:include_blank => 'All'}, {class: 'deliverable-filter'}) %>
+      <%= f.label :submitted_by %>
+      <%= f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, {:include_blank => 'All'}, {class: 'deliverable-filter'} %>
+      <%= f.label :status %>
+      <%= f.select :status, ['Ungraded', 'Graded'], {}, {class: 'deliverable-filter'} %><br />
+      <%= f.submit hidden: true%>
     <% end %>
-
   </div>
-  <table id="grading_queue">
-    <thead>
-    <tr>
-      <th>Course</th>
-      <th>Assignment</th>
-      <th>Deliverable</th>
-      <th>Submitted By</th>
-      <th>Time Submitted</th>
-      <th>Assign Grade</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @courses_teaching_as_faculty.each do |course| %>
-      <% course.assignments.each do |assignment| %>
-        <% assignment.deliverables.each do |deliverable| %>
-          <tr>
-            <td><%= course.name %></td>
-            <td><%= assignment.title %></td>
-            <td><%= deliverable.name %></td>
-            <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
-            <td><%= deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date %></td>
-            <td><%= link_to "Grade", "#" %></td>
-          </tr>
-        <% end %>
-      <% end %>
-    <% end %>
-    </tbody>
-  </table>
+  <div id='grading_queue'><%= render 'deliverables/grading_queue' %></div>
 <% end %>
+
+<script type="text/javascript">
+  $(function() {
+    $('.deliverable-filter').change(function() {
+      $('#filters form').submit();
+    })
+  })
+</script>

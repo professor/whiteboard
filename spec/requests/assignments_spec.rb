@@ -4,6 +4,8 @@ describe "assignments" do
   context "saving" do
     before {
       @course = FactoryGirl.create(:course)
+      @user = FactoryGirl.create(:faculty_frank)
+      login_with_oauth @user
       visit new_course_assignment_path(@course.id)
       fill_in "Task number", with: 1
       fill_in "Title", with: "New Task"
@@ -33,6 +35,8 @@ describe "assignments" do
   context "edit" do
     before {
       @assignment = FactoryGirl.create(:assignment)
+      @user = FactoryGirl.create(:faculty_frank)
+      login_with_oauth @user
       visit edit_assignment_path(@assignment.id)
     }
 
@@ -52,6 +56,8 @@ describe "assignments" do
   context "delete" do
     before {
       @assignment = FactoryGirl.create(:assignment)
+      @user = FactoryGirl.create(:faculty_frank)
+      login_with_oauth @user
     }
 
     it "should delete an assignment" do

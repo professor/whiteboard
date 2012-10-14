@@ -38,25 +38,41 @@ class DeliverablesController < ApplicationController
   end
 
   def professor_deliverables
-    @person = User.find(params[:id])
-    @semesters = AcademicCalendar.school_year_semesters
-    person_id = @person.id.to_i
-    if (current_user.id != person_id)
-      unless (current_user.is_staff?)||(current_user.is_admin?)
-        flash[:error] = 'You don' 't have permission to see gradebooks.'
-        redirect_to(people_url) and return
-      end
-    end
-    @courses_teaching_as_faculty = @person.teaching_these_courses
-    @assignments = []
-    @deliverable_users = {}
-    @courses_teaching_as_faculty.each do |course|
-      @assignments.concat(course.assignments)
-      course.assignments.each do |assignment|
-        assignment.deliverables.each do |deliverable|
-          @deliverable_users[deliverable.creator.id] = deliverable.creator
+    respond_to do |format|
+      format.html {
+        @person = User.find(params[:id])
+        @semester_years = AcademicCalendar.school_year_semesters
+        person_id = @person.id.to_i
+        if (current_user.id != person_id)
+          unless (current_user.is_staff?)||(current_user.is_admin?)
+            flash[:error] = 'You don''t have permission to see gradebooks.'
+            redirect_to(people_url) and return
+          end
         end
-      end
+        @courses_teaching_as_faculty = @person.teaching_these_courses
+        @assignments = []
+        @deliverable_users = {}
+        @courses_teaching_as_faculty.each do |course|
+          @assignments.concat(course.assignments)
+          course.assignments.each do |assignment|
+            assignment.deliverables.each do |deliverable|
+              @deliverable_users[deliverable.creator.id] = deliverable.creator
+            end
+          end
+        end
+        @deliverables = Deliverable.filter(
+            semester_year: @semester_years[0],
+            course_id: @courses_teaching_as_faculty.map {|course| course.id},
+            assignment_id: '',
+            submitted_by: '',
+            status: 'Ungraded')
+      }
+      format.js {
+        if params[:filter][:course_id].blank?
+          params[:filter][:course_id] = current_user.teaching_these_courses.map {|course| course.id}
+        end
+        @deliverables = Deliverable.filter(params[:filter])
+      }
     end
   end
 

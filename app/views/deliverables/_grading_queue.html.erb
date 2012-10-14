@@ -1,0 +1,24 @@
+<table>
+  <thead>
+  <tr>
+    <th>Course</th>
+    <th>Assignment</th>
+    <th>Deliverable</th>
+    <th>Submitted By</th>
+    <th>Time Submitted</th>
+    <th>Assign Grade</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @deliverables.each do |deliverable| %>
+    <tr>
+      <td><%= deliverable.assignment.course.name %></td>
+      <td><%= deliverable.assignment.title %></td>
+      <td><%= deliverable.name %></td>
+      <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
+      <td><%= deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date %></td>
+      <td><%= link_to "Grade", "#" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
