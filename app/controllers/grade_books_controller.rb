@@ -8,7 +8,7 @@ class GradeBooksController < ApplicationController
   
   def index
     @no_pad = true
-    @students = @course.registered_students
+    @students = @course.registered_students.order("first_name ASC")
     @assignments = @course.assignments
     @grade_books = {}
     @students.each do |student|
