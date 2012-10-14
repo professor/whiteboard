@@ -1,6 +1,5 @@
 <% content_for :title, @person.human_name + " - Contact Information" %>
 
-
 <%= form_for(@person) do |f| %>
     <% if @person.errors.any? %>
         <div id="error_explanation">
@@ -14,10 +13,7 @@
         </div>
     <% end %>
 
- <!-- begin -->
-
     <div class="user_profile_content">
-
         <div class="user_profile_photo_social">
             <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
             <div class="user_profile_social clearboth">
@@ -124,17 +120,11 @@
                 <% end %>
             </div>
         </div><!-- user_profile_about -->
-
-
-
-        
-
-
     </div> <!-- user_profile_content -->
 
-        <div class="user_profile_action">
-            <%= link_to 'Back', people_path %> | 
-            <%= link_to 'Edit', edit_person_path(@person) %>
-        </div>
+    <div class="user_profile_action">
+        <%= link_to 'Back', people_path %> | 
+        <%= link_to 'Edit', edit_person_path(@person) %>
+    </div>
     
     <% end %>
