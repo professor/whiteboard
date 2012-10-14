@@ -3,6 +3,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments.xml
   before_filter :authenticate_user!
   before_filter :get_course
+  before_filter :set_due_date, :only=>[:create, :update]
   load_and_authorize_resource
 
 
@@ -49,6 +50,10 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find(params[:id])
   end
 
+  def set_due_date
+    params[:assignment][:due_date] = params[:due_date][:date] + " " + params[:due_date][:hour] + ":" + params[:due_date][:minute] if params.has_key?(:due_date)
+  end
+  
   # POST /assignments
   # POST /assignments.xml
   def create

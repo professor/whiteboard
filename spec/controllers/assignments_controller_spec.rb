@@ -31,6 +31,8 @@ describe AssignmentsController do
     login(FactoryGirl.create(:faculty_frank))
 
   end
+  def valid_due_date_parameters; {:date=>Date.today.strftime("%Y-%m-%d"), :hour=>'23', :minute=>'59'} end
+
   def valid_attributes
     {:maximum_score=>100, :course_id=>@course.id,:assignment_order=>1, :task_number=>1}
   end
@@ -64,18 +66,18 @@ describe AssignmentsController do
     describe "with valid params" do
       it "creates a new Assignment" do
         expect {
-          post :create,:course_id => @course, :assignment => valid_attributes
+          post :create,:course_id => @course, :assignment => valid_attributes, :due_date => valid_due_date_parameters
         }.to change(Assignment, :count).by(1)
       end
 
       it "assigns a newly created assignment as @assignment" do
-        post :create, :course_id => @course, :assignment => valid_attributes
+        post :create, :course_id => @course, :assignment => valid_attributes, :due_date => valid_due_date_parameters
         assigns(:assignment).should be_a(Assignment)
         assigns(:assignment).should be_persisted
       end
 
       it "redirects to the created assignment" do
-        post :create,:course_id => @course, :assignment => valid_attributes
+        post :create,:course_id => @course, :assignment => valid_attributes, :due_date => valid_due_date_parameters
         response.should redirect_to(course_assignments_path)
       end
     end
@@ -84,14 +86,14 @@ describe AssignmentsController do
       it "assigns a newly created but unsaved assignment as @assignment" do
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        post :create, :course_id => @course,:assignment => {}
+        post :create, :course_id => @course,:assignment => {}, :due_date => valid_due_date_parameters
         assigns(:assignment).should be_a_new(Assignment)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        post :create,:course_id => @course, :assignment => {}
+        post :create,:course_id => @course, :assignment => {}, :due_date => valid_due_date_parameters
         response.should render_template("new")
       end
     end
@@ -111,13 +113,13 @@ describe AssignmentsController do
 
       it "assigns the requested assignment as @assignment" do
         assignment = Assignment.create! valid_attributes
-        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes
+        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes, :due_date => valid_due_date_parameters
         assigns(:assignment).should eq(assignment)
       end
 
       it "redirects to the assignment" do
         assignment = Assignment.create! valid_attributes
-        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes
+        put :update, :course_id => @course,:id => assignment.id, :assignment => valid_attributes, :due_date=>valid_due_date_parameters
         response.should redirect_to(course_assignments_path)
       end
     end
@@ -127,7 +129,7 @@ describe AssignmentsController do
         assignment = Assignment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}
+        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}, :due_date => valid_due_date_parameters
         assigns(:assignment).should eq(assignment)
       end
 
@@ -135,7 +137,7 @@ describe AssignmentsController do
         assignment = Assignment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assignment.any_instance.stub(:save).and_return(false)
-        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}
+        put :update,:course_id => @course, :id => assignment.id.to_s, :assignment => {}, :due_date => valid_due_date_parameters
         response.should render_template("edit")
       end
     end

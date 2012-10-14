@@ -16,7 +16,6 @@ describe "Assignments" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       visit (course_assignments_path(@course))
       page.should have_content(@assignment.name)
-      page.should have_content(@assignment.due_date)
       page.should have_content(@assignment.task_number)
     end
 
@@ -33,9 +32,8 @@ describe "Assignments" do
     it "should load the page with assignment details" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       visit (course_assignments_path(@course))
-      click_link "Destroy"
+      click_link "Delete"
       page.should_not have_content(@assignment.name)
-      page.should_not have_content(@assignment.due_date)
     end
 
 

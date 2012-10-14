@@ -1,37 +1,33 @@
-<h1>Listing assignments</h1>
+<h1>Listing Assignments</h1>
 
-<table>
+<table class='cmu_table'>
   <tr>
     <th>Task Number</th>
-    <th>Assignment Order</th>
     <th>Name</th>
     <th>Due Date</th>
-    <th>Team Deliverable</th>
-    <th>Is Submittable</th>
+    <th>Deliverable Type</th>
+    <th>Student Can Submit For this Assignment?</th>
     <th>Max Score</th>
-    <th>Show</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
 
 <% @assignments.each do |assignment| %>
-<% content_tag_for(:tr, assignment) do %>
+  <% content_tag_for(:tr, assignment) do %>
 
     <td><%=assignment.task_number  %> </td>
-    <td><%=assignment.assignment_order  %> </td>
     <td><%=assignment.name  %> </td>
-    <td><%=assignment.due_date  %> </td>
-    <td><%=assignment.is_team_deliverable  %> </td>
-    <td><%=assignment.is_submittable  %> </td>
+    <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
+    <td><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
+    <td><%=(assignment.is_submittable)?"Yes":"No"  %> </td>
     <td><%=assignment.maximum_score  %> </td>
-    <td><%= link_to 'Show',[@course,assignment] %></td>
     <td><%= link_to 'Edit', edit_course_assignment_path(@course,assignment) %></td>
-    <td><%= link_to 'Destroy', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
+    <td><%= link_to 'Delete', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
   </tr>
  <% end %>
 <% end %>
 </table>
-
+</br></br>
 <br />
 
 <%= link_to 'New Assignment', new_course_assignment_path %>

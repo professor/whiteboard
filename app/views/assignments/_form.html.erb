@@ -1,50 +1,68 @@
+<%= javascript_tag do %>
+  $(function() {
+    $(".datepicker").datepicker({
+      showButtonPanel: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+<% end %>
 <%= form_for([@course,@assignment]) do |f| %>
   <% if @assignment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
 
       <ul>
-      <% @assignment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @assignment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
 
-    <table>
-      <tr>
-        <th><%= f.label(:task_number) %></th>
-        <td><%= f.select(:task_number,[1,2,3]) %></td>
-      </tr>
-      <tr>
-        <th><%= f.label(:name) %></th>
-        <td><%= f.text_field(:name) %></td>
-      </tr>
+  <table class='layout_table'>
+    <tr>
+      <td style="width: 135px;"><%= f.label(:task_number) %></td>
+      <td><%= f.text_field(:task_number, :size=>3) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label(:name) %></td>
+      <td><%= f.text_field(:name, :size=>60) %></td>
+    </tr>
 
-      <tr>
-        <th><%= f.label(:is_team_deliverable) %></th>
-        <td><%= f.check_box(:is_team_deliverable) %></td>
-      </tr>
-      <tr>
-        <th><%= f.label(:is_submittable) %></th>
-        <td><%= f.check_box(:is_submittable) %></td>
-      </tr>
-      <tr>
-        <th><%= f.label(:maximum_score) %></th>
-        <td><%= f.text_field(:maximum_score) %></td>
-      </tr>
-      <tr>
-        <th><%= f.label(:due_date) %></th>
-        <td><%= f.datetime_select(:due_date) %></td>
-      </tr>
+    <tr>
+      <td><%= f.label(:is_team_deliverable, "Deliverable Type") %></td>
+      <td>
+        <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label(:is_submittable, "Student can submit for this assignment?") %></td>
+      <td>
+      <%=f.check_box(:is_submittable)%>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label(:maximum_score) %> *</td>
+      <td><%= f.text_field(:maximum_score, :size=>5) %> </td>
+    </tr>
+    <tr>
+      <td><%= f.label(:due_date) %></td>
+      <td>
+        <%= text_field :due_date, :date, :class => "datepicker", :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%Y-%m-%d"), :size=>"11", :placeholder=>"YYYY-MM-DD" %>
+        &nbsp;&nbsp;&nbsp;<%= text_field :due_date, :hour, :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%H"), :size=>2,:placeholder=>"HH" ,:type=>"number", :max=>23, :min=>0%>:
+        <%= text_field :due_date, :minute, :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%M"), :size=>2, :placeholder=>"MM",:type=>"number", :max=>59, :min=>0 %>
+      </td>
+      
+    </tr>
+    <tr>
+      <td></td>
+      <td class="actions">
+        <%= f.submit %>
+      </td>
+    </tr>
 
 
-    </table>
+  </table>
 
-
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
