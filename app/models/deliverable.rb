@@ -14,7 +14,7 @@
 #
 # Way 2) A student team can upload their deliverable by clicking on "My Deliverables" on the left hand navigation and
 # select "New" at the bottom of the page. This is a little less efficient because the student needs to select a
-# course and task number. It is a quick way for a student to see everything they have submitted for their courses.
+# course and assignment. It is a quick way for a student to see everything they have submitted for their courses.
 #
 # If a student or team accidentally uploads the wrong file, they can upload additional files. All files are
 # kept in the system, but the convention is that the faculty will only examine the last uploaded file.

@@ -1,10 +1,15 @@
+# GradingRange is set by a professor for a course
+#
+# It is a mapping between letter and number grades. The professor can
+# enable/disable a grade range.
+
 class GradingRange < ActiveRecord::Base
   attr_accessible :grade, :minimum, :active, :course_id
   belongs_to :course
   validates :minimum, numericality: { less_than_or_equal_to: 100, greater_than_or_equal_to: 0 }
 
   def self.possible_grades
-    {"A+" => 98,
+    {
      "A" => 94,
      "A-" => 90,
      "B+" => 88,

@@ -53,7 +53,7 @@ describe "courses" do
     end
 
     it "should have grading range table" do
-      page.should have_selector("table#grading_range > tbody > tr", count: 13)
+      page.should have_selector("table#grading_range > tbody > tr", count: GradingRange.possible_grades.count)
       page.should have_selector("table#grading_range > tbody > tr:first > td", count: 3)
     end
 

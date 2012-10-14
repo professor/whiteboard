@@ -1,3 +1,6 @@
+# Assignment is created by a professor for a course. A student or a team can
+# submit one deliverable for each assignment.
+
 class Assignment < ActiveRecord::Base
   belongs_to :course
   has_many :deliverables
