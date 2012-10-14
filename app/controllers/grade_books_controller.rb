@@ -12,7 +12,7 @@ class GradeBooksController < ApplicationController
     @assignments = @course.assignments
     @grade_books = {}
     @students.each do |student|
-      @grade_books[student] =  GradeBook.get_gradebooks(@course, student)
+      @grade_books[student] =  GradeBook.get_grade_books(@course, student)
     end
     end
 
@@ -23,7 +23,7 @@ class GradeBooksController < ApplicationController
     error=false
     unless scoreArrayList.blank?
       scoreArrayList.each do|scoreValue|
-      grade_book = GradeBook.get_grade_books(scoreValue)
+      grade_book = GradeBook.get_grade_books(scoreValue["course_id"], scoreValue["assignment_id"],scoreValue["student_id"])
         if  grade_book.blank?
           grade_book_entry=GradeBook.new(scoreValue)
           unless grade_book_entry.save
@@ -45,7 +45,7 @@ class GradeBooksController < ApplicationController
     scoreSubmitted=params["scoreSubmitted"]
      if (scoreSubmitted==true)
        courseAssignment=params["courseAssignment"]
-       GradeBook.update_gradebook(courseAssignment)   
+       GradeBook.update_grade_book(courseAssignment["course_id"],courseAssignment["assignment_id"])   
      end
     if error==false
       render :json => ({"success"=> "true","message"=>"Success" })

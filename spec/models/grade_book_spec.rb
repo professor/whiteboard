@@ -90,14 +90,14 @@ describe GradeBook do
   end
 
   it 'should be able to fetch one student\'s grades' do
-    all_grade_books = GradeBook.get_gradebooks(@course_fse, @student_sam)
+    all_grade_books = GradeBook.get_grade_books(@course_fse, @student_sam)
     subject.should eql(all_grade_books[@assignment_fse.id])
   end
 
   it 'should be able to fetch one student\'s grade earned from one assignment' do
     @grade_book.save
     score_value = {:course_id=>@course_fse.id, :student_id=>@student_sam.id, :assignment_id=>@assignment_fse.id}
-    one_grade_book = GradeBook.get_grade_books(score_value)
+    one_grade_book = GradeBook.get_grade_book(@course_fse.id, @student_sam.id, @assignment_fse.id)
     @grade_book.eql?(one_grade_book)
   end
 
@@ -105,7 +105,7 @@ describe GradeBook do
     course_assignment = {:course_id=>@course_fse.id, :student_id=>@student_sam.id, :assignment_id=>@assignment_fse.id, :score=>20.0}
     @grade_book.save
     GradeBook.update_all(course_assignment)
-    one_grade_book = GradeBook.get_grade_books(course_assignment)
+    one_grade_book = GradeBook.get_grade_book(@course_fse.id, @student_sam.id, @assignment_fse.id)
     @grade_book.eql?(one_grade_book)
   end
 
