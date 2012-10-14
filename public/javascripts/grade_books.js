@@ -12,6 +12,18 @@ $('#gradebook_save_draft').live('click', function() {
 });
 
 
+
+function removeTagsAfterSubmission() {
+    console.log("removing");
+    $(".score [type=text]").each(function(){
+        $(this).css("border","thin solid");
+        $(this).css("border-color","#666666");
+        $(this).removeClass("changedScore");
+    });
+
+
+
+}
 function updateScore(visible_to_student) {
 
     var data = {};
@@ -59,7 +71,15 @@ function updateScore(visible_to_student) {
         data: JSON.stringify(data, null, 1),
         success: function(data, message, jqXHR){
 //            location.reload();
+            if($('#notice').length == 0){
             $('#result').append('<p id="notice">Record submitted successfully</p>');
+            }
+            else{
+                $("#notice").text("Record submitted successfully");
+
+            }
+
+            removeTagsAfterSubmission();
 //            console.log('Submittion Successfull');
         },
         error: function(jqXHR, textStatus, errorThrown){

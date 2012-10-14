@@ -8,12 +8,12 @@
   <div class="score">
   <table class="cmu_table sortable">
   <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
-    <th> First Name
+    <th style='max-width:78px; word-wrap:break-word;'> First Name
       <span id="sorttable_sortfwdind">&nbsp;▾ </span>
     </th>
-  <th> Last Name </th>
+  <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
   <% @assignments.each do |assignment| %>
-    <th style='max-width:25px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
+    <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
   <%end %>
 </tr>
 
