@@ -269,7 +269,7 @@ GEM
     systemu (2.2.0)
     taps (0.3.24)
       rack (>= 1.0.1)
-      rest-client (< 1.7.0, >= 1.4.0)
+      rest-client (>= 1.4.0, < 1.7.0)
       sequel (~> 3.20.0)
       sinatra (~> 1.0.0)
     term-ansicolor (1.0.6)

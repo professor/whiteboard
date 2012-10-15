@@ -14,19 +14,19 @@ describe "phone book" do
     it "renders phone book page" do
       page.should have_content("Phone book")
       page.should have_selector("input#filterBoxOne")
-      page.should have_link("See conference rooms")
-      page.should have_link("See photo book")
+      # page.should have_link("See conference rooms")
+      # page.should have_link("See photo book")
 
     end
 
-    it "renders photo book" do
-      page.should have_link("See photo book")
-      click_link "See photo book"
-      page.should have_content("Photo Book")
-      page.should have_link("See people")
-      click_link "See people"
-      page.should have_content("Phone book")
-    end
+    # it "renders photo book" do
+    #   page.should have_link("See photo book")
+    #   click_link "See photo book"
+    #   page.should have_content("Photo Book")
+    #   page.should have_link("See people")
+    #   click_link "See people"
+    #   page.should have_content("Phone book")
+    # end
 
     it "lets the admin create a new person" do
       @user = FactoryGirl.create(:admin_andy)

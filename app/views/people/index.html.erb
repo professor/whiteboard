@@ -2,24 +2,81 @@
 <% content_for :tablesorter do %>
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
-    <script type="text/javascript">
+    <script type="text/javascript" >
+      //var image_array = new Array();
+        setInterval(function(){
+              if(document.getElementById("hidden_field").value == "on"){
+
+                  document.getElementById("hidden_field").value = "off";
+
+                  var rows_list = document.getElementById("people_table").getElementsByTagName("TR");
+
+                  if (rows_list.length > 1){
+
+                      var loadImageForRow = function(row) {
+
+                          var img = new Image();
+                          img.width = 60;
+
+                          img.onload = function() {
+                                      //console.log(row.find('.url_cell').value);
+                                      if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
+                                          // handle broken image
+                                      } else {
+                                          row.find('.image_cell').append(img);
+                                          //row.getElementsByTagName('td').appendChild(img);
+                                      }
+                                  }
+                          //console.log(row.find(".image_cell"));
+                          img.src = row.find(".url_cell").html();
+
+                      }
+
+                      var rows = [];
+                      //var ary = [];
+                      for(var i=1; i<rows_list.length; i++){
+                          rows.push(rows_list[i]);
+                      }
+
+                      $.each(rows,function(){
+                      //rows.each(function(){
+                          if (this.getElementsByTagName('td')[0].childElementCount<1 ){
+                                       console.log("each hit");
+                            loadImageForRow($(this));
+                          }
+                      });
+                  }
+              }
+        },1000);
+
         $(document).ready(function () {
+
+                    $("#people_table").hide();
+                    $("#filterBoxOne").keyup(function() {
+                        if(this.value.length > 0){
+                            $("#people_table").show();
+                        }
+                        else{
+                            $("#people_table").hide();
+                        }                                
+                    });
+
                     if ($("#filterBoxOne").prop("disabled") == true) {
                         $('#filterBoxOne').val('');
                         $('#filterBoxOne').removeAttr("disabled");
                         $('#filterBoxOne').focus();
                     }
+                    
                     $("#people_table").tablesorter({widgets:['zebra'],
-                        headers:{2:{sorter:false}, 3:{sorter:false}  },
-                        sortList:[
-                            [0, 0],
-                            [1, 0]
-                        ]})
+                        headers:{0:{sorter:false}, 3:{sorter:false}  }
+                    })
                             .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
                                 filterClearContainer:$("#filterClearOne"),
                                 filterColumns:[0, 1, 2],
                                 filterCaseSensitive:false
-                            });
+                            })
+                            ;
+
                     //scroll the message box to the top offset of browser's scrool bar
                     $(window).scroll(function () {
                         $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
@@ -39,8 +96,9 @@
                                 $(this).removeClass("hover");
                             });
 
-                }
-        );
+                    
+
+        });
 
         function toggleStudents() {
             /* we don't use .toggle since the state may be inaccurate from a page reload */
@@ -71,58 +129,77 @@
     </script>
 <% end %>
 
-<h1>Phone book</h1>
-<div class="right_link"><%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
-  <br/>
-  <%= link_to 'See photo book', :action => 'photo_book' %></div>
 
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
 
-<div style="float:none"><%= render :partial => "tablesorter_filter_box" %>
-  <label>Show Students</label>
-  <input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked"/>
-  <label>Show
-    Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked"/>
+<div>
+
+  <%= render :partial => "tablesorter_filter_box" %>
+
 </div>
 
 <!-- conference room url
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
-<% content_for :image_box do %>
-    <div id="image_box">
-      <%= image_tag("/images/mascot.jpg", :width => "150", :alt => "Temporary Picture", :id => "image_box_image") %><%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :alt => "Close Me", :style => "float:right;cursor:pointer", :id => "close_image_box") %>
-      <div id='image_box_label'></div>
-    </div>
-<% end %>
 
-<table id="people_table" class="tablesorter">
+
+
+
+
+<table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
+    <th>Pic</th>
+
     <th>First name</th>
     <th>Last name</th>
-    <th>Phone</th>
-    <th>&nbsp;</th>
+    <th>Contact Details</th>
+    <th>Program</th>
   </tr>
   </thead>
   <tbody>
-  <% for person in @people %>
+  <% for person in @people  %>
       <tr class="tablesorter
         <% if person.is_student %>student
         <% end %>
         <% if person.is_staff %>staff
-        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-        <td><%= link_to person.first_name, person_path(person.twiki_name) %></td>
-        <td><%= link_to person.last_name, person_path(person.twiki_name) %></td>
+
+        <% end %>" >
+        <td class="image_cell photobook-img">
+
+        </td>
+        <td><%= link_to person.first_name, "/people/show/#{person.twiki_name}"  %></td>
+        <td><%= link_to person.last_name, "/people/show/#{person.twiki_name}" %></td>
         <td>
-          <% person.telephones.each { |phone| %><%= h phone %>
-              <br/>
-          <% } %></td>
-        <td><%= link_to 'Show', person_path(person) %></td>
+          <% person.telephones_hash.each do |key, value| %>
+
+              <%= "#{key}: #{value}" %> <br />
+
+          <% end %>
+          Email: <%=mail_to person.email %>
+        </td>
+        <td>
+          <% if person.is_student %>
+              <%= person.masters_program unless person.masters_program.blank? %>
+              <%= person.masters_track unless person.masters_track.blank? %>
+              <% if person.is_part_time %>
+                  (PT)
+              <% else %>
+                  (FT)
+              <% end %>
+          <% elsif person.is_staff %>
+              Staff
+          <% end %>
+        </td>
+        <td hidden="true" class="url_cell">  <%= person.image_uri %></td>
+
       </tr>
   <% end %>
+
+
   </tbody>
 </table>
 
@@ -131,3 +208,5 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
+
+<input type="hidden" id="hidden_field" value="off">

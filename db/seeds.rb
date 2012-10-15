@@ -51,6 +51,7 @@ FactoryGirl.define do
     human_name "Todd Sedano"
     email "todd.sedano@sv.cmu.edu"
     is_staff 1
+    image_uri "/images/staff/ToddSedano.jpg"
   end
 
 
@@ -60,6 +61,7 @@ FactoryGirl.define do
     human_name "Ed Katz"
     email "ed.katz@sv.cmu.edu"
     is_staff 1
+    image_uri "/images/staff/EdKatz.jpg"
   end
 
   factory :awe_smith, :parent => :person do
@@ -72,7 +74,7 @@ FactoryGirl.define do
     first_name "Awe"
     last_name "Smith"
     human_name "Awe Smith"
-    image_uri "/images/mascot.jpg"
+    image_uri "/images/staff/ElodieJaneSims.jpg"
     email "awe.smith@sv.cmu.edu"
     webiso_account "awesm@andrew.cmu.edu"
   end
@@ -87,7 +89,7 @@ FactoryGirl.define do
     first_name "Betty"
     last_name "Ross"
     human_name "Betty Ross"
-    image_uri "/images/mascot.jpg"
+    image_uri "/images/staff/EricPark.jpg"
     email "betty.ross@sv.cmu.edu"
     webiso_account "bross@andrew.cmu.edu"
   end
@@ -104,7 +106,7 @@ FactoryGirl.define do
     first_name "Charlie"
     last_name "Moss"
     human_name "Charlie Moss"
-    image_uri "/images/mascot.jpg"
+    image_uri "/images/staff/FlorianSelch.jpg"
     email "charlie.moss@sv.cmu.edu"
     webiso_account "cmoss@andrew.cmu.edu"
   end
@@ -145,12 +147,12 @@ FactoryGirl.define do
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "FirstLast"
-    first_name "First"
+    twiki_name "Zhipeng"
+    first_name "Li"
     last_name "Last"
     human_name "Your Name"
-    email "your.email@sv.cmu.edu"
-    webiso_account "your.name@andrew.cmu.edu"
+    email "zhipeng.li@sv.cmu.edu"
+    webiso_account "zhipengl@andrew.cmu.edu"
   end
 
 end
