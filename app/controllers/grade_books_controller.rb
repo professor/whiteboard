@@ -23,7 +23,7 @@ class GradeBooksController < ApplicationController
     error=false
     unless scoreArrayList.blank?
       scoreArrayList.each do|scoreValue|
-      grade_book = GradeBook.get_grade_books(scoreValue["course_id"], scoreValue["assignment_id"],scoreValue["student_id"])
+      grade_book = GradeBook.get_grade_book(scoreValue["course_id"], scoreValue["assignment_id"],scoreValue["student_id"])
         if  grade_book.blank?
           grade_book_entry=GradeBook.new(scoreValue)
           unless grade_book_entry.save

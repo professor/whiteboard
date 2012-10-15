@@ -66,7 +66,7 @@ function updateScore(visible_to_student) {
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "grade_books/",
+        url: $("#update_form").attr("action"),
         dataType: "json",
         data: JSON.stringify(data, null, 1),
         success: function(data, message, jqXHR){

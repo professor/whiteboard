@@ -15,42 +15,43 @@
 </script>
 
 <h1><%=@course.name %></h1>
-<div style='width:100%;overflow:scroll'>
+<form id='update_form' action='<%=course_grade_books_path(@course)%>'>
+  <div style='width:100%;overflow:scroll'>
 
 
-  <div id="result"></div>
-  <div class="score">
-  <table class="cmu_table sortable">
-    <thead>
-  <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
-    <th style='max-width:78px; word-wrap:break-word;'> First Name
-    </th>
-  <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
-  <% @assignments.each do |assignment| %>
-    <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
-  <%end %>
-</tr>
+    <div id="result"></div>
+    <div class="score">
+      <table class="cmu_table sortable">
+        <thead>
+          <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+            <th style='max-width:78px; word-wrap:break-word;'> First Name
+            </th>
+            <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
+            <% @assignments.each do |assignment| %>
+              <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
+            <%end %>
+          </tr>
 
-    </thead>
+        </thead>
 
-   <input type="hidden" id="course_id" value=<%=@course.id%> />
-  <% @grade_books.each do |student, gbooks| %>
-     <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
-       <td><%=student.first_name%>
-       </td>
-        <td><%=student.last_name%></td>
-        <% @assignments.each do |assignment|%>
-          <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text" size="4"/></td>
-        <% end %>
-    </tr>
-  <%end%>
-  </table>
+        <input type="hidden" id="course_id" value=<%=@course.id%> />
+        <% @grade_books.each do |student, gbooks| %>
+          <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+            <td><%=student.first_name%>
+            </td>
+            <td><%=student.last_name%></td>
+            <% @assignments.each do |assignment|%>
+              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text" size="4"/></td>
+            <% end %>
+          </tr>
+        <%end%>
+      </table>
 
-  <div style='padding-top:20px;'>
-      <button type="button" id="gradebook_submit">Submit</button>
-      <button type="button" id="gradebook_save_draft">Save as Draft</button>
+      <div style='padding-top:20px;'>
+        <button type="button" id="gradebook_submit">Submit</button>
+        <button type="button" id="gradebook_save_draft">Save as Draft</button>
+      </div>
+
+    </div>
   </div>
-
-
-</div>
-</div>
+</form>
