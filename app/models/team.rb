@@ -154,10 +154,11 @@ class Team < ActiveRecord::Base
   end
 
   def clone_to_another_course(destination_course_id)
+    destination_course = Course.find(destination_course_id)
     clone = self.clone
     clone.member_ids = self.member_ids
-    clone.course_id = destinaton_course_id
-    clone.name = self.name + " - " + destination_course_id
+    clone.course_id = destination_course_id
+    clone.name = self.name + " - " + destination_course.short_or_course_number
     clone.save
   end
 

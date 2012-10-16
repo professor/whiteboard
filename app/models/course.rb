@@ -158,6 +158,14 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def short_or_course_number
+    unless self.short_name.blank?
+      self.short_name
+    else
+      self.number
+    end
+  end
+
   def display_semester
     mini_text = self.mini == "Both" ? "" : self.mini + " "
     return self.semester + " " + mini_text + self.year.to_s
@@ -242,6 +250,12 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def copy_teams_to_another_course(destination_course_id)
+    #Todo: at some point, refactor teams to be an ordered list, so that we wouldn't need to reverse it here to preserve ordering.
+    self.teams.reverse.each do |team|
+      team.clone_to_another_course(destination_course_id)
+    end
+  end
 
   def current_mini?
     case self.mini
