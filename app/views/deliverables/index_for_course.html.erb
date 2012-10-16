@@ -5,5 +5,14 @@
   <span class="instructions">Only faculty can see this information.</span>
 </div>
 
+
+<div class="rounded admin">
+  <p style="font-color:rgb(153,0,0);">A student team is working to improve this page. In the meantime, try these filters</p>
+   <ul><li><%=  link_to "Individual Deliverables", individual_deliverables_path(@course) %></li>
+   <li> <%=  link_to "Team Deliverables", team_deliverables_path(@course) %></li>
+       </ul>
+
+</div>
+
 <%= render :partial => "deliverable_listing", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
 <br/>
