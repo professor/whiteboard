@@ -312,6 +312,13 @@ describe AcademicCalendar do
       year.should == 2012
     end
 
+    it "works for next year's spring" do
+      next_year = Date.today.year + 1
+      (semester, year) = AcademicCalendar.valid_semester_and_year('Spring' + next_year.to_s)
+      semester.should == "Spring"
+      year.should == 2013
+    end
+
     it 'works for the lowercase semesters' do
       (semester, year) = AcademicCalendar.valid_semester_and_year('fall2012')
       semester.should == "Fall"

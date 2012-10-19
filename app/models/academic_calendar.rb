@@ -290,7 +290,7 @@ class AcademicCalendar
 
     semester = "" unless ["Fall", "Summer", "Spring"].include?(semester)
     if year.is_a?(Fixnum)
-      year = "" unless year > 2007 && year < (Date.today.year + 1)
+      year = "" unless year > 2007 && year <= (Date.today.year + 1)
     end
 
     return semester, year
