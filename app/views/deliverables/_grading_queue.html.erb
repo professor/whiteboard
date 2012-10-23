@@ -17,7 +17,7 @@
       <td><%= deliverable.name %></td>
       <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
       <td><%= deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date %></td>
-      <td><%= link_to "Grade", "#" %></td>
+      <td><%= link_to "Grade", deliverable_feedback_path(deliverable) %></td>
     </tr>
   <% end %>
   </tbody>

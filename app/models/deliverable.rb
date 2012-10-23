@@ -191,8 +191,8 @@ class Deliverable < ActiveRecord::Base
     mail_to = self.owner_email
 
     message = "Feedback has been submitted for "
-    if !self.task_number.nil? and self.task_number != ""
-      message += "task " + self.task_number + " of "
+    if !self.assignment && !self.assignment.task_number.blank?
+      message += "task " + self.assignment.task_number + " of "
     end
     message += self.course.name
 

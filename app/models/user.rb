@@ -63,7 +63,6 @@ class User < ActiveRecord::Base
               where t.course_id=c.id and c.year=#{Date.today.year} and c.semester='#{AcademicCalendar.current_semester()}' and t.id in
               (SELECT ta.team_id FROM team_assignments ta, users u where u.id=ta.user_id and u.id=#{self.id})"
     courses_assigned_on_teams = Course.find_by_sql(sql_str)
-
     @registered_courses = hub_registered_courses | courses_assigned_on_teams
   end
 

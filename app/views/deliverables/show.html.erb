@@ -76,7 +76,7 @@
     <th>Comments</th>
   </tr>
 
-  <% if @current_user.is_staff? %>
+  <% if current_user.is_staff? %>
       <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
         <td>(<%= link_to 'Alter Feedback', deliverable_feedback_path(@deliverable) %>)</td>
         <td colspan="2">&nbsp;</td>

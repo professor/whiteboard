@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013182138) do
+ActiveRecord::Schema.define(:version => 20121022155918) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20121013182138) do
     t.string   "email"
     t.string   "grading_nomenclature"
     t.string   "grading_criteria"
+    t.string   "grading_range"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20121013182138) do
     t.datetime "feedback_updated_at"
     t.integer  "assignment_id"
     t.string   "status"
+    t.integer  "grade"
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"

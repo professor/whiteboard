@@ -46,43 +46,6 @@
     <div id="tabs-grading-criteria" class="tab-element">
       <%= render "courses/form_grading_criteria" %>
     </div>
-
-    <div id="tabs-assignment" class="tab-element">
-      <div id="add_deliverable">
-        <%= link_to "Add Deliverable", "#" %>
-      </div>
-      <% if !@course.assignments.count %>
-        <table id="assignment_page">
-          <thead>
-            <tr>
-              <th>Task</th>
-              <th>Task Title</th>
-              <th><%= @course.grading_criteria %></th>
-              <th>Due Date</th>
-              <th>Actions</th>
-              <th>Team/ Individual</th>
-              <th>Can student submit?</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @course.assignments.each do |assignment| %>
-              <tr>
-                <td><%= assignment.task_number %></td>
-                <td><%= assignment.title %></td>
-                <td><%= assignment.weight %></td>
-                <td><%= assignment.due_date %></td>
-                <td><%= "Actions" %></td>
-                <td><%= assignment.team_deliverable ? "Team" : "Individual"%></td>
-                <td><%= assignment.can_submit ? "Yes" : "No" %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-      <div id="add_new_deliverable">
-        <%= render 'assignments/form_create' %>
-      </div>
-    </div>
   </div>
 </div>
 
