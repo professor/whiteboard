@@ -141,6 +141,7 @@ FactoryGirl.define do
   factory :lydian, :parent => :person do
     id 998
     is_student 1
+    is_staff 1
     is_part_time 0
     graduation_year "2012"
     masters_program "SE"
@@ -151,6 +152,21 @@ FactoryGirl.define do
     human_name "Lydian Lee"
     email "lydian.lee@sv.cmu.edu"
     webiso_account "tingyenl@andrew.cmu.edu"
+  end
+  factory :Prabhjot, :parent => :person do
+    id 997
+    is_student 1
+    is_staff 1
+    is_part_time 0
+    graduation_year "2012"
+    masters_program "SE"
+    masters_track "Tech"
+    twiki_name "PrabhjotSingh"
+    first_name "Prabhjot"
+    last_name "Singh"
+    human_name "Prabhjot Singh"
+    email "prabhjot.singh@sv.cmu.edu"
+    webiso_account "prabhjos@andrew.cmu.edu"
   end
 
 
@@ -181,7 +197,8 @@ todd = Factory.create(:todd)
 ed = Factory.create(:ed)
 kate = Factory.create(:kate)
 lydian = Factory.create(:lydian)
-students = [kate, lydian]
+prabhjot = Factory.create(:prabhjot)
+students = [kate, lydian, prabhjot]
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
