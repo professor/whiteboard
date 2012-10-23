@@ -2,7 +2,7 @@ module ApplicationHelper
 
 
   def sanitize_trusted(html)
-    return sanitize html, :tags => %w(a br div em h1 h2 h3 h4 img span p pre strong table tbody tr td ul ol li), :attributes => %w(bgcolor cellpadding cellspacing class href id name padding src style valign width)
+    return sanitize html, :tags => %w(a br div em h1 h2 h3 h4 img span p pre strong table tbody tr td ul ol li), :attributes => %w(bgcolor cellpadding cellspacing class href id name padding src strike style valign width)
   end
 
 
