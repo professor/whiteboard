@@ -1,4 +1,18 @@
-<% @person.telephones.each { |phone| %>
-    <%= h phone %><br/>
-<% } %>
-
+<table class="cmu_table">
+<% if @person.is_staff %>
+    <tr class="cmu_table_odd">
+      <td>Office:</td>
+      <td><%= h @person.office %></td>
+    </tr>
+    <tr>
+      <td>Office Hours:</td>
+      <td><%= h @person.office_hours %></td>
+    </tr>
+<% end %>
+<%  @person.telephones_hash.each_with_index do |(key, value), index| %>
+    <tr <% if index.even? %> class="cmu_table_odd"<% end %> >
+        <td><%= h "#{key}" %></td>
+        <td><%= h "#{value}" %></td>
+    </tr>
+<% end %>
+</table>

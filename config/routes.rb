@@ -71,6 +71,7 @@ CMUEducation::Application.routes.draw do
   match '/effort_reports/course/:course_id' => 'effort_reports#course'
   resources :effort_reports
   match '/people_autocomplete' => 'people#index_autocomplete'
+  match '/people_search' => 'people#search'
   match '/people/class_profile' => 'people#class_profile'
   match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'

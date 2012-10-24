@@ -80,24 +80,54 @@ table.tablesorter {
 	font-size: 8pt;
 	width: 100%;
 	text-align: left;
+	table-layout: fixed;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	border: 1px solid #FFF;
 	font-size: 8pt;
 	padding: 4px;
-    text-transform: none;
+	text-transform: none;
 }
 #key_contacts_table th:first-child, #key_contacts_table td{
     overflow: auto;
 }
-#key_contacts_table th:first-child{
+#key_contacts_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
 }
 #key_contacts_table th:nth-child(3){
     width: 150px;
 }
 #key_contacts_table th:nth-child(4){
     width: 210px;
+}
+#people_table th:first-child {
+/* this is required for making sure cells with too much data don't throw the layout for a toss */
+    white-space:nowrap;
+    overflow: auto;
+}
+#people_table th:first-child {
+/* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#people_table th:nth-child(2),#people_table th:nth-child(3){
+/* first name and last name columns */
+   width: 100px;
+}
+#people_table th:nth-child(4) {
+/* program(track)/staff column */
+   width: 290px;
+}
+#people_table td.photobook-img {
+    padding: 0px;
+    margin: 0px;    
+    width: 60px; 
+}
+#people_table td.photobook-img img {
+    padding:0;
 }
 table.tablesorter thead tr .header {
 	background-image: url(/images/tablesorter/bg.gif);
@@ -114,9 +144,9 @@ table.tablesorter tbody td {
 }
 table.tablesorter tbody td.photobook-img {
     padding: 0px;
-    margin: 0px;
-    width: 60px;
-
+    margin: 0px;    
+    width: 60px; 
+    height: 82px;
 }
 table.tablesorter tbody td.photobook-img img {
     padding:0;
