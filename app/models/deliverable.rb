@@ -59,7 +59,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   def task_number
-    self.assignment.nil? ? nil : self.assignment.task_number
+    self.assignment.nil? ? nil : self.assignment.task_number.to_s
   end
 
   def unique_course_task_owner?

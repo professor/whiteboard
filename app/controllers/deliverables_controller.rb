@@ -125,7 +125,11 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 
-    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+    if @deliverable.assignment.team_deliverable
+      @deliverable.update_team
+    else
+      @deliverable.team = nil
+    end
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -227,6 +231,7 @@ class DeliverablesController < ApplicationController
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
+    @deliverable.grade = params[:deliverable][:grade]
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]

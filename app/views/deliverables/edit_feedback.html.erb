@@ -1,31 +1,45 @@
 <% content_for :title, "Grade Deliverable" %>
 
-<% if @deliverable.is_team_deliverable? %>
+<% if @deliverable.assignment.is_team_deliverable? %>
     <h1>Grade Team Deliverable for <%= @deliverable.team.name %></h1>
 <% else %>
     <h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
 <% end %>
 <h2>Assignment: <%= @deliverable.assignment.title %></h2>
 
-<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-  <p>
-    <%= f.label :grade %>
-    <%= f.text_field :grade, size: 4 %>
-  </p>
-  <p>
-    <%= f.label :feedback, "Feedback file to upload" %>
-    <%= f.file_field :feedback %>
-  </p>
-  <p>
-    <%= f.label :feedback_comment, "Feedback Comments" %>
-    <br>
-    <%= f.text_area :feedback_comment, :size => "100x10" %>
-  </p>
-  <p>
-    <%= f.submit "Submit" %>
-  </p>
+<% if !@deliverable.assignment.team_deliverable? %>
+  <%= render :partial => 'people/twiki_photo_link', :locals => {:person => @deliverable.creator} %>
 <% end %>
 
-<%= link_to 'Cancel', deliverable_path(@deliverable) %>
-<br/>
-<br/>
+<div style="float:right">
+  <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+    <p>
+      <%= f.label :grade %>
+      <%= f.text_field :grade, size: 4 %>
+    </p>
+    <p>
+      <%= f.label :feedback, "Feedback file to upload" %>
+      <%= f.file_field :feedback %>
+    </p>
+    <p>
+      <%= f.label :feedback_comment, "Feedback Comments" %>
+      <br>
+      <%= f.text_area :feedback_comment, :size => "70x10" %>
+    </p>
+    <% if @deliverable.assignment.team_deliverable? %>
+      <% @deliverable.team.members.each do |member| %>
+        <%= render :partial => 'people/twiki_photo_link', :locals => {:person => member} %>
+      <% end %>
+    <% end %>
+    <p>
+      <%= f.submit "Submit", {:style => "float:right;"} %>
+    </p>
+
+  <% end %>
+</div>
+
+<p>
+  <br/>
+  <%= link_to 'Cancel', deliverable_path(@deliverable) %>
+  <br/>
+</p>
