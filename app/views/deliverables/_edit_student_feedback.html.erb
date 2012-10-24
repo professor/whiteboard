@@ -1,0 +1,54 @@
+<% content_for :title, "Provide Feedback" %>
+
+
+
+
+<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+    <h1>Feedback</h1>
+   <p> <% unless @deliverable.feedback_file_name.nil? %>
+      Current uploaded feedback file  <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+    <% else %>
+        None
+    <% end %>
+
+    </p>
+    <p>
+      <%= f.label :feedback, "Feedback file to upload" %>
+      <%= f.file_field :feedback %>
+    </p>
+    <p>
+      <%= f.text_area :feedback_comment, :size => "90x10" %>
+    </p>
+    </br>
+    <h1>Professor's Private Notes</h1>
+    <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
+    <span class="instructions">Only faculty can see this information.</span>
+
+    <p>
+      <%= f.text_area :private_note, :size => "90x10" %>
+    </p>
+
+
+
+
+    <br/><br/>
+    <% if @deliverable.is_team_deliverable? %>
+        <% @deliverable.team.members.each do |user| %>
+            <%= render :partial => 'fetch_picture', :locals => {:person => user} %>
+        <% end %>
+    <% else %>
+        <%= render :partial => 'fetch_picture', :locals => {:person =>@deliverable.creator } %>
+    <% end %>
+
+
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+    <p>
+      <%= f.submit "Save and Email" , :name=>"submit"%>
+      <%= f.submit "Save as Draft" , :name=>"draft" %>
+    </p>
+<% end %>
+
+<%= link_to 'Cancel', deliverable_path(@deliverable) %>
+<br/>
+<br/>

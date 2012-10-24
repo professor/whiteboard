@@ -1,0 +1,28 @@
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <th>Date</th>
+    <th>File</th>
+    <th>Comments</th>
+  </tr>
+
+
+
+  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+    <td><%= format_timestamp(@deliverable.feedback_updated_at) %></td>
+    <td>
+      <% unless @deliverable.feedback_file_name.nil? %>
+          <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+      <% else %>
+          None
+      <% end %>
+    </td>
+    <td>
+      <% if @deliverable.feedback_comment.blank? %>
+          None
+      <% else %>
+          <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %>
+      <% end %>
+    </td>
+  </tr>
+
+</table>
