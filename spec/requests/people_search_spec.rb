@@ -31,10 +31,50 @@ describe "people search" do
 
     before do
       fill_in "search_text_box" , :with => "Sam"
-      click_button "submit_btn"
+
+    end
+
+    it "should update on change of search text string", :js => true do
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Sam")
+      fill_in "search_text_box" , :with => "Todd"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Todd")
+
+    end
+
+    it "should update on change of user type", :js => true do
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Sam")
+      select 'Alumni', :from => 'people_type_picker'
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => "Sam")
+
+    end
+
+    it "should update on change of criteria", :js => true do
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Sam")
+      select 'Company', :from => 'extra_criteria_picker'
+      find('#criteria_company input').set('LinkedIn')
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => "Sam")
+      fill_in "search_text_box" , :with => "Vidya"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+    end
+
+    it "should update on selection of exact match", :js => true do
+      fill_in "search_text_box" , :with => "Vid"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+      find(:css, "#exact_match_checkbox").set(true)
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => 'Vidya')
     end
 
     it "Should display images with the search results", :js => true do
+      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card img')
     end
@@ -47,8 +87,8 @@ describe "people search" do
       fill_in "search_text_box" , :with => "sh"
       click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
-      page.should have_selector('#results_box .data_card', :content => "Rashmi")
-      page.should have_selector('#results_box .data_card', :content => "Shama")
+      page.should have_selector('#results_box .data_card', :text => "Rashmi")
+      page.should have_selector('#results_box .data_card', :text => "Shama")
     end
 
     it "should search with exact match", :js => true do

@@ -194,12 +194,21 @@ $(document).ready(function(){
         return false;
     });
 
+    var search_timout;
 
     // Send query and get results
     $('#search_text_box').keyup(function(e) {
         if(e.which == 13){ // If ENTER
-            execute_search();
+          execute_search();
         }
+    });
+
+    $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
+      execute_search() ;
+    });
+    $('#search_text_box, .criteria_text').keyup(function(e) {
+        clearTimeout(search_timout);
+        search_timout=setTimeout('execute_search()', 400)  ;
     });
 
     $('#submit_btn').click( function(){ execute_search(); });
