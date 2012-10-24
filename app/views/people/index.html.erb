@@ -16,8 +16,7 @@
                       var loadImageForRow = function(row) {
 
                           var img = new Image();
-                          img.width = 60;
-
+                          img.width = 60
                           img.onload = function() {
                                       //console.log(row.find('.url_cell').value);
                                       if (!this.complete || typeof this.naturalWidth == 'undefined' || this.naturalWidth == 0) {
@@ -55,9 +54,11 @@
                     $("#filterBoxOne").keyup(function() {
                         if(this.value.length > 0){
                             $("#people_table").show();
+                            $("#key_contacts_table").hide();
                         }
                         else{
                             $("#people_table").hide();
+                            $("#key_contacts_table").show();
                         }                                
                     });
 
@@ -156,16 +157,23 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-
+  <%if @user_override %>
+      <%
+            user_description = "#{@user.human_name} | UserID: #{@user.id} | "
+            user_description << (@user.is_student ? "Student" : "Staff")
+            user_description << " | #{@user.masters_program}"  unless @user.masters_program.blank?
+            user_description << " #{@user.masters_track}"  unless @user.masters_track.blank?
+      %>
+      <%= "You are showing results for:  #{user_description}" %>
+  <% end %>
   <% @people.each do |person| %>
     <tr>
       <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
-      <td><b><%= person[:title] %></b><br />
-        <%= "See me for: #{person[:job_function]}" unless person[:job_function].blank? %></td>
+      <td><%= person[:title] %>
       <td><%= link_to(person[:human_name], person[:path]) %></td>
       <td><% person[:contact_dtls].each do |k, v| %>
-        <%= "#{k}: #{v}" %>
-        <%end %><br />
+        <%= "#{k}: #{v}" %>  <br />
+        <%end %>
         <%= mail_to person[:email] %></td>
     </tr>
   <% end %>

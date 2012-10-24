@@ -20,6 +20,13 @@ describe PeopleController do
       end
     end
 
+    describe "GET people_search" do
+      it "should assign all active people to people" do
+        get :search, :filterBoxOne => @person1.first_name
+        assigns(:people).should include @person1
+      end
+    end
+
     describe "GET show" do
       it "should find person by name" do
         get :show, :id => @person1.twiki_name

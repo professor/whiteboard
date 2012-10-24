@@ -18,34 +18,43 @@ class PeopleController < ApplicationController
 
 # GET /people
 # GET /people.xml
+# This method loads the search bar and default contacts for that user.
   def index
-    #@people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
+    # These lines allow someone to override the user ID used to display default search results.
+    # This code is intended for use by administrators and staff only.
+    @user = current_user
+    if (current_user.is_admin? || current_user.is_staff?)
+      if !params[:id].blank?
+        @user_override = true
+        @user = User.find_by_param(params[:id])
+      end
+    end
 
-    #@job_functions = JobFunction.where(:program_group => current_user[:masters_program]) || []
-    test_current_user = User.find(2)
-    test_current_user = current_user
-    @test = test_current_user
-    #manualOverrideProgram = 'blah'
-    #manualOverrideTrack = 'blah'
-    #manualOverrideStudent = 'blah'
-    userType = test_current_user.is_student ? "Student" : "Staff"
-    @job_functions = JobFunction.all(:conditions => {:program_group => [test_current_user.masters_program, 'All']},
-                                     :conditions => {:track_group => [test_current_user.masters_track, 'All']},
-                                     :conditions => {:student_staff_group => [userType, 'All']}
-    )
-    #.all(:conditions => {:program_track => [current_user.masters_track, 'All']})
-    @people = @job_functions.collect { |jf| Hash[
-        :image_uri => jf.user.image_uri,
-        :job_function => jf.title,
-        :title => jf.user.title,
-        :human_name => jf.user.human_name,
-        :contact_dtls => jf.user.telephones_hash,
-        :email => jf.user.email,
-        :path => person_path(jf.user)
+    search_defaults = PeopleSearchDefault.all
+    results = search_defaults.find_all { |t| t.student_staff_group == 'All' }
+    search_defaults.reject!  { |t| t.student_staff_group == 'All' }
+    if(@user.is_student)
+      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Student' }
+      search_defaults.find_all { |t| t.program_group == 'All' }.each { |x| results.push(x) }
+      search_defaults.reject!  { |t| t.program_group == 'All' }
+      search_defaults = search_defaults.find_all { |t| t.program_group == @user.masters_program }
+      search_defaults.find_all { |t| t.track_group == 'All' }.each { |x| results.push(x) }
+      search_defaults.reject!  { |t| t.track_group == 'All' }
+      search_defaults = search_defaults.find_all { |t| t.track_group == @user.masters_track || (@user.masters_program == 'PhD' && t.track_group == nil) }.each { |x| results.push(x) }
+    else
+      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Staff' }
+      search_defaults.each { |x| results.push(x) }
+    end
+
+    @people = results.collect { |default_person| Hash[
+        :image_uri => default_person.user.image_uri,
+        :title => default_person.user.title,
+        :human_name => default_person.user.human_name,
+        :contact_dtls => default_person.user.telephones_hash,
+        :email => default_person.user.email,
+        :path => person_path(default_person.user)
     ]}
-
-
-
+    @people.uniq!
 
     respond_to do |format|
       format.html { render :html => @people }

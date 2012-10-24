@@ -19,6 +19,14 @@ describe "phone book" do
 
     end
 
+    it "renders phone book page" do
+      page.should have_content("Phone book")
+      page.should have_selector("input#filterBoxOne")
+      # page.should have_link("See conference rooms")
+      # page.should have_link("See photo book")
+
+    end
+
     # it "renders photo book" do
     #   page.should have_link("See photo book")
     #   click_link "See photo book"
