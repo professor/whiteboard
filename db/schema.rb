@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121023200602) do
+ActiveRecord::Schema.define(:version => 20121024195328) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(:version => 20121023200602) do
     t.string   "feedback_content_type"
     t.integer  "feedback_file_size"
     t.datetime "feedback_updated_at"
-    t.float    "score"
     t.integer  "assignment_id"
     t.string   "private_note"
   end
