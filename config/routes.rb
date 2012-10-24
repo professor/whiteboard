@@ -1,6 +1,10 @@
 CMUEducation::Application.routes.draw do
   resources :search, :only => [:index]
+  get    "/deliverables/get_assignments_for_student(.:format)" =>  "deliverables#get_assignments_for_student"
+
+ # match '/deliverables/get_assignments_for_student(.:format)'=> 'deliverables#get_assignments_for_student' ,:as=> :get_assignments_for_student
   resources :deliverables
+
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
