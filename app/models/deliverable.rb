@@ -150,7 +150,7 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
-  def send_deliverable_feedback_email(url)
+  def send_deliverable_feedback_email(url,feedback_content)
     mail_to = self.owner_email
 
     message = "Feedback has been submitted for "
@@ -159,6 +159,13 @@ class Deliverable < ActiveRecord::Base
     end
     message += self.course.name
 
+
+
+    if !feedback_content.nil?
+      message += "
+
+      "+feedback_content
+    end
     options = {:to => mail_to,
                :subject => "Feedback for " + self.course.name,
                :message => message,

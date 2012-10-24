@@ -191,9 +191,23 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.find(params[:id])
   end
 
+
+
   def update_feedback
+
     @deliverable = Deliverable.find(params[:id])
+
+    submit=true
+    if params[:submit]
+      # @deliverable.is_student_visible=true;
+
+    elsif params[:draft]
+     # @deliverable.is_student_visible=false;
+      submit=false
+    end
+
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
+    @deliverable.private_note = params[:deliverable][:private_note]
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
     end
@@ -202,7 +216,9 @@ class DeliverablesController < ApplicationController
     end
     respond_to do |format|
       if @deliverable.save
-        @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
+        #if submit==true
+        #  @deliverable.send_deliverable_feedback_email(url_for(@deliverable),@deliverable.feedback)
+        #end
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
