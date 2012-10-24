@@ -39,9 +39,9 @@ describe AssignmentsController do
 
   describe "GET index" do
     it "assigns all assignments as @assignments" do
-      #assignment = @course.assignments.create! valid_attributes
+      assignments = @course.assignments
       get :index, :course_id => @course.id
-      assigns(:assignments).should eq([@assignment])
+      assigns(:assignments).should eq(assignments)
     end
   end
 

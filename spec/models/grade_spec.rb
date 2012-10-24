@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe GradeBook do
+describe Grade do
   before(:each) do
     @student_sam = FactoryGirl.create(:student_sam_user)
     @course_fse = FactoryGirl.create(:course_fse_with_students, registered_students: [@student_sam])
     @assignment_fse = FactoryGirl.create(:assignment_fse)
-    @grade_book = GradeBook.create(:course_id => @course_fse.id, 
+    @grade = Grade.create(:course_id => @course_fse.id, 
                                    :student_id => @student_sam.id, 
                                    :assignment_id => @assignment_fse.id,
                                    :score => 0)
@@ -15,12 +15,12 @@ describe GradeBook do
     @student_sam.delete
     @course_fse.delete
     @assignment_fse.delete
-    @grade_book.delete
+    @grade.delete
   end
 
-  subject { @grade_book }
+  subject { @grade }
 
-  context "GradeBook" do
+  context "Grade" do
     it { should belong_to(:course)}
     it { should belong_to(:student)}
     it { should belong_to(:assignment)}
@@ -81,32 +81,32 @@ describe GradeBook do
   end
 
   it 'should not be redundant' do
-    redundant_grade_book = GradeBook.new(
+    redundant_grade = Grade.new(
       :course_id => @course_fse.id, 
       :student_id => @student_sam.id, 
       :assignment_id => @assignment_fse.id,
       :score => 0)
-    redundant_grade_book.should_not be_valid
+    redundant_grade.should_not be_valid
   end
 
   it 'should be able to fetch one student\'s grades' do
-    all_grade_books = GradeBook.get_grade_books(@course_fse, @student_sam)
-    subject.should eql(all_grade_books[@assignment_fse.id])
+    all_grades = Grade.get_grades(@course_fse, @student_sam)
+    subject.should eql(all_grades[@assignment_fse.id])
   end
 
   it 'should be able to fetch one student\'s grade earned from one assignment' do
-    @grade_book.save
+    @grade.save
     score_value = {:course_id=>@course_fse.id, :student_id=>@student_sam.id, :assignment_id=>@assignment_fse.id}
-    one_grade_book = GradeBook.get_grade_book(@course_fse.id, @student_sam.id, @assignment_fse.id)
-    @grade_book.eql?(one_grade_book)
+    one_grade = Grade.get_grade(@course_fse.id, @student_sam.id, @assignment_fse.id)
+    @grade.eql?(one_grade)
   end
 
   it 'should be able to update all grades' do
     course_assignment = {:course_id=>@course_fse.id, :student_id=>@student_sam.id, :assignment_id=>@assignment_fse.id, :score=>20.0}
-    @grade_book.save
-    GradeBook.update_all(course_assignment)
-    one_grade_book = GradeBook.get_grade_book(@course_fse.id, @student_sam.id, @assignment_fse.id)
-    @grade_book.eql?(one_grade_book)
+    @grade.save
+    Grade.update_all(course_assignment)
+    one_grade = Grade.get_grade(@course_fse.id, @student_sam.id, @assignment_fse.id)
+    @grade.eql?(one_grade)
   end
 
 end

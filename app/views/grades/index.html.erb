@@ -15,7 +15,7 @@
 </script>
 
 <h1><%=@course.name %></h1>
-<form id='update_form' action='<%=course_grade_books_path(@course)%>'>
+<form id='update_form' action='<%=course_grades_path(@course)%>'>
   <div style='width:100%;overflow:scroll'>
 
 
@@ -35,13 +35,13 @@
         </thead>
 
         <input type="hidden" id="course_id" value=<%=@course.id%> />
-        <% @grade_books.each do |student, gbooks| %>
+        <% @grades.each do |student, grade_entries| %>
           <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
             <td><%=student.first_name%>
             </td>
             <td><%=student.last_name%></td>
             <% @assignments.each do |assignment|%>
-              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(gbooks.has_key?(assignment.id))?(gbooks[assignment.id].score):""%>' type="text" size="4"/></td>
+              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4"/></td>
             <% end %>
           </tr>
         <%end%>

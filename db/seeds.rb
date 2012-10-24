@@ -153,7 +153,7 @@ FactoryGirl.define do
     email "lydian.lee@sv.cmu.edu"
     webiso_account "tingyenl@andrew.cmu.edu"
   end
-  factory :Prabhjot, :parent => :person do
+  factory :prabhjot, :parent => :person do
     id 997
     is_student 1
     is_staff 1
@@ -211,6 +211,6 @@ students.each{|s| Factory.create(:registration, :user => s)}
 10.times do 
   assignment = Factory.create(:assignment_many)
   [998, 999].each do |s|
-    Factory.create(:grade_book_with_course, :assignment => assignment, :student_id => s)
+    Factory.create(:grade_with_course, :assignment => assignment, :student_id => s)
   end
 end

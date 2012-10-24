@@ -10,7 +10,7 @@ describe Assignment do
         end
     end
     it {should belong_to(:course)}
-    it {should have_many(:grade_books)}
+    it {should have_many(:grades)}
   end
   
   context "maximum score" do

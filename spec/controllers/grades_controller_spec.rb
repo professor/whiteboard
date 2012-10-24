@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GradeBooksController do
+describe GradesController do
     #
     #before(:all) do
     #  @user = FactoryGirl.build(:faculty_frank)
