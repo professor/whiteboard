@@ -54,8 +54,8 @@
               <p><%= link_to "Manage Assignments", course_assignments_path(@course) %> </p>
             </td>
             <td>
-              <%= link_to image_tag("/images/gradebook_icon.png", :class => "icon", :size => "108x75", :alt => "Curriculum website", :title => "Grade Book"), course_grade_books_path(course) %>
-              <p><%= link_to "Grade Book", course_grade_books_path(@course) %> </p>
+              <%= link_to image_tag("/images/gradebook_icon.png", :class => "icon", :size => "108x75", :alt => "Curriculum website", :title => "Grade Book"), course_grades_path(course) %>
+              <p><%= link_to "Grade Book", course_grades_path(@course) %> </p>
             </td>
           </tr>
         </table>
