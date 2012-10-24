@@ -163,6 +163,7 @@ $(document).ready(function(){
         if($('#extra_criteria_box .criteria_tag').last().find('.criteria_text').length != 0 && $('#extra_criteria_box .criteria_tag').last().css('display') != 'none'){
             $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
+        execute_search();
         $(this).val('default');
     });
 
@@ -184,6 +185,7 @@ $(document).ready(function(){
             $(this).parent().fadeTo("fast", 1);
             $(this).html('x');
         }
+        execute_search();
         return false; // avoid anchor action
     });
 
@@ -191,24 +193,25 @@ $(document).ready(function(){
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
         selected_criteria_hash[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
+        execute_search();
         return false;
     });
 
     var search_timout;
 
-    // Send query and get results
-    $('#search_text_box').keyup(function(e) {
+    // DEPRECATED
+    /*$('#search_text_box').keyup(function(e) {
         if(e.which == 13){ // If ENTER
           execute_search();
         }
-    });
+    });*/
 
     $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
-      execute_search() ;
+      execute_search();
     });
     $('#search_text_box, .criteria_text').keyup(function(e) {
-        clearTimeout(search_timout);
-        search_timout=setTimeout('execute_search()', 400)  ;
+      clearTimeout(search_timout);
+      search_timout=setTimeout('execute_search()', 600)  ;
     });
 
     $('#submit_btn').click( function(){ execute_search(); });
