@@ -88,9 +88,10 @@ $(document).ready(function(){
     var current_date = new Date();
     var default_class_year = current_date.getFullYear();
     if (current_date.getMonth() > 8) { default_class_year += 1; }
-    for (i=default_class_year; i>2001; --i){
+    for (var i=default_class_year+1; i>2001; --i){
         $('#criteria_class_year select').append('<option value="'+i+'">'+i+'</option>');
     }
+    $('#criteria_class_year select').val(default_class_year);
 
     // hide criteria_tag in the extra_criteria_box 
     $('#extra_criteria_box .criteria_tag').hide();
@@ -122,7 +123,7 @@ $(document).ready(function(){
                 criteria_ids = [0, 1, 2, 3];
                 break;
             case "staff":
-                criteria_ids = [0, 3];
+                criteria_ids = [0];
                 break;
             case "alumnus":
                 criteria_ids = [0, 1, 2, 3];
@@ -197,7 +198,7 @@ $(document).ready(function(){
         return false;
     });
 
-    var search_timout;
+    var search_timeout, autocomplete_timeout;
 
     // DEPRECATED
     /*$('#search_text_box').keyup(function(e) {
@@ -210,10 +211,21 @@ $(document).ready(function(){
       execute_search();
     });
     $('#search_text_box, .criteria_text').keyup(function(e) {
-      clearTimeout(search_timout);
-      search_timout=setTimeout('execute_search()', 600)  ;
+      clearTimeout(search_timeout);
+      search_timeout=setTimeout('execute_search()', 600)  ;
     });
 
-    $('#submit_btn').click( function(){ execute_search(); });
+
+    $.getJSON('../people_autocomplete.json',
+        function(rcv_data){
+            //console.log(rcv_data);
+            $('#search_text_box').autocomplete({
+                source: rcv_data,
+                minLength: 2,
+                delay: 400
+            });
+        }
+    )
+
 
 });

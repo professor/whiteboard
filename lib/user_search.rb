@@ -90,6 +90,10 @@ module UserSearch
         query_string += " AND "
       end
       query_string += "is_"+criteria['people_type']+" IS true"
+      if(criteria['people_type']=='student')
+
+        query_string += " AND is_alumnus IS NOT true"
+      end
     end
 
     # add filter for class year

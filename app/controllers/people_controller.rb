@@ -30,7 +30,7 @@ class PeopleController < ApplicationController
     #end
 
     # By default order by name
-    #@people = @people.order("first_name ASC, last_name ASC").all
+   # @people = @people.order("first_name ASC, last_name ASC").all
 
 
     respond_to do |format|

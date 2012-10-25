@@ -74,7 +74,6 @@ describe "people search" do
     end
 
     it "Should display images with the search results", :js => true do
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card img')
     end
@@ -85,7 +84,6 @@ describe "people search" do
 
     it "should search with partial match", :js => true do
       fill_in "search_text_box" , :with => "sh"
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :text => "Rashmi")
       page.should have_selector('#results_box .data_card', :text => "Shama")
@@ -94,7 +92,6 @@ describe "people search" do
     it "should search with exact match", :js => true do
       fill_in "search_text_box" , :with => "Sham"
       find(:css, "#exact_match_checkbox").set(true)
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should_not have_content "Shama"
     end
@@ -104,7 +101,6 @@ describe "people search" do
       select 'Company', :from => 'extra_criteria_picker'
       find('#criteria_company input').set('LinkedIn')
       #fill_in "criteria_company_text", :with => "LinkedIn"
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => 'Vidya')
       #page.should have_content('Vidya')
@@ -115,7 +111,6 @@ describe "people search" do
       fill_in "search_text_box" , :with => "ali"
       page.find(:css, '#criteria_first_name a').click
       page.find(:css, '#criteria_last_name a').click
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card')
       page.should have_content('Clyde')
@@ -125,7 +120,6 @@ describe "people search" do
     it "Search by class year", :js => true do
       select 'Class Year', :from => 'extra_criteria_picker'
       page.find(:css, '#criteria_class_year select').select('2013')
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card')
       page.should_not have_content('Sam')
@@ -137,7 +131,6 @@ describe "people search" do
       select 'Program', :from => 'extra_criteria_picker'
       #select 'SE-DM', :from => page.find(:css, '#criteria_program select')
       page.find(:css, '#criteria_program select').select('SE-DM')
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Rashmi")
       page.should_not have_content('Vidya')
@@ -145,7 +138,6 @@ describe "people search" do
 
     it "Filter by people type", :js => true do
       select 'Student', :from => 'people_type_picker'
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Clyde")
       page.should have_selector('#results_box .data_card', :content => "Rashmi")
@@ -162,7 +154,6 @@ describe "people search" do
       select 'Alumni', :from => 'people_type_picker'
       select 'Class Year', :from => 'extra_criteria_picker'
       page.find(:css, '#criteria_class_year select').select('2010')
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Sunil")
       page.should have_selector('#results_box .data_card', :content => "Memo")
@@ -175,7 +166,6 @@ describe "people search" do
       select 'Company', :from => 'extra_criteria_picker'
       find('#criteria_company input').set('yahoo')
       fill_in "search_text_box" , :with => "o"
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Todd")
       page.should_not have_content("Memo")
@@ -190,7 +180,6 @@ describe "people search" do
       page.find(:css, '#criteria_program select').select('SM')
       page.find(:css, "#exact_match_checkbox").set(true)
       fill_in "search_text_box" , :with => "Li"
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Clyde")
       page.should_not have_content("Charlie")
@@ -202,7 +191,6 @@ describe "people search" do
       select 'Staff', :from => 'people_type_picker'
       select 'Full/Part Time', :from => 'extra_criteria_picker'
       page.find(:css, '#criteria_ft_pt select').select('Part Time')
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Allen")
       page.should_not have_content("Sam")
@@ -216,7 +204,6 @@ describe "people search" do
       select 'Student', :from => 'people_type_picker'
       select 'Full/Part Time', :from => 'extra_criteria_picker'
       page.find(:css, '#criteria_ft_pt select').select('Full Time')
-      click_button "submit_btn"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :content => "Clyde")
       page.should have_selector('#results_box .data_card', :content => "Rashmi")

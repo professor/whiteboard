@@ -8,16 +8,26 @@ describe PeopleController do
       @inactive_person = FactoryGirl.create(:student_sally_user, :is_active => false)
     end
 
-    describe "GET index" do
-      it "should assign all active people to people" do
-        get :index
-        assigns(:people).should == [@person1]
+    describe "GET auto_complete" do
+      it "should respond with matching names" do
+        get :index_autocomplete, :format => :json, :term => "sa"
+        parsed_response = JSON.parse(response.body)
+        parsed_response.should include "Student Sally", "Student Sam"
       end
+    end
 
-      it "should sort people by name" do
-        get :index
-        assigns(:people).should == [@person1]
-      end
+
+    describe "GET index" do
+      #    Question TODD
+      #it "should assign all active people to people" do
+      #  get :index
+      #  assigns(:people).should == [@person1]
+      #end
+
+      #it "should sort people by name" do
+      #  get :index
+      #  assigns(:people).should == [@person1]
+      #end
     end
 
     describe "GET show" do
