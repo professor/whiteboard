@@ -11,6 +11,13 @@ describe GradesController do
     @student_sally = FactoryGirl.create(:student_sally)
   end
 
+  after do
+    @admin_andy.delete
+    @faculty_frank.delete
+    @faculty_fagan.delete
+    @student_sam.delete
+    @student_sally.delete
+  end
 
   describe "GET index for grades" do
 

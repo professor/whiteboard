@@ -29,7 +29,6 @@ class Grade < ActiveRecord::Base
       grade_books[grade_book.assignment.id] = grade_book
     end
     grade_books["earned_grade"] = (grade_books.values.map {|grade| grade.score}).reduce(:+)
-    puts "results:" + grade_books.inspect
     grade_books
   end
 
