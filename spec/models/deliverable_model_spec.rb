@@ -23,7 +23,7 @@ describe Deliverable do
       end
     end
 
-    context "when a duplicate deliverable for the same course, task and owner" do
+    context "when a duplicate deliverable for the same course, assignment and owner" do
       [:team_deliverable, :individual_deliverable].each do |symbol|
         it "for a team/individual deliverable" do
           original = FactoryGirl.build(symbol)
@@ -33,7 +33,6 @@ describe Deliverable do
           duplicate.stub(:update_team)
           duplicate.creator_id = original.creator_id
           duplicate.assignment = original.assignment
-          duplicate.task_number = original.task_number
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid
         end
