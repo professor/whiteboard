@@ -4,6 +4,6 @@ class RemoveScoreFromDeliverable < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :deliverales, :score, :integer
+    add_column :deliverables, :score, :integer
   end
 end
