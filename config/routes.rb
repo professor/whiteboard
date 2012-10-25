@@ -1,6 +1,10 @@
 CMUEducation::Application.routes.draw do
   resources :search, :only => [:index]
+  get    "/deliverables/get_assignments_for_student(.:format)" =>  "deliverables#get_assignments_for_student"
+
+ # match '/deliverables/get_assignments_for_student(.:format)'=> 'deliverables#get_assignments_for_student' ,:as=> :get_assignments_for_student
   resources :deliverables
+
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
@@ -31,13 +35,13 @@ CMUEducation::Application.routes.draw do
   resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
+
+  match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
+  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
   resources :courses do
     resources :assignments
     resources :grades
   end
-  match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
-  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
-
 
 
   constraints({:id => /.*/}) do

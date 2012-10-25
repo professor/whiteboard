@@ -87,9 +87,11 @@ class DeliverablesController < ApplicationController
   def create
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
-    @deliverable.creator = current_user
 
-    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+    @deliverable.creator = current_user
+    @deliverable.name=@deliverable.assignment.name
+    @deliverable.task_number=@deliverable.assignment.task_number.to_s
+    @deliverable.assignment.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -226,6 +228,15 @@ class DeliverablesController < ApplicationController
         flash[:error] = 'Unable to save feedback'
         format.html { redirect_to(@deliverable) }
         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def get_assignments_for_student
+    unless params[:course_id].nil?
+      @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
+      respond_to do |format|
+        format.json { render json: @assignments }
       end
     end
   end

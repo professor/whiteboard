@@ -38,7 +38,6 @@
 
         <% @deliverable.team.members.each do |user| %>
               <td>
-                <%#= f.text_field :score, :size => "5x1" ,:id=>user.id ,:placeholder=>"Grade"%>
                 <%= render :partial => 'fetch_picture', :locals => {:person => user} %>     </td>
 
         <% end %>
@@ -48,7 +47,6 @@
     <% else %>
         <table border="0" alignment="center">
         <tr><td><%= render :partial => 'fetch_picture', :locals => {:person =>@deliverable.creator } %> </td></tr>
-          <%#= f.text_field :score, :size => "5x1" ,:id=>user.id ,:placeholder=>"Grade"%>
         </table>
     <% end %>
 
