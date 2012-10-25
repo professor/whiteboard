@@ -1,11 +1,21 @@
 class GradesController < ApplicationController
-  before_filter :get_course
 
   layout 'cmu_sv'
+
+  before_filter :authenticate_user!
+  before_filter :get_course
+  before_filter :validate_permission
+
   def get_course
     @course=Course.find(params[:course_id])
   end
-  
+
+  def validate_permission
+    unless (current_user.is_admin? || @course.faculty.include?(current_user))
+      has_permissions_or_redirect(:admin, root_path)
+    end
+  end
+
   def index
     @no_pad = true
     @students = @course.registered_students.order("first_name ASC")
@@ -14,7 +24,7 @@ class GradesController < ApplicationController
     @students.each do |student|
       @grades[student] =  Grade.get_grades(@course, student)
     end
-    end
+  end
 
   def create
     puts "in create"

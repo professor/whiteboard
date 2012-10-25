@@ -28,6 +28,8 @@ class Grade < ActiveRecord::Base
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade_book|
       grade_books[grade_book.assignment.id] = grade_book
     end
+    grade_books["earned_grade"] = (grade_books.values.map {|grade| grade.score}).reduce(:+)
+    puts "results:" + grade_books.inspect
     grade_books
   end
 

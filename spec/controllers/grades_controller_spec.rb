@@ -1,18 +1,65 @@
 require 'spec_helper'
+require 'controllers/permission_behavior'
 
 describe GradesController do
-    #
-    #before(:all) do
-    #  @user = FactoryGirl.build(:faculty_frank)
-    #  @course = FactoryGirl.build(:mfse)
-    #end
-    #
-    #it 'should have course name if course exists' do
-    #  login(@user)
-    #  current_user.id.should eq(@user.id)
-    #end
-    #
-    #it 'should have registered students'
-    #it 'should list students\' team name'
+
+  before do
+    @admin_andy = FactoryGirl.create(:admin_andy)
+    @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+    @student_sam = FactoryGirl.create(:student_sam)
+    @student_sally = FactoryGirl.create(:student_sally)
+  end
+
+
+  describe "GET index for grades" do
+
+
+    before(:each) do
+      Grade.delete_all
+      @assign_1 = mock_model(Assignment, :id => 1)
+      @course = mock_model(Course, :faculty => [@faculty_frank], :id => 1, :registered_students => [@student_sam, @student_sally], :assignments => [@assign_1, @assignment_2])
+      @grade_sam_assign1   = stub_model(Grade, :course_id => @course.id, :assignment_id => @assign_1.id, :student_id=>@student_sam.id, :score => 100)
+      @grade_sally_assign1 = stub_model(Grade, :course_id => @course.id, :assignment_id => @assign_1.id, :student_id=>@student_sally.id, :score => 100)
+      Course.stub(:find).and_return(@course)
+      @course.registered_students.stub(:order).and_return([@student_sam, @student_sally])
+      Grade.stub(:get_grades).with(@course, @student_sam).and_return({@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score})
+      Grade.stub(:get_grades).with(@course, @student_sally).and_return({@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score})
+      @expected_grades = {@student_sam=>{@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score},
+                          @student_sally=>{@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score}}
+    end
+
+    context "as the faculty owner of the course" do
+      before do
+        login(@faculty_frank)
+      end
+
+      it "assigns @grades" do
+        get :index, :course_id => @course.id
+        assigns(:grades).should  == @expected_grades
+      end
+    end
+
+    context "as an admin" do
+      before do
+        login(@admin_andy)
+      end
+
+      it "assigns @grades" do
+        get :index, :course_id => @course.id
+        assigns(:grades).should  == @expected_grades
+      end
+    end
+
+    context "as other users" do
+      before do
+        login(@faculty_fagan)
+        get :index, :course_id => @course.id
+      end
+
+      it_should_behave_like "permission denied"
+    end
+
+  end
 
 end

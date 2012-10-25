@@ -15,14 +15,14 @@ ActiveRecord::Schema.define(:version => 20121024195328) do
   create_table "assignments", :force => true do |t|
     t.string   "name"
     t.float    "maximum_score"
-    t.boolean  "is_team_deliverable"
+    t.boolean  "is_team_deliverable", :default => false
     t.datetime "due_date"
     t.integer  "course_id"
     t.integer  "assignment_order"
     t.integer  "task_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_submittable"
+    t.boolean  "is_submittable",      :default => false
   end
 
   create_table "course_numbers", :force => true do |t|
