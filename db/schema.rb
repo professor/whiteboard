@@ -186,17 +186,6 @@ ActiveRecord::Schema.define(:version => 20121011010839) do
   add_index "individual_contributions", ["week_number"], :name => "index_individual_contributions_on_week_number"
   add_index "individual_contributions", ["year"], :name => "index_individual_contributions_on_year"
 
-  create_table "job_functions", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.string   "pt_ft_group"
-    t.string   "student_staff_group"
-    t.string   "program_group"
-    t.string   "track_group"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "page_attachments", :force => true do |t|
     t.integer  "page_id"
     t.integer  "user_id"
@@ -305,6 +294,15 @@ ActiveRecord::Schema.define(:version => 20121011010839) do
   add_index "peer_evaluation_reviews", ["author_id"], :name => "index_peer_evaluation_reviews_on_author_id"
   add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
   add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
+
+  create_table "people_search_defaults", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "student_staff_group"
+    t.string   "program_group"
+    t.string   "track_group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "presentation_feedback_answers", :force => true do |t|
     t.integer  "feedback_id"
@@ -578,76 +576,77 @@ ActiveRecord::Schema.define(:version => 20121011010839) do
     t.string   "course_index_view"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "webiso_account"
-    t.string   "email",                                 :limit => 100
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_staff",                                             :default => false
-    t.boolean  "is_student",                                           :default => false
-    t.boolean  "is_admin",                                             :default => false
-    t.string   "twiki_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "human_name"
-    t.string   "image_uri"
-    t.string   "graduation_year"
-    t.string   "masters_program"
-    t.string   "masters_track"
-    t.boolean  "is_part_time"
-    t.boolean  "is_adobe_connect_host"
-    t.datetime "effort_log_warning_email"
-    t.boolean  "is_active"
-    t.string   "legal_first_name"
-    t.string   "organization_name"
-    t.string   "title"
-    t.string   "work_city"
-    t.string   "work_state"
-    t.string   "work_country"
-    t.string   "telephone1"
-    t.string   "skype"
-    t.string   "tigris"
-    t.string   "personal_email"
-    t.string   "local_near_remote"
-    t.text     "biography"
-    t.text     "user_text"
-    t.string   "office"
-    t.string   "office_hours"
-    t.string   "telephone1_label"
-    t.string   "telephone2"
-    t.string   "telephone2_label"
-    t.string   "telephone3"
-    t.string   "telephone3_label"
-    t.string   "telephone4"
-    t.string   "telephone4_label"
-    t.integer  "updated_by_user_id"
-    t.integer  "version"
-    t.boolean  "is_alumnus"
-    t.string   "pronunciation"
-    t.datetime "google_created"
-    t.datetime "twiki_created"
-    t.datetime "adobe_created"
-    t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "yammer_created"
-    t.integer  "strength1_id"
-    t.integer  "strength2_id"
-    t.integer  "strength3_id"
-    t.integer  "strength4_id"
-    t.integer  "strength5_id"
-    t.datetime "sponsored_project_effort_last_emailed"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.string   "github"
-    t.string   "course_tools_view"
-    t.string   "remember_token"
-    t.datetime "remember_created_at"
-    t.date     "expires_at"
-    t.string   "course_index_view"
+  create_table "users", :id => false, :force => true do |t|
+    t.integer   "id",                                                                      :null => false
+    t.string    "webiso_account"
+    t.string    "email",                                 :limit => 100
+    t.timestamp "created_at",                            :limit => 6
+    t.timestamp "updated_at",                            :limit => 6
+    t.boolean   "is_staff",                                             :default => false
+    t.boolean   "is_student",                                           :default => false
+    t.boolean   "is_admin",                                             :default => false
+    t.string    "twiki_name"
+    t.string    "first_name"
+    t.string    "last_name"
+    t.string    "human_name"
+    t.string    "image_uri"
+    t.string    "graduation_year"
+    t.string    "masters_program"
+    t.string    "masters_track"
+    t.boolean   "is_part_time"
+    t.boolean   "is_adobe_connect_host"
+    t.timestamp "effort_log_warning_email",              :limit => 6
+    t.boolean   "is_active"
+    t.string    "legal_first_name"
+    t.string    "organization_name"
+    t.string    "title"
+    t.string    "work_city"
+    t.string    "work_state"
+    t.string    "work_country"
+    t.string    "telephone1"
+    t.string    "skype"
+    t.string    "tigris"
+    t.string    "personal_email"
+    t.string    "local_near_remote"
+    t.text      "biography"
+    t.text      "user_text"
+    t.string    "office"
+    t.string    "office_hours"
+    t.string    "telephone1_label"
+    t.string    "telephone2"
+    t.string    "telephone2_label"
+    t.string    "telephone3"
+    t.string    "telephone3_label"
+    t.string    "telephone4"
+    t.string    "telephone4_label"
+    t.integer   "updated_by_user_id"
+    t.integer   "version"
+    t.boolean   "is_alumnus"
+    t.string    "pronunciation"
+    t.timestamp "google_created",                        :limit => 6
+    t.timestamp "twiki_created",                         :limit => 6
+    t.timestamp "adobe_created",                         :limit => 6
+    t.timestamp "msdnaa_created",                        :limit => 6
+    t.integer   "sign_in_count",                                        :default => 0,     :null => false
+    t.timestamp "current_sign_in_at",                    :limit => 6
+    t.timestamp "last_sign_in_at",                       :limit => 6
+    t.string    "current_sign_in_ip"
+    t.string    "last_sign_in_ip"
+    t.timestamp "yammer_created",                        :limit => 6
+    t.integer   "strength1_id"
+    t.integer   "strength2_id"
+    t.integer   "strength3_id"
+    t.integer   "strength4_id"
+    t.integer   "strength5_id"
+    t.timestamp "sponsored_project_effort_last_emailed", :limit => 6
+    t.string    "photo_file_name"
+    t.string    "photo_content_type"
+    t.string    "github"
+    t.string    "course_tools_view"
+    t.string    "remember_token"
+    t.timestamp "remember_created_at",                   :limit => 6
+    t.date      "expires_at"
+    t.string    "course_index_view"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

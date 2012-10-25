@@ -30,23 +30,24 @@ class PeopleController < ApplicationController
       end
     end
 
+    @people = PeopleSearchDefault.all
     search_defaults = PeopleSearchDefault.all
-    results = search_defaults.find_all { |t| t.student_staff_group == 'All' }
+    @people = search_defaults.find_all { |t| t.student_staff_group == 'All' }
     search_defaults.reject!  { |t| t.student_staff_group == 'All' }
     if(@user.is_student)
       search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Student' }
-      search_defaults.find_all { |t| t.program_group == 'All' }.each { |x| results.push(x) }
+      search_defaults.find_all { |t| t.program_group == 'All' }.each { |x| @people.push(x) }
       search_defaults.reject!  { |t| t.program_group == 'All' }
       search_defaults = search_defaults.find_all { |t| t.program_group == @user.masters_program }
-      search_defaults.find_all { |t| t.track_group == 'All' }.each { |x| results.push(x) }
+      search_defaults.find_all { |t| t.track_group == 'All' }.each { |x| @people.push(x) }
       search_defaults.reject!  { |t| t.track_group == 'All' }
-      search_defaults = search_defaults.find_all { |t| t.track_group == @user.masters_track || (@user.masters_program == 'PhD' && t.track_group == nil) }.each { |x| results.push(x) }
+      search_defaults = search_defaults.find_all { |t| t.track_group == @user.masters_track || (@user.masters_program == 'PhD' && t.track_group == nil) }.each { |x| @people.push(x) }
     else
       search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Staff' }
-      search_defaults.each { |x| results.push(x) }
+      search_defaults.each { |x| @people.push(x) }
     end
 
-    @people = results.collect { |default_person| Hash[
+    @results = @people.collect { |default_person| Hash[
         :image_uri => default_person.user.image_uri,
         :title => default_person.user.title,
         :human_name => default_person.user.human_name,
@@ -54,10 +55,10 @@ class PeopleController < ApplicationController
         :email => default_person.user.email,
         :path => person_path(default_person.user)
     ]}
-    @people.uniq!
+    @results.uniq!
 
     respond_to do |format|
-      format.html { render :html => @people }
+      format.html { render :html => @results }
       #format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
       #                                                              "first_name" => person.first_name,
       #                                                              "last_name" => person.last_name,
@@ -127,7 +128,7 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    @person = User.find_by_param(params[:id])
+    @person = Person.find_by_param(params[:id])
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|
