@@ -1,35 +1,44 @@
-<%= form_for(@assignment) do |assignment| %>
-  <%= assignment.hidden_field :course_id %>
+<%= form_for(@assignment) do |form| %>
+  <%= form.hidden_field :course_id %>
   <p>
-    <%= assignment.label :task_number %>
-    <%= assignment.text_field :task_number, size: 4 %>
+    <%= form.label :task_number %>
+    <%= form.text_field :task_number, size: 4 %>
   </p>
 
   <p>
-    <%= assignment.label :title %>
-    <%= assignment.text_field :title %>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
   </p>
   <p>
-    <%= assignment.label :weight %>
-    <%= assignment.text_field :weight %>
+    <%= form.label :weight %>
+    <%= form.text_field :weight %>
   </p>
 
   <p>
-    <%= assignment.label :due_date %>
-    <%= assignment.text_field :due_date %>
+    <%= form.label :due_date %>
+    <%= form.text_field :due_date %>
   </p>
 
   <p>
-    <%= assignment.radio_button :team_deliverable, true, checked: true %> <%= assignment.label :team_deliverable, "Team Deliverable" %>
-    <%= assignment.radio_button :team_deliverable, false %> <%= assignment.label :team_deliverable, "Individual Deliverable" %>
+    <%= form.radio_button :team_deliverable, true, checked: true %> <%= form.label :team_deliverable, "Team Deliverable" %>
+    <%= form.radio_button :team_deliverable, false %> <%= form.label :team_deliverable, "Individual Deliverable" %>
   </p>
 
   <p>
-    <%= assignment.label :can_submit %>
-    <%= assignment.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %>
+    <%= form.label :can_submit %>
+    <%= form.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %>
   </p>
 
   <p>
-    <%= assignment.submit "Save Assignment" %>
+    <%= form.submit "Save Assignment" %>
   </p>
+<% end %>
+
+<%= javascript_tag do %>
+  $(function() {
+    $("#assignment_due_date").datepicker({
+      showButtonPanel: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
 <% end %>

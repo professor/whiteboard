@@ -60,9 +60,16 @@
    end
 %>
 
-<script type="text/javascript">
+<%= javascript_tag do %>
   $(function() {
     assignment_options = {<%= assignment_options.html_safe %>};
+
+    if ($('#deliverable_course_id').val()) {
+      $('#deliverable_assignment_id').html(assignment_options[$('#deliverable_course_id').val()]);
+      <% if !@deliverable.assignment.nil? %>
+        $('#deliverable_assignment_id').val('<%= @deliverable.assignment.id %>');
+      <% end %>
+    }
 
     $('#deliverable_course_id').change(function() {
       if ($('#deliverable_course_id').val()) {
@@ -72,4 +79,4 @@
       }
     });
   });
-</script>
+<% end %>

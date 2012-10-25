@@ -7,41 +7,60 @@
 <% end %>
 <h2>Assignment: <%= @deliverable.assignment.title %></h2>
 
-<% if !@deliverable.assignment.team_deliverable? %>
-  <%= render :partial => 'people/twiki_photo_link', :locals => {:person => @deliverable.creator} %>
-<% end %>
+<% if !@deliverable.is_team_deliverable? %>
+  <div style="height:250px;width: 100%;">
+    <%= render :partial => 'people/twiki_photo_link', :locals => {:person => @deliverable.creator} %>
 
-<div>
-  <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-    <p>
-      <%= f.label :grade %>
-      <%= f.text_field :grade, size: 4 %>
-    </p>
-    <p>
-      <%= f.label :feedback, "Feedback file to upload" %>
-      <%= f.file_field :feedback %>
-    </p>
-    <p>
-      <%= f.label :feedback_comment, "Feedback Comments" %>
-      <br>
-      <%= f.text_area :feedback_comment, :size => "70x10" %>
-    </p>
-
-    <% if @deliverable.assignment.team_deliverable? %>
-      <% @deliverable.team.members.each do |member| %>
-        <%= render :partial => 'people/twiki_photo_link', :locals => {:person => member} %>
+    <div style="float:left;width: 70%;">
+      <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+        <p>
+          <%= f.label :grade %>
+          <%= f.text_field :grade, size: 4 %>
+        </p>
+        <p>
+          <%= f.label :feedback, "Feedback file to upload" %>
+          <%= f.file_field :feedback %>
+        </p>
+        <p>
+          <%= f.label :feedback_comment, "Feedback Comments" %>
+          <br>
+          <%= f.text_area :feedback_comment, :size => "70x10" %>
+        </p>
+        <p>
+          <%= f.submit "Submit" %>
+        </p>
       <% end %>
-    <% end %>
-
-    <p>
-      <%= f.submit "Submit" %>
-    </p>
-
+    </div>
+  </div>
+<% else %>
+  <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+    <div style="height:550px;width:100%;float:left;">
+      <div style="width:100%;>
+        <p>
+          <%= f.label :grade %>
+          <%= f.text_field :grade, size: 4 %>
+        </p>
+        <p>
+          <%= f.label :feedback, "Feedback file to upload" %>
+          <%= f.file_field :feedback %>
+        </p>
+        <p>
+          <%= f.label :feedback_comment, "Feedback Comments" %>
+          <br>
+          <%= f.text_area :feedback_comment, :size => "70x10" %>
+        </p>
+      </div>
+      <div style="height:250px;width:100%;float:left;">
+        <% @deliverable.team.members.each do |member| %>
+          <%= render :partial => 'people/twiki_photo_link', :locals => {:person => member} %>
+        <% end %>
+      </div>
+      <div>
+        <%= f.submit "Submit" %>
+      </div>
+    </div>
   <% end %>
-</div>
-
+<% end %>
 <p>
-  <br/>
   <%= link_to 'Cancel', deliverable_path(@deliverable) %>
-  <br/>
 </p>
