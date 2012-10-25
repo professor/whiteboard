@@ -16,11 +16,13 @@
     <% end %>
     <p>
       <%= f.label :course_id, "Select Course" %>
-      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => true, :onchange=>"set_assignments();") %>
+      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+      <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
     </p>
     <p>
       <%= f.label :assignment_id, "Deliverable" %>
-      <%= f.collection_select(:assignment_id, [],:id,:allow_blank => true) %>
+      <%= f.collection_select(:assignment_id, @deliverable.creator.registered_for_these_courses_during_current_semester[0].assignments.all(:conditions => ["is_submittable = ?", true]), :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+
     </p>
     <div class="deliverable_attachment">
       <%= fields_for :deliverable_attachment do |attachment_form| -%>
@@ -43,6 +45,7 @@
 
 <script>
   $("#deliverable_course_id").change(function(){
+      $("#loading").show();
     $.ajax({
         url: "get_assignments_for_student",
         type: "get",
@@ -51,12 +54,14 @@
         success: function(result){
             $("#deliverable_assignment_id").empty();
             $.each(result,function(idx, value){
-                        $("#deliverable_assignment_id").append("<option value='"+value.id+"'>" + value.name+"</option>");
+                        $("#deliverable_assignment_id").append("<option value='"+value["assignment"]["id"]+"'>" + value["assignment"]["name"]+"</option>");
                     }
+
             );
 
-
+            $("#loading").hide();
         }
     });
+
   }    );
 </script>

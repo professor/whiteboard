@@ -40,7 +40,7 @@ class Deliverable < ActiveRecord::Base
 
   #-----for assignment----#
   belongs_to :assignment
-  validates :score, :numericality => {:greater_than_or_equal_to => 0}, :allow_nil => true, :allow_blank => true
+  #validates :score, :numericality => {:greater_than_or_equal_to => 0}, :allow_nil => true, :allow_blank => true
 
 
   validates_presence_of :course, :creator

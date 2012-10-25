@@ -15,7 +15,7 @@ class AssignmentsController < ApplicationController
 
 
   def index
-    @assignments = Assignment.all
+    @assignments = Assignment.all(:conditions => ["course_id = ?", @course.id])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -35,13 +35,13 @@ CMUEducation::Application.routes.draw do
   resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
+
+  match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
+  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
   resources :courses do
     resources :assignments
     resources :grades
   end
-  match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
-  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
-
 
 
   constraints({:id => /.*/}) do

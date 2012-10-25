@@ -48,7 +48,6 @@ describe "deliverables" do
       it "lets the user create new deliverable"  do
         click_link "New deliverable"
         page.should have_content("New deliverable")
-        page.should have_selector("input#deliverable_name")
         page.should have_selector("select#deliverable_course_id")
         page.should have_button("Create")
       end

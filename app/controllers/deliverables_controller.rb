@@ -234,7 +234,7 @@ class DeliverablesController < ApplicationController
 
   def get_assignments_for_student
     unless params[:course_id].nil?
-      @assignments = Course.find(params[:course_id]).assignments(:is_student_submittable=>true)
+      @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
       respond_to do |format|
         format.json { render json: @assignments }
       end
