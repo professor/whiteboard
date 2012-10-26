@@ -33,7 +33,7 @@ class GradesController < ApplicationController
     error=false
     unless scoreArrayList.blank?
       scoreArrayList.each do|scoreValue|
-      grade = Grade.get_grade(scoreValue["course_id"], scoreValue["assignment_id"],scoreValue["student_id"])
+      grade = Grade.get_grade(scoreValue["assignment_id"],scoreValue["student_id"])
         if  grade.blank?
           grade_entry=Grade.new(scoreValue)
           unless grade_entry.save

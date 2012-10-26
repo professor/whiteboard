@@ -34,8 +34,8 @@ class Grade < ActiveRecord::Base
 
 
   # To fetch the entry with matching course, assignment and student.
-  def self.get_grade(course_id, assignment_id, student_id)
-    grade_book = Grade.where(:course_id => course_id,:assignment_id => assignment_id,:student_id => student_id).limit(1)[0]
+  def self.get_grade(assignment_id, student_id)
+    grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
 
@@ -44,5 +44,15 @@ class Grade < ActiveRecord::Base
     Grade.update_all({:is_student_visible=>true},{:course_id=>course_id,:assignment_id=>assignment_id,:is_student_visible=>false})
   end
 
+  def self.give_grade(assignment_id, student_id, score)
+    assignment = Assignment.find(assignment_id)
+    grade = Grade.get_grade(assignment.id, student_id)
+    if grade.blank? 
+      grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score})
+    end
+    grade.score =score
+    grade.save
+  end
+  
 end
 
