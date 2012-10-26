@@ -23,13 +23,13 @@
                 <td>&nbsp;</td>
             <% end %>
         <% end %>
-        <td><%= h deliverable.task_number %></td>
+        <td><%= h deliverable.assignment.task_number %></td>
         <td><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%= link_to deliverable.name, latest_attachment.attachment.url %></td>
+            <td><%= link_to deliverable.assignment.name, latest_attachment.attachment.url %></td>
         <% else %>
-            <td><%= deliverable.name %></td>
+            <td><%= deliverable.assignment.name %></td>
         <% end %>
 
         <td>

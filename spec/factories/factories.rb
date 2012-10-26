@@ -14,7 +14,7 @@ FactoryGirl.define do
   end
 
   factory :deliverable do
-    #association :assignment, :factory => :assignment
+    association :assignment, :factory => :assignment
     association :course, :factory => :course
     association :creator, :factory => :student_sally
   end

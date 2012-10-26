@@ -41,7 +41,7 @@ class Deliverable < ActiveRecord::Base
   #-----for assignment----#
   belongs_to :assignment
 
-  validates_presence_of :course, :creator
+  validates_presence_of :course, :creator, :assignment
   validate :unique_course_task_owner?
 
   has_attached_file :feedback,
@@ -51,15 +51,12 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
-  before_validation :sanitize_data
-
-
   def unique_course_task_owner?
     if self.is_team_deliverable?
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => self.team_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :assignment_id => self.assignment_id, :team_id => self.team_id).first
       type = "team"
     else
-      duplicate = Deliverable.where(:course_id => self.course_id, :task_number => self.task_number, :team_id => nil, :creator_id => self.creator_id).first
+      duplicate = Deliverable.where(:course_id => self.course_id, :assignment_id => self.assignment_id, :team_id => nil, :creator_id => self.creator_id).first
       type = "individual"
     end
     if duplicate && duplicate.id != self.id
@@ -134,8 +131,8 @@ class Deliverable < ActiveRecord::Base
     end
 
     message = self.owner_name + " has submitted a deliverable for "
-    if !self.task_number.nil? and self.task_number != ""
-      message += "task " + self.task_number + " of "
+    if !self.assignemnt.task_number.nil? and self.assignment.task_number != "" and !self.assignmet.name.nil? and self.assignment.name !="" 
+      message += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
     message += self.course.name
 
@@ -152,8 +149,8 @@ class Deliverable < ActiveRecord::Base
     mail_to = self.owner_email
 
     message = "Feedback has been submitted for "
-    if !self.task_number.nil? and self.task_number != ""
-      message += "task " + self.task_number + " of "
+    if !self.assignemnt.task_number.nil? and self.assignment.task_number != "" and !self.assignmet.name.nil? and self.assignment.name !="" 
+      message += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
     message += self.course.name
 
@@ -198,11 +195,4 @@ class Deliverable < ActiveRecord::Base
       self.team = team if team.members.include?(self.creator)
     end
   end
-
-  protected
-  def sanitize_data
-    self.name = self.name.titleize unless self.name.blank?
-  end
-
-
 end

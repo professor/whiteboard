@@ -7,6 +7,7 @@ FactoryGirl.define do
     is_team_deliverable false
     due_date "2012-10-03 12:48:24"
     task_number 1
+    association :course, :factory => :fse
   end
 
   factory :assignment_fse, :parent=>:assignment do

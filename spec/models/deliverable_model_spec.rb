@@ -16,14 +16,14 @@ describe Deliverable do
 
   context "is not valid" do
 
-    [:course, :creator].each do |attr|
+    [:course, :assignment, :creator].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
       end
     end
 
-    context "when a duplicate deliverable for the same course, task and owner" do
+    context "when a duplicate deliverable for the same course, assignment and owner" do
       [:team_deliverable, :individual_deliverable].each do |symbol|
         it "for a team/individual deliverable" do
           original = FactoryGirl.build(symbol)
@@ -33,7 +33,6 @@ describe Deliverable do
           duplicate.stub(:update_team)
           duplicate.creator_id = original.creator_id
           duplicate.assignment = original.assignment
-          duplicate.task_number = original.task_number
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid
         end

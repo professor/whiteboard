@@ -62,9 +62,6 @@ class DeliverablesController < ApplicationController
     unless params[:course_id].nil?
       @deliverable.course_id = params[:course_id]
     end
-    unless params[:task_number].nil?
-      @deliverable.task_number = params[:task_number]
-    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -89,8 +86,6 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.new(params[:deliverable])
 
     @deliverable.creator = current_user
-    @deliverable.name=@deliverable.assignment.name
-    @deliverable.task_number=@deliverable.assignment.task_number.to_s
     @deliverable.assignment.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     if !params[:deliverable_attachment][:attachment]
