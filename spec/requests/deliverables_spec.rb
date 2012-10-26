@@ -29,7 +29,8 @@ describe "deliverables" do
         #file = fixture_file_upload(Rails.root + 'spec/fixtures/files/sample_assignment.txt', 'text/txt')
         assignment = FactoryGirl.create(:assignment)
         Registration.create(user_id: @user.id, course_id: assignment.course.id)
-        click_link "New deliverable"
+        #click_link "New deliverable"
+        visit_path new_deliverable_path(course_id: Course.first.id, assignment_id: Assignment.first.id)
       }
 
       it "should have all courses in the courses dropdown" do
@@ -37,19 +38,15 @@ describe "deliverables" do
       end
 
       it "should save" do
-        fill_in 'Name', with: 'Deliverable1'
         attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
         courses = @user.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
         STDERR.puts "User in test:"
         STDERR.puts @user.inspect
         STDERR.puts courses.inspect
 
-        select courses[0].name, from: 'course_id'
-        assignment = courses[0].assignments[0]
-        option_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
-        select option_text, from: 'deliverable_assignment_id'
         click_button 'Create'
       end
+
       context "submitting feedback" do
       end
     end
