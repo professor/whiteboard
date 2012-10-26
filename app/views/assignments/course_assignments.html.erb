@@ -15,18 +15,18 @@
       </tr>
     </thead>
     <tbody>
-    <% @assignments.each do |assignment| %>
-      <tr>
-        <td><%= assignment.task_number %></td>
-        <td><%= assignment.title %></td>
-        <td><%= assignment.team_deliverable ? 'Yes' : 'No' %></td>
-        <td><%= assignment.due_date %></td>
-        <td><%= assignment.weight %></td>
-        <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>
-        <td><%= link_to 'Edit', edit_assignment_path(assignment.id) %>
-        <%= link_to 'Delete', assignment, method: :delete, confirm: "Are you sure you want to delete: #{assignment.title}?" %></td>
-      </tr>
-    <% end %>
+      <% @assignments.each do |assignment| %>
+        <tr>
+          <td><%= assignment.task_number %></td>
+          <td><%= assignment.title %></td>
+          <td><%= assignment.team_deliverable ? 'Yes' : 'No' %></td>
+          <td><%= l assignment.due_date, format: :chatty %></td>
+          <td><%= assignment.weight %></td>
+          <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>
+          <td><%= link_to 'Edit', edit_assignment_path(assignment.id) %>
+          <%= link_to 'Delete', assignment, method: :delete, confirm: "Are you sure you want to delete: #{assignment.title}?" %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 

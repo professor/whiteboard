@@ -20,7 +20,7 @@ class AssignmentsController < ApplicationController
       redirect_to course_assignments_path(params[:assignment][:course_id])
     else
       flash[:error] = "Assignment could not be saved"
-      redirect_to course_assignments_path(params[:assignment][:course_id])
+      render 'new_course_assignment'
     end
   end
 
@@ -31,11 +31,10 @@ class AssignmentsController < ApplicationController
   def update
     @assignment = Assignment.find(params[:id])
     if @assignment.update_attributes(params[:assignment])
-      flash[:success] = "Assignment was updated"
-      redirect_to course_assignments_path(@assignment[:course_id])
+      redirect_to course_assignments_path(@assignment[:course_id]), notice: "Assignment updated"
     else
       flash[:error] = "Assignment was not updated"
-      redirect_to 'edit'
+      render 'edit'
     end
   end
 

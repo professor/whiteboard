@@ -12,11 +12,11 @@
   <tbody>
   <% @deliverables.each do |deliverable| %>
     <tr>
-      <td><%= deliverable.assignment.course.name %></td>
-      <td><%= deliverable.assignment.title %></td>
-      <td><%= deliverable.name %></td>
+      <td><%= deliverable.assignment.course.short_name %></td>
+      <td><%= deliverable.assignment.task_number.blank? ? "" : "Task #{deliverable.assignment.task_number}: " %><%= deliverable.assignment.title %></td>
+      <td><%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %></td>
       <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
-      <td><%= deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date %></td>
+      <td><%= l deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date, format: :chatty %></td>
       <td><%= link_to "Grade", deliverable_feedback_path(deliverable) %></td>
     </tr>
   <% end %>

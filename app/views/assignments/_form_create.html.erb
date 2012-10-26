@@ -1,33 +1,42 @@
+<h1><%= @assignment.new_record? ? "Create" : "Edit" %> Assignment</h1>
+
 <%= form_for(@assignment) do |form| %>
+  <%= render 'shared/error_messages', object: form.object %>
   <%= form.hidden_field :course_id %>
-  <p>
-    <%= form.label :task_number %>
-    <%= form.text_field :task_number, size: 4 %>
-  </p>
 
-  <p>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </p>
-  <p>
-    <%= form.label :weight %>
-    <%= form.text_field :weight %>
-  </p>
+  <table class='layout_table'>
+    <tbody>
+      <tr>
+        <td><%= form.label :task_number %></td>
+        <td><%= form.text_field :task_number, size: 3 %></td>
+      </tr>
 
-  <p>
-    <%= form.label :due_date %>
-    <%= form.text_field :due_date %>
-  </p>
+      <tr>
+        <td><%= form.label :title %></td>
+        <td><%= form.text_field :title %></td>
+      </tr>
 
-  <p>
-    <%= form.radio_button :team_deliverable, true, checked: true %> <%= form.label :team_deliverable, "Team Deliverable" %>
-    <%= form.radio_button :team_deliverable, false %> <%= form.label :team_deliverable, "Individual Deliverable" %>
-  </p>
+      <tr>
+        <td><%= form.label :weight %></td>
+        <td><%= form.text_field :weight, size: 3 %></td>
+      </tr>
 
-  <p>
-    <%= form.label :can_submit %>
-    <%= form.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %>
-  </p>
+      <tr>
+        <td><%= form.label :due_date %></td>
+        <td><%= form.text_field :due_date, :size => 10 %></td>
+      </tr>
+
+      <tr>
+        <td><%= form.label :team_deliverable %></td>
+        <td><%= form.check_box :team_deliverable, checked: @assignment.new_record? ? false : @assignment.can_submit %></td>
+      </tr>
+
+      <tr>
+        <td><%= form.label :can_submit %></td>
+        <td><%= form.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %></td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>
     <%= form.submit "Save Assignment" %>

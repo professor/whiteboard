@@ -44,11 +44,23 @@ describe Assignment do
       @assignment.save
     }
 
-    it "should not create an assignment that puts the total weight of all assignments of this course greater than 100" do
-      another_assignment = @assignment.clone
-      another_assignment.weight = 100 - @assignment.weight + 1
-      another_assignment.save
-      @assignment.errors[:weight].should_not be_empty
+    context "creating and editing assignments that puts the total weight of all assignments of this course greater than 100" do
+      it "should not create" do
+        another_assignment = @assignment.clone
+        another_assignment.weight = 100 - @assignment.weight + 1
+        another_assignment.save
+        @assignment.errors[:weight].should_not be_empty
+      end
+
+      it "should not update" do
+        another_assignment = @assignment.clone
+        another_assignment.weight = 100 - @assignment.weight
+        another_assignment.save
+        @assignment.errors[:weight].should be_empty
+        another_assignment.weight += 1
+        another_assignment.save
+        @assignment.errors[:weight].should_not be_empty
+      end
     end
   end
 end

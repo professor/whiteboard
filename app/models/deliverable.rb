@@ -80,7 +80,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   def current_attachment
-    attachment_versions.find(:first)
+    attachment_versions.first
   end
 
   def owner_name

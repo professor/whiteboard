@@ -30,14 +30,14 @@ class Assignment < ActiveRecord::Base
     end
 
     def validate_total_weights
-      assignments = Assignment.find_all_by_course_id(self.course_id)
+      assignments = Assignment.find_all_by_course_id(self.course_id).delete_if {|assignment| assignment.id == self.id}
       sum = 0
 
       assignments.each do |assignment|
         sum += assignment.weight
       end
 
-      sum += self.weight if !assignments.include?(self)
+      sum += self.weight if !self.weight.blank?
 
       if sum > 100
        self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
