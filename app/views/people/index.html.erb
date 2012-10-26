@@ -71,7 +71,7 @@
                       },
                       success : function(json) {
                             buildSearchResults(json);
-                      },
+                      }
                    });
                 
                 }else{
@@ -160,6 +160,74 @@
             return img;
         }
 
+       function export_csv(){
+           //alert("hit!");
+           searchBox = $("#filterBoxOne");
+           //if(searchBox.val() != searchBox_old_val ){
+
+               //searchBox_old_val =searchBox.val();
+
+               if($.trim(searchBox.val())){
+                   //if(ajax_req_issued){
+                       // an ajax request was already issued, abort them
+                   //    jq_xhr.abort();
+                       // Note: only instructs browser to stop listening for old request, if request already issued to server, cannot force server to stop processing.
+                   //}
+
+                   // send ajax request and assign the XHML HTTP request object returned to jq_xhr
+                   jq_xhr = $.ajax({
+
+                       url : 'people_search',  // the URL for the request
+                       data : { filterBoxOne : searchBox.val(), ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
+                       method : 'GET',
+                       dataType : 'csv',  // the type of data we expect back
+                       contentType: "txt/csv; charset=utf-8",
+                       //beforeSend: function() {
+                       //    ajax_req_issued = true;
+                       //},
+                       //complete: function() {
+                       //    ajax_req_issued = false;
+                       //},
+                       success : function(json) {
+                           //buildSearchResults(json);
+                           console.log("sent succeeded!");
+                       }
+                   });
+
+               }
+           //}
+       }
+
+        function show_box(){
+
+            var boxValue = $("#filterBoxOne").val();
+
+            //if($.trim(searchBox.val())){
+
+            var $dialog = $('<div></div>')
+                    .html('Which format do you wish to export to?')
+                    .dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        draggable: false,
+                        width: 100,
+                        height: 130,
+                        modal: true,
+                        title: 'Export Contacts',
+                        buttons:{
+                            "vCard":function(){
+                                window.location.href='http://localhost:3000/people_vcf?filterBoxOne='+boxValue;
+                                $(this).dialog("close");
+                            },
+                            "csv":function(){
+                                //alert(boxValue);
+                                window.location.href='http://localhost:3000/people_csv.csv?filterBoxOne='+boxValue;
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+        }
+
     </script>
 <% end %>
 
@@ -199,5 +267,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
+
+<input type="button" id="show_box" value="Export List" onclick="show_box();"/>
 
 <input type="hidden" id="hidden_field" value="off">

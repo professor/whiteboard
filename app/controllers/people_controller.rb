@@ -1,3 +1,6 @@
+require 'csv'
+require 'vpim/vcard'
+
 class PeopleController < ApplicationController
   include ActionView::Helpers::AssetTagHelper
 
@@ -68,6 +71,59 @@ class PeopleController < ApplicationController
     respond_to do |format|
         format.json { render :json =>  @ppl, :layout => false }
     end
+  end
+
+  # GET /people/download_csv
+  def download_csv
+    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
+    respond_to do |format|
+      #format.json { render :json =>  @ppl, :layout => false }
+      format.csv do
+        csv_string = CSV.generate do |csv|
+          csv << ["first_name","last_name","email"]
+          @people.each do |user|
+            csv <<[user.first_name,user.last_name,user.email ]
+          end
+        end
+
+        send_data csv_string,
+                  :type=>"text/csv; charset=utf-8",
+                  :disposition =>"attachment; filename=contact.csv"
+      end
+    end
+  end
+
+  # GET /people/download_vcf
+  def download_vcf
+    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
+   # respond_to do |format|
+      #format.json { render :json =>  @ppl, :layout => false }
+      #format.vcf do
+
+        vcard_str=""
+
+        @people.each do |user|
+          card = Vpim::Vcard::Maker.make2 do |maker|
+
+            maker.add_name do |name|
+              name.prefix = ''
+              name.given = user.first_name
+              name.family = user.last_name
+            end
+
+            maker.add_email(user.email)
+
+          end
+
+          vcard_str<<card.to_s
+        end
+
+
+        send_data vcard_str,
+                  :type=>"text/vcf; charset=utf-8",
+                  :disposition =>"attachment; filename=contact.vcf"
+      #end
+    #end
   end
 
   #Ajax call for autocomplete using params[:term]

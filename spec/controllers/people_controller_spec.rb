@@ -91,5 +91,27 @@ describe PeopleController do
         end
       end
     end
+
+    context "Exporting search results" do
+
+      it "should return the CSV file containing user info" do
+        post :download_csv,:format=>'csv', :filterBoxOne=>'exp'
+        #expected_csv = File.read('file.csv')
+        #response.headers['Content-Disposition'] = "attachment;
+        response.header['Content-Disposition'].should include 'attachment'
+        response.header['Content-Disposition'].should include 'contact.csv'
+
+      end
+
+      it "should return the vcard file containing user info" do
+        post :download_vcf, :filterBoxOne=>'test'
+        #expected_csv = File.read('file.csv')
+        #response.headers['Content-Disposition'] = "attachment;
+        response.header['Content-Disposition'].should include 'attachment'
+        response.header['Content-Disposition'].should include 'contact.vcf'
+
+      end
+
+    end
   end
 end

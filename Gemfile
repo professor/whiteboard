@@ -46,6 +46,9 @@ gem 'cancan'
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
+#gem 'fastercsv'
+gem 'vpim'
+
 
 group :production do
   gem 'thin'
