@@ -23,12 +23,12 @@ class Grade < ActiveRecord::Base
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
   # To fetch the grade of student.
-  def self.get_grades (course, student)
+  def self.get_grades_for_student_per_course (course, student)
     grade_books = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade_book|
       grade_books[grade_book.assignment.id] = grade_book
     end
-    grade_books["earned_grade"] = (grade_books.values.map {|grade| grade.score}).reduce(:+)
+    grade_books["earned_grade"] = (grade_books.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
     grade_books
   end
 
