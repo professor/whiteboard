@@ -41,7 +41,11 @@ class PeopleController < ApplicationController
                                                                     "image_uri" => person.image_uri,
                                                                     "team_names" => person.teams,
                                                                     "masters_program" => person.masters_program,
-                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+                                                                    "telephone1_label" => person.telephone1_label,
+                                                                    "telephone1" => person.telephone1,
+                                                                    "telephone2_label" => person.telephone2_label,
+                                                                    "telephone2" => person.telephone2,
+                                                                    "email" => person.email].merge(person.telephones_hash)}, :layout => false }
     end
   end
 

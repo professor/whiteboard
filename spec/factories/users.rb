@@ -23,6 +23,10 @@ FactoryGirl.define do
     twiki_name "StudentSam"
     graduation_year "2014"
     is_part_time true
+    telephone1_label "Work"
+    telephone1 "123-456-789"
+    telephone2_label "Mobile"
+    telephone2 "321-654-987"
   end
 
   factory :student_sally_user, :parent => :user do
@@ -81,6 +85,8 @@ FactoryGirl.define do
     organization_name "google"
     teaching_these_courses = [:fse]
     is_part_time true
+    telephone1_label "Work"
+    telephone1 "213-654-123"
   end
 
   factory :faculty_ed, :parent => :user do

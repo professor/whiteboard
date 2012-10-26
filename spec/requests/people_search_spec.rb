@@ -34,6 +34,25 @@ describe "people search" do
 
     end
 
+    it "should display only fields that are filled in", :js => true  do
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Work")
+      page.should have_selector('#results_box .data_card', :text => "123-456-789")
+      page.should have_selector('#results_box .data_card', :text => "Mobile")
+      page.should have_selector('#results_box .data_card', :text => "321-654-987")
+      fill_in "search_text_box" , :with => "Allen"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Work")
+      page.should have_selector('#results_box .data_card', :text => "213-654-123")
+      page.should_not have_selector('#results_box .data_card', :text => "Mobile")
+
+      fill_in "search_text_box" , :with => "sean"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => "Work")
+      page.should_not have_selector('#results_box .data_card', :text => "Mobile")
+
+    end
+
     it "should update on change of search text string", :js => true do
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :text => "Sam")
@@ -185,19 +204,6 @@ describe "people search" do
       page.should_not have_content("Charlie")
       page.should_not have_content("Allen")
       page.should_not have_content("Sean")
-    end
-
-    it "Search by Part Time / Staff", :js => true do
-      select 'Staff', :from => 'people_type_picker'
-      select 'Full/Part Time', :from => 'extra_criteria_picker'
-      page.find(:css, '#criteria_ft_pt select').select('Part Time')
-      wait_until { page.evaluate_script("jQuery.active") == 0 }
-      page.should have_selector('#results_box .data_card', :content => "Allen")
-      page.should_not have_content("Sam")
-      page.should_not have_content("Sally")
-      page.should_not have_content("Clyde")
-      page.should_not have_content("Ed")
-      page.should_not have_content("Todd")
     end
 
     it "Search by Full Time / Student", :js => true do

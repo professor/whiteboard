@@ -58,11 +58,19 @@ function execute_search(){
             $("#results_box").html("");
             $.each(data, function(){
                 // DEBUG console.log(this.first_name +" "+this.last_name );
-                var card_html = '<div class="data_card">';
-                card_html += '<a href="people/'+this.id+'">'
-                card_html += '<img src='+this.image_uri+'></a><br>';
-                card_html += 'Name: '+this.first_name+' '+this.last_name+'<br>';
-                card_html += 'Email: '+this.email;
+                //console.log(this.telephone2);
+                var card_html =
+                '<div class="data_card">'+
+                  '<a href="people/'+this.id+'">'+
+                  '<img src='+this.image_uri+'></a><br>'+
+                  'Name: '+this.first_name+' '+this.last_name+'<br>'+
+                  'Email: '+this.email + '<br>';
+                if(this.telephone1){
+                  card_html+= this.telephone1_label +': '+this.telephone1+'<br>';
+                }
+                if(this.telephone2){
+                  card_html+= this.telephone2_label +': '+this.telephone2+'<br>';
+                }
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
