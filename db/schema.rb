@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022155918) do
+ActiveRecord::Schema.define(:version => 20121026043042) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(:version => 20121022155918) do
   end
 
   create_table "deliverables", :force => true do |t|
-    t.text     "name"
     t.integer  "team_id"
     t.integer  "creator_id"
     t.datetime "created_at"

@@ -47,7 +47,6 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
-  before_validation :sanitize_data
   before_save :populate_status
 
   def course
@@ -230,11 +229,4 @@ class Deliverable < ActiveRecord::Base
       self.team = team if team.members.include?(self.creator)
     end
   end
-
-  protected
-  def sanitize_data
-    self.name = self.name.titleize unless self.name.blank?
-  end
-
-
 end
