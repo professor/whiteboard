@@ -10,7 +10,7 @@ describe "deliverables" do
     click_link "My Deliverables"
   end
 
-  context "My deliverables" do
+  context "Student deliverables" do
 
     it "renders my deliverables page" do
       page.should have_content("Listing Deliverables")
@@ -26,28 +26,41 @@ describe "deliverables" do
 
     context "submitting" do
       before {
-        #file = fixture_file_upload(Rails.root + 'spec/fixtures/files/sample_assignment.txt', 'text/txt')
-        assignment = FactoryGirl.create(:assignment)
-        Registration.create(user_id: @user.id, course_id: assignment.course.id)
-        #click_link "New deliverable"
-        visit_path new_deliverable_path(course_id: Course.first.id, assignment_id: Assignment.first.id)
+        @assignment = FactoryGirl.create(:assignment)
+        Registration.create(user_id: @user.id, course_id: @assignment.course.id)
       }
 
       it "should have all courses in the courses dropdown" do
-        page.should have_selector("select#deliverable_course_id > option", count: @user.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}.count)
+        # Add one for the empty option
+        visit new_deliverable_path
+        page.should have_selector("select#deliverable_course_id > option", count: @user.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}.count + 1)
       end
 
-      it "should save" do
-        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
-        courses = @user.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
-        STDERR.puts "User in test:"
-        STDERR.puts @user.inspect
-        STDERR.puts courses.inspect
+      context "visiting a populated deliverable submission page" do
+        before {
+          visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
+          courses = @user.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
+        }
 
-        click_button 'Create'
+        it "should save" do
+          attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
+          expect { click_button 'Create' }.to change(Deliverable, :count).by(1)
+        end
+
+        it "should not save" do
+          expect { click_button 'Create' }.to_not change(Deliverable, :count)
+
+          page.should have_selector("h1", text: "New deliverable")
+          page.should have_selector(".ui-state-error")
+        end
       end
 
-      context "submitting feedback" do
+      it "should not save with blank fields" do
+        visit new_deliverable_path
+        expect { click_button 'Create' }.to change(Deliverable, :count).by(0)
+
+        page.should have_selector("h1", text: "New deliverable")
+        page.should have_selector(".ui-state-error")
       end
     end
   end

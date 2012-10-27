@@ -121,6 +121,11 @@ class DeliverablesController < ApplicationController
   # POST /deliverables
   # POST /deliverables.xml
   def create
+    if params[:course_id].blank? || params[:deliverable][:assignment_id].blank?
+      flash[:error] = 'Must specify both a course and assignment'
+      return redirect_to new_deliverable_path
+    end
+
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
