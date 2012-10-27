@@ -54,11 +54,13 @@ class GradesController < ApplicationController
         flash[:error] = "input format is wrong"
         render :json => ({"message"=> "false"})
       end
+  end
 
-
-
-
-
+  def post_all
+    grades = params["grades"]
+    Grade.give_grades(grades)
+    Grade.post_all(@course.id)
+    render :json => ({"message"=>"true"})
   end
 
 end

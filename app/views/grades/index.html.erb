@@ -1,6 +1,7 @@
-<%= javascript_include_tag "grade_books.js" %>
+<%#= javascript_include_tag "grade_books.js" %>
 <%= javascript_include_tag "jquery.tablesorter.js" %>
 <script>
+  var changed_grades = {}
   $(document).ready(function() { 
     // call the tablesorter plugin 
     $(".sortable").tablesorter({ 
@@ -10,12 +11,73 @@
         if ($(node.childNodes[0]).is("input")) return $(node.childNodes[0]).val();
         return $(node).text();
       } 
-    }); 
-  }); 
+    });
+      $(".score [type=text]").live("change", function() {
+
+          //         console.log($(this).attr('id'))  ;
+          var grade_attrs = parse_id($(this).attr('id'));
+          var score = $(this).val();
+          var previousValue = $(this)[0].defaultValue;
+          if(previousValue != score)
+          {
+              //           console.log("different");
+              $(this).css("border","thin solid");
+              $(this).css("border-color","red");
+              $(this).addClass("changedScore");
+              changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
+                  course_id: grade_attrs.course_id,
+                  assignment_id: grade_attrs.assignment_id,
+                  student_id: grade_attrs.student_id,
+                  score: parseFloat(score)
+              };
+
+
+          }
+          else
+          {
+              $(this).css("border","thin solid");
+              $(this).css("border-color","#666666");
+              $(this).removeClass("changedScore");
+              delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
+          }
+      });
+  });
+  function parse_id(idAttr){
+      course_id = parseInt(idAttr.split("_")[0]);
+      assignment_id = parseInt(idAttr.split("_")[1]);
+      student_id = parseInt(idAttr.split("_")[2]);
+      return {"course_id": course_id, "assignment_id": assignment_id, "student_id": student_id};
+  }
+  function postAll() {
+      var data = {};
+      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
+      alert(changed_grades.toString());
+      $.ajax({
+          url: '<%=post_all_grades_path(@course)%>',
+          type: "POST",
+          data: JSON.stringify(data, null, 1),
+          dataType: "json",
+          success:function(result){
+              if(data["message"] == "true"){
+                location.reload(false);
+              }
+              changed_grades = {};
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              console.log("Unalbe to submit the record");
+              changed_grades = {};
+          }
+
+      })
+  }
+
+
+  function saveAsDraft() {
+
+  }
 </script>
 
 <h1><%=@course.name %></h1>
-<form id='update_form' action='<%=course_grades_path(@course)%>'>
   <div style='width:100%;overflow:scroll'>
 
 
@@ -23,7 +85,7 @@
     <div class="score">
       <table class="cmu_table sortable">
         <thead>
-          <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+          <tr>
             <th style='max-width:78px; word-wrap:break-word;'> First Name
             </th>
             <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
@@ -48,10 +110,10 @@
       </table>
 
       <div style='padding-top:20px;'>
-        <button type="button" id="gradebook_submit">Submit</button>
-        <button type="button" id="gradebook_save_draft">Save as Draft</button>
+        <button type="button" id="gradebook_submit" onclick="postAll()">Submit</button>
+        <button type="button" id="gradebook_save_draft" onclick="saveAsDraft()">Save as Draft</button>
       </div>
 
     </div>
   </div>
-</form>
+

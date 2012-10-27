@@ -38,6 +38,16 @@ class Grade < ActiveRecord::Base
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+  def self.post_all(course_id)
+    Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
+  end
+
+  def self.save_as_draft(grades)
+    grades.each do |grade_entry|
+      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).try(
+          :update_attribute, :is_student_visible, false)
+    end
+  end
 
   # To allow the scores to be visible to the students.
   def self.update_grade(course_id, assignment_id)
@@ -45,14 +55,30 @@ class Grade < ActiveRecord::Base
   end
 
   def self.give_grade(assignment_id, student_id, score)
+    grading_result = false
+    student = User.find(student_id)
+
     assignment = Assignment.find(assignment_id)
-    grade = Grade.get_grade(assignment.id, student_id)
-    if grade.blank? 
-      grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score})
+    if assignment.nil?
+      grading_result = false
+    elsif assignment.course.registered_students.include?(student)
+      grade = Grade.get_grade(assignment.id, student_id)
+      if grade.blank?
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score})
+      end
+      grade.score =score
+      grading_result = grade.save
     end
-    grade.score =score
-    grade.save
+    grading_result
   end
-  
+
+  def self.give_grades(grades)
+    puts grades.inspect
+    grades.each do |grade_entry|
+      # FIXME: error handling for update failure
+      self.give_grade(grade_entry["assignment_id"], grade_entry["student_id"], grade_entry["score"])
+    end
+  end
+
 end
 
