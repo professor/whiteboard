@@ -7,9 +7,9 @@
       <tr>
         <th>Task Number</th>
         <th>Title</th>
-        <th>Team<br/>Individual</th>
+        <th>Team Deliverable</th>
         <th>Due Date</th>
-        <th>Weight</th>
+        <th><%= @course.grading_criteria == 'Points' ? 'Points' : 'Weight' %></th>
         <th>Can Submit?</th>
         <th>Actions</th>
       </tr>

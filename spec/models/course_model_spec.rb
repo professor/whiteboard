@@ -445,20 +445,28 @@ describe Course do
 
   context "assignments" do
     before(:each) do
-      @course = FactoryGirl.create(:course)
-      @assignment1 = FactoryGirl.create(:assignment, course: @course)
+      @course = FactoryGirl.create(:course, grading_criteria: 'Points')
+      @assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 100)
       # Create an assignment with invalid due date
-      @assignment2 = FactoryGirl.build(:assignment, course: @course, due_date: DateTime.now)
+      @assignment2 = FactoryGirl.build(:assignment, course: @course, due_date: DateTime.now, weight: 300)
       @assignment2.stub(:validate_due_date)
       @assignment2.save
-      @assignment3 = FactoryGirl.create(:assignment, course: @course)
-      @assignment4 = FactoryGirl.create(:assignment, course: @course, can_submit: false)
+      @assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 100)
+      @assignment4 = FactoryGirl.create(:assignment, course: @course, can_submit: false, weight: 500)
     end
 
     it "should get all submittable assignments" do
       @course.submittable_assignments.count.should == 2
       @course.submittable_assignments.should include(@assignment1, @assignment3)
     end
+
+    #it "should scale the weight out of 100 when grading criteria is changed from points to percentage" do
+    #  Course.update(@course.id, grading_criteria:  "Percentage")
+    #  @assignment1.reload.weight.should == 10
+    #  @assignment2.reload.weight.should == 30
+    #  @assignment3.reload.weight.should == 10
+    #  @assignment4.reload.weight.should == 50
+    #end
   end
 
   # Tests for has_and_belongs_to_many relationship

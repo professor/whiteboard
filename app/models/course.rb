@@ -83,6 +83,7 @@ class Course < ActiveRecord::Base
   before_validation :set_grading_ranges
   before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
   after_save :update_distribution_list
+  before_update :scale_assignments
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
   scope :unique_course_names, :select => "DISTINCT name", :order => 'name ASC'
@@ -345,4 +346,18 @@ class Course < ActiveRecord::Base
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
+  def scale_assignments
+    if !self.assignments.empty? && self.grading_criteria == "Percentage" && Course.find(self.id).grading_criteria == 'Points'
+      assignment_sum = self.assignments.to_a.sum(&:weight)
+      if assignment_sum > 100
+        self.assignments.each do |assignment|
+          assignment.weight = assignment.weight * 100/assignment_sum
+          if assignment.weight < 1
+            assignment.weight = 1
+          end
+          assignment.save
+        end
+      end
+    end
+  end
 end
