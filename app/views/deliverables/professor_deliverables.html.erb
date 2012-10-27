@@ -51,6 +51,7 @@
         $('#filter_assignment_id').html(assignment_options[$(this).val()]);
       }
 
+      $('#grading_queue').html("<%= escape_javascript(image_tag("ajax-loader.gif")) %>");
       $('#filters form').submit();
     })
   })
