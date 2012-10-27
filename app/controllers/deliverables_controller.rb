@@ -95,10 +95,6 @@ class DeliverablesController < ApplicationController
   def new
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
-    STDERR.puts @deliverable.inspect
-    STDERR.puts "User in controller"
-    STDERR.puts current_user.inspect
-    STDERR.puts @deliverable.creator.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}.inspect
 
     respond_to do |format|
       format.html # new.html.erb
@@ -172,11 +168,11 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable = Deliverable.find(params[:id])
 
-    #if @deliverable.assignment.team_deliverable
-    #  @deliverable.update_team
-    #else
-    #  @deliverable.team = nil
-    #end
+    if Assignment.find(params[:deliverable][:assignment_id]).team_deliverable?
+      @deliverable.update_team
+    else
+      @deliverable.team = nil
+    end
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)

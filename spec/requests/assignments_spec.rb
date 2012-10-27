@@ -9,9 +9,9 @@ describe "assignments" do
       visit new_course_assignment_path(@course.id)
       fill_in "Task number", with: 1
       fill_in "Title", with: "New Task"
-      fill_in "Weight", with: "10"
+      fill_in "assignment_weight", with: "10"
       fill_in "Due date", with: DateTime.now + 30
-      choose "assignment_team_deliverable_true"
+      find(:css, "#assignment_team_deliverable").set(true)
       find(:css, "#assignment_can_submit").set(true)
     }
 
@@ -23,7 +23,7 @@ describe "assignments" do
       end
 
       it "should not save a new assignment" do
-        fill_in "Weight", with: 120
+        fill_in "assignment_weight", with: 120
 
         expect {
           click_button "Save Assignment"
@@ -47,7 +47,7 @@ describe "assignments" do
     end
 
     it "should not change weight" do
-      fill_in "Weight", with: 120
+      fill_in "assignment_weight", with: 120
       click_button "Save Assignment"
       @assignment.reload.weight.should_not == 120
     end

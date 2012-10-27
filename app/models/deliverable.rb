@@ -225,7 +225,6 @@ class Deliverable < ActiveRecord::Base
   def update_team
     # Look up the team this user is on if it is a team deliverable
     Team.where(:course_id => self.course_id).each do |team|
-      answer = team.members.include?(self.creator)
       self.team = team if team.members.include?(self.creator)
     end
   end

@@ -127,6 +127,19 @@ describe Deliverable do
     end
   end
 
+  context "updating" do
+    before {
+      @student = FactoryGirl.create(:student_sally)
+      @deliverable = FactoryGirl.create(:deliverable, creator: @student)
+      @deliverable2 = FactoryGirl.create(:deliverable, creator: @student)
+    }
+
+    it "should not update when there is another deliverable for the same assignment" do
+      @deliverable2.assignment = @deliverable.assignment
+      @deliverable2.should_not be_valid
+    end
+  end
+
   context 'filtering' do
     before {
       @course1 = FactoryGirl.create(:course, name: "Course 1", semester: 'Fall', year: 2012)
