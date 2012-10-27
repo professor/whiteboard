@@ -14,7 +14,7 @@
     -->
   </tr>
 
-  <% deliverables.each do |deliverable| %>
+  <% deliverables.delete_if{|del| del.assignment.nil?}.each do |deliverable| %>
       <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
         <% unless skip_course_column %>
             <% if deliverable.course %>

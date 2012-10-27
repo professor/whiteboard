@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026043042) do
+ActiveRecord::Schema.define(:version => 20121027180503) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -121,6 +121,17 @@ ActiveRecord::Schema.define(:version => 20121026043042) do
     t.text     "comment"
   end
 
+  create_table "deliverable_grades", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "deliverable_id"
+    t.integer  "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deliverable_grades", ["deliverable_id"], :name => "index_deliverable_grades_on_deliverable_id"
+  add_index "deliverable_grades", ["user_id"], :name => "index_deliverable_grades_on_user_id"
+
   create_table "deliverables", :force => true do |t|
     t.integer  "team_id"
     t.integer  "creator_id"
@@ -133,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20121026043042) do
     t.datetime "feedback_updated_at"
     t.integer  "assignment_id"
     t.string   "status"
-    t.integer  "grade"
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
