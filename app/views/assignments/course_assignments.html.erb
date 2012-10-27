@@ -7,9 +7,9 @@
       <tr>
         <th>Task Number</th>
         <th>Title</th>
-        <th>Team Deliverable</th>
+        <th></th>
         <th>Due Date</th>
-        <th><%= @course.grading_criteria == 'Points' ? 'Points' : 'Percentage' %></th>
+        <th><%= @course.grading_criteria %></th>
         <th>Can Submit?</th>
         <th>Actions</th>
       </tr>
@@ -19,7 +19,7 @@
         <tr>
           <td><%= assignment.task_number %></td>
           <td><%= assignment.title %></td>
-          <td><%= assignment.team_deliverable ? 'Yes' : 'No' %></td>
+          <td><%= assignment.team_deliverable ? 'Team' : 'Individual' %></td>
           <td><%= l assignment.due_date, format: :chatty %></td>
           <td><%= assignment.weight %></td>
           <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>

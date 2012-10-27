@@ -374,3 +374,9 @@ div.modified {
 .inline_field .field_with_errors {
     display: inline;
 }
+
+.team_portraits {
+    height: 250px;
+    width: 100%;
+    float: left;
+}

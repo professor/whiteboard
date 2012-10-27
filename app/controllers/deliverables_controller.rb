@@ -234,7 +234,7 @@ class DeliverablesController < ApplicationController
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
-    @deliverable.grade = params[:deliverable][:grade]
+    #@deliverable.grade = params[:deliverable][:grade]
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
