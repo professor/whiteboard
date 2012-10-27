@@ -19,8 +19,10 @@
       <tr>
         <td><%= form.label :weight, @assignment.course.grading_criteria %></td>
         <td>
-          <%= form.text_field :weight, size: 3 %>
-          <%= "%" if @assignment.course.grading_criteria == "Percentage" %>
+          <div class="inline_field">
+            <%= form.text_field :weight, size: 3 %>
+            <%= "%" if @assignment.course.grading_criteria == "Percentage" %>
+          </div>
         </td>
       </tr>
 

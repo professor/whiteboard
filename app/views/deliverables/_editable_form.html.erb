@@ -2,33 +2,42 @@
   deliverables.</p>
 <p>If your deliverable contains more than one file, then create a zip file.</p>
 <%
-   courses = @deliverable.creator.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
+  courses = @deliverable.creator.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
 
-   assignment_options = {}
-   selected_assignment = nil
-   assignments_js = ''
-   courses.each do |course|
-     assignments_js += "'#{course.id}':\""
-     assignment_options[course.id] = []
-     course.submittable_assignments.each do |assignment|
-       assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
-       assignment_options[course.id] << [assignment_text, assignment.id]
-       assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
+  assignment_options = {}
+  selected_assignment = nil
+  assignments_js = ''
+  courses.each do |course|
+    assignments_js += "'#{course.id}':\""
+    assignment_options[course.id] = []
+    course.submittable_assignments.each do |assignment|
+      assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
+      assignment_options[course.id] << [assignment_text, assignment.id]
 
-       if !params[:assignment_id].blank? && params[:assignment_id].to_i == assignment.id
-         selected_assignment = assignment.id
-       end
-     end
-     assignments_js += "\","
-   end
+      assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
+    end
+    assignments_js += "\","
+  end
 
-   selected_course = !params[:course_id].blank? ? params[:course_id] : nil;
+  selected_course = nil
+  if !params[:course_id].blank?
+    selected_course = params[:course_id]
+  elsif @deliverable.persisted? && courses.include?(@deliverable.assignment.course)
+    selected_course = @deliverable.assignment.course.id
+  end
 
-   if !params[:assignment_id].blank? && !params[:course_id].blank? && assignment_options[params[:course_id].to_i]
-     selected_course_assignments = assignment_options[params[:course_id].to_i]
-   else
-     selected_course_assignments = []
-   end
+  selected_assignment = nil
+  if !params[:assignment_id].blank?
+    selected_assignment = params[:assignment_id]
+  elsif selected_course && @deliverable.persisted? && !selected_assignment
+    selected_assignment = @deliverable.assignment.id
+  end
+
+  if selected_course && assignment_options[selected_course.to_i]
+    selected_course_assignments = assignment_options[selected_course.to_i]
+  else
+    selected_course_assignments = []
+  end
 %>
 
 <%= form_for @deliverable, :html => {:multipart => true} do |f| %>

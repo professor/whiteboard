@@ -460,13 +460,14 @@ describe Course do
       @course.submittable_assignments.should include(@assignment1, @assignment3)
     end
 
-    #it "should scale the weight out of 100 when grading criteria is changed from points to percentage" do
-    #  Course.update(@course.id, grading_criteria:  "Percentage")
-    #  @assignment1.reload.weight.should == 10
-    #  @assignment2.reload.weight.should == 30
-    #  @assignment3.reload.weight.should == 10
-    #  @assignment4.reload.weight.should == 50
-    #end
+    it "should scale the weight out of 100 when grading criteria is changed from points to percentage" do
+      @course.grading_criteria = "Percentage"
+      @course.save
+      @assignment1.reload.weight.should == 10
+      @assignment2.reload.weight.should == 30
+      @assignment3.reload.weight.should == 10
+      @assignment4.reload.weight.should == 50
+    end
   end
 
   # Tests for has_and_belongs_to_many relationship
