@@ -6,7 +6,7 @@ class Assignment < ActiveRecord::Base
   has_many :deliverables
 
   validates_presence_of :title
-  validates :weight, numericality: { greater_than: 0, less_than_or_equal_to: 100 }, presence: true
+  validates :weight, numericality: { greater_than: 0 }, presence: true
   validate :validate_due_date, :validate_total_weights
 
   default_scope order: "task_number ASC, due_date ASC"
@@ -30,17 +30,20 @@ class Assignment < ActiveRecord::Base
     end
 
     def validate_total_weights
-      assignments = Assignment.find_all_by_course_id(self.course_id).delete_if {|assignment| assignment.id == self.id}
-      sum = 0
+      if self.course.grading_criteria == "Percentage"
 
-      assignments.each do |assignment|
-        sum += assignment.weight
-      end
+        assignments = Assignment.find_all_by_course_id(self.course_id).delete_if {|assignment| assignment.id == self.id}
+        sum = 0
 
-      sum += self.weight if !self.weight.blank?
+        assignments.each do |assignment|
+          sum += assignment.weight
+        end
 
-      if sum > 100
-       self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
+        sum += self.weight if !self.weight.blank?
+
+        if sum > 100
+         self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
+        end
       end
     end
 end

@@ -36,8 +36,11 @@
   <%
     assignment_array = @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"}
 
-    if 100 - @assignments.to_a.sum(&:weight)
-      assignment_array << "['Unassigned', #{100 - @assignments.to_a.sum(&:weight)}]"
+    if !@assignments.empty? && @assignments[0].course.grading_criteria == "Percentage"
+      assignment_sum = @assignments.to_a.sum(&:weight)
+      if (100 - assignment_sum) > 0
+        assignment_array << "['Unassigned', #{100 - assignment_sum}]"
+      end
     end
   %>
 
