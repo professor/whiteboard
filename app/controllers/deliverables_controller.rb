@@ -50,10 +50,8 @@ class DeliverablesController < ApplicationController
           end
         end
         @courses_teaching_as_faculty = @person.teaching_these_courses
-        @assignments = []
         @deliverable_users = {}
         @courses_teaching_as_faculty.each do |course|
-          @assignments.concat(course.assignments)
           course.assignments.each do |assignment|
             assignment.deliverables.each do |deliverable|
               @deliverable_users[deliverable.creator.id] = deliverable.creator

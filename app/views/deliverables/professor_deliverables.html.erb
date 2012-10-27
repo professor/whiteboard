@@ -8,7 +8,7 @@
       <%= f.label :course_id %>
       <%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All'}, {class: 'deliverable-filter'})  %><br />
       <%= f.label :assignment_id %>
-      <%= f.collection_select(:assignment_id, @assignments, :id, :title, {:include_blank => 'All'}, {class: 'deliverable-filter'}) %>
+      <%= f.collection_select(:assignment_id, [], :id, :title, {:include_blank => 'All'}, {class: 'deliverable-filter'}) %>
       <%= f.label :submitted_by %>
       <%= f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, {:include_blank => 'All'}, {class: 'deliverable-filter'} %>
       <%= f.label :status %>
@@ -19,9 +19,38 @@
   <div id='grading_queue'><%= render 'deliverables/grading_queue' %></div>
 <% end %>
 
+<%
+  #course_assignments_js = "'1': "<option value=''>All</option><option>...</option><option>...</option>", 2:..."
+  course_assignments_js = ''
+  all_assignment_options = "<option value=''>All</option>"
+
+  @courses_teaching_as_faculty.each do |course|
+    course_assignments_js += "'#{course.id}':\""
+    course_assignments_js += "<option value=''>All</option>"
+    course.assignments.each do |assignment|
+      assignment_option = "<option value='#{assignment.id}'>#{course.short_name}: #{assignment.title}</option>"
+      course_assignments_js += assignment_option
+      all_assignment_options += assignment_option
+    end
+    course_assignments_js += "\","
+  end
+
+  course_assignments_js = "'': \"#{all_assignment_options}\"," + course_assignments_js
+%>
+
 <script type="text/javascript">
   $(function() {
-    $('.deliverable-filter').change(function() {
+    assignment_options = {<%= course_assignments_js.html_safe %>};
+
+    $('#filter_assignment_id').html(assignment_options[$('#filter_course_id').val()]);
+
+    $('.deliverable-filter').change(function(event) {
+      event.stopPropagation();
+
+      if ($(this).attr('id') == 'filter_course_id') {
+        $('#filter_assignment_id').html(assignment_options[$(this).val()]);
+      }
+
       $('#filters form').submit();
     })
   })
