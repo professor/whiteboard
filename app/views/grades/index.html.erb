@@ -12,52 +12,39 @@
         return $(node).text();
       } 
     });
-      $(".score [type=text]").live("change", function() {
-
-          //         console.log($(this).attr('id'))  ;
-          var grade_attrs = parse_id($(this).attr('id'));
-          var score = $(this).val();
-          var previousValue = $(this)[0].defaultValue;
-          if(previousValue != score)
-          {
-              //           console.log("different");
-              $(this).css("border","thin solid");
-              $(this).css("border-color","red");
-              $(this).addClass("changedScore");
-              changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
-                  course_id: grade_attrs.course_id,
-                  assignment_id: grade_attrs.assignment_id,
-                  student_id: grade_attrs.student_id,
-                  score: parseFloat(score)
-              };
-
-
-          }
-          else
-          {
-              $(this).css("border","thin solid");
-              $(this).css("border-color","#666666");
-              $(this).removeClass("changedScore");
-              delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
-          }
-      });
   });
+  function change_grade(event){
+    var grade_attrs = parse_id($(event.target).attr('id'));
+    var score = $(event.target).val();
+    var previousValue = $(event.target)[0].defaultValue;
+    if(previousValue != score)
+    {
+      $(event.target).addClass("changedScore");
+      changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
+        course_id: grade_attrs.course_id,
+        assignment_id: grade_attrs.assignment_id,
+        student_id: grade_attrs.student_id,
+        score: parseFloat(score)
+      };
+    }
+    else{
+      $(event.target).removeClass("changedScore");
+      delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
+    }
+  }
   function parse_id(idAttr){
-      course_id = parseInt(idAttr.split("_")[0]);
-      assignment_id = parseInt(idAttr.split("_")[1]);
-      student_id = parseInt(idAttr.split("_")[2]);
-      return {"course_id": course_id, "assignment_id": assignment_id, "student_id": student_id};
+      return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};
   }
   function postAll() {
       var data = {};
       data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
-      alert(changed_grades.toString());
       $.ajax({
+          contentType: "application/json;",
           url: '<%=post_all_grades_path(@course)%>',
           type: "POST",
           data: JSON.stringify(data, null, 1),
           dataType: "json",
-          success:function(result){
+          success:function(data){
               if(data["message"] == "true"){
                 location.reload(false);
               }
@@ -76,7 +63,12 @@
 
   }
 </script>
-
+<style>
+  .changedScore{
+    border: thin solid;
+    border-color: red;
+  }
+</style>
 <h1><%=@course.name %></h1>
   <div style='width:100%;overflow:scroll'>
 
@@ -103,13 +95,13 @@
             </td>
             <td><%=student.last_name%></td>
             <% @assignments.each do |assignment|%>
-              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4"/></td>
+              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
             <% end %>
           </tr>
         <%end%>
       </table>
 
-      <div style='padding-top:20px;'>
+      <div style='padding-top:20px;margin-bottom: 40px;'>
         <button type="button" id="gradebook_submit" onclick="postAll()">Submit</button>
         <button type="button" id="gradebook_save_draft" onclick="saveAsDraft()">Save as Draft</button>
       </div>
