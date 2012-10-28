@@ -38,6 +38,11 @@ FactoryGirl.define do
     association :deliverable, :factory => :deliverable
   end
 
+  factory :deliverable_grade do
+    association :user, :factory => :student_sally
+    association :deliverable, :factory => :deliverable
+  end
+
   factory :assignment do
     task_number 1
     title 'Just an assignment'

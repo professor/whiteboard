@@ -8,6 +8,12 @@ describe Deliverable do
     }.should change(Deliverable, :count).by(1)
   end
 
+  it "should create a new deliverable grade on creation" do
+    deliverable = FactoryGirl.create(:deliverable)
+    deliverable.deliverable_grades.count.should == 1
+    deliverable.deliverable_grades[0].grade == 0
+  end
+
   context "is not valid" do
 
     [:creator, :assignment].each do |attr|

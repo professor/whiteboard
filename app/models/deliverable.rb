@@ -36,6 +36,7 @@ class Deliverable < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :assignment
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
+  has_many :deliverable_grades
 
   validates_presence_of :creator, :assignment
   validate :unique_course_task_owner?
@@ -47,7 +48,10 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
+  accepts_nested_attributes_for :deliverable_grades, allow_destroy: true
+
   before_save :populate_status
+  after_save :create_deliverable_grade
 
   def course
     self.assignment.nil? ? nil : self.assignment.course
@@ -152,12 +156,6 @@ class Deliverable < ActiveRecord::Base
     !self.feedback_comment.blank? or !self.feedback_file_name.blank?
   end
 
-  def populate_status
-    if self.status.nil?
-      self.status = "Ungraded"
-    end
-  end
-
   def send_deliverable_upload_email(url)
     mail_to = []
     unless self.team.nil? || self.team.primary_faculty.nil?
@@ -226,6 +224,20 @@ class Deliverable < ActiveRecord::Base
     # Look up the team this user is on if it is a team deliverable
     Team.where(:course_id => self.course_id).each do |team|
       self.team = team if team.members.include?(self.creator)
+    end
+  end
+
+  private
+
+  def populate_status
+    if self.status.nil?
+      self.status = "Ungraded"
+    end
+  end
+
+  def create_deliverable_grade
+    if self.deliverable_grades.blank?
+      self.deliverable_grades.create(grade: 0, user: self.creator)
     end
   end
 end
