@@ -51,6 +51,19 @@
                 staffid:"991234"
             }
         });
+
+        // jQuery script to show an upload button when hovering over the user profile picture
+        $(function() {
+            $(".user_profile_photo_imgHover").hover(
+                function() {
+                    $(this).children("img").fadeTo(200, 0.5).end().children(".user_profile_photo_hover").show();
+                },
+                function() {
+                    $(this).children("img").fadeTo(200, 1).end().children(".user_profile_photo_hover").hide();
+                });
+        });
+
+
     </script>
 <% end %>
 
@@ -70,7 +83,23 @@
 
     <div class="user_profile_content">
         <div class="user_profile_photo_social">
-            <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+
+
+            <% if can? :upload_photo, User %>
+              </fieldset>
+              <div class="user_profile_photo_imgHover">
+                <div class="user_profile_photo_hover">
+                    <div class="user_profile_photo_upload">
+                      <%= f.label :upload_photo, "Upload new photo" %>
+                      <%= f.file_field :photo %>
+                    </div>
+                </div>
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+            </div>
+            <% else %>
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+            <% end %>
+
             <div class="user_profile_social clearboth">
                 <table>
                     <tr>
@@ -96,10 +125,10 @@
                 </table>
             </div>
         </div>
-        
+
         <div class="user_profile_title">
             <div class="user_profile_action">
-                <%= link_to 'Back', @person %> | 
+                <%= link_to 'Back', @person %> |
                 <%= f.submit "Update" %>
             </div>
             <h1 id="user_profile_name">
@@ -110,7 +139,34 @@
         </div> <!-- user_profile_title -->
 
 
-        <div class="user_profile_org_edit">
+
+        <div class="user_profile_content_body">
+            <table class="cmu_table">
+                <tr class="">
+                    <td>Personal Email</td>
+                    <td><%= f.text_field :personal_email, :placeholder => "Enter your personal email" %></td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone1 , :placeholder => "Enter telephone number" %>
+                </tr>
+                <tr class="">
+                    <td><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone2, :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr>
+                    <td><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone3 , :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr class="">
+                    <td><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone4 , :placeholder => "Enter telephone number" %></td>
+                </tr>
+            </table>
+        </div>
+        <div class="user_profile_content_body">
             <table class="cmu_table">
                 <tr class="">
                     <td>Organization</td>
@@ -128,35 +184,6 @@
                     </td>
                 </tr>
             </table>
-        </div>
-
-        <div class="user_profile_contact_details_edit">
-            <div class="user_profile_contact_details_content_edit">
-                <table class="cmu_table">
-                    <tr class="">
-                        <td>Personal Email</td>
-                        <td><%= f.text_field :personal_email, :placeholder => "Enter your personal email" %></td>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
-                        <td><%= f.text_field :telephone1 , :placeholder => "Enter telephone number" %>
-                    </tr>
-                    <tr class="">
-                        <td><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
-                        <td><%= f.text_field :telephone2, :placeholder => "Enter telephone number" %></td>
-                    </tr>
-                    <tr>
-                        <td><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
-                        <td><%= f.text_field :telephone3 , :placeholder => "Enter telephone number" %></td>
-                    </tr>
-                    <tr class="">
-                        <td><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
-                        <td><%= f.text_field :telephone4 , :placeholder => "Enter telephone number" %></td>
-                    </tr>
-                </table>
-            </div>
         </div>
 
         <% if @person.is_student %>
@@ -182,15 +209,76 @@
                     </td>
                 </tr>
             </table>
-
-            
-
-        </div>
+        </div> <!-- user_profile_campus_proximity -->
         <% end %>
-    
-    </div> <!-- use_profile_content div ends -->
 
-<% end %>
+        <div class="clearboth">
+            <h2><%= f.label :biography %>:</h2>
+            <div class="user_profile_bio_edit_content">
+                <div class="formItem">
+                  <%= f.text_area :biography, :size => "80x30", :class => "tinymce" %>
+                </div>
+            </div>
+        </div>
+
+        <div class="user_profile_about_edit clearboth">
+            <h2>About Me:</h2>
+            <div class="user_profile_about_edit_content">
+                <div class="formItem">
+                  <%= f.text_area :user_text, :size => "80x30", :class => "tinymce" %>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:none">
+            <fieldset>
+              <legend>Strength Finders</legend>
+              For more information about Clifton's Strength Finders, visit
+              <a href="http://www.strengthquest.com">Strength Quest</a>
+
+              <div class="formItem">
+                <%= f.label :strength1, "Strength 1" %>
+                <%= f.collection_select :strength1_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength2, "Strength 2" %>
+                <%= f.collection_select :strength2_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength3, "Strength 3" %>
+                <%= f.collection_select :strength3_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength4, "Strength 4" %>
+                <%= f.collection_select :strength4_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength5, "Strength 5" %>
+                <%= f.collection_select :strength5_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+            </fieldset>
+        </div>
+
+        <%= render :partial => 'show_faculty_fields', :locals => {:f => f, :person => @person} %>
+        <%= render :partial => 'show_admin_fields', :locals => {:f => f, :person => @person} %>
+
+    </div> <!-- user_profile_content div ends -->
+
+    <div class="user_profile_action">
+        <%= link_to 'Back', @person %> |
+        <%= f.submit "Update" %>
+    </div>
+
+    <div class="user_profile_debugging clearboth">
+        <% if @person.effort_log_warning_email.nil? %>
+            An effort log warning email has never been sent
+        <% else %>
+            An effort log warning email was last sent on <%= l @person.effort_log_warning_email, :format => :chatty %>
+        <% end %>
+    </div>
+
+
+<% end %> <!-- form end script -->
 
 
 

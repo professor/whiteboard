@@ -41,20 +41,20 @@ div#topnav ul {
 td.log_sum {
    padding-left: 10px;
    text-align: right;
-}        
+}
 
 td.log_remove {
-   padding-left: 10px; 
+   padding-left: 10px;
 }
 
 td.log_weeknumber {
     text-align: right;
-    
+
 }
 
 td.log_action  {
     padding-left: 7px;
-    
+
 }
 
 #description {
@@ -151,7 +151,7 @@ table.tablesorter tbody tr.hover td {
 .comment {
     padding: 5px;
     margin-right: 5px;
-    margin-bottom: 5px;    
+    margin-bottom: 5px;
 }
 
 .comment_type_none {
@@ -359,12 +359,12 @@ div.modified {
 #sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
 
 
-/************************ 
- * User Profile Page 
+/************************
+ * User Profile Page
 *************************/
 
 .user_profile_content{
-    overflow: auto;
+    overflow: hidden;
     margin-top: 10px;
     /*width: 700px;*/
 }
@@ -382,14 +382,33 @@ div.modified {
     }
 
     .user_profile_photo{
-        width:155px;    
+        width:155px;
         float:left;
         margin-bottom: 5px;
     }
+        .user_profile_photo_upload{
+            background:white;
+            padding:10px;
+            border:1px solid gray;
+            width:90%;
+            text-align: center;
+        }
+            .user_profile_photo_imgHover {
+                display: inline;
+                position: relative;
+            }
+            .user_profile_photo_imgHover .user_profile_photo_hover {
+                display: none;
+                position: absolute;
+                top: 90px;
+                z-index: 2;
+            }
+
+
 .user_profile_title, .user_profile_bio{
     float: left;
     width: 70%;
-    margin: 0 0 0 15px;
+    margin: 0 0 15px 15px;
     padding: 0px 0 0 20px;
 }
     #user_profile_name{
@@ -411,16 +430,19 @@ div.modified {
     width: 68%;
     margin: 15px 0 0 15px;
 }
-.user_profile_about, .user_profile_contact_details {
+.user_profile_contact_details{
     /*widows: 630px;*/
     float:left;
     margin: 15px 0 0 15px;
     padding: 0px 20px;
 }
-    .user_profile_about_header, .user_profile_contact_details_header{
+    .user_profile_about_header,
+    .user_profile_content .clearboth h2 {
         text-align: right;
         float: left;
-        width: 20%;    
+        width: 24%;
+        margin-top: 5px;
+
     }
         .user_profile_about_me_text {
             width: 450px;
@@ -428,59 +450,70 @@ div.modified {
             margin: 20px 0 0 0;
         }
 
-.user_profile_org, .user_profile_org_edit, .user_profile_contact_details_content {
+.user_profile_org_edit{
     width: 65%;
     float: right;
-    margin: 10px 53px 0 0;
-}
-.user_profile_org_edit{
     margin: 0;
     width: 474px;
 }
-    .user_profile_contact_details_content_edit, .user_profile_campus_proximity{
+    .user_profile_campus_proximity,
+    .user_profile_bio_edit_content, .user_profile_about_edit_content,
+    .user_profile_content_body,
+    .user_profile_content .clearboth table.cmu_table {
             float: right;
             margin:0;
+            margin-bottom: 40px;
             padding:0;
             width: 474px;
     }
-        .user_profile_org table, .user_profile_contact_details_content table{
+    .user_profile_content .clearboth table.user_profile_content_admin_editable{
+        margin-bottom:10px;
+    }
+
+    .user_profile_bio_edit_content, .user_profile_about_edit_content{
+        width: 77%;
+        margin-top: -30px;
+    }
+        .user_profile_org table,{
             width: 450px;
         }
-        .user_profile_contact_details_content_edit table{
+        .user_profile_content_body table{
             width:100%;
         }
-        .user_profile_contact_details_content_edit table td:first-child,
+
+        .user_profile_content_body table td:first-child,
         .user_profile_campus_proximity table td:first-child {
             width:114px;
         }
-        .user_profile_contact_details_content_edit table td input[type="text"]{
-            width:99%;
-        }
-        .user_profile_campus_proximity table td select {
-            width: 102px;
-        }
-        .user_profile_campus_proximity table.cmu_table tbody tbody tr td{
-            padding: 0;
-            border-style: none;
-        }
-            .user_profile_campus_proximity table.cmu_table tbody tbody tr td {
-                padding-bottom: 10px;
-            }
-            .user_profile_campus_proximity table.cmu_table tbody tbody tr td:first-child{
-                width: 20%;
-            }
-
-        .user_profile_org_edit table{
-            width:100%;
-        }
-            .user_profile_org_edit table input[type="text"]{
+            .user_profile_content_body table td input[type="text"],
+            .user_profile_content .clearboth table.cmu_table td input[type="text"] {
                 width:99%;
             }
-
+            .user_profile_campus_proximity table td select {
+                width: 102px;
+            }
+                .user_profile_campus_proximity table.cmu_table tbody tbody tr td{
+                    padding: 0;
+                    border-style: none;
+                }
+                    .user_profile_campus_proximity table.cmu_table tbody tbody tr td {
+                        padding-bottom: 10px;
+                    }
+                    .user_profile_campus_proximity table.cmu_table tbody tbody tr td:first-child{
+                        width: 20%;
+                    }
 
 
     .user_profile_org table tr td:first-child,
-    .user_profile_org_edit table tr td:first-child,
-    .user_profile_contact_details_content table tr td:first-child {
+    .user_profile_content_body table tr td:first-child,
+
+    .user_profile_content .clearboth table.cmu_table tr td:first-child {
         width: 30%;
     }
+
+.user_profile_content .user_profile_content_admin_editable{ background: #D5D6C1; }
+.user_profile_content .user_profile_content_faculty_editable{ background: #D9E7E6; }
+
+.user_profile_contact_details_content{ padding-top:30px}
+.user_profile_debugging{ text-align:center; margin-top:50px}
+
