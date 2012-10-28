@@ -16,6 +16,7 @@ describe Grade do
                                    :student_id => @student_sam.id, 
                                    :assignment_id => @assignment_1.id,
                                    :score => 0)
+    User.stub(:find).with(@student_sam.id).and_return(@student_sam)
   end
 
   after(:each) do
@@ -123,6 +124,7 @@ describe Grade do
   it "should not give grade to an unregistered student" do
     score = 10
     student_sally = FactoryGirl.create(:student_sally_user)
+    User.stub(:find).with(student_sally.id).and_return(student_sally)
     Grade.give_grade(@assignment_1.id, student_sally.id, score).should be_false
   end
 

@@ -1,0 +1,18 @@
+<div class='team_member_photo'>
+  <% unless  grade_obj.is_student_visible? %>
+  <div class="rounded staff">
+  <% end %>
+  <div class="label">
+    <%= fields_for :grade do |grade| %>
+      <%= grade.text_field :grade_for_student ,:name=>member.id,:value => grade_obj.score,:size=> "5x1" %>
+    <% end %>
+  </div>
+  <div>
+  <a href='http://rails.sv.cmu.edu/people/<%= member.twiki_name %>' target='_top'>
+    <%= image_tag(member.image_uri, :border => 0, :height => 100, :alt => member.human_name+" image") %></a>
+  </div>
+  <div class='label'> <%= member.human_name %></div>
+  <% unless  grade_obj.is_student_visible? %>
+  </div>
+  <% end %>
+</div>

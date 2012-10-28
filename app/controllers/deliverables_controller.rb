@@ -84,7 +84,6 @@ class DeliverablesController < ApplicationController
   def create
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
-
     @deliverable.creator = current_user
     @deliverable.assignment.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
@@ -194,13 +193,15 @@ class DeliverablesController < ApplicationController
 
     @deliverable = Deliverable.find(params[:id])
 
-    submit=true
-    if params[:submit]
-      # @deliverable.is_student_visible=true;
 
+    # check is save and email is clicked or save as draft is clicked
+    is_student_visible=true
+    if params[:submit]
+       @deliverable.is_student_visible=true;
+      is_student_visible=true
     elsif params[:draft]
-     # @deliverable.is_student_visible=false;
-      submit=false
+      @deliverable.is_student_visible=false;
+      is_student_visible=false
     end
 
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
@@ -211,11 +212,25 @@ class DeliverablesController < ApplicationController
     if @deliverable.has_feedback?
       @deliverable.feedback_updated_at = Time.now
     end
+
+
+    assignment_id=@deliverable.assignment_id
+    if @deliverable.assignment.is_team_deliverable?
+      @deliverable.team.members.each do |user|
+        score= params[:"#{user.id}"]
+        Grade.give_grade(assignment_id,user.id,score,is_student_visible)
+      end
+    else
+      score= params[:"#{@deliverable.creator_id}"]
+      Grade.give_grade(assignment_id,@deliverable.creator_id,score,is_student_visible)
+    end
+
+
     respond_to do |format|
       if @deliverable.save
-        #if submit==true
-        #  @deliverable.send_deliverable_feedback_email(url_for(@deliverable),@deliverable.feedback)
-        #end
+        if is_student_visible==true
+          @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
+        end
         flash[:notice] = 'Feedback successfully saved.'
         format.html { redirect_to(@deliverable) }
         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
@@ -235,6 +250,5 @@ class DeliverablesController < ApplicationController
       end
     end
   end
-
 
 end

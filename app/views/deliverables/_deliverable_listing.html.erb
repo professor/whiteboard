@@ -8,6 +8,7 @@
     <th>Owner</th>
     <th>Latest Deliverable</th>
     <th>Feedback Received?</th>
+    <th>Grade Recieved</th>
     <th>Actions</th>
     <!--
         <th>File</th>
@@ -32,12 +33,19 @@
             <td><%= deliverable.assignment.name %></td>
         <% end %>
 
+
         <td>
           <% if deliverable.has_feedback? %>
               Yes
           <% else %>
               No
           <% end %>
+        </td>
+        <td>
+        <% grade=Grade.get_grade(deliverable.assignment.id,current_user.id) %>
+        <%unless (grade.nil? || !grade.is_student_visible) %>
+            <%= grade.score.to_s %>
+        <% end %>
         </td>
         <td><%= link_to 'View History and Feedback', deliverable %></td>
         <!--

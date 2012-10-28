@@ -29,8 +29,8 @@ describe GradesController do
 
     before(:each) do
       @course.registered_students.stub(:order).and_return([@student_sam, @student_sally])
-      Grade.stub(:get_grades).with(@course, @student_sam).and_return({@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score})
-      Grade.stub(:get_grades).with(@course, @student_sally).and_return({@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score})
+      Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sam).and_return({@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score})
+      Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sally).and_return({@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score})
       @expected_grades = {@student_sam=>{@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score},
                           @student_sally=>{@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score}}
     end

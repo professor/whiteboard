@@ -54,7 +54,7 @@ class Grade < ActiveRecord::Base
     Grade.update_all({:is_student_visible=>true},{:course_id=>course_id,:assignment_id=>assignment_id,:is_student_visible=>false})
   end
 
-  def self.give_grade(assignment_id, student_id, score)
+  def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
     grading_result = false
     student = User.find(student_id)
 
@@ -64,9 +64,10 @@ class Grade < ActiveRecord::Base
     elsif assignment.course.registered_students.include?(student)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
-        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score})
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score,:is_student_visible=>is_student_visible})
       end
       grade.score =score
+      grade.is_student_visible = is_student_visible
       grading_result = grade.save
     end
     grading_result
