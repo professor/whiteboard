@@ -74,10 +74,9 @@ class Grade < ActiveRecord::Base
   end
 
   def self.give_grades(grades)
-    puts grades.inspect
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
-      self.give_grade(grade_entry["assignment_id"], grade_entry["student_id"], grade_entry["score"])
+      self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
     end
   end
 
