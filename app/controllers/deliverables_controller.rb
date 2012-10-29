@@ -234,7 +234,10 @@ class DeliverablesController < ApplicationController
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
-    #@deliverable.grade = params[:deliverable][:grade]
+
+    # TODO: change grade field from integer to string and do necessary error checking
+    update_grades
+
     @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
     unless params[:deliverable][:feedback].blank?
       @deliverable.feedback = params[:deliverable][:feedback]
@@ -249,10 +252,18 @@ class DeliverablesController < ApplicationController
         format.html { redirect_to(@deliverable) }
         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
       else
-        flash[:error] = 'Unable to save feedback'
+        flash[:error] = 'Unable to save feedback but grades updated'
         format.html { redirect_to(@deliverable) }
         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  private
+
+  def update_grades
+    params[:deliverable][:deliverable_grades_attributes].values.each do |individual_grade|
+      @deliverable.deliverable_grades.find((individual_grade[:id]).to_i).update_attributes(grade: individual_grade[:grade].to_i)
     end
   end
 end

@@ -13,14 +13,19 @@
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <div>
-    <p>
-      <%= f.fields_for :deliverable_grades do |builder| %>
-        <tr>
-          <td><%= builder.label builder.object.grade %></td>
-          <td><%= builder.text_field :minimum, size: 4 %></td>
-        </tr>
-      <% end %>
-    </p>
+    <% if !@deliverable.is_team_deliverable? %>
+      <p>
+        <%= f.fields_for :deliverable_grades do |builder| %>
+          <%= builder.label :grade %>
+          <%= builder.text_field :grade, size: 4 %>/<%= builder.object.max_score %>
+        <% end %>
+      </p>
+    <% else %>
+      <p>
+        <%= label_tag "Team members grade" %>
+        <%= text_field_tag "team_grade", ' ', :size => 4 %>
+      </p>
+    <% end %>
     <p>
       <%= f.label :feedback, "Feedback file to upload" %>
       <%= f.file_field :feedback %>
@@ -34,9 +39,13 @@
 
   <% if @deliverable.is_team_deliverable? %>
     <div class="team_portraits">
-      <% @deliverable.team.members.each do |member| %>
-        <%= render :partial => 'people/twiki_photo_link', :locals => {:person => member} %>
-      <% end %>
+      <p>
+        <%= f.fields_for :deliverable_grades do |builder| %>
+          <%= builder.label :grade %>
+          <%= builder.text_field :grade, size: 4 %>/<%= builder.object.max_score %>
+          <%= render :partial => 'people/twiki_photo_link', :locals => {:person => User.find(builder.object.user_id)} %>
+        <% end %>
+      </p>
     </div>
   <% end %>
   <div>

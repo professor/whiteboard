@@ -237,7 +237,18 @@ class Deliverable < ActiveRecord::Base
 
   def create_deliverable_grade
     if self.deliverable_grades.blank?
-      self.deliverable_grades.create(grade: 0, user: self.creator)
+      if self.assignment.team_deliverable?
+        self.course.teams.each do |team|
+          if team.members.include?(self.creator)
+            team.members.each do |member|
+              self.deliverable_grades.create(grade: 0, user: member)
+            end
+            return
+          end
+        end
+      else
+        self.deliverable_grades.create(grade: 0, user: self.creator)
+      end
     end
   end
 end
