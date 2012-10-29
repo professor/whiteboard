@@ -60,7 +60,26 @@
 
 
   function saveAsDraft() {
+      var data = {};
+      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
+      $.ajax({
+          contentType: "application/json;",
+          url: '<%=save_draft_path(@course)%>',
+          type: "POST",
+          data: JSON.stringify(data, null, 1),
+          dataType: "json",
+          success:function(data){
+              if(data["message"] == "true"){
+                  location.reload(false);
+              }
+              changed_grades = {};
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              console.log("Unalbe to submit the record");
+              changed_grades = {};
+          }
 
+      })
   }
 </script>
 <style>
@@ -97,6 +116,7 @@
             <% @assignments.each do |assignment|%>
               <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
             <% end %>
+            <td><input id="<%= @course.id %>_<%=student.id%>" value='<%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
           </tr>
         <%end%>
       </table>
