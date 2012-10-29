@@ -22,7 +22,7 @@ class GradesController < ApplicationController
     @assignments = @course.assignments
     @grades = {}
     @students.each do |student|
-      @grades[student] =  Grade.get_grades(@course, student)
+      @grades[student] =  Grade.get_grades_for_student_per_course(@course, student)
     end
   end
 
@@ -30,25 +30,13 @@ class GradesController < ApplicationController
     puts "in create"
 
     scoreArrayList=params["scoreArrayList"]
-    error=false
+    success=true
     unless scoreArrayList.blank?
       scoreArrayList.each do|scoreValue|
-      grade = Grade.get_grade(scoreValue["course_id"], scoreValue["assignment_id"],scoreValue["student_id"])
-        if  grade.blank?
-          grade_entry=Grade.new(scoreValue)
-          unless grade_entry.save
-            error=true
-          end
-        else
-          begin
-            puts "update score"
-            unless grade.update_attributes(scoreValue)
-              error=true
-            end
-          rescue
-            error=true
-          end
+        if  Grade.give_grade(scoreValue["assignment_id"],scoreValue["student_id"],scoreValue["score"])==false
+         success=false
         end
+        puts success
       end
     end
 
@@ -57,12 +45,27 @@ class GradesController < ApplicationController
        courseAssignment=params["courseAssignment"]
        Grade.update_grade(courseAssignment["course_id"],courseAssignment["assignment_id"])   
      end
-    if error==false
-      render :json => ({"success"=> "true","message"=>"Success" })
-    else
-      flash[:error] = "input format is wrong"
-      render :json => ({"success"=> "false"})
-    end
+
+
+      if success==true
+        flash[:notice] = 'Feedback successfully saved.'
+        render :json => ({"message"=>"true" })
+      else
+        flash[:error] = "input format is wrong"
+        render :json => ({"message"=> "false"})
+      end
+  end
+
+  def post_all
+    puts "Lydian"
+    puts params
+    puts "Lydian"
+    grades = params["grades"]
+    puts grades
+    puts "Lydian"
+    Grade.give_grades(grades)
+    Grade.post_all(@course.id)
+    render :json => ({"message"=>"true"})
   end
 
 end

@@ -51,6 +51,8 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
+
+
   def unique_course_task_owner?
     if self.is_team_deliverable?
       duplicate = Deliverable.where(:course_id => self.course_id, :assignment_id => self.assignment_id, :team_id => self.team_id).first
@@ -131,7 +133,7 @@ class Deliverable < ActiveRecord::Base
     end
 
     message = self.owner_name + " has submitted a deliverable for "
-    if !self.assignemnt.task_number.nil? and self.assignment.task_number != "" and !self.assignmet.name.nil? and self.assignment.name !="" 
+    if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
       message += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
     message += self.course.name
@@ -145,29 +147,42 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
-  def send_deliverable_feedback_email(url,feedback_content)
-    mail_to = self.owner_email
-
-    message = "Feedback has been submitted for "
-    if !self.assignemnt.task_number.nil? and self.assignment.task_number != "" and !self.assignmet.name.nil? and self.assignment.name !="" 
-      message += "#{self.assignment.name} (#{self.assignment.task_number}) of "
+  def send_feedback_to_student( member_id, member_email, url)
+    feedback = "Feedback has been submitted for "
+    if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
+      feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
-    message += self.course.name
+    feedback +=self.course.name
 
-
-
-    if !feedback_content.nil?
-      message += "
-
-      "+feedback_content
+    if self.feedback_comment
+      feedback +="\n\nFeedback Given:\n"
+      feedback += self.feedback_comment
+      feedback += "\n"
     end
-    options = {:to => mail_to,
+    given_grade=Grade.get_grade(self.assignment_id,member_id)
+    unless  given_grade.nil?
+      feedback += "\nGrade earned for this assignment is: "
+      feedback += given_grade.score.to_s
+      feedback += "\n"
+    end
+
+    options = {:to => member_email,
                :subject => "Feedback for " + self.course.name,
-               :message => message,
+               :message => feedback,
                :url_label => "View this deliverable",
-               :url => url
-    }
+               :url => url}
+
     GenericMailer.email(options).deliver
+  end
+
+  def send_deliverable_feedback_email(url)
+    if self.is_team_deliverable?
+      self.team.members.each do |member|
+        send_feedback_to_student( member.id, member.email, url)
+      end
+    else
+      send_feedback_to_student( self.creator_id, self.creator.email, url)
+    end
   end
 
   def editable?(current_user)

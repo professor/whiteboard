@@ -23,25 +23,61 @@ class Grade < ActiveRecord::Base
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
   # To fetch the grade of student.
-  def self.get_grades (course, student)
+  def self.get_grades_for_student_per_course (course, student)
     grade_books = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade_book|
       grade_books[grade_book.assignment.id] = grade_book
     end
-    grade_books["earned_grade"] = (grade_books.values.map {|grade| grade.score}).reduce(:+)
+    grade_books["earned_grade"] = (grade_books.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
     grade_books
   end
 
 
   # To fetch the entry with matching course, assignment and student.
-  def self.get_grade(course_id, assignment_id, student_id)
-    grade_book = Grade.where(:course_id => course_id,:assignment_id => assignment_id,:student_id => student_id).limit(1)[0]
+  def self.get_grade(assignment_id, student_id)
+    grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+  def self.post_all(course_id)
+    Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
+  end
+
+  def self.save_as_draft(grades)
+    grades.each do |grade_entry|
+      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).try(
+          :update_attribute, :is_student_visible, false)
+    end
+  end
 
   # To allow the scores to be visible to the students.
   def self.update_grade(course_id, assignment_id)
     Grade.update_all({:is_student_visible=>true},{:course_id=>course_id,:assignment_id=>assignment_id,:is_student_visible=>false})
+  end
+
+  def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
+    grading_result = false
+    student = User.find(student_id)
+
+    assignment = Assignment.find(assignment_id)
+    if assignment.nil?
+      grading_result = false
+    elsif assignment.course.registered_students.include?(student)
+      grade = Grade.get_grade(assignment.id, student_id)
+      if grade.blank?
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score,:is_student_visible=>is_student_visible})
+      end
+      grade.score =score
+      grade.is_student_visible = is_student_visible
+      grading_result = grade.save
+    end
+    grading_result
+  end
+
+  def self.give_grades(grades)
+    grades.each do |grade_entry|
+      # FIXME: error handling for update failure
+      self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
+    end
   end
 
 end

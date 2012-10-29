@@ -1,14 +1,12 @@
 <% if @deliverable.course %>
-    <% title = "Deliverable for "# + @deliverable.course.name + " Task " + @deliverable.assignment.task_number %>
+    <% title = "Deliverable for " + @deliverable.course.name + " (" + @deliverable.assignment.name + ")" %>
 <% else %>
-    <% title = "Deliverable for "# + "(missing) course" + " Task " + @deliverable.assignment.task_number %>
+    <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment.name + ")" %>
 <% end %>
 <% content_for :title, title %>
 <h1><%= title %></h1>
 
-<p>
-  <b><%= h @deliverable.assignment.name %></b>
-</p>
+
 
 <p>
   <% if @deliverable.is_team_deliverable? %>

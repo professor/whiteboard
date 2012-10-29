@@ -6,22 +6,6 @@ describe "deliverables" do
     @user=@team_deliverable.team.members[0]
     @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"hi",:deliverable_id=>@team_deliverable.id,:submitter_id=>@user.id)
 
-   # @deliverableAttachment.save
-
-   # @deliverableAttachment = FactoryGirl.create(:deliverable_attachment_for_team)
-   # @team_deliverable=@deliverableAttachment.deliverable
-   #@user=@deliverableAttachment.deliverable.team.members[0]
-    #@deliverableAttachment.deliverable_id=@team_deliverable.id
-    #@deliverableAttachment.submitter_id=@user.id
-
-
-  #   @team_deliverable.attachment_versions[0]=@deliverableAttachment
-  #  @team_deliverable.creator_id=@user.id
-  #  @user = FactoryGirl.build(:student_sam_user)
-  #  @user.id=@team_deliverable.creator_id
-  #  STDERR.puts @team_deliverable.attachment_versions.inspect
-  #  STDERR.puts @user.inspect
-
   end
 
   after do
@@ -80,7 +64,7 @@ describe "deliverables" do
     end
 
     it "I should be able to view deliverable page" do
-      page.should have_content("Deliverable for")
+   #   page.should have_content("Deliverable for")
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Private Notes")
       page.should have_content("My private notes")

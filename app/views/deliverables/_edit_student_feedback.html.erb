@@ -4,60 +4,74 @@
 
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-    <h1>Feedback</h1>
-   <p> <% unless @deliverable.feedback_file_name.nil? %>
-      Current uploaded feedback file  <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
-    <% else %>
-        None
-    <% end %>
-
-    </p>
-    <p>
-      <%= f.label :feedback, "Feedback file to upload" %>
-      <%= f.file_field :feedback %>
-    </p>
-    <p>
-      <%= f.text_area :feedback_comment, :size => "90x10" %>
-    </p>
-    </br>
-    <h1>Professor's Private Notes</h1>
-    <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
-    <span class="instructions">Only faculty can see this information.</span>
-
-    <p>
-      <%= f.text_area :private_note, :size => "90x10" %>
-    </p>
-
-
-
-
-    <br/><br/>
-    <% if @deliverable.is_team_deliverable? %>
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="0">
-          <tr>
-
-        <% @deliverable.team.members.each do |user| %>
-              <td>
-                <%= render :partial => 'fetch_picture', :locals => {:person => user} %>     </td>
-
+        <% unless @deliverable.is_student_visible? %>
+        <div class="rounded staff" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+              <%= professor_image %>
+              <span class="instructions">You have saved this information as draft. So this information is not visible to the students</span>
         <% end %>
 
-          </tr>
-        </table>
-    <% else %>
-        <table border="0" alignment="center">
-        <tr><td><%= render :partial => 'fetch_picture', :locals => {:person =>@deliverable.creator } %> </td></tr>
-        </table>
-    <% end %>
+            <h1>Feedback</h1>
+            <p>
+                <% unless @deliverable.feedback_file_name.nil? %>
+                 Current uploaded feedback file  <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+                <% end %>
+            </p>
+
+            <p>
+              <%= f.label :feedback, "Feedback file to upload" %>
+              <%= f.file_field :feedback %>
+            </p>
+
+            <p>
+              <%= f.text_area :feedback_comment, :size => "90x10" %>
+            </p>
 
 
-    <br/><br/>
+        <% unless @deliverable.is_student_visible? %>
+            </div>
+        <% end %>
 
+        </br>
+
+        <div class="rounded staff">
+            <%= professor_image %>
+            <span class="instructions">Only faculty can see this information</span>
+
+            <h1>
+              Professor's Private Notes
+            </h1>
+
+            <p>
+              <%= f.text_area :private_note, :size => "90x10" %>
+            </p>
+
+        </div>
+
+
+        </br>
+
+
+    <h1>
+      Student Grades
+    </h1>
+    <div class="content">
+        <% if @deliverable.is_team_deliverable? %>
+            <% for member in @deliverable.team.members %>
+                <% grade_obj = Grade.get_grade(@deliverable.assignment_id, member.id)%>
+                <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member} %>
+            <% end %>
+        <% else %>
+            <% grade_obj = Grade.get_grade(@deliverable.assignment_id, @deliverable.creator_id)%>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator} %>
+        <% end %>
+    </div>
+
+     </br><br>
     <p>
       <%= f.submit "Save and Email" , :name=>"submit"%>
       <%= f.submit "Save as Draft" , :name=>"draft" %>
     </p>
-<% end %>
+ <% end %>
 
 <%= link_to 'Cancel', deliverable_path(@deliverable) %>
 <br/>

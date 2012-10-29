@@ -70,17 +70,21 @@ function updateScore(visible_to_student) {
         dataType: "json",
         data: JSON.stringify(data, null, 1),
         success: function(data, message, jqXHR){
-//            location.reload();
-            if($('#notice').length == 0){
-            $('#result').append('<p id="notice">Record submitted successfully</p>');
-            }
-            else{
-                $("#notice").text("Record submitted successfully");
-
+            if (data["message"]=="true") {
+                location.reload(false);
+   //             removeTagsAfterSubmission();
             }
 
-            removeTagsAfterSubmission();
-//            console.log('Submittion Successfull');
+
+
+//            if($('#notice').length == 0){
+//            $('#result').append('<p id="notice">Record submitted successfully</p>');
+//            }
+//            else{
+//                $("#notice").text("Record submitted successfully");
+//
+//            }
+
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log('Unable to submit the record');
@@ -92,18 +96,18 @@ function updateScore(visible_to_student) {
 
 
 $(document).ready(function() {
-    console.log("I am loaded");
+//    console.log("I am loaded");
  //   console.log($(".score [type=text]"));
     $(".score [type=text]").live("change", function() {
 
-          console.log($(this).attr('id'))  ;
+ //         console.log($(this).attr('id'))  ;
 //            var id = $(this).attr('id');
         var score = $(this).val();
 
         var previousValue = $(this)[0].defaultValue;
         if(previousValue != score)
         {
-            console.log("different");
+ //           console.log("different");
             $(this).css("border","thin solid");
             $(this).css("border-color","red");
             $(this).addClass("changedScore");
