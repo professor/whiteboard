@@ -16,6 +16,24 @@ describe Course do
         subject.errors[attr].should_not be_empty
       end
     end
+    [:A_plus_grade, :A_grade,:A_minus_grade, :B_plus_grade, :B_grade,:B_minus_grade,:C_plus_grade, :C_grade,:C_minus_grade ].each do |attr|
+      it "#{attr} should not be negative" do
+        subject[attr] = -1
+        subject.should_not be_valid
+        subject.errors[attr].should_not be_empty
+      end
+    end
+  end
+
+  context "it should be valid " do
+    subject {Course.new(:semester=>1, :year => 2, :mini => 'mini', :name=>"name")}
+    [:A_plus_grade, :A_grade,:A_minus_grade, :B_plus_grade, :B_grade,:B_minus_grade,:C_plus_grade, :C_grade,:C_minus_grade ].each do |attr|
+      it " if #{attr} is empty" do
+        subject.should be_valid
+
+      end
+    end
+
   end
 
 

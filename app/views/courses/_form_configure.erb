@@ -1,5 +1,5 @@
 <% content_for :javascript do %>
-    <script type="text/javascript">
+    <script type="text/javascript" xmlns="http://www.w3.org/1999/html">
         $(document).ready(function () {
             $('#course_configure_course_twiki').change(function () {
                 if ($(this).is(':checked')) {
@@ -95,10 +95,7 @@
         reminder will be sent on this date)
       </p>
 
-      <p>
-        <%= f.hidden_field :is_configured, :value => true %>
-        <%= f.submit button_name %>
-      </p>
+
       <!--
     <p>
       <%= f.label :primary_faculty_label %><br/>
@@ -108,7 +105,30 @@
       <%= f.label :secondary_faculty_label %><br/>
       <%= f.text_field(:secondary_faculty_label, :size => 40) %>
     </p>
--->
+      -->
+      <p>
+      <%= f.label :is_assignment_points, "Please select grading type for assignments?" %><br/>
+      <%= f.select(:is_assignment_points , [['Points',true],['Percentage',false]])  %> <br/>
+
+    </p>
+     Grading Criteria
+    <table>
+      <%[[:A_plus_grade, "A+"], [:A_grade, "A"],[:A_minus_grade, "A-"],[:B_plus_grade, "B+"], [:B_grade, "B"],[:B_minus_grade, "B-"],[:C_plus_grade, "C+"], [:C_grade, "C"],[:C_minus_grade, "C-"]].each do |entry| %>
+      <tr>
+        <td>     <%= f.label entry[0], entry[1]%><br/></td>
+        <td>     <%= f.text_field(entry[0], :size => 5 , :placeholder=>entry[1],:type=>"number",:step=>".1",:min=>0 )%></td>
+      </tr>
+       <%end%>
+
+
+    </table>
+
+      </br></br>
+
+      <p>
+        <%= f.hidden_field :is_configured, :value => true %>
+        <%= f.submit button_name %>
+      </p>
 
   <% end %>
 
