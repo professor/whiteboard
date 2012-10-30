@@ -134,7 +134,7 @@ module UserSearch
     end
 
     # return the constructed query string
-    return query_string
+    return query_string + " AND is_active IS true"
 
   end
 
