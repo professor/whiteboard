@@ -16,7 +16,7 @@
   function change_grade(event){
     var grade_attrs = parse_id($(event.target).attr('id'));
     var score = $(event.target).val();
-    var previousValue = $(event.target)[0].defaultValue;
+    var previousValue = event.target.defaultValue;
     if(previousValue != score)
     {
       $(event.target).addClass("changedScore");
@@ -87,6 +87,9 @@
     border: thin solid;
     border-color: red;
   }
+  .draft{
+    background-color: #999;
+  }
 </style>
 <h1><%=@course.name %></h1>
   <div style='width:100%;overflow:scroll'>
@@ -103,6 +106,7 @@
             <% @assignments.each do |assignment| %>
               <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
             <%end %>
+            <th>Earned Grades</th>
           </tr>
 
         </thead>
@@ -114,9 +118,9 @@
             </td>
             <td><%=student.last_name%></td>
             <% @assignments.each do |assignment|%>
-              <td><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
+              <td class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
             <% end %>
-            <td><input id="<%= @course.id %>_<%=student.id%>" value='<%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
+            <td><%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%></td>
           </tr>
         <%end%>
       </table>
