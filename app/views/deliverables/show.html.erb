@@ -1,3 +1,13 @@
+
+<div style='text-align:right;width:100%;margin-bottom:30px;'>
+<% if current_user.is_staff %>
+  <%= link_to 'Back', course_deliverables_path(@deliverable.course) , :title=>"Back to Course Deliverables"%>
+<% end %>
+<% if current_user.is_student %>
+  <%= link_to 'Back', my_deliverables_path(current_user), :title=>"Back to My Deliverables" %>
+<% end %>
+</div>
+
 <% if @deliverable.course %>
     <% title = "Deliverable for " + @deliverable.course.name + " (" + @deliverable.assignment.name + ")" %>
 <% else %>
@@ -14,10 +24,12 @@
   <% else %>
       Individual Deliverable for <%= @deliverable.creator.human_name -%>
   <% end %>
-
-
-  (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
+<% if current_user.is_student %>
+    (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
+<% end %>
 </p>
+
+
 <h1>Attachment Version History</h1>
 
 <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
@@ -28,7 +40,10 @@
   </tr>
 
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-    <td>(<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
+    <td>
+      <% if current_user.is_student %>
+      (<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
+      <% end %>
     </td>
     <td colspan="2">&nbsp;</td>
   </tr>
@@ -55,12 +70,6 @@
       </tr>
   <% end %>
 </table>
-<% if current_user.is_staff %>
-    <%= link_to 'Back to Course Deliverables', course_deliverables_path(@deliverable.course) %>
-<% end %>
-<% if current_user.is_student %>
-    <%= link_to 'Back to My Deliverables', my_deliverables_path(current_user) %>
-<% end %>
 
 <br/>
 <br/>
