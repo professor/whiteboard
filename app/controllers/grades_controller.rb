@@ -57,14 +57,16 @@ class GradesController < ApplicationController
   end
 
   def post_all
-    puts "Lydian"
-    puts params
-    puts "Lydian"
     grades = params["grades"]
-    puts grades
-    puts "Lydian"
     Grade.give_grades(grades)
     Grade.post_all(@course.id)
+    render :json => ({"message"=>"true"})
+  end
+
+  def save_draft
+    grades = params["grades"]
+    Grade.give_grades(grades)
+    Grade.save_as_draft(grades)
     render :json => ({"message"=>"true"})
   end
 
