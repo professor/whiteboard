@@ -509,6 +509,7 @@ div.modified {
 
     .user_profile_content .clearboth table.cmu_table tr td:first-child {
         width: 30%;
+        text-align: right;
     }
 
 .user_profile_content .user_profile_content_admin_editable{ background: #D5D6C1; }

@@ -19,6 +19,7 @@
             <td><%= f.label :is_part_time%></td>
             <td><%= f.check_box :is_part_time, :disabled => 'disabled' %></td>
         </tr>
+
         <% else %>
         <tr>
             <td><%= f.label :masters_program, "Graduate Program"%></td>
@@ -35,6 +36,31 @@
         <tr>
             <td><%= f.label :is_part_time%></td>
             <td><%= f.check_box :is_part_time %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+<% elsif (@person.is_staff? || @person.is_admin?) %>
+<div class="clearboth">
+    <h2>Faculty Information:</h2>
+    <table class="cmu_table user_profile_content_faculty_editable">
+        <% if !(current_user.is_admin? || current_user.is_staff?) %>
+        <tr>
+            <td><%= f.label :office, "Office number" %></td>
+            <td><%= f.text_field :office, :placeholder => "Building 23 Room #109", :disabled => 'disabled' %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :office_hours%></td>
+            <td><%= f.text_field :office_hours,  :placeholder => "9:00am-6:00pm", :disabled => 'disabled' %></td>
+        </tr>
+        <% else %>
+        <tr>
+            <td><%= f.label :office, "Office number" %></td>
+            <td><%= f.text_field :office, :placeholder => "Building 23 Room #109" %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :office_hours%></td>
+            <td><%= f.text_field :office_hours,  :placeholder => "9:00am-6:00pm" %></td>
         </tr>
         <% end %>
     </table>

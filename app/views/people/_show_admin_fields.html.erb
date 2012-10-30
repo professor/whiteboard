@@ -3,11 +3,11 @@
     <table class="cmu_table user_profile_content_admin_editable">
         <% if !(current_user.is_admin?) %>
         <tr>
-            <td><%= f.label :email, "CMU-SV email:" %></td>
+            <td><%= f.label :email, "CMU-SV email" %></td>
             <td><%= f.text_field :email, :placeholder => "CMU-SV email address", :disabled => 'disabled' %></td>
         </tr>
         <tr>
-            <td><%= f.label :webiso_account, "Andrew email:" %></td>
+            <td><%= f.label :webiso_account, "Andrew email" %></td>
             <td><%= f.text_field :webiso_account, :placeholder => "Webiso account", :disabled => 'disabled' %></td>
         </tr>
         <tr>
@@ -25,11 +25,11 @@
 
         <% else %>
         <tr>
-            <td><%= f.label :email, "CMU-SV email:" %></td>
+            <td><%= f.label :email, "CMU-SV email" %></td>
             <td><%= f.text_field :email, :placeholder => "CMU-SV email address" %></td>
         </tr>
         <tr>
-            <td><%= f.label :webiso_account, "Andrew email:" %></td>
+            <td><%= f.label :webiso_account, "Andrew email" %></td>
             <td><%= f.text_field :webiso_account, :placeholder => "Webiso account" %></td>
         </tr>
         <tr>
