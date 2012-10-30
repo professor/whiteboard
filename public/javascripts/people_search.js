@@ -2,23 +2,25 @@
 
 var criterias_array = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
 
-var criteria_name_hash = new Object();
-criteria_name_hash["first_name"] = "First Name";
-criteria_name_hash["last_name"] = "Last Name";
-criteria_name_hash["andrew_id"] = "Andrew ID";
-criteria_name_hash["company"] = "Company";
-criteria_name_hash["class_year"] = "Class Year";
-criteria_name_hash["program"] = "Program";
-criteria_name_hash["ft_pt"] = "Full/Part Time";
+var criteria_name_hash = {
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "andrew_id": "Andrew ID",
+    "company": "Company",
+    "class_year": "Class Year",
+    "program": "Program",
+    "ft_pt": "Full/Part Time"
+}
 
-var selected_criteria_hash = new Object();
-selected_criteria_hash["First Name"] = true;
-selected_criteria_hash["Last Name"] = true;
-selected_criteria_hash["Andrew ID"] = true;
-selected_criteria_hash["Company"] = false;
-selected_criteria_hash["Class Year"] = false;
-selected_criteria_hash["Program"] = false;
-selected_criteria_hash["Full/Part Time"] = false;
+var selected_criteria_hash = {
+    "First Name": true,
+    "Last Name": true,
+    "Andrew ID": true,
+    "Company": false,
+    "Class Year": false,
+    "Program": false,
+    "Full/Part Time": false
+}
 
 // reserved for future iteration 
 //criteria_name_hash["team"] = "Team";
@@ -28,9 +30,13 @@ selected_criteria_hash["Full/Part Time"] = false;
 //selected_criteria_hash["Project"] = false;
 //selected_criteria_hash["Course"] = false;
 
+var search_request = $.ajax();
 
 function execute_search(){
-    // DEBUG console.log("search executed");
+    // DEBUG
+    console.log("search executed");
+    search_request.abort();
+
     var request_url_with_params = 'people.json?page=1';
     // add main criteria to query string
     if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
@@ -51,25 +57,25 @@ function execute_search(){
     }
     
     // DEBUG console.log(request_url_with_params);
-
-    $.ajax({
+    
+    search_request = $.ajax({
         url: request_url_with_params, dataType: 'json',
         success: function(data){
             $("#results_box").html("");
             $.each(data, function(){
                 // DEBUG console.log(this.first_name +" "+this.last_name );
-                //console.log(this.telephone2);
                 var card_html =
                 '<div class="data_card">'+
-                  '<a href="people/'+this.id+'">'+
-                  '<img src='+this.image_uri+'></a><br>'+
-                  'Name: '+this.first_name+' '+this.last_name+'<br>'+
-                  'Email: '+this.email + '<br>';
+                '<a href="people/'+this.id+'">'+
+                '<img src='+this.image_uri+'></a><br>'+
+                /*'Name: '+this.first_name+' '+this.last_name+'<br>'+*/
+                '<div style="font-size: 16px;">'+this.first_name+' '+this.last_name+'</div>'+
+                /*'Email: '+*/this.email + '<br>';
                 if(this.telephone1){
-                  card_html+= this.telephone1_label +': '+this.telephone1+'<br>';
+                    card_html+= this.telephone1_label +': '+this.telephone1+'<br>';
                 }
                 if(this.telephone2){
-                  card_html+= this.telephone2_label +': '+this.telephone2+'<br>';
+                    card_html+= this.telephone2_label +': '+this.telephone2+'<br>';
                 }
                 card_html += '</div>';
                 $("#results_box").append(card_html);
@@ -78,7 +84,7 @@ function execute_search(){
             $("#results_box").css('height', 260*Math.ceil(data.length/3)+16+"px");
         }
     });
-
+    
 };
 
 
@@ -206,7 +212,7 @@ $(document).ready(function(){
         return false;
     });
 
-    var search_timeout, autocomplete_timeout;
+    var search_timeout;
 
     // DEPRECATED
     /*$('#search_text_box').keyup(function(e) {
@@ -218,19 +224,22 @@ $(document).ready(function(){
     $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
       execute_search();
     });
-    $('#search_text_box, .criteria_text').keyup(function(e) {
+    $('#search_text_box').keyup(function(e) {
       clearTimeout(search_timeout);
-      search_timeout=setTimeout('execute_search()', 600)  ;
+      //if($('#search_text_box').val().length >1){
+        search_timeout=setTimeout('execute_search()', 400);
+      //}
+    });
+    $('.criteria_text').keyup(function(e) {
+      clearTimeout(search_timeout);
+      search_timeout=setTimeout('execute_search()', 400)  ;
     });
 
 
     $.getJSON('../people_autocomplete.json',
         function(rcv_data){
-            //console.log(rcv_data);
             $('#search_text_box').autocomplete({
-                source: rcv_data,
-                minLength: 2,
-                delay: 400
+                source: rcv_data, minLength: 2, delay: 400
             });
         }
     )
