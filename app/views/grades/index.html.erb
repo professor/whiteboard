@@ -100,15 +100,20 @@
       <table class="cmu_table sortable">
         <thead>
           <tr>
-            <th style='max-width:78px; word-wrap:break-word;'> First Name
+            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
             </th>
-            <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
+            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
+            <th rowspan="2"> Team </th>
             <% @assignments.each do |assignment| %>
-              <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name} (#{assignment.maximum_score})"%></th>
+              <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
             <%end %>
             <th>Earned Grades</th>
           </tr>
-
+          <tr>
+            <% @assignments.each do |assignment| %>
+                <td>Max <%="#{assignment.maximum_score}"%></td>
+            <% end %>
+          </tr>
         </thead>
 
         <input type="hidden" id="course_id" value=<%=@course.id%> />
@@ -117,6 +122,7 @@
             <td><%=student.first_name%>
             </td>
             <td><%=student.last_name%></td>
+            <td><%=@team_assignment[student.id].try(:name) || "" %></td>
             <% @assignments.each do |assignment|%>
               <td class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
             <% end %>
@@ -126,7 +132,7 @@
       </table>
 
       <div style='padding-top:20px;margin-bottom: 40px;'>
-        <button type="button" id="gradebook_submit" onclick="postAll()">Submit</button>
+        <button type="button" id="gradebook_submit" onclick="postAll()">post all</button>
         <button type="button" id="gradebook_save_draft" onclick="saveAsDraft()">Save as Draft</button>
       </div>
 

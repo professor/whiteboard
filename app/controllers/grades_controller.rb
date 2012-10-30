@@ -5,6 +5,7 @@ class GradesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_course
   before_filter :validate_permission
+  before_filter :get_team_assignment, :only=>:index
 
   def get_course
     @course=Course.find(params[:course_id])
@@ -15,6 +16,16 @@ class GradesController < ApplicationController
       has_permissions_or_redirect(:admin, root_path)
     end
   end
+
+  def get_team_assignment
+    @team_assignment = {}
+    @course.teams.each do |t|
+      t.members.each do |m|
+        @team_assignment[m.id] = t
+      end
+    end
+  end
+
 
   def index
     @no_pad = true
