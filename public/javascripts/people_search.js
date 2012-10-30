@@ -187,7 +187,7 @@ $(document).ready(function(){
 
     // fade out main criteria tag when click on x
     $('#main_criteria_box').on("click", ".criteria_tag a", function(){
-        if($(this).parent().css('opacity') == '1'){
+        if(selected_criteria_hash[$(this).parent()[0].title] == true){
             selected_criteria_hash[$(this).parent()[0].title] = false;
             $(this).parent().fadeTo("fast", 0.55);
             $(this).html('+');
@@ -196,6 +196,7 @@ $(document).ready(function(){
                 $(this).parent().fadeTo("fast", 1);
                 $(this).html('x');
                 alert("Sorry, but you can not discard all three criterias.");
+                selected_criteria_hash[$(this).parent()[0].title] = true;
             }
         } else { // fade in when click on +
             selected_criteria_hash[$(this).parent()[0].title] = true;

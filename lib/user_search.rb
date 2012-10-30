@@ -14,23 +14,28 @@ module UserSearch
       query_string = "("
       # by default add filter for partial search
       main_search_string = "%"+criteria['main_search_text']+"%"
-
       # add filter for exact match
       if(criteria['exact_match'] != nil)
         main_search_string = criteria['main_search_text']
       end
 
-      # check first name and add to query string
-      if (criteria['first_name'] != nil)
-        query_string += "first_name ILIKE '"+main_search_string+"'"
-      end
-      # check last name and add to query string
-      if (criteria['last_name'] != nil)
-        if( query_string != "(")
-          query_string += " OR "
+
+      if (criteria['first_name'] != nil && criteria['last_name'] != nil)
+        # check full name if both first name and last name are selected
+        query_string += "human_name ILIKE '"+main_search_string+"'"
+      else
+        # check first name and add to query string
+        if (criteria['first_name'] != nil)
+          query_string += "first_name ILIKE '"+main_search_string+"'"
         end
-        query_string += "last_name ILIKE '"+main_search_string+"'"
+        # check last name and add to query string
+        if (criteria['last_name'] != nil)
+          query_string += "last_name ILIKE '"+main_search_string+"'"
+        end
       end
+
+
+
 
       # check andrew id and add to query string
       if (criteria['andrew_id'] != nil)
