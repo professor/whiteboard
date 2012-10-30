@@ -17,7 +17,8 @@
       <td><%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %></td>
       <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
       <td><%= l deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date, format: :chatty %></td>
-      <td><%= link_to "Grade", deliverable_feedback_path(deliverable) %></td>
+      <% grade_link_text = deliverable.status.blank? ? 'Grade' : deliverable.status %>
+      <td><%= link_to grade_link_text, deliverable_feedback_path(deliverable) %></td>
     </tr>
   <% end %>
   </tbody>
