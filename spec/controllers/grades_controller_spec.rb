@@ -33,7 +33,6 @@ describe GradesController do
       Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sally).and_return({@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score})
       @expected_grades = {@student_sam=>{@assign_1.id=>@grade_sam_assign1, "earned_grade" => @grade_sam_assign1.score},
                           @student_sally=>{@assign_1.id=>@grade_sally_assign1, "earned_grade" => @grade_sally_assign1.score}}
-      STDERR.puts Grade.get_grades(@course, @student_sally)
     end
 
     context "as the faculty owner of the course" do

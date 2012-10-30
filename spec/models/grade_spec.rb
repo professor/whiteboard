@@ -131,11 +131,11 @@ describe Grade do
   it "should be able to update scores" do
     grades = []
     [@assignment_1, @assignment_2].each do |assignment|
-      grades << {"assignment_id" => assignment.id, "student_id"=>@student_sam.id, "score" => 10 }
+      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => 10 }
     end
     Grade.give_grades(grades)
     grades.each do |grade_entry|
-      Grade.find_by_assignment_id_and_student_id(grade_entry["assignment_id"], grade_entry["student_id"]).score.should eq(grade_entry["score"])
+      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq(grade_entry[:score])
     end
   end
 
@@ -149,12 +149,12 @@ describe Grade do
   it 'should be able to save changed scores as draft' do
     grades = []
     [@assignment_1, @assignment_2].each do |assignment|
-      grades << {"assignment_id" => assignment.id, "student_id"=>@student_sam.id, "score" => 10 }
+      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => 10 }
     end
     Grade.give_grades(grades)
     Grade.save_as_draft(grades)
     grades.each do |grade_entry|
-      Grade.find_by_assignment_id_and_student_id(grade_entry["assignment_id"], grade_entry["student_id"]).is_student_visible.should be_false
+      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
     end
   end
 
