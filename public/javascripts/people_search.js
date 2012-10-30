@@ -35,6 +35,7 @@ var search_request = $.ajax();
 function execute_search(){
     // DEBUG
     console.log("search executed");
+    $('#results_box').fadeTo('fast', 0.5);
     search_request.abort();
 
     var request_url_with_params = 'people.json?page=1';
@@ -70,7 +71,7 @@ function execute_search(){
                 '<img src='+this.image_uri+'></a><br>'+
                 /*'Name: '+this.first_name+' '+this.last_name+'<br>'+*/
                 '<div style="font-size: 16px;">'+this.first_name+' '+this.last_name+'</div>'+
-                /*'Email: '+*/this.email + '<br>';
+                /*'Email: '+*/'<a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a><br>';
                 if(this.telephone1){
                     card_html+= this.telephone1_label +': '+this.telephone1+'<br>';
                 }
@@ -80,8 +81,8 @@ function execute_search(){
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
-            // re-height the results box for aligning
-            $("#results_box").css('height', 260*Math.ceil(data.length/3)+16+"px");
+
+            $('#results_box').fadeTo('fast', 1);
         }
     });
     
@@ -92,11 +93,12 @@ $(document).ready(function(){
 
     // Initialize the customization dialog box
     $('#dialog_modal').dialog({
-        dialogClass: 'customization_dialog', position: 'top', width: 220, height: 450,
+        dialogClass: 'customization_dialog', position: 'top', width: 210, height: 420,
         autoOpen: false, show: 'fold', hide: 'fold', modal: true
     });
     $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
     $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
+
 
     // add Class Year options
     var current_date = new Date();
@@ -227,8 +229,14 @@ $(document).ready(function(){
     $('#search_text_box').keyup(function(e) {
       clearTimeout(search_timeout);
       //if($('#search_text_box').val().length >1){
+      $('#results_box').fadeTo('fast', 0.5);
+      if(e.which == 13){
+        search_timeout=setTimeout('execute_search()', 0);
+      } else {
         search_timeout=setTimeout('execute_search()', 400);
+      }
       //}
+
     });
     $('.criteria_text').keyup(function(e) {
       clearTimeout(search_timeout);

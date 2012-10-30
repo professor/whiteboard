@@ -1,6 +1,6 @@
 /* UI Mockup CSS Migration */
 
-.customization_dialog {margin-top: 64px;}
+.customization_dialog {margin-top: 32px;}
 .customization_dialog .ui-dialog-titlebar {display:none}
 
 .criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
@@ -15,11 +15,11 @@
 .criteria_tag a:hover { opacity: 1; }
 
 .criteria_text { border: 0; width: 72px; font-weight: 700;}
-.null_search_text { color: #aaa; }
+.null_search_text { color: #ccc; }
 
 #main_criteria_box, #extra_criteria_box { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
 #search_text_box { 
-	border: none; width: 128px; margin-left: 5px;
+	border: none; width: 160px; margin-left: 5px;
 	background-color: #f3f0e9;
 }
 
@@ -28,14 +28,17 @@ select .select-hint { color: #ccc;}
 
 #customization_link, #customization_dialog_close, #export_link { float:right; }
 #customization_modal_card  { margin-left: auto; margin-right: auto; }
+.ui-autocomplete { max-height: 120px; overflow-y: auto; overflow-x: hidden;}
 #results_box { display: block; min-height: 16px; margin: 0 auto;}
 .data_card {
     float: left; margin: 4px; padding-left: 6px; padding-top: 6px;
-    background-color: #eee;
-    width: 150px; height: 280px;
-    border: 1px solid #999; border-radius: 1px;
-    font-size: 11px; font-weight: 700;
+    background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
+    width: 150px; height: 280px; font-size: 11px; font-weight: 700;
+    overflow: hidden;
 }
 .data_card img{
     width: 139px; height: 190px; margin-top: 0px; margin-left:0px; margin-bottom: 5px;
 }
+
+/* Fix Modal Card */
+#modal_card { width: auto; height: auto; padding: 6px;}
