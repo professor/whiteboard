@@ -1,0 +1,13 @@
+<% person = User.find(builder.object.user_id) %>
+<div class='team_member_photo'>
+  <div class='inline_field'>
+    <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= builder.object.max_score %>
+  </div>
+  <div>
+    <a href='http://rails.sv.cmu.edu/people/<%= person.twiki_name %>' target='_top'>
+      <%= image_tag(person.image_uri, :border => 0, :height => 200, :alt => person.human_name+" image") %>
+    </a>
+  </div>
+
+  <div class='label'><%= person.human_name %></div>
+</div>

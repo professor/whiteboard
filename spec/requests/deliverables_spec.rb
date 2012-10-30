@@ -64,4 +64,26 @@ describe "deliverables" do
       end
     end
   end
+
+  context "Professor deliverables" do
+    context "grading team deliverable" do
+      before {
+        @assignment = FactoryGirl.create(:assignment, team_deliverable: true)
+        Registration.create(user_id: @user.id, course_id: @assignment.course.id)
+        visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
+        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
+        click_button "Create"
+        #@professor = FactoryGirl.create(:faculty_frank_user)
+        #login_with_oauth @professor
+        visit deliverable_feedback_path(Deliverable.first)
+      }
+
+      it "should provide feedback and a grade to each student in the team" do
+        page.should have_selector('h1', text: "Grade Team Deliverable")
+      end
+    end
+
+    context "grading individual deliverables" do
+    end
+  end
 end

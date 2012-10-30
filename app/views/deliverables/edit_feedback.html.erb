@@ -12,6 +12,7 @@
 <% end %>
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
   <div>
     <% if !@deliverable.is_team_deliverable? %>
       <p>
@@ -38,16 +39,26 @@
   </div>
 
   <% if @deliverable.is_team_deliverable? %>
-    <div class="team_portraits">
-      <p>
-        <%= f.fields_for :deliverable_grades do |builder| %>
-          <%= builder.label :grade %>
-          <%= builder.text_field :grade, size: 4 %>/<%= builder.object.max_score %>
-          <%= render :partial => 'people/twiki_photo_link', :locals => {:person => User.find(builder.object.user_id)} %>
+    <table class='layout_table'>
+      <tbody>
+        <% count = 0 %>
+        <%=  f.fields_for :deliverable_grades do |builder| %>
+        <% if count == 0 %>
+            <tr>
+          <% end %>
+          <td><%= render :partial => 'people/twiki_photo_link_grading', :locals => {:builder => builder} %></td>
+          <% count += 1 %>
+          <% if count % 3 == 0 %>
+            </tr>
+          <% end %>
         <% end %>
-      </p>
-    </div>
+        <% if count % 3 %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
+
   <div>
     <%= f.submit "Submit" %>
   </div>
@@ -56,3 +67,13 @@
 <p>
   <%= link_to 'Cancel', deliverable_path(@deliverable) %>
 </p>
+
+<script>
+  $(function() {
+    $('#team_grade').bind('keyup', function() {
+      $('.grade_input').each(function() {
+        $(this).val($('#team_grade').val());
+      });
+    });
+  });
+</script>
