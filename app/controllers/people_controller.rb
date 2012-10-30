@@ -80,9 +80,11 @@ class PeopleController < ApplicationController
       #format.json { render :json =>  @ppl, :layout => false }
       format.csv do
         csv_string = CSV.generate do |csv|
-          csv << ["first_name","last_name","email"]
+          #csv << ["Name","Give Name","Family Name","Email","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value"]
+          csv << ["First","Last","Email","Mobile","Work","Home"]
+
           @people.each do |user|
-            csv <<[user.first_name,user.last_name,user.email ]
+            csv <<[user.first_name,user.last_name,user.email, user.telephone1,user.telephone2,user.telephone3 ]
           end
         end
 
@@ -112,6 +114,11 @@ class PeopleController < ApplicationController
             end
 
             maker.add_email(user.email)
+            #maker.add_tel('416 123 2222') { |t| t.location = 'home'; t.preferred = true }
+            maker.add_tel(user.telephone1) if (!user.telephone1.blank?)
+            maker.add_tel(user.telephone2) if (!user.telephone2.blank?)
+            maker.add_tel(user.telephone3) if (!user.telephone3.blank?)
+            maker.add_tel(user.telephone4) if (!user.telephone4.blank?)
 
           end
 

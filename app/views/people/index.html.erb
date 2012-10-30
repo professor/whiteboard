@@ -2,6 +2,7 @@
 <% content_for :tablesorter do %>
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
+
     <script type="text/javascript" >
     
         var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
@@ -215,15 +216,16 @@
                         modal: true,
                         title: 'Export Contacts',
                         buttons:{
-                            "vCard":function(){
-                                window.location.href='http://localhost:3000/people_vcf?filterBoxOne='+boxValue;
-                                $(this).dialog("close");
-                            },
-                            "csv":function(){
+                            "CSV":function(){
                                 //alert(boxValue);
                                 window.location.href='http://localhost:3000/people_csv.csv?filterBoxOne='+boxValue;
                                 $(this).dialog("close");
+                            },
+                            "vCard":function(){
+                                window.location.href='http://localhost:3000/people_vcf?filterBoxOne='+boxValue;
+                                $(this).dialog("close");
                             }
+
                         }
                     });
         }
@@ -268,6 +270,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
     <%= link_to 'New person', new_person_path %>
 <% end %>
 
-<input type="button" id="show_box" value="Export List" onclick="show_box();"/>
+<input type="button" id="show_box" value="Export List" onclick="show_box();" style="float: right" />
 
 <input type="hidden" id="hidden_field" value="off">
