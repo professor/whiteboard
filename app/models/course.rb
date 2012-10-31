@@ -304,6 +304,25 @@ class Course < ActiveRecord::Base
     @deliverables
   end
 
+  def number_to_letter_grade(number)
+    scaled_number = number
+    if self.grading_criteria == "Points"
+      total_points = self.assignments.to_a.sum(&:weight)
+      STDERR.puts total_points
+      if total_points <= 0
+        return nil
+      end
+      scaled_number = number*100.0/total_points
+      STDERR.puts scaled_number
+    end
+    self.grading_ranges.each do |grading_range|
+      if scaled_number >= grading_range.minimum
+        return grading_range.grade
+      end
+    end
+    return self.grading_ranges.last.grade
+  end
+
   protected
   def set_grading_ranges
     if self.grading_ranges.empty?

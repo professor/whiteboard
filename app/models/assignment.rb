@@ -11,12 +11,34 @@ class Assignment < ActiveRecord::Base
 
   default_scope order: "task_number ASC, due_date ASC"
 
+  def find_deliverable_grade(user)
+    if self.team_deliverable?
+      team = Team.find_current_by_person_and_course(user, self.course)
+      # find_by_team_id may find an individual deliverable if passed nil
+      if !team.blank?
+        deliverable = self.deliverables.find_by_team_id(team.id)
+      end
+    else
+      deliverable = self.deliverables.find_by_creator_id(user.id)
+    end
+
+    deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(user.id)
+  end
+
   def submittable?
     self.can_submit && self.due_date > DateTime.now
+  end
 
+  def formatted_title
+    if self.task_number.blank?
+      self.title
+    else
+      "Task #{self.task_number}: #{self.title}"
+    end
   end
 
   private
+
     def validate_due_date
       if self.can_submit?
         if self.due_date.nil?

@@ -18,7 +18,9 @@
       <p>
         <%= f.fields_for :deliverable_grades do |builder| %>
           <%= builder.label :grade %>
-          <%= builder.text_field :grade, size: 4 %>/<%= builder.object.max_score %>
+          <div class='inline_field'>
+            <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= builder.object.max_score %>
+          </div>
         <% end %>
       </p>
     <% else %>

@@ -440,6 +440,25 @@ describe Course do
         @course.should be_invalid
         @course.errors[:grading_ranges].should_not be_empty
       end
+
+      context 'convert number grade to letter grade' do
+        context 'point grading criteria' do
+          it "should return correct grades" do
+            assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 30)
+            assignment2 = FactoryGirl.create(:assignment, course: @course, weight: 20)
+            assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 40)
+            assignment4 = FactoryGirl.create(:assignment, course: @course, weight: 10)
+            assignment5 = FactoryGirl.create(:assignment, course: @course, weight: 20)
+            assignment6 = FactoryGirl.create(:assignment, course: @course, weight: 80)
+
+            @course.number_to_letter_grade(198).should == "A"
+            @course.number_to_letter_grade(188).should == "A"
+            @course.number_to_letter_grade(186).should == "A-"
+            @course.number_to_letter_grade(100).should == "F"
+            @course.number_to_letter_grade(0).should == "F"
+          end
+        end
+      end
     end
   end
 

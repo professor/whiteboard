@@ -71,6 +71,12 @@ class Team < ActiveRecord::Base
     Team.find_by_sql(["SELECT t.* FROM  teams t INNER JOIN team_assignments ta ON ( t.id = ta.team_id) INNER JOIN courses c ON (t.course_id = c.id) WHERE ta.user_id = ? AND (c.semester <> ? OR c.year <> ?)", user.id, current_semester, current_year])
   end
 
+  def self.find_current_by_person_and_course(person, course)
+    Team.where(:course_id => course.id).each do |team|
+      return team if team.members.include?(person)
+    end
+    return nil
+  end
 
   def update_email_address
     self.email = generate_email_name unless self.name.blank?

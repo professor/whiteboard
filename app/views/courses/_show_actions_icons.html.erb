@@ -48,6 +48,12 @@
 
               <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
             </td>
+            <td>
+              <%= link_to image_tag("/images/peer_evaluation2.jpg", :class => "icon", :size => "90x70", :alt => "Gradebook", :title => "Gradebook"), course_gradebook_path(course) %>
+              <br/>
+
+              <p><%= link_to 'Gradebook', course_gradebook_path(course) %></p>
+            </td>
           </tr>
         </table>
       </fieldset>

@@ -17,9 +17,7 @@ class DeliverableGrade < ActiveRecord::Base
 
   private
     def grade_upper_limit
-      STDERR.puts self.grade
-      STDERR.puts self.deliverable.assignment.weight
-      if self.grade > self.deliverable.assignment.weight
+      if !self.grade.blank? && self.grade > self.deliverable.assignment.weight
         self.errors.add(:grade, "Grade can't be over #{self.max_score} for this assignment")
       end
     end

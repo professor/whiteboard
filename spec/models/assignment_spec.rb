@@ -76,4 +76,26 @@ describe Assignment do
       end
     end
   end
+
+  context "find deliverables" do
+    it "should find the individual deliverable for a user" do
+      @assignment = FactoryGirl.create(:assignment, team_deliverable: false)
+      @user = FactoryGirl.create(:student_sally)
+      @deliverable = FactoryGirl.create(:deliverable, assignment: @assignment, creator: @user)
+      @deliverable_grade = FactoryGirl.create(:deliverable_grade, deliverable: @deliverable, user: @user, grade: 10)
+      @deliverable.deliverable_grades = [@deliverable_grade]
+      @deliverable.save
+      @assignment.find_deliverable_grade(@user).should == @deliverable_grade
+    end
+
+    it "should find the team deliverable for a user" do
+      @assignment = FactoryGirl.create(:assignment, team_deliverable: true)
+      @team = FactoryGirl.create(:team, course: @assignment.course)
+      @deliverable = FactoryGirl.create(:deliverable, assignment: @assignment, team: @team)
+      @deliverable_grade = FactoryGirl.create(:deliverable_grade, deliverable: @deliverable, user: @team.members.first, grade: 10)
+      @deliverable.deliverable_grades = [@deliverable_grade]
+      @deliverable.save
+      @assignment.find_deliverable_grade(@team.members.first).should == @deliverable_grade
+    end
+  end
 end

@@ -21,6 +21,6 @@ class GradingRange < ActiveRecord::Base
      "D+" => 68,
      "D" => 64,
      "D-" => 60,
-     "F" => 50}
+     "F" => 0}
   end
 end

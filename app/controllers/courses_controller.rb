@@ -89,6 +89,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  def gradebook
+    @course = Course.find(params[:id])
+    render layout: 'simple'
+  end
+
   # GET /courses/new
   # GET /courses/new.xml
   def new
@@ -239,6 +244,7 @@ class CoursesController < ApplicationController
   end
 
   private
+
   def index_core
     respond_to do |format|
       format.html { render :action => "index" }
