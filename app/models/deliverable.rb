@@ -153,7 +153,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   def has_feedback?
-    !self.feedback_comment.blank? or !self.feedback_file_name.blank?
+    !self.feedback_comment.blank? or !self.feedback_file_name.blank? or self.status == 'Graded'
   end
 
   def send_deliverable_upload_email(url)

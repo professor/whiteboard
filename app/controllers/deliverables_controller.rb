@@ -233,6 +233,16 @@ class DeliverablesController < ApplicationController
   end
 
   def update_feedback
+    STDERR.puts params[:commit]
+    if !params[:commit].blank?
+      if params[:commit] == "Save as draft"
+        params[:deliverable][:status] = 'Draft'
+      elsif params[:commit] == "Submit"
+        params[:deliverable][:status] = 'Graded'
+      end
+    end
+
+    STDERR.puts params[:deliverable]
     @deliverable = Deliverable.find(params[:id])
     @deliverable.attributes = params[:deliverable]
 

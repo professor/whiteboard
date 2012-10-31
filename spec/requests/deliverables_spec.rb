@@ -68,22 +68,74 @@ describe "deliverables" do
   context "Professor deliverables" do
     context "grading team deliverable" do
       before {
-        @assignment = FactoryGirl.create(:assignment, team_deliverable: true)
+        @assignment = FactoryGirl.create(:assignment, team_deliverable: true, course: @team.course)
         Registration.create(user_id: @user.id, course_id: @assignment.course.id)
         visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
         attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
         click_button "Create"
-        #@professor = FactoryGirl.create(:faculty_frank_user)
-        #login_with_oauth @professor
-        visit deliverable_feedback_path(Deliverable.first)
+        @professor = FactoryGirl.create(:faculty_frank_user)
+        login_with_oauth @professor
+        visit deliverable_feedback_path(Deliverable.last)
+        page.should have_selector('h1', text: "Grade Team Deliverable")
       }
 
       it "should provide feedback and a grade to each student in the team" do
-        page.should have_selector('h1', text: "Grade Team Deliverable")
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
+        click_button "Submit"
+        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.status.should == 'Graded'
+      end
+
+      it "should not save if the grade point is greater than the allocated points" do
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: @assignment.weight + 1
+        click_button "Submit"
+        Deliverable.last.deliverable_grades.first.grade.should == 0
+        Deliverable.last.status.should == 'Ungraded'
+        page.should have_selector('#error_explanation')
+      end
+
+      it "should save as draft" do
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
+        click_button "Save as draft"
+        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.status.should == 'Draft'
       end
     end
 
     context "grading individual deliverables" do
+      before {
+        @assignment = FactoryGirl.create(:assignment, team_deliverable: false)
+        Registration.create(user_id: @user.id, course_id: @assignment.course.id)
+        visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
+        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
+        click_button "Create"
+        @professor = FactoryGirl.create(:faculty_frank_user)
+        login_with_oauth @professor
+        visit deliverable_feedback_path(Deliverable.last)
+        page.should have_selector('h1', text: "Grade Individual Deliverable")
+      }
+
+      it "should provide feedback and a grade to the student" do
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
+        click_button "Submit"
+        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.status.should == 'Graded'
+      end
+
+      it "should not save if the grade point is greater than the allocated points" do
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: @assignment.weight + 1
+        click_button "Submit"
+        Deliverable.last.deliverable_grades.first.grade.should == 0
+        Deliverable.last.status.should == 'Ungraded'
+        page.should have_selector('#error_explanation')
+      end
+
+      it "should save as draft" do
+        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
+        click_button "Save as draft"
+        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.status.should == 'Draft'
+      end
     end
   end
 end

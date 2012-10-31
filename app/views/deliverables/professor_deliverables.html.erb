@@ -12,7 +12,7 @@
       <%= f.label :submitted_by %>
       <%= f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, {:include_blank => 'All'}, {class: 'deliverable-filter'} %>
       <%= f.label :status %>
-      <%= f.select :status, ['Ungraded', 'Graded'], {}, {class: 'deliverable-filter'} %><br />
+      <%= f.select :status, ['Ungraded', 'Graded', 'Draft'], {}, {class: 'deliverable-filter'} %><br />
       <%= f.submit hidden: true%>
     <% end %>
   </div>

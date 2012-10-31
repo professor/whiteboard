@@ -33,7 +33,7 @@
         <% end %>
 
         <td>
-          <% if deliverable.has_feedback? %>
+          <% if deliverable.status == 'Graded' %>
               Yes
           <% else %>
               No
