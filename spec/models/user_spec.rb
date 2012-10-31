@@ -272,7 +272,6 @@ describe User do
 
   end
 
-
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student

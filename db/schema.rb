@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801031314) do
+ActiveRecord::Schema.define(:version => 20121030220552) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -565,6 +565,10 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
     t.datetime "remember_created_at"
     t.date     "expires_at"
     t.string   "course_index_view"
+    t.string   "linked_in"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "google_plus"
   end
 
   create_table "users", :force => true do |t|
@@ -637,6 +641,10 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
     t.datetime "remember_created_at"
     t.date     "expires_at"
     t.string   "course_index_view"
+    t.string   "linked_in"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "google_plus"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
