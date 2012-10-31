@@ -23,6 +23,8 @@ describe "assignments" do
       end
 
       it "should not save a new assignment" do
+        @course.update_attributes(grading_criteria: "Percentage")
+
         fill_in "assignment_weight", with: 120
 
         expect {
@@ -47,6 +49,7 @@ describe "assignments" do
     end
 
     it "should not change weight" do
+      @assignment.course.update_attributes(grading_criteria: "Percentage")
       fill_in "assignment_weight", with: 120
       click_button "Save Assignment"
       @assignment.reload.weight.should_not == 120
