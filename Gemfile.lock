@@ -285,6 +285,7 @@ GEM
     uuid (2.3.4)
       macaddr (~> 1.0)
     uuidtools (2.1.2)
+    vpim (0.695)
     warden (1.0.6)
       rack (>= 1.0)
     xpath (0.1.4)
@@ -329,4 +330,5 @@ DEPENDENCIES
   taps
   thin
   vestal_versions!
+  vpim
   webrobots (~> 0.0.10)!
