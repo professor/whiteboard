@@ -1,22 +1,30 @@
 require "spec_helper"
 
 describe PeopleController do
+
   context "any user can" do
     before do
-      @person1 = FactoryGirl.create(:student_sam_user)
+      @person1 = FactoryGirl.create(:student_sam_user, :is_active => true)
       login(@person1)
       @inactive_person = FactoryGirl.create(:student_sally_user, :is_active => false)
     end
 
-    describe "GET index" do
-      it "should assign all active people to people" do
-        get :index
-        assigns(:people).should == [@person1]
-      end
+    #describe "GET index" do
+      #it "should assign all active people to people" do
+      #  get :index
+      #  assigns(:people).should == [@person1]
+      #end
 
-      it "should sort people by name" do
-        get :index
-        assigns(:people).should == [@person1]
+    #  it "should sort people by name" do
+    #    get :index
+    #    assigns(:people).should == [@person1]
+    #  end
+    #end
+
+    describe "GET people_search" do
+      it "should assign all active people to people" do
+        get :search, :filterBoxOne => @person1.first_name
+        assigns(:people).should include @person1
       end
     end
 

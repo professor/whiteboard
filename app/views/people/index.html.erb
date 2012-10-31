@@ -10,7 +10,20 @@
         var ajax_req_issued = false;            // object that
         var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 
+
         $(document).ready(function () {
+
+                    $("#people_table").hide();
+                    $("#filterBoxOne").keyup(function() {
+                        if(this.value.length > 0){
+                            $("#people_table").show();
+                            $("#key_contacts_table").hide();
+                        }
+                        else{
+                            $("#people_table").hide();
+                            $("#key_contacts_table").show();
+                        }                                
+                    });
 
             if ($("#filterBoxOne").prop("disabled") == true) {
                 $('#filterBoxOne').val('');
@@ -31,6 +44,7 @@
                 filterColumns:[0, 1, 2],
                 filterCaseSensitive:false
             });
+
 
             // on entering some key in the search box "filterBoxOne"
             $("#filterBoxOne").keyup(function() {
@@ -149,10 +163,9 @@
             // contact details data
             contactDtls_td = document.createElement('td');
             var contactDtls_string = '';
-            for(var i in json.contact_dtls){
-                contactDtls_string += json.contact_dtls[i] + "<br />";
-            }
-            contactDtls_string += json.email
+            for(var i in json.contact_dtls)
+               contactDtls_string += json.contact_dtls[i] + "<br />";
+            contactDtls_string += "<a href='mailto:" + json.email + "'>" + json.email + "</a>"
             contactDtls_td.innerHTML = contactDtls_string;
 
             // Program Data
@@ -219,7 +232,43 @@
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
-
+<% if !@results.blank? %>
+    <table id="key_contacts_table" class="tablesorter">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Role</th>
+        <th>Name</th>
+        <th>Contact Details</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%if @user_override %>
+          <%
+                user_description = "#{@user.human_name} | UserID: #{@user.id} | "
+                user_description << (@user.is_student ? "Student" : "Staff")
+                user_description << " | #{@user.masters_program}"  unless @user.masters_program.blank?
+                user_description << " #{@user.masters_track}"  unless @user.masters_track.blank?
+          %>
+          <%= "You are showing results for:  #{user_description}" %>
+      <% end %>
+         <% @results.each do |person| %>
+            <tr>
+              <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
+              <td><%= person[:title] %>
+              <td><%= link_to(person[:human_name], person[:path]) %></td>
+              <td>
+                <% person[:contact_dtls].each do |k, v| %>
+                    <% if !k.include? "Fax" %>
+                        <%= "#{k}: #{v}" %>  <br />
+                    <%end %>
+                <%end %>
+                <%= mail_to person[:email] %></td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
+<% end %>
 <table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
@@ -231,8 +280,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tr>
   </thead>
   <tbody>
-
-
   </tbody>
 </table>
 

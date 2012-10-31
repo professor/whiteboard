@@ -18,16 +18,52 @@ class PeopleController < ApplicationController
 
 # GET /people
 # GET /people.xml
+# This method loads the search bar and default contacts for that user.
   def index
-    @people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
+    # These lines allow someone to override the user ID used to display default search results.
+    # This code is intended for use by administrators and staff only.
+    @user = current_user
+    if (current_user.is_admin? || current_user.is_staff?)
+      if !params[:id].blank?
+        @user_override = true
+        @user = User.find_by_param(params[:id])
+      end
+    end
+
+    @people = PeopleSearchDefault.all
+    search_defaults = PeopleSearchDefault.all
+    @people = search_defaults.find_all { |t| t.student_staff_group == 'All' }
+    search_defaults.reject!  { |t| t.student_staff_group == 'All' }
+    if(@user.is_student)
+      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Student' }
+      search_defaults.find_all { |t| t.program_group == 'All' }.each { |x| @people.push(x) }
+      search_defaults.reject!  { |t| t.program_group == 'All' }
+      search_defaults = search_defaults.find_all { |t| t.program_group == @user.masters_program }
+      search_defaults.find_all { |t| t.track_group == 'All' }.each { |x| @people.push(x) }
+      search_defaults.reject!  { |t| t.track_group == 'All' }
+      search_defaults = search_defaults.find_all { |t| t.track_group == @user.masters_track || (@user.masters_program == 'PhD' && t.track_group == nil) }.each { |x| @people.push(x) }
+    else
+      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Staff' }
+      search_defaults.each { |x| @people.push(x) }
+    end
+
+    @results = @people.collect { |default_person| Hash[
+        :image_uri => default_person.user.image_uri,
+        :title => default_person.user.title,
+        :human_name => default_person.user.human_name,
+        :contact_dtls => default_person.user.telephones_hash,
+        :email => default_person.user.email,
+        :path => person_path(default_person.user)
+    ]}
+    @results.uniq!
 
     respond_to do |format|
-      format.html { render :html => @people }
-      format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-                                                                    "first_name" => person.first_name,
-                                                                    "last_name" => person.last_name,
-                                                                    "image_uri" => person.image_uri,
-                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+      format.html { render :html => @results }
+      #format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
+      #                                                              "first_name" => person.first_name,
+      #                                                              "last_name" => person.last_name,
+      #                                                              "image_uri" => person.image_uri,
+      #                                                              "email" => person.email].merge(person.telephones_hash) }, :layout => false }
     end
   end
 
@@ -40,6 +76,7 @@ class PeopleController < ApplicationController
   # Number of requesting coming in here is controlled through a javascript timer
   # (see js in views/people/index.html.erb for more details.)
   def search
+    #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
     @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
     @ppl = @people.collect do |person| 
         # program the user is enrolled in
@@ -97,7 +134,7 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    @person = User.find_by_param(params[:id]) 
+    @person = Person.find_by_param(params[:id])
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|
@@ -205,7 +242,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
 #    authorize! :update, @person
 
     @strength_themes = StrengthTheme.all
@@ -267,7 +304,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
 #    authorize! :update, @person
 
     @person.updated_by_user_id = current_user.id
@@ -290,7 +327,7 @@ class PeopleController < ApplicationController
   end
 
   def revert_to_version
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
@@ -308,7 +345,7 @@ class PeopleController < ApplicationController
       redirect_to(people_url) and return
     end
 
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     @person.destroy
 
     respond_to do |format|
@@ -319,7 +356,7 @@ class PeopleController < ApplicationController
 
 
   def my_teams
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -346,7 +383,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -364,7 +401,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses_verbose
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)

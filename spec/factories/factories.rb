@@ -143,6 +143,9 @@ FactoryGirl.define do
   end
 
 
+  factory :people_search_default, class: PeopleSearchDefault do
+  end
+
   factory :presentation do
     name "Test Presentation"
     description "Desc"

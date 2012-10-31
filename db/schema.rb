@@ -295,6 +295,15 @@ ActiveRecord::Schema.define(:version => 20121030220552) do
   add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
   add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
 
+  create_table "people_search_defaults", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "student_staff_group"
+    t.string   "program_group"
+    t.string   "track_group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "presentation_feedback_answers", :force => true do |t|
     t.integer  "feedback_id"
     t.integer  "question_id"

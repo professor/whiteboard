@@ -89,9 +89,23 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 	text-transform: none;
 }
-
+#key_contacts_table th:first-child, #key_contacts_table td{
+    overflow: auto;
+}
+#key_contacts_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#key_contacts_table th:nth-child(3){
+    width: 150px;
+}
+#key_contacts_table th:nth-child(4){
+    width: 210px;
+}
 #people_table th:first-child, #people_table td {
 /* this is required for making sure cells with too much data don't throw the layout for a toss */
+    white-space:nowrap;
     overflow: auto;
 }
 #people_table th:first-child {
@@ -150,9 +164,17 @@ table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
 	background-color: #FFF;
-	vertical-align: top;
+	vertical-align: middle;
 }
-
+table.tablesorter tbody td.photobook-img {
+    padding: 0px;
+    margin: 0px;    
+    width: 60px; 
+    height: 82px;
+}
+table.tablesorter tbody td.photobook-img img {
+    padding:0;
+}
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
@@ -418,7 +440,7 @@ div.modified {
 .user_profile_content{
     overflow: hidden;
     margin-top: 10px;
-    /*width: 700px;*/
+
 }
 .user_profile_content h2{
     padding-top: 5px;
@@ -483,7 +505,6 @@ div.modified {
     margin: 15px 0 0 15px;
 }
 .user_profile_contact_details{
-    /*widows: 630px;*/
     float:left;
     margin: 15px 0 0 15px;
     padding: 0px 20px;
