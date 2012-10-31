@@ -33,7 +33,8 @@ class PeopleController < ApplicationController
     # By default order by name
    # @people = @people.order("first_name ASC, last_name ASC").all
 
-
+=begin
+# BEFORE MERGE
     respond_to do |format|
       format.html { render :html => @people }
       format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
@@ -48,7 +49,37 @@ class PeopleController < ApplicationController
                                                                     "telephone2" => person.telephone2,
                                                                     "email" => person.email].merge(person.telephones_hash)}, :layout => false }
     end
+=end
+
+# MERGE TRY
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json { render :json => @people.collect { |person|
+        teams_array = person.teams.map(&:attributes)
+        teams_array.each do |team|
+          team["course_name"] = Course.find(team["course_id"]).short_name
+        end
+        Hash[
+          "id" => person.twiki_name,
+          "first_name" => person.first_name,
+          "last_name" => person.last_name,
+          "image_uri" => person.image_uri,
+          "team_names" => teams_array,
+          "masters_program" => person.masters_program,
+          "telephone1_label" => person.telephone1_label,
+          "telephone1" => person.telephone1,
+          "telephone2_label" => person.telephone2_label,
+          "telephone2" => person.telephone2,
+          "email" => person.email
+        ].merge(person.telephones_hash)
+      }, :layout => false }
+    end
+# END MERGE
+
+
   end
+
+
 
   #Ajax call for autocomplete using params[:term]
   def index_autocomplete

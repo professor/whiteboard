@@ -78,6 +78,15 @@ function execute_search(){
                 if(this.telephone2){
                     card_html+= this.telephone2_label +': '+this.telephone2+'<br>';
                 }
+
+// MERGE TRY
+                card_html += 'Teams: ';
+                console.log(this.team_names);
+                for(var i=0; i<this.team_names.length; i++){
+                    card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ') ';
+                    //console.log(card_html);
+                }
+// END TRY
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
