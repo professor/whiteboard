@@ -104,19 +104,19 @@
                 <table>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account") %></td>
-                        <td  class="user_profile_social_edit"></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :linked_in, :placeholder => "LinkedIn URL", :size => "16" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account") %></td>
-                        <td  class="user_profile_social_edit"></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :facebook, :placeholder => "Facebook handle", :size => "16" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account") %></td>
-                        <td  class="user_profile_social_edit"></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :twitter, :placeholder => "Twitter handle", :size => "16" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account") %></td>
-                        <td  class="user_profile_social_edit"></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :google_plus, :placeholder => "Google+ URL", :size => "16" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account") %></td>
@@ -163,6 +163,10 @@
                 <tr class="">
                     <td><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
                     <td><%= f.text_field :telephone4 , :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr>
+                    <td>Skype</td>
+                    <td><%= f.text_field :skype, :placeholder => "Enter your skype id" %></td>
                 </tr>
             </table>
         </div>

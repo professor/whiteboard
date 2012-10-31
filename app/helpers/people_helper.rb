@@ -7,5 +7,4 @@ module PeopleHelper
 
   end
 
-
 end
