@@ -3,10 +3,11 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <script type="text/javascript" >
-    
+        var photobook_toggled = false;
+        var last_search_results = '';
         var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
         var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
-        var ajax_req_issued = false;            // object that 
+        var ajax_req_issued = false;            // object that
         var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 
         $(document).ready(function () {
@@ -38,16 +39,28 @@
                     clearTimeout(sendQueryToServer_timer);
                 }
                 // set timer for the keystrokes entered by user
+
                 sendQueryToServer_timer = setTimeout(queryDatabase, 500);
+                $('#people_table tbody').empty();
+                $('#photobook_results').empty();
+            });
+
+            $("#filterBoxOne_photobook").click(function (){
+                $('#people_table tbody').empty();
+                $('#photobook_results').empty();
+                photobook_toggled = !photobook_toggled;
+                var path = photobook_toggled ? '/images/tablesorter/photo_book_gloss_gray.png' : '/images/tablesorter/photo_book_gloss_red.png';
+                $("#filterBoxOne_photobook").attr('src', path);
+                buildSearchResults(last_search_results);
             });
         });
 
         function queryDatabase(){
             searchBox = $("#filterBoxOne");
             if(searchBox.val() != searchBox_old_val ){
-                
-                searchBox_old_val =searchBox.val();
-                
+
+                searchBox_old_val = searchBox.val();
+
                 if($.trim(searchBox.val())){
                     if(ajax_req_issued){
                         // an ajax request was already issued, abort them
@@ -57,10 +70,10 @@
 
                     // send ajax request and assign the XHML HTTP request object returned to jq_xhr
                     jq_xhr = $.ajax({
-                      
+
                       url : 'people_search',  // the URL for the request
                       data : { filterBoxOne : searchBox.val(), ajaxCall : true },  // the data to send  (will be converted to a query string)
-                      method : 'GET', 
+                      method : 'GET',
                       dataType : 'json',  // the type of data we expect back
                       contentType: "application/json; charset=utf-8",
                       beforeSend: function() {
@@ -70,10 +83,11 @@
                         ajax_req_issued = false;
                       },
                       success : function(json) {
+                            last_search_results = json;
                             buildSearchResults(json);
                       },
                    });
-                
+
                 }else{
                 // user has not entered any string
                     if(ajax_req_issued){
@@ -81,38 +95,50 @@
                     }
                     // hide the results table
                     $("#people_table").hide();
+                    $("#photobook_results").hide();
                 }
             }
         }
 
         /* helper function to build the table results in #people_table */
         function buildSearchResults(json) {
-            for (var i in json){
-                // build row number i
-                buildRow(json[i]);
+            if(!photobook_toggled){
+                for (var i in json){
+                    // build row number i
+                    buildRow(json[i]);
+                }
+                // after all rows built, show #people_table
+                $("#photobook_results").hide();
+                searchBox = $("#filterBoxOne");
+                if($.trim(searchBox.val()))
+                    $("#people_table").show();
+            } else{
+                for (var i in json){
+                    // build row number i
+                    buildPhotoBookItem(json[i]);
+                }
+                $("#people_table").hide();
+                $("#photobook_results").show();
             }
-            // after all rows built, show #people_table
-            $("#people_table").show();
         }
 
         /* helper function to build the result row */
         function buildRow(json){
-            
+
             row = document.createElement('tr');
-            
+
             // image data
             photo_td = document.createElement('td');
             photo_td.setAttribute('class','photobook-img');
-            image_uri_link = json.image_uri;
-            photo_td.appendChild(loadImage(image_uri_link));
-            
+            photo_td.appendChild(loadImage(json.image_uri));
+
             // first_name data
             firstName_td = document.createElement('td');
             firstName_anchorLink = document.createElement('a');
             firstName_anchorLink.href = json.path;
             firstName_anchorLink.appendChild(document.createTextNode(json.first_name));
             firstName_td.appendChild(firstName_anchorLink);
-            
+
             // last_name data
             lastName_td = document.createElement('td');
             lastName_anchorLink = document.createElement('a');
@@ -128,26 +154,41 @@
             }
             contactDtls_string += json.email
             contactDtls_td.innerHTML = contactDtls_string;
-            
+
             // Program Data
             program = document.createElement('td');
-            program.appendChild(document.createTextNode(json.program)); 
-            
+            program.appendChild(document.createTextNode(json.program));
+
             // append each data element to the row
             row.appendChild(photo_td);
             row.appendChild(firstName_td);
             row.appendChild(lastName_td);
             row.appendChild(contactDtls_td);
             row.appendChild(program);
-            
+
             // append the row to the table
             $('#people_table tbody').append(row);
         }
 
-        /* helper function to build the photo image form the uri */
+        /* helper function to build the result row for the photobook layout*/
+        function buildPhotoBookItem(json){
+            $(loadImage(json.image_uri))
+                .appendTo($('<div class="photobook_item" />'))
+                // jQuery chaining refers always to the first element (so still img)
+                .parent()
+                // now you're in the photobook_item element
+                .append($('<p class="photobook_item_name" />').html(json.first_name+" "+json.last_name))
+                .appendTo('#photobook_results');
+        }
+
+        /* helper function to build the photo image form the uri and add a scotty img if not loaded */
         function loadImage(image_uri){
             var img = new Image();
-            img.width = 60;
+            if(!photobook_toggled){
+                img.width = 60;
+            }else{
+                img.width = 145;
+            }
             img.src = image_uri;
             $(img).bind({
                 error: function() {
@@ -194,6 +235,9 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
   </tbody>
 </table>
+
+<div id="photobook_results" hidden="true" class="clearboth" >
+</div>
 
 <br/>
 

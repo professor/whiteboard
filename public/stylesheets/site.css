@@ -41,20 +41,20 @@ div#topnav ul {
 td.log_sum {
    padding-left: 10px;
    text-align: right;
-}        
+}
 
 td.log_remove {
-   padding-left: 10px; 
+   padding-left: 10px;
 }
 
 td.log_weeknumber {
     text-align: right;
-    
+
 }
 
 td.log_action  {
     padding-left: 7px;
-    
+
 }
 
 #description {
@@ -109,10 +109,33 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 }
 #people_table td.photobook-img {
     padding: 0px;
-    margin: 0px;    
-    width: 60px; 
+    margin: 0px;
+    width: 60px;
 }
 #people_table td.photobook-img img {
+    padding:0;
+}
+#photobook_results{
+    overflow: hidden;
+}
+.photobook_item{
+    float:left;
+    background-color: white;
+    margin: 5px;
+    text-align: center;
+}
+.photobook_item .photobook_item_name{
+    overflow: auto;
+    padding-bottom:2px;
+    border:1px solid lightgray;
+    white-space: nowrap;
+    width: 155px;
+}
+div.photobook_item img{
+    width:155px;
+    height:208px;
+    border:1px solid lightgray;
+    border-bottom:none;
     padding:0;
 }
 
@@ -180,7 +203,7 @@ table.tablesorter tbody tr.hover td {
 .comment {
     padding: 5px;
     margin-right: 5px;
-    margin-bottom: 5px;    
+    margin-bottom: 5px;
 }
 
 .comment_type_none {
