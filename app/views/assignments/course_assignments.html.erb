@@ -1,5 +1,8 @@
 <h1>Assignments for <%= @course.name %></h1>
-<%= link_to "New assignment", new_course_assignment_path(@course.id) %>
+<div>
+  <%= link_to "New assignment", new_course_assignment_path(@course.id) %> |
+  <%= link_to "Course configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %>
+</div>
 
 <% if !@assignments.empty? %>
   <table class='cmu_table'>
