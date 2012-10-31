@@ -472,6 +472,9 @@ describe Course do
       @assignment2.save
       @assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 100)
       @assignment4 = FactoryGirl.create(:assignment, course: @course, can_submit: false, weight: 500)
+
+      @deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1)
+      @deliverable_grade = FactoryGirl.create(:deliverable_grade, deliverable: @deliverable1, user: @deliverable1.creator, grade: 30)
     end
 
     it "should get all submittable assignments" do
@@ -486,6 +489,8 @@ describe Course do
       @assignment2.reload.weight.should == 30
       @assignment3.reload.weight.should == 10
       @assignment4.reload.weight.should == 50
+
+      @deliverable_grade.reload.grade.should == 3
     end
   end
 

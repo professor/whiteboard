@@ -308,12 +308,10 @@ class Course < ActiveRecord::Base
     scaled_number = number
     if self.grading_criteria == "Points"
       total_points = self.assignments.to_a.sum(&:weight)
-      STDERR.puts total_points
       if total_points <= 0
         return nil
       end
       scaled_number = number*100.0/total_points
-      STDERR.puts scaled_number
     end
     self.grading_ranges.each do |grading_range|
       if scaled_number >= grading_range.minimum
@@ -369,10 +367,17 @@ class Course < ActiveRecord::Base
     if !self.assignments.empty? && self.grading_criteria == "Percentage" && Course.find(self.id).grading_criteria == 'Points'
       assignment_sum = self.assignments.to_a.sum(&:weight)
       if assignment_sum > 100
+        ratio = 100.0/assignment_sum
         self.assignments.each do |assignment|
-          assignment.weight = assignment.weight * 100/assignment_sum
-          if assignment.weight < 1
-            assignment.weight = 1
+          assignment.weight = assignment.weight * ratio
+          assignment.deliverables.each do |deliverable|
+            deliverable.deliverable_grades.each do |deliverable_grade|
+              deliverable_grade.grade = deliverable_grade.grade * ratio
+              if deliverable_grade.grade < 1
+                deliverable_grade.grade = 1
+              end
+              deliverable_grade.save
+            end
           end
           assignment.save
         end
