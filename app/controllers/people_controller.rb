@@ -22,6 +22,7 @@ class PeopleController < ApplicationController
   def index
     # These lines allow someone to override the user ID used to display default search results.
     # This code is intended for use by administrators and staff only.
+
     @user = current_user
     if (current_user.is_admin? || current_user.is_staff?)
       if !params[:id].blank?
@@ -30,22 +31,7 @@ class PeopleController < ApplicationController
       end
     end
 
-    @people = PeopleSearchDefault.all
-    search_defaults = PeopleSearchDefault.all
-    @people = search_defaults.find_all { |t| t.student_staff_group == 'All' }
-    search_defaults.reject!  { |t| t.student_staff_group == 'All' }
-    if(@user.is_student)
-      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Student' }
-      search_defaults.find_all { |t| t.program_group == 'All' }.each { |x| @people.push(x) }
-      search_defaults.reject!  { |t| t.program_group == 'All' }
-      search_defaults = search_defaults.find_all { |t| t.program_group == @user.masters_program }
-      search_defaults.find_all { |t| t.track_group == 'All' }.each { |x| @people.push(x) }
-      search_defaults.reject!  { |t| t.track_group == 'All' }
-      search_defaults = search_defaults.find_all { |t| t.track_group == @user.masters_track || (@user.masters_program == 'PhD' && t.track_group == nil) }.each { |x| @people.push(x) }
-    else
-      search_defaults = search_defaults.find_all { |t| t.student_staff_group == 'Staff' }
-      search_defaults.each { |x| @people.push(x) }
-    end
+    @people = PeopleSearchDefault.default_search_results(@user)
 
     @results = @people.collect { |default_person| Hash[
         :image_uri => default_person.user.image_uri,
