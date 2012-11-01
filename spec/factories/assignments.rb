@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :assignment do
     name "MyString"
-    maximum_score 1.5
+    maximum_score 20.0
     is_team_deliverable false
     due_date "2012-10-03 12:48:24"
     task_number 1
@@ -15,9 +15,10 @@ FactoryGirl.define do
     association :course, :factory => :fse
   end
 
-  factory :assignment_many, :parent=>:assignment  do
+  factory :assignment_seq, :parent=>:assignment  do
     course_id 1
     sequence(:name) {|i| "Assignment #{i}"}
+    sequence(:maximum_score) {|i| i*3}
     sequence(:assignment_order) {|i| i}
   end
 end

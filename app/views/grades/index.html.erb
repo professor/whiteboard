@@ -17,6 +17,7 @@
     var grade_attrs = parse_id($(event.target).attr('id'));
     var score = $(event.target).val();
     var previousValue = event.target.defaultValue;
+
     if(previousValue != score)
     {
       $(event.target).addClass("changedScore");
@@ -56,7 +57,16 @@
           }
 
       })
-  }
+    }
+    function compute_grades(student_id){
+      var total = 0; 
+      $("#s_" + student_id + " input[type='text']").map(function(){return parseFloat($(this).val());}).each(function(index,value){
+          total += value;
+        });
+      $("#s_" + student_id + " .earned").text(total);
+
+    
+    } 
 
 
   function saveAsDraft() {
@@ -107,26 +117,26 @@
             <% @assignments.each do |assignment| %>
               <th style='max-width:78px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
             <%end %>
-            <th>Earned Grades</th>
+            <th rowspan="2">Earned Grades</th>
           </tr>
           <tr>
             <% @assignments.each do |assignment| %>
                 <td>Max <%="#{assignment.maximum_score}"%></td>
-            <% end %>
+              <% end %>
           </tr>
         </thead>
 
         <input type="hidden" id="course_id" value=<%=@course.id%> />
         <% @grades.each do |student, grade_entries| %>
-          <tr class="<%= cycle('cmu_table_odd', 'cmu_table_even') %>">
+          <tr id="s_<%=student.id%>">
             <td><%=student.first_name%>
             </td>
             <td><%=student.last_name%></td>
             <td><%=@team_assignment[student.id].try(:name) || "" %></td>
             <% @assignments.each do |assignment|%>
-              <td class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
+              <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'><input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' type="text" size="4" onchange="change_grade(event);" /></td>
             <% end %>
-            <td><%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%></td>
+            <td class='earned'><%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%></td>
           </tr>
         <%end%>
       </table>
