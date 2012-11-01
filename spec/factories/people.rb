@@ -74,37 +74,4 @@ FactoryGirl.define do
     twiki_name "TeamMember"
   end
 
-  factory :student_setech, :parent => :person do
-    email "student.setech@sv.cmu.edu"
-    webiso_account "setech@andrew.cmu.edu"
-    is_student true
-    is_alumnus false
-    masters_program "SE"
-    masters_track "Tech"
-    first_name "Student"
-    last_name "Setech"
-    human_name "Student Setech"
-    twiki_name "StudentSetech"
-#    initialize_with { Person.find_or_create_by_id(id)}
-  end
-
-  factory :student_phd, :parent => :person do
-    email "student.phd@sv.cmu.edu"
-    webiso_account "student_phd@andrew.cmu.edu"
-    is_student true
-    is_alumnus false
-    masters_program "PhD"
-    first_name "Student"
-    last_name "PhD"
-    human_name "Student PhD"
-    twiki_name "StudentPhd"
-#    initialize_with { Person.find_or_create_by_id(id)}
-  end
-
-  factory :person_visible_to_setech, :parent => :people_search_default do
-    student_staff_group "All"
-    program_group "SE"
-    track_group "Tech"
-  end
-
 end
