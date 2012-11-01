@@ -91,7 +91,9 @@ class CoursesController < ApplicationController
 
   def gradebook
     @course = Course.find(params[:id])
-    render layout: 'simple'
+    respond_to do |format|
+      format.html { render layout: 'simple' } # gradebook.html.erb
+    end
   end
 
   # GET /courses/new

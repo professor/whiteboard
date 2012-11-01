@@ -9,6 +9,8 @@ class Assignment < ActiveRecord::Base
   validates :weight, numericality: { greater_than: 0 }, presence: true
   validate :validate_due_date, :validate_total_weights
 
+  after_save :create_unsubmittable_deliverable
+
   default_scope order: "task_number ASC, due_date ASC"
 
   def find_deliverable_grade(user)
@@ -34,6 +36,16 @@ class Assignment < ActiveRecord::Base
       self.title
     else
       "Task #{self.task_number}: #{self.title}"
+    end
+  end
+
+  def create_unsubmittable_deliverable
+    if !self.can_submit? && !self.deliverables.empty?
+      # Create a "virtual" deliverable for an unsubmittable assignment
+      assignments.deliverables.create(creator_id: self.course.faculty.first, status:"Ungraded")
+      self.course.registered_students.each do |student|
+        student.deliverable_grades.create(grade: 0, deliverable_id: assignments.deliverables.first.id)
+      end
     end
   end
 

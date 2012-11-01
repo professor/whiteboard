@@ -33,6 +33,17 @@ FactoryGirl.define do
     twiki_name "StudentSally"
   end
 
+  factory :student, :parent => :user do
+    sequence(:email) { |n| "student#{n}@sv.cmu.edu" }
+    sequence(:webiso_account) { |n| "sally#{n}@andrew.cmu.edu" }
+    is_student true
+    is_alumnus false
+    sequence(:first_name) { |n| "Firstname#{n}" }
+    sequence(:last_name) { |n| "Lastname#{n}" }
+    sequence(:human_name) { |n| "Student #{n}" }
+    sequence(:twiki_name) { |n| "Student#{n}" }
+  end
+
   factory :faculty_frank_user, :parent => :user do
     email "faculty.frank@sv.cmu.edu"
     webiso_account "frank@andrew.cmu.edu"

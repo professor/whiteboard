@@ -23,14 +23,18 @@
           <% total_score = 0 %>
           <% @course.assignments.each do |assignment| %>
             <td>
-              <% deliverable_grade = assignment.find_deliverable_grade(member) %>
-              <% if deliverable_grade.blank? %>
-                Unsubmitted
-              <% else %>
-                <% total_score += deliverable_grade.grade %>
-                <% link_text = (deliverable_grade.deliverable.status == 'Graded') ? deliverable_grade.grade : "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"%>
-                <%= link_to link_text, deliverable_feedback_path(deliverable_grade.deliverable) %>
-            <% end %>
+              <% if assignment.can_submit? %>
+                <% deliverable_grade = assignment.find_deliverable_grade(member) %>
+                <% if deliverable_grade.blank? %>
+                  Unsubmitted
+                <% else %>
+                  <% total_score += deliverable_grade.grade %>
+                  <% link_text = (deliverable_grade.deliverable.status == 'Graded') ? deliverable_grade.grade : "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"%>
+                  <%= link_to link_text, deliverable_feedback_path(deliverable_grade.deliverable) %>
+                <% end %>
+               <% else %>
+
+              <% end %>
             </td>
           <% end %>
           <td><%= total_score %></td>
