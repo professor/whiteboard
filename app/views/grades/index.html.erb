@@ -17,7 +17,8 @@
     var grade_attrs = parse_id($(event.target).attr('id'));
     var score = $(event.target).val();
     var previousValue = event.target.defaultValue;
-
+    
+    compute_grades(grade_attrs.student_id);
     if(previousValue != score)
     {
       $(event.target).addClass("changedScore");

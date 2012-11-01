@@ -39,6 +39,7 @@
     <th>Comments</th>
   </tr>
 
+      <% if current_user.is_student %>
   <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
     <td>
       <% if current_user.is_student %>
@@ -47,6 +48,7 @@
     </td>
     <td colspan="2">&nbsp;</td>
   </tr>
+    <% end %>
 
   <% @deliverable.attachment_versions.each_with_index do |version, index| %>
       <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
