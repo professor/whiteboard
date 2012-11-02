@@ -244,6 +244,7 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
        if flash[:error].blank?
+         flash[:error] = ""
          flash[:notice] = 'Feedback successfully saved.'
          #format.html { redirect_to(@deliverable) }
          format.html {redirect_to(course_deliverables_path(@deliverable.course))}

@@ -14,8 +14,8 @@
     <th>Task</th>
     <th>Owner</th>
     <th>Latest Deliverable</th>
-    <th>Grades</th>
-    <td>Actions</td>
+    <th>Graded</th>
+    <th>Actions</th>
     <!--
         <th>File</th>
     -->
@@ -35,7 +35,7 @@
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%=deliverable.assignment.name%>(<%= link_to "download", latest_attachment.attachment.url %>)</td>
+            <td><%=deliverable.assignment.name%> (<%= link_to "download", latest_attachment.attachment.url %>)</td>
         <% else %>
             <td><%= deliverable.assignment.name %></td>
         <% end %>
@@ -52,9 +52,9 @@
           <td><%= link_to 'View History and Feedback', deliverable %></td>
         <%else%>
             <% if deliverable.is_graded? %>
-                <td><%= link_to 'Review Grades', deliverable %></td>
+                <td><%= link_to 'Review Grade', deliverable %></td>
             <%else%>
-                <td><%= link_to 'Give Grades', deliverable %></td>
+                <td><%= link_to 'Give Grade', deliverable %></td>
             <%end%>
         <%end%>
         <!--

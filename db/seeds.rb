@@ -150,10 +150,10 @@ FactoryGirl.define do
 
   sleep(0.02)
 
-  factory :prof_signh, :parent => :person do
+  factory :prof_singh, :parent => :person do
     first_name "P"
-    last_name "Signh"
-    human_name "P Signh"
+    last_name "Singh"
+    human_name "P Singh"
     email "prabhjot.singh@sv.cmu.edu"
     is_staff 1
   end
@@ -216,9 +216,10 @@ FactoryGirl.define do
     email "fall-2012-team-3-amigos@west.cmu.edu"
     course_id 1
     after(:create) { |team|
-      FactoryGirl.create(:owen, teams:[team])
-      FactoryGirl.create(:david, teams:[team])
-      FactoryGirl.create(:madhok, teams:[team])
+      team.members = []
+      team.members << FactoryGirl.create(:owen, teams:[team])
+      team.members << FactoryGirl.create(:david, teams:[team])
+      team.members << FactoryGirl.create(:madhok, teams:[team])
     }
   end
 
@@ -281,9 +282,10 @@ FactoryGirl.define do
     email "fall-2012-team-leopard@west.cmu.edu"
     course_id 1
     after(:create) { |team|
-      FactoryGirl.create(:prabhjot, teams:[team])
-      FactoryGirl.create(:lydian, teams:[team])
-      FactoryGirl.create(:kate, teams:[team])
+      team.members = []
+      team.members << FactoryGirl.create(:prabhjot, teams:[team])
+      team.members << FactoryGirl.create(:lydian, teams:[team])
+      team.members << FactoryGirl.create(:kate, teams:[team])
     }
   end
 
