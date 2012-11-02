@@ -58,8 +58,8 @@ class PeopleController < ApplicationController
 
 
   # GET /people_search.json
-  # 
-  # Ajax call for people search results using params[:filterBoxOne]. 
+  #
+  # Ajax call for people search results using params[:filterBoxOne].
   # Sends back json object with search results (from database)
   #
   # Number of requesting coming in here is controlled through a javascript timer
@@ -67,7 +67,7 @@ class PeopleController < ApplicationController
   def search
     #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
     @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
-    @ppl = @people.collect do |person| 
+    @ppl = @people.collect do |person|
         # program the user is enrolled in
         program = ''
         if person.is_student

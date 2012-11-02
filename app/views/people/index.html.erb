@@ -17,13 +17,17 @@
                     $("#people_table").hide();
                     $("#filterBoxOne").keyup(function() {
                         if(this.value.length > 0){
-                            $("#people_table").show();
+                            if(photobook_toggled)
+                                $("#photobook_results").show();
+                            else
+                                $("#people_table").show();
                             $("#key_contacts_table").hide();
                         }
                         else{
-                            $("#people_table").hide();
                             $("#key_contacts_table").show();
-                        }                                
+                            $("#people_table").hide();
+                            $("#photobook_results").hide();
+                        }
                     });
 
             if ($("#filterBoxOne").prop("disabled") == true) {
@@ -56,8 +60,6 @@
                 // set timer for the keystrokes entered by user
 
                 sendQueryToServer_timer = setTimeout(queryDatabase, 500);
-                $('#people_table tbody').empty();
-                $('#photobook_results').empty();
             });
 
             $("#filterBoxOne_photobook").click(function (){
@@ -65,7 +67,8 @@
                 $('#photobook_results').empty();
                 photobook_toggled = !photobook_toggled;
                 var path = photobook_toggled ? '/images/tablesorter/photo_book_gloss_gray.png' : '/images/tablesorter/photo_book_gloss_red.png';
-                $("#filterBoxOne_photobook").attr('src', path);
+                var title = photobook_toggled ? 'Grid View' : 'Photobook View';
+                $("#filterBoxOne_photobook").attr('src', path).attr('title', title);
                 buildSearchResults(last_search_results);
             });
         });
@@ -75,6 +78,8 @@
             if(searchBox.val() != searchBox_old_val ){
 
                 searchBox_old_val = searchBox.val();
+                $('#people_table tbody').empty();
+                $('#photobook_results').empty();
 
                 if($.trim(searchBox.val())){
                     if(ajax_req_issued){
@@ -123,17 +128,17 @@
                     buildRow(json[i]);
                 }
                 // after all rows built, show #people_table
-                $("#photobook_results").hide();
                 searchBox = $("#filterBoxOne");
                 if($.trim(searchBox.val()))
                     $("#people_table").show();
+                $("#photobook_results").hide();
             } else{
                 for (var i in json){
                     // build row number i
                     buildPhotoBookItem(json[i]);
                 }
-                $("#people_table").hide();
                 $("#photobook_results").show();
+                $("#people_table").hide();
             }
         }
 
@@ -187,7 +192,7 @@
         /* helper function to build the result row for the photobook layout*/
         function buildPhotoBookItem(json){
             $(loadImage(json.image_uri))
-                .appendTo($('<div class="photobook_item" />'))
+                .appendTo($('<a class="photobook_item" href="' + json.path + '"/>'))
                 // jQuery chaining refers always to the first element (so still img)
                 .parent()
                 // now you're in the photobook_item element
@@ -351,6 +356,13 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </thead>
   <tbody>
   </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="5">
+              <input type="button" id="show_box" value="Export List" onclick="show_box();" style="float: right" />
+          </td>
+      </tr>
+  </tfoot>
 </table>
 
 <div id="photobook_results" hidden="true" class="clearboth" >
@@ -361,7 +373,5 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
-
-<input type="button" id="show_box" value="Export List" onclick="show_box();" style="float: right" />
 
 <input type="hidden" id="hidden_field" value="off">

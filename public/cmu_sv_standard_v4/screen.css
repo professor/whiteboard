@@ -94,7 +94,7 @@ h1#titleHead {
 }
 #wordmark h2 a span {
 	height: 1px;
-	width: 1px; 
+	width: 1px;
 	position:absolute;
 	overflow:hidden;
 	top:-10px;
@@ -150,7 +150,7 @@ h1#titleHead {
 	padding: 0px 10px 0px 11px;
 	border-left: none;
 /*	background-image:none !important; */
-	
+
 }
 #topnav a, #topnav a:visited {
 	color: #ffffff;
@@ -158,7 +158,7 @@ h1#titleHead {
 }
 #topnav a:hover, #topnav a:visited:hover {
 	color: #ffffff;
-	text-decoration: underline;	
+	text-decoration: underline;
 }
 
 #socialLinks {
@@ -235,7 +235,7 @@ h1#titleHead {
 	font-size:11px;
 	color:#ffffff;
 	height: 25px;
-	margin:7px 35px 3px 5px; 
+	margin:7px 35px 3px 5px;
 	vertical-align:middle;
 	position:absolute;
 	top:0px;
@@ -275,7 +275,7 @@ h1#titleHead {
 	height: 13px;
 	border: none;
 /*	padding: 1px 0px 0px 0px; */
-	
+
 }
 
 /* Navigation */
@@ -447,13 +447,13 @@ h1#titleHead {
 {
 	list-style-type:decimal;
 	list-style-position:outside;
-	margin: 4px 0px 9px 0px; 
+	margin: 4px 0px 9px 0px;
 	padding-left: 25px;
 }
 
 ol.letterList{
 	list-style-type:lower-alpha
-} 
+}
 
 .content ul
 {
@@ -553,9 +553,9 @@ ol.letterList{
 */
 
 .content table {
-	border-collapse:collapse; 
-	border-style: none; 
-	margin: 3px 5px 3px 1px; 
+	border-collapse:collapse;
+	border-style: none;
+	margin: 3px 5px 3px 1px;
 	background-color: transparent;
 }
 
@@ -563,46 +563,26 @@ ol.letterList{
 .content  tr {}
 
 .content tbody td {
-	font-size:12px; 
-	text-decoration:none; 
-	font-weight:normal; 
+	font-size:12px;
+	text-decoration:none;
+	font-weight:normal;
 	border: 1px solid #d4d4d4;
-	padding: 5px 3px 11px 5px;  
-	margin: 0px; 
+	padding: 5px 3px 11px 5px;
+	margin: 0px;
 	vertical-align: top;
 }
 .content thead td, .content thead th {
 	font-size:11px;
-	text-decoration:none; 
-	font-weight:bold; 
-	border-style: none; 
-	padding:6px 4px 9px 5px; 
-	margin-top: 3px; 
-	text-transform:uppercase; 
-	vertical-align: bottom; 
+	text-decoration:none;
+	font-weight:bold;
+	border-style: none;
+	padding:6px 4px 9px 5px;
+	margin-top: 3px;
+	text-transform:uppercase;
+	vertical-align: bottom;
 	text-align: left;
 }
 .content table p {padding:0px 0px 5px 0px !important;margin:0px !important;}
-
-#filterBoxUserSearch {
-    width:100%;
-    overflow: auto;
-    margin-bottom: 5px;
-}
-
-#filterBoxOne{
-    width: 80%;
-    float: left;
-    padding: 5px;
-    font-size: 1.3em;
-}
-#filterClearOne{
-    display:none;
-}
-#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
-    float: right;
-}
-
 
 
 table.sortable thead tr .header, table.sortableAlternatingRows thead tr .header {
@@ -622,7 +602,7 @@ table.sortable thead tr .headerSortDown, table.sortableAlternatingRows thead tr 
 
 
 #supplementaryContent {
-	float:left; 
+	float:left;
 	margin-bottom: 19px;
 }
 
@@ -728,7 +708,7 @@ table.sortable thead tr .headerSortDown, table.sortableAlternatingRows thead tr 
 }
 
 .simpleCallout thead th, .simpleCallout thead td {
-	font-size: 14px;	
+	font-size: 14px;
 	font-weight: bold;
 	padding: 0px;
 	text-transform: none;
@@ -737,7 +717,7 @@ table.sortable thead tr .headerSortDown, table.sortableAlternatingRows thead tr 
 .simpleCallout tbody td {
 	border: none;
 	padding: 2px;
-	font-size: 14px;	
+	font-size: 14px;
 }
 
 .simpleCallout .small thead th, .simpleCallout .small thead td {
@@ -875,7 +855,7 @@ html > body .callout table {
 
 
 .callout thead th, .callout thead td {
-	font-size: 14px;	
+	font-size: 14px;
 	font-weight: bold;
 	padding: 0px;
 	text-transform: none;
@@ -884,7 +864,7 @@ html > body .callout table {
 .callout tbody td {
 	border: none;
 	padding: 2px;
-	font-size: 14px;	
+	font-size: 14px;
 }
 
 .callout .small thead th, .callout .small thead td {
@@ -1148,5 +1128,5 @@ h2.newsHeadline {
 form .instructions {
         font-size: 10px;
         margin-bottom: 5px;
-        font-style: italic;     
+        font-style: italic;
 }

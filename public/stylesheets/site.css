@@ -134,6 +134,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 }
 .photobook_item{
     float:left;
+    display: block;
     background-color: white;
     margin: 5px;
     text-align: center;
@@ -142,10 +143,14 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
     overflow: auto;
     padding-bottom:2px;
     border:1px solid lightgray;
+    border-top: none;
     white-space: nowrap;
     width: 155px;
 }
-div.photobook_item img{
+#photobook_results a.photobook_item {
+    text-decoration: none;
+}
+a.photobook_item img{
     width:155px;
     height:208px;
     border:1px solid lightgray;
@@ -168,8 +173,8 @@ table.tablesorter tbody td {
 }
 table.tablesorter tbody td.photobook-img {
     padding: 0px;
-    margin: 0px;    
-    width: 60px; 
+    margin: 0px;
+    width: 60px;
     height: 82px;
 }
 table.tablesorter tbody td.photobook-img img {
@@ -434,6 +439,29 @@ div.modified {
 
 /* for the export search result button */
 .ui-button-text {width:30px;}
+
+
+/************************
+ * Search Box styling
+*************************/
+#filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne{
+    width: 86%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+#filterClearOne{
+    display:none;
+}
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
 
 
 /************************
