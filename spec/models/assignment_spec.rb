@@ -99,25 +99,12 @@ describe Assignment do
     end
   end
 
-  context "unsubmitted assignment" do
-    it "should create deliverables for every student"
-      @assignment = FactoryGirl.create(:assignment, team_deliverable: false, can_submit: false)
-      @student1 = FactoryGirl.create(:student)
-      @student1.registered_courses = [@assignment.course]
-      @student1.save
-      @student2 = FactoryGirl.create(:student)
-      @student2.registered_courses = [@assignment.course]
-      @student2.save
-
-      @assignment.create_unsubmittable_deliverable
-
-      @assignment.deliverables.count.should == 1
-      deliverable_grades = @assignment.deliverables.first.deliverable_grades
-      deliverable_grades.count.should == @assignment.course.registered_students.count
-      student_ids = deliverable_grades.map { |deliverable_grade| deliverable_grade.user_id }
-
-      @assignment.course.registered_students.each do |student|
-        student_ids.should include(student.id)
+  context "unsubmittable assignment" do
+    it "should create a deliverable for an unsubmittable assignment" do
+      expect {
+        faculty_assignment = FactoryGirl.create(:faculty_assignment)
+        assignment = FactoryGirl.create(:assignment, team_deliverable: false, can_submit: false, course: faculty_assignment.course)
+      }.to change(Deliverable, :count).by(1)
     end
   end
 end

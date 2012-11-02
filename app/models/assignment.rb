@@ -9,7 +9,7 @@ class Assignment < ActiveRecord::Base
   validates :weight, numericality: { greater_than: 0 }, presence: true
   validate :validate_due_date, :validate_total_weights
 
-  after_save :create_unsubmittable_deliverable
+  after_save :create_placeholder_deliverable
 
   default_scope order: "task_number ASC, due_date ASC"
 
@@ -21,7 +21,11 @@ class Assignment < ActiveRecord::Base
         deliverable = self.deliverables.find_by_team_id(team.id)
       end
     else
-      deliverable = self.deliverables.find_by_creator_id(user.id)
+      if self.can_submit?
+        deliverable = self.deliverables.find_by_creator_id(user.id)
+      else
+        deliverable = self.deliverables.first
+      end
     end
 
     deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(user.id)
@@ -39,13 +43,10 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def create_unsubmittable_deliverable
-    if !self.can_submit? && !self.deliverables.empty?
-      # Create a "virtual" deliverable for an unsubmittable assignment
-      assignments.deliverables.create(creator_id: self.course.faculty.first, status:"Ungraded")
-      self.course.registered_students.each do |student|
-        student.deliverable_grades.create(grade: 0, deliverable_id: assignments.deliverables.first.id)
-      end
+  def create_placeholder_deliverable
+    if !self.can_submit? && self.deliverables.empty?
+      # Create a placeholder deliverable for an assignment that does not accept deliverables from students
+      self.deliverables.create(creator_id: self.course.faculty_assignments.first.user.id, status: "Ungraded")
     end
   end
 

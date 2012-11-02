@@ -168,6 +168,19 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def all_students
+    students = Hash.new
+    self.registered_students.each do |student|
+      students[student.id] = student
+    end
+    self.teams.each do |team|
+      team.members.each do |user|
+        students[user.id] = user
+      end
+    end
+    return students
+  end
+
   def display_semester
     mini_text = self.mini == "Both" ? "" : self.mini + " "
     return self.semester + " " + mini_text + self.year.to_s

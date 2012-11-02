@@ -183,4 +183,9 @@ FactoryGirl.define do
     deleted false
   end
 
+  factory :faculty_assignment, class: FacultyAssignment do
+    association :course, :factory => :course
+    association :user, :factory => :faculty_frank_user
+  end
+
 end
