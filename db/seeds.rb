@@ -323,9 +323,9 @@ prof_liu = Factory.create(:prof_liu)
 Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_liu.id)
 
 # set up another course
-course_mfse = Factory.create(:mfse)
-prof_signh = Factory.create(:prof_signh)
-Factory.create(:faculty_assignment, :course_id=>course_mfse.id, :user_id=>prof_signh.id)
+# course_mfse = Factory.create(:mfse)
+prof_singh = Factory.create(:prof_singh)
+Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_singh.id)
 
 
 Factory(:task_type, :name => "Working on deliverables")
