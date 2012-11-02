@@ -217,9 +217,9 @@ FactoryGirl.define do
     course_id 1
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:owen, teams:[team])
-      team.members << FactoryGirl.create(:david, teams:[team])
-      team.members << FactoryGirl.create(:madhok, teams:[team])
+      team.members << FactoryGirl.create(:owen)
+      team.members << FactoryGirl.create(:david)
+      team.members << FactoryGirl.create(:madhok)
     }
   end
 
@@ -283,9 +283,9 @@ FactoryGirl.define do
     course_id 1
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:prabhjot, teams:[team])
-      team.members << FactoryGirl.create(:lydian, teams:[team])
-      team.members << FactoryGirl.create(:kate, teams:[team])
+      team.members << FactoryGirl.create(:prabhjot)
+      team.members << FactoryGirl.create(:lydian)
+      team.members << FactoryGirl.create(:kate)
     }
   end
 
@@ -302,10 +302,23 @@ fse_teams << Factory.create(:team_leopard, :course_id=>course_fse.id)
 # set up assignments
 assignments = []
 2.times do # prepare team deliverables
-  assignments << Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: true, is_submittable: true)
+  team_assignment = Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: true, is_submittable: true)
+  assignments << team_assignment
+  fse_teams.each do |team|
+     deliverable=FactoryGirl.create(:team_deliverable_simple, :team_id=>team.id, :creator_id=>team.members.first.id, :course_id=>course_fse.id, :assignment_id=>team_assignment.id)
+     FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>team.members.first.id, :attachment_file_name=>"#{team.members.first.human_name}_file", :submission_date=>Time.now)
+  end
 end
+
 2.times do # prepare individual deliverables
-  assignments << Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: false, is_submittable: true)
+  individual_assignment = Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: false, is_submittable: true)
+  assignments << individual_assignment
+  fse_teams.each do |team|
+    team.members.each do |team_member|
+      deliverable=FactoryGirl.create(:individual_deliverable, :creator_id=>team_member.id, :course_id=>course_fse.id, :assignment_id=>individual_assignment.id)
+      FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>team_member.id, :attachment_file_name=>"#{team_member.human_name}_file", :submission_date=>Time.now)
+    end
+  end
 end
 assignments << Factory.create(:assignment_seq, :course_id=>course_fse.id, is_submittable: false)
 
