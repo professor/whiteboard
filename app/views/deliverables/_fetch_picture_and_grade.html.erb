@@ -4,7 +4,7 @@
   <% end %>
   <div class="label">
     <%= fields_for :grade do |grade| %>
-      <%= grade.text_field :grade_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "5x1" %>
+      <%= grade.text_field :grade_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "5x1", :tabindex=>member.id%>
     <% end %>
   </div>
   <div>
