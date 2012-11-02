@@ -101,6 +101,9 @@
           <hr>
         </div>
         <%= yield :left_nav %>
+        <% if @is_in_grade_book %>
+            <%=  render :partial=>"layouts/grade_book_menu" %>
+        <% end %>
       </div>
     </div>
     <div id="topnav">

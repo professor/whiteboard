@@ -14,11 +14,7 @@
     <th>Task</th>
     <th>Owner</th>
     <th>Latest Deliverable</th>
-    <th>Deliverable Graded?</th>
-    <%if current_user.is_staff? %>
-      <th>Grade Published?</th>
-    <%end%>
-    <th>Grade Recieved</th>
+    <th>Grades</th>
     <td>Actions</td>
     <!--
         <th>File</th>
@@ -36,36 +32,30 @@
             <% end %>
         <% end %>
         <td><%= h deliverable.assignment.task_number %></td>
-        <td><%= deliverable.owner_name %></td>
+        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%= link_to deliverable.assignment.name, latest_attachment.attachment.url %></td>
+            <td><%=deliverable.assignment.name%>(<%= link_to "download", latest_attachment.attachment.url %>)</td>
         <% else %>
             <td><%= deliverable.assignment.name %></td>
         <% end %>
 
-
-        <% grade=Grade.get_grade(deliverable.assignment.id,current_user.id) %>
         <td>
-          <% if deliverable.has_feedback? %>
+          <% if deliverable.is_graded? %>
               Yes
           <% else %>
               No
           <% end %>
         </td>
-        <%if current_user.is_staff? %>
-          <td><%= (!grade.nil? && grade.is_student_visible?)?"Yes":"No" %></td>
-        <%end%>
-        <td>
-        <%unless (grade.nil? || !grade.is_student_visible) %>
-            <%= grade.score.to_s %>
-        <% end %>
-        </td>
         
         <% if current_user.is_student %>
           <td><%= link_to 'View History and Feedback', deliverable %></td>
         <%else%>
-          <td><%= link_to 'Give Grades', deliverable %></td>
+            <% if deliverable.is_graded? %>
+                <td><%= link_to 'Review Grades', deliverable %></td>
+            <%else%>
+                <td><%= link_to 'Give Grades', deliverable %></td>
+            <%end%>
         <%end%>
         <!--
       <td>

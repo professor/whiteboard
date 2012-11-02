@@ -10,6 +10,10 @@ FactoryGirl.define do
     association :course, :factory => :fse
   end
 
+  factory :assignment_team, :parent=>:assignment do
+    is_team_deliverable true
+  end
+
   factory :assignment_fse, :parent=>:assignment do
     name "fse assignment 1"
     association :course, :factory => :fse

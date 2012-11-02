@@ -3,6 +3,11 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
+  before_filter :render_grade_book_menu, :only=>[:index_for_course, :show]
+
+  def render_grade_book_menu
+    @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
+  end
 
   # GET /deliverables
   # GET /deliverables.xml
@@ -41,7 +46,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1.xml
   def show
     @deliverable = Deliverable.find(params[:id])
-
+    @course = @deliverable.course
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
       redirect_to root_path and return
@@ -85,7 +90,7 @@ class DeliverablesController < ApplicationController
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
-    @deliverable.assignment.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
+    @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'

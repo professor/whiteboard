@@ -122,7 +122,7 @@ FactoryGirl.define do
   sleep(0.02)
 
   factory :team_terrific, :class => Team do
-    name "Team Terrific"
+    name "Terrific"
     email "terrific@sv.cmu.edu"
     tigris_space "http://terrific.tigris.org/servlets/ProjectDocumentList"
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
@@ -212,7 +212,7 @@ FactoryGirl.define do
   sleep(0.02)
 
   factory :team_3amigos, :class => Team do
-    name "Team 3 Amigos"
+    name "3 Amigos"
     email "fall-2012-team-3-amigos@west.cmu.edu"
     course_id 1
     after(:create) { |team|
@@ -277,7 +277,7 @@ FactoryGirl.define do
   sleep(0.02)
 
   factory :team_leopard, :class => Team do
-    name "Team Leopard"
+    name "Leopard"
     email "fall-2012-team-leopard@west.cmu.edu"
     course_id 1
     after(:create) { |team|

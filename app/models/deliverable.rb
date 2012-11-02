@@ -36,6 +36,7 @@ class Deliverable < ActiveRecord::Base
   belongs_to :course
   belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
+  delegate :is_team_deliverable, :to=>:assignment, :allow_nil=>true
 
 
   #-----for assignment----#
@@ -52,7 +53,6 @@ class Deliverable < ActiveRecord::Base
   default_scope :order => "created_at DESC"
 
 
-
   def unique_course_task_owner?
     if self.is_team_deliverable?
       duplicate = Deliverable.where(:course_id => self.course_id, :assignment_id => self.assignment_id, :team_id => self.team_id).first
@@ -67,7 +67,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   def is_team_deliverable?
-    team ? true : false
+    self.is_team_deliverable
   end
 
   def current_attachment
@@ -210,4 +210,20 @@ class Deliverable < ActiveRecord::Base
       self.team = team if team.members.include?(self.creator)
     end
   end
+
+  def is_graded?
+    if self.is_team_deliverable?
+      self.team.members.each do |member|
+        grade = Grade.get_grade(self.assignment.id, member.id)
+        if grade.nil? || !grade.is_student_visible?
+          return false
+        end
+      end
+      true
+    else
+      grade = Grade.get_grade(self.assignment.id, self.creator.id)
+      grade.try(:is_student_visible) || false
+    end
+  end
+
 end

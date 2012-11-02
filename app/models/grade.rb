@@ -3,14 +3,14 @@
 # Grade allows the professor to grade students. Professor can go to Grade by clicking Grade tab in faculty
 # tools, on the index page of each course. Professor can assign/view/change the score of the student directly
 # by putting the score for the assignment in front of his/her name. Also, only one grade is permitted for one student
-# per assignment. The design of gradebook is to encapusulate the grading from the submission.
+# per assignment. The design of grade is to encapusulate the grading from the submission.
 #
-# * For a course, a student will have at most one grade_book on each assignment.
+# * For a course, a student will have at most one grade on each assignment.
 # * is_student_visible indicates that whether this grade is going to publish to student or not. 
 # * score should be number greater than zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor can add extra credit on student's grade.
-# * get_grade_books returns a list of assignment score of given course and student. 
-# * get_grade_book returns a specific one assignment score of given course_id, student_id and assignment_id. This function is useful for controller to test whether the score is existed or not. 
-# * update_grade_book makes all selected assignment grades hidden from students. 
+# * get_grades returns a list of assignment score of given course and student.
+# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is useful for controller to test whether the score is existed or not.
+# * update_grade makes all selected assignment grades hidden from students.
 # 
 #
 class Grade < ActiveRecord::Base
@@ -24,12 +24,12 @@ class Grade < ActiveRecord::Base
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
-    grade_books = {}
-    Grade.where(course_id: course.id).where(student_id: student.id).each do |grade_book|
-      grade_books[grade_book.assignment.id] = grade_book
+    grades = {}
+    Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
+      grades[grade.assignment.id] = grade
     end
-    grade_books["earned_grade"] = (grade_books.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
-    grade_books
+    grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
+    grades
   end
 
 

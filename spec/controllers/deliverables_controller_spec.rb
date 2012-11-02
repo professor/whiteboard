@@ -102,7 +102,8 @@ describe DeliverablesController do
     describe "GET show" do
       before(:each) do
         @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :is_team_deliverable => true)
+        @assignment = mock_model(Assignment, :course_id=>@course.id, :is_team_deliverable => true)
+        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :assignment=>@assignment)
         @team = stub_model(Team)
         Deliverable.stub(:find).and_return(@deliverable)
         @deliverable.stub(:team).and_return(@team)

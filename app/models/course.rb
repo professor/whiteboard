@@ -48,7 +48,7 @@ class Course < ActiveRecord::Base
 
   has_many :presentations
 
-  has_many :grade_books, :through => :assignments
+  has_many :grades, :through => :assignments
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty

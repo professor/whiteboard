@@ -37,15 +37,15 @@ describe "deliverables" do
       end
     end
 
-    context "I should be" do
-      it " not be able to view professor private notes" do
+    context "I shouldL" do
+      it " not be able to view professor's notes" do
         page.should have_content("View History and Feedback")
         click_link "View History and Feedback"
      #   visit deliverable_path(@team_deliverable)
 
         page.should have_content("Deliverable for")
         page.should have_content("Attachment Version History")
-        page.should_not have_content("Professor's Private Notes")
+        page.should_not have_content("Professor's Notes")
         page.should_not have_content("My private notes")
       end
     end
@@ -66,9 +66,8 @@ describe "deliverables" do
     it "I should be able to view deliverable page" do
    #   page.should have_content("Deliverable for")
       page.should have_content("Attachment Version History")
-      page.should have_content("Professor's Private Notes")
+      page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
-      page.should_not have_content("My private notes XXXXXXX")
     end
   end
 end

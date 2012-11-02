@@ -4,11 +4,16 @@ class GradesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :get_course
+  before_filter :render_grade_book_menu
   before_filter :validate_permission
   before_filter :get_team_assignment, :only=>:index
 
   def get_course
     @course=Course.find(params[:course_id])
+  end
+
+  def render_grade_book_menu
+    @is_in_grade_book = true
   end
 
   def validate_permission

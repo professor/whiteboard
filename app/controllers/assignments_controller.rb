@@ -4,6 +4,7 @@ class AssignmentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_course
   before_filter :set_due_date, :only=>[:create, :update]
+  before_filter :render_grade_book_menu
   load_and_authorize_resource
 
 
@@ -13,6 +14,9 @@ class AssignmentsController < ApplicationController
     @course=Course.find(params[:course_id])
   end
 
+  def render_grade_book_menu
+    @is_in_grade_book = true
+  end
 
   def index
     @assignments = Assignment.all(:conditions => ["course_id = ?", @course.id])
@@ -27,7 +31,6 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1.xml
   def show
     @assignment = Assignment.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @assignment }

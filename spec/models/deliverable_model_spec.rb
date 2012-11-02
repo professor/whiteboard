@@ -122,12 +122,60 @@ describe Deliverable do
     end
   end
 
+  context "for an individual deliverable's grading status" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:individual_deliverable)
+    end
 
+    it "is visible if the grade is published" do
+      grade = FactoryGirl.build(:grade_visible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.is_graded?.should be_true
+    end
 
+    it "is invisible if the grade is not published" do
+      grade = FactoryGirl.build(:grade_invisible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.is_graded?.should be_false
+    end
 
+    it "is invisible if it is not graded" do
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+      @deliverable.is_graded?.should be_false
+    end
+  end
 
+  context "for a team deliverable's grading status" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:team_deliverable)
+    end
 
+    it "is visible if all of members' grades are published" do
 
+      @deliverable.team.members.each do | member |
+        grade = FactoryGirl.build(:grade_visible, :student_id => member.id)
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+      end
+
+      @deliverable.is_graded?.should be_true
+    end
+
+    it "is invisible if any of the member's grade is not published" do
+      grade = FactoryGirl.build(:grade_invisible)
+      @deliverable.team.members.each do | member |
+        grade = FactoryGirl.build(:grade_invisible, :student_id => member.id)
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+      end
+      @deliverable.is_graded?.should be_false
+    end
+
+    it "is invisible if any of the member's grade is not given" do
+      @deliverable.team.members.each do | member |
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(nil)
+      end
+      @deliverable.is_graded?.should be_false
+    end
+  end
 end
 
 
