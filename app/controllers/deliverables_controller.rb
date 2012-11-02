@@ -218,32 +218,41 @@ class DeliverablesController < ApplicationController
       @deliverable.feedback_updated_at = Time.now
     end
 
-
+    flash[:error] = []
     assignment_id=@deliverable.assignment_id
     if @deliverable.assignment.is_team_deliverable?
       @deliverable.team.members.each do |user|
         score= params[:"#{user.id}"]
-        Grade.give_grade(assignment_id,user.id,score,is_student_visible)
+        unless Grade.give_grade(assignment_id,user.id,score,is_student_visible)
+          flash[:error] << "Grade given to " + user.human_name + " is invalid!"
+        end
       end
     else
       score= params[:"#{@deliverable.creator_id}"]
-      Grade.give_grade(assignment_id,@deliverable.creator_id,score,is_student_visible)
+      unless Grade.give_grade(assignment_id,@deliverable.creator_id,score,is_student_visible)
+        flash[:error] << "Grade given to " + @deliverable.creator.human_name + " is invalid!"
+      end
     end
 
+    if @deliverable.save
+      if is_student_visible==true
+        @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
+      end
+    else
+      flash[:error] << 'Unable to save feedback'
+    end
 
     respond_to do |format|
-      if @deliverable.save
-        if is_student_visible==true
-          @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
-        end
-        flash[:notice] = 'Feedback successfully saved.'
-        format.html { redirect_to(@deliverable) }
-        format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
-      else
-        flash[:error] = 'Unable to save feedback'
-        format.html { redirect_to(@deliverable) }
-        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
-      end
+       if flash[:error].blank?
+         flash[:notice] = 'Feedback successfully saved.'
+         #format.html { redirect_to(@deliverable) }
+         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
+       else
+         flash[:error] = flash[:error].join("<br>")
+         format.html { redirect_to(@deliverable) }
+         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+       end
     end
   end
 

@@ -1,13 +1,3 @@
-
-<div style='text-align:right;width:100%;margin-bottom:30px;'>
-<% if current_user.is_staff %>
-  <%= link_to 'Back', course_deliverables_path(@deliverable.course) , :title=>"Back to Course Deliverables"%>
-<% end %>
-<% if current_user.is_student %>
-  <%= link_to 'Back', my_deliverables_path(current_user), :title=>"Back to My Deliverables" %>
-<% end %>
-</div>
-
 <% if @deliverable.course %>
     <% title = "Deliverable for " + @deliverable.course.name + " (" + @deliverable.assignment.name + ")" %>
 <% else %>
