@@ -3,18 +3,36 @@
 <% if !@courses_teaching_as_faculty.empty? %>
   <div id="filters">
     <%= form_for(:filter, remote: true) do |f| %>
-      <%= f.label :semester_year %>
-      <%= f.select :semester_year, @semester_years, {}, {class: 'deliverable-filter'} %>
-      <%= f.label :course_id %>
-      <%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All'}, {class: 'deliverable-filter'})  %><br />
-      <%= f.label :assignment_id %>
-      <%= f.collection_select(:assignment_id, [], :id, :title, {:include_blank => 'All'}, {class: 'deliverable-filter'}) %>
-      <%= f.label :submitted_by %>
-      <%= f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, {:include_blank => 'All'}, {class: 'deliverable-filter'} %>
-      <%= f.label :status %>
-      <%= f.select :status, ['Ungraded', 'Graded', 'Draft'], {}, {class: 'deliverable-filter'} %><br />
+    <table id="basic_search" class="layout_table">
+      <tbody>
+        <tr>
+          <td><%= f.label :semester_year %></td>
+          <td><%= f.select :semester_year, @semester_years, {}, {class: 'deliverable-filter'} %></td>
+          <td><%= f.label :course_id %></td>
+          <td><%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All'}, {class: 'deliverable-filter'})  %></td>
+          <td><%= link_to "View Gradebook", course_gradebook_path(nil), id: :gradebook_link %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= link_to "Toggle Advanced Search", '#', id: :toggle_advanced_search %>
+    <table id="advanced_search" class="layout_table">
+      <tbody>
+        <tr>
+          <td><%= f.label :assignment_id %></td>
+          <td><%= f.collection_select(:assignment_id, [], :id, :title, {:include_blank => 'All'}, {class: 'deliverable-filter'}) %></td>
+          <td><%= f.label :submitted_by %></td>
+          <td><%= f.select :submitted_by, @deliverable_users.map {|id, user| [user.human_name, id]}, {:include_blank => 'All'}, {class: 'deliverable-filter'} %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :status %></td>
+          <td><%= f.select :status, ['Ungraded', 'Graded', 'Draft'], {}, {class: 'deliverable-filter'} %></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
       <%= f.submit hidden: true%>
-    <% end %>
+  <% end %>
   </div>
   <div id='grading_queue'><%= render 'deliverables/grading_queue' %></div>
 <% end %>
@@ -39,8 +57,17 @@
 %>
 
 <script type="text/javascript">
+  function changeGradebookLink() {
+    if ($('#filter_course_id').val() == '') {
+      $('#gradebook_link').hide();
+    } else {
+      $('#gradebook_link').attr('href', $('#gradebook_link').attr('href').replace(/\/\d\//, '/' + $('#filter_course_id').val() + '/'));
+      $('#gradebook_link').show();
+    }
+  }
   $(function() {
     assignment_options = {<%= course_assignments_js.html_safe %>};
+    $('#advanced_search').hide();
 
     $('#filter_assignment_id').html(assignment_options[$('#filter_course_id').val()]);
 
@@ -54,5 +81,12 @@
       $('#grading_queue').html("<%= escape_javascript(image_tag("ajax-loader.gif")) %>");
       $('#filters form').submit();
     })
+
+    $('#toggle_advanced_search').click(function() {
+      $('#advanced_search').toggle();
+    });
+
+    $('#filter_course_id').change(changeGradebookLink);
+    changeGradebookLink();
   })
 </script>
