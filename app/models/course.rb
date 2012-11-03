@@ -342,7 +342,8 @@ class Course < ActiveRecord::Base
     if self.grading_criteria == "Percentage"
       total_grade
     else
-      ((total_grade.to_f/get_max_points) * 100).to_i
+      total_weight = self.total_assignment_weight
+      total_weight == 0 ? 0 : ((total_grade.to_f / total_weight) * 100).to_i
     end
   end
 
@@ -410,7 +411,9 @@ class Course < ActiveRecord::Base
     end
   end
 
-  private
+  def total_assignment_weight
+    self.assignments.to_a.sum(&:weight)
+  end
 
   def get_user_deliverable_grades(user)
     deliverable_grades = []
@@ -422,11 +425,5 @@ class Course < ActiveRecord::Base
     deliverable_grades
   end
 
-  def get_max_points
-    max_points = 0
-    self.assignments.each do |assignment|
-      max_points += assignment.weight
-    end
-    max_points
-  end
+  private
 end

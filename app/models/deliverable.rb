@@ -256,6 +256,24 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  #{"Fall 2012"=>{"Architecture and Design"=>{deliverables: [#<Deliverable 1>, #<Deliverable 2>], total: 100}, ...}}
+  def self.group_by_semester_course(deliverables, student)
+    grouped_deliverables = {}
+    deliverables.each do |deliverable|
+      course = deliverable.assignment.course
+      if !grouped_deliverables.has_key?(course.display_semester)
+        grouped_deliverables[course.display_semester] = {}
+      end
+      if !grouped_deliverables[course.display_semester].has_key?(course.name)
+        total_weight = course.total_assignment_weight
+        earned_score = course.get_user_deliverable_grades(student).to_a.sum(&:grade)
+        grouped_deliverables[course.display_semester][course.name] = {deliverables: [], max_score: total_weight, earned_score: earned_score}
+      end
+      grouped_deliverables[course.display_semester][course.name][:deliverables] << deliverable
+    end
+    return grouped_deliverables
+  end
+
   private
 
   def populate_status

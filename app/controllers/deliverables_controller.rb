@@ -21,6 +21,7 @@ class DeliverablesController < ApplicationController
 
   def my_deliverables
     user = User.find(params[:id])
+
     if (current_user.id != user.id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
@@ -28,8 +29,10 @@ class DeliverablesController < ApplicationController
         return
       end
     end
+
     @current_deliverables = Deliverable.find_current_by_user(user)
     @past_deliverables = Deliverable.find_past_by_user(user)
+    @grouped_deliverables = Deliverable.group_by_semester_course(@current_deliverables + @past_deliverables, user)
 
     respond_to do |format|
       format.html { render :action => "index" }

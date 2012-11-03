@@ -465,6 +465,8 @@ describe Course do
   context "assignments" do
     before(:each) do
       @course = FactoryGirl.create(:course, grading_criteria: 'Points')
+      @course.faculty = [FactoryGirl.create(:faculty_frank)]
+      @course.save
       @assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 100)
       # Create an assignment with invalid due date
       @assignment2 = FactoryGirl.build(:assignment, course: @course, due_date: DateTime.now, weight: 300)

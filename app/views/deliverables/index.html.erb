@@ -8,19 +8,40 @@
 
 <%= link_to 'New deliverable', new_deliverable_path %>
 
-<% if !@current_deliverables.empty? %>
-    <h2><%= @current_semester %> <%= @current_year %>Current Semester Deliverables</h2>
-    <%= render :partial => "deliverable_listing", :locals => {:deliverables => @current_deliverables, :skip_course_column => false} %>
-    <br>
-<% end %>
-<% if !@past_deliverables.empty? %>
-    <h2>Previous Semesters' Deliverables</h2>
-    <%= render :partial => "deliverable_listing", :locals => {:deliverables => @past_deliverables, :skip_course_column => false} %>
-    <br><br>
+<br/>
+<br/>
+
+<% if !@grouped_deliverables.empty? %>
+  <div>
+    <%= select(:deliverable, :semester, @grouped_deliverables.keys) %>
+    <%= select(:deliverable, :course, @grouped_deliverables[@grouped_deliverables.keys.first].keys) %>
+  </div>
+
+  <% @grouped_deliverables.each do |semester, courses| %>
+    <% courses.each do |course, deliverables| %>
+      <div id="<%= "#{semester}_#{course}".gsub(/\s/, '-') %>" class="deliverable_listing" style="display:none;">
+        <h2><%= course %></h2>
+        <%= render :partial => "deliverable_listing", :locals => {:deliverables => deliverables[:deliverables], :skip_course_column => true} %>
+        Course Totals: <%= deliverables[:earned_score] %>/<%= deliverables[:max_score] %>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
 
 <br/>
 
-<% if !@current_deliverables.empty? %>
+<% if !@grouped_deliverables.empty? %>
   <%= link_to 'New deliverable', new_deliverable_path %>
 <% end %>
+
+<script>
+  function showDeliverables() {
+    deliverableDiv = ($('#deliverable_semester').val() + '_' + $('#deliverable_course').val()).replace(/\s/g, '-');
+    $('.deliverable_listing').hide();
+    $('#' + deliverableDiv).show();
+  }
+  $(function() {
+    $('#deliverable_semester, #deliverable_course').change(showDeliverables);
+    showDeliverables();
+  });
+</script>

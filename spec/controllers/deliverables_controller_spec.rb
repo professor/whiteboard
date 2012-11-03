@@ -60,6 +60,7 @@ describe DeliverablesController do
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
         Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
         Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
+        Deliverable.stub(:group_by_semester_course)
         Course.stub(:find).and_return(@course)
       end
 
