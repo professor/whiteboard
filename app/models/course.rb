@@ -334,6 +334,18 @@ class Course < ActiveRecord::Base
     return self.grading_ranges.last.grade
   end
 
+  def get_earned_number_grade(user)
+    total_grade = 0;
+    get_user_deliverable_grades(user).each do |deliverable_grade|
+      total_grade = total_grade + deliverable_grade.grade
+    end
+    if self.grading_criteria == "Percentage"
+      total_grade
+    else
+      ((total_grade.to_f/get_max_points) * 100).to_i
+    end
+  end
+
   protected
   def set_grading_ranges
     if self.grading_ranges.empty?
@@ -396,5 +408,25 @@ class Course < ActiveRecord::Base
         end
       end
     end
+  end
+
+  private
+
+  def get_user_deliverable_grades(user)
+    deliverable_grades = []
+    self.assignments.each do |assignment|
+      assignment.deliverables.each do |deliverable|
+        deliverable_grades += deliverable.deliverable_grades.select {|grade| grade.user_id == user.id }
+      end
+    end
+    deliverable_grades
+  end
+
+  def get_max_points
+    max_points = 0
+    self.assignments.each do |assignment|
+      max_points += assignment.weight
+    end
+    max_points
   end
 end

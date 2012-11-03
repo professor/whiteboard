@@ -47,6 +47,9 @@ class Assignment < ActiveRecord::Base
     if !self.can_submit? && self.deliverables.empty?
       # Create a placeholder deliverable for an assignment that does not accept deliverables from students
       self.deliverables.create(creator_id: self.course.faculty_assignments.first.user.id, status: "Ungraded")
+      self.course.registered_students.each do |student|
+        student.deliverable_grades.create(grade: 0, deliverable_id: self.deliverables.first.id)
+      end
     end
   end
 
