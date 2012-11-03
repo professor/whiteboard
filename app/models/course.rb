@@ -424,6 +424,4 @@ class Course < ActiveRecord::Base
     end
     deliverable_grades
   end
-
-  private
 end

@@ -14,7 +14,9 @@ class Assignment < ActiveRecord::Base
   default_scope order: "task_number ASC, due_date ASC"
 
   def find_deliverable_grade(user)
-    if self.team_deliverable?
+    if !self.can_submit
+      deliverable = self.deliverables.first
+    elsif self.team_deliverable?
       team = Team.find_current_by_person_and_course(user, self.course)
       # find_by_team_id may find an individual deliverable if passed nil
       if !team.blank?

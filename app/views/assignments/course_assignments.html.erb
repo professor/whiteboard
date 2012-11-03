@@ -22,7 +22,13 @@
         <tr>
           <td><%= assignment.task_number %></td>
           <td><%= assignment.title %></td>
-          <td><%= assignment.team_deliverable ? 'Team' : 'Individual' %></td>
+          <td>
+            <% if assignment.can_submit %>
+              <%= assignment.team_deliverable ? 'Team' : 'Individual'  %>
+            <% else %>
+              Class
+            <% end%>
+          </td>
           <td><%= l assignment.due_date, format: :chatty %></td>
           <td><%= assignment.weight %></td>
           <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>

@@ -91,9 +91,6 @@ class CoursesController < ApplicationController
 
   def gradebook
     @course = Course.find(params[:id])
-    @course.assignments.select {|assignment| !assignment.can_submit}.each do |assignment|
-      assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-    end
     respond_to do |format|
       format.html { render layout: 'simple' } # gradebook.html.erb
     end

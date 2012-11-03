@@ -79,7 +79,8 @@ class Deliverable < ActiveRecord::Base
   end
 
   def is_team_deliverable?
-    team ? true : false
+    self.assignment.team_deliverable
+    #team ? true : false
   end
 
   def current_attachment
@@ -96,7 +97,7 @@ class Deliverable < ActiveRecord::Base
 
   def owner_email
     if self.is_team_deliverable?
-      team.email
+      self.team.nil? ? nil : team.email
     else
       creator.email
     end
@@ -185,21 +186,32 @@ class Deliverable < ActiveRecord::Base
   end
 
   def send_deliverable_feedback_email(url)
-    mail_to = self.owner_email
-
     message = "Feedback has been submitted for "
     if !self.assignment && !self.assignment.task_number.blank?
       message += "task " + self.assignment.task_number + " of "
     end
     message += self.course.name
 
-    options = {:to => mail_to,
-               :subject => "Feedback for " + self.course.name,
-               :message => message,
-               :url_label => "View this deliverable",
-               :url => url
-    }
-    GenericMailer.email(options).deliver
+    if self.assignment.can_submit?
+      mail_to = self.owner_email
+      options = {:to => mail_to,
+                 :subject => "Feedback for " + self.course.name,
+                 :message => message,
+                 :url_label => "View this deliverable",
+                 :url => url
+      }
+      GenericMailer.email(options).deliver
+    else
+      self.deliverable_grades.each do |deliverable_grade|
+        options = {:to => deliverable_grade.user.email,
+                   :subject => "Feedback for " + self.course.name,
+                   :message => message,
+                   :url_label => "View this deliverable",
+                   :url => url
+        }
+        GenericMailer.email(options).deliver
+      end
+    end
   end
 
   def editable?(current_user)

@@ -1,7 +1,7 @@
 <% content_for :title, "Grade Deliverable" %>
 
 <% if @deliverable.is_team_deliverable? %>
-    <h1>Grade Team Deliverable for <%= @deliverable.team.name %></h1>
+    <h1>Grade Team Deliverable for <%= @deliverable.team.blank? ? "Class" : @deliverable.team.name %></h1>
 <% else %>
     <h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
 <% end %>

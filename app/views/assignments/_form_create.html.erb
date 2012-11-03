@@ -33,7 +33,7 @@
 
       <tr>
         <td><%= form.label :team_deliverable %></td>
-        <td><%= form.check_box :team_deliverable, checked: @assignment.new_record? ? false : @assignment.can_submit %></td>
+        <td><%= form.check_box :team_deliverable, checked: @assignment.new_record? ? false : @assignment.team_deliverable %></td>
       </tr>
 
       <tr>
