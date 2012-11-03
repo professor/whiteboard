@@ -40,11 +40,11 @@ class Assignment < ActiveRecord::Base
   end
 
   def create_unsubmittable_deliverable
-    if !self.can_submit? && !self.deliverables.empty?
+    if !self.can_submit? && self.deliverables.empty?
       # Create a "virtual" deliverable for an unsubmittable assignment
-      assignments.deliverables.create(creator_id: self.course.faculty.first, status:"Ungraded")
+      self.deliverables.create!(creator: self.course.faculty.first, status:"Ungraded")
       self.course.registered_students.each do |student|
-        student.deliverable_grades.create(grade: 0, deliverable_id: assignments.deliverables.first.id)
+        student.deliverable_grades.create(grade: 0, deliverable_id: self.deliverables.first.id)
       end
     end
   end
