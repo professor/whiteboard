@@ -41,6 +41,7 @@ class DeliverablesController < ApplicationController
   end
 
   def professor_deliverables
+    store_location
     respond_to do |format|
       format.html {
         @person = User.find(params[:id])
@@ -239,7 +240,6 @@ class DeliverablesController < ApplicationController
   end
 
   def update_feedback
-    STDERR.puts params[:commit]
     if !params[:commit].blank?
       if params[:commit] == "Save as draft"
         params[:deliverable][:status] = 'Draft'
@@ -259,7 +259,8 @@ class DeliverablesController < ApplicationController
       if @deliverable.save
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
         flash[:notice] = 'Feedback successfully saved.'
-        format.html { redirect_to professor_deliverables_path(current_user.id) }
+        # format.html { redirect_to professor_deliverables_path(current_user.id) }
+        format.html { redirect_back_or_default(professor_deliverables_path(current_user.id)) }
         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
       else
         flash[:error] = 'Unable to save feedback'

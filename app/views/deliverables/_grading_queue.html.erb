@@ -14,9 +14,27 @@
     <tr>
       <td><%= deliverable.assignment.course.short_name %></td>
       <td><%= deliverable.assignment.task_number.blank? ? "" : "Task #{deliverable.assignment.task_number}: " %><%= deliverable.assignment.title %></td>
-      <td><%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %></td>
-      <td><%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %></td>
-      <td><%= l deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date, format: :chatty %></td>
+      <td>
+        <% if deliverable.current_attachment.blank? %>
+          N/A
+        <% else %>
+          <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
+        <% end %>
+      </td>
+      <td>
+        <% if deliverable.assignment.can_submit? %>
+          <%= deliverable.team_id.nil? ? deliverable.creator.human_name : deliverable.team.name %>
+        <% else %>
+            N/A
+        <% end %>
+      </td>
+      <td>
+        <% if deliverable.attachment_versions.blank? %>
+          N/A
+        <% else %>
+          <%= l deliverable.attachment_versions.sort_by(&:submission_date).last.submission_date, format: :chatty %>
+        <% end %>
+      </td>
       <% grade_link_text = deliverable.status.blank? || deliverable.status == 'Ungraded' ? 'Grade' : deliverable.status %>
       <td><%= link_to grade_link_text, deliverable_feedback_path(deliverable) %></td>
     </tr>

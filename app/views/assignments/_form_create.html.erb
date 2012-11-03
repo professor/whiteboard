@@ -34,9 +34,15 @@
       <tr>
         <td>Can students submit deliverables<br/>for this assignment?</td>
         <td>
-          <%= form.radio_button :can_submit, true, checked: @assignment.new_record? || !@assignment.can_submit ? false : true %> <%= form.label :can_submit, "Yes" %>
-          <br/>
-          <%= form.radio_button :can_submit, false, checked: !@assignment.can_submit ? true : false %> <%= form.label :can_submit, "No" %>
+          <% if @assignment.new_record? %>
+            <%= form.radio_button :can_submit, true, checked: true %> <%= form.label :can_submit, "Yes" %>
+            <br/>
+            <%= form.radio_button :can_submit, false %> <%= form.label :can_submit, "No" %>
+          <% else %>
+            <%= form.radio_button :can_submit, true, checked: @assignment.can_submit %> <%= form.label :can_submit, "Yes" %>
+            <br/>
+            <%= form.radio_button :can_submit, false, checked: @assignment.can_submit %> <%= form.label :can_submit, "No" %>
+        <% end %>
         </td>
       </tr>
 
@@ -55,6 +61,8 @@
     <%= form.submit "Save Assignment" %>
   </p>
 <% end %>
+
+<%= @assignment.can_submit %>
 
 <script>
   $(function() {

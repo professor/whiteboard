@@ -90,6 +90,7 @@ class CoursesController < ApplicationController
   end
 
   def gradebook
+    store_location
     @course = Course.find(params[:id])
     respond_to do |format|
       format.html { render layout: 'simple' } # gradebook.html.erb

@@ -41,7 +41,12 @@ class AssignmentsController < ApplicationController
   def destroy
     @assignment = Assignment.find(params[:id])
     course_id = @assignment[:course_id]
-    @assignment.destroy
+    if @assignment.deliverables.empty?
+      flash[:success] = "Assignment was deleted"
+      @assignment.destroy
+    else
+      flash[:error] = "Assignment cannot be deleted because it has deliverables"
+    end
     redirect_to course_assignments_path(course_id)
   end
 end
