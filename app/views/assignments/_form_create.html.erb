@@ -32,13 +32,21 @@
       </tr>
 
       <tr>
-        <td><%= form.label :team_deliverable %></td>
-        <td><%= form.check_box :team_deliverable, checked: @assignment.new_record? ? false : @assignment.team_deliverable %></td>
+        <td>Can students submit deliverables<br/>for this assignment?</td>
+        <td>
+          <%= form.radio_button :can_submit, true, checked: @assignment.new_record? || !@assignment.can_submit ? false : true %> <%= form.label :can_submit, "Yes" %>
+          <br/>
+          <%= form.radio_button :can_submit, false, checked: !@assignment.can_submit ? true : false %> <%= form.label :can_submit, "No" %>
+        </td>
       </tr>
 
-      <tr>
-        <td><%= form.label :can_submit %></td>
-        <td><%= form.check_box :can_submit, checked: @assignment.new_record? ? true : @assignment.can_submit %></td>
+      <tr id="team_radio">
+        <td></td>
+        <td>
+          <%= form.radio_button :team_deliverable, true, checked: @assignment.new_record? || !@assignment.team_deliverable ? false : true %> <%= form.label :team_deliverable, "Team Deliverable" %>
+          <br/>
+          <%= form.radio_button :team_deliverable, false, checked: !@assignment.team_deliverable ? true : false %> <%= form.label :team_deliverable, "Individual Deliverable" %>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -48,11 +56,24 @@
   </p>
 <% end %>
 
-<%= javascript_tag do %>
+<script>
   $(function() {
     $("#assignment_due_date").datepicker({
       showButtonPanel: true,
       dateFormat: 'yy-mm-dd'
     });
+
+    $('#assignment_can_submit_true').click(function() {
+      $('#team_radio').show();
+    });
+
+    $('#assignment_can_submit_false').click(function() {
+      $('#assignment_team_deliverable_true').click();
+      $('#team_radio').hide();
+    });
+
+    if ($("input[name='assignment[can_submit]']:checked").val() == 'false') {
+      $('#team_radio').hide();
+    }
   });
-<% end %>
+</script>
