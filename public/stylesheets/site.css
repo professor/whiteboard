@@ -80,14 +80,86 @@ table.tablesorter {
 	font-size: 8pt;
 	width: 100%;
 	text-align: left;
+	table-layout: fixed;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	border: 1px solid #FFF;
 	font-size: 8pt;
 	padding: 4px;
-    text-transform: none;
+	text-transform: none;
 }
+#key_contacts_table th:first-child, #key_contacts_table td{
+    overflow: auto;
+}
+#key_contacts_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#key_contacts_table td:nth-child(2) a{
+    font-weight: bold;
+    text-decoration: none;
+}
+#key_contacts_table th:nth-child(2){
+    width: 300px;
+}
+
+#people_table th:first-child, #people_table td {
+/* this is required for making sure cells with too much data don't throw the layout for a toss */
+    white-space:nowrap;
+    overflow: auto;
+}
+#people_table th:first-child {
+/* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#people_table th:nth-child(2),#people_table th:nth-child(3){
+/* first name and last name columns */
+   width: 100px;
+}
+#people_table th:nth-child(4) {
+/* program(track)/staff column */
+   width: 290px;
+}
+#people_table td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+}
+#people_table td.photobook-img img {
+    padding:0;
+}
+#photobook_results{
+    overflow: hidden;
+}
+.photobook_item{
+    float:left;
+    display: block;
+    background-color: white;
+    margin: 5px;
+    text-align: center;
+}
+.photobook_item .photobook_item_name{
+    overflow: auto;
+    padding-bottom:2px;
+    border:1px solid lightgray;
+    border-top: none;
+    white-space: nowrap;
+    width: 155px;
+}
+#photobook_results a.photobook_item {
+    text-decoration: none;
+}
+a.photobook_item img{
+    width:155px;
+    height:208px;
+    border:1px solid lightgray;
+    border-bottom:none;
+    padding:0;
+}
+
 table.tablesorter thead tr .header {
 	background-image: url(/images/tablesorter/bg.gif);
 	background-repeat: no-repeat;
@@ -99,7 +171,16 @@ table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
 	background-color: #FFF;
-	vertical-align: top;
+	vertical-align: middle;
+}
+table.tablesorter tbody td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+    height: 82px;
+}
+table.tablesorter tbody td.photobook-img img {
+    padding:0;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
@@ -358,6 +439,32 @@ div.modified {
 #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
 #sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
 
+/* for the export search result button */
+.ui-button-text {width:30px;}
+
+
+/************************
+ * Search Box styling
+*************************/
+#filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne{
+    width: 86%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+#filterClearOne{
+    display:none;
+}
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
+
 
 /************************
  * User Profile Page
@@ -366,7 +473,9 @@ div.modified {
 .user_profile_content{
     overflow: hidden;
     margin-top: 10px;
-    /*width: 700px;*/
+}
+.user_profile_content table.cmu_table{
+    background-color: #FBFBFB;
 }
 .user_profile_content h2{
     padding-top: 5px;
@@ -405,19 +514,32 @@ div.modified {
             }
 
 
-.user_profile_title, .user_profile_bio{
+.user_profile_title, .user_profile_contact_details_content{
     float: left;
     width: 70%;
-    margin: 0 0 15px 15px;
+    margin: 0 0 5px 15px;
     padding: 0px 0 0 20px;
 }
     #user_profile_name{
         float:left;
-        margin-top:0;
+        margin:0;
+        font-weight: bold;
     }
-        #user_pronunciation{width: 99%;}
-        #user_first_name{width: 48%; float:left}
-        #user_last_name{width: 48%; float:right}
+    .edit_user_profile #user_profile_name{
+        width: 458px;
+        margin-top: 10px;
+    }
+
+        #user_pronunciation{ width: 99% }
+        #user_first_name, #user_last_name {
+            float:left;
+            width: 48%;
+            line-height: 1.2;
+            font: bold 18px Helvetica, sans-serif;
+            color: #900;
+        }
+
+        #user_last_name{float:right}
 
     .user_profile_action{
         float:right;
@@ -425,13 +547,22 @@ div.modified {
     #user_profile_dtls{
         float:left;
         clear:left;
+        font-weight: bold;
     }
-.user_profile_bio{
+        .user_profile_pron{
+            line-height: 18px;
+            font: normal 13px verdana, arial, helvetica, sans-serif;
+            color: gray;
+        }
+.user_profile_contact_details_content{
     width: 68%;
-    margin: 15px 0 0 15px;
+    margin: 3px 0 15px 15px;
 }
+    .user_profile_contact_details_content .cmu_table{
+        width: 100%;
+    }
+
 .user_profile_contact_details{
-    /*widows: 630px;*/
     float:left;
     margin: 15px 0 0 15px;
     padding: 0px 20px;
@@ -456,23 +587,25 @@ div.modified {
     margin: 0;
     width: 474px;
 }
-    .user_profile_campus_proximity,
     .user_profile_bio_edit_content, .user_profile_about_edit_content,
     .user_profile_content_body,
     .user_profile_content .clearboth table.cmu_table {
             float: right;
-            margin:0;
-            margin-bottom: 40px;
+            margin:0 15px 10px 0;
             padding:0;
-            width: 474px;
+            /*width: 474px;*/
+            width: 458px;
+            text-align: justify;
     }
-    .user_profile_content .clearboth table.user_profile_content_admin_editable{
-        margin-bottom:10px;
-    }
+    .user_profile_content .clearboth table.cmu_table {text-align: left;}
+    .user_profile_content .cmu_table .help_text{margin:0}
+
+    .user_profile_content .clearboth table.user_profile_content_admin_editable{margin-bottom:10px;}
 
     .user_profile_bio_edit_content, .user_profile_about_edit_content{
         width: 77%;
-        margin-top: -30px;
+        margin:0 -30px 0 0;
+
     }
         .user_profile_org table,{
             width: 450px;
@@ -481,40 +614,51 @@ div.modified {
             width:100%;
         }
 
-        .user_profile_content_body table td:first-child,
-        .user_profile_campus_proximity table td:first-child {
+        .user_profile_content_body table td:first-child{
             width:114px;
         }
+        .edit_user_profile .user_profile_campus_proximity table td:nth-child(2) {text-align: left;}
             .user_profile_content_body table td input[type="text"],
             .user_profile_content .clearboth table.cmu_table td input[type="text"] {
                 width:99%;
             }
-            .user_profile_campus_proximity table td select {
-                width: 102px;
-            }
-                .user_profile_campus_proximity table.cmu_table tbody tbody tr td{
-                    padding: 0;
-                    border-style: none;
-                }
-                    .user_profile_campus_proximity table.cmu_table tbody tbody tr td {
-                        padding-bottom: 10px;
-                    }
-                    .user_profile_campus_proximity table.cmu_table tbody tbody tr td:first-child{
-                        width: 20%;
-                    }
 
 
     .user_profile_org table tr td:first-child,
     .user_profile_content_body table tr td:first-child,
-
+    .user_profile_contact_details_content table tr td:first-child,
     .user_profile_content .clearboth table.cmu_table tr td:first-child {
         width: 30%;
         text-align: right;
+        vertical-align: middle;
     }
 
 .user_profile_content .user_profile_content_admin_editable{ background: #D5D6C1; }
 .user_profile_content .user_profile_content_faculty_editable{ background: #D9E7E6; }
 
-.user_profile_contact_details_content{ padding-top:30px}
-.user_profile_debugging{ text-align:center; margin-top:50px}
+.user_profile_debugging{
+    background-color: white;
+    border: 1px solid gray;
 
+    margin-top: 50px;
+    padding-top: 20px;
+
+    text-align: center;
+    font-size: 10px;
+    color: gray;
+}
+
+
+/*making whole row clickable*/
+#key_contacts_table tbody tr:hover td,
+#people_table tbody tr:hover td{
+    background-color: #E1EAEA;
+    cursor: pointer;
+}
+#photobook_results a.photobook_item:hover{
+    opacity:0.7;
+    filter:alpha(opacity=70); /* For IE8 and earlier */
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
+}
