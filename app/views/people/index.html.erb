@@ -71,6 +71,20 @@
                 $("#filterBoxOne_photobook").attr('src', path).attr('title', title);
                 buildSearchResults(last_search_results);
             });
+
+
+            // making the whole row of key_contacts clickable
+            $('#key_contacts_table tbody tr').click(function () {
+                window.location = $(this).find('a').attr('href');
+            });
+
+            // making the whole row of people_table clickable
+            $('#people_table tbody tr')
+                .live(  "click",
+                        function(){
+                            window.location = $(this).find('a').attr('href');
+                        }
+                );
         });
 
         function queryDatabase(){
