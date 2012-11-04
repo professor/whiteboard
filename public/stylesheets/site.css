@@ -97,12 +97,14 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
     padding: 0;
     width: 60px;
 }
-#key_contacts_table th:nth-child(3){
-    width: 150px;
+#key_contacts_table td:nth-child(2) a{
+    font-weight: bold;
+    text-decoration: none;
 }
-#key_contacts_table th:nth-child(4){
-    width: 210px;
+#key_contacts_table th:nth-child(2){
+    width: 300px;
 }
+
 #people_table th:first-child, #people_table td {
 /* this is required for making sure cells with too much data don't throw the layout for a toss */
     white-space:nowrap;

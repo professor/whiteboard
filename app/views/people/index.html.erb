@@ -326,8 +326,8 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       <thead>
       <tr>
         <th>&nbsp;</th>
-        <th>Role</th>
-        <th>Name</th>
+        <th>&nbsp;</th>
+
         <th>Contact Details</th>
       </tr>
       </thead>
@@ -344,8 +344,10 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
          <% @results.each do |person| %>
             <tr>
               <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
-              <td><%= person[:title] %>
-              <td><%= link_to(person[:human_name], person[:path]) %></td>
+              <td>
+                <%= link_to(person[:human_name], person[:path]) %><br />
+                <%= person[:title] %>
+              </td>
               <td>
                 <% person[:contact_dtls].each do |k, v| %>
                     <% if !k.include? "Fax" %>
