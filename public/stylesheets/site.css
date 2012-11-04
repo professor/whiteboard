@@ -636,7 +636,17 @@ div.modified {
 .user_profile_content .user_profile_content_admin_editable{ background: #D5D6C1; }
 .user_profile_content .user_profile_content_faculty_editable{ background: #D9E7E6; }
 
-.user_profile_debugging{ text-align:center; margin-top:50px}
+.user_profile_debugging{
+    background-color: white;
+    border: 1px solid gray;
+
+    margin-top: 50px;
+    padding-top: 20px;
+
+    text-align: center;
+    font-size: 10px;
+    color: gray;
+}
 
 
 /*making whole row clickable*/

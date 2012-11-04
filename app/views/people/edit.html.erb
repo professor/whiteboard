@@ -271,11 +271,28 @@
     </div>
 
     <div class="user_profile_debugging clearboth">
+        <h4>Debugging Info</h4>
         <% if @person.effort_log_warning_email.nil? %>
             An effort log warning email has never been sent
         <% else %>
             An effort log warning email was last sent on <%= l @person.effort_log_warning_email, :format => :chatty %>
         <% end %>
+        <br/><br/>
+        <% for version in @person.versions.reverse %>
+            Version <%= version.version %>
+            <%= link_to '(revert)', {:action => 'revert_to_version', :version_id => version.version, :id => @person}, {:confirm => "Are you sure?"} %>
+            <% if @person.version == version.version %>
+                (currently on page)
+            <% else %>
+                <%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
+            <% end %>
+            <% updated_by = Person.find(:first, :conditions => ["id = ?", version.updated_by_user_id]) %>
+            <% if !updated_by.nil? %>by <%= h updated_by.human_name %>
+            <% end %>
+            on <%= l version.updated_at, :format => :detailed %>
+            <br/>
+        <% end %>
+        <br/><br/>
     </div>
 
 
