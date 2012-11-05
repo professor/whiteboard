@@ -35,7 +35,7 @@ FactoryGirl.define do
 
   factory :student, :parent => :user do
     sequence(:email) { |n| "student#{n}@sv.cmu.edu" }
-    sequence(:webiso_account) { |n| "sally#{n}@andrew.cmu.edu" }
+    sequence(:webiso_account) { |n| "student#{n}@andrew.cmu.edu" }
     is_student true
     is_alumnus false
     sequence(:first_name) { |n| "Firstname#{n}" }

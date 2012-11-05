@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :teams, :through => :team_assignments, :source => :team
 
   has_many :deliverable_grades
+  has_many :course_user_grades
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"

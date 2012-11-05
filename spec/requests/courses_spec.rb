@@ -95,6 +95,22 @@ describe "courses" do
 
   context "gradebook" do
     context "student's final score" do
+      it 'testing with rspec' do
+        @architecture_course = FactoryGirl.create(:architecture_current_semester)
+
+        STDERR.puts "Teams: #{@architecture_course.teams.count}"
+        STDERR.puts "Team inspect: #{@architecture_course.teams.inspect}"
+        @architecture_course.teams.each { |team| STDERR.puts "Team count: #{team.members.count}" }
+        STDERR.puts "Assignment count: #{@architecture_course.assignments.count}"
+        STDERR.puts "Assignment inspect: #{@architecture_course.assignments.inspect}"
+
+        @architecture_course.assignments.each do |assignment|
+          STDERR.puts "@@@@@@@@@@@ #{assignment.title} @@@@@@@@@@@"
+          STDERR.puts "Deliverable count: #{assignment.deliverables.count}"
+          STDERR.puts "Deliverable inspect: #{assignment.deliverables.inspect}"
+        end
+      end
+
       it "show score when grading criteria is percentage" do
         @course = FactoryGirl.create(:course, grading_criteria: "Percentage")
         @course.faculty = [FactoryGirl.create(:faculty_frank)]

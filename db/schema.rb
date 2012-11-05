@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121027180503) do
+ActiveRecord::Schema.define(:version => 20121105172654) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(:version => 20121027180503) do
     t.datetime "updated_at"
     t.string   "short_name"
   end
+
+  create_table "course_user_grades", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_user_grades", ["course_id"], :name => "index_course_user_grades_on_course_id"
+  add_index "course_user_grades", ["user_id"], :name => "index_course_user_grades_on_user_id"
 
   create_table "courses", :force => true do |t|
     t.integer  "course_number_id"

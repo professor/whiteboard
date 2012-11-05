@@ -43,7 +43,19 @@
           <td><%= total_score %></td>
           <td><%= total_score %></td>
           <td><%= @course.number_to_letter_grade(total_score) %></td>
-          <td><%= @course.number_to_letter_grade(total_score) %></td>
+          <td>
+            <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id} %>
+            <%= user_grade.blank? %>
+            <%= form_for :course_user_grade, url: course_user_grades_path do |f| %>
+              <% if !user_grade.blank? %>
+                <%= f.hidden_field :id, value: user_grade.id %>
+              <% end %>
+              <%= f.hidden_field :user_id, value: member.id %>
+              <%= f.hidden_field :course_id, value: @course.id %>
+              <%= f.text_field :grade, size: 4, value: user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade %>
+              <%= f.submit "Save" %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     <% end %>

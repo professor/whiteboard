@@ -44,6 +44,7 @@ class Course < ActiveRecord::Base
   has_many :presentations
   has_many :grading_ranges, order: 'id ASC'
   has_many :assignments
+  has_many :course_user_grades
 
   accepts_nested_attributes_for :grading_ranges, allow_destroy: true
   accepts_nested_attributes_for :assignments, allow_destroy: true

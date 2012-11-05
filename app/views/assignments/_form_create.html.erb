@@ -47,7 +47,7 @@
       </tr>
 
       <tr id="team_radio">
-        <td></td>
+        <td>Deliverable type</td>
         <td>
           <%= form.radio_button :team_deliverable, true, checked: @assignment.new_record? || !@assignment.team_deliverable ? false : true %> <%= form.label :team_deliverable, "Team Deliverable" %>
           <br/>
@@ -61,8 +61,6 @@
     <%= form.submit "Save Assignment" %>
   </p>
 <% end %>
-
-<%= @assignment.can_submit %>
 
 <script>
   $(function() {
