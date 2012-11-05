@@ -220,7 +220,7 @@ class PeerEvaluationController < ApplicationController
       @users = @team.members
       @users.each do |user|
         #Step 1 save feedback
-        feedback = params[:peer_evaluation_report][user.to_s][:feedback]
+        feedback = params[:peer_evaluation_report][user.id.to_s][:feedback]
         report = PeerEvaluationReport.where(:recipient_id => user.id, :team_id => @team.id).first
         if report.nil?
           report = PeerEvaluationReport.new(:recipient_id => user.id, :team_id => @team.id, :feedback => feedback)
