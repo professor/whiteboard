@@ -22,7 +22,9 @@
       <div id="<%= "#{semester}_#{course}".gsub(/\s/, '-') %>" class="deliverable_listing" style="display:none;">
         <h2><%= course %></h2>
         <%= render :partial => "deliverable_listing", :locals => {:deliverables => deliverables[:deliverables], :skip_course_column => true} %>
-        Course Totals: <%= deliverables[:earned_score] %>/<%= deliverables[:max_score] %>
+        Course Totals: <%= deliverables[:earned_score] %>/<%= deliverables[:max_score] %><br/>
+        Earned Grade: <%= Course.find_by_name(course).number_to_letter_grade(deliverables[:earned_score]) %><br/>
+        Final Grade: <%=  CourseUserGrade.find_by_user_id(current_user.id).blank? ? Course.find_by_name(course).number_to_letter_grade(deliverables[:earned_score]) : CourseUserGrade.find_by_user_id(current_user.id).grade%>
       </div>
     <% end %>
   <% end %>

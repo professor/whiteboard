@@ -307,6 +307,8 @@ border-width:1px;
     border-style: solid;
     border-width: 1px;
     border-color: #EAE5E5;
+    text-align: center;
+    padding: 0.5em;
 }
 
 .cmu_table td.field_label {

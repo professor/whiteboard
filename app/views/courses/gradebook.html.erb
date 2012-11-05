@@ -1,17 +1,17 @@
 <h1>Gradebook: <%= @course.name %></h1>
 
+<%= link_to "Back", course_path(@course) %>
 <table class="cmu_table inner_border">
   <thead>
     <tr>
-      <th></th>
-      <th></th>
+      <th>Team</th>
+      <th>Student</th>
       <% @course.assignments.each do |assignment| %>
         <th><%= assignment.formatted_title %><br/>(Max: <%= assignment.weight %>)</th>
       <% end %>
-      <th>Earned Total</th>
-      <th>Final Score</th>
-      <th>Earned Letter Grade</th>
-      <th>Final Letter Grade</th>
+      <th>Earned<br/>Total</th>
+      <th>Earned<br/>Letter Grade</th>
+      <th>Final<br/>Letter Grade</th>
     </tr>
   </thead>
   <tbody>
@@ -41,18 +41,16 @@
             </td>
           <% end %>
           <td><%= total_score %></td>
-          <td><%= total_score %></td>
           <td><%= @course.number_to_letter_grade(total_score) %></td>
           <td>
-            <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id} %>
-            <%= user_grade.blank? %>
-            <%= form_for :course_user_grade, url: course_user_grades_path do |f| %>
+            <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
+            <%= form_for(:course_user_grade, url: course_user_grades_path) do |f| %>
               <% if !user_grade.blank? %>
                 <%= f.hidden_field :id, value: user_grade.id %>
               <% end %>
               <%= f.hidden_field :user_id, value: member.id %>
               <%= f.hidden_field :course_id, value: @course.id %>
-              <%= f.text_field :grade, size: 4, value: user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade %>
+              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade} %>
               <%= f.submit "Save" %>
             <% end %>
           </td>
