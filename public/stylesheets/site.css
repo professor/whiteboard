@@ -483,6 +483,7 @@ div.modified {
 .user_profile_content h2{
     padding-top: 5px;
 }
+.user_profile_social{ text-align: center; }
 .user_profile_photo_social{
     float:left;
     margin-left: 5px;
