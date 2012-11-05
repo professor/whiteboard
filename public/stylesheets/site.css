@@ -89,6 +89,76 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 	text-transform: none;
 }
+#key_contacts_table th:first-child, #key_contacts_table td{
+    overflow: auto;
+}
+#key_contacts_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#key_contacts_table td:nth-child(2) a{
+    font-weight: bold;
+    text-decoration: none;
+}
+#key_contacts_table th:nth-child(2){
+    width: 300px;
+}
+
+#people_table th:first-child, #people_table td {
+/* this is required for making sure cells with too much data don't throw the layout for a toss */
+    white-space:nowrap;
+    overflow: auto;
+}
+#people_table th:first-child {
+/* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#people_table th:nth-child(2),#people_table th:nth-child(3){
+/* first name and last name columns */
+   width: 100px;
+}
+#people_table th:nth-child(4) {
+/* program(track)/staff column */
+   width: 290px;
+}
+#people_table td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+}
+#people_table td.photobook-img img {
+    padding:0;
+}
+#photobook_results{
+    overflow: hidden;
+}
+.photobook_item{
+    float:left;
+    display: block;
+    background-color: white;
+    margin: 5px;
+    text-align: center;
+}
+.photobook_item .photobook_item_name{
+    overflow: auto;
+    padding-bottom:2px;
+    border:1px solid lightgray;
+    border-top: none;
+    white-space: nowrap;
+    width: 155px;
+}
+#photobook_results a.photobook_item {
+    text-decoration: none;
+}
+a.photobook_item img{
+    width:155px;
+    height:208px;
+    border:1px solid lightgray;
+    border-bottom:none;
+    padding:0;
+}
 
 table.tablesorter thead tr .header {
 	background-image: url(/images/tablesorter/bg.gif);
@@ -374,6 +444,29 @@ div.modified {
 
 
 /************************
+ * Search Box styling
+*************************/
+#filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne{
+    width: 86%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+#filterClearOne{
+    display:none;
+}
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
+
+
+/************************
  * User Profile Page
 *************************/
 
@@ -381,9 +474,12 @@ div.modified {
     overflow: hidden;
     margin-top: 10px;
 }
-.user_profile_content table.cmu_table{
-    background-color: #FBFBFB;
-}
+.user_profile_content table.cmu_table{ background-color: #FBFBFB; }
+.user_profile_content table.cmu_table.user_profile_content_admin_editable{ background: #D5D6C1; }
+.user_profile_content table.cmu_table.user_profile_content_faculty_editable{ background: #D9E7E6; }
+
+
+
 .user_profile_content h2{
     padding-top: 5px;
 }
@@ -540,9 +636,6 @@ div.modified {
         vertical-align: middle;
     }
 
-.user_profile_content .user_profile_content_admin_editable{ background: #D5D6C1; }
-.user_profile_content .user_profile_content_faculty_editable{ background: #D9E7E6; }
-
 .user_profile_debugging{
     background-color: white;
     border: 1px solid gray;
@@ -553,4 +646,19 @@ div.modified {
     text-align: center;
     font-size: 10px;
     color: gray;
+}
+
+
+/*making whole row clickable*/
+#key_contacts_table tbody tr:hover td,
+#people_table tbody tr:hover td{
+    background-color: #E1EAEA;
+    cursor: pointer;
+}
+#photobook_results a.photobook_item:hover{
+    opacity:0.7;
+    filter:alpha(opacity=70); /* For IE8 and earlier */
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -o-transform: rotate(-3deg);
 }
