@@ -9,10 +9,10 @@ CMU-SV Students
 1. fork the project on github,
 1. $ git clone http://github.com/URL/cmusv # to get the code
 1. read {file:doc/Git_Directions.rdoc Git Directions}
-1. $ cp config/database.default.yml to config/database.yml -- see instructor for username and password
-1. $ cp config/morning_glory.mfse.yml to config/morning_glory.yml -- no need to configure
-1. $ cp config/systems.default.yml to config/systems.yml -- no need to configure
-1. create a config/amazon_s3.yml from (http://rails.sv.cmu.edu/pages/amazon_s3.yml)
+1. $ cp config/database.default.yml config/database.yml -- see instructor for username and password
+1. $ cp config/morning_glory.mfse.yml config/morning_glory.yml -- no need to configure
+1. $ cp config/systems.default.yml config/systems.yml -- no need to configure
+    1. create a config/amazon_s3.yml from (http://rails.sv.cmu.edu/pages/amazon_s3.yml)
 1. create a config/google_apps.yml from (http://rails.sv.cmu.edu/pages/google_apps.yml)
 1. set your environment variables
    1. (Mac OS X) install an Environment Preference pane (for your Systems Preference) using from http://www.rubicode.com/Downloads/RCEnvironment-1.4.X.dmg
