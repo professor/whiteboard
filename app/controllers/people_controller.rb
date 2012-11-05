@@ -73,6 +73,42 @@ class PeopleController < ApplicationController
           "email" => person.email
         ].merge(person.telephones_hash)
       }, :layout => false }
+
+      format.csv { 
+        @return_string = "Name, Email, Telephone1, Telephone2\n"
+        @people.collect { |person|
+          @return_string += person.human_name + ', ' + person.email + ', ' # + person.telephone2 + "\n"
+          if (person.telephone1 != nil)
+            @return_string += person.telephone1
+          end
+          @return_string += ', '
+          if (person.telephone2 != nil)
+            @return_string += person.telephone2
+          end
+          @return_string += "\n"
+        }
+        send_data(@return_string, :type => 'text/csv;charset=iso-8859-1;', :filename => "search_results.csv", :disposition => 'attachment', :encoding => 'utf8')
+      }
+
+      format.vcf { 
+        @return_string = ""
+        @people.collect { |person|
+          @return_string += "BEGIN:VCARD\nVERSION:4.0"
+          @return_string += "FN: " + person.human_name + "\n"
+          
+          if (person.telephone1 != nil && person.telephone1_label != nil && person.telephone1 != "" && person.telephone1_label != "")
+            @return_string += "TEL;TYPE=" + person.telephone1_label + ";VALUE=uri:tel:" + person.telephone1+"\n"
+          end
+          if (person.telephone2 != nil && person.telephone2_label != nil && person.telephone2 != "" && person.telephone2_label != "")
+            @return_string += "TEL;TYPE=" + person.telephone2_label + ";VALUE=uri:tel:" + person.telephone2+"\n"
+          end
+          @return_string += "EMAIL: " + person.email + "\nEND:VCARD\n"
+        }
+        send_data(@return_string, :type => 'text/x-vcard;charset=iso-8859-1;', :filename => "search_results.vcf", :disposition => 'attachment', :encoding => 'utf8')
+      }
+
+
+
     end
 # END MERGE
 

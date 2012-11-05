@@ -44,7 +44,7 @@ describe "people search" do
       @team_leffing =  Team.create(name: "Leffingwell", email: "leffingwell@sv.cmu.edu", course_id: @course_req.id)
       @team_amigo =  Team.create(name: "Amigos", email: "amigos@sv.cmu.edu", course_id: @course_fse.id)
 
-      @stu_rashmi = User.create(first_name: "Rashmi", last_name: "Dev", email: "rashmi.dr@sv.cmu.edu", webiso_account: "rdev@andrew.cmu.edu", is_student: true, graduation_year:"2013")#,team_names:[@team_coop, @team_mav])
+      @stu_rashmi = User.create(first_name: "David", last_name: "Dev", email: "david.d@sv.cmu.edu", is_active: true, webiso_account: "rdev@andrew.cmu.edu", is_student: true, graduation_year:"2013")#,team_names:[@team_coop, @team_mav])
       @stu_shama = User.create(first_name: "Shama", last_name: "Hoq", email: "shama.hoq@sv.cmu.edu", webiso_account: "shoq@andrew.cmu.edu", is_student: true, graduation_year:"2013") #, team_names: [@team_leffing,@team_mav])
 
       @stu_rashmi.teams = [@team_mav,@team_coop]
@@ -53,7 +53,7 @@ describe "people search" do
     end
 
     it "display team names along with course for every student", :js => true do
-      fill_in "search_text_box" , :with => "Rashmi"
+      fill_in "search_text_box" , :with => "David"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', text: "Teams: Cooper (Course: Req) Maverick (Course: FSE)")
 

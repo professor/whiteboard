@@ -16,6 +16,28 @@ describe PeopleController do
       end
     end
 
+# Added my Team Maverick
+    describe "GET CSV" do
+      it "should export to CSV format" do
+        get :index, :format => :csv
+        response.body.should include "Name, Email, Telephone1, Telephone2"
+        response.body.should include 'Student Sam, student.sam@sv.cmu.edu, 123-456-789, 321-654-987'
+      end
+    end
+
+    describe "GET VCARD" do
+      it "should export to VCARD format" do
+        get :index, :format => :vcf
+        response.body.should include "BEGIN:VCARD"
+        response.body.should include "END:VCARD"
+        response.body.should include 'FN: Student Sam'
+        response.body.should include 'EMAIL: student.sam@sv.cmu.edu'
+        response.body.should include 'TEL;TYPE=Work;VALUE=uri:tel:123-456-789'
+        response.body.should include 'TEL;TYPE=Mobile;VALUE=uri:tel:321-654-987'
+      end
+    end
+
+
 
     describe "GET index" do
       #    Question TODD
