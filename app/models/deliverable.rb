@@ -34,6 +34,7 @@
 class Deliverable < ActiveRecord::Base
   belongs_to :team
   belongs_to :course
+
   belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
   delegate :is_team_deliverable, :to=>:assignment, :allow_nil=>true

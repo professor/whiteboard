@@ -92,12 +92,12 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1.xml
   def destroy
     @assignment = Assignment.find(params[:id])
-    @assignment.destroy
 
     respond_to do |format|
       format.js
-      format.html { redirect_to(course_assignments_path) }
-      format.xml  { head :ok }
     end
+
+
+
   end
 end

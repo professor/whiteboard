@@ -1,3 +1,13 @@
+<script xmlns="http://www.w3.org/1999/html">
+  function change_team_scores(){
+      var score = $("#team_scores").val();
+      $(".team_scores input[type='text']").each(function(){
+          $(this).val(score);
+      });
+  }
+
+</script>
+
 <% content_for :title, "Provide Feedback" %>
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
@@ -12,10 +22,14 @@
         </h1>
         <div class="content">
           <% if @deliverable.is_team_deliverable? %>
+
+           Team Score: <input type="text" id="team_scores" size="5x1" onchange="change_team_scores();" /><p/><p/>
+           <div class="team_scores">
             <% for member in @deliverable.team.members %>
               <% grade_obj = Grade.get_grade(@deliverable.assignment_id, member.id)%>
               <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member} %>
             <% end %>
+           </div>
           <% else %>
             <% grade_obj = Grade.get_grade(@deliverable.assignment_id, @deliverable.creator_id)%>
             <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator} %>
