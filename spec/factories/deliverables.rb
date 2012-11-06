@@ -10,4 +10,9 @@ FactoryGirl.define do
     team_id nil
   end
 
+  factory :team_deliverable_simple, :class => Deliverable do
+    private_note "My private notes"
+  end
+
+
 end
