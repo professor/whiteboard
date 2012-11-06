@@ -1,0 +1,16 @@
+<% if @success %>
+  <% message = "Grade for #{@course_user_grade.user.human_name} was successfully saved at #{Time.now.to_formatted_s(:db)}." %>
+  $('#success_explanation p').html("<%= escape_javascript(message) %>");
+  /*
+  var earnedGrade = $('#earned_<%= @course_user_grade.user_id %>').html();
+  if (earnedGrade != '<%= @course_user_grade.grade %>') {
+    $('#earned_<%= @course_user_grade.user_id %>').css({textDecoration: 'line-through'});
+  } else {
+    $('#earned_<%= @course_user_grade.user_id %>').css({textDecoration: 'none'});
+  }
+  */
+  decorateEarnedGrade('<%= @course_user_grade.user_id %>', '<%= @course_user_grade.grade %>');
+<% else %>
+  <% message = "Grade for #{@course_user_grade.user.human_name} was not successfully saved." %>
+  $('#error_explanation p').html("<%= escape_javascript(message) %>");
+<% end %>

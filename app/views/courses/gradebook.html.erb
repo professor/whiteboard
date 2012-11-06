@@ -41,17 +41,17 @@
             </td>
           <% end %>
           <td><%= total_score %></td>
-          <td><%= @course.number_to_letter_grade(total_score) %></td>
+          <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(total_score) %></td>
           <td>
             <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
-            <%= form_for(:course_user_grade, url: course_user_grades_path) do |f| %>
+            <%= form_for(:course_user_grade, url: course_user_grades_path, remote: true) do |f| %>
               <% if !user_grade.blank? %>
                 <%= f.hidden_field :id, value: user_grade.id %>
               <% end %>
               <%= f.hidden_field :user_id, value: member.id %>
               <%= f.hidden_field :course_id, value: @course.id %>
-              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade} %>
-              <%= f.submit "Save" %>
+              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade}, {:class => 'grade_select'} %>
+              <%= f.submit hidden: true %>
             <% end %>
           </td>
         </tr>
@@ -59,3 +59,26 @@
     <% end %>
   </tbody>
 </table>
+
+<script>
+  function decorateEarnedGrade(userId, finalGrade) {
+    var earned_grade = $('#earned_' + userId).html();
+    if (earned_grade != finalGrade) {
+      $('#earned_' + userId).css({textDecoration: 'line-through'});
+    } else {
+      $('#earned_' + userId).css({textDecoration: 'none'});
+    }
+  }
+
+  $(function() {
+    $('.grade_select').change(function() {
+      $(this).closest('form').submit();
+    });
+
+    $('.grade_select').each(function() {
+      var finalGrade = $(this).val();
+      var userId = $(this).closest('td').prev('td').attr('id').split('_')[1];
+      decorateEarnedGrade(userId, finalGrade);
+    });
+  });
+</script>
