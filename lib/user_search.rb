@@ -134,10 +134,12 @@ module UserSearch
     end
 
     # return the constructed query string
+    #return query_string
     if( query_string != "")
       query_string += " AND "
     end
     return query_string + "is_active IS true"
+
 
   end
 

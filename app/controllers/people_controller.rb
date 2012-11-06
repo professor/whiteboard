@@ -23,7 +23,7 @@ class PeopleController < ApplicationController
     #@people = User.where(:is_active => true)
 
     @people = User.Search(params)
-    @people = @people.limit(24)
+    #@people = @people.limit(24)
 
     # Apply limit criteria
     #if (params[:limit] != nil)

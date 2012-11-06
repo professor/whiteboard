@@ -72,21 +72,14 @@ function execute_search(){
                 /*'Name: '+this.first_name+' '+this.last_name+'<br>'+*/
                 '<div style="font-size: 16px;">'+this.first_name+' '+this.last_name+'</div>'+
                 /*'Email: '+*/'<a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a><br>';
-                if(this.telephone1){
-                    card_html+= this.telephone1_label +': '+this.telephone1+'<br>';
-                }
-                if(this.telephone2){
-                    card_html+= this.telephone2_label +': '+this.telephone2+'<br>';
-                }
+                if(this.telephone1){ card_html+= this.telephone1_label +': '+this.telephone1+'<br>'; }
+                if(this.telephone2){ card_html+= this.telephone2_label +': '+this.telephone2+'<br>'; }
 
-// MERGE TRY
                 card_html += 'Teams: ';
-                console.log(this.team_names);
                 for(var i=0; i<this.team_names.length; i++){
                     card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ') ';
-                    //console.log(card_html);
                 }
-// END TRY
+
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });

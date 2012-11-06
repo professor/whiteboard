@@ -26,8 +26,6 @@ describe "people search" do
     page.should_not have_selector('#results_box .data_card')
   end
 
-
-# MERGE TRY
   context 'display team names along with course' do
 
     before do
@@ -36,16 +34,13 @@ describe "people search" do
       @course_req  = Course.create(name: "Requirement Engineering", short_name: "Req", semester: "Fall", year: "2012", mini: "A")
       @course_arch  = Course.create(name: "Architecture and Design", short_name: "Arch", semester: "Fall", year: "2012", mini: "B")
 
-  #    @stu_rashmi = User.create(first_name: "Rashmi", last_name: "Dev", email: "rashmi.dr@sv.cmu.edu", webiso_account: "rdev@andrew.cmu.edu", is_student: true, graduation_year:"2013",teams: [@team_mav,@team_coop])
-  #    @stu_shama = User.create(first_name: "Shama", last_name: "Hoq", email: "shama.hoq@sv.cmu.edu", webiso_account: "shoq@andrew.cmu.edu", is_student: true, graduation_year:"2013",teams: [@team_mav,@team_leffing])
-
       @team_mav = Team.create(name: "Maverick", email: "maverick@sv.cmu.edu", course_id: @course_fse.id)
       @team_coop = Team.create(name: "Cooper", email: "cooper@sv.cmu.edu", course_id: @course_req.id)
       @team_leffing =  Team.create(name: "Leffingwell", email: "leffingwell@sv.cmu.edu", course_id: @course_req.id)
       @team_amigo =  Team.create(name: "Amigos", email: "amigos@sv.cmu.edu", course_id: @course_fse.id)
 
-      @stu_rashmi = User.create(first_name: "David", last_name: "Dev", email: "david.d@sv.cmu.edu", is_active: true, webiso_account: "rdev@andrew.cmu.edu", is_student: true, graduation_year:"2013")#,team_names:[@team_coop, @team_mav])
-      @stu_shama = User.create(first_name: "Shama", last_name: "Hoq", email: "shama.hoq@sv.cmu.edu", webiso_account: "shoq@andrew.cmu.edu", is_student: true, graduation_year:"2013") #, team_names: [@team_leffing,@team_mav])
+      @stu_rashmi = User.create(first_name: "Rashmi", last_name: "Dev", email: "rashmi.dr@sv.cmu.edu", webiso_account: "rdev@andrew.cmu.edu", is_student: true, graduation_year:"2013", is_active: true)
+      @stu_shama = User.create(first_name: "Shama", last_name: "Hoq", email: "shama.hoq@sv.cmu.edu", webiso_account: "shoq@andrew.cmu.edu", is_student: true, graduation_year:"2013", is_active: true)
 
       @stu_rashmi.teams = [@team_mav,@team_coop]
       @stu_shama.teams = [@team_mav,@team_leffing]
@@ -53,13 +48,13 @@ describe "people search" do
     end
 
     it "display team names along with course for every student", :js => true do
-      fill_in "search_text_box" , :with => "David"
+      fill_in "search_text_box" , :with => "Rashmi"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
-      page.should have_selector('#results_box .data_card', text: "Teams: Cooper (Course: Req) Maverick (Course: FSE)")
-
+      page.should have_selector('#results_box .data_card', text: "Teams")
+      page.should have_selector('#results_box .data_card', text: "Cooper (Course: Req)")
+      page.should have_selector('#results_box .data_card', text: "Maverick (Course: FSE)")
     end
   end
-# END MERGE
 
 
   context 'with search results' do
