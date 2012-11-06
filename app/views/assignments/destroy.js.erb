@@ -1,4 +1,4 @@
-<% if @assignment.check_for_submitted_deliverables %>
+<% if @assignment.is_deliverable_submitted %>
     $('#<%= dom_id(@assignment) %>').fadeOut();
 <% else %>
   alert("Student has already submitted for this item. You don't have permissions to delete this. Please contact admin if you want to delete it.")

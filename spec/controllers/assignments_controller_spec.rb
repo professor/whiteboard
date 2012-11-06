@@ -143,19 +143,5 @@ describe AssignmentsController do
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested assignment" do
-      assignment = Assignment.create! valid_attributes
-      expect {
-        delete :destroy, :course_id => @course,:id => assignment.id.to_s
-      }.to change(Assignment, :count).by(-1)
-    end
-
-    it "redirects to the assignments list" do
-      assignment = Assignment.create! valid_attributes
-      delete :destroy,:course_id => @course, :id => assignment.id.to_s
-      response.should redirect_to(course_assignments_url)
-    end
-  end
 
 end

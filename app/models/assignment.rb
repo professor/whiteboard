@@ -31,13 +31,13 @@ class Assignment < ActiveRecord::Base
   has_many :grades
   has_many :deliverables
 
-  before_destroy :check_for_submitted_deliverables
+  before_destroy :is_deliverable_submitted
 
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   default_scope :order => 'task_number ASC, assignment_order ASC'
 
 
-  def check_for_submitted_deliverables
+  def is_deliverable_submitted
     if self.deliverables.size>0
       false
     else

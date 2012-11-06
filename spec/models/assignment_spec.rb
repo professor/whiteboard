@@ -60,4 +60,25 @@ describe Assignment do
     end
   
   end
+  context "Delete Assignment" do
+    before :each do
+      @course = FactoryGirl.create(:course)
+
+
+    end
+    it "should be able to delete assignment if no student submit for it" do
+      assignment = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
+      before_delete = Assignment.count
+      assignment.destroy
+      Assignment.count.should eq(before_delete-1)
+    end
+    it "should not be able to delete assignment if student submit for it"  do
+      deliverable=FactoryGirl.create(:deliverable)
+      assignment = FactoryGirl.create(:assignment, :task_number => nil, :course => @course, :deliverables => [deliverable])
+      before_delete = Assignment.count
+      assignment.destroy
+      Assignment.count.should eq(before_delete)
+    end
+
+  end
 end
