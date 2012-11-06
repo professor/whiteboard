@@ -7,10 +7,6 @@
 
 
 <h1>People Search</h1>
-<div class="right_link">
-  <%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
-</div>
-
 
 <!-- UI Mockup HTML Migration -->
 
@@ -18,9 +14,9 @@
 <div id="dialog_modal" title="Customization">
   <a id='customization_dialog_close' href='#'>[x]</a><br><br>
   <div id="modal_card" class="data_card">
-    <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
     <img src="images/mascot.jpg"><br>
-    <input checked type="checkbox" name="Name" value="cu_name" /> Name: ? <br>
+    <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
+    
     <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
     <input type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
     <input type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
@@ -39,7 +35,7 @@
   </ul>
 </div>
 <select id="people_type_picker" class="criterias">
-  <option value="all">All</option>
+  <option value="all">All People</option>
   <option value="student"> Student </option>
   <option value="staff"> Staff/Faculty </option>
   <option value="alumnus"> Alumni </option>

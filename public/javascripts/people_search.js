@@ -75,7 +75,7 @@ function execute_search(){
                 if(this.telephone1){ card_html+= this.telephone1_label +': '+this.telephone1+'<br>'; }
                 if(this.telephone2){ card_html+= this.telephone2_label +': '+this.telephone2+'<br>'; }
 
-                card_html += 'Teams: ';
+                if(this.team_names.length > 0){ card_html += 'Teams: '; }
                 for(var i=0; i<this.team_names.length; i++){
                     card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ') ';
                 }
