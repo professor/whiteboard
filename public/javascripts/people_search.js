@@ -32,7 +32,7 @@ var selected_criteria_hash = {
 
 var search_request = $.ajax();
 
-function execute_search(){
+function construct_query_sting(){
     // DEBUG
     console.log("search executed");
     $('#results_box').fadeTo('fast', 0.5);
@@ -57,8 +57,10 @@ function execute_search(){
       else { request_url_with_params += "&is_part_time=true"; }
     }
     
-    // DEBUG console.log(request_url_with_params);
-    
+    return request_url_with_params;
+};
+
+function execute_search(request_url_with_params){
     search_request = $.ajax({
         url: request_url_with_params, dataType: 'json',
         success: function(data){
@@ -182,7 +184,7 @@ $(document).ready(function(){
         if($('#extra_criteria_box .criteria_tag').last().find('.criteria_text').length != 0 && $('#extra_criteria_box .criteria_tag').last().css('display') != 'none'){
             $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
-        execute_search();
+        execute_search(construct_query_sting());
         $(this).val('default');
     });
 
@@ -205,7 +207,7 @@ $(document).ready(function(){
             $(this).parent().fadeTo("fast", 1);
             $(this).html('x');
         }
-        execute_search();
+        execute_search(construct_query_sting());
         return false; // avoid anchor action
     });
 
@@ -213,7 +215,7 @@ $(document).ready(function(){
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
         selected_criteria_hash[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
-        execute_search();
+        execute_search(construct_query_sting());
         return false;
     });
 
@@ -227,23 +229,23 @@ $(document).ready(function(){
     });*/
 
     $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
-      execute_search();
+      execute_search(construct_query_sting());
     });
     $('#search_text_box').keyup(function(e) {
       clearTimeout(search_timeout);
       //if($('#search_text_box').val().length >1){
       $('#results_box').fadeTo('fast', 0.5);
       if(e.which == 13){
-        search_timeout=setTimeout('execute_search()', 0);
+        search_timeout=setTimeout(execute_search(construct_query_sting()), 0);
       } else {
-        search_timeout=setTimeout('execute_search()', 400);
+        search_timeout=setTimeout(execute_search(construct_query_sting()), 400);
       }
       //}
 
     });
     $('.criteria_text').keyup(function(e) {
       clearTimeout(search_timeout);
-      search_timeout=setTimeout('execute_search()', 400)  ;
+      search_timeout=setTimeout(execute_search(construct_query_sting()), 400)  ;
     });
 
 
