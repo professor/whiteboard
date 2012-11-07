@@ -3,12 +3,12 @@
 <script>
   var changed_grades = {}
   $(document).ready(function() { 
-    // call the tablesorter plugin 
+    // call the tablesorter plugin
     $(".sortable").tablesorter({ 
       // define a custom text extraction function 
       textExtraction: function(node) { 
         // extract data from markup and return it 
-        if ($(node.childNodes[0]).is("input")) return $(node.childNodes[0]).val();
+        if ($(node).find("input").length > 0) return $(node).find("input").val();
         return $(node).text();
       } 
     });
