@@ -31,17 +31,20 @@
         <td><%= form.text_field :due_date, :size => 10 %></td>
       </tr>
 
+      <%#= form.label :can_submit, "Yes" , value: "Yes" do %>
+      <%#= form.radio_button :can_submit, "Yes", true, checked: true,  %>
+    <% #end %>
       <tr>
         <td>Can students submit deliverables<br/>for this assignment?</td>
         <td>
           <% if @assignment.new_record? %>
-            <%= form.radio_button :can_submit, true, checked: true %> <%= form.label :can_submit, "Yes" %>
+            <%= form.radio_button :can_submit, true, checked: true %> <%= form.label :can_submit_true, "Yes" %>
             <br/>
-            <%= form.radio_button :can_submit, false %> <%= form.label :can_submit, "No" %>
+            <%= form.radio_button :can_submit, false %> <%= form.label :can_submit_false, "No" %>
           <% else %>
-            <%= form.radio_button :can_submit, true, checked: @assignment.can_submit %> <%= form.label :can_submit, "Yes" %>
+            <%= form.radio_button :can_submit, true, checked: @assignment.can_submit %> <%= form.label :can_submit_true, "Yes" %>
             <br/>
-            <%= form.radio_button :can_submit, false, checked: @assignment.can_submit %> <%= form.label :can_submit, "No" %>
+            <%= form.radio_button :can_submit, false, checked: !@assignment.can_submit %> <%= form.label :can_submit_false, "No" %>
         <% end %>
         </td>
       </tr>
@@ -49,9 +52,9 @@
       <tr id="team_radio">
         <td>Deliverable type</td>
         <td>
-          <%= form.radio_button :team_deliverable, true, checked: @assignment.new_record? || !@assignment.team_deliverable ? false : true %> <%= form.label :team_deliverable, "Team Deliverable" %>
+          <%= form.radio_button :team_deliverable, true, checked: @assignment.new_record? || !@assignment.team_deliverable ? false : true %> <%= form.label :team_deliverable_true, "Team Deliverable" %>
           <br/>
-          <%= form.radio_button :team_deliverable, false, checked: !@assignment.team_deliverable ? true : false %> <%= form.label :team_deliverable, "Individual Deliverable" %>
+          <%= form.radio_button :team_deliverable, false, checked: !@assignment.team_deliverable ? true : false %> <%= form.label :team_deliverable_false, "Individual Deliverable" %>
         </td>
       </tr>
     </tbody>

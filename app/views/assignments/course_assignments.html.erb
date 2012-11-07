@@ -1,7 +1,8 @@
 <h1>Assignments for <%= @course.name %></h1>
 <div>
   <%= link_to "New assignment", new_course_assignment_path(@course.id) %> |
-  <%= link_to "Course configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %>
+  <%= link_to "Course configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %> |
+  <%= link_to "Gradebook", course_gradebook_path(@course.id) %>
 </div>
 
 <% if !@assignments.empty? %>
@@ -25,11 +26,9 @@
           <td>
             <% if assignment.can_submit %>
               <%= assignment.team_deliverable ? 'Team' : 'Individual'  %>
-            <% else %>
-              Class
             <% end%>
           </td>
-          <td><%= l assignment.due_date, format: :chatty %></td>
+          <td><% if !assignment.due_date.nil? %><%= l assignment.due_date, format: :chatty %><% end %></td>
           <td><%= assignment.weight %></td>
           <td><%= assignment.can_submit ? 'Yes' : 'No' %></td>
           <td><%= link_to 'Edit', edit_assignment_path(assignment.id) %>
@@ -52,6 +51,10 @@
       end
     end
   %>
+
+  <div>
+    <%= link_to "Back", course_path(@course.id) %>
+  </div>
 
   <!--Load the AJAX API-->
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -78,7 +81,8 @@
       var options = {'title':'Assignment Weight Distribution',
         'width':696,
         'height':300,
-        'backgroundColor':'transparent'};
+        'backgroundColor':'transparent',
+        'sliceVisibilityThreshold':0};
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));

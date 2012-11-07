@@ -14,11 +14,16 @@
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div>
+    <p>
+      <% if !@deliverable.current_attachment.blank? %>
+        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+      <% end %>
+    </p>
     <% if !@deliverable.is_team_deliverable? %>
       <p>
         <%= f.fields_for :deliverable_grades do |builder| %>
-          <%= builder.label :grade %>
           <div class='inline_field'>
+            <%= builder.label :grade %>:
             <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= builder.object.max_score %>
           </div>
         <% end %>

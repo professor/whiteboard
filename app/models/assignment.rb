@@ -6,10 +6,10 @@ class Assignment < ActiveRecord::Base
   has_many :deliverables
 
   validates_presence_of :title
-  validates :weight, numericality: { greater_than: 0 }, presence: true
-  validate :validate_due_date, :validate_total_weights
+  validates :weight, numericality: { greater_than_or_equal_to: 0 }
+  validate :validate_total_weights
 
-  #after_save :create_placeholder_deliverable
+  before_validation :check_weight
 
   default_scope order: "task_number ASC, due_date ASC"
 
@@ -84,6 +84,12 @@ class Assignment < ActiveRecord::Base
         if sum > 100
          self.errors.add(:weight, "The sum of all assignment weights for this course is greater than 100")
         end
+      end
+    end
+
+    def check_weight
+      if self.weight.blank?
+        self.weight = 0
       end
     end
 end

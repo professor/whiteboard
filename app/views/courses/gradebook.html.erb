@@ -1,6 +1,8 @@
 <h1>Gradebook: <%= @course.name %></h1>
 
-<%= link_to "Back", course_path(@course) %>
+<%= link_to "Back", course_path(@course) %> |
+<%= link_to "Grading Deliverables", professor_deliverables_path(current_user) %> |
+<%= link_to "Assignments", course_assignments_path(@course) %>
 <table class="cmu_table inner_border">
   <thead>
     <tr>
@@ -9,7 +11,7 @@
       <% @course.assignments.each do |assignment| %>
         <th><%= assignment.formatted_title %><br/>(Max: <%= assignment.weight %>)</th>
       <% end %>
-      <th>Earned<br/>Total</th>
+      <th>EarnedTotal<br/>(Max: <%= @course.total_assignment_weight %>)</th>
       <th>Earned<br/>Letter Grade</th>
       <th>Final<br/>Letter Grade</th>
     </tr>

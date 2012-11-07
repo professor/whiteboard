@@ -348,6 +348,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def total_assignment_weight
+    self.assignments.to_a.sum(&:weight)
+  end
+
   protected
   def set_grading_ranges
     if self.grading_ranges.empty?
@@ -410,10 +414,6 @@ class Course < ActiveRecord::Base
         end
       end
     end
-  end
-
-  def total_assignment_weight
-    self.assignments.to_a.sum(&:weight)
   end
 
   def get_user_deliverable_grades(user)

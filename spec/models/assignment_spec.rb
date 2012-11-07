@@ -12,8 +12,8 @@ describe Assignment do
     end
 
     describe "invalid weight" do
-      it 'should not save when weight less or equal to 0' do
-        subject.weight = 0
+      it 'should not save when weight less than 0' do
+        subject.weight = -1
         subject.should_not be_valid
         subject.errors[:weight].should_not be_empty
       end
@@ -22,15 +22,6 @@ describe Assignment do
         subject.weight = "abc"
         subject.should_not be_valid
         subject.errors[:weight].should_not be_empty
-      end
-    end
-
-    context 'when the student can submit' do
-      before(:each) { subject.can_submit = true }
-      it 'should have a valid due date' do
-        subject.due_date = DateTime.now
-        subject.should_not be_valid
-        subject.errors[:due_date].should_not be_empty
       end
     end
   end

@@ -8,6 +8,7 @@
     <th>Owner</th>
     <th>Latest Deliverable</th>
     <th>Feedback Received?</th>
+    <th>Earned Grade</th>
     <th>Actions</th>
     <!--
         <th>File</th>
@@ -23,6 +24,7 @@
                 <td>&nbsp;</td>
             <% end %>
         <% end %>
+        <% STDERR.puts deliverable.inspect%>
         <td><%= h deliverable.task_number %></td>
         <td><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
@@ -38,6 +40,10 @@
           <% else %>
               No
           <% end %>
+        </td>
+        <td>
+          <% deliverable_grade = deliverable.deliverable_grades.find_by_user_id(current_user.id) %>
+          <%= deliverable_grade.grade %> / <%= deliverable.assignment.weight %>
         </td>
         <td><%= link_to 'View History and Feedback', deliverable %></td>
         <!--
