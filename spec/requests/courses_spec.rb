@@ -108,6 +108,10 @@ describe "courses" do
           STDERR.puts "@@@@@@@@@@@ #{assignment.title} @@@@@@@@@@@"
           STDERR.puts "Deliverable count: #{assignment.deliverables.count}"
           STDERR.puts "Deliverable inspect: #{assignment.deliverables.inspect}"
+          assignment.deliverables.each do |deliverable|
+            STDERR.puts "DeliverableGrade count: #{deliverable.deliverable_grades.count}"
+            STDERR.puts "DeliverableGrade inspect: #{deliverable.deliverable_grades.inspect}"
+          end
         end
       end
 
@@ -135,26 +139,37 @@ describe "courses" do
       end
 
       it "show score when grading criteria is points" do
-        @course = FactoryGirl.create(:course, grading_criteria: "Points")
-        @course.faculty = [FactoryGirl.create(:faculty_frank)]
-        @course.save
-        @team = FactoryGirl.create(:team, course: @course)
-        @student = @team.members.first
-        @student.registered_courses = [@course]
-        @student.save
-        @course.reload
-        @assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 40, team_deliverable: false)
-        @assignment2 = FactoryGirl.create(:assignment, course: @course, weight: 70, team_deliverable: true)
-        @assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 60, team_deliverable: false, can_submit: false)
-        @assignment4 = FactoryGirl.create(:assignment, course: @course, weight: 30, team_deliverable: true, can_submit: false)
-        @deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1, creator: @student)
-        @deliverable2 = FactoryGirl.create(:deliverable, assignment: @assignment2, creator: @student, team: @team)
-        @deliverable1.deliverable_grades.create(user: @student, grade: 20)
-        @deliverable2.deliverable_grades.create(user: @student, grade: 35)
-        @assignment3.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 30)
-        @assignment4.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 15)
+        #@course = FactoryGirl.create(:course, grading_criteria: "Points")
+        #@course.faculty = [FactoryGirl.create(:faculty_frank)]
+        #@course.save
+        #@team = FactoryGirl.create(:team, course: @course)
+        #@student = @team.members.first
+        #@student.registered_courses = [@course]
+        #@student.save
+        #@course.reload
+        #@assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 40, team_deliverable: false)
+        #@assignment2 = FactoryGirl.create(:assignment, course: @course, weight: 70, team_deliverable: true)
+        #@assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 60, team_deliverable: false, can_submit: false)
+        #@assignment4 = FactoryGirl.create(:assignment, course: @course, weight: 30, team_deliverable: true, can_submit: false)
+        #@deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1, creator: @student)
+        #@deliverable2 = FactoryGirl.create(:deliverable, assignment: @assignment2, creator: @student, team: @team)
+        #@deliverable1.deliverable_grades.create(user: @student, grade: 20)
+        #@deliverable2.deliverable_grades.create(user: @student, grade: 35)
+        #@assignment3.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 30)
+        #@assignment4.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 15)
 
-        @course.get_earned_number_grade(@student).should == 50
+        #@course.get_earned_number_grade(@student).should == 50
+
+        architecture_course = FactoryGirl.create(:architecture_current_semester)
+        student = architecture_course.teams.first.members.first
+        STDERR.puts student.deliverable_grades.inspect
+        student.deliverable_grades.first.update_attributes(grade: 20)
+        student.deliverable_grades.last.update_attributes(grade: 30)
+        student.reload
+        architecture_course.reload
+        STDERR.puts student.deliverable_grades.inspect
+
+        architecture_course.get_earned_number_grade(student).should == 50
       end
     end
   end

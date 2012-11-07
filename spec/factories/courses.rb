@@ -46,6 +46,13 @@ FactoryGirl.define do
     team_deliverable false
     due_date DateTime.now + 10
     weight 20
+
+    after(:create) do |assignment|
+      team_1 = assignment.course.teams.first
+      team_2 = assignment.course.teams.last
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, assignment: assignment)
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, assignment: assignment)
+    end
   end
 
   factory :architecture_assignment_2, :parent => :assignment do
@@ -54,6 +61,13 @@ FactoryGirl.define do
     team_deliverable true
     due_date DateTime.now + 20
     weight 20
+
+    after(:create) do |assignment|
+      team_1 = assignment.course.teams.first
+      team_2 = assignment.course.teams.last
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+    end
   end
 
   factory :architecture_assignment_3, :parent => :assignment do
@@ -64,13 +78,10 @@ FactoryGirl.define do
     weight 20
 
     after(:create) do |assignment|
-      #assignment.deliverables << FactoryGirl.create(:deliverable, creator: assignment.course.teams.first.members.first)
-      #assignment.deliverables << FactoryGirl.create(:deliverable, creator: assignment.course.teams.last.members.first)
       team_1 = assignment.course.teams.first
       team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team_id: team_1.id , assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team_id: team_2.id , assignment: assignment)
-      assignment.reload
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
     end
   end
 
@@ -80,6 +91,13 @@ FactoryGirl.define do
     team_deliverable true
     due_date DateTime.now + 40
     weight 20
+
+    after(:create) do |assignment|
+      team_1 = assignment.course.teams.first
+      team_2 = assignment.course.teams.last
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
+      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+    end
   end
 
   factory :architecture_assignment_5, :parent => :assignment do
@@ -104,7 +122,7 @@ FactoryGirl.define do
   end
 
   factory :architecture_team_2, :parent => :team do
-    name "Team Awesome"
+    name "Best Team Never"
     email "TeamAwesome@sv.cmu.edu"
     tigris_space "http://TeamAwesome.org/servlets/ProjectDocumentList"
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
