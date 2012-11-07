@@ -39,6 +39,7 @@ CMUEducation::Application.routes.draw do
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
   match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semestrseer
   match '/course/:course_id/grades/post_all' => 'grades#post_all', :as=>:post_all_grades, :via => :post
+  match '/course/:course_id/grades/post_grades_for_one_assignment' => 'grades#post_grades_for_one_assignment', :as=>:post_one_assignment, :via => :post
   match '/course/:course_id/grades/save_draft' => 'grades#save_draft', :as=>:save_draft, :via => :post
   resources :courses do
     resources :assignments

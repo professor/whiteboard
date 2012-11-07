@@ -10,7 +10,7 @@
 # * score should be number greater than zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor can add extra credit on student's grade.
 # * get_grades returns a list of assignment score of given course and student.
 # * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is useful for controller to test whether the score is existed or not.
-# * update_grade makes all selected assignment grades hidden from students.
+#
 # 
 #
 class Grade < ActiveRecord::Base
@@ -49,11 +49,6 @@ class Grade < ActiveRecord::Base
     end
   end
 
-  # To allow the scores to be visible to the students.
-  def self.update_grade(course_id, assignment_id)
-    Grade.update_all({:is_student_visible=>true},{:course_id=>course_id,:assignment_id=>assignment_id,:is_student_visible=>false})
-  end
-
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
     grading_result = false
     student = User.find(student_id)
@@ -78,6 +73,15 @@ class Grade < ActiveRecord::Base
       # FIXME: error handling for update failure
       self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
     end
+  end
+
+  def self.post_grades_for_one_assignment(grades, assignment_id)
+      grades.each do |grade_entry|
+        if grade_entry[:assignment_id] == assignment_id
+          self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
+        end
+      end
+      Grade.update_all({:is_student_visible=>true},{:assignment_id=>assignment_id})
   end
 
 end

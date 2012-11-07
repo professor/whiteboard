@@ -42,36 +42,6 @@ class GradesController < ApplicationController
     end
   end
 
-  def create
-    puts "in create"
-
-    scoreArrayList=params["scoreArrayList"]
-    success=true
-    unless scoreArrayList.blank?
-      scoreArrayList.each do|scoreValue|
-        if  Grade.give_grade(scoreValue["assignment_id"],scoreValue["student_id"],scoreValue["score"])==false
-         success=false
-        end
-        puts success
-      end
-    end
-
-    scoreSubmitted=params["scoreSubmitted"]
-     if (scoreSubmitted==true)
-       courseAssignment=params["courseAssignment"]
-       Grade.update_grade(courseAssignment["course_id"],courseAssignment["assignment_id"])   
-     end
-
-
-      if success==true
-        flash[:notice] = 'Feedback successfully saved.'
-        render :json => ({"message"=>"true" })
-      else
-        flash[:error] = "input format is wrong"
-        render :json => ({"message"=> "false"})
-      end
-  end
-
   def post_all
     grades = params["grades"]
     Grade.give_grades(grades)
@@ -83,6 +53,13 @@ class GradesController < ApplicationController
     grades = params["grades"]
     Grade.give_grades(grades)
     Grade.save_as_draft(grades)
+    render :json => ({"message"=>"true"})
+  end
+
+  def post_grades_for_one_assignment
+    grades = params["grades"]
+    assignment_id = params["assignment_id"]
+    Grade.post_grades_for_one_assignment(grades, assignment_id)
     render :json => ({"message"=>"true"})
   end
 

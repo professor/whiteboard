@@ -37,28 +37,7 @@
   function parse_id(idAttr){
       return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};
   }
-  function postAll() {
-      var data = {};
-      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
-      $.ajax({
-          contentType: "application/json;",
-          url: '<%=post_all_grades_path(@course)%>',
-          type: "POST",
-          data: JSON.stringify(data, null, 1),
-          dataType: "json",
-          success:function(data){
-              if(data["message"] == "true"){
-                location.reload(false);
-              }
-              changed_grades = {};
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-              console.log("Unalbe to submit the record");
-              changed_grades = {};
-          }
 
-      })
-    }
     function compute_grades(student_id){
       var total = 0; 
       $("#s_" + student_id + " input[type='text']").map(function(){return parseFloat($(this).val());}).each(function(index,value){
@@ -67,15 +46,50 @@
       $("#s_" + student_id + " .earned").text(total);
 
     
-    } 
-
-
+    }
   function saveAsDraft() {
+      post_grades('<%=save_draft_path(@course)%>');
+  }
+  function postAll() {
+      post_grades('<%=post_all_grades_path(@course)%>');
+  }
+  function post_grades_for_one_assignment(assignment_id){
+
+      var data = {};
+      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
+      data.assignment_id = assignment_id
+      $.ajax({
+          contentType: "application/json;",
+          url: '<%= post_one_assignment_path %>',
+          type: "POST",
+          data: JSON.stringify(data, null, 1),
+          dataType: "json",
+          success:function(data){
+              //clean changed_grades
+              $.each(changed_grades, function(index, value){
+                  if(parseInt(index.split("_")[0]) == assignment_id)
+                    delete changed_grades[index];
+              });
+
+              //update changed view
+              $("input[id^='<%=@course.id%>_" + assignment_id + "']").each(function(){
+                  $(this).removeClass("draft");
+                  $(this).removeClass("changedScore");
+                  $(this).get(0).defaultValue = $(this).val();
+              })
+
+          },
+          error: function(jqXHR, textStatus, errorThrown){
+              console.log("Unalbe to submit the record");
+          }
+      });
+  }
+  function post_grades(url) {
       var data = {};
       data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
       $.ajax({
           contentType: "application/json;",
-          url: '<%=save_draft_path(@course)%>',
+          url: url,
           type: "POST",
           data: JSON.stringify(data, null, 1),
           dataType: "json",
@@ -87,7 +101,7 @@
           },
           error: function(jqXHR, textStatus, errorThrown){
               console.log("Unalbe to submit the record");
-              changed_grades = {};
+              //changed_grades = {};
           }
 
       })
@@ -157,7 +171,7 @@
           </tr>
           <tr>
             <% @assignments.each do |assignment| %>
-            <td> <button type="button" id="a_<%=assignment.id%>">Save grades</button></td>
+            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save grades</button></td>
             <% end %>
           </tr>
 
