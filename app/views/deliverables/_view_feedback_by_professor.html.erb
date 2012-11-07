@@ -1,28 +1,29 @@
-<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-    <th>Date</th>
-    <th>File</th>
-    <th>Comments</th>
-  </tr>
+<p><b>Date: </b><%= format_timestamp(@deliverable.feedback_updated_at) %></p>
+
+<% unless @deliverable.feedback_file_name.nil? %>
+    <p>
+      <b>File:</b>
+      <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
+    </p>
+<% end %>
 
 
 
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-    <td><%= format_timestamp(@deliverable.feedback_updated_at) %></td>
-    <td>
-      <% unless @deliverable.feedback_file_name.nil? %>
-          <%= link_to @deliverable.feedback_file_name, @deliverable.feedback.url %>
-      <% else %>
-          None
-      <% end %>
-    </td>
-    <td>
-      <% if @deliverable.feedback_comment.blank? %>
-          None
-      <% else %>
-          <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %>
-      <% end %>
-    </td>
-  </tr>
+<% grade_obj = Grade.get_grade(@deliverable.assignment_id, @current_user.id)%>
+<% if grade_obj.try(:is_student_visible) || false %>
+    <p><b> Score received: </b><%= Grade.get_grade(@deliverable.assignment_id, @current_user.id).try(:score) %> </p>
+<% end %>
 
-</table>
+<b>Comments: </b> </br>
+  <% if @deliverable.feedback_comment.blank? %>
+      None
+  <% else %>
+      <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %></br></br>
+  <% end %>
+</p>
+
+
+
+
+
+

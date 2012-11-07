@@ -11,10 +11,10 @@
 <% content_for :title, "Provide Feedback" %>
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-        <% unless @deliverable.is_student_visible? %>
-        <div class="rounded staff" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-              <%= professor_image %>
-              <span class="instructions">You have saved this information as draft. So this information is not visible to the students</span>
+        <% unless @deliverable.is_graded? %>
+        <div class="rounded staff" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"  style="background-color:#d3d3d3;">
+          <b>You have saved this information as draft. So this information is not visible to the students</b>
+          <%= professor_image %>
         <% end %>
             
         <h1>
@@ -23,16 +23,16 @@
         <div class="content">
           <% if @deliverable.is_team_deliverable? %>
 
-           Team Score: <input type="text" id="team_scores" size="5x1" onchange="change_team_scores();" /><p/><p/>
+           Team Score: <input type="text" id="team_scores" size="5x1" onchange="change_team_scores();" />/<%= @deliverable.assignment.maximum_score%><p/><p/>
            <div class="team_scores">
             <% for member in @deliverable.team.members %>
               <% grade_obj = Grade.get_grade(@deliverable.assignment_id, member.id)%>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member} %>
+              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
             <% end %>
            </div>
           <% else %>
             <% grade_obj = Grade.get_grade(@deliverable.assignment_id, @deliverable.creator_id)%>
-            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator} %>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
           <% end %>
         </div>
 
@@ -53,7 +53,7 @@
         </p>
 
 
-        <% unless @deliverable.is_student_visible? %>
+        <% unless @deliverable.is_graded? %>
         </div>
       <% end %>
 

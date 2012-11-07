@@ -37,7 +37,7 @@ class Deliverable < ActiveRecord::Base
 
   belongs_to :creator, :class_name => "User"
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
-  delegate :is_team_deliverable, :to=>:assignment, :allow_nil=>true
+  delegate :is_team_deliverable, :to => :assignment, :allow_nil => true
 
 
   #-----for assignment----#
@@ -148,7 +148,7 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
-  def send_feedback_to_student( member_id, member_email, url)
+  def send_feedback_to_student(member_id, member_email, url)
     feedback = "Feedback has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
       feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
@@ -160,7 +160,7 @@ class Deliverable < ActiveRecord::Base
       feedback += self.feedback_comment
       feedback += "\n"
     end
-    given_grade=Grade.get_grade(self.assignment_id,member_id)
+    given_grade=Grade.get_grade(self.assignment_id, member_id)
     unless  given_grade.nil?
       feedback += "\nGrade earned for this assignment is: "
       feedback += given_grade.score.to_s
@@ -179,10 +179,10 @@ class Deliverable < ActiveRecord::Base
   def send_deliverable_feedback_email(url)
     if self.is_team_deliverable?
       self.team.members.each do |member|
-        send_feedback_to_student( member.id, member.email, url)
+        send_feedback_to_student(member.id, member.email, url)
       end
     else
-      send_feedback_to_student( self.creator_id, self.creator.email, url)
+      send_feedback_to_student(self.creator_id, self.creator.email, url)
     end
   end
 
@@ -227,4 +227,33 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  def update_feedback_and_notes (params)
+    self.feedback_comment = params[:feedback_comment]
+    self.private_note = params[:private_note]
+    unless params[:feedback].blank?
+      self.feedback = [:feedback]
+    end
+    if self.has_feedback?
+      self.feedback_updated_at = Time.now
+    end
+    self.save
+  end
+
+  def update_grade (params, is_student_visible)
+    error_msg = []
+    if self.assignment.is_team_deliverable?
+      self.team.members.each do |user|
+        score = params[:"#{user.id}"]
+        unless Grade.give_grade(self.assignment.id, user.id, score, is_student_visible)
+          error_msg << "Grade given to " + user.human_name + " is invalid!"
+        end
+      end
+    else
+      score = params[:"#{self.creator_id}"]
+      unless Grade.give_grade(self.assignment.id, self.creator_id, score, is_student_visible)
+        error_msg << "Grade given to " + self.creator.human_name + " is invalid!"
+      end
+    end
+    error_msg
+  end
 end

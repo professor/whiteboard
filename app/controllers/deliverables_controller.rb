@@ -195,46 +195,18 @@ class DeliverablesController < ApplicationController
 
 
   def update_feedback
-
     @deliverable = Deliverable.find(params[:id])
-
 
     # check is save and email is clicked or save as draft is clicked
     is_student_visible=true
     if params[:submit]
-       @deliverable.is_student_visible=true;
       is_student_visible=true
     elsif params[:draft]
-      @deliverable.is_student_visible=false;
       is_student_visible=false
     end
 
-    @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
-    @deliverable.private_note = params[:deliverable][:private_note]
-    unless params[:deliverable][:feedback].blank?
-      @deliverable.feedback = params[:deliverable][:feedback]
-    end
-    if @deliverable.has_feedback?
-      @deliverable.feedback_updated_at = Time.now
-    end
-
-    flash[:error] = []
-    assignment_id=@deliverable.assignment_id
-    if @deliverable.assignment.is_team_deliverable?
-      @deliverable.team.members.each do |user|
-        score= params[:"#{user.id}"]
-        unless Grade.give_grade(assignment_id,user.id,score,is_student_visible)
-          flash[:error] << "Grade given to " + user.human_name + " is invalid!"
-        end
-      end
-    else
-      score= params[:"#{@deliverable.creator_id}"]
-      unless Grade.give_grade(assignment_id,@deliverable.creator_id,score,is_student_visible)
-        flash[:error] << "Grade given to " + @deliverable.creator.human_name + " is invalid!"
-      end
-    end
-
-    if @deliverable.save
+    flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    if @deliverable.update_feedback_and_notes(params[:deliverable])
       if is_student_visible==true
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
       end
@@ -244,15 +216,12 @@ class DeliverablesController < ApplicationController
 
     respond_to do |format|
        if flash[:error].blank?
-         flash[:error] = ""
+         flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
-         #format.html { redirect_to(@deliverable) }
          format.html {redirect_to(course_deliverables_path(@deliverable.course))}
-         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
-         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
        end
     end
   end
