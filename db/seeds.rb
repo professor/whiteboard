@@ -158,6 +158,14 @@ FactoryGirl.define do
     email "prabhjot.singh@sv.cmu.edu"
     is_staff 1
   end
+  
+  factory :prof_lee, :parent => :person do
+    first_name "TY"
+    last_name "Lee"
+    human_name "TY Lee"
+    email "lydian.lee@sv.cmu.edu"
+    is_staff 1
+  end
 
   sleep(0.02)
 
@@ -255,7 +263,7 @@ FactoryGirl.define do
     first_name "Lydian"
     last_name "Lee"
     human_name "Lydian Lee"
-    email "lydian.lee@sv.cmu.edu"
+    email "fake.lydian.lee@sv.cmu.edu"
     webiso_account "tingyenl@andrew.cmu.edu"
   end
 
@@ -305,6 +313,9 @@ def create_course_with_profs
   # course_mfse = Factory.create(:mfse)
   prof_singh = Factory.create(:prof_singh)
   Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_singh.id)
+  
+  prof_lee = Factory.create(:prof_lee)
+  Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_lee.id)
   course_fse
 
 end
