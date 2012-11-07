@@ -16,14 +16,20 @@
   <div id="modal_card" class="data_card">
     <img src="images/mascot.jpg"><br>
     <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
-    
+    John Doe<br>
     <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
-    <input type="checkbox" name="PhoneH" value="cu_phoneh" /> Phone(H): ? <br>
-    <input type="checkbox" name="PhoneM" value="cu_phonem" /> Phone(M): ? <br>
+    <input type="checkbox" name="PhoneH" value="cu_phone1" /> Phone1: ? <br>
+    <input type="checkbox" name="PhoneM" value="cu_phone2" /> Phone2: ? <br>
     <input type="checkbox" name="Team" value="cu_team" /> Team: ? <br>
     <input type="checkbox" name="Company" value="cu_company" /> Company: ? <br>
   </div>
 </div>
+<div id="export_dialog_modal" title="Export Results">
+  <a id='export_dialog_close' href='#'>[x]</a><br><br>
+  <button id="export_to_csv"> CSV </button>
+  <button id="export_to_vcf"> VCARD </button>  
+</div>
+
 
 
 <div id="main_criteria_box" class="criterias">
@@ -89,8 +95,8 @@
 
 
 <br>
-<a id="customization_link" href="#">Customization</a><br>
-<a id="export_link" href="#">Export Results</a>
+<a id="customization_link">Customization</a><br>
+<a id="export_link">Export Results</a> 
 <br>
 <div id="results_box"></div><br>
 <div style="clear: both;"></div>

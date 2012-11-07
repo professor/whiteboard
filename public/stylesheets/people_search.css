@@ -1,6 +1,8 @@
 /* UI Mockup CSS Migration */
 
-.customization_dialog {margin-top: 32px;}
+.hidden { display: none; }
+
+.customization_dialog { margin-top: 32px; }
 .customization_dialog .ui-dialog-titlebar {display:none}
 
 .criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
@@ -26,19 +28,21 @@
 select .select-hint { color: #ccc;}
 
 
-#customization_link, #customization_dialog_close, #export_link { float:right; }
+#customization_link, #customization_dialog_close, #export_link, #export_dialog_close { float:right;}
+#export_to_csv, #export_to_vcf { width:100%;}
 #customization_modal_card  { margin-left: auto; margin-right: auto; }
-.ui-autocomplete { max-height: 120px; overflow-y: auto; overflow-x: hidden;}
+/*.ui-autocomplete { max-height: 120px; overflow-y: auto; overflow-x: hidden;}*/
 #results_box { display: block; min-height: 16px; margin: 0 auto;}
+
+
 .data_card {
     float: left; margin: 4px; padding-left: 6px; padding-top: 6px;
     background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
     width: 150px; height: 280px; font-size: 11px; font-weight: 700;
     overflow: hidden;
 }
-.data_card img{
-    width: 139px; height: 190px; margin-top: 0px; margin-left:0px; margin-bottom: 5px;
-}
+.data_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
+.data_card_human_name { font-size: 16px; }
 
 /* Fix Modal Card */
 #modal_card { width: auto; height: auto; padding: 6px;}

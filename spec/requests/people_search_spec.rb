@@ -127,6 +127,7 @@ describe "people search" do
       page.should have_selector('#results_box .data_card img')
     end
 
+
   end
 
   context ' search by single criteria' do
