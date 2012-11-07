@@ -164,6 +164,8 @@ class Deliverable < ActiveRecord::Base
     unless  given_grade.nil?
       feedback += "\nGrade earned for this assignment is: "
       feedback += given_grade.score.to_s
+      feedback+= " /"
+      feedback+= self.assignment.maximum_score.to_s
       feedback += "\n"
     end
 
