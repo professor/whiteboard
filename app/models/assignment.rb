@@ -9,7 +9,7 @@ class Assignment < ActiveRecord::Base
   validates :weight, numericality: { greater_than: 0 }, presence: true
   validate :validate_due_date, :validate_total_weights
 
-  after_save :create_placeholder_deliverable
+  #after_save :create_placeholder_deliverable
 
   default_scope order: "task_number ASC, due_date ASC"
 
@@ -45,10 +45,10 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def create_placeholder_deliverable
+  def create_placeholder_deliverable(current_user)
     if !self.can_submit? && self.deliverables.empty?
       # Create a placeholder deliverable for an assignment that does not accept deliverables from students
-      self.deliverables.create(creator_id: self.course.faculty_assignments.first.user.id, status: "Ungraded")
+      self.deliverables.create(creator: current_user, status: "Ungraded")
       self.course.registered_students.each do |student|
         student.deliverable_grades.create(grade: 0, deliverable_id: self.deliverables.first.id)
       end

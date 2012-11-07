@@ -79,8 +79,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   def is_team_deliverable?
-    self.assignment.team_deliverable
-    #team ? true : false
+    self.assignment.blank? ? nil : self.assignment.team_deliverable
   end
 
   def current_attachment
@@ -246,7 +245,6 @@ class Deliverable < ActiveRecord::Base
 
     students_with_grades = self.deliverable_grades.map {|deliverable_grade| deliverable_grade.user}
     students_enrolled = self.assignment.course.all_students.values
-    STDERR.puts self.assignment.course.all_students
 
     students_no_longer_enrolled = students_with_grades - students_enrolled
 

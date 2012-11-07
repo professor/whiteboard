@@ -463,36 +463,20 @@ describe Course do
   end
 
   context "assignments" do
-    before(:each) do
-      @course = FactoryGirl.create(:course, grading_criteria: 'Points')
-      @course.faculty = [FactoryGirl.create(:faculty_frank)]
-      @course.save
-      @assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 100)
-      # Create an assignment with invalid due date
-      @assignment2 = FactoryGirl.build(:assignment, course: @course, due_date: DateTime.now, weight: 300)
-      @assignment2.stub(:validate_due_date)
-      @assignment2.save
-      @assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 100)
-      @assignment4 = FactoryGirl.create(:assignment, course: @course, can_submit: false, weight: 500)
-
-      @deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1)
-      @deliverable_grade = FactoryGirl.create(:deliverable_grade, deliverable: @deliverable1, user: @deliverable1.creator, grade: 30)
-    end
-
-    it "should get all submittable assignments" do
-      @course.submittable_assignments.count.should == 2
-      @course.submittable_assignments.should include(@assignment1, @assignment3)
-    end
-
     it "should scale the weight out of 100 when grading criteria is changed from points to percentage" do
+      @course = FactoryGirl.create(:architecture_current_semester)
+      old_weights = {}
+      @course.assignments.each do |assignment|
+        old_weights[assignment.id] = assignment.weight
+        assignment.update_attributes(weight: assignment.weight * 2)
+      end
+
       @course.grading_criteria = "Percentage"
       @course.save
-      @assignment1.reload.weight.should == 10
-      @assignment2.reload.weight.should == 30
-      @assignment3.reload.weight.should == 10
-      @assignment4.reload.weight.should == 50
 
-      @deliverable_grade.reload.grade.should == 3
+      @course.assignments.each do |assignment|
+        assignment.reload.weight.should == old_weights[assignment.id]
+      end
     end
   end
 

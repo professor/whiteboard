@@ -95,81 +95,27 @@ describe "courses" do
 
   context "gradebook" do
     context "student's final score" do
-      it 'testing with rspec' do
-        @architecture_course = FactoryGirl.create(:architecture_current_semester)
-
-        STDERR.puts "Teams: #{@architecture_course.teams.count}"
-        STDERR.puts "Team inspect: #{@architecture_course.teams.inspect}"
-        @architecture_course.teams.each { |team| STDERR.puts "Team count: #{team.members.count}" }
-        STDERR.puts "Assignment count: #{@architecture_course.assignments.count}"
-        STDERR.puts "Assignment inspect: #{@architecture_course.assignments.inspect}"
-
-        @architecture_course.assignments.each do |assignment|
-          STDERR.puts "@@@@@@@@@@@ #{assignment.title} @@@@@@@@@@@"
-          STDERR.puts "Deliverable count: #{assignment.deliverables.count}"
-          STDERR.puts "Deliverable inspect: #{assignment.deliverables.inspect}"
-          assignment.deliverables.each do |deliverable|
-            STDERR.puts "DeliverableGrade count: #{deliverable.deliverable_grades.count}"
-            STDERR.puts "DeliverableGrade inspect: #{deliverable.deliverable_grades.inspect}"
-          end
-        end
-      end
-
       it "show score when grading criteria is percentage" do
-        @course = FactoryGirl.create(:course, grading_criteria: "Percentage")
-        @course.faculty = [FactoryGirl.create(:faculty_frank)]
-        @course.save
-        @team = FactoryGirl.create(:team, course: @course)
-        @student = @team.members.first
-        @student.registered_courses = [@course]
-        @student.save
-        @course.reload
-        @assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 40, team_deliverable: false)
-        @assignment2 = FactoryGirl.create(:assignment, course: @course, weight: 30, team_deliverable: true)
-        @assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 20, team_deliverable: false, can_submit: false)
-        @assignment4 = FactoryGirl.create(:assignment, course: @course, weight: 10, team_deliverable: true, can_submit: false)
-        @deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1, creator: @student)
-        @deliverable2 = FactoryGirl.create(:deliverable, assignment: @assignment2, creator: @student, team: @team)
-        @deliverable1.deliverable_grades.create(user: @student, grade: 40)
-        @deliverable2.deliverable_grades.create(user: @student, grade: 20)
-        @assignment3.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 15)
-        @assignment4.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 5)
+        ppm_course = FactoryGirl.create(:ppm_current_semester)
+        student = ppm_course.teams.first.members.first
+        student.deliverable_grades.each do |deliverable_grade|
+          deliverable_grade.update_attributes(grade: 1)
+        end
+        ppm_course.reload
 
-        @course.get_earned_number_grade(@student).should == 80
+        ppm_course.get_earned_number_grade(student).should == student.deliverable_grades.count
       end
 
       it "show score when grading criteria is points" do
-        #@course = FactoryGirl.create(:course, grading_criteria: "Points")
-        #@course.faculty = [FactoryGirl.create(:faculty_frank)]
-        #@course.save
-        #@team = FactoryGirl.create(:team, course: @course)
-        #@student = @team.members.first
-        #@student.registered_courses = [@course]
-        #@student.save
-        #@course.reload
-        #@assignment1 = FactoryGirl.create(:assignment, course: @course, weight: 40, team_deliverable: false)
-        #@assignment2 = FactoryGirl.create(:assignment, course: @course, weight: 70, team_deliverable: true)
-        #@assignment3 = FactoryGirl.create(:assignment, course: @course, weight: 60, team_deliverable: false, can_submit: false)
-        #@assignment4 = FactoryGirl.create(:assignment, course: @course, weight: 30, team_deliverable: true, can_submit: false)
-        #@deliverable1 = FactoryGirl.create(:deliverable, assignment: @assignment1, creator: @student)
-        #@deliverable2 = FactoryGirl.create(:deliverable, assignment: @assignment2, creator: @student, team: @team)
-        #@deliverable1.deliverable_grades.create(user: @student, grade: 20)
-        #@deliverable2.deliverable_grades.create(user: @student, grade: 35)
-        #@assignment3.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 30)
-        #@assignment4.deliverables.first.deliverable_grades.find_by_user_id(@student.id).update_attributes(grade: 15)
-
-        #@course.get_earned_number_grade(@student).should == 50
-
         architecture_course = FactoryGirl.create(:architecture_current_semester)
         student = architecture_course.teams.first.members.first
-        STDERR.puts student.deliverable_grades.inspect
-        student.deliverable_grades.first.update_attributes(grade: 20)
-        student.deliverable_grades.last.update_attributes(grade: 30)
-        student.reload
+        deliverable_1 = student.deliverable_grades.first
+        deliverable_2 = student.deliverable_grades.last
+        deliverable_1.update_attributes(grade: 20)
+        deliverable_2.update_attributes(grade: 20)
         architecture_course.reload
-        STDERR.puts student.deliverable_grades.inspect
 
-        architecture_course.get_earned_number_grade(student).should == 50
+        architecture_course.get_earned_number_grade(student).should == 40
       end
     end
   end

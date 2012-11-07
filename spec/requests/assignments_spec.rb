@@ -11,8 +11,8 @@ describe "assignments" do
       fill_in "Title", with: "New Task"
       fill_in "assignment_weight", with: "10"
       fill_in "Due date", with: DateTime.now + 30
-      find(:css, "#assignment_team_deliverable").set(true)
-      find(:css, "#assignment_can_submit").set(true)
+      choose('assignment_can_submit_true')
+      choose('assignment_team_deliverable_true')
     }
 
     context "new" do
@@ -30,6 +30,13 @@ describe "assignments" do
         expect {
           click_button "Save Assignment"
         }.to change(Assignment, :count).by(0)
+      end
+
+      it "should create a placeholder deliverable when creating an unsubmittable assignment" do
+        expect {
+          choose('assignment_can_submit_false')
+          click_button "Save Assignment"
+        }.to change(Deliverable, :count).by(1)
       end
     end
   end

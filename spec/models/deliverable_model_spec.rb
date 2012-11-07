@@ -40,9 +40,10 @@ describe Deliverable do
   end
 
   it "should return team name for a team deliverable" do
-    deliverable = FactoryGirl.build(:team_deliverable)
+    deliverable = FactoryGirl.build(:team_deliverable, assignment: FactoryGirl.build(:assignment, team_deliverable: true))
     deliverable.stub(:update_team)
     deliverable.save
+    STDERR.puts deliverable.owner_name
     deliverable.owner_name.should be_equal(deliverable.team.name)
   end
 
@@ -52,7 +53,7 @@ describe Deliverable do
   end
 
   it "should return team email for a team deliverable" do
-    deliverable = FactoryGirl.build(:team_deliverable)
+    deliverable = FactoryGirl.build(:team_deliverable, assignment: FactoryGirl.build(:assignment, team_deliverable: true))
     deliverable.stub(:update_team)
     deliverable.save
     deliverable.owner_email.should be_equal(deliverable.team.email)
@@ -85,7 +86,7 @@ describe Deliverable do
 
   context "for a team" do
     before(:each) do
-      @deliverable = FactoryGirl.build(:team_deliverable)
+      @deliverable = FactoryGirl.build(:team_deliverable, assignment: FactoryGirl.create(:assignment, team_deliverable: true))
       @team_member = @deliverable.team.members[0]
     end
 
@@ -181,13 +182,14 @@ describe Deliverable do
   context "creating deliverable grades for unsbumittable assignments" do
     before {
       @faculty_assignment = FactoryGirl.create(:faculty_assignment)
-      @assignment = FactoryGirl.create(:assignment, team_deliverable: false, can_submit: false, course: @faculty_assignment.course)
+      @assignment = FactoryGirl.create(:assignment, team_deliverable: true, can_submit: false, course: @faculty_assignment.course)
       @student1 = FactoryGirl.create(:student)
       @student2 = FactoryGirl.create(:student)
       @student1.registered_courses = [@assignment.course]
       @student2.registered_courses = [@assignment.course]
       @student1.save
       @student2.save
+      @assignment.create_placeholder_deliverable(@faculty_assignment.user)
     }
 
     it "should create a deliverable grade for each student in the course" do

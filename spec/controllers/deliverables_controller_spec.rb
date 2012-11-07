@@ -107,6 +107,7 @@ describe DeliverablesController do
         @team = stub_model(Team)
         Deliverable.stub(:find).and_return(@deliverable)
         @deliverable.stub(:team).and_return(@team)
+        @deliverable.stub(:is_team_deliverable?).and_return(true)
         Course.stub(:find).and_return(@course)
       end
 

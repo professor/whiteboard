@@ -338,7 +338,6 @@ class Course < ActiveRecord::Base
   def get_earned_number_grade(user)
     total_grade = 0;
     get_user_deliverable_grades(user).each do |deliverable_grade|
-      STDERR.puts deliverable_grade.inspect
       total_grade = total_grade + deliverable_grade.grade
     end
     if self.grading_criteria == "Percentage"

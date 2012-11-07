@@ -98,13 +98,4 @@ describe Assignment do
       @assignment.find_deliverable_grade(@team.members.first).should == @deliverable_grade
     end
   end
-
-  context "unsubmittable assignment" do
-    it "should create a deliverable for an unsubmittable assignment" do
-      expect {
-        faculty_assignment = FactoryGirl.create(:faculty_assignment)
-        assignment = FactoryGirl.create(:assignment, team_deliverable: false, can_submit: false, course: faculty_assignment.course)
-      }.to change(Deliverable, :count).by(1)
-    end
-  end
 end
