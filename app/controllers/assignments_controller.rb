@@ -20,7 +20,7 @@ class AssignmentsController < ApplicationController
       flash[:success] = "Assignment saved"
       redirect_to course_assignments_path(params[:assignment][:course_id])
     else
-      flash[:error] = "Assignment could not be saved #{@assignment.inspect}"
+      flash[:error] = "Assignment could not be saved"
       render 'new_course_assignment'
     end
   end

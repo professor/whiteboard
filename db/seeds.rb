@@ -145,12 +145,12 @@ FactoryGirl.define do
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "DavidLiu"
-    first_name "David"
-    last_name "Liu"
-    human_name "David Liu"
-    email "david.liu@sv.cmu.edu"
-    webiso_account "davidliu@andrew.cmu.edu"
+    twiki_name "OwenChu"
+    first_name "Owen"
+    last_name "Chu"
+    human_name "Owen Chu"
+    email "owen.chu@sv.cmu.edu"
+    webiso_account "hanweic@andrew.cmu.edu"
   end
 
 end
@@ -160,13 +160,29 @@ Factory(:task_type, :name => "Readings")
 Factory(:task_type, :name => "Meetings")
 Factory(:task_type, :name => "Other")
 
-
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:your_name_here)
+you = Factory.create(:your_name_here)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
-Factory.create(:architecture_current_semester)
-Factory.create(:ppm_current_semester)
+
+architecture_course = Factory.create(:architecture_current_semester)
+ppm_course = Factory.create(:ppm_current_semester)
+
+[architecture_course, ppm_course].each do |course|
+  course.teams.first.members << you
+  course.save
+  course.assignments.each do |assignment|
+    if assignment.team_deliverable
+      deliverable = assignment.deliverables.find_by_team_id(Team.find_current_by_person_and_course(you, course).id)
+      FactoryGirl.create(:deliverable_grade, user: you, deliverable: deliverable, grade: 0) unless deliverable.blank?
+    else
+      deliverable = FactoryGirl.create(:deliverable, creator: you, assignment: assignment)
+      deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: you, attachment_file_name: "attachment")
+      assignment.deliverables << deliverable
+    end
+  end
+  course.faculty_assignments << FactoryGirl.create(:faculty_assignment, user: todd, course: course)
+end
 
 Factory.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
 Factory.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")

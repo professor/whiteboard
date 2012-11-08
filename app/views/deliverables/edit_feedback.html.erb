@@ -14,11 +14,6 @@
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div>
-    <p>
-      <% if !@deliverable.current_attachment.blank? %>
-        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-      <% end %>
-    </p>
     <% if !@deliverable.is_team_deliverable? %>
       <p>
         <%= f.fields_for :deliverable_grades do |builder| %>
@@ -34,6 +29,13 @@
         <%= text_field_tag "team_grade", ' ', :size => 4 %>
       </p>
     <% end %>
+    <p>
+      <% if @deliverable.current_attachment.blank? %>
+        Deliverable: None
+      <% else %>
+        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+      <% end %>
+    </p>
     <p>
       <%= f.label :feedback, "Feedback file to upload" %>
       <%= f.file_field :feedback %>

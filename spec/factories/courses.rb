@@ -1,3 +1,15 @@
+def create_individual_deliverable(assignment, creator)
+  deliverable = FactoryGirl.create(:deliverable, creator: creator, assignment: assignment)
+  deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: creator, attachment_file_name: "attachment")
+  assignment.deliverables << deliverable
+end
+
+def create_team_deliverable(assignment, team)
+  deliverable = FactoryGirl.create(:deliverable, creator: team.members.first, team: team, assignment: assignment)
+  deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: team.members.first, attachment_file_name: "attachment")
+  assignment.deliverables << deliverable
+end
+
 FactoryGirl.define do
 
   factory :fse, :parent => :course do
@@ -76,10 +88,8 @@ FactoryGirl.define do
     weight 20
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, assignment: assignment)
+      create_individual_deliverable(assignment, assignment.course.teams.first.members.first)
+      create_individual_deliverable(assignment, assignment.course.teams.last.members.first)
     end
   end
 
@@ -91,10 +101,8 @@ FactoryGirl.define do
     weight 20
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -106,10 +114,8 @@ FactoryGirl.define do
     weight 20
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -121,10 +127,8 @@ FactoryGirl.define do
     weight 20
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -171,10 +175,8 @@ FactoryGirl.define do
     weight 12
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -186,10 +188,8 @@ FactoryGirl.define do
     weight 8
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, assignment: assignment)
+      create_individual_deliverable(assignment, assignment.course.teams.first.members.first)
+      create_individual_deliverable(assignment, assignment.course.teams.last.members.first)
     end
   end
 
@@ -201,10 +201,8 @@ FactoryGirl.define do
     weight 35
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -216,10 +214,8 @@ FactoryGirl.define do
     weight 3
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, team: team_1, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, team: team_2, assignment: assignment)
+      create_team_deliverable(assignment, assignment.course.teams.first)
+      create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -231,10 +227,8 @@ FactoryGirl.define do
     weight 12
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, assignment: assignment)
+      create_individual_deliverable(assignment, assignment.course.teams.first.members.first)
+      create_individual_deliverable(assignment, assignment.course.teams.last.members.first)
     end
   end
 
@@ -246,10 +240,8 @@ FactoryGirl.define do
     weight 10
 
     after(:create) do |assignment|
-      team_1 = assignment.course.teams.first
-      team_2 = assignment.course.teams.last
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_1.members.first, assignment: assignment)
-      assignment.deliverables << FactoryGirl.create(:deliverable, creator: team_2.members.first, assignment: assignment)
+      create_individual_deliverable(assignment, assignment.course.teams.first.members.first)
+      create_individual_deliverable(assignment, assignment.course.teams.last.members.first)
     end
   end
 
