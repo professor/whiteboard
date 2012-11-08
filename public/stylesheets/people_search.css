@@ -2,33 +2,56 @@
 
 .hidden { display: none; }
 
+
 .customization_dialog { margin-top: 32px; }
 .customization_dialog .ui-dialog-titlebar {display:none}
 
-.criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}
-.criterias ul { display: inline; list-style:none; padding-left: 0px; }
-.criterias ul li{ display: inline; margin-left: 0px; border: 1px solid #666; border-radius: 2px; padding: 0px 2px; margin: 0px 2px;}
+#export_dialog_modal { text-align: center; font-size: 12px;}
 
-.criteria_tag input, .criteria_tag select{ height: 12px;}
+#smart_search_area { height:24px; vertical-align: middle;}
+#smart_search_text { 
+	height:21px; padding: 0 3px; width: 76%;
+	border: 1px solid #000; border-radius: 1px; background-color: #f3f0e9; }
+#smart_search_area button { vertical-align: middle; height:24px; margin: 0 1px; float: right; width:7%;}
+#smart_search_area img { height:16px; }
+
+ 
+#advanced_search_area { 
+	margin-top: 6px; padding: 4px 2px; border: 1px solid #000;
+	display: none; position: relative;
+}
+#advanced_area_close {position: absolute; right:5px; top:4px; font-size: 16px; cursor: pointer; font-weight: 700; opacity: 0.8;}
+#advanced_area_close:hover {opacity: 1;}
+#main_criteria_box { height:21px; border: 1px solid #000; border-radius: 1px; width: 58%; display:inline-block;}
+#search_text_box { border: none; padding: 0 3px; background-color: #f3f0e9; width:58%;}
+#main_criteria_picker { border: none; background-color: #f3f0e9; width: 38%;}
+#people_type_picker, #extra_criteria_picker { width: 19%; height:22px; display: inline-block;}
+
+
+
+/*.criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}*/
+#extra_criteria_box .criteria_tags { display: block; list-style:none; padding-left: 0; }
+.criteria_tags li{ 
+	height: 20px; display: inline-block; border: 1px solid #666;
+ 	border-radius: 1px; padding: 0 2px; margin: 0 5px 0 0; vertical-align: middle;
+ }
+
+.criteria_tag input, .criteria_tag select{ height: 14px;}
 .criteria_tag a {
-    opacity: 0.4; color: #000; text-decoration: none;
+    opacity: 0.7; color: #000; text-decoration: none;
     font-weight: 700; padding-left: 3px;
 }
 .criteria_tag a:hover { opacity: 1; }
 
 .criteria_text { border: 0; width: 72px; font-weight: 700;}
-.null_search_text { color: #ccc; }
 
-#main_criteria_box, #extra_criteria_box { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}
-#search_text_box { 
-	border: none; width: 160px; margin-left: 5px;
-	background-color: #f3f0e9;
-}
+/*#main_criteria_box, #extra_criteria_box { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}*/
+
 
 select .select-hint { color: #ccc;}
 
 
-#customization_link, #customization_dialog_close, #export_link, #export_dialog_close { float:right;}
+#customization_link, #customization_dialog_close, #export_link, #export_dialog_close { float:right; cursor: pointer;}
 #export_to_csv, #export_to_vcf { width:100%;}
 #customization_modal_card  { margin-left: auto; margin-right: auto; }
 /*.ui-autocomplete { max-height: 120px; overflow-y: auto; overflow-x: hidden;}*/
@@ -38,7 +61,7 @@ select .select-hint { color: #ccc;}
 .data_card {
     float: left; margin: 4px; padding-left: 6px; padding-top: 6px;
     background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
-    width: 150px; height: 280px; font-size: 11px; font-weight: 700;
+    width: 150px; height: 300px; font-size: 11px; font-weight: 700;
     overflow: hidden;
 }
 .data_card img{ width: 139px; height: 190px; margin: 0 0 5px; }

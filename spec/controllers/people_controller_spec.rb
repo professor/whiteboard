@@ -3,6 +3,12 @@ require "spec_helper"
 describe PeopleController do
   context "any user can" do
     before do
+    
+      @alumnus_sean = FactoryGirl.create(:alumnus_sean)
+      @alumnus_sunil = FactoryGirl.create(:alumnus_sunil)
+      @student_rashmi = FactoryGirl.create(:student_rashmi)
+      @student_shama = FactoryGirl.create(:student_shama)
+      @student_vidya = FactoryGirl.create(:student_vidya)
       @person1 = FactoryGirl.create(:student_sam_user)
       login(@person1)
       @inactive_person = FactoryGirl.create(:student_sally_user, :is_active => false)
@@ -37,6 +43,15 @@ describe PeopleController do
       end
     end
 
+
+    describe "Ordered by First Name" do
+
+      it "should orders search results by first name then last name" do
+        #@inactive_person.is_active = true;
+        get :index, :term => "s"
+        assigns(:people).should == [@alumnus_sean, @student_shama, @student_rashmi, @person1, @alumnus_sunil ,@student_vidya]
+      end
+    end
 
 
     describe "GET index" do

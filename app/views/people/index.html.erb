@@ -16,7 +16,7 @@
   <div id="modal_card" class="data_card">
     <img src="images/mascot.jpg"><br>
     <input checked type="checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
-    John Doe<br>
+    John Doe
     <input checked type="checkbox" name="Email" value="cu_email" /> Email: ? <br>
     <input type="checkbox" name="PhoneH" value="cu_phone1" /> Phone1: ? <br>
     <input type="checkbox" name="PhoneM" value="cu_phone2" /> Phone2: ? <br>
@@ -26,71 +26,92 @@
 </div>
 <div id="export_dialog_modal" title="Export Results">
   <a id='export_dialog_close' href='#'>[x]</a><br><br>
+  Please Choose Format:
   <button id="export_to_csv"> CSV </button>
   <button id="export_to_vcf"> VCARD </button>  
 </div>
 
 
-
-<div id="main_criteria_box" class="criterias">
-  <input type="text" title="Search Text" id="search_text_box" style="background-color: #f3f0e9;"/> in
-  <ul class="criteria_tags">
-    <li class="criteria_tag" id="criteria_first_name" title="First Name" style="background-color: LightBlue;">First Name <a href="#">x</a> </li>
-    <li class="criteria_tag" id="criteria_last_name" title="Last Name" style="background-color: LightGoldenRodYellow;">Last Name <a href="#">x</a> </li>
-    <li class="criteria_tag" id="criteria_andrew_id" title="Andrew ID" style="background-color: Pink;">Andrew ID <a href="#">x</a> </li>
-  </ul>
+<!-- Smart Search Area-->
+<div id="smart_search_area">
+  <input type="text" placeholder="Enter Search Text" id="smart_search_text" style="background-color: #f3f0e9;"/>
+  <button id="advanced_search_btn">Adv.</button>
+  <button id="list_mode_btn"><img src="images/list.png"></button>
+  <button id="card_mode_btn"><img src="images/card.png"></button>
 </div>
-<select id="people_type_picker" class="criterias">
-  <option value="all">All People</option>
-  <option value="student"> Student </option>
-  <option value="staff"> Staff/Faculty </option>
-  <option value="alumnus"> Alumni </option>
-</select>
 
-<select id="extra_criteria_picker" class="criterias">
-  <option value="default" class="select-hint">Add Criteria</option>
-  <option value="company">Company</option>
-  <option value="class_year">Class Year</option>
-  <option value="program">Program</option>
-  <option value="ft_pt">Full/Part Time</option>
-</select>
 
-<div id="extra_criteria_box" class="criterias">
-  <ul class="criteria_tags">
-    <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: Orange;">
-      Company: <input type="text" id="criteria_company_text" class="criteria_text" style="background-color: Orange;"/><a href="#">x</a> </li>
-    <li class="criteria_tag" id="criteria_class_year" title="Class Year" style="background-color: Moccasin;">
-      Class Year:
-      <select class="criteria_text" style="background-color: Moccasin; width:56px;">
+
+
+<div id="advanced_search_area">
+  <div id='advanced_area_close'>x</div>
+  <div>
+    <div id="main_criteria_box" style="display: inline-block;">
+      <input type="text" placeholder="Search in ..." id="search_text_box" style="background-color: #f3f0e9;"/>
+      <select id="main_criteria_picker" class="criterias">
+        <option value="">Full Name & Andrew ID</option>
+        <option value="">Only First Name</option>
+        <option value="">Only Last Name</option>
+        <option value="">Only Andrew ID</option>
       </select>
-      <a href="#">x</a>
-    </li>
-    <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
-      Program:
-      <select class="criteria_text" style="background-color: Beige; width: 80px;">
-        <option value="SE">SE</option>
-        <option value="SE_TECH">SE-Tech</option>
-        <option value="SE_DM">SE-DM</option>
-        <option value="SM">SM</option>
-        <option value="ECE">ECE</option>
-        <option value="INI">INI</option>
-        <!--<option value="INI_IS">INI-IS</option>
-        <option value="INI_SM">INI-SM</option>
-        <option value="INI_MOB">INI_MOB</option>-->
-      </select>
-      <a href="#">x</a>
-    </li>
-    <li class="criteria_tag" id="criteria_ft_pt" title="Full/Part Time" style="background-color: LightBlue;">
-      <select class="criteria_text" style="background-color: LightBlue; width: 86px;">
-        <option value="ft">Full Time</option>
-        <option value="pt">Part Time</option>
-      </select>
-      <a href="#">x</a>
-    </li>
-  </ul>
-</div>
+    </div>
+
+    <select id="people_type_picker">
+      <option value="all">All People</option>
+      <option value="student"> Student </option>
+      <option value="staff"> Staff/Faculty </option>
+      <option value="alumnus"> Alumni </option>
+    </select>
+
+    <select id="extra_criteria_picker">
+      <option value="default" class="select-hint">Add Criteria</option>
+      <option value="company">Company</option>
+      <option value="class_year">Class Year</option>
+      <option value="program">Program</option>
+      <option value="ft_pt">Full/Part Time</option>
+    </select>
+  </div>
+
+
+  <div id="extra_criteria_box">
+    <ul class="criteria_tags">
+      <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: LightCoral;">
+        Company: <input type="text" id="criteria_company_text" class="criteria_text" style="background-color: LightCoral;"/><a href="#">x</a> </li>
+      <li class="criteria_tag" id="criteria_class_year" title="Class Year" style="background-color: Moccasin;">
+        Class Year:
+        <select class="criteria_text" style="background-color: Moccasin; width:56px;">
+        </select>
+        <a href="#">x</a>
+      </li>
+      <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
+        Program:
+        <select class="criteria_text" style="background-color: Beige; width: 80px;">
+          <option value="SE">SE</option>
+          <option value="SE_TECH">SE-Tech</option>
+          <option value="SE_DM">SE-DM</option>
+          <option value="SM">SM</option>
+          <option value="ECE">ECE</option>
+          <option value="INI">INI</option>
+          <!--<option value="INI_IS">INI-IS</option>
+          <option value="INI_SM">INI-SM</option>
+          <option value="INI_MOB">INI_MOB</option>-->
+        </select>
+        <a href="#">x</a>
+      </li>
+      <li class="criteria_tag" id="criteria_ft_pt" title="Full/Part Time" style="background-color: LightBlue;">
+        <select class="criteria_text" style="background-color: LightBlue; width: 86px;">
+          <option value="ft">Full Time</option>
+          <option value="pt">Part Time</option>
+        </select>
+        <a href="#">x</a>
+      </li>
+    </ul>
+  </div>
 
 <input type="checkbox" id="exact_match_checkbox" name="exact_match" value="exact_match" /> Exact Match?
+
+</div>
+
 
 
 

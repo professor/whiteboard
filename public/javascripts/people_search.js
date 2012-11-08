@@ -22,14 +22,6 @@ var SELECTED_CRITERIA_HASH = {
     "Full/Part Time": false
 }
 
-// reserved for future iteration 
-//CRITERIA_NAME_HASH["team"] = "Team";
-//CRITERIA_NAME_HASH["project"] = "Project";
-//CRITERIA_NAME_HASH["course"] = "Course";
-//SELECTED_CRITERIA_HASH["Team"] = false;
-//SELECTED_CRITERIA_HASH["Project"] = false;
-//SELECTED_CRITERIA_HASH["Course"] = false;
-
 // Prefetch data from server and build hash table for prediction on user inputs
 var PREFETCHED_HASH = new Object();
 PREFETCHED_HASH["NAME"] = new Object();
@@ -38,10 +30,9 @@ PREFETCHED_HASH["PROGRAM"] = new Object();
 
 // Predefines the Global Search Request object
 var SEARCH_REQUEST = $.ajax();
+var SEARCH_TIMEOUT;
 
 function construct_query_sting(){
-    // DEBUG
-
     var request_url_with_params = '';
     // add main criteria to query string
     if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
@@ -120,6 +111,26 @@ $(document).ready(function(){
     $('#export_link').click(function() {  $('#export_dialog_modal').dialog("open");  });
     $('#export_dialog_close').click(function() { $('#export_dialog_modal').dialog("close"); });
 
+    $('#export_to_csv').click(function(){
+      window.open('people.csv?page=1'+construct_query_sting());
+      $('#export_dialog_modal').dialog("close");
+    });
+
+    $('#export_to_vcf').click(function(){
+      window.open('people.vcf?page=1'+construct_query_sting());
+      $('#export_dialog_modal').dialog("close");
+    });
+
+    // Advanced Search Area
+    $('#advanced_search_btn').click(function(){
+      $('#smart_search_text').attr('disabled', 'disabled').css('opacity', 0.3);
+      $('#advanced_search_area').slideDown();
+    });
+    $('#advanced_area_close').click(function(){ 
+      $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
+      $('#advanced_search_area').slideUp();
+    });
+
 
 
 
@@ -134,21 +145,6 @@ $(document).ready(function(){
 
     // hide criteria_tag in the extra_criteria_box 
     $('#extra_criteria_box .criteria_tag').hide();
-
-
-    // display "Seartch Text" in the main search text if no text is inputed
-    $('#search_text_box').val("Search Text").addClass("null_search_text");
-    $("input").focus( function(){
-        if ($(this).val() == $(this)[0].title){
-            $(this).removeClass("null_search_text");
-            $(this).val("");
-        }
-    }).blur(function(){
-        if ($(this).val() == ""){
-            $(this).addClass("null_search_text");
-            $(this).val($(this)[0].title);
-        }
-    });
 
 
     // when user change the people type
@@ -209,7 +205,7 @@ $(document).ready(function(){
 
 
     // fade out main criteria tag when click on x
-    $('#main_criteria_box').on("click", ".criteria_tag a", function(){
+    /*$('#main_criteria_box').on("click", ".criteria_tag a", function(){
         if(SELECTED_CRITERIA_HASH[$(this).parent()[0].title]){
             SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = false;
             $(this).parent().fadeTo("fast", 0.55);
@@ -228,7 +224,7 @@ $(document).ready(function(){
         }
         execute_search(construct_query_sting());
         return false; // avoid anchor action
-    });
+    });*/
 
     // Remove extra criteria tag when click on x
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
@@ -238,36 +234,28 @@ $(document).ready(function(){
         return false;
     });
 
-    var search_timeout;
 
     $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
       execute_search(construct_query_sting());
     });
+
     $('#search_text_box').keyup(function(e) {
-      clearTimeout(search_timeout);
+      clearTimeout(SEARCH_TIMEOUT);
       //if($('#search_text_box').val().length >1){
       $('#results_box').fadeTo('fast', 0.5);
       if(e.which != 13){
-        search_timeout=setTimeout(execute_search(construct_query_sting()), 400);
+        SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
       }
       //}
 
     });
+
     $('.criteria_text').keyup(function(e) {
-      clearTimeout(search_timeout);
-      search_timeout=setTimeout(execute_search(construct_query_sting()), 400)  ;
+      clearTimeout(SEARCH_TIMEOUT);
+      SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400)  ;
     });
 
 
-    $('#export_to_csv').click(function(){
-      window.open('people.csv?page=1'+construct_query_sting());
-      $('#export_dialog_modal').dialog("close");
-    });
-
-    $('#export_to_vcf').click(function(){
-      window.open('people.vcf?page=1'+construct_query_sting());
-      $('#export_dialog_modal').dialog("close");
-    });
 
 
     /*
