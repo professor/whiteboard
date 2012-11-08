@@ -57,8 +57,8 @@ class Course < ActiveRecord::Base
 
   attr_accessible :course_number_id, :name, :number, :semester, :mini, :primary_faculty_label,
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
-                  :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
-                  :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
+                  :peer_evaluation_first_email, :peer_evaluation_second_email,
+                  :curriculum_url, :configure_course_twiki,
                   :faculty_assignments_override
 
 #  def to_param
