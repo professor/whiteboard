@@ -4,6 +4,10 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course', :as => :individual_deliverables
   match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course', :as => :team_deliverables
 
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
+    get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
 
   constraints(:host => /rails.sv.cmu.edu/) do
     match "/*path" => redirect {|params, req| "http://whiteboard.sv.cmu.edu/#{params[:path]}"}
@@ -92,10 +96,7 @@ CMUEducation::Application.routes.draw do
   resources :suggestions
   match '/teams' => 'teams#index_all', :as => :teams
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
-    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
-    get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
-  end
+
 
   #resources :users
   #resource :user_session
