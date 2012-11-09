@@ -7,10 +7,20 @@
 #
 # * For a course, a student will have at most one grade on each assignment.
 # * is_student_visible indicates that whether this grade is going to publish to student or not. 
-# * score should be number greater than zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor can add extra credit on student's grade.
-# * get_grades returns a list of assignment score of given course and student.
-# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is useful for controller to test whether the score is existed or not.
-#
+# * score should be two forms. If the grading rule applies points, the score should be a number greater than zero, and
+#   we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor
+#   can add extra credit on student's grade. If the grading rule uses letter grades, score would be A, A-, B+, B, B-,
+#   C+, C, C-.
+# * score= should assign a number greater than zero, and we don't validate whether the score is greater than maximum
+#   number defined in Assignment object, so that professor can add extra credit on student's grade.
+# * get_grades_for_student_per_course returns a list of assignment score of given course and student.
+# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
+#   useful for controller to test whether the score is existed or not.
+# * post_all should
+# * save_as_draft should mark the given grades as invisible to the students.
+# * give_grade store the grade given for a student who submit deliverable for an assignment.
+# * give_grades
+# * post_grades_for_one_assignment stores a list of assignment scores.
 # 
 #
 class Grade < ActiveRecord::Base
@@ -21,6 +31,14 @@ class Grade < ActiveRecord::Base
   validates :course_id, :student_id, :assignment_id, :presence => true 
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
+
+  def score
+    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  end
+
+  def score=(val)
+    write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
+  end
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
@@ -36,15 +54,6 @@ class Grade < ActiveRecord::Base
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
-  end
-
-
-  def score
-    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
-  end
-  #
-  def score=(val)
-    write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
   end
 
   def self.post_all(course_id)

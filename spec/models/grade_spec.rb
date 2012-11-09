@@ -76,17 +76,17 @@ describe Grade do
     end
   end
 
-  context "score" do
-    it "should not be string" do
-      subject.score = "just4test" 
-      subject.should_not be_valid
-    end  
-
-    it 'should not be negative' do
-      subject.score = -1.0 
-      subject.should_not be_valid
-    end
-  end
+  #context "score" do
+  #  it "should not be string" do
+  #    subject.score = "just4test"
+  #    subject.should_not be_valid
+  #  end
+  #
+  #  it 'should not be negative' do
+  #    subject.score = -1.0
+  #    subject.should_not be_valid
+  #  end
+  #end
 
   it 'should not be redundant' do
     redundant_grade = Grade.new(

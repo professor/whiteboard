@@ -1,3 +1,19 @@
+# GradingRule represents the correspondence between points earned and letter grades. The mapping rule is given by the
+# course instructor.
+#
+# GradingRule is configurable by clicking on "Configure course" in "Initial Course Configuration", on the index page of
+# each course. In the configuration pate, professor can choose grading criteria between points and letter grades. If
+# professor chooses using letter grades, professor would see a table that needs to be filled in the mapping rule between
+# points and letter grades.
+#
+# As each course would have its own grading rule,
+#
+# We provides the following functions to facilitate the conversion between points and letter grades.
+# * convert_points_to_letter_grade
+# * convert_letter_grade_to_points
+# * get_grade_in_prof_format
+# * get_raw_grade
+
 class GradingRule < ActiveRecord::Base
   attr_accessible :grade_type,
                   :A_grade_min,
@@ -59,25 +75,29 @@ class GradingRule < ActiveRecord::Base
 
   def self.get_grade_in_prof_format(course_id, raw_grade)
     grading_rule = GradingRule.find_by_course_id(course_id)
-    unless grading_rule.nil?
-      case grading_rule.grade_type
-        when "letter"
-          return grading_rule.convert_points_to_letter_grade(raw_grade)
-        when "points"
-          return raw_grade
-      end
+    if grading_rule.nil?
+      return raw_grade
+    end
+
+    case grading_rule.grade_type
+      when "letter"
+        return grading_rule.convert_points_to_letter_grade(raw_grade)
+      when "points"
+        return raw_grade
     end
   end
 
   def self.get_raw_grade(course_id, grade)
     grading_rule = GradingRule.find_by_course_id(course_id)
-    unless grading_rule.nil?
-      case grading_rule.grade_type
-        when "letter"
-          return grading_rule.convert_letter_grade_to_points(grade)
-        when "points"
-          return grade
-      end
+    if grading_rule.nil?
+      return grade
+    end
+
+    case grading_rule.grade_type
+      when "letter"
+        return grading_rule.convert_letter_grade_to_points(grade)
+      when "points"
+        return grade
     end
   end
 
