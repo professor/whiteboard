@@ -16,8 +16,7 @@
 # * maximum_score is a required field. Professor should give a maximum score (>=0 ) for each assignment.
 # * is_team_deliverable tells the assignment is a team deliverable or individual deliverable
 # * is_submittable is designed for those assignment that don't required any submission, e.g., course participation, effort log. 
-#
-
+# * is_deliverable_submitted tells whether there are any deliverable submmited for this  assignment. If so, the professor could not delete this assignment. 
 
 
 
