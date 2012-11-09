@@ -19,9 +19,7 @@ class PeopleController < ApplicationController
 # GET /people
 # GET /people.xml
   def index
-
     #@people = User.where(:is_active => true)
-
     @people = User.Search(params)
     @people = @people.limit(24)
 

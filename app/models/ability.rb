@@ -16,11 +16,11 @@ class Ability
     can :update, PageAttachment
 
 
-    if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
+    if (user.human_name == "Todd Sedano" ||user.human_name == "Vidya Pissaye" || user.human_name == "Gerry Elizondo")
       can :upload, Course
     end
 
-    if (user.human_name == "Jazz Sabian" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
+    if (user.human_name == "Jazz Sabian" || user.human_name == "Vidya Pissaye" || user.human_name == "Todd Sedano")
       can :create, User
     else
       cannot :create, User

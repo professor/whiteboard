@@ -57,7 +57,7 @@ function construct_query_sting(){
 
 function execute_search(request_params){
     
-    console.log("search executed");
+   // console.log("search executed");
     $('#results_box').fadeTo('fast', 0.5);
     SEARCH_REQUEST.abort();
 
@@ -89,7 +89,9 @@ function execute_search(request_params){
             $('#results_box').fadeTo('fast', 1);
         }
     });
-    
+    //history.pushState(null, "", 'people?'+request_params);
+    //history.replaceState(null, "", 'people?'+request_params);
+    location.hash=request_params;
 };
 
 
@@ -263,9 +265,59 @@ $(document).ready(function(){
         function(rcv_data){
             $('#search_text_box').autocomplete({
                 source: rcv_data, minLength: 2, delay: 400
-            });
+            });                                                        s
         }
     )*/
+    //Linkable url
+    var hash_params = window.location.hash;
+
+    if(hash_params!=""){
+        hash_params=hash_params.replace("#","");
+        execute_search(hash_params);
+    }
+    //Back button
+    $(window).bind("popstate", function() {
+        var h= location.hash;
+
+        if(h!=""){
+            h=h.replace("#","");
+            execute_search(h);
+        }
+    });
+
+
+
+
+
+    /* var hp = hash_params.split("&");
+var i;
+for(i = 0; i < hp.length; i++) {
+var name_value = hp[i].split("=");
+var name = name_value[0];
+var value = name_value[1];
+
+
+if(name === "first_name") {
+    $("#sea").val(value);
+    console.log ($("#criteria_first_name").val());
+} else if (name === "last_name") {
+    $("#criteria_last_name").val(value);
+} else if (name === "andrew_id") {
+    $("#criteria_andrew_id").val(value);
+} else if (name === "people_type") {
+    $("#people_type_picker").val(value);
+} else if (name === "organization_name") {
+    $("#criteria_company input").val(value);
+} else if (name === "main_search_text") {
+    $("#search_text_box").val(value);
+}
+
+//execute_search();
+
+
+}        */
+
+
 
 
 });

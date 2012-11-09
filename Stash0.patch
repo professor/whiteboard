@@ -1,0 +1,175 @@
+diff --git a/.DS_Store b/.DS_Store
+index 80f5e05..25b3bce 100644
+Binary files a/.DS_Store and b/.DS_Store differ
+diff --git a/app/controllers/people_controller.rb b/app/controllers/people_controller.rb
+index 3869e38..96a4e56 100644
+--- a/app/controllers/people_controller.rb
++++ b/app/controllers/people_controller.rb
+@@ -19,9 +19,7 @@ class PeopleController < ApplicationController
+ # GET /people
+ # GET /people.xml
+   def index
+-
+     #@people = User.where(:is_active => true)
+-
+     @people = User.Search(params)
+     @people = @people.limit(24)
+ 
+diff --git a/app/models/ability.rb b/app/models/ability.rb
+index 6a720ee..e244d24 100644
+--- a/app/models/ability.rb
++++ b/app/models/ability.rb
+@@ -16,11 +16,11 @@ class Ability
+     can :update, PageAttachment
+ 
+ 
+-    if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
++    if (user.human_name == "Todd Sedano" ||user.human_name == "Vidya Pissaye" || user.human_name == "Gerry Elizondo")
+       can :upload, Course
+     end
+ 
+-    if (user.human_name == "Jazz Sabian" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
++    if (user.human_name == "Jazz Sabian" || user.human_name == "Vidya Pissaye" || user.human_name == "Todd Sedano")
+       can :create, User
+     else
+       cannot :create, User
+diff --git a/public/javascripts/people_search.js b/public/javascripts/people_search.js
+index 7fdc877..1ffdeb7 100644
+--- a/public/javascripts/people_search.js
++++ b/public/javascripts/people_search.js
+@@ -34,7 +34,7 @@ var search_request = $.ajax();
+ 
+ function execute_search(){
+     // DEBUG
+-    console.log("search executed");
++   // console.log("search executed");
+     $('#results_box').fadeTo('fast', 0.5);
+     search_request.abort();
+ 
+@@ -57,8 +57,9 @@ function execute_search(){
+       else { request_url_with_params += "&is_part_time=true"; }
+     }
+     
+-    // DEBUG console.log(request_url_with_params);
+-    
++  //  console.log(request_url_with_params);
++
++
+     search_request = $.ajax({
+         url: request_url_with_params, dataType: 'json',
+         success: function(data){
+@@ -81,16 +82,15 @@ function execute_search(){
+ 
+ // MERGE TRY
+                 card_html += 'Teams: ';
+-                console.log(this.team_names);
+                 for(var i=0; i<this.team_names.length; i++){
+                     card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ') ';
+-                    //console.log(card_html);
+                 }
+ // END TRY
+                 card_html += '</div>';
+                 $("#results_box").append(card_html);
+             });
+ 
++            location.hash = request_url_with_params.replace("people.json?page=1&", "");
+             $('#results_box').fadeTo('fast', 1);
+         }
+     });
+@@ -262,5 +262,34 @@ $(document).ready(function(){
+         }
+     )
+ 
++    // Linkable url code: Post the UI redesign
++  /*  var hash_params = window.location.hash;
++    var hp = hash_params.split("&");
++    var i;
++    for(i = 0; i < hp.length; i++) {
++        var name_value = hp[i].split("=");
++        var name = name_value[0];
++        var value = name_value[1];
++
++
++        if(name === "first_name") {
++            $("#sea").val(value);
++            console.log ($("#criteria_first_name").val());
++        } else if (name === "last_name") {
++            $("#criteria_last_name").val(value);
++        } else if (name === "andrew_id") {
++            $("#criteria_andrew_id").val(value);
++        } else if (name === "people_type") {
++            $("#people_type_picker").val(value);
++        } else if (name === "organization_name") {
++            $("#criteria_company input").val(value);
++        } else if (name === "main_search_text") {
++            $("#search_text_box").val(value);
++        }
++
++        //execute_search();
++
++        console.log($("#criteria_first_name").val());
+ 
++    }                                                  */
+ });
+diff --git a/spec/models/user_spec.rb b/spec/models/user_spec.rb
+index 223ef49..1a9cdde 100644
+--- a/spec/models/user_spec.rb
++++ b/spec/models/user_spec.rb
+@@ -26,6 +26,10 @@ describe User do
+       @alumnus_sean = FactoryGirl.create(:alumnus_sean)
+     end
+ 
++   # def create_team_1
++    #  [ :one, :two, :three ]
++    #end
++
+     it "should do partial search case - default" do
+       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+       @users=User.Search(params_hash)
+diff --git a/spec/requests/people_search_spec.rb b/spec/requests/people_search_spec.rb
+index dbd879b..5f30b9b 100644
+--- a/spec/requests/people_search_spec.rb
++++ b/spec/requests/people_search_spec.rb
+@@ -26,6 +26,42 @@ describe "people search" do
+     page.should_not have_selector('#results_box .data_card')
+   end
+ 
++  context 'display and use linkable urls' do
++
++    it "should generate linkable url", :js => true do
++
++        fill_in "search_text_box" , :with => "vid"
++        find(:css, "#exact_match_checkbox").set(true)
++        wait_until { page.evaluate_script("jQuery.active") == 0 }
++        page.should_not have_selector('#results_box .data_card', :text => 'Vidya')
++        URI.parse(current_url).fragment.should == "main_search_text=vid&first_name=true&last_name=true&andrew_id=true&exact_match=true"
++
++    end
++
++    it "Should display result page with an entry of a linkable url" do
++
++    end
++
++  end
++
++  context 'check user preferences' do
++
++      before(:each) do
++        request.env["HTTP_REFERER"] = "where_i_came_from"
++      end
++
++      describe "GET /goback" do
++        it "redirects back to the referring page" do
++          get 'goback'
++          response.should redirect_to "where_i_came_from"
++        end
++      end
++    #  When(/^I go back$/) do
++     #   page.evaluate_script('window.history.back()')
++      #end
++
++
++  end
+ 
+ # MERGE TRY
+   context 'display team names along with course' do

@@ -26,6 +26,10 @@ describe User do
       @alumnus_sean = FactoryGirl.create(:alumnus_sean)
     end
 
+   # def create_team_1
+    #  [ :one, :two, :three ]
+    #end
+
     it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
       @users=User.Search(params_hash)

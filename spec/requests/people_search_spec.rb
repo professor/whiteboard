@@ -26,6 +26,37 @@ describe "people search" do
     page.should_not have_selector('#results_box .data_card')
   end
 
+  context 'display and use linkable urls and back button' do
+
+    it "should generate linkable url", :js => true do
+
+      fill_in "search_text_box" , :with => "vid"
+      find(:css, "#exact_match_checkbox").set(true)
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => 'Vidya')
+      URI.parse(current_url).fragment.should == "&main_search_text=vid&first_name=true&last_name=true&andrew_id=true&exact_match=true"
+    end
+
+    it "Should display result page with an entry of a linkable url", :js => true do
+
+      visit ("/people#&main_search_text=Vid&first_name=true&last_name=true&andrew_id=true&people_type=student&class_year=2013")
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+
+    end
+
+    it "Should go back to the previous search page on clicking back button", :js => true do
+      visit ("/people#&main_search_text=Vid&first_name=true&last_name=true&andrew_id=true&people_type=student&class_year=2013")
+      visit ("/people#&main_search_text=Todd&first_name=true&last_name=true&andrew_id=true&people_type=staff&organization_name=yahoo")
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Todd')
+      page.evaluate_script('window.history.back()')
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+    end
+
+  end
+
   context 'display team names along with course' do
 
     before do
