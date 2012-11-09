@@ -19,7 +19,7 @@ class Grade < ActiveRecord::Base
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
   validates :course_id, :student_id, :assignment_id, :presence => true 
-  validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
+  #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
   # To fetch the grade of student.
@@ -38,6 +38,15 @@ class Grade < ActiveRecord::Base
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+
+  def score
+    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  end
+  #
+  def score=(val)
+    write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
+  end
+
   def self.post_all(course_id)
     Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
   end
@@ -50,18 +59,19 @@ class Grade < ActiveRecord::Base
   end
 
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
-    grading_result = false
+      grading_result = false
     student = User.find(student_id)
 
     assignment = Assignment.find(assignment_id)
     if assignment.nil?
       grading_result = false
     elsif assignment.course.registered_students.include?(student)
+      raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
-        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score,:is_student_visible=>is_student_visible})
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>raw_score,:is_student_visible=>is_student_visible})
       end
-      grade.score =score
+      grade.score=raw_score
       grade.is_student_visible = is_student_visible
       grading_result = grade.save
     end

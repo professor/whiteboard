@@ -26,7 +26,7 @@
         course_id: grade_attrs.course_id,
         assignment_id: grade_attrs.assignment_id,
         student_id: grade_attrs.student_id,
-        score: parseFloat(score)
+        score: score//parseFloat(score)
       };
     }
     else{
@@ -187,7 +187,7 @@
             <% @assignments.each do |assignment|%>
               <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
                 <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" 
-                       value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>' 
+                       value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
                        type="text" size="4" width="100%" onchange="change_grade(event);" 
                        class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>' />
               </td>

@@ -50,6 +50,8 @@ class Course < ActiveRecord::Base
 
   has_many :grades, :through => :assignments
 
+  has_one :grading_rule
+
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty
 
@@ -66,10 +68,7 @@ class Course < ActiveRecord::Base
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
                   :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
-                  :faculty_assignments_override,
-                  :is_assignment_points, :A_plus_grade, :A_grade, :A_minus_grade, :B_plus_grade, :B_grade, :B_minus_grade, :C_plus_grade, :C_grade, :C_minus_grade
-
-  validates_numericality_of [:A_plus_grade, :A_grade, :A_minus_grade, :B_plus_grade, :B_grade, :B_minus_grade, :C_plus_grade, :C_grade, :C_minus_grade],:allow_nil=>true     ,:greater_than_or_equal_to => 0
+                  :faculty_assignments_override
 
 #  def to_param
 #    display_course_name
