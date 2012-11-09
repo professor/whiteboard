@@ -34,7 +34,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def submittable?
-    self.can_submit && self.due_date > DateTime.now
+    self.can_submit
   end
 
   def formatted_title

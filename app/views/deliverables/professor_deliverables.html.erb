@@ -1,4 +1,5 @@
 <h1>My Deliverables</h1>
+<% selected_course = params[:course_id].blank? ? nil : params[:course_id] %>
 
 <% if !@courses_teaching_as_faculty.empty? %>
   <div id="filters">
@@ -9,7 +10,7 @@
           <td><%= f.label :semester_year %></td>
           <td><%= f.select :semester_year, @semester_years, {}, {class: 'deliverable-filter'} %></td>
           <td><%= f.label :course_id %></td>
-          <td><%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All'}, {class: 'deliverable-filter'})  %></td>
+          <td><%= f.collection_select(:course_id, @courses_teaching_as_faculty, :id, :name, {:include_blank => 'All', selected: selected_course}, {class: 'deliverable-filter'})  %></td>
           <td><%= link_to "View Gradebook", course_gradebook_path(nil), id: :gradebook_link %></td>
         </tr>
       </tbody>
@@ -34,7 +35,7 @@
       <%= f.submit hidden: true%>
   <% end %>
   </div>
-  <div id='grading_queue'><%= render 'deliverables/grading_queue' %></div>
+  <div id='grading_queue'><%= image_tag 'ajax-loader.gif' %></div>
 <% end %>
 
 <%
@@ -88,5 +89,7 @@
 
     $('#filter_course_id').change(changeGradebookLink);
     changeGradebookLink();
+
+    $('#filters form').submit();
   })
 </script>

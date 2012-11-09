@@ -1,3 +1,4 @@
+<%= link_to "Assignments", course_assignments_path(@course) %>
 <%= form_for(@course, url: {action: 'update_grading_criteria', id: @course.id}) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">

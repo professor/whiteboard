@@ -37,10 +37,9 @@
         <table cellpadding="2" cellspacing="2" border=1 style="border-width: 1px;" class="cmu_table">
           <tr class="course_tools">
             <td>
-              <%= link_to image_tag("/images/deliverables.png", :class => "icon", :size => "75x75", :alt => "Grading Deliverables", :title => "Grading Deliverables"), course_deliverables_path(course) %>
+              <%= link_to image_tag("/images/deliverables.png", :class => "icon", :size => "75x75", :alt => "Grading Deliverables", :title => "Grading Deliverables"), professor_deliverables_path(current_user, course_id: @course.id) %>
               <br/>
-
-              <p><%= link_to 'Grading Deliverables', course_deliverables_path(course) %></p>
+              <p><%= link_to 'Grading Deliverables', professor_deliverables_path(current_user, course_id: @course.id) %></p>
             </td>
             <td>
               <%= link_to image_tag("/images/peer_evaluation2.jpg", :class => "icon", :size => "90x70", :alt => "Peer evaluation", :title => "Peer evaluation"), peer_evaluations_path(course) %>

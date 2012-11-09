@@ -14,7 +14,7 @@
       <span class="instructions">Only faculty and course instructors can see this information.</span>
       <fieldset>
         <legend>Faculty tools</legend>
-        <p><%= link_to 'Grading Deliverables', course_deliverables_path(course) %></p>
+        <p><%= link_to 'Grading Deliverables', professor_deliverables_path(current_user, course_id: @course.id) %></p>
 
         <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
 

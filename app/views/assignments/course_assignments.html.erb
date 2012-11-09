@@ -6,6 +6,8 @@
 </div>
 
 <% if !@assignments.empty? %>
+  <% assignment_sum = @assignments.to_a.sum(&:weight) %>
+
   <table class='cmu_table'>
     <thead>
       <tr>
@@ -38,14 +40,21 @@
     </tbody>
   </table>
 
+  <div style='text-align:right'>
+    <% if @course.grading_criteria == "Points" %>
+      <%= "Total Points: #{assignment_sum}"%>
+    <% else %>
+      <%= "Total Percentage: #{assignment_sum}%"%>
+    <% end %>
+  </div>
+
   <!--Div that will hold the pie chart-->
   <div id="chart_div" style='text-align: left;'></div>
 
   <%
     assignment_array = @assignments.map {|assignment| "[\"#{assignment.title}\", #{assignment.weight}],"}
 
-    if !@assignments.empty? && @assignments[0].course.grading_criteria == "Percentage"
-      assignment_sum = @assignments.to_a.sum(&:weight)
+    if !@assignments.empty? && @course.grading_criteria == "Percentage"
       if (100 - assignment_sum) > 0
         assignment_array << "['Unassigned', #{100 - assignment_sum}]"
       end
