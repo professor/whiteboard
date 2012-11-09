@@ -27,7 +27,7 @@
 # has "configured" the course. (Or verified it's settings.) If this doesn't happen, the system should periodically
 # remind faculty about the change.)
 #
-#
+# Course has grading rules. These include grading cut_offs for grade's like A,A-,B+ etc.
 
 class Course < ActiveRecord::Base
   has_many :teams
