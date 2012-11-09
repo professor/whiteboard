@@ -5,7 +5,7 @@
 # required. The assignments will automatically get sorted out based on the course and the task. Student will not be able
 # to modify the assignment, only faculty can do this.
 #
-# Generally, a course has many assignments, and each assignments contains many student grades(grade_books)
+# Generally, a course has many assignments, and each assignments contains many student grades and many submitted deliverables.
 #
 #
 # * Professor can create an assignment on course assignments index page by clicking the "New Assignment" link. 
