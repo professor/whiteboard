@@ -41,7 +41,6 @@ class DeliverablesController < ApplicationController
   end
 
   def professor_deliverables
-    store_location
     respond_to do |format|
       format.html {
         @person = User.find(params[:id])
@@ -72,6 +71,9 @@ class DeliverablesController < ApplicationController
       format.js {
         if params[:filter][:course_id].blank?
           params[:filter][:course_id] = current_user.teaching_these_courses.map {|course| course.id}
+          store_location
+        else
+          session[:return_to] = professor_deliverables_path(current_user, course_id: params[:filter][:course_id])
         end
         @deliverables = Deliverable.filter(params[:filter])
       }

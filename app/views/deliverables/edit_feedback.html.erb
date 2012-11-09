@@ -28,6 +28,11 @@
         <%= label_tag "Team members grade" %>
         <%= text_field_tag "team_grade", ' ', :size => 4 %>
       </p>
+      <% if @deliverable.assignment.course.grading_criteria == "Percentage" %>
+        <p>
+          <%= "Weight: #{@deliverable.assignment.weight}%" %>
+        </p>
+      <% end %>
     <% end %>
     <p>
       <% if @deliverable.current_attachment.blank? %>
