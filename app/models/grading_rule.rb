@@ -9,10 +9,10 @@
 # As each course would have its own grading rule,
 #
 # We provides the following functions to facilitate the conversion between points and letter grades.
-# * convert_points_to_letter_grade
-# * convert_letter_grade_to_points
-# * get_grade_in_prof_format
-# * get_raw_grade
+# * convert_points_to_letter_grade uses the grading rule to convert points to letter grades.
+# * convert_letter_grade_to_points uses the grading rule to convert letter grades to points.
+# * get_grade_in_prof_format returns the grade that follows grade configuration.
+# * get_raw_grade returns points. If the grade type is letter, we will apply the grading rule to convert it to points.
 
 class GradingRule < ActiveRecord::Base
   attr_accessible :grade_type,

@@ -16,11 +16,11 @@
 # * get_grades_for_student_per_course returns a list of assignment score of given course and student.
 # * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
 #   useful for controller to test whether the score is existed or not.
-# * post_all should
+# * post_all creates/saves a list of grades updated by professor.
 # * save_as_draft should mark the given grades as invisible to the students.
-# * give_grade store the grade given for a student who submit deliverable for an assignment.
-# * give_grades
-# * post_grades_for_one_assignment stores a list of assignment scores.
+# * give_grade saves the grade given for a student's assignment.
+# * give_grades saves a list of assignment grades given to a group of students.
+# * post_grades_for_one_assignment saves a list of assignment grades.
 # 
 #
 class Grade < ActiveRecord::Base
@@ -78,7 +78,8 @@ class Grade < ActiveRecord::Base
       raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
-        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>raw_score,:is_student_visible=>is_student_visible})
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
+                           :score =>raw_score,:is_student_visible=>is_student_visible})
       end
       grade.score=raw_score
       grade.is_student_visible = is_student_visible
