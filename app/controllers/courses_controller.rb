@@ -160,13 +160,6 @@ class CoursesController < ApplicationController
       @course.updated_by_user_id = current_user.id if current_user
       @course.attributes = params[:course]
       if @course.save
-        if (params[:course][:is_configured])
-          #The previous page was configure action
-          CourseMailer.configure_course_admin_email(@course).deliver
-        else
-          #The previous page was edit action
-          CourseMailer.configure_course_faculty_email(@course).deliver unless @course.is_configured?
-        end
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_back_or_default(course_path(@course)) }
         format.xml { head :ok }

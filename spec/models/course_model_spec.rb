@@ -397,6 +397,17 @@ describe Course do
     end
   end
 
+  it "email_faculty_to_configure_course sends an email" do
+    CourseMailer.should_receive(:configure_course_faculty_email).and_return(double(CourseMailer, :deliver => true))
+    course = FactoryGirl.build(:course)
+    course.email_faculty_to_configure_course_unless_already_configured
+  end
+
+  it "email_faculty_to_configure_course does not sends an email if course is already configured" do
+    CourseMailer.should_not_receive(:configure_course_faculty_email)
+    course = FactoryGirl.build(:course, :is_configured => true)
+    course.email_faculty_to_configure_course_unless_already_configured
+  end
 
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }

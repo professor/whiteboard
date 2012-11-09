@@ -274,6 +274,12 @@ class Course < ActiveRecord::Base
     self.email = build_email
   end
 
+  def email_faculty_to_configure_course_unless_already_configured
+    CourseMailer.configure_course_faculty_email(self).deliver unless self.is_configured?
+  end
+
+
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
