@@ -32,13 +32,13 @@ class Grade < ActiveRecord::Base
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
-  def score
-    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
-  end
-
-  def score=(val)
-    write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
-  end
+  #def score
+  #  GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  #end
+  #
+  #def score=(val)
+  #  write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
+  #end
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)

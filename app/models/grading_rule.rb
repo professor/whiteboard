@@ -24,10 +24,12 @@ class GradingRule < ActiveRecord::Base
                   :C_plus_grade_min,
                   :C_grade_min,
                   :C_minus_grade_min,
-                  :course_id
+                  :course_id,
+                  :is_nomenclature_deliverable
 
   belongs_to :course
 
+  # To convert points to letter grades
   def convert_points_to_letter_grade (points)
     if points>=self.A_grade_min
       return "A"
@@ -50,6 +52,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To convert letter grades to points
   def convert_letter_grade_to_points (letter_grade)
     case letter_grade
       when "A"
@@ -73,6 +76,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To get grade in the format that is configured by professor
   def self.get_grade_in_prof_format(course_id, raw_grade)
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
@@ -87,6 +91,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To get grade in points
   def self.get_raw_grade(course_id, grade)
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
