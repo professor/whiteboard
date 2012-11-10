@@ -98,13 +98,18 @@ describe "courses" do
       it "show score when grading criteria is percentage" do
         ppm_course = FactoryGirl.create(:ppm_current_semester)
         student = ppm_course.teams.first.members.first
-        student.deliverable_grades.each do |deliverable_grade|
-          deliverable_grade.update_attributes(grade: 1)
-        end
-        student.deliverable_grades.first.update_attributes(grade: "A")
-        ppm_course.reload
 
-        ppm_course.get_earned_number_grade(student).should == student.deliverable_grades.count + 99
+        student.deliverable_grades.each do |deliverable_grade|
+          deliverable_grade.update_attributes(grade: 50)
+        end
+        ppm_course.reload
+        ppm_course.get_earned_number_grade(student).should == 40
+
+        student.deliverable_grades.each do |deliverable_grade|
+          deliverable_grade.update_attributes(grade: "B")
+        end
+        ppm_course.reload
+        ppm_course.get_earned_number_grade(student).should == 69.6
       end
 
       it "show score when grading criteria is points" do
