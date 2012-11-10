@@ -2,7 +2,7 @@
 
 <%= link_to "Back", course_path(@course) %> |
 <%= link_to "Grading Deliverables", professor_deliverables_path(current_user) %> |
-<%= link_to "Assignments", course_assignments_path(@course) %>
+<%= link_to @course.grading_nomenclature, course_assignments_path(@course) %>
 <table class="cmu_table inner_border">
   <thead>
     <tr>

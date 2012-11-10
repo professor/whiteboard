@@ -1,6 +1,6 @@
-<h1>Assignments for <%= @course.name %></h1>
+<h1><%= @course.grading_nomenclature %> for <%= @course.name %></h1>
 <div>
-  <%= link_to "New assignment", new_course_assignment_path(@course.id) %> |
+  <%= link_to "New #{@course.grading_nomenclature}", new_course_assignment_path(@course.id) %> |
   <%= link_to "Course configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %> |
   <%= link_to "Gradebook", course_gradebook_path(@course.id) %>
 </div>
@@ -11,7 +11,9 @@
   <table class='cmu_table'>
     <thead>
       <tr>
-        <th>Task Number</th>
+        <% if @course.grading_nomenclature == "Tasks" %>
+          <th>Task Number</th>
+        <% end %>
         <th>Title</th>
         <th></th>
         <th>Due Date</th>
@@ -23,7 +25,9 @@
     <tbody>
       <% @assignments.each do |assignment| %>
         <tr>
-          <td><%= assignment.task_number %></td>
+          <% if @course.grading_nomenclature == "Tasks" %>
+            <td><%= assignment.task_number %></td>
+          <% end %>
           <td><%= assignment.title %></td>
           <td>
             <% if assignment.can_submit %>
@@ -87,7 +91,7 @@
       data.addRows([<%= assignment_array.join.html_safe %>]);
 
       // Set chart options
-      var options = {'title':'Assignment Weight Distribution',
+      var options = {'title':'<%= @course.grading_nomenclature %> Weight Distribution',
         'width':696,
         'height':300,
         'backgroundColor':'transparent',

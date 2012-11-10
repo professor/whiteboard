@@ -24,7 +24,7 @@
         <legend>Initial Course Configuration</legend>
         <p><%= link_to 'Configure course', configure_course_path(course) %></p>
 
-        <p><%= link_to 'Assignments', course_assignments_path(@course.id) %></p>
+        <p><%= link_to @course.grading_nomenclature, course_assignments_path(@course.id) %></p>
 
         <p><%= link_to 'Team Formation', past_teams_list_path(course) %></p>
 

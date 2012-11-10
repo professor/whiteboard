@@ -38,7 +38,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def formatted_title
-    if self.task_number.blank?
+    if self.task_number.blank? || (self.course.grading_nomenclature == "Assignments")
       self.title
     else
       "Task #{self.task_number}: #{self.title}"
