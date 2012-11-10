@@ -9,9 +9,9 @@
       <th>Team</th>
       <th>Student</th>
       <% @course.assignments.each do |assignment| %>
-        <th><%= assignment.formatted_title %><br/>(Max: <%= assignment.weight %>)</th>
+        <th><%= assignment.formatted_title %><br/>(<%= @course.grading_criteria == "Percentage" ? "#{assignment.weight}%" : "Max: #{assignment.weight}" %>)</th>
       <% end %>
-      <th>EarnedTotal<br/>(Max: <%= @course.total_assignment_weight %>)</th>
+      <th>Earned<br/>Total <br/><%= @course.grading_criteria == "Percentage" ? "" : "(Max: #{@course.total_assignment_weight})"%></th>
       <th>Earned<br/>Letter Grade</th>
       <th>Final<br/>Letter Grade</th>
     </tr>
@@ -22,14 +22,22 @@
         <tr>
           <td><%= team.name %></td>
           <td><%= member.human_name %></td>
-          <% total_score = 0 %>
+          <% total_score = 0.0 %>
           <% @course.assignments.each do |assignment| %>
             <td>
               <% deliverable_grade = assignment.find_deliverable_grade(member) %>
               <% if assignment.can_submit? && deliverable_grade.blank? %>
                 Unsubmitted
               <% else %>
-                <% total_score += deliverable_grade.grade if !deliverable_grade.blank? %>
+                <%
+                  if !deliverable_grade.blank?
+                    if @course.grading_criteria == "Percentage"
+                      total_score += (deliverable_grade.grade.to_f * assignment.weight / 100)
+                    else
+                      total_score += deliverable_grade.grade
+                    end
+                  end
+                %>
                 <%
                    if deliverable_grade.blank?
                      link_text = "0 (Ungraded)"
@@ -42,7 +50,9 @@
               <% end %>
             </td>
           <% end %>
-          <td><%= total_score %></td>
+          <td>
+            <%= total_score %><%= @course.grading_criteria == "Percentage" ? "%" : "" %>
+          </td>
           <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(total_score) %></td>
           <td>
             <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
