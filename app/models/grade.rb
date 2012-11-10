@@ -56,10 +56,12 @@ class Grade < ActiveRecord::Base
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+  #To make all the grades in the gradebook visible to students
   def self.post_all(course_id)
     Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
   end
 
+  # To save the changes and making them visible to professor only.
   def self.save_as_draft(grades)
     grades.each do |grade_entry|
       Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).try(
@@ -67,6 +69,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To assign/update the grade to the student
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
       grading_result = false
     student = User.find(student_id)
@@ -88,6 +91,7 @@ class Grade < ActiveRecord::Base
     grading_result
   end
 
+  # To assign grades for to multiple students
   def self.give_grades(grades)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
@@ -95,6 +99,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To post all the grades to students for one assignment
   def self.post_grades_for_one_assignment(grades, assignment_id)
       grades.each do |grade_entry|
         if grade_entry[:assignment_id] == assignment_id
