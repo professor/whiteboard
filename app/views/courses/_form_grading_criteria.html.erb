@@ -28,7 +28,7 @@
     <thead>
     <tr>
       <th>Grades</th>
-      <th>Minimum Value</th>
+      <th>Minimum<br/>Percentile</th>
       <th>Enable</th>
     </tr>
     </thead>
@@ -37,7 +37,7 @@
       <%= f.fields_for :grading_ranges do |builder| %>
         <tr>
           <td><%= builder.label builder.object.grade %></td>
-          <td><%= builder.text_field :minimum, size: 4 %></td>
+          <td><%= builder.text_field :minimum, size: 3 %></td>
           <td><%= builder.check_box :active %></td>
         </tr>
       <% end %>
