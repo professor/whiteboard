@@ -7,17 +7,17 @@
 #
 # * For a course, a student will have at most one grade on each assignment.
 # * is_student_visible indicates that whether this grade is going to publish to student or not. 
-# * score should be two forms. If the grading rule applies points, the score should be a number greater than zero, and
-#   we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor
-#   can add extra credit on student's grade. If the grading rule uses letter grades, score would be A, A-, B+, B, B-,
-#   C+, C, C-.
-# * score= should assign a number greater than zero, and we don't validate whether the score is greater than maximum
+# * score would be in two forms. If the grading rule is set to use points, the score should be a number greater than
+#   zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that
+#   professor can add extra credit on student's grade. If the grading rule is set to use letter grades, score would be
+#   A, A-, B+, B, B-, C+, C, or C-.
+# * score= assigns a number greater than zero, and we don't validate whether the score is greater than maximum
 #   number defined in Assignment object, so that professor can add extra credit on student's grade.
 # * get_grades_for_student_per_course returns a list of assignment score of given course and student.
 # * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
 #   useful for controller to test whether the score is existed or not.
 # * post_all creates/saves a list of grades updated by professor.
-# * save_as_draft should mark the given grades as invisible to the students.
+# * save_as_draft marks the given grades as invisible to the students.
 # * give_grade saves the grade given for a student's assignment.
 # * give_grades saves a list of assignment grades given to a group of students.
 # * post_grades_for_one_assignment saves a list of assignment grades.
@@ -32,12 +32,32 @@ class Grade < ActiveRecord::Base
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
-  def score
-    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  #before_save :convert_to_points
+  #after_save :points_to_letter
+
+  def convert_to_points
+    puts "i am before save : convert to points"
+    #GradingRule.get_raw_grade(self.course_id, self[:score])
+    self[:score] = @score
   end
 
+
+  def points_to_letter
+    puts "i am after save : points to letter"
+    #write_attribute(:score, GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score)))
+    #self[:score] = GradingRule.get_grade_in_prof_format(self.course_id, self[:score])
+    self[:score] = GradingRule.get_grade_in_prof_format(self.course_id, @score)
+  end
+
+  def score
+    puts "i am score!!!!!!!!!!!!!!!!!!!!!!!!"
+    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  end
+  #
   def score=(val)
-    write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
+    puts "i am score=!!!!!!!!!!!!!!"
+    @score = val
+    #write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
   end
 
   # To fetch the grade of student.
@@ -81,9 +101,12 @@ class Grade < ActiveRecord::Base
         grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
                            :score =>raw_score,:is_student_visible=>is_student_visible})
       end
-      grade.score=raw_score
+      #grade.score=raw_score
+      grade[:score] = raw_score
       grade.is_student_visible = is_student_visible
+      puts "before save!!!!!!!!!!!!!!!!"
       grading_result = grade.save
+      puts "after save!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     end
     grading_result
   end
