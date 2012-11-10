@@ -24,12 +24,7 @@
           <% if @deliverable.is_team_deliverable? %>
 
            Team Score: <input type="text" id="team_scores" size="5x1" onchange="change_team_scores();" />
-              <% if @deliverable.course.is_assignment_points? %>
-                  / <%= @deliverable.assignment.maximum_score%> (Points)<p/><p/>
-              <%  else %>
-                  / 100%<p/><p/>
 
-              <% end %>
 
            <div class="team_scores">
             <% for member in @deliverable.team.members %>

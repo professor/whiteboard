@@ -20,18 +20,23 @@
   <% end %>
 
 
+
+    <% customised_name=get_customised_name %>
   <table class='layout_table'>
+
+    <% if customised_name =="Deliverable"  %>
+        <tr>
+          <td style="width: 135px;"><%= f.label(:task_number) %></td>
+          <td><%= f.text_field(:task_number, :size=>3) %></td>
+        </tr>
+    <% end %>
     <tr>
-      <td style="width: 135px;"><%= f.label(:task_number) %></td>
-      <td><%= f.text_field(:task_number, :size=>3) %></td>
-    </tr>
-    <tr>
-      <td><%= f.label(:name) %></td>
+      <td><%= f.label(:name, "#{customised_name} Name") %></td>
       <td><%= f.text_field(:name, :size=>60) %></td>
     </tr>
 
     <tr>
-      <td><%= f.label(:is_team_deliverable, "Deliverable Type") %></td>
+      <td><%= f.label(:is_team_deliverable, "#{customised_name} Type") %></td>
       <td>
         <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
       </td>
@@ -58,7 +63,13 @@
     <tr>
       <td></td>
       <td class="actions">
-        <%= f.submit %>
+
+        <% if controller.action_name == 'new' %>
+            <%= f.submit "Create #{customised_name}"%>
+        <% elsif controller.action_name == 'edit' %>
+            <%= f.submit "Update #{customised_name}"%>
+        <% end %>
+
       </td>
     </tr>
 

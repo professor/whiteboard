@@ -7,10 +7,20 @@
 #
 # * For a course, a student will have at most one grade on each assignment.
 # * is_student_visible indicates that whether this grade is going to publish to student or not. 
-# * score should be number greater than zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor can add extra credit on student's grade.
-# * get_grades returns a list of assignment score of given course and student.
-# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is useful for controller to test whether the score is existed or not.
-#
+# * score should be two forms. If the grading rule applies points, the score should be a number greater than zero, and
+#   we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor
+#   can add extra credit on student's grade. If the grading rule uses letter grades, score would be A, A-, B+, B, B-,
+#   C+, C, C-.
+# * score= should assign a number greater than zero, and we don't validate whether the score is greater than maximum
+#   number defined in Assignment object, so that professor can add extra credit on student's grade.
+# * get_grades_for_student_per_course returns a list of assignment score of given course and student.
+# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
+#   useful for controller to test whether the score is existed or not.
+# * post_all creates/saves a list of grades updated by professor.
+# * save_as_draft should mark the given grades as invisible to the students.
+# * give_grade saves the grade given for a student's assignment.
+# * give_grades saves a list of assignment grades given to a group of students.
+# * post_grades_for_one_assignment saves a list of assignment grades.
 # 
 #
 class Grade < ActiveRecord::Base
@@ -19,8 +29,16 @@ class Grade < ActiveRecord::Base
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
   validates :course_id, :student_id, :assignment_id, :presence => true 
-  validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
+  #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
+
+  #def score
+  #  GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
+  #end
+  #
+  #def score=(val)
+  #  write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
+  #end
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
@@ -38,10 +56,12 @@ class Grade < ActiveRecord::Base
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+  #To make all the grades in the gradebook visible to students
   def self.post_all(course_id)
     Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
   end
 
+  # To save the changes and making them visible to professor only.
   def self.save_as_draft(grades)
     grades.each do |grade_entry|
       Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).try(
@@ -49,25 +69,29 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To assign/update the grade to the student
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
-    grading_result = false
+      grading_result = false
     student = User.find(student_id)
 
     assignment = Assignment.find(assignment_id)
     if assignment.nil?
       grading_result = false
     elsif assignment.course.registered_students.include?(student)
+      raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
-        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id, :score =>score,:is_student_visible=>is_student_visible})
+        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
+                           :score =>raw_score,:is_student_visible=>is_student_visible})
       end
-      grade.score =score
+      grade.score=raw_score
       grade.is_student_visible = is_student_visible
       grading_result = grade.save
     end
     grading_result
   end
 
+  # To assign grades for to multiple students
   def self.give_grades(grades)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
@@ -75,6 +99,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To post all the grades to students for one assignment
   def self.post_grades_for_one_assignment(grades, assignment_id)
       grades.each do |grade_entry|
         if grade_entry[:assignment_id] == assignment_id

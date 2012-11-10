@@ -35,7 +35,7 @@ class Assignment < ActiveRecord::Base
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   default_scope :order => 'task_number ASC, assignment_order ASC'
 
-
+  #This returns whether the deliverable is submitted or not.
   def is_deliverable_submitted
     if self.deliverables.size>0
       false

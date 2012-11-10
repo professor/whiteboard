@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029191927) do
+ActiveRecord::Schema.define(:version => 20121107222820) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -58,16 +58,6 @@ ActiveRecord::Schema.define(:version => 20121029191927) do
     t.integer  "configured_by_user_id"
     t.boolean  "updating_email"
     t.string   "email"
-    t.boolean  "is_assignment_points"
-    t.float    "A_plus_grade"
-    t.float    "A_grade"
-    t.float    "A_minus_grade"
-    t.float    "B_plus_grade"
-    t.float    "B_grade"
-    t.float    "B_minus_grade"
-    t.float    "C_plus_grade"
-    t.float    "C_grade"
-    t.float    "C_minus_grade"
   end
 
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
@@ -195,6 +185,21 @@ ActiveRecord::Schema.define(:version => 20121029191927) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_student_visible"
+  end
+
+  create_table "grading_rules", :force => true do |t|
+    t.string   "grade_type"
+    t.float    "A_grade_min"
+    t.float    "A_minus_grade_min"
+    t.float    "B_plus_grade_min"
+    t.float    "B_grade_min"
+    t.float    "B_minus_grade_min"
+    t.float    "C_plus_grade_min"
+    t.float    "C_grade_min"
+    t.float    "C_minus_grade_min"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "individual_contribution_for_courses", :force => true do |t|

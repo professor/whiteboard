@@ -1,9 +1,13 @@
-<h1>Listing Assignments</h1>
+<% customised_name= get_customised_name %>
+
+<h1>Listing <%= customised_name %></h1>
 
 <table class='cmu_table'>
   <tr>
+  <% if customised_name=="Deliverable" %>
     <th>Task Number</th>
-    <th>Name</th>
+  <% end %>
+    <th><%=customised_name  %> Name</th>
     <th>Due Date</th>
     <th>Deliverable Type</th>
     <th>Student Can Submit For this Assignment?</th>
@@ -14,8 +18,9 @@
 
 <% @assignments.each do |assignment| %>
   <%= content_tag_for(:tr, assignment) do %>
-
-    <td><%=assignment.task_number  %> </td>
+    <% if customised_name=="Deliverable" %>
+         <td><%=assignment.task_number  %> </td>
+    <% end %>
     <td><%=assignment.name  %> </td>
     <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
     <td><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
@@ -28,5 +33,5 @@
 <% end %>
 </table>
 <br />
-<%= link_to 'New Assignment', new_course_assignment_path %>
+<%= link_to "New #{customised_name}", new_course_assignment_path %>
 <br><br>
