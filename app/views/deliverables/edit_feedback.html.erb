@@ -49,7 +49,7 @@
 
   <% if @deliverable.is_team_deliverable? %>
     <p>
-      <%= text_field_tag "team_grade", ' ', :size => 4 %>/<%= @deliverable.assignment.max_score %>
+      <%= text_field_tag "team_grade", '', :size => 4 %>/<%= @deliverable.assignment.max_score %>
       <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
     </p>
     <table class='layout_table'>

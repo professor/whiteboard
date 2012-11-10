@@ -22,22 +22,13 @@
         <tr>
           <td><%= team.name %></td>
           <td><%= member.human_name %></td>
-          <% total_score = 0.0 %>
+          <% number_grade = @course.get_earned_number_grade(member) %>
           <% @course.assignments.each do |assignment| %>
             <td>
               <% deliverable_grade = assignment.find_deliverable_grade(member) %>
               <% if assignment.can_submit? && deliverable_grade.blank? %>
                 Unsubmitted
               <% else %>
-                <%
-                  if !deliverable_grade.blank?
-                    if @course.grading_criteria == "Percentage"
-                      total_score += (deliverable_grade.grade.to_f * assignment.weight / 100)
-                    else
-                      total_score += deliverable_grade.grade
-                    end
-                  end
-                %>
                 <%
                    if deliverable_grade.blank?
                      link_text = "0 (Ungraded)"
@@ -51,9 +42,9 @@
             </td>
           <% end %>
           <td>
-            <%= total_score %><%= @course.grading_criteria == "Percentage" ? "%" : "" %>
+            <%= number_grade %><%= @course.grading_criteria == "Percentage" ? "%" : "" %>
           </td>
-          <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(total_score) %></td>
+          <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(number_grade) %></td>
           <td>
             <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
             <%= form_for(:course_user_grade, url: course_user_grades_path, remote: true) do |f| %>
@@ -62,7 +53,7 @@
               <% end %>
               <%= f.hidden_field :user_id, value: member.id %>
               <%= f.hidden_field :course_id, value: @course.id %>
-              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(total_score) : user_grade.grade}, {:class => 'grade_select'} %>
+              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(number_grade) : user_grade.grade}, {:class => 'grade_select'} %>
               <%= f.submit hidden: true %>
             <% end %>
           </td>

@@ -15,12 +15,16 @@ class DeliverableGrade < ActiveRecord::Base
     if is_numeric?
       self.grade.to_f
     else
-      previous_grading_range_number = 100
+      previous_grading_range_number = 100.0
       self.deliverable.assignment.course.grading_ranges.each do |grading_range|
         if self.grade == grading_range.grade
-          return previous_grading_range_number
+          if self.deliverable.assignment.course.grading_criteria == "Points"
+            return (previous_grading_range_number / 100) * self.deliverable.assignment.weight
+          else
+            return previous_grading_range_number
+          end
         end
-        previous_grading_range_number = grading_range.minimum - 1
+        previous_grading_range_number = (grading_range.minimum - 1).to_f
       end
       return 0
     end
@@ -41,7 +45,7 @@ class DeliverableGrade < ActiveRecord::Base
       valid_letter_grades = self.deliverable.assignment.course.grading_ranges.map {|grading_range| grading_range.grade}
 
       if !valid_letter_grades.include?(self.grade)
-        self.errors.add(:grade, "Grade should be a grade in [#{valid_letter_grades.join(", ")}]")
+        self.errors.add(:base, "Grade should be a grade in [#{valid_letter_grades.join(", ")}]")
       end
     end
   end

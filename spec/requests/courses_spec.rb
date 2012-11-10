@@ -101,21 +101,23 @@ describe "courses" do
         student.deliverable_grades.each do |deliverable_grade|
           deliverable_grade.update_attributes(grade: 1)
         end
+        student.deliverable_grades.first.update_attributes(grade: "A")
         ppm_course.reload
 
-        ppm_course.get_earned_number_grade(student).should == student.deliverable_grades.count
+        ppm_course.get_earned_number_grade(student).should == student.deliverable_grades.count + 99
       end
 
       it "show score when grading criteria is points" do
         architecture_course = FactoryGirl.create(:architecture_current_semester)
         student = architecture_course.teams.first.members.first
-        deliverable_grade_1 = student.deliverable_grades.first
-        deliverable_grade_2 = student.deliverable_grades.second
-        deliverable_grade_1.update_attributes(grade: 20)
-        deliverable_grade_2.update_attributes(grade: 20)
+        student_deliverable_grades = student.deliverable_grades
+        student_deliverable_grades[0].update_attributes(grade: 20)
+        student_deliverable_grades[1].update_attributes(grade: 20)
+        student_deliverable_grades[2].update_attributes(grade: "A") #(20)
+        student_deliverable_grades[3].update_attributes(grade: "B") #(17.4)
         architecture_course.reload
 
-        architecture_course.get_earned_number_grade(student).should == 40
+        architecture_course.get_earned_number_grade(student).should == 77.4
       end
     end
   end
