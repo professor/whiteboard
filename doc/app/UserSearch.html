@@ -386,23 +386,28 @@ constructs the query string depending on the search criteria.</p>
     <span class="ruby-identifier">query_string</span> = <span class="ruby-string">&quot;(&quot;</span>
     <span class="ruby-comment"># by default add filter for partial search</span>
     <span class="ruby-identifier">main_search_string</span> = <span class="ruby-string">&quot;%&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">criteria</span>[<span class="ruby-string">'main_search_text'</span>]<span class="ruby-operator">+</span><span class="ruby-string">&quot;%&quot;</span>
-
     <span class="ruby-comment"># add filter for exact match</span>
     <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'exact_match'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
       <span class="ruby-identifier">main_search_string</span> = <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'main_search_text'</span>]
     <span class="ruby-keyword">end</span>
 
-    <span class="ruby-comment"># check first name and add to query string</span>
-    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'first_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
-      <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;first_name ILIKE '&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">main_search_string</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&quot;</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-comment"># check last name and add to query string</span>
-    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'last_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
-      <span class="ruby-keyword">if</span>( <span class="ruby-identifier">query_string</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;(&quot;</span>)
-        <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; OR &quot;</span>
+
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'first_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'last_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+      <span class="ruby-comment"># check full name if both first name and last name are selected</span>
+      <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;human_name ILIKE '&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">main_search_string</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-comment"># check first name and add to query string</span>
+      <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'first_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;first_name ILIKE '&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">main_search_string</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&quot;</span>
       <span class="ruby-keyword">end</span>
-      <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;last_name ILIKE '&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">main_search_string</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&quot;</span>
+      <span class="ruby-comment"># check last name and add to query string</span>
+      <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'last_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;last_name ILIKE '&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">main_search_string</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&quot;</span>
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
+
+
+
 
     <span class="ruby-comment"># check andrew id and add to query string</span>
     <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'andrew_id'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
@@ -462,6 +467,10 @@ constructs the query string depending on the search criteria.</p>
       <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; AND &quot;</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;is_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">criteria</span>[<span class="ruby-string">'people_type'</span>]<span class="ruby-operator">+</span><span class="ruby-string">&quot; IS true&quot;</span>
+    <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'people_type'</span>]<span class="ruby-operator">==</span><span class="ruby-string">'student'</span>)
+
+      <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; AND is_alumnus IS NOT true&quot;</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># add filter for class year</span>
@@ -497,7 +506,12 @@ constructs the query string depending on the search criteria.</p>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># return the constructed query string</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">query_string</span>
+  <span class="ruby-comment">#return query_string</span>
+  <span class="ruby-keyword">if</span>( <span class="ruby-identifier">query_string</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>)
+    <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; AND &quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">query_string</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;is_active IS true&quot;</span>
+
 
 <span class="ruby-keyword">end</span></pre>
           </div><!-- construct_query_string-source -->

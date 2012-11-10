@@ -26,6 +26,87 @@ describe "people search" do
     page.should_not have_selector('#results_box .data_card')
   end
 
+# Tests written for Simple(Smart) Search
+
+=begin
+  context 'smart search capability' do
+    it "should search for human name", :js => true do
+      fill_in "smart_search_text" , :with => "clyde"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Clyde')
+    end
+
+    it "should recognize and search for company name", :js => true do
+      fill_in "smart_search_text" , :with => "google"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Clyde')
+      page.should have_selector('#results_box .data_card', :text => 'Allen')
+    end
+
+    it "should recognize and search for class year", :js => true do
+      fill_in "smart_search_text" , :with => "2013"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Clyde')
+      page.should have_selector('#results_box .data_card', :text => 'Shama')
+      page.should have_selector('#results_box .data_card', :text => 'Rashmi')
+      page.should have_selector('#results_box .data_card', :text => 'Charlie')
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sunil')
+      page.should_not have_selector('#results_box .data_card', :text => 'Allen')
+    end
+
+    it "should recognize and search for program", :js => true do
+      fill_in "smart_search_text" , :with => "SE TECH"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Shama')
+      page.should_not have_selector('#results_box .data_card', :text => 'Clyde')
+      page.should_not have_selector('#results_box .data_card', :text => 'Rashmi')
+      page.should_not have_selector('#results_box .data_card', :text => 'Vidya')
+    end
+
+    it "should recognize and search for FT/PT", :js => true do
+      fill_in "smart_search_text" , :with => "full time"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Shama')
+      page.should have_selector('#results_box .data_card', :text => 'Clyde')
+      page.should have_selector('#results_box .data_card', :text => 'Rashmi')
+      page.should have_selector('#results_box .data_card', :text => 'Vidya')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sam')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sally')
+    end
+
+    it "should recognize and search for people type", :js => true do
+      fill_in "smart_search_text" , :with => "faculty"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Allen')
+      page.should have_selector('#results_box .data_card', :text => 'Todd')
+      page.should have_selector('#results_box .data_card', :text => 'Ed')
+      page.should_not have_selector('#results_box .data_card', :text => 'Shama')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sunil')
+    end
+
+    it "should recognize and search for name AND company", :js => true do
+      fill_in "smart_search_text" , :with => "todd google"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card')
+      fill_in "smart_search_text" , :with => "todd yahoo"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Todd')
+    end
+
+    it "should recognize and search for combination of class year / FT or PT / program", :js => true do
+      fill_in "smart_search_text" , :with => "2013 FT SE"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Rashmi')
+      page.should have_selector('#results_box .data_card', :text => 'Shama')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sam')
+      page.should_not have_selector('#results_box .data_card', :text => 'Sunil')
+    end
+
+  end
+=end
+
+
   context 'display and use linkable urls and back button' do
 
     it "should generate linkable url", :js => true do
@@ -57,10 +138,10 @@ describe "people search" do
 
   end
 
+
   context 'display team names along with course' do
 
     before do
-
       @course_fse  = Course.create(name: "Foundation of Software Engineering", short_name: "FSE", semester: "Fall", year: "2012", mini: "Both")
       @course_req  = Course.create(name: "Requirement Engineering", short_name: "Req", semester: "Fall", year: "2012", mini: "A")
       @course_arch  = Course.create(name: "Architecture and Design", short_name: "Arch", semester: "Fall", year: "2012", mini: "B")
@@ -75,7 +156,6 @@ describe "people search" do
 
       @stu_rashmi.teams = [@team_mav,@team_coop]
       @stu_shama.teams = [@team_mav,@team_leffing]
-
     end
 
     it "display team names along with course for every student", :js => true do
@@ -92,7 +172,6 @@ describe "people search" do
 
     before do
       fill_in "search_text_box" , :with => "Sam"
-
     end
 
     it "should display only fields that are filled in", :js => true  do
@@ -111,7 +190,6 @@ describe "people search" do
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should_not have_selector('#results_box .data_card', :text => "Work")
       page.should_not have_selector('#results_box .data_card', :text => "Mobile")
-
     end
 
     it "should update on change of search text string", :js => true do
@@ -120,7 +198,6 @@ describe "people search" do
       fill_in "search_text_box" , :with => "Todd"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :text => "Todd")
-
     end
 
     it "should update on change of user type", :js => true do
@@ -129,7 +206,6 @@ describe "people search" do
       select 'Alumni', :from => 'people_type_picker'
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should_not have_selector('#results_box .data_card', :text => "Sam")
-
     end
 
     it "should update on change of criteria", :js => true do
@@ -188,6 +264,8 @@ describe "people search" do
       page.should_not have_content('Shama')
     end
 
+# NEED TO BE REFACTORED AFTER UI CHANGE
+=begin
     it "Search by Andrew ID",  :js => true do
       fill_in "search_text_box" , :with => "ali"
       page.find(:css, '#criteria_first_name a').click
@@ -196,6 +274,7 @@ describe "people search" do
       page.should have_selector('#results_box .data_card')
       page.should have_content('Clyde')
     end
+=end
 
     #need to be implemented
     it "Search by class year", :js => true do
@@ -255,6 +334,8 @@ describe "people search" do
       page.should_not have_content("Clyde")
     end
 
+# NEED TO BE REFACTORED AFTER UI CHANGE
+=begin
     it "Search by exact Last Name / Student / Program", :js => true do
       select 'Student', :from => 'people_type_picker'
       select 'Program', :from => 'extra_criteria_picker'
@@ -267,6 +348,7 @@ describe "people search" do
       page.should_not have_content("Allen")
       page.should_not have_content("Sean")
     end
+=end
 
     it "Search by Full Time / Student", :js => true do
       select 'Student', :from => 'people_type_picker'

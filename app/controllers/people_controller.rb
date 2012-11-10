@@ -29,29 +29,12 @@ class PeopleController < ApplicationController
     #end
 
     # By default order by name
-   @people = @people.order("first_name ASC, last_name ASC").all
+    @people = @people.order("first_name ASC, last_name ASC").all
 
-=begin
-# BEFORE MERGE
+
     respond_to do |format|
       format.html { render :html => @people }
-      format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-                                                                    "first_name" => person.first_name,
-                                                                    "last_name" => person.last_name,
-                                                                    "image_uri" => person.image_uri,
-                                                                    "team_names" => person.teams,
-                                                                    "masters_program" => person.masters_program,
-                                                                    "telephone1_label" => person.telephone1_label,
-                                                                    "telephone1" => person.telephone1,
-                                                                    "telephone2_label" => person.telephone2_label,
-                                                                    "telephone2" => person.telephone2,
-                                                                    "email" => person.email].merge(person.telephones_hash)}, :layout => false }
-    end
-=end
-
-# MERGE TRY
-    respond_to do |format|
-      format.html { render :html => @people }
+      # Formatting for JSON response
       format.json { render :json => @people.collect { |person|
         teams_array = person.teams.map(&:attributes)
         teams_array.each do |team|
@@ -71,7 +54,7 @@ class PeopleController < ApplicationController
           "email" => person.email
         ].merge(person.telephones_hash)
       }, :layout => false }
-
+      # Formatting for CSV response
       format.csv { 
         @return_string = "Name, Email, Telephone1, Telephone2\n"
         @people.collect { |person|
@@ -87,7 +70,7 @@ class PeopleController < ApplicationController
         }
         send_data(@return_string, :type => 'text/csv;charset=iso-8859-1;', :filename => "search_results.csv", :disposition => 'attachment', :encoding => 'utf8')
       }
-
+      # Formatting for VCARD response
       format.vcf { 
         @return_string = ""
         @people.collect { |person|
@@ -105,11 +88,7 @@ class PeopleController < ApplicationController
         send_data(@return_string, :type => 'text/x-vcard;charset=iso-8859-1;', :filename => "search_results.vcf", :disposition => 'attachment', :encoding => 'utf8')
       }
 
-
-
     end
-# END MERGE
-
 
   end
 
@@ -117,8 +96,9 @@ class PeopleController < ApplicationController
 
   #Ajax call for autocomplete using params[:term]
   def index_autocomplete
-    #if database is mysql
-    #@people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    # if database is mysql
+    # @people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    # Modified because database is PostgreSQL
     @people = User.where("human_name ILIKE ?", "%#{params[:term]}%").all
 
     respond_to do |format|
@@ -126,6 +106,16 @@ class PeopleController < ApplicationController
       format.json { render :json => @people.collect { |person| person.human_name }, :layout => false }
     end
   end
+
+  #Ajax call for getting all company names
+  def get_companies
+    @people = User.all
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json { render :json => @people.collect { |person| person.organization_name }, :layout => false }
+    end
+  end
+
 
   def advanced
     index

@@ -21,6 +21,7 @@ FactoryGirl.define do
     last_name "Sam"
     human_name "Student Sam"
     twiki_name "StudentSam"
+    masters_program "SE"
     graduation_year "2014"
     is_part_time true
     telephone1_label "Work"
@@ -203,6 +204,7 @@ FactoryGirl.define do
     last_name "Pissaye"
     human_name "Sunil Pissaye"
     twiki_name "SunilPissaye"
+    masters_program "SE"
     graduation_year "2010"
   end
 

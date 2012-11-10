@@ -1,7 +1,9 @@
 /* UI Mockup JS Migration */
 
+// An array of available criteria
 var CRITERIA_ARRAY = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
 
+// HASH providing the mapping of variable name and screen name
 var CRITERIA_NAME_HASH = {
     "first_name": "First Name",
     "last_name": "Last Name",
@@ -11,7 +13,7 @@ var CRITERIA_NAME_HASH = {
     "program": "Program",
     "ft_pt": "Full/Part Time"
 }
-
+// HASH reflecting if criteria specified or not
 var SELECTED_CRITERIA_HASH = {
     "First Name": true,
     "Last Name": true,
@@ -23,14 +25,38 @@ var SELECTED_CRITERIA_HASH = {
 }
 
 // Prefetch data from server and build hash table for prediction on user inputs
-var PREFETCHED_HASH = new Object();
-PREFETCHED_HASH["NAME"] = new Object();
-PREFETCHED_HASH["COMPANY"] = new Object();
-PREFETCHED_HASH["PROGRAM"] = new Object();
+var RECOGNITION_HASH = new Object();
+RECOGNITION_HASH["COMPANY"] = new Object();
 
 // Predefines the Global Search Request object
 var SEARCH_REQUEST = $.ajax();
 var SEARCH_TIMEOUT;
+
+// Build the company hash
+function build_company_hash(){
+  $.ajax({
+    url: 'people_get_companies.json', dataType: 'json',
+    success: function(data){
+      for(var i=0; i<data.length; ++i){
+        if(data[i] != null && data[i] != ""){
+          var splited_str_array = data[i].split(" ");
+          for(var j=0; j<splited_str_array.length; ++j){
+            //splited_str_array[j] = splited_str_array[j].replace(/^[a-zA-Z0-9](.*[a-zA-Z0-9])?$/gi, '');
+            splited_str_array[j] = splited_str_array[j].replace(/^[^a-z0-9]/gi,'').replace(/[^a-z0-9]$/gi,'');
+          }
+          console.log(splited_str_array);
+        }
+      }
+    }  
+  });
+};
+
+// TODO for company hash
+// ignore, pvt, ltd, limited, private, dept, corp, an, co, inc, or, and, of, the, single character, empty string, replace character like (. , ) at the beginning and end  with empty
+// Check for program full time..... first and then company (because someone write SE Fulltime Tech.... as company)
+
+
+
 
 function construct_query_sting(){
     var request_url_with_params = '';
@@ -57,7 +83,7 @@ function construct_query_sting(){
 
 function execute_search(request_params){
     
-   // console.log("search executed");
+    // console.log("search executed");
     $('#results_box').fadeTo('fast', 0.5);
     SEARCH_REQUEST.abort();
 
@@ -91,6 +117,7 @@ function execute_search(request_params){
     });
     //history.pushState(null, "", 'people?'+request_params);
     //history.replaceState(null, "", 'people?'+request_params);
+    // Linkable URL - Modify the location hash when search performed
     location.hash=request_params;
 };
 
@@ -123,7 +150,7 @@ $(document).ready(function(){
       $('#export_dialog_modal').dialog("close");
     });
 
-    // Advanced Search Area
+    // Advanced Search Area Initialization
     $('#advanced_search_btn').click(function(){
       $('#smart_search_text').attr('disabled', 'disabled').css('opacity', 0.3);
       $('#advanced_search_area').slideDown();
@@ -133,8 +160,8 @@ $(document).ready(function(){
       $('#advanced_search_area').slideUp();
     });
 
-
-
+    // Build the Companies Hash
+    build_company_hash();
 
     // add Class Year options
     var current_date = new Date();
@@ -205,7 +232,7 @@ $(document).ready(function(){
         $(this).val('default');
     });
 
-
+    // NEED TO BE REFACTORED AFTER UI CHANGE
     // fade out main criteria tag when click on x
     /*$('#main_criteria_box').on("click", ".criteria_tag a", function(){
         if(SELECTED_CRITERIA_HASH[$(this).parent()[0].title]){
@@ -228,6 +255,7 @@ $(document).ready(function(){
         return false; // avoid anchor action
     });*/
 
+
     // Remove extra criteria tag when click on x
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
         SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = false;
@@ -237,19 +265,17 @@ $(document).ready(function(){
     });
 
 
+    // Events binded to search execution
     $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
       execute_search(construct_query_sting());
     });
 
     $('#search_text_box').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
-      //if($('#search_text_box').val().length >1){
       $('#results_box').fadeTo('fast', 0.5);
       if(e.which != 13){
         SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
       }
-      //}
-
     });
 
     $('.criteria_text').keyup(function(e) {
@@ -257,39 +283,27 @@ $(document).ready(function(){
       SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400)  ;
     });
 
-
-
-
-    /*
-    $.getJSON('../people_autocomplete.json',
-        function(rcv_data){
-            $('#search_text_box').autocomplete({
-                source: rcv_data, minLength: 2, delay: 400
-            });                                                        s
-        }
-    )*/
-    //Linkable url
+    // Linkable URL - Match hash to search parameters and execute search
     var hash_params = window.location.hash;
 
-    if(hash_params!=""){
-        hash_params=hash_params.replace("#","");
-        execute_search(hash_params);
+    if(hash_params != ""){
+      hash_params = hash_params.replace("#","");
+      execute_search(hash_params);
     }
-    //Back button
+    // Back to previous search by pressing back button 
     $(window).bind("popstate", function() {
-        var h= location.hash;
-
-        if(h!=""){
-            h=h.replace("#","");
-            execute_search(h);
+        var hash= location.hash;
+        if( hash != ""){
+          hash = hash.replace("#","");
+          execute_search(hash);
         }
     });
 
 
 
 
-
-    /* var hp = hash_params.split("&");
+// TODO: Match Parameters in Hash to new UI
+/* var hp = hash_params.split("&");
 var i;
 for(i = 0; i < hp.length; i++) {
 var name_value = hp[i].split("=");
@@ -314,10 +328,7 @@ if(name === "first_name") {
 
 //execute_search();
 
-
-}        */
-
-
+} */
 
 
 });
