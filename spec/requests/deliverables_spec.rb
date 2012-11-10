@@ -82,14 +82,14 @@ describe "deliverables" do
       it "should provide feedback and a grade to each student in the team" do
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Submit"
-        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
         Deliverable.last.status.should == 'Graded'
       end
 
       it "should save as draft" do
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Save as draft"
-        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
         Deliverable.last.status.should == 'Draft'
       end
     end
@@ -110,14 +110,14 @@ describe "deliverables" do
       it "should provide feedback and a grade to the student" do
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Submit"
-        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
         Deliverable.last.status.should == 'Graded'
       end
 
       it "should save as draft" do
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Save as draft"
-        Deliverable.last.deliverable_grades.first.grade.should == 10
+        Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
         Deliverable.last.status.should == 'Draft'
       end
     end

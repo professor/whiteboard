@@ -336,15 +336,15 @@ class Course < ActiveRecord::Base
   end
 
   def get_earned_number_grade(user)
-    total_grade = 0;
+    total_grade = 0
     get_user_deliverable_grades(user).each do |deliverable_grade|
-      total_grade = total_grade + deliverable_grade.grade
+      total_grade += deliverable_grade.number_grade
     end
     if self.grading_criteria == "Percentage"
       total_grade
     else
       total_weight = self.total_assignment_weight
-      total_weight == 0 ? 0 : ((total_grade.to_f / total_weight) * 100).to_i
+      total_weight == 0 ? 0 : ((total_grade / total_weight) * 100)
     end
   end
 
@@ -401,15 +401,6 @@ class Course < ActiveRecord::Base
         ratio = 100.0/assignment_sum
         self.assignments.each do |assignment|
           assignment.weight = assignment.weight * ratio
-          assignment.deliverables.each do |deliverable|
-            deliverable.deliverable_grades.each do |deliverable_grade|
-              deliverable_grade.grade = deliverable_grade.grade * ratio
-              if deliverable_grade.grade < 1
-                deliverable_grade.grade = 1
-              end
-              deliverable_grade.save
-            end
-          end
           assignment.save
         end
       end

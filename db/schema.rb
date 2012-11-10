@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105172654) do
+ActiveRecord::Schema.define(:version => 20121110064048) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(:version => 20121105172654) do
   create_table "deliverable_grades", :force => true do |t|
     t.integer  "user_id"
     t.integer  "deliverable_id"
-    t.integer  "grade"
+    t.string   "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -109,10 +109,10 @@ describe "courses" do
       it "show score when grading criteria is points" do
         architecture_course = FactoryGirl.create(:architecture_current_semester)
         student = architecture_course.teams.first.members.first
-        deliverable_1 = student.deliverable_grades.first
-        deliverable_2 = student.deliverable_grades.last
-        deliverable_1.update_attributes(grade: 20)
-        deliverable_2.update_attributes(grade: 20)
+        deliverable_grade_1 = student.deliverable_grades.first
+        deliverable_grade_2 = student.deliverable_grades.second
+        deliverable_grade_1.update_attributes(grade: 20)
+        deliverable_grade_2.update_attributes(grade: 20)
         architecture_course.reload
 
         architecture_course.get_earned_number_grade(student).should == 40
