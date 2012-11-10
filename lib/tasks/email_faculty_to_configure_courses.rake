@@ -6,7 +6,7 @@ namespace :cmu do
   task(:email_faculty_to_configure_courses => :environment) do
 
     count = 0
-    Course.current_semester_courses.each do |course|
+    Course.next_semester_courses.each do |course|
       response = course.email_faculty_to_configure_course_unless_already_configured
       count += 1 if response
     end
