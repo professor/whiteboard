@@ -5,7 +5,7 @@ FactoryGirl.define do
     course_id 1
     student_id 1
     assignment_id 1
-    score 1.5
+    score "1.5"
   end
 
   factory :grade_visible, :parent=>:grade do
@@ -16,10 +16,18 @@ FactoryGirl.define do
     is_student_visible false
   end
 
-  factory :grade_seq, :parent=>:grade do
+  factory :grade_points, :parent=>:grade do
     course_id 1
-    sequence(:score) {|i| i*5 }
+    sequence(:score) {|i| (i*5).to_s }
     student_id 999
     assignment
   end
+
+  factory :grade_letters, :parent=>:grade do
+    course_id 1
+    score "A"
+    student_id 999
+    assignment
+  end
+
 end

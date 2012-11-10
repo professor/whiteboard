@@ -29,36 +29,9 @@ class Grade < ActiveRecord::Base
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
   validates :course_id, :student_id, :assignment_id, :presence => true 
+  # FIXME: implement proprietary validation functions
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
-
-  #before_save :convert_to_points
-  #after_save :points_to_letter
-
-  def convert_to_points
-    puts "i am before save : convert to points"
-    #GradingRule.get_raw_grade(self.course_id, self[:score])
-    self[:score] = @score
-  end
-
-
-  def points_to_letter
-    puts "i am after save : points to letter"
-    #write_attribute(:score, GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score)))
-    #self[:score] = GradingRule.get_grade_in_prof_format(self.course_id, self[:score])
-    self[:score] = GradingRule.get_grade_in_prof_format(self.course_id, @score)
-  end
-
-  def score
-    puts "i am score!!!!!!!!!!!!!!!!!!!!!!!!"
-    GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
-  end
-  #
-  def score=(val)
-    puts "i am score=!!!!!!!!!!!!!!"
-    @score = val
-    #write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
-  end
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
@@ -66,10 +39,10 @@ class Grade < ActiveRecord::Base
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       grades[grade.assignment.id] = grade
     end
-    grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
+    # FIXME: calculate earned grade
+    #grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
     grades
   end
-
 
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)
@@ -88,25 +61,21 @@ class Grade < ActiveRecord::Base
   end
 
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
-      grading_result = false
+    grading_result = false
     student = User.find(student_id)
 
     assignment = Assignment.find(assignment_id)
     if assignment.nil?
       grading_result = false
     elsif assignment.course.registered_students.include?(student)
-      raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
         grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
-                           :score =>raw_score,:is_student_visible=>is_student_visible})
+                           :score =>score,:is_student_visible=>is_student_visible})
       end
-      #grade.score=raw_score
-      grade[:score] = raw_score
+      grade.score=score
       grade.is_student_visible = is_student_visible
-      puts "before save!!!!!!!!!!!!!!!!"
       grading_result = grade.save
-      puts "after save!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     end
     grading_result
   end
