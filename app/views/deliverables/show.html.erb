@@ -58,7 +58,7 @@
   <% end %>
 </table>
 <% if current_user.is_staff %>
-    <%= link_to 'Back to Course Deliverables', course_deliverables_path(@deliverable.course) %>
+    <%= link_to 'Back to Course Deliverables', professor_deliverables_path(current_user, course_id: @deliverable.assignment.course.id) %>
 <% end %>
 <% if current_user.is_student %>
     <%= link_to 'Back to My Deliverables', my_deliverables_path(current_user) %>

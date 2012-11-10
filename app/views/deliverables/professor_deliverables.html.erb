@@ -36,6 +36,8 @@
   <% end %>
   </div>
   <div id='grading_queue'><%= image_tag 'ajax-loader.gif' %></div>
+<% else %>
+  <%= "#{@person.human_name} is not teaching any courses" %>.
 <% end %>
 
 <%

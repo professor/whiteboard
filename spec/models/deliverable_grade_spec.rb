@@ -19,11 +19,5 @@ describe DeliverableGrade do
       expect { @deliverable_grade.save }.to_not change(DeliverableGrade, :count)
       @deliverable_grade.errors.should include(:grade)
     end
-
-    it "should not save when grade is higher than assignment weight" do
-      @deliverable_grade.grade = @assignment.weight + 1
-      expect { @deliverable_grade.save }.to_not change(DeliverableGrade, :count)
-      @deliverable_grade.errors.should include(:grade)
-    end
   end
 end

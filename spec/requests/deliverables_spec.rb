@@ -86,14 +86,6 @@ describe "deliverables" do
         Deliverable.last.status.should == 'Graded'
       end
 
-      it "should not save if the grade point is greater than the allocated points" do
-        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: @assignment.weight + 1
-        click_button "Submit"
-        Deliverable.last.deliverable_grades.first.grade.should == 0
-        Deliverable.last.status.should == 'Ungraded'
-        page.should have_selector('#error_explanation')
-      end
-
       it "should save as draft" do
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Save as draft"
@@ -120,14 +112,6 @@ describe "deliverables" do
         click_button "Submit"
         Deliverable.last.deliverable_grades.first.grade.should == 10
         Deliverable.last.status.should == 'Graded'
-      end
-
-      it "should not save if the grade point is greater than the allocated points" do
-        fill_in "deliverable_deliverable_grades_attributes_0_grade", with: @assignment.weight + 1
-        click_button "Submit"
-        Deliverable.last.deliverable_grades.first.grade.should == 0
-        Deliverable.last.status.should == 'Ungraded'
-        page.should have_selector('#error_explanation')
       end
 
       it "should save as draft" do

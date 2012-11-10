@@ -43,7 +43,6 @@ describe Deliverable do
     deliverable = FactoryGirl.build(:team_deliverable, assignment: FactoryGirl.build(:assignment, team_deliverable: true))
     deliverable.stub(:update_team)
     deliverable.save
-    STDERR.puts deliverable.owner_name
     deliverable.owner_name.should be_equal(deliverable.team.name)
   end
 

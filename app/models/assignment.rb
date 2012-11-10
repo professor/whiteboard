@@ -55,6 +55,14 @@ class Assignment < ActiveRecord::Base
     end
   end
 
+  def max_score
+    if self.course.grading_criteria == "Points"
+      "#{self.weight} points"
+    else
+      "100"
+    end
+  end
+
   private
 
     def validate_due_date

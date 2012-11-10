@@ -7,6 +7,7 @@
     <th>Task</th>
     <th>Owner</th>
     <th>Latest Deliverable</th>
+    <th>Grade</th>
     <th>Feedback Received?</th>
     <th>Actions</th>
   </tr>
@@ -14,11 +15,11 @@
   <% deliverables.delete_if{|del| del.assignment.nil?}.each do |deliverable| %>
       <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
         <% unless skip_course_column %>
-            <% if deliverable.course %>
-                <td><%= h deliverable.course.name %></td>
-            <% else %>
-                <td>&nbsp;</td>
-            <% end %>
+          <% if deliverable.course %>
+            <td><%= h deliverable.course.name %></td>
+          <% else %>
+            <td>&nbsp;</td>
+          <% end %>
         <% end %>
         <td><%= h deliverable.task_number %></td>
         <td><%= deliverable.owner_name %></td>
@@ -28,7 +29,14 @@
         <% else %>
             <td><%= deliverable.assignment.title %></td>
         <% end %>
-
+        <td>
+          <% deliverable_grade = deliverable.deliverable_grades.find_by_user_id(@user) %>
+          <% if deliverable.status == 'Graded' && !deliverable_grade.blank? %>
+            <%= deliverable_grade.grade %>/<%= deliverable.assignment.max_score %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
         <td>
           <% if deliverable.status == 'Graded' %>
               Yes

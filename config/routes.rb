@@ -110,7 +110,6 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/export_to_csv_old' => 'teams#export_to_csv'
   match 'courses/:course_id/export_to_csv' => 'courses#export_to_csv'
   match 'courses/:course_id/team_formation_tool' => 'courses#team_formation_tool', :as => :team_formation_tool
-  match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
 
   #match 'courses/:course_id/presentations/update' => 'presentations#create',:via => :post, :as => :new_course_presentation

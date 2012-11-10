@@ -19,30 +19,6 @@ describe DeliverablesController do
         Course.stub(:find).and_return(@course)
       end
 
-      context "as the faculty owner of the course" do
-
-        before do
-          login(@faculty_frank)
-        end
-
-        it 'assigns @deliverables' do
-          get :index_for_course, :course_id => @course.id
-          assigns(:deliverables).should == [@deliverable, @deliverable]
-        end
-      end
-
-      context "as an admin" do
-
-        before do
-          login(@admin_andy)
-        end
-
-        it 'assigns @deliverables' do
-          get :index_for_course, :course_id => @course.id
-          assigns(:deliverables).should == [@deliverable, @deliverable]
-        end
-      end
-
       context "as any other user" do
         before do
           login(@faculty_fagan)
