@@ -162,9 +162,6 @@ class CoursesController < ApplicationController
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       @course.attributes = params[:course]
-      puts "Lydian!!!!"
-      puts params.inspect
-      puts "Lydian!!!!"
       if @course.save
         if (params[:course][:is_configured])
           #The previous page was configure action
