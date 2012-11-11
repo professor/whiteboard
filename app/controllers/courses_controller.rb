@@ -93,7 +93,7 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     authorize! :create, Course
-    @course = Course.new
+    @course = Course.new(:grading_rule => GradingRule.new)
     @course.semester = AcademicCalendar.next_semester
     @course.year = AcademicCalendar.next_semester_year
 
@@ -107,6 +107,9 @@ class CoursesController < ApplicationController
   def edit
     store_previous_location
     @course = Course.find(params[:id])
+    if @course.grading_rule.nil?
+      @course.grading_rule = GradingRule.new
+    end
     authorize! :update, @course
   end
 
@@ -159,6 +162,9 @@ class CoursesController < ApplicationController
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       @course.attributes = params[:course]
+      puts "Lydian!!!!"
+      puts params.inspect
+      puts "Lydian!!!!"
       if @course.save
         if (params[:course][:is_configured])
           #The previous page was configure action

@@ -105,17 +105,33 @@
       <%= f.label :secondary_faculty_label %><br/>
       <%= f.text_field(:secondary_faculty_label, :size => 40) %>
     </p>
-      -->
+    -->
+    <%= f.fields_for :grading_rule do |rule| %>
+      <p>
+      <%= rule.label :grade_type, "Please select grading type for assignments?" %><br/>
+      <%= rule.select(:grade_type, [['Points', 'points'],['Weight','weight'], ['Letter', 'letter']])  %> <br/>
 
+      </p>
+      Grading Criteria
+      <table>
+        <%[[:A_grade_min, "A"],[:A_minus_grade_min, "A-"],[:B_plus_grade_min, "B+"], [:B_grade_min, "B"],[:B_minus_grade_min, "B-"],[:C_plus_grade_min, "C+"], [:C_grade_min, "C"],[:C_minus_grade_min, "C-"]].each do |entry| %>
+          <tr>
+            <td>     <%= rule.label entry[0], entry[1]%><br/></td>
+            <td>     <%= rule.text_field(entry[0], :size => 5 , :placeholder=>entry[1],:type=>"number",:step=>".1",:min=>0 )%></td>
+          </tr>
+        <%end%>
+      
 
+      </table>
+    <%end%>
       </br></br>
 
       <p>
-        <%= f.hidden_field :is_configured, :value => true %>
-        <%= f.submit button_name %>
+      <%= f.hidden_field :is_configured, :value => true %>
+      <%= f.submit button_name %>
       </p>
 
-  <% end %>
+    <% end %>
 
-</div>
+  </div>
 
