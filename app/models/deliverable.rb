@@ -4,9 +4,10 @@
 #
 # Way 1) On the curriculum pages for each task,  under the "Submitting Your Work" tab, there is a
 # "submit your deliverable link" -- this gives the student the ability to name their deliverable, and upload a
-# single attachment (i.e. one doc, ppt, or zip file) The student needs to mark whether this is an individual deliverable
-# or team deliverable. By default a task number and the course number is provided for the student.
-# If a faculty member tries to do this, they won't see any courses lists since they aren't taking the course as a student.
+# single attachment (i.e. one doc, ppt, or zip file). By default a Course Number and the Assignments are  provided for
+# the student. Student needs to choose which asignment he/she is going to submit. The deliverable is individual or team
+# deliverable will be checked on the basis of the assignment he/she is submitting. If a faculty member tries to do this,
+# they won't see any courses lists since they aren't taking the course as a student.
 # Students can submit only team deliverable and one individual deliverable per task, although they can update the
 # attachment as many times as they like.
 #
@@ -30,6 +31,7 @@
 # for a course sorted by recent changes first. There is no way to filter by faculty member, or sort by task,
 # or sort by team, or sort by whether feedback has been provided. Control F in the browser is a life saver.
 # It does show you which deliverables have been graded. In theory, just relying on the emails should be sufficient.
+
 
 class Deliverable < ActiveRecord::Base
   belongs_to :team
