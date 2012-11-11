@@ -1,3 +1,12 @@
+# CourseUserGrade represents a student’s final letter grade for a course.
+#
+# We don’t store a student’s earned grade, which is calculated by summing all
+# the student’s deliverable grades based on the course’s grading criteria
+# (e.g. point-based or percentage-based); the earned grade is calculated on
+# demand.  However, we store the student’s final grade so that the professor
+# can adjust it if necessary.
+#
+
 class CourseUserGrade < ActiveRecord::Base
 
   validate :grade_in_grading_range

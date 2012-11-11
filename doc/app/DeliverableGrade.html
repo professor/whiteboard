@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>Class: DeliverableGrade</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/deliverable_grade.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-grade-3D">#grade=</a>
+    
+    <li><a href="#method-i-number_grade">#number_grade</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./DeliverableGrade.html">DeliverableGrade</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class DeliverableGrade</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="DeliverableGrade.html">DeliverableGrade</a> represents a student’s
+grade for a particular deliverable.</p>
+
+<p>Course -&gt; Assignment -&gt; Deliverable -&gt; <a
+href="DeliverableGrade.html">DeliverableGrade</a></p>
+
+<p>A course has many assignments.  Assignments are created by professors, and
+students submit their work to these assignments.  Each student can submit
+one deliverable for an individual assignment.  Similarly, each team can
+submit one deliverable for a team assignment.  Deliverables can be graded,
+and grades are represented through entries in the <a
+href="DeliverableGrade.html">DeliverableGrade</a> model. A deliverable
+grade is stored as a string, which means it could be a number grade or a
+letter grade.</p>
+
+<p>Courses that are graded on percentages have scores that are out of 100,
+while courses graded on points are graded out of the total points for that
+assignment.</p>
+
+<p>Individual assignments: One deliverable grade for the creator of the
+deliverable</p>
+
+<p>Team assignments: One deliverable grade for each member in the team</p>
+
+<p>Unsubmittable assignments: One deliverable to be used as a placeholder with
+the creator as the creator of the assignment.  This will be created when
+the assignment is created. Deliverable grades will be created for each
+student in the course.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-grade-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">grade=</span><span
+            class="method-args">(grade)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="grade-3D-source">
+            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">grade=</span>(<span class="ruby-identifier">grade</span>)
+  <span class="ruby-identifier">write_attribute</span>(<span class="ruby-value">:grade</span>, <span class="ruby-identifier">grade</span>.<span class="ruby-identifier">to_s</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- grade-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- grade-3D-method -->
+
+    
+      <div id="method-i-number_grade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">number_grade</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="number_grade-source">
+            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">number_grade</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_numeric?</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">grade</span>.<span class="ruby-identifier">to_f</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">previous_grading_range_number</span> = <span class="ruby-value">100.0</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">assignment</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">grading_ranges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">grading_range</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">grade</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">grading_range</span>.<span class="ruby-identifier">grade</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">assignment</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">grading_criteria</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Points&quot;</span>
+          <span class="ruby-keyword">return</span> (<span class="ruby-identifier">previous_grading_range_number</span> <span class="ruby-operator">/</span> <span class="ruby-value">100</span>) * <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">assignment</span>.<span class="ruby-identifier">weight</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-keyword">return</span> <span class="ruby-identifier">previous_grading_range_number</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">previous_grading_range_number</span> = (<span class="ruby-identifier">grading_range</span>.<span class="ruby-identifier">minimum</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_f</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- number_grade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- number_grade-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

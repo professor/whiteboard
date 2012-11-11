@@ -1,3 +1,30 @@
+# DeliverableGrade represents a student’s grade for a particular deliverable.
+#
+# Course -> Assignment -> Deliverable -> DeliverableGrade
+#
+# A course has many assignments.  Assignments are created by professors, and
+# students submit their work to these assignments.  Each student can submit
+# one deliverable for an individual assignment.  Similarly, each team can
+# submit one deliverable for a team assignment.  Deliverables can be graded,
+# and grades are represented through entries in the DeliverableGrade model.
+# A deliverable grade is stored as a string, which means it could be a number
+# grade or a letter grade.
+#
+# Courses that are graded on percentages have scores that are out of 100, while
+# courses graded on points are graded out of the total points for that
+# assignment.
+#
+# Individual assignments: One deliverable grade for the creator of the
+# deliverable
+#
+# Team assignments: One deliverable grade for each member in the team
+#
+# Unsubmittable assignments: One deliverable to be used as a placeholder with
+# the creator as the creator of the assignment.  This will be created when the
+# assignment is created. Deliverable grades will be created for each student
+# in the course.
+#
+
 class DeliverableGrade < ActiveRecord::Base
   belongs_to :user
   belongs_to :deliverable
