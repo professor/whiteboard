@@ -81,14 +81,7 @@ group :development, :test do
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
 
-  gem 'guard-spork'
   gem 'spork'
-
-  gem 'growl'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'guard-bundler'
-  gem 'guard-rspec'
-
 end
 
 
