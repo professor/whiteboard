@@ -236,9 +236,7 @@ class DeliverablesController < ApplicationController
     end
 
     @deliverable = Deliverable.find(params[:id])
-    if !@deliverable.assignment.can_submit
-      @deliverable.create_unsubmittable_assignment_deliverable_grades
-    end
+    @deliverable.create_assignment_grade
   end
 
   def update_feedback

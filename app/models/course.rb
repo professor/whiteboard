@@ -337,7 +337,7 @@ class Course < ActiveRecord::Base
 
   def get_earned_number_grade(user)
     total_grade = 0
-    get_user_deliverable_grades(user).each do |deliverable_grade|
+    get_user_assignment_grades(user).each do |deliverable_grade|
       if self.grading_criteria == "Percentage"
         total_grade += deliverable_grade.number_grade * deliverable_grade.deliverable.assignment.weight / 100
       else
@@ -412,13 +412,11 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def get_user_deliverable_grades(user)
-    deliverable_grades = []
+  def get_user_assignment_grades(user)
+    assignment_grades = []
     self.assignments.each do |assignment|
-      assignment.deliverables.each do |deliverable|
-        deliverable_grades += deliverable.deliverable_grades.select {|grade| grade.user_id == user.id }
-      end
+      assignment_grades += assignment.assignment_grades.select {|grade| grade.user_id == user.id }
     end
-    deliverable_grades
+    assignment_grades
   end
 end

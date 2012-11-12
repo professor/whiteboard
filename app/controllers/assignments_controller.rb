@@ -16,7 +16,6 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.new(params[:assignment])
 
     if @assignment.save
-      @assignment.create_placeholder_deliverable(current_user)
       flash[:success] = "Assignment saved"
       redirect_to course_assignments_path(params[:assignment][:course_id])
     else

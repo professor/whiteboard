@@ -1,8 +1,8 @@
 <% person = User.find(builder.object.user_id) %>
 <div class='team_member_photo'>
   <div class='inline_field'>
-    <%= builder.label :grade %>
-    <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= builder.object.deliverable.assignment.max_score %>
+    <%= builder.label :given_grade %>
+    <%= builder.text_field :given_grade, size: 4, class: 'grade_input' %>/<%= builder.object.assignment.max_score %>
   </div>
   <div>
     <a href='http://rails.sv.cmu.edu/people/<%= person.twiki_name %>' target='_top'>

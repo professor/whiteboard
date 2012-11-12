@@ -36,7 +36,6 @@ class Deliverable < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :assignment
   has_many :attachment_versions, :class_name => "DeliverableAttachment", :order => "submission_date DESC"
-  has_many :deliverable_grades
 
   validates_presence_of :creator, :assignment
   validate :unique_course_task_owner?
@@ -48,10 +47,9 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
-  accepts_nested_attributes_for :deliverable_grades, allow_destroy: true
+  accepts_nested_attributes_for :assignment, allow_destroy: false
 
   before_save :populate_status
-  after_save :create_deliverable_grade
 
   def course
     self.assignment.nil? ? nil : self.assignment.course
@@ -276,12 +274,25 @@ class Deliverable < ActiveRecord::Base
       end
       if !grouped_deliverables[course.display_semester].has_key?(course.name)
         total_weight = course.total_assignment_weight
-        earned_score = course.get_user_deliverable_grades(student).to_a.sum(&:grade)
+        earned_score = course.get_user_assignment_grades(student).to_a.sum(&:grade)
         grouped_deliverables[course.display_semester][course.name] = {deliverables: [], max_score: total_weight, earned_score: earned_score}
       end
       grouped_deliverables[course.display_semester][course.name][:deliverables] << deliverable
     end
     return grouped_deliverables
+  end
+
+  def create_assignment_grade
+    if !self.assignment.team_deliverable && self.assignment.assignment_grades.blank?
+      self.assignment.assignment_grades << AssignmentGrade.new(assignment_id: self.assignment.id, user_id: self.creator.id, given_grade: '0')
+    elsif self.assignment.team_deliverable
+      students = self.assignment.can_submit ? self.team.members : self.assignment.course.all_students
+      students.each do |member|
+        if self.assignment.assignment_grades.find_by_user_id(member.id).blank?
+          self.assignment.assignment_grades << AssignmentGrade.new(assignment_id: self.assignment.id, user_id: member.id, given_grade: '0')
+        end
+      end
+    end
   end
 
   private
@@ -292,20 +303,20 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
-  def create_deliverable_grade
-    if self.deliverable_grades.blank? && self.assignment.can_submit
-      if self.assignment.team_deliverable?
-        self.course.teams.each do |team|
-          if team.members.include?(self.creator)
-            team.members.each do |member|
-              self.deliverable_grades.create(grade: 0, user: member)
-            end
-            return
-          end
-        end
-      else
-        self.deliverable_grades.create(grade: 0, user: self.creator)
-      end
-    end
-  end
+  #def create_deliverable_grade
+  #  if self.deliverable_grades.blank? && self.assignment.can_submit
+  #    if self.assignment.team_deliverable?
+  #      self.course.teams.each do |team|
+  #        if team.members.include?(self.creator)
+  #          team.members.each do |member|
+  #            self.deliverable_grades.create(grade: 0, user: member)
+  #          end
+  #          return
+  #        end
+  #      end
+  #    else
+  #      self.deliverable_grades.create(grade: 0, user: self.creator)
+  #    end
+  #  end
+  #end
 end
