@@ -11,7 +11,7 @@
 #smart_search_area { height:24px; vertical-align: middle;}
 #smart_search_text { 
 	height:21px; padding: 0 3px; width: 76%;
-	border: 1px solid #000; border-radius: 1px; background-color: #f3f0e9; }
+	border: 1px solid #000; border-radius: 1px; background-color: #f3f0e9; opacity: 0.3;}
 #smart_search_area button { vertical-align: middle; height:24px; margin: 0 1px; float: right; width:7%;}
 #smart_search_area img { height:16px; }
 

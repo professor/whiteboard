@@ -27,10 +27,27 @@ var SELECTED_CRITERIA_HASH = {
 // Prefetch data from server and build hash table for prediction on user inputs
 var RECOGNITION_HASH = new Object();
 RECOGNITION_HASH["COMPANY"] = new Object();
+RECOGNITION_HASH["PEOPLE_TYPE"] = {
+  "student": true, "faculty": true, "staff": true, "alumni": true, "professor": true, "alumnus": true
+};
+RECOGNITION_HASH["FTPT"] = {
+  "ft": true, "pt": true, "fulltime": true, "parttime": true, "part": true, "full": true
+};
+RECOGNITION_HASH["PROGRAM"] = {
+  "se": true, "sm": true, "ini": true, "ece": true, "se-tech": true, "se-dm": true, "ini-is": true, "ini-sm": true, "ini-mob": true
+};
+RECOGNITION_HASH["IGNORED_COMPANY_WORDS"] = {
+  "pvt": true, "ltd": true , "limited": true, "private": true, "dept": true, "corp": true, "an": true, "co": true,
+  "corporation": true, "inc": true, "or": true, "and": true, "of": true, "the": true
+};
 
 // Predefines the Global Search Request object
 var SEARCH_REQUEST = $.ajax();
 var SEARCH_TIMEOUT;
+
+
+
+
 
 // Build the company hash
 function build_company_hash(){
@@ -42,18 +59,188 @@ function build_company_hash(){
           var splited_str_array = data[i].split(" ");
           for(var j=0; j<splited_str_array.length; ++j){
             //splited_str_array[j] = splited_str_array[j].replace(/^[a-zA-Z0-9](.*[a-zA-Z0-9])?$/gi, '');
-            splited_str_array[j] = splited_str_array[j].replace(/^[^a-z0-9]/gi,'').replace(/[^a-z0-9]$/gi,'');
+            splited_str_array[j] = splited_str_array[j].replace(/^[^a-z0-9]/gi,'').replace(/[^a-z0-9]$/gi,'').toLowerCase();
+            if(!(splited_str_array[j].length < 2) && !RECOGNITION_HASH["IGNORED_COMPANY_WORDS"].hasOwnProperty(splited_str_array[j]) && !$.isNumeric(splited_str_array[j])){
+              //console.log(splited_str_array[j]);
+              RECOGNITION_HASH["COMPANY"][splited_str_array[j]] = true;
+            }
+
           }
-          console.log(splited_str_array);
         }
       }
+      //console.log(RECOGNITION_HASH["COMPANY"]);
+      $('#smart_search_text').removeAttr('disabled').css('opacity', 1);;
     }  
   });
 };
 
-// TODO for company hash
-// ignore, pvt, ltd, limited, private, dept, corp, an, co, inc, or, and, of, the, single character, empty string, replace character like (. , ) at the beginning and end  with empty
-// Check for program full time..... first and then company (because someone write SE Fulltime Tech.... as company)
+// Try to parse the smart search text
+function parse_smart_search(){
+  splited_search_str_array = $.trim($('#smart_search_text').val()).split(" ");  
+  var category_selected = new Object();
+  category_selected["main_search_text"] = "";
+  var parameters_hash = new Object();
+  //console.log(splited_search_str_array);
+  for(var i=0; i<splited_search_str_array.length; ++i){
+    if(splited_search_str_array[i].length > 1){
+      splited_search_str_array[i] = splited_search_str_array[i].toLowerCase();
+
+      // Start guessing the category, start from people type
+      if(!category_selected.hasOwnProperty("people_type") && RECOGNITION_HASH["PEOPLE_TYPE"].hasOwnProperty(splited_search_str_array[i])){
+        switch(splited_search_str_array[i]){
+          case "faculty":
+          case "professor":
+            category_selected["people_type"] = "staff";
+            break;
+          case "alumni":
+            category_selected["people_type"] = "alumnus";
+            break;
+          default:
+            category_selected["people_type"] = splited_search_str_array[i];
+            break;
+        }
+      }
+
+      // Then guess program
+      else if(!category_selected.hasOwnProperty("program") && RECOGNITION_HASH["PROGRAM"].hasOwnProperty(splited_search_str_array[i])){
+        var program_text = splited_search_str_array[i];
+        if( i+1 < splited_search_str_array.length ){
+          var merged_program_text = splited_search_str_array[i]+'-'+splited_search_str_array[i+1].toLowerCase();
+          if(RECOGNITION_HASH["PROGRAM"].hasOwnProperty(merged_program_text) ){
+            program_text = splited_search_str_array[i]+'_'+splited_search_str_array[i+1];
+            i++;
+          }
+        }
+        category_selected["program"] = program_text.toUpperCase();
+      }
+
+      // Then guess FT/PT
+      else if(!category_selected.hasOwnProperty("ftpt") && RECOGNITION_HASH["FTPT"].hasOwnProperty(splited_search_str_array[i])){
+        switch(splited_search_str_array[i]){
+          case "ft":
+          case "fulltime":
+          case "full":
+            category_selected["is_part_time"] = false;
+            break;
+          case "pt":
+          case "parttime":
+          case "part":
+            category_selected["is_part_time"] = true;
+            break;
+        }
+        if(splited_search_str_array[i] == "full" || splited_search_str_array[i] == "part"){
+          if( i+1 < splited_search_str_array.length ){
+            if( splited_search_str_array[i+1].toLowerCase() == "time" ) { i++; }
+          }
+        }
+      }
+
+      // Then guess company
+      else if(RECOGNITION_HASH["COMPANY"].hasOwnProperty(splited_search_str_array[i]) ){
+        if(!category_selected.hasOwnProperty("organization_name")){
+          category_selected["organization_name"] = splited_search_str_array[i];
+        }
+      }
+
+      // Then guess class year 
+      else if($.isNumeric(splited_search_str_array[i])){
+        var current_date = new Date();
+        var default_class_year = current_date.getFullYear();
+        if (current_date.getMonth() > 8) { default_class_year += 1; }
+        var tmp_class_year = splited_search_str_array[i];
+        if (splited_search_str_array[i].length == 2){ tmp_class_year = "20"+splited_search_str_array[i]; }
+        if (tmp_class_year.length == 4){
+          tmp_class_year = parseInt(tmp_class_year);
+          if(tmp_class_year > 2001 && tmp_class_year <= default_class_year){
+            category_selected["class_year"] = tmp_class_year;
+          }
+        }
+      }
+
+      // else it is name or andrew id
+      else {
+        category_selected["main_search_text"] += splited_search_str_array[i]+" ";
+      }
+
+    }
+  }
+  category_selected["main_search_text"] = $.trim(category_selected["main_search_text"]);
+
+  fill_advanced_area(category_selected);
+  SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
+
+  // DEBUG
+  // console.log(category_selected);
+  
+}
+
+// Reset things in the advanced area
+function reset_advanced_area(){
+  // caution... memory leak.. fix later
+  SELECTED_CRITERIA_HASH = {
+    "First Name": true,
+    "Last Name": true,
+    "Andrew ID": true,
+    "Company": false,
+    "Class Year": false,
+    "Program": false,
+    "Full/Part Time": false
+  }
+
+  $('#search_text_box').val("");
+  $('#people_type_picker').val("all");
+  $('.criteria_tag').hide();
+  location.hash = "";
+}
+
+// Auto fillin parameters into advanced search area UI - will be used by both linkable url and extracting smart search fields
+function fill_advanced_area(parameters_hash){
+  
+  reset_advanced_area()
+  
+  // Start from main search text
+  $('#search_text_box').val(parameters_hash["main_search_text"]);
+
+  // Then company
+  if(parameters_hash.hasOwnProperty("organization_name")){
+    SELECTED_CRITERIA_HASH["Company"] = true;
+    $('#criteria_company').show();
+    $('#criteria_company_text').val(parameters_hash["organization_name"]);
+  }
+
+  // Then people type
+  var is_staff = false;
+  if(parameters_hash.hasOwnProperty("people_type")){
+    $('#people_type_picker').val(parameters_hash["people_type"]);
+    if(parameters_hash["people_type"] == "staff"){ is_staff = true; }
+  }
+
+  // If people type is not staff, then apply all other criteria
+  if(!is_staff){
+    // Then Program
+    if(parameters_hash.hasOwnProperty("program")){
+      SELECTED_CRITERIA_HASH["Program"] = true;
+      $('#criteria_program').show();
+      $('#criteria_program .criteria_text').val(parameters_hash["program"]);
+    }
+
+    // Then class year
+    if(parameters_hash.hasOwnProperty("class_year")){
+      SELECTED_CRITERIA_HASH["Class Year"] = true;
+      $('#criteria_class_year').show();
+      $('#criteria_class_year .criteria_text').val(parameters_hash["class_year"]);
+    }
+
+    // Then FT/PT
+    if(parameters_hash.hasOwnProperty("is_part_time")){
+      SELECTED_CRITERIA_HASH["Full/Part Time"] = true;
+      $('#criteria_ft_pt').show();
+      $('#criteria_ft_pt .criteria_text').val( parameters_hash["is_part_time"]? "pt":"ft" );
+    }
+  }
+
+}
+
 
 
 
@@ -83,7 +270,8 @@ function construct_query_sting(){
 
 function execute_search(request_params){
     
-    // console.log("search executed");
+    console.log("search executed");
+    
     $('#results_box').fadeTo('fast', 0.5);
     SEARCH_REQUEST.abort();
 
@@ -158,6 +346,9 @@ $(document).ready(function(){
     $('#advanced_area_close').click(function(){ 
       $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
       $('#advanced_search_area').slideUp();
+      reset_advanced_area();
+      $("#results_box").html("");
+      $('#smart_search_text').val("");
     });
 
     // Build the Companies Hash
@@ -280,8 +471,19 @@ $(document).ready(function(){
 
     $('.criteria_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
-      SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400)  ;
+      SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
     });
+
+
+    $('#smart_search_text').keyup(function(e) {
+      clearTimeout(SEARCH_TIMEOUT);
+      SEARCH_TIMEOUT = setTimeout('parse_smart_search()', 400)  ;
+    });
+
+
+
+
+
 
     // Linkable URL - Match hash to search parameters and execute search
     var hash_params = window.location.hash;

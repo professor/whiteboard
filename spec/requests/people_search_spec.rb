@@ -28,7 +28,6 @@ describe "people search" do
 
 # Tests written for Simple(Smart) Search
 
-=begin
   context 'smart search capability' do
     it "should search for human name", :js => true do
       fill_in "smart_search_text" , :with => "clyde"
@@ -104,7 +103,6 @@ describe "people search" do
     end
 
   end
-=end
 
 
   context 'display and use linkable urls and back button' do
