@@ -85,7 +85,7 @@
       <div style="float: left; width: auto;">
         <%= f.submit "Save and Email" , :name=>"submit"%>
         <%= f.submit "Save as Draft" , :name=>"draft" %>
-        <%= link_to "Back to Course Deliverables", course_deliverables_path(@deliverable.course) %>
+        <%= link_to "Back to Course #{get_customised_name }", course_deliverables_path(@deliverable.course) %>
       </div><div style='clear:both;'></div>
       </p>
     <% end %>

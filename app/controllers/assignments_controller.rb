@@ -12,6 +12,7 @@ class AssignmentsController < ApplicationController
   layout 'cmu_sv'
   def get_course
     @course=Course.find(params[:course_id])
+    @wording = @course.try(:grading_rule).try(:to_display) || "Assignments"
   end
 
   def render_grade_book_menu

@@ -105,5 +105,12 @@ class GradingRule < ActiveRecord::Base
         return grade
     end
   end
+  def to_display
+    unless self.is_nomenclature_deliverable?
+      return "Assignment"
+    else
+      return "Deliverable"
+    end
+  end
 
 end
