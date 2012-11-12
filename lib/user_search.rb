@@ -4,10 +4,67 @@
 
 module UserSearch
 
+  def construct_default_query_string(criteria)
+
+
+    query_string = ""
+
+    if(criteria['main_search_text'] != nil)
+
+      # by default add filter for partial search
+      main_search_string = "%"+criteria['main_search_text']+"%"
+      # add filter for exact match
+      if(criteria['exact_match'] != nil)
+        main_search_string = criteria['main_search_text']
+      end
+
+
+      if (criteria['first_name'] != nil && criteria['last_name'] != nil)
+        # check full name if both first name and last name are selected
+        query_string += "human_name ILIKE ?"
+        count = 1
+      else
+        # check first name and add to query string
+        if (criteria['first_name'] != nil)
+          query_string += "first_name ILIKE ?"
+          # check last name and add to query string
+        elsif (criteria['last_name'] != nil)
+          query_string += "last_name ILIKE ?"
+          #var_list << main_search_string
+        end
+        count = 1
+      end
+
+
+      # check andrew id and add to query string
+      if (criteria['andrew_id'] != nil)
+        if( query_string != "")
+          query_string += " OR "
+          count = 2
+        else
+          count = 1
+        end
+        query_string += "webiso_account ILIKE ?"
+      end
+
+
+    else
+      main_search_string = ""
+      count = 0
+      query_string = ""
+    end
+    return {:query_string => query_string, :main_search_string => main_search_string, :count => count}
+
+  end
+
+
+
+
   def construct_query_string(criteria)
 
     # declare an empty query string
     query_string = ""
+    var_list = []
 
     # add filters for main criteria
     if(criteria['main_search_text'] != nil)
@@ -19,33 +76,31 @@ module UserSearch
         main_search_string = criteria['main_search_text']
       end
 
+    end
 
-      if (criteria['first_name'] != nil && criteria['last_name'] != nil)
-        # check full name if both first name and last name are selected
-        query_string += "human_name ILIKE '"+main_search_string+"'"
-      else
-        # check first name and add to query string
-        if (criteria['first_name'] != nil)
-          query_string += "first_name ILIKE '"+main_search_string+"'"
-        end
-        # check last name and add to query string
-        if (criteria['last_name'] != nil)
-          query_string += "last_name ILIKE '"+main_search_string+"'"
-        end
+    if (criteria['first_name'] != nil && criteria['last_name'] != nil)
+      # check full name if both first name and last name are selected
+      query_string += "human_name ILIKE '?'"
+    else
+      # check first name and add to query string
+      if (criteria['first_name'] != nil)
+        query_string += "first_name ILIKE '?'"
       end
-
-
-
-
-      # check andrew id and add to query string
-      if (criteria['andrew_id'] != nil)
-        if( query_string != "(")
-          query_string += " OR "
-        end
-        query_string += "webiso_account ILIKE '"+main_search_string+"'"
+      # check last name and add to query string
+      if (criteria['last_name'] != nil)
+        query_string += "last_name ILIKE '?'"
       end
-      query_string += ")"
+    end
 
+
+
+
+    # check andrew id and add to query string
+    if (criteria['andrew_id'] != nil)
+      if( query_string != "(")
+        query_string += " OR "
+      end
+      query_string += "webiso_account ILIKE '?"
     end
 
 
@@ -134,14 +189,10 @@ module UserSearch
     end
 
     # return the constructed query string
-    #return query_string
-    if( query_string != "")
-      query_string += " AND "
-    end
-    return query_string + "is_active IS true"
-
+    return [ query_string + " AND is_active IS true", var_list ]
 
   end
+
 
 
 end

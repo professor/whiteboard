@@ -147,14 +147,14 @@ describe User do
 
 
     it "should search students by part time" do
-      params_hash = {'is_part_time' => true}
+      params_hash = {'is_part_time' => "true"}
       @users = User.Search(params_hash)
       @users.should include @student_sally_user, @student_sam_user, @faculty_allen
       @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
     end
 
     it "should search students by full time" do
-      params_hash = {'is_part_time' => false}
+      params_hash = {'is_part_time' => "false"}
       @users = User.Search(params_hash)
       @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
       @users.should_not include @student_sally_user, @student_sam_user, @faculty_allen
