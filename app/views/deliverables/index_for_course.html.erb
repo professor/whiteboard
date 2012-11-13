@@ -6,5 +6,58 @@
   <span class="instructions">Only faculty can see this information.</span>
 </div>
 
-<%= render :partial => "deliverable_listing", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+
+
+<div>
+  <%= javascript_include_tag "tablesorter" %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+  <script>
+        var abc=[1]
+      $(document).ready(function(){
+          if ($("#filterBoxOne").prop("disabled") == true) {
+              $('#filterBoxOne').val('');
+              $('#filterBoxOne').removeAttr("disabled");
+              $('#filterBoxTwo').val('');
+              $('#filterBoxTwo').removeAttr("disabled");
+
+          }
+
+          $(".sortable").tablesorter().tablesorterFilter({
+              filterContainer: '#filterBoxOne',
+              filterClearContainer: '#filterClearOne',
+              filterColumns:abc
+          })        ;
+          $("#test").click(function(){
+               alert("Hi, Prabhjot");
+              $(".sortable").settings.filterColumns = [2];
+          })  ;
+      });
+  </script>
+  <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
+
+
+  <h2>Search</h2>
+
+
+  <div id='filterBox'>
+    Student/Team Name: <input id='filterBoxOne' value='Page is still loading' disabled maxlength='30' size='30' type='text'/>
+    <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %>
+  </div>
+
+  <div id='filterBoxAssignment'>
+    <%= get_customised_name %> Name: <input id='filterBoxTwo' value='Page is still loading' disabled maxlength='30' size='30' type='text'/>
+    <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %>
+  </div>
+
+
+  Assignment/Task: <input type="text"> <br/>
+  Student Name: <input type="text">    <br/>
+  Status: <input id="test" type="checkbox"/ >Graded <input type="checkbox"/>Ungraded <input type="checkbox"/> Drafted </br>
+</div>
+
+<% if current_user.is_staff? ||  current_user.is_admin? %>
+<%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+ <% else %>
+    <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+    <% end %>
 <br/>

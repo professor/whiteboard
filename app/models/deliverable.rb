@@ -217,18 +217,8 @@ class Deliverable < ActiveRecord::Base
   end
 
   def is_graded?
-    if self.is_team_deliverable?
-      self.team.members.each do |member|
-        grade = Grade.get_grade(self.assignment.id, member.id)
-        if grade.nil? || !grade.is_student_visible?
-          return false
-        end
-      end
-      true
-    else
-      grade = Grade.get_grade(self.assignment.id, self.creator.id)
+      grade = Grade.get_grade(self.assignment.id, creator_id)
       grade.try(:is_student_visible) || false
-    end
   end
 
   def update_feedback_and_notes (params)
@@ -259,5 +249,30 @@ class Deliverable < ActiveRecord::Base
       end
     end
     error_msg
+  end
+
+
+  def get_grade_status
+    if self.is_team_deliverable?
+      self.team.members.each do |member|
+        if self.get_status_for_every_individual (member.id) != :graded
+          return self.get_status_for_every_individual(member.id)
+        end
+      end
+      return :graded
+    else
+      return self.get_status_for_every_individual(self.creator_id)
+    end
+  end
+
+  def get_status_for_every_individual  (student_id)
+    grade = Grade.get_grade(self.assignment.id, student_id)
+    if grade.nil?
+      return :ungraded
+    elsif !grade.is_student_visible?
+      return :drafted
+    else
+      return :graded
+    end
   end
 end

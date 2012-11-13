@@ -71,20 +71,20 @@ class Grade < ActiveRecord::Base
 
   # To assign/update the grade to the student
   def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
-      grading_result = false
+    grading_result = false
     student = User.find(student_id)
 
     assignment = Assignment.find(assignment_id)
     if assignment.nil?
       grading_result = false
     elsif assignment.course.registered_students.include?(student)
-      raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
+      #raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
       if grade.blank?
         grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
-                           :score =>raw_score,:is_student_visible=>is_student_visible})
+                           :score =>score,:is_student_visible=>is_student_visible})
       end
-      grade.score=raw_score
+      grade.score=score
       grade.is_student_visible = is_student_visible
       grading_result = grade.save
     end
