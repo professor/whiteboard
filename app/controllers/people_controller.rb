@@ -34,12 +34,16 @@ class PeopleController < ApplicationController
         :human_name => default_person.user.human_name,
         :contact_dtls => default_person.user.telephones_hash,
         :email => default_person.user.email,
-        :path => person_path(default_person.user)
+        :path => person_path(default_person.user),
+    #    first_name and last_name required for photobook
+        :first_name => default_person.user.first_name,
+        :last_name => default_person.user.last_name
     ]}
     @results.uniq!
 
     respond_to do |format|
       format.html { render :html => @results }
+      format.json { render :json => @results }
       #format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
       #                                                              "first_name" => person.first_name,
       #                                                              "last_name" => person.last_name,
