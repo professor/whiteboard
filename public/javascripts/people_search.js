@@ -51,28 +51,47 @@ var SEARCH_TIMEOUT;
 
 // Build the company hash
 function build_company_hash(){
-  $.ajax({
-    url: 'people_get_companies.json', dataType: 'json',
-    success: function(data){
-      for(var i=0; i<data.length; ++i){
-        if(data[i] != null && data[i] != ""){
-          var splited_str_array = data[i].split(" ");
-          for(var j=0; j<splited_str_array.length; ++j){
-            //splited_str_array[j] = splited_str_array[j].replace(/^[a-zA-Z0-9](.*[a-zA-Z0-9])?$/gi, '');
-            splited_str_array[j] = splited_str_array[j].replace(/^[^a-z0-9]/gi,'').replace(/[^a-z0-9]$/gi,'').toLowerCase();
-            if(!(splited_str_array[j].length < 2) && !RECOGNITION_HASH["IGNORED_COMPANY_WORDS"].hasOwnProperty(splited_str_array[j]) && !$.isNumeric(splited_str_array[j])){
-              //console.log(splited_str_array[j]);
-              RECOGNITION_HASH["COMPANY"][splited_str_array[j]] = true;
-            }
 
+  var build_from_server = function(){
+    return $.ajax({
+      url: 'people_get_companies.json', dataType: 'json',
+      success: function(data){
+        for(var i=0; i<data.length; ++i){
+          if(data[i] != null && data[i] != ""){
+            var splited_str_array = data[i].split(" ");
+            for(var j=0; j<splited_str_array.length; ++j){
+              //splited_str_array[j] = splited_str_array[j].replace(/^[a-zA-Z0-9](.*[a-zA-Z0-9])?$/gi, '');
+              splited_str_array[j] = splited_str_array[j].replace(/^[^a-z0-9]/gi,'').replace(/[^a-z0-9]$/gi,'').toLowerCase();
+              if(!(splited_str_array[j].length < 2) && !RECOGNITION_HASH["IGNORED_COMPANY_WORDS"].hasOwnProperty(splited_str_array[j]) && !$.isNumeric(splited_str_array[j])){
+                RECOGNITION_HASH["COMPANY"][splited_str_array[j]] = true;
+              }
+
+            }
           }
         }
-      }
-      //console.log(RECOGNITION_HASH["COMPANY"]);
-      $('#smart_search_text').removeAttr('disabled').css('opacity', 1);;
-    }  
-  });
+        //console.log(RECOGNITION_HASH["COMPANY"]);
+        if(typeof(Storage) !== "undefined"){
+          localStorage['RECOGNITION_HASH_COMPANY'] = JSON.stringify(RECOGNITION_HASH["COMPANY"]);  
+          localStorage['RECOGNITION_HASH_COMPANY_TIMESTAMP'] = current_date.getTime();
+        }
+        $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
+      }  
+    });
+  }
+
+  if(typeof(Storage) !== "undefined"){
+    //console.log("HTML5 Local Storage Supported");
+    var current_date = new Date();
+    if(localStorage['RECOGNITION_HASH_COMPANY'] == undefined || (parseInt(localStorage['RECOGNITION_HASH_COMPANY_TIMESTAMP'])+1209600000) < current_date.getTime() ){ 
+      build_from_server()
+    } else {
+      console.log("Found Local Recognition Hash for Company.");
+      RECOGNITION_HASH["COMPANY"] = JSON.parse(localStorage['RECOGNITION_HASH_COMPANY']);
+      $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
+    }
+  } else { build_from_server(); }
 };
+
 
 // Try to parse the smart search text
 function parse_smart_search(){
@@ -111,7 +130,7 @@ function parse_smart_search(){
             i++;
           }
         }
-        category_selected["program"] = program_text.toUpperCase();
+        category_selected["program"] = program_text.replace('-','_').toUpperCase();
       }
 
       // Then guess FT/PT
@@ -151,7 +170,7 @@ function parse_smart_search(){
         if (splited_search_str_array[i].length == 2){ tmp_class_year = "20"+splited_search_str_array[i]; }
         if (tmp_class_year.length == 4){
           tmp_class_year = parseInt(tmp_class_year);
-          if(tmp_class_year > 2001 && tmp_class_year <= default_class_year){
+          if(tmp_class_year > 2001 && tmp_class_year <= default_class_year+1){
             category_selected["class_year"] = tmp_class_year;
           }
         }
