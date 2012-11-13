@@ -125,6 +125,7 @@ FactoryGirl.define do
     masters_program "SE"
     masters_track "Tech"
     organization_name "NestLabs"
+    is_part_time false
     registered_courses = [:fse]
     graduation_year "2013"
     team = [:team_maverick]
@@ -143,6 +144,7 @@ FactoryGirl.define do
     masters_program "SE"
     masters_track "DM"
     organization_name "HP"
+    is_part_time false
     registered_courses = [:fse]
     graduation_year "2013"
     team = [:team_maverick]
@@ -161,6 +163,7 @@ FactoryGirl.define do
     masters_program "SM"
     organization_name "Google"
     graduation_year "2013"
+    is_part_time false
     team = [:team_maverick, :team_cooper]
   end
 
@@ -176,6 +179,7 @@ FactoryGirl.define do
     twiki_name "CharlieLi"
     masters_program "INI"
     graduation_year "2013"
+    is_part_time false
   end
 
   factory :student_vidya, :parent => :user do
@@ -191,6 +195,7 @@ FactoryGirl.define do
     masters_program "ECE"
     organization_name "LinkedIn"
     graduation_year "2013"
+    is_part_time false
     team = [:team_maverick, :team_leffingwell]
   end
 
@@ -206,6 +211,7 @@ FactoryGirl.define do
     twiki_name "SunilPissaye"
     masters_program "SE"
     graduation_year "2010"
+    is_part_time false
   end
 
   factory :alumnus_memo, :parent => :user do
@@ -220,6 +226,7 @@ FactoryGirl.define do
     twiki_name "Memo Giordano"
     graduation_year "2010"
     organization_name "yahoo"
+    is_part_time false
   end
 
   factory :alumnus_sean, :parent => :user do
@@ -233,6 +240,7 @@ FactoryGirl.define do
     human_name "Sean Xiao"
     twiki_name "Sean Xiao"
     graduation_year "2011"
+    is_part_time false
   end
 
 
