@@ -8,7 +8,7 @@ class AssignmentGrade < ActiveRecord::Base
   validate :valid_number_grade, :valid_letter_grade
 
   def given_grade=(given_grade)
-    write_attribute(:given_grade=, given_grade.to_s)
+    write_attribute(:given_grade, given_grade.to_s)
   end
 
   def number_grade
@@ -28,22 +28,6 @@ class AssignmentGrade < ActiveRecord::Base
       end
       return 0
     end
-  end
-
-  def deliverable
-    if self.assignment.can_submit?
-      if self.assignment.team_deliverable?
-        team = Team.find_current_by_person_and_course(self.user, self.assignment.course)
-        # find_by_team_id may find an individual deliverable if passed nil
-        if !team.blank?
-          deliverable = self.assignment.deliverables.find_by_team_id(team.id)
-        end
-      else
-        deliverable = self.assignment.deliverables.find_by_creator_id(self.user_id)
-      end
-    end
-
-    deliverable.blank? ? nil : deliverable
   end
 
   private

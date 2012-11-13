@@ -282,19 +282,6 @@ class Deliverable < ActiveRecord::Base
     return grouped_deliverables
   end
 
-  def create_assignment_grade
-    if !self.assignment.team_deliverable && self.assignment.assignment_grades.blank?
-      self.assignment.assignment_grades << AssignmentGrade.new(assignment_id: self.assignment.id, user_id: self.creator.id, given_grade: '0')
-    elsif self.assignment.team_deliverable
-      students = self.assignment.can_submit ? self.team.members : self.assignment.course.all_students
-      students.each do |member|
-        if self.assignment.assignment_grades.find_by_user_id(member.id).blank?
-          self.assignment.assignment_grades << AssignmentGrade.new(assignment_id: self.assignment.id, user_id: member.id, given_grade: '0')
-        end
-      end
-    end
-  end
-
   private
 
   def populate_status
@@ -302,21 +289,4 @@ class Deliverable < ActiveRecord::Base
       self.status = "Ungraded"
     end
   end
-
-  #def create_deliverable_grade
-  #  if self.deliverable_grades.blank? && self.assignment.can_submit
-  #    if self.assignment.team_deliverable?
-  #      self.course.teams.each do |team|
-  #        if team.members.include?(self.creator)
-  #          team.members.each do |member|
-  #            self.deliverable_grades.create(grade: 0, user: member)
-  #          end
-  #          return
-  #        end
-  #      end
-  #    else
-  #      self.deliverable_grades.create(grade: 0, user: self.creator)
-  #    end
-  #  end
-  #end
 end

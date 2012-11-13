@@ -25,25 +25,21 @@
           <% number_grade = @course.get_earned_number_grade(member) %>
           <% @course.assignments.each do |assignment| %>
             <td>
+              <% deliverable = assignment.find_deliverable_by_user(member) %>
               <% assignment_grade = assignment.assignment_grades.find_by_user_id(member.id) %>
-              <% if assignment.can_submit? && assignment_grade.blank? %>
-                Unsubmitted
+
+              <% if assignment_grade.blank? && deliverable.blank? %>
+                <%= link_to "0 (Not Submitted)", grade_assignment_path(assignment, member) %>
+              <% elsif assignment_grade.blank? && !deliverable.blank? %>
+                <%= link_to "0 (Ungraded)", deliverable_feedback_path(deliverable) %>
+              <% elsif !assignment_grade.blank? && deliverable.blank? %>
+                <%= link_to "#{assignment_grade.given_grade} (Graded)", grade_assignment_path(assignment, member) %>
               <% else %>
-                <%
-                   if assignment_grade.blank?
-                     link_text = "0 (Ungraded)"
-                   else
-                    link_text = (assignment_grade.deliverable.status == 'Graded') ? assignment_grade.given_grade : "#{assignment_grade.given_grade} (#{assignment_grade.deliverable.status})"
-                   end
-                %>
-                <% deliverable = assignment_grade.blank? ? assignment.deliverables.first : assignment_grade.deliverable %>
-                <%= link_to link_text, deliverable_feedback_path(deliverable) %>
+                <%= link_to "#{assignment_grade.given_grade} (#{deliverable.status})", deliverable_feedback_path(deliverable) %>
               <% end %>
             </td>
           <% end %>
-          <td>
-            <%= number_grade %><%= @course.grading_criteria == "Percentage" ? "%" : "" %>
-          </td>
+          <td><%= number_grade %><%= @course.grading_criteria == "Percentage" ? "%" : "" %></td>
           <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(number_grade) %></td>
           <td>
             <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
