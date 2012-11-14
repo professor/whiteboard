@@ -10,12 +10,14 @@
         var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
         var ajax_req_issued = false;            // object that
         var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
-
+        var default_results_json ='';
 
         $(document).ready(function () {
 
                     $("#people_table").hide();
                     $("#filterBoxOne").keyup(function() {
+
+
                         if(this.value.length > 0){
                             if(photobook_toggled)
                                 $("#photobook_results").show();
@@ -28,6 +30,7 @@
                             $("#people_table").hide();
                             $("#photobook_results").hide();
                         }
+
                     });
 
             if ($("#filterBoxOne").prop("disabled") == true) {
@@ -63,14 +66,40 @@
             });
 
             $("#filterBoxOne_photobook").click(function (){
+
                 $('#people_table tbody').empty();
                 $('#photobook_results').empty();
                 photobook_toggled = !photobook_toggled;
                 var path = photobook_toggled ? '/images/tablesorter/photo_book_gloss_gray.png' : '/images/tablesorter/photo_book_gloss_red.png';
                 var title = photobook_toggled ? 'Grid View' : 'Photobook View';
+
                 $("#filterBoxOne_photobook").attr('src', path).attr('title', title);
-                buildSearchResults(last_search_results);
+
+                if($.trim($("#filterBoxOne").val())){
+                    buildSearchResults(last_search_results);
+                }else{
+                    buildSearchResults(default_results_json);
+                    if (photobook_toggled ){
+                        $("#key_contacts_table").hide();
+                    }else{
+                        $("#key_contacts_table").show();
+                    }
+                }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             // making the whole row of key_contacts clickable
@@ -85,6 +114,9 @@
                             window.location = $(this).find('a').attr('href');
                         }
                 );
+
+            // fetch default search results
+            default_search_results();
         });
 
         function queryDatabase(){
@@ -117,6 +149,7 @@
                         ajax_req_issued = false;
                       },
                       success : function(json) {
+
                             last_search_results = json;
                             buildSearchResults(json);
                       }
@@ -132,6 +165,22 @@
                     $("#photobook_results").hide();
                 }
             }
+        }
+
+        // fetch default search results and store in a json object
+        function default_search_results(){
+                // send ajax request and assign the XHML HTTP request object returned to jq_xhr
+                jq_xhr = $.ajax({
+                    url : 'people',  // the URL for the request
+                    data : { ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
+                    method : 'GET',
+                    dataType : 'json',  // the type of data we expect back
+                    contentType: "application/json; charset=utf-8",
+
+                    success : function(json) {
+                        default_results_json=json;
+                    }
+                });
         }
 
         /* helper function to build the table results in #people_table */
