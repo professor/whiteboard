@@ -66,6 +66,7 @@ select .select-hint { color: #ccc;}
 }
 .data_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
 .data_card_human_name { font-size: 16px; }
+.resize{ width: 150px; height: 150px;}
 
 /* Fix Modal Card */
 #modal_card { width: auto; height: auto; padding: 6px;}

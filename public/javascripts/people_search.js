@@ -302,25 +302,28 @@ function execute_search(request_params){
                 // DEBUG console.log(this.first_name +" "+this.last_name );
                 var card_html =
                 '<div class="data_card">'+
-                '<a href="people/'+this.id+'"><img src='+this.image_uri+'></a><br>'+
+                '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a><br>'+
                 '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>'+
-                '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>'+
-                '<div class="data_card_telephone">';
-                if(this.telephone1){ card_html+= this.telephone1_label +': '+this.telephone1+'<br>'; }
-                if(this.telephone2){ card_html+= this.telephone2_label +': '+this.telephone2+'<br>'; }
-                card_html += '</div>';
+                '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
+                if(this.telephone1){ card_html+= '<div class="data_card_telephone1">'+this.telephone1_label +': '+this.telephone1+'<br>'+'</div>'; }
+                if(this.telephone2){ card_html+= '<div class="data_card_telephone2">'+this.telephone2_label +': '+this.telephone2+'<br>'+'</div>'; }
 
-                if(this.team_names.length > 0){ card_html += 'Teams: '; }
-                for(var i=0; i<this.team_names.length; i++){
-                    card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ') ';
+                if(this.team_names.length > 0){ card_html += '<div class="data_card_teams">Teams: ';
+                    for(var i=0; i<this.team_names.length; i++){
+                        card_html +=  this.team_names[i].name + ' (Course: ' + this.team_names[i].course_name+ ')<br/> ';
+                    }
+                    card_html +='</div>';
                 }
 
+                card_html+= '<div class="data_card_company">'+'Company: '+this.company+'</div>';
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
 
             $('#results_box').fadeTo('fast', 1);
+            customize_display();
         }
+
     });
     //history.pushState(null, "", 'people?'+request_params);
     //history.replaceState(null, "", 'people?'+request_params);
@@ -328,6 +331,29 @@ function execute_search(request_params){
     location.hash=request_params;
 };
 
+function customize_display()
+{
+    if(!($('#photo_checkbox')[0].checked)){
+        $('.data_card_photo').addClass("hidden");
+        $('.data_card').addClass("resize");
+    }
+    else{
+        $('.data_card_photo').removeClass("hidden");
+        $('.data_card').removeClass("resize");
+    }
+    if(!($('#email_checkbox')[0].checked)){$('.data_card_email').addClass("hidden");}
+    else{$('.data_card_email').removeClass("hidden")};
+    if(!($('#phone_home_checkbox')[0].checked)){$('.data_card_telephone1').addClass("hidden");}
+    else{$('.data_card_telephone1').removeClass("hidden")};
+    if(!($('#phone_mobile_checkbox')[0].checked)){$('.data_card_telephone2').addClass("hidden");}
+    else{$('.data_card_telephone2').removeClass("hidden")};
+    if(!($('#team_checkbox')[0].checked)){$('.data_card_teams').addClass("hidden");}
+    else{$('.data_card_teams').removeClass("hidden")};
+    if(!($('#company_checkbox')[0].checked)){$('.data_card_company').addClass("hidden");}
+    else{$('.data_card_company').removeClass("hidden")};
+   // execute_search();
+
+}
 
 $(document).ready(function(){
 
@@ -337,7 +363,7 @@ $(document).ready(function(){
         autoOpen: false, show: 'fold', hide: 'fold', modal: true
     });
     $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
-    $('#customization_dialog_close').click(function() { $('#dialog_modal').dialog("close"); });
+    $('#customization_dialog_close').click(function() {customize_display(); $('#dialog_modal').dialog("close"); });
 
     // Initialize the export results dialog box
     $('#export_dialog_modal').dialog({
@@ -369,6 +395,8 @@ $(document).ready(function(){
       $("#results_box").html("");
       $('#smart_search_text').val("");
     });
+
+
 
     // Build the Companies Hash
     build_company_hash();
@@ -519,6 +547,7 @@ $(document).ready(function(){
           execute_search(hash);
         }
     });
+
 
 
 
