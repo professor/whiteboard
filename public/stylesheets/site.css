@@ -486,6 +486,7 @@ div.modified {
 .user_profile_photo_social{
     float:left;
     margin-left: 5px;
+    text-align: center;
 }
      .user_profile_content tbody td.user_profile_social_edit{
         border: none;
@@ -598,9 +599,7 @@ div.modified {
             float: right;
             margin:0 15px 10px 0;
             padding:0;
-            /*width: 474px;*/
             width: 458px;
-            text-align: justify;
     }
     .user_profile_content .clearboth table.cmu_table {text-align: left;}
     .user_profile_content .cmu_table .help_text{margin:0}
