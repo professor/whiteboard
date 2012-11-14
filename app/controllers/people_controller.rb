@@ -523,12 +523,13 @@ class PeopleController < ApplicationController
 
   def return_search_results(search_query)
     if search_query.empty?
+
       @defaults = return_defaults
       @people = []
       @defaults.each do |default|
         @people << User.find(default.user_id)
       end
-      return @people
+      return @people.uniq
     else
       User.where("human_name ILIKE ? ", "%#{search_query}%").order("first_name ASC, last_name ASC")
     end
