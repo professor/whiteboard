@@ -217,8 +217,18 @@ class Deliverable < ActiveRecord::Base
   end
 
   def is_graded?
-      grade = Grade.get_grade(self.assignment.id, creator_id)
+    if self.is_team_deliverable?
+      self.team.members.each do |member|
+        grade = Grade.get_grade(self.assignment.id, member.id)
+        if grade.nil? || !grade.is_student_visible?
+          return false
+        end
+      end
+      true
+    else
+      grade = Grade.get_grade(self.assignment.id, self.creator.id)
       grade.try(:is_student_visible) || false
+    end
   end
 
   def update_feedback_and_notes (params)
