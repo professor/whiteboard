@@ -550,12 +550,11 @@ div.modified {
     #user_profile_dtls{
         float:left;
         clear:left;
-        font-weight: bold;
     }
         .user_profile_pron{
             line-height: 18px;
             font: normal 13px verdana, arial, helvetica, sans-serif;
-            color: gray;
+            color: #424545;
         }
 .user_profile_contact_details_content{
     width: 68%;
