@@ -563,6 +563,9 @@ div.modified {
     .user_profile_contact_details_content .cmu_table{
         width: 100%;
     }
+    .user_profile_contact_details_content table:nth-child(2){
+        margin-top: 20px;
+    }
 
 .user_profile_contact_details{
     float:left;
