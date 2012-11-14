@@ -78,15 +78,15 @@
             <table class="cmu_table">
                 <tr class="cmu_table_odd">
                     <td>Email</td>
-                    <td><%= h @person.email %></td>
+                    <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
                 </tr>
                 <tr>
                     <td>Personal Email</td>
-                    <td><%= h @person.personal_email %></td>
+                    <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
                 </tr>
                 <tr class="cmu_table_odd">
                     <td>Andrew Email</td>
-                    <td><%= h @person.webiso_account %></td>
+                    <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
                 </tr>
 
                 <% if @person.is_staff %>
