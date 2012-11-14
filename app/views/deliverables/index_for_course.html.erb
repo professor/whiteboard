@@ -28,6 +28,16 @@
           }) ;
           $("#filter_student").change(create_filter);
           $("#filter_assignment").change(create_filter);
+          $("#filter_drafted").change(function(){
+              filter("drafted");
+          });
+          $("#filter_graded").change(function(){
+              filter("graded");
+          });
+          $("#filter_ungraded").change(function(){
+              filter("ungraded");
+          });
+
 
       });
       function create_filter(){
@@ -38,10 +48,15 @@
           if($("#filter_assignment").is(':checked')){
               filters.push(2);
           }
-          console.log(filters);
           $(".sortable")[0].config.filter[0].filterColumns=filters;
+          $(".sortable").trigger("doFilter");
 
 
+
+      }
+      function filter(status){
+          console.log(status);
+          $("tr."+ status).toggle();
       }
   </script>
   <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
@@ -55,7 +70,7 @@
     <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
     <input type="checkbox" id="filter_student"  checked="true"/> Student/Team Name   <input type="checkbox" id="filter_assignment"  checked="true">Assignment
   </div>
-  Status: <input id="test" type="checkbox"/ >Graded <input type="checkbox"/>Ungraded <input type="checkbox"/> Drafted </br>
+  Status: <input id="filter_graded" type="checkbox" checked="true"/ >Graded <input id="filter_ungraded" checked="true" type="checkbox"/>Ungraded <input id="filter_drafted"  checked="true" type="checkbox"/> Drafted </br>
 </div>
 
 <% if current_user.is_staff? ||  current_user.is_admin? %>

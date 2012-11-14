@@ -18,7 +18,7 @@
   </thead>
 
   <% deliverables.each do |deliverable| %>
-      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
         <% unless skip_course_column %>
             <% if deliverable.course %>
                 <td><%= h deliverable.course.name %></td>
