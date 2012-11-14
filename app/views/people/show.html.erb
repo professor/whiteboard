@@ -130,12 +130,15 @@
 
 
         <div class="clearboth ">
+            <% if !(@person.user_text.blank?) %>
             <h2>About Me:</h2>
             <div class="user_profile_content_body">
               <% if display_location(@person) %>
                 <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
                 <% end %>
             </div>
+            <% end %>
+
         </div><!-- user_profile_about -->
 
         <div class="clearboth ">
