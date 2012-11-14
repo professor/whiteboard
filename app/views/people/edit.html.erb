@@ -194,19 +194,19 @@
         <div class="user_profile_campus_proximity user_profile_content_body">
             <table class="cmu_table">
                 <tr>
-                    <td>Unknown<input type="radio" name="user[local_near_remote]" value="Unknown"></td>
+                    <td>Unknown<input type="radio" name="user[local_near_remote]" value="Unknown" <% if @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %> checked <% end %> ></td>
                     <td>Not really sure.</td>
                 </tr>
                 <tr>
-                    <td>Local<input type="radio" name="user[local_near_remote]" value="Local"></td>
+                    <td>Local<input type="radio" name="user[local_near_remote]" value="Local" <% if @person.local_near_remote=="Local" %>checked<% end %> ></td>
                     <td>I'm able to come to campus once or twice a week. </td>
                 </tr>
                 <tr>
-                    <td>Near<input type="radio" name="user[local_near_remote]" value="Near"></td>
+                    <td>Near<input type="radio" name="user[local_near_remote]" value="Near" <% if @person.local_near_remote=="Near" %>checked<% end %> ></td>
                     <td>I live near Silicon Valley. I can drive in for final presentations or weekend events.</td>
                 </tr>
                 <tr>
-                    <td>Remote<input type="radio" name="user[local_near_remote]" value="Remote"></td>
+                    <td>Remote<input type="radio" name="user[local_near_remote]" value="Remote" <% if @person.local_near_remote=="Remote" %>checked<% end %> ></td>
                     <td>I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation.</td>
                 </tr>
             </table>
