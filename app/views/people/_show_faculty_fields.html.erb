@@ -42,7 +42,7 @@
 </div>
 <% elsif (@person.is_staff? || @person.is_admin?) %>
 <div class="clearboth">
-    <h2>Faculty Information:</h2>
+    <h2>Staff Information:</h2>
     <table class="cmu_table user_profile_content_faculty_editable">
         <% if !(current_user.is_admin? || current_user.is_staff?) %>
         <tr>
