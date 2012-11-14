@@ -11,7 +11,7 @@
 <% content_for :title, "Provide Feedback" %>
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-        <% unless @deliverable.is_graded? %>
+        <% unless @deliverable.is_visible_to_student? %>
         <div class="rounded staff" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"  style="background-color:#d3d3d3;">
           <b>You have saved this information as draft. So this information is not visible to the students</b>
           <%= professor_image %>
@@ -55,7 +55,7 @@
         </p>
 
 
-        <% unless @deliverable.is_graded? %>
+        <% unless @deliverable.is_visible_to_student? %>
         </div>
       <% end %>
 

@@ -1,5 +1,5 @@
 <% reset_cycle %>
-<%= javascript_include_tag "jquery.tablesorter.js" %>
+<%= javascript_include_tag "tablesorter" %>
 <script>
     $(document).ready(function(){
         $(".sortable").tablesorter();
@@ -41,22 +41,14 @@
         <% end %>
 
         <td>
-          <% if deliverable.is_graded? %>
+          <% if deliverable.is_visible_to_student? %>
               Yes
           <% else %>
               No
           <% end %>
         </td>
 
-        <% if current_user.is_student %>
-            <td><%= link_to 'View History and Feedback', deliverable %></td>
-        <%else%>
-            <% if deliverable.is_graded? %>
-                <td><%= link_to 'Review Grade', deliverable %></td>
-            <%else%>
-                <td><%= link_to 'Give Grade', deliverable %></td>
-            <%end%>
-        <%end%>
+        <td><%= link_to 'View History and Feedback', deliverable %></td>
         <!--
       <td>
           <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
