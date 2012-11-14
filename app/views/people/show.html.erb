@@ -162,6 +162,13 @@
                   <td>Office Hours:</td>
                   <td><%= h @person.office_hours %></td>
                 </tr>
+                <% elsif @person.is_student %>
+                <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
+                <tr>
+                  <td>Availability:</td>
+                  <td>I am a  <%= h @person.local_near_remote.downcase %> student.</td>
+                </tr>
+                <% end %>
                 <% end %>
             </table>
         </div>
