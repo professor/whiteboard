@@ -66,6 +66,10 @@
                 $('#people_table tbody').empty();
                 $('#photobook_results').empty();
                 photobook_toggled = !photobook_toggled;
+                if(photobook_toggled)
+                    $(this).addClass("toggled");
+                else
+                    $(this).removeClass("toggled")
                 var path = photobook_toggled ? '/images/tablesorter/photo_book_gloss_gray.png' : '/images/tablesorter/photo_book_gloss_red.png';
                 var title = photobook_toggled ? 'Grid View' : 'Photobook View';
                 $("#filterBoxOne_photobook").attr('src', path).attr('title', title);

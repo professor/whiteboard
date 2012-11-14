@@ -453,7 +453,7 @@ div.modified {
 }
 
 #filterBoxOne{
-    width: 86%;
+    width: 82%;
     float: left;
     padding: 5px;
     font-size: 1.3em;
@@ -461,11 +461,27 @@ div.modified {
 #filterClearOne{
     display:none;
 }
-#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
-    float: right;
+
+#filterBoxOne_filter {
+    background:url('/images/people_export_contacts.png') 0px 0;
+}
+#filterBoxOne_photobook{
+    background:url(/images/people_photobook_sprite.png) 0px 0;
 }
 
+#filterBoxOne_export_contacts {
+    background:url(/images/people_filtering_sprite.png)  0px 0;
+}
 
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook, #filterBoxOne_export_contacts {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin: 2px 1px 0px 1px;
+}
+#filterBoxOne_filter.toggled, #filterBoxOne_photobook.toggled {
+    background-position: 32px 0px;
+}
 /************************
  * User Profile Page
 *************************/
