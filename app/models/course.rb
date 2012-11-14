@@ -50,7 +50,9 @@ class Course < ActiveRecord::Base
 
   has_many :grades, :through => :assignments
 
-  has_one :grading_rule
+  has_one :grading_rule, :dependent => :destroy
+  accepts_nested_attributes_for :grading_rule
+  attr_accessible :grading_rule_attributes
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty

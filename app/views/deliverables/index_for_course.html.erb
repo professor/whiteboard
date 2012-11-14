@@ -1,10 +1,95 @@
-<h1>Course: <%= @course.display_name %></h1>
-<h2>Submitted Deliverables</h2>
+<h1 xmlns="http://www.w3.org/1999/html">Course: <%= @course.display_name %></h1>
+<h2>Submitted <%=get_customised_name%>s</h2>
 
 <div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
 </div>
 
-<%= render :partial => "deliverable_listing", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-<br/>
+
+
+<div>
+  <%= javascript_include_tag "tablesorter" %>
+  <%= javascript_include_tag 'tablesorter_filter' %>
+  <%= javascript_include_tag 'jquery.session' %>
+
+  <script>
+    var assignment = "<%=get_customised_name%>";
+    var name_column_index = 0;
+    if (assignment=="Deliverable"){
+       name_column_index = 1;
+    }
+
+
+      $(document).ready(function(){
+          if ($("#filterInputBox").prop("disabled") == true) {
+              $('#filterInputBox').val('');
+              $('#filterInputBox').removeAttr("disabled");
+
+          }
+          $(".sortable").tablesorter().tablesorterFilter({
+              filterContainer: '#filterInputBox',
+              filterClearContainer: '#filterClearOne',
+              filterColumns:[name_column_index,name_column_index+1]
+          }) ;
+          $("#filter_student").change(update_filter);
+          $("#filter_assignment").change(update_filter);
+
+
+          var statuses = ["graded", "ungraded", "drafted"];
+          $.each(["graded", "ungraded", "drafted"], function(index, value){
+            if($.session.get(value) == "false"){
+              $("#filter_" + value).removeAttr("checked");
+              filter(value);
+            }
+            else
+            {
+              $("#filter_" + value ).prop("checked", "true");
+            }
+          });
+          
+          $(".filter_status").change(function(){
+            var status = $(this).attr("id").replace("filter_", "");
+            filter(status);
+            $.session.set(status, $("#filter_" + status).is(":checked"));
+          });
+
+        });
+        function update_filter(){
+          var filters = [];
+          if($("#filter_student").is(':checked')){
+            filters.push(name_column_index);
+          }
+          if($("#filter_assignment").is(':checked')){
+            filters.push(name_column_index+1);
+          }
+          $(".sortable")[0].config.filter[0].filterColumns=filters;
+          $(".sortable").trigger("doFilter");
+        }
+        function filter(status){
+          $("tr."+ status).toggle();
+        }
+      </script>
+      <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
+
+
+        <h2>Search</h2>
+
+
+        <div id='filterBox'>
+          <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text'/>
+          <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
+          <input type="checkbox" id="filter_student"  checked="true"/> Student/Team Name   <input type="checkbox" id="filter_assignment"  checked="true"><%= get_customised_name %>
+        </div></br>
+        <%= get_customised_name %> Status: 
+        <input id="filter_graded" class="filter_status" type="checkbox" checked="true"/ >Graded 
+        <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/>Ungraded 
+        <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/> Drafted </br>
+      </div>
+
+      <% if current_user.is_staff? ||  current_user.is_admin? %>
+        <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+      <% else %>
+        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+      <% end %>
+      <br/>

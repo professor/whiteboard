@@ -1,17 +1,15 @@
 <% reset_cycle %>
-<%= javascript_include_tag "jquery.tablesorter.js" %>
-<script>
-  $(document).ready(function(){
-    $(".sortable").tablesorter();
-  });
-</script>
+<% customised_name= get_customised_name %>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
-    <thead>
+  <thead>
   <tr>
     <% unless skip_course_column %>
         <th>Course</th>
     <% end %>
-    <th>Task</th>
+    <% if customised_name=="Deliverable" %>
+        <th>Task Number</th>
+    <% end %>
+
     <th>Owner</th>
     <th>Latest <%=get_customised_name%></th>
     <th>Graded</th>
@@ -20,10 +18,10 @@
         <th>File</th>
     -->
   </tr>
-    </thead>
+  </thead>
 
   <% deliverables.each do |deliverable| %>
-      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
         <% unless skip_course_column %>
             <% if deliverable.course %>
                 <td><%= h deliverable.course.name %></td>
@@ -31,7 +29,10 @@
                 <td>&nbsp;</td>
             <% end %>
         <% end %>
-        <td><%= h deliverable.assignment.task_number %></td>
+
+        <% if customised_name=="Deliverable" %>
+            <td><%= h deliverable.assignment.task_number %></td>
+         <% end %>
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>
@@ -41,22 +42,23 @@
         <% end %>
 
         <td>
-          <% if deliverable.is_visible_to_student? %>
-              Yes
-          <% else %>
-              No
+
+          <% if deliverable.get_grade_status==:graded %>
+             Yes
+          <% elsif deliverable.get_grade_status==:drafted %>
+             No (Draft)
+          <% elsif deliverable.get_grade_status==:ungraded %>
+             No
           <% end %>
         </td>
-        
-        <% if current_user.is_student %>
-          <td><%= link_to 'View History and Feedback', deliverable %></td>
-        <%else%>
-            <% if deliverable.is_graded? %>
-                <td><%= link_to 'Review Grade', deliverable %></td>
-            <%else%>
+
+
+              <% if  deliverable.get_grade_status==:graded %>
+                  <td><%= link_to 'Review Grade', deliverable %></td>
+              <%else%>
                 <td><%= link_to 'Give Grade', deliverable %></td>
             <%end%>
-        <%end%>
+
         <!--
       <td>
           <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
