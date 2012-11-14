@@ -44,7 +44,7 @@
         <div class="user_profile_title">
 
             <h1 id="user_profile_name">
-                <%= h @person.human_name %>
+                <%= h @person.first_name %> <%= h @person.last_name %>
                 <% if !(@person.pronunciation.blank?) %>
                     <div class="user_profile_pron">Pronounced: <%= h @person.pronunciation %> <br /></div>
                 <% end %>
@@ -76,68 +76,26 @@
 
         <div class="user_profile_contact_details_content">
             <table class="cmu_table">
-                <tr class="cmu_table_odd">
+                <tr class="">
                     <td>Email</td>
-                    <td><%= h @person.email %></td>
+                    <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
                 </tr>
-                <tr>
-                    <td>Personal Email</td>
-                    <td><%= h @person.personal_email %></td>
-                </tr>
-                <tr class="cmu_table_odd">
-                    <td>Andrew Email</td>
-                    <td><%= h @person.webiso_account %></td>
-                </tr>
-
-                <% if @person.is_staff %>
-                <tr>
-                  <td>Office:</td>
-                  <td><%= h @person.office %></td>
-                </tr>
-                <tr class="cmu_table_odd">
-                  <td>Office Hours:</td>
-                  <td><%= h @person.office_hours %></td>
-                </tr>
-                <% end %>
-            </table>
-        </div><!--  user_profile_contact_details -->
-        <div class="user_profile_contact_details_content">
-            <table class="cmu_table">
-                <%  skype_class_z_style = ""
-                    @person.telephones_hash.each_with_index do |(key, value), index| %>
-                <tr <% if index.even? %> class="cmu_table_odd"<% end %> >
+                <%  @person.telephones_hash.each_with_index do |(key, value), index| %>
+                <tr <% if index.even? %> class=""<% end %> >
                     <td><%= h "#{key}" %></td>
                     <td><%= h "#{value}" %></td>
                 </tr>
-                    <% skype_class_z_style = (index.even?)? "": "cmu_table_odd" %>
                 <%  end %>
                 <% if !(@person.skype.blank?) %>
-                <tr class="<%= skype_class_z_style %>">
+                <tr>
                     <td>Skype</td>
                     <td><%= h @person.skype %></td>
                 </tr>
                 <% end %>
             </table>
-        </div><!--  user_profile_contact_details -->
-
-
-        <div class="clearboth">
-            <h2>Biography:</h2>
-            <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
-        </div>
-
-
-
-        <div class="clearboth ">
-            <h2>About Me:</h2>
-            <div class="user_profile_content_body">
-              <% if display_location(@person) %>
-                <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
-                <% end %>
-            </div>
 
             <table class="cmu_table">
-                <tr class="cmu_table_odd">
+                <tr class="">
                     <td>Organization</td>
                     <td>
                         <% if @person.organization_name %>
@@ -160,8 +118,63 @@
                 </tr>
             </table>
 
+        </div><!--  user_profile_contact_details -->
+
+
+
+        <div class="clearboth">
+            <h2>Biography:</h2>
+            <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
+        </div>
+
+
+
+        <div class="clearboth ">
+            <% if !(@person.user_text.blank?) %>
+            <h2>About Me:</h2>
+            <div class="user_profile_content_body">
+              <% if display_location(@person) %>
+                <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+                <% end %>
+            </div>
+            <% end %>
 
         </div><!-- user_profile_about -->
+
+        <div class="clearboth ">
+            <h2>Other Information:</h2>
+            <table class="cmu_table">
+                <tr class="">
+                <tr>
+                    <td>Personal Email</td>
+                    <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
+                </tr>
+                <tr class="">
+                    <td>Andrew Email</td>
+                    <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
+                </tr>
+                <% if @person.is_staff %>
+                <tr>
+                  <td>Office:</td>
+                  <td><%= h @person.office %></td>
+                </tr>
+                <tr class="">
+                  <td>Office Hours:</td>
+                  <td><%= h @person.office_hours %></td>
+                </tr>
+                <% elsif @person.is_student %>
+                <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
+                <tr>
+                  <td>Availability:</td>
+                  <td>I am a  <%= h @person.local_near_remote.downcase %> student.</td>
+                </tr>
+                <% end %>
+                <% end %>
+            </table>
+        </div>
+
+
+
     </div> <!-- user_profile_content -->
 
     <div class="user_profile_action">

@@ -551,12 +551,11 @@ div.modified {
     #user_profile_dtls{
         float:left;
         clear:left;
-        font-weight: bold;
     }
         .user_profile_pron{
             line-height: 18px;
             font: normal 13px verdana, arial, helvetica, sans-serif;
-            color: gray;
+            color: #424545;
         }
 .user_profile_contact_details_content{
     width: 68%;
@@ -564,6 +563,9 @@ div.modified {
 }
     .user_profile_contact_details_content .cmu_table{
         width: 100%;
+    }
+    .user_profile_contact_details_content table:nth-child(2){
+        margin-top: 20px;
     }
 
 .user_profile_contact_details{
@@ -597,9 +599,7 @@ div.modified {
             float: right;
             margin:0 15px 10px 0;
             padding:0;
-            /*width: 474px;*/
             width: 458px;
-            text-align: justify;
     }
     .user_profile_content .clearboth table.cmu_table {text-align: left;}
     .user_profile_content .cmu_table .help_text{margin:0}
