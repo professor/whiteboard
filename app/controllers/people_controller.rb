@@ -519,7 +519,12 @@ class PeopleController < ApplicationController
 
   def return_search_results(search_query)
     if search_query.empty?
-      return_defaults
+      @defaults = return_defaults
+      @people = []
+      @defaults.each do |default|
+        @people << User.find(default.user_id)
+      end
+      return @people
     else
       User.where("human_name ILIKE ? ", "%#{search_query}%").order("first_name ASC, last_name ASC")
     end
@@ -541,23 +546,5 @@ class PeopleController < ApplicationController
         return ""
     end
   end
-
-  ## FUTURE REFACTORING ##
-  #def vcf_name_converter(origin)
-  #  case origin
-  #    when "Work"
-  #      return "work"
-  #    when "Home"
-  #      return "home"
-  #    when "Fax"
-  #      return "fax"
-  #    when "Mobile"
-  #      return "cell"
-  #    when "Google Voice"
-  #      return "voice"
-  #    else
-  #      return ""
-  #  end
-  #end
 
 end
