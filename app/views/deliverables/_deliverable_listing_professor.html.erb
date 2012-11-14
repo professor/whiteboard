@@ -1,12 +1,15 @@
 <% reset_cycle %>
-
+<% customised_name= get_customised_name %>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
   <thead>
   <tr>
     <% unless skip_course_column %>
         <th>Course</th>
     <% end %>
-    <th>Task</th>
+    <% if customised_name=="Deliverable" %>
+        <th>Task Number</th>
+    <% end %>
+
     <th>Owner</th>
     <th>Latest <%=get_customised_name%></th>
     <th>Graded</th>
@@ -26,7 +29,10 @@
                 <td>&nbsp;</td>
             <% end %>
         <% end %>
-        <td><%= h deliverable.assignment.task_number %></td>
+
+        <% if customised_name=="Deliverable" %>
+            <td><%= h deliverable.assignment.task_number %></td>
+         <% end %>
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>

@@ -1,4 +1,4 @@
-<h1>Course: <%= @course.display_name %></h1>
+<h1 xmlns="http://www.w3.org/1999/html">Course: <%= @course.display_name %></h1>
 <h2>Submitted <%=get_customised_name%>s</h2>
 
 <div class="rounded staff">
@@ -11,7 +11,16 @@
 <div>
   <%= javascript_include_tag "tablesorter" %>
   <%= javascript_include_tag 'tablesorter_filter' %>
+  <%= javascript_include_tag 'jquery.session' %>
+
   <script>
+    var assignment = "<%=get_customised_name%>";
+    var name_column_index = 0;
+    if (assignment=="Deliverable"){
+       name_column_index = 1;
+    }
+
+
       $(document).ready(function(){
           if ($("#filterBoxOne").prop("disabled") == true) {
               $('#filterBoxOne').val('');
@@ -20,34 +29,74 @@
               $('#filterBoxTwo').removeAttr("disabled");
 
           }
-
           $(".sortable").tablesorter().tablesorterFilter({
               filterContainer: '#filterBoxOne',
               filterClearContainer: '#filterClearOne',
-              filterColumns:[1,2]
+              filterColumns:[name_column_index,name_column_index+1]
           }) ;
           $("#filter_student").change(create_filter);
           $("#filter_assignment").change(create_filter);
           $("#filter_drafted").change(function(){
               filter("drafted");
+              $.session.set("drafted", $("#filter_drafted").is(":checked"));
           });
           $("#filter_graded").change(function(){
               filter("graded");
+              $.session.set("graded", $("#filter_graded").is(":checked"));
           });
           $("#filter_ungraded").change(function(){
               filter("ungraded");
+              $.session.set("ungraded", $("#filter_ungraded").is(":checked"));
           });
+          if($.session.get("graded")) {
+              if($.session.get("graded")=="false"){
+                  $("#filter_graded").removeAttr("checked");
+                  filter("graded");
+              }
+              else
+              {
+                  $("#filter_graded").prop("checked", $.session.get("graded"));
+              }
+
+          }
+
+          if($.session.get("ungraded")) {
+              if($.session.get("ungraded")=="false"){
+                  $("#filter_ungraded").removeAttr("checked");
+                  filter("ungraded");
+              }
+              else
+              {
+                  $("#filter_ungraded").prop("checked", $.session.get("ungraded"));
+              }
+
+          }
+
+          if($.session.get("drafted")) {
+              if($.session.get("drafted")=="false"){
+                  $("#filter_drafted").removeAttr("checked");
+                  filter("drafted");
+              }
+              else
+              {
+                  $("#filter_drafted").prop("checked", $.session.get("drafted"));
+              }
+
+          }
+
+
 
 
       });
       function create_filter(){
           var filters = [];
           if($("#filter_student").is(':checked')){
-              filters.push(1);
+              filters.push(name_column_index);
           }
           if($("#filter_assignment").is(':checked')){
-              filters.push(2);
+              filters.push(name_column_index+1);
           }
+          console.log(filters);
           $(".sortable")[0].config.filter[0].filterColumns=filters;
           $(".sortable").trigger("doFilter");
 
@@ -68,9 +117,9 @@
   <div id='filterBox'>
     <input id='filterBoxOne' value='Page is still loading' disabled maxlength='30' size='30' type='text'/>
     <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
-    <input type="checkbox" id="filter_student"  checked="true"/> Student/Team Name   <input type="checkbox" id="filter_assignment"  checked="true">Assignment
-  </div>
-  Status: <input id="filter_graded" type="checkbox" checked="true"/ >Graded <input id="filter_ungraded" checked="true" type="checkbox"/>Ungraded <input id="filter_drafted"  checked="true" type="checkbox"/> Drafted </br>
+    <input type="checkbox" id="filter_student"  checked="true"/> Student/Team Name   <input type="checkbox" id="filter_assignment"  checked="true"><%= get_customised_name %>
+  </div></br>
+  <%= get_customised_name %> Status: <input id="filter_graded" type="checkbox" checked="true"/ >Graded <input id="filter_ungraded" checked="true" type="checkbox"/>Ungraded <input id="filter_drafted"  checked="true" type="checkbox"/> Drafted </br>
 </div>
 
 <% if current_user.is_staff? ||  current_user.is_admin? %>

@@ -12,7 +12,7 @@
   <% if @deliverable.is_team_deliverable? %>
     Team <%=get_customised_name%> for Team <%= @deliverable.team.name -%>
   <% else %>
-    Individual <%=get_customised_name %>for <%= @deliverable.creator.human_name -%>
+    Individual <%=get_customised_name %> for <%= @deliverable.creator.human_name -%>
   <% end %>
 <% if current_user.is_student %>
     (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
