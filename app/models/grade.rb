@@ -84,9 +84,17 @@ class Grade < ActiveRecord::Base
         grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
-      grade.score=score
-      grade.is_student_visible = is_student_visible
-      grading_result = grade.save
+      if GradingRule.validate_score(assignment.course.id, score)
+        if GradingRule.get_grade_type=="percentage"
+
+        end
+        grade.score=score
+        grade.is_student_visible = is_student_visible
+        grading_result = grade.save
+      else
+        grading_result=false
+      end
+
     end
     grading_result
   end
