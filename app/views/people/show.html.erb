@@ -44,7 +44,7 @@
         <div class="user_profile_title">
 
             <h1 id="user_profile_name">
-                <%= h @person.human_name %>
+                <%= h @person.first_name %> <%= h @person.last_name %>
                 <% if !(@person.pronunciation.blank?) %>
                     <div class="user_profile_pron">Pronounced: <%= h @person.pronunciation %> <br /></div>
                 <% end %>
