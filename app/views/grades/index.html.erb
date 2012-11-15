@@ -55,37 +55,6 @@
   function postAll() {
       post_grades('<%=post_all_grades_path(@course)%>');
   }
-  function post_grades_for_one_assignment(assignment_id){
-
-      var data = {};
-      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
-      data.assignment_id = assignment_id
-      $.ajax({
-          contentType: "application/json;",
-          url: '<%= post_one_assignment_path %>',
-          type: "POST",
-          data: JSON.stringify(data, null, 1),
-          dataType: "json",
-          success:function(data){
-              //clean changed_grades
-              $.each(changed_grades, function(index, value){
-                  if(parseInt(index.split("_")[0]) == assignment_id)
-                    delete changed_grades[index];
-              });
-
-              //update changed view
-              $("input[id^='<%=@course.id%>_" + assignment_id + "']").each(function(){
-                  $(this).removeClass("draft");
-                  $(this).removeClass("changedScore");
-                  $(this).get(0).defaultValue = $(this).val();
-              })
-
-          },
-          error: function(jqXHR, textStatus, errorThrown){
-              console.log("Unalbe to submit the record");
-          }
-      });
-  }
   function post_grades(url) {
       var data = {};
       data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
@@ -157,26 +126,20 @@
       <table class="cmu_table sortable">
         <thead>
           <tr>
-            <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> First Name
+            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
             </th>
-            <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> Last Name </th>
-            <th rowspan="3"> Team </th>
+            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
+            <th rowspan="2"> Team </th>
             <% @assignments.each do |assignment| %>
               <th style='max-width:30px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
             <%end %>
-            <th rowspan="3">Earned Grades</th>
+            <th rowspan="2">Earned Grades</th>
           </tr>
           <tr>
             <% @assignments.each do |assignment| %>
                 <td>Max <%="#{assignment.maximum_score}"%></td>
               <% end %>
           </tr>
-          <tr>
-            <% @assignments.each do |assignment| %>
-            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save grades</button></td>
-            <% end %>
-          </tr>
-
         </thead>
 
         <input type="hidden" id="course_id" value=<%=@course.id%> />
