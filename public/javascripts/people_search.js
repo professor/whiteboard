@@ -186,10 +186,6 @@ function parse_smart_search(){
   category_selected["main_search_text"] = $.trim(category_selected["main_search_text"]);
 
   fill_advanced_area(category_selected);
-  SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
-
-  // DEBUG
-  // console.log(category_selected);
   
 }
 
@@ -209,7 +205,6 @@ function reset_advanced_area(){
   $('#search_text_box').val("");
   $('#people_type_picker').val("all");
   $('.criteria_tag').hide();
-  location.hash = "";
 }
 
 // Auto fillin parameters into advanced search area UI - will be used by both linkable url and extracting smart search fields
@@ -267,8 +262,8 @@ function fill_advanced_area(parameters_hash){
 function construct_query_sting(){
     var request_url_with_params = '';
     // add main criteria to query string
-    if($("#search_text_box").val() != "Search Text"){ request_url_with_params += "&main_search_text="+$("#search_text_box").val(); }
-    else { request_url_with_params += "&main_search_text="; }
+    request_url_with_params += "&smart_search_text="+$("#smart_search_text").val();
+    request_url_with_params += "&main_search_text="+$("#search_text_box").val();
     if(SELECTED_CRITERIA_HASH["First Name"]){ request_url_with_params += "&first_name=true"; }
     if(SELECTED_CRITERIA_HASH["Last Name"]){ request_url_with_params += "&last_name=true"; }
     if(SELECTED_CRITERIA_HASH["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
@@ -322,10 +317,9 @@ function execute_search(request_params){
             $('#results_box').fadeTo('fast', 1);
         }
     });
-    //history.pushState(null, "", 'people?'+request_params);
-    //history.replaceState(null, "", 'people?'+request_params);
+
     // Linkable URL - Modify the location hash when search performed
-    location.hash=request_params;
+    location.hash = request_params;
 };
 
 
@@ -357,18 +351,53 @@ $(document).ready(function(){
       $('#export_dialog_modal').dialog("close");
     });
 
+
+    var advanced_only_hash = { "smart_search_text": true, "first_name": true, "last_name": true, "andrew_id": true };
     // Advanced Search Area Initialization
     $('#advanced_search_btn').click(function(){
       $('#smart_search_text').attr('disabled', 'disabled').css('opacity', 0.3);
       $('#advanced_search_area').slideDown();
+
+      if($(this).hasClass("btn_pressed")){
+        $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
+        $('#advanced_search_area').slideUp();
+
+        var query_string = window.location.hash.replace("#","");
+        var tmp_smart_string = "";
+
+          if(query_string != ""){
+              var hash_params = query_string.split('&');
+              for (var i = 1; i < hash_params.length; i++){
+                  hash_params[i] = hash_params[i].split('=');
+
+                  if (!advanced_only_hash.hasOwnProperty(hash_params[i][0])){
+                    tmp_smart_string += hash_params[i][1] + ' ';
+                  }
+              }
+              $('#smart_search_text').val(tmp_smart_string.replace("_","-"));
+
+
+          }
+      }
+      $(this).toggleClass("btn_pressed");
     });
-    $('#advanced_area_close').click(function(){ 
+
+    /*$('#advanced_area_close').click(function(){
+      $(this).toggleClass("btn_pressed");
       $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
       $('#advanced_search_area').slideUp();
       reset_advanced_area();
       $("#results_box").html("");
       $('#smart_search_text').val("");
+      location.hash = ""
+    });*/
+
+    // Toggle Display Mode
+    $("#list_mode_btn, #card_mode_btn").click(function(){
+      $("#list_mode_btn, #card_mode_btn").toggleClass("btn_pressed");
     });
+
+
 
     // Build the Companies Hash
     build_company_hash();
@@ -480,76 +509,44 @@ $(document).ready(function(){
       execute_search(construct_query_sting());
     });
 
-    $('#search_text_box').keyup(function(e) {
+    $('#search_text_box, .criteria_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
-      $('#results_box').fadeTo('fast', 0.5);
       if(e.which != 13){
         SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
       }
     });
 
-    $('.criteria_text').keyup(function(e) {
-      clearTimeout(SEARCH_TIMEOUT);
-      SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
-    });
-
-
     $('#smart_search_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
-      SEARCH_TIMEOUT = setTimeout('parse_smart_search()', 400)  ;
+      if(e.which != 13){
+        SEARCH_TIMEOUT = setTimeout('parse_smart_search();execute_search(construct_query_sting());', 400);
+      }
     });
 
 
+    // Linkable URL & Back Button- Match hash to search parameters and execute search
+    window.onpopstate = function() {
 
+        var query_string = window.location.hash.replace("#","");
+        var url_hash = new Object();
 
+        if(query_string != ""){
+          var hash_params = query_string.split('&');
+          for (var i = 0; i < hash_params.length; i++){
+            hash_params[i] = hash_params[i].split('=');
+            url_hash[hash_params[i][0]] = hash_params[i][1];
+          }
 
-
-    // Linkable URL - Match hash to search parameters and execute search
-    var hash_params = window.location.hash;
-
-    if(hash_params != ""){
-      hash_params = hash_params.replace("#","");
-      execute_search(hash_params);
-    }
-    // Back to previous search by pressing back button 
-    $(window).bind("popstate", function() {
-        var hash= location.hash;
-        if( hash != ""){
-          hash = hash.replace("#","");
-          execute_search(hash);
+          fill_advanced_area(url_hash);
+          $('#smart_search_text').val(url_hash["smart_search_text"]);
+          execute_search(query_string);
+        } else { 
+          reset_advanced_area();
+          $("#results_box").html("");
+          $('#smart_search_text').val("");
         }
-    });
+    }
 
-
-
-
-// TODO: Match Parameters in Hash to new UI
-/* var hp = hash_params.split("&");
-var i;
-for(i = 0; i < hp.length; i++) {
-var name_value = hp[i].split("=");
-var name = name_value[0];
-var value = name_value[1];
-
-
-if(name === "first_name") {
-    $("#sea").val(value);
-    console.log ($("#criteria_first_name").val());
-} else if (name === "last_name") {
-    $("#criteria_last_name").val(value);
-} else if (name === "andrew_id") {
-    $("#criteria_andrew_id").val(value);
-} else if (name === "people_type") {
-    $("#people_type_picker").val(value);
-} else if (name === "organization_name") {
-    $("#criteria_company input").val(value);
-} else if (name === "main_search_text") {
-    $("#search_text_box").val(value);
-}
-
-//execute_search();
-
-} */
 
 
 });

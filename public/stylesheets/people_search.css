@@ -1,7 +1,7 @@
 /* UI Mockup CSS Migration */
 
 .hidden { display: none; }
-
+.btn_pressed { border: 1px inset; }
 
 .customization_dialog { margin-top: 32px; }
 .customization_dialog .ui-dialog-titlebar {display:none}
@@ -25,7 +25,7 @@
 #main_criteria_box { height:21px; border: 1px solid #000; border-radius: 1px; width: 58%; display:inline-block;}
 #search_text_box { border: none; padding: 0 3px; background-color: #f3f0e9; width:58%;}
 #main_criteria_picker { border: none; background-color: #f3f0e9; width: 38%;}
-#people_type_picker, #extra_criteria_picker { width: 19%; height:22px; display: inline-block;}
+#people_type_picker, #extra_criteria_picker { width: 20%; height:22px; display: inline-block;}
 
 
 

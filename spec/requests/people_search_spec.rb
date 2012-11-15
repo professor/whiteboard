@@ -113,7 +113,7 @@ describe "people search" do
       find(:css, "#exact_match_checkbox").set(true)
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should_not have_selector('#results_box .data_card', :text => 'Vidya')
-      URI.parse(current_url).fragment.should == "&main_search_text=vid&first_name=true&last_name=true&andrew_id=true&exact_match=true"
+      URI.parse(current_url).fragment.should == "&smart_search_text=&main_search_text=vid&first_name=true&last_name=true&andrew_id=true&exact_match=true"
     end
 
     it "Should display result page with an entry of a linkable url", :js => true do
@@ -129,6 +129,7 @@ describe "people search" do
       visit ("/people#&main_search_text=Todd&first_name=true&last_name=true&andrew_id=true&people_type=staff&organization_name=yahoo")
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :text => 'Todd')
+
       page.evaluate_script('window.history.back()')
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', :text => 'Vidya')
