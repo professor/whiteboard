@@ -159,4 +159,8 @@ FactoryGirl.define do
     deleted false
   end
 
+  factory :registration, class: Registration do
+
+  end
+
 end

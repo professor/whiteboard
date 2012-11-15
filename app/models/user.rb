@@ -54,6 +54,13 @@ class User < ActiveRecord::Base
     where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
   }
 
+  def self.get_all_programs
+    User.select(:masters_program).map(&:masters_program).uniq.reject{|e|e.blank?}.sort
+  end
+  def self.get_all_years
+    User.select(:graduation_year).map(&:graduation_year).uniq.reject{|e|e.blank?}.sort.reverse
+  end
+
 
   def to_param
     if twiki_name.blank?

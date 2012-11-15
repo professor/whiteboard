@@ -14,21 +14,30 @@
 
         $(document).ready(function () {
 
+            // Hide these tables by default. We'll pull the results manually and populate through js.
+            $("#people_table").hide();
+            $("#advanced_search_filters").hide();
+            $("#filterBoxOne_loader").hide();
+
+            $("#filterBoxOne").keyup(function() {
+                if(this.value.length > 0){
+                    if(photobook_toggled)
+                        $("#photobook_results").show();
+                    else
+                        $("#people_table").show();
+                    $("#key_contacts_table").hide();
+                }
+                else{
+
+                    if(!($("#advanced_search_filters").is(":visible"))){
+                        // show the key contacts table again only if the filters are not displayed.
+                        $("#key_contacts_table").show();
+                    }
+
                     $("#people_table").hide();
-                    $("#filterBoxOne").keyup(function() {
-                        if(this.value.length > 0){
-                            if(photobook_toggled)
-                                $("#photobook_results").show();
-                            else
-                                $("#people_table").show();
-                            $("#key_contacts_table").hide();
-                        }
-                        else{
-                            $("#key_contacts_table").show();
-                            $("#people_table").hide();
-                            $("#photobook_results").hide();
-                        }
-                    });
+                    $("#photobook_results").hide();
+                }
+            });
 
             if ($("#filterBoxOne").prop("disabled") == true) {
                 $('#filterBoxOne').val('');
@@ -36,8 +45,7 @@
                 $('#filterBoxOne').focus();
             }
 
-            // Hide the search results table by default. We'll pull the results manually and populate through js.
-            $("#people_table").hide();
+
             $("#people_table").tablesorter({
                 // add zebra striping style
                 widgets:['zebra'],
@@ -62,6 +70,7 @@
                 sendQueryToServer_timer = setTimeout(queryDatabase, 500);
             });
 
+            // Photobook layout
             $("#filterBoxOne_photobook").click(function (){
                 $('#people_table tbody').empty();
                 $('#photobook_results').empty();
@@ -70,38 +79,76 @@
                     $(this).addClass("toggled");
                 else
                     $(this).removeClass("toggled")
-                var path = photobook_toggled ? '/images/tablesorter/photo_book_gloss_gray.png' : '/images/tablesorter/photo_book_gloss_red.png';
                 var title = photobook_toggled ? 'Grid View' : 'Photobook View';
-                $("#filterBoxOne_photobook").attr('src', path).attr('title', title);
-                buildSearchResults(last_search_results);
+                $("#filterBoxOne_photobook").attr('title', title);
+                buildSearchResults(last_search_results, false);
             });
 
+            // Advanced Search filter toggling
+            $("#filterBoxOne_filter").toggle(
+                    function(){
+                      // show advanced filters
+                      $("#advanced_search_filters").show();
+                      $(this).addClass("toggled");
+                      $("#key_contacts_table").hide();
+                      queryDatabase(true);
+
+                    },
+
+                    function(){
+                      // deactivate advanced filters
+                      $("#advanced_search_filters").hide();
+                      $(this).removeClass("toggled");
+                      // if there's a search parameter entered
+                      if ( $.trim($("#filterBoxOne").val()).length < 1 ){
+                        // show the default results
+                        $("#key_contacts_table").show();
+                        $('#people_table').hide();
+                        $('#photobook_results').hide();
+                      }else{
+                        // requery databse with search parameters entered
+                        queryDatabase(true);
+                      }
+                    }
+            );
+
+            $("#filter_person_type").change(function(){queryDatabase(true);});
+            $("#filter_course").change(function(){queryDatabase(true);});
+            $("#filter_year").change(function(){queryDatabase(true);});
+            $("#filter_program").change(function(){queryDatabase(true);});
+            $("#search_inactive").change(function(){queryDatabase(true);});
 
             // making the whole row of key_contacts clickable
             $('#key_contacts_table tbody tr').click(function () {
                 window.location = $(this).find('a').attr('href');
             });
-
             // making the whole row of people_table clickable
             $('#people_table tbody tr')
-                .live(  "click",
-                        function(){
-                            window.location = $(this).find('a').attr('href');
-                        }
-                );
-        });
+                .live(  "click",function(){
+                    window.location = $(this).find('a').attr('href');
+                });
 
-        function queryDatabase(){
+
+        }); // jQuery end ready function
+
+
+
+        function queryDatabase(force_query){
+
+            if (force_query != true){
+                force_query = false;
+            }
+
             searchBox = $("#filterBoxOne");
-            if(searchBox.val() != searchBox_old_val ){
+            if( (searchBox.val() != searchBox_old_val) || force_query ){
 
                 searchBox_old_val = searchBox.val();
                 $('#people_table tbody').empty();
                 $('#photobook_results').empty();
 
-                if($.trim(searchBox.val())){
+                if( ($.trim(searchBox.val())) || force_query ){
                     if(ajax_req_issued){
-                        // an ajax request was already issued, abort them
+                        // an ajax request was already issued, abort that request
                         jq_xhr.abort();
                         // Note: only instructs browser to stop listening for old request, if request already issued to server, cannot force server to stop processing.
                     }
@@ -110,19 +157,21 @@
                     jq_xhr = $.ajax({
 
                       url : 'people_search',  // the URL for the request
-                      data : { filterBoxOne : searchBox.val(), ajaxCall : true },  // the data to send  (will be converted to a query string)
+                      data : buildDataObject(),  // the data to send  (will be converted to a query string)
                       method : 'GET',
                       dataType : 'json',  // the type of data we expect back
                       contentType: "application/json; charset=utf-8",
                       beforeSend: function() {
                         ajax_req_issued = true;
+                        $("#filterBoxOne_loader").show();
                       },
                       complete: function() {
                         ajax_req_issued = false;
                       },
                       success : function(json) {
-                            last_search_results = json;
-                            buildSearchResults(json);
+                        last_search_results = json;
+                        buildSearchResults(json, force_query);
+                        $("#filterBoxOne_loader").hide();
                       }
                    });
 
@@ -138,8 +187,29 @@
             }
         }
 
+        function buildDataObject() {
+            var json = {};
+            if ($("#advanced_search_filters").is(":visible")) {
+                json = {
+                            filterBoxOne : $("#filterBoxOne").val(),
+                            user_type :   $("#filter_person_type").val(),
+                            graduation_year : $("#filter_year").val(),
+                            masters_program : $("#filter_program").val(),
+                            course_id : $("#filter_course").val(),
+                            search_inactive : $('#search_inactive:checked').val(),
+                            ajaxCall : true
+                };
+            } else{
+                json = {
+                            filterBoxOne : $("#filterBoxOne").val(),
+                            ajaxCall : true
+                };
+            };
+            return json;
+        }
+
         /* helper function to build the table results in #people_table */
-        function buildSearchResults(json) {
+        function buildSearchResults(json, force_query) {
             if(!photobook_toggled){
                 for (var i in json){
                     // build row number i
@@ -147,7 +217,7 @@
                 }
                 // after all rows built, show #people_table
                 searchBox = $("#filterBoxOne");
-                if($.trim(searchBox.val()))
+                if($.trim(searchBox.val()) || force_query)
                     $("#people_table").show();
                 $("#photobook_results").hide();
             } else{
@@ -157,6 +227,7 @@
                 }
                 $("#photobook_results").show();
                 $("#people_table").hide();
+
             }
         }
 
@@ -238,7 +309,7 @@
             return img;
         }
 
-       function export_csv(){
+        function export_csv(){
            //alert("hit!");
            searchBox = $("#filterBoxOne");
            //if(searchBox.val() != searchBox_old_val ){

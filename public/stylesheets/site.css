@@ -70,9 +70,63 @@ td.today {
     background-color: #eae5da;
 }
 
+/***************************
+  *Advanced search filter
+**************************/
+
+#filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne{
+    width: 80%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+#filterClearOne{
+    display:none;
+}
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
+#filterBoxOne_loader{
+    width: 30px;
+    margin-top: 2px;
+    margin-left: -36px;
+}
+
+#advanced_search_filters{
+    background-color: #E1EAEA;
+    border: 1px solid white;
+    margin: 10px 0px 15px 0;
+    padding: 10px;
+    height: 50px;
+}
+#advanced_search_filters .filter_col table{ margin:0 }
+#advanced_search_filters .filter_col table tbody td { border-style: none; padding: 0 5px 0 0; text-align: right }
+#advanced_search_filters .filter_col table tbody td:first-child {padding: 2px 20px 0 0;}
 
 
-/* tables - http://tablesorter.com*/
+
+.filter_option, .filter_label{
+    float:left;
+}
+.filter_col{
+    float:left;
+    width:50%;
+}
+    #filter_program{width:60%}
+    #filter_year{width:35%}
+    #filter_course{width:97%}
+
+
+/***********************************
+  * tables - http://tablesorter.com
+************************************/
+
 table.tablesorter {
 	font-family:arial;
 	background-color: #CDCDCD;

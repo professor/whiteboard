@@ -9,6 +9,7 @@ describe User do
     @faculty_frank = FactoryGirl.create(:faculty_frank)
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     @admin_andy = FactoryGirl.create(:admin_andy)
+
   end
 
   describe "abilities" do
@@ -24,6 +25,22 @@ describe User do
       it{ should be_able_to(:manage, SponsoredProject.new) }
     end
   end
+
+  describe 'list of user related information' do
+
+    before do
+      @student_sam = FactoryGirl.create(:student_sam, :graduation_year=>"2012", :masters_program=>"SE")
+    end
+
+    it 'should get list of all graduation years available in the database'  do
+      User.get_all_years.should include("2012")
+    end
+    it 'should get list of all programs available in the database' do
+      User.get_all_programs.should include("SE")
+    end
+
+  end
+
 
 
 

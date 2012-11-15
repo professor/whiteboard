@@ -65,8 +65,46 @@ class PeopleController < ApplicationController
   # Number of requesting coming in here is controlled through a javascript timer
   # (see js in views/people/index.html.erb for more details.)
   def search
-    #@people = User.where("first_name ILIKE ? OR last_name ILIKE ? ", "%#{params[:filterBoxOne]}%", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC").all
-    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
+
+
+
+    @people = User.scoped
+
+    # check user_type
+    # user_type - F => Faculty
+    # user_type - S => Students
+    # user_type - T => Staff
+    if !params[:user_type].blank?
+        where_clause_string = ""
+        if params[:user_type].include? "F" or params[:user_type].include? "S"  or params[:user_type].include? "T"
+        # if (params[:user_type] =~ /[FST]/) == 0
+            where_clause_string << "("
+            where_clause_string << " is_faculty = 't' OR " if params[:user_type].include?("F")
+            where_clause_string << " is_student = 't' OR " if params[:user_type].include?("S")
+            where_clause_string << " is_staff = 't' OR " if params[:user_type].include?("T")
+            # remove last OR
+            where_clause_string= where_clause_string[0..-4]
+            where_clause_string << ")"
+        end
+        @people = @people.where(where_clause_string) unless where_clause_string.blank?
+        # user_type - P => Part Time students
+        @people = @people.where("is_part_time = 't'") if params[:user_type].include?("P")
+        # user_type - L => Full Time students
+        @people = @people.where("is_part_time = 'f'") if params[:user_type].include?("L")
+    end
+
+    @people = @people.where("human_name ILIKE ?","%#{params[:filterBoxOne]}%") unless params[:filterBoxOne].blank?
+    @people = @people.where("graduation_year = ?","#{params[:graduation_year]}") unless params[:graduation_year].blank?
+    @people = @people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
+    @people = @people.where("is_active = 't'") unless params[:search_inactive] == 't'
+    @people = @people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
+    # @people.scoped(:joins => :registrations , :conditions => { :registrations => { :course_id => 1 } }).to_sql
+    @people = @people.order("first_name ASC, last_name ASC")
+
+    # @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
+
+
+
     @ppl = @people.collect do |person|
         # program the user is enrolled in
         program = ''

@@ -13,7 +13,7 @@
 # other information must not be copied.
 #
 # The CMU-SV community typically does not refer to courses by their number, where as on the Pittsburgh campus,
-# most undergraduate courses are referred to by their number. 
+# most undergraduate courses are referred to by their number.
 #
 # The system asks for the tuple (course_number, semester, and year) to create the course and then puts the user
 # in an edit mode prompting reasonable defaults from the last time the course was offered. If nothing has changed,
@@ -293,6 +293,5 @@ class Course < ActiveRecord::Base
   def map_faculty_strings_to_users(faculty_assignments_override_list)
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
-
 
 end
