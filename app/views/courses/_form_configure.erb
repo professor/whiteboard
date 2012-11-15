@@ -112,6 +112,11 @@
       <%= rule.select(:grade_type, [['Points', 'points'],['Weight','weight'], ['Letter', 'letter']])  %> <br/>
 
       </p>
+      <p>
+      <%=rule.label :is_nomenclature_deliverable, "Assignment or Task/Deliverable" %>
+      <%=rule.select(:is_nomenclature_deliverable, [["Assignment", false], ["Task/Deliverable", true]]) %>
+      </p>
+      <br/>
       Grading Criteria
       <table>
         <%[[:A_grade_min, "A"],[:A_minus_grade_min, "A-"],[:B_plus_grade_min, "B+"], [:B_grade_min, "B"],[:B_minus_grade_min, "B-"],[:C_plus_grade_min, "C+"], [:C_grade_min, "C"],[:C_minus_grade_min, "C-"]].each do |entry| %>
