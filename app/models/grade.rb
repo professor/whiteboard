@@ -32,13 +32,11 @@ class Grade < ActiveRecord::Base
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
-  #def score
-  #  GradingRule.get_grade_in_prof_format(self.course_id, read_attribute(:score))
-  #end
-  #
-  #def score=(val)
-  #  write_attribute(:score, GradingRule.get_raw_grade(self.course_id, val))
-  #end
+  before_save :format_score
+
+  def format_score
+    self.score = GradingRule.format_score(self.course.id, self.score)
+  end
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
@@ -78,23 +76,19 @@ class Grade < ActiveRecord::Base
     if assignment.nil?
       grading_result = false
     elsif assignment.course.registered_students.include?(student)
-      #raw_score = GradingRule.get_raw_grade(assignment.course.id, score)
       grade = Grade.get_grade(assignment.id, student_id)
-      if grade.blank?
+      if grade.nil?
         grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
-      if GradingRule.validate_score(assignment.course.id, score)
-        if GradingRule.get_grade_type=="percentage"
 
-        end
+      if GradingRule.validate_score(assignment.course.id, score)
         grade.score=score
         grade.is_student_visible = is_student_visible
         grading_result = grade.save
       else
         grading_result=false
       end
-
     end
     grading_result
   end

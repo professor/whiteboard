@@ -238,7 +238,7 @@ class Deliverable < ActiveRecord::Base
     if self.assignment.is_team_deliverable?
       self.team.members.each do |user|
         score = params[:"#{user.id}"]
-        unless Grade.give_grade(self.assignment.id, user.id, score, is_student_visible)
+        if Grade.give_grade(self.assignment.id, user.id, score, is_student_visible)==false
           error_msg << "Grade given to " + user.human_name + " is invalid!"
         end
       end

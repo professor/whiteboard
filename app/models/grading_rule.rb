@@ -86,8 +86,31 @@ class GradingRule < ActiveRecord::Base
       else
         return true
     end
-
   end
+
+  def self.format_score (course_id, raw_score)
+    raw_score=raw_score.to_s
+    grading_rule = GradingRule.find_by_course_id(course_id)
+    if grading_rule.nil?
+      return raw_score
+    elsif grading_rule.grade_type=="percentage" && raw_score.end_with?("%")
+      return raw_score.split("%")[0]
+    else
+      return raw_score
+   end
+    #unless grading_rule.nil?
+    #  case grading_rule.grade_type
+    #    when "percentage"
+    #     if raw_score.end_with?("%")
+    #      return raw_score.split("%")[0]
+    #    else
+    #      return raw_score
+    #  end
+    #else
+    #  return raw_score
+    #end
+  end
+
   # To convert points to letter grades
   def convert_points_to_letter_grade (points)
     if points>=self.A_grade_min
@@ -175,16 +198,10 @@ class GradingRule < ActiveRecord::Base
   def self.get_grade_type (course_id)
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
-      return "none"
+      return "points"
     end
 
-    case grading_rule.grade_type
-      when "letter"
-        return "letter"
-      when "points"
-        return "points"
-      when "percentage"
-        return "percentage"
-    end
+    return grading_rule.grade_type
+
   end
 end
