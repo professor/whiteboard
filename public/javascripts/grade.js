@@ -59,8 +59,19 @@ function Grade(type)
     this.earned_grade = function(student_id){
       var grades_hash = this.get_grades_for_student(student_id);
       var earned_grade = this.calculate(grades_hash);
+      if(gradeType =="letter") earned_grade = this.get_letter(earned_grade);
       $("tr#s_"+student_id + " .earned").text(earned_grade);
       return earned_grade;
-    }
+    };
+    this.get_letter = function(grade){
+      if(isNaN(grade)) return "";
+      var order = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"];
+      var current = order[0];
+      $.each(order,function(index, letter){
+        if(grade < gradeMapping[letter])
+          current = letter;
+      });
+      return current;
+    };
 
 }

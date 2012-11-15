@@ -43,4 +43,11 @@ describe("Grade", function(){
       expect(grade.earned_grade(student_id)).toEqual(3);
       expect($("tr#s_"+student_id+ " .earned").text()).toEqual('3');
     });
+    it("can convert point to letter", function(){
+        var grade = new Grade("letter", [0.1,0.1,0.1], {"A":100, "A-":92, "B+": 90});
+        expect(grade.get_letter(100)).toEqual("A");
+        expect(grade.get_letter(98)).toEqual("A");
+        expect(grade.get_letter(92)).toEqual("A");
+        expect(grade.get_letter(91)).toEqual("A-");
+    })
 });
