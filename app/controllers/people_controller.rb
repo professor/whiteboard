@@ -26,15 +26,7 @@ class PeopleController < ApplicationController
     # These lines allow someone to override the user ID used to display default search results.
     # This code is intended for use by administrators and staff only.
 
-    @user = current_user
-    if (current_user.is_admin? || current_user.is_staff?)
-      if !params[:id].blank?
-        @user_override = true
-        @user = User.find_by_param(params[:id])
-      end
-    end
-
-    @people = PeopleSearchDefault.default_search_results(@user)
+    @people = return_defaults
 
     @results = @people.collect { |default_person| Hash[
         :image_uri => default_person.user.image_uri,
@@ -42,12 +34,16 @@ class PeopleController < ApplicationController
         :human_name => default_person.user.human_name,
         :contact_dtls => default_person.user.telephones_hash,
         :email => default_person.user.email,
-        :path => person_path(default_person.user)
+        :path => person_path(default_person.user),
+    #    first_name and last_name required for photobook
+        :first_name => default_person.user.first_name,
+        :last_name => default_person.user.last_name
     ]}
     @results.uniq!
 
     respond_to do |format|
       format.html { render :html => @results }
+      format.json { render :json => @results }
       #format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
       #                                                              "first_name" => person.first_name,
       #                                                              "last_name" => person.last_name,
@@ -102,51 +98,54 @@ class PeopleController < ApplicationController
     @people = @people.order("first_name ASC, last_name ASC")
 
     # @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
-
+     # potentially refactot the below
+     # @people = return_search_results(params[:filterBoxOne])
 
 
     @ppl = @people.collect do |person|
-        # program the user is enrolled in
-        program = ''
-        if person.is_student
-            program += (person.masters_program + ' ') unless person.masters_program.blank?
-            program += person.masters_track unless person.masters_track.blank?
-            if person.is_part_time
-                program += ' (PT)'
-            else
-                program += ' (FT)'
-            end
-        elsif person.is_staff
-            program += 'Staff'
+      # program the user is enrolled in
+      program = ''
+      if person.is_student
+        program += (person.masters_program + ' ') unless person.masters_program.blank?
+        program += person.masters_track unless person.masters_track.blank?
+        if person.is_part_time
+          program += ' (PT)'
+        else
+          program += ' (FT)'
         end
-        # constructing Hash/json containing results
-        Hash["id" => person.twiki_name,
-            "first_name" => person.first_name,
-            "last_name" => person.last_name,
-            "image_uri" => person.image_uri,
-            "program" => program,
-            "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
-            "email" => person.email,
-            "path" => person_path(person)
-        ]
+      elsif person.is_staff
+        program += 'Staff'
+      end
+      # constructing Hash/json containing results
+      Hash["id" => person.twiki_name,
+           "first_name" => person.first_name,
+           "last_name" => person.last_name,
+           "image_uri" => person.image_uri,
+           "program" => program,
+           "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
+           "email" => person.email,
+           "path" => person_path(person)
+      ]
     end
     respond_to do |format|
-        format.json { render :json =>  @ppl, :layout => false }
+      format.json { render :json =>  @ppl, :layout => false }
     end
   end
 
   # GET /people/download_csv
   def download_csv
-    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
+    @people = return_search_results(params[:filterBoxOne])
     respond_to do |format|
-      #format.json { render :json =>  @ppl, :layout => false }
       format.csv do
         csv_string = CSV.generate do |csv|
-          #csv << ["Name","Give Name","Family Name","Email","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value"]
-          csv << ["First","Last","Email","Mobile","Work","Home"]
+          csv << ["Name","Given Name","Additional Name","Family Name","Yomi Name","Given Name Yomi","Additional Name Yomi","Family Name Yomi","Name Prefix","Name Suffix","Initials","Nickname","Short Name","Maiden Name","Birthday","Gender","Location","Billing Information","Directory Server","Mileage","Occupation","Hobby","Sensitivity","Priority","Subject","Notes","Group Membership","E-mail 1 - Type","E-mail 1 - Value","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value"]
 
           @people.each do |user|
-            csv <<[user.first_name,user.last_name,user.email, user.telephone1,user.telephone2,user.telephone3 ]
+            csv << [user.first_name,user.first_name,"",user.last_name,"","","","","","","","","","","","","","","","","","","","","","","","other",user.email,
+                csv_name_converter(user.telephone1_label),user.telephone1,
+                csv_name_converter(user.telephone2_label),user.telephone2,
+                csv_name_converter(user.telephone3_label),user.telephone3,
+                csv_name_converter(user.telephone4_label),user.telephone4]
           end
         end
 
@@ -159,40 +158,40 @@ class PeopleController < ApplicationController
 
   # GET /people/download_vcf
   def download_vcf
-    @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
-   # respond_to do |format|
-      #format.json { render :json =>  @ppl, :layout => false }
-      #format.vcf do
+    @people = return_search_results(params[:filterBoxOne])
 
-        vcard_str=""
+    vcard_str=""
 
-        @people.each do |user|
-          card = Vpim::Vcard::Maker.make2 do |maker|
+    @people.each do |user|
+      card = Vpim::Vcard::Maker.make2 do |maker|
 
-            maker.add_name do |name|
-              name.prefix = ''
-              name.given = user.first_name
-              name.family = user.last_name
-            end
-
-            maker.add_email(user.email)
-            #maker.add_tel('416 123 2222') { |t| t.location = 'home'; t.preferred = true }
-            maker.add_tel(user.telephone1) if (!user.telephone1.blank?)
-            maker.add_tel(user.telephone2) if (!user.telephone2.blank?)
-            maker.add_tel(user.telephone3) if (!user.telephone3.blank?)
-            maker.add_tel(user.telephone4) if (!user.telephone4.blank?)
-
-          end
-
-          vcard_str<<card.to_s
+        maker.add_name do |name|
+          name.prefix = ''
+          name.given = user.first_name
+          name.family = user.last_name
         end
 
+        phones_hash = user.telephones_hash
+        maker.add_email(user.email)
+        phones_hash.each do |k,v|
+          maker.add_tel(v) do |tel|
+            tel.location = "work" if k == "Work"
+            tel.location = "home" if k == "Home"
+            tel.location = "fax" if k == "Fax"
+            tel.location = "cell" if k == "Mobile"
+            tel.location = "voice" if k == "Google Voice"
+          end
+        end
+      end
 
-        send_data vcard_str,
-                  :type=>"text/vcf; charset=utf-8",
-                  :disposition =>"attachment; filename=contact.vcf"
-      #end
-    #end
+      vcard_str<<card.to_s
+    end
+
+
+    send_data vcard_str,
+              :type=>"text/vcf; charset=utf-8",
+              :disposition =>"attachment; filename=contact.vcf"
+
   end
 
   #Ajax call for autocomplete using params[:term]
@@ -542,6 +541,52 @@ class PeopleController < ApplicationController
       else
         format.html { render :layout => "cmu_sv" } # index.html.erb
       end
+    end
+  end
+
+
+
+  private
+
+  def return_defaults
+    @user = current_user
+    if (current_user.is_admin? || current_user.is_staff?)
+      if !params[:id].blank?
+        @user_override = true
+        @user = User.find_by_param(params[:id])
+      end
+    end
+    PeopleSearchDefault.default_search_results(@user)
+  end
+
+  def return_search_results(search_query)
+    if search_query.empty?
+
+      @defaults = return_defaults
+      @people = []
+      @defaults.each do |default|
+        @people << User.find(default.user_id)
+      end
+      return @people.uniq
+    else
+      User.where("human_name ILIKE ? ", "%#{search_query}%").order("first_name ASC, last_name ASC")
+    end
+  end
+
+  def csv_name_converter(origin)
+    case origin
+      when "Work"
+        return "work"
+      when "Home"
+        return "home"
+      when "Fax"
+        return "fax"
+      when "Mobile"
+        return "cell"
+      when "Google Voice"
+        return "voice"
+      else
+        return ""
     end
   end
 
