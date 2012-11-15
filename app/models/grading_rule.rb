@@ -203,6 +203,25 @@ class GradingRule < ActiveRecord::Base
     end
 
     return grading_rule.grade_type
+  end
 
+  def get_grade_params_for_javascript
+    weight_hash = {}
+    self.course.assignments.each do |assignment| 
+      weight_hash[assignment.id] = 0.01* assignment.maximum_score
+    end
+    score_assignment = {} 
+    ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"].each do |letter|
+      score_assignment[letter] = convert_letter_grade_to_points(letter)
+    end
+
+    case GradingRule.get_grade_type self.course_id
+      when "points" then
+        "'points'"
+      when "percentage" then
+        "'weight', #{weight_hash.to_json}"
+      when "letter" then
+        "'letter', #{weight_hash.to_json}, #{score_assignment.to_json}"
+    end 
   end
 end
