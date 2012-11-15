@@ -2,6 +2,7 @@
 <%= javascript_include_tag "jquery.tablesorter.js" %>
 <script>
   var changed_grades = {}
+  var grades = new Grade("points");
   $(document).ready(function() { 
     // call the tablesorter plugin
     $(".sortable").tablesorter({ 
@@ -14,9 +15,13 @@
     });
     $(".grade input[type='text']").dblclick(function(event){
         $(this).toggleClass("draft");
-        change_grade(event)
-
+        change_grade(event);
     })
+    $("tr[id^='s_']").each(function(){
+      var student_id = $(this).attr("id").replace("s_","");
+      grades.earned_grade(student_id);    
+    });
+
   });
   function change_grade(event){
     var grade_attrs = parse_id($(event.target).attr('id'));
@@ -24,14 +29,7 @@
     var previousValue = event.target.defaultValue;
     var visible = !$(event.target).hasClass("draft");
     var previousVisible = $(event.target).hasClass("default_draft")?false:true;
-    var grades = new Grade("points");
-    var grades_hash = {}
-    $(event.target).parents("tr").find("input").each(function(){
-        grades_hash[parse_id($(this).attr("id")).assignment_id] = $(this).val();
-    });
-    console.log(grades_hash);
-      $("#s_" + grade_attrs.student_id + " .earned").text( grades.calculate(grades.convert(grades_hash)));
-
+    grades.earned_grade(grade_attrs.student_id);
     if(previousValue != score || visible != previousVisible)
     {
       $(event.target).addClass("changedScore");
@@ -47,7 +45,6 @@
       $(event.target).removeClass("changedScore");
       delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
     }
-    console.log(changed_grades);
   }
   function parse_id(idAttr){
       return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};

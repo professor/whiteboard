@@ -30,4 +30,17 @@ describe("Grade", function(){
         var grade = new Grade("letter", [0.1,0.1,0.1], {"A":100, "A-":92, "B+": 90});
         expect(grade.calculate({0:"A", 2:"B+"})).toEqual(19);
     });
+    it("can fetch grades for one person", function(){
+      var grade = new Grade("points");
+      loadFixtures("gradebook.html");
+      expect(grade.get_grades_for_student(1)).toEqual({1:'1', 2:'2'});
+      expect(grade.get_grades_for_student(2)).toEqual({1:'3', 2:'4'});
+    });
+    it("can compute and update grade for a student", function(){
+      loadFixtures("gradebook.html");
+      var grade = new Grade("points");
+      var student_id = 1;
+      expect(grade.earned_grade(student_id)).toEqual(3);
+      expect($("tr#s_"+student_id+ " .earned").text()).toEqual('3');
+    });
 });
