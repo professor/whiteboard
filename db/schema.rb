@@ -10,19 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121111001335) do
+ActiveRecord::Schema.define(:version => 20121110232950) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
     t.float    "maximum_score"
-    t.boolean  "is_team_deliverable"
+    t.boolean  "is_team_deliverable", :default => false
     t.datetime "due_date"
     t.integer  "course_id"
     t.integer  "assignment_order"
     t.integer  "task_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_submittable"
+    t.boolean  "is_submittable",      :default => false
   end
 
   create_table "course_numbers", :force => true do |t|
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20121111001335) do
     t.datetime "feedback_updated_at"
     t.integer  "assignment_id"
     t.string   "private_note"
+    t.boolean  "is_student_visible"
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"

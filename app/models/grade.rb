@@ -68,7 +68,7 @@ class Grade < ActiveRecord::Base
   end
 
   # To assign/update the grade to the student
-  def self.give_grade(assignment_id, student_id, score,is_student_visible=false)
+  def self.give_grade(assignment_id, student_id, score,is_student_visible=nil)
     grading_result = false
     student = User.find(student_id)
 
@@ -84,7 +84,9 @@ class Grade < ActiveRecord::Base
 
       if GradingRule.validate_score(assignment.course.id, score)
         grade.score=score
-        grade.is_student_visible = is_student_visible
+        unless is_student_visible.nil?
+          grade.is_student_visible = is_student_visible
+        end
         grading_result = grade.save
       else
         grading_result=false
@@ -109,6 +111,36 @@ class Grade < ActiveRecord::Base
         end
       end
       Grade.update_all({:is_student_visible=>true},{:assignment_id=>assignment_id})
+  end
+
+  def send_feedback_to_student
+    feedback = "Grade has been submitted for "
+    if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
+      feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
+    end
+    feedback +=self.course.name
+
+
+      feedback += "\nGrade earned for this assignment is: "
+      feedback += self.score.to_s
+      feedback+= " /"
+      feedback+= self.assignment.maximum_score.to_s
+      feedback += "\n"
+
+
+    options = {:to => self.student.email,
+               :subject => "Grade for " + self.course.name,
+               :message => feedback
+              }
+
+    GenericMailer.email(options).deliver
+  end
+  def self.mail_drafted_grade course_id
+    Grade.find_all_by_is_student_visible_and_course_id(false, course_id).each do |grade|
+      grade.is_student_visible = true
+      grade.save
+      grade.send_feedback_to_student
+    end
   end
 
 end

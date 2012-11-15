@@ -1,4 +1,4 @@
-<%#= javascript_include_tag "grade_books.js" %>
+<%= javascript_include_tag "grade.js" %>
 <%= javascript_include_tag "jquery.tablesorter.js" %>
 <script>
   var changed_grades = {}
@@ -12,27 +12,42 @@
         return $(node).text();
       } 
     });
+    $(".grade input[type='text']").dblclick(function(event){
+        $(this).toggleClass("draft");
+        change_grade(event)
+
+    })
   });
   function change_grade(event){
     var grade_attrs = parse_id($(event.target).attr('id'));
     var score = $(event.target).val();
     var previousValue = event.target.defaultValue;
-    
-    compute_grades(grade_attrs.student_id);
-    if(previousValue != score)
+    var visible = !$(event.target).hasClass("draft");
+    var previousVisible = $(event.target).hasClass("default_draft")?false:true;
+    var grades = new Grade("points");
+    var grades_hash = {}
+    $(event.target).parents("tr").find("input").each(function(){
+        grades_hash[parse_id($(this).attr("id")).assignment_id] = $(this).val();
+    });
+    console.log(grades_hash);
+      $("#s_" + grade_attrs.student_id + " .earned").text( grades.calculate(grades.convert(grades_hash)));
+
+    if(previousValue != score || visible != previousVisible)
     {
       $(event.target).addClass("changedScore");
       changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
         course_id: grade_attrs.course_id,
         assignment_id: grade_attrs.assignment_id,
         student_id: grade_attrs.student_id,
-        score: score
+        score: score,
+        is_student_visible: visible
       };
     }
     else{
       $(event.target).removeClass("changedScore");
       delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
     }
+    console.log(changed_grades);
   }
   function parse_id(idAttr){
       return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};
@@ -52,8 +67,12 @@
   function saveAsDraft() {
       post_grades('<%=save_draft_path(@course)%>');
   }
-  function postAll() {
-      post_grades('<%=post_all_grades_path(@course)%>');
+  function post_drafted_and_send() {
+      post_grades('<%=post_drafted_and_send_path(@course)%>');
+
+  }
+  function save() {
+      post_grades('<%=save_path(@course)%>');
   }
   function post_grades(url) {
       var data = {};
@@ -154,7 +173,7 @@
                 <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" 
                        value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
                        type="text" size="4" width="100%" onchange="change_grade(event);" 
-                       class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>' />
+                       class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
               </td>
             <% end %>
             <td class='earned'><%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%></td>
@@ -163,8 +182,9 @@
       </table>
 
       <div style='padding-top:20px;margin-bottom: 40px;'>
-        <button type="button" id="gradebook_submit" onclick="postAll()">Save</button>
+        <button type="button" id="gradebook_submit" onclick="save()">Save</button>
         <button type="button" id="gradebook_save_draft" onclick="saveAsDraft()">Save as Draft</button>
+        <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
       </div>
 
   </div>

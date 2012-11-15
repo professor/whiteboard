@@ -42,10 +42,10 @@ class GradesController < ApplicationController
     end
   end
 
-  def post_all
+  def post_drafted_and_send #and send email
     grades = params["grades"]
-    Grade.give_grades(grades)
-    Grade.post_all(@course.id)
+    #Grade.give_grades(grades)
+    Grade.mail_drafted_grade @course.id
     render :json => ({"message"=>"true"})
   end
 
@@ -56,11 +56,17 @@ class GradesController < ApplicationController
     render :json => ({"message"=>"true"})
   end
 
-  def post_grades_for_one_assignment
+  def save
     grades = params["grades"]
-    assignment_id = params["assignment_id"]
-    Grade.post_grades_for_one_assignment(grades, assignment_id)
+    Grade.give_grades(grades)
     render :json => ({"message"=>"true"})
   end
+
+  #def post_grades_for_one_assignment
+  #  grades = params["grades"]
+  #  assignment_id = params["assignment_id"]
+  #  Grade.post_grades_for_one_assignment(grades, assignment_id)
+  #  render :json => ({"message"=>"true"})
+  #end
 
 end
