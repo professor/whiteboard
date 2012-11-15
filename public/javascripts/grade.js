@@ -39,7 +39,7 @@ function Grade(type)
         return gradeArray;
     };
     this.calculate = function(gradeHash){
-        var total = 0;
+      var total = 0;
             var gradeArray = this.convert(gradeHash);
 
 
@@ -48,6 +48,19 @@ function Grade(type)
         }
         return total;
     };
-
+    this.get_grades_for_student = function(student_id){
+      var hash = {};
+      $("tr#s_"+ student_id).find("input").each(function(){
+        var assignment_id = $(this).attr("id").split("_")[1];
+        hash[assignment_id] = $(this).val();
+      });
+      return hash;
+    };
+    this.earned_grade = function(student_id){
+      var grades_hash = this.get_grades_for_student(student_id);
+      var earned_grade = this.calculate(grades_hash);
+      $("tr#s_"+student_id + " .earned").text(earned_grade);
+      return earned_grade;
+    }
 
 }
