@@ -316,6 +316,9 @@ def create_course_with_profs
   
   prof_lee = Factory.create(:prof_lee)
   Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_lee.id)
+
+  Factory.create(:grading_rule_points, :course_id=>course_fse.id)
+
   course_fse
 
 end
@@ -353,7 +356,7 @@ def create_assignments course_fse
     team.members.each do |team_member|
       Factory.create(:registration, :course_id=>course_fse.id, :user => team_member)
       assignments.each do |assign|
-        Factory.create(:grade_letters, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
+        Factory.create(:grade_points, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
       end
     end
   end
