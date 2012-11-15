@@ -243,5 +243,20 @@ FactoryGirl.define do
     is_part_time false
   end
 
+  factory :alumnus_harry, :parent => :user do
+    email "harry.potter@sv.cmu.edu"
+    webiso_account "hpotter@andrew.cmu.edu"
+    is_alumnus true
+    is_student false
+    is_admin true
+    first_name "Harry"
+    last_name "Potter"
+    human_name "Harry Potter"
+    twiki_name "Harry Potter"
+    graduation_year "2011"
+    is_part_time false
+    is_active false
+  end
+
 
 end

@@ -39,7 +39,8 @@ describe "people/index.html.erb" do
   it "should have Go button, exact match, customization, exports results" do
     rendered.should have_selector("button", :content => 'Go')
     rendered.should have_selector("input[type='checkbox']", :content => 'Exact Match?')
-    rendered.should have_content("Customization")
+    rendered.should have_selector("input[type='checkbox']", :content => 'Include Inactive Users?')
+    rendered.should have_content("Customize")
     rendered.should have_content("Export Results")
   end
 end

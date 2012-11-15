@@ -268,6 +268,7 @@ function construct_query_sting(){
     if(SELECTED_CRITERIA_HASH["Last Name"]){ request_url_with_params += "&last_name=true"; }
     if(SELECTED_CRITERIA_HASH["Andrew ID"]){ request_url_with_params += "&andrew_id=true"; }
     if($('#exact_match_checkbox')[0].checked){ request_url_with_params += "&exact_match=true"; }
+    if($('#include_inactive_checkbox')[0].checked){ request_url_with_params += "&include_inactive=true"; }
     // add people_type to query string 
     if($('#people_type_picker').val() != "all") {request_url_with_params += "&people_type="+$('#people_type_picker').val();}
     // add extra criteria to query string
@@ -531,9 +532,11 @@ $(document).ready(function(){
 
 
     // Events binded to search execution
-    $('#people_type_picker, .criteria_text, #exact_match_checkbox').change(function(e) {
+    $('#people_type_picker, .criteria_text, #exact_match_checkbox, #include_inactive_checkbox').change(function(e) {
       execute_search(construct_query_sting());
     });
+
+
 
     $('#search_text_box, .criteria_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);

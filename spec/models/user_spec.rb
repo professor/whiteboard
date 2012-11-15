@@ -24,11 +24,25 @@ describe User do
       @alumnus_sunil = FactoryGirl.create(:alumnus_sunil)
       @alumnus_memo = FactoryGirl.create(:alumnus_memo)
       @alumnus_sean = FactoryGirl.create(:alumnus_sean)
+      @alumnus_harry = FactoryGirl.create(:alumnus_harry)
+
     end
 
    # def create_team_1
     #  [ :one, :two, :three ]
     #end
+
+    it "should not include inactive users by default" do
+      params_hash = {'main_search_text' => 'harr', 'first_name' => true, 'last_name' => true, 'andrew_id' => true}
+      @users=User.Search(params_hash)
+      @users.should_not include @alumnus_harry
+    end
+
+    it "should include even inactive users" do
+      params_hash = {'main_search_text' => 'harr', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'include_inactive'=>true  }
+      @users=User.Search(params_hash)
+      @users.should include @alumnus_harry
+    end
 
     it "should do partial search case - default" do
       params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }

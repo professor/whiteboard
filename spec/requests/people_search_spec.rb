@@ -15,6 +15,7 @@ describe "people search" do
     FactoryGirl.create(:student_rashmi)
     FactoryGirl.create(:student_shama)
     FactoryGirl.create(:student_vidya)
+    FactoryGirl.create(:alumnus_harry)
     @user = FactoryGirl.create(:student_sam_user)
 
     login_with_oauth @user
@@ -26,6 +27,24 @@ describe "people search" do
     page.should_not have_selector('#results_box .data_card')
   end
 
+  #Tests for active/inactive users
+  context 'active/inactive users' do
+    it "should include only active users by default, then update with inactive users only on checking the 'Include Inactive Users'", :js => true do
+      fill_in "search_text_box" , :with => "Harr"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => "Harry")
+      find(:css, "#include_inactive_checkbox").set(true)
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Harry")
+    end
+
+    it "should include even inactive users on checking 'Include Inactive Users'", :js => true do
+      fill_in "search_text_box" , :with => "Harry"
+      find(:css, "#include_inactive_checkbox").set(true)
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "Harry")
+    end
+  end
   #Tests for customization
   context 'customization of the search result' do
 

@@ -431,8 +431,20 @@ class User < ActiveRecord::Base
       @results_set = @results_set.where("is_part_time = ?", criteria['is_part_time'])
     end
 
+
+
+
+
     #add filter for active or inactive
-    if (criteria['is_active'] != nil)
+    if(criteria['include_inactive'] == nil)
+      @results_set = @results_set.where("is_active = ?", true)
+    end
+
+
+
+=begin
+    #if (criteria['is_active'] != nil)
+    else
       # Convert String to Boolean
       if(criteria['is_active'].is_a?(String))
         if(criteria['is_active'] == 'true')
@@ -443,6 +455,7 @@ class User < ActiveRecord::Base
       end
       @results_set = @results_set.where("is_active = ?", criteria['is_active'])
     end
+=end
 
     return @results_set
   end
