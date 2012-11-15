@@ -10,7 +10,6 @@ CMUEducation::Application.routes.draw do
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
-  match '/assignments/:id/:user_id/grade_assignment' => 'assignments#grade_assignment', :as => :grade_assignment
   match '/presentations/:id/feedback' => 'presentations#create_feedback', :via => :post
   match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
   match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get

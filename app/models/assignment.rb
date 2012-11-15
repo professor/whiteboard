@@ -36,39 +36,6 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def find_deliverable_by_user(user)
-    if self.can_submit?
-      if self.team_deliverable?
-        team = Team.find_current_by_person_and_course(user, self.course)
-        # find_by_team_id may find an individual deliverable if passed nil
-        if !team.blank?
-          deliverable = self.deliverables.find_by_team_id(team.id)
-        end
-      else
-        deliverable = self.deliverables.find_by_creator_id(user.id)
-      end
-    end
-
-    deliverable.blank? ? nil : deliverable
-  end
-
-  def set_assignment_grades(user)
-    if !self.team_deliverable
-      if self.assignment_grades.find_by_user_id(user).blank?
-        self.assignment_grades << AssignmentGrade.new(assignment_id: self.id, user_id: user.id, given_grade: '0')
-      else
-        self.assignment_grades << self.assignment_grades.find_by_user_id(user)
-      end
-    elsif self.team_deliverable
-      students = self.can_submit ? Team.find_current_by_person_and_course(user, self.course).members : self.course.all_students.values
-      students.each do |member|
-        if self.assignment_grades.find_by_user_id(member).blank?
-          self.assignment_grades << AssignmentGrade.new(assignment_id: self.id, user_id: member.id, given_grade: '0')
-        end
-      end
-    end
-  end
-
   private
 
     def validate_due_date

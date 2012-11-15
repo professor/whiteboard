@@ -1,9 +1,9 @@
 <% content_for :title, "Grade Deliverable" %>
 
 <% if @deliverable.is_team_deliverable? %>
-  <h1>Grade Team Deliverable for <%= @deliverable.team.blank? ? @deliverable.creator.human_name : @deliverable.team.name %></h1>
+    <h1>Grade Team Deliverable for <%= @deliverable.team.blank? ? "Class" : @deliverable.team.name %></h1>
 <% else %>
-  <h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
+    <h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
 <% end %>
 <h2><%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h2>
 
@@ -19,7 +19,6 @@
         <%= f.fields_for :assignment do |a_builder| %>
           <div class='inline_field'>
             <% a_builder.fields_for :assignment_grades do |ag_builder| %>
-              <% next if @deliverable.creator != ag_builder.object.user %>
               <%= ag_builder.label :given_grade %>
               <%= ag_builder.text_field :given_grade, size:4, class: 'grade_input' %>/<%=  @deliverable.assignment.max_score %>
             <% end %>
@@ -52,8 +51,6 @@
   </div>
 
   <% if @deliverable.is_team_deliverable? %>
-    <% team_members = @deliverable.team.members %>
-
     <p>
       <%= text_field_tag "team_grade", '', :size => 4 %>/<%= @deliverable.assignment.max_score %>
       <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
@@ -64,7 +61,6 @@
         <%= f.fields_for :assignment do |a_builder| %>
           <div class='inline_field'>
             <% a_builder.fields_for :assignment_grades do |ag_builder| %>
-              <% next if !team_members.include?(ag_builder.object.user) %>
               <% if count == 0 %>
                 <tr>
               <% end %>

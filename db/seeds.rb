@@ -145,12 +145,12 @@ FactoryGirl.define do
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "MadhokShivaratre"
-    first_name "Madhok"
-    last_name "Shivaratre"
-    human_name "Madhok Shivaratre"
-    email "madhok.shivaratreu@sv.cmu.edu"
-    webiso_account "mshivara@andrew.cmu.edu"
+    twiki_name "OwenChu"
+    first_name "Owen"
+    last_name "Chu"
+    human_name "Owen Chu"
+    email "owen.chu@sv.cmu.edu"
+    webiso_account "hanweic@andrew.cmu.edu"
   end
 
 end
@@ -177,6 +177,8 @@ ppm_course = Factory.create(:ppm_current_semester)
       FactoryGirl.create(:deliverable_grade, user: you, deliverable: deliverable, grade: 0) unless deliverable.blank?
     else
       deliverable = FactoryGirl.create(:deliverable, creator: you, assignment: assignment)
+      deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: you, attachment_file_name: "attachment")
+      assignment.deliverables << deliverable
     end
   end
   course.faculty_assignments << FactoryGirl.create(:faculty_assignment, user: todd, course: course)

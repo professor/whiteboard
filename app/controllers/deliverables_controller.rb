@@ -236,7 +236,7 @@ class DeliverablesController < ApplicationController
     end
 
     @deliverable = Deliverable.find(params[:id])
-    @deliverable.assignment.set_assignment_grades(@deliverable.creator)
+    @deliverable.create_assignment_grade
   end
 
   def update_feedback
