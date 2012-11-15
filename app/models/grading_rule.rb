@@ -29,6 +29,88 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
+  def self.validate_letter_grade(raw_score)
+    case raw_score
+      when "A"
+        return true
+      when "A-"
+        return true
+      when "B+"
+        return true
+      when "B"
+        return true
+      when "B-"
+        return true
+      when "C+"
+        return true
+      when "C"
+        return true
+      when "C-"
+        return true
+      else
+        return false
+    end
+  end
+
+  def self.validate_points(raw_score)
+     if raw_score.to_i<0
+       return false
+     end
+    true if Float(raw_score) rescue false
+  end
+
+  def self.validate_percentage(raw_score)
+    if raw_score.end_with?("%")
+      raw_score = raw_score.split('%')[0]
+    end
+    return GradingRule.validate_points(raw_score)
+  end
+
+  def self.validate_score(course_id, raw_score)
+    if raw_score.nil?
+      return true
+    end
+
+    grading_rule = GradingRule.find_by_course_id(course_id)
+    if grading_rule.nil?
+      return false
+    end
+
+    case grading_rule.grade_type
+      when "points"
+        return GradingRule.validate_points(raw_score)
+      when "letter"
+        return GradingRule.validate_letter_grade(raw_score)
+      when "percentage"
+        return GradingRule.validate_percentage(raw_score)
+      else
+        return true
+    end
+  end
+
+  def self.format_score (course_id, raw_score)
+    raw_score=raw_score.to_s
+    grading_rule = GradingRule.find_by_course_id(course_id)
+    if grading_rule.nil?
+      return raw_score
+    elsif grading_rule.grade_type=="percentage" && raw_score.end_with?("%")
+      return raw_score.split("%")[0]
+    else
+      return raw_score
+   end
+    #unless grading_rule.nil?
+    #  case grading_rule.grade_type
+    #    when "percentage"
+    #     if raw_score.end_with?("%")
+    #      return raw_score.split("%")[0]
+    #    else
+    #      return raw_score
+    #  end
+    #else
+    #  return raw_score
+    #end
+  end
+
   # To convert points to letter grades
   def convert_points_to_letter_grade (points)
     if points>=self.A_grade_min
@@ -113,4 +195,13 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  def self.get_grade_type (course_id)
+    grading_rule = GradingRule.find_by_course_id(course_id)
+    if grading_rule.nil?
+      return "points"
+    end
+
+    return grading_rule.grade_type
+
+  end
 end
