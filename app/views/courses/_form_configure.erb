@@ -108,13 +108,13 @@
     -->
     <%= f.fields_for :grading_rule do |rule| %>
       <p>
-      <%= rule.label :grade_type, "Please select grading type for assignments?" %><br/>
-      <%= rule.select(:grade_type, [['Points', 'points'],['Weight','weight'], ['Letter', 'letter']])  %> <br/>
+      <%= rule.label :grade_type, "How does your syllabus determine grades?" %><br/>
+      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weight'], ['Letter (e.g. \'A\')', 'letter']])  %> <br/>
 
       </p>
       <p>
-      <%=rule.label :is_nomenclature_deliverable, "Assignment or Task/Deliverable" %>
-      <%=rule.select(:is_nomenclature_deliverable, [["Assignment", false], ["Task/Deliverable", true]]) %>
+      <%=rule.label :is_nomenclature_deliverable, "What nomenclature do you prefer: assignments or deliverables?" %> <br/>
+      <%=rule.select(:is_nomenclature_deliverable, [["Assignments", false], ["Deliverables in a task", true]]) %>
       </p>
       <br/>
       Grading Criteria
