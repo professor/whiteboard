@@ -21,6 +21,7 @@ FactoryGirl.define do
     sequence(:score) {|i| (i*5).to_s }
     student_id 999
     assignment
+    is_student_visible false
   end
 
   factory :grade_letters, :parent=>:grade do
