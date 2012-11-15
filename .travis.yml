@@ -20,13 +20,11 @@ env:
 notifications:
   email:
     recipients:
-      - fall-2012-team-ramrod@west.cmu.edu
       - david.pfeffer@sv.cmu.edu
       - edward.akoto@sv.cmu.edu
       - kaushik.gopal@sv.cmu.edu
-      - iam@kaush.co
       - zhipeng.li@sv.cmu.edu
     # on_success: [always|never|change] # default: change
     # on_failure: [always|never|change] # default: always
-    on_success: always
+    on_success: change
     on_failure: always
