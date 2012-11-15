@@ -2,7 +2,7 @@
 <%= javascript_include_tag "jquery.tablesorter.js" %>
 <script>
   var changed_grades = {}
-  var grades = new Grade("points");
+  var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
   $(document).ready(function() { 
     // call the tablesorter plugin
     $(".sortable").tablesorter({ 
@@ -50,17 +50,6 @@
       return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};
   }
 
-    function compute_grades(student_id){
-      // FIXME: calculate letter grades and weight grades
-      /*
-      var total = 0;
-      $("#s_" + student_id + " input[type='text']").map(function(){return parseFloat($(this).val());}).each(function(index,value){
-          total += value;
-        });
-      $("#s_" + student_id + " .earned").text(total);
-      */
-    }
-
   function saveAsDraft() {
       post_grades('<%=save_draft_path(@course)%>');
   }
@@ -103,16 +92,16 @@
     background-color: #AAA;
   }
   td.grade input{
-    width: 94%;
-    height: 101%;
+    width: 98%;
+    height: 100%;
     text-align: right;
     border-width: 1px;
     margin: 0px;
-      padding-right: 2px;
+    padding-right: 0px;
   }
   td.grade{
+    border-width: 1px;
     padding: 0;
-    border: 0px;
   }
   #legend{
       border:0px;
@@ -153,7 +142,14 @@
           </tr>
           <tr>
             <% @assignments.each do |assignment| %>
-                <td>Max <%="#{assignment.maximum_score}"%></td>
+              <td>
+                <% case GradingRule.get_grade_type @course.id %>
+                <%when "points" %>
+                  Max <%="#{assignment.maximum_score}"%>
+                <%else%>
+                  Weight <%="#{assignment.maximum_score}"%> %
+                <%end%>
+              </td>
               <% end %>
           </tr>
         </thead>
