@@ -4,9 +4,6 @@
 class Assignment < ActiveRecord::Base
   belongs_to :course
   has_many :deliverables
-  has_many :assignment_grades
-
-  accepts_nested_attributes_for :assignment_grades, allow_destroy: true
 
   validates_presence_of :title
   validates :weight, numericality: { greater_than_or_equal_to: 0 }
@@ -15,6 +12,26 @@ class Assignment < ActiveRecord::Base
   before_validation :check_weight
 
   default_scope order: "task_number ASC, due_date ASC"
+
+  def find_deliverable_grade(user)
+    if !self.can_submit
+      deliverable = self.deliverables.first
+    elsif self.team_deliverable?
+      team = Team.find_current_by_person_and_course(user, self.course)
+      # find_by_team_id may find an individual deliverable if passed nil
+      if !team.blank?
+        deliverable = self.deliverables.find_by_team_id(team.id)
+      end
+    else
+      if self.can_submit?
+        deliverable = self.deliverables.find_by_creator_id(user.id)
+      else
+        deliverable = self.deliverables.first
+      end
+    end
+
+    deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(user.id)
+  end
 
   def submittable?
     self.can_submit
@@ -25,6 +42,16 @@ class Assignment < ActiveRecord::Base
       self.title
     else
       "Task #{self.task_number}: #{self.title}"
+    end
+  end
+
+  def create_placeholder_deliverable(current_user)
+    if !self.can_submit? && self.deliverables.empty?
+      # Create a placeholder deliverable for an assignment that does not accept deliverables from students
+      self.deliverables.create(creator: current_user, status: "Ungraded")
+      self.course.registered_students.each do |student|
+        student.deliverable_grades.create(grade: 0, deliverable_id: self.deliverables.first.id)
+      end
     end
   end
 

@@ -25,18 +25,18 @@
           <% number_grade = @course.get_earned_number_grade(member) %>
           <% @course.assignments.each do |assignment| %>
             <td>
-              <% assignment_grade = assignment.assignment_grades.find_by_user_id(member.id) %>
-              <% if assignment.can_submit? && assignment_grade.blank? %>
+              <% deliverable_grade = assignment.find_deliverable_grade(member) %>
+              <% if assignment.can_submit? && deliverable_grade.blank? %>
                 Unsubmitted
               <% else %>
                 <%
-                   if assignment_grade.blank?
+                   if deliverable_grade.blank?
                      link_text = "0 (Ungraded)"
                    else
-                    link_text = (assignment_grade.deliverable.status == 'Graded') ? assignment_grade.given_grade : "#{assignment_grade.given_grade} (#{assignment_grade.deliverable.status})"
+                    link_text = (deliverable_grade.deliverable.status == 'Graded') ? deliverable_grade.grade : "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"
                    end
                 %>
-                <% deliverable = assignment_grade.blank? ? assignment.deliverables.first : assignment_grade.deliverable %>
+                <% deliverable = deliverable_grade.blank? ? assignment.deliverables.first : deliverable_grade.deliverable %>
                 <%= link_to link_text, deliverable_feedback_path(deliverable) %>
               <% end %>
             </td>
