@@ -26,6 +26,36 @@ describe "people search" do
     page.should_not have_selector('#results_box .data_card')
   end
 
+  #Tests for customization
+  context 'customization of the search result' do
+
+    it "should display only the fields selected in the customization window", :js => true do
+      find(:css, "#photo_checkbox").set(false)
+      find(:css, "#email_checkbox").set(true)
+      find(:css, "#phone_home_checkbox").set(false)
+      find(:css, "#phone_mobile_checkbox").set(false)
+      find(:css, "#team_checkbox").set(false)
+      find(:css, "#company_checkbox").set(true)
+      page.find(:css, '#customization_dialog_close').click
+
+      fill_in "smart_search_text" , :with => "Sam"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => 'Sam')
+      page.should have_selector('#results_box .data_card', text: "student.sam@sv.cmu.edu")
+
+
+      page.should have_selector('#results_box .data_card', text: "Company")
+      page.should_not have_selector('#results_box .data_card', text: "Work")
+      page.should_not have_selector('#results_box .data_card', text: "Mobile")
+      page.should_not have_selector('#results_box .data_card', text: "Work")
+      page.should_not have_selector('#results_box .data_card', text: "Team")
+      page.should_not have_selector('#results_box .data_card img', visible: true)
+
+    end
+
+  end
+
+
 # Tests written for Simple(Smart) Search
 
   context 'smart search capability' do
@@ -158,6 +188,8 @@ describe "people search" do
     end
 
     it "display team names along with course for every student", :js => true do
+      find(:css, "#team_checkbox").set(true)
+      page.find(:css, '#customization_dialog_close').click
       fill_in "search_text_box" , :with => "Rashmi"
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card', text: "Teams")

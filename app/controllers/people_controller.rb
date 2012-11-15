@@ -51,7 +51,8 @@ class PeopleController < ApplicationController
           "telephone1" => person.telephone1,
           "telephone2_label" => person.telephone2_label,
           "telephone2" => person.telephone2,
-          "email" => person.email
+          "email" => person.email,
+          "company" => person.organization_name,
         ].merge(person.telephones_hash)
       }, :layout => false }
       # Formatting for CSV response

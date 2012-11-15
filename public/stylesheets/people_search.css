@@ -3,7 +3,7 @@
 .hidden { display: none; }
 .btn_pressed { border: 1px inset; }
 
-.customization_dialog { margin-top: 32px; }
+.customization_dialog { margin-top: 32px;}
 .customization_dialog .ui-dialog-titlebar {display:none}
 
 #export_dialog_modal { text-align: center; font-size: 12px;}
@@ -66,6 +66,7 @@ select .select-hint { color: #ccc;}
 }
 .data_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
 .data_card_human_name { font-size: 16px; }
+.resize{ width: 150px; height: 150px;}
 
 /* Fix Modal Card */
-#modal_card { width: auto; height: auto; padding: 6px;}
+#modal_card { width: auto; height:auto; padding: 6px;}
