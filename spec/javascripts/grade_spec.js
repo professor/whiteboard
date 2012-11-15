@@ -26,6 +26,10 @@ describe("Grade", function(){
         var grade = new Grade("weight", [0.1,0.1,0.1]);
         expect(grade.calculate({0:"100", 2:"100"})).toEqual(20);
     });
+    it("can compute final grades for weight", function(){
+        var grade = new Grade("weight", [0.1,0.1,0.1]);
+        expect(grade.calculate({0:"", 2:"100"})).toEqual(10);
+    });
     it("can compute final grades for letter", function(){
         var grade = new Grade("letter", [0.1,0.1,0.1], {"A":100, "A-":92, "B+": 90});
         expect(grade.calculate({0:"A", 2:"B+"})).toEqual(19);

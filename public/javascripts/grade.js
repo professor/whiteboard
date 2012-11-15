@@ -27,6 +27,7 @@ function Grade(type)
                 gradeHash[assignment_index] = gradeMapping[gradeHash[assignment_index]];
             }
             else{
+             if(gradeHash[assignment_index].trim() == '') gradeHash[assignment_index] = 0;
              gradeHash[assignment_index] = parseFloat(gradeHash[assignment_index]);
             }
         }
