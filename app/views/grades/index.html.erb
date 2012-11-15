@@ -167,7 +167,7 @@
           <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> Last Name </th>
           <th rowspan="3"> Team </th>
           <% @assignments.each do |assignment| %>
-            <th style='max-width:30px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
+            <th style='max-width:30px;' title="<%=assignment.name%>"><%="#{assignment.name[0..4]}"%></th>
           <%end %>
           <th rowspan="3">Earned Grades</th>
         </tr>
@@ -185,7 +185,7 @@
         </tr>
         <tr>
           <% @assignments.each do |assignment| %>
-            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save grades</button></td>
+            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save and Email grades</button></td>
           <% end %>
         </tr>
         </thead>
