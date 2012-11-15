@@ -1,0 +1,49 @@
+<h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
+<h2><%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h2>
+
+<%= render :partial => 'people/twiki_photo_link', :locals => {:person => @deliverable.creator} %>
+
+<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div>
+    <p>
+      <%= f.fields_for :deliverable_grades do |builder| %>
+      <div class='inline_field'>
+        <%= builder.label :grade %>:
+        <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= @deliverable.assignment.max_score %>
+      </div>
+    <% end %>
+    </p>
+
+    <% if @deliverable.assignment.course.grading_criteria == "Percentage" %>
+      <p>
+        <%= "Weight: #{@deliverable.assignment.weight}%" %>
+      </p>
+    <% end %>
+    <p>
+      <% if @deliverable.current_attachment.blank? %>
+        Deliverable: None
+      <% else %>
+        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+      <% end %>
+    </p>
+    <p>
+      <%= f.label :feedback, "Feedback file to upload" %>
+      <%= f.file_field :feedback %>
+    </p>
+    <p>
+      <%= f.label :feedback_comment, "Feedback Comments" %>
+      <br>
+      <%= f.text_area :feedback_comment, :size => "70x10" %>
+    </p>
+  </div>
+
+  <div>
+    <%= f.submit "Save as draft"  %>
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to 'Cancel', deliverable_path(@deliverable) %>
+</p>

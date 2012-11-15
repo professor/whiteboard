@@ -1,93 +1,9 @@
 <% content_for :title, "Grade Deliverable" %>
 
-<% if @deliverable.is_team_deliverable? %>
-    <h1>Grade Team Deliverable for <%= @deliverable.team.blank? ? "Class" : @deliverable.team.name %></h1>
+<% if !@deliverable.assignment.can_submit? %>
+  <%= render "deliverables/unsubmittable_grading_form" %>
+<% elsif @deliverable.is_team_deliverable? %>
+  <%= render "deliverables/team_grading_form" %>
 <% else %>
-    <h1>Grade Individual Deliverable for <%= @deliverable.creator.human_name %></h1>
+  <%= render "deliverables/individual_grading_form" %>
 <% end %>
-<h2><%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h2>
-
-<% if !@deliverable.is_team_deliverable? %>
-  <%= render :partial => 'people/twiki_photo_link', :locals => {:person => @deliverable.creator} %>
-<% end %>
-
-<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div>
-    <% if !@deliverable.is_team_deliverable? %>
-      <p>
-        <%= f.fields_for :deliverable_grades do |builder| %>
-        <div class='inline_field'>
-          <%= builder.label :grade %>:
-          <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= @deliverable.assignment.max_score %>
-        </div>
-      <% end %>
-      </p>
-    <% end %>
-    <% if @deliverable.assignment.course.grading_criteria == "Percentage" %>
-      <p>
-        <%= "Weight: #{@deliverable.assignment.weight}%" %>
-      </p>
-    <% end %>
-    <p>
-      <% if @deliverable.current_attachment.blank? %>
-        Deliverable: None
-      <% else %>
-        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-      <% end %>
-    </p>
-    <p>
-      <%= f.label :feedback, "Feedback file to upload" %>
-      <%= f.file_field :feedback %>
-    </p>
-    <p>
-      <%= f.label :feedback_comment, "Feedback Comments" %>
-      <br>
-      <%= f.text_area :feedback_comment, :size => "70x10" %>
-    </p>
-  </div>
-
-  <% if @deliverable.is_team_deliverable? %>
-    <p>
-      <%= text_field_tag "team_grade", '', :size => 4 %>/<%= @deliverable.assignment.max_score %>
-      <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
-    </p>
-    <table class='layout_table'>
-      <tbody>
-        <% count = 0 %>
-        <%=  f.fields_for :deliverable_grades do |builder| %>
-        <% if count == 0 %>
-            <tr>
-          <% end %>
-          <td><%= render :partial => 'people/twiki_photo_link_grading', :locals => {:builder => builder} %></td>
-          <% count += 1 %>
-          <% if count % 3 == 0 %>
-            </tr>
-          <% end %>
-        <% end %>
-        <% if count % 3 %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-
-  <div>
-    <%= f.submit "Save as draft"  %>
-    <%= f.submit "Submit" %>
-  </div>
-<% end %>
-
-<p>
-  <%= link_to 'Cancel', deliverable_path(@deliverable) %>
-</p>
-
-<script>
-  $(function() {
-    $('#apply_team_grade').bind('click', function() {
-      $('.grade_input').each(function() {
-        $(this).val($('#team_grade').val());
-      });
-    });
-  });
-</script>

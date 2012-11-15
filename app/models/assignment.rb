@@ -13,7 +13,7 @@ class Assignment < ActiveRecord::Base
 
   default_scope order: "task_number ASC, due_date ASC"
 
-  def find_deliverable_grade(user)
+  def deliverable(user)
     if !self.can_submit
       deliverable = self.deliverables.first
     elsif self.team_deliverable?
@@ -30,6 +30,11 @@ class Assignment < ActiveRecord::Base
       end
     end
 
+    deliverable.blank? ? nil : deliverable
+  end
+
+  def find_deliverable_grade(user)
+    deliverable = deliverable(user)
     deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(user.id)
   end
 
@@ -42,16 +47,6 @@ class Assignment < ActiveRecord::Base
       self.title
     else
       "Task #{self.task_number}: #{self.title}"
-    end
-  end
-
-  def create_placeholder_deliverable(current_user)
-    if !self.can_submit? && self.deliverables.empty?
-      # Create a placeholder deliverable for an assignment that does not accept deliverables from students
-      self.deliverables.create(creator: current_user, status: "Ungraded")
-      self.course.registered_students.each do |student|
-        student.deliverable_grades.create(grade: 0, deliverable_id: self.deliverables.first.id)
-      end
     end
   end
 

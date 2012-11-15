@@ -1,0 +1,71 @@
+<h1>Grade Team Deliverable<%= @deliverable.team.blank? ? "" : " for #{@deliverable.team.name}" %></h1>
+<h2><%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h2>
+
+<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div>
+    <% if @deliverable.assignment.course.grading_criteria == "Percentage" %>
+      <p>
+        <%= "Weight: #{@deliverable.assignment.weight}%" %>
+      </p>
+    <% end %>
+    <p>
+      <% if @deliverable.current_attachment.blank? %>
+        Deliverable: None
+      <% else %>
+        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+      <% end %>
+    </p>
+    <p>
+      <%= f.label :feedback, "Feedback file to upload" %>
+      <%= f.file_field :feedback %>
+    </p>
+    <p>
+      <%= f.label :feedback_comment, "Feedback Comments" %>
+      <br>
+      <%= f.text_area :feedback_comment, :size => "70x10" %>
+    </p>
+  </div>
+
+  <p>
+    <%= text_field_tag "team_grade", '', :size => 4 %>/<%= @deliverable.assignment.max_score %>
+    <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+  </p>
+  <table class='layout_table'>
+    <tbody>
+    <% count = 0 %>
+    <%=  f.fields_for :deliverable_grades do |builder| %>
+      <% if count == 0 %>
+        <tr>
+      <% end %>
+      <td><%= render :partial => 'people/twiki_photo_link_grading', :locals => {:builder => builder} %></td>
+      <% count += 1 %>
+      <% if count % 3 == 0 %>
+        </tr>
+      <% end %>
+    <% end %>
+    <% if count % 3 %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <%= f.submit "Save as draft"  %>
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to 'Cancel', deliverable_path(@deliverable) %>
+</p>
+
+<script>
+  $(function() {
+    $('#apply_team_grade').bind('click', function() {
+      $('.grade_input').each(function() {
+        $(this).val($('#team_grade').val());
+      });
+    });
+  });
+</script>

@@ -1,3 +1,5 @@
+<% content_for :title, "Gradebook" %>
+
 <h1>Gradebook: <%= @course.name %></h1>
 
 <%= link_to "Back", course_path(@course) %> |
@@ -16,6 +18,23 @@
       <th>Final<br/>Letter Grade</th>
     </tr>
   </thead>
+
+  <%
+    def deliverable_grade_link_text(deliverable_grade)
+      if deliverable_grade.blank?
+        "Ungraded"
+      else
+        if deliverable_grade.deliverable.status == 'Graded'
+          deliverable_grade.grade
+        elsif deliverable_grade.deliverable.status == 'Ungraded'
+          "Ungraded"
+        else
+          "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"
+        end
+      end
+    end
+  %>
+
   <tbody>
     <% @course.teams.each do |team| %>
       <% team.members.each do |member| %>
@@ -25,19 +44,20 @@
           <% number_grade = @course.get_earned_number_grade(member) %>
           <% @course.assignments.each do |assignment| %>
             <td>
-              <% deliverable_grade = assignment.find_deliverable_grade(member) %>
-              <% if assignment.can_submit? && deliverable_grade.blank? %>
-                <%= link_to "0 (Unsubmitted)", assignment_deliverable_create_path(assignment, member) %>
+              <% deliverable = assignment.deliverable(member) %>
+              <% deliverable_grade = deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(member.id) %>
+              <% if assignment.can_submit? %>
+                <% if deliverable.blank? %>
+                  <%= link_to "Unsubmitted", assignment_deliverable_create_path(assignment, member) %>
+                <% else %>
+                  <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
+                <% end %>
               <% else %>
-                <%
-                   if deliverable_grade.blank?
-                     link_text = "0 (Ungraded)"
-                   else
-                    link_text = (deliverable_grade.deliverable.status == 'Graded') ? deliverable_grade.grade : "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"
-                   end
-                %>
-                <% deliverable = deliverable_grade.blank? ? assignment.deliverables.first : deliverable_grade.deliverable %>
-                <%= link_to link_text, deliverable_feedback_path(deliverable) %>
+                <% if deliverable.blank? %>
+                  <%= link_to "Ungraded", assignment_deliverable_create_path(assignment, member) %>
+                <% else %>
+                  <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
+                <% end %>
               <% end %>
             </td>
           <% end %>

@@ -245,7 +245,7 @@ class DeliverablesController < ApplicationController
     assignment = Assignment.find(params[:assignment_id])
     user = User.find(params[:user_id])
 
-    deliverable = assignment.find_deliverable_grade(user)
+    deliverable = assignment.deliverable(user)
     if deliverable.blank?
       deliverable = assignment.deliverables.build(creator: user, status: "Ungraded")
       if assignment.team_deliverable
