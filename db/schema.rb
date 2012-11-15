@@ -180,7 +180,7 @@ ActiveRecord::Schema.define(:version => 20121111001335) do
     t.integer  "course_id"
     t.integer  "student_id"
     t.integer  "assignment_id"
-    t.float    "score"
+    t.text     "score"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_student_visible"

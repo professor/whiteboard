@@ -353,7 +353,7 @@ def create_assignments course_fse
     team.members.each do |team_member|
       Factory.create(:registration, :course_id=>course_fse.id, :user => team_member)
       assignments.each do |assign|
-        Factory.create(:grade_seq, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
+        Factory.create(:grade_letters, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
       end
     end
   end

@@ -93,7 +93,7 @@ describe Grade do
       :course_id => @course_fse.id, 
       :student_id => @student_sam.id, 
       :assignment_id => @assignment_1.id,
-      :score => 0)
+      :score => "0")
     redundant_grade.should_not be_valid
   end
 
@@ -172,10 +172,10 @@ describe Grade do
     Grade.post_grades_for_one_assignment(grades, @assignment_1.id)
     grades.each do |grade_entry|
       if grade_entry[:assignment_id] == @assignment_1.id
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq(20)
+        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq("20")
         Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_true
       else
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should_not eq(20)
+        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should_not eq("20")
         Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
       end
     end

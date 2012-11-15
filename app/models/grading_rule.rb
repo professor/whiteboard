@@ -1,18 +1,19 @@
 # GradingRule represents the correspondence between points earned and letter grades. The mapping rule is given by the
 # course instructor.
 #
-# GradingRule is configurable by clicking on "Configure course" in "Initial Course Configuration", on the index page of
-# each course. In the configuration pate, professor can choose grading criteria between points and letter grades. If
-# professor chooses using letter grades, professor would see a table that needs to be filled in the mapping rule between
-# points and letter grades.
+# GradingRule is configurable by clicking on "Configure course" in "Initial Course Configuration", both of which could
+# be found on the index page of each course. In the configuration page, professor can choose grading criteria between
+#   points and letter grades. If professor adopts letter grades, then professor needs to fill the table which maps out
+#   point and letter grades.
 #
-# As each course would have its own grading rule,
+# GradingRule follows the grading policy of CMU@SV. We provide the following options for letter grades: A, A-, B+, B,
+#   B-, C+, C, C-.
 #
-# We provides the following functions to facilitate the conversion between points and letter grades.
-# * convert_points_to_letter_grade uses the grading rule to convert points to letter grades.
-# * convert_letter_grade_to_points uses the grading rule to convert letter grades to points.
-# * get_grade_in_prof_format returns the grade that follows grade configuration.
-# * get_raw_grade returns points. If the grade type is letter, we will apply the grading rule to convert it to points.
+# We provide the following functions to map out points and letter grades.
+# * convert_points_to_letter_grade maps out points to letter grades.
+# * convert_letter_grade_to_points maps out letter grades to points.
+# * get_grade_in_prof_format convert points to
+# * get_raw_grade returns points. If the grade type is letter, we will apply the grading rule to convert it.
 
 class GradingRule < ActiveRecord::Base
   attr_accessible :grade_type,

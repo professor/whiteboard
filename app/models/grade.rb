@@ -7,17 +7,17 @@
 #
 # * For a course, a student will have at most one grade on each assignment.
 # * is_student_visible indicates that whether this grade is going to publish to student or not. 
-# * score should be two forms. If the grading rule applies points, the score should be a number greater than zero, and
-#   we don't validate whether the score is greater than maximum number defined in Assignment object, so that professor
-#   can add extra credit on student's grade. If the grading rule uses letter grades, score would be A, A-, B+, B, B-,
-#   C+, C, C-.
-# * score= should assign a number greater than zero, and we don't validate whether the score is greater than maximum
+# * score would be in two forms. If the grading rule is set to use points, the score should be a number greater than
+#   zero, and we don't validate whether the score is greater than maximum number defined in Assignment object, so that
+#   professor can add extra credit on student's grade. If the grading rule is set to use letter grades, score would be
+#   A, A-, B+, B, B-, C+, C, or C-.
+# * score= assigns a number greater than zero, and we don't validate whether the score is greater than maximum
 #   number defined in Assignment object, so that professor can add extra credit on student's grade.
 # * get_grades_for_student_per_course returns a list of assignment score of given course and student.
 # * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
 #   useful for controller to test whether the score is existed or not.
 # * post_all creates/saves a list of grades updated by professor.
-# * save_as_draft should mark the given grades as invisible to the students.
+# * save_as_draft marks the given grades as invisible to the students.
 # * give_grade saves the grade given for a student's assignment.
 # * give_grades saves a list of assignment grades given to a group of students.
 # * post_grades_for_one_assignment saves a list of assignment grades.
@@ -37,17 +37,17 @@ class Grade < ActiveRecord::Base
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
   end
-
+  
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       grades[grade.assignment.id] = grade
     end
-    grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
+    # FIXME: calculate earned grade
+    #grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
     grades
   end
-
 
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)

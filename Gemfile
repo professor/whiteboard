@@ -73,6 +73,8 @@ group :development, :test do
   gem 'mocha'
   gem 'factory_girl_rails', '3.4.0'
   gem 'capybara'
+  gem 'jasmine'
+
 #  gem 'morning_glory'
 
 #  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/

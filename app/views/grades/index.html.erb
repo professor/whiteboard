@@ -26,7 +26,7 @@
         course_id: grade_attrs.course_id,
         assignment_id: grade_attrs.assignment_id,
         student_id: grade_attrs.student_id,
-        score: score//parseFloat(score)
+        score: score
       };
     }
     else{
@@ -39,14 +39,16 @@
   }
 
     function compute_grades(student_id){
-      var total = 0; 
+      // FIXME: calculate letter grades and weight grades
+      /*
+      var total = 0;
       $("#s_" + student_id + " input[type='text']").map(function(){return parseFloat($(this).val());}).each(function(index,value){
           total += value;
         });
       $("#s_" + student_id + " .earned").text(total);
-
-    
+      */
     }
+
   function saveAsDraft() {
       post_grades('<%=save_draft_path(@course)%>');
   }
