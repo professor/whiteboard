@@ -27,7 +27,7 @@
             <td>
               <% deliverable_grade = assignment.find_deliverable_grade(member) %>
               <% if assignment.can_submit? && deliverable_grade.blank? %>
-                Unsubmitted
+                <%= link_to "0 (Unsubmitted)", assignment_deliverable_create_path(assignment, member) %>
               <% else %>
                 <%
                    if deliverable_grade.blank?

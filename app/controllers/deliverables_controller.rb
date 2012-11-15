@@ -241,6 +241,24 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  def assignment_deliverable_create
+    assignment = Assignment.find(params[:assignment_id])
+    user = User.find(params[:user_id])
+
+    deliverable = assignment.find_deliverable_grade(user)
+    if deliverable.blank?
+      deliverable = assignment.deliverables.build(creator: user, status: "Ungraded")
+      if assignment.team_deliverable
+        deliverable.creator = user
+        team = Team.find_current_by_person_and_course(user, assignment.course)
+        deliverable.team = team
+      end
+      assignment.save
+    end
+
+    redirect_to deliverable_feedback_path(deliverable)
+  end
+
   def update_feedback
     if !params[:commit].blank?
       if params[:commit] == "Save as draft"
@@ -261,7 +279,6 @@ class DeliverablesController < ApplicationController
       if @deliverable.save
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
         flash[:notice] = 'Feedback successfully saved.'
-        # format.html { redirect_to professor_deliverables_path(current_user.id) }
         format.html { redirect_back_or_default(professor_deliverables_path(current_user.id)) }
         format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
       else

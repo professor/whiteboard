@@ -94,36 +94,12 @@ describe "courses" do
   end
 
   context "gradebook" do
-    context "student's final score" do
-      it "show score when grading criteria is percentage" do
-        ppm_course = FactoryGirl.create(:ppm_current_semester)
-        student = ppm_course.teams.first.members.first
-
-        student.deliverable_grades.each do |deliverable_grade|
-          deliverable_grade.update_attributes(grade: 50)
-        end
-        ppm_course.reload
-        ppm_course.get_earned_number_grade(student).should == 40
-
-        student.deliverable_grades.each do |deliverable_grade|
-          deliverable_grade.update_attributes(grade: "B")
-        end
-        ppm_course.reload
-        ppm_course.get_earned_number_grade(student).should == 69.6
-      end
-
-      it "show score when grading criteria is points" do
-        architecture_course = FactoryGirl.create(:architecture_current_semester)
-        student = architecture_course.teams.first.members.first
-        student_deliverable_grades = student.deliverable_grades
-        student_deliverable_grades[0].update_attributes(grade: 20)
-        student_deliverable_grades[1].update_attributes(grade: 20)
-        student_deliverable_grades[2].update_attributes(grade: "A") #(20)
-        student_deliverable_grades[3].update_attributes(grade: "B") #(17.4)
-        architecture_course.reload
-
-        architecture_course.get_earned_number_grade(student).should == 77.4
-      end
+    it "should be able to grade a unsubmitted assignment" do
+      ppm_course = FactoryGirl.create(:ppm_current_semester)
+      visit course_gradebook_path(ppm_course)
+      expect {
+        click_link "0 (Unsubmitted)"
+      }.to change(Deliverable, :count).by(1)
     end
   end
 end

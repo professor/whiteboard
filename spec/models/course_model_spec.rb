@@ -480,6 +480,40 @@ describe Course do
     end
   end
 
+  context "earned grades" do
+    context "student's final score" do
+      it "show score when grading criteria is percentage" do
+        ppm_course = FactoryGirl.create(:ppm_current_semester)
+        student = ppm_course.teams.first.members.first
+
+        student.deliverable_grades.each do |deliverable_grade|
+          deliverable_grade.update_attributes(grade: 50)
+        end
+        ppm_course.reload
+        ppm_course.get_earned_number_grade(student).should == 38.5
+
+        student.deliverable_grades.each do |deliverable_grade|
+          deliverable_grade.update_attributes(grade: "B")
+        end
+        ppm_course.reload
+        ppm_course.get_earned_number_grade(student).should == 66.99
+      end
+
+      it "show score when grading criteria is points" do
+        architecture_course = FactoryGirl.create(:architecture_current_semester)
+        student = architecture_course.teams.first.members.first
+        student_deliverable_grades = student.deliverable_grades
+        student_deliverable_grades[0].update_attributes(grade: 20)
+        student_deliverable_grades[1].update_attributes(grade: 20)
+        student_deliverable_grades[2].update_attributes(grade: "A") #(20)
+        student_deliverable_grades[3].update_attributes(grade: "B") #(17.4)
+        architecture_course.reload
+
+        architecture_course.get_earned_number_grade(student).should == 77.4
+      end
+    end
+  end
+
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
   it { should have_many(:registered_students) }

@@ -128,7 +128,7 @@ FactoryGirl.define do
 
     after(:create) do |assignment|
       create_team_deliverable(assignment, assignment.course.teams.first)
-      create_team_deliverable(assignment, assignment.course.teams.last)
+      #create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
 
@@ -214,7 +214,7 @@ FactoryGirl.define do
     weight 3
 
     after(:create) do |assignment|
-      create_team_deliverable(assignment, assignment.course.teams.first)
+      #create_team_deliverable(assignment, assignment.course.teams.first)
       create_team_deliverable(assignment, assignment.course.teams.last)
     end
   end
