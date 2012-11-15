@@ -84,8 +84,33 @@
                     $(this).removeClass("toggled")
                 var title = photobook_toggled ? 'Grid View' : 'Photobook View';
                 $("#filterBoxOne_photobook").attr('title', title);
-                buildSearchResults(last_search_results);
+
+
+//                buildSearchResults(last_search_results);
+
+                if($.trim($("#filterBoxOne").val())){
+                    buildSearchResults(last_search_results);
+                }else{
+                    buildSearchResults(default_results_json);
+                    if (photobook_toggled ){
+                        $("#key_contacts_table").hide();
+                    }else{
+                        $("#key_contacts_table").show();
+                    }
+                }
+
+
+
+
             });
+
+
+
+
+
+
+
+
 
             // Advanced Search filter toggling
             $("#filterBoxOne_filter").toggle(
