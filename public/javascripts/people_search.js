@@ -359,7 +359,7 @@ $(document).ready(function(){
 
     // Initialize the customization dialog box
     $('#dialog_modal').dialog({
-        dialogClass: 'customization_dialog', position: 'top', width: 200, height: 400,
+        dialogClass: 'customization_dialog', position: 'top', width: 200, height: 450,
         autoOpen: false, show: 'fold', hide: 'fold', modal: true
     });
     $('#customization_link').click(function() {  $('#dialog_modal').dialog("open");  });
