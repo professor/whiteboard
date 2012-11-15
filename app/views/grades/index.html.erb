@@ -81,77 +81,113 @@
           }
 
       })
-  }
-</script>
-<style>
-  .changedScore{
-    border: thin solid;
-    border-color: red;
-  }
-  .draft{
-    background-color: #AAA;
-  }
-  td.grade input{
-    width: 98%;
-    height: 100%;
-    text-align: right;
-    border-width: 1px;
-    margin: 0px;
-    padding-right: 0px;
-  }
-  td.grade{
-    border-width: 1px;
-    padding: 0;
-  }
-  #legend{
+    }
+    function post_grades_for_one_assignment(assignment_id){
+
+      var data = {};
+      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
+      data.assignment_id = assignment_id
+      $.ajax({
+        contentType: "application/json;",
+        url: '<%= post_one_assignment_path %>',
+        type: "POST",
+        data: JSON.stringify(data, null, 1),
+        dataType: "json",
+        success:function(data){
+          //clean changed_grades
+          $.each(changed_grades, function(index, value){
+            if(parseInt(index.split("_")[0]) == assignment_id)
+            delete changed_grades[index];
+          });
+
+          //update changed view
+          $("input[id^='<%=@course.id%>_" + assignment_id + "']").each(function(){
+            $(this).removeClass("draft");
+            $(this).removeClass("changedScore");
+            $(this).get(0).defaultValue = $(this).val();
+          })
+
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log("Unalbe to submit the record");
+        }
+      });
+    }
+  </script>
+  <style>
+    .changedScore{
+      border: thin solid;
+      border-color: red;
+    }
+    .draft{
+      background-color: #AAA;
+    }
+    td.grade input{
+      width: 98%;
+      height: 100%;
+      text-align: right;
+      border-width: 1px;
+      margin: 0px;
+      padding-right: 0px;
+    }
+    td.grade{
+      border-width: 1px;
+      padding: 0;
+    }
+    #legend{
       border:0px;
       border-collapse: collapse;
-  }
-  #legend td{
+    }
+    #legend td{
       border: 0;
-  }
-</style>
-<h1><%=@course.name %></h1>
+    }
+  </style>
+  <h1><%=@course.name %></h1>
 
 
-    <div id="result"></div>
-    <div style="width:100%;">
-      <table id="legend">
+  <div id="result"></div>
+  <div style="width:100%;">
+    <table id="legend">
+      <tr>
+        <td style="width:20px;padding:0 10px;">
+
+          <input style="widht:10px;height:10px;" size="1" type="'text" class="draft" >
+        </td>
+        <td>Draft</td>
+      </tr>
+      <tr><td><input class="changedScore" size="1" type="text" /></td><td>Unsaved changes</td></tr>
+    </table>
+  </div>
+  <div class="score">
+    <table class="cmu_table sortable">
+      <thead>
         <tr>
-          <td style="width:20px;padding:0 10px;">
-
-           <input style="widht:10px;height:10px;" size="1" type="'text" class="draft" >
-          </td>
-          <td>Draft</td>
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> First Name
+          </th>
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> Last Name </th>
+          <th rowspan="3"> Team </th>
+          <% @assignments.each do |assignment| %>
+            <th style='max-width:30px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
+          <%end %>
+          <th rowspan="3">Earned Grades</th>
         </tr>
-        <tr><td><input class="changedScore" size="1" type="text" /></td><td>Unsaved changes</td></tr>
-      </table>
-    </div>
-    <div class="score">
-      <table class="cmu_table sortable">
-        <thead>
-          <tr>
-            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
-            </th>
-            <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
-            <th rowspan="2"> Team </th>
-            <% @assignments.each do |assignment| %>
-              <th style='max-width:30px; word-wrap:break-word;'><%="#{assignment.name}"%></th>
-            <%end %>
-            <th rowspan="2">Earned Grades</th>
-          </tr>
-          <tr>
-            <% @assignments.each do |assignment| %>
-              <td>
-                <% case GradingRule.get_grade_type @course.id %>
-                <%when "points" %>
-                  Max <%="#{assignment.maximum_score}"%>
-                <%else%>
-                  Weight <%="#{assignment.maximum_score}"%> %
-                <%end%>
-              </td>
-              <% end %>
-          </tr>
+        <tr>
+          <% @assignments.each do |assignment| %>
+            <td>
+              <% case GradingRule.get_grade_type @course.id %>
+              <%when "points" %>
+                Max <%="#{assignment.maximum_score}"%>
+              <%else%>
+                Weight <%="#{assignment.maximum_score}"%> %
+              <%end%>
+            </td>
+          <% end %>
+        </tr>
+        <tr>
+          <% @assignments.each do |assignment| %>
+            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save grades</button></td>
+          <% end %>
+        </tr>
         </thead>
 
         <input type="hidden" id="course_id" value=<%=@course.id%> />

@@ -62,11 +62,11 @@ class GradesController < ApplicationController
     render :json => ({"message"=>"true"})
   end
 
-  #def post_grades_for_one_assignment
-  #  grades = params["grades"]
-  #  assignment_id = params["assignment_id"]
-  #  Grade.post_grades_for_one_assignment(grades, assignment_id)
-  #  render :json => ({"message"=>"true"})
-  #end
+  def post_grades_for_one_assignment
+    grades = params["grades"]
+    assignment_id = params["assignment_id"]
+    Grade.post_grades_for_one_assignment(grades, assignment_id)
+    render :json => ({"message"=>"true"})
+  end
 
 end
