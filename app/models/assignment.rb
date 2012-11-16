@@ -9,28 +9,25 @@ class Assignment < ActiveRecord::Base
   validates :weight, numericality: { greater_than_or_equal_to: 0 }
   validate :validate_total_weights
 
+  before_save :set_individual_to_unsubmittable
   before_validation :check_weight
 
   default_scope order: "task_number ASC, due_date ASC"
 
-  def deliverable(user)
-    if !self.can_submit
-      deliverable = self.deliverables.first
-    elsif self.team_deliverable?
+  accepts_nested_attributes_for :deliverables, allow_destroy: true
+
+  def deliverable_for_user(user)
+    if self.team_deliverable?
       team = Team.find_current_by_person_and_course(user, self.course)
       # find_by_team_id may find an individual deliverable if passed nil
       if !team.blank?
         deliverable = self.deliverables.find_by_team_id(team.id)
       end
     else
-      if self.can_submit?
-        deliverable = self.deliverables.find_by_creator_id(user.id)
-      else
-        deliverable = self.deliverables.first
-      end
+      deliverable = self.deliverables.find_by_creator_id(user.id)
     end
 
-    deliverable.blank? ? nil : deliverable
+    deliverable
   end
 
   def find_deliverable_grade(user)
@@ -58,19 +55,35 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  private
+  def create_placeholder_deliverables
+    if self.submittable?
+      return
+    end
 
-    def validate_due_date
-      if self.can_submit?
-        if self.due_date.nil?
-          self.errors.add(:due_date, "Empty due date")
-        else
-          if self.due_date <= DateTime.now
-            self.errors.add(:due_date, "Due date earlier than now")
-          end
+    students_with_deliverables = self.deliverables.map {|deliverable| deliverable.creator}
+    students_enrolled = self.course.all_students.values
+
+    students_no_longer_enrolled = students_with_deliverables - students_enrolled
+
+    if !students_no_longer_enrolled.empty?
+      students_no_longer_enrolled.each do |student|
+        deliverable = self.deliverables.find_by_creator_id(student.id)
+        deliverable.destroy if !deliverable.blank?
+      end
+    end
+
+    students_newly_enrolled = students_enrolled - students_with_deliverables
+
+    if !students_newly_enrolled.empty?
+      students_newly_enrolled.each do |student|
+        if self.deliverables.find_by_creator_id(student.id).blank?
+          self.deliverables.create(creator: student, status: "Ungraded")
         end
       end
     end
+  end
+
+  private
 
     def validate_total_weights
       if self.course.grading_criteria == "Percentage"
@@ -94,5 +107,13 @@ class Assignment < ActiveRecord::Base
       if self.weight.blank?
         self.weight = 0
       end
+      true
+    end
+
+    def set_individual_to_unsubmittable
+      if !self.submittable?
+        self.team_deliverable = false
+      end
+      true
     end
 end

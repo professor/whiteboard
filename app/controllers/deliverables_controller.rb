@@ -237,7 +237,7 @@ class DeliverablesController < ApplicationController
 
     @deliverable = Deliverable.find(params[:id])
     if !@deliverable.assignment.can_submit
-      @deliverable.create_unsubmittable_assignment_deliverable_grades
+      @deliverable.assignment.create_placeholder_deliverables
     end
   end
 
@@ -245,7 +245,7 @@ class DeliverablesController < ApplicationController
     assignment = Assignment.find(params[:assignment_id])
     user = User.find(params[:user_id])
 
-    deliverable = assignment.deliverable(user)
+    deliverable = assignment.deliverable_for_user(user)
     if deliverable.blank?
       deliverable = assignment.deliverables.build(creator: user, status: "Ungraded")
       if assignment.team_deliverable

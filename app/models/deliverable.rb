@@ -238,34 +238,6 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
-  def create_unsubmittable_assignment_deliverable_grades
-    if self.assignment.can_submit?
-      return
-    end
-
-    students_with_grades = self.deliverable_grades.map {|deliverable_grade| deliverable_grade.user}
-    students_enrolled = self.assignment.course.all_students.values
-
-    students_no_longer_enrolled = students_with_grades - students_enrolled
-
-    if !students_no_longer_enrolled.empty?
-      students_no_longer_enrolled.each do |student|
-        deliverable_grade = self.deliverable_grades.find_by_user_id(student.id)
-        deliverable_grade.destroy if !deliverable_grade.blank?
-      end
-    end
-
-    students_newly_enrolled = students_enrolled - students_with_grades
-
-    if !students_newly_enrolled.empty?
-      students_newly_enrolled.each do |student|
-        if self.deliverable_grades.find_by_user_id(student.id).blank?
-          self.deliverable_grades.create(user_id: student.id, grade: 0)
-        end
-      end
-    end
-  end
-
   #{"Fall 2012"=>{"Architecture and Design"=>{deliverables: [#<Deliverable 1>, #<Deliverable 2>], total: 100}, ...}}
   def self.group_by_semester_course(deliverables, student)
     grouped_deliverables = {}
@@ -290,10 +262,11 @@ class Deliverable < ActiveRecord::Base
     if self.status.nil?
       self.status = "Ungraded"
     end
+    true
   end
 
   def create_deliverable_grade
-    if self.deliverable_grades.blank? && self.assignment.can_submit
+    if self.deliverable_grades.blank?
       if self.assignment.team_deliverable?
         self.course.teams.each do |team|
           if team.members.include?(self.creator)

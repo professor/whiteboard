@@ -177,58 +177,6 @@ describe Deliverable do
       deliverables.should include(@deliverable2)
     end
   end
-
-  context "creating deliverable grades for unsbumittable assignments" do
-    before {
-      @faculty_assignment = FactoryGirl.create(:faculty_assignment)
-      @assignment = FactoryGirl.create(:assignment, team_deliverable: true, can_submit: false, course: @faculty_assignment.course)
-      @student1 = FactoryGirl.create(:student)
-      @student2 = FactoryGirl.create(:student)
-      @student1.registered_courses = [@assignment.course]
-      @student2.registered_courses = [@assignment.course]
-      @student1.save
-      @student2.save
-      @assignment.create_placeholder_deliverable(@faculty_assignment.user)
-    }
-
-    it "should create a deliverable grade for each student in the course" do
-      students = @assignment.reload.course.all_students.values
-
-      expect {
-        @assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-      }.to change(DeliverableGrade, :count).by(students.size)
-
-      deliverable_grades = @assignment.reload.deliverables.first.deliverable_grades
-      student_ids = deliverable_grades.map { |deliverable_grade| deliverable_grade.user_id }
-
-      students.each do |student|
-        student_ids.should include(student.id)
-      end
-    end
-
-    it "should account for students who register out of the class" do
-      @assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-      @student1.registered_courses = []
-      @student1.save
-      @assignment.reload
-
-      expect {
-        @assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-      }.to change(DeliverableGrade, :count).by(-1)
-    end
-
-    it "should account for students who register into the class" do
-      @assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-      @student3 = FactoryGirl.create(:student)
-      @student3.registered_courses = [@assignment.course]
-      @student3.save
-      @assignment.reload
-
-      expect {
-        @assignment.deliverables.first.create_unsubmittable_assignment_deliverable_grades
-      }.to change(DeliverableGrade, :count).by(1)
-    end
-  end
 end
 
 

@@ -6,36 +6,7 @@
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div>
-    <p>
-      <%= f.fields_for :deliverable_grades do |builder| %>
-      <div class='inline_field'>
-        <%= builder.label :grade %>:
-        <%= builder.text_field :grade, size: 4, class: 'grade_input' %>/<%= @deliverable.assignment.max_score %>
-      </div>
-    <% end %>
-    </p>
-
-    <% if @deliverable.assignment.course.grading_criteria == "Percentage" %>
-      <p>
-        <%= "Weight: #{@deliverable.assignment.weight}%" %>
-      </p>
-    <% end %>
-    <p>
-      <% if @deliverable.current_attachment.blank? %>
-        Deliverable: None
-      <% else %>
-        Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-      <% end %>
-    </p>
-    <p>
-      <%= f.label :feedback, "Feedback file to upload" %>
-      <%= f.file_field :feedback %>
-    </p>
-    <p>
-      <%= f.label :feedback_comment, "Feedback Comments" %>
-      <br>
-      <%= f.text_area :feedback_comment, :size => "70x10" %>
-    </p>
+    <%= render 'deliverables/individual_grading_fields', f: f, deliverable: @deliverable %>
   </div>
 
   <div>

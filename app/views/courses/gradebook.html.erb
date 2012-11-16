@@ -44,7 +44,7 @@
           <% number_grade = @course.get_earned_number_grade(member) %>
           <% @course.assignments.each do |assignment| %>
             <td>
-              <% deliverable = assignment.deliverable(member) %>
+              <% deliverable = assignment.deliverable_for_user(member) %>
               <% deliverable_grade = deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(member.id) %>
               <% if assignment.can_submit? %>
                 <% if deliverable.blank? %>

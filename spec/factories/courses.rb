@@ -135,7 +135,7 @@ FactoryGirl.define do
   factory :architecture_assignment_5, :parent => :assignment do
     task_number ''
     title 'Individual Participation'
-    team_deliverable true
+    team_deliverable false
     due_date DateTime.now + 50  # Should be removed
     weight 20
     can_submit false
@@ -248,7 +248,7 @@ FactoryGirl.define do
   factory :ppm_assignment_7, :parent => :assignment do
     task_number ''
     title 'Contribution'
-    team_deliverable true
+    team_deliverable false
     due_date DateTime.now + 50  # Should be removed
     weight 20
     can_submit false
