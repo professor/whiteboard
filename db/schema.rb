@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801031314) do
+ActiveRecord::Schema.define(:version => 20121108224510) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -34,13 +34,11 @@ ActiveRecord::Schema.define(:version => 20120801031314) do
     t.boolean  "remind_about_effort"
     t.string   "short_name"
     t.integer  "year"
-    t.boolean  "configure_class_mailinglist",     :default => false
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
-    t.boolean  "configure_teams_name_themselves", :default => true
     t.string   "curriculum_url"
-    t.boolean  "configure_course_twiki",          :default => false
-    t.boolean  "is_configured",                   :default => false
+    t.boolean  "configure_course_twiki",       :default => false
+    t.boolean  "is_configured",                :default => false
     t.integer  "updated_by_user_id"
     t.integer  "configured_by_user_id"
     t.boolean  "updating_email"

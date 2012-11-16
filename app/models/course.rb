@@ -57,8 +57,8 @@ class Course < ActiveRecord::Base
 
   attr_accessible :course_number_id, :name, :number, :semester, :mini, :primary_faculty_label,
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
-                  :configure_class_mailinglist, :peer_evaluation_first_email, :peer_evaluation_second_email,
-                  :configure_teams_name_themselves, :curriculum_url, :configure_course_twiki,
+                  :peer_evaluation_first_email, :peer_evaluation_second_email,
+                  :curriculum_url, :configure_course_twiki,
                   :faculty_assignments_override
 
 #  def to_param
@@ -273,6 +273,12 @@ class Course < ActiveRecord::Base
   def update_email_address
     self.email = build_email
   end
+
+  def email_faculty_to_configure_course_unless_already_configured
+    CourseMailer.configure_course_faculty_email(self).deliver unless self.is_configured?
+  end
+
+
 
   protected
   def strip_whitespaces

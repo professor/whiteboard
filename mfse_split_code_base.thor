@@ -31,23 +31,4 @@ class MfseSplitCodeBase < Thor
   def self.source_root
      File.dirname(__FILE__)
    end
-
-  desc "create_project TEAM_NAME", "create a team project"
-  def create_project(project, name)
-    project_directory = "Fall-" + @@year + "-" + @@course + "-" + name
-    run "git init"
-    run "rails new " + project + " -v 3.2.7 --skip-test-unit"
-    run "mv " + project + "/* ."
-    run "mv " + project + "/.[^.]* ." #Move .files
-    remove_dir project
-    update_gemfile
-    update_git_file
-    create_rvmrc
-    modify_readme_with_build_status name
-    rename_readme
-    run "git add ."
-    run "git commit -m 'Adding in initial repo'"
-  end
-
-
 end
