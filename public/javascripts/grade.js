@@ -1,15 +1,9 @@
-function Grade(type)
+function Grade(type, mapping, weight)
 {
 
     var gradeType = type;
-    var gradeWeight;
-    var gradeMapping;
-    if(arguments.length > 1)
-        gradeWeight = arguments[1];
-    if(arguments.length > 2)
-        gradeMapping = arguments[2];
-
-
+    var gradeMapping = mapping;
+    var gradeWeight = weight;
 
     this.getType = function(){
         return gradeType;
@@ -22,22 +16,30 @@ function Grade(type)
     };
     this.convert = function(gradeHash){
         var gradeArray = [];
-        for (var assignment_index in gradeHash) {
-            if(gradeType == "letter"){
-                gradeHash[assignment_index] = gradeMapping[gradeHash[assignment_index]];
-            }
-            else{
-             if(gradeHash[assignment_index].trim() == '') gradeHash[assignment_index] = 0;
-             gradeHash[assignment_index] = parseFloat(gradeHash[assignment_index]);
-            }
-        }
-        if(gradeType == "points")
-            return gradeHash;
-
-        for (var assignment_index in gradeHash) {
-            gradeArray[assignment_index] = gradeHash[assignment_index] * gradeWeight[assignment_index];
+        for(var assignment_index in gradeHash){
+          gradeArray[assignment_index] = this.to_number(gradeHash[assignment_index], assignment_index);
+          if(gradeType == "weight")
+            gradeArray[assignment_index] *= gradeWeight[assignment_index];
         }
         return gradeArray;
+    };
+    this.to_number = function(grade, assignment_index){
+      if(typeof grade  == 'number') {
+        return grade;
+      }
+      grade = $.trim(grade);
+      if( /[\d\.]+/.test(grade)){
+        return parseFloat(grade);
+      }
+      if(grade in gradeMapping){
+        if(gradeType == "points"){
+          return gradeMapping[grade] * gradeWeight[assignment_index];
+        }
+        else{
+          return gradeMapping[grade];
+        }
+      }
+      return 0;
     };
     this.calculate = function(gradeHash){
       var total = 0;
@@ -60,6 +62,7 @@ function Grade(type)
     this.earned_grade = function(student_id){
       var grades_hash = this.get_grades_for_student(student_id);
       var earned_grade = this.calculate(grades_hash);
+      earned_grade = Math.round(earned_grade*100)/100;
       if(gradeType =="letter") earned_grade = this.get_letter(earned_grade);
       $("tr#s_"+student_id + " .earned").text(earned_grade);
       return earned_grade;

@@ -214,14 +214,7 @@ class GradingRule < ActiveRecord::Base
     ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"].each do |letter|
       score_assignment[letter] = convert_letter_grade_to_points(letter)
     end
+    "'#{GradingRule.get_grade_type self.course_id}', #{score_assignment.to_json}, #{weight_hash.to_json}"
 
-    case GradingRule.get_grade_type self.course_id
-      when "points" then
-        "'points'"
-      when "weight" then
-        "'weight', #{weight_hash.to_json}"
-      when "letter" then
-        "'letter', #{weight_hash.to_json}, #{score_assignment.to_json}"
-    end 
   end
 end
