@@ -10,40 +10,40 @@
 require 'factory_girl'
 
 
-Factory.create(:achiever)
-Factory.create(:activator)
-Factory.create(:adaptability)
-Factory.create(:analytical)
-Factory.create(:arranger)
-Factory.create(:belief)
-Factory.create(:command)
-Factory.create(:communication)
-Factory.create(:competition)
-Factory.create(:connectedness)
-Factory.create(:consistency)
-Factory.create(:context)
-Factory.create(:deliberative)
-Factory.create(:developer)
-Factory.create(:discipline)
-Factory.create(:empathy)
-Factory.create(:focus)
-Factory.create(:futuristic)
-Factory.create(:harmony)
-Factory.create(:ideation)
-Factory.create(:includer)
-Factory.create(:individualization)
-Factory.create(:input)
-Factory.create(:intellection)
-Factory.create(:learner)
-Factory.create(:maximizer)
-Factory.create(:positivity)
-Factory.create(:relator)
-Factory.create(:responsibility)
-Factory.create(:restorative)
-Factory.create(:self_assurance)
-Factory.create(:significance)
-Factory.create(:strategic)
-Factory.create(:woo)
+FactoryGirl.create(:achiever)
+FactoryGirl.create(:activator)
+FactoryGirl.create(:adaptability)
+FactoryGirl.create(:analytical)
+FactoryGirl.create(:arranger)
+FactoryGirl.create(:belief)
+FactoryGirl.create(:command)
+FactoryGirl.create(:communication)
+FactoryGirl.create(:competition)
+FactoryGirl.create(:connectedness)
+FactoryGirl.create(:consistency)
+FactoryGirl.create(:context)
+FactoryGirl.create(:deliberative)
+FactoryGirl.create(:developer)
+FactoryGirl.create(:discipline)
+FactoryGirl.create(:empathy)
+FactoryGirl.create(:focus)
+FactoryGirl.create(:futuristic)
+FactoryGirl.create(:harmony)
+FactoryGirl.create(:ideation)
+FactoryGirl.create(:includer)
+FactoryGirl.create(:individualization)
+FactoryGirl.create(:input)
+FactoryGirl.create(:intellection)
+FactoryGirl.create(:learner)
+FactoryGirl.create(:maximizer)
+FactoryGirl.create(:positivity)
+FactoryGirl.create(:relator)
+FactoryGirl.create(:responsibility)
+FactoryGirl.create(:restorative)
+FactoryGirl.create(:self_assurance)
+FactoryGirl.create(:significance)
+FactoryGirl.create(:strategic)
+FactoryGirl.create(:woo)
 
 FactoryGirl.define do
   factory :todd, :parent => :person do
@@ -303,21 +303,21 @@ end
 
 def create_course_with_profs
 # set up course
-  course_fse = Factory.create(:fse)
+  course_fse = FactoryGirl.create(:fse)
 
 
-  prof_liu = Factory.create(:prof_liu)
-  Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_liu.id)
+  prof_liu = FactoryGirl.create(:prof_liu)
+  FactoryGirl.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_liu.id)
 
   # set up another course
-  # course_mfse = Factory.create(:mfse)
-  prof_singh = Factory.create(:prof_singh)
-  Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_singh.id)
+  # course_mfse = FactoryGirl.create(:mfse)
+  prof_singh = FactoryGirl.create(:prof_singh)
+  FactoryGirl.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_singh.id)
   
-  prof_lee = Factory.create(:prof_lee)
-  Factory.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_lee.id)
+  prof_lee = FactoryGirl.create(:prof_lee)
+  FactoryGirl.create(:faculty_assignment, :course_id=>course_fse.id, :user_id=>prof_lee.id)
 
-  Factory.create(:grading_rule_points, :course_id=>course_fse.id)
+  FactoryGirl.create(:grading_rule_points, :course_id=>course_fse.id)
 
   course_fse
 
@@ -325,13 +325,13 @@ end
 def create_assignments course_fse
   # set up teams
   fse_teams = []
-  fse_teams << Factory.create(:team_3amigos, :course_id=>course_fse.id)
-  fse_teams << Factory.create(:team_leopard, :course_id=>course_fse.id)
+  fse_teams << FactoryGirl.create(:team_3amigos, :course_id=>course_fse.id)
+  fse_teams << FactoryGirl.create(:team_leopard, :course_id=>course_fse.id)
 
   # set up assignments
   assignments = []
   2.times do # prepare team deliverables
-    team_assignment = Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: true, is_submittable: true)
+    team_assignment = FactoryGirl.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: true, is_submittable: true)
     assignments << team_assignment
     fse_teams.each do |team|
        deliverable=FactoryGirl.create(:team_deliverable_simple, :team_id=>team.id, :creator_id=>team.members.first.id, :course_id=>course_fse.id, :assignment_id=>team_assignment.id)
@@ -340,7 +340,7 @@ def create_assignments course_fse
   end
 
   2.times do # prepare individual deliverables
-    individual_assignment = Factory.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: false, is_submittable: true)
+    individual_assignment = FactoryGirl.create(:assignment_seq, :course_id=>course_fse.id, is_team_deliverable: false, is_submittable: true)
     assignments << individual_assignment
     fse_teams.each do |team|
       team.members.each do |team_member|
@@ -349,14 +349,14 @@ def create_assignments course_fse
       end
     end
   end
-  assignments << Factory.create(:assignment_seq, :course_id=>course_fse.id, is_submittable: false)
+  assignments << FactoryGirl.create(:assignment_seq, :course_id=>course_fse.id, is_submittable: false)
 
   # set up registration and grades
   fse_teams.each do |team|
     team.members.each do |team_member|
-      Factory.create(:registration, :course_id=>course_fse.id, :user => team_member)
+      FactoryGirl.create(:registration, :course_id=>course_fse.id, :user => team_member)
       assignments.each do |assign|
-        Factory.create(:grade_points, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
+        FactoryGirl.create(:grade_points, :course_id=>course_fse.id, :assignment => assign, :student_id => team_member.id)
       end
     end
   end
@@ -367,20 +367,20 @@ course_fse= create_course_with_profs
 create_assignments(course_fse)
 
 
-Factory(:task_type, :name => "Working on deliverables")
-Factory(:task_type, :name => "Readings")
-Factory(:task_type, :name => "Meetings")
-Factory(:task_type, :name => "Other")
+FactoryGirl.create(:task_type, :name => "Working on deliverables")
+FactoryGirl.create(:task_type, :name => "Readings")
+FactoryGirl.create(:task_type, :name => "Meetings")
+FactoryGirl.create(:task_type, :name => "Other")
 
 
-todd = Factory.create(:todd)
-ed = Factory.create(:ed)
-Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
+todd = FactoryGirl.create(:todd)
+ed = FactoryGirl.create(:ed)
+FactoryGirl.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 
-Factory.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
-Factory.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
-Factory.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
-Factory.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
 
 
