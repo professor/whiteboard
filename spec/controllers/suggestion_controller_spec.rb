@@ -13,7 +13,7 @@ describe SuggestionsController do
     it "prompts for an email address if the user is not logged in" do
       pending "Test disabled: this is more like a view test. Not sure it belongs here + it started failing on rails3" do
         get :new
-        puts response
+        #puts response
         response.should have_selector("input", :id => "suggestion_email")
       end
     end
