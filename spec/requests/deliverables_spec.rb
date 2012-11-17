@@ -43,7 +43,6 @@ describe "deliverables" do
         click_link "View History and Feedback"
      #   visit deliverable_path(@team_deliverable)
 
-        page.should have_content("Deliverable for")
         page.should have_content("Attachment Version History")
         page.should_not have_content("Professor's Notes")
         page.should_not have_content("My private notes")

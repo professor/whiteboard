@@ -7,6 +7,7 @@ FactoryGirl.define do
     mini 'Both'
     number '96-700'
     updated_by_user_id 10
+    association :grading_rule, :factory => :grading_rule_points
   end
 
 

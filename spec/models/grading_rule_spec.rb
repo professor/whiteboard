@@ -42,6 +42,8 @@ describe GradingRule do
     before do
       @course_fse = FactoryGirl.create(:fse)
       @course_grading_rule = FactoryGirl.create(:grading_rule, :course_id=> @course_fse.id)
+      @course_fse.grading_rule = @course_grading_rule
+      @course_fse.save
     end
 
     it "should be able to get grade in format" do
