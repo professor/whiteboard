@@ -218,7 +218,7 @@ class GradingRule < ActiveRecord::Base
     case GradingRule.get_grade_type self.course_id
       when "points" then
         "'points'"
-      when "percentage" then
+      when "weight" then
         "'weight', #{weight_hash.to_json}"
       when "letter" then
         "'letter', #{weight_hash.to_json}, #{score_assignment.to_json}"
