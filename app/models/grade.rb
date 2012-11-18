@@ -16,12 +16,9 @@
 # * get_grades_for_student_per_course returns a list of assignment score of given course and student.
 # * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
 #   useful for controller to test whether the score is existed or not.
-# * post_all creates/saves a list of grades updated by professor.
-# * save_as_draft marks the given grades as invisible to the students.
 # * give_grade saves the grade given for a student's assignment.
 # * give_grades saves a list of assignment grades given to a group of students.
-# * post_grades_for_one_assignment saves a list of assignment grades.
-# 
+#
 #
 class Grade < ActiveRecord::Base
   attr_accessible :course_id, :student_id, :assignment_id, :is_student_visible, :score
@@ -42,10 +39,12 @@ class Grade < ActiveRecord::Base
   def self.get_grades_for_student_per_course (course, student)
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
-      grades[grade.assignment.id] = grade
+      if grade.assignment_id < 0
+        grades["final"] = grade
+      else
+        grades[grade.assignment.id] = grade
+      end
     end
-    # FIXME: calculate earned grade
-    #grades["earned_grade"] = (grades.values.map {|grade|  ((grade.score.nil?) ? 0: grade.score)}).reduce(:+)
     grades
   end
 
@@ -54,35 +53,25 @@ class Grade < ActiveRecord::Base
     grade = Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
-  #To make all the grades in the gradebook visible to students
-  def self.post_all(course_id)
-    Grade.update_all({:is_student_visible=>true}, {:course_id=>course_id})
-  end
-
-  # To save the changes and making them visible to professor only.
-  def self.save_as_draft(grades)
-    grades.each do |grade_entry|
-      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).try(
-          :update_attribute, :is_student_visible, false)
-    end
-  end
-
   # To assign/update the grade to the student
-  def self.give_grade(assignment_id, student_id, score,is_student_visible=nil)
+  def self.give_grade(course_id, assignment_id, student_id, score,is_student_visible=nil)
+    if assignment_id>0
+      if Assignment.find(assignment_id).nil?
+        return false
+      end
+    end
+
     grading_result = false
     student = User.find(student_id)
-
-    assignment = Assignment.find(assignment_id)
-    if assignment.nil?
-      grading_result = false
-    elsif assignment.course.registered_students.include?(student)
-      grade = Grade.get_grade(assignment.id, student_id)
+    course = Course.find(course_id)
+    if course.registered_students.include?(student)
+      grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
-        grade = Grade.new({:course_id=>assignment.course.id, :assignment_id => assignment.id, :student_id=> student_id,
+        grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
 
-      if GradingRule.validate_score(assignment.course.id, score)
+      if GradingRule.validate_score(course_id, score)
         grade.score=score
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
@@ -99,18 +88,8 @@ class Grade < ActiveRecord::Base
   def self.give_grades(grades)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
-      self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
+      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible])
     end
-  end
-
-  # To post all the grades to students for one assignment
-  def self.post_grades_for_one_assignment(grades, assignment_id)
-      grades.each do |grade_entry|
-        if grade_entry[:assignment_id] == assignment_id
-          self.give_grade(grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score])
-        end
-      end
-      Grade.update_all({:is_student_visible=>true},{:assignment_id=>assignment_id})
   end
 
   def send_feedback_to_student

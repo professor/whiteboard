@@ -76,18 +76,6 @@ describe Grade do
     end
   end
 
-  #context "score" do
-  #  it "should not be string" do
-  #    subject.score = "just4test"
-  #    subject.should_not be_valid
-  #  end
-  #
-  #  it 'should not be negative' do
-  #    subject.score = -1.0
-  #    subject.should_not be_valid
-  #  end
-  #end
-
   it 'should not be redundant' do
     redundant_grade = Grade.new(
       :course_id => @course_fse.id, 
@@ -111,13 +99,13 @@ describe Grade do
 
   it "should be able to give new grade to a registered student" do
     score = "10"
-    Grade.give_grade(@assignment_2.id, @student_sam.id, score).should be_true
+    Grade.give_grade(@course_fse.id, @assignment_2.id, @student_sam.id, score).should be_true
     Grade.find_by_assignment_id_and_student_id(@assignment_2.id,@student_sam.id).score.should eq(score)
   end
 
   it "should be able to give a updated grade to a registered student" do
     score = "10"
-    Grade.give_grade(@assignment_1.id, @student_sam.id, score).should be_true
+    Grade.give_grade(@course_fse.id, @assignment_1.id, @student_sam.id, score).should be_true
     Grade.find_by_assignment_id_and_student_id(@assignment_1.id, @student_sam.id).score.should eq(score)
   end
 
@@ -125,13 +113,13 @@ describe Grade do
     score = "10"
     student_sally = FactoryGirl.create(:student_sally_user)
     User.stub(:find).with(student_sally.id).and_return(student_sally)
-    Grade.give_grade(@assignment_1.id, student_sally.id, score).should be_false
+    Grade.give_grade(@course_fse.id, @assignment_1.id, student_sally.id, score).should be_false
   end
 
   it "should be able to update scores" do
     grades = []
     [@assignment_1, @assignment_2].each do |assignment|
-      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
+      grades << {:course_id=>@course_fse.id, :assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
     end
     Grade.give_grades(grades)
     grades.each do |grade_entry|
@@ -139,47 +127,45 @@ describe Grade do
     end
   end
 
-  it 'should be able to post all grades for a course' do
-    Grade.post_all(@course_fse.id)
-    Grade.find_all_by_course_id(@course_fse.id).each do |grade_entry|
-      grade_entry.is_student_visible.should be_true
-    end
+  it "should be able to give final grades" do
+    score = "10"
+    Grade.give_grade(@course_fse.id, -1, @student_sam.id, score).should be_true
+    Grade.find_by_assignment_id_and_student_id(-1, @student_sam.id).score.should eq(score)
   end
 
-  it 'should be able to save changed scores as draft' do
-    grades = []
-    [@assignment_1, @assignment_2].each do |assignment|
-      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
-    end
-    Grade.give_grades(grades)
-    Grade.save_as_draft(grades)
-    grades.each do |grade_entry|
-      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
-    end
-  end
+  #it 'should be able to save changed scores as draft' do
+  #  grades = []
+  #  [@assignment_1, @assignment_2].each do |assignment|
+  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
+  #  end
+  #  Grade.give_grades(grades)
+  #  Grade.save_as_draft(grades)
+  #  grades.each do |grade_entry|
+  #    Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
+  #  end
+  #end
 
-  it 'should be able to save changed scores in one assignment' do
-    grades = []
-    [@assignment_1, @assignment_2].each do |assignment|
-      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
-    end
-    Grade.give_grades(grades)
-    Grade.save_as_draft(grades)
-    grades = []
-    [@assignment_1, @assignment_2].each do |assignment|
-      grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "20" }
-    end
-    Grade.post_grades_for_one_assignment(grades, @assignment_1.id)
-    grades.each do |grade_entry|
-      if grade_entry[:assignment_id] == @assignment_1.id
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq("20")
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_true
-      else
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should_not eq("20")
-        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
-      end
-    end
-
-  end
+  #it 'should be able to save changed scores in one assignment' do
+  #  grades = []
+  #  [@assignment_1, @assignment_2].each do |assignment|
+  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
+  #  end
+  #  Grade.give_grades(grades)
+  #  Grade.save_as_draft(grades)
+  #  grades = []
+  #  [@assignment_1, @assignment_2].each do |assignment|
+  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "20" }
+  #  end
+  #  Grade.post_grades_for_one_assignment(grades, @assignment_1.id)
+  #  grades.each do |grade_entry|
+  #    if grade_entry[:assignment_id] == @assignment_1.id
+  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq("20")
+  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_true
+  #    else
+  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should_not eq("20")
+  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
+  #    end
+  #  end
+  #end
 
 end

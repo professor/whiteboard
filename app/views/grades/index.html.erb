@@ -47,12 +47,17 @@
     }
   }
   function parse_id(idAttr){
-      return {"course_id": parseInt(idAttr.split("_")[0]), "assignment_id": parseInt(idAttr.split("_")[1]), "student_id": parseInt(idAttr.split("_")[2])};
+      var course_id = parseInt(idAttr.split("_")[0]);
+      var assignment_id = idAttr.split("_")[1];
+      var student_id = parseInt(idAttr.split("_")[2]);
+
+      if (assignment_id == "final")
+        assignment_id = -1;
+      else
+        assignment_id = parseInt(assignment_id);
+      return {"course_id": course_id, "assignment_id": assignment_id, "student_id": student_id};
   }
 
-  function saveAsDraft() {
-      post_grades('<%=save_draft_path(@course)%>');
-  }
   function post_drafted_and_send() {
       post_grades('<%=post_drafted_and_send_path(@course)%>');
 
@@ -81,37 +86,6 @@
           }
 
       })
-    }
-    function post_grades_for_one_assignment(assignment_id){
-
-      var data = {};
-      data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
-      data.assignment_id = assignment_id
-      $.ajax({
-        contentType: "application/json;",
-        url: '<%= post_one_assignment_path %>',
-        type: "POST",
-        data: JSON.stringify(data, null, 1),
-        dataType: "json",
-        success:function(data){
-          //clean changed_grades
-          $.each(changed_grades, function(index, value){
-            if(parseInt(index.split("_")[0]) == assignment_id)
-            delete changed_grades[index];
-          });
-
-          //update changed view
-          $("input[id^='<%=@course.id%>_" + assignment_id + "']").each(function(){
-            $(this).removeClass("draft");
-            $(this).removeClass("changedScore");
-            $(this).get(0).defaultValue = $(this).val();
-          })
-
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          console.log("Unalbe to submit the record");
-        }
-      });
     }
   </script>
   <style>
@@ -156,20 +130,22 @@
         <td>Draft</td>
       </tr>
       <tr><td><input class="changedScore" size="1" type="text" /></td><td>Unsaved changes</td></tr>
+      <tr><td colspan="2">double click to switch ertrete</td></tr>
     </table>
   </div>
   <div class="score">
     <table class="cmu_table sortable">
       <thead>
         <tr>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> First Name
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
           </th>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="3"> Last Name </th>
-          <th rowspan="3"> Team </th>
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
+          <th rowspan="2"> Team </th>
           <% @assignments.each do |assignment| %>
             <th style='max-width:30px;' title="<%=assignment.name%>"><%="#{assignment.name[0..4]}"%></th>
           <%end %>
-          <th rowspan="3">Earned Grades</th>
+          <th rowspan="2">Earned Grades</th>
+          <th rowspan="2">Final Grades</th>
         </tr>
         <tr>
           <% @assignments.each do |assignment| %>
@@ -181,11 +157,6 @@
                 Weight <%="#{assignment.maximum_score}"%> %
               <%end%>
             </td>
-          <% end %>
-        </tr>
-        <tr>
-          <% @assignments.each do |assignment| %>
-            <td> <button type="button" id="a_<%=assignment.id%>" onclick="post_grades_for_one_assignment(<%=assignment.id %>)">Save and Email grades</button></td>
           <% end %>
         </tr>
         </thead>
@@ -205,14 +176,19 @@
                        class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
               </td>
             <% end %>
-            <td class='earned'><%=(grade_entries.has_key?("earned_grade"))?(grade_entries["earned_grade"]):""%></td>
+            <td class='earned'></td>
+            <td class='final grade'>
+              <input id="<%= @course.id %>_final_<%=student.id%>"
+                     value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
+                     type="text" size="4" width="100%" onchange="change_grade(event);"
+                     class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
+             </td>
           </tr>
         <%end%>
       </table>
 
       <div style='padding-top:20px;margin-bottom: 40px;'>
         <button type="button" id="gradebook_submit" onclick="save()">Save</button>
-        <button type="button" id="gradebook_save_draft" onclick="saveAsDraft()">Save as Draft</button>
         <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
       </div>
 
