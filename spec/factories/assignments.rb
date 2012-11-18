@@ -7,11 +7,18 @@ FactoryGirl.define do
     is_team_deliverable false
     due_date "2012-10-03 12:48:24"
     task_number 1
-    association :course, :factory => :fse
+    is_submittable true
+    sequence(:assignment_order) {|i| i}
+    course_id 1
   end
 
   factory :assignment_team, :parent=>:assignment do
     is_team_deliverable true
+  end
+
+  factory :assignment_unsubmissible, :parent=>:assignment do
+    is_submittable false
+    due_date ""
   end
 
   factory :assignment_fse, :parent=>:assignment do
@@ -23,6 +30,5 @@ FactoryGirl.define do
     course_id 1
     sequence(:name) {|i| "Assignment #{i}"}
     sequence(:maximum_score) {|i| i*3}
-    sequence(:assignment_order) {|i| i}
   end
 end

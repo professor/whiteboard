@@ -18,7 +18,6 @@ FactoryGirl.define do
 
   factory :grade_points, :parent=>:grade do
     course_id 1
-    sequence(:score) {|i| (i*5).to_s }
     student_id 999
     assignment
     is_student_visible false

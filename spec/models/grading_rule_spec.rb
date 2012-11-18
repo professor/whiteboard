@@ -4,7 +4,7 @@ describe GradingRule do
   context "can convert grade" do
     before do
       @course_fse = FactoryGirl.create(:fse)
-      @course_grading_rule = FactoryGirl.create(:grading_rule, :course_id=> @course_fse.id)
+      @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id=> @course_fse.id)
     end
 
     it "should be able to get points from letter"  do
@@ -35,19 +35,6 @@ describe GradingRule do
       @course_grading_rule.convert_letter_grade_to_points("C+").should eq(79.9)
       @course_grading_rule.convert_letter_grade_to_points("C").should eq(77.9)
       @course_grading_rule.convert_letter_grade_to_points("C-").should eq(73.9)
-    end
-  end
-
-  context "using letter" do
-    before do
-      @course_fse = FactoryGirl.create(:fse)
-      @course_grading_rule = FactoryGirl.create(:grading_rule, :course_id=> @course_fse.id)
-      @course_fse.grading_rule = @course_grading_rule
-      @course_fse.save
-    end
-
-    it "should be able to get grade in format" do
-      GradingRule.get_grade_in_prof_format(@course_fse.id, 100).should eq("A")
     end
   end
 
