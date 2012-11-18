@@ -31,7 +31,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def find_deliverable_grade(user)
-    deliverable = deliverable(user)
+    deliverable = deliverable_for_user(user)
     deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(user.id)
   end
 
@@ -55,35 +55,48 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def create_placeholder_deliverables
+  def find_or_create_deliverable_by_user(user)
     if self.submittable?
-      return
-    end
-
-    students_with_deliverables = self.deliverables.map {|deliverable| deliverable.creator}
-    students_enrolled = self.course.all_students.values
-
-    students_no_longer_enrolled = students_with_deliverables - students_enrolled
-
-    if !students_no_longer_enrolled.empty?
-      students_no_longer_enrolled.each do |student|
-        deliverable = self.deliverables.find_by_creator_id(student.id)
-        deliverable.destroy if !deliverable.blank?
+      if self.team_deliverable
+        team = Team.find_current_by_person_and_course(user, self.course)
+        deliverable = self.deliverables.find_by_team_id(team.id)
+        if deliverable.blank?
+          create_deliverable_for_team(user, team)
+        else
+          team.members.each do |member|
+            if deliverable.deliverable_grades.find_by_user_id(member).blank?
+              deliverable.deliverable_grades.create(user: member, grade: "0")
+            end
+          end
+        end
+      else # individual
+        deliverable = self.deliverable_for_user(user)
+        if deliverable.blank?
+          create_deliverable_for_user(user)
+        end
       end
-    end
-
-    students_newly_enrolled = students_enrolled - students_with_deliverables
-
-    if !students_newly_enrolled.empty?
-      students_newly_enrolled.each do |student|
-        if self.deliverables.find_by_creator_id(student.id).blank?
-          self.deliverables.create(creator: student, status: "Ungraded")
+    else # unsubmittable
+      all_students = self.course.all_students.values
+      all_students.each do |student|
+        deliverable = self.deliverable_for_user(student)
+        if deliverable.blank?
+          create_deliverable_for_user(student)
         end
       end
     end
+
+    deliverable_for_user(user)
   end
 
   private
+
+    def create_deliverable_for_user(user)
+      self.deliverables.create(creator: user, status: "Ungraded")
+    end
+
+    def create_deliverable_for_team(user, team)
+      self.deliverables.create(creator: user, team: team, status: "Ungraded")
+    end
 
     def validate_total_weights
       if self.course.grading_criteria == "Percentage"

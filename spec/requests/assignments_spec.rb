@@ -31,13 +31,6 @@ describe "assignments" do
           click_button "Save Assignment"
         }.to change(Assignment, :count).by(0)
       end
-
-      it "should create a placeholder deliverable when creating an unsubmittable assignment" do
-        expect {
-          choose('assignment_can_submit_false')
-          click_button "Save Assignment"
-        }.to change(Deliverable, :count).by(1)
-      end
     end
   end
 

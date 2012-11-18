@@ -150,7 +150,9 @@ FactoryGirl.define do
     faculty_assignments []
 
     after(:create) do |course|
-      course.faculty_assignments << FactoryGirl.create(:faculty_assignment, user: FactoryGirl.create(:faculty_frank), course: course)
+      faculty_frank = FactoryGirl.create(:faculty_frank)
+      course.faculty_assignments_override = [faculty_frank.human_name]
+      course.update_faculty
 
       course.teams << FactoryGirl.create(:course_team_1, course: course, name: '10 Amigos', email: '10Amigos@sv.cmu.edu')
       course.teams << FactoryGirl.create(:course_team_2, course: course, name: 'Best Team Never', email: 'BestTeamNever@sv.cmu.edu')
@@ -263,7 +265,9 @@ FactoryGirl.define do
     faculty_assignments []
 
     after(:create) do |course|
-      course.faculty_assignments << FactoryGirl.create(:faculty_assignment, user: FactoryGirl.create(:faculty_fagan), course: course)
+      faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      course.faculty_assignments_override = [faculty_fagan.human_name]
+      course.update_faculty
 
       course.teams << FactoryGirl.create(:course_team_1, course: course, name: '20 Amigos', email: '20Amigos@sv.cmu.edu')
       course.teams << FactoryGirl.create(:course_team_2, course: course, name: 'Team2Cool', email: 'Team2Cool@sv.cmu.edu')

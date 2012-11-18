@@ -1,4 +1,4 @@
-<% content_for :title, "Gradebook" %>
+  <% content_for :title, "Gradebook" %>
 
 <h1>Gradebook: <%= @course.name %></h1>
 
@@ -26,6 +26,8 @@
       else
         if deliverable_grade.deliverable.status == 'Graded'
           deliverable_grade.grade
+        elsif deliverable_grade.deliverable.attachment_versions.blank?
+          "Unsubmitted"
         elsif deliverable_grade.deliverable.status == 'Ungraded'
           "Ungraded"
         else

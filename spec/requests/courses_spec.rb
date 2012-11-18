@@ -96,9 +96,10 @@ describe "courses" do
   context "gradebook" do
     it "should be able to grade a unsubmitted assignment" do
       ppm_course = FactoryGirl.create(:ppm_current_semester)
+      login_with_oauth ppm_course.faculty.first
       visit course_gradebook_path(ppm_course)
       expect {
-        click_link "0 (Unsubmitted)"
+        click_link "Unsubmitted"
       }.to change(Deliverable, :count).by(1)
     end
   end

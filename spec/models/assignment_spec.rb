@@ -93,15 +93,8 @@ describe Assignment do
   context "creating placeholder deliverables for unsbumittable assignments" do
     before {
       @ppm = FactoryGirl.create(:ppm_current_semester)
-      #@faculty_assignment = FactoryGirl.create(:faculty_assignment)
-      #@assignment = FactoryGirl.create(:assignment, team_deliverable: true, can_submit: false, course: @faculty_assignment.course)
-      #@student1 = FactoryGirl.create(:student)
-      #@student2 = FactoryGirl.create(:student)
-      #@student1.registered_courses = [@assignment.course]
-      #@student2.registered_courses = [@assignment.course]
-      #@student1.save
-      #@student2.save
-      #@assignment.create_placeholder_deliverable(@faculty_assignment.user)
+      @student1 = @ppm.all_students.values.first
+      @student2 = @ppm.all_students.values.last
       @unsubmittable_assignment = @ppm.assignments.find_by_can_submit(false)
     }
 
@@ -109,7 +102,7 @@ describe Assignment do
       students = @ppm.all_students.values
 
       expect {
-        @unsubmittable_assignment.create_placeholder_deliverables
+        @unsubmittable_assignment.find_or_create_deliverable_by_user(@student1)
       }.to change(Deliverable, :count).by(students.size)
 
       deliverables = @unsubmittable_assignment.reload.deliverables
@@ -120,33 +113,16 @@ describe Assignment do
       end
     end
 
-    it "should account for students who register out of the class" do
-      @unsubmittable_assignment.create_placeholder_deliverables
-      @student1.registered_courses = []
-      @student1.save
-      @assignment.reload
-
-      expect {
-        @@unsubmittable_assignment.create_placeholder_deliverables
-      }.to change(Deliverable, :count).by(-1)
-    end
-
     it "should account for students who register into the class" do
-      @unsubmittable_assignment.create_placeholder_deliverables
+      @unsubmittable_assignment.find_or_create_deliverable_by_user(@student1)
       @student3 = FactoryGirl.create(:student)
-      @student3.registered_courses = [@assignment.course]
+      @student3.registered_courses = [@ppm]
       @student3.save
-      @assignment.reload
+      @unsubmittable_assignment.reload
 
       expect {
-        @unsubmittable_assignment.create_placeholder_deliverables
+        @unsubmittable_assignment.find_or_create_deliverable_by_user(@student3)
       }.to change(Deliverable, :count).by(1)
-    end
-  end
-
-  context "testing with rspec" do
-    it "blah" do
-      assignment = FactoryGirl.create(:ppm_assignment_7)
     end
   end
 end

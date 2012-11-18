@@ -236,26 +236,14 @@ class DeliverablesController < ApplicationController
     end
 
     @deliverable = Deliverable.find(params[:id])
-    if !@deliverable.assignment.can_submit
-      @deliverable.assignment.create_placeholder_deliverables
-    end
+    # Create deliverable grades for new team members or deliverables for new students to the course
+    @deliverable.assignment.find_or_create_deliverable_by_user(@deliverable.creator)
   end
 
   def assignment_deliverable_create
     assignment = Assignment.find(params[:assignment_id])
     user = User.find(params[:user_id])
-
-    deliverable = assignment.deliverable_for_user(user)
-    if deliverable.blank?
-      deliverable = assignment.deliverables.build(creator: user, status: "Ungraded")
-      if assignment.team_deliverable
-        deliverable.creator = user
-        team = Team.find_current_by_person_and_course(user, assignment.course)
-        deliverable.team = team
-      end
-      assignment.save
-    end
-
+    deliverable = assignment.find_or_create_deliverable_by_user(user)
     redirect_to deliverable_feedback_path(deliverable)
   end
 
