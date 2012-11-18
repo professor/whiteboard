@@ -92,11 +92,12 @@ jQuery(document).ready(function() {
 
             var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0)?true:false ;
             if ( isSearchTextEntered ){
+                getSearchResults();
                 showRelevantTables(isSearchTextEntered);
             }else{
-                // requery databse with search parameters entered
+                // build photobook default results
                 clearAllTables();
-                getSearchResults();
+                buildSearchResults(default_results_json);
             }
         }
     );
@@ -218,8 +219,10 @@ function getSearchResults(){
     isAdvancedFiltersEnabled = ($("#advanced_search_filters").is(":visible"));
     searchBox = $("#filterBoxOne");
 
-    if( (searchBox.val() != searchBox_old_val) || isAdvancedFiltersEnabled ){
-
+    if(     (searchBox.val() != searchBox_old_val)
+        ||  isAdvancedFiltersEnabled
+        ||  ( (!(isAdvancedFiltersEnabled)) && ($.trim(searchBox.val())) )
+        ){
         searchBox_old_val = searchBox.val();
         $('#people_table tbody').empty();
         $('#photobook_results').empty();
