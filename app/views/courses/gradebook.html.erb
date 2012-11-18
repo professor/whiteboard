@@ -4,7 +4,13 @@
 
 <%= link_to "Back", course_path(@course) %> |
 <%= link_to "Grading Deliverables", professor_deliverables_path(current_user) %> |
-<%= link_to @course.grading_nomenclature, course_assignments_path(@course) %>
+<%= link_to @course.grading_nomenclature, course_assignments_path(@course) %> |
+<%= link_to "Export Spreadsheet", course_export_gradebook_path(@course) %> |
+
+<% form_for(:import_spreadsheet, url: course_import_gradebook_path(@course), html: {multipart: true}) do |f| %>
+  <%= f.file_field :import_spreadsheet %>
+<% end %>
+
 <table class="cmu_table inner_border">
   <thead>
     <tr>
@@ -55,10 +61,10 @@
                   <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
                 <% end %>
               <% else %>
-                <% if deliverable.blank? %>
+                <% if deliverable.blank? || deliverable_grade.blank? || deliverable.status == 'Ungraded' %>
                   <%= link_to "Ungraded", assignment_deliverable_create_path(assignment, member) %>
                 <% else %>
-                  <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
+                  <%= link_to deliverable_grade.grade, deliverable_feedback_path(deliverable) %>
                 <% end %>
               <% end %>
             </td>
@@ -104,6 +110,12 @@
       var finalGrade = $(this).val();
       var userId = $(this).closest('td').prev('td').attr('id').split('_')[1];
       decorateEarnedGrade(userId, finalGrade);
+    });
+
+    $('#import_spreadsheet_import_spreadsheet').change(function() {
+      if (confirm('Are you sure?')) {
+        $(this).closest('form').submit();
+      }
     });
   });
 </script>

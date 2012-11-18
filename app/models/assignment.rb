@@ -12,7 +12,7 @@ class Assignment < ActiveRecord::Base
   before_save :set_individual_to_unsubmittable
   before_validation :check_weight
 
-  default_scope order: "task_number ASC, due_date ASC"
+  default_scope order: "task_number ASC, due_date ASC, created_at ASC"
 
   accepts_nested_attributes_for :deliverables, allow_destroy: true
 
@@ -61,18 +61,18 @@ class Assignment < ActiveRecord::Base
         team = Team.find_current_by_person_and_course(user, self.course)
         deliverable = self.deliverables.find_by_team_id(team.id)
         if deliverable.blank?
-          create_deliverable_for_team(user, team)
+          self.deliverables.build(creator: user, team: team, status: "Ungraded")
         else
           team.members.each do |member|
             if deliverable.deliverable_grades.find_by_user_id(member).blank?
-              deliverable.deliverable_grades.create(user: member, grade: "0")
+              deliverable.deliverable_grades.build(user: member, grade: "0")
             end
           end
         end
       else # individual
         deliverable = self.deliverable_for_user(user)
         if deliverable.blank?
-          create_deliverable_for_user(user)
+          self.deliverables.build(creator: user, status: "Ungraded")
         end
       end
     else # unsubmittable
@@ -80,23 +80,16 @@ class Assignment < ActiveRecord::Base
       all_students.each do |student|
         deliverable = self.deliverable_for_user(student)
         if deliverable.blank?
-          create_deliverable_for_user(student)
+          self.deliverables.build(creator: student, status: "Ungraded")
         end
       end
     end
 
+    self.save
     deliverable_for_user(user)
   end
 
   private
-
-    def create_deliverable_for_user(user)
-      self.deliverables.create(creator: user, status: "Ungraded")
-    end
-
-    def create_deliverable_for_team(user, team)
-      self.deliverables.create(creator: user, team: team, status: "Ungraded")
-    end
 
     def validate_total_weights
       if self.course.grading_criteria == "Percentage"

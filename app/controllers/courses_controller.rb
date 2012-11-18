@@ -97,6 +97,85 @@ class CoursesController < ApplicationController
     end
   end
 
+  def export_gradebook
+    @course = Course.find(params[:id])
+
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    sheet.name = 'Grades'
+    row = sheet.row(0)
+    row2 = sheet.row(1)
+
+    row.push "Team", "Student"
+    row2.push "", ""
+
+    @course.assignments.each do |assignment|
+      row.push assignment.formatted_title
+      row.push ""
+      row2.push "Grade", "Attachment"
+    end
+
+    row_num = 2
+
+    @course.teams.each do |team|
+      team.members.each do |member|
+        row = sheet.row(row_num)
+        row.push team.name, Spreadsheet::Link.new(member.email, member.human_name)
+
+        @course.assignments.each do |assignment|
+          deliverable_grade = assignment.find_deliverable_grade(member)
+          if deliverable_grade.blank?
+            row.push "0", "N/A"
+          else
+            attachment = deliverable_grade.deliverable.current_attachment
+            row.push deliverable_grade.grade, attachment.blank? ? "N/A" : Spreadsheet::Link.new(attachment.attachment.url, attachment.attachment_file_name)
+          end
+        end
+
+        row_num += 1
+      end
+    end
+
+    book.write '/Users/owenchu/Source/cmusv/excel-file.xls'
+    send_file '/Users/owenchu/Source/cmusv/excel-file.xls'
+  end
+
+  def import_gradebook
+    @course = Course.find(params[:id])
+    STDERR.puts "================="
+    STDERR.puts params[:import_spreadsheet].inspect
+    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].class
+    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:read)
+    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:seek)
+    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:path)
+    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].path
+    STDERR.puts "================="
+
+    book = Spreadsheet.open(params[:import_spreadsheet][:import_spreadsheet].path)
+    sheet = book.worksheet(0)
+
+    assignments = @course.assignments
+    sheet.each 2 do |row|
+      student = User.find_by_human_name(row[1])
+      assignment_index = 0
+      row.each_with_index do |cell, index|
+        if (index > 0) && index.even?
+          assignment = assignments[asignment_index]
+          deliverable_grade = assignment.find_deliverable_grade(student)
+          if deliverable_grade.blank?
+            deliverable = assignment.find_or_create_deliverable_by_user(student, save: false)
+            deliverable_grade = deliverable.find_by_user_id(student)
+            #if deliverable_grade.update_attributes(grade: cell)
+          end
+          assignment_index += 1
+        end
+      end
+    end
+    return
+
+    redirect_to course_gradebook_path(@course)
+  end
+
   # GET /courses/new
   # GET /courses/new.xml
   def new

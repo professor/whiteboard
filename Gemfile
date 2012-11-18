@@ -43,6 +43,8 @@ gem 'pg'
 
 gem 'cancan'
 
+gem 'spreadsheet'
+
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
