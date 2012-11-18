@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :grading_rule do
-    grade_type "letter"
     A_grade_min 94
     A_minus_grade_min 90
     B_plus_grade_min  87
@@ -17,4 +16,9 @@ FactoryGirl.define do
   factory :grading_rule_points, :parent=>:grading_rule do
     grade_type "points"
   end
+
+  factory :grading_rule_weights, :parent=>:grading_rule do
+    grade_type "weights"
+  end
+
 end

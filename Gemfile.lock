@@ -263,6 +263,7 @@ GEM
       archive-tar-minitar (>= 0.5.2)
     rubyntlm (0.1.1)
     rubyzip (0.9.4)
+    seedbank (0.2.0)
     selenium-webdriver (2.8.0)
       childprocess (>= 0.2.1)
       ffi (>= 1.0.7)
@@ -332,6 +333,7 @@ DEPENDENCIES
   ruby-debug-base19x
   ruby-debug-ide
   ruby-debug19
+  seedbank
   shoulda
   taps
   thin

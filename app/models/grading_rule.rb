@@ -82,7 +82,7 @@ class GradingRule < ActiveRecord::Base
         return GradingRule.validate_points(raw_score)
       when "letter"
         return GradingRule.validate_letter_grade(raw_score)
-      when "percentage"
+      when "weights"
         return GradingRule.validate_percentage(raw_score)
       else
         return true
