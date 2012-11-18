@@ -30,8 +30,6 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
-
-
   def self.validate_letter_grade(raw_score)
     case raw_score
       when "A"
@@ -79,9 +77,6 @@ class GradingRule < ActiveRecord::Base
       return false
     end
 
-    #RegexForLetter=[]
-    #if raw_score.match(re) then validate
-
     mapping_rule = grading_rule.get_mapping_rule()
     if mapping_rule.has_key?(raw_score.to_s.upcase)
       return true
@@ -107,21 +102,7 @@ class GradingRule < ActiveRecord::Base
     else
       return raw_score
    end
-    #unless grading_rule.nil?
-    #  case grading_rule.grade_type
-    #    when "weights"
-    #     if raw_score.end_with?("%")
-    #      return raw_score.split("%")[0]
-    #    else
-    #      return raw_score
-    #  end
-    #else
-    #  return raw_score
-    #end
   end
-
-
-
 
   # To convert points to letter grades
   def convert_points_to_letter_grade (points)

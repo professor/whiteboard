@@ -72,8 +72,7 @@ class Grade < ActiveRecord::Base
       end
 
       if GradingRule.validate_score(course_id, score)
-        score=score.to_s.upcase
-        grade.score=score
+        grade.score=score.upcase
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
         end
