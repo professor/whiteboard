@@ -10,7 +10,7 @@ module DeliverablesHelper
        return val
      when "points"
        return @deliverable.assignment.maximum_score
-     when "percentage"
+     when "weights"
        val= "100%"
        return val
      end

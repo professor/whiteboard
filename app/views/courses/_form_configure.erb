@@ -109,7 +109,7 @@
     <%= f.fields_for :grading_rule do |rule| %>
       <p>
       <%= rule.label :grade_type, "How does your syllabus determine grades?" %><br/>
-      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weight'], ['Letter (e.g. \'A\')', 'letter']])  %> <br/>
+      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weights']])  %> <br/>
 
       </p>
       <p>

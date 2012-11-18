@@ -3,7 +3,7 @@
 # Professor can create/view/modify assignments by going to manage assignment tab in course tools, on the index page of
 # each course. He/She can also limit submission from student, can change the type of assignment and submission date if
 # required. The assignments will automatically get sorted out based on the course and the task. Student will not be able
-# to modify the assignment, only faculty can do this. The assignment could be graded by points/percentage/letter, and it 
+# to modify the assignment, only faculty can do this. The assignment could be graded by points/weights/letter, and it
 # can be modified in the Course Configuration page.  
 #
 # Generally, a course has many assignments, and each assignments contains many student grades and many submitted deliverables.

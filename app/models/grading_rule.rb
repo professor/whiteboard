@@ -30,6 +30,8 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
+
+
   def self.validate_letter_grade(raw_score)
     case raw_score
       when "A"
@@ -60,7 +62,7 @@ class GradingRule < ActiveRecord::Base
     true if Float(raw_score) rescue false
   end
 
-  def self.validate_percentage(raw_score)
+  def self.validate_weights(raw_score)
     if raw_score.end_with?("%")
       raw_score = raw_score.split('%')[0]
     end
@@ -77,13 +79,19 @@ class GradingRule < ActiveRecord::Base
       return false
     end
 
+    #RegexForLetter=[]
+    #if raw_score.match(re) then validate
+
+    mapping_rule = grading_rule.get_mapping_rule()
+    if mapping_rule.has_key?(raw_score.to_s.upcase)
+      return true
+    end
+
     case grading_rule.grade_type
       when "points"
         return GradingRule.validate_points(raw_score)
-      when "letter"
-        return GradingRule.validate_letter_grade(raw_score)
       when "weights"
-        return GradingRule.validate_percentage(raw_score)
+        return GradingRule.validate_weights(raw_score)
       else
         return true
     end
@@ -94,14 +102,14 @@ class GradingRule < ActiveRecord::Base
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
       return raw_score
-    elsif grading_rule.grade_type=="percentage" && raw_score.end_with?("%")
+    elsif grading_rule.grade_type=="weights" && raw_score.end_with?("%")
       return raw_score.split("%")[0]
     else
       return raw_score
    end
     #unless grading_rule.nil?
     #  case grading_rule.grade_type
-    #    when "percentage"
+    #    when "weights"
     #     if raw_score.end_with?("%")
     #      return raw_score.split("%")[0]
     #    else
@@ -111,6 +119,9 @@ class GradingRule < ActiveRecord::Base
     #  return raw_score
     #end
   end
+
+
+
 
   # To convert points to letter grades
   def convert_points_to_letter_grade (points)
@@ -135,28 +146,16 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  def get_mapping_rule
+    {"A"=>100, "A-"=>self.A_grade_min-0.1,
+     "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
+     "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
+  end
+
   # To convert letter grades to points
   def convert_letter_grade_to_points (letter_grade)
-    case letter_grade
-      when "A"
-        return 100.0
-      when "A-"
-        return (self.A_grade_min-0.1)
-      when "B+"
-        return (self.A_minus_grade_min-0.1)
-      when "B"
-        return (self.B_plus_grade_min-0.1)
-      when "B-"
-        return (self.B_grade_min-0.1)
-      when "C+"
-        return (self.B_minus_grade_min-0.1)
-      when "C"
-        return (self.C_plus_grade_min-0.1)
-      when "C-"
-        return (self.C_grade_min-0.1)
-      else
-        return -1.0
-    end
+    mapping_rule = get_mapping_rule()
+    return mapping_rule.has_key?(letter_grade)?mapping_rule[letter_grade]:-1.0;
   end
 
   # To get grade in the format that is configured by professor
