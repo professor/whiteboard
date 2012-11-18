@@ -102,7 +102,7 @@ class PeopleController < ApplicationController
      # @people = return_search_results(params[:filterBoxOne])
 
 
-    @ppl = @people.collect do |person|
+    @people_hash = @people.collect do |person|
       # program the user is enrolled in
       program = ''
       if person.is_student
@@ -128,7 +128,7 @@ class PeopleController < ApplicationController
       ]
     end
     respond_to do |format|
-      format.json { render :json =>  @ppl, :layout => false }
+      format.json { render :json =>  @people_hash, :layout => false }
     end
   end
 
