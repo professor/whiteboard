@@ -132,6 +132,15 @@ FactoryGirl.define do
     association :course, :factory => :course
   end
 
+  factory :team_two, class: Team do
+    name "Team2"
+    email "team2@sv.cmu.edu"
+    tigris_space "http://team.tigris.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+    members { |members| [members.association(:student_sally)] }
+    association :course, :factory => :course
+  end
+
   factory :user, class: User do
     is_staff 0
     is_student 0
@@ -144,6 +153,7 @@ FactoryGirl.define do
 
 
   factory :presentation do
+    sequence(:id)
     name "Test Presentation"
     description "Desc"
     task_number "1"
@@ -152,8 +162,49 @@ FactoryGirl.define do
     association :team, :factory => :team
   end
 
+  factory :presentation_two, class: Presentation do
+    sequence(:id)
+    name "Test Presentation2"
+    description "Desc"
+    task_number "1"
+    presentation_date Date.new(2012, 1, 1)
+    association :course, :factory => :course
+    association :team, :factory => :team_two
+  end
+
   factory :presentation_feedback_questions, class: PresentationQuestion do
     deleted false
   end
+
+  factory :feedback_from_sam, class: PresentationFeedback do
+    association :evaluator, :factory => :student_sam
+    association :presentation, :factory => :presentation
+  end
+
+  factory :feedback_from_sam_with_id, class: PresentationFeedback do
+
+    association :evaluator, evaluator
+    association :presentation, presentation
+  end
+
+
+  factory :presentation_feedback_answer, class: PresentationFeedbackAnswer do
+    rating 2
+    association :question, :factory => :presentation_feedback_questions
+    association :feedback, :factory => :feedback_from_sam
+  end
+
+  factory :presentation_feedback_answer_with_question_text, class: PresentationFeedbackAnswer do
+    rating 3
+    association :question, :factory => :presentation_feedback_questions, :text => "q1"
+    association :feedback, :factory => :feedback_from_sam
+  end  
+
+  factory :presentation_feedback_answer_with_question_text_and_comment, class: PresentationFeedbackAnswer do
+    rating 3
+    comment "Comment 1"
+    association :question, :factory => :presentation_feedback_questions, :text => "q1"
+    association :feedback, :factory => :feedback_from_sam
+  end 
 
 end
