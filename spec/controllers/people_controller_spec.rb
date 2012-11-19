@@ -88,6 +88,14 @@ describe PeopleController do
                 assigns(:people).should_not include @student_sam
             end
 
+            it "should find student whose biography contains the word google" do
+              @student_sally.biography='has worked at google company'
+              @student_sally.save
+              get :search, :filterBoxOne=>'google'
+              assigns(:people).should include @student_sally
+              assigns(:people).should_not include @student_sam
+            end
+
         end
 
 
