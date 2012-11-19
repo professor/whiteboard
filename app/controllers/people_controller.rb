@@ -90,7 +90,7 @@ class PeopleController < ApplicationController
     end
 
 
-    #search more db fields
+    # search more db fields
     if !params[:filterBoxOne].blank?
       params[:filterBoxOne].split.each do |query|
         query = '%'+query+'%'
