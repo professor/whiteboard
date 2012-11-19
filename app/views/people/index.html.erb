@@ -22,13 +22,13 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
 <% if !@results.blank? %>
+<hr>
     <table id="key_contacts_table" class="tablesorter">
       <thead>
-      <tr>
+      <tr hidden="true">
         <th>&nbsp;</th>
         <th>&nbsp;</th>
-
-        <th>Contact Details</th>
+        <th>&nbsp;</th>
       </tr>
       </thead>
       <tbody>
@@ -58,6 +58,13 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
             </tr>
           <% end %>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+             <input type="button" id="show_box" value="Export List" onclick="show_box();"/>
+          </td>
+      </tr>        
+      </tfoot>
     </table>
 <% end %>
 <table id="people_table" class="tablesorter" hidden="true" >
@@ -75,7 +82,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
     <tfoot>
         <tr>
           <td colspan="5">
-              <!-- <input type="button" id="show_box" value="Export List" onclick="show_box();" style="float: right" /> -->
+             <input type="button" id="show_box" value="Export List" onclick="show_box();"/>
           </td>
       </tr>
   </tfoot>
@@ -83,7 +90,8 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 
 <div id="photobook_results" hidden="true" class="clearboth" >
 </div>
-<input type="button" id="show_box" value="Export List" onclick="show_box();"/>
+<div id="ajax_loading_notice" hidden="true" class="clearboth"></div>
+<div id="empty_results" hidden="true" class="clearboth">No Results Found<br /></div>
 
 <br/>
 
