@@ -47,6 +47,7 @@ gem 'cancan'
 # gem 'actionmailer_gmail' # Used for sending mail to gmail
 
 gem 'seedbank'
+gem 'spreadsheet'
 
 group :production do
   gem 'thin'

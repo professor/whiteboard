@@ -114,6 +114,7 @@ class Grade < ActiveRecord::Base
 
     GenericMailer.email(options).deliver
   end
+
   def self.mail_drafted_grade course_id
     Grade.find_all_by_is_student_visible_and_course_id(false, course_id).each do |grade|
       grade.is_student_visible = true
@@ -121,6 +122,8 @@ class Grade < ActiveRecord::Base
       grade.send_feedback_to_student
     end
   end
+
+
 
 end
 

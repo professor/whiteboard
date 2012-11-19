@@ -256,6 +256,7 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-ole (1.2.11.5)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
@@ -273,6 +274,8 @@ GEM
     shoulda (2.11.3)
     sinatra (1.0)
       rack (>= 1.0)
+    spreadsheet (0.7.4)
+      ruby-ole (>= 1.0)
     systemu (2.2.0)
     taps (0.3.24)
       rack (>= 1.0.1)
@@ -335,6 +338,7 @@ DEPENDENCIES
   ruby-debug19
   seedbank
   shoulda
+  spreadsheet
   taps
   thin
   vestal_versions!
