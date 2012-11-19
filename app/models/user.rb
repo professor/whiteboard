@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
     @registered_courses = hub_registered_courses | courses_assigned_on_teams
   end
 
+  def registered_for_these_courses_during_past_semesters
+    self.registered_courses - self.registered_for_these_courses_during_current_semester
+  end
+
 
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
     data = access_token['user_info']

@@ -58,8 +58,10 @@ describe DeliverablesController do
       before(:each) do
         @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
+        @assignment = stub_model(Assignment, :course_id => @course.id)
         Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
         Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
+        Assignment.stub(:list_assignments_for_student).and_return([@assignment, @assignment])
         Course.stub(:find).and_return(@course)
       end
 
@@ -70,8 +72,10 @@ describe DeliverablesController do
 
         it 'assigns deliverables' do
           get :my_deliverables, :id => @student_sam.id
-          assigns(:current_deliverables).should == [@deliverable, @deliverable]
-          assigns(:past_deliverables).should == [@deliverable, @deliverable]
+          #assigns(:current_deliverables).should == [@deliverable, @deliverable]
+          #assigns(:past_deliverables).should == [@deliverable, @deliverable]
+          assigns(:current_assignments).should == [@assignment, @assignment]
+          assigns(:past_assignments).should == [@assignment, @assignment]
         end
       end
 

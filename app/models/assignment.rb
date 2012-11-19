@@ -54,10 +54,18 @@ class Assignment < ActiveRecord::Base
   end
 
 
-  def self.list_assignments_for_student student_id
+  def self.list_assignments_for_student student_id , type= :all
     student = User.find(student_id)
+    courses = case type
+                when :all
+                  student.registered_courses
+                when :current
+                  student.registered_for_these_courses_during_current_semester
+                when :past
+                  student.registered_for_these_courses_during_past_semesters
+    end
     assignments = []
-    student.registered_courses.each do |course|
+    courses.each do |course|
 
       assignments.concat(course.assignments)
 

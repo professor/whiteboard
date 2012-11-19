@@ -2,8 +2,15 @@ require "spec_helper"
 
 describe "deliverables" do
   before do
+
+    @assignment = FactoryGirl.create(:assignment_team)
     @team_deliverable = FactoryGirl.create(:team_deliverable)
     @user=@team_deliverable.team.members[0]
+    @grade =  FactoryGirl.create(:grade_visible, :course_id => @assignment.course.id)
+    Assignment.stub(:list_assignments_for_student).with(@user.id).and_return([@assignment])
+    @assignment.stub(:deliverables).and_return([@team_deliverable])
+    @assignment.stub(:get_student_grade).with(@user.id).and_return(@grade)
+    @assignment.stub(:get_student_deliverable).with(@user.id).and_return(@team_deliverable)
     @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"hi",:deliverable_id=>@team_deliverable.id,:submitter_id=>@user.id)
 
   end
@@ -37,7 +44,7 @@ describe "deliverables" do
       end
     end
 
-    context "I shouldL" do
+    context "I should" do
       it " not be able to view professor's notes" do
         page.should have_content("View History and Feedback")
         click_link "View History and Feedback"

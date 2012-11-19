@@ -28,24 +28,39 @@ describe Assignment do
   context "assignment list" do
     before do
       @courses = []
+      @current_assignments = []
+      @past_assignments = []
       @assignments = []
       @students = []
       2.times.each do |student|
         @students << FactoryGirl.create(:student_john_user)
       end
 
-      2.times.each do |course|
-        course = FactoryGirl.create(:course, :registered_students=>@students)
+      4.times.each do |course|
+        if course < 2
+          course = FactoryGirl.create(:course, :registered_students=>@students, :year => Date.today.year)
+          @current_assignments << FactoryGirl.create(:assignment, :course_id=>course.id)
+          @current_assignments << FactoryGirl.create(:assignment_team, :course_id=>course.id)
+          @current_assignments << FactoryGirl.create(:assignment_unsubmissible, :course_id=>course.id)
+        else
+          course = FactoryGirl.create(:course, :registered_students=>@students, :year => Date.today.year-1)
+          @past_assignments << FactoryGirl.create(:assignment, :course_id=>course.id)
+          @past_assignments << FactoryGirl.create(:assignment_team, :course_id=>course.id)
+          @past_assignments << FactoryGirl.create(:assignment_unsubmissible, :course_id=>course.id)
+        end
         @courses << course
-
-        @assignments << FactoryGirl.create(:assignment, :course_id=>course.id)
-        @assignments << FactoryGirl.create(:assignment_team, :course_id=>course.id)
-        @assignments << FactoryGirl.create(:assignment_unsubmissible, :course_id=>course.id)
       end
+      @assignments = @current_assignments + @past_assignments
     end
 
-    it "List Student's all assignment" do
+    it "List Student's all assignments" do
       Assignment.list_assignments_for_student(@students[0].id).should eq(@assignments)
+    end
+    it "List Student's current assignments" do
+      Assignment.list_assignments_for_student(@students[0].id, :current).should eq(@current_assignments)
+    end
+    it "List Student's past assignments" do
+      Assignment.list_assignments_for_student(@students[0].id, :past).should eq(@past_assignments)
     end
 
     it "can get student's deliverable for individual assignment " do
