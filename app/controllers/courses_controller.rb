@@ -106,13 +106,14 @@ class CoursesController < ApplicationController
     row = sheet.row(0)
     row2 = sheet.row(1)
 
-    row.push "Team", "Student"
-    row2.push "", ""
+    row.push "ID", "Team", "Student"
+    row2.push "", "", ""
+
+    sheet.column(0).hidden = true # do not show the ID column to the user
 
     @course.assignments.each do |assignment|
-      row.push assignment.formatted_title
-      row.push ""
-      row2.push "Grade", "Attachment"
+      row.push assignment.formatted_title, ""
+      row2.push "Attachment" ,"Grade"
     end
 
     row_num = 2
@@ -120,7 +121,7 @@ class CoursesController < ApplicationController
     @course.teams.each do |team|
       team.members.each do |member|
         row = sheet.row(row_num)
-        row.push team.name, Spreadsheet::Link.new(member.email, member.human_name)
+        row.push member.id, team.name, member.human_name
 
         @course.assignments.each do |assignment|
           deliverable_grade = assignment.find_deliverable_grade(member)
@@ -136,43 +137,50 @@ class CoursesController < ApplicationController
       end
     end
 
-    book.write '/Users/owenchu/Source/cmusv/excel-file.xls'
-    send_file '/Users/owenchu/Source/cmusv/excel-file.xls'
+    book.write '/Users/madhok/RubymineProjects/cmusv/excel-file.xls'
+    send_file '/Users/madhok/RubymineProjects/cmusv/excel-file.xls'
   end
 
   def import_gradebook
     @course = Course.find(params[:id])
-    STDERR.puts "================="
-    STDERR.puts params[:import_spreadsheet].inspect
-    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].class
-    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:read)
-    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:seek)
-    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].respond_to?(:path)
-    STDERR.puts params[:import_spreadsheet][:import_spreadsheet].path
-    STDERR.puts "================="
 
     book = Spreadsheet.open(params[:import_spreadsheet][:import_spreadsheet].path)
     sheet = book.worksheet(0)
-
     assignments = @course.assignments
+
+    # check for validity of deliverable grades
     sheet.each 2 do |row|
-      student = User.find_by_human_name(row[1])
       assignment_index = 0
       row.each_with_index do |cell, index|
-        if (index > 0) && index.even?
-          assignment = assignments[asignment_index]
-          deliverable_grade = assignment.find_deliverable_grade(student)
-          if deliverable_grade.blank?
-            deliverable = assignment.find_or_create_deliverable_by_user(student, save: false)
-            deliverable_grade = deliverable.find_by_user_id(student)
-            #if deliverable_grade.update_attributes(grade: cell)
+        if (index > 2) && index.odd?  # only the grade cell are considered
+          deliverable_grade = DeliverableGrade.new(deliverable_id: Deliverable.first.id, user_id: current_user.id, grade: cell)
+          if !deliverable_grade.valid?
+            flash[:error] = "There was a problem parsing your excel file."
+            return redirect_to course_gradebook_path(@course)
           end
+        end
+      end
+    end
+
+    sheet.each 2 do |row|
+      student = User.find(row[0])
+      assignment_index = 0
+      row.each_with_index do |cell, index|
+        if (index > 2) && index.odd?  # only the grade cell are considered
+          assignment = assignments[assignment_index]
+          deliverable = assignment.find_or_create_deliverable_by_user(student)
+          deliverable_grade = deliverable.deliverable_grades.find_by_user_id(student.id)
+          if deliverable_grade.blank?
+            deliverable_grade = deliverable.deliverable_grades.create(grade: cell, user: student)
+          else
+            deliverable_grade.update_attributes(grade: cell)
+          end
+          deliverable.update_attributes(status: "Graded")
           assignment_index += 1
         end
       end
     end
-    return
-
+    flash[:notice] = "Successfully imported excel file to gradebook"
     redirect_to course_gradebook_path(@course)
   end
 
