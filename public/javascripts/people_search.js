@@ -45,6 +45,8 @@ RECOGNITION_HASH["IGNORED_COMPANY_WORDS"] = {
 var SEARCH_REQUEST = $.ajax();
 var SEARCH_TIMEOUT;
 
+// 
+var DATACARD_MODE = "photo_card";
 
 
 
@@ -222,6 +224,16 @@ function fill_advanced_area(parameters_hash){
     $('#criteria_company_text').val(parameters_hash["organization_name"]);
   }
 
+
+  if(parameters_hash.hasOwnProperty("exact_match")){
+    $('#exact_match_checkbox').prop('checked', true)
+  }
+  if(parameters_hash.hasOwnProperty("include_inactive")){
+    $('#include_inactive_checkbox').prop('checked', true)
+  }
+
+
+
   // Then people type
   var is_staff = false;
   if(parameters_hash.hasOwnProperty("people_type")){
@@ -297,7 +309,8 @@ function execute_search(request_params){
             $.each(data, function(){
                 // DEBUG console.log(this.first_name +" "+this.last_name );
                 var card_html =
-                '<div class="data_card">'+
+                '<div class="data_card '+DATACARD_MODE+'">'+
+                //if(DATACARD_MODE == "photo_card"){ card_html += '">';}
                 '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a><br>'+
                 '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>'+
                 '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
@@ -379,14 +392,14 @@ $(document).ready(function(){
     });
 
 
-    var advanced_only_hash = { "smart_search_text": true, "first_name": true, "last_name": true, "andrew_id": true };
+    var advanced_only_hash = { "smart_search_text": true, "first_name": true, "last_name": true, "andrew_id": true, "include_inactive": true, "exact_match": true };
     // Advanced Search Area Initialization
     $('#advanced_search_btn').click(function(){
-      $('#smart_search_text').attr('disabled', 'disabled').css('opacity', 0.3);
+      $('#smart_search_text').prop('disabled', true).css('opacity', 0.3);
       $('#advanced_search_area').slideDown();
 
       if($(this).hasClass("btn_pressed")){
-        $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
+        $('#smart_search_text').prop('disabled', false).css('opacity', 1);
         $('#advanced_search_area').slideUp();
 
         var query_string = window.location.hash.replace("#","");
@@ -396,7 +409,6 @@ $(document).ready(function(){
               var hash_params = query_string.split('&');
               for (var i = 1; i < hash_params.length; i++){
                   hash_params[i] = hash_params[i].split('=');
-
                   if (!advanced_only_hash.hasOwnProperty(hash_params[i][0])){
                     tmp_smart_string += hash_params[i][1] + ' ';
                   }
@@ -421,7 +433,12 @@ $(document).ready(function(){
 
     // Toggle Display Mode
     $("#list_mode_btn, #card_mode_btn").click(function(){
-      $("#list_mode_btn, #card_mode_btn").toggleClass("btn_pressed");
+      if(!$(this).hasClass('btn_pressed')){
+        $("#list_mode_btn, #card_mode_btn").toggleClass("btn_pressed");
+        if(DATACARD_MODE == "photo_card") { DATACARD_MODE = "list_view"; }
+        else if(DATACARD_MODE == "list_view") { DATACARD_MODE = "photo_card"; }
+        $('.data_card').toggleClass('list_view').toggleClass('photo_card');
+      }
     });
 
 

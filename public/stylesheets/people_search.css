@@ -58,13 +58,25 @@ select .select-hint { color: #ccc;}
 #results_box { display: block; min-height: 16px; margin: 0 auto;}
 
 
-.data_card {
+.data_card.photo_card {
     float: left; margin: 4px; padding-left: 6px; padding-top: 6px;
     background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
     width: 150px; height: 300px; font-size: 11px; font-weight: 700;
     overflow: hidden;
 }
-.data_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
+.data_card.photo_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
+.data_card.photo_card img:after{ content: "<br>"; }
+
+.data_card.list_view {
+    float: left; margin: 4px; padding-left: 6px; padding-top: 6px;
+    background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
+    width: 150px; height: 300px; font-size: 11px; font-weight: 700;
+    overflow: hidden;
+}
+.data_card.list_view img{ width: 64px; height: 64px; margin: 0 0 5px; }
+
+
+
 .data_card_human_name { font-size: 16px; }
 .resize{ width: 150px; height: 150px;}
 
