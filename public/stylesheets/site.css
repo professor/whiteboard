@@ -155,8 +155,8 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
     font-weight: bold;
     text-decoration: none;
 }
-#key_contacts_table th:nth-child(2){
-    width: 300px;
+#key_contacts_table td:nth-child(3){
+    width: 200px;
 }
 
 #people_table th:first-child, #people_table td {
@@ -729,7 +729,7 @@ div.modified {
 #photobook_results a.photobook_item:hover{
     opacity:0.7;
     filter:alpha(opacity=70); /* For IE8 and earlier */
-    -webkit-transform: rotate(-3deg);
-    -moz-transform: rotate(-3deg);
-    -o-transform: rotate(-3deg);
+}
+#ajax_loading_notice{
+    text-align: center;
 }

@@ -3,6 +3,7 @@
 
 var photobook_toggled = false;
 var last_search_results = '';
+var last_search_query = '';
 var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
 var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
 var ajax_req_issued = false;            // object that
@@ -42,6 +43,13 @@ jQuery(document).ready(function() {
     // fetch default search results (key contacts)
     getDefaultSearchResultsJson();
 
+    // Populate the Ajax loading div
+    loading_image = document.createElement('img');
+    loading_image.src="images/ajax-loader.gif";
+    loading_text = document.createTextNode(" Loading Results... ");
+    elem = document.getElementById('ajax_loading_notice');
+    elem.appendChild(loading_image);
+    elem.appendChild(loading_text);
 
     /**************************************************************
         SEARCHING FOR PEOPLE (Search trigger functions)
@@ -51,15 +59,19 @@ jQuery(document).ready(function() {
     // Entering Search parameters (keyup)
     // on entering some key in the search box "filterBoxOne"
     $("#filterBoxOne").keyup(function() {
-        var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0)?true:false ;
-        if(isSearchTextEntered){
+        var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0) ? true : false;
+        var didSearchChange = ($("#filterBoxOne").val() == last_search_query) ? false : true;
+        if(isSearchTextEntered && didSearchChange){
+            clearAllTables();
+            $('#people_table').hide();
+            $('#ajax_loading_notice').show();
         // Prevent multiple calls to the database
             if(sendQueryToServer_timer != null){
                 clearTimeout(sendQueryToServer_timer); // there's a previous timer running, clear it and set a new one for the new keystrokes of the user
             }
-
+            last_search_query = $("#filterBoxOne").val();
             sendQueryToServer_timer = setTimeout(getSearchResults, 500); // set timer for the keystrokes entered by user
-        }else{
+        }else if(didSearchChange){
             // clear tables only when there is text entered, otherwise hitting function keys will also clear the results
             clearAllTables();
             // TODO: test functionality
@@ -72,7 +84,7 @@ jQuery(document).ready(function() {
                 getSearchResults();
             }
         }
-        showRelevantTables(isSearchTextEntered);
+        //showRelevantTables(isSearchTextEntered);
     });
 
     // Advanced filters (toggle)
@@ -83,6 +95,7 @@ jQuery(document).ready(function() {
             $(this).addClass("toggled");
 
             clearAllTables();
+            $('#people_table').hide();
             getSearchResults();
         },
         function(){
@@ -92,11 +105,12 @@ jQuery(document).ready(function() {
 
             var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0)?true:false ;
             if ( isSearchTextEntered ){
-                showRelevantTables(isSearchTextEntered);
-            }else{
-                // requery databse with search parameters entered
-                clearAllTables();
                 getSearchResults();
+                //???showRelevantTables(isSearchTextEntered);
+            }else{
+                // build photobook default results
+                clearAllTables();
+                buildSearchResults(default_results_json);
             }
         }
     );
@@ -127,6 +141,9 @@ jQuery(document).ready(function() {
         }
     });
 
+    $("#filterBoxOne_export_contacts").click(function (){
+        show_box();
+    });
 
 
     /* making the whole row of key_contacts clickable
@@ -159,7 +176,7 @@ function export_csv(){
             contentType: "txt/csv; charset=utf-8",
             success : function(json) {
                 //buildSearchResults(json);
-                console.log("sent succeeded!");
+                console.log("Sent Successfully!");
             }
         });
     }
@@ -218,8 +235,10 @@ function getSearchResults(){
     isAdvancedFiltersEnabled = ($("#advanced_search_filters").is(":visible"));
     searchBox = $("#filterBoxOne");
 
-    if( (searchBox.val() != searchBox_old_val) || isAdvancedFiltersEnabled ){
-
+    if(     (searchBox.val() != searchBox_old_val)
+        ||  isAdvancedFiltersEnabled
+        ||  ( (!(isAdvancedFiltersEnabled)) && ($.trim(searchBox.val())) )
+        ){
         searchBox_old_val = searchBox.val();
         $('#people_table tbody').empty();
         $('#photobook_results').empty();
@@ -239,15 +258,17 @@ function getSearchResults(){
               contentType: "application/json; charset=utf-8",
               beforeSend: function() {
                 ajax_req_issued = true;
-                $("#filterBoxOne_loader").show();
+                //$("#filterBoxOne_loader").show();
               },
               complete: function() {
                 ajax_req_issued = false;
+                showRelevantTables($.trim($("#filterBoxOne").val()).length > 0);  
               },
               success : function(json) {
                 last_search_results = json;
+                clearAllTables();
                 buildSearchResults(json);
-                $("#filterBoxOne_loader").hide();
+                //$("#filterBoxOne_loader").hide();
               }
            });
         }else{
@@ -264,18 +285,23 @@ function getSearchResults(){
 
 // build the search results (called from one of the search trigger functions )
 function buildSearchResults(json) {
-    if(!photobook_toggled){
-        for (var i in json){
-            // build row number i
-            buildResultRowListFormat(json[i]);
+    if(json != ''){
+        if(!photobook_toggled){
+            for (var i in json){
+                // build row number i
+                buildResultRowListFormat(json[i]);
+            }
+        } else{
+            for (var i in json){
+                // build row number i
+                buildResultRowPhotoBookFormat(json[i]);
+            }
         }
+        showRelevantTables(($.trim($("#filterBoxOne").val()).length > 0));
     } else{
-        for (var i in json){
-            // build row number i
-            buildResultRowPhotoBookFormat(json[i]);
-        }
+        clearAllTables();
+        $("#empty_results").show();
     }
-    showRelevantTables(($.trim($("#filterBoxOne").val()).length > 0));
 }
 
 // build a single list result row (TODO: change this name to build list result row)
@@ -338,6 +364,12 @@ function clearAllTables () {
     // clear existing tables
     $('#people_table tbody').empty();
     $('#photobook_results').empty();
+
+    // hide existing tables to possibly be re-displayed later
+    $('#people_table').hide();
+    $('#photobook_results').hide
+    $("#empty_results").hide();
+
     // key_contacts_table will remain constant for a user, so no need of destroying it, just hiding/showing will do.
     $("#key_contacts_table").hide();
 }
@@ -348,27 +380,47 @@ function clearAllTables () {
     // $('#photobook_results')
 */
 function showRelevantTables(isSearchTextEntered) {
+    if(last_search_results != ''){
     // if photobook toggled, show the table, hide everything else
-    if (photobook_toggled) {
-        $('#photobook_results').show();
-        $('#people_table').hide();
-        $("#key_contacts_table").hide();
-    } else{
-        $('#photobook_results').hide();
-        // while photobook uses the same table to show results, list view uses different tables
-        if ( isSearchTextEntered ){
-            $('#people_table').show();
+        if (photobook_toggled && !ajax_req_issued) {
+            $('#ajax_loading_notice').hide();
+            $('#people_table').hide();
             $("#key_contacts_table").hide();
+            $('#photobook_results').show();
         } else{
-            // if advanced filters is visible
-            if ($("#advanced_search_filters").is(":visible")) {
+            $('#photobook_results').hide();
+            $('#people_table').trigger("update"); 
+            // while photobook uses the same table to show results, list view uses different tables
+            if ( isSearchTextEntered && !ajax_req_issued){
+                $('#ajax_loading_notice').hide();
                 $('#people_table').show();
-            }else{
-                $("#key_contacts_table").show();
-                $('#people_table').hide();
-            }
+                $("#key_contacts_table").hide();
+            } else if (!ajax_req_issued){
+                $('#ajax_loading_notice').hide();
+                // if advanced filters is visible
+                if ($("#advanced_search_filters").is(":visible")) {
+                    $('#people_table').show();
+                    $('#people_table').trigger("update"); 
+                }else{
+                    $("#key_contacts_table").show();
+                    $('#people_table').hide();
+                }
+            };
         };
-    };
+    } else{
+        $("#ajax_loading_notice").hide();
+        if(isSearchTextEntered){
+            // if no results returned, show a friendly warning message.
+            clearAllTables();
+            $("#empty_results").show();
+        } else{
+            // this handles a rare bug.  Return proper state when no search text entered.
+            if(photobook_toggled)
+                $('#photobook_results').show();
+            else
+                $("#key_contacts_table").show();
+        }
+    }
 }
 
 // helper function to build json data object for ajax calls
