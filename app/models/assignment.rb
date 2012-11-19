@@ -37,12 +37,32 @@ class Assignment < ActiveRecord::Base
 
   #This returns whether the deliverable is submitted or not.
   def is_deliverable_submitted
-    if self.deliverables.size>0
-      false
-    else
-      true
-    end
+    self.deliverables.size<=0
+  end
 
+  def get_student_deliverable student_id
+    if self.is_team_deliverable?
+      team = User.find(student_id).teams.find_by_course_id(self.course_id)
+      self.deliverables.find_by_team_id(team.id)
+    else
+      self.deliverables.find_by_creator_id(student_id)
+    end
+  end
+
+  def get_student_grade student_id
+    Grade.get_grade(self.id, student_id)
+  end
+
+
+  def self.list_assignments_for_student student_id
+    student = User.find(student_id)
+    assignments = []
+    student.registered_courses.each do |course|
+
+      assignments.concat(course.assignments)
+
+    end
+    assignments
   end
 
 end

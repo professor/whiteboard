@@ -25,6 +25,48 @@ describe Assignment do
       subject.should_not be_valid
     end
   end
+  context "assignment list" do
+    before do
+      @courses = []
+      @assignments = []
+      @students = []
+      2.times.each do |student|
+        @students << FactoryGirl.create(:student_john_user)
+      end
+
+      2.times.each do |course|
+        course = FactoryGirl.create(:course, :registered_students=>@students)
+        @courses << course
+
+        @assignments << FactoryGirl.create(:assignment, :course_id=>course.id)
+        @assignments << FactoryGirl.create(:assignment_team, :course_id=>course.id)
+        @assignments << FactoryGirl.create(:assignment_unsubmissible, :course_id=>course.id)
+      end
+    end
+
+    it "List Student's all assignment" do
+      Assignment.list_assignments_for_student(@students[0].id).should eq(@assignments)
+    end
+
+    it "can get student's deliverable for individual assignment " do
+      deliverable = FactoryGirl.create(:individual_deliverable, :assignment_id => @assignments[0].id, :creator_id => @students[0].id)
+      @assignments[0].get_student_deliverable(@students[0].id).should  eq(deliverable)
+    end
+
+    it "can get student's deliverable for team assignment " do
+      team = FactoryGirl.create(:team, :course_id=>@courses[0].id)
+      team.members = @students
+      deliverable = FactoryGirl.create(:team_deliverable, :assignment_id => @assignments[1].id, :team_id=>team.id, :creator_id => @students[0].id)
+      @assignments[1].get_student_deliverable(@students[0].id).should eq(deliverable)
+      @assignments[1].get_student_deliverable(@students[1].id).should eq(deliverable)
+    end
+
+    it "can get student's grade for an assignment " do
+      grade = FactoryGirl.create(:grade, :assignment_id => @assignments[0].id, :student_id => @students[0].id, :course_id=>@courses[0].id)
+      @assignments[0].get_student_grade(@students[0].id).should eq(grade)
+    end
+
+  end
 
   context "Assignment Order" do
     before do

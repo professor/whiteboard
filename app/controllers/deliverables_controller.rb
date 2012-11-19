@@ -35,7 +35,7 @@ class DeliverablesController < ApplicationController
     end
     @current_deliverables = Deliverable.find_current_by_user(user)
     @past_deliverables = Deliverable.find_past_by_user(user)
-
+    @assignments = Assignment.list_assignments_for_student user.id
     respond_to do |format|
       format.html { render :action => "index" }
       format.xml { render :xml => @deliverables }
