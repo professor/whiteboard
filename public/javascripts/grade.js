@@ -33,7 +33,7 @@ function Grade(type, mapping, weight)
       }
       if(grade in gradeMapping){
         if(gradeType == "points"){
-          return gradeMapping[grade] * gradeWeight[assignment_index];
+          return gradeMapping[grade] * gradeWeight[assignment_index]/100;
         }
         else{
           return gradeMapping[grade];
@@ -43,19 +43,32 @@ function Grade(type, mapping, weight)
     };
     this.calculate = function(gradeHash){
       var total = 0;
-            var gradeArray = this.convert(gradeHash);
-
-
-        for (var assignment_index in gradeArray) {
-            total += gradeArray[assignment_index];
-        }
-        return total;
+      var gradeArray = this.convert(gradeHash);
+      for (var assignment_index in gradeArray) {
+        total += gradeArray[assignment_index];
+      }
+      return total;
     };
+    
+    this.calculate_percentage = function(gradeHash){
+      var total = 0;
+      for(var assignment_index in gradeHash){
+        if($.trim(gradeHash[assignment_index])=='')
+          continue;
+        if(gradeType=="weight")
+          total += gradeWeight[assignment_index] * 100;
+        else
+          total += gradeWeight[assignment_index];
+      }
+      return this.calculate(gradeHash)/total*100;
+    };
+    
     this.get_grades_for_student = function(student_id){
       var hash = {};
       $("tr#s_"+ student_id).find("input").each(function(){
         var assignment_id = $(this).attr("id").split("_")[1];
-        hash[assignment_id] = $(this).val();
+        if(assignment_id > 0)
+          hash[assignment_id] = $(this).val();
       });
       return hash;
     };
@@ -63,11 +76,11 @@ function Grade(type, mapping, weight)
       var grades_hash = this.get_grades_for_student(student_id);
       var earned_grade = this.calculate(grades_hash);
       earned_grade = Math.round(earned_grade*100)/100;
-      if(gradeType =="letter") earned_grade = this.get_letter(earned_grade);
-      $("tr#s_"+student_id + " .earned").text(earned_grade);
+      percentage = Math.round(this.calculate_percentage(grades_hash));
+      $("tr#s_"+student_id + " .earned").text(earned_grade+"(" + percentage + "%)" );
       return earned_grade;
     };
-    this.get_letter = function(grade){
+    this.get_final = function(grade){
       if(isNaN(grade)) return "";
       var order = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"];
       var current = order[0];
@@ -77,5 +90,10 @@ function Grade(type, mapping, weight)
       });
       return current;
     };
-
+    this.updateFinalGrade = function(student_id){
+      var grades_hash = this.get_grades_for_student(student_id);
+      var percentage = this.calculate_percentage(grades_hash);
+      var final_grade = this.get_final(percentage);
+      $("tr#s_"+student_id + " .final input").val(final_grade);
+    };
 }
