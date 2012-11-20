@@ -10,15 +10,6 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
-  def index_for_course
-    @course = Course.find(params[:course_id])
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = @course.deliverables
-    else
-      has_permissions_or_redirect(:admin, root_path)
-    end
-  end
-
   def my_deliverables
     @user = User.find(params[:id])
 
@@ -229,13 +220,14 @@ class DeliverablesController < ApplicationController
 
   def edit_feedback
     # Only staff can provide feedback
-    if !current_user.is_staff?
-      flash[:error] = "Only faculty can provide feedback on deliverables."
+    @deliverable = Deliverable.find(params[:id])
+
+    if !@deliverable.assignment.course.faculty.include?(current_user)
+      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
     end
 
-    @deliverable = Deliverable.find(params[:id])
     # Create deliverable grades for new team members or deliverables for new students to the course
     @deliverable.assignment.find_or_create_deliverable_by_user(@deliverable.creator)
   end

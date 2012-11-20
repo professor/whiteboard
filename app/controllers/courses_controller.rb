@@ -144,6 +144,12 @@ class CoursesController < ApplicationController
   def import_gradebook
     @course = Course.find(params[:id])
 
+    if !@course.faculty.include?(current_user)
+      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
+      redirect_to course_gradebook_path(@course)
+      return
+    end
+
     book = Spreadsheet.open(params[:import_spreadsheet][:import_spreadsheet].path)
     sheet = book.worksheet(0)
     assignments = @course.assignments

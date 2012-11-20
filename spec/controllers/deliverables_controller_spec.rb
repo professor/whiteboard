@@ -18,15 +18,6 @@ describe DeliverablesController do
         @course.stub(:deliverables).and_return([@deliverable, @deliverable])
         Course.stub(:find).and_return(@course)
       end
-
-      context "as any other user" do
-        before do
-          login(@faculty_fagan)
-          get :index_for_course, :course_id => @course.id
-        end
-
-        it_should_behave_like "permission denied"
-      end
     end
 
 

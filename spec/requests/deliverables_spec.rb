@@ -74,6 +74,8 @@ describe "deliverables" do
         attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
         click_button "Create"
         @professor = FactoryGirl.create(:faculty_frank_user)
+        @assignment.course.faculty_assignments_override = [@professor.human_name]
+        @assignment.course.update_faculty
         login_with_oauth @professor
         visit deliverable_feedback_path(Deliverable.last)
         page.should have_selector('h1', text: "Grade Team Deliverable")
@@ -102,12 +104,14 @@ describe "deliverables" do
         attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/files/sample_assignment.txt'
         click_button "Create"
         @professor = FactoryGirl.create(:faculty_frank_user)
+        @assignment.course.faculty_assignments_override = [@professor.human_name]
+        @assignment.course.update_faculty
         login_with_oauth @professor
-        visit deliverable_feedback_path(Deliverable.last)
-        page.should have_selector('h1', text: "Grade Individual Deliverable")
       }
 
       it "should provide feedback and a grade to the student" do
+        visit deliverable_feedback_path(Deliverable.last)
+        page.should have_selector('h1', text: "Grade Individual Deliverable")
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Submit"
         Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
@@ -115,10 +119,19 @@ describe "deliverables" do
       end
 
       it "should save as draft" do
+        visit deliverable_feedback_path(Deliverable.last)
+        page.should have_selector('h1', text: "Grade Individual Deliverable")
         fill_in "deliverable_deliverable_grades_attributes_0_grade", with: 10
         click_button "Save as draft"
         Deliverable.last.deliverable_grades.first.number_grade.should == 10.0
         Deliverable.last.status.should == 'Draft'
+      end
+
+      it "should not allow unassigned faculty to grade" do
+        unallowed_professor = FactoryGirl.create(:faculty_fagan)
+        login_with_oauth unallowed_professor
+        visit deliverable_feedback_path(Deliverable.last)
+        page.should have_selector('.ui-state-error')
       end
     end
   end
