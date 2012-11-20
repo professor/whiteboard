@@ -46,7 +46,7 @@ jQuery(document).ready(function() {
     // Populate the Ajax loading div
     loading_image = document.createElement('img');
     loading_image.src="images/ajax-loader.gif";
-    loading_text = document.createTextNode(" Loading Results... ");
+    loading_text = document.createTextNode("Loading Results");
     elem = document.getElementById('ajax_loading_notice');
     elem.appendChild(loading_image);
     elem.appendChild(loading_text);
