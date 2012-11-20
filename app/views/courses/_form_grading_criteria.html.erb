@@ -1,4 +1,4 @@
-<%= link_to @course.grading_nomenclature, course_assignments_path(@course) %>
+<%= link_to @course.nomenclature_title, course_assignments_path(@course) %>
 <%= form_for(@course, url: {action: 'update_grading_criteria', id: @course.id}) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">

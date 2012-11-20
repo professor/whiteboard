@@ -4,7 +4,7 @@
 
 <%= link_to "Back", course_path(@course) %> |
 <%= link_to "Grading Deliverables", professor_deliverables_path(current_user) %> |
-<%= link_to @course.grading_nomenclature, course_assignments_path(@course) %> |
+<%= link_to @course.nomenclature_title, course_assignments_path(@course) %> |
 <%= link_to "Export as xls", course_export_gradebook_path(@course) %> |
 
 <% form_for(:import_spreadsheet, url: course_import_gradebook_path(@course), html: {multipart: true}) do |f| %>

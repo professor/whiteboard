@@ -1,5 +1,5 @@
 <h1>Grade Team Deliverable<%= @deliverable.team.blank? ? "" : " for #{@deliverable.team.name}" %></h1>
-<h2><%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h2>
+<h2><%= @deliverable.assignment.course.nomenclature_title %>: <%= @deliverable.assignment.title %></h2>
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
   <%= render 'shared/error_messages', object: f.object %>

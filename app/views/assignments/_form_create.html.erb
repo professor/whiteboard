@@ -1,4 +1,4 @@
-<h1><%= @assignment.new_record? ? "Create" : "Edit" %> <%= @assignment.course.grading_nomenclature %></h1>
+<h1><%= @assignment.new_record? ? "Create" : "Edit" %> <%= @assignment.course.nomenclature_title %></h1>
 
 <%= form_for(@assignment) do |form| %>
   <%= render 'shared/error_messages', object: form.object %>

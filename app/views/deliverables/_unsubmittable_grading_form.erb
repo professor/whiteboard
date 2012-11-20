@@ -1,4 +1,4 @@
-<h1>Grade <%= @deliverable.assignment.course.grading_nomenclature %>: <%= @deliverable.assignment.title %></h1>
+<h1>Grade <%= @deliverable.assignment.course.nomenclature_title %>: <%= @deliverable.assignment.title %></h1>
 
 <%= form_for @deliverable.assignment do |f| %>
   <%= render 'shared/error_messages', object: f.object %>

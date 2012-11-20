@@ -80,4 +80,5 @@ class DeliverableGrade < ActiveRecord::Base
   def is_numeric?
     !!Float(self.grade) rescue false
   end
+
 end

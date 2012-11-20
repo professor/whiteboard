@@ -67,8 +67,8 @@
               <p><%= link_to 'Configure course', configure_course_path(course) %></p>
             </td>
             <td>
-              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size => "75x75", :alt => @course.grading_nomenclature, :title => @course.grading_nomenclature), course_assignments_path(course.id) %>
-              <p><%= link_to @course.grading_nomenclature, course_assignments_path(course.id) %></p>
+              <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size => "75x75", :alt => @course.nomenclature_title, :title => @course.nomenclature_title), course_assignments_path(course.id) %>
+              <p><%= link_to @course.nomenclature_title, course_assignments_path(course.id) %></p>
             </td>
             <td>
               <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size => "75x75", :alt => "Team formation", :title => "Team formation"), team_formation_tool_path(course) %>

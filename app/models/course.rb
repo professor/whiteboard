@@ -169,6 +169,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def nomenclature_title
+    self.grading_nomenclature == "Tasks" ? "Deliverables" : self.grading_nomenclature
+  end
+
   def all_students
     students = Hash.new
     self.registered_students.each do |student|
