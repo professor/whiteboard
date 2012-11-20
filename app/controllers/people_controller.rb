@@ -89,7 +89,15 @@ class PeopleController < ApplicationController
         @people = @people.where("is_part_time = 'f'") if params[:user_type].include?("L")
     end
 
-    @people = @people.where("human_name ILIKE ?","%#{params[:filterBoxOne]}%") unless params[:filterBoxOne].blank?
+
+    # search more db fields
+    if !params[:filterBoxOne].blank?
+      params[:filterBoxOne].split.each do |query|
+        query = '%'+query+'%'
+        @people = @people.where( "human_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR title ILIKE ? OR webiso_account ILIKE ? OR organization_name ILIKE ? OR personal_email ILIKE ? OR work_city ILIKE ? OR work_state ILIKE ? OR work_country ILIKE ?",query, query, query, query, query,query,query, query, query, query)
+      end
+    end
+
     @people = @people.where("graduation_year = ?","#{params[:graduation_year]}") unless params[:graduation_year].blank?
     @people = @people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
     @people = @people.where("is_active = 't'") unless params[:search_inactive] == 't'
