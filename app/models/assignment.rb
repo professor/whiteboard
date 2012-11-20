@@ -64,13 +64,7 @@ class Assignment < ActiveRecord::Base
                 when :past
                   student.registered_for_these_courses_during_past_semesters
     end
-    assignments = []
-    courses.each do |course|
-
-      assignments.concat(course.assignments)
-
-    end
-    assignments
+    assignments = Assignment.unscoped.find_all_by_course_id(courses.map(&:id), :order => "course_id ASC, id ASC")
   end
 
 end
