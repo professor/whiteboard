@@ -719,7 +719,6 @@ div.modified {
     color: gray;
 }
 
-
 /*making whole row clickable*/
 #key_contacts_table tbody tr:hover td,
 #people_table tbody tr:hover td{
@@ -730,6 +729,17 @@ div.modified {
     opacity:0.7;
     filter:alpha(opacity=70); /* For IE8 and earlier */
 }
+
+/*people search loader*/
 #ajax_loading_notice{
     text-align: center;
+}
+#ajax_loading_notice img{
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/*ckeditor customizations*/
+#cke_bottom_user_user_text, #cke_bottom_user_biography{
+    display: none;
 }
