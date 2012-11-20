@@ -102,4 +102,17 @@ describe HUBClassRosterHandler do
     end
 
   end
+
+  context "When emailing professors about students that were added, dropped or not in system" do
+    before :each do
+      @course = FactoryGirl.create(:fse_fall_2011)
+      @info = { :not_in_system => ['new_student'], :added => [], :dropped => [] }
+    end
+
+    it "should include chris.ziese@sv.cmu.edu as one of the recipients" do
+      email = HUBClassRosterHandler.email_professors_about_added_and_dropped_students(@course, @info)
+      email.to.should include("chris.ziese@sv.cmu.edu")
+    end
+  end
+
 end
