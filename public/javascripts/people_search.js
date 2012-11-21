@@ -10,7 +10,7 @@ var ajax_req_issued = false;            // object that
 var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 var default_results_json ='';
 
-jQuery(document).ready(function() {
+$(document).ready(function() {
 
     /****************************************
                 SETUP INITIAL STATE
@@ -51,6 +51,53 @@ jQuery(document).ready(function() {
     elem.appendChild(loading_image);
     elem.appendChild(loading_text);
 
+    // filterBoxOne : $("#filterBoxOne").val(),
+    // user_type :   $("#filter_person_type").val(),
+    // graduation_year : $("#filter_year").val(),
+    // masters_program : $("#filter_program").val(),
+    // course_id : $("#filter_course").val(),
+    // search_inactive : $('#search_inactive:checked').val(),
+    // ajaxCall : true
+
+        //$.session.set("previous_search_params", JSON.stringify(json));
+        //$.session.set("previous_toggle_state", getToggleState());
+
+    // making our search considerate (load search params from session)
+    //alert($.session.get("previous_search_params"));
+    if($.session.get("previous_search_params") || $.session.get("previous_toggle_state")){
+        
+        var previous_search_params = jQuery.parseJSON($.session.get("previous_search_params"));
+        var previous_toggle_states = jQuery.parseJSON($.session.get("previous_toggle_state"));
+        
+        if(previous_search_params){
+            if(typeof previous_search_params.filterBoxOne !== undefined)
+                $("#filterBoxOne").val(previous_search_params.filterBoxOne);
+            if(typeof previous_search_params.filter_person_type !== undefined && previous_search_params.search_inactive)
+                $("#search_inactive").prop('checked', true);
+            if(typeof previous_search_params.user_type !== undefined)
+                $("#filter_person_type").val(previous_search_params.user_type);
+            if(typeof previous_search_params.graduation_year !== undefined)
+                $("#filter_year").val(previous_search_params.graduation_year);
+            if(typeof previous_search_params.masters_program !== undefined)
+                $("#filter_program").val(previous_search_params.masters_program);
+            if(typeof previous_search_params.course_id !== undefined)
+                $("#filter_course").val(previous_search_params.course_id);
+        }
+        if(previous_toggle_states){
+            if(typeof previous_toggle_states.photobook_toggled_state !== undefined && previous_toggle_states.photobook_toggled_state){
+                photobook_toggled = previous_toggle_states.photobook_toggled_state;
+                setPhotobookToggleState();
+            }
+            if(typeof previous_toggle_states.advanced_search_filters !== undefined && previous_toggle_states.advanced_search_filters)
+                setAdvancedFilterToggleState(true);
+        }        
+        getSearchResults();
+    }
+
+        
+
+
+
     /**************************************************************
         SEARCHING FOR PEOPLE (Search trigger functions)
         These are the main search functions that trigger a search
@@ -90,28 +137,10 @@ jQuery(document).ready(function() {
     // Advanced filters (toggle)
     $("#filterBoxOne_filter").toggle(
         function(){
-            // show advanced filters
-            $("#advanced_search_filters").show();
-            $(this).addClass("toggled");
-
-            clearAllTables();
-            $('#people_table').hide();
-            getSearchResults();
+            setAdvancedFilterToggleState(true);
         },
         function(){
-            // deactivate advanced filters
-            $("#advanced_search_filters").hide();
-            $(this).removeClass("toggled");
-
-            var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0)?true:false ;
-            if ( isSearchTextEntered ){
-                getSearchResults();
-                //???showRelevantTables(isSearchTextEntered);
-            }else{
-                // build photobook default results
-                clearAllTables();
-                buildSearchResults(default_results_json);
-            }
+            setAdvancedFilterToggleState(false);
         }
     );
     $("#filter_person_type").change(function(){getSearchResults();});
@@ -124,13 +153,7 @@ jQuery(document).ready(function() {
     // Photobook view (click)
     $("#filterBoxOne_photobook").click(function (){
         photobook_toggled = !photobook_toggled;
-        if(photobook_toggled)
-            $(this).addClass("toggled");
-        else
-            $(this).removeClass("toggled")
-        var title = photobook_toggled ? 'Grid View' : 'Photobook View';
-        $("#filterBoxOne_photobook").attr('title', title);
-
+        setPhotobookToggleState();
         clearAllTables();
         if (    $("#advanced_search_filters").is(":visible") ||     // advanced search filters visible
                 ($.trim($("#filterBoxOne").val()).length > 0)       // search text entered
@@ -439,10 +462,58 @@ function buildDataObject() {
     } else{
         json = {
                     filterBoxOne : $("#filterBoxOne").val(),
+                    show_advanced_search : false,
                     ajaxCall : true
         };
     };
+
+    $.session.set("previous_search_params", JSON.stringify(json));
+    $.session.set("previous_toggle_state", getToggleState());
     return json;
+    
+}
+
+function getToggleState(){
+    var json = { 
+        photobook_toggled_state : photobook_toggled,
+        advanced_search_filters : $("#advanced_search_filters").is(":visible")
+    };
+    return JSON.stringify(json);
+}
+
+function setPhotobookToggleState(){
+        buildDataObject();
+        var $photobook = $("#filterBoxOne_photobook");
+        if(photobook_toggled)
+            $photobook.addClass("toggled");
+        else
+            $photobook.removeClass("toggled");
+        $photobook.attr('title', (photobook_toggled ? 'Grid View' : 'Photobook View'));
+}
+
+function setAdvancedFilterToggleState(toggled){
+         var $filter = $("#filterBoxOne_filter");
+         if(toggled){
+            // show advanced filters
+            $("#advanced_search_filters").show();
+            $filter.addClass("toggled");
+
+            clearAllTables();
+            getSearchResults();
+        } else {
+            // deactivate advanced filters
+            $("#advanced_search_filters").hide();
+            $filter.removeClass("toggled");
+
+            if ($.trim($("#filterBoxOne").val()).length > 0){
+                getSearchResults();
+                //showRelevantTables(isSearchTextEntered);
+            }else{
+                // build photobook default results
+                clearAllTables();
+                buildSearchResults(default_results_json);
+            }
+        }
 }
 
 // helper function to build the photo image form the uri and add a scotty img if not loaded
