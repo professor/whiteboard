@@ -37,6 +37,7 @@ pull*.dat
 push*.dat
 
 db/seeds.rb
+db/*
 
 # OS files
 .DS_Store
