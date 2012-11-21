@@ -6,7 +6,7 @@ describe HUBClassRosterHandler do
     context "and they are not already in the course," do
       before :each do
         @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
-        @older_course = FactoryGirl.create(:fse_fall_2011, :year => 1900)
+        # @older_course = FactoryGirl.create(:fse_fall_2011, :year => 1900)
         @course = FactoryGirl.create(:fse_fall_2011)
         @student_sam = FactoryGirl.create(:student_sam)
         @student_sally = FactoryGirl.create(:student_sally)
@@ -27,7 +27,7 @@ describe HUBClassRosterHandler do
 
 
       it "should notify help@sv.cmu.edu about missing students" do
-        subject.should_receive(:email_help_about_missing_student).exactly(41).times
+        subject.should_receive(:email_help_about_missing_student).exactly(1).times
         subject.handle(@roster_file)
       end
 
@@ -37,7 +37,7 @@ describe HUBClassRosterHandler do
       end
 
       it "should send the emails" do
-        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(42)
+        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(2)
       end
 
     end
@@ -56,7 +56,7 @@ describe HUBClassRosterHandler do
       end
 
       it "should notify help@sv.cmu.edu about missing students" do
-        subject.should_receive(:email_help_about_missing_student).exactly(41).times
+        subject.should_receive(:email_help_about_missing_student).exactly(1).times
         subject.handle(@roster_file)
       end
 
@@ -66,7 +66,7 @@ describe HUBClassRosterHandler do
       end
 
       it "should send the emails" do
-        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(41)
+        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
   end
@@ -102,4 +102,17 @@ describe HUBClassRosterHandler do
     end
 
   end
+
+  context "When emailing professors about students that were added, dropped or not in system" do
+    before :each do
+      @course = FactoryGirl.create(:fse_fall_2011)
+      @info = { :not_in_system => ['new_student'], :added => [], :dropped => [] }
+    end
+
+    it "should include chris.ziese@sv.cmu.edu as one of the recipients" do
+      email = HUBClassRosterHandler.email_professors_about_added_and_dropped_students(@course, @info)
+      email.to.should include("chris.ziese@sv.cmu.edu")
+    end
+  end
+
 end
