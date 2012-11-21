@@ -44,7 +44,8 @@ module UserSearch
         else
           count = 1
         end
-        query_string += "webiso_account ILIKE ?"
+        query_string += "regexp_replace(webiso_account, '@andrew.cmu.edu', '') ILIKE ?"
+
       end
 
 
