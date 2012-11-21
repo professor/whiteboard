@@ -94,7 +94,7 @@ module HUBClassRosterHandler
 
   def self.email_professors_about_added_and_dropped_students course, info
     faculty_emails = course.faculty.collect(&:email)
-    if faculty_emails.any?
+    if faculty_emails
       options = {:to => faculty_emails, :subject => "Roster change for your course #{course.name}",
                  :message => self.roster_change_message(course, info[:added], info[:dropped], info[:not_in_system])}
 # The message handles this well...
