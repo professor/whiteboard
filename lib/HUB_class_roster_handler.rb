@@ -101,7 +101,7 @@ module HUBClassRosterHandler
 #                 :url_label => "Your course: " + course.number + " " + course.short_or_full_name,
 #                 :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
       else
-        options = {:to => "chris.ziese@sv.cmu.edu", :subject => "Please add faculty to this course",
+        options = {:to => "gerry.elizondo@sv.cmu.edu", :subject => "Please add faculty to this course",
                    :message => "The HUB importer code was just run, however this course no faculty assigned to it. Thus I could not email them.",
                    :url_label => "The course: " + course.number + " " + course.short_or_full_name,
                    :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }

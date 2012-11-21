@@ -109,9 +109,9 @@ describe HUBClassRosterHandler do
       @info = { :not_in_system => ['new_student'], :added => [], :dropped => [] }
     end
 
-    it "should include chris.ziese@sv.cmu.edu as one of the recipients" do
+    it "should include gerry.elizondo@sv.cmu.edu as one of the recipients" do
       email = HUBClassRosterHandler.email_professors_about_added_and_dropped_students(@course, @info)
-      email.to.should include("chris.ziese@sv.cmu.edu")
+      email.to.should include("gerry.elizondo@sv.cmu.edu")
     end
   end
 
