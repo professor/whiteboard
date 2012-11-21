@@ -102,7 +102,7 @@ module HUBClassRosterHandler
 #                 :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
       else
         options = {:to => "chris.ziese@sv.cmu.edu", :subject => "Please add faculty to this course",
-                   :message => "The HUB importer code was just run, however this course no faculty assigned to it. Thus I could not email them.",
+                   :message => "The HUB importer code was just run, however this course has no faculty assigned to it. Thus, I could not email them.",
                    :url_label => "The course: " + course.number + " " + course.short_or_full_name,
                    :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
     end
@@ -131,7 +131,7 @@ module HUBClassRosterHandler
       dropped.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
-    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
+    message += "<br/>The system will be updating your course mailing list (#{course.email}). For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
