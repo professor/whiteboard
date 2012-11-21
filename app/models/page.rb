@@ -58,7 +58,7 @@ class Page < ActiveRecord::Base
 
 
   def task_number
-    match = self.title.match /\d/
+    match = self.title.match /\d{1,3}/
     match.nil? ? nil : match[0]
   end
 
