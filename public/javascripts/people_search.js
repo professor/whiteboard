@@ -50,6 +50,9 @@ $(document).ready(function() {
     elem = document.getElementById('ajax_loading_notice');
     elem.appendChild(loading_image);
     elem.appendChild(loading_text);
+    empty_text = document.createTextNode("No results found.");
+    elem = document.getElementById('empty_results');
+    elem.appendChild(empty_text);
 
     // filterBoxOne : $("#filterBoxOne").val(),
     // user_type :   $("#filter_person_type").val(),
@@ -137,7 +140,7 @@ $(document).ready(function() {
     // Advanced filters (toggle)
     $("#filterBoxOne_filter").toggle(
         function(){
-            setAdvancedFilterToggleState(true);
+            setAdvancedFilterToggleState(bool);
         },
         function(){
             setAdvancedFilterToggleState(false);
