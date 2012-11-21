@@ -97,6 +97,7 @@ module HUBClassRosterHandler
 
     if not(faculty_emails.include? "chris.ziese@sv.cmu.edu")
       faculty_emails << "chris.ziese@sv.cmu.edu"
+      # append chris to all e-mails for modification course
     end
 
     if faculty_emails
