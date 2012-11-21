@@ -1,4 +1,4 @@
-/* UI Mockup JS Migration */
+/* JS Migration */
 
 // An array of available criteria
 var CRITERIA_ARRAY = ["company", "class_year", "program", "ft_pt", "course", "project", "team" ];
@@ -25,8 +25,8 @@ var SELECTED_CRITERIA_HASH = {
 }
 
 // Prefetch data from server and build hash table for prediction on user inputs
-var RECOGNITION_HASH = new Object();
-RECOGNITION_HASH["COMPANY"] = new Object();
+var RECOGNITION_HASH = {};
+RECOGNITION_HASH["COMPANY"] = {};
 RECOGNITION_HASH["PEOPLE_TYPE"] = {
   "student": true, "faculty": true, "staff": true, "alumni": true, "professor": true, "alumnus": true
 };
@@ -71,7 +71,6 @@ function build_company_hash(){
             }
           }
         }
-        //console.log(RECOGNITION_HASH["COMPANY"]);
         if(typeof(Storage) !== "undefined"){
           localStorage['RECOGNITION_HASH_COMPANY'] = JSON.stringify(RECOGNITION_HASH["COMPANY"]);  
           localStorage['RECOGNITION_HASH_COMPANY_TIMESTAMP'] = current_date.getTime();
@@ -98,9 +97,9 @@ function build_company_hash(){
 // Try to parse the smart search text
 function parse_smart_search(){
   splited_search_str_array = $.trim($('#smart_search_text').val()).split(" ");  
-  var category_selected = new Object();
+  var category_selected = {};
   category_selected["main_search_text"] = "";
-  var parameters_hash = new Object();
+  var parameters_hash = {};
   //console.log(splited_search_str_array);
   for(var i=0; i<splited_search_str_array.length; ++i){
     if(splited_search_str_array[i].length > 1){
@@ -296,7 +295,7 @@ function construct_query_sting(){
 };
 
 function execute_search(request_params){
-    
+    // For debug
     console.log("search executed");
     
     $('#results_box').fadeTo('fast', 0.5);
@@ -311,11 +310,12 @@ function execute_search(request_params){
                 var card_html =
                 '<div class="data_card '+DATACARD_MODE+'">'+
                 //if(DATACARD_MODE == "photo_card"){ card_html += '">';}
-                '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a><br>'+
-                '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>'+
-                '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
-                if(this.telephone1){ card_html+= '<div class="data_card_telephone1">'+this.telephone1_label +': '+this.telephone1+'<br>'+'</div>'; }
-                if(this.telephone2){ card_html+= '<div class="data_card_telephone2">'+this.telephone2_label +': '+this.telephone2+'<br>'+'</div>'; }
+                '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a>'+
+                '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>';
+                if(this.title){ card_html += '<div class="data_card_title">'+this.title+'</div>' };
+                card_html += '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
+                if(this.telephone1){ card_html+= '<div class="data_card_telephone1">'+this.telephone1_label +': '+this.telephone1+'</div>'; }
+                if(this.telephone2){ card_html+= '<div class="data_card_telephone2">'+this.telephone2_label +': '+this.telephone2+'</div>'; }
 
                 if(this.team_names.length > 0){ card_html += '<div class="data_card_teams">Teams: ';
                     for(var i=0; i<this.team_names.length; i++){
@@ -324,7 +324,7 @@ function execute_search(request_params){
                     card_html +='</div>';
                 }
 
-                card_html+= '<div class="data_card_company">'+'Company: '+this.company+'</div>';
+                if(this.company) { card_html += '<div class="data_card_company">'+'Company: '+this.company+'</div>'; }
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
@@ -335,8 +335,6 @@ function execute_search(request_params){
 
     });
 
-    // Linkable URL - Modify the location hash when search performed
-    location.hash = request_params;
 };
 
 function customize_display()
@@ -359,8 +357,17 @@ function customize_display()
     else{$('.data_card_teams').removeClass("hidden")};
     if(!($('#company_checkbox')[0].checked)){$('.data_card_company').addClass("hidden");}
     else{$('.data_card_company').removeClass("hidden")};
-   // execute_search();
 
+    //execute_search(construct_query_sting());
+    
+    // Resize the height of data_card
+    if(DATACARD_MODE == "photo_card"){
+      var max_height = 0;
+      $(".data_card.photo_card").each( function(){
+        if($(this).height() > max_height) { max_height = $(this).height(); }
+      });
+      $(".data_card.photo_card").css('height', max_height+'px');
+    } else { $(".data_card").css('height', 'auto'); }
 }
 
 $(document).ready(function(){
@@ -421,23 +428,22 @@ $(document).ready(function(){
       $(this).toggleClass("btn_pressed");
     });
 
-    /*$('#advanced_area_close').click(function(){
-      $(this).toggleClass("btn_pressed");
-      $('#smart_search_text').removeAttr('disabled').css('opacity', 1);
-      $('#advanced_search_area').slideUp();
-      reset_advanced_area();
-      $("#results_box").html("");
-      $('#smart_search_text').val("");
-      location.hash = ""
-    });*/
-
     // Toggle Display Mode
     $("#list_mode_btn, #card_mode_btn").click(function(){
       if(!$(this).hasClass('btn_pressed')){
         $("#list_mode_btn, #card_mode_btn").toggleClass("btn_pressed");
         if(DATACARD_MODE == "photo_card") { DATACARD_MODE = "list_view"; }
         else if(DATACARD_MODE == "list_view") { DATACARD_MODE = "photo_card"; }
-        $('.data_card').toggleClass('list_view').toggleClass('photo_card');
+        $('.data_card').not('.customization_dialog .data_card').toggleClass('list_view').toggleClass('photo_card');
+        
+        // Resize the height of data_card
+        if(DATACARD_MODE == "photo_card"){
+          var max_height = 0;
+          $(".data_card.photo_card").each( function(){
+            if($(this).height() > max_height) { max_height = $(this).height(); }
+          });
+          $(".data_card.photo_card").css('height', max_height+'px');
+        } else { $(".data_card").css('height', 'auto'); }
       }
     });
 
@@ -511,7 +517,8 @@ $(document).ready(function(){
         if($('#extra_criteria_box .criteria_tag').last().find('.criteria_text').length != 0 && $('#extra_criteria_box .criteria_tag').last().css('display') != 'none'){
             $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
-        execute_search(construct_query_sting());
+        location.hash = construct_query_sting();
+        //execute_search(construct_query_sting());
         $(this).val('default');
     });
 
@@ -543,14 +550,16 @@ $(document).ready(function(){
     $('#extra_criteria_box').on("click", ".criteria_tag a", function(){
         SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
-        execute_search(construct_query_sting());
+        location.hash = construct_query_sting();
+        //execute_search(construct_query_sting());
         return false;
     });
 
 
     // Events binded to search execution
     $('#people_type_picker, .criteria_text, #exact_match_checkbox, #include_inactive_checkbox').change(function(e) {
-      execute_search(construct_query_sting());
+      location.hash = construct_query_sting();
+      //execute_search(construct_query_sting());
     });
 
 
@@ -558,14 +567,16 @@ $(document).ready(function(){
     $('#search_text_box, .criteria_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
       if(e.which != 13){
-        SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
+        //SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
+        SEARCH_TIMEOUT = setTimeout('location.hash = construct_query_sting()', 400);
       }
     });
 
     $('#smart_search_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
       if(e.which != 13){
-        SEARCH_TIMEOUT = setTimeout('parse_smart_search();execute_search(construct_query_sting());', 400);
+        //SEARCH_TIMEOUT = setTimeout('parse_smart_search();execute_search(construct_query_sting());', 400);
+        SEARCH_TIMEOUT = setTimeout('parse_smart_search();location.hash = construct_query_sting();', 400);
       }
     });
 
@@ -574,7 +585,7 @@ $(document).ready(function(){
     window.onpopstate = function() {
 
         var query_string = window.location.hash.replace("#","");
-        var url_hash = new Object();
+        var url_hash = {};
 
         if(query_string != ""){
           var hash_params = query_string.split('&');

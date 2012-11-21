@@ -44,6 +44,7 @@ class PeopleController < ApplicationController
           "id" => person.twiki_name,
           "first_name" => person.first_name,
           "last_name" => person.last_name,
+          "title" => person.title,
           "image_uri" => person.image_uri,
           "team_names" => teams_array,
           "masters_program" => person.masters_program,
