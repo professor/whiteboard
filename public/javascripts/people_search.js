@@ -313,6 +313,7 @@ function execute_search(request_params){
                 '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a>'+
                 '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>';
                 if(this.title){ card_html += '<div class="data_card_title">'+this.title+'</div>' };
+                if($('#main_criteria_picker')[0].value=="andrew_id") {console.log($('#main_criteria_picker')[0].value);card_html+='<div>'+this.andrew_id+'</div>'};
                 card_html += '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
                 if(this.telephone1){ card_html+= '<div class="data_card_telephone1">'+this.telephone1_label +': '+this.telephone1+'</div>'; }
                 if(this.telephone2){ card_html+= '<div class="data_card_telephone2">'+this.telephone2_label +': '+this.telephone2+'</div>'; }
@@ -482,6 +483,11 @@ $(document).ready(function(){
                 criteria_ids = [0, 1, 2, 3];
                 break;
         }
+
+
+
+
+
         // add extra criteria options according to criteria_ids
         $('#extra_criteria_picker').append('<option value="default" class="select-hint">Add Criteria</option>');
         for (var i=0; i<criteria_ids.length; ++i){
@@ -505,8 +511,35 @@ $(document).ready(function(){
             }
         });
     });
+    // when user selects from the main criteria menu
+    $('#main_criteria_picker').change(function() {
 
+         var tag_text = $(this)[0].value; // fetch the tag screen text for later use
+         console.log(tag_text);
+         if(tag_text=="andrew_id"){
+         SELECTED_CRITERIA_HASH['First Name']=false;
+         SELECTED_CRITERIA_HASH['Last Name']=false;
+         SELECTED_CRITERIA_HASH['Andrew ID']=true;
 
+         }
+         else if(tag_text=="first_name"){
+         SELECTED_CRITERIA_HASH['First Name']=true;
+         SELECTED_CRITERIA_HASH['Last Name']=false;
+         SELECTED_CRITERIA_HASH['Andrew ID']=false;
+
+         }
+         else if(tag_text=="last_name"){
+         SELECTED_CRITERIA_HASH['First Name']=false;
+         SELECTED_CRITERIA_HASH['Last Name']=true;
+         SELECTED_CRITERIA_HASH['Andrew ID']=false;
+
+         }else{
+         SELECTED_CRITERIA_HASH['First Name']=true;
+         SELECTED_CRITERIA_HASH['Last Name']=true;
+         SELECTED_CRITERIA_HASH['Andrew ID']=true;
+         }
+         location.hash = construct_query_sting();
+    });
     // when user select something from the extra criteria menu
     $('#extra_criteria_picker').change(function() {
         var tag_text = CRITERIA_NAME_HASH[$(this)[0].value]; // fetch the tag screen text for later use
@@ -521,6 +554,8 @@ $(document).ready(function(){
         //execute_search(construct_query_sting());
         $(this).val('default');
     });
+
+
 
     // NEED TO BE REFACTORED AFTER UI CHANGE
     // fade out main criteria tag when click on x

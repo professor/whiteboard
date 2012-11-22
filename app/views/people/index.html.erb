@@ -12,7 +12,7 @@
 
 <!-- Dialog Box for Customization -->
 <div id="dialog_modal" title="Customization">
-  <a id='customization_dialog_close' href='#'>[x]</a><br><br>
+  <div id='customization_dialog_close' >[x]</div><br><br>
   <div id="modal_card" class="data_card">
     <h2>Customize Search Results</h2>
     <img src="images/mascot.jpg"><br>
@@ -25,7 +25,7 @@
   </div>
 </div>
 <div id="export_dialog_modal" title="Export Results">
-  <a id='export_dialog_close' href='#'>[x]</a><br><br>
+  <div id='export_dialog_close'>[x]</div><br><br>
   Please Choose Format:
   <button id="export_to_csv"> CSV </button>
   <button id="export_to_vcf"> VCARD </button>  
@@ -48,10 +48,10 @@
     <div id="main_criteria_box" style="display: inline-block;">
       <input type="text" placeholder="Search in ..." id="search_text_box" style="background-color: #f3f0e9;"/>
       <select id="main_criteria_picker" class="criterias">
-        <option value="">Full Name & Andrew ID</option>
-        <option value="">Only First Name</option>
-        <option value="">Only Last Name</option>
-        <option value="">Only Andrew ID</option>
+        <option value="all">Full Name & Andrew ID</option>
+        <option value="first_name">Only First Name</option>
+        <option value="last_name">Only Last Name</option>
+        <option value="andrew_id">Only Andrew ID</option>
       </select>
     </div>
 
