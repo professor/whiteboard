@@ -77,11 +77,11 @@ module HUBClassRosterHandler
   end
 
   def self.email_help_about_missing_student webiso_account, course
-      options = {:to => "todd.sedano@sv.cmu.edu", :subject => "Need to add this user #{webiso_account}@andrew.cmu.edu",
-                 :message => "We were adding registered HUB users to the course #{course.name}, but they are not in the system.",
-                 :url => "http://rails.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&is_student=true",
-                 :url_label => "Add person"}
-      GenericMailer.email(options).deliver
+    options = {:to => "todd.sedano@sv.cmu.edu", :subject => "Need to add this user #{webiso_account}@andrew.cmu.edu",
+               :message => "We were adding registered HUB users to the course #{course.name}, but they are not in the system.",
+               :url => "http://rails.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&is_student=true",
+               :url_label => "Add person"}
+    GenericMailer.email(options).deliver
   end
 
 
@@ -100,11 +100,11 @@ module HUBClassRosterHandler
 # The message handles this well...
 #                 :url_label => "Your course: " + course.number + " " + course.short_or_full_name,
 #                 :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
-      else
-        options = {:to => "gerry.elizondo@sv.cmu.edu", :subject => "Please add faculty to this course",
-                   :message => "The HUB importer code was just run, however this course no faculty assigned to it. Thus I could not email them.",
-                   :url_label => "The course: " + course.number + " " + course.short_or_full_name,
-                   :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
+    else
+      options = {:to => "gerry.elizondo@sv.cmu.edu", :subject => "Please add faculty to this course",
+                 :message => "The HUB importer code was just run, however this course has no faculty assigned to it. Thus, I could not email them.",
+                 :url_label => "The course: " + course.number + " " + course.short_or_full_name,
+                 :url => "http://rails.sv.cmu.edu/courses/#{course.id}" }
     end
 
     GenericMailer.email(options).deliver
@@ -131,7 +131,7 @@ module HUBClassRosterHandler
       dropped.each { |student| message += "&nbsp;&nbsp;&nbsp;#{student.first_name} #{student.last_name}<br/>" }
     end
 
-    message += "<br/>The system will be updating your course mailing list (#{course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
+    message += "<br/>The system will be updating your course mailing list (#{course.email}). For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{course.id}'>course tools</a><br/><br/>"
 
     message
   end
