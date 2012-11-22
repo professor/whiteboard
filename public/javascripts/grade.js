@@ -16,9 +16,9 @@ function Grade(type, mapping, weight)
     };
     this.convert = function(gradeHash){
         var gradeArray = [];
-        for(var assignment_index in gradeHash){
+        for(var assignment_index=0; assignment_index < gradeHash.length; assignment_index ++){
           gradeArray[assignment_index] = this.to_number(gradeHash[assignment_index], assignment_index);
-          if(gradeType == "weight")
+          if(gradeType == "weights")
             gradeArray[assignment_index] *= gradeWeight[assignment_index];
         }
         return gradeArray;
@@ -27,7 +27,7 @@ function Grade(type, mapping, weight)
       if(typeof grade  == 'number') {
         return grade;
       }
-      grade = $.trim(grade);
+      grade = $.trim(grade).toUpperCase();
       if( /[\d\.]+/.test(grade)){
         return parseFloat(grade);
       }
@@ -41,34 +41,39 @@ function Grade(type, mapping, weight)
       }
       return 0;
     };
+    
     this.calculate = function(gradeHash){
       var total = 0;
       var gradeArray = this.convert(gradeHash);
       for (var assignment_index in gradeArray) {
-        total += gradeArray[assignment_index];
+          total += gradeArray[assignment_index];
       }
       return total;
     };
     
-    this.calculate_percentage = function(gradeHash){
+    this.calculate_max = function(gradeHash){
       var total = 0;
-      for(var assignment_index in gradeHash){
+      for(var assignment_index =0; assignment_index < gradeHash.length; assignment_index ++){
         if($.trim(gradeHash[assignment_index])=='')
           continue;
-        if(gradeType=="weight")
+        if(gradeType == "weights")
           total += gradeWeight[assignment_index] * 100;
         else
           total += gradeWeight[assignment_index];
       }
-      return this.calculate(gradeHash)/total*100;
+      return total;
+    };
+
+    this.calculate_percentage = function(gradeHash){
+      return this.calculate(gradeHash)/this.calculate_max(gradeHash) * 100;
     };
     
     this.get_grades_for_student = function(student_id){
-      var hash = {};
+      var hash = [];
       $("tr#s_"+ student_id).find("input").each(function(){
         var assignment_id = $(this).attr("id").split("_")[1];
-        if(assignment_id > 0)
-          hash[assignment_id] = $(this).val();
+        if(assignment_id >= 0)
+          hash.push($(this).val());
       });
       return hash;
     };

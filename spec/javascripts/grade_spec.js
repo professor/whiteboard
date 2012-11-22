@@ -4,9 +4,13 @@ describe("Grade", function(){
   var mapping = {"A":100, "A-": 92, "B+": 90, "B": 87, "B-": 83, "C+": 78, "C": 73, "C-": 65};
   var gradeWeight;
   var gradePoints;
+  var student100Weight = ["A", "100", ""];
+  var student50Weight = ["50", "50", ""];
+  var student100Points = ["A", "10", ""];
+  var student50Points = ["5", "5", ""];
   beforeEach(function(){
     gradePoints = new Grade("points", mapping, max_scores);
-    gradeWeight = new Grade("weight", mapping, weight);
+    gradeWeight = new Grade("weights", mapping, weight);
   
   });
   
@@ -18,7 +22,7 @@ describe("Grade", function(){
     });
 
     it("with weight grade type", function(){
-      expect(gradeWeight.getType()).toEqual("weight");
+      expect(gradeWeight.getType()).toEqual("weights");
       expect(gradeWeight.getMapping()).toEqual(mapping);
       expect(gradeWeight.getWeight()).toEqual(weight);
     });
@@ -59,46 +63,62 @@ describe("Grade", function(){
   });
   describe("can transform for grades array", function(){
     it("from combination weight array to points", function(){
-      expect(gradeWeight.convert({0:"A", 1:" ", 2:"100"})).toEqual({0:10,1:0,2:10});
+      expect(gradeWeight.convert(student100Weight)).toEqual([10,10,0]);
+      expect(gradeWeight.convert(student50Weight)).toEqual([5,5,0]);
     });
     it("from combination points array to points", function(){
-      expect(gradePoints.convert({0:"A", 1:" ", 2:"10"})).toEqual({0:10,1:0,2:10});
+      expect(gradePoints.convert(student100Points)).toEqual([10,10,0]);
+      expect(gradePoints.convert(student50Points)).toEqual([5,5,0]);
     });
   });
   describe("can compute earned grades", function(){
     it("for points", function(){
-      expect(gradePoints.calculate({0:"", 1:"A ", 2:"10"})).toEqual(20);
+      expect(gradePoints.calculate(student100Points)).toEqual(20);
+      expect(gradePoints.calculate(student50Points)).toEqual(10);
     });
     it("for weight", function(){
-      expect(gradeWeight.calculate({0:"",1:" A", 2:"100"})).toEqual(20);
+      expect(gradeWeight.calculate(student100Weight)).toEqual(20);
+    expect(gradeWeight.calculate(student50Weight)).toEqual(10);
     });
+  });
+  it("can compute could earned max grades", function(){
+    expect(gradePoints.calculate_max(student100Points)).toEqual(20);
+    expect(gradePoints.calculate_max(student50Points)).toEqual(20);
+    expect(gradeWeight.calculate_max(student100Weight)).toEqual(20);
+    expect(gradeWeight.calculate_max(student50Weight)).toEqual(20);
   });
   describe("can compute earned grade percentage", function(){
     it("for points", function(){
-      expect(gradePoints.calculate_percentage({0:"", 1:"A ", 2:"10"})).toEqual(100);
+      expect(gradePoints.calculate_percentage(student100Points)).toEqual(100);
+      expect(gradePoints.calculate_percentage(student50Points)).toEqual(50);
     });
     it("for weight", function(){
-      expect(gradeWeight.calculate_percentage({0:"",1:" A", 2:"100"})).toEqual(100);
+      expect(gradeWeight.calculate_percentage(student100Weight)).toEqual(100);
+      expect(gradeWeight.calculate_percentage(student50Weight)).toEqual(50);
     });
   });
   describe("can interact with table", function(){
     it("can fetch all grades for one person", function(){
       loadFixtures("gradebook.html");
-      expect(gradePoints.get_grades_for_student(1)).toEqual({1:'1', 2:'2'});
-      expect(gradePoints.get_grades_for_student(2)).toEqual({1:'3', 2:'4'});
+      expect(gradePoints.get_grades_for_student(1)).toEqual(['10', 'A']);
+      expect(gradeWeight.get_grades_for_student(2)).toEqual(['100', 'A']);
     });
     it("can compute and update earned grade for a student", function(){
       loadFixtures("gradebook.html");
       var student_id = 1;
-      expect(gradePoints.earned_grade(student_id)).toEqual(3);
-      expect($("tr#s_"+student_id+ " .earned").text()).toEqual('3(15%)');
+      expect(gradePoints.earned_grade(1)).toEqual(20);
+      expect($("tr#s_1 .earned").text()).toEqual('20(100%)');
+      expect(gradeWeight.earned_grade(2)).toEqual(20);
+      expect($("tr#s_2 .earned").text()).toEqual('20(100%)');
     });
     it("can compute and update final grade for a student", function(){
+      console.log("Student 1");
       loadFixtures("gradebook.html");
-      var student_id = 1;
-      gradePoints.updateFinalGrade(student_id);
-      expect(gradePoints.get_final(student_id)).toEqual("C-");
-      expect($("tr#s_"+student_id + " .final input").val()).toEqual("C-");
+      gradePoints.updateFinalGrade(1);
+      expect($("tr#s_1 .final input").val()).toEqual("A");
+      console.log("Student 2");
+      gradeWeight.updateFinalGrade(2);
+      expect($("tr#s_2 .final input").val()).toEqual("A");
     });
   });
 });
