@@ -7,7 +7,8 @@ describe "deliverables" do
     @team_deliverable = FactoryGirl.create(:team_deliverable)
     @user=@team_deliverable.team.members[0]
     @grade =  FactoryGirl.create(:grade_visible, :course_id => @assignment.course.id)
-    Assignment.stub(:list_assignments_for_student).and_return([@assignment])
+    Assignment.stub(:list_assignments_for_student).with(@user.id, :current).and_return([@assignment])
+    Assignment.stub(:list_assignments_for_student).with(@user.id, :past).and_return([@assignment])
     @assignment.stub(:deliverables).and_return([@team_deliverable])
     @assignment.stub(:get_student_grade).with(@user.id).and_return(@grade)
     @assignment.stub(:get_student_deliverable).with(@user.id).and_return(@team_deliverable)
