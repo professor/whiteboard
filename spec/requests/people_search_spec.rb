@@ -28,6 +28,7 @@ describe "people search" do
   end
 
   #Tests for active/inactive users
+
   context 'active/inactive users' do
     it "should include only active users by default, then update with inactive users only on checking the 'Include Inactive Users'", :js => true do
       fill_in "search_text_box" , :with => "Harr"
@@ -63,10 +64,9 @@ describe "people search" do
       page.should have_selector('#results_box .data_card', text: "student.sam@sv.cmu.edu")
 
 
-      page.should have_selector('#results_box .data_card', text: "Company")
+      #page.should have_selector('#results_box .data_card', text: "Company")
       page.should_not have_selector('#results_box .data_card', text: "Work")
       page.should_not have_selector('#results_box .data_card', text: "Mobile")
-      page.should_not have_selector('#results_box .data_card', text: "Work")
       page.should_not have_selector('#results_box .data_card', text: "Team")
       page.should_not have_selector('#results_box .data_card img', visible: true)
 
@@ -282,6 +282,16 @@ describe "people search" do
     it "Should display images with the search results", :js => true do
       wait_until { page.evaluate_script("jQuery.active") == 0 }
       page.should have_selector('#results_box .data_card img')
+    end
+
+    #Test for displaying andrew id when searched for
+    it "should display andrew id when searched by only andrew id", :js => true do
+      fill_in "search_text_box" , :with => "Sam"
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should_not have_selector('#results_box .data_card', :text => "sam@andrew.cmu.edu")
+      select 'Only Andrew ID', :from => 'main_criteria_picker'
+      wait_until { page.evaluate_script("jQuery.active") == 0 }
+      page.should have_selector('#results_box .data_card', :text => "sam@andrew.cmu.edu")
     end
 
 
