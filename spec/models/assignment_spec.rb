@@ -54,13 +54,16 @@ describe Assignment do
     end
 
     it "List Student's all assignments" do
-      Assignment.list_assignments_for_student(@students[0].id).should eq(@assignments)
+      all = Assignment.list_assignments_for_student(@students[0].id).sort_by {|a| a.id}
+      all.should eq(@assignments)
     end
     it "List Student's current assignments" do
-      Assignment.list_assignments_for_student(@students[0].id, :current).should eq(@current_assignments)
+      curr = Assignment.list_assignments_for_student(@students[0].id, :current).sort_by {|a| a.id}
+      curr.should eq(@current_assignments)
     end
     it "List Student's past assignments" do
-      Assignment.list_assignments_for_student(@students[0].id, :past).should eq(@past_assignments)
+      past = Assignment.list_assignments_for_student(@students[0].id, :past).sort_by {|a| a.id}
+      past.should eq(@past_assignments)
     end
 
     it "can get student's deliverable for individual assignment " do
