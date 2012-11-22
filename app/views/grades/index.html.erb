@@ -144,7 +144,7 @@
           <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
           <th rowspan="2"> Team </th>
           <% @assignments.each do |assignment| %>
-            <th style='max-width:30px;' title="<%=assignment.name%>"><%="#{assignment.name[0..4]}"%></th>
+            <th style='max-width:30px;' title="<%=assignment.name%>"><%="#{assignment.try(:short_name) || assignment.name[0..4]}"%></th>
           <%end %>
           <th rowspan="2">Earned Grades</th>
           <th rowspan="2">Final Grades</th>
@@ -189,7 +189,18 @@
         <%end%>
       </table>
 
-      <div style='padding-top:20px;margin-bottom: 40px;'>
+        <%= form_tag({:action => :import}, :multipart => true) do %>
+            <%= file_field_tag 'xls_file' %>
+            <%= submit_tag 'Import' %>
+        <% end %>
+
+        <% form_for :dump, :url=>{:controller=>"grades",
+                                  :action=>"import"}, :html => { :multipart => true } do |f| -%>
+            Select an Excel File :
+            <%= f.file_field :xls_file -%>
+            <%= submit_tag 'Submit' -%>
+        <% end %>
+
         <button type="button" id="gradebook_submit" onclick="save()">Save</button>
         <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
       </div>

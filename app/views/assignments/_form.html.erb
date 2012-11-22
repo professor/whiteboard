@@ -34,6 +34,10 @@
       <td><%= f.label(:name, "#{customised_name} Name") %></td>
       <td><%= f.text_field(:name, :size=>60) %></td>
     </tr>
+    <tr>
+      <td><%= f.label(:short_name, "#{customised_name} Abbreviation") %></td>
+      <td><%= f.text_field(:short_name, :size=>5, :maxlength=>4) %></td>
+    </tr>
 
     <tr>
       <td><%= f.label(:is_team_deliverable, "#{customised_name} Type") %></td>

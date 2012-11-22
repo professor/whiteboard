@@ -186,9 +186,13 @@ class GradingRule < ActiveRecord::Base
   end
 
   def get_grade_params_for_javascript
-    weight_hash = {}
+    weight_hash = []
     self.course.assignments.each do |assignment| 
-      weight_hash[assignment.id] = 0.01* assignment.maximum_score
+      score = assignment.maximum_score
+      if self.grade_type == "weights"
+        score *= 0.01
+      end
+      weight_hash << score
     end
     score_assignment = {} 
     ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"].each do |letter|

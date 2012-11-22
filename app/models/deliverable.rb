@@ -225,7 +225,7 @@ class Deliverable < ActiveRecord::Base
     self.feedback_comment = params[:feedback_comment]
     self.private_note = params[:private_note]
     unless params[:feedback].blank?
-      self.feedback = [:feedback]
+      self.feedback = params[:feedback]
     end
     if self.has_feedback?
       self.feedback_updated_at = Time.now
