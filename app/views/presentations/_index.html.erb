@@ -39,7 +39,7 @@
           <% end %>
           <% unless presentation.presenter?(current_user) %>
               <% if presentation.has_given_feedback?(current_user) %>
-                  <%= link_to 'View the feedback you gave', show_feedback_for_presentation_path(presentation) %>
+                  <%= link_to 'Edit the feedback you gave', edit_feedback_for_presentation_path(presentation) %>
               <% else %>
                   <%= link_to 'Give feedback', new_presentation_feedback_path(presentation) %>
               <% end %>

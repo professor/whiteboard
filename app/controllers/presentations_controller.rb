@@ -11,7 +11,7 @@ class PresentationsController < ApplicationController
   }
 
   def my_presentations
-    user = User.find(params[:id])
+    user = User.find_by_param(params[:id])
     if (current_user.id != user.id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_presentation)
@@ -112,6 +112,8 @@ class PresentationsController < ApplicationController
     @questions = PresentationQuestion.existing_questions
     @eval_options = @@eval_options
     @presentation = Presentation.find(params[:id])
+    @ratings = []
+    @comments = []
 
     # Check whether this user has already created a feedback
 
@@ -168,8 +170,59 @@ class PresentationsController < ApplicationController
 
   end
 
+  def update_feedback
+    feedback = PresentationFeedback.find_by_evaluator_id_and_presentation_id(current_user, params[:id])
+
+    params[:evaluation].each do |key, value|
+        answer = PresentationFeedbackAnswer.find_by_feedback_id_and_question_id(feedback.id, key)
+        if answer
+          answer.rating   = value["rating"]
+          answer.comment  = value["comment"]
+          answer.save
+        end
+    end
+
+    respond_to do |format|
+      flash[:notice] = I18n.t(:presentation_feedback_updated)
+      format.html { redirect_back_or_default(today_presentations_url) }
+    end
+  end
+
+  def edit_feedback
+    store_previous_location
+
+    @presentation = Presentation.find(params[:id])
+
+    feedbacks = PresentationFeedback.where(:presentation_id => params[:id])
+
+    @feedback = nil
+    @eval_options = @@eval_options
+
+    @questions = PresentationQuestion.where(:deleted => false)
+
+    feedbacks.each do |f|
+      if f.evaluator_id == current_user.id
+        @feedback = f
+        # break
+      end
+    end
+
+    @ratings = []
+    @comments = []
+    @questions.each do |q|
+      feedback_answer = PresentationFeedbackAnswer.where(:question_id => q.id, :feedback_id => @feedback.id)
+      @ratings << feedback_answer.first.rating
+      @comments << feedback_answer.first.comment
+    end
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def show_feedback
     @presentation = Presentation.find(params[:id])
+
 
     unless @presentation.can_view_feedback?(current_user)
       flash[:error] = I18n.t(:not_your_presentation)

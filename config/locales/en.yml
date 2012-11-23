@@ -15,6 +15,7 @@ en:
   no_person: This person doesn't exist in the system.
   not_your_deliverable: You don't have permission to see another person's deliverables.
   not_your_presentation: You don't have permission to see another person's presentation feedback.
+  presentation_feedback_updated: Your feedback has been updated.
   unauthorized:
     manage:
       all: "You don't have permission to %{action} %{subject}."
