@@ -112,6 +112,8 @@ class PresentationsController < ApplicationController
     @questions = PresentationQuestion.existing_questions
     @eval_options = @@eval_options
     @presentation = Presentation.find(params[:id])
+    @ratings = []
+    @comments = []
 
     # Check whether this user has already created a feedback
 
@@ -169,14 +171,11 @@ class PresentationsController < ApplicationController
   end
 
   def update_feedback
-    logger.debug("**************1")
     feedback = PresentationFeedback.find_by_evaluator_id_and_presentation_id(current_user, params[:id])
 
     params[:evaluation].each do |key, value|
-      logger.debug("**************2")
         answer = PresentationFeedbackAnswer.find_by_feedback_id_and_question_id(feedback.id, key)
         if answer
-          logger.debug("**************3")
           answer.rating   = value["rating"]
           answer.comment  = value["comment"]
           answer.save
@@ -184,13 +183,14 @@ class PresentationsController < ApplicationController
     end
 
     respond_to do |format|
-      logger.debug("**************4")
       flash[:notice] = I18n.t(:presentation_feedback_updated)
-      format.html { redirect_to (today_presentations_url) }
+      format.html { redirect_back_or_default(today_presentations_url) }
     end
   end
 
   def edit_feedback
+    store_previous_location
+
     @presentation = Presentation.find(params[:id])
 
     feedbacks = PresentationFeedback.where(:presentation_id => params[:id])
@@ -223,9 +223,6 @@ class PresentationsController < ApplicationController
   def show_feedback
     @presentation = Presentation.find(params[:id])
 
-    if @presentation.has_given_feedback?(current_user)
-      redirect_to edit_feedback_for_presentation_url and return
-    end
 
     unless @presentation.can_view_feedback?(current_user)
       flash[:error] = I18n.t(:not_your_presentation)
