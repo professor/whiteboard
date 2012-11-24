@@ -41,10 +41,11 @@ describe PagesController do
       end
 
       it "should redirect to GET new" do
-        response.should redirect_to(new_page_path)
+        response.should redirect_to(:controller => :pages, :action => :new, :url => @nonexistent_page_id)
       end
 
       it "should prepopulate the requested name" do
+        get :new, :url => @nonexistent_page_id
         assigns(:page).url.should == @nonexistent_page_id
       end
 
