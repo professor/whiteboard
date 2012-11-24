@@ -133,10 +133,6 @@ describe PagesController do
     end
   end
 
-  context "" do
-
-  end
-
 
 
 
