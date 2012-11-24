@@ -33,8 +33,11 @@ class PagesController < ApplicationController
     @page.revert_to(params[:version].to_i) if params[:version]
 
     if @page.blank?
-      flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+      flash[:new_page] = params[:id] 
       redirect_to(pages_url) and return
+      
+      #flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+      #redirect_to(pages_url) and return
     end
 
     unless @page.viewable?(current_user)
@@ -65,6 +68,8 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     @page.course_id = params[:course_id].to_i
+    @page.title = params[:title]
+    @page.url = params[:title]
 #    @courses = Course.all
     @courses = Course.unique_course_names
 
