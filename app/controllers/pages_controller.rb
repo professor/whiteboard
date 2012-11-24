@@ -90,17 +90,16 @@ class PagesController < ApplicationController
     end
 
     now = Time.now
-    editing_started_minutes_ago = ((now - @page.updating_started_at) / 1.minute).round
     if @page.updater_user_id.nil? ||
         @page.updating_started_at.nil?||
-        editing_started_minutes_ago > 30 ||
+        ((now - @page.updating_started_at) / 1.minute).round >= 30 ||
         @page.updater_user_id == current_user.id
       @page.updater_user_id=current_user.id
       @page.updating_started_at=now
       @page.save!
     else
       flash[:notice] = "#{@page.current_updater.human_name} started editing this page
-                        #{pluralize(editing_started_minutes_ago, 'minute')} ago at
+                        #{pluralize(((now - @page.updating_started_at) / 1.minute).round, 'minute')} ago at
                        '#{@page.updating_started_at.getlocal.strftime('%Y-%m-%d %I:%M:%S %p')}'"
     end
 
