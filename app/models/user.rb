@@ -339,16 +339,93 @@ class User < ActiveRecord::Base
 
 # attribute :github
 # If the user has not set this attribute, then ask the user to do so
-  def notify_about_missing_field(attribute, message)
-    if self.send(attribute).blank?
-      options = {:to => self.email,
-                 :subject => "Your user account needs updating",
-                 :message => message,
-                 :url_label => "Modify your profile",
-                 :url => Rails.application.routes.url_helpers.edit_user_url(self, :host => "rails.sv.cmu.edu")
-      }
-      GenericMailer.email(options).deliver
+  def notify_about_missing_field()
+    notification_fields = []
+    self.attributes.each do |key, val|
+      case key
+        when "first_name"
+          if val.nil? 
+            notification_fields << "Preferred First Name"
+          end
+        when "github"
+          if val.nil? 
+            notification_fields << "Github"
+          end
+        when "last_name"
+          if val.nil? 
+            notification_fields << "Last Name"
+          end
+        when "organization_name"
+          if val.nil? 
+            notification_fields << "Organization Company"
+          end
+        when "personal_email"
+          if val.nil? 
+            notification_fields << "Personal Email"
+          end
+        when "pronunciation"
+          if val.nil? 
+            notification_fields << "Pronunciation"
+          end
+        when "skype"
+          if val.nil? 
+            notification_fields << "Skype"
+          end
+        when "strength1_id"
+          if val.nil? 
+            notification_fields << "Strength 1"
+          end
+        when "strength2_id"
+          if val.nil? 
+            notification_fields << "Strength 2"
+          end
+        when "strength3_id"
+          if val.nil? 
+            notification_fields << "Strength 3"
+          end
+        when "strength4_id"
+          if val.nil? 
+            notification_fields << "Strength 4"
+          end
+        when "strength5_id"
+          if val.nil? 
+            notification_fields << "Strength 5"
+          end
+        when "telephone1"
+          if val.nil? 
+            notification_fields << "Telephone"
+          end
+        when "title"
+          if val.nil? 
+            notification_fields << "Organization Title"
+          end
+        when "work_city"
+          if val.nil? 
+            notification_fields << "Work City"
+          end
+        when "work_state"
+          if val.nil? 
+            notification_fields << "Work State"
+          end
+        when "work_country"
+          if val.nil? 
+            notification_fields << "Work Country"
+          end
+        when "user_text"
+          if val =~ /<p>I'd like to accomplish the following three goals (professional or personal) by the time I graduate:<\/p>/
+            notification_fields << "User Text"
+          end
+        when "biography"
+          if val =~ /sheepherders on the hills of BoingBoing/
+            notification_fields << "Biography"
+          end
+        when "local_near_remote"
+          if val == "Unknown" 
+            notification_fields << "Local Near Remote Status"
+          end
+      end
     end
+    notification_fields
   end
 
 

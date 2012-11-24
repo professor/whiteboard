@@ -32,6 +32,12 @@ task :cron do
    puts "----done."
  end
 
+ if Date.today.day == 1 # run on the first on the month
+   puts "----Updating cmu:update_user_profile_email"
+   Rake::Task['cmu:update_user_profile_email'].invoke
+   puts "----done."
+ end
+
  if Date.today.day == 10 || Date.today.day == 15
    puts "----Send cmu:sponsored_projects email"
    Rake::Task['cmu:sponsored_projects:emails_staff_requesting_confirmation_for_allocations'].invoke
