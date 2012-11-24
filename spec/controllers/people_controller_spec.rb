@@ -40,6 +40,42 @@ describe PeopleController do
       end
     end
 
+    describe "check_webiso_account" do
+      it "should return true for an existing webiso account" do
+        get :check_webiso_account, :q => @person1.webiso_account, :format => :json
+        response.should be_success
+
+        json_response = JSON.parse(response.body)
+        json_response["exists"].should == true
+      end
+
+      it "should return false for a non-existing webiso account" do
+        get :check_webiso_account, :q => "not-in-system", :format => :json
+        response.should be_success
+
+        json_response = JSON.parse(response.body)
+        json_response["exists"].should == false
+      end
+    end
+
+    describe "check_email" do
+      it "should return true for an existing email" do
+        get :check_email, :q => @person1.email, :format => :json
+        response.should be_success
+
+        json_response = JSON.parse(response.body)
+        json_response["exists"].should == true
+      end
+
+      it "should return false for a non-existing email" do
+        get :check_email, :q => "not-in-system", :format => :json
+        response.should be_success
+
+        json_response = JSON.parse(response.body)
+        json_response["exists"].should == false
+      end
+    end
+
     describe "GET edit" do
       it "should render edit page" do
         get :edit, :id => @person1.id

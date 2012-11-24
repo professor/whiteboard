@@ -136,7 +136,8 @@ class PeopleController < ApplicationController
   # GET /people/new
   # GET /people/new.xml
   def new
-    authorize! :create, User
+    # TODO(vmarmol): Comment this back in
+    #authorize! :create, User
 
     @person = User.new
     @person.is_active = true
@@ -248,6 +249,43 @@ class PeopleController < ApplicationController
         format.html { render :action => "edit" }
         format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  # Checks whether the specified webiso account already exists.
+  # Expected input is through the q=<account@andrew.cmu.edu> parameter
+  # Output is an object with a single exists property set to whether the account
+  # exists.
+  # Requires user to be able to authenticate same-as-if creating.
+  # GET /people/check_webiso_account
+  def check_webiso_account
+    respond_with_existence User.find_by_webiso_account(params[:q])
+  end
+
+  # Checks whether the specified email account already exists.
+  # Expected input is through the q=<account@andrew.cmu.edu> parameter
+  # Output is an object with a single exists property set to whether the account
+  # exists.
+  # Requires user to be able to authenticate same-as-if creating.
+  # GET /people/check_email
+  def check_email
+    respond_with_existence User.find_by_email(params[:q])
+  end
+
+  # Creates a response from the specified object.
+  # Output is an object with a single exists property set to whether the object
+  # is not nil.
+  def respond_with_existence obj
+    result = {}
+    result[:exists] = !obj.nil?
+
+    respond_to do |format|
+      format.json {
+        render :json => result
+      }
+      format.xml {
+        render :xml => result, :status => 200
+      }
     end
   end
 

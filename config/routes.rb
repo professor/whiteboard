@@ -86,6 +86,8 @@ CMUEducation::Application.routes.draw do
   resources :effort_reports
   match '/people_autocomplete' => 'people#index_autocomplete'
   match '/people/class_profile' => 'people#class_profile'
+  match '/people/check_email' => 'people#check_email'
+  match '/people/check_webiso_account' => 'people#check_webiso_account'
   match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'
   match '/people/:id/my_courses_verbose' => 'people#my_courses_verbose', :as => :my_courses
