@@ -351,6 +351,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Send email reminder to user.
+  #
+  # ==== Attributes
+  #
+  # * +subject+ - Subject of the email like "Friendly reminder".
+  # * +message+ - Message preceding the urls "Please update the following urls:".
+  # * +urls+ - Hash containing details about the urls to include like
+  #   "{url_1 => url_label_1, url_2 => url_label_2}".
+  def send_reminder(subject, message, urls)
+    options = {:to => self.email,
+               :subject => subject,
+               :message => message,
+               :urls => urls
+    }
+    ReminderMailer.email(options).deliver
+  end
 
   protected
   def person_before_save

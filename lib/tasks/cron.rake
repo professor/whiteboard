@@ -30,6 +30,10 @@ task :cron do
    Rake::Task['cmu:sponsored_projects:monthly_copy_to_sponsored_project_effort'].invoke
    Rake::Task['cmu:sponsored_projects:emails_staff_requesting_confirmation_for_allocations'].invoke
    puts "----done."
+
+   puts "----Running cmu:send_reminders"
+   Rake::Task['cmu:send_reminders'].invoke
+   puts "----done."
  end
 
  if Date.today.day == 10 || Date.today.day == 15
