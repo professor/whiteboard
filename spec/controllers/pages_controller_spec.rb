@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe PagesController do
+  
+  render_views
 
   before(:each) do
     Page.any_instance.stub(:update_search_index)
@@ -46,6 +48,26 @@ describe PagesController do
         get :edit, :id => @page.to_param
       end
       it_should_behave_like "finding page"
+    end
+    
+    describe "GET show with non-exist page" do
+      before :each do
+        @page_name = 'some_new_page_i_made_up'
+      end
+      
+      it "redirects to the pages index" do
+        get :show, :id => @page_name
+        response.code.should == "302"
+        response.should redirect_to(pages_url)
+        flash[:new_page].should == @page_name
+      end
+      
+      it "new should handle the title GET parameter and assign it to page title and page url" do
+        get :new, :title => @page_name
+        response.code.should == "200"
+        assigns(:page).title.should == @page_name
+        assigns(:page).url.should == @page_name
+      end
     end
   end
 
