@@ -136,8 +136,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   # GET /people/new.xml
   def new
-    # TODO(vmarmol): Comment this back in
-    #authorize! :create, User
+    authorize! :create, User
 
     @person = User.new
     @person.is_active = true
