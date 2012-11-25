@@ -169,6 +169,82 @@ class PeerEvaluationController < ApplicationController
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
+  def complete_evaluation_update
+    @questions = @@questions
+
+    @team = Team.find(params[:id])
+    @users = @team.members
+
+    @author = User.find(current_user.id)
+
+    if (params[:peer_evaluation_review])
+      field_id    = params[:peer_evaluation_review].first[0].to_i
+      question_id = field_id % @questions.size
+      question    = @questions[question_id]
+      user_id     = (field_id / (@users.size.to_i + 1)).ceil
+      user        = @users[user_id]
+      @evaluation = nil
+      if question && question_id && user.id && @author.id && @team.id
+        @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => user.id, :team_id => @team.id, :question => question).first
+        
+        if @evaluation.nil?
+           @evaluation = PeerEvaluationReview.new(
+                  :author_id => @author.id,
+                  :recipient_id => user.id,
+                  :team_id => @team.id,
+                  :question => question,
+                  :answer => params[:peer_evaluation_review][field_id.to_s][:answer],
+                  :sequence_number => question_id
+              )
+        else
+          @evaluation.answer = params[:peer_evaluation_review][field_id.to_s][:answer]
+        end
+        @evaluation.save!
+      end
+    end
+
+    alloc_answer = ""
+    if (params[:allocations] && params[:allocations].first && params[:allocations].first[0])
+      user_position = params[:allocations].first[0]
+      user = @users[user_position.to_i]
+      allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
+      user_allocs = []
+
+      if (allocation.nil?)
+        alloc_answer << user.human_name + ":" + params[:allocations][user_position] + " "
+        allocation = PeerEvaluationReview.new(
+            :author_id => @author.id,
+            :team_id => @team.id,
+            :question => @@point_allocation,
+            :answer => alloc_answer,
+            :sequence_number => user_position
+        )
+      else
+        # pull the string out of the database and parse it into an array
+        # keeping the users in order
+        match_array = allocation.answer.scan /((\w| )*):(\d*)\s*/
+        match_array.each_with_index do |match, index|
+          name = match[0]
+          points = match[2]
+          user_positions = @users.map{|u| u.human_name == name}
+          user_allocs[user_positions.index(true)] = {name => points}
+        end
+        # update the values for the value given via ajax in the correct position and make it a string again
+        user_allocs[user_position.to_i] = {user.human_name => params[:allocations][user_position]}
+        user_allocs.each do |user_alloc|
+          unless user_alloc.nil?
+          alloc_answer << user_alloc.first[0] + ":" + user_alloc.first[1] + " "
+          end
+        end
+
+        allocation.answer = alloc_answer
+      end
+      allocation.save!
+    end
+
+    render :nothing => true
+  end
+
   def edit_report
     if has_permissions_or_redirect(:staff, root_path)
       @team = Team.find(params[:id])
