@@ -257,7 +257,7 @@ class PeopleController < ApplicationController
   # exists.
   # Requires user to be able to authenticate same-as-if creating.
   # GET /people/check_webiso_account
-  def check_webiso_account
+  def ajax_check_if_webiso_account_exists
     respond_with_existence User.find_by_webiso_account(params[:q])
   end
 
@@ -267,7 +267,7 @@ class PeopleController < ApplicationController
   # exists.
   # Requires user to be able to authenticate same-as-if creating.
   # GET /people/check_email
-  def check_email
+  def ajax_check_if_email_exists
     respond_with_existence User.find_by_email(params[:q])
   end
 

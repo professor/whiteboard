@@ -73,7 +73,7 @@
         function check_email() {
           var email = document.forms["new_user"].user_email.value;
           var node = $('#email_warning');
-          $.getJSON('<%=people_path%>/check_email.json?q=' + email, function(data) {
+          $.getJSON('<%=people_path%>/ajax_check_if_email_exists.json?q=' + email, function(data) {
             clear_or_display_account_error(node, email, data);
           });
           add_loader(node, 'Checking email...');
@@ -91,7 +91,7 @@
 
           // Async check for duplicate webiso accounts
           var node = $('#webiso_account_warning');
-          $.getJSON('<%=people_path%>/check_webiso_account.json?q=' + email, function(data) {
+          $.getJSON('<%=people_path%>/ajax_check_if_webiso_account_exists.json?q=' + email, function(data) {
             clear_or_display_account_error(node, email, data);
           });
           add_loader(node, 'Checking account...');
