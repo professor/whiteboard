@@ -5,10 +5,16 @@
 
     <%= javascript_tag do %>
         $(function() {
-        $("#user_expires_at").datepicker({
-        showButtonPanel: true,
-        dateFormat: 'yy-mm-dd'
-        });
+          $("#user_expires_at").datepicker({
+            showButtonPanel: true,
+            dateFormat: 'yy-mm-dd'
+          });
+
+          // Do auto checks in case there is pre-populated data
+          update_twiki_and_email();
+          check_email();
+          check_webiso_account();
+          update_graduation_year();
         });
     <% end %>
 
@@ -37,6 +43,11 @@
         function update_twiki_and_email() {
           var first_name = document.forms["new_user"].user_first_name.value;
           var last_name = document.forms["new_user"].user_last_name.value;
+
+          // Do nothing in an empty update
+          if (first_name == "" && last_name == "") {
+            return;
+          }
 
           // TWiki - user names MJLee must be renamed to MjLee
           var twiki_name = capitalize(remove_hyphens(first_name)) + capitalize(remove_hyphens(last_name));
@@ -72,6 +83,12 @@
         // Checks whether the specified email address is already in use.
         function check_email() {
           var email = document.forms["new_user"].user_email.value;
+
+          // Do nothing in an empty check
+          if (email == "") {
+            return;
+          }
+
           var node = $('#email_warning');
           $.getJSON('<%=people_path%>/ajax_check_if_email_exists.json?q=' + email, function(data) {
             clear_or_display_account_error(node, email, data);
@@ -82,6 +99,11 @@
         // Checks whether the specified webiso accoutn is already in use
         function check_webiso_account() {
           var email = document.forms["new_user"].user_webiso_account.value
+
+          // Do nothing in an empty check
+          if (email == "") {
+            return;
+          }
 
           // Adds an "@andrew.cmu.edu" to the webiso_account field if it doesn't already exist.
           if (email != "" && !ends_with(email, "@andrew.cmu.edu")) {
