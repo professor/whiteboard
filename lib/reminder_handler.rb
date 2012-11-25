@@ -1,17 +1,18 @@
 # Module responsible for handling reminders that need to be sent out to users
 module ReminderHandler
 
-  # Send the user a reminder to update pages. Reminders are only sent if the
-  # page was last updated by the user before the specified date. If the user
-  # updated multiple pages before this date, only one email will be sent
-  # containing urls to all the pages that need to be updated.
+  # Send users a reminder to update pages. Reminders are only sent if the
+  # page was last updated by the user on this day and month in previous years.
+  # If the user updated multiple pages on that day, only one email will be sent
+  # containing urls to all the pages that need to be updated. Reminders for pages
+  # that were last updated on Feb 29th in previous years will be sent out on Feb 28
   #
   # ==== Attributes
   #
-  # * +updated_before+ - Reminders will only be sent if the page was last
-  #   updated before this date.
-   def self.send_page_update_reminders (updated_before)
-    pages_to_update_by_user_id(updated_before).each do |u_id, pages|
+  # * +ref_time+ - Time value used for reference. Reminders will only be sent if the
+  #   page was last updated on this day and month but in previous years.
+   def self.send_page_update_reminders ref_time
+    pages_to_update_by_user_id(ref_time).each do |u_id, pages|
       subject = "Some pages need your attention"
       message = "I noticed that you were the last one to update #{pages.length > 1 ? "these pages" : "this page"}. "
       message += "Please take a few minutes to update #{pages.length > 1 ? "them" : "it"} again."
@@ -23,18 +24,28 @@ module ReminderHandler
   end
 
   # Creates a hash to keep track of pages last updated by a user. Pages that
-  # were last updated before the specified date get added to the hash. The
-  # key is the ID of the user and the value is an array of page records that
+  # were last updated on this day and month in previous years get added to the hash.
+  # The key is the ID of the user and the value is an array of page records that
   # were last updated by that user.
   #
   # ==== Attributes
   #
-  # * +updated_before+ - Pages that were last updated before this date get
-  #   added to the hash.
-  def self.pages_to_update_by_user_id updated_before
+  # * +ref_time+ - Time value used for reference. Reminders will only be sent if the
+  #   page was last updated on this day and month but in previous years.
+  def self.pages_to_update_by_user_id ref_time
     pages_by_u_id = {}
     Page.all.each do |page|
-      next unless page.updated_at < updated_before
+      next if page.updated_at.nil?
+
+      # If page was updated on Feb 29, then use Feb 28 instead for comparison.
+      m = page.updated_at.month
+      d = (m == 2 && page.updated_at.day == 29) ? 28 : page.updated_at.day
+      y = page.updated_at.year
+
+      # Select pages that were updated on 'd' day and 'm' month in previous years
+      next unless (d == ref_time.day &&
+                   m == ref_time.month &&
+                   y < ref_time.year)
 
       pages_by_u_id[page.updated_by_user_id] ||= []
       pages_by_u_id[page.updated_by_user_id] << page

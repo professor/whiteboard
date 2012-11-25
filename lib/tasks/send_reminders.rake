@@ -6,6 +6,6 @@ namespace :cmu do
   task :send_reminders => :environment do
 
     # Send reminders to update pages that haven't been updated in a while
-    ReminderHandler.send_page_update_reminders(1.year.ago)
+    ReminderHandler.send_page_update_reminders(Time.now)
   end
 end
