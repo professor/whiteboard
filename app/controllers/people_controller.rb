@@ -279,12 +279,8 @@ class PeopleController < ApplicationController
     result[:exists] = !obj.nil?
 
     respond_to do |format|
-      format.json {
-        render :json => result
-      }
-      format.xml {
-        render :xml => result, :status => 200
-      }
+      format.json { render :json => result }
+      format.xml { render :xml => result, :status => 200 }
     end
   end
 
