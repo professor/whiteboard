@@ -5,10 +5,23 @@
 
     <%= javascript_tag do %>
         $(function() {
-        $("#user_expires_at").datepicker({
-        showButtonPanel: true,
-        dateFormat: 'yy-mm-dd'
-        });
+          $("#user_expires_at").datepicker({
+            showButtonPanel: true,
+            dateFormat: 'yy-mm-dd'
+          });
+
+          // Create TWiki and email from any pre-populated data
+          if (document.forms["new_user"].user_first_name.value != "" || document.forms["new_user"].user_last_name.value) {
+            update_twiki_and_email();
+          }
+
+          // Check accounts if they are non-empty
+          if (document.forms["new_user"].user_email.value != "") {
+            check_email();
+          }
+          if (document.forms["new_user"].user_webiso_account.value != "") {
+            check_webiso_account();
+          }
         });
     <% end %>
 
