@@ -361,7 +361,10 @@ function customize_display()
 
     //execute_search(construct_query_sting());
     
-    // Resize the height of data_card
+    // Resize the height of data_card and photo
+    $(".data_card.photo_card .data_card_photo").each( function(){
+        $(this).css('height', $(this).width()*19/14 );
+    });
     if(DATACARD_MODE == "photo_card"){
       var max_height = 0;
       $(".data_card.photo_card").each( function(){
@@ -554,8 +557,6 @@ $(document).ready(function(){
         //execute_search(construct_query_sting());
         $(this).val('default');
     });
-
-
 
     // NEED TO BE REFACTORED AFTER UI CHANGE
     // fade out main criteria tag when click on x

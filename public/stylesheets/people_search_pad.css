@@ -1,0 +1,4 @@
+#wrapper, #pageHeader { width: auto;}
+#navWrapper, #pageFooter { display: none;}
+#topnav, #contentWrapper, #footer { margin: 0; }
+#main {background-image: none;}
