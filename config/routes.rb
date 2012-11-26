@@ -33,6 +33,7 @@ CMUEducation::Application.routes.draw do
   match '/effort_logs/effort_for_unregistered_courses' => 'effort_logs#effort_for_unregistered_courses'
   resources :effort_logs
   resources :effort_log_line_items
+  resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
 

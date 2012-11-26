@@ -128,44 +128,23 @@ describe Grade do
   end
 
   it "should be able to give final grades" do
-    score = "10"
+    score = "A"
     Grade.give_grade(@course_fse.id, -1, @student_sam.id, score).should be_true
-    Grade.find_by_assignment_id_and_student_id(-1, @student_sam.id).score.should eq(score)
   end
 
-  #it 'should be able to save changed scores as draft' do
-  #  grades = []
-  #  [@assignment_1, @assignment_2].each do |assignment|
-  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
-  #  end
-  #  Grade.give_grades(grades)
-  #  Grade.save_as_draft(grades)
-  #  grades.each do |grade_entry|
-  #    Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
-  #  end
-  #end
+  it "should encrypt final grades" do
+    raw_score = "A"
+    if Grade.give_grade(@course_fse.id, -1, @student_sam.id, raw_score)
+      grade = Grade.get_grade(-1, @student_sam.id)
+      grade.score.should_not eq(raw_score)
+    end
+  end
 
-  #it 'should be able to save changed scores in one assignment' do
-  #  grades = []
-  #  [@assignment_1, @assignment_2].each do |assignment|
-  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
-  #  end
-  #  Grade.give_grades(grades)
-  #  Grade.save_as_draft(grades)
-  #  grades = []
-  #  [@assignment_1, @assignment_2].each do |assignment|
-  #    grades << {:assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "20" }
-  #  end
-  #  Grade.post_grades_for_one_assignment(grades, @assignment_1.id)
-  #  grades.each do |grade_entry|
-  #    if grade_entry[:assignment_id] == @assignment_1.id
-  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should eq("20")
-  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_true
-  #    else
-  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).score.should_not eq("20")
-  #      Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).is_student_visible.should be_false
-  #    end
-  #  end
-  #end
-
+  it "should be able to decrypt final grades" do
+    final_score = "A"
+    if Grade.give_grade(@course_fse.id, -1, @student_sam.id, final_score)
+      grade = Grade.get_grade(-1, @student_sam.id)
+      grade.decrypt_grade(grade.score).should eq(final_score)
+    end
+  end
 end
