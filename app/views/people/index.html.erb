@@ -2,6 +2,8 @@
 
 <% content_for :people_search do %>
     <%= stylesheet_link_tag 'people_search', :media => "screen", :rel => "stylesheet" %>
+    <%= stylesheet_link_tag 'people_search_pad', :media => "only screen and (min-width: 641px) and (max-width: 800px)", :rel => "stylesheet" %>
+    <%= stylesheet_link_tag 'people_search_phone', :media => "handheld, only screen and (max-width: 640px)", :rel => "stylesheet" %>
     <%= javascript_include_tag 'people_search' %>
 <% end %>
 

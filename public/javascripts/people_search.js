@@ -360,7 +360,10 @@ function customize_display()
 
     //execute_search(construct_query_sting());
     
-    // Resize the height of data_card
+    // Resize the height of data_card and photo
+    $(".data_card.photo_card .data_card_photo").each( function(){
+        $(this).css('height', $(this).width()*19/14 );
+    });
     if(DATACARD_MODE == "photo_card"){
       var max_height = 0;
       $(".data_card.photo_card").each( function(){
@@ -522,6 +525,9 @@ $(document).ready(function(){
         $(this).val('default');
     });
 
+    $('#main_criteria_picker').change(function() {
+      console.log("test");
+    });
     // NEED TO BE REFACTORED AFTER UI CHANGE
     // fade out main criteria tag when click on x
     /*$('#main_criteria_box').on("click", ".criteria_tag a", function(){
