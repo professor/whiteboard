@@ -1,7 +1,6 @@
 FactoryGirl.define do
 
   factory :admin_andy_user, :parent => :user do
-    sequence(:id)
     email "admin.andy@sv.cmu.edu"
     webiso_account "andy@andrew.cmu.edu"
     is_staff true
@@ -13,7 +12,6 @@ FactoryGirl.define do
   end
 
   factory :student_sam_user, :parent => :user do
-    sequence(:id)
     email "student.sam@sv.cmu.edu"
     webiso_account "sam@andrew.cmu.edu"
     is_student true
@@ -25,7 +23,6 @@ FactoryGirl.define do
   end
 
   factory :student_sally_user, :parent => :user do
-    sequence(:id)
     email "student.sally@sv.cmu.edu"
     webiso_account "sally@andrew.cmu.edu"
     is_student true
@@ -37,7 +34,6 @@ FactoryGirl.define do
   end
 
   factory :faculty_frank_user, :parent => :user do
-    sequence(:id)
     email "faculty.frank@sv.cmu.edu"
     webiso_account "frank@andrew.cmu.edu"
     is_staff true
@@ -48,7 +44,6 @@ FactoryGirl.define do
   end
 
   factory :faculty_fagan_user, :parent => :user do
-    sequence(:id)
     email "faculty.fagan@sv.cmu.edu"
     webiso_account "fagan@andrew.cmu.edu"
     is_staff true
@@ -59,7 +54,6 @@ FactoryGirl.define do
   end
 
   factory :contracts_manager_user, :parent => :user do
-    sequence(:id)
     email "ngoc.ho@sv.cmu.edu"
     webiso_account "ngocho@andrew.cmu.edu"
     is_staff true

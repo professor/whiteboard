@@ -21,7 +21,7 @@ describe PresentationsController do
 
     describe "GET index" do
       it "should return the index page with the presentations variable listed in descending order" do
-        FactoryGirl.create(:presentation_two, :presentation_date => Date.today)
+        FactoryGirl.create(:presentation_for_team_bean_counters, :presentation_date => Date.today)
         get :index
         presentations = assigns :presentations
         presentations.length.should == 2
