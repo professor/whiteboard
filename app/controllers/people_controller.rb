@@ -141,19 +141,22 @@ class PeopleController < ApplicationController
   end
 
   # GET /people/download_csv
-  def download_csv
+def download_csv
     @people = return_search_results(params[:filterBoxOne])
     respond_to do |format|
       format.csv do
         csv_string = CSV.generate do |csv|
-          csv << ["Name","Given Name","Additional Name","Family Name","Yomi Name","Given Name Yomi","Additional Name Yomi","Family Name Yomi","Name Prefix","Name Suffix","Initials","Nickname","Short Name","Maiden Name","Birthday","Gender","Location","Billing Information","Directory Server","Mileage","Occupation","Hobby","Sensitivity","Priority","Subject","Notes","Group Membership","E-mail 1 - Type","E-mail 1 - Value","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value"]
+          csv << ["Name","Given Name","Additional Name","Family Name","Yomi Name","Given Name Yomi","Additional Name Yomi","Family Name Yomi","Name Prefix","Name Suffix","Initials","Nickname","Short Name","Maiden Name","Birthday","Gender","Location","Billing Information","Directory Server","Mileage","Occupation","Hobby","Sensitivity","Priority","Subject","Notes","Group Membership","E-mail 1 - Type","E-mail 1 - Value","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value","Organization 1 - Type", "Organization 1 - Name", "Organization 1 - Yomi Name", "Organization 1 - Title", "Organization 1 - Department", "Organization 1 - Symbol", "Organization 1 - Location", "Organization 1 - Job Description"]
 
           @people.each do |user|
+            org = user.organization_name.nil? ? "" : user.organization_name
+            title = user.title.nil? ? "" : user.title
             csv << [user.first_name,user.first_name,"",user.last_name,"","","","","","","","","","","","","","","","","","","","","","","","other",user.email,
                 csv_name_converter(user.telephone1_label),user.telephone1,
                 csv_name_converter(user.telephone2_label),user.telephone2,
                 csv_name_converter(user.telephone3_label),user.telephone3,
-                csv_name_converter(user.telephone4_label),user.telephone4]
+                csv_name_converter(user.telephone4_label),user.telephone4,
+                "",org,"",title,"","","",""]
           end
         end
 
@@ -180,7 +183,9 @@ class PeopleController < ApplicationController
         end
 
         phones_hash = user.telephones_hash
-        maker.add_email(user.email)
+        maker.add_email(user.email) { |e| e.location = 'work' }
+        maker.title = user.title unless user.title.nil?
+        maker.org = user.organization_name unless user.organization_name.nil?
         phones_hash.each do |k,v|
           maker.add_tel(v) do |tel|
             tel.location = "work" if k == "Work"
@@ -192,7 +197,8 @@ class PeopleController < ApplicationController
         end
       end
 
-      vcard_str<<card.to_s
+      vcard_str << card.to_s
+
     end
 
 

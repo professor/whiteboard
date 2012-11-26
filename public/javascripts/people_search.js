@@ -197,11 +197,11 @@ function show_box(){
             title: 'Export Contacts',
             buttons:{
                 "CSV":function(){
-                    window.location.href='http://localhost:3000/people_csv.csv?filterBoxOne='+boxValue;
+                    window.location.href='people_csv.csv?filterBoxOne='+boxValue;
                     $(this).dialog("close");
                 },
                 "vCard":function(){
-                    window.location.href='http://localhost:3000/people_vcf?filterBoxOne='+boxValue;
+                    window.location.href='people_vcf?filterBoxOne='+boxValue;
                     $(this).dialog("close");
                 }
             }
