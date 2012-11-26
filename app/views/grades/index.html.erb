@@ -20,18 +20,19 @@
     $("tr[id^='s_']").each(function(){
       var student_id = $(this).attr("id").replace("s_","");
       grades.earned_grade(student_id);    
-      grades.updateFinalGrade(student_id);
+//      grades.updateFinalGrade(student_id);
     });
 
   });
   function change_grade(event){
+      console.log("change");
     var grade_attrs = parse_id($(event.target).attr('id'));
     var score = $(event.target).val();
     var previousValue = event.target.defaultValue;
     var visible = !$(event.target).hasClass("draft");
     var previousVisible = $(event.target).hasClass("default_draft")?false:true;
     grades.earned_grade(grade_attrs.student_id);
-    grades.updateFinalGrade(grade_attrs.student_id);
+//    grades.updateFinalGrade(grade_attrs.student_id);
     if(previousValue != score || visible != previousVisible)
     {
       $(event.target).addClass("changedScore");
@@ -64,6 +65,7 @@
       post_grades('<%=post_drafted_and_send_path(@course)%>');
 
   }
+
   function save() {
       post_grades('<%=save_path(@course)%>');
   }
@@ -161,49 +163,49 @@
             </td>
           <% end %>
         </tr>
-        </thead>
+      </thead>
 
-        <input type="hidden" id="course_id" value=<%=@course.id%> />
-        <% @grades.each do |student, grade_entries| %>
-          <tr id="s_<%=student.id%>">
-            <td><%=student.first_name%>
-            </td>
-            <td><%=student.last_name%></td>
-            <td><%=@team_assignment[student.id].try(:name) || "" %></td>
-            <% @assignments.each do |assignment|%>
-              <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
-                <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>" 
-                       value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
-                       type="text" size="4" width="100%" onchange="change_grade(event);" 
-                       class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
-              </td>
-            <% end %>
-            <td class='earned'></td>
-            <td class='final grade'>
-              <input id="<%= @course.id %>_final_<%=student.id%>"
-                     value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
-                     type="text" size="4" width="100%" onchange="change_grade(event);"
-                     class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
-             </td>
-          </tr>
-        <%end%>
-      </table>
-
-        <%= form_tag({:action => :import}, :multipart => true) do %>
-            <%= file_field_tag 'xls_file' %>
-            <%= submit_tag 'Import' %>
+      <input type="hidden" id="course_id" value=<%=@course.id%> />
+      <% @grades.each do |student, grade_entries| %>
+      <tr id="s_<%=student.id%>">
+        <td><%=student.first_name%></td>
+        <td><%=student.last_name%></td>
+        <td><%=@team_assignment[student.id].try(:name) || "" %></td>
+        <% @assignments.each do |assignment|%>
+          <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
+            <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
+                   value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
+                   type="text" size="4" width="100%" onchange="change_grade(event);"
+                   class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
+          </td>
         <% end %>
-
-        <% form_for :dump, :url=>{:controller=>"grades",
-                                  :action=>"import"}, :html => { :multipart => true } do |f| -%>
-            Select an Excel File :
-            <%= f.file_field :xls_file -%>
-            <%= submit_tag 'Submit' -%>
-        <% end %>
-
-        <button type="button" id="gradebook_submit" onclick="save()">Save</button>
-        <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
-      </div>
-
+        <td class='earned'></td>
+        <td class='final grade'>
+          <input id="<%= @course.id %>_final_<%=student.id%>"
+                 value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
+                 type="text" size="4" width="100%" onchange="change_grade(event);"
+                 class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
+         </td>
+      </tr>
+      <%end%>
+    </table>
+    <div>
+    <button type="button" id="gradebook_submit" onclick="save()">Save</button>
+    <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
+    </div>
+    <div>
+      <h2>Import Grade Book</h2>
+      <% form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
+        <%= f.file_field :spreadsheet -%>
+        <%= submit_tag 'Import' -%>
+      <% end %>
+    </div>
+    <div>
+      <h2>Export Grade Book</h2>
+      <% form_for :export, :url=>{:controller=>"grades", :action=>"export"}, :html => { :multipart => true } do |f| %>
+        <%= f.file_field :spreadsheet -%>
+        <%= submit_tag 'Export' -%>
+      <% end %>
+    </div>
   </div>
 
