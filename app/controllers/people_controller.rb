@@ -538,7 +538,7 @@ def download_csv
       end
       return @people.uniq
     else
-      User.where("human_name ILIKE ? ", "%#{search_query}%").order("first_name ASC, last_name ASC")
+      search_more_db_fields
     end
   end
 
@@ -599,6 +599,7 @@ def download_csv
     people = people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
     people = people.order("first_name ASC, last_name ASC")
   end
+  
   def search_name_fields
     priority_results = User.scoped
     if !params[:filterBoxOne].blank?
