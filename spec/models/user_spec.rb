@@ -277,4 +277,23 @@ describe User do
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student
 
+  context "reminders" do
+    before(:each) do
+      @page = FactoryGirl.create(:ppm, updated_by_user_id: @faculty_frank.id)
+      @subject = "User reminder"
+      @message = "User reminder message"
+      @urls = {"http://whiteboard.sv.cmu.edu" => @page.title}
+    end
+
+    it "should include user as one of the recipients" do
+      email = @faculty_frank.send_reminder(@subject, @message, @urls)
+      email.to.should include(@faculty_frank.email)
+    end
+
+    it "should send email" do
+      expect { @faculty_frank.send_reminder(@subject, @message, @urls)
+             }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
 end

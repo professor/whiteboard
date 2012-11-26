@@ -41,4 +41,5 @@ task :cron do
   #Run every day
   Rake::Task['cmu:please_do_peer_evaluation_email'].invoke
   Rake::Task['cmu:rss'].invoke
+  Rake::Task['cmu:send_reminders'].invoke
 end

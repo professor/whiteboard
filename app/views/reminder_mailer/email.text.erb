@@ -1,0 +1,10 @@
+<%= @message %>
+
+<% unless @urls.nil? %>
+    <%= @urls.each { |url, url_label| link_to url_label, url } %>
+<% end %>
+
+Patrolling the campus,
+Scotty Dog
+
+<%= image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %>
