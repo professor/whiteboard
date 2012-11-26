@@ -10,8 +10,11 @@
                    method: "ajax",
                    // Any option that jQuery.ajax accepts can go here
                    options: {
-                       type: "POST",
-                       url: "/peer_evaluation/complete_evaluation_update?id=<%= @team.id %>"
+                        type: "POST",
+                        url: "/peer_evaluation/complete_evaluation_update?id=<%= @team.id %>",
+                        error: function() {
+                            alert("Autosave Failed!");
+                        }
                    }
                }
            }

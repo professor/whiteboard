@@ -169,7 +169,7 @@ class PeerEvaluationController < ApplicationController
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
-  def complete_evaluation_update
+  def complete_evaluation_update    
     @questions = @@questions
 
     @team = Team.find(params[:id])
@@ -199,7 +199,10 @@ class PeerEvaluationController < ApplicationController
         else
           @evaluation.answer = params[:peer_evaluation_review][field_id.to_s][:answer]
         end
-        @evaluation.save!
+        unless @evaluation.save!
+          head :internal_server_error
+          return
+        end
       end
     end
 
@@ -239,7 +242,10 @@ class PeerEvaluationController < ApplicationController
 
         allocation.answer = alloc_answer
       end
-      allocation.save!
+      unless allocation.save!
+          head :internal_server_error
+          return
+        end
     end
 
     render :nothing => true
