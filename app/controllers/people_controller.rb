@@ -61,54 +61,8 @@ class PeopleController < ApplicationController
   # Number of requesting coming in here is controlled through a javascript timer
   # (see js in views/people/index.html.erb for more details.)
   def search
-
-
-
-    @people = User.scoped
-
-    # check user_type
-    # user_type - F => Faculty
-    # user_type - S => Students
-    # user_type - T => Staff
-    if !params[:user_type].blank?
-        where_clause_string = ""
-        if params[:user_type].include? "F" or params[:user_type].include? "S"  or params[:user_type].include? "T"
-        # if (params[:user_type] =~ /[FST]/) == 0
-            where_clause_string << "("
-            where_clause_string << " is_faculty = 't' OR " if params[:user_type].include?("F")
-            where_clause_string << " is_student = 't' OR " if params[:user_type].include?("S")
-            where_clause_string << " is_staff = 't' OR " if params[:user_type].include?("T")
-            # remove last OR
-            where_clause_string= where_clause_string[0..-4]
-            where_clause_string << ")"
-        end
-        @people = @people.where(where_clause_string) unless where_clause_string.blank?
-        # user_type - P => Part Time students
-        @people = @people.where("is_part_time = 't'") if params[:user_type].include?("P")
-        # user_type - L => Full Time students
-        @people = @people.where("is_part_time = 'f'") if params[:user_type].include?("L")
-    end
-
-
-    # search more db fields
-    if !params[:filterBoxOne].blank?
-      params[:filterBoxOne].split.each do |query|
-        query = '%'+query+'%'
-        @people = @people.where( "human_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR title ILIKE ? OR webiso_account ILIKE ? OR organization_name ILIKE ? OR personal_email ILIKE ? OR work_city ILIKE ? OR work_state ILIKE ? OR work_country ILIKE ?",query, query, query, query, query,query,query, query, query, query)
-      end
-    end
-
-    @people = @people.where("graduation_year = ?","#{params[:graduation_year]}") unless params[:graduation_year].blank?
-    @people = @people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
-    @people = @people.where("is_active = 't'") unless params[:search_inactive] == 't'
-    @people = @people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
-    # @people.scoped(:joins => :registrations , :conditions => { :registrations => { :course_id => 1 } }).to_sql
-    @people = @people.order("first_name ASC, last_name ASC")
-
-    # @people = User.where("human_name ILIKE ? ", "%#{params[:filterBoxOne]}%").order("first_name ASC, last_name ASC")
-     # potentially refactot the below
-     # @people = return_search_results(params[:filterBoxOne])
-
+    @people = search_more_db_fields
+    priority_results = search_name_fields
 
     @people_hash = @people.collect do |person|
       # program the user is enrolled in
@@ -125,14 +79,15 @@ class PeopleController < ApplicationController
         program += 'Staff'
       end
       # constructing Hash/json containing results
-      Hash["id" => person.twiki_name,
-           "first_name" => person.first_name,
-           "last_name" => person.last_name,
-           "image_uri" => person.image_uri,
-           "program" => program,
-           "contact_dtls" => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
-           "email" => person.email,
-           "path" => person_path(person)
+      Hash[:id => person.twiki_name,
+           :first_name => person.first_name,
+           :last_name => person.last_name,
+           :image_uri => person.image_uri,
+           :program => program,
+           :contact_dtls => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
+           :email => person.email,
+           :path => person_path(person),
+           :priority => priority_results.include?(person.id)
       ]
     end
     respond_to do |format|
@@ -596,6 +551,57 @@ class PeopleController < ApplicationController
       else
         return ""
     end
+  end
+
+  def search_more_db_fields
+    people = User.scoped
+    # check user_type
+    # user_type - F => Faculty
+    # user_type - S => Students
+    # user_type - T => Staff
+    if !params[:user_type].blank?
+        where_clause_string = ""
+        if params[:user_type].include? "F" or params[:user_type].include? "S"  or params[:user_type].include? "T"
+        # if (params[:user_type] =~ /[FST]/) == 0
+            where_clause_string << "("
+            where_clause_string << " is_faculty = 't' OR " if params[:user_type].include?("F")
+            where_clause_string << " is_student = 't' OR " if params[:user_type].include?("S")
+            where_clause_string << " is_staff = 't' OR " if params[:user_type].include?("T")
+            # remove last OR
+            where_clause_string= where_clause_string[0..-4]
+            where_clause_string << ")"
+        end
+        people = people.where(where_clause_string) unless where_clause_string.blank?
+        # user_type - P => Part Time students
+        people = people.where("is_part_time = 't'") if params[:user_type].include?("P")
+        # user_type - L => Full Time students
+        people = people.where("is_part_time = 'f'") if params[:user_type].include?("L")
+    end
+
+
+    # search more db fields
+    if !params[:filterBoxOne].blank?
+      params[:filterBoxOne].split.each do |query|
+        query = '%'+query+'%'
+        people = people.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR title ILIKE ? OR webiso_account ILIKE ? OR organization_name ILIKE ? OR personal_email ILIKE ? OR work_city ILIKE ? OR work_state ILIKE ? OR work_country ILIKE ?",query, query, query, query, query,query,query, query, query, query, query,query)
+      end
+    end
+
+    people = people.where("graduation_year = ?","#{params[:graduation_year]}") unless params[:graduation_year].blank?
+    people = people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
+    people = people.where("is_active = 't'") unless params[:search_inactive] == 't'
+    people = people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
+    people = people.order("first_name ASC, last_name ASC")
+  end
+  def search_name_fields
+    priority_results = User.scoped
+    if !params[:filterBoxOne].blank?
+      params[:filterBoxOne].split.each do |query|
+        query = '%'+query+'%'
+        priority_results = priority_results.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ?",query, query, query)
+      end
+    end
+    priority_results = priority_results.collect{ |result| result.id }
   end
 
 end
