@@ -34,6 +34,26 @@ describe PagesController do
       it_should_behave_like "finding page"
     end
 
+    describe "when requesting a page that does not exist" do
+      before do
+        @nonexistent_page_id = "some_page"
+        get :show, :id => @nonexistent_page_id
+      end
+
+      it "should redirect to GET new" do
+        response.should redirect_to(:controller => :pages, :action => :new, :url => @nonexistent_page_id)
+      end
+
+      it "should prepopulate the requested name" do
+        get :new, :url => @nonexistent_page_id
+        assigns(:page).url.should == @nonexistent_page_id
+      end
+
+      it "should display a helpful message" do
+        flash[:error].should == "Page with an id of #{@nonexistent_page_id} is not in this system. You may create it using the form below."
+      end
+    end
+
     describe "GET new" do
       it "assigns a new page as page" do
         get :new
@@ -47,6 +67,7 @@ describe PagesController do
       end
       it_should_behave_like "finding page"
     end
+
   end
 
   context "as a student can" do
