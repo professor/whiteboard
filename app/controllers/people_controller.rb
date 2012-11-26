@@ -139,8 +139,13 @@ def download_csv
         end
 
         phones_hash = user.telephones_hash
-        maker.add_email(user.email) { |e| e.location = user.is_staff? ? 'work' : 'other' }
-        maker.add_email(user.personal_email) { |e| e.location = 'home' }
+
+        if(!user.email.blank?)
+          maker.add_email(user.email) { |e| e.location = user.is_staff? ? 'work' : 'other' }
+        end
+        if(!user.personal_email.blank?)
+          maker.add_email(user.personal_email) { |e| e.location = 'home' }
+        end
         maker.title = user.title unless user.title.nil?
         maker.org = user.organization_name unless user.organization_name.nil?
         phones_hash.each do |k,v|
