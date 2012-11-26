@@ -223,11 +223,11 @@ function show_box(){
             title: 'Export Contacts',
             buttons:{
                 "CSV":function(){
-                    window.location.href='http://localhost:3000/people_csv.csv?filterBoxOne='+boxValue;
+                    window.location.href='people_csv.csv?filterBoxOne='+boxValue;
                     $(this).dialog("close");
                 },
                 "vCard":function(){
-                    window.location.href='http://localhost:3000/people_vcf?filterBoxOne='+boxValue;
+                    window.location.href='people_vcf?filterBoxOne='+boxValue;
                     $(this).dialog("close");
                 }
             }
@@ -313,14 +313,24 @@ function getSearchResults(){
 function buildSearchResults(json) {
     if(json != ''){
         if(!photobook_toggled){
+            // build row number i
             for (var i in json){
-                // build row number i
-                buildResultRowListFormat(json[i]);
+                if(json[i].priority)
+                    buildResultRowListFormat(json[i]);
+            }
+            for (var i in json){
+                if(!json[i].priority)
+                    buildResultRowListFormat(json[i]);
             }
         } else{
+            // build row number i
             for (var i in json){
-                // build row number i
-                buildResultRowPhotoBookFormat(json[i]);
+                if(json[i].priority)
+                    buildResultRowPhotoBookFormat(json[i]);
+            }
+            for (var i in json){
+                if(!json[i].priority)
+                    buildResultRowPhotoBookFormat(json[i]);
             }
         }
         showRelevantTables(($.trim($("#filterBoxOne").val()).length > 0));
