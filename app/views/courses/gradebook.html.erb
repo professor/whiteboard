@@ -103,7 +103,15 @@
   }
 
   $(function() {
-    $('.tablesorter').tablesorter();
+    $('.tablesorter').tablesorter({
+      headers: {
+        <% assignment_index = 1; @course.assignments.each do |assignment| %>
+          <%= assignment_index += 1 %>: { sorter: false },
+        <% end %>
+        <%= assignment_index += 2 %>: { sorter: false },
+        <%= assignment_index += 1 %>: { sorter: false },
+      }
+    });
 
     $('.grade_select').change(function() {
       $(this).closest('form').submit();
