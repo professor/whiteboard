@@ -43,7 +43,6 @@ class GradesController < ApplicationController
 
   def post_drafted_and_send #and send email
     grades = params["grades"]
-    #Grade.give_grades(grades)
     Grade.mail_drafted_grade @course.id
     render :json => ({"message"=>"true"})
   end
@@ -55,8 +54,13 @@ class GradesController < ApplicationController
   end
 
   def import
-    file_path = params[:import][:spreadsheet].path
-    if Grade.import_grade_book_from_spreadsheet(file_path)
+    if params[:import].nil? || params[:import][:spreadsheet].nil?
+      flash[:error] = "please select a file to import"
+      redirect_to course_grades_path(@course) and return
+    end
+
+    temp_file_path = params[:import][:spreadsheet].path
+    if Grade.import_grade_book_from_spreadsheet(temp_file_path)
       flash[:notice] = "grade book was imported"
     else
       flash[:error] = "spreadsheet format is incorrect"
@@ -65,9 +69,10 @@ class GradesController < ApplicationController
   end
 
   def export
-    file_path = params[:export][:spreadsheet].path
-    Grade.export_grade_book_to_spreadsheet(@course, file_path)
-    flash[:notice] = "grade book was exported"
+    # FIXME:
+    temp_file_path = File.expand_path('~') + "/Downloads/export.xls"
+    Grade.export_grade_book_to_spreadsheet(@course, temp_file_path)
+    flash[:notice] = "grade book was exported to " + temp_file_path
     redirect_to course_grades_path(@course)
   end
 end

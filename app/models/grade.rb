@@ -27,7 +27,7 @@ class Grade < ActiveRecord::Base
   belongs_to :course
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
-  validates :course_id, :student_id, :assignment_id, :presence => true 
+  validates :course_id, :student_id, :assignment_id, :presence => true
   #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
@@ -39,17 +39,16 @@ class Grade < ActiveRecord::Base
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
     if self.assignment_id <0
-      self.score = encrypt_score(self.score)
+      self.score = Grade.encrypt_score(self.score)
     end
   end
-
 
   # To fetch the grade of student.
   def self.get_grades_for_student_per_course (course, student)
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
-        grade.score = grade.decrypt_grade(grade.score)
+        grade.score = Grade.decrypt_score(grade.score)
         grades["final"] = grade
       else
         grades[grade.assignment.id] = grade
@@ -68,7 +67,7 @@ class Grade < ActiveRecord::Base
     if grade.nil?
       ""
     else
-      grade.decrypt_grade(grade.score)
+      Grade.decrypt_score(grade.score)
     end
   end
 
@@ -86,11 +85,12 @@ class Grade < ActiveRecord::Base
     if course.registered_students.include?(student)
       grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
+        score = Grade.encrypt_score(score) if assignment_id < 0
         grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
 
-      if GradingRule.validate_score(course_id, score)
+      if course.grading_rule.validate_score(score)
         grade.score=score.upcase
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
@@ -111,6 +111,86 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  def send_feedback_to_student
+    if assignment_id > 0
+      feedback = make_feedback_for_one_assignment
+    else
+      feedback = make_feedback_for_final_grade
+    end
+    url="whiteboard.sv.cmu.edu/people/#{self.student_id}/my_deliverables"
+    options = {:to => self.student.email,
+               :subject => "Grade for " + self.course.name,
+               :message => feedback,
+               :url_label => "Click here to view grade",
+               :url => url
+              }
+
+    GenericMailer.email(options).deliver
+  end
+
+  def self.mail_drafted_grade(course_id)
+    Grade.find_all_by_is_student_visible_and_course_id(false, course_id).each do |grade|
+      grade.is_student_visible = true
+      grade.save
+      grade.send_feedback_to_student
+    end
+  end
+
+  def self.import_grade_book_from_spreadsheet(file_path)
+    Spreadsheet.client_encoding = 'UTF-8'
+    grade_book = Spreadsheet.open(file_path)
+    grade_sheet = grade_book.worksheet(0)
+
+    if validate_sheet(grade_sheet)
+      import_scores(grade_sheet)
+      return true
+    else
+      return false
+    end
+  end
+
+  def self.export_grade_book_to_spreadsheet(course, file_path)
+    Spreadsheet.client_encoding = 'UTF-8'
+    grade_book = Spreadsheet::Workbook.new
+    grade_sheet = grade_book.create_worksheet
+    grade_sheet.name = "#{course.short_name}"
+
+    # print course id and assignment id
+    grade_sheet[0,0] = course.id
+    course.assignments.each_with_index do |assignment, i|
+      grade_sheet[0, FIRST_GRADE_COL+i] = assignment.id
+    end
+    assignment_count = course.assignments.count
+    grade_sheet[0, FIRST_GRADE_COL+assignment_count] = -1
+    grade_sheet.row(0).hidden = true
+
+    # print details
+    grade_sheet[1,1] = "First Name"
+    grade_sheet[1,2] = "Last Name"
+    grade_sheet.column(0).hidden=true
+    course.assignments.each_with_index do |assignment, j|
+      grade_sheet[1, FIRST_GRADE_COL+j] = assignment.name
+    end
+    grade_sheet[1, FIRST_GRADE_COL+assignment_count] = "Final Grade"
+
+    # print students' names and grades
+    course.registered_students.each_with_index do |student, i|
+      grade_sheet[FIRST_GRADE_ROW+i, 0] = student.id
+      grade_sheet[FIRST_GRADE_ROW+i, 1] = student.first_name
+      grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
+      course.assignments.each_with_index do |assignment, j|
+        score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
+        if !course.grading_rule.validate_letter_grade(score)
+          score=score.to_f
+        end
+        grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+j] = score
+      end
+      grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+assignment_count] = Grade.get_final_grade(course.id, student.id)
+    end
+    grade_book.write(file_path)
+  end
+
+private
   def make_feedback_for_one_assignment
     feedback = "Grade has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
@@ -129,51 +209,6 @@ class Grade < ActiveRecord::Base
   def make_feedback_for_final_grade
     feedback = "Final grade has been assigned for "
     feedback += self.course.name + "\n"
-  end
-
-  def send_feedback_to_student
-    if assignment_id >= 0
-      feedback = make_feedback_for_one_assignment
-    else
-      feedback = make_feedback_for_final_grade
-    end
-    url="whiteboard.sv.cmu.edu/people/#{self.student_id}/my_deliverables"
-    options = {:to => self.student.email,
-               :subject => "Grade for " + self.course.name,
-               :message => feedback,
-               :url_label => "Click here to view grade",
-               :url => url
-              }
-
-    GenericMailer.email(options).deliver
-  end
-
-  def self.mail_drafted_grade course_id
-    Grade.find_all_by_is_student_visible_and_course_id(false, course_id).each do |grade|
-      grade.is_student_visible = true
-      grade.save
-      grade.send_feedback_to_student
-    end
-  end
-
-  def encrypt_score raw_score
-    # FIXME: get salt from somewhere else
-    salt="I am salt without any iodine"
-    return Digest::SHA2.hexdigest(salt+raw_score)
-  end
-
-  def decrypt_grade encrypted_score
-    case encrypted_score
-      when encrypt_score("A") then return "A"
-      when encrypt_score("A-") then return "A-"
-      when encrypt_score("B+") then return "B+"
-      when encrypt_score("B") then return "B"
-      when encrypt_score("B-") then return "B-"
-      when encrypt_score("C+") then return "C+"
-      when encrypt_score("C") then return "C"
-      when encrypt_score("C-") then return "C-"
-      else return encrypted_score
-    end
   end
 
   def self.validate_first_row(row)
@@ -261,58 +296,24 @@ class Grade < ActiveRecord::Base
     end
   end
 
-  def self.import_grade_book_from_spreadsheet(file_path)
-    Spreadsheet.client_encoding = 'UTF-8'
-    grade_book = Spreadsheet.open(file_path)
-    grade_sheet = grade_book.worksheet(0)
-
-    if validate_sheet(grade_sheet)
-      import_scores(grade_sheet)
-      return true
-    else
-      return false
-    end
+  def self.encrypt_score(raw_score)
+    # FIXME: get salt from somewhere else
+    salt="I am salt without any iodine"
+    return Digest::SHA2.hexdigest(salt+raw_score)
   end
 
-  def self.export_grade_book_to_spreadsheet(course, file_path)
-    Spreadsheet.client_encoding = 'UTF-8'
-    grade_book = Spreadsheet::Workbook.new
-    grade_sheet = grade_book.create_worksheet
-    grade_sheet.name = "#{course.short_name}"
-
-    # print course id and assignment id
-    grade_sheet[0,0] = course.id
-    course.assignments.each_with_index do |assignment, i|
-      grade_sheet[0, FIRST_GRADE_COL+i] = assignment.id
+  def self.decrypt_score(encrypted_score)
+    case encrypted_score
+      when encrypt_score("A") then return "A"
+      when encrypt_score("A-") then return "A-"
+      when encrypt_score("B+") then return "B+"
+      when encrypt_score("B") then return "B"
+      when encrypt_score("B-") then return "B-"
+      when encrypt_score("C+") then return "C+"
+      when encrypt_score("C") then return "C"
+      when encrypt_score("C-") then return "C-"
+      else return encrypted_score
     end
-    assignment_count = course.assignments.count
-    grade_sheet[0, FIRST_GRADE_COL+assignment_count] = -1
-    grade_sheet.row(0).hidden = true
-
-    # print details
-    grade_sheet[1,1] = "First Name"
-    grade_sheet[1,2] = "Last Name"
-    grade_sheet.column(0).hidden=true
-    course.assignments.each_with_index do |assignment, j|
-      grade_sheet[1, FIRST_GRADE_COL+j] = assignment.name
-    end
-    grade_sheet[1, FIRST_GRADE_COL+assignment_count] = "Final Grade"
-
-    # print students' names and grades
-    course.registered_students.each_with_index do |student, i|
-      grade_sheet[FIRST_GRADE_ROW+i, 0] = student.id
-      grade_sheet[FIRST_GRADE_ROW+i, 1] = student.first_name
-      grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
-      course.assignments.each_with_index do |assignment, j|
-        score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
-        if !GradingRule.validate_letter_grade(score)
-          score=score.to_f
-        end
-        grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+j] = score
-      end
-      grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+assignment_count] = Grade.get_final_grade(course.id, student.id)
-    end
-    grade_book.write(file_path)
-    end
+  end
 end
 
