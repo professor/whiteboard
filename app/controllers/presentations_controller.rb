@@ -131,12 +131,6 @@ class PresentationsController < ApplicationController
     @feedback.evaluator = current_user
     @presentation = Presentation.find(params[:id])
     @feedback.presentation = @presentation
-
-    if @presentation.feedbacks.empty?
-      @presentation.feedback_email_sent = false
-    else
-      @presentation.feedback_email_sent = true
-    end
     @presentation.save
 
 
@@ -159,7 +153,9 @@ class PresentationsController < ApplicationController
       end
 
       if is_successful && @feedback.save
-        if !@presentation.feedback_email_sent?
+        @presentation.feedback_email_sent = true
+        
+        if @presentation.feedback_email_sent?
           @presentation.send_presentation_feedback_email(show_feedback_for_presentation_url(:id => params[:id]))
         end
         format.html { redirect_back_or_default(today_presentations_url) }
