@@ -16,7 +16,7 @@ class PagesController < ApplicationController
   end
 
   def changed
-    @pages = Page.order("created_at DESC").all
+    @pages = Page.order("updated_at DESC").all
     @no_pad = true
 
     respond_to do |format|
