@@ -4,25 +4,29 @@ describe Grade do
   before(:each) do
     @student_sam = FactoryGirl.create(:student_sam_user)
     @course_fse = FactoryGirl.create(:course_fse_with_students, registered_students: [@student_sam])
+    @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id=> @course_fse.id)
+    @course_fse.grading_rule = @course_grading_rule
+    @course_grading_rule.save
+
     @assignment_1 = FactoryGirl.create(:assignment_fse)
-    @assignment_1.course = @course_fse
-    @assignment_1.save
+    @course_fse.assignments << @assignment_1
 
     @assignment_2 = FactoryGirl.create(:assignment)
-    @assignment_2.course = @course_fse
-    @assignment_2.save
+    @course_fse.assignments << @assignment_2
 
     @grade = Grade.create(:course_id => @course_fse.id, 
                                    :student_id => @student_sam.id, 
                                    :assignment_id => @assignment_1.id,
                                    :score => "0")
     User.stub(:find).with(@student_sam.id).and_return(@student_sam)
+    @course_fse.grading_rule.stub(:validate_score).and_return(true)
   end
 
   after(:each) do
     @student_sam.delete
     @course_fse.delete
     @assignment_1.delete
+    @assignment_2.delete
     @grade.delete
   end
 

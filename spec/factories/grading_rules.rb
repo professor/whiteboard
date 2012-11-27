@@ -20,5 +20,4 @@ FactoryGirl.define do
   factory :grading_rule_weights, :parent=>:grading_rule do
     grade_type "weights"
   end
-
 end

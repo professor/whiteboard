@@ -197,14 +197,13 @@
       <h2>Import Grade Book</h2>
       <% form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
         <%= f.file_field :spreadsheet -%>
-        <%= submit_tag 'Import' -%>
+        <%= submit_tag 'Import' %>
       <% end %>
     </div>
     <div>
       <h2>Export Grade Book</h2>
-      <% form_for :export, :url=>{:controller=>"grades", :action=>"export"}, :html => { :multipart => true } do |f| %>
-        <%= f.file_field :spreadsheet -%>
-        <%= submit_tag 'Export' -%>
+      <% form_for :export, :url=>{:controller=>"grades", :action=>"export"} do |f| %>
+        <%= submit_tag 'Export' %>
       <% end %>
     </div>
   </div>
