@@ -24,8 +24,11 @@
 # assignment is created. Deliverable grades will be created for each student
 # in the course.
 #
+require 'aes'
 
 class DeliverableGrade < ActiveRecord::Base
+  include AESCrypt
+
   belongs_to :user
   belongs_to :deliverable
 
@@ -33,6 +36,9 @@ class DeliverableGrade < ActiveRecord::Base
   validates :deliverable_id, presence: true
   validates :grade, presence: true
   validate :valid_number_grade, :valid_letter_grade
+
+  before_save :encrypt_grade
+  after_find :decrypt_grade
 
   def grade=(grade)
     write_attribute(:grade, grade.to_s)
@@ -81,4 +87,11 @@ class DeliverableGrade < ActiveRecord::Base
     !!Float(self.grade) rescue false
   end
 
+  def encrypt_grade
+    write_attribute(:grade, encrypt(self.grade))
+  end
+
+  def decrypt_grade
+    write_attribute(:grade, decrypt(self.grade))
+  end
 end

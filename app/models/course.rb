@@ -351,9 +351,9 @@ class Course < ActiveRecord::Base
 
     if self.grading_criteria == "Points"
       total_weight = self.total_assignment_weight
-      total_weight == 0 ? 0 : ((total_grade / total_weight) * 100)
+      total_weight == 0 ? 0 : ((total_grade / total_weight) * 100).round(1)
     else
-      total_grade
+      total_grade.round(1)
     end
   end
 

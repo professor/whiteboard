@@ -248,7 +248,7 @@ class Deliverable < ActiveRecord::Base
       end
       if !grouped_deliverables[course.display_semester].has_key?(course.name)
         total_weight = course.total_assignment_weight
-        earned_score = course.get_user_deliverable_grades(student).to_a.sum(&:grade)
+        earned_score = course.get_user_deliverable_grades(student).to_a.sum(&:number_grade)
         grouped_deliverables[course.display_semester][course.name] = {deliverables: [], max_score: total_weight, earned_score: earned_score}
       end
       grouped_deliverables[course.display_semester][course.name][:deliverables] << deliverable

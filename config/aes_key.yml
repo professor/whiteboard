@@ -1,0 +1,3 @@
+development:
+  key: "GIVE YOUR OWN KEY HERE(32 CHARS)"
+  cipher_type: "AES-256-CBC"
