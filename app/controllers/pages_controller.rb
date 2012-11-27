@@ -68,11 +68,14 @@ class PagesController < ApplicationController
   def new
     @page = Page.new
     @page.course_id = params[:course_id].to_i
-    @page.title = params[:title]
-    @page.url = params[:title]
-#    @courses = Course.all
     @courses = Course.unique_course_names
-
+    
+    # Try and split the title
+    unless (params[:title].nil?)
+      @page.title = params[:title].split('_').collect { |w| w.capitalize + ' ' }.join().chomp(' ')
+      @page.url = params[:title]
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @page }
