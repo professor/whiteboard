@@ -11,10 +11,18 @@
     assignments_js += "'#{course.id}':\""
     assignment_options[course.id] = []
     course.submittable_assignments.each do |assignment|
-      assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
-      assignment_options[course.id] << [assignment_text, assignment.id]
-
-      assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
+      #assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
+      assignment_text = assignment.formatted_title + (assignment.team_deliverable ? " (Team deliverable)" : "")
+      if assignment.team_deliverable
+        @user_teams.select { |team| team.course_id == course.id }.each do |user_team|
+          team_assignment_text = assignment_text + " (#{user_team.name})"
+          assignment_options[course.id] << [team_assignment_text, "#{assignment.id},#{user_team.id}"]
+          assignments_js += "<option value='#{assignment.id},#{user_team.id}'>#{team_assignment_text}</option>"
+        end
+      else
+        assignment_options[course.id] << [assignment_text, assignment.id]
+        assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
+      end
     end
     assignments_js += "\","
   end
@@ -79,16 +87,21 @@
     </p>
 <% end %>
 
-<%= javascript_tag do %>
+<script>
   $(function() {
     assignment_options = {<%= assignments_js.html_safe %>};
 
-    $('#deliverable_course_id').change(function() {
+    function populate_assignments() {
       if ($('#deliverable_course_id').val()) {
         $('#deliverable_assignment_id').html(assignment_options[$('#deliverable_course_id').val()]);
       } else {
         $('#deliverable_assignment_id').html('');
       }
+    }
+
+    $('#deliverable_course_id').change(function() {
+      populate_assignments();
     });
+    populate_assignments();
   });
-<% end %>
+</script>

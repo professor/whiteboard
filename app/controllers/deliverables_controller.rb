@@ -92,6 +92,7 @@ class DeliverablesController < ApplicationController
   def new
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
+    @user_teams = Team.find_by_person(current_user)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -118,14 +119,19 @@ class DeliverablesController < ApplicationController
     end
 
     # Make sure that a file was specified
+    if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
+      team_assignment_ids = params[:deliverable][:assignment_id].split(',')
+      params[:deliverable][:assignment_id] = team_assignment_ids[0]
+      params[:deliverable][:team_id] = team_assignment_ids[1]
+    end
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 
-    if @deliverable.assignment.team_deliverable
-      @deliverable.update_team
-    else
-      @deliverable.team = nil
-    end
+    #if @deliverable.assignment.team_deliverable
+    #  @deliverable.update_team
+    #else
+    #  @deliverable.team = nil
+    #end
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -154,6 +160,7 @@ class DeliverablesController < ApplicationController
         else
           flash[:notice] = 'Something else went wrong'
         end
+        @user_teams = Team.find_by_person(current_user)
         format.html { render :action => "new" }
         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
