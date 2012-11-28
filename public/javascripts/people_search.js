@@ -47,7 +47,7 @@ $(document).ready(function() {
     if($.session.get("previous_search_params") && $.session.get("previous_toggle_state")){
         var previous_search_params = jQuery.parseJSON($.session.get("previous_search_params"));
         var previous_toggle_states = jQuery.parseJSON($.session.get("previous_toggle_state"));
-        
+
         if(previous_search_params){
             if(previous_search_params.filterBoxOne){
                 $("#filterBoxOne").val(previous_search_params.filterBoxOne);
@@ -73,7 +73,7 @@ $(document).ready(function() {
                 advanced_search_toggled = previous_toggle_states.advanced_search_filters;
                 setAdvancedFilterToggleState();
             }
-        }   
+        }
         getSearchResults();
     }
 
@@ -309,43 +309,20 @@ function buildSearchResults(json) {
 
 // build a single list result row (TODO: change this name to build list result row)
 function buildResultRowListFormat (json) {
-    row = document.createElement('tr');
-    // image data
-    photo_td = document.createElement('td');
-    photo_td.setAttribute('class','photobook-img');
-    photo_td.appendChild(loadImage(json.image_uri));
-    // first_name data
-    firstName_td = document.createElement('td');
-    firstName_anchorLink = document.createElement('a');
-    firstName_anchorLink.href = json.path;
-    firstName_anchorLink.appendChild(document.createTextNode(json.first_name));
-    firstName_td.appendChild(firstName_anchorLink);
-    // last_name data
-    lastName_td = document.createElement('td');
-    lastName_anchorLink = document.createElement('a');
-    lastName_anchorLink.href = json.path;
-    lastName_anchorLink.innerHTML = json.last_name;
-    lastName_td.appendChild(lastName_anchorLink);
     // contact details data
-    contactDtls_td = document.createElement('td');
     var contactDtls_string = '';
     for(var i in json.contact_dtls)
        contactDtls_string += json.contact_dtls[i] + "<br />";
-    contactDtls_string += "<a href='mailto:" + json.email + "'>" + json.email + "</a>"
-    contactDtls_td.innerHTML = contactDtls_string;
-    // Program Data
-    program = document.createElement('td');
-    program.appendChild(document.createTextNode(json.program));
-    // append each data element to the row
-    row.appendChild(photo_td);
-    row.appendChild(firstName_td);
-    row.appendChild(lastName_td);
-    row.appendChild(contactDtls_td);
-    row.appendChild(program);
-    // append the row to the table
-    $('#people_table tbody').append(row);
-}
+    contactDtls_string += "<a href='mailto:" + json.email + "'>" + json.email + "</a>";
 
+    $('<tr />')
+        .append($('<td class="photobook-img" />').append($(loadImage(json.image_uri))))
+        .append($('<td><a href="'+json.path+'">'+json.first_name+'</a></td>'))
+        .append($('<td><a href="'+json.path+'">'+json.last_name+'</a></td>'))
+        .append($('<td>'+contactDtls_string+'</td>'))
+        .append($('<td>'+json.program+'</td>'))
+    .appendTo('#people_table tbody');
+}
 
 // build a single photoboook result row
 function buildResultRowPhotoBookFormat(json){
@@ -400,11 +377,11 @@ function setSessionInfo() {
     $.session.set("previous_toggle_state", getToggleState());
 
     return json;
-    
+
 }
 
 function getToggleState(){
-    var json = { 
+    var json = {
         photobook_toggled_state : photobook_toggled,
         advanced_search_filters : advanced_search_toggled
     };
@@ -495,7 +472,7 @@ function updateView(){
             // hide other sections
             $key_contacts_table.hide();
             $people_table.hide();
-            $advanced_search_filters.hide();     
+            $advanced_search_filters.hide();
         }
         if(!advanced_search_toggled && photobook_toggled && isSearchTextEntered){
             // show people search results in photobook_results
