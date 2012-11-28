@@ -34,7 +34,7 @@ class Grade < ActiveRecord::Base
   before_save :format_score
 
   FIRST_GRADE_ROW = 2
-  FIRST_GRADE_COL = 3
+  FIRST_GRADE_COL = 4
 
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
@@ -167,6 +167,8 @@ class Grade < ActiveRecord::Base
     # print details
     grade_sheet[1,1] = "First Name"
     grade_sheet[1,2] = "Last Name"
+    grade_sheet[1,3] = "Team Name"
+
     grade_sheet.column(0).hidden=true
     course.assignments.each_with_index do |assignment, j|
       grade_sheet[1, FIRST_GRADE_COL+j] = assignment.name
@@ -178,6 +180,7 @@ class Grade < ActiveRecord::Base
       grade_sheet[FIRST_GRADE_ROW+i, 0] = student.id
       grade_sheet[FIRST_GRADE_ROW+i, 1] = student.first_name
       grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
+      grade_sheet[FIRST_GRADE_ROW+i, 3] = self.find_student_team(course.id, student.id).name
       course.assignments.each_with_index do |assignment, j|
         score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)
@@ -188,6 +191,11 @@ class Grade < ActiveRecord::Base
       grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+assignment_count] = Grade.get_final_grade(course.id, student.id)
     end
     grade_book.write(file_path)
+  end
+  def self.find_student_team course_id, student_id
+    team = User.find(student_id).teams.find_by_course_id(course_id)
+    return team
+
   end
 
 private

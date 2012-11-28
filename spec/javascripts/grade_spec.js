@@ -107,9 +107,9 @@ describe("Grade", function(){
       loadFixtures("gradebook.html");
       var student_id = 1;
       expect(gradePoints.earned_grade(1)).toEqual(20);
-      expect($("tr#s_1 .earned").text()).toEqual('20(100%)');
+      expect($("tr#s_1 .earned").text()).toEqual('20pts (100%)');
       expect(gradeWeight.earned_grade(2)).toEqual(20);
-      expect($("tr#s_2 .earned").text()).toEqual('20(100%)');
+      expect($("tr#s_2 .earned").text()).toEqual('20% (100%)');
     });
     it("can compute and update final grade for a student", function(){
       console.log("Student 1");

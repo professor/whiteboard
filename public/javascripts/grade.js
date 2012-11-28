@@ -81,8 +81,11 @@ function Grade(type, mapping, weight)
       var grades_hash = this.get_grades_for_student(student_id);
       var earned_grade = this.calculate(grades_hash);
       earned_grade = Math.round(earned_grade*100)/100;
-      percentage = Math.round(this.calculate_percentage(grades_hash));
-      $("tr#s_"+student_id + " .earned").text(earned_grade+"(" + percentage + "%)" );
+      var percentage = Math.round(this.calculate_percentage(grades_hash) );
+      var term = "pts";
+      if(gradeType == "weights")
+        term = "%";
+      $("tr#s_"+student_id + " .earned").text(earned_grade+ term + " (" + percentage + "%)" );
       return earned_grade;
     };
     this.get_final = function(grade){
