@@ -46,9 +46,13 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label(:is_submittable, "Student can submit for this assignment?") %></td>
+      <td><%= f.label(:is_submittable, "Can students submit for this #{customised_name}?") %></td>
+
       <td>
-      <%=f.check_box(:is_submittable)%>
+        <% f.object.is_submittable= true if f.object.maximum_score.nil? %>
+        <%= f.radio_button(:is_submittable, "true")%> Yes <br/>
+
+        <%= f.radio_button(:is_submittable, "false") %> No (e.g. effort log, class participation, etc.)
       </td>
     </tr>
     <tr>
