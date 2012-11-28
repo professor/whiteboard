@@ -32,14 +32,22 @@ class Grade < ActiveRecord::Base
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
   before_save :format_score
+  after_find :decrypt_score
 
   FIRST_GRADE_ROW = 2
-  FIRST_GRADE_COL = 3
+  FIRST_GRADE_COL = 4
 
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
-    if self.assignment_id <0
+    if self.assignment_id < 0
       self.score = Grade.encrypt_score(self.score)
+    end
+  end
+
+  def decrypt_score
+    puts "I am in format_score assignment_id="+self.assignment_id.to_s
+    if self.assignment_id < 0
+      self.score = Grade.decrypt_score(self.score)
     end
   end
 
@@ -48,6 +56,7 @@ class Grade < ActiveRecord::Base
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
+        puts "I am in get_grades_for_student_per_course"
         grade.score = Grade.decrypt_score(grade.score)
         grades["final"] = grade
       else
@@ -59,6 +68,7 @@ class Grade < ActiveRecord::Base
 
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)
+    puts "I am in get_grade"
     Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
@@ -85,7 +95,6 @@ class Grade < ActiveRecord::Base
     if course.registered_students.include?(student)
       grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
-        score = Grade.encrypt_score(score) if assignment_id < 0
         grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
@@ -167,6 +176,8 @@ class Grade < ActiveRecord::Base
     # print details
     grade_sheet[1,1] = "First Name"
     grade_sheet[1,2] = "Last Name"
+    grade_sheet[1,3] = "Team Name"
+
     grade_sheet.column(0).hidden=true
     course.assignments.each_with_index do |assignment, j|
       grade_sheet[1, FIRST_GRADE_COL+j] = assignment.name
@@ -178,6 +189,7 @@ class Grade < ActiveRecord::Base
       grade_sheet[FIRST_GRADE_ROW+i, 0] = student.id
       grade_sheet[FIRST_GRADE_ROW+i, 1] = student.first_name
       grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
+      grade_sheet[FIRST_GRADE_ROW+i, 3] = self.find_student_team(course.id, student.id).name
       course.assignments.each_with_index do |assignment, j|
         score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)
@@ -188,6 +200,11 @@ class Grade < ActiveRecord::Base
       grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+assignment_count] = Grade.get_final_grade(course.id, student.id)
     end
     grade_book.write(file_path)
+  end
+  def self.find_student_team course_id, student_id
+    team = User.find(student_id).teams.find_by_course_id(course_id)
+    return team
+
   end
 
 private
@@ -291,7 +308,7 @@ private
         student_id = grade_sheet[i,0].to_i
         assignment_id = grade_sheet[0,j].to_i
         score = grade_sheet[i,j].to_s
-        Grade.give_grade(course_id, assignment_id, student_id, score, false)
+        Grade.give_grade(course_id, assignment_id, student_id, score, true)
       end
     end
   end
