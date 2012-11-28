@@ -23,7 +23,6 @@
 http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
 -->
 
-<% if !@results.blank? %>
 <hr>
     <table id="key_contacts_table" class="tablesorter">
       <thead>
@@ -34,16 +33,17 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       </tr>
       </thead>
       <tbody>
-      <%if @user_override %>
-          <%
-                user_description = "#{@user.human_name} | UserID: #{@user.id} | "
-                user_description << (@user.is_student ? "Student" : "Staff")
-                user_description << " | #{@user.masters_program}"  unless @user.masters_program.blank?
-                user_description << " #{@user.masters_track}"  unless @user.masters_track.blank?
-          %>
-          <%= "You are showing results for:  #{user_description}" %>
-      <% end %>
-         <% @results.each do |person| %>
+        <%if @user_override %>
+             <%
+                   user_description = "#{@user.human_name} | UserID: #{@user.id} | "
+                   user_description << (@user.is_student ? "Student" : "Staff")
+                   user_description << " | #{@user.masters_program}"  unless @user.masters_program.blank?
+                   user_description << " #{@user.masters_track}"  unless @user.masters_track.blank?
+             %>
+             <%= "You are showing results for:  #{user_description}" %>
+        <% end %>
+        <% if !@results.blank? %>
+          <% @results.each do |person| %>
             <tr>
               <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
               <td>
@@ -59,6 +59,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
                 <%= mail_to person[:email] %></td>
             </tr>
           <% end %>
+        <% end %>
       </tbody>
       <tfoot>
         <tr>
@@ -68,7 +69,6 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       </tr>        
       </tfoot>
     </table>
-<% end %>
 <table id="people_table" class="tablesorter" hidden="true" >
   <thead>
   <tr>
@@ -90,11 +90,13 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tfoot>
 </table>
 <div id="key_contacts_photobook" class="clearboth" hidden="true">
-  <% @results.each do |person| %>
-    <a class="photobook_item" href="<%= person[:path] %>">
-      <%= image_tag(person[:image_uri]) %>
-      <p class="photobook_item_name"><%= person[:human_name] %> </p>
-    </a>
+  <% if !@results.blank? %>
+    <% @results.each do |person| %>
+      <a class="photobook_item" href="<%= person[:path] %>">
+        <%= image_tag(person[:image_uri]) %>
+        <p class="photobook_item_name"><%= person[:human_name] %> </p>
+      </a>
+    <% end %>
   <% end %>
 </div>
 <div id="photobook_results" hidden="true" class="clearboth" ></div>

@@ -122,6 +122,8 @@ $(document).ready(function() {
             $("#advanced_search_filters").show();
             $("#key_contacts_table").hide();
             $("#people_table").hide();
+        }else{
+            $("#advanced_search_filters").hide();
         }
 
         // update UI to show key_contacts_table if true.  Else, execute a search.
@@ -138,6 +140,10 @@ $(document).ready(function() {
         photobook_toggled = !photobook_toggled;
         setPhotobookToggleState();
         clearSearchResults();
+        if(!photobook_toggled){
+            $("#key_contacts_photobook").hide();
+            $("#people_photobook").hide();
+        }
         if (    advanced_search_toggled ||     // advanced search filters visible
                 ($.trim($("#filterBoxOne").val()).length > 0)       // search text entered
             ) {
@@ -444,11 +450,11 @@ function updateView(){
         var empty_results = false;
 
         if(last_search_results == '' && !$key_contacts_table.is(":visible") && !$key_contacts_photobook.is(":visible")){
-            $empty_results.show();
-            empty_results = true;
-            if(advanced_search_toggled)
+            if(advanced_search_toggled){
                 $advanced_search_filters.show();
-            else
+                $empty_results.show();
+                empty_results = true;
+            }else
                 $advanced_search_filters.hide();
             // hide other sections
             $people_table.hide();

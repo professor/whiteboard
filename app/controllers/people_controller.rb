@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
     # This code is intended for use by administrators and staff only.
 
     @people = return_defaults
-
+    
     @results = @people.collect { |default_person| Hash[
         :image_uri => default_person.user.image_uri,
         :title => default_person.user.title,
@@ -44,11 +44,6 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html { render :html => @results }
       format.json { render :json => @results }
-      #format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-      #                                                              "first_name" => person.first_name,
-      #                                                              "last_name" => person.last_name,
-      #                                                              "image_uri" => person.image_uri,
-      #                                                              "email" => person.email].merge(person.telephones_hash) }, :layout => false }
     end
   end
 
@@ -532,7 +527,7 @@ def download_csv
         @user = User.find_by_param(params[:id])
       end
     end
-    PeopleSearchDefault.default_search_results(@user)
+    results = PeopleSearchDefault.default_search_results(@user)
   end
 
   def return_search_results(search_query)
