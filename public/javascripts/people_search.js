@@ -7,7 +7,8 @@ var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
 var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
 var ajax_req_issued = false;            // object that
 var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
-var default_results_json = '';  // fetch default search results (key contacts)
+var advanced_search_changed = false;
+//var default_results_json = '';  // fetch default search results (key contacts)
 
 $(document).ready(function() {
 
@@ -36,12 +37,13 @@ $(document).ready(function() {
             filterCaseSensitive:false
         });
 
-    $("#ajax_loading_notice").hide();
+    // $("#ajax_loading_notice").hide();
     $("#key_contacts_table").hide();
     $("#advanced_search_filters").hide();
-    $("#ajax_loading_notice").append($('<img src="images/ajax-loader.gif">')).append('Loading Results');
+    // $("#ajax_loading_notice").append($('')).append('Loading Results');
+    // $("#empty_results").append('No results found.');
 
-    default_results_json = getDefaultSearchResultsJson();
+    //default_results_json = getDefaultSearchResultsJson();
 
     // making our search considerate (load search params from session)
     if($.session.get("previous_search_params") && $.session.get("previous_toggle_state")){
@@ -72,12 +74,14 @@ $(document).ready(function() {
             if(previous_toggle_states.advanced_search_filters){
                 advanced_search_toggled = previous_toggle_states.advanced_search_filters;
                 setAdvancedFilterToggleState();
+                advanced_search_changed = true;
             }
         }
         getSearchResults();
     }
 
     updateView();
+    $("#photobook_results").hide();
 
     /**************************************************************
         SEARCHING FOR PEOPLE (Search trigger functions)
@@ -110,6 +114,7 @@ $(document).ready(function() {
     $("#filterBoxOne_filter").click(function (){
         var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
         advanced_search_toggled = !advanced_search_toggled;
+        advanced_search_changed=true;
         setAdvancedFilterToggleState();
 
         // update UI immediately while search ajax call is processing.
@@ -128,34 +133,30 @@ $(document).ready(function() {
         setSessionInfo();
     });
 
-    $("#filter_person_type").change(function(){getSearchResults();});
-    $("#filter_course").change(function(){getSearchResults();});
-    $("#filter_year").change(function(){getSearchResults();});
-    $("#filter_program").change(function(){getSearchResults();});
-    $("#search_inactive").change(function(){getSearchResults();});
-
-
     // Photobook view (click)
     $("#filterBoxOne_photobook").click(function (){
         photobook_toggled = !photobook_toggled;
         setPhotobookToggleState();
-        clearAllTables();
+        clearSearchResults();
         if (    advanced_search_toggled ||     // advanced search filters visible
                 ($.trim($("#filterBoxOne").val()).length > 0)       // search text entered
             ) {
+            $("#empty_results").hide();
             buildSearchResults(last_search_results);
-        }else{
-            $("#ajax_loading_notice").hide();
-            buildSearchResults(default_results_json);
         }
         updateView();
         setSessionInfo();
     });
 
+    $("#filter_person_type").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_course").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_year").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_program").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#search_inactive").change(function(){ advanced_search_changed=true; getSearchResults(); });
+
     $("#filterBoxOne_export_contacts").click(function (){
         show_box();
     });
-
 
     /* making the whole row of key_contacts clickable
     ***************************************************/
@@ -206,24 +207,24 @@ function show_box(){
         MAIN SEARCH FUNCTIONS
 *****************************************/
 
-// get default search results and store in a json object
-function getDefaultSearchResultsJson(){
-    // send ajax request and assign the XHML HTTP request object returned to jq_xhr
-    jq_xhr = $.ajax({
-        url : 'people',  // the URL for the request
-        data : { ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
-        method : 'GET',
-        dataType : 'json',  // the type of data we expect back
-        contentType: "application/json; charset=utf-8",
+// // get default search results and store in a json object
+// function getDefaultSearchResultsJson(){
+//     // send ajax request and assign the XHML HTTP request object returned to jq_xhr
+//     jq_xhr = $.ajax({
+//         url : 'people',  // the URL for the request
+//         data : { ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
+//         method : 'GET',
+//         dataType : 'json',  // the type of data we expect back
+//         contentType: "application/json; charset=utf-8",
 
-        success : function(json) {
-            default_results_json = json;
-            if(photobook_toggled && !($.trim($("#filterBoxOne").val()).length > 0)){
-                buildSearchResults(default_results_json);
-            }
-        }
-    });
-}
+//         success : function(json) {
+//             default_results_json = json;
+//             if(photobook_toggled && !($.trim($("#filterBoxOne").val()).length > 0)){
+//                 buildSearchResults(default_results_json);
+//             }
+//         }
+//     });
+// }
 
 // get search results from database based on search parameters
 //      queries the database with search parameters
@@ -232,12 +233,13 @@ function getSearchResults(){
     searchBox = $("#filterBoxOne");
 
     if(     (searchBox.val() != searchBox_old_val)
-        ||  advanced_search_toggled
+        ||  advanced_search_changed
         ||  ( (!advanced_search_toggled) && ($.trim(searchBox.val())) )
         ){
+
+        advanced_search_changed = false;
+        $("#people_table").hide();
         searchBox_old_val = searchBox.val();
-        $('#people_table tbody').empty();
-        $('#photobook_results').empty();
 
         if( ($.trim(searchBox.val())) || advanced_search_toggled ){
             if(ajax_req_issued){
@@ -254,12 +256,14 @@ function getSearchResults(){
               contentType: "application/json; charset=utf-8",
               beforeSend: function() {
                 ajax_req_issued = true;
-                clearAllTables();
+                clearSearchResults();
                 $('#ajax_loading_notice').show();
+                $('#empty_results').hide();
               },
               complete: function() {
                 ajax_req_issued = false;
-                updateView();
+                if(jq_xhr.status)
+                    updateView();
                 $("#ajax_loading_notice").hide();
               },
               success : function(json) {
@@ -340,7 +344,7 @@ function buildResultRowPhotoBookFormat(json){
         HELPER FUNCTIONS
 *****************************************/
 // helper function to clear all tables
-function clearAllTables () {
+function clearSearchResults () {
     // clear existing tables
     $('#people_table tbody').empty();
     $('#photobook_results').empty();
@@ -417,7 +421,6 @@ function loadImage(image_uri){
     img.src = image_uri;
     $(img).bind({
         error: function() {
-            // alert('404 on image');
             // if there's some error in loading the image, load scotty dog instead
             img.src = "/images/mascot.jpg";
         }
@@ -432,63 +435,87 @@ function updateView(){
         $filterBoxOne_filter = $("#filterBoxOne_filter");
         $filterBoxOne_photobook = $("#filterBoxOne_photobook");
         $key_contacts_table = $("#key_contacts_table");
+        $key_contacts_photobook = $("#key_contacts_photobook");
         $people_table = $("#people_table");
         $photobook_results = $("#photobook_results");
         $advanced_search_filters = $("#advanced_search_filters");
+        $empty_results = $("#empty_results");
         isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
+        var empty_results = false;
 
+        if(last_search_results == '' && !$key_contacts_table.is(":visible") && !$key_contacts_photobook.is(":visible")){
+            $empty_results.show();
+            empty_results = true;
+            if(advanced_search_toggled)
+                $advanced_search_filters.show();
+            else
+                $advanced_search_filters.hide();
+            // hide other sections
+            $people_table.hide();
+            $key_contacts_photobook.hide();
+            $key_contacts_table.hide();
+            $photobook_results.hide();
+        }
         // Set up initial state
         if(!advanced_search_toggled && !photobook_toggled && !isSearchTextEntered){
             //show key_contacts table
             $key_contacts_table.show();
             // hide other sections
+            $key_contacts_photobook.hide();
             $people_table.hide();
             $photobook_results.hide();
             $advanced_search_filters.hide();
+            //$("#ajax_loading_notice").hide();
         }
         // Set up people search results table view without advanced filters
-        if(!advanced_search_toggled && !photobook_toggled && isSearchTextEntered){
+        if(!advanced_search_toggled && !photobook_toggled && isSearchTextEntered && !empty_results){
             // show people search results in people_table
             $people_table.show();
             // hide other sections
+            $key_contacts_photobook.hide();
             $key_contacts_table.hide();
             $photobook_results.hide();
             $advanced_search_filters.hide();
         }
         // Set up people search results table view with advanced filters
-        if(advanced_search_toggled && !photobook_toggled){
+        if(advanced_search_toggled && !photobook_toggled && !empty_results){
             // show results people_table
             // show advance search filters box
             $people_table.show();
             $advanced_search_filters.show();
             // hide other sections
+            $key_contacts_photobook.hide();
             $key_contacts_table.hide();
             $photobook_results.hide();
         }
         // Set up people search results photobook view without advanced filters
         if(!advanced_search_toggled && photobook_toggled && !isSearchTextEntered){
             // show key contacts in photobook_results
-            $photobook_results.show();
+            $key_contacts_photobook.show();
             // hide other sections
             $key_contacts_table.hide();
+            $photobook_results.hide();
             $people_table.hide();
             $advanced_search_filters.hide();
+            //$("#ajax_loading_notice").hide();
         }
-        if(!advanced_search_toggled && photobook_toggled && isSearchTextEntered){
+        if(!advanced_search_toggled && photobook_toggled && isSearchTextEntered && !empty_results){
             // show people search results in photobook_results
             $photobook_results.show();
             // hide other sections
+            $key_contacts_photobook.hide();
             $people_table.hide();
             $key_contacts_table.hide();
             $advanced_search_filters.hide();
         }
         // Set up people search results photobook view with advanced filters
-        if(advanced_search_toggled && photobook_toggled){
+        if(advanced_search_toggled && photobook_toggled && !empty_results){
             // show search results in photobook_table
             // show advance search filters box
             $photobook_results.show();
             $advanced_search_filters.show();
             // hide other sections
+            $key_contacts_photobook.hide();
             $people_table.hide();
             $key_contacts_table.hide();
         }

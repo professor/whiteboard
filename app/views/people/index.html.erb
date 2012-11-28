@@ -89,11 +89,17 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       </tr>
   </tfoot>
 </table>
-
-<div id="photobook_results" hidden="true" class="clearboth" >
+<div id="key_contacts_photobook" class="clearboth" hidden="true">
+  <% @results.each do |person| %>
+    <a class="photobook_item" href="<%= person[:path] %>">
+      <%= image_tag(person[:image_uri]) %>
+      <p class="photobook_item_name"><%= person[:human_name] %> </p>
+    </a>
+  <% end %>
 </div>
-<div id="ajax_loading_notice" hidden="true" class="clearboth"></div>
-<div id="empty_results" hidden="true" class="clearboth"></div>
+<div id="photobook_results" hidden="true" class="clearboth" ></div>
+<div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
+<div id="empty_results" hidden="true" class="clearboth">No results found.</div>
 
 <br/>
 

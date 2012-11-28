@@ -185,7 +185,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 #people_table td.photobook-img img {
     padding:0;
 }
-#photobook_results{
+#photobook_results, #key_contacts_photobook{
     overflow: hidden;
 }
 .photobook_item{
@@ -203,7 +203,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
     white-space: nowrap;
     width: 155px;
 }
-#photobook_results a.photobook_item {
+#photobook_results a.photobook_item, #key_contacts_photobook a.photobook_item{
     text-decoration: none;
 }
 a.photobook_item img{
@@ -725,7 +725,7 @@ div.modified {
     background-color: #E1EAEA;
     cursor: pointer;
 }
-#photobook_results a.photobook_item:hover{
+#photobook_results a.photobook_item:hover, #key_contacts_photobook a.photobook_item:hover{
     opacity:0.7;
     filter:alpha(opacity=70); /* For IE8 and earlier */
 }
