@@ -362,7 +362,7 @@ function customize_display()
     //execute_search(construct_query_sting());
     
     // Resize the height of data_card and photo
-    $(".data_card.photo_card .data_card_photo").each( function(){
+    $(".data_card .data_card_photo").each( function(){
         $(this).css('height', $(this).width()*19/14 );
     });
     if(DATACARD_MODE == "photo_card"){
@@ -441,6 +441,9 @@ $(document).ready(function(){
         $('.data_card').not('.customization_dialog .data_card').toggleClass('list_view').toggleClass('photo_card');
         
         // Resize the height of data_card
+        $(".data_card .data_card_photo").each( function(){
+          $(this).css('height', $(this).width()*19/14 );
+        });
         if(DATACARD_MODE == "photo_card"){
           var max_height = 0;
           $(".data_card.photo_card").each( function(){
