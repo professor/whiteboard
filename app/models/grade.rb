@@ -32,14 +32,22 @@ class Grade < ActiveRecord::Base
   validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
 
   before_save :format_score
+  after_find :decrypt_score
 
   FIRST_GRADE_ROW = 2
   FIRST_GRADE_COL = 4
 
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
-    if self.assignment_id <0
+    if self.assignment_id < 0
       self.score = Grade.encrypt_score(self.score)
+    end
+  end
+
+  def decrypt_score
+    puts "I am in format_score assignment_id="+self.assignment_id.to_s
+    if self.assignment_id < 0
+      self.score = Grade.decrypt_score(self.score)
     end
   end
 
@@ -48,6 +56,7 @@ class Grade < ActiveRecord::Base
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
+        puts "I am in get_grades_for_student_per_course"
         grade.score = Grade.decrypt_score(grade.score)
         grades["final"] = grade
       else
@@ -59,6 +68,7 @@ class Grade < ActiveRecord::Base
 
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)
+    puts "I am in get_grade"
     Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
@@ -85,7 +95,6 @@ class Grade < ActiveRecord::Base
     if course.registered_students.include?(student)
       grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
-        score = Grade.encrypt_score(score) if assignment_id < 0
         grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
@@ -299,7 +308,7 @@ private
         student_id = grade_sheet[i,0].to_i
         assignment_id = grade_sheet[0,j].to_i
         score = grade_sheet[i,j].to_s
-        Grade.give_grade(course_id, assignment_id, student_id, score, false)
+        Grade.give_grade(course_id, assignment_id, student_id, score, true)
       end
     end
   end
