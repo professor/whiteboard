@@ -28,8 +28,7 @@ class Grade < ActiveRecord::Base
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
   validates :course_id, :student_id, :assignment_id, :presence => true
-  #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
-  validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
+  validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}, :allow_nil => true, :allow_blank => true
 
   before_save :format_score
   after_find :decrypt_score
@@ -45,7 +44,6 @@ class Grade < ActiveRecord::Base
   end
 
   def decrypt_score
-    puts "I am in format_score assignment_id="+self.assignment_id.to_s
     if self.assignment_id < 0
       self.score = Grade.decrypt_score(self.score)
     end
@@ -56,7 +54,6 @@ class Grade < ActiveRecord::Base
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
-        puts "I am in get_grades_for_student_per_course"
         grade.score = Grade.decrypt_score(grade.score)
         grades["final"] = grade
       else
@@ -68,7 +65,6 @@ class Grade < ActiveRecord::Base
 
   # To fetch the entry with matching course, assignment and student.
   def self.get_grade(assignment_id, student_id)
-    puts "I am in get_grade"
     Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
@@ -316,7 +312,11 @@ private
   def self.encrypt_score(raw_score)
     # FIXME: get salt from somewhere else
     salt="I am salt without any iodine"
-    return Digest::SHA2.hexdigest(salt+raw_score)
+    if raw_score.nil? || raw_score.empty?
+      return raw_score
+    else
+      return Digest::SHA2.hexdigest(salt+raw_score)
+    end
   end
 
   def self.decrypt_score(encrypted_score)
