@@ -41,4 +41,11 @@ FactoryGirl.define do
     email "cecile.peraire@sv.cmu.edu"
   end
 
+  factory :prof_zhang, :parent => :prof do
+    first_name "Jia"
+    last_name "Zhang"
+    human_name "Jia Zhang"
+    email "jia.zhang@sv.cmu.edu"
+  end
+
 end
