@@ -76,12 +76,12 @@
 
         <div class="user_profile_contact_details_content">
             <table class="cmu_table">
-                <tr class="">
+                <tr>
                     <td>Email</td>
                     <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
                 </tr>
                 <%  @person.telephones_hash.each_with_index do |(key, value), index| %>
-                <tr <% if index.even? %> class=""<% end %> >
+                <tr <% if index.even? %> <% end %> >
                     <td><%= h "#{key}" %></td>
                     <td><%= h "#{value}" %></td>
                 </tr>
@@ -95,7 +95,7 @@
             </table>
 
             <table class="cmu_table">
-                <tr class="">
+                <tr >
                     <td>Organization</td>
                     <td>
                         <% if @person.organization_name %>
@@ -144,12 +144,12 @@
         <div class="clearboth ">
             <h2>Other Information:</h2>
             <table class="cmu_table">
-                <tr class="">
+                <tr >
                 <tr>
                     <td>Personal Email</td>
                     <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
                 </tr>
-                <tr class="">
+                <tr >
                     <td>Andrew Email</td>
                     <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
                 </tr>
@@ -158,7 +158,7 @@
                   <td>Office:</td>
                   <td><%= h @person.office %></td>
                 </tr>
-                <tr class="">
+                <tr >
                   <td>Office Hours:</td>
                   <td><%= h @person.office_hours %></td>
                 </tr>

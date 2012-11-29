@@ -300,7 +300,7 @@ function buildSearchResults(json) {
             for (var i in json){
                 if(!json[i].priority)
                     buildResultRowPhotoBookFormat(json[i]);
-            }
+            }    
         } else{
             // build row number i
             // first do high priority results, then low priority results
@@ -353,7 +353,7 @@ function buildResultRowPhotoBookFormat(json){
 function clearSearchResults () {
     // clear existing tables
     $('#people_table tbody').empty();
-    $('#photobook_results').empty();
+    $('#photobook_results_main').empty();
 }
 /*
     Based on the various toggles show the correct tables. Tables:

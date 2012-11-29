@@ -332,3 +332,26 @@ h2.newsHeadline {
 .eventCalendarListView .dayEnd {height: 10px;}
 
 .bioContactInfo {padding: 2px 0px 2px 0px;}
+
+
+.user_profile_photo_social{
+    float:left;
+    margin-bottom: 5px;
+}
+.user_profile_title, .user_profile_contact_details_content{
+    float: left;
+    width: 70%;
+    margin: 0 0 5px 15px;
+    padding: 0px 0 0 20px;
+}
+.user_profile_action{
+	display : none;
+}
+.user_profile_contact_details_content table tr td:first-child{
+	width: 30%;
+	text-align: right;
+	vertical-align: middle;
+}
+.export_button{
+
+}

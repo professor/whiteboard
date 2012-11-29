@@ -42,7 +42,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
              %>
              <%= "You are showing results for:  #{user_description}" %>
         <% end %>
-        <% if !@results.blank? %>
+        <% unless @results.blank? %>
           <% @results.each do |person| %>
             <tr>
               <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
@@ -64,7 +64,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       <tfoot>
         <tr>
           <td colspan="3">
-             <input type="button" id="show_box" value="Export List" onclick="show_box();"/>
+             <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
           </td>
       </tr>        
       </tfoot>
@@ -84,22 +84,25 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
     <tfoot>
         <tr>
           <td colspan="5">
-             <input type="button" id="show_box" value="Export List" onclick="show_box();"/>
+             <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
           </td>
       </tr>
   </tfoot>
 </table>
 <div id="key_contacts_photobook" class="clearboth" hidden="true">
-  <% if !@results.blank? %>
+  <% unless @results.blank? %>
     <% @results.each do |person| %>
       <a class="photobook_item" href="<%= person[:path] %>">
         <%= image_tag(person[:image_uri]) %>
         <p class="photobook_item_name"><%= person[:human_name] %> </p>
       </a>
     <% end %>
+    <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
   <% end %>
 </div>
-<div id="photobook_results" hidden="true" class="clearboth" ></div>
+<div id="photobook_results" hidden="true" class="clearboth" >
+  <div id="photobook_results_main" class="clearboth" ></div>
+</div>
 <div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
 <div id="empty_results" hidden="true" class="clearboth">No results found.</div>
 
