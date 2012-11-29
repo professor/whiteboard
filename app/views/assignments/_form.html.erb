@@ -76,6 +76,8 @@
             <%= f.submit "Create #{customised_name}"%>
         <% elsif controller.action_name == 'edit' %>
             <%= f.submit "Update #{customised_name}"%>
+         <% else %>
+            <%= f.submit%>
         <% end %>
 
       </td>

@@ -143,15 +143,14 @@
   <div id="result"></div>
   <div style="width:100%;">
     <table id="legend">
-      <tr>
-        <td style="width:20px;padding:0 10px;">
+     <tr></tr>
+        <td style="width:100px;padding:0 10px;">
+          <input style="width:10px;height:10px;" size="1" type="'text" class="draft" >
+        Draft</td>
 
-          <input style="widht:10px;height:10px;" size="1" type="'text" class="draft" >
-        </td>
-        <td>Draft</td>
+      <td style="width:150px;padding:0 10px;"><input class="changedScore" style="width:10px;height:10px;" size="1" type="'text" /> Unsaved changes</td>
+      <td style="width:250px;padding:0 10px;"><%=image_tag("doubleclick.png", :size=>"25x25")%> Double click to toggle draft</td>
       </tr>
-      <tr><td><input class="changedScore" size="1" type="text" /></td><td>Unsaved changes</td></tr>
-      <tr><td colspan="2">double click to switch ertrete</td></tr>
     </table>
   </div>
   <div class="score">

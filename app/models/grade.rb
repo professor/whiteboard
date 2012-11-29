@@ -28,18 +28,24 @@ class Grade < ActiveRecord::Base
   belongs_to :student, :class_name => "User"
   belongs_to :assignment
   validates :course_id, :student_id, :assignment_id, :presence => true
-  #validates :score, :numericality => {:greater_than_or_equal_to => 0} , :allow_nil => true, :allow_blank => true
-  validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}
+  validates :score, :uniqueness => {:scope => [:course_id, :assignment_id, :student_id]}, :allow_nil => true, :allow_blank => true
 
   before_save :format_score
+  after_find :decrypt_score
 
   FIRST_GRADE_ROW = 2
   FIRST_GRADE_COL = 4
 
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
-    if self.assignment_id <0
+    if self.assignment_id < 0
       self.score = Grade.encrypt_score(self.score)
+    end
+  end
+
+  def decrypt_score
+    if self.assignment_id < 0
+      self.score = Grade.decrypt_score(self.score)
     end
   end
 
@@ -85,7 +91,6 @@ class Grade < ActiveRecord::Base
     if course.registered_students.include?(student)
       grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
-        score = Grade.encrypt_score(score) if assignment_id < 0
         grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
                            :score =>score,:is_student_visible=>is_student_visible})
       end
@@ -299,7 +304,7 @@ private
         student_id = grade_sheet[i,0].to_i
         assignment_id = grade_sheet[0,j].to_i
         score = grade_sheet[i,j].to_s
-        Grade.give_grade(course_id, assignment_id, student_id, score, false)
+        Grade.give_grade(course_id, assignment_id, student_id, score, true)
       end
     end
   end
@@ -307,7 +312,11 @@ private
   def self.encrypt_score(raw_score)
     # FIXME: get salt from somewhere else
     salt="I am salt without any iodine"
-    return Digest::SHA2.hexdigest(salt+raw_score)
+    if raw_score.nil? || raw_score.empty?
+      return raw_score
+    else
+      return Digest::SHA2.hexdigest(salt+raw_score)
+    end
   end
 
   def self.decrypt_score(encrypted_score)
