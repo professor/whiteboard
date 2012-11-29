@@ -2,69 +2,10 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  factory :prof, :parent => :person do
-    is_staff 1
-  end
-
-  factory :prof_liu, :parent => :prof do
-    first_name "YC"
-    last_name "Liu"
-    human_name "YC Liu"
-    email "kate.liu@sv.cmu.edu"
-  end
-
-  factory :prof_singh, :parent => :prof do
-    first_name "P"
-    last_name "Singh"
-    human_name "P Singh"
-    email "prabhjot.singh@sv.cmu.edu"
-  end
-
-  factory :prof_lee, :parent => :prof do
-    first_name "TY"
-    last_name "Lee"
-    human_name "TY Lee"
-    email "lydian.lee@sv.cmu.edu"
-  end
-
-  factory :student_se_full_time, :parent => :person do
-    is_student 1
-    is_part_time 0
-    graduation_year "2012"
-    masters_program "SE"
-    masters_track "Tech"
-    sequence(:email) {|n| "sestudent#{n}@sv.cmu.edu"}
-    sequence(:webiso_account) {|n| "sestudent#{n}@andrew.cmu.edu"}
-  end
-
-  factory :owen, :parent => :student_se_full_time do
-    id 994
-    twiki_name "OwenChu"
-    first_name "Owen"
-    last_name "Chu"
-    human_name "Owen Chu"
-  end
-
-  factory :david, :parent => :student_se_full_time do
-    id 995
-    twiki_name "DavidLiu"
-    first_name "David"
-    last_name "Liu"
-    human_name "David Liu"
-  end
-
-  factory :madhok, :parent => :student_se_full_time do
-    id 996
-    twiki_name "MadhokShivaratre"
-    first_name "Madhok"
-    last_name "Shivaratre"
-    human_name "Madhok Shivaratre"
-  end
-
   factory :team_3amigos, :class => Team do
+    course_id 1
     name "3 Amigos"
     email "fall-2012-team-3-amigos@west.cmu.edu"
-    course_id 1
     after(:create) { |team|
       team.members = []
       team.members << FactoryGirl.create(:owen)
@@ -73,39 +14,66 @@ FactoryGirl.define do
     }
   end
 
-  factory :prabhjot, :parent => :student_se_full_time do
-    id 997
-    twiki_name "PrabhjotSingh"
-    first_name "Prabhjot"
-    last_name "Singh"
-    human_name "Prabhjot Singh"
-  end
-
-  factory :lydian, :parent => :student_se_full_time do
-    id 998
-    twiki_name "LydianLee"
-    first_name "Lydian"
-    last_name "Lee"
-    human_name "Lydian Lee"
-  end
-
-  factory :kate, :parent => :student_se_full_time do
-    id 999
-    twiki_name "KateLiu"
-    first_name "Kate"
-    last_name "Liu"
-    human_name "Kate Liu"
-  end
-
   factory :team_leopard, :class => Team do
+    course_id 1
     name "Leopard"
     email "fall-2012-team-leopard@west.cmu.edu"
-    course_id 1
     after(:create) { |team|
       team.members = []
       team.members << FactoryGirl.create(:prabhjot)
       team.members << FactoryGirl.create(:lydian)
       team.members << FactoryGirl.create(:kate)
+    }
+  end
+
+  factory :team_awesome, :class => Team do
+    course_id 1
+    name "Awesome"
+    email "fall-2012-team-awesome@west.cmu.edu"
+    after(:create) { |team|
+      team.members = []
+      team.members << FactoryGirl.create(:oscar)
+      team.members << FactoryGirl.create(:aristide)
+      team.members << FactoryGirl.create(:sky)
+      team.members << FactoryGirl.create(:norman)
+    }
+  end
+
+  factory :team_ramrod, :class => Team do
+    course_id 1
+    name "Ramrod"
+    email "fall-2012-team-ramrod@west.cmu.edu"
+    after(:create) { |team|
+      team.members = []
+      team.members << FactoryGirl.create(:david_p)
+      team.members << FactoryGirl.create(:kaushik)
+      team.members << FactoryGirl.create(:edward)
+      team.members << FactoryGirl.create(:zhipeng)
+    }
+  end
+
+  factory :team_maverick, :class => Team do
+    course_id 1
+    name "Maverick"
+    email "fall-2012-team-maverick@west.cmu.edu"
+    after(:create) { |team|
+      team.members = []
+      team.members << FactoryGirl.create(:rashmi)
+      team.members << FactoryGirl.create(:clyde)
+      team.members << FactoryGirl.create(:shama)
+      team.members << FactoryGirl.create(:vidya)
+    }
+  end
+
+  factory :team_curiosity, :class => Team do
+    course_id 1
+    name "Curiosity"
+    email "fall-2012-team-curiosirt@west.cmu.edu"
+    after(:create) { |team|
+      team.members = []
+      team.members << FactoryGirl.create(:sean)
+      team.members << FactoryGirl.create(:mark)
+      team.members << FactoryGirl.create(:sumeet)
     }
   end
 
@@ -209,6 +177,10 @@ FactoryGirl.define do
       course.teams = []
       course.teams << FactoryGirl.create(:team_3amigos)
       course.teams << FactoryGirl.create(:team_leopard)
+      course.teams << FactoryGirl.create(:team_awesome)
+      course.teams << FactoryGirl.create(:team_ramrod)
+      course.teams << FactoryGirl.create(:team_maverick)
+      course.teams << FactoryGirl.create(:team_curiosity)
 
       course.assignments = []
       course.assignments << FactoryGirl.create(:assignment_team_prep, :course_id=>course.id)

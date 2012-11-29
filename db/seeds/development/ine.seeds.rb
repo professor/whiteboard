@@ -2,52 +2,10 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  factory :prof_evans, :parent => :person do
-    is_staff 1
-    first_name "Stuart"
-    last_name "Evans"
-    human_name "Stuart Evans"
-    email "stuart.evans@sv.cmu.edu"
-  end
-
-  factory :student_sm_full_time, :parent => :person do
-    is_student 1
-    is_part_time 0
-    graduation_year "2012"
-    masters_program "SM"
-    masters_track "Tech"
-    sequence(:email) {|n| "smstudent#{n}@sv.cmu.edu"}
-    sequence(:webiso_account) {|n| "smstudent#{n}@andrew.cmu.edu"}
-  end
-
-  factory :michael, :parent => :student_sm_full_time do
-    id 991
-    twiki_name "MichaelJordan"
-    first_name "Michael"
-    last_name "Jordan"
-    human_name "Michael Jordan"
-  end
-
-  factory :scottie, :parent => :student_sm_full_time do
-    id 992
-    twiki_name "ScottiePippen"
-    first_name "Scottie"
-    last_name "Pippen"
-    human_name "Scottie Pippen"
-  end
-
-  factory :dennis, :parent => :student_sm_full_time do
-    id 993
-    twiki_name "DennisRodman"
-    first_name "Dennis"
-    last_name "Rodman"
-    human_name "Dennis Rodman"
-  end
-
   factory :team_bulls, :class => Team do
+    course_id 1
     name "Bulls"
     email "fall-2012-team-bulls@west.cmu.edu"
-    course_id 1
     after(:create) { |team|
       team.members = []
       team.members << FactoryGirl.create(:michael)
@@ -78,6 +36,8 @@ FactoryGirl.define do
 
   factory :ine_2012, :parent => :course do
     name "Innovation and Entrepreneurship"
+    semester "Fall"
+    year 2012
     after(:create) { |course|
       course.grading_rule = FactoryGirl.create(:grading_rule_weights)
 

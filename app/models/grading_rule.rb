@@ -59,7 +59,7 @@ class GradingRule < ActiveRecord::Base
 
   def validate_score(raw_score)
     # allow users to skip entering grades
-    if raw_score.nil?
+    if raw_score.nil? || raw_score.empty?
       return true
     end
 
