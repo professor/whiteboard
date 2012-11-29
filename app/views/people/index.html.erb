@@ -66,7 +66,7 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
           <td colspan="3">
              <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
           </td>
-      </tr>        
+      </tr>
       </tfoot>
     </table>
 <table id="people_table" class="tablesorter" hidden="true" >
@@ -90,14 +90,19 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
   </tfoot>
 </table>
 <div id="key_contacts_photobook" class="clearboth" hidden="true">
-  <% unless @results.blank? %>
+    <% unless @results.blank? %>
+    <div>
     <% @results.each do |person| %>
       <a class="photobook_item" href="<%= person[:path] %>">
         <%= image_tag(person[:image_uri]) %>
         <p class="photobook_item_name"><%= person[:human_name] %> </p>
       </a>
     <% end %>
-    <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
+    </div>
+    <div class="clearboth">
+        <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
+    </div>
+
   <% end %>
 </div>
 <div id="photobook_results" hidden="true" class="clearboth" >

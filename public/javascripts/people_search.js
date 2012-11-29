@@ -300,7 +300,9 @@ function buildSearchResults(json) {
             for (var i in json){
                 if(!json[i].priority)
                     buildResultRowPhotoBookFormat(json[i]);
-            }    
+            }
+            // apped the export list row button
+            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" onclick="show_box();"/></div>'));
         } else{
             // build row number i
             // first do high priority results, then low priority results
@@ -342,7 +344,7 @@ function buildResultRowPhotoBookFormat(json){
         .parent()
         // now you're in the photobook_item element
         .append($('<p class="photobook_item_name" />').html(json.first_name+" "+json.last_name))
-        .appendTo('#photobook_results');
+        .appendTo('#photobook_results_main');
 }
 
 
