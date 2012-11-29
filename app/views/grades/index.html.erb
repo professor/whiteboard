@@ -13,17 +13,31 @@
         return $(node).text();
       } 
     });
+      // bind double click event for changing visibility of a grade
     $(".grade input[type='text']").dblclick(function(event){
         $(this).toggleClass("draft");
         change_grade(event);
     })
+     // Calculate initial Earned Grades
     $("tr[id^='s_']").each(function(){
       var student_id = $(this).attr("id").replace("s_","");
       grades.earned_grade(student_id);    
 //      grades.updateFinalGrade(student_id);
     });
 
+     // Leave Warning
+    $(window).bind("beforeunload", function(){
+        if(Object.keys(changed_grades).length > 0 ){
+            return 'You have some unsaved changes in this page.';
+        }
+    });
+    //
+
   });
+  window.onbeforeunload = function(){
+
+
+  };
   function change_grade(event){
       console.log("change");
     var grade_attrs = parse_id($(event.target).attr('id'));
@@ -72,6 +86,7 @@
   function post_grades(url) {
       var data = {};
       data.grades = Object.keys(changed_grades).map(function(key){return changed_grades[key];});
+      $("#loading").show();
       $.ajax({
           contentType: "application/json;",
           url: url,
@@ -83,10 +98,12 @@
                   location.reload(false);
               }
               changed_grades = {};
+              $("#loading").hide();
           },
           error: function(jqXHR, textStatus, errorThrown){
               console.log("Unalbe to submit the record");
               //changed_grades = {};
+              $("#loading").hide();
           }
 
       })
@@ -190,6 +207,7 @@
       <%end%>
     </table>
     <div>
+     <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
     <button type="button" id="gradebook_submit" onclick="save()">Save</button>
     <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
     </div>
