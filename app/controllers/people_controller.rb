@@ -26,6 +26,15 @@ class PeopleController < ApplicationController
     # These lines allow someone to override the user ID used to display default search results.
     # This code is intended for use by administrators and staff only.
 
+    #if !current_user.profile_updated? && !params[:test_profile_update].nil?
+    if !current_user.is_profile_valid?
+      flash[:error] = "Warning: You have to update your profile details. If you do not do so in 4 weeks, you will lost access to the search profile features.<a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a>".html_safe
+
+      if current_user.should_be_redirected?
+        flash[:error] = 'Warning: Your access to the user search features have temporarily been disabled. To continue, please update your biography/phone numbers and social handles.'
+       redirect_to edit_person_path(current_user) and return
+      end
+    end
     @people = return_defaults
 
     @results = @people.collect { |default_person| Hash[
@@ -97,7 +106,12 @@ class PeopleController < ApplicationController
 
   # GET /people/download_csv
 def download_csv
-    @people = return_search_results(params[:filterBoxOne])
+    if params[:search_id].nil?
+      @people = return_search_results(params[:filterBoxOne])
+    else
+      @people = []
+      @people << User.find_by_id(params[:search_id])
+    end
     respond_to do |format|
       format.csv do
         csv_string = CSV.generate do |csv|
@@ -125,7 +139,12 @@ def download_csv
 
   # GET /people/download_vcf
   def download_vcf
-    @people = return_search_results(params[:filterBoxOne])
+    if params[:search_id].nil?
+      @people = return_search_results(params[:filterBoxOne])
+    else
+      @people = []
+      @people << User.find_by_id(params[:search_id])
+    end
 
     vcard_str=""
 
@@ -305,6 +324,11 @@ def download_csv
   # GET /people/1/edit
   def edit
     @person = User.find_by_param(params[:id])
+
+    unless @person.id == current_user.id or current_user.is_admin?
+      flash[:error] = "You're not allowed to edit this user's profile."
+      redirect_to user_path(@person)
+    end
 #    authorize! :update, @person
 
     @strength_themes = StrengthTheme.all
@@ -369,6 +393,7 @@ def download_csv
     @person = User.find_by_param(params[:id])
 #    authorize! :update, @person
 
+
     @person.updated_by_user_id = current_user.id
     @strength_themes = StrengthTheme.all
 
@@ -377,8 +402,29 @@ def download_csv
       @person.photo = params[:user][:photo] if can? :upload_photo, User
       @person.expires_at = params[:user][:expires_at] if current_user.is_admin?
 
+      if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.github.blank?) or (@person.telephone1.blank? && @person.telephone2.blank? && @person.telephone3.blank? && @person.telephone4.blank?)
+      #  if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.github.blank?)
+          flash[:error] = "Please update your (social handles or biography) and your contact information"
+          @person.is_profile_valid = false
+
+          #attribute = "facebook " if @person.facebook.blank?
+          #attribute = "twitter " if @person.twitter.blank?
+          #attribute = "google_plus " if @person.google_plus.blank?
+          #attribute = "github " if @person.github.blank?
+          #attribute = "telephone" if @person.telephone1.blank? && person.telephone2.blank? && person.telephone3.blank? && person.telephone4.blank?
+
+          attribute = "biography" #if @person.biography.blank?
+          @person.notify_about_missing_field(attribute, "Please update these fields!")
+      else
+          @person.is_profile_valid= true
+        end
+
       if @person.save
         flash[:notice] = 'Person was successfully updated.'
+
+
+
+
         format.html { redirect_to(@person) }
         format.xml { head :ok }
       else
