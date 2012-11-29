@@ -137,8 +137,12 @@ class CoursesController < ApplicationController
       end
     end
 
-    book.write '/Users/madhok/RubymineProjects/cmusv/excel-file.xls'
-    send_file '/Users/madhok/RubymineProjects/cmusv/excel-file.xls'
+    filename = Rails.root.join('tmp', 'gradebook_' + @course.name.to_s.gsub(/\s+/, "") + '_' + current_user.human_name.to_s.gsub(/\s+/, "") + '.xls').to_s
+
+    book.write filename
+    send_file filename
+
+    File.delete(filename)
   end
 
   def import_gradebook

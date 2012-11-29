@@ -23,11 +23,6 @@ module AESCrypt
     aes.key = KEY
     #aes.iv = iv
 
-    STDERR.puts "======="
-    STDERR.puts KEY
-    STDERR.puts KEY.length
-    STDERR.puts CIPHER_TYPE
-    STDERR.puts "======="
     aes.update(Base64.decode64(encrypted_data)) + aes.final
   end
 
