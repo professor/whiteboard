@@ -16,7 +16,7 @@
       // bind double click event for changing visibility of a grade
     $(".grade input[type='text']").dblclick(function(event){
         $(this).toggleClass("draft");
-        change_grade(event);
+        $(this).trigger("change");
     })
      // Calculate initial Earned Grades
     $("tr[id^='s_']").each(function(){
@@ -31,38 +31,35 @@
             return 'You have some unsaved changes in this page.';
         }
     });
-    //
+    //  change grades
+    $(".grade input[type='text']").change(function(){
+        console.log("change");
+        var grade_attrs = parse_id($(this).attr('id'));
+        var score = $(this).val();
+        var previousValue = this.defaultValue;
+        var visible = !$(this).hasClass("draft");
+        var previousVisible = $(this).hasClass("default_draft")?false:true;
+        grades.earned_grade(grade_attrs.student_id);
+//    grades.updateFinalGrade(grade_attrs.student_id);
+        if(previousValue != score || visible != previousVisible)
+        {
+            $(this).addClass("changedScore");
+            changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
+                course_id: grade_attrs.course_id,
+                assignment_id: grade_attrs.assignment_id,
+                student_id: grade_attrs.student_id,
+                score: score,
+                is_student_visible: visible
+            };
+        }
+        else{
+            $(this).removeClass("changedScore");
+            delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
+        }
+    });
 
   });
-  window.onbeforeunload = function(){
 
-
-  };
-  function change_grade(event){
-      console.log("change");
-    var grade_attrs = parse_id($(event.target).attr('id'));
-    var score = $(event.target).val();
-    var previousValue = event.target.defaultValue;
-    var visible = !$(event.target).hasClass("draft");
-    var previousVisible = $(event.target).hasClass("default_draft")?false:true;
-    grades.earned_grade(grade_attrs.student_id);
-//    grades.updateFinalGrade(grade_attrs.student_id);
-    if(previousValue != score || visible != previousVisible)
-    {
-      $(event.target).addClass("changedScore");
-      changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
-        course_id: grade_attrs.course_id,
-        assignment_id: grade_attrs.assignment_id,
-        student_id: grade_attrs.student_id,
-        score: score,
-        is_student_visible: visible
-      };
-    }
-    else{
-      $(event.target).removeClass("changedScore");
-      delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
-    }
-  }
   function parse_id(idAttr){
       var course_id = parseInt(idAttr.split("_")[0]);
       var assignment_id = idAttr.split("_")[1];
@@ -76,6 +73,9 @@
   }
 
   function post_drafted_and_send() {
+      if(Object.keys(changed_grades).length > 0 ){
+          if(!confirm("You have unsaved changes, these changes will be discard. Are you sure you want to continue? ")) return;
+      }
       post_grades('<%=post_drafted_and_send_path(@course)%>');
 
   }
