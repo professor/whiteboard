@@ -192,17 +192,11 @@ function parse_smart_search(){
 
 // Reset things in the advanced area
 function reset_advanced_area(){
-  // caution... memory leak.. fix later
-  SELECTED_CRITERIA_HASH = {
-    "First Name": true,
-    "Last Name": true,
-    "Andrew ID": true,
-    "Company": false,
-    "Class Year": false,
-    "Program": false,
-    "Full/Part Time": false
-  }
-
+  SELECTED_CRITERIA_HASH["Company"] = false;
+  SELECTED_CRITERIA_HASH["Class Year"] = false;
+  SELECTED_CRITERIA_HASH["Program"] = false;
+  SELECTED_CRITERIA_HASH["Full/Part Time"] = false;
+  
   $('#search_text_box').val("");
   $('#people_type_picker').val("all");
   $('.criteria_tag').hide();
@@ -216,6 +210,12 @@ function fill_advanced_area(parameters_hash){
   // Start from main search text
   $('#search_text_box').val(parameters_hash["main_search_text"]);
 
+  // Then first name, last name, andrew id
+  if(parameters_hash.hasOwnProperty("first_name") && parameters_hash.hasOwnProperty("last_name") && parameters_hash.hasOwnProperty("andrew_id")){ $('#main_criteria_picker').val("all"); }
+  else if(parameters_hash.hasOwnProperty("first_name")) { $('#main_criteria_picker').val("first_name"); }
+  else if(parameters_hash.hasOwnProperty("last_name")) { $('#main_criteria_picker').val("last_name"); }
+  else if(parameters_hash.hasOwnProperty("andrew_id")) { $('#main_criteria_picker').val("andrew_id"); }
+  
   // Then company
   if(parameters_hash.hasOwnProperty("organization_name")){
     SELECTED_CRITERIA_HASH["Company"] = true;
@@ -414,6 +414,10 @@ $(document).ready(function(){
       $('#export_dialog_modal').dialog("close");
     });
 
+    // Insert alternate top nav bar for mobile display
+    $('#topnav').append(
+      "<div id='alt_topnav'><ul>"+$('#nav ul').html()+"</ul></div>"
+    );
 
     var advanced_only_hash = { "smart_search_text": true, "first_name": true, "last_name": true, "andrew_id": true, "include_inactive": true, "exact_match": true };
     // Advanced Search Area Initialization
@@ -527,37 +531,24 @@ $(document).ready(function(){
             }
         });
     });
+
     // when user selects from the main criteria menu
     $('#main_criteria_picker').change(function() {
 
-        /*
-        var tag_text = $(this)[0].value; // fetch the tag screen text for later use
-        if(tag_text=="andrew_id"){
-         SELECTED_CRITERIA_HASH['First Name']=false;
-         SELECTED_CRITERIA_HASH['Last Name']=false;
-         SELECTED_CRITERIA_HASH['Andrew ID']=true;
-        } else if(tag_text=="first_name"){
-         SELECTED_CRITERIA_HASH['First Name']=true;
-         SELECTED_CRITERIA_HASH['Last Name']=false;
-         SELECTED_CRITERIA_HASH['Andrew ID']=false;
-        } else if(tag_text=="last_name"){
-          SELECTED_CRITERIA_HASH['First Name']=false;
-          SELECTED_CRITERIA_HASH['Last Name']=true;
-          SELECTED_CRITERIA_HASH['Andrew ID']=false;
-         } else{
-          SELECTED_CRITERIA_HASH['First Name']=true;
-          SELECTED_CRITERIA_HASH['Last Name']=true;
-          SELECTED_CRITERIA_HASH['Andrew ID']=true;
-         }*/
         if (CRITERIA_NAME_HASH.hasOwnProperty($(this)[0].value)){
-          SELECTED_CRITERIA_HASH['First Name'] = SELECTED_CRITERIA_HASH['Last Name'] = SELECTED_CRITERIA_HASH['Andrew ID'] = false;
+          SELECTED_CRITERIA_HASH['First Name'] = false;
+          SELECTED_CRITERIA_HASH['Last Name'] = false;
+          SELECTED_CRITERIA_HASH['Andrew ID'] = false;
           SELECTED_CRITERIA_HASH[CRITERIA_NAME_HASH[$(this)[0].value]] = true;
         } else {
-          SELECTED_CRITERIA_HASH['First Name'] = SELECTED_CRITERIA_HASH['Last Name'] = SELECTED_CRITERIA_HASH['Andrew ID'] = true;
+          SELECTED_CRITERIA_HASH['First Name'] = true;
+          SELECTED_CRITERIA_HASH['Last Name'] = true;
+          SELECTED_CRITERIA_HASH['Andrew ID'] = true;
         }
 
         location.hash = construct_query_sting();
     });
+
     // when user select something from the extra criteria menu
     $('#extra_criteria_picker').change(function() {
         var tag_text = CRITERIA_NAME_HASH[$(this)[0].value]; // fetch the tag screen text for later use
@@ -597,14 +588,8 @@ $(document).ready(function(){
 
     $('#smart_search_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
-      if(e.which != 13){
-        //if($.trim($('#smart_search_text').val()).length < 2){ 
-          //SEARCH_REQUEST.abort();
-          //$('#results_box').html("<b>Please input more characters to trigger the search</b>");
-        //}
-        //else { 
-          SEARCH_TIMEOUT = setTimeout('parse_smart_search();location.hash = construct_query_sting();', 400);
-        //}
+      if(e.which != 13){ 
+        SEARCH_TIMEOUT = setTimeout('parse_smart_search();location.hash = construct_query_sting();', 400);
       }
     });
 

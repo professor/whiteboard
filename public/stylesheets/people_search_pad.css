@@ -1,4 +1,9 @@
 #wrapper, #pageHeader { width: auto;}
-#navWrapper, #pageFooter { display: none;}
+#navWrapper, #pageFooter, #socialLinks { display: none;}
 #topnav, #contentWrapper, #footer { margin: 0; }
 #main {background-image: none;}
+
+#topnav ul { display: none; }
+#topnav #alt_topnav, #topnav #alt_topnav ul { display: block; }
+#topnav #alt_topnav ul ul{ display: none; }
+#topnav #alt_topnav ul li:first-child { border-left: none; }

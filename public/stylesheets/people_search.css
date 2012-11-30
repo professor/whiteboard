@@ -6,6 +6,7 @@
 .customization_dialog { margin-top: 32px;}
 .customization_dialog .ui-dialog-titlebar {display:none}
 
+#alt_topnav {display: none;}
 
 #export_dialog_modal { text-align: center; font-size: 12px;}
 

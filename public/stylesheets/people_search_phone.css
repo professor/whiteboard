@@ -16,3 +16,9 @@
 .data_card.photo_card div  { margin: 8px 0; }
 .data_card.photo_card .data_card_human_name { font-size: 140%; }
 .data_card.photo_card {width: 31%; font-size: 140%; }
+
+#topnav ul { display: none; }
+#topnav #alt_topnav, #topnav #alt_topnav ul { display: block; }
+#topnav #alt_topnav ul ul{ display: none; }
+#topnav #alt_topnav ul li:first-child { border-left: none; }
+#topnav #alt_topnav ul li:last-child { display: none; }
