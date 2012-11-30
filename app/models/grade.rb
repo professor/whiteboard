@@ -39,13 +39,13 @@ class Grade < ActiveRecord::Base
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
     if self.assignment_id < 0
-      self.score = Grade.encrypt_score(self.score, self.student_id)
+      self.score = Grade.encrypt_score(self.score, self.course_id, self.student_id)
     end
   end
 
   def decrypt_score
     if self.assignment_id < 0
-      self.score = Grade.decrypt_score(self.score, self.student_id)
+      self.score = Grade.decrypt_score(self.score, self.course_id, self.student_id)
     end
   end
 
@@ -54,7 +54,7 @@ class Grade < ActiveRecord::Base
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
-        grade.score = Grade.decrypt_score(grade.score, grade.student_id)
+        grade.score = Grade.decrypt_score(grade.score, grade.course_id, grade.student_id)
         grades["final"] = grade
       else
         grades[grade.assignment.id] = grade
@@ -73,7 +73,7 @@ class Grade < ActiveRecord::Base
     if grade.nil?
       ""
     else
-      Grade.decrypt_score(grade.score, grade.student_id)
+      Grade.decrypt_score(grade.score, grade.course_id, grade.student_id)
     end
   end
 
@@ -325,26 +325,26 @@ private
     end
   end
 
-  def self.encrypt_score(raw_score, student_id)
+  def self.encrypt_score(raw_score, course_id, student_id)
     # FIXME: get salt from somewhere else
     salt="I am salt without any iodine"
     if raw_score.nil? || raw_score.empty?
       return raw_score
     else
-      return Digest::SHA2.hexdigest(salt+raw_score+student_id.to_s)
+      return Digest::SHA2.hexdigest(salt+raw_score+course_id.to_s+student_id.to_s)
     end
   end
 
-  def self.decrypt_score(encrypted_score, student_id)
+  def self.decrypt_score(encrypted_score, course_id, student_id)
     case encrypted_score
-      when encrypt_score("A", student_id) then return "A"
-      when encrypt_score("A-", student_id) then return "A-"
-      when encrypt_score("B+", student_id) then return "B+"
-      when encrypt_score("B", student_id) then return "B"
-      when encrypt_score("B-", student_id) then return "B-"
-      when encrypt_score("C+", student_id) then return "C+"
-      when encrypt_score("C", student_id) then return "C"
-      when encrypt_score("C-", student_id) then return "C-"
+      when encrypt_score("A", course_id, student_id) then return "A"
+      when encrypt_score("A-", course_id, student_id) then return "A-"
+      when encrypt_score("B+", course_id, student_id) then return "B+"
+      when encrypt_score("B", course_id, student_id) then return "B"
+      when encrypt_score("B-", course_id, student_id) then return "B-"
+      when encrypt_score("C+", course_id, student_id) then return "C+"
+      when encrypt_score("C", course_id, student_id) then return "C"
+      when encrypt_score("C-", course_id, student_id) then return "C-"
       else return encrypted_score
     end
   end
