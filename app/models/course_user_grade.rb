@@ -47,11 +47,14 @@ class CourseUserGrade < ActiveRecord::Base
   private
 
   def encrypt_grade
-    self.grade = encrypt(self.grade)
+    self.grade = encrypt(self.grade, iv)
   end
 
   def decrypt_grade
-    self.grade = decrypt(self.grade)
+    self.grade = decrypt(self.grade, iv)
   end
 
+  def iv
+    Digest::SHA256.hexdigest(self.course.id.to_s + self.user.id.to_s)
+  end
 end

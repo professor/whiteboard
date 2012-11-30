@@ -88,10 +88,14 @@ class DeliverableGrade < ActiveRecord::Base
   end
 
   def encrypt_grade
-    write_attribute(:grade, encrypt(self.grade))
+    write_attribute(:grade, encrypt(self.grade, iv))
   end
 
   def decrypt_grade
-    write_attribute(:grade, decrypt(self.grade))
+    write_attribute(:grade, decrypt(self.grade, iv))
+  end
+
+  def iv
+    Digest::SHA256.hexdigest(self.deliverable.id.to_s + self.user.id.to_s)
   end
 end
