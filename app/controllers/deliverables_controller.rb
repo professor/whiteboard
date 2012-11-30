@@ -103,6 +103,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
+    @user_teams = Team.find_by_person(current_user)
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
@@ -171,11 +172,16 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
+    @user_teams = Team.find_by_person(current_user)
 
-    if Assignment.find(params[:deliverable][:assignment_id]).team_deliverable?
-      @deliverable.update_team
-    else
-      @deliverable.team = nil
+    if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
+      params[:deliverable][:assignment_id], params[:deliverable][:team_id] = params[:deliverable][:assignment_id].split(',')
+    end
+
+    if params[:deliverable].blank? || params[:deliverable][:assignment_id].blank?
+      flash[:error] = "A course and assignment need to be selected"
+      render :action => "edit"
+      return
     end
 
     unless @deliverable.editable?(current_user)

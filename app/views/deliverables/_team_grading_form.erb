@@ -22,6 +22,7 @@
     </p>
     <p>
       <%= f.label :feedback_comment, "Feedback Comments" %>
+      (<%= link_to 'View History and Feedback', @deliverable %>)
       <br>
       <%= f.text_area :feedback_comment, :size => "70x10" %>
     </p>

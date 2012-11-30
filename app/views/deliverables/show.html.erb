@@ -75,7 +75,6 @@
       <th>Date</th>
       <th>File</th>
       <th>Comments</th>
-      <th>Grade</th>
     </tr>
 
     <% if current_user.is_staff? %>
@@ -102,7 +101,6 @@
             <%= @deliverable.feedback_comment.gsub("\n", "<br/>").html_safe %>
         <% end %>
       </td>
-      <td><%= @deliverable.deliverable_grades.select {|deliverable_grade| deliverable_grade.user_id == current_user.id}[0].grade %>/<%= @deliverable.assignment.weight %></td>
     </tr>
   </table>
 <% else %>
