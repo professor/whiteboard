@@ -37,11 +37,8 @@ $(document).ready(function() {
             filterCaseSensitive:false
         });
 
-    // $("#ajax_loading_notice").hide();
     $("#key_contacts_table").hide();
     $("#advanced_search_filters").hide();
-    // $("#ajax_loading_notice").append($('')).append('Loading Results');
-    // $("#empty_results").append('No results found.');
 
     //default_results_json = getDefaultSearchResultsJson();
 
@@ -94,12 +91,15 @@ $(document).ready(function() {
         var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
         var didSearchChange = ($("#filterBoxOne").val() != last_search_query);
         if(didSearchChange){
+            updateView();
             if(isSearchTextEntered){
                 // Prevent multiple calls to the database
                 if(sendQueryToServer_timer != null)
                     clearTimeout(sendQueryToServer_timer); // there's a previous timer running, clear it and set a new one for the new keystrokes of the user
                 sendQueryToServer_timer = setTimeout(getSearchResults, 500); // set timer for the keystrokes entered by user
                 last_search_query = $("#filterBoxOne").val();
+                // update the UI immediately to indicate that the pending search is in progress
+                // when ajax search query returns successfully, the view will be updated again.
                 $('#empty_results').hide();
                 $("#people_table").hide();
                 $("#key_contacts_table").hide();
@@ -524,7 +524,6 @@ function updateView(){
             $photobook_results.hide();
             $people_table.hide();
             $advanced_search_filters.hide();
-            //$("#ajax_loading_notice").hide();
         }
         if(!advanced_search_toggled && photobook_toggled && isSearchTextEntered && !empty_results){
             // show people search results in photobook_results
@@ -548,4 +547,3 @@ function updateView(){
         }
     }
 }
-
