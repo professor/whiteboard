@@ -1,3 +1,6 @@
 <% ids = @students.map { |student| "#notify_#{student.id}" }.join(',') %>
 $("<%= ids %>").html('Notified');
 $('#notify-loader-all').hide();
+
+$('#success_explanation p,#error_explanation p').html('');
+$('#success_explanation p').html("<%= escape_javascript(@message) %>");

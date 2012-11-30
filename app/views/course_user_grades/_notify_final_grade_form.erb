@@ -1,0 +1,5 @@
+<%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_path, remote: true) do |f| %>
+  <%= f.hidden_field :user_id, value: member.id %>
+  <%= f.hidden_field :course_id, value: course.id %>
+  <%= f.submit "Notify", class: "notify-button" %>
+<% end %>

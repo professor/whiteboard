@@ -41,6 +41,8 @@ class CourseUserGradesController < ApplicationController
       CourseUserGrade.notify_final_grade(course, student)
     end
 
+    @message = "Notifications sent at #{ l Time.now, :format => :chatty }"
+
     respond_to do |format|
       format.js
     end

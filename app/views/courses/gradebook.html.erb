@@ -89,6 +89,7 @@
               <% end %>
               <%= f.hidden_field :user_id, value: member.id %>
               <%= f.hidden_field :course_id, value: @course.id %>
+              <%= f.hidden_field :notified_at, value: nil %>
               <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(number_grade) : user_grade.grade}, {:class => 'grade_select'} %>
               <%= f.submit hidden: true %>
             <% end %>
@@ -98,11 +99,7 @@
             <% if (!user_grade.blank? && !user_grade.notified_at.blank?) %>
               Notified
             <% else %>
-              <%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_path, remote: true) do |f| %>
-                <%= f.hidden_field :user_id, value: member.id %>
-                <%= f.hidden_field :course_id, value: @course.id %>
-                <%= f.submit "Notify", class: "notify-button" %>
-              <% end %>
+              <%= render partial: 'course_user_grades/notify_final_grade_form', locals: {course: @course, member: member} %>
               <%= image_tag 'ajax-loader-small.gif', class: "notify-loader", id: "notify-loader-#{member.id}" %>
           <% end %>
           </td>
