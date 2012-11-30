@@ -64,6 +64,16 @@ FactoryGirl.define do
     twiki_name "FacultyFagan"
   end
 
+  factory :faculty_dwight_user, :parent => :user do
+    email "faculty.dwight@sv.cmu.edu"
+    webiso_account "dwight@andrew.cmu.edu"
+    is_staff true
+    first_name "Faculty"
+    last_name "Dwight"
+    human_name "Faculty Dwight"
+    twiki_name "FacultyDwight"
+  end
+
   factory :contracts_manager_user, :parent => :user do
     email "ngoc.ho@sv.cmu.edu"
     webiso_account "ngocho@andrew.cmu.edu"

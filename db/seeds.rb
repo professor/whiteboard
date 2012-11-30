@@ -145,12 +145,12 @@ FactoryGirl.define do
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "OwenChu"
-    first_name "Owen"
-    last_name "Chu"
-    human_name "Owen Chu"
-    email "owen.chu@sv.cmu.edu"
-    webiso_account "hanweic@andrew.cmu.edu"
+    twiki_name "DavidLiu"
+    first_name "David"
+    last_name "Liu"
+    human_name "David Liu"
+    email "david.liu@sv.cmu.edu"
+    webiso_account "davidliu@andrew.cmu.edu"
   end
 
 end
@@ -166,9 +166,10 @@ you = Factory.create(:your_name_here)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 architecture_course = Factory.create(:architecture_current_semester)
+foundations_course = Factory.create(:foundations_current_semester)
 ppm_course = Factory.create(:ppm_current_semester)
 
-[architecture_course, ppm_course].each do |course|
+[architecture_course, foundations_course, ppm_course].each do |course|
   course.teams.first.members << you
   course.save
   course.assignments.each do |assignment|
