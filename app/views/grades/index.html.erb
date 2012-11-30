@@ -80,6 +80,10 @@
 
   }
 
+  function send_final_grade() {
+    post_grades('<%=send_final_grade_path(@course)%>');
+  }
+
   function save() {
       post_grades('<%=save_path(@course)%>');
   }
@@ -206,7 +210,8 @@
     <div>
      <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
     <button type="button" id="gradebook_submit" onclick="save()">Save</button>
-    <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">mark draft grade as graded and email to students</button>
+    <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
+      <button type="button" id="gradebook_long_button" onclick="send_final_grade()">Notify all</button>
     </div>
     <div>
       <h2>Import Grade Book</h2>

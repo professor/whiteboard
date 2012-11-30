@@ -39,13 +39,13 @@ class Grade < ActiveRecord::Base
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
     if self.assignment_id < 0
-      self.score = Grade.encrypt_score(self.score)
+      self.score = Grade.encrypt_score(self.score, self.student_id)
     end
   end
 
   def decrypt_score
     if self.assignment_id < 0
-      self.score = Grade.decrypt_score(self.score)
+      self.score = Grade.decrypt_score(self.score, self.student_id)
     end
   end
 
@@ -54,7 +54,7 @@ class Grade < ActiveRecord::Base
     grades = {}
     Grade.where(course_id: course.id).where(student_id: student.id).each do |grade|
       if grade.assignment_id < 0
-        grade.score = Grade.decrypt_score(grade.score)
+        grade.score = Grade.decrypt_score(grade.score, grade.student_id)
         grades["final"] = grade
       else
         grades[grade.assignment.id] = grade
@@ -73,7 +73,7 @@ class Grade < ActiveRecord::Base
     if grade.nil?
       ""
     else
-      Grade.decrypt_score(grade.score)
+      Grade.decrypt_score(grade.score, grade.student_id)
     end
   end
 
@@ -133,11 +133,27 @@ class Grade < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
-  def self.mail_drafted_grade(course_id)
-    Grade.find_all_by_is_student_visible_and_course_id(false, course_id).each do |grade|
-      grade.is_student_visible = true
-      grade.save
-      grade.send_feedback_to_student
+  def self.mail_drafted_grade(course_id, changed_grades)
+    draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
+    draft_grade.concat(changed_grades)
+    draft_grade.each do |grade|
+      unless (grade.score.nil? || grade.score.empty?)
+        grade.is_student_visible = true
+        grade.save
+        grade.send_feedback_to_student
+      end
+    end
+  end
+
+  def self.mail_final_grade(course_id, changed_grades)
+    final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
+    final_grades.concat(changed_grades)
+    final_grades.each do |grade|
+      unless (grade.score.nil? || grade.score.empty? || grade.assignment_id!=-1)
+        grade.is_student_visible = true
+        grade.save
+        grade.send_feedback_to_student
+      end
     end
   end
 
@@ -309,26 +325,26 @@ private
     end
   end
 
-  def self.encrypt_score(raw_score)
+  def self.encrypt_score(raw_score, student_id)
     # FIXME: get salt from somewhere else
     salt="I am salt without any iodine"
     if raw_score.nil? || raw_score.empty?
       return raw_score
     else
-      return Digest::SHA2.hexdigest(salt+raw_score)
+      return Digest::SHA2.hexdigest(salt+raw_score+student_id.to_s)
     end
   end
 
-  def self.decrypt_score(encrypted_score)
+  def self.decrypt_score(encrypted_score, student_id)
     case encrypted_score
-      when encrypt_score("A") then return "A"
-      when encrypt_score("A-") then return "A-"
-      when encrypt_score("B+") then return "B+"
-      when encrypt_score("B") then return "B"
-      when encrypt_score("B-") then return "B-"
-      when encrypt_score("C+") then return "C+"
-      when encrypt_score("C") then return "C"
-      when encrypt_score("C-") then return "C-"
+      when encrypt_score("A", student_id) then return "A"
+      when encrypt_score("A-", student_id) then return "A-"
+      when encrypt_score("B+", student_id) then return "B+"
+      when encrypt_score("B", student_id) then return "B"
+      when encrypt_score("B-", student_id) then return "B-"
+      when encrypt_score("C+", student_id) then return "C+"
+      when encrypt_score("C", student_id) then return "C"
+      when encrypt_score("C-", student_id) then return "C-"
       else return encrypted_score
     end
   end
