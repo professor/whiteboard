@@ -1,12 +1,9 @@
 #wrapper, #pageHeader { width: auto;}
-#pageHeader #search { display: none;}
-#navWrapper, #pageFooter { display: none;}
+#pageHeader #search, #navWrapper, #pageFooter, #breadcrumbs, #socialLinks, #headerImage { display: none;}
 #topnav, #contentWrapper, #footer { margin: 0; }
 #main {background-image: none;}
 
-#socialLinks { display: none; }
-
-#main, #pageHeaderPhoto, #topnav, #contentWrapper, #footer, #mainContent, #headerImage  { width: 100%;}
+#main, #topnav, #contentWrapper, #footer, #mainContent { width: 100%;}
 #mainContent .content { width: 92%; font-size: 150%;}
 #mainContent { margin: 0; background-color: rgb(243, 240, 233);}
 #mainContent, #mainContent .boxTop, #mainContent .boxBottom { background-image: none; }

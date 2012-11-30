@@ -11,9 +11,10 @@
 
 #smart_search_area { height:24px; vertical-align: middle;}
 #smart_search_text { 
-	height:21px; padding: 0 3px; width: 76%;
+	height:21px; padding: 0 3px; width: 78%;
 	border: 1px solid #000; border-radius: 1px; background-color: #f3f0e9; opacity: 0.3;}
 #smart_search_area button { vertical-align: middle; height:24px; margin: 0 1px; float: right; width:7%;}
+#smart_search_area #advanced_search_btn { width: 12%;}
 #smart_search_area img { height:16px; }
 
  
@@ -30,7 +31,6 @@
 
 
 
-/*.criterias  {  display: inline; height: 22px; margin-top: 16px; margin-bottom: 3px;}*/
 #extra_criteria_box .criteria_tags { display: block; list-style:none; padding-left: 0; }
 .criteria_tags li{ 
 	height: 20px; display: inline-block; border: 1px solid #666;
@@ -62,6 +62,7 @@ select .select-hint { color: #ccc;}
     margin: 4px; padding-left: 6px; padding-top: 6px;
     background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
     font-size: 11px; font-weight: 700; overflow: hidden;
+    word-wrap: break-word;
 }
 .data_card.photo_card { float: left; width: 150px;  }
 .data_card.photo_card img{ width: 139px; height: 190px; margin: 0 0 5px; }

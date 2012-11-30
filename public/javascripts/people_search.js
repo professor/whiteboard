@@ -211,7 +211,7 @@ function reset_advanced_area(){
 // Auto fillin parameters into advanced search area UI - will be used by both linkable url and extracting smart search fields
 function fill_advanced_area(parameters_hash){
   
-  reset_advanced_area()
+  reset_advanced_area();
   
   // Start from main search text
   $('#search_text_box').val(parameters_hash["main_search_text"]);
@@ -252,6 +252,7 @@ function fill_advanced_area(parameters_hash){
     // Then class year
     if(parameters_hash.hasOwnProperty("class_year")){
       SELECTED_CRITERIA_HASH["Class Year"] = true;
+      console.log(parameters_hash["class_year"]);
       $('#criteria_class_year').show();
       $('#criteria_class_year .criteria_text').val(parameters_hash["class_year"]);
     }
@@ -260,7 +261,8 @@ function fill_advanced_area(parameters_hash){
     if(parameters_hash.hasOwnProperty("is_part_time")){
       SELECTED_CRITERIA_HASH["Full/Part Time"] = true;
       $('#criteria_ft_pt').show();
-      $('#criteria_ft_pt .criteria_text').val( parameters_hash["is_part_time"]? "pt":"ft" );
+      console.log(parameters_hash["is_part_time"]);
+      $('#criteria_ft_pt .criteria_text').val( (parameters_hash["is_part_time"] == "true" || parameters_hash["is_part_time"] === true)? "pt":"ft" );
     }
   }
 
@@ -271,6 +273,17 @@ function fill_advanced_area(parameters_hash){
 
 
 function construct_query_sting(){
+    
+    if($.trim($("#search_text_box").val()).length < 2 &&
+       $('#people_type_picker').val() == "all" &&
+       !SELECTED_CRITERIA_HASH["Company"] && !SELECTED_CRITERIA_HASH["Class Year"] &&
+       !SELECTED_CRITERIA_HASH["Program"] && !SELECTED_CRITERIA_HASH["Full/Part Time"]
+    ){ 
+      SEARCH_REQUEST.abort();
+      $('#results_box').html("<b>Please input more characters to trigger the search</b>");
+      return location.hash;
+    }
+
     var request_url_with_params = '';
     // add main criteria to query string
     request_url_with_params += "&smart_search_text="+$("#smart_search_text").val();
@@ -287,7 +300,7 @@ function construct_query_sting(){
     if(SELECTED_CRITERIA_HASH["Class Year"]){ request_url_with_params += "&class_year="+$('#criteria_class_year select').val(); }
     if(SELECTED_CRITERIA_HASH["Program"]){ request_url_with_params += "&program="+$('#criteria_program select').val(); }
     if(SELECTED_CRITERIA_HASH["Full/Part Time"]){
-      if($('#criteria_ft_pt select').val() == "ft") { request_url_with_params += "&is_part_time=false"; }
+      if($('#criteria_ft_pt .criteria_text').val() == "ft") { request_url_with_params += "&is_part_time=false"; }
       else { request_url_with_params += "&is_part_time=true"; }
     }
     
@@ -329,7 +342,7 @@ function execute_search(request_params){
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
-
+            if($("#results_box").html() == ""){ $("#results_box").html("<b>Sorry but we could not find any results</b>"); }
             $('#results_box').fadeTo('fast', 1);
             customize_display();
         }
@@ -396,7 +409,6 @@ $(document).ready(function(){
       window.open('people.csv?page=1'+construct_query_sting());
       $('#export_dialog_modal').dialog("close");
     });
-
     $('#export_to_vcf').click(function(){
       window.open('people.vcf?page=1'+construct_query_sting());
       $('#export_dialog_modal').dialog("close");
@@ -406,10 +418,8 @@ $(document).ready(function(){
     var advanced_only_hash = { "smart_search_text": true, "first_name": true, "last_name": true, "andrew_id": true, "include_inactive": true, "exact_match": true };
     // Advanced Search Area Initialization
     $('#advanced_search_btn').click(function(){
-      $('#smart_search_text').prop('disabled', true).css('opacity', 0.3);
-      $('#advanced_search_area').slideDown();
 
-      if($(this).hasClass("btn_pressed")){
+      if($(this).html() == "Smart"){
         $('#smart_search_text').prop('disabled', false).css('opacity', 1);
         $('#advanced_search_area').slideUp();
 
@@ -421,21 +431,25 @@ $(document).ready(function(){
               for (var i = 1; i < hash_params.length; i++){
                   hash_params[i] = hash_params[i].split('=');
                   if (!advanced_only_hash.hasOwnProperty(hash_params[i][0])){
-                    tmp_smart_string += hash_params[i][1] + ' ';
+                    if(hash_params[i][0] == "is_part_time"){ tmp_smart_string += (hash_params[i][1] == "true")? "PT ":"FT "; }
+                    else { tmp_smart_string += hash_params[i][1] + ' '; }
                   }
               }
-              $('#smart_search_text').val(tmp_smart_string.replace("_","-"));
-
-
+              $('#smart_search_text').val(tmp_smart_string.replace("_","-").slice(0, -1));
           }
+          $(this).html("Advanced");
+      } else {
+        $('#smart_search_text').prop('disabled', true).css('opacity', 0.3);
+        $('#advanced_search_area').slideDown();
+        $(this).html("Smart");
       }
-      $(this).toggleClass("btn_pressed");
+      
     });
 
     // Toggle Display Mode
     $("#list_mode_btn, #card_mode_btn").click(function(){
-      if(!$(this).hasClass('btn_pressed')){
-        $("#list_mode_btn, #card_mode_btn").toggleClass("btn_pressed");
+      //if(!$(this).hasClass('hidden')){
+        $("#list_mode_btn, #card_mode_btn").toggleClass("hidden");
         if(DATACARD_MODE == "photo_card") { DATACARD_MODE = "list_view"; }
         else if(DATACARD_MODE == "list_view") { DATACARD_MODE = "photo_card"; }
         $('.data_card').not('.customization_dialog .data_card').toggleClass('list_view').toggleClass('photo_card');
@@ -451,7 +465,7 @@ $(document).ready(function(){
           });
           $(".data_card.photo_card").css('height', max_height+'px');
         } else { $(".data_card").css('height', 'auto'); }
-      }
+      //}
     });
 
 
@@ -490,10 +504,6 @@ $(document).ready(function(){
                 break;
         }
 
-
-
-
-
         // add extra criteria options according to criteria_ids
         $('#extra_criteria_picker').append('<option value="default" class="select-hint">Add Criteria</option>');
         for (var i=0; i<criteria_ids.length; ++i){
@@ -520,31 +530,33 @@ $(document).ready(function(){
     // when user selects from the main criteria menu
     $('#main_criteria_picker').change(function() {
 
-         var tag_text = $(this)[0].value; // fetch the tag screen text for later use
-         console.log(tag_text);
-         if(tag_text=="andrew_id"){
+        /*
+        var tag_text = $(this)[0].value; // fetch the tag screen text for later use
+        if(tag_text=="andrew_id"){
          SELECTED_CRITERIA_HASH['First Name']=false;
          SELECTED_CRITERIA_HASH['Last Name']=false;
          SELECTED_CRITERIA_HASH['Andrew ID']=true;
-
-         }
-         else if(tag_text=="first_name"){
+        } else if(tag_text=="first_name"){
          SELECTED_CRITERIA_HASH['First Name']=true;
          SELECTED_CRITERIA_HASH['Last Name']=false;
          SELECTED_CRITERIA_HASH['Andrew ID']=false;
+        } else if(tag_text=="last_name"){
+          SELECTED_CRITERIA_HASH['First Name']=false;
+          SELECTED_CRITERIA_HASH['Last Name']=true;
+          SELECTED_CRITERIA_HASH['Andrew ID']=false;
+         } else{
+          SELECTED_CRITERIA_HASH['First Name']=true;
+          SELECTED_CRITERIA_HASH['Last Name']=true;
+          SELECTED_CRITERIA_HASH['Andrew ID']=true;
+         }*/
+        if (CRITERIA_NAME_HASH.hasOwnProperty($(this)[0].value)){
+          SELECTED_CRITERIA_HASH['First Name'] = SELECTED_CRITERIA_HASH['Last Name'] = SELECTED_CRITERIA_HASH['Andrew ID'] = false;
+          SELECTED_CRITERIA_HASH[CRITERIA_NAME_HASH[$(this)[0].value]] = true;
+        } else {
+          SELECTED_CRITERIA_HASH['First Name'] = SELECTED_CRITERIA_HASH['Last Name'] = SELECTED_CRITERIA_HASH['Andrew ID'] = true;
+        }
 
-         }
-         else if(tag_text=="last_name"){
-         SELECTED_CRITERIA_HASH['First Name']=false;
-         SELECTED_CRITERIA_HASH['Last Name']=true;
-         SELECTED_CRITERIA_HASH['Andrew ID']=false;
-
-         }else{
-         SELECTED_CRITERIA_HASH['First Name']=true;
-         SELECTED_CRITERIA_HASH['Last Name']=true;
-         SELECTED_CRITERIA_HASH['Andrew ID']=true;
-         }
-         location.hash = construct_query_sting();
+        location.hash = construct_query_sting();
     });
     // when user select something from the extra criteria menu
     $('#extra_criteria_picker').change(function() {
@@ -557,32 +569,8 @@ $(document).ready(function(){
             $('#extra_criteria_box .criteria_tag').last().find('.criteria_text')[0].focus();
         }
         location.hash = construct_query_sting();
-        //execute_search(construct_query_sting());
         $(this).val('default');
     });
-
-    // NEED TO BE REFACTORED AFTER UI CHANGE
-    // fade out main criteria tag when click on x
-    /*$('#main_criteria_box').on("click", ".criteria_tag a", function(){
-        if(SELECTED_CRITERIA_HASH[$(this).parent()[0].title]){
-            SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = false;
-            $(this).parent().fadeTo("fast", 0.55);
-            $(this).html('+');
-            // check if all main criteria is faded
-            if(!(SELECTED_CRITERIA_HASH["First Name"] || SELECTED_CRITERIA_HASH["Last Name"] || SELECTED_CRITERIA_HASH["Andrew ID"])) {
-                $(this).parent().fadeTo("fast", 1);
-                $(this).html('x');
-                alert("Sorry, but you can not discard all three criterias.");
-                SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = true;
-            }
-        } else { // fade in when click on +
-            SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = true;
-            $(this).parent().fadeTo("fast", 1);
-            $(this).html('x');
-        }
-        execute_search(construct_query_sting());
-        return false; // avoid anchor action
-    });*/
 
 
     // Remove extra criteria tag when click on x
@@ -590,23 +578,19 @@ $(document).ready(function(){
         SELECTED_CRITERIA_HASH[$(this).parent()[0].title] = false;
         $(this).parent().fadeOut();
         location.hash = construct_query_sting();
-        //execute_search(construct_query_sting());
         return false;
     });
 
 
     // Events binded to search execution
-    $('#people_type_picker, .criteria_text, #exact_match_checkbox, #include_inactive_checkbox').change(function(e) {
+    $('#people_type_picker, select.criteria_text, #exact_match_checkbox, #include_inactive_checkbox').change(function(e) {
+      console.log('triggered');
       location.hash = construct_query_sting();
-      //execute_search(construct_query_sting());
     });
-
-
 
     $('#search_text_box, .criteria_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
       if(e.which != 13){
-        //SEARCH_TIMEOUT = setTimeout('execute_search(construct_query_sting())', 400);
         SEARCH_TIMEOUT = setTimeout('location.hash = construct_query_sting()', 400);
       }
     });
@@ -614,8 +598,13 @@ $(document).ready(function(){
     $('#smart_search_text').keyup(function(e) {
       clearTimeout(SEARCH_TIMEOUT);
       if(e.which != 13){
-        //SEARCH_TIMEOUT = setTimeout('parse_smart_search();execute_search(construct_query_sting());', 400);
-        SEARCH_TIMEOUT = setTimeout('parse_smart_search();location.hash = construct_query_sting();', 400);
+        //if($.trim($('#smart_search_text').val()).length < 2){ 
+          //SEARCH_REQUEST.abort();
+          //$('#results_box').html("<b>Please input more characters to trigger the search</b>");
+        //}
+        //else { 
+          SEARCH_TIMEOUT = setTimeout('parse_smart_search();location.hash = construct_query_sting();', 400);
+        //}
       }
     });
 
@@ -623,6 +612,7 @@ $(document).ready(function(){
     // Linkable URL & Back Button- Match hash to search parameters and execute search
     window.onpopstate = function() {
 
+        console.log("popstate triggered");
         var query_string = window.location.hash.replace("#","");
         var url_hash = {};
 
