@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030220552) do
+ActiveRecord::Schema.define(:version => 20121129012448) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -578,6 +578,8 @@ ActiveRecord::Schema.define(:version => 20121030220552) do
     t.string   "facebook"
     t.string   "twitter"
     t.string   "google_plus"
+    t.datetime "people_search_first_accessed_at"
+    t.boolean  "is_profile_valid"
   end
 
   create_table "users", :force => true do |t|
@@ -654,6 +656,8 @@ ActiveRecord::Schema.define(:version => 20121030220552) do
     t.string   "facebook"
     t.string   "twitter"
     t.string   "google_plus"
+    t.datetime "people_search_first_accessed_at"
+    t.boolean  "is_profile_valid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

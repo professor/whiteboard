@@ -50,8 +50,10 @@
                 <% end %>
             </h1>
             <div class="user_profile_action">
-                <%= link_to 'Back', people_path %> |
-                <%= link_to 'Edit', edit_person_path(@person) %>
+                <%= link_to 'Back', people_path %>
+              <%   if @person.id == current_user.id or current_user.is_admin? %>
+                 | <%= link_to 'Edit', edit_person_path(@person) %>
+                <% end %>
             </div>
             <div id="user_profile_dtls">
                 <% if @person.is_student %>
@@ -71,6 +73,7 @@
                 <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
                         <br /><%= link_to "My teams", my_teams_path(@person) %>
                 <% end %>
+                <br/><a  href="#" onclick="show_box();" >Download contact details</a>
             </div>
         </div>
 
@@ -95,7 +98,9 @@
             </table>
 
             <table class="cmu_table">
-                <tr >
+
+              <% if (!@person.organization_name.blank?) || (!@person.title.blank?) %>
+                <tr class="">
                     <td>Organization</td>
                     <td>
                         <% if @person.organization_name %>
@@ -105,9 +110,11 @@
                             <%= h @person.organization_name %>
                         <% else %>
                             &nbsp;
-                        <% end %>
                     </td>
+                  <% end %>
                 </tr>
+              <% end %>
+
                 <tr>
                     <td>Location</td>
                     <td>
@@ -123,8 +130,10 @@
 
 
         <div class="clearboth">
+          <% if !@person.biography.blank? %>
             <h2>Biography:</h2>
             <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
+          <% end %>
         </div>
 
 
@@ -144,24 +153,33 @@
         <div class="clearboth ">
             <h2>Other Information:</h2>
             <table class="cmu_table">
-                <tr >
+
+              <% if !@person.personal_email.blank? %>
+                <tr class="">
                 <tr>
                     <td>Personal Email</td>
                     <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
                 </tr>
-                <tr >
+              <% end %>
+                <tr class="">
                     <td>Andrew Email</td>
                     <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
                 </tr>
+
                 <% if @person.is_staff %>
+                <% if !@person.office.blank? %>
                 <tr>
                   <td>Office:</td>
                   <td><%= h @person.office %></td>
                 </tr>
-                <tr >
+
+                <% end %>
+                <% if !@person.office_hours.blank? %>
+                <tr class="">
                   <td>Office Hours:</td>
                   <td><%= h @person.office_hours %></td>
                 </tr>
+                <% end %>
                 <% elsif @person.is_student %>
                 <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
                 <tr>
@@ -178,9 +196,42 @@
     </div> <!-- user_profile_content -->
 
     <div class="user_profile_action">
-        <%= link_to 'Back', people_path %> |
-        <%= link_to 'Edit', edit_person_path(@person) %>
+        <%= link_to 'Back', people_path %>
+        <%   if @person.id == current_user.id or current_user.is_admin? %>
+            | <%= link_to 'Edit', edit_person_path(@person) %>
+        <% end %>
     </div>
 
 
 <% end %>
+
+<script type="text/javascript">
+    // pop up box that shows up on hitting the Export button
+    function show_box(){
+        //var boxValue = $("#filterBoxOne").val();
+        var $dialog = $('<div></div>')
+                .html('Which format do you wish to export to?')
+                .dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    draggable: false,
+                    width: 100,
+                    height: 130,
+                    modal: true,
+                    title: 'Export Contact',
+                    buttons:{
+                        "CSV":function(){
+                            window.location.href = "http://"+window.location.hostname+':'+window.location.port+'/people_csv.csv?search_id=<%= @person.id %>';
+                            // var host = "http://"+window.location.hostname;
+                            //'http://localhost:3000/people_csv.csv?search_id=<%= @person.id %>';
+                            $(this).dialog("close");
+                        },
+                        "vCard":function(){
+                            window.location.href = "http://"+window.location.hostname+':'+window.location.port+'/people_vcf.vcf?search_id=<%= @person.id %>';
+                            // 'http://localhost:3000/people_vcf?search_id=<%= @person.id %>';
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+    }
+</script>
