@@ -5,7 +5,7 @@ var last_search_results = '';
 var last_search_query = '';
 var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
 var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
-var ajax_req_issued = false;            // object that
+var ajax_req_issued = false;            // object that indicates if an ajax search request is currently executing
 var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 var advanced_search_changed = false;
 //var default_results_json = '';  // fetch default search results (key contacts)
@@ -100,12 +100,16 @@ $(document).ready(function() {
                     clearTimeout(sendQueryToServer_timer); // there's a previous timer running, clear it and set a new one for the new keystrokes of the user
                 sendQueryToServer_timer = setTimeout(getSearchResults, 500); // set timer for the keystrokes entered by user
                 last_search_query = $("#filterBoxOne").val();
+                $('#empty_results').hide();
+                $("#people_table").hide();
+                $("#key_contacts_table").hide();
+                $("#key_contacts_photobook").hide();
+                $("#ajax_loading_notice").show();
             }else if(advanced_search_toggled){
                     // advanced filters are visible, query the database
                     // this is essentially a select all (as nothing entered in filterBoxOne)
                     getSearchResults();
             }
-            updateView();
         }
         setSessionInfo();
     });
@@ -118,13 +122,11 @@ $(document).ready(function() {
         setAdvancedFilterToggleState();
 
         // update UI immediately while search ajax call is processing.
-        if(advanced_search_toggled){
+        if(advanced_search_toggled)
             $("#advanced_search_filters").show();
-            $("#key_contacts_table").hide();
-            $("#people_table").hide();
-        }else{
+        else
             $("#advanced_search_filters").hide();
-        }
+        updateView();
 
         // update UI to show key_contacts_table if true.  Else, execute a search.
         if(!isSearchTextEntered && !advanced_search_toggled){
@@ -237,17 +239,18 @@ function show_box(){
 //      calls builds the search results
 function getSearchResults(){
     searchBox = $("#filterBoxOne");
+    isSearchTextEntered = ($.trim(searchBox.val()).length > 0);
 
     if(     (searchBox.val() != searchBox_old_val)
         ||  advanced_search_changed
-        ||  ( (!advanced_search_toggled) && ($.trim(searchBox.val())) )
+        ||  ( (!advanced_search_toggled) && isSearchTextEntered )
         ){
 
         advanced_search_changed = false;
         $("#people_table").hide();
         searchBox_old_val = searchBox.val();
 
-        if( ($.trim(searchBox.val())) || advanced_search_toggled ){
+        if( isSearchTextEntered || advanced_search_toggled ){
             if(ajax_req_issued){
                 // an ajax request was already issued, abort that request
                 jq_xhr.abort();
@@ -264,7 +267,6 @@ function getSearchResults(){
                 ajax_req_issued = true;
                 clearSearchResults();
                 $('#ajax_loading_notice').show();
-                $('#empty_results').hide();
               },
               complete: function() {
                 ajax_req_issued = false;
@@ -277,13 +279,17 @@ function getSearchResults(){
                 buildSearchResults(json);
               }
            });
-        }else{
+        } else{
         // user has not entered a search query
-            if(ajax_req_issued){
+            if(ajax_req_issued)
                 jq_xhr.abort();
-            }
             updateView();
         }
+    } //speed up transition from filter toggled to untoggled state when no text entered.
+    else if ((!advanced_search_toggled) && (!isSearchTextEntered)){
+        if(ajax_req_issued)
+            jq_xhr.abort();
+        updateView();
     }
 }
 
@@ -451,6 +457,17 @@ function updateView(){
         isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
         var empty_results = false;
 
+        if(last_search_results == '' && !$key_contacts_table.is(":visible") && !$key_contacts_photobook.is(":visible") && !ajax_req_issued){
+            empty_results = true;
+            if(advanced_search_toggled)
+                $advanced_search_filters.show();
+            // hide other sections
+            $empty_results.show();
+            $people_table.hide();
+            $key_contacts_photobook.hide();
+            $key_contacts_table.hide();
+            $photobook_results.hide();
+        }
         if(last_search_results == '' && !$key_contacts_table.is(":visible") && !$key_contacts_photobook.is(":visible")){
             if(advanced_search_toggled){
                 $advanced_search_filters.show();
