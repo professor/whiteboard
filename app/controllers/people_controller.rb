@@ -28,10 +28,11 @@ class PeopleController < ApplicationController
 
     #if !current_user.profile_updated? && !params[:test_profile_update].nil?
     if !current_user.is_profile_valid?
-      flash[:error] = "Warning: You have to update your profile details. If you do not do so in 4 weeks, you will lost access to the search profile features.<a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a>".html_safe
-
+      flash[:notice] = "<div align='center'><b>Warning:</b><br/> You have to update your profile details.<br/> If you do not do so in 4 weeks, you will lose access to the search profile features.<br/><a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a></div>".html_safe
+      flash[:error] = nil
       if current_user.should_be_redirected?
-        flash[:error] = 'Warning: Your access to the user search features have temporarily been disabled. To continue, please update your biography/phone numbers and social handles.'
+        flash[:notice] = nil
+        flash[:error] = "<div align='center'><b>Warning:</b><br/> Your access to the user search features have temporarily been disabled. <br/>To continue, please update your biography/phone numbers and social handles.</div>".html_safe
        redirect_to edit_person_path(current_user) and return
       end
     end

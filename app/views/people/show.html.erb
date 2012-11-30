@@ -73,6 +73,7 @@
                 <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
                         <br /><%= link_to "My teams", my_teams_path(@person) %>
                 <% end %>
+                <br/><a  href="#" onclick="show_box();" >Download contact details</a>
             </div>
         </div>
 
@@ -112,6 +113,7 @@
                   <% end %>
                 </tr>
               <% end %>
+
                 <tr>
                     <td>Location</td>
                     <td>
@@ -197,7 +199,7 @@
         <% end %>
     </div>
 
-    <input type="button" value="Export Contact" onclick="show_box();" />
+
 <% end %>
 
 <script type="text/javascript">
