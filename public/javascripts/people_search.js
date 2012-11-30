@@ -486,10 +486,12 @@ function updateView(){
             //show key_contacts table
             $key_contacts_table.show();
             // hide other sections
+            $empty_results.hide();
             $key_contacts_photobook.hide();
             $people_table.hide();
             $photobook_results.hide();
             $advanced_search_filters.hide();
+            $("#ajax_loading_notice").hide();
             //$("#ajax_loading_notice").hide();
         }
         // Set up people search results table view without advanced filters
