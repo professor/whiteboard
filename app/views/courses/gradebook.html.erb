@@ -26,8 +26,9 @@
       <th>Final Grade Notification<br/>
         <%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_all_path, remote: true) do |f| %>
           <%= f.hidden_field :course_id, value: @course.id %>
-          <%= f.submit "Notify All Students" %>
+          <%= f.submit "Notify All Students", id: "notify-all-button" %>
         <% end %>
+        <%= image_tag 'ajax-loader-small.gif', class: "notify-loader", id: "notify-loader-all" %>
       </th>
     </tr>
   </thead>
@@ -91,6 +92,7 @@
               <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(number_grade) : user_grade.grade}, {:class => 'grade_select'} %>
               <%= f.submit hidden: true %>
             <% end %>
+            <%= image_tag 'ajax-loader-small.gif', class: "grade-loader", id: "grade-loader-#{member.id}" %>
           </td>
           <td id="notify_<%= member.id %>">
             <% if (!user_grade.blank? && !user_grade.notified_at.blank?) %>
@@ -99,8 +101,9 @@
               <%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_path, remote: true) do |f| %>
                 <%= f.hidden_field :user_id, value: member.id %>
                 <%= f.hidden_field :course_id, value: @course.id %>
-                <%= f.submit "Notify" %>
+                <%= f.submit "Notify", class: "notify-button" %>
               <% end %>
+              <%= image_tag 'ajax-loader-small.gif', class: "notify-loader", id: "notify-loader-#{member.id}" %>
           <% end %>
           </td>
         </tr>
@@ -133,6 +136,11 @@
 
     $('.grade_select').change(function() {
       $(this).closest('form').submit();
+      $(this).closest('form').next('.grade-loader').show();
+    });
+
+    $('.notify-button, #notify-all-button').click(function() {
+      $(this).closest('form').next('.notify-loader').show();
     });
 
     $('.grade_select').each(function() {
@@ -154,5 +162,8 @@
     $('#import-xls').click(function() {
       $('#import_spreadsheet_import_spreadsheet').click();
     });
+
+    $('.grade-loader').hide();
+    $('.notify-loader').hide();
   });
 </script>

@@ -8,3 +8,5 @@ $('#success_explanation p,#error_explanation p').html('');
   <% @message ||= "Grade for #{@course_user_grade.user.human_name} was not successfully saved." %>
   $('#error_explanation p').html("<%= escape_javascript(@message) %>");
 <% end %>
+
+$('#grade-loader-<%= @course_user_grade.user.id %>').hide();
