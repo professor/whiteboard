@@ -89,14 +89,21 @@ FactoryGirl.define do
     task_number 3
   end
 
-  factory :assignment_req_presentation, :parent=>:assignment_team do
-    name "Presentation"
-    maximum_score 20
+  factory :assignment_req_presentation, :parent=>:assignment do
+    name "Individual Presentation"
+    maximum_score 10
     due_date "2012-10-06 22:00:00"
     task_number 4
   end
 
-  factory :assignment_req_participation, :parent=>:assignment_team do
+  factory :assignment_req_presentation_slides, :parent=>:assignment_team do
+    name "Presentation Slides"
+    maximum_score 10
+    due_date "2012-10-06 22:00:00"
+    task_number 4
+  end
+
+  factory :assignment_req_participation, :parent=>:assignment_unsubmissible do
     name "Class Participation"
     maximum_score 20
     due_date "2012-10-09 22:00:00"
@@ -125,6 +132,7 @@ FactoryGirl.define do
       course.assignments << FactoryGirl.create(:assignment_envision, :course_id=>course.id)
       course.assignments << FactoryGirl.create(:assignment_elaboration, :course_id=>course.id)
       course.assignments << FactoryGirl.create(:assignment_req_presentation, :course_id=>course.id)
+      course.assignments << FactoryGirl.create(:assignment_req_presentation_slides, :course_id=>course.id)
       course.assignments << FactoryGirl.create(:assignment_req_participation, :course_id=>course.id)
     }
   end
