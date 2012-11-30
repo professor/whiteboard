@@ -113,7 +113,7 @@ class Deliverable < ActiveRecord::Base
     # Find everything where the passed in person is either the creator
     # or is on the deliverable's team
     past_teams = Team.find_past_by_person(user)
-    Deliverable.find_by_user_and_teams(user, past_teams)
+    past_teams.blank? ? [] : Deliverable.find_by_user_and_teams(user, past_teams)
   end
 
   def self.find_by_user_and_teams(user, teams)

@@ -40,6 +40,8 @@ CMUEducation::Application.routes.draw do
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
   match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
   resources :course_user_grades, :only => [:create]
+  match '/course_user_grades/notify_final_grade' => 'course_user_grades#notify_final_grade', :via => :post, :as => :course_user_grade_notify_final_grade
+  match '/course_user_grades/notify_final_grade_all' => 'course_user_grades#notify_final_grade_all', :via => :post, :as => :course_user_grade_notify_final_grade_all
 
   constraints({:id => /.*/}) do
     resources :mailing_lists

@@ -18,6 +18,14 @@ class CourseMailer < ActionMailer::Base
          :date => Time.now)
   end
 
+  def notify_final_grade(course, student)
+    @student = student
+
+    mail(:to => student.email,
+         :subject => "Final grade for #{course.semester} #{course.year} #{course.name} was updated",
+         :date => Time.now)
+  end
+
 end
 
 

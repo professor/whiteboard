@@ -113,7 +113,7 @@ class CoursesController < ApplicationController
 
     @course.assignments.each do |assignment|
       row.push assignment.formatted_title, ""
-      row2.push "Attachment" ,"Grade"
+      row2.push "Grade", "Attachment"
     end
 
     row_num = 2
@@ -154,7 +154,14 @@ class CoursesController < ApplicationController
       return
     end
 
-    book = Spreadsheet.open(params[:import_spreadsheet][:import_spreadsheet].path)
+    begin
+      book = Spreadsheet.open(params[:import_spreadsheet][:import_spreadsheet].path)
+    rescue
+      flash[:error] = "Invalid file"
+      redirect_to course_gradebook_path(@course)
+      return
+    end
+
     sheet = book.worksheet(0)
     assignments = @course.assignments
 

@@ -357,6 +357,16 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def get_user_deliverable_grades(user)
+    deliverable_grades = []
+    self.assignments.each do |assignment|
+      assignment.deliverables.each do |deliverable|
+        deliverable_grades += deliverable.deliverable_grades.select {|grade| grade.user_id == user.id }
+      end
+    end
+    deliverable_grades
+  end
+
   def total_assignment_weight
     self.assignments.to_a.sum(&:weight)
   end
@@ -414,15 +424,5 @@ class Course < ActiveRecord::Base
         end
       end
     end
-  end
-
-  def get_user_deliverable_grades(user)
-    deliverable_grades = []
-    self.assignments.each do |assignment|
-      assignment.deliverables.each do |deliverable|
-        deliverable_grades += deliverable.deliverable_grades.select {|grade| grade.user_id == user.id }
-      end
-    end
-    deliverable_grades
   end
 end

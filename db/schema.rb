@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121110064048) do
+ActiveRecord::Schema.define(:version => 20121129235006) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20121110064048) do
     t.string   "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "notified_at"
   end
 
   add_index "course_user_grades", ["course_id"], :name => "index_course_user_grades_on_course_id"

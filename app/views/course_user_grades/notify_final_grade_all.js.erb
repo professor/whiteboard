@@ -1,0 +1,2 @@
+<% ids = @students.map { |student| "#notify_#{student.id}" }.join(',') %>
+$("<%= ids %>").html('Notified');

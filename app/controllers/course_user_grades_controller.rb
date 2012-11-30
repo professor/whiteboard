@@ -22,4 +22,27 @@ class CourseUserGradesController < ApplicationController
       format.js
     end
   end
+
+  def notify_final_grade
+    course = Course.find(params[:course_user_grade][:course_id])
+    @student = User.find(params[:course_user_grade][:user_id])
+    CourseUserGrade.notify_final_grade(course, @student)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def notify_final_grade_all
+    course = Course.find(params[:course_user_grade][:course_id])
+    @students = course.all_students.values
+
+    @students.each do |student|
+      CourseUserGrade.notify_final_grade(course, student)
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end

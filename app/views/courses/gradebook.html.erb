@@ -23,20 +23,26 @@
       <th>Earned<br/>Total <br/><%= @course.grading_criteria == "Percentage" ? "" : "(Max: #{@course.total_assignment_weight})"%></th>
       <th>Earned<br/>Letter Grade</th>
       <th>Final<br/>Letter Grade</th>
+      <th>Final Grade Notification<br/>
+        <%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_all_path, remote: true) do |f| %>
+          <%= f.hidden_field :course_id, value: @course.id %>
+          <%= f.submit "Notify All Students" %>
+        <% end %>
+      </th>
     </tr>
   </thead>
 
   <%
     def deliverable_grade_link_text(deliverable_grade)
       if deliverable_grade.blank?
-        "Ungraded"
+        "Grade"
       else
         if deliverable_grade.deliverable.status == 'Graded'
           deliverable_grade.grade
         elsif deliverable_grade.deliverable.attachment_versions.blank?
-          "Unsubmitted"
+          "Not Submitted"
         elsif deliverable_grade.deliverable.status == 'Ungraded'
-          "Ungraded"
+          "Grade"
         else
           "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"
         end
@@ -57,13 +63,13 @@
               <% deliverable_grade = deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(member.id) %>
               <% if assignment.can_submit? %>
                 <% if deliverable.blank? %>
-                  <%= link_to "Unsubmitted", assignment_deliverable_create_path(assignment, member) %>
+                  <%= link_to "Not Submitted", assignment_deliverable_create_path(assignment, member) %>
                 <% else %>
                   <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
                 <% end %>
               <% else %>
                 <% if deliverable.blank? || deliverable_grade.blank? || deliverable.status == 'Ungraded' %>
-                  <%= link_to "Ungraded", assignment_deliverable_create_path(assignment, member) %>
+                  <%= link_to "Grade", assignment_deliverable_create_path(assignment, member) %>
                 <% else %>
                   <%= link_to deliverable_grade.grade, deliverable_feedback_path(deliverable) %>
                 <% end %>
@@ -85,6 +91,17 @@
               <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(number_grade) : user_grade.grade}, {:class => 'grade_select'} %>
               <%= f.submit hidden: true %>
             <% end %>
+          </td>
+          <td id="notify_<%= member.id %>">
+            <% if (!user_grade.blank? && !user_grade.notified_at.blank?) %>
+              Notified
+            <% else %>
+              <%= form_for(:course_user_grade, url: course_user_grade_notify_final_grade_path, remote: true) do |f| %>
+                <%= f.hidden_field :user_id, value: member.id %>
+                <%= f.hidden_field :course_id, value: @course.id %>
+                <%= f.submit "Notify" %>
+              <% end %>
+          <% end %>
           </td>
         </tr>
       <% end %>
@@ -110,6 +127,7 @@
         <% end %>
         <%= assignment_index += 2 %>: { sorter: false },
         <%= assignment_index += 1 %>: { sorter: false },
+        <%= assignment_index += 1 %>: { sorter: false },
       }
     });
 
@@ -126,13 +144,14 @@
     $('#import_spreadsheet_import_spreadsheet').change(function() {
       if (confirm('Are you sure?')) {
         $(this).closest('form').submit();
+      } else {
+        $('#import_spreadsheet_import_spreadsheet').val();
       }
     });
 
-    //$('#import_spreadsheet_import_spreadsheet').hide()
+    //$('#import_spreadsheet_import_spreadsheet').show()
 
     $('#import-xls').click(function() {
-      //$('#import_spreadsheet_import_spreadsheet').toggle()
       $('#import_spreadsheet_import_spreadsheet').click();
     });
   });
