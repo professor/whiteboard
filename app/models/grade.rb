@@ -197,11 +197,17 @@ class Grade < ActiveRecord::Base
     grade_sheet[1, FIRST_GRADE_COL+assignment_count] = "Final Grade"
 
     # print students' names and grades
-    course.registered_students.each_with_index do |student, i|
+    students = course.registered_students.sort do |x, y|
+      r = (self.find_student_team(course.id, x.id).try(:name) || "" )<=> (self.find_student_team(course.id, y.id).try(:name) || "")
+      r = x.first_name <=> y.first_name if r == 0
+      r = x.last_name <=> y.last_name if r == 0
+      r
+    end
+    students.each_with_index do |student, i|
       grade_sheet[FIRST_GRADE_ROW+i, 0] = student.id
       grade_sheet[FIRST_GRADE_ROW+i, 1] = student.first_name
       grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
-      grade_sheet[FIRST_GRADE_ROW+i, 3] = self.find_student_team(course.id, student.id).name
+      grade_sheet[FIRST_GRADE_ROW+i, 3] = self.find_student_team(course.id, student.id).try(:name)
       course.assignments.each_with_index do |assignment, j|
         score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)

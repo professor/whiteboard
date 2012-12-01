@@ -43,7 +43,9 @@ class Assignment < ActiveRecord::Base
   def get_student_deliverable student_id
     if self.is_team_deliverable?
       team = User.find(student_id).teams.find_by_course_id(self.course_id)
-      self.deliverables.find_by_team_id(team.id)
+      unless team.nil?
+        self.deliverables.find_by_team_id(team.id)
+      end
     else
       self.deliverables.find_by_creator_id(student_id)
     end

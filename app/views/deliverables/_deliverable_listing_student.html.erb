@@ -2,7 +2,12 @@
 <%= javascript_include_tag "tablesorter" %>
 <script>
     $(document).ready(function(){
-        $(".sortable").tablesorter();
+        $(".sortable").tablesorter({
+            sortList: [[0,0],[1,0]] ,
+            headers: {
+                1: { sorter: "digit", empty: "top" }
+            } // non-numeric content is treated as a MAX value
+        });
     });
 </script>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
