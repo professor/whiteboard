@@ -7,7 +7,7 @@
             var isUpdated = false;
 
             var showErrors = function (m) {
-                // A simple way to show error message is showing a textbox.
+                // A simple way to show error message is showing an alert message.
                 // alert(m.toString());
                 var errorElement = '' +
                         '<div class="ui-widget" data-error="ajaxError">' +
@@ -25,7 +25,7 @@
             };
 
             // The timer of checking if evaluation page is "dirty". Timer function will be triggered every
-            // 10 seconds. If evaluation page has been updated since previous ajax save, the evaluation
+            // 10 seconds. If evaluation page has been updated since previous ajax save, the new evaluation
             // data will be saved again.
             setInterval(function () {
                 if (isUpdated) {
@@ -53,7 +53,7 @@
                 }
             }, 10000);
 
-            // note: change doesn't work here. To fire change "event", user has to focus out the control
+            // note: "change" event doesn't work here. To fire "change" event, user has to focus out the control
             $("#new_peer_evaluation_review textarea").live("keydown",function () {
                 isUpdated = true;
             });
