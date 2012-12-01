@@ -7,11 +7,12 @@
     // call the tablesorter plugin
     $(".sortable").tablesorter({ 
       // define a custom text extraction function 
-      textExtraction: function(node) { 
+        sortList: [[2,0],[0,0],[1,0]],
+        textExtraction: function(node) {
         // extract data from markup and return it 
         if ($(node).find("input").length > 0) return $(node).find("input").val();
         return $(node).text();
-      } 
+      }
     });
       // bind double click event for changing visibility of a grade
     $(".grade input[type='text']").dblclick(function(event){
