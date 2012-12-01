@@ -292,5 +292,33 @@ describe User do
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student
+  context "user should update profile" do
+    before(:each) do
+
+      @student_sam = FactoryGirl.create(:student_sam)
+
+      @student_sam.is_profile_valid = false
+    end
+
+  it "a student should be redirected if first_access is more than 4 weeks ago" do
+
+
+    #@student_sam.first_access= DateTime.strptime('01/01/2010 12:00:00', '%d/%m/%Y %H:%M:%S')
+    @student_sam.people_search_first_accessed_at = Time.now - 5.weeks
+
+
+    @student_sam.should_be_redirected?.should == true
+
+  end
+
+  it "a student should not be redirected if first_access is less than 4 weeks ago" do
+
+
+    @student_sam.people_search_first_accessed_at = Time.now - 3.weeks
+
+    @student_sam.should_be_redirected?.should == false
+
+  end
+    end
 
 end

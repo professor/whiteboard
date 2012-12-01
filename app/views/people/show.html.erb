@@ -43,39 +43,41 @@
                 </div>
             </div>
 
-            <div class="user_profile_title">
-                <input type="hidden" id="person_id" value="<%= @person.id %>" />
-                <h1 id="user_profile_name">
-                    <%= h @person.first_name %> <%= h @person.last_name %>
-                    <% if !(@person.pronunciation.blank?) %>
-                        <div class="user_profile_pron">Pronounced: <%= h @person.pronunciation %> <br /></div>
-                    <% end %>
-                </h1>
-                <div class="user_profile_action">
-                    <%= link_to 'Back', people_path %> |
-                    <%= link_to 'Edit', edit_person_path(@person) %> |
-                    <input type="button" value="Export Contact"  class="export_button" />
-                </div>
-                <div id="user_profile_dtls">
-                    <% if @person.is_student %>
-                        <%= h @person.masters_program %>
-                        <% if !(@person.masters_track.blank?) %>(<%= h @person.masters_track %>)<% end %>
-                        <% if @person.is_part_time %>
-                            Part Time
-                        <% else %>
-                            Full Time
-                        <% end %>
-                        <% if !(@person.graduation_year.blank?) %>
-                            (<%= h @person.graduation_year %>)
-                        <% end %>
-                    <% elsif @person.is_staff %>
-                        <%= @person.title %>
-                    <% end %>
-                    <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
-                            <br /><%= link_to "My teams", my_teams_path(@person) %>
-                    <% end %>
-                </div>
+        <div class="user_profile_title">
+	    <input type="hidden" id="person_id" value="<%= @person.id %>" />
+            <h1 id="user_profile_name">
+                <%= h @person.first_name %> <%= h @person.last_name %>
+                <% if !(@person.pronunciation.blank?) %>
+                    <div class="user_profile_pron">Pronounced: <%= h @person.pronunciation %> <br /></div>
+                <% end %>
+            </h1>
+            <div class="user_profile_action">
+                <%= link_to 'Back', people_path %>
+              <%   if @person.id == current_user.id or current_user.is_admin? %>
+                 | <%= link_to 'Edit', edit_person_path(@person) %>
+                <% end %>
             </div>
+            <div id="user_profile_dtls">
+                <% if @person.is_student %>
+                    <%= h @person.masters_program %>
+                    <% if !(@person.masters_track.blank?) %>(<%= h @person.masters_track %>)<% end %>
+                    <% if @person.is_part_time %>
+                        Part Time
+                    <% else %>
+                        Full Time
+                    <% end %>
+                    <% if !(@person.graduation_year.blank?) %>
+                        (<%= h @person.graduation_year %>)
+                    <% end %>
+                <% elsif @person.is_staff %>
+                    <%= @person.title %>
+                <% end %>
+                <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
+                        <br /><%= link_to "My teams", my_teams_path(@person) %>
+                <% end %>
+                <br/><a  href="#" class="export_button" >Download contact details</a>
+            </div>
+        </div>
 
             <div class="user_profile_contact_details_content">
                 <table class="cmu_table">
@@ -97,90 +99,110 @@
                     <% end %>
                 </table>
 
-                <table class="cmu_table">
-                    <tr >
-                        <td>Organization</td>
-                        <td>
-                            <% if @person.organization_name %>
-                                <% if @person.title %>
-                                    <%= h @person.title %> <br />
-                                <% end %>
-                                <%= h @person.organization_name %>
-                            <% else %>
-                                &nbsp;
+            <table class="cmu_table">
+
+              <% if (!@person.organization_name.blank?) || (!@person.title.blank?) %>
+                <tr>
+                    <td>Organization</td>
+                    <td>
+                        <% if @person.organization_name %>
+                            <% if @person.title %>
+                                <%= h @person.title %> <br />
                             <% end %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Location</td>
-                        <td>
-                            <% if display_location(@person) %><%= h display_location(@person) %>
-                            <% else %>&nbsp;
-                            <% end %>
-                        </td>
-                    </tr>
-                </table>
+                            <%= h @person.organization_name %>
+                        <% else %>
+                            &nbsp;
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <% if display_location(@person) %><%= h display_location(@person) %>
+                        <% else %>&nbsp;
+                        <% end %>
+                    </td>
+                </tr>
+            </table>
 
             </div><!--  user_profile_contact_details -->
 
 
 
-            <div class="clearboth">
-                <h2>Biography:</h2>
-                <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
-            </div>
-
-
-
-            <div class="clearboth ">
-                <% if !(@person.user_text.blank?) %>
-                <h2>About Me:</h2>
-                <div class="user_profile_content_body">
-                  <% if display_location(@person) %>
-                    <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
-                    <% end %>
-                </div>
-                <% end %>
-
-            </div><!-- user_profile_about -->
-
-            <div class="clearboth ">
-                <h2>Other Information:</h2>
-                <table class="cmu_table">
-                    <tr >
-                    <tr>
-                        <td>Personal Email</td>
-                        <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
-                    </tr>
-                    <tr >
-                        <td>Andrew Email</td>
-                        <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
-                    </tr>
-                    <% if @person.is_staff %>
-                    <tr>
-                      <td>Office:</td>
-                      <td><%= h @person.office %></td>
-                    </tr>
-                    <tr >
-                      <td>Office Hours:</td>
-                      <td><%= h @person.office_hours %></td>
-                    </tr>
-                    <% elsif @person.is_student %>
-                    <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
-                    <tr>
-                      <td>Availability:</td>
-                      <td>I am a  <%= h @person.local_near_remote.downcase %> student.</td>
-                    </tr>
-                    <% end %>
-                    <% end %>
-                </table>
-            </div>
-        </div> <!-- user_profile_content -->
-
-        <div class="user_profile_action">
-            <%= link_to 'Back', people_path %> |
-            <%= link_to 'Edit', edit_person_path(@person) %>
+        <div class="clearboth">
+          <% if !@person.biography.blank? %>
+            <h2>Biography:</h2>
+            <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
+          <% end %>
         </div>
+
+
+
+        <div class="clearboth ">
+            <% if !(@person.user_text.blank?) %>
+            <h2>About Me:</h2>
+            <div class="user_profile_content_body">
+              <% if display_location(@person) %>
+                <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+                <% end %>
+            </div>
+            <% end %>
+
+        </div><!-- user_profile_about -->
+
+        <div class="clearboth ">
+            <h2>Other Information:</h2>
+            <table class="cmu_table">
+
+              <% if !@person.personal_email.blank? %>
+                <tr class="">
+                <tr>
+                    <td>Personal Email</td>
+                    <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
+                </tr>
+              <% end %>
+                <tr class="">
+                    <td>Andrew Email</td>
+                    <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
+                </tr>
+
+                <% if @person.is_staff %>
+                <% if !@person.office.blank? %>
+                <tr>
+                  <td>Office:</td>
+                  <td><%= h @person.office %></td>
+                </tr>
+
+                <% end %>
+                <% if !@person.office_hours.blank? %>
+                <tr class="">
+                  <td>Office Hours:</td>
+                  <td><%= h @person.office_hours %></td>
+                </tr>
+                <% end %>
+                <% elsif @person.is_student %>
+                <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
+                <tr>
+                  <td>Availability:</td>
+                  <td>I am a  <%= h @person.local_near_remote.downcase %> student.</td>
+                </tr>
+                <% end %>
+                <% end %>
+            </table>
+        </div>
+
+
+
+    </div> <!-- user_profile_content -->
+
+    <div class="user_profile_action">
+        <%= link_to 'Back', people_path %>
+        <%   if @person.id == current_user.id or current_user.is_admin? %>
+            | <%= link_to 'Edit', edit_person_path(@person) %>
+        <% end %>
+    </div>
     </div><!-- user_profile_show -->
 
 <% end %>
