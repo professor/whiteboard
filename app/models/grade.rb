@@ -349,17 +349,19 @@ private
 
   # To decrypt the score for showing it to the professor.
   def self.decrypt_score(encrypted_score, course_id, student_id)
-    case encrypted_score
-      when encrypt_score("A", course_id, student_id) then return "A"
-      when encrypt_score("A-", course_id, student_id) then return "A-"
-      when encrypt_score("B+", course_id, student_id) then return "B+"
-      when encrypt_score("B", course_id, student_id) then return "B"
-      when encrypt_score("B-", course_id, student_id) then return "B-"
-      when encrypt_score("C+", course_id, student_id) then return "C+"
-      when encrypt_score("C", course_id, student_id) then return "C"
-      when encrypt_score("C-", course_id, student_id) then return "C-"
-      else return encrypted_score
+    if encrypted_score.nil? || encrypted_score.empty?
+      return ""
     end
+
+    grading_rule = GradingRule.find_by_course_id(course_id)
+    if grading_rule.nil?
+      return ""
+    end
+
+    grading_rule.letter_grades.each do |letter|
+      return letter if encrypted_score == encrypt_score(letter, course_id, student_id)
+    end
+    return encrypted_score
   end
 end
 
