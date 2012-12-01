@@ -1,4 +1,67 @@
 <% content_for :title, 'Peer evaluation for ' + @team.name %>
+<% content_for :javascript do %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // If a reviewer has updated the form on evaluation page, "isUpdated" will be set to true.
+            // Every time after an ajax save operation has been made, "isUpdated" will be set to false.
+            var isUpdated = false;
+
+            var showErrors = function (m) {
+                // A simple way to show error message is showing a textbox.
+                // alert(m.toString());
+                var errorElement = '' +
+                        '<div class="ui-widget" data-error="ajaxError">' +
+                        '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' +
+                        '<p style="color: red; margin-top: 5px;">' +
+                        '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
+                        m.toString() +
+                        '</p>' +
+                        '</div>' +
+                        '</div>'
+
+                // clear error messages before setting a new one
+                $('div[data-error="ajaxError"]').remove();
+                $(errorElement).prependTo('#mainContent .content');
+            };
+
+            // The timer of checking if evaluation page is "dirty". Timer function will be triggered every
+            // 10 seconds. If evaluation page has been updated since previous ajax save, the evaluation
+            // data will be saved again.
+            setInterval(function () {
+                if (isUpdated) {
+                    $.ajax({
+                        type:'post',
+                        dataType:'json',
+                        data:$('#new_peer_evaluation_review').serialize(),
+                        timeout: 8000,
+                        url:"/peer_evaluation/complete_evaluation",
+                        success:function (data) {
+                            if (data.code == "failed") {
+                                showErrors(data.message);
+                            }
+                        },
+                        error:function (x, t, m) {
+                            // ignore timeout error
+                            if ("timeout" != t) {
+                                showErrors(m);
+                            }
+                        },
+                        complete:function (data) {
+                            isUpdated = false;
+                        }
+                    });
+                }
+            }, 10000);
+
+            // note: change doesn't work here. To fire change "event", user has to focus out the control
+            $("#new_peer_evaluation_review textarea").live("keydown",function () {
+                isUpdated = true;
+            });
+        });
+
+    </script>
+
+<% end %>
 <script type="text/javascript">
     var confirmation_needed = true;
     window.onbeforeunload = confirmExit;
