@@ -159,12 +159,11 @@ class Grade < ActiveRecord::Base
   end
 
   # To import the grades into the gradebook from spreadsheet.
-  def self.import_grade_book_from_spreadsheet(file_path)
+  def self.import_grade_book_from_spreadsheet(file_path, current_course_id)
     Spreadsheet.client_encoding = 'UTF-8'
     grade_book = Spreadsheet.open(file_path)
     grade_sheet = grade_book.worksheet(0)
-
-    if validate_sheet(grade_sheet)
+    if validate_sheet(grade_sheet, current_course_id)
       import_scores(grade_sheet)
       return true
     else
@@ -222,10 +221,10 @@ class Grade < ActiveRecord::Base
     end
     grade_book.write(file_path)
   end
+
   def self.find_student_team course_id, student_id
     team = User.find(student_id).teams.find_by_course_id(course_id)
     return team
-
   end
 
 private
@@ -253,7 +252,7 @@ private
 
 
   # To validate the course and assignment when importing a file
-  def self.validate_first_row(row)
+  def self.validate_first_row(row, current_course_id)
     num_cols = row.length
     if num_cols < (FIRST_GRADE_COL+1)
       return false
@@ -261,9 +260,10 @@ private
 
     # check course ID at sheet[0,0]
     course = Course.find_by_id(row[0].to_i)
-    if course.nil?
+    if course.nil? || course.id!=current_course_id
       return false
     end
+
 
     # check assignment IDs
     is_found_final_grade_col = false
@@ -323,8 +323,8 @@ private
   end
 
   # To validate that course, assignments and students are valid.
-  def self.validate_sheet(grade_sheet)
-    (validate_first_row(grade_sheet.row(0).to_a) && validate_first_column(grade_sheet.column(0).to_a))
+  def self.validate_sheet(grade_sheet, current_course_id)
+    (validate_first_row(grade_sheet.row(0).to_a, current_course_id) && validate_first_column(grade_sheet.column(0).to_a))
   end
 
   # To import the scores from the gradebook

@@ -42,34 +42,10 @@ class GradingRule < ActiveRecord::Base
                   :is_nomenclature_deliverable
 
   belongs_to :course
-  # To map the grade with the points for calculating final and earned grades.
-  def mapping_rule
-    @mapping_rule ||= {
-      "A"=>100, "A-"=>self.A_grade_min-0.1,
-      "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
-      "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
-  end
 
   # To perform letter grade validation for the given score.
   def validate_letter_grade(raw_score)
     mapping_rule.has_key?(raw_score.to_s.upcase)
-  end
-
-
-  # To validate the grade given if grading type is points
-  def validate_points(raw_score)
-     if raw_score.to_i<0
-       return false
-     end
-     true if Float(raw_score) rescue false
-  end
-
-  # To validate the grade given if grading type is weight
-  def validate_weights(raw_score)
-    if raw_score.end_with?("%")
-      raw_score = raw_score.split('%')[0]
-    end
-    return validate_points(raw_score)
   end
 
   # To perform validation for the given score by the grade type
@@ -79,12 +55,12 @@ class GradingRule < ActiveRecord::Base
       return true
     end
 
-    # To allow users to enter letter grades
+    # allow users to enter letter grades
     if mapping_rule.has_key?(raw_score.to_s.upcase)
       return true
     end
 
-    # returns the grading type
+    # return the grading type
     case grade_type
       when "points"
         return validate_points(raw_score)
@@ -111,14 +87,14 @@ class GradingRule < ActiveRecord::Base
 
   # To display the preferred name of assignment
   def to_display
-    unless self.is_nomenclature_deliverable?
-      return "Assignment"
+    if self.is_nomenclature_deliverable?
+      "Deliverable"
     else
-      return "Deliverable"
+      "Assignment"
     end
   end
 
-  # To get the grade type of the course, i.e. it is points or weightage
+  # To get the grade type of the course, i.e. it is points or weights
   def self.get_grade_type (course_id)
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
@@ -141,6 +117,7 @@ class GradingRule < ActiveRecord::Base
     "'#{GradingRule.get_grade_type self.course_id}', #{mapping_rule.to_json}, #{weight_hash.to_json}"
   end
 
+  # To get all of the valid letter grades.
   def letter_grades
     @letter_grades ||= mapping_rule.keys
   end
@@ -169,7 +146,7 @@ private
     if raw_score.end_with?("%")
       raw_score = raw_score.split('%')[0]
     end
-    return validate_points(raw_score)
+    validate_points(raw_score)
   end
 
 end
