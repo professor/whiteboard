@@ -3,6 +3,7 @@
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
     <%= javascript_include_tag 'people_search' %>
+    <%= javascript_include_tag 'people_search_export' %>
     <%= javascript_include_tag 'jquery.session' %>
 
 <% end %>
@@ -12,18 +13,18 @@
     <%= link_to 'New person', new_person_path %>
 <% end %>
 
-<div>
+<div id="people_search">
 
-  <%= render :partial => "people_search_box" %>
+    <div>
+      <%= render :partial => "people_search_box" %>
+    </div>
 
-</div>
+    <!-- conference room url
+    http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
+    -->
 
+    <hr>
 
-<!-- conference room url
-http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
--->
-
-<hr>
     <table id="key_contacts_table" class="tablesorter">
       <thead>
       <tr hidden="true">
@@ -64,52 +65,58 @@ http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
       <tfoot>
         <tr>
           <td colspan="3">
-             <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
+             <input type="button" class="export_button" value="Export List" />
           </td>
       </tr>
       </tfoot>
     </table>
-<table id="people_table" class="tablesorter" hidden="true" >
-  <thead>
-  <tr>
-    <th>&nbsp;</th>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Contact Details</th>
-    <th>Program</th>
-  </tr>
-  </thead>
-  <tbody>
-  </tbody>
-    <tfoot>
-        <tr>
-          <td colspan="5">
-             <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
-          </td>
+
+    <table id="people_table" class="tablesorter" hidden="true" >
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Contact Details</th>
+        <th>Program</th>
       </tr>
-  </tfoot>
-</table>
-<div id="key_contacts_photobook" class="clearboth" hidden="true">
-    <% unless @results.blank? %>
-    <div>
-    <% @results.each do |person| %>
-      <a class="photobook_item" href="<%= person[:path] %>">
-        <%= image_tag(person[:image_uri]) %>
-        <p class="photobook_item_name"><%= person[:human_name] %> </p>
-      </a>
-    <% end %>
-    </div>
-    <div class="clearboth">
-        <input type="button" class="export_button" value="Export List" onclick="show_box();"/>
+      </thead>
+      <tbody>
+      </tbody>
+        <tfoot>
+            <tr>
+              <td colspan="5">
+                 <input type="button" class="export_button" value="Export List" />
+              </td>
+          </tr>
+      </tfoot>
+    </table>
+
+    <div id="key_contacts_photobook" class="clearboth" hidden="true">
+        <% unless @results.blank? %>
+        <div>
+        <% @results.each do |person| %>
+          <a class="photobook_item" href="<%= person[:path] %>">
+            <%= image_tag(person[:image_uri]) %>
+            <p class="photobook_item_name"><%= person[:human_name] %> </p>
+          </a>
+        <% end %>
+        </div>
+        <div class="clearboth">
+            <input type="button" class="export_button" value="Export List" />
+        </div>
+
+      <% end %>
     </div>
 
-  <% end %>
+    <div id="photobook_results" hidden="true" class="clearboth" >
+      <div id="photobook_results_main" class="clearboth" ></div>
+    </div>
+
+    <div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
+    <div id="empty_results" hidden="true" class="clearboth">No results found.</div>
+
 </div>
-<div id="photobook_results" hidden="true" class="clearboth" >
-  <div id="photobook_results_main" class="clearboth" ></div>
-</div>
-<div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
-<div id="empty_results" hidden="true" class="clearboth">No results found.</div>
 
 <br/>
 

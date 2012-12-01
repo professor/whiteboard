@@ -162,10 +162,6 @@ $(document).ready(function() {
     $("#filter_program").change(function(){ advanced_search_changed=true; getSearchResults(); });
     $("#search_inactive").change(function(){ advanced_search_changed=true; getSearchResults(); });
 
-    $("#filterBoxOne_export_contacts").click(function (){
-        show_box();
-    });
-
     /* making the whole row of key_contacts clickable
     ***************************************************/
     // apply on key_contacts
@@ -179,60 +175,6 @@ $(document).ready(function() {
         });
 
 }); // jQuery ready function ending
-
-
-/****************************************
-        EXPORT VCARD FUNCTIONS
-*****************************************/
-
-// pop up box that shows up on hitting the Export button
-function show_box(){
-    var boxValue = $("#filterBoxOne").val();
-    var $dialog = $('<div></div>')
-        .html('Which format do you wish to export to?')
-        .dialog({
-            autoOpen: true,
-            resizable: false,
-            draggable: false,
-            width: 100,
-            height: 130,
-            modal: true,
-            title: 'Export Contacts',
-            buttons:{
-                "CSV":function(){
-                    window.location.href='people_csv.csv?filterBoxOne='+boxValue;
-                    $(this).dialog("close");
-                },
-                "vCard":function(){
-                    window.location.href='people_vcf?filterBoxOne='+boxValue;
-                    $(this).dialog("close");
-                }
-            }
-        });
-}
-
-/****************************************
-        MAIN SEARCH FUNCTIONS
-*****************************************/
-
-// // get default search results and store in a json object
-// function getDefaultSearchResultsJson(){
-//     // send ajax request and assign the XHML HTTP request object returned to jq_xhr
-//     jq_xhr = $.ajax({
-//         url : 'people',  // the URL for the request
-//         data : { ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
-//         method : 'GET',
-//         dataType : 'json',  // the type of data we expect back
-//         contentType: "application/json; charset=utf-8",
-
-//         success : function(json) {
-//             default_results_json = json;
-//             if(photobook_toggled && !($.trim($("#filterBoxOne").val()).length > 0)){
-//                 buildSearchResults(default_results_json);
-//             }
-//         }
-//     });
-// }
 
 // get search results from database based on search parameters
 //      queries the database with search parameters
@@ -308,7 +250,7 @@ function buildSearchResults(json) {
                     buildResultRowPhotoBookFormat(json[i]);
             }
             // apped the export list row button
-            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" onclick="show_box();"/></div>'));
+            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" /></div>'));
         } else{
             // build row number i
             // first do high priority results, then low priority results
@@ -363,12 +305,6 @@ function clearSearchResults () {
     $('#people_table tbody').empty();
     $('#photobook_results_main').empty();
 }
-/*
-    Based on the various toggles show the correct tables. Tables:
-    // $("#key_contacts_table")
-    // $('#people_table')
-    // $('#photobook_results')
-*/
 
 // helper function to build json data object for ajax calls
 function setSessionInfo() {
@@ -443,6 +379,7 @@ function loadImage(image_uri){
     return img;
 }
 
+// helper function that shows/hides the correct table(s) depending on search parameters & toggled states
 function updateView(){
     if(!ajax_req_issued){
         $filterBoxOne = $("#filterBoxOne");
