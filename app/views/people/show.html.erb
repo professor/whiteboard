@@ -1,4 +1,5 @@
 <% content_for :title, @person.human_name + " - Contact Information" %>
+<%= javascript_include_tag 'people_search_export' %>
 
 <%= form_for(@person) do |f| %>
     <% if @person.errors.any? %>
@@ -13,36 +14,37 @@
         </div>
     <% end %>
 
-    <div class="user_profile_content">
-        <div class="user_profile_photo_social">
-            <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
-            <div class="user_profile_social clearboth">
+    <div id="user_profile_show">
+        <div class="user_profile_content">
+            <div class="user_profile_photo_social">
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+                <div class="user_profile_social clearboth">
 
-                <% if !@person.linked_in.blank? %>
-                    <%= link_to image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account"), linked_in_path(@person) %>
-                <% end %>
+                    <% if !@person.linked_in.blank? %>
+                        <%= link_to image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account"), linked_in_path(@person) %>
+                    <% end %>
 
-                <% if !@person.facebook.blank? %>
-                    <%= link_to image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account"), facebook_path(@person) %>
-                <% end %>
+                    <% if !@person.facebook.blank? %>
+                        <%= link_to image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account"), facebook_path(@person) %>
+                    <% end %>
 
-                <% if !@person.twitter.blank? %>
-                    <%= link_to image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account"), twitter_path(@person) %>
-                <% end %>
+                    <% if !@person.twitter.blank? %>
+                        <%= link_to image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account"), twitter_path(@person) %>
+                    <% end %>
 
-                <% if !@person.google_plus.blank? %>
-                    <%= link_to image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account"), google_plus_path(@person) %>
-                <% end %>
+                    <% if !@person.google_plus.blank? %>
+                        <%= link_to image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account"), google_plus_path(@person) %>
+                    <% end %>
 
-                <% if !@person.github.blank? %>
-                    <%= link_to image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account"), github_path(@person) %>
-                <% end %>
+                    <% if !@person.github.blank? %>
+                        <%= link_to image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account"), github_path(@person) %>
+                    <% end %>
 
+                </div>
             </div>
-        </div>
 
         <div class="user_profile_title">
-
+	    <input type="hidden" id="person_id" value="<%= @person.id %>" />
             <h1 id="user_profile_name">
                 <%= h @person.first_name %> <%= h @person.last_name %>
                 <% if !(@person.pronunciation.blank?) %>
@@ -73,34 +75,34 @@
                 <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
                         <br /><%= link_to "My teams", my_teams_path(@person) %>
                 <% end %>
-                <br/><a  href="#" onclick="show_box();" >Download contact details</a>
+                <br/><a  href="#" class="export_button" >Download contact details</a>
             </div>
         </div>
 
-        <div class="user_profile_contact_details_content">
-            <table class="cmu_table">
-                <tr>
-                    <td>Email</td>
-                    <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
-                </tr>
-                <%  @person.telephones_hash.each_with_index do |(key, value), index| %>
-                <tr <% if index.even? %> <% end %> >
-                    <td><%= h "#{key}" %></td>
-                    <td><%= h "#{value}" %></td>
-                </tr>
-                <%  end %>
-                <% if !(@person.skype.blank?) %>
-                <tr>
-                    <td>Skype</td>
-                    <td><%= h @person.skype %></td>
-                </tr>
-                <% end %>
-            </table>
+            <div class="user_profile_contact_details_content">
+                <table class="cmu_table">
+                    <tr>
+                        <td>Email</td>
+                        <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
+                    </tr>
+                    <%  @person.telephones_hash.each_with_index do |(key, value), index| %>
+                    <tr <% if index.even? %> <% end %> >
+                        <td><%= h "#{key}" %></td>
+                        <td><%= h "#{value}" %></td>
+                    </tr>
+                    <%  end %>
+                    <% if !(@person.skype.blank?) %>
+                    <tr>
+                        <td>Skype</td>
+                        <td><%= h @person.skype %></td>
+                    </tr>
+                    <% end %>
+                </table>
 
             <table class="cmu_table">
 
               <% if (!@person.organization_name.blank?) || (!@person.title.blank?) %>
-                <tr class="">
+                <tr>
                     <td>Organization</td>
                     <td>
                         <% if @person.organization_name %>
@@ -125,7 +127,7 @@
                 </tr>
             </table>
 
-        </div><!--  user_profile_contact_details -->
+            </div><!--  user_profile_contact_details -->
 
 
 
@@ -201,37 +203,6 @@
             | <%= link_to 'Edit', edit_person_path(@person) %>
         <% end %>
     </div>
-
+    </div><!-- user_profile_show -->
 
 <% end %>
-
-<script type="text/javascript">
-    // pop up box that shows up on hitting the Export button
-    function show_box(){
-        //var boxValue = $("#filterBoxOne").val();
-        var $dialog = $('<div></div>')
-                .html('Which format do you wish to export to?')
-                .dialog({
-                    autoOpen: true,
-                    resizable: false,
-                    draggable: false,
-                    width: 100,
-                    height: 130,
-                    modal: true,
-                    title: 'Export Contact',
-                    buttons:{
-                        "CSV":function(){
-                            window.location.href = "http://"+window.location.hostname+':'+window.location.port+'/people_csv.csv?search_id=<%= @person.id %>';
-                            // var host = "http://"+window.location.hostname;
-                            //'http://localhost:3000/people_csv.csv?search_id=<%= @person.id %>';
-                            $(this).dialog("close");
-                        },
-                        "vCard":function(){
-                            window.location.href = "http://"+window.location.hostname+':'+window.location.port+'/people_vcf.vcf?search_id=<%= @person.id %>';
-                            // 'http://localhost:3000/people_vcf?search_id=<%= @person.id %>';
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-    }
-</script>

@@ -183,10 +183,6 @@ $(document).ready(function() {
     $("#filter_program").change(function(){ advanced_search_changed=true; getSearchResults(); });
     $("#search_inactive").change(function(){ advanced_search_changed=true; getSearchResults(); });
 
-    $("#filterBoxOne_export_contacts").click(function (){
-        show_box();
-    });
-
     /* making the whole row of key_contacts clickable
     ***************************************************/
     // apply on key_contacts
@@ -202,35 +198,6 @@ $(document).ready(function() {
 }); // jQuery ready function ending
 
 
-/****************************************
-        EXPORT VCARD FUNCTIONS
-*****************************************/
-
-// pop up box that shows up on hitting the Export button
-function show_box(){
-    var boxValue = $("#filterBoxOne").val();
-    var $dialog = $('<div></div>')
-        .html('Which format do you wish to export to?')
-        .dialog({
-            autoOpen: true,
-            resizable: false,
-            draggable: false,
-            width: 100,
-            height: 130,
-            modal: true,
-            title: 'Export Contacts',
-            buttons:{
-                "CSV":function(){
-                    window.location.href='people_csv.csv?filterBoxOne='+boxValue;
-                    $(this).dialog("close");
-                },
-                "vCard":function(){
-                    window.location.href='people_vcf?filterBoxOne='+boxValue;
-                    $(this).dialog("close");
-                }
-            }
-        });
-}
 
 /****************************************
         MAIN SEARCH FUNCTIONS
@@ -310,7 +277,7 @@ function buildSearchResults(json) {
                     buildResultRowPhotoBookFormat(json[i]);
             }
             // apped the export list row button
-            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" onclick="show_box();"/></div>'));
+            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" /></div>'));
         } else{
             // build row number i
             // first do high priority results, then low priority results
@@ -371,7 +338,6 @@ function setSessionInfo() {
     var json = {};
 
     if(load_using_custom_params){
-
         // JSON object for override parameters
         json = {
             filterBoxOne : getURLParameter('filterBoxOne'),
@@ -382,7 +348,6 @@ function setSessionInfo() {
             search_inactive : getURLParameter('search_inactive'),
             ajaxCall : true
         };
-
     } else if (advanced_search_toggled) {
         json = {
                     filterBoxOne : $("#filterBoxOne").val(),
@@ -470,6 +435,7 @@ function keyup_error_recover(){
 
 }
 
+// helper function that shows/hides the correct table(s) depending on search parameters & toggled states
 function updateView(){
     if(!ajax_req_issued){
         $filterBoxOne = $("#filterBoxOne");

@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
       end
     end
     @people = return_defaults
-    
+
     @results = @people.collect { |default_person| Hash[
         :image_uri => default_person.user.image_uri,
         :title => default_person.user.title,
@@ -112,7 +112,6 @@ def download_csv
       format.csv do
         csv_string = CSV.generate do |csv|
           csv << ["Name","Given Name","Additional Name","Family Name","Yomi Name","Given Name Yomi","Additional Name Yomi","Family Name Yomi","Name Prefix","Name Suffix","Initials","Nickname","Short Name","Maiden Name","Birthday","Gender","Location","Billing Information","Directory Server","Mileage","Occupation","Hobby","Sensitivity","Priority","Subject","Notes","Group Membership","E-mail 1 - Type","E-mail 1 - Value","E-mail 2 - Type","E-mail 2 - Value","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value","Organization 1 - Type", "Organization 1 - Name", "Organization 1 - Yomi Name", "Organization 1 - Title", "Organization 1 - Department", "Organization 1 - Symbol", "Organization 1 - Location", "Organization 1 - Job Description"]
-
           @people.each do |user|
             org = user.organization_name.nil? ? "" : user.organization_name
             title = user.title.nil? ? "" : user.title
@@ -125,7 +124,6 @@ def download_csv
                 "",org,"",title,"","","",""]
           end
         end
-
         send_data csv_string,
                   :type=>"text/csv; charset=utf-8",
                   :disposition =>"attachment; filename=contact.csv"
@@ -143,18 +141,14 @@ def download_csv
     end
 
     vcard_str=""
-
     @people.each do |user|
       card = Vpim::Vcard::Maker.make2 do |maker|
-
         maker.add_name do |name|
           name.prefix = ''
           name.given = user.first_name
           name.family = user.last_name
         end
-
         phones_hash = user.telephones_hash
-
         if(!user.email.blank?)
           maker.add_email(user.email) { |e| e.location = user.is_staff? ? 'work' : 'other' }
         end
@@ -173,16 +167,11 @@ def download_csv
           end
         end
       end
-
       vcard_str << card.to_s
-
     end
-
-
     send_data vcard_str,
               :type=>"text/vcf; charset=utf-8",
               :disposition =>"attachment; filename=contact.vcf"
-
   end
 
   #Ajax call for autocomplete using params[:term]
@@ -648,7 +637,7 @@ def download_csv
     people = people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
     people = people.order("first_name ASC, last_name ASC")
   end
-  
+
   def search_name_fields
     priority_results = User.scoped
     if !params[:filterBoxOne].blank?
