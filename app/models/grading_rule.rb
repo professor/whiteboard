@@ -175,6 +175,7 @@ class GradingRule < ActiveRecord::Base
   end
 
 private
+  # To generate the mapping rule for converting grades into points
   def mapping_rule
     @mapping_rule ||= {
         "A"=>100, "A-"=>self.A_grade_min-0.1,
@@ -184,6 +185,7 @@ private
     }
   end
 
+  # To validate that the points given by faculty are correct
   def validate_points(raw_score)
     if raw_score.to_i<0
       return false
@@ -191,6 +193,7 @@ private
     true if Float(raw_score) rescue false
   end
 
+  # To validate that the score is a valid weight.
   def validate_weights(raw_score)
     if raw_score.end_with?("%")
       raw_score = raw_score.split('%')[0]
