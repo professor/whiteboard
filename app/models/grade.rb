@@ -13,13 +13,7 @@
 #   A, A-, B+, B, B-, C+, C, or C-.
 # * score= assigns a number greater than zero, and we don't validate whether the score is greater than maximum
 #   number defined in Assignment object, so that professor can add extra credit on student's grade.
-# * get_grades_for_student_per_course returns a list of assignment score of given course and student.
-# * get_grade returns a specific one assignment score of given course_id, student_id and assignment_id. This function is
-#   useful for controller to test whether the score is existed or not.
-# * give_grade saves the grade given for a student's assignment.
-# * give_grades saves a list of assignment grades given to a group of students.
-#
-#
+
 require 'spreadsheet'
 
 class Grade < ActiveRecord::Base
@@ -36,6 +30,7 @@ class Grade < ActiveRecord::Base
   FIRST_GRADE_ROW = 2
   FIRST_GRADE_COL = 4
 
+  # To format and encrypt the score in correct format before saving into the database.
   def format_score
     self.score = GradingRule.format_score(self.course.id, self.score)
     if self.assignment_id < 0
@@ -43,6 +38,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To decrpyt the score if it is a final grade.
   def decrypt_score
     if self.assignment_id < 0
       self.score = Grade.decrypt_score(self.score, self.course_id, self.student_id)
@@ -68,6 +64,7 @@ class Grade < ActiveRecord::Base
     Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
   end
 
+  # To get the final grade of the student for a particular course.
   def self.get_final_grade(course_id, student_id)
     grade = Grade.where(course_id: course_id).where(student_id: student_id).where(:assignment_id => -1)[0]
     if grade.nil?
@@ -77,7 +74,8 @@ class Grade < ActiveRecord::Base
     end
   end
 
-  # To assign/update the grade to the student
+  # To returns a specific grade for one assignment of given course_id, student_id and assignment_id. This function is
+  #   useful for controller to test whether the score is exists or not.
   def self.give_grade(course_id, assignment_id, student_id, score,is_student_visible=nil)
     if assignment_id>0
       if Assignment.find(assignment_id).nil?
@@ -108,7 +106,7 @@ class Grade < ActiveRecord::Base
     grading_result
   end
 
-  # To assign grades for to multiple students
+  # To assign grades for to multiple students.
   def self.give_grades(grades)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
@@ -116,6 +114,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To send the feedback to the student.
   def send_feedback_to_student
     if assignment_id > 0
       feedback = make_feedback_for_one_assignment
@@ -133,6 +132,7 @@ class Grade < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
+  # To notify students about the grade that were drafted by professor till now.
   def self.mail_drafted_grade(course_id, changed_grades)
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
     draft_grade.concat(changed_grades)
@@ -145,6 +145,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To send the final grade mail to students
   def self.mail_final_grade(course_id, changed_grades)
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
     final_grades.concat(changed_grades)
@@ -157,6 +158,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To import the grades into the gradebook from spreadsheet.
   def self.import_grade_book_from_spreadsheet(file_path)
     Spreadsheet.client_encoding = 'UTF-8'
     grade_book = Spreadsheet.open(file_path)
@@ -170,6 +172,7 @@ class Grade < ActiveRecord::Base
     end
   end
 
+  # To export the grades in spreadheet for offline grading.
   def self.export_grade_book_to_spreadsheet(course, file_path)
     Spreadsheet.client_encoding = 'UTF-8'
     grade_book = Spreadsheet::Workbook.new
@@ -220,6 +223,7 @@ class Grade < ActiveRecord::Base
   end
 
 private
+  # To make the email body for the assignment graded by professor
   def make_feedback_for_one_assignment
     feedback = "Grade has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
@@ -235,11 +239,14 @@ private
     feedback += "\n"
   end
 
+  # To make the email body for the final grade awarded by the professor
   def make_feedback_for_final_grade
     feedback = "Final grade has been assigned for "
     feedback += self.course.name + "\n"
   end
 
+
+  # To validate the course and assignment when importing a file
   def self.validate_first_row(row)
     num_cols = row.length
     if num_cols < (FIRST_GRADE_COL+1)
@@ -282,6 +289,8 @@ private
     return true
   end
 
+
+  # To validate that the students are enlisted in the course
   def self.validate_first_column(col)
     num_rows = col.length
     if num_rows < (FIRST_GRADE_ROW+1)
@@ -307,10 +316,12 @@ private
     return true
   end
 
+  # To validate that course, assignments and students are valid.
   def self.validate_sheet(grade_sheet)
     (validate_first_row(grade_sheet.row(0).to_a) && validate_first_column(grade_sheet.column(0).to_a))
   end
 
+  # To import the scores from the gradebook
   def self.import_scores (grade_sheet)
     course_id = grade_sheet[0,0].to_i
     num_rows = grade_sheet.row_count()
@@ -325,6 +336,7 @@ private
     end
   end
 
+  # To encrypt the final scores.
   def self.encrypt_score(raw_score, course_id, student_id)
     # FIXME: get salt from somewhere else
     salt="I am salt without any iodine"
@@ -335,6 +347,7 @@ private
     end
   end
 
+  # To decrypt the score for showing it to the professor.
   def self.decrypt_score(encrypted_score, course_id, student_id)
     case encrypted_score
       when encrypt_score("A", course_id, student_id) then return "A"

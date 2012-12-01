@@ -7,12 +7,24 @@
 #   point and letter grades.
 #
 # GradingRule follows the grading policy of CMU@SV. We provide the following options for letter grades: A, A-, B+, B,
-#   B-, C+, C, C-.
+#   B-, C+, C, C-. These grades can be configured by faculty by going to course configuration page. Beside these grades
+#   faculty can also enter R, W, I grades. But these grades are not configurable.
 #
 # We provide the following functions to map out points and letter grades.
 # * convert_points_to_letter_grade maps out points to letter grades.
 # * convert_letter_grade_to_points maps out letter grades to points.
 # * get_grade_in_prof_format convert points to
+# * grade_type tells whether the deliverable is graded by weight or by points
+# * A_grade_min tells on or above this value the student will be marked as A-
+# * A_minus_grade_min tells on or above this value the student will be marked as A
+# * B_plus_grade_min tells on or above this value the student will be marked as B+
+# * B_grade_min tells on or above this value the student will be marked as B
+# * B_minus_grade_min tells on or above this value the student will be marked as B-
+# * C_plus_grade_min tells on or above this value the student will be marked as C+
+# * C_grade_min tells on or above this value the student will be marked as C
+# * C_minus_grade_min tells on or above this value the student will be marked as C
+# * course_id tells the course for which this grading rule exists
+# * is_nomenclature_deliverable tells which name is preferred by professor (deliverable or assignment)
 
 class GradingRule < ActiveRecord::Base
   attr_accessible :grade_type,
@@ -29,6 +41,7 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
+  # To map the grade with the points for calculating final and earned grades.
   def mapping_rule
     @mapping_rule ||= {
       "A"=>100, "A-"=>self.A_grade_min-0.1,
@@ -36,10 +49,12 @@ class GradingRule < ActiveRecord::Base
       "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
   end
 
+  # To validate the letter grades
   def validate_letter_grade(raw_score)
     mapping_rule.has_key?(raw_score.to_s.upcase)
   end
 
+  # To validate the grade given if grading type is points
   def validate_points(raw_score)
      if raw_score.to_i<0
        return false
@@ -47,6 +62,7 @@ class GradingRule < ActiveRecord::Base
      true if Float(raw_score) rescue false
   end
 
+  # To validate the grade given if grading type is weight
   def validate_weights(raw_score)
     if raw_score.end_with?("%")
       raw_score = raw_score.split('%')[0]
@@ -54,6 +70,7 @@ class GradingRule < ActiveRecord::Base
     return validate_points(raw_score)
   end
 
+  # To validate the score given by the professor
   def validate_score(raw_score)
     # allow users to skip entering grades
     if raw_score.nil? || raw_score.empty?
@@ -65,6 +82,7 @@ class GradingRule < ActiveRecord::Base
       return true
     end
 
+    # returns the grading type
     case grade_type
       when "points"
         return validate_points(raw_score)
@@ -75,6 +93,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To format the score is correct format before saving into the database.
   def self.format_score (course_id, raw_score)
     raw_score=raw_score.to_s
     grading_rule = GradingRule.find_by_course_id(course_id)
@@ -115,6 +134,7 @@ class GradingRule < ActiveRecord::Base
     (mapping_rule.has_key?(letter_grade)?mapping_rule[letter_grade]:-1.0)
   end
 
+  # To display the preferred name of assignment
   def to_display
     unless self.is_nomenclature_deliverable?
       return "Assignment"
@@ -123,6 +143,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To get the grade type of the course, i.e. it is points or weightage
   def self.get_grade_type (course_id)
     grading_rule = GradingRule.find_by_course_id(course_id)
     if grading_rule.nil?
@@ -132,6 +153,7 @@ class GradingRule < ActiveRecord::Base
     return grading_rule.grade_type
   end
 
+  # To get the grade parameters for calculating earned grade and final grade in the javascript.
   def get_grade_params_for_javascript
     weight_hash = []
     self.course.assignments.each do |assignment|

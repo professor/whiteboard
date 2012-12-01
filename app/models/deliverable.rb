@@ -55,7 +55,7 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
-
+  # To get the owner of the deliverable
   def unique_course_task_owner?
     if self.is_team_deliverable?
       duplicate = Deliverable.where(:course_id => self.course_id, :assignment_id => self.assignment_id, :team_id => self.team_id).first
@@ -69,14 +69,17 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  # To check if it is a team deliverable
   def is_team_deliverable?
     self.is_team_deliverable
   end
 
+  # To check the current attachment for the deliverable
   def current_attachment
     attachment_versions.find(:first)
   end
 
+  # To get the name of the person/team who has submitted the deliverable
   def owner_name
     if self.is_team_deliverable?
       team.name
@@ -85,6 +88,7 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  # To get the email_id/team_id who has submitted the deliverable
   def owner_email
     if self.is_team_deliverable?
       team.email
@@ -117,11 +121,12 @@ class Deliverable < ActiveRecord::Base
     Deliverable.find(:all, :conditions => team_condition + "(team_id IS NULL AND creator_id = #{user.id})")
   end
 
+  # To see if this deliverable has a feedback or not
   def has_feedback?
     !self.feedback_comment.blank? or !self.feedback_file_name.blank?
   end
 
-
+  # To send the deliverable submitted mail to the primary and secondary faculty
   def send_deliverable_upload_email(url)
     mail_to = []
     unless self.team.nil? || self.team.primary_faculty.nil?
@@ -150,6 +155,7 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
+  # To send the feedback to the each student along with the score received respectively.
   def send_feedback_to_student(member_id, member_email, url)
     feedback = "Feedback has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
@@ -180,6 +186,7 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
+  # To send the feedback in the email back to the students.
   def send_deliverable_feedback_email(url)
     if self.is_team_deliverable?
       self.team.members.each do |member|
@@ -190,6 +197,7 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  # To check if the current user can change/edit the deliverable
   def editable?(current_user)
     if self.is_team_deliverable?
       unless self.team.is_user_on_team?(current_user)
@@ -216,11 +224,13 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  # To check if the grade received for this deliverable is visible to the students or not.
   def is_visible_to_student?
     grade = Grade.get_grade(self.assignment.id, creator_id)
     grade.try(:is_student_visible) || false
   end
 
+  # To update the feedback and the private notes by faculty
   def update_feedback_and_notes (params)
     self.feedback_comment = params[:feedback_comment]
     self.private_note = params[:private_note]
@@ -233,6 +243,7 @@ class Deliverable < ActiveRecord::Base
     self.save
   end
 
+  # To update the grade received by the student
   def update_grade (params, is_student_visible)
     error_msg = []
     if self.assignment.is_team_deliverable?
@@ -251,7 +262,7 @@ class Deliverable < ActiveRecord::Base
     error_msg
   end
 
-
+  # To get the status of the deliverable for whether it is graded or not.
   def get_grade_status
     if self.is_team_deliverable?
       self.team.members.each do |member|
@@ -266,6 +277,7 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  # To get the status of deliverable by student for is it graded or not.
   def get_status_for_every_individual  (student_id)
     grade = Grade.get_grade(self.assignment.id, student_id)
     if grade.nil?

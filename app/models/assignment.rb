@@ -35,11 +35,12 @@ class Assignment < ActiveRecord::Base
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   default_scope :order => 'task_number ASC, assignment_order ASC'
 
-  #This returns whether the deliverable is submitted or not.
+  # To check whether the deliverable is submitted or not.
   def is_deliverable_submitted
     self.deliverables.size<=0
   end
 
+  # To get the list of deliverables submitted by the student.
   def get_student_deliverable student_id
     if self.is_team_deliverable?
       team = User.find(student_id).teams.find_by_course_id(self.course_id)
@@ -49,11 +50,12 @@ class Assignment < ActiveRecord::Base
     end
   end
 
+  # To get the student grade for an assignment.
   def get_student_grade student_id
     Grade.get_grade(self.id, student_id)
   end
 
-
+  # To get list of all the assignments for the student from the courses he has registered.
   def self.list_assignments_for_student student_id , type= :all
     student = User.find(student_id)
     courses = case type
