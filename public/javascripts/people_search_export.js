@@ -16,13 +16,6 @@ jQuery(document).ready(function($) {
 
 
 function export_contact_dtls(isSingleContact){
-    // if (isSingleContact){
-    //     "http://"+window.location.hostname+':'+window.location.port+'/people_csv.csv?search_id='+ $("#person_id").val();
-    //     "http://"+window.location.hostname+':'+window.location.port+'/people_vcf.vcf?search_id='+ $("#person_id").val();
-    // }else{
-    //     'people_csv.csv?filterBoxOne='+boxValue;
-    //     'people_vcf?filterBoxOne='+boxValue;
-    // }
     var $dialog = $('<div></div>')
         .html('Which format do you wish to export to?')
         .dialog({
