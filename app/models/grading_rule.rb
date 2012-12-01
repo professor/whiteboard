@@ -10,9 +10,13 @@
 #   B-, C+, C, C-.
 #
 # We provide the following functions to map out points and letter grades.
+# * validate_letter_grade performs letter grade validation for the given score.
+# * validate_score performs score validation for the given score by the grade type
+# * format_score formats the given score
 # * convert_points_to_letter_grade maps out points to letter grades.
 # * convert_letter_grade_to_points maps out letter grades to points.
-# * get_grade_in_prof_format convert points to
+# * to_display
+# * get_grade_params_for_javascript
 
 class GradingRule < ActiveRecord::Base
   attr_accessible :grade_type,
@@ -29,38 +33,19 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
-  def mapping_rule
-    @mapping_rule ||= {
-      "A"=>100, "A-"=>self.A_grade_min-0.1,
-      "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
-      "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
-  end
-
+  # To perform letter grade validation for the given score.
   def validate_letter_grade(raw_score)
     mapping_rule.has_key?(raw_score.to_s.upcase)
   end
 
-  def validate_points(raw_score)
-     if raw_score.to_i<0
-       return false
-     end
-     true if Float(raw_score) rescue false
-  end
-
-  def validate_weights(raw_score)
-    if raw_score.end_with?("%")
-      raw_score = raw_score.split('%')[0]
-    end
-    return validate_points(raw_score)
-  end
-
+  # To perform validation for the given score by the grade type
   def validate_score(raw_score)
     # allow users to skip entering grades
     if raw_score.nil? || raw_score.empty?
       return true
     end
 
-    # allow users to enter letter grades
+    # To allow users to enter letter grades
     if mapping_rule.has_key?(raw_score.to_s.upcase)
       return true
     end
@@ -75,6 +60,7 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
+  # To format the given score
   def self.format_score (course_id, raw_score)
     raw_score=raw_score.to_s
     grading_rule = GradingRule.find_by_course_id(course_id)
@@ -147,4 +133,27 @@ class GradingRule < ActiveRecord::Base
     end
     "'#{GradingRule.get_grade_type self.course_id}', #{score_assignment.to_json}, #{weight_hash.to_json}"
   end
+
+private
+  def mapping_rule
+    @mapping_rule ||= {
+        "A"=>100, "A-"=>self.A_grade_min-0.1,
+        "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
+        "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
+  end
+
+  def validate_points(raw_score)
+    if raw_score.to_i<0
+      return false
+    end
+    true if Float(raw_score) rescue false
+  end
+
+  def validate_weights(raw_score)
+    if raw_score.end_with?("%")
+      raw_score = raw_score.split('%')[0]
+    end
+    return validate_points(raw_score)
+  end
+
 end
