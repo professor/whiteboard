@@ -1,0 +1,6 @@
+development:
+  salt: I am salt without any iodine
+test:
+  salt: I am salt without any knowledge of iodine
+production:
+  salt: I am salt with lot of iodine
