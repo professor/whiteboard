@@ -14,8 +14,6 @@
 # * validate_letter_grade performs letter grade validation for the given score.
 # * validate_score performs score validation for the given score by the grade type
 # * format_score formats the given score
-# * convert_points_to_letter_grade maps out points to letter grades.
-# * convert_letter_grade_to_points maps out letter grades to points.
 # * get_grade_in_prof_format convert points to
 # * grade_type tells whether the deliverable is graded by weight or by points
 # * A_grade_min tells on or above this value the student will be marked as A-
@@ -110,33 +108,6 @@ class GradingRule < ActiveRecord::Base
    end
   end
 
-  # To convert points to letter grades
-  def convert_points_to_letter_grade (points)
-    if points>=self.A_grade_min
-      return "A"
-    elsif points>=self.A_minus_grade_min
-        return "A-"
-    elsif points>=self.B_plus_grade_min
-      return "B+"
-    elsif points>=self.B_grade_min
-      return "B"
-    elsif points>=self.B_minus_grade_min
-      return "B-"
-    elsif points>=self.C_plus_grade_min
-      return "C+"
-    elsif points>=self.C_grade_min
-      return "C"
-    elsif points>=self.C_minus_grade_min
-      return "C-"
-    else
-      return 0.to_s
-    end
-  end
-
-  # To convert letter grades to points
-  def convert_letter_grade_to_points (letter_grade)
-    (mapping_rule.has_key?(letter_grade)?mapping_rule[letter_grade]:-1.0)
-  end
 
   # To display the preferred name of assignment
   def to_display
