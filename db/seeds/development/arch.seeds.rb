@@ -1,4 +1,7 @@
+$LOAD_PATH << File.dirname(__FILE__) + "/db/seeds/development"
+
 require 'factory_girl'
+require 'seeds_helper'
 
 FactoryGirl.define do
 
@@ -8,12 +11,12 @@ FactoryGirl.define do
     email "fall-2012-team-1@west.cmu.edu"
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:oscar)
-      team.members << FactoryGirl.create(:prabhjot)
-      team.members << FactoryGirl.create(:shama)
-      team.members << FactoryGirl.create(:aristide)
-      team.members << FactoryGirl.create(:zhipeng)
-      team.members << FactoryGirl.create(:edward)
+      team.members << find_user("Oscar Sandoval", :oscar)
+      team.members << find_user("Prabhjot Singh", :prabhjot)
+      team.members << find_user("Shama Rajeev", :shama)
+      team.members << find_user("Aristide Niyungeko", :aristide)
+      team.members << find_user("Sky Hu", :sky)
+      team.members << find_user("Zhipeng Li", :zhipeng)
     }
   end
 
@@ -23,11 +26,11 @@ FactoryGirl.define do
     email "fall-2012-team-2@west.cmu.edu"
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:owen)
-      team.members << FactoryGirl.create(:clyde)
-      team.members << FactoryGirl.create(:kate)
-      team.members << FactoryGirl.create(:david)
-      team.members << FactoryGirl.create(:norman)
+      team.members << find_user("Owen Chu", :owen)
+      team.members << find_user("Clyde Li", :clyde)
+      team.members << find_user("Kate Liu", :kate)
+      team.members << find_user("David Liu", :david)
+      team.members << find_user("Norman Xin", :norman)
     }
   end
 
@@ -37,11 +40,11 @@ FactoryGirl.define do
     email "fall-2012-team-3@west.cmu.edu"
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:rashmi)
-      team.members << FactoryGirl.create(:madhok)
-      team.members << FactoryGirl.create(:lydian)
-      team.members << FactoryGirl.create(:edward)
-      team.members << FactoryGirl.create(:vidya)
+      team.members << find_user("Rashmi Devarahalli", :rashmi)
+      team.members << find_user("Madhok Shivaratre", :madhok)
+      team.members << find_user("Lydian Li", :lydian)
+      team.members << find_user("Edward Akoto", :edward)
+      team.members << find_user("Vidya Pissaye", :vidya)
     }
   end
 
@@ -51,11 +54,11 @@ FactoryGirl.define do
     email "fall-2012-team-4@west.cmu.edu"
     after(:create) { |team|
       team.members = []
-      team.members << FactoryGirl.create(:david_p)
-      team.members << FactoryGirl.create(:kaushik)
-      team.members << FactoryGirl.create(:mark)
-      team.members << FactoryGirl.create(:sean)
-      team.members << FactoryGirl.create(:sumeet)
+      team.members << find_user("David Pfeffer", :david_p)
+      team.members << find_user("Kaushik Gopal", :kaushik)
+      team.members << find_user("Mark Hennessy", :mark)
+      team.members << find_user("Sean Xiao", :sean)
+      team.members << find_user("Sumeet Kumar", :sumeet)
     }
   end
 
@@ -122,33 +125,4 @@ FactoryGirl.define do
 end
 
 course_arch = FactoryGirl.create(:arch_2012)
-
-course_arch.teams.each do |team|
-  team.members.each do |team_member|
-    FactoryGirl.create(:registration, :course_id=>course_arch.id, :user => team_member)
-  end
-end
-
-course_arch.assignments.each do |assignment|
-  if assignment.is_team_deliverable
-    course_arch.teams.each do |team|
-      deliverable=FactoryGirl.create(:team_deliverable_simple, :team_id=>team.id, :creator_id=>team.members.first.id, :course_id=>course_arch.id, :assignment_id=>assignment.id)
-      FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>team.members.first.id, :attachment_file_name=>"#{team.members.first.human_name}_file", :submission_date=>Time.now)
-      score = 1+Random.rand(assignment.maximum_score)
-      team.members.each do |member|
-        grade = FactoryGirl.create(:grade_points, :course_id=>course_arch.id, :assignment => assignment, :student_id => member.id)
-        grade.score = score
-        grade.save
-      end
-    end
-  else
-    course_arch.registered_students.each do |student|
-      deliverable=FactoryGirl.create(:individual_deliverable, :creator_id=>student.id, :course_id=>course_arch.id, :assignment_id=>assignment.id)
-      FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>student.id, :attachment_file_name=>"#{student.human_name}_file", :submission_date=>Time.now)
-      grade = FactoryGirl.create(:grade_points, :course_id=>course_arch.id, :assignment => assignment, :student_id => student.id)
-      grade.score = 1+Random.rand(assignment.maximum_score)
-      grade.save
-    end
-  end
-end
-
+set_up_course(course_arch)

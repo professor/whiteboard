@@ -29,18 +29,15 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
-  #after_save :build_mapping_rule
-
-  def build_mapping_rule
-    @mapping_rule = {
+  def mapping_rule
+    @mapping_rule ||= {
       "A"=>100, "A-"=>self.A_grade_min-0.1,
       "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
       "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
   end
 
   def validate_letter_grade(raw_score)
-    build_mapping_rule()
-    @mapping_rule.has_key?(raw_score.to_s.upcase)
+    mapping_rule.has_key?(raw_score.to_s.upcase)
   end
 
   def validate_points(raw_score)
@@ -64,8 +61,7 @@ class GradingRule < ActiveRecord::Base
     end
 
     # allow users to enter letter grades
-    build_mapping_rule()
-    if @mapping_rule.has_key?(raw_score.to_s.upcase)
+    if mapping_rule.has_key?(raw_score.to_s.upcase)
       return true
     end
 
@@ -116,8 +112,7 @@ class GradingRule < ActiveRecord::Base
 
   # To convert letter grades to points
   def convert_letter_grade_to_points (letter_grade)
-    build_mapping_rule()
-    return @mapping_rule.has_key?(letter_grade)?@mapping_rule[letter_grade]:-1.0;
+    (mapping_rule.has_key?(letter_grade)?mapping_rule[letter_grade]:-1.0)
   end
 
   def to_display
