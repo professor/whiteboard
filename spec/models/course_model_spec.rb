@@ -496,7 +496,7 @@ describe Course do
           deliverable_grade.update_attributes(grade: "B")
         end
         ppm_course.reload
-        ppm_course.get_earned_number_grade(student).should == 66.99
+        ppm_course.get_earned_number_grade(student).should == 67.0
       end
 
       it "show score when grading criteria is points" do

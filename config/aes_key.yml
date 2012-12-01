@@ -1,3 +1,11 @@
 development:
   key: "GIVE YOUR OWN KEY HERE(32 CHARS)"
   cipher_type: "AES-256-CBC"
+
+test:
+  key: "GIVE YOUR OWN KEY HERE(32 CHARS)"
+  cipher_type: "AES-256-CBC"
+
+production:
+    key: "GIVE YOUR OWN KEY HERE(32 CHARS)"
+    cipher_type: "AES-256-CBC"

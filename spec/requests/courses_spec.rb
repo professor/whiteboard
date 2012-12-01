@@ -99,7 +99,7 @@ describe "courses" do
       login_with_oauth ppm_course.faculty.first
       visit course_gradebook_path(ppm_course)
       expect {
-        click_link "Unsubmitted"
+        click_link "Not Submitted"
       }.to change(Deliverable, :count).by(1)
     end
   end

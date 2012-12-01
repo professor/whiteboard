@@ -92,7 +92,7 @@ class DeliverablesController < ApplicationController
   def new
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
-    @user_teams = Team.find_by_person(current_user)
+    @user_teams = Team.find_by_person(current_user) || []
 
     respond_to do |format|
       format.html # new.html.erb
@@ -103,7 +103,7 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
-    @user_teams = Team.find_by_person(current_user)
+    @user_teams = Team.find_by_person(current_user) || []
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
@@ -118,6 +118,8 @@ class DeliverablesController < ApplicationController
       flash[:error] = 'Must specify both a course and assignment'
       return redirect_to new_deliverable_path
     end
+
+    @user_teams = Team.find_by_person(current_user) || []
 
     # Make sure that a file was specified
     if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
@@ -161,7 +163,6 @@ class DeliverablesController < ApplicationController
         else
           flash[:notice] = 'Something else went wrong'
         end
-        @user_teams = Team.find_by_person(current_user)
         format.html { render :action => "new" }
         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
@@ -172,7 +173,7 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
-    @user_teams = Team.find_by_person(current_user)
+    @user_teams = Team.find_by_person(current_user) || []
 
     if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
       params[:deliverable][:assignment_id], params[:deliverable][:team_id] = params[:deliverable][:assignment_id].split(',')
