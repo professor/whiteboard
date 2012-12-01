@@ -327,7 +327,6 @@ private
 
   def self.encrypt_score(raw_score, course_id, student_id)
     # FIXME: get salt from somewhere else
-    salt="I am salt without any iodine"
     if raw_score.nil? || raw_score.empty?
       return raw_score
     else
@@ -350,5 +349,11 @@ private
     end
     return encrypted_score
   end
+
+private
+  def self.salt
+    @salt = YAML.load_file("#{Rails.root}/config/salt.yml")[Rails.env]['salt']
+  end
+
 end
 
