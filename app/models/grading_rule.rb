@@ -127,11 +127,11 @@ class GradingRule < ActiveRecord::Base
       end
       weight_hash << score
     end
-    score_assignment = {}
-    ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"].each do |letter|
-      score_assignment[letter] = convert_letter_grade_to_points(letter)
-    end
-    "'#{GradingRule.get_grade_type self.course_id}', #{score_assignment.to_json}, #{weight_hash.to_json}"
+    "'#{GradingRule.get_grade_type self.course_id}', #{mapping_rule.to_json}, #{weight_hash.to_json}"
+  end
+
+  def letter_grades
+    @letter_grades ||= mapping_rule.keys
   end
 
 private
@@ -139,7 +139,9 @@ private
     @mapping_rule ||= {
         "A"=>100, "A-"=>self.A_grade_min-0.1,
         "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
-        "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1}
+        "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1,
+        "R"=>0, "W"=>0, "I"=>0
+    }
   end
 
   def validate_points(raw_score)
