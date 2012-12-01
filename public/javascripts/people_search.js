@@ -45,7 +45,7 @@ RECOGNITION_HASH["IGNORED_COMPANY_WORDS"] = {
 var SEARCH_REQUEST = $.ajax();
 var SEARCH_TIMEOUT;
 
-// 
+// Global variable for datacard mode 
 var DATACARD_MODE = "photo_card";
 
 
@@ -184,7 +184,11 @@ function parse_smart_search(){
 
     }
   }
+
   category_selected["main_search_text"] = $.trim(category_selected["main_search_text"]);
+  category_selected["first_name"] = true;
+  category_selected["last_name"] = true;
+  category_selected["andrew_id"] = true;
 
   fill_advanced_area(category_selected);
   
@@ -264,12 +268,12 @@ function fill_advanced_area(parameters_hash){
       console.log(parameters_hash["is_part_time"]);
       $('#criteria_ft_pt .criteria_text').val( (parameters_hash["is_part_time"] == "true" || parameters_hash["is_part_time"] === true)? "pt":"ft" );
     }
+  } else {
+    $('#extra_criteria_picker').html("");
+    $('#extra_criteria_picker').append('<option value="default" class="select-hint">Add Criteria</option><option value="company">Company</option>');
   }
 
 }
-
-
-
 
 
 function construct_query_sting(){
@@ -280,7 +284,12 @@ function construct_query_sting(){
        !SELECTED_CRITERIA_HASH["Program"] && !SELECTED_CRITERIA_HASH["Full/Part Time"]
     ){ 
       SEARCH_REQUEST.abort();
-      $('#results_box').html("<b>Please input more characters to trigger the search</b>");
+      $('#results_box').html(
+        '<div class="ui-widget"><div class="ui-state-highlight ui-corner-all"><p style="color: green; margin-top: 5px;">'+
+          '<span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>'+
+            'Please input more characters to trigger the search'+
+        '</p></div></div>'
+      );
       return location.hash;
     }
 
@@ -303,7 +312,7 @@ function construct_query_sting(){
       if($('#criteria_ft_pt .criteria_text').val() == "ft") { request_url_with_params += "&is_part_time=false"; }
       else { request_url_with_params += "&is_part_time=true"; }
     }
-    
+
     return request_url_with_params;
 };
 
@@ -326,7 +335,7 @@ function execute_search(request_params){
                 '<a href="people/'+this.id+'"><img class ="data_card_photo" src='+this.image_uri+'></a>'+
                 '<div class="data_card_human_name">'+this.first_name+' '+this.last_name+'</div>';
                 if(this.title){ card_html += '<div class="data_card_title">'+this.title+'</div>' };
-                if($('#main_criteria_picker')[0].value=="andrew_id") {console.log($('#main_criteria_picker')[0].value);card_html+='<div>'+this.andrew_id+'</div>'};
+                if($('#main_criteria_picker')[0].value=="andrew_id") {card_html+='<div>'+this.andrew_id+'</div>'};
                 card_html += '<div class="data_card_email"><a class="mail_link" href="mailto:'+this.email+'">'+this.email + '</a></div>';
                 if(this.telephone1){ card_html+= '<div class="data_card_telephone1">'+this.telephone1_label +': '+this.telephone1+'</div>'; }
                 if(this.telephone2){ card_html+= '<div class="data_card_telephone2">'+this.telephone2_label +': '+this.telephone2+'</div>'; }
@@ -342,7 +351,14 @@ function execute_search(request_params){
                 card_html += '</div>';
                 $("#results_box").append(card_html);
             });
-            if($("#results_box").html() == ""){ $("#results_box").html("<b>Sorry but we could not find any results</b>"); }
+            if($("#results_box").html() == ""){
+              $('#results_box').html(
+                '<div class="ui-widget"><div class="ui-state-highlight ui-corner-all"><p style="color: green; margin-top: 5px;">'+
+                  '<span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>'+
+                    'No matches found'+
+                '</p></div></div>'
+              );
+            }
             $('#results_box').fadeTo('fast', 1);
             customize_display();
         }
@@ -436,11 +452,17 @@ $(document).ready(function(){
                   hash_params[i] = hash_params[i].split('=');
                   if (!advanced_only_hash.hasOwnProperty(hash_params[i][0])){
                     if(hash_params[i][0] == "is_part_time"){ tmp_smart_string += (hash_params[i][1] == "true")? "PT ":"FT "; }
-                    else { tmp_smart_string += hash_params[i][1] + ' '; }
+                    else if(!(hash_params[i][0] == "people_type" && $('#people_type_picker').val() == "all")) { 
+                      tmp_smart_string += hash_params[i][1] + ' '; }
                   }
               }
-              $('#smart_search_text').val(tmp_smart_string.replace("_","-").slice(0, -1));
+              $('#smart_search_text').val( $.trim(tmp_smart_string.replace("_","-")) );
           }
+          $('#main_criteria_picker').val("all");
+          SELECTED_CRITERIA_HASH["First Name"] = true;
+          SELECTED_CRITERIA_HASH["Last Name"] = true;
+          SELECTED_CRITERIA_HASH["Andrew ID"] = true;
+          location.hash = construct_query_sting();
           $(this).html("Advanced");
       } else {
         $('#smart_search_text').prop('disabled', true).css('opacity', 0.3);
@@ -515,6 +537,7 @@ $(document).ready(function(){
             $('#extra_criteria_picker').append('<option value="'+criteria_name+'">'+CRITERIA_NAME_HASH[criteria_name]+'</option>');
         }
         // iterate through every extra criteria to determine if it should be hidden
+        var invalid_extra_criteria = "";
         $('#extra_criteria_box .criteria_tag').each( function(){
             var to_be_hide = true;
             for (var i=0; i<criteria_ids.length; ++i){
@@ -526,10 +549,20 @@ $(document).ready(function(){
             // check if added extra criteria not valid to selected people type
             if(to_be_hide && $(this).css('display') != 'none') {
                 SELECTED_CRITERIA_HASH[$(this)[0].title] = false;
-                alert($(this)[0].title +" is not related to the user type selected.");
+                //alert($(this)[0].title +" is not related to the user type selected.");
+                invalid_extra_criteria += $(this)[0].title+" ";
                 $(this).fadeOut();
             }
         });
+        if(invalid_extra_criteria != ""){
+          $('#results_box').before(
+            '<div id="invalid_criteria_alert" class="ui-widget"><div class="ui-state-highlight ui-corner-all"><p style="color: green; margin-top: 5px;">'+
+              '<span class="ui-icon ui-icon-info" style="float: left; margin-left: .2em; margin-top: .1em; margin-right: .3em"></span>'+
+                "Criteria: "+invalid_extra_criteria+" is/are unselected acoording to the people type selected"+
+            '</p></div></div>'
+          );
+          setTimeout('$("#invalid_criteria_alert").fadeOut()', 3999);
+        }
     });
 
     // when user selects from the main criteria menu
@@ -575,11 +608,12 @@ $(document).ready(function(){
 
     // Events binded to search execution
     $('#people_type_picker, select.criteria_text, #exact_match_checkbox, #include_inactive_checkbox').change(function(e) {
-      console.log('triggered');
+      //console.log('triggered');
       location.hash = construct_query_sting();
     });
 
     $('#search_text_box, .criteria_text').keyup(function(e) {
+      //console.log('triggered');
       clearTimeout(SEARCH_TIMEOUT);
       if(e.which != 13){
         SEARCH_TIMEOUT = setTimeout('location.hash = construct_query_sting()', 400);
@@ -598,11 +632,11 @@ $(document).ready(function(){
     window.onpopstate = function() {
 
         console.log("popstate triggered");
-        var query_string = window.location.hash.replace("#","");
+        var query_string = location.hash.replace("#","").slice(1);
         var url_hash = {};
-
+        
         if(query_string != ""){
-          var hash_params = query_string.split('&');
+          var hash_params = query_string.split('&');  
           for (var i = 0; i < hash_params.length; i++){
             hash_params[i] = hash_params[i].split('=');
             url_hash[hash_params[i][0]] = hash_params[i][1];
@@ -610,7 +644,7 @@ $(document).ready(function(){
 
           fill_advanced_area(url_hash);
           $('#smart_search_text').val(url_hash["smart_search_text"]);
-          execute_search(query_string);
+          execute_search("&"+query_string);
         } else { 
           reset_advanced_area();
           $("#results_box").html("");

@@ -38,9 +38,9 @@
 <!-- Smart Search Area-->
 <div id="smart_search_area">
   <input disabled type="text" placeholder="Enter Search Text" id="smart_search_text" style="background-color: #f3f0e9;"/>
-  <button id="advanced_search_btn">Advanced</button>
-  <button id="card_mode_btn" class="hidden"><img src="images/card.png"></button>
-  <button id="list_mode_btn"><img src="images/list.png"></button>
+  <button id="advanced_search_btn" title="Click to switch between smart/advanced search">Advanced</button>
+  <button id="card_mode_btn" title="Click to switch to Photo Card View" class="hidden"><img src="images/card.png"></button>
+  <button id="list_mode_btn" title="Click to switch to List View"><img src="images/list.png"></button>
 </div>
 
 
@@ -50,7 +50,7 @@
   <div>
     <div id="main_criteria_box" style="display: inline-block;">
       <input type="text" placeholder="Search in ..." id="search_text_box" style="background-color: #f3f0e9;"/>
-      <select id="main_criteria_picker" class="criterias">
+      <select id="main_criteria_picker" class="criterias" >
         <option value="all">Full Name & Andrew ID</option>
         <option value="first_name">Only First Name</option>
         <option value="last_name">Only Last Name</option>
@@ -58,7 +58,7 @@
       </select>
     </div>
 
-    <select id="people_type_picker">
+    <select id="people_type_picker" title="Choose one or all categories">
       <option value="all">All People</option>
       <option value="student"> Student </option>
       <option value="staff"> Staff/Faculty </option>
