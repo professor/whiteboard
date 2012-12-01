@@ -136,19 +136,4 @@ describe Grade do
     Grade.give_grade(@course_fse.id, -1, @student_sam.id, score).should be_true
   end
 
-  it "should encrypt final grades" do
-    raw_score = "A"
-    if Grade.give_grade(@course_fse.id, -1, @student_sam.id, raw_score)
-      grade = Grade.get_grade(-1, @student_sam.id)
-      grade.score.should_not eq(raw_score)
-    end
-  end
-
-  it "should be able to decrypt final grades" do
-    final_score = "A"
-    if Grade.give_grade(@course_fse.id, -1, @student_sam.id, final_score)
-      grade = Grade.get_grade(-1, @student_sam.id)
-      grade.decrypt_grade(grade.score).should eq(final_score)
-    end
-  end
 end
