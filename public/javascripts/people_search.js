@@ -8,7 +8,7 @@ var searchBox_old_val  = '';            // searchBox old value holder. If user c
 var ajax_req_issued = false;            // object that indicates if an ajax search request is currently executing
 var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
 var advanced_search_changed = false;
-//var default_results_json = '';  // fetch default search results (key contacts)
+var load_using_custom_params = false;
 
 $(document).ready(function() {
 
@@ -41,6 +41,23 @@ $(document).ready(function() {
     $("#advanced_search_filters").hide();
 
     //default_results_json = getDefaultSearchResultsJson();
+
+    var standard_params_list = ['filterBoxOne', 'photobook'];
+    var advanced_params_list = ['filterBoxOne','user_type','graduation_year','masters_program','course_id','search_inactive'];
+    var valid_params_list = advanced_params_list.concat(standard_params_list);
+    for (var i in valid_params_list) {
+        if(getURLParameter(valid_params_list[i]))
+            load_using_custom_params = true;
+    }
+    for (var i in advanced_params_list) {
+        if(getURLParameter(valid_params_list[i]))
+            advanced_search_toggled = true;
+    }
+    if(getURLParameter('photobook') == "true")
+        photobook_toggled = true;
+    if(load_using_custom_params)
+        setSessionInfo();
+    load_using_custom_params = false;
 
     // making our search considerate (load search params from session)
     if($.session.get("previous_search_params") && $.session.get("previous_toggle_state")){
@@ -112,6 +129,10 @@ $(document).ready(function() {
             }
         }
         setSessionInfo();
+        // if ($("#filterBoxOne").val() == last_search_query){
+        //     if($("#people_table").is(":visible") && $('#people_table tbody tr').length <= 1){
+        //         setTimeout(keyup_error_recover(),500); alert('what!'); }
+        // }
     });
 
     // Advanced filters (toggle)
@@ -215,32 +236,12 @@ function show_box(){
         MAIN SEARCH FUNCTIONS
 *****************************************/
 
-// // get default search results and store in a json object
-// function getDefaultSearchResultsJson(){
-//     // send ajax request and assign the XHML HTTP request object returned to jq_xhr
-//     jq_xhr = $.ajax({
-//         url : 'people',  // the URL for the request
-//         data : { ajaxCall : true, fake_data:true },  // the data to send  (will be converted to a query string)
-//         method : 'GET',
-//         dataType : 'json',  // the type of data we expect back
-//         contentType: "application/json; charset=utf-8",
-
-//         success : function(json) {
-//             default_results_json = json;
-//             if(photobook_toggled && !($.trim($("#filterBoxOne").val()).length > 0)){
-//                 buildSearchResults(default_results_json);
-//             }
-//         }
-//     });
-// }
-
 // get search results from database based on search parameters
 //      queries the database with search parameters
 //      calls builds the search results
 function getSearchResults(){
     searchBox = $("#filterBoxOne");
     isSearchTextEntered = ($.trim(searchBox.val()).length > 0);
-
     if(     (searchBox.val() != searchBox_old_val)
         ||  advanced_search_changed
         ||  ( (!advanced_search_toggled) && isSearchTextEntered )
@@ -267,6 +268,7 @@ function getSearchResults(){
                 ajax_req_issued = true;
                 clearSearchResults();
                 $('#ajax_loading_notice').show();
+                $('#empty_results').hide();
               },
               complete: function() {
                 ajax_req_issued = false;
@@ -363,17 +365,25 @@ function clearSearchResults () {
     $('#people_table tbody').empty();
     $('#photobook_results_main').empty();
 }
-/*
-    Based on the various toggles show the correct tables. Tables:
-    // $("#key_contacts_table")
-    // $('#people_table')
-    // $('#photobook_results')
-*/
 
 // helper function to build json data object for ajax calls
 function setSessionInfo() {
     var json = {};
-    if (advanced_search_toggled) {
+
+    if(load_using_custom_params){
+
+        // JSON object for override parameters
+        json = {
+            filterBoxOne : getURLParameter('filterBoxOne'),
+            user_type :   getURLParameter('user_type'),
+            graduation_year : getURLParameter('graduation_year'),
+            masters_program : getURLParameter('masters_program'),
+            course_id : getURLParameter('course_id'),
+            search_inactive : getURLParameter('search_inactive'),
+            ajaxCall : true
+        };
+
+    } else if (advanced_search_toggled) {
         json = {
                     filterBoxOne : $("#filterBoxOne").val(),
                     user_type :   $("#filter_person_type").val(),
@@ -441,6 +451,23 @@ function loadImage(image_uri){
     });
     $(img).attr('src',image_uri);
     return img;
+}
+
+// Get parameter from the current URL
+function getURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++){
+        var sParameterName = sURLVariables[i].split('=');
+        if(sParameterName[0] == sParam){
+            return sParameterName[1];
+        }
+    }
+}
+
+function keyup_error_recover(){
+    alert('help is on the way!');
+
 }
 
 function updateView(){
