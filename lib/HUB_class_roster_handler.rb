@@ -111,11 +111,18 @@ module HUBClassRosterHandler
   end
 
   def self.roster_change_message course, added, dropped, not_in_system
+
+    unless course
+      message = "This email is supposed to contain information about course roster changes, but an error occured while"
+      message += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
+      return message += "to resolve any issues."
+    end
+
     message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with the rails system, then you can see who has not been assigned to a team. This does not currently track students on wait-lists. We only have access to students registered in 96-xxx courses.<br/><br/>"
     message += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.<br/><br/>"
     message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
 
-    if not_in_system.any?
+    unless not_in_system.blank?
       message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:<br/>"
       not_in_system.each { |student|
         escaped_student = ERB::Util.html_escape(student)
@@ -124,7 +131,7 @@ module HUBClassRosterHandler
       message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
     end
 
-    if added.any?
+    unless added.blank?
       message += "#{added.count} students were added to the course:<br/>"
       added.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
@@ -133,7 +140,7 @@ module HUBClassRosterHandler
       }
     end
 
-    if dropped.any?
+    unless dropped.blank?
       message += "#{dropped.count} students were dropped from the course:<br/>"
       dropped.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
