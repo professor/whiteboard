@@ -66,7 +66,7 @@ class GradesController < ApplicationController
     end
 
     temp_file_path = params[:import][:spreadsheet].path
-    if Grade.import_grade_book_from_spreadsheet(temp_file_path)
+    if Grade.import_grade_book_from_spreadsheet(temp_file_path,@course.id)
       flash[:notice] = "grade book was imported"
     else
       flash[:error] = "spreadsheet format is incorrect"

@@ -88,14 +88,12 @@
   }
 
   function post_drafted_and_send() {
-      if(Object.keys(changed_grades).length > 0 ){
-          if(!confirm("You have unsaved changes, these changes will be discard. Are you sure you want to continue? ")) return;
-      }
       post_grades('<%=post_drafted_and_send_path(@course)%>');
-
   }
 
   function send_final_grade() {
+    if (!confirm("Send final grades to all students?"))
+      return;
     post_grades('<%=send_final_grade_path(@course)%>');
   }
 

@@ -77,16 +77,35 @@ class AssignmentsController < ApplicationController
   # PUT /assignments/1.xml
   def update
     @assignment = Assignment.find(params[:id])
+    deliverable_submitted=Deliverable.find_all_by_assignment_id(@assignment.id).first
+    puts "Deliverable"+deliverable_submitted.to_s
+    deliverable_status=0;
+    unless deliverable_submitted.nil?
+      if @assignment.is_team_deliverable.to_s!= params[:assignment]["is_team_deliverable"]
+        deliverable_status=1
+        flash[:error] = "You cannot change the Type as the student(s) has already submitted for this item."
 
-    respond_to do |format|
-      if @assignment.update_attributes(params[:assignment])
-        format.html { redirect_to(course_assignments_path, :notice => "Assignment #{@assignment.name} was successfully updated.") }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
       end
     end
+
+    if deliverable_status==0
+      respond_to do |format|
+        if @assignment.update_attributes(params[:assignment])
+          format.html { redirect_to(course_assignments_path, :notice => "Assignment #{@assignment.name} was successfully updated.") }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit"}
+          format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+          format.html { render :action => "edit"}
+          format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
+      end
+    end
+
+
   end
 
   # DELETE /assignments/1

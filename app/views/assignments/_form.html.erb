@@ -22,6 +22,7 @@
 
 
     <% customised_name=get_customised_name %>
+    <% cutomised_grade_type=get_customised_grade_type %>
   <table class='layout_table'>
 
     <% if customised_name =="Deliverable"  %>
@@ -56,7 +57,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label(:maximum_score) %> *</td>
+      <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
       <td><%= f.text_field(:maximum_score, :size=>5) %> </td>
     </tr>
     <tr>
