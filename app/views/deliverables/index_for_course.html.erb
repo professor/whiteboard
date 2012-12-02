@@ -77,14 +77,16 @@
 
 
         <div id='filterBox'>
-          <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text'/>
+          <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text' placeholder="Enter search keywords"/>
           <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
-          <input type="checkbox" id="filter_student"  checked="true"/> Student/Team Name   <input type="checkbox" id="filter_assignment"  checked="true"><%= get_customised_name %>
+          Search by:
+          <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
+          <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= get_customised_name %></label>
         </div></br>
-        <%= get_customised_name %> Status: 
-        <input id="filter_graded" class="filter_status" type="checkbox" checked="true" />Graded
-        <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/>Ungraded 
-        <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/> Drafted </br>
+        Filter by <%= get_customised_name %> status:
+  <input id="filter_graded" class="filter_status" type="checkbox" checked="true" /><label for="filter_graded">Graded</label>&nbsp; &nbsp;
+        <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label> &nbsp; &nbsp;
+        <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label> </br>
       </div>
 
       <% if current_user.is_staff? ||  current_user.is_admin? %>
