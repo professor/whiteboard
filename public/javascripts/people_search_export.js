@@ -1,5 +1,5 @@
 /****************************************
-        EXPORT VCARD FUNCTIONS
+    EXPORT CONTACT DETAILS FUNCTIONS
 *****************************************/
 
 jQuery(document).ready(function($) {
@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
     });
 });
 
-
+// Export contact details from the people search results page (multiple) or user profile page (single)
 function export_contact_dtls(isSingleContact){
     // export the results only for the search parameters chosen by user.
     var search_params = '';

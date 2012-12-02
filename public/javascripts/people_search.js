@@ -1,14 +1,14 @@
 // This page contains all relevant JS for the people search
 var photobook_toggled = false;
 var advanced_search_toggled = false;
-var last_search_results = '';
+var advanced_search_changed = false;
+var load_using_custom_params = false;   // variable to indicate if the search results page is loaded with params provided directly in the url
+var last_search_results = '';           // json object with previous results to prevent re-querying server when just switching between photobook/list views
 var last_search_query = '';
-var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
 var searchBox_old_val  = '';            // searchBox old value holder. If user changes keystrokes but lands up with same parameter, don't send a request again.
+var jq_xhr;                             // jQuery Ajax XML HTTP Request Object
 var ajax_req_issued = false;            // object that indicates if an ajax search request is currently executing
 var sendQueryToServer_timer = null;     // js timer object for controlling number of requests going to server on keyup
-var advanced_search_changed = false;
-var load_using_custom_params = false;
 
 $(document).ready(function() {
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
         $('#filterBoxOne').focus();
     };
 
-    // Setup the initial state of tables
+    // Setup the initial state of tables with tablesorter (styling & sortable headers)
     $("#people_table")
         .tablesorter({
             // add zebra striping style
@@ -37,33 +37,46 @@ $(document).ready(function() {
             filterCaseSensitive:false
         });
 
+    // These are handled by the updateView function already but forcing it here to give a quick ui response to the user.
     $("#key_contacts_table").hide();
     $("#advanced_search_filters").hide();
 
-    //default_results_json = getDefaultSearchResultsJson();
-
+    /* functionality to handle params provided directly in the url
+    ***************************************************************/
+    // add your preferred search params to below list
     var standard_params_list = ['filterBoxOne', 'photobook'];
     var advanced_params_list = ['user_type','graduation_year','masters_program','course_id','search_inactive'];
     var valid_params_list = advanced_params_list.concat(standard_params_list);
+    var iterator_length = 0;
+
+    // check to see if any valid search parameters were entered
+    // also check if any of the search params were advanced search params and toggle the advanced search filter box
+    check_url_params_loop :
     for (var i in valid_params_list) {
-        if(getURLParameter(valid_params_list[i]))
+        if(getURLParameter(valid_params_list[i])){
             load_using_custom_params = true;
+            if((jQuery.inArray(valid_params_list[i], advanced_params_list)) != -1)
+                advanced_search_toggled = true;
+        }
+        if (advanced_search_toggled && load_using_custom_params)
+            break check_url_params_loop;
     }
-    for (var i in advanced_params_list) {
-        if(getURLParameter(valid_params_list[i]))
-            advanced_search_toggled = true;
-    }
+    // check to see if photobook needs to be toggled
     if(getURLParameter('photobook') == "true")
         photobook_toggled = true;
+    // set the search parameters from url to the session and build the json query data object.
     if(load_using_custom_params)
         setSessionInfo();
+    // reset load_using_custom_params to original state as filters have the value populated from url.
     load_using_custom_params = false;
 
-    // making our search considerate (load search params from session)
+
+    /* functionality to make the search "considerate" (load search params from session)
+    ***********************************************************************************/
+    // check to see if any search parameters are already available from the session
     if($.session.get("previous_search_params") && $.session.get("previous_toggle_state")){
         var previous_search_params = jQuery.parseJSON($.session.get("previous_search_params"));
         var previous_toggle_states = jQuery.parseJSON($.session.get("previous_toggle_state"));
-
         if(previous_search_params){
             if(previous_search_params.filterBoxOne){
                 $("#filterBoxOne").val(previous_search_params.filterBoxOne);
@@ -102,8 +115,8 @@ $(document).ready(function() {
         These are the main search functions that trigger a search
     ***************************************************************/
 
-    // Entering Search parameters (keyup)
-    // on entering some key in the search box "filterBoxOne"
+    /* search for people on entering some key in the search box "filterBoxOne"
+    ***************************************************************************/
     $("#filterBoxOne").keyup(function() {
         var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
         var didSearchChange = ($("#filterBoxOne").val() != last_search_query);
@@ -115,8 +128,9 @@ $(document).ready(function() {
                     clearTimeout(sendQueryToServer_timer); // there's a previous timer running, clear it and set a new one for the new keystrokes of the user
                 sendQueryToServer_timer = setTimeout(getSearchResults, 500); // set timer for the keystrokes entered by user
                 last_search_query = $("#filterBoxOne").val();
+
                 // update the UI immediately to indicate that the pending search is in progress
-                // when ajax search query returns successfully, the view will be updated again.
+                    // when ajax search query returns successfully, the view will be updated again.
                 $('#empty_results').hide();
                 $("#people_table").hide();
                 $("#key_contacts_table").hide();
@@ -129,13 +143,10 @@ $(document).ready(function() {
             }
         }
         setSessionInfo();
-        // if ($("#filterBoxOne").val() == last_search_query){
-        //     if($("#people_table").is(":visible") && $('#people_table tbody tr').length <= 1){
-        //         setTimeout(keyup_error_recover(),500); alert('what!'); }
-        // }
     });
 
-    // Advanced filters (toggle)
+    /* search for people on toggling the advanced filters
+    ******************************************************/
     $("#filterBoxOne_filter").click(function (){
         var isSearchTextEntered = ($.trim($("#filterBoxOne").val()).length > 0);
         advanced_search_toggled = !advanced_search_toggled;
@@ -149,7 +160,7 @@ $(document).ready(function() {
             $("#advanced_search_filters").hide();
         updateView();
 
-        // update UI to show key_contacts_table if true.  Else, execute a search.
+        // update UI to show the key_contacts_table if no search params were entered otherwise execute a search.
         if(!isSearchTextEntered && !advanced_search_toggled){
             updateView();
         } else {
@@ -157,8 +168,15 @@ $(document).ready(function() {
         }
         setSessionInfo();
     });
+    // search for people results again on changing any of the advanced search params
+    $("#filter_person_type").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_course").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_year").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#filter_program").change(function(){ advanced_search_changed=true; getSearchResults(); });
+    $("#search_inactive").change(function(){ advanced_search_changed=true; getSearchResults(); });
 
-    // Photobook view (click)
+    /* display results in photobook format on toggling
+    ***************************************************/
     $("#filterBoxOne_photobook").click(function (){
         photobook_toggled = !photobook_toggled;
         setPhotobookToggleState();
@@ -177,12 +195,6 @@ $(document).ready(function() {
         setSessionInfo();
     });
 
-    $("#filter_person_type").change(function(){ advanced_search_changed=true; getSearchResults(); });
-    $("#filter_course").change(function(){ advanced_search_changed=true; getSearchResults(); });
-    $("#filter_year").change(function(){ advanced_search_changed=true; getSearchResults(); });
-    $("#filter_program").change(function(){ advanced_search_changed=true; getSearchResults(); });
-    $("#search_inactive").change(function(){ advanced_search_changed=true; getSearchResults(); });
-
     /* making the whole row of key_contacts clickable
     ***************************************************/
     // apply on key_contacts
@@ -190,24 +202,20 @@ $(document).ready(function() {
         window.location = $(this).find('a').attr('href');
     });
     // apply on people_table
-    $('#people_table tbody tr').live(  "click",
-        function(){
-            window.location = $(this).find('a').attr('href');
-        });
+    $('#people_table tbody tr').live( "click", function(){
+        window.location = $(this).find('a').attr('href');
+    });
 
 }); // jQuery ready function ending
 
-
-
 /****************************************
-        MAIN SEARCH FUNCTIONS
+        MAIN SEARCH FUNCTION
 *****************************************/
-
 // get search results from database based on search parameters
 //      queries the database with search parameters
 //      calls builds the search results
 function getSearchResults(){
-    searchBox = $("#filterBoxOne");
+    searchBox = $("#filterBoxOne"); // search text entered
     isSearchTextEntered = ($.trim(searchBox.val()).length > 0);
     if(     (searchBox.val() != searchBox_old_val)
         ||  advanced_search_changed
@@ -262,180 +270,71 @@ function getSearchResults(){
     }
 }
 
-// build the search results (called from one of the search trigger functions )
-function buildSearchResults(json) {
-    if(json != ''){
+/****************************************
+    SEARCH RESULT BUILDER FUNCTIONS
+*****************************************/
+
+/* Controller function that decides which builder sub-routine to call
+*******************************************************************************/
+function buildSearchResults(search_results_json) {
+    if(search_results_json != ''){
         if(photobook_toggled){
             // build row number i
             // first do high priority results, then low priority results
-            for (var i in json){
-                if(json[i].priority)
-                    buildResultRowPhotoBookFormat(json[i]);
+            for (var i in search_results_json){
+                if(search_results_json[i].priority)
+                    buildResultRowPhotoBookFormat(search_results_json[i]);
             }
-            for (var i in json){
-                if(!json[i].priority)
-                    buildResultRowPhotoBookFormat(json[i]);
+            for (var i in search_results_json){
+                if(!search_results_json[i].priority)
+                    buildResultRowPhotoBookFormat(search_results_json[i]);
             }
             // apped the export list row button
             $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" /></div>'));
         } else{
             // build row number i
             // first do high priority results, then low priority results
-            for (var i in json){
-                if(json[i].priority)
-                    buildResultRowListFormat(json[i]);
+            for (var i in search_results_json){
+                if(search_results_json[i].priority)
+                    buildResultRowListFormat(search_results_json[i]);
             }
-            for (var i in json){
-                if(!json[i].priority)
-                    buildResultRowListFormat(json[i]);
+            for (var i in search_results_json){
+                if(!search_results_json[i].priority)
+                    buildResultRowListFormat(search_results_json[i]);
             }
             $("#people_table").trigger("update");
         }
     }
 }
 
-// build a single list result row (TODO: change this name to build list result row)
-function buildResultRowListFormat (json) {
+/* builder sub-routine functions for normal row list/photobook format
+**********************************************************************/
+function buildResultRowListFormat (search_results_json) {
     // contact details data
     var contactDtls_string = '';
-    for(var i in json.contact_dtls)
-       contactDtls_string += json.contact_dtls[i] + "<br />";
-    contactDtls_string += "<a href='mailto:" + json.email + "'>" + json.email + "</a>";
-
+    for(var i in search_results_json.contact_dtls)
+       contactDtls_string += search_results_json.contact_dtls[i] + "<br />";
+    contactDtls_string += "<a href='mailto:" + search_results_json.email + "'>" + search_results_json.email + "</a>";
     $('<tr />')
-        .append($('<td class="photobook-img" />').append($(loadImage(json.image_uri))))
-        .append($('<td><a href="'+json.path+'">'+json.first_name+'</a></td>'))
-        .append($('<td><a href="'+json.path+'">'+json.last_name+'</a></td>'))
+        .append($('<td class="photobook-img" />').append($(loadImage(search_results_json.image_uri))))
+        .append($('<td><a href="'+search_results_json.path+'">'+search_results_json.first_name+'</a></td>'))
+        .append($('<td><a href="'+search_results_json.path+'">'+search_results_json.last_name+'</a></td>'))
         .append($('<td>'+contactDtls_string+'</td>'))
-        .append($('<td>'+json.program+'</td>'))
+        .append($('<td>'+search_results_json.program+'</td>'))
     .appendTo('#people_table tbody');
 }
-
-// build a single photoboook result row
-function buildResultRowPhotoBookFormat(json){
-    $(loadImage(json.image_uri))
-        .appendTo($('<a class="photobook_item" href="' + json.path + '"/>'))
+function buildResultRowPhotoBookFormat(search_results_json){
+    $(loadImage(search_results_json.image_uri))
+        .appendTo($('<a class="photobook_item" href="' + search_results_json.path + '"/>'))
         // jQuery chaining refers always to the first element (so still img)
         .parent()
         // now you're in the photobook_item element
-        .append($('<p class="photobook_item_name" />').html(json.first_name+" "+json.last_name))
+        .append($('<p class="photobook_item_name" />').html(search_results_json.first_name+" "+search_results_json.last_name))
         .appendTo('#photobook_results_main');
 }
 
-
-/****************************************
-        HELPER FUNCTIONS
-*****************************************/
-// helper function to clear all tables
-function clearSearchResults () {
-    // clear existing tables
-    $('#people_table tbody').empty();
-    $('#photobook_results_main').empty();
-}
-
-// helper function to build json data object for ajax calls
-function setSessionInfo() {
-    var json = {};
-
-    if(load_using_custom_params){
-        // JSON object for override parameters
-        json = {
-            filterBoxOne : getURLParameter('filterBoxOne'),
-            user_type :   getURLParameter('user_type'),
-            graduation_year : getURLParameter('graduation_year'),
-            masters_program : getURLParameter('masters_program'),
-            course_id : getURLParameter('course_id'),
-            search_inactive : getURLParameter('search_inactive'),
-            ajaxCall : true
-        };
-    } else if (advanced_search_toggled) {
-        json = {
-                    filterBoxOne : $("#filterBoxOne").val(),
-                    user_type :   $("#filter_person_type").val(),
-                    graduation_year : $("#filter_year").val(),
-                    masters_program : $("#filter_program").val(),
-                    course_id : $("#filter_course").val(),
-                    search_inactive : $('#search_inactive:checked').val(),
-                    ajaxCall : true
-        };
-    } else{
-        json = {
-                    filterBoxOne : $("#filterBoxOne").val(),
-                    show_advanced_search : false,
-                    ajaxCall : true
-        };
-    };
-
-    $.session.set("previous_search_params", JSON.stringify(json));
-    $.session.set("previous_toggle_state", getToggleState());
-
-    return json;
-
-}
-
-function getToggleState(){
-    var json = {
-        photobook_toggled_state : photobook_toggled,
-        advanced_search_filters : advanced_search_toggled
-    };
-    return JSON.stringify(json);
-}
-
-function setPhotobookToggleState(){
-        setSessionInfo();
-        var $photobook = $("#filterBoxOne_photobook");
-        if(photobook_toggled)
-            $photobook.addClass("toggled");
-        else
-            $photobook.removeClass("toggled");
-        $photobook.attr('title', (photobook_toggled ? 'Grid View' : 'Photobook View'));
-}
-
-function setAdvancedFilterToggleState(){
-    var $filter = $("#filterBoxOne_filter");
-    if(advanced_search_toggled)
-        $filter.addClass("toggled");
-    else
-        $filter.removeClass("toggled");
-}
-
-// helper function to build the photo image form the uri and add a scotty img if not loaded
-function loadImage(image_uri){
-    var img = new Image();
-    if(!photobook_toggled){
-        img.width = 60;
-    }else{
-        img.width = 145;
-    }
-    img.src = image_uri;
-    $(img).bind({
-        error: function() {
-            // if there's some error in loading the image, load scotty dog instead
-            img.src = "/images/mascot.jpg";
-        }
-    });
-    $(img).attr('src',image_uri);
-    return img;
-}
-
-// Get parameter from the current URL
-function getURLParameter(sParam){
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++){
-        var sParameterName = sURLVariables[i].split('=');
-        if(sParameterName[0] == sParam){
-            return sParameterName[1];
-        }
-    }
-}
-
-function keyup_error_recover(){
-    alert('help is on the way!');
-
-}
-
-// helper function that shows/hides the correct table(s) depending on search parameters & toggled states
+/* helper function that shows/hides the correct table(s) depending on search parameters & toggled states
+********************************************************************************************************/
 function updateView(){
     if(!ajax_req_issued){
         $filterBoxOne = $("#filterBoxOne");
@@ -537,6 +436,112 @@ function updateView(){
             $key_contacts_photobook.hide();
             $people_table.hide();
             $key_contacts_table.hide();
+        }
+    }
+}
+
+/****************************************
+        MISC HELPER FUNCTIONS
+*****************************************/
+// helper function to clear all tables
+function clearSearchResults () {
+    // clear existing tables
+    $('#people_table tbody').empty();
+    $('#photobook_results_main').empty();
+}
+
+/* helper function to build json data object for ajax calls
+ * also store the information onto the session for considerate searching
+*************************************************************************/
+function setSessionInfo() {
+    var json = {};
+    if(load_using_custom_params){ // if the search parameters were loaded directly through a URL call
+        json = {
+            filterBoxOne : getURLParameter('filterBoxOne'),
+            user_type :   getURLParameter('user_type'),
+            graduation_year : getURLParameter('graduation_year'),
+            masters_program : getURLParameter('masters_program'),
+            course_id : getURLParameter('course_id'),
+            search_inactive : getURLParameter('search_inactive'),
+            ajaxCall : true
+        };
+    } else if (advanced_search_toggled) { // if the search parameters were loaded directly through a URL call
+        json = {
+                    filterBoxOne : $("#filterBoxOne").val(),
+                    user_type :   $("#filter_person_type").val(),
+                    graduation_year : $("#filter_year").val(),
+                    masters_program : $("#filter_program").val(),
+                    course_id : $("#filter_course").val(),
+                    search_inactive : $('#search_inactive:checked').val(),
+                    ajaxCall : true
+        };
+    } else{
+        json = {
+                    filterBoxOne : $("#filterBoxOne").val(),
+                    show_advanced_search : false,
+                    ajaxCall : true
+        };
+    };
+    // store the json search data object in the session for considerate searching (uses jQuery session plugin)
+    $.session.set("previous_search_params", JSON.stringify(json));
+    $.session.set("previous_toggle_state", getToggleState());
+    return json;
+}
+
+// get the toggled states of photobook & advanced search
+function getToggleState(){
+    var json = {
+        photobook_toggled_state : photobook_toggled,
+        advanced_search_filters : advanced_search_toggled
+    };
+    return JSON.stringify(json);
+}
+
+function setPhotobookToggleState(){
+        setSessionInfo();
+        var $photobook = $("#filterBoxOne_photobook");
+        if(photobook_toggled)
+            $photobook.addClass("toggled");
+        else
+            $photobook.removeClass("toggled");
+        $photobook.attr('title', (photobook_toggled ? 'Grid View' : 'Photobook View'));
+}
+function setAdvancedFilterToggleState(){
+    var $filter = $("#filterBoxOne_filter");
+    if(advanced_search_toggled)
+        $filter.addClass("toggled");
+    else
+        $filter.removeClass("toggled");
+}
+
+// helper function to build the photo image form the uri and add a scotty img if not loaded
+function loadImage(image_uri){
+    var img = new Image();
+    if(!photobook_toggled){
+        img.width = 60;
+    }else{
+        img.width = 145;
+    }
+    img.src = image_uri;
+    $(img).bind({
+        error: function() {
+            // if there's some error in loading the image, load scotty dog instead
+            img.src = "/images/mascot.jpg";
+        }
+    });
+    $(img).attr('src',image_uri);
+    return img;
+}
+
+// function to get the value of search parameter entered from the current URL
+function getURLParameter(sParam){
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    var sParameterName ='';
+    for (var i = 0; i < sURLVariables.length; i++){
+        sParameterName = sURLVariables[i].split('=');
+        if(sParameterName[0] == sParam){
+            return sParameterName[1];
         }
     }
 }
