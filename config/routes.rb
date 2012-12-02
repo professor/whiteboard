@@ -22,6 +22,8 @@ CMUEducation::Application.routes.draw do
   match '/presentations/:id/feedback' => 'presentations#create_feedback', :via => :post
   match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
   match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
+  match '/presentations/:id/edit_feedback' => 'presentations#edit_feedback', :as => :edit_feedback_for_presentation, :via => :get
+  match '/presentations/:id/edit_feedback' => 'presentations#update_feedback', :via => :put
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
