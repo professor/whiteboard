@@ -130,6 +130,22 @@ describe HUBClassRosterHandler do
       @expected_end = "<br/>The system will be updating your course mailing list (#{@course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{@course.id}'>course tools</a><br/><br/>"
     end
 
+    it "course is nil" do
+      message = HUBClassRosterHandler.roster_change_message(nil, nil, nil, nil)
+
+      expected_body = "This email is supposed to contain information about course roster changes, but an error occured while"
+      expected_body += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
+      expected_body += "to resolve any issues."
+
+      message.should == expected_body
+    end
+
+    it "nil added, dropped, and not_in_system" do
+      message = HUBClassRosterHandler.roster_change_message(@course, nil, nil, nil)
+
+      message.should == @expected_start + @expected_end
+    end
+
     it "empty added, dropped, and not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, [], [], [])
 
