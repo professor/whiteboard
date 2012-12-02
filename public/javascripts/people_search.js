@@ -474,24 +474,22 @@ $(document).ready(function(){
 
     // Toggle Display Mode
     $("#list_mode_btn, #card_mode_btn").click(function(){
-      //if(!$(this).hasClass('hidden')){
-        $("#list_mode_btn, #card_mode_btn").toggleClass("hidden");
-        if(DATACARD_MODE == "photo_card") { DATACARD_MODE = "list_view"; }
-        else if(DATACARD_MODE == "list_view") { DATACARD_MODE = "photo_card"; }
-        $('.data_card').not('.customization_dialog .data_card').toggleClass('list_view').toggleClass('photo_card');
+      $("#list_mode_btn, #card_mode_btn").toggleClass("hidden");
+      if(DATACARD_MODE == "photo_card") { DATACARD_MODE = "list_view"; }
+      else if(DATACARD_MODE == "list_view") { DATACARD_MODE = "photo_card"; }
+      $('.data_card').not('.customization_dialog .data_card').toggleClass('list_view').toggleClass('photo_card');
         
-        // Resize the height of data_card
-        $(".data_card .data_card_photo").each( function(){
-          $(this).css('height', $(this).width()*19/14 );
+      // Resize the height of data_card
+      $(".data_card .data_card_photo").each( function(){
+        $(this).css('height', $(this).width()*19/14 );
+      });
+      if(DATACARD_MODE == "photo_card"){
+        var max_height = 0;
+        $(".data_card.photo_card").each( function(){
+          if($(this).height() > max_height) { max_height = $(this).height(); }
         });
-        if(DATACARD_MODE == "photo_card"){
-          var max_height = 0;
-          $(".data_card.photo_card").each( function(){
-            if($(this).height() > max_height) { max_height = $(this).height(); }
-          });
-          $(".data_card.photo_card").css('height', max_height+'px');
-        } else { $(".data_card").css('height', 'auto'); }
-      //}
+        $(".data_card.photo_card").css('height', max_height+'px');
+      } else { $(".data_card").css('height', 'auto'); }
     });
 
 

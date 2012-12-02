@@ -12,15 +12,6 @@ describe "people/index.html.erb" do
     rendered.should have_selector("#search_text_box")
   end
 
-  # NEED TO BE REFACTORED AFTER UI CHANGE
-=begin
-  it "should have main search criteria" do
-    rendered.should have_selector("#criteria_first_name", :content => 'First Name')
-    rendered.should have_selector("#criteria_last_name", :content => 'Last Name')
-    rendered.should have_selector("#criteria_andrew_id", :content => 'Andrew ID')
-  end
-=end
-
   it "should have people type and extra criteria drop down menus" do
     # People Type Testing
     rendered.should have_selector("#people_type_picker option[value='all']")
@@ -37,7 +28,6 @@ describe "people/index.html.erb" do
   end
 
   it "should have Go button, exact match, customization, exports results" do
-    rendered.should have_selector("button", :content => 'Go')
     rendered.should have_selector("input[type='checkbox']", :content => 'Exact Match?')
     rendered.should have_selector("input[type='checkbox']", :content => 'Include Inactive Users?')
     rendered.should have_content("Customize")

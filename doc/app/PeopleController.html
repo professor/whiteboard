@@ -422,7 +422,7 @@
 
           
           <div class="method-source-code" id="advanced-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">advanced</span>
   <span class="ruby-identifier">index</span>
 <span class="ruby-keyword">end</span></pre>
@@ -452,7 +452,7 @@
 
           
           <div class="method-source-code" id="class_profile-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 419</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 420</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">class_profile</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:class_profile_state</span>]
     <span class="ruby-ivar">@class_profile_state</span> = <span class="ruby-constant">ClassProfileState</span>.<span class="ruby-identifier">new</span>
@@ -517,7 +517,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 250</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 251</span>
   <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
     <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
 
@@ -594,7 +594,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 339</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 340</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">is_admin?</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">'You don'</span> <span class="ruby-string">'t have permission to do this action.'</span>
@@ -635,7 +635,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 241</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 242</span>
   <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
     <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
 <span class="ruby-comment">#    authorize! :update, @person</span>
@@ -668,7 +668,7 @@
 
           
           <div class="method-source-code" id="get_companies-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 111</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_companies</span>
   <span class="ruby-ivar">@people</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">all</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
@@ -704,10 +704,8 @@
           <div class="method-source-code" id="index-source">
             <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
-  <span class="ruby-comment">#@people = User.where(:is_active =&gt; true)</span>
   <span class="ruby-ivar">@people</span> = <span class="ruby-constant">User</span>.<span class="ruby-constant">Search</span>(<span class="ruby-identifier">params</span>)
-  <span class="ruby-ivar">@people</span> = <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">limit</span>(<span class="ruby-value">24</span>)
-
+  
   <span class="ruby-comment"># Apply limit criteria</span>
   <span class="ruby-comment">#if (params[:limit] != nil)</span>
   <span class="ruby-comment">#  @people = @people.limit(params[:limit])</span>
@@ -729,6 +727,8 @@
         <span class="ruby-string">&quot;id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">twiki_name</span>,
         <span class="ruby-string">&quot;first_name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">first_name</span>,
         <span class="ruby-string">&quot;last_name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">last_name</span>,
+        <span class="ruby-string">&quot;andrew_id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">webiso_account</span>,
+        <span class="ruby-string">&quot;title&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">title</span>,
         <span class="ruby-string">&quot;image_uri&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">image_uri</span>,
         <span class="ruby-string">&quot;team_names&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">teams_array</span>,
         <span class="ruby-string">&quot;masters_program&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">masters_program</span>,
@@ -736,7 +736,8 @@
         <span class="ruby-string">&quot;telephone1&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">telephone1</span>,
         <span class="ruby-string">&quot;telephone2_label&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">telephone2_label</span>,
         <span class="ruby-string">&quot;telephone2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">telephone2</span>,
-        <span class="ruby-string">&quot;email&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">email</span>
+        <span class="ruby-string">&quot;email&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">email</span>,
+        <span class="ruby-string">&quot;company&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">organization_name</span>,
       ].<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">person</span>.<span class="ruby-identifier">telephones_hash</span>)
     }, <span class="ruby-value">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span> }
     <span class="ruby-comment"># Formatting for CSV response</span>
@@ -802,7 +803,7 @@
 
           
           <div class="method-source-code" id="index_autocomplete-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 98</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index_autocomplete</span>
   <span class="ruby-comment"># if database is mysql</span>
   <span class="ruby-comment"># @people = User.where(&quot;human_name LIKE ?&quot;, &quot;%#{params[:term]}%&quot;).all</span>
@@ -840,7 +841,7 @@
 
           
           <div class="method-source-code" id="my_courses-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 382</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 383</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">my_courses</span>
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">nil?</span>
@@ -884,7 +885,7 @@
 
           
           <div class="method-source-code" id="my_courses_verbose-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 400</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 401</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">my_courses_verbose</span>
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
   <span class="ruby-identifier">person_id</span> = <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_i</span>
@@ -923,7 +924,7 @@
 
           
           <div class="method-source-code" id="my_teams-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 355</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 356</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">my_teams</span>
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">nil?</span>
@@ -976,7 +977,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 212</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 213</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
 
@@ -1030,7 +1031,7 @@
 
           
           <div class="method-source-code" id="photo_book-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 124</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">photo_book</span>
   <span class="ruby-identifier">index</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1060,7 +1061,7 @@
 
           
           <div class="method-source-code" id="revert_to_version-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 326</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 327</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">revert_to_version</span>
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
   <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">revert_to!</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:version_id</span>]
@@ -1092,7 +1093,7 @@
 
           
           <div class="method-source-code" id="robots-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 332</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 333</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">robots</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-string">&quot;curriculum comment: robot detected&quot;</span>)
   <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># index.html.erb</span>
@@ -1124,7 +1125,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 133</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
   <span class="ruby-ivar">@person</span>.<span class="ruby-identifier">revert_to</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:version_id</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:version_id</span>]
@@ -1167,7 +1168,7 @@
 
           
           <div class="method-source-code" id="show_by_twiki-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 152</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 153</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_by_twiki</span>
 
   <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'robots'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">robot?</span>
@@ -1249,7 +1250,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 303</span>
+            <pre><span class="ruby-comment"># File app/controllers/people_controller.rb, line 304</span>
   <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
     <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_param</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) 
 <span class="ruby-comment">#    authorize! :update, @person</span>

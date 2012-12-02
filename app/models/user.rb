@@ -440,70 +440,7 @@ class User < ActiveRecord::Base
       @results_set = @results_set.where("is_active = ?", true)
     end
 
-
-
-=begin
-    #if (criteria['is_active'] != nil)
-    else
-      # Convert String to Boolean
-      if(criteria['is_active'].is_a?(String))
-        if(criteria['is_active'] == 'true')
-          criteria['is_active'] = true
-        elsif(criteria['is_active'] == 'false')
-          criteria['is_active'] = false
-        end
-      end
-      @results_set = @results_set.where("is_active = ?", criteria['is_active'])
-    end
-=end
-
     return @results_set
   end
 
 end
-
-=begin
-
-    @results_set = where(self.construct_default_query_string(criteria));
-    @results_set = where(self.construct_query_string(criteria))
-    # where("human_name = ?", human_name)
-    # str, vars = self.construct_query(criteria)
-    # where(str, *vars)
-    return @results_set
-
-    # Apply limit criteria
-    #if (criteria[:limit] != nil)
-    #limit(params[:limit])
-    #end
-
-    # By default order by name
-    #order("first_name ASC, last_name ASC").all
-
-  end
-=end
-
-
-=begin
-  #People search with criteria
-  def self.Search(criteria)
-
-    @results_set = []
-    @results_set = where(self.construct_query_string(criteria))
-    return @results_set
-
-    # Apply limit criteria
-    #if (criteria[:limit] != nil)
-    #limit(params[:limit])
-    #end
-
-    # By default order by name
-    #order("first_name ASC, last_name ASC").all
-
-  end
-=end
-
-
-
-
-
-

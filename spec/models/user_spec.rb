@@ -178,23 +178,6 @@ describe User do
       @users.should_not include @student_sally_user, @student_sam_user, @faculty_allen
     end
 
-
-# for iteration 2 Team Maverick
-=begin
-    context "When people belong to teams" do
-      before do
-        @team_maverick = FactoryGirl.create(:team_maverick)
-        @team_cooper = FactoryGirl.create(:team_cooper)
-        @team_leffingwell = FactoryGirl.create(:team_leffingwell)
-      end
-
-      it "clyde should belongs to Team Maverick and Team Cooper" do
-        @student_clyde.teams.should == [:team_maverick, :team_cooper]
-      end
-
-    end
-=end
-
   end
 
 # end of Team Maverick's test

@@ -614,21 +614,82 @@
 
           
           <div class="method-source-code" id="Search-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 372</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 369</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">Search</span>(<span class="ruby-identifier">criteria</span>)
 
-  <span class="ruby-ivar">@results_set</span> = []
-  <span class="ruby-ivar">@results_set</span> = <span class="ruby-identifier">where</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">construct_query_string</span>(<span class="ruby-identifier">criteria</span>))
+  <span class="ruby-ivar">@results_set</span> = <span class="ruby-keyword">self</span>
+
+  <span class="ruby-identifier">query_hash</span> = <span class="ruby-identifier">construct_default_query_string</span>(<span class="ruby-identifier">criteria</span>)
+
+  <span class="ruby-keyword">if</span>(<span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:count</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>)
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:query_string</span>], <span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:main_search_string</span>])
+  <span class="ruby-keyword">elsif</span>(<span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:count</span>] <span class="ruby-operator">==</span> <span class="ruby-value">2</span>)
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:query_string</span>], <span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:main_search_string</span>],<span class="ruby-identifier">query_hash</span>[<span class="ruby-value">:main_search_string</span>])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add filter for company name</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'organization_name'</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">company_name</span> = <span class="ruby-string">&quot;%&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">criteria</span>[<span class="ruby-string">'organization_name'</span>]<span class="ruby-operator">+</span><span class="ruby-string">&quot;%&quot;</span>
+    <span class="ruby-ivar">@results_set</span> =  <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;organization_name ILIKE ?&quot;</span>, <span class="ruby-identifier">company_name</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add filter for program - SE, SE-Tech, SE-DM, SM, INI, ECE</span>
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword">nil</span>)
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SE_DM&quot;</span>)
+      <span class="ruby-ivar">@results_set</span> =   <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE 'SE' AND masters_track ILIKE 'DM'&quot;</span>)
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SE_TECH&quot;</span>)
+      <span class="ruby-ivar">@results_set</span> =   <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE 'SE' AND masters_track ILIKE 'TECH'&quot;</span>)
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;INI_IS&quot;</span>)
+      <span class="ruby-ivar">@results_set</span> =   <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE 'INI' AND masters_track ILIKE 'IS'&quot;</span>)
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;INI_SM&quot;</span>)
+      <span class="ruby-ivar">@results_set</span> =   <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE 'INI' AND masters_track ILIKE 'SM'&quot;</span>)
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;INI_MOB&quot;</span>)
+      <span class="ruby-ivar">@results_set</span> =   <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE 'INI' AND masters_track ILIKE 'MOB'&quot;</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;masters_program ILIKE ?&quot;</span>, <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'program'</span>])
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add filter for people type - student, staff, alumni</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'people_type'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">people_type_string</span> = <span class="ruby-string">&quot;is_&quot;</span> <span class="ruby-operator">+</span>  <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'people_type'</span>]
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">people_type_string</span><span class="ruby-operator">+</span> <span class="ruby-string">&quot; IS true&quot;</span>)<span class="ruby-comment">#</span>
+    <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'people_type'</span>]<span class="ruby-operator">==</span><span class="ruby-string">'student'</span>)
+      <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;is_alumnus IS NOT true&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add filter for class year</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'class_year'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;graduation_year ILIKE ?&quot;</span>, <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'class_year'</span>])
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-comment"># add filter for full/part time</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+    <span class="ruby-comment"># Convert String to Boolean</span>
+    <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>))
+      <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;true&quot;</span>)
+        <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>] = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">elsif</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;false&quot;</span>)
+        <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>] = <span class="ruby-keyword">false</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;is_part_time = ?&quot;</span>, <span class="ruby-identifier">criteria</span>[<span class="ruby-string">'is_part_time'</span>])
+  <span class="ruby-keyword">end</span>
+
+
+
+
+
+  <span class="ruby-comment">#add filter for active or inactive</span>
+  <span class="ruby-keyword">if</span>(<span class="ruby-identifier">criteria</span>[<span class="ruby-string">'include_inactive'</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
+    <span class="ruby-ivar">@results_set</span> = <span class="ruby-ivar">@results_set</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;is_active = ?&quot;</span>, <span class="ruby-keyword">true</span>)
+  <span class="ruby-keyword">end</span>
+
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@results_set</span>
-
-  <span class="ruby-comment"># Apply limit criteria</span>
-  <span class="ruby-comment">#if (criteria[:limit] != nil)</span>
-  <span class="ruby-comment">#limit(params[:limit])</span>
-  <span class="ruby-comment">#end</span>
-
-  <span class="ruby-comment"># By default order by name</span>
-  <span class="ruby-comment">#order(&quot;first_name ASC, last_name ASC&quot;).all</span>
-
 <span class="ruby-keyword">end</span></pre>
           </div><!-- Search-source -->
           
