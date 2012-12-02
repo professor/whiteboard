@@ -41,13 +41,13 @@
     </tr>
 
     <tr>
-      <td><%= f.label(:is_team_deliverable, "#{customised_name} Type") %></td>
+      <td><%= f.label(:is_team_deliverable, "Type") %></td>
       <td>
         <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
       </td>
     </tr>
     <tr>
-      <td><%= f.label(:is_submittable, "Can students submit for this #{customised_name}?") %></td>
+      <td><%= f.label(:is_submittable, "Submission Required?") %></td>
 
       <td>
         <% f.object.is_submittable= true if f.object.maximum_score.nil? %>
@@ -58,7 +58,7 @@
     </tr>
     <tr>
       <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
-      <td><%= f.text_field(:maximum_score, :size=>5) %> </td>
+      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type)?"Pts":"%" %></td>
     </tr>
     <tr>
       <td><%= f.label(:due_date) %></td>

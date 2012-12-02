@@ -1,7 +1,22 @@
+<script>
+  $(window).load(function(){
+      var total_score = 0, individual_score = 0, team_score = 0;
+      $(".max_score").each(function(){
+          total_score += parseFloat($(this).text());
+          if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Individual")
+            individual_score += parseFloat($(this).text());
+          if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Team")
+              team_score += parseFloat($(this).text());
+      });
+      var unit=" Pts";
+      if("<%=get_customised_grade_type%>" != "Points") unit = " %";
+      $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
+
+  });
+</script>
 <% customised_name= get_customised_name %>
-
 <h1>Listing <%= customised_name %></h1>
-
+<%= link_to "New #{customised_name}", new_course_assignment_path %>
 <table class='cmu_table'>
   <tr>
   <% if customised_name=="Deliverable" %>
@@ -9,9 +24,9 @@
   <% end %>
     <th><%=customised_name  %> Name</th>
     <th>Due Date</th>
-    <th>Deliverable Type</th>
-    <th>Student Can Submit For this <%= get_customised_name %>?</th>
-    <th>Max Score</th>
+    <th>Type</th>
+    <th>Submission Required</th>
+    <th><%=get_customised_grade_type%></th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -23,9 +38,9 @@
     <% end %>
     <td><%=assignment.name  %> </td>
     <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
-    <td><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
+    <td class="deliverable_type"><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
     <td><%=(assignment.is_submittable)?"Yes":"No"  %> </td>
-    <td><%=assignment.maximum_score  %> </td>
+    <td class="max_score"><%=assignment.maximum_score  %> </td>
     <td><%= link_to 'Edit', edit_course_assignment_path(@course,assignment) %></td>
     <td><%= link_to 'Delete', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
   </tr>
@@ -33,5 +48,8 @@
 <% end %>
 </table>
 <br />
-<%= link_to "New #{customised_name}", new_course_assignment_path %>
+<div style="width:97%" >
+  <div  style="float:right;text-align: right;" id="total"></div>
+</div>
+<div style="clear:both"></div>
 <br><br>

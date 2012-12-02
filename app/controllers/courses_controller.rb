@@ -105,6 +105,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @is_in_grade_book = true
     store_previous_location
     @course = Course.find(params[:id])
     if @course.grading_rule.nil?
