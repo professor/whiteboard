@@ -34,10 +34,17 @@
     });
     //  change grades
     $(".grade input[type='text']").change(function(){
-        console.log("change");
         var grade_attrs = parse_id($(this).attr('id'));
-        var score = $(this).val();
         var previousValue = this.defaultValue;
+        $(this).val($.trim($(this).val()));
+        var score = $(this).val();
+        if(!validate_grade(score)){
+            alert('Unrecognized input');
+            $(this).val(previousValue) ;
+            $(this).focus();
+            return;
+        }
+
         var visible = !$(this).hasClass("draft");
         var previousVisible = $(this).hasClass("default_draft")?false:true;
         grades.earned_grade(grade_attrs.student_id);
@@ -60,7 +67,14 @@
     });
 
   });
-
+  function validate_grade(score){
+      if(score == "")  return true;
+      if(score.match(/^\d*\.{0,1}\d+$/)) return true;
+      validate_grades = ["A", "A-","B+","B", "B-", "C+", "C", "C-","R","W","I"];
+      if($.inArray(score.toUpperCase(), validate_grades) >=0 ) return true;
+      console.log("false");
+      return false;
+  }
   function parse_id(idAttr){
       var course_id = parseInt(idAttr.split("_")[0]);
       var assignment_id = idAttr.split("_")[1];
@@ -194,7 +208,7 @@
           <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
             <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
                    value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
-                   type="text" size="4" width="100%" onchange="change_grade(event);"
+                   type="text" size="4" width="100%"
                    class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
           </td>
         <% end %>
@@ -202,7 +216,7 @@
         <td class='final grade'>
           <input id="<%= @course.id %>_final_<%=student.id%>"
                  value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
-                 type="text" size="4" width="100%" onchange="change_grade(event);"
+                 type="text" size="4" width="100%"
                  class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
          </td>
       </tr>

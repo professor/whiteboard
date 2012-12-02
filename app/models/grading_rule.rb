@@ -125,12 +125,24 @@ class GradingRule < ActiveRecord::Base
 private
   # To generate the mapping rule for converting grades into points
   def mapping_rule
-    @mapping_rule ||= {
-        "A"=>100, "A-"=>self.A_grade_min-0.1,
-        "B+"=>self.A_minus_grade_min-0.1, "B"=>self.B_plus_grade_min-0.1, "B-"=>self.B_grade_min-0.1,
-        "C+"=>self.B_minus_grade_min-0.1, "C"=>self.C_plus_grade_min-0.1, "C-"=>self.C_grade_min-0.1,
-        "R"=>0, "W"=>0, "I"=>0
-    }
+
+    @mapping_rule = {}
+    prev = 100
+    ["A_grade_min", "A_minus_grade_min", "B_plus_grade_min", "B_grade_min", "B_minus_grade_min", "C_plus_grade_min", "C_grade_min", "C_minus_grade_min"].each do |attr_name|
+      key = attr_name.gsub("_grade_min", "").gsub("_minus", "-").gsub("_plus", "+")
+      @mapping_rule[key] = prev if attr_name =="A_grade_min"
+      attr = self.read_attribute(attr_name)
+      puts attr
+      unless attr.nil?
+        @mapping_rule[key] = prev
+        prev = attr - 0.1  unless attr.nil?
+      end
+      ["R","W","I"].each do |attr|
+        @mapping_rule[attr] = 0
+      end
+
+    end
+    @mapping_rule
   end
 
   # To validate that the points given by faculty are correct

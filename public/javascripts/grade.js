@@ -65,6 +65,7 @@ function Grade(type, mapping, weight)
     };
 
     this.calculate_percentage = function(gradeHash){
+        if(this.calculate_max(gradeHash) == 0) return "";
       return this.calculate(gradeHash)/this.calculate_max(gradeHash) * 100;
     };
     
@@ -85,11 +86,14 @@ function Grade(type, mapping, weight)
       var term = "pts";
       if(gradeType == "weights")
         term = "%";
-      $("tr#s_"+student_id + " .earned").text(earned_grade+ term + " (" + percentage + "%)" );
+      var text = earned_grade+ term;
+      if(percentage != "") text += " (" + percentage + "%)";
+        $("tr#s_"+student_id + " .earned").text(text);
       return earned_grade;
     };
     this.get_final = function(grade){
       if(isNaN(grade)) return "";
+      var order = gradeMapping.keys();
       var order = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"];
       var current = order[0];
       $.each(order,function(index, letter){
