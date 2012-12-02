@@ -1,3 +1,9 @@
+# If no search parameters were provided, the most useful default contacts for that user is shown.
+# this is implemented in the people search pages
+#
+# == Related classes
+# {Person Controller}[link:classes/PeopleController.html]
+#
 class PeopleSearchDefault < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :student_staff_group, :user_id
