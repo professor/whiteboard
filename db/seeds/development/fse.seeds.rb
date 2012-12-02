@@ -24,7 +24,7 @@ FactoryGirl.define do
     after(:create) { |team|
       team.members = []
       team.members << find_user("Prabhjot Singh", :prabhjot)
-      team.members << find_user("Lydian Li", :lydian)
+      team.members << find_user("Lydian Lee", :lydian)
       team.members << find_user("Kate Liu", :kate)
     }
   end

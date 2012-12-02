@@ -134,12 +134,14 @@ class Grade < ActiveRecord::Base
 
   # To notify students about the grade that were drafted by professor till now.
   def self.mail_drafted_grade(course_id, changed_grades)
+    changed_grades.each do |grade_entry|
+      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], false)
+    end
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
-    draft_grade.concat(changed_grades)
-    draft_grade.each do |grade|
+    draft_grades.each do |grade|
+      grade.is_student_visible = true
+      grade.save
       unless (grade.score.nil? || grade.score.empty?)
-        grade.is_student_visible = true
-        grade.save
         grade.send_feedback_to_student
       end
     end
@@ -147,10 +149,13 @@ class Grade < ActiveRecord::Base
 
   # To send the final grade mail to students
   def self.mail_final_grade(course_id, changed_grades)
+    # save changes, but we don't send out emails.
+    self.give_grades(changed_grades)
+
+    # save final grades, and send emails
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
-    final_grades.concat(changed_grades)
     final_grades.each do |grade|
-      unless (grade.score.nil? || grade.score.empty? || grade.assignment_id!=-1)
+      unless (grade.score.nil? || grade.score.empty?)
         grade.is_student_visible = true
         grade.save
         grade.send_feedback_to_student
