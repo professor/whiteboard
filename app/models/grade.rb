@@ -213,7 +213,10 @@ class Grade < ActiveRecord::Base
       course.assignments.each_with_index do |assignment, j|
         score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)
-          score=score.to_f
+          unless score.blank?
+             score=score.to_f
+          end
+
         end
         grade_sheet[FIRST_GRADE_ROW+i, FIRST_GRADE_COL+j] = score
       end
