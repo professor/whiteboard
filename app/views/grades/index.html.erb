@@ -78,6 +78,8 @@
   }
 
   function send_final_grade() {
+    if (!confirm("Send final grades to all students?"))
+      return;
     post_grades('<%=send_final_grade_path(@course)%>');
   }
 
