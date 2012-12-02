@@ -26,8 +26,8 @@
 #advanced_area_close {position: absolute; right:5px; top:4px; font-size: 16px; cursor: pointer; font-weight: 700; opacity: 0.8;}
 #advanced_area_close:hover {opacity: 1;}
 #main_criteria_box { height:21px; border: 1px solid #000; border-radius: 1px; width: 58%; display:inline-block;}
-#search_text_box { border: none; padding: 0 3px; background-color: #f3f0e9; width:58%;}
-#main_criteria_picker { border: none; background-color: #f3f0e9; width: 38%;}
+#search_text_box { border: none; padding: 0 3px; background-color: #f3f0e9; width:52%;}
+#main_criteria_picker { border: none; background-color: #f3f0e9; width: 44%;}
 #people_type_picker, #extra_criteria_picker { width: 20%; height:22px; display: inline-block;}
 
 
