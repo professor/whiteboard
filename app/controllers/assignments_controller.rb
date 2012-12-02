@@ -12,7 +12,7 @@ class AssignmentsController < ApplicationController
   layout 'cmu_sv'
   def get_course
     @course=Course.find(params[:course_id])
-    @wording = @course.try(:grading_rule).try(:to_display) || "Assignments"
+    @wording = @course.try(:grading_rule).try(:to_display) || "Assignment"
   end
 
   def render_grade_book_menu
@@ -64,7 +64,7 @@ class AssignmentsController < ApplicationController
     @assignment = @course.assignments.new(params[:assignment])
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to(course_assignments_path, :notice => "Assignment  #{@assignment.name} was successfully created.") }
+        format.html { redirect_to(course_assignments_path, :notice => "#{@wording}  #{@assignment.name} was successfully created.") }
         format.xml  { render :xml => @assignment, :status => :created, :location => @assignment }
       else
         format.html { render :action => "new" }
