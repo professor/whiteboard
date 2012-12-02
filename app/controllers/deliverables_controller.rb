@@ -3,6 +3,7 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
+  before_filter :check_teaching_course, only: [:edit_feedback]
 
   # GET /deliverables
   # GET /deliverables.xml
@@ -236,12 +237,6 @@ class DeliverablesController < ApplicationController
     # Only staff can provide feedback
     @deliverable = Deliverable.find(params[:id])
 
-    if !@deliverable.assignment.course.faculty.include?(current_user)
-      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
-    end
-
     # Create deliverable grades for new team members or deliverables for new students to the course
     @deliverable.assignment.find_or_create_deliverable_by_user(@deliverable.creator)
   end
@@ -281,5 +276,14 @@ class DeliverablesController < ApplicationController
         format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
     end
+  end
+end
+
+private
+
+def check_teaching_course
+  course = Deliverable.find(params[:id]).assignment.course
+  if course.blank? || (!can? :instruct, course)
+    redirect_to root_path, flash: { error: "You must be teaching this course to access this page." }
   end
 end

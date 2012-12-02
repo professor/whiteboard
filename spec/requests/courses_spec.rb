@@ -94,13 +94,31 @@ describe "courses" do
   end
 
   context "gradebook" do
+    before {
+      @ppm_course = FactoryGirl.create(:ppm_current_semester)
+    }
+
     it "should be able to grade a unsubmitted assignment" do
-      ppm_course = FactoryGirl.create(:ppm_current_semester)
-      login_with_oauth ppm_course.faculty.first
-      visit course_gradebook_path(ppm_course)
+      login_with_oauth @ppm_course.faculty.first
+      visit course_gradebook_path(@ppm_course)
+      page.should have_selector("h1", text: @ppm_course.name)
+
       expect {
         click_link "Not Submitted"
       }.to change(Deliverable, :count).by(1)
+    end
+
+    context "unallowed access" do
+      before {
+        @dwight = FactoryGirl.create(:faculty_dwight_user)
+        login_with_oauth @dwight
+      }
+
+      it "should not allow access to assignments related pages" do
+        visit course_gradebook_path(@ppm_course)
+        page.should have_selector(".ui-icon-alert")
+        page.should_not have_selector("h1", text: @ppm_course.name)
+      end
     end
   end
 end

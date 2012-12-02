@@ -127,11 +127,16 @@ describe "deliverables" do
         Deliverable.last.status.should == 'Draft'
       end
 
-      it "should not allow unassigned faculty to grade" do
-        unallowed_professor = FactoryGirl.create(:faculty_fagan)
-        login_with_oauth unallowed_professor
-        visit deliverable_feedback_path(Deliverable.last)
-        page.should have_selector('.ui-state-error')
+      context "unallowed access" do
+        before {
+          @dwight = FactoryGirl.create(:faculty_dwight_user)
+          login_with_oauth @dwight
+        }
+
+        it "should not allow unassigned faculty to grade" do
+          visit deliverable_feedback_path(Deliverable.last)
+          page.should have_selector('.ui-state-error')
+        end
       end
     end
   end

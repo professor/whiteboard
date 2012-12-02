@@ -1,5 +1,5 @@
 class AssignmentsController < ApplicationController
-  load_and_authorize_resource
+  before_filter :check_teaching_course
 
   layout 'cmu_sv'
 
@@ -49,5 +49,21 @@ class AssignmentsController < ApplicationController
       flash[:error] = "Assignment cannot be deleted because it has deliverables"
     end
     redirect_to course_assignments_path(course_id)
+  end
+
+  private
+
+  def check_teaching_course
+    if !params[:course_id].blank?
+      course = Course.find(params[:course_id])
+    elsif !params[:assignment].blank? && !params[:assignment][:course_id].blank?
+      course = Course.find(params[:assignment][:course_id])
+    elsif !params[:id].blank?
+      course = Assignment.find(params[:id]).course
+    end
+
+    if course.blank? || (!can? :instruct, course)
+      redirect_to root_path, flash: { error: "You must be teaching this course to access this page." }
+    end
   end
 end

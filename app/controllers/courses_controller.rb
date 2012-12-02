@@ -2,6 +2,7 @@ class CoursesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
+  before_filter :check_teaching_course, only: [:gradebook, :export_gradebook, :import_gradebook]
 
   # GET /courses
   # GET /courses.xml
@@ -379,6 +380,13 @@ class CoursesController < ApplicationController
         format.html { render :action => "edit" }
         format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  def check_teaching_course
+    course = Course.find(params[:id])
+    if course.blank? || (!can? :instruct, course)
+      redirect_to root_path, flash: { error: "You must be teaching this course to access this page." }
     end
   end
 end
