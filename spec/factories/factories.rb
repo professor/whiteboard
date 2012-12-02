@@ -7,7 +7,6 @@ FactoryGirl.define do
     grade "A"
     minimum 95
     course_id 1
-    active true
   end
 
   factory :course, class: Course do
@@ -21,7 +20,7 @@ FactoryGirl.define do
     grading_criteria 'Points'
     grading_ranges {
       GradingRange.possible_grades.map do |grade, value|
-        FactoryGirl.create(:grading_range, grade: grade, minimum: value, active: true)
+        FactoryGirl.create(:grading_range, grade: grade, minimum: value)
       end
     }
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129235006) do
+ActiveRecord::Schema.define(:version => 20121202060915) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "task_number"
@@ -207,7 +207,6 @@ ActiveRecord::Schema.define(:version => 20121129235006) do
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active"
   end
 
   add_index "grading_ranges", ["course_id"], :name => "index_grading_ranges_on_course_id"

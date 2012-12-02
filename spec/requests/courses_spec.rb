@@ -54,7 +54,7 @@ describe "courses" do
 
     it "should have grading range table" do
       page.should have_selector("table#grading_range > tbody > tr", count: GradingRange.possible_grades.count)
-      page.should have_selector("table#grading_range > tbody > tr:first > td", count: 3)
+      page.should have_selector("table#grading_range > tbody > tr:first > td", count: 2)
     end
 
     it 'should save when numerical values are entered' do
@@ -69,23 +69,8 @@ describe "courses" do
       end
     end
 
-    it 'should not save when less than 2 grades are enabled' do
-      @course.grading_ranges.each_with_index do |grading_range, index|
-        find(:css, "#course_grading_ranges_attributes_#{index}_active").set(false)
-      end
-
-      click_button "Update Grading Criteria"
-      page.should have_selector("#error_explanation", content: "Less than 2 active ranges")
-    end
-
     it 'should not save when grades are not descending' do
-      @course.grading_ranges.each_with_index do |grading_range, index|
-        find(:css, "#course_grading_ranges_attributes_#{index}_active").set(false)
-      end
-
-      find(:css, "#course_grading_ranges_attributes_0_active").set(true)
       fill_in "course_grading_ranges_attributes_0_minimum", with: 90
-      find(:css, "#course_grading_ranges_attributes_1_active").set(true)
       fill_in "course_grading_ranges_attributes_1_minimum", with: 95
       click_button "Update Grading Criteria"
 

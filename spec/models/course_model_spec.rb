@@ -415,26 +415,6 @@ describe Course do
     end
 
     context 'grading range' do
-
-      context 'invalid' do
-        before(:each) do
-          @course.grading_ranges.each { |grading_range| grading_range.active = false }
-        end
-
-        it 'should be invalid with less than 2 active grading ranges' do
-          @course.should be_invalid
-          @course.grading_ranges[0].active = true
-          @course.should be_invalid
-          @course.errors[:grading_ranges].should_not be_empty
-        end
-
-        it 'should be valid with 2 or more active grading ranges' do
-          @course.grading_ranges[0].active = true
-          @course.grading_ranges[1].active = true
-          @course.should be_valid
-        end
-      end
-
       it 'should have descending grading range values' do
         @course.grading_ranges[2].minimum = @course.grading_ranges[1].minimum + 1
         @course.should be_invalid

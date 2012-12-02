@@ -236,25 +236,19 @@ class Course < ActiveRecord::Base
   end
 
   def validate_grading_ranges
-    if self.grading_ranges.select { |grading_range| grading_range.active }.count < 2
-      self.errors.add(:grading_ranges, "Less than 2 active ranges")
-    end
-
-    previous_active_grade_minimum = nil
+    previous_grade_minimum = nil
     self.grading_ranges.each do |grading_range|
-      next if !grading_range.active
-
-      if previous_active_grade_minimum.nil?
-        previous_active_grade_minimum = grading_range.minimum
+      if previous_grade_minimum.nil?
+        previous_grade_minimum = grading_range.minimum
         next
       end
 
-      if grading_range.minimum >= previous_active_grade_minimum
+      if grading_range.minimum >= previous_grade_minimum
         self.errors.add(:grading_ranges, "Number values must be descending by descending grades")
         break
       end
 
-      previous_active_grade_minimum = grading_range.minimum
+      previous_grade_minimum = grading_range.minimum
     end
   end
 

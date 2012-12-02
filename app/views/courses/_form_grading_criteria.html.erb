@@ -29,7 +29,6 @@
     <tr>
       <th>Grades</th>
       <th>Minimum<br/>Percentile</th>
-      <th>Enable</th>
     </tr>
     </thead>
     <tbody>
@@ -38,7 +37,6 @@
         <tr>
           <td><%= builder.label builder.object.grade %></td>
           <td><%= builder.text_field :minimum, size: 3 %></td>
-          <td><%= builder.check_box :active %></td>
         </tr>
       <% end %>
     </tbody>
