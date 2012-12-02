@@ -202,5 +202,51 @@ class PresentationsController < ApplicationController
       format.html
     end
   end
+  
+  def edit_feedback
+    @presentation = Presentation.find(params[:id])
+    
+    unless @presentation.can_view_feedback?(current_user)
+      flash[:error] = I18n.t(:not_your_presentation)
+      redirect_to root_path and return
+    end
+    
+    @feedbacks = PresentationFeedback.where(:presentation_id => params[:id])
+    @feedback = nil
 
+    @feedbacks.each do |f|
+      if f.evaluator_id == current_user.id
+        @feedback = f 
+      end
+    end
+
+    @questions = PresentationQuestion.where(:deleted => false)
+    @eval_options = @@eval_options
+    @ratings = Presentation.find_ratings([@feedback], @questions)
+    @comments = Presentation.find_comments([@feedback], @questions)
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def update_feedback   
+    params[:evaluation].each do |question, value|
+      answers = PresentationFeedbackAnswer.find(:all, :conditions => { :feedback_id => params[:presentation_feedback][:feedback_id] } )
+      answers.each do |a|
+        if a.question.id == question.to_i
+          a.rating = value[:rating]
+          a.comment = value[:comment]
+          a.save
+        end
+      end
+    end
+    
+    respond_to do |format|
+      flash[:notice] = "Presentation Feedback Updated!"
+      format.html { redirect_back_or_default(today_presentations_url) }
+    end
+  end
+    
+    
 end
