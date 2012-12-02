@@ -43,7 +43,7 @@ $(document).ready(function() {
     //default_results_json = getDefaultSearchResultsJson();
 
     var standard_params_list = ['filterBoxOne', 'photobook'];
-    var advanced_params_list = ['filterBoxOne','user_type','graduation_year','masters_program','course_id','search_inactive'];
+    var advanced_params_list = ['user_type','graduation_year','masters_program','course_id','search_inactive'];
     var valid_params_list = advanced_params_list.concat(standard_params_list);
     for (var i in valid_params_list) {
         if(getURLParameter(valid_params_list[i]))
@@ -289,7 +289,7 @@ function buildSearchResults(json) {
                 if(!json[i].priority)
                     buildResultRowListFormat(json[i]);
             }
-
+            $("#people_table").trigger("update");
         }
     }
 }
