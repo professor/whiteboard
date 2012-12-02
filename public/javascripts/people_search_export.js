@@ -11,6 +11,11 @@ jQuery(document).ready(function($) {
     $("#people_search .export_button").live('click', function(){
         export_contact_dtls(false);
     });
+    // same as export multiple but done from the button on search filter bar
+    $("#filterBoxOne_export_contacts").click(function(){
+        export_contact_dtls(false);
+    });
+
 });
 
 // Export contact details from the people search results page (multiple) or user profile page (single)
