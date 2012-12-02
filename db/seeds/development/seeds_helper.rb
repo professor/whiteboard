@@ -21,7 +21,7 @@ def set_up_course(course)
           grade.save
         end
       end
-    else
+    elsif assignment.is_submittable
       course.registered_students.each do |student|
         deliverable=FactoryGirl.create(:individual_deliverable, :creator_id=>student.id, :course_id=>course.id, :assignment_id=>assignment.id)
         FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>student.id, :attachment_file_name=>"#{student.human_name}_file", :submission_date=>Time.now)
