@@ -7,8 +7,12 @@
       <%= h type.name %>
       <%= h type.background_color %>
       <td><%= link_to 'Show', type %></td>
-      <td><%= link_to 'Edit', edit_page_comment_type_path(type) %></td>
-      <td><%= link_to 'Destroy', type, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% if current_user.is_staff || current_user.is_admin %>
+          <td><%= link_to 'Edit', edit_page_comment_type_path(type) %></td>
+      <% end %>
+      <% if current_user.is_admin %>
+          <td><%= link_to 'Destroy', type, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
     </div>
     <br/>
 <% end %>

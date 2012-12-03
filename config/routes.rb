@@ -19,9 +19,11 @@ CMUEducation::Application.routes.draw do
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
+  match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
+  match '/presentations/:id/edit_feedback' => 'presentations#update_feedback', :via => :put
+  match '/presentations/:id/edit_feedback' => 'presentations#edit_feedback', :as => :edit_feedback_for_presentation, :via => :get
   match '/presentations/:id/feedback' => 'presentations#create_feedback', :via => :post
   match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
-  match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
@@ -86,6 +88,8 @@ CMUEducation::Application.routes.draw do
   resources :effort_reports
   match '/people_autocomplete' => 'people#index_autocomplete'
   match '/people/class_profile' => 'people#class_profile'
+  match '/people/ajax_check_if_email_exists' => 'people#ajax_check_if_email_exists'
+  match '/people/ajax_check_if_webiso_account_exists' => 'people#ajax_check_if_webiso_account_exists'
   match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'
   match '/people/:id/my_courses_verbose' => 'people#my_courses_verbose', :as => :my_courses
