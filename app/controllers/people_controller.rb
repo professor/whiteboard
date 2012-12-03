@@ -545,12 +545,14 @@ class PeopleController < ApplicationController
         maker.title = user.title unless user.title.nil?
         maker.org = user.organization_name unless user.organization_name.nil?
         phones_hash.each do |k,v|
-          maker.add_tel(v) do |tel|
-            tel.location = "work" if k == "Work"
-            tel.location = "home" if k == "Home"
-            tel.location = "fax" if k == "Fax"
-            tel.location = "cell" if k == "Mobile"
-            tel.location = "voice" if k == "Google Voice"
+          if(!v.blank?)
+            maker.add_tel(v) do |tel|
+              tel.location = "work" if k == "Work"
+              tel.location = "home" if k == "Home"
+              tel.location = "fax" if k == "Fax"
+              tel.location = "cell" if k == "Mobile"
+              tel.location = "voice" if k == "Google Voice"
+            end
           end
         end
       end
