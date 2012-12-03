@@ -77,7 +77,7 @@ class PeopleController < ApplicationController
     # call the function that actually finds all releveant search results from database
     @people = search_db_fields
     #
-    priority_results = prioritize_search_results_with_name
+    priority_results = prioritize_search_results
 
     # pick only the fields required to be shown in the view and return as a Hash
     @people_hash = @people.collect do |person|
@@ -609,12 +609,12 @@ class PeopleController < ApplicationController
   end
 
   # helper function that prioritizes the search results (if name was entered as part of search result, that is shown first vs it being found in bio/profile etc)
-  def prioritize_search_results_with_name
+  def prioritize_search_results
     priority_results = User.scoped
     if !params[:filterBoxOne].blank?
       params[:filterBoxOne].split.each do |query|
         query = '%'+query+'%'
-        priority_results = priority_results.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ?",query, query, query)
+        priority_results = priority_results.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ? OR organization_name ILIKE ?",query, query, query, query)
       end
     end
     priority_results = priority_results.collect{ |result| result.id }
