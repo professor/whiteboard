@@ -305,8 +305,7 @@ class PeopleController < ApplicationController
   # PUT /people/1.xml
   def update
     @person = User.find_by_param(params[:id])
-#    authorize! :update, @person
-
+    # authorize! :update, @person
 
     @person.updated_by_user_id = current_user.id
     @strength_themes = StrengthTheme.all
@@ -316,17 +315,11 @@ class PeopleController < ApplicationController
       @person.photo = params[:user][:photo] if can? :upload_photo, User
       @person.expires_at = params[:user][:expires_at] if current_user.is_admin?
 
-      if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.github.blank?) or (@person.telephone1.blank? && @person.telephone2.blank? && @person.telephone3.blank? && @person.telephone4.blank?)
-      #  if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.github.blank?)
+      if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.github.blank?)
+            ||
+         (@person.telephone1.blank? && @person.telephone2.blank? && @person.telephone3.blank? && @person.telephone4.blank?)
           flash[:error] = "Please update your (social handles or biography) and your contact information"
           @person.is_profile_valid = false
-
-          #attribute = "facebook " if @person.facebook.blank?
-          #attribute = "twitter " if @person.twitter.blank?
-          #attribute = "google_plus " if @person.google_plus.blank?
-          #attribute = "github " if @person.github.blank?
-          #attribute = "telephone" if @person.telephone1.blank? && person.telephone2.blank? && person.telephone3.blank? && person.telephone4.blank?
-
           attribute = "biography" #if @person.biography.blank?
           @person.notify_about_missing_field(attribute, "Please update these fields!")
       else
@@ -335,10 +328,6 @@ class PeopleController < ApplicationController
 
       if @person.save
         flash[:notice] = 'Person was successfully updated.'
-
-
-
-
         format.html { redirect_to(@person) }
         format.xml { head :ok }
       else
