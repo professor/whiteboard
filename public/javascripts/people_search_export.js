@@ -31,7 +31,8 @@ function export_contact_dtls(isSingleContact){
             '&graduation_year='+ $("#filter_year").val()+
             '&masters_program='+ $("#filter_program").val()+
             '&course_id='+ $("#filter_course").val()+
-            '&search_inactive='+ $('#search_inactive:checked').val() ;
+            '&search_inactive='+ $('#search_inactive:checked').val()+
+            '&advanced_search_toggled=true';
         }
     }
     // export pop-up dialog

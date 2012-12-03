@@ -484,11 +484,13 @@ class PeopleController < ApplicationController
   #
   # Export the search results in csv format
   def download_csv
-    if params[:search_id].nil?
-      @people = get_search_or_key_contacts(params[:filterBoxOne])
+    if params[:search_id].blank?
+        # this is for multiple contacts
+        @people = get_search_or_key_contacts(params)
     else
-      @people = []
-      @people << User.find_by_id(params[:search_id])
+        # this is for a single contact
+        @people = []
+        @people << User.find_by_id(params[:search_id])
     end
     respond_to do |format|
       format.csv do
@@ -517,11 +519,13 @@ class PeopleController < ApplicationController
   #
   # Export the search results in vCard format
   def download_vcf
-    if params[:search_id].nil?
-      @people = get_search_or_key_contacts(params[:filterBoxOne])
+    if params[:search_id].blank?
+        # this is for multiple contacts
+        @people = get_search_or_key_contacts(params)
     else
-      @people = []
-      @people << User.find_by_id(params[:search_id])
+        # this is for a single contact
+        @people = []
+        @people << User.find_by_id(params[:search_id])
     end
     vcard_str=""
     @people.each do |user|
@@ -639,17 +643,19 @@ class PeopleController < ApplicationController
   end
 
   # Private helper function currently used by download_vcf and download_csv
-  # to decide whether to return key_contacts or search_results from the search_query
-  def get_search_or_key_contacts(search_query)
-    if search_query.empty?
-      @defaults = get_default_key_contacts
-      @people = []
-      @defaults.each do |default|
-        @people << User.find(default.user_id)
-      end
-      return @people.uniq
+  # to decide whether to return key_contacts or search_results from the search_params
+  def get_search_or_key_contacts(search_params)
+    if !search_params[:filterBoxOne].blank? || !search_params[:advanced_search_toggled].blank?
+        # a specific search was issued, so return the exact search results for exporting contact details
+        search_db_fields
     else
-      search_db_fields
+        # no specific search issues, return key_contact results
+        @defaults = get_default_key_contacts
+        @people = []
+        @defaults.each do |default|
+            @people << User.find(default.user_id)
+        end
+        return @people.uniq
     end
   end
 
