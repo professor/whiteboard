@@ -336,6 +336,14 @@ class User < ActiveRecord::Base
 #     end
 #   end
 
+  def self.recently_signed_on_users
+    User.where("last_sign_in_at >= ?", 1.month.ago)
+  end
+
+  def notify_about_missing_fields
+    self.notify_about_missing_field(:github, "Your profile is missing your github username.")
+    self.notify_about_missing_field(:skype, "Your profile is missing your skype username.")
+  end
 
 # attribute :github
 # If the user has not set this attribute, then ask the user to do so
@@ -345,7 +353,7 @@ class User < ActiveRecord::Base
                  :subject => "Your user account needs updating",
                  :message => message,
                  :url_label => "Modify your profile",
-                 :url => Rails.application.routes.url_helpers.edit_user_url(self, :host => "rails.sv.cmu.edu")
+                 :url => Rails.application.routes.url_helpers.edit_user_url(self, :host => "whiteboard.sv.cmu.edu")
       }
       GenericMailer.email(options).deliver
     end
