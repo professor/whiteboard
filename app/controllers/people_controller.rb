@@ -545,6 +545,8 @@ class PeopleController < ApplicationController
         maker.title = user.title unless user.title.nil?
         maker.org = user.organization_name unless user.organization_name.nil?
         phones_hash.each do |k,v|
+
+          # ignore empty telephone fields
           if(!v.blank?)
             maker.add_tel(v) do |tel|
               tel.location = "work" if k == "Work"
