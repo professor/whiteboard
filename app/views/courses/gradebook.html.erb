@@ -48,7 +48,7 @@
             <% if deliverable_grade.blank? %>
               <td><%= link_to "Not Submitted", assignment_deliverable_create_path(assignment, student) %></td>
             <% else %>
-              <td><%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable_grade.deliverable) %></td>
+              <td><%= link_to deliverable_grade.link_text, deliverable_feedback_path(deliverable_grade.deliverable) %></td>
             <% end %>
           <% else %>
             <% if deliverable_grade.blank? %>

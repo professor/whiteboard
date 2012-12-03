@@ -7,7 +7,7 @@
 # one deliverable for an individual assignment.  Similarly, each team can
 # submit one deliverable for a team assignment.  Deliverables can be graded,
 # and grades are represented through entries in the DeliverableGrade model.
-# A deliverable grade is stored as a string, which means it could be a number
+# A deliverable grade is stored as an AES-encrypted string in DB, and it could be a number
 # grade or a letter grade.
 #
 # Courses that are graded on percentages have scores that are out of 100, while
@@ -19,11 +19,11 @@
 #
 # Team assignments: One deliverable grade for each member in the team
 #
-# Unsubmittable assignments: One deliverable to be used as a placeholder with
-# the creator as the creator of the assignment.  This will be created when the
-# assignment is created. Deliverable grades will be created for each student
-# in the course.
-#
+# Unsubmittable assignments: One deliverable is used as a placeholder for
+# each student in the course.  This will be created when the professor grades the
+# assignment. Deliverable grades will be created for each student in the course when
+# the deliveable is created.  Unsubmittable assignments are always individual assignments.
+
 require 'aes'
 
 class DeliverableGrade < ActiveRecord::Base
@@ -60,6 +60,20 @@ class DeliverableGrade < ActiveRecord::Base
         previous_grading_range_number = (grading_range.minimum - 1).to_f
       end
       return 0
+    end
+  end
+
+  def link_text
+    if self.deliverable.status == 'Graded'
+      self.grade
+    elsif self.deliverable.status == "Draft"
+      "#{self.grade} (#{self.deliverable.status})"
+    elsif self.deliverable.attachment_versions.blank?
+      "Not Submitted"
+    elsif self.deliverable.status == 'Ungraded'
+      "Grade"
+    else
+      "#{self.grade} (#{self.deliverable.status})"
     end
   end
 

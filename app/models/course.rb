@@ -318,13 +318,6 @@ class Course < ActiveRecord::Base
 
   def number_to_letter_grade(number)
     scaled_number = number
-    if self.grading_criteria == "Points"
-      total_points = self.assignments.to_a.sum(&:weight)
-      if total_points <= 0
-        return nil
-      end
-      scaled_number = number*100.0/total_points
-    end
     self.grading_ranges.each do |grading_range|
       if scaled_number >= grading_range.minimum
         return grading_range.grade
@@ -343,12 +336,7 @@ class Course < ActiveRecord::Base
       end
     end
 
-    if self.grading_criteria == "Points"
-      total_weight = self.total_assignment_weight
-      total_weight == 0 ? 0 : ((total_grade / total_weight) * 100).round(1)
-    else
-      total_grade.round(1)
-    end
+    total_grade.round(1)
   end
 
   def get_user_deliverable_grades(user)

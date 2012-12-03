@@ -83,12 +83,17 @@
   $(function() {
     assignment_options = {<%= assignments_js.html_safe %>};
 
-    $('#deliverable_course_id').change(function() {
+    function populate_assignments() {
       if ($('#deliverable_course_id').val()) {
         $('#deliverable_assignment_id').html(assignment_options[$('#deliverable_course_id').val()]);
       } else {
         $('#deliverable_assignment_id').html('');
       }
+    }
+
+    $('#deliverable_course_id').change(function() {
+      populate_assignments();
     });
+    populate_assignments();
   });
 </script>

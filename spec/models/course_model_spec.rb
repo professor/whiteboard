@@ -431,6 +431,11 @@ describe Course do
             assignment5 = FactoryGirl.create(:assignment, course: @course, weight: 20)
             assignment6 = FactoryGirl.create(:assignment, course: @course, weight: 80)
 
+            # Update grading range for a 200 point course
+            @course.grading_ranges.each do |grading_range|
+              grading_range.update_attributes(minimum: grading_range.minimum * 2)
+            end
+
             @course.number_to_letter_grade(198).should == "A"
             @course.number_to_letter_grade(188).should == "A"
             @course.number_to_letter_grade(186).should == "A-"

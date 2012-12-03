@@ -4,7 +4,7 @@
 # the student’s deliverable grades based on the course’s grading criteria
 # (e.g. point-based or percentage-based); the earned grade is calculated on
 # demand.  However, we store the student’s final grade so that the professor
-# can adjust it if necessary.
+# can adjust it if necessary.  The grade is AES-encrypted.
 #
 require 'aes'
 
