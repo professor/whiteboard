@@ -63,7 +63,19 @@
   
 </nav>
 
-    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">AESCrypt</span>
+  
+  
+  </ul>
+</nav>
+
     <!-- Method Quickref -->
 <nav id="method-list-section" class="section">
   <h3 class="section-header">Methods</h3>
@@ -71,6 +83,8 @@
   <ul class="link-list">
     
     <li><a href="#method-i-grade-3D">#grade=</a>
+    
+    <li><a href="#method-i-link_text">#link_text</a>
     
     <li><a href="#method-i-number_grade">#number_grade</a>
     
@@ -111,8 +125,8 @@ one deliverable for an individual assignment.  Similarly, each team can
 submit one deliverable for a team assignment.  Deliverables can be graded,
 and grades are represented through entries in the <a
 href="DeliverableGrade.html">DeliverableGrade</a> model. A deliverable
-grade is stored as a string, which means it could be a number grade or a
-letter grade.</p>
+grade is stored as an AES-encrypted string in DB, and it could be a number
+grade or a letter grade.</p>
 
 <p>Courses that are graded on percentages have scores that are out of 100,
 while courses graded on points are graded out of the total points for that
@@ -123,10 +137,11 @@ deliverable</p>
 
 <p>Team assignments: One deliverable grade for each member in the team</p>
 
-<p>Unsubmittable assignments: One deliverable to be used as a placeholder with
-the creator as the creator of the assignment.  This will be created when
-the assignment is created. Deliverable grades will be created for each
-student in the course.</p>
+<p>Unsubmittable assignments: One deliverable is used as a placeholder for
+each student in the course.  This will be created when the professor grades
+the assignment. Deliverable grades will be created for each student in the
+course when the deliverable is created.  Unsubmittable assignments are
+always individual assignments.</p>
 
   </div><!-- description -->
 
@@ -164,7 +179,7 @@ student in the course.</p>
 
           
           <div class="method-source-code" id="grade-3D-source">
-            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">grade=</span>(<span class="ruby-identifier">grade</span>)
   <span class="ruby-identifier">write_attribute</span>(<span class="ruby-value">:grade</span>, <span class="ruby-identifier">grade</span>.<span class="ruby-identifier">to_s</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -176,6 +191,46 @@ student in the course.</p>
 
         
       </div><!-- grade-3D-method -->
+
+    
+      <div id="method-i-link_text" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_text</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="link_text-source">
+            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_text</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-string">'Graded'</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">grade</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Draft&quot;</span>
+    <span class="ruby-node">&quot;#{self.grade} (#{self.deliverable.status})&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">attachment_versions</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-string">&quot;Not Submitted&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">deliverable</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-string">'Ungraded'</span>
+    <span class="ruby-string">&quot;Grade&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-node">&quot;#{self.grade} (#{self.deliverable.status})&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_text-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_text-method -->
 
     
       <div id="method-i-number_grade" class="method-detail ">
@@ -194,7 +249,7 @@ student in the course.</p>
 
           
           <div class="method-source-code" id="number_grade-source">
-            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 41</span>
+            <pre><span class="ruby-comment"># File app/models/deliverable_grade.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">number_grade</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_numeric?</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">grade</span>.<span class="ruby-identifier">to_f</span>

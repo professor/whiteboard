@@ -22,8 +22,8 @@
 # Unsubmittable assignments: One deliverable is used as a placeholder for
 # each student in the course.  This will be created when the professor grades the
 # assignment. Deliverable grades will be created for each student in the course when
-# the deliveable is created.  Unsubmittable assignments are always individual assignments.
-
+# the deliverable is created.  Unsubmittable assignments are always individual assignments.
+#
 require 'aes'
 
 class DeliverableGrade < ActiveRecord::Base

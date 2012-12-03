@@ -63,12 +63,26 @@
   
 </nav>
 
-    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">AESCrypt</span>
+  
+  
+  </ul>
+</nav>
+
     <!-- Method Quickref -->
 <nav id="method-list-section" class="section">
   <h3 class="section-header">Methods</h3>
 
   <ul class="link-list">
+    
+    <li><a href="#method-c-notify_final_grade">::notify_final_grade</a>
     
     <li><a href="#method-i-grade_in_grading_range">#grade_in_grading_range</a>
     
@@ -104,7 +118,7 @@ final letter grade for a course.</p>
 the student’s deliverable grades based on the course’s grading criteria
 (e.g. point-based or percentage-based); the earned grade is calculated on
 demand.  However, we store the student’s final grade so that the professor
-can adjust it if necessary.</p>
+can adjust it if necessary.  The grade is AES-encrypted.</p>
 
   </div><!-- description -->
 
@@ -122,6 +136,53 @@ can adjust it if necessary.</p>
 
     <!-- Methods -->
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-notify_final_grade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">notify_final_grade</span><span
+            class="method-args">(course, user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="notify_final_grade-source">
+            <pre><span class="ruby-comment"># File app/models/course_user_grade.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">notify_final_grade</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">user</span>)
+  <span class="ruby-identifier">final_grade</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_or_initialize_by_course_id_and_user_id</span>(<span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">final_grade</span>.<span class="ruby-identifier">new_record?</span>
+    <span class="ruby-identifier">earned_score</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">get_user_deliverable_grades</span>(<span class="ruby-identifier">user</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">sum</span>(&amp;<span class="ruby-value">:number_grade</span>)
+    <span class="ruby-identifier">final_grade</span>.<span class="ruby-identifier">grade</span> = <span class="ruby-identifier">course</span>.<span class="ruby-identifier">number_to_letter_grade</span>(<span class="ruby-identifier">earned_score</span>)
+    <span class="ruby-identifier">final_grade</span>.<span class="ruby-identifier">notified_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-identifier">final_grade</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">final_grade</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">notified_at</span><span class="ruby-operator">:</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">CourseMailer</span>.<span class="ruby-identifier">notify_final_grade</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">user</span>).<span class="ruby-identifier">deliver</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- notify_final_grade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- notify_final_grade-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
       <h3 class="section-header">Public Instance Methods</h3>
 
@@ -142,7 +203,7 @@ can adjust it if necessary.</p>
 
           
           <div class="method-source-code" id="grade_in_grading_range-source">
-            <pre><span class="ruby-comment"># File app/models/course_user_grade.rb, line 19</span>
+            <pre><span class="ruby-comment"># File app/models/course_user_grade.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">grade_in_grading_range</span>
   <span class="ruby-identifier">grading_range_grades</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">grading_ranges</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">grading_range</span><span class="ruby-operator">|</span> <span class="ruby-identifier">grading_range</span>.<span class="ruby-identifier">grade</span>}
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">grading_range_grades</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">grade</span>)
