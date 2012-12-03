@@ -2,7 +2,6 @@
 
 <h1>Gradebook: <%= @course.name %></h1>
 
-
 <% form_for(:import_spreadsheet, url: course_import_gradebook_path(@course), html: {multipart: true}) do |f| %>
   <%= link_to "Back", course_path(@course) %> |
   <%= link_to "Grading Deliverables", professor_deliverables_path(current_user) %> |
@@ -33,78 +32,52 @@
     </tr>
   </thead>
 
-  <%
-    def deliverable_grade_link_text(deliverable_grade)
-      if deliverable_grade.blank?
-        "Grade"
-      else
-        if deliverable_grade.deliverable.status == 'Graded'
-          deliverable_grade.grade
-        elsif deliverable_grade.deliverable.attachment_versions.blank?
-          "Not Submitted"
-        elsif deliverable_grade.deliverable.status == 'Ungraded'
-          "Grade"
-        else
-          "#{deliverable_grade.grade} (#{deliverable_grade.deliverable.status})"
-        end
-      end
-    end
-  %>
-
   <tbody>
-    <% @course.teams.each do |team| %>
-      <% team.members.each do |member| %>
-        <tr>
-          <td><%= team.name %></td>
-          <td><%= member.human_name %></td>
-          <% number_grade = @course.get_earned_number_grade(member) %>
-          <% @course.assignments.each do |assignment| %>
-            <td>
-              <% deliverable = assignment.deliverable_for_user(member) %>
-              <% deliverable_grade = deliverable.blank? ? nil : deliverable.deliverable_grades.find_by_user_id(member.id) %>
-              <% if assignment.can_submit? %>
-                <% if deliverable.blank? %>
-                  <%= link_to "Not Submitted", assignment_deliverable_create_path(assignment, member) %>
-                <% else %>
-                  <%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable) %>
-                <% end %>
-              <% else %>
-                <% if deliverable.blank? || deliverable_grade.blank? || deliverable.status == 'Ungraded' %>
-                  <%= link_to "Grade", assignment_deliverable_create_path(assignment, member) %>
-                <% else %>
-                  <%= link_to deliverable_grade.grade, deliverable_feedback_path(deliverable) %>
-                <% end %>
-              <% end %>
-            </td>
-          <% end %>
-          <td>
-            <%= number_grade %><%= @course.grading_criteria == "Percentage" ? "%" : "" %>
-          </td>
-          <td id="earned_<%= member.id %>"><%= @course.number_to_letter_grade(number_grade) %></td>
-          <td>
-            <% user_grade = @course.course_user_grades.select {|course_grade| course_grade.user_id == member.id}.first %>
-            <%= form_for(:course_user_grade, url: course_user_grades_path, remote: true) do |f| %>
-              <% if !user_grade.blank? %>
-                <%= f.hidden_field :id, value: user_grade.id %>
-              <% end %>
-              <%= f.hidden_field :user_id, value: member.id %>
-              <%= f.hidden_field :course_id, value: @course.id %>
-              <%= f.hidden_field :notified_at, value: nil %>
-              <%= f.select :grade, @course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? @course.number_to_letter_grade(number_grade) : user_grade.grade}, {:class => 'grade_select'} %>
-              <%= f.submit hidden: true %>
-            <% end %>
-            <%= image_tag 'ajax-loader-small.gif', class: "grade-loader", id: "grade-loader-#{member.id}" %>
-          </td>
-          <td id="notify_<%= member.id %>">
-            <% if (!user_grade.blank? && !user_grade.notified_at.blank?) %>
-              Notified
+    <% @course.gradebook_values.each do |gradebook_value| %>
+      <tr>
+        <% team = gradebook_value[:team] %>
+        <% student = gradebook_value[:student] %>
+        <% deliverable_grades = gradebook_value[:deliverable_grades] %>
+
+        <td><%= team.blank? ? "N/A" : team.name %></td>
+        <td><%= student.human_name %></td>
+
+        <% @course.assignments.each do |assignment| %>
+          <% deliverable_grade = deliverable_grades[assignment.id] %>
+          <% if assignment.can_submit? %>
+            <% if deliverable_grade.blank? %>
+              <td><%= link_to "Not Submitted", assignment_deliverable_create_path(assignment, student) %></td>
             <% else %>
-              <%= render partial: 'course_user_grades/notify_final_grade_form', locals: {course: @course, member: member} %>
-              <%= image_tag 'ajax-loader-small.gif', class: "notify-loader", id: "notify-loader-#{member.id}" %>
+              <td><%= link_to deliverable_grade_link_text(deliverable_grade), deliverable_feedback_path(deliverable_grade.deliverable) %></td>
+            <% end %>
+          <% else %>
+            <% if deliverable_grade.blank? %>
+              <td><%= link_to "Grade", assignment_deliverable_create_path(assignment, student) %></td>
+            <% else %>
+              <td><%= link_to deliverable_grade.grade, deliverable_feedback_path(deliverable_grade.deliverable) %></td>
+            <% end %>
           <% end %>
-          </td>
-        </tr>
-      <% end %>
+        <% end %>
+
+        <% final_letter_grade = gradebook_value[:final_letter_grade] %>
+        <% earned_letter_grade = gradebook_value[:earned_letter_grade] %>
+
+        <td><%= gradebook_value[:earned_number_grade] %></td>
+        <td id="earned_<%= student.id %>"><%= earned_letter_grade %></td>
+        <td>
+          <%= render partial: "course_user_grades/select_final_grade_form", locals: {course: @course, user: student, user_grade: final_letter_grade, earned_letter_grade: earned_letter_grade }%>
+          <%= image_tag 'ajax-loader-small.gif', class: "grade-loader", id: "grade-loader-#{student.id}" %>
+        </td>
+
+        <td id="notify_<%= student.id %>">
+          <% if (!final_letter_grade.blank? && !final_letter_grade.notified_at.blank?) %>
+            Notified
+          <% else %>
+            <%= render partial: 'course_user_grades/notify_final_grade_form', locals: {course: @course, member: student} %>
+            <%= image_tag 'ajax-loader-small.gif', class: "notify-loader", id: "notify-loader-#{student.id}" %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>

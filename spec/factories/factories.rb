@@ -191,4 +191,9 @@ FactoryGirl.define do
     association :course, :factory => :course
     association :user, :factory => :faculty_frank_user
   end
+
+  factory :registration do
+    association :user, :factory => :user
+    association :course, :factory => :course
+  end
 end

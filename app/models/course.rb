@@ -175,13 +175,13 @@ class Course < ActiveRecord::Base
 
   def all_students
     students = Hash.new
-    self.registered_students.each do |student|
-      students[student.id] = student
-    end
     self.teams.each do |team|
       team.members.each do |user|
         students[user.id] = user
       end
+    end
+    self.registered_students.each do |student|
+      students[student.id] = student
     end
     return students
   end
@@ -363,6 +363,33 @@ class Course < ActiveRecord::Base
 
   def total_assignment_weight
     self.assignments.to_a.sum(&:weight)
+  end
+
+  def gradebook_values
+    # already sorted by team
+    all_students = self.all_students.values
+    gradebook_values = []
+
+    all_students.each do |student|
+      gradebook_value = { student: student, team: Team.find_current_by_person_and_course(student, self), deliverable_grades: {} }
+
+      self.assignments.each do |assignment|
+        deliverable_grade = student.deliverable_grades.select { |deliverable_grade| deliverable_grade.deliverable.assignment == assignment }.first
+        if !deliverable_grade.blank?
+          gradebook_value[:deliverable_grades][assignment.id] = deliverable_grade
+        end
+      end
+
+      gradebook_value[:earned_number_grade] = self.get_earned_number_grade(student)
+      gradebook_value[:earned_letter_grade] = self.number_to_letter_grade(gradebook_value[:earned_number_grade])
+
+      final_letter_grade = self.course_user_grades.select {|course_grade| course_grade.user_id == student.id}.first
+      gradebook_value[:final_letter_grade] = final_letter_grade
+
+      gradebook_values << gradebook_value
+    end
+
+    gradebook_values
   end
 
   protected

@@ -22,6 +22,9 @@ class Assignment < ActiveRecord::Base
       # find_by_team_id may find an individual deliverable if passed nil
       if !team.blank?
         deliverable = self.deliverables.find_by_team_id(team.id)
+      else
+        # The student is not in any team.
+        deliverable = self.deliverables.find_by_creator_id(user.id)
       end
     else
       deliverable = self.deliverables.find_by_creator_id(user.id)
@@ -59,7 +62,11 @@ class Assignment < ActiveRecord::Base
     if self.submittable?
       if self.team_deliverable
         team = Team.find_current_by_person_and_course(user, self.course)
-        deliverable = self.deliverables.find_by_team_id(team.id)
+
+        if !team.blank?
+          deliverable = self.deliverables.find_by_team_id(team.id)
+        end
+
         if deliverable.blank?
           self.deliverables.build(creator: user, team: team, status: "Ungraded")
         else

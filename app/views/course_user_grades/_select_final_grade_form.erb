@@ -1,0 +1,10 @@
+<%= form_for(:course_user_grade, url: course_user_grades_path, remote: true) do |f| %>
+  <% if !user_grade.blank? %>
+    <%= f.hidden_field :id, value: user_grade.id %>
+  <% end %>
+  <%= f.hidden_field :user_id, value: user.id %>
+  <%= f.hidden_field :course_id, value: @course.id %>
+  <%= f.hidden_field :notified_at, value: nil %>
+  <%= f.select :grade, course.grading_ranges.map {|range| range.grade}, {:selected => user_grade.blank? ? earned_letter_grade : user_grade.grade}, {:class => 'grade_select'} %>
+  <%= f.submit hidden: true %>
+<% end %>

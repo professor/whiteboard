@@ -66,10 +66,12 @@ class Deliverable < ActiveRecord::Base
   end
 
   def unique_course_task_owner?
-    if self.is_team_deliverable?
+    if self.is_team_deliverable? && !self.team_id.blank?
       duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => self.team_id).first
       type = "team"
     else
+      # Search for deliverable submitted by an individual.  It could be a team deliverable submitted by somebody not in
+      # a team.
       duplicate = Deliverable.where(:assignment_id => self.assignment_id, :team_id => nil, :creator_id => self.creator_id).first
       type = "individual"
     end
@@ -276,6 +278,8 @@ class Deliverable < ActiveRecord::Base
             return
           end
         end
+        # The student is not in any team.
+        self.deliverable_grades.create(grade: 0, user: self.creator)
       else
         self.deliverable_grades.create(grade: 0, user: self.creator)
       end
