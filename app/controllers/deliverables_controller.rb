@@ -93,7 +93,6 @@ class DeliverablesController < ApplicationController
   def new
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
-    @user_teams = Team.find_by_person(current_user) || []
 
     respond_to do |format|
       format.html # new.html.erb
@@ -104,7 +103,6 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
-    @user_teams = Team.find_by_person(current_user) || []
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
@@ -120,22 +118,15 @@ class DeliverablesController < ApplicationController
       return redirect_to new_deliverable_path
     end
 
-    @user_teams = Team.find_by_person(current_user) || []
-
     # Make sure that a file was specified
-    if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
-      team_assignment_ids = params[:deliverable][:assignment_id].split(',')
-      params[:deliverable][:assignment_id] = team_assignment_ids[0]
-      params[:deliverable][:team_id] = team_assignment_ids[1]
-    end
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
 
-    #if @deliverable.assignment.team_deliverable
-    #  @deliverable.update_team
-    #else
-    #  @deliverable.team = nil
-    #end
+    if @deliverable.assignment.team_deliverable
+      @deliverable.update_team
+    else
+      @deliverable.team = nil
+    end
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -174,11 +165,6 @@ class DeliverablesController < ApplicationController
   # PUT /deliverables/1.xml
   def update
     @deliverable = Deliverable.find(params[:id])
-    @user_teams = Team.find_by_person(current_user) || []
-
-    if !params[:deliverable][:assignment_id].blank? and params[:deliverable][:assignment_id].split(',').size > 1
-      params[:deliverable][:assignment_id], params[:deliverable][:team_id] = params[:deliverable][:assignment_id].split(',')
-    end
 
     if params[:deliverable].blank? || params[:deliverable][:assignment_id].blank?
       flash[:error] = "A course and assignment need to be selected"
@@ -237,6 +223,12 @@ class DeliverablesController < ApplicationController
     # Only staff can provide feedback
     @deliverable = Deliverable.find(params[:id])
 
+    if !@deliverable.assignment.course.faculty.include?(current_user)
+      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
+      redirect_to :controller => "welcome", :action => "index"
+      return
+    end
+
     # Create deliverable grades for new team members or deliverables for new students to the course
     @deliverable.assignment.find_or_create_deliverable_by_user(@deliverable.creator)
   end
@@ -277,13 +269,14 @@ class DeliverablesController < ApplicationController
       end
     end
   end
-end
 
-private
+  private
 
-def check_teaching_course
-  course = Deliverable.find(params[:id]).assignment.course
-  if course.blank? || (!can? :instruct, course)
-    redirect_to root_path, flash: { error: "You must be teaching this course to access this page." }
+  def check_teaching_course
+    course = Deliverable.find(params[:id]).assignment.course
+    if course.blank? || (!can? :instruct, course)
+      redirect_to root_path, flash: { error: "You must be teaching this course to access this page." }
+    end
   end
+
 end

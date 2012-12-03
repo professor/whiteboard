@@ -1,12 +1,23 @@
 <p>Submit team deliverables and individual deliverables separately. Any person on the team can submit your team
   deliverables.</p>
 <p>If your deliverable contains more than one file, then create a zip file.</p>
-
 <%
   courses = @deliverable.creator.registered_for_these_courses_during_current_semester.delete_if {|course| course.assignments.empty?}
 
   assignment_options = {}
+  selected_assignment = nil
   assignments_js = ''
+  courses.each do |course|
+    assignments_js += "'#{course.id}':\""
+    assignment_options[course.id] = []
+    course.submittable_assignments.each do |assignment|
+      assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
+      assignment_options[course.id] << [assignment_text, assignment.id]
+
+      assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
+    end
+    assignments_js += "\","
+  end
 
   selected_course = nil
   if !params[:course_id].blank?
@@ -18,34 +29,8 @@
   selected_assignment = nil
   if !params[:assignment_id].blank?
     selected_assignment = params[:assignment_id]
-  elsif selected_course && @deliverable.persisted?
+  elsif selected_course && @deliverable.persisted? && !selected_assignment
     selected_assignment = @deliverable.assignment.id
-  end
-  selected_course_teams = @user_teams.select { |team| team.course_id == selected_course.to_i }
-
-  courses.each do |course|
-    assignments_js += "'#{course.id}':\""
-    assignment_options[course.id] = []
-    course.submittable_assignments.each do |assignment|
-      #assignment_text = "Task #{assignment.task_number}: #{assignment.title} " + (assignment.team_deliverable ? "(Team deliverable)" : "")
-      assignment_text = assignment.formatted_title + (assignment.team_deliverable ? " (Team deliverable)" : "")
-      if assignment.team_deliverable
-        @user_teams.select { |team| team.course_id == course.id }.each do |user_team|
-          team_assignment_text = assignment_text + " (#{user_team.name})"
-          assignment_options[course.id] << [team_assignment_text, "#{assignment.id},#{user_team.id}"]
-          assignments_js += "<option value='#{assignment.id},#{user_team.id}'>#{team_assignment_text}</option>"
-        end
-      else
-        assignment_options[course.id] << [assignment_text, assignment.id.to_s]
-        assignments_js += "<option value='#{assignment.id}'>#{assignment_text}</option>"
-      end
-
-      if !selected_assignment.blank? && (selected_assignment == assignment.id.to_s) && assignment.team_deliverable
-        selected_assignment += ",#{selected_course_teams.first.id}"
-      end
-
-    end
-    assignments_js += "\","
   end
 
   if selected_course && assignment_options[selected_course.to_i]
@@ -98,16 +83,12 @@
   $(function() {
     assignment_options = {<%= assignments_js.html_safe %>};
 
-    function populate_assignments() {
+    $('#deliverable_course_id').change(function() {
       if ($('#deliverable_course_id').val()) {
         $('#deliverable_assignment_id').html(assignment_options[$('#deliverable_course_id').val()]);
       } else {
         $('#deliverable_assignment_id').html('');
       }
-    }
-
-    $('#deliverable_course_id').change(function() {
-      populate_assignments();
     });
   });
 </script>

@@ -7,6 +7,7 @@ FactoryGirl.define do
     team_deliverable false
     due_date nil
     weight 5
+    can_submit false
   end
 
   factory :foundations_assignment_2, :parent => :assignment do
@@ -15,6 +16,7 @@ FactoryGirl.define do
     team_deliverable false
     due_date nil
     weight 5
+    can_submit false
   end
 
   factory :foundations_assignment_3, :parent => :assignment do
@@ -156,6 +158,10 @@ FactoryGirl.define do
 
       course.teams << FactoryGirl.create(:course_team_1, course: course, name: '3 Amigos', email: '3Amigos@sv.cmu.edu')
       course.teams << FactoryGirl.create(:course_team_2, course: course, name: 'TeamCray', email: 'TeamCray@sv.cmu.edu')
+
+      lonely_student = FactoryGirl.create(:student)
+      FactoryGirl.create(:registration, user: lonely_student, course: course)
+      course.registered_students << lonely_student
 
       course.assignments << FactoryGirl.create(:foundations_assignment_1, course: course)
       course.assignments << FactoryGirl.create(:foundations_assignment_2, course: course)
