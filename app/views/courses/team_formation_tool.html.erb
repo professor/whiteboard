@@ -27,7 +27,7 @@
           <td><%= user.formatted_teams(user.past_teams) %></td>
           <td><%= part_time %></td>
           <td><%= user.local_near_remote %></td>
-          <td><%= user.masters_program + " " + user.masters_track %></td>
+          <td><%= user.masters_program.to_s + " " + user.masters_track.to_s %></td>
           <td><%= user.work_state %></td>
           <td><%= user.organization_name %></td>
         </tr>
