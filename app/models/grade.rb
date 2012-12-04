@@ -115,13 +115,13 @@ class Grade < ActiveRecord::Base
   end
 
   # To send the feedback to the student.
-  def send_feedback_to_student
+  def send_feedback_to_student(hostname)
     if assignment_id > 0
       feedback = make_feedback_for_one_assignment
     else
       feedback = make_feedback_for_final_grade
     end
-    url="whiteboard.sv.cmu.edu/people/#{self.student_id}/my_deliverables"
+    url = hostname + "/people/#{self.student_id}/my_deliverables"
     options = {:to => self.student.email,
                :subject => "Grade for " + self.course.name,
                :message => feedback,
@@ -133,32 +133,25 @@ class Grade < ActiveRecord::Base
   end
 
   # To notify students about the grade that were drafted by professor till now.
-  def self.mail_drafted_grade(course_id, changed_grades)
-    changed_grades.each do |grade_entry|
-      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], false)
-    end
+  def self.mail_drafted_grade(course_id, hostname)
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
     draft_grades.each do |grade|
       grade.is_student_visible = true
       grade.save
       unless (grade.score.nil? || grade.score.empty?)
-        grade.send_feedback_to_student
+        grade.send_feedback_to_student(hostname)
       end
     end
   end
 
   # To send the final grade mail to students
-  def self.mail_final_grade(course_id, changed_grades)
-    # save changes, but we don't send out emails.
-    self.give_grades(changed_grades)
-
-    # save final grades, and send emails
+  def self.mail_final_grade(course_id, hostname)
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
     final_grades.each do |grade|
       unless (grade.score.nil? || grade.score.empty?)
         grade.is_student_visible = true
         grade.save
-        grade.send_feedback_to_student
+        grade.send_feedback_to_student(hostname)
       end
     end
   end

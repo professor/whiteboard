@@ -43,7 +43,7 @@ class GradesController < ApplicationController
 
   def post_drafted_and_send #and send email
     grades = params["grades"]
-    Grade.mail_drafted_grade(@course.id, grades)
+    Grade.mail_drafted_grade(@course.id, request.host_with_port )
     render :json => ({"message"=>"true"})
   end
 
@@ -55,7 +55,7 @@ class GradesController < ApplicationController
 
   def send_final_grade
     grades = params["grades"]
-    Grade.mail_final_grade(@course.id, grades)
+    Grade.mail_final_grade(@course.id, request.host_with_port)
     render :json => ({"message"=>"true"})
   end
 
@@ -80,4 +80,5 @@ class GradesController < ApplicationController
     flash[:notice] = "grade book was exported to " + temp_file_path
     send_file(temp_file_path, :filename=>"GradeBook_#{@course.name}.xls")
   end
+
 end
