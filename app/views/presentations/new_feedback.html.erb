@@ -2,5 +2,6 @@
 <h1>Feedback for <%= @presentation.presenter %></h1>
 <p><%= @presentation.name %></p>
 
-<%= render :partial => "editable_feedback_form", :locals => {:destination_url => new_presentation_feedback_path, :button_name => "Create"} %>
+<% @form_path = new_presentation_feedback_path %>
+<%= render :partial => "editable_feedback_form", :locals => {:button_name => "Create"} %>
 

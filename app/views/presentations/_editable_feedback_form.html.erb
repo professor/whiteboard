@@ -2,7 +2,7 @@
     var confirmation_needed = true;
     window.onbeforeunload = confirmExit;
 </script>
-<%= form_for @feedback, :url => destination_url, :html => {:multipart => true} do |f| %>
+<%= form_for @feedback, :url => @form_path, :html => {:multipart => true} do |f| %>
     <% if @feedback.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this page from being saved:</h2>
@@ -16,23 +16,37 @@
     <% end %>
 
     <%= f.hidden_field(:presentation_id) %>
-
-    <% @questions.each_with_index do |question, index| %>
+	<%= f.hidden_field :feedback_id, :value => @feedback.id %>
+	
+    <% @questions.each do |question| %>
         <h2><%= question.label %></h2>
         <p>
           <%= question.text %>
         <div>
+		  <% count = 3 %>
           <% @eval_options.each do |key, value| %>
               <div>
-                <% is_checked = (key == @ratings[index]) %>
-                <%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key, is_checked %>
-                <span><%= value %></span>
-              </div>
+				<% unless @ratings.nil? %>
+					<% if @ratings[question.id][count].to_i == 0 %>
+						<%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key, %>
+					<% else %>
+						<%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key, :checked => "checked" %>
+					<% end %>
+				<% else %>
+					<%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key %>
+				<% end %>
+				<span><%= value %></span>
+			  </div>
+		  	  <% count = count - 1 %>
           <% end %>
         </div>
         <br/>
         <div>
-          <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", @comments[index], :size => "95x5" %>
+		  <% unless @comments.nil? %>
+		  	<span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", @comments[question.id].split('*')[1].sub("- ", ""), :size => "95x5" %>
+		  <% else %>
+		    <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
+	      <% end %>
         </div>
         <br/>
         </p>
