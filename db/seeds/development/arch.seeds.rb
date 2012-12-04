@@ -34,9 +34,9 @@ FactoryGirl.define do
     }
   end
 
-  factory :team_mastermind, :class => Team do
+  factory :team_3, :class => Team do
     course_id 1
-    name "Mastermind"
+    name "3"
     email "fall-2012-team-3@west.cmu.edu"
     after(:create) { |team|
       team.members = []
@@ -90,7 +90,7 @@ FactoryGirl.define do
     task_number 4
   end
 
-  factory :assignment_arch_participation, :parent=>:assignment_team do
+  factory :assignment_arch_participation, :parent=>:assignment do
     name "Individual Participation"
     maximum_score 7
     due_date "2012-12-04 23:59:59"
@@ -110,7 +110,7 @@ FactoryGirl.define do
       course.teams = []
       course.teams << FactoryGirl.create(:team_1)
       course.teams << FactoryGirl.create(:team_2)
-      course.teams << FactoryGirl.create(:team_mastermind)
+      course.teams << FactoryGirl.create(:team_3)
       course.teams << FactoryGirl.create(:team_4)
 
       course.assignments = []

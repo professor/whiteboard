@@ -16,7 +16,7 @@ module AssignmentsHelper
         return "Weight"
       else
         return "Points"
-        end
+      end
     end
   end
 

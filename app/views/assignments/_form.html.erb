@@ -58,7 +58,7 @@
     </tr>
     <tr>
       <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
-      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type)?"Pts":"%" %></td>
+      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type=="Points")?"Pts":"%" %></td>
     </tr>
     <tr>
       <td><%= f.label(:due_date) %></td>
