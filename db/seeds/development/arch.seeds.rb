@@ -7,7 +7,7 @@ FactoryGirl.define do
 
   factory :team_1, :class => Team do
     course_id 1
-    name "1"
+    name "Project 1"
     email "fall-2012-team-1@west.cmu.edu"
     after(:create) { |team|
       team.members = []
@@ -22,7 +22,7 @@ FactoryGirl.define do
 
   factory :team_2, :class => Team do
     course_id 1
-    name "2"
+    name "Project 2"
     email "fall-2012-team-2@west.cmu.edu"
     after(:create) { |team|
       team.members = []
@@ -36,7 +36,7 @@ FactoryGirl.define do
 
   factory :team_3, :class => Team do
     course_id 1
-    name "3"
+    name "Project 3"
     email "fall-2012-team-3@west.cmu.edu"
     after(:create) { |team|
       team.members = []
@@ -50,7 +50,7 @@ FactoryGirl.define do
 
   factory :team_4, :class => Team do
     course_id 1
-    name "4"
+    name "Project 4"
     email "fall-2012-team-4@west.cmu.edu"
     after(:create) { |team|
       team.members = []
