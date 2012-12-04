@@ -32,6 +32,10 @@
             return 'You have some unsaved changes in this page.';
         }
     });
+
+    // warning messages
+    $("div#gradebook_indicator").hide();
+
     //  change grades
     $(".grade input[type='text']").change(function(){
         var grade_attrs = parse_id($(this).attr('id'));
@@ -64,6 +68,19 @@
             $(this).removeClass("changedScore");
             delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
         }
+
+        if(Object.keys(changed_grades).length > 0 ) {
+          $("button#gradebook_submit").removeAttr("disabled");
+          $("div#gradebook_indicator").show();
+          $("button#gradebook_post_draft").attr("disabled", "disabled");
+          $("button#gradebook_post_final").attr("disabled", "disabled");
+        }
+        else {
+          $("button#gradebook_submit").attr("disabled", "disabled");
+          $("div#gradebook_indicator").hide();
+          $("button#gradebook_post_draft").removeAttr("disabled");
+          $("button#gradebook_post_final").removeAttr("disabled");
+        }
     });
 
   });
@@ -88,12 +105,11 @@
   }
 
   function post_drafted_and_send() {
-      post_grades('<%=post_drafted_and_send_path(@course)%>');
+    post_grades('<%=post_drafted_and_send_path(@course)%>');
   }
 
   function send_final_grade() {
-    if (!confirm("Send final grades to all students?"))
-      return;
+    if (!confirm("Send final grades to all students?")) return;
     post_grades('<%=send_final_grade_path(@course)%>');
   }
 
@@ -150,6 +166,13 @@
     }
     #legend td{
       border: 0;
+    }
+    div.indicator{
+      border: 1px solid;
+      padding: 5px 5px 5px 5px;
+      background-position: 10px center;
+      color: #D8000C;
+      background-color: #FFBABA;
     }
   </style>
   <h1><%=@course.name %></h1>
@@ -221,11 +244,12 @@
       <%end%>
     </table>
     <div>
-     <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
-    <button type="button" id="gradebook_submit" onclick="save()">Save</button>
-    <button type="button" id="gradebook_long_button" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
-      <button type="button" id="gradebook_long_button" onclick="send_final_grade()">Notify all</button>
+      <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
+      <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
+      <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
+      <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify students of final grades (including draft)</button>
     </div>
+    <div class="indicator" id="gradebook_indicator">Please save changes</div>
     <div>
       <h2>Import Grade Book</h2>
       <% form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
