@@ -338,10 +338,7 @@ private
         student_id = grade_sheet[i,0].to_i
         assignment_id = grade_sheet[0,j].to_i
         score = grade_sheet[i,j].to_s
-        unless score.blank?|| score=""
-          Grade.give_grade(course_id, assignment_id, student_id, score, true)
-        end
-
+        Grade.give_grade(course_id, assignment_id, student_id, score, true)
       end
     end
   end
