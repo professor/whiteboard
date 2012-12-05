@@ -72,21 +72,21 @@ FactoryGirl.define do
   end
 
   factory :assignment_elicitation, :parent=>:assignment_team do
-    name "Requirements Elicitation"
+    name "Elicitation"
     maximum_score 20
     due_date "2012-09-09 22:00:00"
     task_number 1
   end
 
   factory :assignment_envision, :parent=>:assignment_team do
-    name "Requirements Envisioning"
+    name "Envisioning"
     maximum_score 20
     due_date "2012-09-23 22:00:00"
     task_number 2
   end
 
   factory :assignment_elaboration, :parent=>:assignment_team do
-    name "Requirements Elaboration and Validation"
+    name "Elaboration and Validation"
     maximum_score 20
     due_date "2012-10-04 22:00:00"
     task_number 3
@@ -113,12 +113,18 @@ FactoryGirl.define do
     task_number 5
   end
 
+  factory :grading_rule_req, :parent=>:grading_rule do
+    grade_type "points"
+    is_nomenclature_deliverable true
+  end
+
+
   factory :req_2012, :parent => :course do
     name "Requirements Engineering"
     semester "Fall"
     year 2012
     after(:create) { |course|
-      course.grading_rule = FactoryGirl.create(:grading_rule_points)
+      course.grading_rule = FactoryGirl.create(:grading_rule_req)
 
       course.faculty = []
       course.faculty << FactoryGirl.create(:prof_peraire)
@@ -144,3 +150,15 @@ end
 
 course_req = FactoryGirl.create(:req_2012)
 set_up_course(course_req)
+
+team_cooper = Team.find_by_name("Cooper")
+assignment_validation = Assignment.find_by_name("Elaboration and Validation")
+team_cooper.members.each do |member|
+  grade = Grade.get_grade(assignment_validation.id, member.id)
+  grade.destroy
+end
+
+deliverable = Deliverable.find_by_assignment_id_and_team_id(assignment_validation.id, team_cooper.id)
+attachment = FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>team_cooper.members.first.id, :attachment_file_name=>"#{team_cooper.name}_old_file", :submission_date=>Time.now)
+attachment.submission_date = assignment_validation.due_date
+attachment.save

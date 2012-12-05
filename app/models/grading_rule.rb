@@ -132,7 +132,6 @@ private
       key = attr_name.gsub("_grade_min", "").gsub("_minus", "-").gsub("_plus", "+")
       @mapping_rule[key] = prev if attr_name =="A_grade_min"
       attr = self.read_attribute(attr_name)
-      puts attr
       unless attr.nil?
         @mapping_rule[key] = prev
         prev = attr - 0.1  unless attr.nil?
