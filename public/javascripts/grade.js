@@ -87,13 +87,18 @@ function Grade(type, mapping, weight)
       if(gradeType == "weights")
         term = "%";
       var text = earned_grade+ term;
-      if(percentage != "") text += " (" + percentage + "%)";
+      if(percentage != ""){
+          text += " (" + percentage + "%)  ";
+          $("tr#s_" +student_id + " .performance").text(this.get_final(percentage));
+      }
+
         $("tr#s_"+student_id + " .earned").text(text);
+
       return earned_grade;
     };
     this.get_final = function(grade){
       if(isNaN(grade)) return "";
-      var order = gradeMapping.keys();
+      //var order = gradeMapping.keys();
       var order = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-"];
       var current = order[0];
       $.each(order,function(index, letter){

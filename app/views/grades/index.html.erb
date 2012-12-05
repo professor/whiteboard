@@ -56,7 +56,7 @@
 //    grades.updateFinalGrade(grade_attrs.student_id);
         if(previousValue != score || visible != previousVisible)
         {
-            $(this).addClass("changedScore");
+            $(this).parents("td").addClass("changedScore");
             changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id] = {
                 course_id: grade_attrs.course_id,
                 assignment_id: grade_attrs.assignment_id,
@@ -66,7 +66,7 @@
             };
         }
         else{
-            $(this).removeClass("changedScore");
+            $(this).parents("td").removeClass("changedScore");
             delete changed_grades[grade_attrs.assignment_id+"_"+grade_attrs.student_id];
         }
 
@@ -142,12 +142,25 @@
     }
   </script>
   <style>
-    .changedScore{
-      border: thin solid;
-      border-color: red;
+    th, td#notify-all {
+        background-color: #696969;
+        color: white;
+        font-size: 8pt;
+        font-weight: normal;
+    }
+    td#notify-all{
+        margin: 0;
+        max-height: 10px;
+        border-top-width: 0;
+    }
+    td.grade.changedScore{
+      border: 2px solid red;
+    }
+    td.changedScore{
+        border: 2px solid red;
     }
     .draft{
-      background-color: #AAA;
+      background-color: #c1d2ee;
     }
     td.grade input{
       width: 99%;
@@ -163,8 +176,17 @@
       padding: 0;
       border-color: #696969;
     }
-    /* tr.hover:hover { background-color: #8db1ff; }   */
-    /* .hover:hover input {background-color: #8db1ff; } */
+     tr.hover:hover td {
+         border-bottom: 2pt solid #0066cc;
+         border-top: 2pt solid #0066cc;
+     }
+    tr.hover:hover td:first-child {
+        border-left: 2pt solid #0066cc;
+    }
+    tr.hover:hover td:nth-last-child(2) {
+        border-right: 2pt solid #0066cc;
+    }
+    /*.hover:hover input {background-color: #8db1ff; } */
     /* .draft:hover input {background-color: #ffffbe; }  */
     #legend{
       border:0;
@@ -206,22 +228,30 @@
           <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
           </th>
           <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
-          <th rowspan="1"> Team </th>
+          <th rowspan="2"> Team </th>
           <% @assignments.each do |assignment| %>
-            <th style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
-              <%="#{assignment.try(:short_name) || assignment.name[0..4]}"%><br/>
-              <span style="font-weight: normal;">
+            <th rowspan="2" style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
+              <%="#{assignment.try(:short_name) || assignment.name}"%><br/>
+              <span style="font-weight: normal;white-space: nowrap;">(
               <% case GradingRule.get_grade_type @course.id %>
               <%when "points" %>
                   Max <%="#{assignment.maximum_score}"%>
               <%else%>
-                  Weight <%="#{assignment.maximum_score}"%> %
-              <%end%>
-              </span>
+                  Weight <%="#{assignment.maximum_score}"%>
+              %<%end%>
+              )</span>
             </th>
           <%end %>
-          <th rowspan="1">Earned Grades</th>
-          <th rowspan="1">Final Grades</th>
+          <th rowspan="2" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
+          <th rowspan="2">Performance</th>
+          <th style="white-space: nowrap;">
+            Final Grades
+          </th>
+        </tr>
+        <tr>
+          <td id="notify-all">
+            <button type="button" id="gradebook_post_final" style="width:65px;float:bottom;margin: 0;" onclick="send_final_grade()">Notify All</button>
+          </td>
         </tr>
         <!--
         <tr>
@@ -255,6 +285,7 @@
           </td>
         <% end %>
         <td class='earned' style="border-color:#696969;background-color: white;"></td>
+        <td class='performance'></td>
         <td class='final grade' style="border-right-width: 1px;">
           <input id="<%= @course.id %>_final_<%=student.id%>"
                  value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
@@ -267,14 +298,14 @@
       <%end%>
       </tbody>
         <tr style="background-color:white;">
-          <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 4 %>">
+          <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 5 %>">
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
 
           </td>
           <td style="border-width: 0;">
-            <button type="button" id="gradebook_post_final" style="width:65px;" onclick="send_final_grade()">Notify All</button>
+
           </td>
         </tr>
     </table>
