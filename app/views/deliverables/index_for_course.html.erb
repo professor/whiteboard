@@ -34,7 +34,7 @@
           }) ;
           $("#filter_student").change(update_filter);
           $("#filter_assignment").change(update_filter);
-
+          $("#filter_graded").removeAttr("checked", false);
 
           var statuses = ["graded", "ungraded", "drafted"];
           $.each(["graded", "ungraded", "drafted"], function(index, value){
