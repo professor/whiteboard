@@ -48,6 +48,7 @@ FactoryGirl.define do
     first_name "David"
     last_name "Pfeffer"
     human_name "David Pfeffer"
+    image_uri "http://s3.amazonaws.com/cmusv-rails-production/people/photo/803/profile/030_DavidPfeffer.jpg"
   end
 
   factory :edward, :parent => :student_se_full_time do
@@ -111,6 +112,7 @@ FactoryGirl.define do
     first_name "Owen"
     last_name "Chu"
     human_name "Owen Chu"
+    image_uri "http://s3.amazonaws.com/cmusv-rails-production/people/photo/791/profile/057_OwenChu.jpg"
   end
 
   factory :prabhjot, :parent => :student_se_full_time do
@@ -146,6 +148,7 @@ FactoryGirl.define do
     first_name "Sky"
     last_name "Hu"
     human_name "Sky Hu"
+    image_uri "http://s3.amazonaws.com/cmusv-rails-production/people/photo/795/profile/058_SkyHu.jpg"
   end
 
   factory :sumeet, :parent => :student_se_full_time do
@@ -153,6 +156,7 @@ FactoryGirl.define do
     first_name "Sumeet"
     last_name "Kumar"
     human_name "Sumeet Kumar"
+    image_uri "http://s3.amazonaws.com/cmusv-rails-production/people/photo/796/profile/044_SumeetKumar.jpg"
   end
 
   factory :vidya, :parent => :student_se_full_time do

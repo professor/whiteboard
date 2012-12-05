@@ -11,6 +11,7 @@ FactoryGirl.define do
     C_grade_min 74
     C_minus_grade_min 70
     course_id 1
+    is_nomenclature_deliverable false
   end
 
   factory :grading_rule_points, :parent=>:grading_rule do
