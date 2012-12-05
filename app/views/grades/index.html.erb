@@ -230,6 +230,7 @@
             <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
                    value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
                    type="text" size="4" width="100%"
+                   tabindex="<%=assignment.task_number*10+assignment.assignment_order %>"
                    class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
           </td>
         <% end %>
