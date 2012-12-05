@@ -17,12 +17,46 @@
                     $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
                 }
             });
+            $(".letter").change(function(){
+                var error = "";
+                $(".letter").each(function(){
+                    var max = $(this).parents("tr").prev("tr").find(".letter").val();
+                    var min = $(this).parents("tr").next("tr").find(".letter").val();
+                    if(max!=undefined && $(this).val() >= max){
+                        error = "The grading criteria should be in decending order.";
+                    }
+                    if($(this).val() <= min){
+                        error = "The grading criteria should be in decending order.";
+                    }
+                });
+                if(error !=""){
+                    $("#decending-error").text(error);
+                    $("#decending-error").show();
+                    $("#course_submit").attr("disabled", true);
+                    $(this).focus();
+
+                }
+                else{
+                    $("#decending-error").hide();
+                    $("#course_submit").attr("disabled", false);
+                }
+
+
+            });
 
         });
     </script>
 
 <% end %>
-
+<style>
+#decending-error{
+border: 1px solid;
+padding: 5px 5px 5px 5px;
+background-position: 10px center;
+color: #D8000C;
+background-color: #FFBABA;
+}
+</style>
 <div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
@@ -122,18 +156,19 @@
         <%[[:A_grade_min, "A"],[:A_minus_grade_min, "A-"],[:B_plus_grade_min, "B+"], [:B_grade_min, "B"],[:B_minus_grade_min, "B-"],[:C_plus_grade_min, "C+"], [:C_grade_min, "C"],[:C_minus_grade_min, "C-"]].each do |entry| %>
           <tr>
             <td>     <%= rule.label entry[0], entry[1]%><br/></td>
-            <td>     <%= rule.text_field(entry[0], :size => 5 , :placeholder=>entry[1],:type=>"number",:step=>".1",:min=>0 )%></td>
+            <td>     <%= rule.text_field(entry[0], :size => 5 , :class=>"letter", :placeholder=>entry[1],:type=>"number",:step=>".1",:min=>0 )%></td>
           </tr>
         <%end%>
-      
-
       </table>
     <%end%>
+
       </br></br>
 
       <p>
       <%= f.hidden_field :is_configured, :value => true %>
+
       <%= f.submit button_name %>
+        <span  id="decending-error" style="display: none;"></span>
       </p>
 
     <% end %>
