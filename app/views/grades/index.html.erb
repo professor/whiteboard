@@ -1,6 +1,5 @@
 <%= javascript_include_tag "grade.js" %>
 <%= javascript_include_tag "jquery.tablesorter.js" %>
-<%= javascript_include_tag "jquery.freezetablecolumns.1.1.js" %>
 <script>
   var changed_grades = {}
   var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
@@ -134,7 +133,7 @@
               changed_grades = {};
           },
           error: function(jqXHR, textStatus, errorThrown){
-              console.log("Unalbe to submit the record");
+              console.log("Unable to submit the record");
               //changed_grades = {};
           }
 
@@ -202,6 +201,9 @@
       background-position: 10px center;
       color: #D8000C;
       background-color: #FFBABA;
+    }
+    .final{
+        border-right-width: 1px;
     }
   </style>
   <h1><%=@course.name %></h1>
@@ -284,9 +286,9 @@
                    class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
           </td>
         <% end %>
-        <td class='earned' style="border-color:#696969;background-color: white;"></td>
-        <td class='performance'></td>
-        <td class='final grade' style="border-right-width: 1px;">
+        <td class='earned' style="background-color: white;"></td>
+        <td class='performance' style="background-color:white;text-align: center;"></td>
+        <td class='final grade'>
           <input id="<%= @course.id %>_final_<%=student.id%>"
                  value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
                  type="text" size="4" width="100%"
