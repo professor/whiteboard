@@ -378,8 +378,13 @@ class CoursesController < ApplicationController
         format.html { redirect_back_or_default(course_path(@course)) }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
+        if !params[:course][:grading_nomenclature].blank?
+          format.html { render :action => "configure" }
+          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
+        else
+          format.html { render :action => "edit" }
+          format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

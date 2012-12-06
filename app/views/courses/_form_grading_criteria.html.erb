@@ -1,5 +1,5 @@
 <%= link_to @course.nomenclature_title, course_assignments_path(@course) %>
-<%= form_for(@course, url: {action: 'update_grading_criteria', id: @course.id}) do |f| %>
+<%= form_for(@course, url: {action: 'update_grading_criteria', id: @course.id, anchor: 'tabs-grading-criteria'}) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
