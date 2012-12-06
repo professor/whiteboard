@@ -62,7 +62,7 @@
   </table>
 
   <p>
-    <%= form.submit "Save Assignment" %>
+    <%= form.submit "Save " + @assignment.course.nomenclature_title.singularize %>
   </p>
 <% end %>
 

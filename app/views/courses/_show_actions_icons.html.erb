@@ -64,7 +64,7 @@
               <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size => "75x75", :alt => "Configure course", :title => "Configure course"), configure_course_path(course) %>
               <br/>
 
-              <p><%= link_to 'Configure course', configure_course_path(course) %></p>
+              <p><%= link_to 'Configure Course', configure_course_path(course) %></p>
             </td>
             <td>
               <%= link_to image_tag("/images/cmu_seal.jpg", :class => "icon", :size => "75x75", :alt => @course.nomenclature_title, :title => @course.nomenclature_title), course_assignments_path(course.id) %>

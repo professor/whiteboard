@@ -1,7 +1,7 @@
 <h1><%= @course.nomenclature_title %> for <%= @course.name %></h1>
 <div>
-  <%= link_to "New #{@course.nomenclature_title}", new_course_assignment_path(@course.id) %> |
-  <%= link_to "Course configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %> |
+  <%= link_to "New #{@course.nomenclature_title.singularize}", new_course_assignment_path(@course.id) %> |
+  <%= link_to "Course Configuration", configure_course_path(@course, anchor: "tabs-grading-criteria") %> |
   <%= link_to "Gradebook", course_gradebook_path(@course.id) %>
 </div>
 
