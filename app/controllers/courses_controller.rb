@@ -119,23 +119,24 @@ class CoursesController < ApplicationController
 
     row_num = 2
 
-    @course.teams.each do |team|
-      team.members.each do |member|
-        row = sheet.row(row_num)
-        row.push member.id, team.name, member.human_name
+    @course.gradebook_values.each do |gradebook_value|
+      team = gradebook_value[:team]
+      student = gradebook_value[:student]
+      deliverable_grades = gradebook_value[:deliverable_grades]
+      row = sheet.row(row_num)
+      row.push student.id, (team.blank? ? "N/A" : team.name), student.human_name
 
-        @course.assignments.each do |assignment|
-          deliverable_grade = assignment.find_deliverable_grade(member)
-          if deliverable_grade.blank?
-            row.push "0", "N/A"
-          else
-            attachment = deliverable_grade.deliverable.current_attachment
-            row.push deliverable_grade.grade, attachment.blank? ? "N/A" : Spreadsheet::Link.new(attachment.attachment.url, attachment.attachment_file_name)
-          end
+      @course.assignments.each do |assignment|
+        deliverable_grade = deliverable_grades[assignment.id]
+        if deliverable_grade.blank?
+          row.push "0", "N/A"
+        else
+          attachment = deliverable_grade.deliverable.current_attachment
+          row.push deliverable_grade.grade, attachment.blank? ? "N/A" : Spreadsheet::Link.new(attachment.attachment.url, attachment.attachment_file_name)
         end
-
-        row_num += 1
       end
+
+      row_num += 1
     end
 
     filename = Rails.root.join('tmp', 'gradebook_' + @course.name.to_s.gsub(/\s+/, "") + '_' + current_user.human_name.to_s.gsub(/\s+/, "") + '.xls').to_s

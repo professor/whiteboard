@@ -173,13 +173,15 @@ ppm_course = Factory.create(:ppm_current_semester)
   course.teams.first.members << you
   course.save
   course.assignments.each do |assignment|
-    if assignment.team_deliverable
-      deliverable = assignment.deliverables.find_by_team_id(Team.find_current_by_person_and_course(you, course).id)
-      FactoryGirl.create(:deliverable_grade, user: you, deliverable: deliverable, grade: 0) unless deliverable.blank?
-    else
-      deliverable = FactoryGirl.create(:deliverable, creator: you, assignment: assignment)
-      deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: you, attachment_file_name: "attachment")
-      assignment.deliverables << deliverable
+    if assignment.can_submit?
+      if assignment.team_deliverable
+        deliverable = assignment.deliverables.find_by_team_id(Team.find_current_by_person_and_course(you, course).id)
+        FactoryGirl.create(:deliverable_grade, user: you, deliverable: deliverable, grade: 0) unless deliverable.blank?
+      else
+        deliverable = FactoryGirl.create(:deliverable, creator: you, assignment: assignment)
+        deliverable.attachment_versions << FactoryGirl.create(:deliverable_attachment, deliverable: deliverable, submitter: you, attachment_file_name: "attachment")
+        assignment.deliverables << deliverable
+      end
     end
   end
   course.faculty_assignments << FactoryGirl.create(:faculty_assignment, user: todd, course: course)
