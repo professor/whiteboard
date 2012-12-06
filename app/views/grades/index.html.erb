@@ -40,6 +40,9 @@
     $(".grade input[type='text']").change(function(){
         var grade_attrs = parse_id($(this).attr('id'));
         var previousValue = this.defaultValue;
+        if(this.defaultValue!=$(this).val()){
+            $(this).addClass("draft");
+        }
         $(this).val($.trim($(this).val()));
         var score = $(this).val();
         if(!validate_grade(score)){
@@ -242,9 +245,9 @@
             </th>
           <%end %>
           <th rowspan="1" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
-          <th rowspan="1">Performance</th>
+          <th rowspan="1" style="white-space: nowrap;">Earned <br/> Letter Grades</th>
           <th style="white-space: nowrap;">
-            Final Grades
+            Final <br/> Letter Grades
           </th>
         </tr>
 
