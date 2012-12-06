@@ -19,6 +19,7 @@
     <th>Task</th>
     <th><%=get_customised_name%> Name</th>
     <th>Type</th>
+    <th>Due Date</th>
     <th>Grade</th>
     <th>Actions</th>
   </tr>
@@ -38,11 +39,14 @@
       <% deliverable = assignment.get_student_deliverable(current_user.id) %>
       <td>
         <%if assignment.is_team_deliverable? %>
-          Team
+          T
         <% else  %>
-          Individual
+          I
         <% end %>
       </td>
+
+      <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
+
       <% grade = assignment.get_student_grade(current_user.id)  %>
       <td>
         <% if grade.nil? || !grade.is_student_visible %>
@@ -59,7 +63,7 @@
             <% if grade.nil? || !grade.is_student_visible %>
               <%= link_to 'Resubmit deliverable', deliverable %>
             <% else  %>
-              <%= link_to 'View History and Feedback', deliverable %>
+              <%= link_to 'View Feedback', deliverable %>
             <%end%>
           <% end %>
         <% end %>
@@ -73,7 +77,8 @@
       <% end %>
       <td>&nbsp;</td>
       <td>Final Grade</td>
-      <td>Individual</td>
+      <td>I</td>
+      <td></td>
       <td><%=Grade.get_final_grade(course.id, current_user.id)%></td>
       <td>&nbsp;</td>
     </tr>
