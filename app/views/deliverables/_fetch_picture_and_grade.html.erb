@@ -1,8 +1,6 @@
 
 <div class='team_member_photo'>
-  <% if (grade_obj && !grade_obj.is_student_visible) %>
-    <div class="rounded staff">
-  <% end %>
+
   <div class="label">
     <%= fields_for :grade do |grade| %>
       <%= grade.text_field :grade_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "5x1", :tabindex=>member.id%>
@@ -13,12 +11,10 @@
       <% end %>
     <% end %>
   </div>
-  <div>
+  <div style="text-align: center;">
   <a href='http://whiteboard.sv.cmu.edu/people/<%= member.twiki_name %>' target='_top'>
     <%= image_tag(member.image_uri, :border => 0, :height => 100, :alt => member.human_name+" image") %></a>
   </div>
   <div class='label'> <%= member.human_name %></div>
-  <% if (grade_obj && !grade_obj.is_student_visible) %>
-    </div>
-  <% end %>
+
   </div>

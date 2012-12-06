@@ -156,7 +156,7 @@
         border: 2px solid red;
     }
     .draft{
-      background-color: #c1d2ee;
+      background-color: #E7E7E7;
     }
     td.grade input{
       width: 99%;
@@ -244,7 +244,7 @@
           <th rowspan="1" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
           <th rowspan="1">Performance</th>
           <th style="white-space: nowrap;">
-            Final Letter Grades
+            Final Grades
           </th>
         </tr>
 
@@ -285,7 +285,7 @@
           <input id="<%= @course.id %>_final_<%=student.id%>"
                  value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
                  type="text" size="4" width="100%"
-                 style="text-align:center;"
+                 style="text-align:center;font-size:10.5pt;"
                  class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
          </td>
         <td style="border-width: 0;background-color: white;">&nbsp</td>
