@@ -152,10 +152,7 @@
         max-height: 10px;
         border-top-width: 0;
     }
-    td.grade.changedScore{
-      border: 2px solid red;
-    }
-    td.changedScore{
+    td.grade.changedScore, td.changedScore, input.changedScore{
         border: 2px solid red;
     }
     .draft{
@@ -300,7 +297,7 @@
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
-            <button type="button" id="gradebook_post_final" style="width:65px;float:bottom;margin: 0;" onclick="send_final_grade()">Notify Final Grades</button>
+            <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
           </td>
           <td style="border-width: 0;text-align: center;">
 
