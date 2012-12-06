@@ -22,6 +22,16 @@ FactoryGirl.define do
     sequence(:webiso_account) {|n| "smstudent#{n}@andrew.cmu.edu"}
   end
 
+  factory :student_magic_full_time, :parent => :person do
+    is_student 1
+    is_part_time 0
+    graduation_year "2012"
+    masters_program "MG"
+    masters_track "Magic"
+    sequence(:email) {|n| "mgstudent#{n}@sv.cmu.edu"}
+    sequence(:webiso_account) {|n| "mgstudent#{n}@andrew.cmu.edu"}
+  end
+
   factory :aristide, :parent => :student_se_full_time do
     twiki_name "AristideNiyungeko"
     first_name "Aristide"
@@ -192,6 +202,46 @@ FactoryGirl.define do
     first_name "Dennis"
     last_name "Rodman"
     human_name "Dennis Rodman"
+  end
+
+  factory :harry, :parent => :student_magic_full_time do
+    twiki_name "HarryPotter"
+    first_name "Harry"
+    last_name "Potter"
+    human_name "Harry Potter"
+    image_uri "http://upload.wikimedia.org/wikipedia/en/4/44/HarryPotter5poster.jpg"
+  end
+
+  factory :ron, :parent => :student_magic_full_time do
+    twiki_name "RonWeasley"
+    first_name "Ron"
+    last_name "Weasley"
+    human_name "Ron Weasley"
+    image_uri "http://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Ron_Weasley_poster.jpg/200px-Ron_Weasley_poster.jpg"
+  end
+
+  factory :hermione, :parent => :student_magic_full_time do
+    twiki_name "HermioneGranger"
+    first_name "Hermione"
+    last_name "Granger"
+    human_name "Hermione Granger"
+    image_uri "http://www.hermionegrangerswand.com/images/hermione.jpg"
+  end
+
+  factory :neville, :parent => :student_magic_full_time do
+    twiki_name "NevilleLongbottom"
+    first_name "Neville"
+    last_name "Longbottom"
+    human_name "Neville Longbottom"
+    image_uri "http://thesexylittlenerd.files.wordpress.com/2011/12/neville.jpg"
+  end
+
+  factory :draco, :parent => :student_magic_full_time do
+    twiki_name "DracoMalfoy"
+    first_name "Draco"
+    last_name "Malfoy"
+    human_name "Draco Malfoy"
+    image_uri "http://2ch-tachiyomi.com/image/2012-11/30/20352-0.jpg"
   end
 
 end

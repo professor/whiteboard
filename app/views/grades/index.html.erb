@@ -110,7 +110,7 @@
   }
 
   function send_final_grade() {
-    if (!confirm("Send final grades to all students?")) return;
+    if (!confirm("Do you want to send all final letter grades (including draft grades) to students?")) return;
     post_grades('<%=send_final_grade_path(@course)%>');
   }
 
@@ -243,9 +243,9 @@
             </th>
           <%end %>
           <th rowspan="2" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
-          <th rowspan="2">Performance</th>
+          <th rowspan="2">Earned Letter Grades</th>
           <th style="white-space: nowrap;">
-            Final Grades
+            Final Letter Grades
           </th>
         </tr>
         <tr>
