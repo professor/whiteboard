@@ -119,6 +119,8 @@
       decorateEarnedGrade(userId, finalGrade);
     });
 
+    $('#import_spreadsheet_import_spreadsheet').val('');
+
     $('#import_spreadsheet_import_spreadsheet').change(function() {
       if (confirm('Are you sure?')) {
         $(this).closest('form').submit();
@@ -126,8 +128,6 @@
         $('#import_spreadsheet_import_spreadsheet').val();
       }
     });
-
-    //$('#import_spreadsheet_import_spreadsheet').show()
 
     $('#import-xls').click(function() {
       $('#import_spreadsheet_import_spreadsheet').click();
