@@ -227,12 +227,12 @@
     <table class="cmu_table sortable" style="margin-right: 50px;border-width: 0;">
       <thead>
         <tr>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> First Name
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="1"> First Name
           </th>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="2"> Last Name </th>
-          <th rowspan="2"> Team </th>
+          <th style='max-width:78px; word-wrap:break-word;' rowspan="1"> Last Name </th>
+          <th rowspan="1"> Team </th>
           <% @assignments.each do |assignment| %>
-            <th rowspan="2" style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
+            <th rowspan="1" style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
               <%="#{assignment.try(:short_name) || assignment.name}"%><br/>
               <span style="font-weight: normal;white-space: nowrap;">(
               <% case GradingRule.get_grade_type @course.id %>
@@ -244,17 +244,13 @@
               )</span>
             </th>
           <%end %>
-          <th rowspan="2" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
-          <th rowspan="2">Performance</th>
+          <th rowspan="1" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
+          <th rowspan="1">Performance</th>
           <th style="white-space: nowrap;">
             Final Grades
           </th>
         </tr>
-        <tr>
-          <td id="notify-all">
-            <button type="button" id="gradebook_post_final" style="width:65px;float:bottom;margin: 0;" onclick="send_final_grade()">Notify All</button>
-          </td>
-        </tr>
+
         <!--
         <tr>
           <% @assignments.each do |assignment| %>
@@ -304,9 +300,9 @@
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
-
+            <button type="button" id="gradebook_post_final" style="width:65px;float:bottom;margin: 0;" onclick="send_final_grade()">Notify Final Grades</button>
           </td>
-          <td style="border-width: 0;">
+          <td style="border-width: 0;text-align: center;">
 
           </td>
         </tr>
