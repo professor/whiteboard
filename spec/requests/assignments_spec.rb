@@ -24,7 +24,7 @@ describe "assignments" do
     context "new" do
       it "should save a new assignment" do
         expect {
-          click_button "Save Assignment"
+          click_button "Save " + @course.nomenclature_title.singularize
         }.to change(Assignment, :count).by(1)
       end
 
@@ -34,7 +34,7 @@ describe "assignments" do
         fill_in "assignment_weight", with: 120
 
         expect {
-          click_button "Save Assignment"
+          click_button "Save " + @course.nomenclature_title.singularize
         }.to change(Assignment, :count).by(0)
       end
     end
@@ -48,14 +48,14 @@ describe "assignments" do
 
     it "should change title field" do
       fill_in "Title", with: "My Test Assignment"
-      click_button "Save Assignment"
+      click_button "Save " + @course.nomenclature_title.singularize
       @assignment.reload.title.should == "My Test Assignment"
     end
 
     it "should not change weight" do
       @assignment.course.update_attributes(grading_criteria: "Percentage")
       fill_in "assignment_weight", with: 120
-      click_button "Save Assignment"
+      click_button "Save " + @course.nomenclature_title.singularize
       @assignment.reload.weight.should_not == 120
     end
   end
