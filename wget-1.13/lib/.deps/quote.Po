@@ -1,0 +1,11 @@
+quote.o quote.o: quote.c ../src/config.h quotearg.h \
+  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h \
+  quote.h
+
+../src/config.h:
+
+quotearg.h:
+
+/usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h:
+
+quote.h:

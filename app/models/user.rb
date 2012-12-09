@@ -1,8 +1,12 @@
+require 'user_search'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable, :rememberable, :trackable, :timeoutable
   #, :database_authenticatable, :registerable,
+
+  extend UserSearch
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state
@@ -366,5 +370,83 @@ class User < ActiveRecord::Base
     Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
   end
 
+
+  #People search with criteria
+  def self.Search(criteria)
+
+    @results_set = self
+
+    query_hash = construct_default_query_string(criteria)
+
+    if(query_hash[:count] == 1)
+      @results_set = self.where(query_hash[:query_string], query_hash[:main_search_string])
+    elsif(query_hash[:count] == 2)
+      @results_set = self.where(query_hash[:query_string], query_hash[:main_search_string],query_hash[:main_search_string])
+    end
+
+    # add filter for company name
+    if (criteria['organization_name']!=nil)
+      company_name = "%"+criteria['organization_name']+"%"
+      @results_set =  @results_set.where("organization_name ILIKE ?", company_name)
+    end
+
+    # add filter for program - SE, SE-Tech, SE-DM, SM, INI, ECE
+
+    if (criteria['program']!=nil)
+      if (criteria['program'] == "SE_DM")
+        @results_set =   @results_set.where("masters_program ILIKE 'SE' AND masters_track ILIKE 'DM'")
+      elsif (criteria['program'] == "SE_TECH")
+        @results_set =   @results_set.where("masters_program ILIKE 'SE' AND masters_track ILIKE 'TECH'")
+      elsif (criteria['program'] == "INI_IS")
+        @results_set =   @results_set.where("masters_program ILIKE 'INI' AND masters_track ILIKE 'IS'")
+      elsif (criteria['program'] == "INI_SM")
+        @results_set =   @results_set.where("masters_program ILIKE 'INI' AND masters_track ILIKE 'SM'")
+      elsif (criteria['program'] == "INI_MOB")
+        @results_set =   @results_set.where("masters_program ILIKE 'INI' AND masters_track ILIKE 'MOB'")
+      else
+        @results_set = @results_set.where("masters_program ILIKE ?", criteria['program'])
+      end
+    end
+
+    # add filter for people type - student, staff, alumni
+    if (criteria['people_type'] != nil)
+      people_type_string = "is_" +  criteria['people_type']
+      @results_set = @results_set.where(people_type_string+ " IS true")#
+      if(criteria['people_type']=='student')
+        @results_set = @results_set.where("is_alumnus IS NOT true")
+      end
+    end
+
+    # add filter for class year
+    if (criteria['class_year'] != nil)
+      @results_set = @results_set.where("graduation_year ILIKE ?", criteria['class_year'])
+    end
+
+
+    # add filter for full/part time
+    if (criteria['is_part_time'] != nil)
+      # Convert String to Boolean
+      if(criteria['is_part_time'].is_a?(String))
+        if(criteria['is_part_time'] == "true")
+          criteria['is_part_time'] = true
+        elsif(criteria['is_part_time'] == "false")
+          criteria['is_part_time'] = false
+        end
+      end
+
+      @results_set = @results_set.where("is_part_time = ?", criteria['is_part_time'])
+    end
+
+
+
+
+
+    #add filter for active or inactive
+    if(criteria['include_inactive'] == nil)
+      @results_set = @results_set.where("is_active = ?", true)
+    end
+
+    return @results_set
+  end
 
 end

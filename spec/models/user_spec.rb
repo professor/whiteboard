@@ -5,11 +5,189 @@ describe User do
 
   before do
     User.delete_all
-    # this list must not be sorted alphabetically
-    @faculty_frank = FactoryGirl.create(:faculty_frank)
-    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
-    @admin_andy = FactoryGirl.create(:admin_andy)
+
   end
+
+  # People search tests by Team Maverick
+
+  context "People Search" do
+    before do
+      @faculty_allen = FactoryGirl.create(:faculty_allen)
+      @faculty_ed = FactoryGirl.create(:faculty_ed)
+      @faculty_todd = FactoryGirl.create(:faculty_todd)
+      @student_shama  = FactoryGirl.create(:student_shama)
+      @student_rashmi  = FactoryGirl.create(:student_rashmi)
+      @student_clyde  = FactoryGirl.create(:student_clyde)
+      @student_vidya  = FactoryGirl.create(:student_vidya)
+      @student_sally_user = FactoryGirl.create(:student_sally_user)
+      @student_sam_user = FactoryGirl.create(:student_sam_user)
+      @alumnus_sunil = FactoryGirl.create(:alumnus_sunil)
+      @alumnus_memo = FactoryGirl.create(:alumnus_memo)
+      @alumnus_sean = FactoryGirl.create(:alumnus_sean)
+      @alumnus_harry = FactoryGirl.create(:alumnus_harry)
+
+    end
+
+   # def create_team_1
+    #  [ :one, :two, :three ]
+    #end
+
+    it "should not include inactive users by default" do
+      params_hash = {'main_search_text' => 'harr', 'first_name' => true, 'last_name' => true, 'andrew_id' => true}
+      @users=User.Search(params_hash)
+      @users.should_not include @alumnus_harry
+    end
+
+    it "should include even inactive users" do
+      params_hash = {'main_search_text' => 'harr', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'include_inactive'=>true  }
+      @users=User.Search(params_hash)
+      @users.should include @alumnus_harry
+    end
+
+    it "should do partial search case - default" do
+      params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_shama, @student_rashmi
+    end
+
+    it "should do partial search case - only first name" do
+      params_hash = {'main_search_text' => 'sha', 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_shama
+    end
+
+    it "should do partial search case - first name disabled" do
+      params_hash = {'main_search_text' => 'hoq', 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_shama
+    end
+
+    it "should do partial search case - no match" do
+      params_hash = {'main_search_text' => 'abc', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == []
+    end
+
+    it "should only search in andrew ID" do
+      params_hash = {'main_search_text' => 'clyde', 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == []
+    end
+
+    it "should search in andrew ID - default" do
+      params_hash = {'main_search_text' => 'ali', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_clyde]
+    end
+
+
+    it "should do exact match search case - default" do
+      params_hash = {'main_search_text' => 'Alle', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'exact_match' => true }
+      @users = User.Search(params_hash)
+      @users.should == []
+    end
+
+    #program
+    it "should search by program - all students in program" do
+      params_hash = {'main_search_text' => "", 'program' => "SE_TECH",'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_shama
+    end
+
+
+    it "should not return people in other programs" do
+      params_hash = {'main_search_text' => "", 'program' => "SM", 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_clyde
+      @users.should_not include @student_shama, @student_rashmi
+    end
+
+    #company_name
+    it "should search by company name" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true, 'last_name' => true }
+      @users=User.Search(params_hash)
+      @users.should include @faculty_allen, @student_clyde
+    end
+
+    it "should not include people at other companies" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "HP", 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should_not include @student_clyde, @faculty_allen
+    end
+
+    it "should search students by class year" do
+      params_hash = {'class_year' => '2013'}
+      @users = User.Search(params_hash)
+      @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+    end
+
+    it "should not search students by class year other than given year" do
+      params_hash = {'class_year' => '2014'}
+      @users = User.Search(params_hash)
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+    end
+
+    it "should search all students" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.Search(params_hash)
+      @users.should include @student_sam_user, @student_sally_user, @student_vidya, @student_clyde,  @student_rashmi, @student_shama
+    end
+
+    it "should search alumni" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.Search(params_hash)
+      @users.should include @alumnus_sunil, @alumnus_memo, @alumnus_sean
+    end
+
+    it "should search staff" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.Search(params_hash)
+      @users.should include @faculty_todd, @faculty_ed, @faculty_allen
+    end
+
+    it "should not search alumni if staff is selected" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.Search(params_hash)
+      @users.should_not include @alumnus_sunil, @alumnus_memo, @alumnus_sean
+    end
+
+    it "should not search staff if student is selected" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.Search(params_hash)
+      @users.should_not include @faculty_allen, @faculty_ed, @faculty_todd
+    end
+
+    it "should not search students/staff if alumni is selected" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.Search(params_hash)
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user, @faculty_allen
+    end
+
+
+    it "should search students by part time" do
+      params_hash = {'is_part_time' => "true"}
+      @users = User.Search(params_hash)
+      @users.should include @student_sally_user, @student_sam_user, @faculty_allen
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+    end
+
+    it "should search students by full time" do
+      params_hash = {'is_part_time' => "false"}
+      @users = User.Search(params_hash)
+      @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+      @users.should_not include @student_sally_user, @student_sam_user, @faculty_allen
+    end
+
+  end
+
+# end of Team Maverick's test
+  context "Other tests" do
+    before do
+      # this list must not be sorted alphabetically
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @admin_andy = FactoryGirl.create(:admin_andy)
+    end
 
   describe "abilities" do
     subject { ability }
@@ -272,9 +450,9 @@ describe User do
 
   end
 
-
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student
 
+    end
 end

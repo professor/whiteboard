@@ -73,6 +73,11 @@ group :development, :test do
   gem 'mocha'
   gem 'factory_girl_rails', '3.4.0'
   gem 'capybara'
+
+  # added by clydeli for ajax test
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
+
 #  gem 'morning_glory'
 
 #  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/

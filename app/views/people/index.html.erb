@@ -1,132 +1,130 @@
-<% content_for :title, 'People - Phone book' %>
-<% content_for :tablesorter do %>
-    <%= javascript_include_tag 'tablesorter' %>
-    <%= javascript_include_tag 'tablesorter_filter' %>
-    <script type="text/javascript">
-        $(document).ready(function () {
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
-                    $("#people_table").tablesorter({widgets:['zebra'],
-                        headers:{2:{sorter:false}, 3:{sorter:false}  },
-                        sortList:[
-                            [0, 0],
-                            [1, 0]
-                        ]})
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2],
-                                filterCaseSensitive:false
-                            });
-                    //scroll the message box to the top offset of browser's scrool bar
-                    $(window).scroll(function () {
-                        $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
-                    });
-                    //when the close button at right corner of the message box is clicked
-                    $('#close_image_box').click(function () {
-                        //the messagebox gets scrool down with top property and gets hidden with zero opacity
-                        $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
-                    });
+<% content_for :title, 'People - Search' %>
 
-                    //hoving over a line selects it
-                    $("tr").hover(
-                            function () {
-                                $(this).addClass("hover");
-                            },
-                            function () {
-                                $(this).removeClass("hover");
-                            });
-
-                }
-        );
-
-        function toggleStudents() {
-            /* we don't use .toggle since the state may be inaccurate from a page reload */
-            if ($('#student_checkbox').is(':checked')) {
-                $(".student").show();
-            } else {
-                $(".student").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
-        }
-
-        function toggleStaff() {
-            if ($('#staff_checkbox').is(':checked')) {
-                $(".staff").show();
-            } else {
-                $(".staff").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
-        }
-
-        function updateImage(uri, label) {
-            $('#image_box_image').prop("src", uri);
-
-            $('#image_box_label').text(label);
-        }
-
-
-    </script>
+<% content_for :people_search do %>
+    <%= stylesheet_link_tag 'people_search', :media => "screen", :rel => "stylesheet" %>
+    <%= stylesheet_link_tag 'people_search_pad', :media => "only screen and (min-width: 641px) and (max-width: 800px)", :rel => "stylesheet" %>
+    <%= stylesheet_link_tag 'people_search_phone', :media => "only screen and (max-width: 640px)", :rel => "stylesheet" %>
+    <%= stylesheet_link_tag 'people_search_phone', :media => "handheld, only screen and (max-device-width: 640px)", :rel => "stylesheet" %>
+    <%= javascript_include_tag 'people_search' %>
 <% end %>
 
-<h1>Phone book</h1>
-<div class="right_link"><%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
-  <br/>
-  <%= link_to 'See photo book', :action => 'photo_book' %></div>
 
-<% if can? :create, User %>
-    <%= link_to 'New person', new_person_path %>
-<% end %>
+<h1>People Search</h1>
 
-<div style="float:none"><%= render :partial => "tablesorter_filter_box" %>
-  <label>Show Students</label>
-  <input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked"/>
-  <label>Show
-    Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked"/>
+<!-- UI Mockup HTML Migration -->
+
+<!-- Dialog Box for Customization -->
+<div id="dialog_modal" title="Customization">
+  <div id='customization_dialog_close' >[x]</div><br><br>
+  <div id="modal_card" class="data_card">
+    <h2>Customize Search Results</h2>
+    <img src="images/mascot.jpg"><br>
+    <input checked type="checkbox" id= "photo_checkbox" name="Photo" value="cu_photo" /> Display Photo? <br>
+    <input checked type="checkbox" id="email_checkbox" name="Email" value="cu_email" /> Email: ? <br>
+    <input checked type="checkbox" id="phone_home_checkbox"  name="PhoneH" value="cu_phone1" /> Phone1: ? <br>
+    <input checked type="checkbox" id="phone_mobile_checkbox"  name="PhoneM" value="cu_phone2" /> Phone2: ? <br>
+    <input type="checkbox" id="team_checkbox"  name="Team" value="cu_team" /> Team: ? <br>
+    <input type="checkbox" id="company_checkbox"  name="Company" value="cu_company" /> Company: ? <br>
+  </div>
+</div>
+<div id="export_dialog_modal" title="Export Results">
+  <div id='export_dialog_close'>[x]</div><br><br>
+  Please Choose Format:
+  <button id="export_to_csv"> CSV </button>
+  <button id="export_to_vcf"> VCARD </button>  
 </div>
 
-<!-- conference room url
-http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
--->
 
-<% content_for :image_box do %>
-    <div id="image_box">
-      <%= image_tag("/images/mascot.jpg", :width => "150", :alt => "Temporary Picture", :id => "image_box_image") %><%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :alt => "Close Me", :style => "float:right;cursor:pointer", :id => "close_image_box") %>
-      <div id='image_box_label'></div>
+<!-- Smart Search Area-->
+<div id="smart_search_area">
+  <input disabled type="text" placeholder="Enter Search Text" id="smart_search_text" style="background-color: #f3f0e9;"/>
+  <button id="advanced_search_btn" title="Click to switch between smart/advanced search">Advanced</button>
+  <button id="card_mode_btn" title="Click to switch to Photo Card View" class="hidden"><img src="images/card.png"></button>
+  <button id="list_mode_btn" title="Click to switch to List View"><img src="images/list.png"></button>
+</div>
+
+
+<!-- Advanced Search Area-->
+<div id="advanced_search_area">
+  <div id='advanced_area_close' class="hidden">x</div>
+  <div>
+    <div id="main_criteria_box" style="display: inline-block;">
+      <input type="text" placeholder="Search in ..." id="search_text_box" style="background-color: #f3f0e9;"/>
+      <select id="main_criteria_picker" title="Search in one or all Name/ID fields" class="criterias" >
+        <option value="all">Full Name & Andrew ID</option>
+        <option value="first_name">Only First Name</option>
+        <option value="last_name">Only Last Name</option>
+        <option value="andrew_id">Only Andrew ID</option>
+      </select>
     </div>
-<% end %>
 
-<table id="people_table" class="tablesorter">
-  <thead>
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Phone</th>
-    <th>&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% for person in @people %>
-      <tr class="tablesorter
-        <% if person.is_student %>student
-        <% end %>
-        <% if person.is_staff %>staff
-        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-        <td><%= link_to person.first_name, person_path(person.twiki_name) %></td>
-        <td><%= link_to person.last_name, person_path(person.twiki_name) %></td>
-        <td>
-          <% person.telephones.each { |phone| %><%= h phone %>
-              <br/>
-          <% } %></td>
-        <td><%= link_to 'Show', person_path(person) %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    <select id="people_type_picker" title="Choose one or all people categories">
+      <option value="all">All People</option>
+      <option value="student"> Student </option>
+      <option value="staff"> Staff/Faculty </option>
+      <option value="alumnus"> Alumni </option>
+    </select>
 
-<br/>
+    <select id="extra_criteria_picker" title="Add extra criteria">
+      <option value="default" class="select-hint">Add Criteria</option>
+      <option value="company">Company</option>
+      <option value="class_year">Class Year</option>
+      <option value="program">Program</option>
+      <option value="ft_pt">Full/Part Time</option>
+    </select>
+  </div>
+
+
+  <div id="extra_criteria_box">
+    <ul class="criteria_tags">
+      <li class="criteria_tag" id="criteria_company" title="Company" style="background-color: LightCoral;">
+        Company: <input type="text" id="criteria_company_text" class="criteria_text" style="background-color: LightCoral;"/><a href="#">x</a> </li>
+      <li class="criteria_tag" id="criteria_class_year" title="Class Year" style="background-color: Moccasin;">
+        Class Year:
+        <select class="criteria_text" style="background-color: Moccasin; width:56px;">
+        </select>
+        <a href="#">x</a>
+      </li>
+      <li class="criteria_tag" id="criteria_program" title="Program" style="background-color: Beige;">
+        Program:
+        <select class="criteria_text" style="background-color: Beige; width: 80px;">
+          <option value="SE">SE</option>
+          <option value="SE_TECH">SE-Tech</option>
+          <option value="SE_DM">SE-DM</option>
+          <option value="SM">SM</option>
+          <option value="ECE">ECE</option>
+          <option value="INI">INI</option>
+          <option value="INI_IS">INI-IS</option>
+          <option value="INI_SM">INI-SM</option>
+          <option value="INI_MOB">INI_MOB</option>
+        </select>
+        <a href="#">x</a>
+      </li>
+      <li class="criteria_tag" id="criteria_ft_pt" title="Full/Part Time" style="background-color: LightBlue;">
+        <select class="criteria_text" style="background-color: LightBlue; width: 86px;">
+          <option value="ft">Full Time</option>
+          <option value="pt">Part Time</option>
+        </select>
+        <a href="#">x</a>
+      </li>
+    </ul>
+  </div>
+
+  <input type="checkbox" id="exact_match_checkbox" name="exact_match" value="exact_match" /> Exact Match?
+  <input type="checkbox" id="include_inactive_checkbox" name="include_inactive" value="include_inactive" /> Include Inactive Users?
+
+</div>
+
+
+
+<br>
+<a id="customization_link">Customize</a><br>
+<a id="export_link">Export Results</a> 
+<br>
+<div id="results_box"></div><br>
+<div style="clear: both;"></div>
+<!-- End of HTML Migration -->
+
 
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>

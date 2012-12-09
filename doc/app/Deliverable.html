@@ -347,6 +347,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -389,10 +391,9 @@ the page. This is a little less efficient because the student needs to
 select a course and task number. It is a quick way for a student to see
 everything they have submitted for their courses.</p>
 
-<pre>If a student or team accidentally uploads the wrong file, they can upload additional files. All files are</pre>
-
-<p>kept in the system, but the convention is that the faculty will only
-examine the last uploaded file.</p>
+<p>If a student or team accidentally uploads the wrong file, they can upload
+additional files. All files are kept in the system, but the convention is
+that the faculty will only examine the last uploaded file.</p>
 
 <p>The faculty assigned to that team will receive an email whenever a student
 submits a deliverable. The faculty can click on the email and provide
@@ -900,7 +901,8 @@ graded. In theory, just relying on the emails should be sufficient.</p>
   <span class="ruby-constant">Team</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:course_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">course_id</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">answer</span> = <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">creator</span>)
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">team</span> = <span class="ruby-identifier">team</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">creator</span>)
-  <span class="ruby-keyword">end</span>  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
           </div><!-- update_team-source -->
           
         </div>
@@ -933,7 +935,7 @@ graded. In theory, just relying on the emails should be sufficient.</p>
 
           
           <div class="method-source-code" id="sanitize_data-source">
-            <pre><span class="ruby-comment"># File app/models/deliverable.rb, line 191</span>
+            <pre><span class="ruby-comment"># File app/models/deliverable.rb, line 192</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sanitize_data</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">titleize</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">blank?</span>
 <span class="ruby-keyword">end</span></pre>

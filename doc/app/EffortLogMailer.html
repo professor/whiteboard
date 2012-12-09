@@ -325,6 +325,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -378,7 +380,7 @@
 
           
           <div class="method-source-code" id="endweek_admin_report-source">
-            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">endweek_admin_report</span>(<span class="ruby-identifier">course_id</span>, <span class="ruby-identifier">course_name</span>, <span class="ruby-identifier">faculty_emails</span>)
   <span class="ruby-ivar">@course_id</span> = <span class="ruby-identifier">course_id</span>
   <span class="ruby-ivar">@course_name</span> = <span class="ruby-identifier">course_name</span>
@@ -411,7 +413,7 @@
 
           
           <div class="method-source-code" id="midweek_warning-source">
-            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 7</span>
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">midweek_warning</span>(<span class="ruby-identifier">saying</span>, <span class="ruby-identifier">user</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
   <span class="ruby-identifier">email_with_name</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">+</span> <span class="ruby-string">' &lt;'</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&gt;'</span>
@@ -446,7 +448,7 @@
 
           
           <div class="method-source-code" id="midweek_warning_admin_report-source">
-            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/mailers/effort_log_mailer.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">midweek_warning_admin_report</span>(<span class="ruby-identifier">saying</span>, <span class="ruby-identifier">people_without_effort</span>, <span class="ruby-identifier">people_with_effort</span>)
   <span class="ruby-ivar">@saying</span> = <span class="ruby-identifier">saying</span>
   <span class="ruby-ivar">@people_without_effort</span> = <span class="ruby-identifier">people_without_effort</span>

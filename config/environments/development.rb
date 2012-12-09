@@ -38,6 +38,10 @@ CMUEducation::Application.configure do
     :password => ENV['GMAIL_SMTP_PASSWORD'],
     :enable_starttls_auto => true
   }
+
+  # Add MIME Type by Team Maverick
+  #Mime::Type.register "text/csv", :csv
+
 end
 
 

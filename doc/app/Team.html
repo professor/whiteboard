@@ -363,6 +363,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -586,11 +588,11 @@ temporary variable that is used to do validation of the strings (to verify</p>
           <div class="method-source-code" id="clone_to_another_course-source">
             <pre><span class="ruby-comment"># File app/models/team.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">clone_to_another_course</span>(<span class="ruby-identifier">destination_course_id</span>)
-    <span class="ruby-identifier">clone</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">clone</span>
-    <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">member_ids</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">member_ids</span>
-    <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">destinaton_course_id</span>
-    <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; - &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">destination_course_id</span>    
-    <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">save</span>    
+  <span class="ruby-identifier">clone</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">member_ids</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">member_ids</span>
+  <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">course_id</span> = <span class="ruby-identifier">destinaton_course_id</span>
+  <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">name</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; - &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">destination_course_id</span>
+  <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">save</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- clone_to_another_course-source -->
           
@@ -1010,9 +1012,9 @@ temporary variable that is used to do validation of the strings (to verify</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_members</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">nil?</span>
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span> = <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span> = <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span> }
   <span class="ruby-comment">#if the list has changed</span>
-  <span class="ruby-keyword">if</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">person</span><span class="ruby-operator">|</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">human_name</span>}.<span class="ruby-identifier">sort</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">sort</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">person</span><span class="ruby-operator">|</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">human_name</span> }.<span class="ruby-identifier">sort</span>)
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updating_email</span> = <span class="ruby-keyword">true</span>
     <span class="ruby-identifier">list</span> = <span class="ruby-identifier">map_member_stings_to_users</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Error converting members_override to IDs!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">nil</span>)
@@ -1053,7 +1055,7 @@ same code in course.rb Todo - move to a higher class or try as a mixin</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_members</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">nil?</span>
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span> = <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">members_override</span> = <span class="ruby-identifier">members_override</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span> }
   <span class="ruby-identifier">list</span> = <span class="ruby-identifier">map_member_stings_to_users</span>(<span class="ruby-identifier">members_override</span>)
   <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">nil?</span>
@@ -1093,12 +1095,12 @@ same code in course.rb Todo - move to a higher class or try as a mixin</p>
 
           
           <div class="method-source-code" id="generate_email_name-source">
-            <pre><span class="ruby-comment"># File app/models/team.rb, line 167</span>
+            <pre><span class="ruby-comment"># File app/models/team.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_email_name</span>
-    <span class="ruby-identifier">email</span> = <span class="ruby-node">&quot;#{self.course.semester}-#{self.course.year}-#{self.name}&quot;</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/ /</span>, <span class="ruby-string">'-'</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;@&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">GOOGLE_DOMAIN</span>
-    <span class="ruby-identifier">email</span> = <span class="ruby-identifier">email</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">'&amp;'</span>,<span class="ruby-string">'and'</span>)
-    <span class="ruby-identifier">email</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-string">'@west.cmu.edu'</span>, <span class="ruby-string">'@sv.cmu.edu'</span>)
-  <span class="ruby-keyword">end</span></pre>
+  <span class="ruby-identifier">email</span> = <span class="ruby-node">&quot;#{self.course.semester}-#{self.course.year}-#{self.name}&quot;</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/ /</span>, <span class="ruby-string">'-'</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;@&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">GOOGLE_DOMAIN</span>
+  <span class="ruby-identifier">email</span> = <span class="ruby-identifier">email</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">'&amp;'</span>, <span class="ruby-string">'and'</span>)
+  <span class="ruby-identifier">email</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-string">'@west.cmu.edu'</span>, <span class="ruby-string">'@sv.cmu.edu'</span>)
+<span class="ruby-keyword">end</span></pre>
           </div><!-- generate_email_name-source -->
           
         </div>
@@ -1125,7 +1127,7 @@ same code in course.rb Todo - move to a higher class or try as a mixin</p>
 
           
           <div class="method-source-code" id="map_member_stings_to_users-source">
-            <pre><span class="ruby-comment"># File app/models/team.rb, line 180</span>
+            <pre><span class="ruby-comment"># File app/models/team.rb, line 179</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">map_member_stings_to_users</span>(<span class="ruby-identifier">members_override_list</span>)
   <span class="ruby-identifier">members_override_list</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">member_name</span><span class="ruby-operator">|</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_human_name</span>(<span class="ruby-identifier">member_name</span>) }
 <span class="ruby-keyword">end</span></pre>
@@ -1155,7 +1157,7 @@ same code in course.rb Todo - move to a higher class or try as a mixin</p>
 
           
           <div class="method-source-code" id="remove_google_group-source">
-            <pre><span class="ruby-comment"># File app/models/team.rb, line 173</span>
+            <pre><span class="ruby-comment"># File app/models/team.rb, line 172</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_google_group</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-string">&quot;trying before_destroy&quot;</span>
   <span class="ruby-identifier">google_apps_connection</span>.<span class="ruby-identifier">delete_group</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>)

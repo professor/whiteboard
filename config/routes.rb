@@ -50,7 +50,6 @@ CMUEducation::Application.routes.draw do
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
   match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
 
-
   constraints({:id => /.*/}) do
     resources :mailing_lists
     resources :pages do
@@ -87,6 +86,8 @@ CMUEducation::Application.routes.draw do
   match '/effort_reports/course/:course_id' => 'effort_reports#course'
   resources :effort_reports
   match '/people_autocomplete' => 'people#index_autocomplete'
+  # Adds the route for getting company names by Team Maverick
+  match '/people_get_companies' => 'people#get_companies'
   match '/people/class_profile' => 'people#class_profile'
   match '/people/ajax_check_if_email_exists' => 'people#ajax_check_if_email_exists'
   match '/people/ajax_check_if_webiso_account_exists' => 'people#ajax_check_if_webiso_account_exists'

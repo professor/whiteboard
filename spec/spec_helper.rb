@@ -7,6 +7,11 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+# added by clydeli for ajax test
+require 'database_cleaner'
+require 'capybara/rspec'
+Capybara.javascript_driver = :webkit
+
 #include Capybara::DSL
 
 require 'shoulda'
@@ -64,6 +69,20 @@ RSpec.configure do |config|
 
   config.include Paperclip::Shoulda::Matchers
 #  config.include Helpers
+
+
+# database_cleaner for capybara webkit driver added by clydeli
+  config.use_transactional_fixtures = false
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
 end
 
 Capybara.default_host = 'http://rails.sv.cmu.edu'

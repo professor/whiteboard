@@ -1,0 +1,24 @@
+#wrapper, #pageHeader { width: auto;}
+#pageHeader #search, #navWrapper, #pageFooter, #breadcrumbs, #socialLinks, #headerImage { display: none;}
+#topnav, #contentWrapper, #footer { margin: 0; }
+#main {background-image: none;}
+
+#main, #topnav, #contentWrapper, #footer, #mainContent { width: 100%;}
+#mainContent .content { width: 92%; font-size: 150%;}
+#mainContent { margin: 0; background-color: rgb(243, 240, 233);}
+#mainContent, #mainContent .boxTop, #mainContent .boxBottom { background-image: none; }
+#topnav { padding: 8px 0 5px 0;}
+#footer { padding: 6px 0; margin: 0;}
+#footer ul { margin: 0 6px; }
+
+#smart_search_text { width: 98%; height: 39px; font-size: 160%; }
+#card_mode_btn, #list_mode_btn, #advanced_search_btn { display: none; }
+.data_card.photo_card div  { margin: 8px 0; }
+.data_card.photo_card .data_card_human_name { font-size: 140%; }
+.data_card.photo_card {width: 31%; font-size: 140%; }
+
+#topnav ul { display: none; }
+#topnav #alt_topnav, #topnav #alt_topnav ul { display: block; }
+#topnav #alt_topnav ul ul{ display: none; }
+#topnav #alt_topnav ul li:first-child { border-left: none; }
+#topnav #alt_topnav ul li:last-child { display: none; }

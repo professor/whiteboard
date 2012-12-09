@@ -333,6 +333,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -402,11 +404,11 @@
   <span class="ruby-identifier">can</span> <span class="ruby-value">:update</span>, <span class="ruby-constant">PageAttachment</span>
 
 
-  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span> <span class="ruby-operator">||</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Chris Zeise&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Gerry Elizondo&quot;</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span> <span class="ruby-operator">||</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Vidya Pissaye&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Gerry Elizondo&quot;</span>)
     <span class="ruby-identifier">can</span> <span class="ruby-value">:upload</span>, <span class="ruby-constant">Course</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Jazz Sabian&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stacy Marshall&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Jazz Sabian&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Vidya Pissaye&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Todd Sedano&quot;</span>)
     <span class="ruby-identifier">can</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">cannot</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">User</span>
@@ -429,11 +431,10 @@
   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin?</span>)
     <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Course</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span>  (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span> )
+  <span class="ruby-keyword">if</span>  (<span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span>)
     <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:create</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>, <span class="ruby-value">:faculty</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span> } <span class="ruby-comment">#Useful for TAs.</span>
-
+  <span class="ruby-identifier">can</span> [<span class="ruby-value">:teach</span>, <span class="ruby-value">:update</span>, <span class="ruby-value">:peer_evaluation</span>, <span class="ruby-value">:team_formation</span>], <span class="ruby-constant">Course</span>, <span class="ruby-value">:faculty</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>} <span class="ruby-comment">#Useful for TAs.</span>
 
 
   <span class="ruby-comment"># The first argument to `can` is the action you are giving the user permission to do.</span>

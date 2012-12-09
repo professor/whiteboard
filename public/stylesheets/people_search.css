@@ -1,0 +1,86 @@
+/* UI Mockup CSS Migration */
+
+.hidden { display: none; }
+.btn_pressed { border: 1px inset; }
+
+.customization_dialog { margin-top: 32px;}
+.customization_dialog .ui-dialog-titlebar {display:none}
+
+#alt_topnav {display: none;}
+
+#export_dialog_modal { text-align: center; font-size: 12px;}
+
+#smart_search_area { height:24px; vertical-align: middle;}
+#smart_search_text { 
+	height:21px; padding: 0 3px; width: 78%;
+	border: 1px solid #000; border-radius: 1px; background-color: #f3f0e9; opacity: 0.3;}
+#smart_search_area button { vertical-align: middle; height:24px; margin: 0 1px; float: right; width:7%;}
+#smart_search_area #advanced_search_btn { width: 12%;}
+#smart_search_area img { height:16px; }
+
+ 
+#advanced_search_area { 
+	margin-top: 6px; padding: 4px 2px; border: 1px solid #000;
+	display: none; position: relative;
+}
+#advanced_area_close {position: absolute; right:5px; top:4px; font-size: 16px; cursor: pointer; font-weight: 700; opacity: 0.8;}
+#advanced_area_close:hover {opacity: 1;}
+#main_criteria_box { height:21px; border: 1px solid #000; border-radius: 1px; width: 58%; display:inline-block;}
+#search_text_box { border: none; padding: 0 3px; background-color: #f3f0e9; width:52%;}
+#main_criteria_picker { border: none; background-color: #f3f0e9; width: 44%;}
+#people_type_picker, #extra_criteria_picker { width: 20%; height:22px; display: inline-block;}
+
+
+
+#extra_criteria_box .criteria_tags { display: block; list-style:none; padding-left: 0; }
+.criteria_tags li{ 
+	height: 20px; display: inline-block; border: 1px solid #666;
+ 	border-radius: 1px; padding: 0 2px; margin: 0 5px 0 0; vertical-align: middle;
+ }
+
+.criteria_tag input, .criteria_tag select{ height: 14px;}
+.criteria_tag a {
+    opacity: 0.7; color: #000; text-decoration: none;
+    font-weight: 700; padding-left: 3px;
+}
+.criteria_tag a:hover { opacity: 1; }
+
+.criteria_text { border: 0; width: 72px; font-weight: 700;}
+
+/*#main_criteria_box, #extra_criteria_box { padding: 3px 0; border: 1px solid #666; border-radius: 2px; margin: 0px 1px;}*/
+
+
+select .select-hint { color: #ccc;}
+
+
+#customization_link, #customization_dialog_close, #export_link, #export_dialog_close { float:right; cursor: pointer;}
+#export_to_csv, #export_to_vcf { width:100%;}
+#customization_modal_card  { margin-left: auto; margin-right: auto; }
+/*.ui-autocomplete { max-height: 120px; overflow-y: auto; overflow-x: hidden;}*/
+#results_box { display: block; min-height: 16px; margin: 0 auto;}
+
+.data_card {
+    margin: 4px; padding-left: 6px; padding-top: 6px;
+    background-color: #eee; border: 1px solid #aaa; border-radius: 1px; box-shadow: 1px 1px 5px #aaa;
+    font-size: 11px; font-weight: 700; overflow: hidden;
+    word-wrap: break-word;
+}
+.data_card.photo_card { float: left; width: 150px;  }
+.data_card.photo_card img{ width: 139px; height: 190px; margin: 0 0 5px; }
+
+
+.data_card.list_view {  width: 650px; font-size: 11px; }
+.data_card.list_view .data_card_human_name { margin-top: 4px;}
+.data_card.list_view img{ float:left; vertical-align: top; width: 64px; height: 87px; margin: 0 8px 5px 0; }
+.data_card.list_view .data_card_human_name, .data_card.list_view .data_card_title, .data_card.list_view .data_card_telephone1, .data_card.list_view .data_card_telephone2
+{ display: inline; }
+.data_card.list_view .data_card_title { font-size: 13px; color: #999; }
+.data_card.list_view .data_card_title:before { content: " "} 
+.data_card.list_view .data_card_telephone2:before { content: ", ";}
+
+
+.data_card_human_name { font-size: 16px; }
+.resize{ width: 150px; height: 150px;}
+
+/* Fix Modal Card */
+#modal_card { width: auto; height:auto; padding: 6px;}

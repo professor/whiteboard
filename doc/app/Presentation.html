@@ -343,6 +343,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -423,7 +425,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="find_by_presenter-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 72</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_presenter</span>(<span class="ruby-identifier">current_user</span>)
   <span class="ruby-comment"># Find everything where the passed in person is either the assignee</span>
   <span class="ruby-comment"># or is on the presentation's team</span>
@@ -456,7 +458,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="find_by_user_and_teams-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 79</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_user_and_teams</span>(<span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">teams</span>)
   <span class="ruby-identifier">team_condition</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">teams</span>.<span class="ruby-identifier">empty?</span>
@@ -492,7 +494,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="find_comments-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 123</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_comments</span> (<span class="ruby-identifier">feedbacks</span>, <span class="ruby-identifier">questions</span>)
 
   <span class="ruby-comment"># code for comments</span>
@@ -545,7 +547,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="find_ratings-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 96</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_ratings</span> (<span class="ruby-identifier">feedbacks</span>, <span class="ruby-identifier">questions</span>)
 
   <span class="ruby-comment">#code for ratings</span>
@@ -604,7 +606,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="can_view_feedback-3F-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 89</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_view_feedback?</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">presenter?</span>(<span class="ruby-identifier">user</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_staff?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_admin</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
@@ -637,10 +639,10 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="has_given_feedback-3F-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 61</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">has_given_feedback?</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-ivar">@presentation_feedbacks</span> = <span class="ruby-constant">PresentationFeedback</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;evaluator_id = :uid AND presentation_id = :pid&quot;</span>,
-        {<span class="ruby-value">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:pid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>})
+                                                       {<span class="ruby-value">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:pid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>})
 
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@presentation_feedbacks</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
@@ -674,7 +676,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="is_team_presentation-3F-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_team_presentation?</span>
   <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">team</span>.<span class="ruby-identifier">blank?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -704,7 +706,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="presenter-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">presenter</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_team_presentation?</span>
     <span class="ruby-identifier">team</span>.<span class="ruby-identifier">name</span>
@@ -738,7 +740,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="presenter-3F-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 57</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">presenter?</span>(<span class="ruby-identifier">current_user</span>)
   <span class="ruby-identifier">current_user</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">team</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -768,7 +770,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="send_presentation_feedback_email-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 158</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 157</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_presentation_feedback_email</span>(<span class="ruby-identifier">url</span>)
 
   <span class="ruby-identifier">mail_to</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user_email</span>
@@ -813,7 +815,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="team_or_user_for_presenter-3F-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 39</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">team_or_user_for_presenter?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">team_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">user_id</span>.<span class="ruby-identifier">blank?</span>
     <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:base</span>, <span class="ruby-string">&quot;Can't create a presentation without a team or person giving it&quot;</span>)
@@ -845,7 +847,7 @@ Presentations”</p>
 
           
           <div class="method-source-code" id="user_email-source">
-            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 150</span>
+            <pre><span class="ruby-comment"># File app/models/presentation.rb, line 149</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">user_email</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">team_id</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">team</span>.<span class="ruby-identifier">email</span>

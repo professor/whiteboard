@@ -1,11 +1,11 @@
 class PeopleController < ApplicationController
   include ActionView::Helpers::AssetTagHelper
 
-  def controller;
-    self;
+  def controller
+    self
   end
 
-  ; private(:controller)
+  private(:controller)
 
   before_filter :authenticate_user!, :except => [:show_by_twiki]
 
@@ -19,22 +19,87 @@ class PeopleController < ApplicationController
 # GET /people
 # GET /people.xml
   def index
-    @people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
+    @people = User.Search(params)
+    
+    # Apply limit criteria
+    #if (params[:limit] != nil)
+    #  @people = @people.limit(params[:limit])
+    #end
+
+    # By default order by name
+    @people = @people.order("first_name ASC, last_name ASC").all
+
 
     respond_to do |format|
       format.html { render :html => @people }
-      format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-                                                                    "first_name" => person.first_name,
-                                                                    "last_name" => person.last_name,
-                                                                    "image_uri" => person.image_uri,
-                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+      # Formatting for JSON response
+      format.json { render :json => @people.collect { |person|
+        teams_array = person.teams.map(&:attributes)
+        teams_array.each do |team|
+          team["course_name"] = Course.find(team["course_id"]).short_name
+        end
+        Hash[
+          "id" => person.twiki_name,
+          "first_name" => person.first_name,
+          "last_name" => person.last_name,
+          "andrew_id" => person.webiso_account,
+          "title" => person.title,
+          "image_uri" => person.image_uri,
+          "team_names" => teams_array,
+          "masters_program" => person.masters_program,
+          "telephone1_label" => person.telephone1_label,
+          "telephone1" => person.telephone1,
+          "telephone2_label" => person.telephone2_label,
+          "telephone2" => person.telephone2,
+          "email" => person.email,
+          "company" => person.organization_name,
+        ].merge(person.telephones_hash)
+      }, :layout => false }
+      # Formatting for CSV response
+      format.csv { 
+        @return_string = "Name, Email, Telephone1, Telephone2\n"
+        @people.collect { |person|
+          @return_string += person.human_name + ', ' + person.email + ', ' # + person.telephone2 + "\n"
+          if (person.telephone1 != nil)
+            @return_string += person.telephone1
+          end
+          @return_string += ', '
+          if (person.telephone2 != nil)
+            @return_string += person.telephone2
+          end
+          @return_string += "\n"
+        }
+        send_data(@return_string, :type => 'text/csv;charset=iso-8859-1;', :filename => "search_results.csv", :disposition => 'attachment', :encoding => 'utf8')
+      }
+      # Formatting for VCARD response
+      format.vcf { 
+        @return_string = ""
+        @people.collect { |person|
+          @return_string += "BEGIN:VCARD\nVERSION:4.0"
+          @return_string += "FN: " + person.human_name + "\n"
+          
+          if (person.telephone1 != nil && person.telephone1_label != nil && person.telephone1 != "" && person.telephone1_label != "")
+            @return_string += "TEL;TYPE=" + person.telephone1_label + ";VALUE=uri:tel:" + person.telephone1+"\n"
+          end
+          if (person.telephone2 != nil && person.telephone2_label != nil && person.telephone2 != "" && person.telephone2_label != "")
+            @return_string += "TEL;TYPE=" + person.telephone2_label + ";VALUE=uri:tel:" + person.telephone2+"\n"
+          end
+          @return_string += "EMAIL: " + person.email + "\nEND:VCARD\n"
+        }
+        send_data(@return_string, :type => 'text/x-vcard;charset=iso-8859-1;', :filename => "search_results.vcf", :disposition => 'attachment', :encoding => 'utf8')
+      }
+
     end
+
   end
+
+
 
   #Ajax call for autocomplete using params[:term]
   def index_autocomplete
-    #if database is mysql
-    #@people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    # if database is mysql
+    # @people = User.where("human_name LIKE ?", "%#{params[:term]}%").all
+    # Modified because database is PostgreSQL
     @people = User.where("human_name ILIKE ?", "%#{params[:term]}%").all
 
     respond_to do |format|
@@ -42,6 +107,16 @@ class PeopleController < ApplicationController
       format.json { render :json => @people.collect { |person| person.human_name }, :layout => false }
     end
   end
+
+  #Ajax call for getting all company names
+  def get_companies
+    @people = User.all
+    respond_to do |format|
+      format.html { render :html => @people }
+      format.json { render :json => @people.collect { |person| person.organization_name }, :layout => false }
+    end
+  end
+
 
   def advanced
     index

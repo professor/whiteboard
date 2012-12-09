@@ -139,18 +139,18 @@ FactoryGirl.define do
 
   end
 
-  factory :your_name_here, :parent => :person do
+  factory :clydeli, :parent => :person do
     is_student 1
     is_part_time 0
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "FirstLast"
-    first_name "First"
-    last_name "Last"
-    human_name "Your Name"
-    email "your.email@sv.cmu.edu"
-    webiso_account "your.name@andrew.cmu.edu"
+    twiki_name "ClydeLi"
+    first_name "Clyde"
+    last_name "Li"
+    human_name "An-Tai Li"
+    email "clyde.li@sv.cmu.edu"
+    webiso_account "ali@andrew.cmu.edu"
   end
 
 end
@@ -163,7 +163,7 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:your_name_here)
+Factory.create(:clydeli)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 

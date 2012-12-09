@@ -377,6 +377,8 @@
   
     <li><a href="./UserPreference.html">UserPreference</a>
   
+    <li><a href="./UserSearch.html">UserSearch</a>
+  
     <li><a href="./UsersHelper.html">UsersHelper</a>
   
     <li><a href="./WelcomeController.html">WelcomeController</a>
@@ -456,12 +458,10 @@ change.)</p>
         <div class="method-description">
         
         <p>When assigning faculty to a page, the user types in a series of strings
-that then need to be processed :<a
-href="Course.html#attribute-i-faculty_assignments_override">#faculty_assignments_override</a>
-is a temporary variable that is used to do validation of the strings (to
-verify</p>
+that then need to be processed</p>
 
-<pre>that they are people in the system) and then to save the people in the faculty association.</pre>
+<pre>:faculty_assignments_override is a temporary variable that is used to do validation of the strings (to verify
+that they are people in the system) and then to save the people in the faculty association.</pre>
         
         </div>
       </div>
@@ -689,7 +689,7 @@ verify</p>
           <div class="method-source-code" id="remind_about_effort_course_list-source">
             <pre><span class="ruby-comment"># File app/models/course.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">remind_about_effort_course_list</span>
-  <span class="ruby-identifier">courses</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:remind_about_effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,  <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>, <span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span>  <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>(), <span class="ruby-value">:mini</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Both&quot;</span>).<span class="ruby-identifier">all</span>
+  <span class="ruby-identifier">courses</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:remind_about_effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>, <span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>(), <span class="ruby-value">:mini</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Both&quot;</span>).<span class="ruby-identifier">all</span>
   <span class="ruby-identifier">courses</span> = <span class="ruby-identifier">courses</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:remind_about_effort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">cwyear</span>, <span class="ruby-value">:semester</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_semester</span>(), <span class="ruby-value">:mini</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">current_mini</span>).<span class="ruby-identifier">all</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">courses</span>
 <span class="ruby-keyword">end</span></pre>
@@ -890,7 +890,7 @@ verify</p>
       <span class="ruby-keyword">return</span> <span class="ruby-value">12</span>
     <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">semester</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Fall&quot;</span> <span class="ruby-keyword">then</span>
       <span class="ruby-keyword">return</span> <span class="ruby-value">15</span>
-    <span class="ruby-keyword">else</span> 
+    <span class="ruby-keyword">else</span>
       <span class="ruby-keyword">return</span> <span class="ruby-value">16</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">else</span>
@@ -900,7 +900,7 @@ verify</p>
       <span class="ruby-keyword">return</span> <span class="ruby-value">7</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
- <span class="ruby-keyword">end</span></pre>
+<span class="ruby-keyword">end</span></pre>
           </div><!-- course_length-source -->
           
         </div>
@@ -1230,7 +1230,7 @@ verify</p>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty</span> = []
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty_assignments_override</span> = <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty_assignments_override</span> = <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span> }
   <span class="ruby-identifier">list</span> = <span class="ruby-identifier">map_faculty_strings_to_users</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty_assignments_override</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Error converting faculty_assignments_override to IDs!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty</span> = <span class="ruby-identifier">list</span>
@@ -1270,7 +1270,7 @@ same code in team.rb Todo - move to a higher class or try as a mixin</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_faculty</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">nil?</span>
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty_assignments_override</span> = <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty_assignments_override</span> = <span class="ruby-identifier">faculty_assignments_override</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span> }
   <span class="ruby-identifier">list</span> = <span class="ruby-identifier">map_faculty_strings_to_users</span>(<span class="ruby-identifier">faculty_assignments_override</span>)
   <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">nil?</span>
@@ -1317,7 +1317,7 @@ same code in team.rb Todo - move to a higher class or try as a mixin</p>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">email</span> = <span class="ruby-node">&quot;#{self.semester}-#{self.year}-#{self.number}&quot;</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/ /</span>, <span class="ruby-string">'-'</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;@&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">GOOGLE_DOMAIN</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">email</span> = <span class="ruby-identifier">email</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">'&amp;'</span>,<span class="ruby-string">'and'</span>)
+  <span class="ruby-identifier">email</span> = <span class="ruby-identifier">email</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">'&amp;'</span>, <span class="ruby-string">'and'</span>)
   <span class="ruby-identifier">email</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-string">'@west.cmu.edu'</span>, <span class="ruby-string">'@sv.cmu.edu'</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- build_email-source -->
@@ -1443,7 +1443,7 @@ same code in team.rb Todo - move to a higher class or try as a mixin</p>
             <pre><span class="ruby-comment"># File app/models/course.rb, line 286</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_distribution_list</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">updating_email</span>
-    <span class="ruby-identifier">recipients</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty</span> <span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">registered_students</span> <span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>}.<span class="ruby-identifier">flatten</span>
+    <span class="ruby-identifier">recipients</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">faculty</span> <span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">registered_students</span> <span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span> }.<span class="ruby-identifier">flatten</span>
     <span class="ruby-constant">Delayed</span><span class="ruby-operator">::</span><span class="ruby-constant">Job</span>.<span class="ruby-identifier">enqueue</span>(<span class="ruby-constant">GoogleMailingListJob</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>, <span class="ruby-identifier">recipients</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email</span>, <span class="ruby-string">&quot;Course distribution list&quot;</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>, <span class="ruby-string">&quot;courses&quot;</span>))
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

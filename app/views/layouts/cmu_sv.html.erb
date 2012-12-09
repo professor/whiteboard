@@ -9,14 +9,15 @@
   <%# stylesheet_link_tag '/cmu_sv_standard_v4/reset.css', :media => "all", :rel => "stylesheet" %>
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
+  <%= stylesheet_link_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css' %>
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js",
-                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js",
+                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js",
                              "jquery_ujs.js",
                              "tablesorter",
                              "tablesorter_filter",
                              "application" %>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all"/>
+  <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all"/>-->
 
   <%= yield :tablesorter %>
 
@@ -30,6 +31,7 @@
   <%= stylesheet_link_tag '/cmu_sv_standard_v4/print.css', :media => "print" %>
   <%= stylesheet_link_tag 'scaffold' %>
 
+  <%= yield :people_search if content_for :people_search %>
 
   <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
   <%= yield :javascript %>

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "phone book" do
-
+=begin
   before do
    visit('/')
    @user = FactoryGirl.create(:student_sam)
@@ -35,5 +35,5 @@ describe "phone book" do
     end
 
   end
-
+=end
 end

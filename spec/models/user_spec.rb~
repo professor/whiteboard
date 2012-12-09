@@ -1,0 +1,457 @@
+require 'spec_helper'
+require "cancan/matchers"
+
+describe User do
+
+  before do
+    User.delete_all
+
+  end
+
+  # People search tests by Team Maverick
+
+  context "People Search" do
+    before do
+      @faculty_allen = FactoryGirl.create(:faculty_allen)
+      @faculty_ed = FactoryGirl.create(:faculty_ed)
+      @faculty_todd = FactoryGirl.create(:faculty_todd)
+      @student_shama  = FactoryGirl.create(:student_shama)
+      @student_rashmi  = FactoryGirl.create(:student_rashmi)
+      @student_clyde  = FactoryGirl.create(:student_clyde)
+      @student_vidya  = FactoryGirl.create(:student_vidya)
+      @student_sally_user = FactoryGirl.create(:student_sally_user)
+      @student_sam_user = FactoryGirl.create(:student_sam_user)
+      @alumnus_sunil = FactoryGirl.create(:alumnus_sunil)
+      @alumnus_memo = FactoryGirl.create(:alumnus_memo)
+      @alumnus_sean = FactoryGirl.create(:alumnus_sean)
+    end
+
+    it "should do partial search case - default" do
+      params_hash = {'main_search_text' => 'sh', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_shama, @student_rashmi]
+    end
+
+    it "should do partial search case - only first name" do
+      params_hash = {'main_search_text' => 'sha', 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_shama]
+    end
+
+    it "should do partial search case - first name disabled" do
+      params_hash = {'main_search_text' => 'hoq', 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_shama]
+    end
+
+    it "should do partial search case - no match" do
+      params_hash = {'main_search_text' => 'abc', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == []
+    end
+
+    it "should only search in andrew ID" do
+      params_hash = {'main_search_text' => 'clyde', 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == []
+    end
+
+    it "should search in andrew ID - default" do
+      params_hash = {'main_search_text' => 'ali', 'first_name' => true, 'last_name' => true, 'andrew_id' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_clyde]
+    end
+
+
+    it "should do exact match search case - default" do
+      params_hash = {'main_search_text' => 'Alle', 'first_name' => true, 'last_name' => true, 'andrew_id' => true, 'exact_match' => true }
+      @users = User.Search(params_hash)
+      @users.should == []
+    end
+
+    #program
+    it "should search by program - all students in program" do
+      params_hash = {'main_search_text' => "", 'program' => "SE_TECH",'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@student_shama]
+    end
+
+
+    it "should not return people in other programs" do
+      params_hash = {'main_search_text' => "", 'program' => "SM", 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should include @student_clyde
+      @users.should_not include @student_shama, @student_rashmi
+    end
+
+    #company_name
+    it "should search by company name" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "google", 'first_name' => true, 'last_name' => true }
+      @users=User.Search(params_hash)
+      @users.should == [@faculty_allen, @student_clyde ]
+    end
+
+    it "should not include people at other companies" do
+      params_hash = {'main_search_text' => "", 'organization_name' => "HP", 'first_name' => true }
+      @users=User.Search(params_hash)
+      @users.should_not include @student_clyde, @faculty_allen
+    end
+
+    it "should search students by class year" do
+      params_hash = {'class_year' => '2013'}
+      @users = User.Search(params_hash)
+      @users.should == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    end
+
+    it "should not search students by class year other than given year" do
+      params_hash = {'class_year' => '2014'}
+      @users = User.Search(params_hash)
+      @users.should_not == [@student_shama, @student_rashmi, @student_clyde, @student_vidya]
+    end
+
+    it "should search all students" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.Search(params_hash)
+      @users.should include @student_sam_user, @student_sally_user, @student_vidya, @student_clyde,  @student_rashmi, @student_shama
+    end
+
+    it "should search alumni" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.Search(params_hash)
+      @users.should == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+    end
+
+    it "should search staff" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.Search(params_hash)
+      @users.should == [@faculty_todd, @faculty_ed, @faculty_allen]
+    end
+
+    it "should not search alumni if staff is selected" do
+      params_hash = {'people_type' => 'staff'}
+      @users = User.Search(params_hash)
+      @users.should_not == [@alumnus_sunil, @alumnus_memo, @alumnus_sean]
+    end
+
+    it "should not search staff if student is selected" do
+      params_hash = {'people_type' => 'student'}
+      @users = User.Search(params_hash)
+      @users.should_not == [@faculty_allen, @faculty_ed, @faculty_todd]
+    end
+
+    it "should not search students/staff if alumni is selected" do
+      params_hash = {'people_type' => 'alumnus'}
+      @users = User.Search(params_hash)
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya, @student_sally_user, @student_sam_user, @faculty_allen
+    end
+
+
+    it "should search students by part time" do
+      params_hash = {'is_part_time' => true}
+      @users = User.Search(params_hash)
+      @users.should include @student_sally_user, @student_sam_user, @faculty_allen
+      @users.should_not include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+    end
+
+    it "should search students by full time" do
+      params_hash = {'is_part_time' => false}
+      @users = User.Search(params_hash)
+      @users.should include @student_shama, @student_rashmi, @student_clyde, @student_vidya
+      @users.should_not include @student_sally_user, @student_sam_user, @faculty_allen
+    end
+
+
+# for iteration 2 Team Maverick
+=begin
+    context "When people belong to teams" do
+      before do
+        @team_maverick = FactoryGirl.create(:team_maverick)
+        @team_cooper = FactoryGirl.create(:team_cooper)
+        @team_leffingwell = FactoryGirl.create(:team_leffingwell)
+      end
+
+      it "clyde should belongs to Team Maverick and Team Cooper" do
+        @student_clyde.teams.should == [:team_maverick, :team_cooper]
+      end
+
+    end
+=end
+
+  end
+
+# end of Team Maverick's test
+  context "Other tests" do
+    before do
+      # this list must not be sorted alphabetically
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+      @admin_andy = FactoryGirl.create(:admin_andy)
+    end
+
+  describe "abilities" do
+    subject { ability }
+    let(:ability){ Ability.new(user) }
+
+
+    context "when is a contracts manager" do
+      let(:user){ FactoryGirl.create(:contracts_manager_user) }
+      it{ should be_able_to(:manage, SponsoredProjectAllocation.new) }
+      it{ should be_able_to(:manage, SponsoredProjectEffort.new) }
+      it{ should be_able_to(:manage, SponsoredProjectSponsor.new) }
+      it{ should be_able_to(:manage, SponsoredProject.new) }
+    end
+  end
+
+
+
+  describe "user's teams" do
+
+    it "should format teams" do
+      @team_triumphant = FactoryGirl.create(:team_triumphant)
+      teams = [@team_triumphant, @team_triumphant]
+      subject.formatted_teams(teams).should == "Team Triumphant, Team Triumphant"
+#      teams = [FactoryGirl.create(:team, :name => "Team Awesome"), FactoryGirl.create(:team, :name => "Team Beautiful")]
+#      subject.formatted_teams(teams).should == "Team Awesome, Team Beautiful"
+    end
+  end
+
+
+  context "photo upload" do
+    before(:each) do
+      @student_sam = FactoryGirl.create(:student_sam)
+    end
+
+
+      it "accepts PNG files" do
+        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
+        @student_sam.should be_valid
+      end
+
+      it "accepts GIF files" do
+        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
+        @student_sam.should be_valid
+      end
+
+      it "should update image_uri after photo is uploaded", :skip_on_build_machine => true do
+        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
+        @student_sam.save!
+        @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
+      end
+
+  end
+
+  context "webiso account" do
+
+     it "defaults to user.update_webiso_account if blank" do
+       user = User.new
+       user.update_webiso_account
+       (Time.at(Time.now.to_f) - Time.at(Float(user.webiso_account))).should be < 1.second
+     end
+
+   end
+  describe 'Custom Finders' do
+
+      it "should have a named scope staff" do
+        Person.should respond_to(:staff)
+      end
+
+      it 'finds all staff' do
+        #Person.staff.should =~ [@admin_andy, @faculty_frank]
+        staff = Person.staff
+        staff.length.should == 3
+        staff.include?(@admin_andy).should be_true
+        staff.include?(@faculty_fagan).should be_true
+        staff.include?(@faculty_frank).should be_true
+      end
+
+      it 'ordered by human name' do
+        staff = Person.staff
+        staff[0].should == @admin_andy
+        staff[1].should == @faculty_fagan
+        staff[2].should == @faculty_frank
+      end
+
+
+    end
+
+
+    it "should allow for StrengthFinder/StrengthQuest themes" do
+      subject.should respond_to(:strength1)
+      subject.should respond_to(:strength2)
+      subject.should respond_to(:strength3)
+      subject.should respond_to(:strength4)
+      subject.should respond_to(:strength5)
+
+      user = FactoryGirl.build(:strength_quest)
+      user.strength1.theme.should be_kind_of(String)
+    end
+
+    describe "permission levels" do
+      before(:each) do
+        @student_sam = FactoryGirl.create(:student_sam)
+      end
+
+      it "can respond to " do
+        subject.should respond_to(:permission_level_of)
+      end
+
+      it "faculty can do faculty and admin activities" do
+        @faculty_frank.permission_level_of(:admin).should == false
+        @faculty_frank.permission_level_of(:staff).should == true
+        @faculty_frank.permission_level_of(:student).should == true
+      end
+
+      it "admin can do all activities" do
+        @admin_andy.permission_level_of(:admin).should == true
+        @admin_andy.permission_level_of(:staff).should == true
+        @admin_andy.permission_level_of(:student).should == true
+      end
+
+      it "student can only do student activities" do
+        @student_sam.permission_level_of(:admin).should == false
+        @student_sam.permission_level_of(:staff).should == false
+        @student_sam.permission_level_of(:student).should == true
+      end
+    end
+
+    describe "emailed_recently" do
+      before(:each) do
+        @student_sam = FactoryGirl.create(:student_sam)
+      end
+
+      context "for effort logs" do
+        it "should be false if they've never received an email" do
+          @student_sam.effort_log_warning_email = nil
+          @student_sam.emailed_recently(:effort_log).should == false
+        end
+
+        it "should be false if they were emailed a while ago" do
+          @student_sam.effort_log_warning_email = 4.days.ago
+          @student_sam.emailed_recently(:effort_log).should == false
+        end
+
+        it "should be true if they were just emailed" do
+          @student_sam.effort_log_warning_email = 1.hour.ago
+          @student_sam.emailed_recently(:effort_log).should == true
+        end
+      end
+
+      context "for sponsored project effort" do
+        it "should be false if they've never received an email" do
+          @student_sam.sponsored_project_effort_last_emailed = nil
+          @student_sam.emailed_recently(:sponsored_project_effort).should == false
+        end
+
+        it "should be false if they were emailed a while ago" do
+          @student_sam.sponsored_project_effort_last_emailed = 4.days.ago
+          @student_sam.emailed_recently(:sponsored_project_effort).should == false
+        end
+
+        it "should be true if they were just emailed" do
+          @student_sam.sponsored_project_effort_last_emailed = 1.hour.ago
+          @student_sam.emailed_recently(:sponsored_project_effort).should == true
+        end
+      end
+
+    end
+
+    context "is versioned" do
+
+      before(:each) do
+        @student_sam = FactoryGirl.create(:student_sam)
+        @version_number = @student_sam.version
+      end
+
+      it "normally" do
+        @student_sam.first_name = "New"
+        @student_sam.save
+        @student_sam.version.should == (@version_number+1)
+      end
+
+      it "except when effort log email was sent" do
+        @student_sam.effort_log_warning_email = Time.now
+        @student_sam.save
+        @student_sam.version.should == (@version_number)
+      end
+
+      it "except when sponsored project email was sent" do
+        @student_sam.sponsored_project_effort_last_emailed = Time.now
+        @student_sam.save
+        @student_sam.version.should == (@version_number)
+      end
+
+    end
+
+    describe "person's registered courses" do
+      # TODO: courses registered - as not tested in the course model
+
+    end
+
+    context "twiki name parsing" do
+      it "finds the correct first and last name" do
+        twiki_names = {}
+        twiki_names["StudentSam"] = ["Student", "Sam"]
+        twiki_names["TestUser4"] = ["Test", "User4"]
+        twiki_names["DenaHaritosTsamitis"] = ["Dena", "HaritosTsamitis"]
+        twiki_names["GordonMcCreight"] = ["Gordon", "McCreight"]
+
+        twiki_names.each do |twiki_name, expected_names|
+          names = Person.parse_twiki(twiki_name)
+          assert_equal(names[0], expected_names[0])
+          assert_equal(names[1], expected_names[1])
+        end
+      end
+
+    end
+
+
+    context "can create_google_email(password)" do
+      before(:each) do
+        @student_sam = FactoryGirl.create(:student_sam)
+      end
+
+      it " is successful" do
+        ProvisioningApi.any_instance.stub(:create_user).and_return(:some_value)
+        password = "just4now"
+        @student_sam.email = "student.sam@sandbox.sv.cmu.edu"
+        status = @student_sam.create_google_email(password)
+        status.should_not be_is_a(String) #If it is a string, should be error message
+      end
+
+      it " errors when no email is provided" do
+        ProvisioningApi.any_instance.stub(:create_user).and_return("Empty email address")
+        password = "just4now"
+        @student_sam.email = ""
+        status = @student_sam.create_google_email(password)
+        status.should == "Empty email address"
+        status.should be_is_a(String)
+      end
+    end
+
+
+  context "registered_for_these_courses_during_current_semester" do
+
+    it "a student is 'registered' if we have data from the HUB" do
+      @student_sam = FactoryGirl.create(:student_sam)
+      @course = FactoryGirl.create(:fse_current_semester)
+      @student_sam.registered_courses = [@course]
+      @student_sam.save
+      @student_sam.registered_for_these_courses_during_current_semester.should == [@course]
+    end
+
+    it "a student is 'registered' if the faculty has put the student on a team" do
+      @team_triumphant = FactoryGirl.create(:team_triumphant)
+      @course = @team_triumphant.course
+      @student = @team_triumphant.members[0]
+      @student.registered_for_these_courses_during_current_semester.should == [@course]
+    end
+
+
+  end
+
+    # More tests
+    # Effort log should only be set for person that is_student - tested in effort_log
+    # Graduation_year should be set for person that is_student
+
+    end
+end
