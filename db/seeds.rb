@@ -4,7 +4,7 @@
 # Examples:
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)             
+#   Mayor.create(:name => 'Daley', :city => cities.first)
 
 
 require 'factory_girl'
@@ -141,18 +141,19 @@ FactoryGirl.define do
 
   end
 
+
   factory :your_name_here, :parent => :person do
     is_student 1
     is_part_time 0
     graduation_year "2012"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "Zhipeng"
-    first_name "Li"
+    twiki_name "FirstLast"
+    first_name "First"
     last_name "Last"
     human_name "Your Name"
-    email "zhipeng.li@sv.cmu.edu"
-    webiso_account "zhipengl@andrew.cmu.edu"
+    email "your.email@sv.cmu.edu"
+    webiso_account "your.name@andrew.cmu.edu"
   end
 
 end
