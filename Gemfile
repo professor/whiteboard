@@ -28,7 +28,7 @@ gem 'indextank'
 
 #gem 'oauth'
 
-gem 'heroku'
+#gem 'heroku'
 gem 'paperclip'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'

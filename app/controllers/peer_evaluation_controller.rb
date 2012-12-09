@@ -147,7 +147,7 @@ class PeerEvaluationController < ApplicationController
     alloc_counter = 0
     alloc_answer = ""
     @users.each do |user|
-      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter] + " "
+      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter.to_s] + " "
       alloc_counter += 1
     end
 
@@ -220,7 +220,7 @@ class PeerEvaluationController < ApplicationController
       @users = @team.members
       @users.each do |user|
         #Step 1 save feedback
-        feedback = params[:peer_evaluation_report][user.to_s][:feedback]
+        feedback = params[:peer_evaluation_report][user.id.to_s][:feedback]
         report = PeerEvaluationReport.where(:recipient_id => user.id, :team_id => @team.id).first
         if report.nil?
           report = PeerEvaluationReport.new(:recipient_id => user.id, :team_id => @team.id, :feedback => feedback)

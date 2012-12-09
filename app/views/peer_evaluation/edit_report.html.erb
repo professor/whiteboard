@@ -24,7 +24,7 @@ Once you are done editing the reports, the last button allows you to email the r
 
     <% @users.each do |user| %>
         <%= user.human_name %><br />
-        <%= f.text_area :feedback, :index => usercounter, :value => @reportArray[usercounter], :size => "95x20" %><br />
+        <%= f.text_area :feedback, :index => user.id, :value => @reportArray[usercounter], :size => "95x20" %><br />
         <%= f.submit 'Save All Reports', :onclick => "confirmation_needed = false;" %><br /><br/>
         <% usercounter += 1 %>
     <% end %>

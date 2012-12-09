@@ -2,7 +2,7 @@
     var confirmation_needed = true;
     window.onbeforeunload = confirmExit;
 </script>
-<%= form_for @feedback, :url => new_presentation_feedback_path, :html => {:multipart => true} do |f| %>
+<%= form_for @feedback, :url => destination_url, :html => {:multipart => true} do |f| %>
     <% if @feedback.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this page from being saved:</h2>
@@ -17,21 +17,22 @@
 
     <%= f.hidden_field(:presentation_id) %>
 
-    <% @questions.each do |question| %>
+    <% @questions.each_with_index do |question, index| %>
         <h2><%= question.label %></h2>
         <p>
           <%= question.text %>
         <div>
           <% @eval_options.each do |key, value| %>
               <div>
-                <%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key %>
+                <% is_checked = (key == @ratings[index]) %>
+                <%= radio_button_tag "evaluation[#{question.id.to_s}][rating]", key, is_checked %>
                 <span><%= value %></span>
               </div>
           <% end %>
         </div>
         <br/>
         <div>
-          <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", nil, :size => "95x5" %>
+          <span>Comments: (optional)</span><br/><%= text_area_tag "evaluation[#{question.id.to_s}][comment]", @comments[index], :size => "95x5" %>
         </div>
         <br/>
         </p>

@@ -14,9 +14,12 @@ class User < ActiveRecord::Base
       user.course_tools_view_changed? ||
       user.course_index_view_changed? ||
       user.google_created_changed? ||
-      user.twiki_created? ||
-      user.is_profile_valid?
-      ) }
+      user.remember_token_changed? ||
+      user.remember_created_at_changed? ||
+      user.last_sign_in_at_changed? ||
+      user.current_sign_in_at_changed? ||
+      user.sign_in_count_changed? ||
+      user.twiki_created?) }
 
   has_many :registrations
   has_many :registered_courses, :through => :registrations, :source => :course
@@ -380,6 +383,7 @@ class User < ActiveRecord::Base
     # update the image_uri if a photo was uploaded
     self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
 
+    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
   end
 
 

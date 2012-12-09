@@ -137,7 +137,7 @@ describe Team do
       @faculty_frank = FactoryGirl.create(:faculty_frank_user)
       @student_sam = FactoryGirl.create(:student_sam_user)
       @student_sally = FactoryGirl.create(:student_sally_user)
-      @course = FactoryGirl.create(:course, :configure_teams_name_themselves => false)
+      @course = FactoryGirl.create(:course)
       @team = FactoryGirl.create(:team, :course_id => @course.id, :name => "Dracula", :members => [@student_sam, @student_sally])
     end
 

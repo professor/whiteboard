@@ -1,13 +1,29 @@
 CMUEducation::Application.routes.draw do
+
+  #temporary for Mel
+  match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course', :as => :individual_deliverables
+  match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course', :as => :team_deliverables
+
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
+    get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
+
+  constraints(:host => /rails.sv.cmu.edu/) do
+    match "/*path" => redirect {|params, req| "http://whiteboard.sv.cmu.edu/#{params[:path]}"}
+  end
+
   resources :search, :only => [:index]
   resources :deliverables
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
   match '/deliverables/:id/feedback' => 'deliverables#edit_feedback', :as => :deliverable_feedback
+  match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
+  match '/presentations/:id/edit_feedback' => 'presentations#update_feedback', :via => :put
+  match '/presentations/:id/edit_feedback' => 'presentations#edit_feedback', :as => :edit_feedback_for_presentation, :via => :get
   match '/presentations/:id/feedback' => 'presentations#create_feedback', :via => :post
   match '/presentations/:id/feedback' => 'presentations#new_feedback', :as => :new_presentation_feedback, :via => :get
-  match '/presentations/:id/show_feedback' => 'presentations#show_feedback', :as => :show_feedback_for_presentation, :via => :get
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
@@ -77,6 +93,8 @@ CMUEducation::Application.routes.draw do
   match '/people_vcf' => 'people#download_vcf'
 
   match '/people/class_profile' => 'people#class_profile'
+  match '/people/ajax_check_if_email_exists' => 'people#ajax_check_if_email_exists'
+  match '/people/ajax_check_if_webiso_account_exists' => 'people#ajax_check_if_webiso_account_exists'
   match '/people/advanced' => 'people#advanced' #Just in case anyone bookmarked this url
   match '/people/photo_book' => 'people#photo_book'
   match '/people/:id/my_courses_verbose' => 'people#my_courses_verbose', :as => :my_courses
@@ -87,10 +105,7 @@ CMUEducation::Application.routes.draw do
   resources :suggestions
   match '/teams' => 'teams#index_all', :as => :teams
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
-    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
-    get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
-  end
+
 
   #resources :users
   #resource :user_session
