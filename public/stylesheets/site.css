@@ -358,3 +358,74 @@ div.modified {
 #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
 #sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
 
+
+/************************ 
+ * User Profile Page 
+*************************/
+
+.user_profile_content{
+    overflow: auto;
+    margin-top: 10px;
+    widows: 700px;
+}
+.user_profile_content h2{
+    padding-top: 5px;
+}
+.user_profile_photo_social{
+    float:left;
+    margin-left: 5px;
+}
+    .user_profile_photo{
+        width:155px;    
+        float:left;
+        margin-bottom: 5px;
+    }
+.user_profile_title, .user_profile_bio{
+    float: left;
+    width: 70%;
+    margin: 0 0 0 15px;
+    padding: 0px 0 0 20px;
+}
+    #user_profile_name{
+        float:left;
+        margin-top:0;
+    }
+    .user_profile_action{
+        float:right;
+    }
+    #user_profile_dtls{
+        float:left;
+        clear:left;
+    }
+.user_profile_bio{
+    width: 68%;
+    margin: 15px 0 0 15px;
+}
+.user_profile_about, .user_profile_contact_details {
+    widows: 630px;
+    float:left;
+    margin: 15px 0 0 15px;
+    padding: 0px 20px;
+}
+    .user_profile_about_header, .user_profile_contact_details_header{
+        text-align: right;
+        float: left;
+        width: 20%;    
+    }
+        .user_profile_about_me_text {
+            width: 450px;
+            float: right;
+            margin: 20px 0 0 0;
+        }
+.user_profile_org, .user_profile_contact_details_content {
+    width: 65%;
+    float: right;
+    margin: 10px 53px 0 0;
+}
+    .user_profile_org table, .user_profile_contact_details_content table{
+        width: 450px;
+    }
+    .user_profile_org table tr td:first-child,
+    .user_profile_contact_details_content table tr td:first-child {
+        width: 30%;
+    }
