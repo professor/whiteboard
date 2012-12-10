@@ -88,7 +88,7 @@ function Grade(type, mapping, weight)
         term = "%";
       var text = earned_grade+ term;
       if(percentage != ""){
-          text += " (" + percentage + "%)  ";
+          text += " (" + percentage + "%)";
           $("tr#s_" +student_id + " .performance").text(this.get_final(percentage));
       }
 

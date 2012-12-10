@@ -205,6 +205,7 @@
     .final{
         border-right-width: 1px;
     }
+
   </style>
   <h1><%=@course.name %></h1>
 
@@ -222,18 +223,18 @@
       </tr>
     </table>
   </div>
-  <div style="padding-right: 30px;">
+  <div>
   <div class="score">
-    <table class="cmu_table sortable" style="margin-right: 50px;border-width: 0;">
+    <table class="cmu_table sortable" style="border-width: 0;">
       <thead>
         <tr>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="1"> First Name
+          <th style='max-width:78px; word-wrap:break-word;'> First Name
           </th>
-          <th style='max-width:78px; word-wrap:break-word;' rowspan="1"> Last Name </th>
-          <th rowspan="1"> Team </th>
+          <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
+          <th> Team </th>
           <% @assignments.each do |assignment| %>
-            <th rowspan="1" style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
-              <%="#{assignment.try(:short_name) || assignment.name}"%><br/>
+            <th style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
+              <%="#{assignment.try(:short_name) || assignment.try(:name) || ''}"%><br/>
               <span style="font-weight: normal;white-space: nowrap;">(
               <% case GradingRule.get_grade_type @course.id %>
               <%when "points" %>
@@ -244,11 +245,9 @@
               )</span>
             </th>
           <%end %>
-          <th rowspan="1" style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
-          <th rowspan="1" style="white-space: nowrap;">Earned <br/> Letter Grades</th>
-          <th style="white-space: nowrap;">
-            Final <br/> Letter Grades
-          </th>
+          <th style="white-space: nowrap;">Earned Grades<br/>(Performance)</th>
+          <th style="white-space: nowrap;">Earned <br/> Letter Grades</th>
+          <th style="white-space: nowrap;">Final <br/> Letter Grades</th>
         </tr>
 
         <!--
@@ -278,7 +277,7 @@
             <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
                    value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
                    type="text" size="4" width="100%"
-                   tabindex="<%=assignment.task_number*10+assignment.assignment_order %>"
+                   tabindex="<%=(assignment.try(:task_number) || 0)*10+assignment.assignment_order %>"
                    class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
           </td>
         <% end %>

@@ -19,9 +19,8 @@
     <th>Task</th>
     <th><%=get_customised_name%> Name</th>
     <th>Type</th>
-    <th>Due Date</th>
-    <th>Grade</th>
-    <th>Actions</th>
+    <th>Due Date <br/>(Pacific)</th>
+    <th style="width:100px;">Grade</th>
   </tr>
   </thead>
 
@@ -44,29 +43,24 @@
           I
         <% end %>
       </td>
-
-      <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
-
+      <td>
+        <%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")}"  %>
+      </td>
       <% grade = assignment.get_student_grade(current_user.id)  %>
       <td>
         <% if grade.nil? || !grade.is_student_visible %>
-          Not graded
-        <% else %>
-          <%= grade.score %>
-        <% end  %>
-      </td>
-      <td>
-        <% if assignment.is_submittable?%>
-          <% if deliverable.nil? %>
-            <%= link_to 'Submit deliverable', new_deliverable_path %>
-          <% else %>
-            <% if grade.nil? || !grade.is_student_visible %>
-              <%= link_to 'Resubmit deliverable', deliverable %>
-            <% else  %>
-              <%= link_to 'View Feedback', deliverable %>
+
+            <% if deliverable.nil? && assignment.is_submittable %>
+                <%= link_to 'Submit deliverable', new_deliverable_path %>
+            <% elsif grade.nil? || !grade.is_student_visible %>
+                Not graded
+                <% if assignment.is_submittable %>
+                    <br/><%= link_to 'Resubmit deliverable', deliverable %>
+                <%end%>
             <%end%>
-          <% end %>
-        <% end %>
+        <% else %>
+          <%= link_to "#{grade.score}/#{assignment.maximum_score}", deliverable  %>
+        <% end  %>
       </td>
     </tr>
   <% end %>
@@ -79,7 +73,7 @@
       <td>Final Grade</td>
       <td>I</td>
       <td></td>
-      <td><%=Grade.get_final_grade(course.id, current_user.id)%></td>
+      <td><%= Grade.get_final_grade(course.id, current_user.id).presence || "Not graded"%></td>
       <td>&nbsp;</td>
     </tr>
   <% end %>

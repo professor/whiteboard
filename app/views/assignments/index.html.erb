@@ -1,18 +1,20 @@
 <script>
   $(window).load(function(){
+    calculate();
+  });
+  function calculate(){
       var total_score = 0, individual_score = 0, team_score = 0;
       $(".max_score").each(function(){
           total_score += parseFloat($(this).text());
           if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Individual")
-            individual_score += parseFloat($(this).text());
+              individual_score += parseFloat($(this).text());
           if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Team")
               team_score += parseFloat($(this).text());
       });
       var unit=" Pts";
       if("<%=get_customised_grade_type%>" != "Points") unit = " %";
       $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
-
-  });
+  }
 </script>
 <% customised_name= get_customised_name %>
 <h1>Listing <%= customised_name %></h1>
