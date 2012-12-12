@@ -50,6 +50,7 @@ class DeliverablesController < ApplicationController
   def show
     @deliverable = Deliverable.find(params[:id])
     @course = @deliverable.course
+    @hostname_with_port = request.host_with_port
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
       redirect_to root_path and return

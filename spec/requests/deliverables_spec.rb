@@ -12,6 +12,7 @@ describe "deliverables" do
     @assignment.stub(:deliverables).and_return([@team_deliverable])
     @assignment.stub(:get_student_grade).with(@user.id).and_return(@grade)
     @assignment.stub(:get_student_deliverable).with(@user.id).and_return(@team_deliverable)
+    @assignment.stub(:maximum_score).and_return(20.0)
     @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"hi",:deliverable_id=>@team_deliverable.id,:submitter_id=>@user.id)
 
   end
@@ -47,8 +48,9 @@ describe "deliverables" do
 
     context "I should" do
       it " not be able to view professor's notes" do
-        page.should have_content("View History and Feedback")
-        click_link "View History and Feedback"
+        action_link = @grade.score + "/" + @assignment.maximum_score.to_s
+        page.should have_content(action_link)
+        click_link action_link
      #   visit deliverable_path(@team_deliverable)
 
         page.should have_content("Attachment Version History")

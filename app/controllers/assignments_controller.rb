@@ -78,7 +78,6 @@ class AssignmentsController < ApplicationController
   def update
     @assignment = Assignment.find(params[:id])
     deliverable_submitted=Deliverable.find_all_by_assignment_id(@assignment.id).first
-    puts "Deliverable"+deliverable_submitted.to_s
     deliverable_status=0;
     unless deliverable_submitted.nil?
       if @assignment.is_team_deliverable.to_s!= params[:assignment]["is_team_deliverable"]

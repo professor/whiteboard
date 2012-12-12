@@ -114,24 +114,6 @@ class Grade < ActiveRecord::Base
     end
   end
 
-  # To send the feedback to the student.
-  def send_feedback_to_student(hostname)
-    if assignment_id > 0
-      feedback = make_feedback_for_one_assignment
-    else
-      feedback = make_feedback_for_final_grade
-    end
-    url = hostname + "/people/#{self.student_id}/my_deliverables"
-    options = {:to => self.student.email,
-               :subject => "Grade for " + self.course.name,
-               :message => feedback,
-               :url_label => "Click here to view grade",
-               :url => url
-              }
-
-    GenericMailer.email(options).deliver
-  end
-
   # To notify students about the grade that were drafted by professor till now.
   def self.mail_drafted_grade(course_id, hostname)
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
@@ -223,11 +205,6 @@ class Grade < ActiveRecord::Base
     grade_book.write(file_path)
   end
 
-  def self.find_student_team course_id, student_id
-    team = User.find(student_id).teams.find_by_course_id(course_id)
-    return team
-  end
-
 private
   # To make the email body for the assignment graded by professor
   def make_feedback_for_one_assignment
@@ -251,6 +228,23 @@ private
     feedback += self.course.name + "\n"
   end
 
+  # To send the feedback to the student.
+  def send_feedback_to_student(hostname)
+    if assignment_id > 0
+      feedback = make_feedback_for_one_assignment
+    else
+      feedback = make_feedback_for_final_grade
+    end
+    url = hostname + "/people/#{self.student_id}/my_deliverables"
+    options = {:to => self.student.email,
+               :subject => "Grade for " + self.course.name,
+               :message => feedback,
+               :url_label => "Click here to view grade",
+               :url => url
+    }
+
+    GenericMailer.email(options).deliver
+  end
 
   # To validate the course and assignment when importing a file
   def self.validate_first_row(row, current_course_id)
@@ -264,7 +258,6 @@ private
     if course.nil? || course.id!=current_course_id
       return false
     end
-
 
     # check assignment IDs
     is_found_final_grade_col = false
@@ -292,7 +285,6 @@ private
         return false
       end
     end
-
     return true
   end
 
@@ -343,6 +335,11 @@ private
     end
   end
 
+  # To find the team to which the student is assigned
+  def self.find_student_team(course_id, student_id)
+    User.find(student_id).teams.find_by_course_id(course_id)
+  end
+
   # To encrypt the final scores.
   def self.encrypt_score(raw_score, course_id, student_id)
     # FIXME: get salt from somewhere else
@@ -370,7 +367,7 @@ private
     return encrypted_score
   end
 
-private
+  # To load salt from yml file
   def self.salt
     @salt = YAML.load_file("#{Rails.root}/config/salt.yml")[Rails.env]['salt']
   end

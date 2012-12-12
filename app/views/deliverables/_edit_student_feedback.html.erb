@@ -54,12 +54,11 @@
         <%= f.text_area :feedback_comment, :size => "90x10" %>
         </p>
 
-
         <% unless @deliverable.is_visible_to_student? %>
         </div>
       <% end %>
 
-      </br>
+      <br />
 
       <div class="rounded staff">
         <%= professor_image %>
@@ -72,15 +71,10 @@
         <p>
         <%= f.text_area :private_note, :size => "90x10" %>
         </p>
-
       </div>
 
+      <br /><br /><br />
 
-      </br>
-
-
-
-      </br><br>
       <p>
       <div style="float: left; width: auto;">
         <%= f.submit "Save and Email" , :name=>"submit"%>

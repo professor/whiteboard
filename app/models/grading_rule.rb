@@ -84,7 +84,6 @@ class GradingRule < ActiveRecord::Base
    end
   end
 
-
   # To display the preferred name of assignment
   def to_display
     if self.is_nomenclature_deliverable?
@@ -125,7 +124,6 @@ class GradingRule < ActiveRecord::Base
 private
   # To generate the mapping rule for converting grades into points
   def mapping_rule
-
     @mapping_rule = {}
     prev = 100
     ["A_grade_min", "A_minus_grade_min", "B_plus_grade_min", "B_grade_min", "B_minus_grade_min", "C_plus_grade_min", "C_grade_min", "C_minus_grade_min"].each do |attr_name|
@@ -139,7 +137,6 @@ private
       ["R","W","I"].each do |attr|
         @mapping_rule[attr] = 0
       end
-
     end
     @mapping_rule
   end

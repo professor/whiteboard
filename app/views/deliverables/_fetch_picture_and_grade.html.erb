@@ -12,7 +12,7 @@
     <% end %>
   </div>
   <div style="text-align: center;">
-  <a href='http://whiteboard.sv.cmu.edu/people/<%= member.twiki_name %>' target='_top'>
+  <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
     <%= image_tag(member.image_uri, :border => 0, :height => 100, :alt => member.human_name+" image") %></a>
   </div>
   <div class='label'> <%= member.human_name %></div>
