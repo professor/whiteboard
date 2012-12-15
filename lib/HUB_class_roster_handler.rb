@@ -113,7 +113,7 @@ module HUBClassRosterHandler
   def self.roster_change_message course, added, dropped, not_in_system
 
     unless course
-      message = "This email is supposed to contain information about course roster changes, but an error occured while"
+      message = "This email is supposed to contain information about course roster changes, but an error occurred while"
       message += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
       return message += "to resolve any issues."
     end
