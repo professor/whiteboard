@@ -1,4 +1,6 @@
 module HUBClassRosterHandler
+  extend ActionView::Helpers::TextHelper
+
   def self.handle roster_text
     raise ArgumentError if roster_text.blank?
     roster_text = roster_text.gsub("\n", ' ').gsub("\r", ' ')
@@ -123,16 +125,16 @@ module HUBClassRosterHandler
     message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
 
     unless not_in_system.blank?
-      message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:<br/>"
+      message += "#{pluralize(not_in_system.count, "registered student")} #{not_in_system.count > 1 ? "are" : "is"} not in any of our SV systems:<br/>"
       not_in_system.each { |student|
         escaped_student = ERB::Util.html_escape(student)
         message += "&nbsp;&nbsp;&nbsp;#{escaped_student}@andrew.cmu.edu<br/>"
       }
-      message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
+      message += "We can easily create accounts for #{not_in_system.count > 1 ? "these" : "this"} #{pluralize(not_in_system.count, "student")}. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
     end
 
     unless added.blank?
-      message += "#{added.count} students were added to the course:<br/>"
+      message += "#{pluralize(added.count, "student")} #{added.count > 1 ? "were" : "was"} added to the course:<br/>"
       added.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
         escaped_last_name = ERB::Util.html_escape(student.last_name)
@@ -141,7 +143,7 @@ module HUBClassRosterHandler
     end
 
     unless dropped.blank?
-      message += "#{dropped.count} students were dropped from the course:<br/>"
+      message += "#{pluralize(dropped.count, "student")} #{dropped.count > 1 ? "were" : "was"} dropped from the course:<br/>"
       dropped.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
         escaped_last_name = ERB::Util.html_escape(student.last_name)
