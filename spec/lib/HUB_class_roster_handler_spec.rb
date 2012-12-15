@@ -133,7 +133,7 @@ describe HUBClassRosterHandler do
     it "course is nil" do
       message = HUBClassRosterHandler.roster_change_message(nil, nil, nil, nil)
 
-      expected_body = "This email is supposed to contain information about course roster changes, but an error occured while"
+      expected_body = "This email is supposed to contain information about course roster changes, but an error occurred while"
       expected_body += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
       expected_body += "to resolve any issues."
 
