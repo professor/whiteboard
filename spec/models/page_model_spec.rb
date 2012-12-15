@@ -130,10 +130,26 @@ describe Page do
       @page.task_number.should == nil
     end
 
-    it "with a number" do
+    it "with a number that is one digit" do
       @page.title = "Task 7: Something Wonderful"
       @page.task_number.should == "7"
     end
+    
+    it "with a number that is two digits" do
+      @page.title = "Task 15: Something Even Better Than Before"
+      @page.task_number.should == "15"
+    end
+    
+    it "with a number that is three digits" do
+      @page.title = "Task 168: The last task of the longest class ever!"
+      @page.task_number.should == "168"
+    end
+      
+    it "should truncate task numbers over three characters" do
+      @page.title = "Task 1445: Some task that will never happen"
+      @page.task_number.should == "144"
+    end
+      
   end
 
   it { should have_many :page_attachments }
