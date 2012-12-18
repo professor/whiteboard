@@ -130,10 +130,16 @@ describe Page do
       @page.task_number.should == nil
     end
 
-    it "with a number" do
+    it "with a number that is one digit" do
       @page.title = "Task 7: Something Wonderful"
       @page.task_number.should == "7"
     end
+    
+    it "with a number that is two digits" do
+      @page.title = "Task 15: Something Even Better Than Before"
+      @page.task_number.should == "15"
+    end
+
   end
 
   it { should have_many :page_attachments }

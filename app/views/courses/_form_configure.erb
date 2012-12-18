@@ -72,7 +72,7 @@
         <% if @course.peer_evaluation_first_email.blank? && @course.peer_evaluation_second_email.blank? %>
           <input type="checkbox" name="course_configure_peer_evaluation">
         <% else %>
-          <input type="checkbox" name="course_configure_peer_evaluation", :checked => "checked">
+          <input type="checkbox" name="course_configure_peer_evaluation" checked="checked">
         <% end %>
         I plan on using the Peer Evaluation Tool <br/>
         <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email

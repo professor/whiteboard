@@ -130,6 +130,22 @@ describe HUBClassRosterHandler do
       @expected_end = "<br/>The system will be updating your course mailing list (#{@course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{@course.id}'>course tools</a><br/><br/>"
     end
 
+    it "course is nil" do
+      message = HUBClassRosterHandler.roster_change_message(nil, nil, nil, nil)
+
+      expected_body = "This email is supposed to contain information about course roster changes, but an error occurred while"
+      expected_body += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
+      expected_body += "to resolve any issues."
+
+      message.should == expected_body
+    end
+
+    it "nil added, dropped, and not_in_system" do
+      message = HUBClassRosterHandler.roster_change_message(@course, nil, nil, nil)
+
+      message.should == @expected_start + @expected_end
+    end
+
     it "empty added, dropped, and not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, [], [], [])
 
@@ -148,6 +164,12 @@ describe HUBClassRosterHandler do
       message.should == @expected_start + expected_body + @expected_end
     end
 
+    it "with one added student" do
+      message = HUBClassRosterHandler.roster_change_message(@course, [@person1], [], [])
+
+      message.should include("1 student was added to the course")
+    end
+
     it "with dropped students" do
       @person2.first_name = "<script>cool"
       @person2.last_name = "<script>hacker"
@@ -160,27 +182,39 @@ describe HUBClassRosterHandler do
       message.should == @expected_start + expected_body + @expected_end
     end
 
+    it "with one dropped student" do
+      message = HUBClassRosterHandler.roster_change_message(@course, [], [@person1], [])
+
+      message.should include("1 student was dropped from the course")
+    end
+
     it "with students not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, [], [], ["student1", "<script>hacker"])
       
-      expected_body = "There are 2 registered students that are not in any of our SV systems:<br/>"
+      expected_body = "2 registered students are not in any of our SV systems:<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;student1@andrew.cmu.edu<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;&lt;script&gt;hacker@andrew.cmu.edu<br/>"
-      expected_body += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
+      expected_body += "We can easily create accounts for these 2 students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
 
       message.should == @expected_start + expected_body + @expected_end
+    end
+
+    it "with one student not_in_system" do
+      message = HUBClassRosterHandler.roster_change_message(@course, [], [], ["student1"])
+
+      message.should include("1 registered student is not in any of our SV systems")
     end
 
     it "with students added, dropped and not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, [@person1], [@person2], ["student1", "student2"])
       
-      expected_body = "There are 2 registered students that are not in any of our SV systems:<br/>"
+      expected_body = "2 registered students are not in any of our SV systems:<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;student1@andrew.cmu.edu<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;student2@andrew.cmu.edu<br/>"
-      expected_body += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
-      expected_body += "1 students were added to the course:<br/>"
+      expected_body += "We can easily create accounts for these 2 students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
+      expected_body += "1 student was added to the course:<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;#{@person1.first_name} #{@person1.last_name}<br/>"
-      expected_body += "1 students were dropped from the course:<br/>"
+      expected_body += "1 student was dropped from the course:<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;#{@person2.first_name} #{@person2.last_name}<br/>"
 
       message.should == @expected_start + expected_body + @expected_end

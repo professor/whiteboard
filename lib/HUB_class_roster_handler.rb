@@ -1,4 +1,6 @@
 module HUBClassRosterHandler
+  extend ActionView::Helpers::TextHelper
+
   def self.handle roster_text
     raise ArgumentError if roster_text.blank?
     roster_text = roster_text.gsub("\n", ' ').gsub("\r", ' ')
@@ -111,21 +113,28 @@ module HUBClassRosterHandler
   end
 
   def self.roster_change_message course, added, dropped, not_in_system
+
+    unless course
+      message = "This email is supposed to contain information about course roster changes, but an error occurred while"
+      message += "generating its contents.  Please contact <a href='mailto:todd.sedano@sv.cmu.edu?subject=Roster%20Email%20Error'>Todd Sedano</a>"
+      return message += "to resolve any issues."
+    end
+
     message = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with the rails system, then you can see who has not been assigned to a team. This does not currently track students on wait-lists. We only have access to students registered in 96-xxx courses.<br/><br/>"
     message += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.<br/><br/>"
     message += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
 
-    if not_in_system.any?
-      message += "There are #{not_in_system.count} registered students that are not in any of our SV systems:<br/>"
+    unless not_in_system.blank?
+      message += "#{pluralize(not_in_system.count, "registered student")} #{not_in_system.count > 1 ? "are" : "is"} not in any of our SV systems:<br/>"
       not_in_system.each { |student|
         escaped_student = ERB::Util.html_escape(student)
         message += "&nbsp;&nbsp;&nbsp;#{escaped_student}@andrew.cmu.edu<br/>"
       }
-      message += "We can easily create accounts for these students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
+      message += "We can easily create accounts for #{not_in_system.count > 1 ? "these" : "this"} #{pluralize(not_in_system.count, "student")}. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
     end
 
-    if added.any?
-      message += "#{added.count} students were added to the course:<br/>"
+    unless added.blank?
+      message += "#{pluralize(added.count, "student")} #{added.count > 1 ? "were" : "was"} added to the course:<br/>"
       added.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
         escaped_last_name = ERB::Util.html_escape(student.last_name)
@@ -133,8 +142,8 @@ module HUBClassRosterHandler
       }
     end
 
-    if dropped.any?
-      message += "#{dropped.count} students were dropped from the course:<br/>"
+    unless dropped.blank?
+      message += "#{pluralize(dropped.count, "student")} #{dropped.count > 1 ? "were" : "was"} dropped from the course:<br/>"
       dropped.each { |student|
         escaped_first_name = ERB::Util.html_escape(student.first_name)
         escaped_last_name = ERB::Util.html_escape(student.last_name)
