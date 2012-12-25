@@ -143,6 +143,9 @@ FactoryGirl.define do
   end
 
 
+  factory :people_search_default, class: PeopleSearchDefault do
+  end
+
   factory :presentation do
     name "Test Presentation"
     description "Desc"
@@ -154,6 +157,10 @@ FactoryGirl.define do
 
   factory :presentation_feedback_questions, class: PresentationQuestion do
     deleted false
+  end
+
+  factory :registration, class: Registration do
+
   end
 
 end

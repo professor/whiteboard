@@ -1,133 +1,130 @@
+
 <% content_for :title, 'People - Phone book' %>
 <% content_for :tablesorter do %>
     <%= javascript_include_tag 'tablesorter' %>
     <%= javascript_include_tag 'tablesorter_filter' %>
-    <script type="text/javascript">
-        $(document).ready(function () {
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
-                    $("#people_table").tablesorter({widgets:['zebra'],
-                        headers:{2:{sorter:false}, 3:{sorter:false}  },
-                        sortList:[
-                            [0, 0],
-                            [1, 0]
-                        ]})
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2],
-                                filterCaseSensitive:false
-                            });
-                    //scroll the message box to the top offset of browser's scrool bar
-                    $(window).scroll(function () {
-                        $('#image_box').animate({top:$(window).scrollTop() + "px" }, {queue:false, duration:350});
-                    });
-                    //when the close button at right corner of the message box is clicked
-                    $('#close_image_box').click(function () {
-                        //the messagebox gets scrool down with top property and gets hidden with zero opacity
-                        $('#image_box').animate({ top:"+=15px", opacity:0 }, "slow");
-                    });
+    <%= javascript_include_tag 'people_search' %>
+    <%= javascript_include_tag 'people_search_export' %>
+    <%= javascript_include_tag 'jquery.session' %>
 
-                    //hoving over a line selects it
-                    $("tr").hover(
-                            function () {
-                                $(this).addClass("hover");
-                            },
-                            function () {
-                                $(this).removeClass("hover");
-                            });
-
-                }
-        );
-
-        function toggleStudents() {
-            /* we don't use .toggle since the state may be inaccurate from a page reload */
-            if ($('#student_checkbox').is(':checked')) {
-                $(".student").show();
-            } else {
-                $(".student").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
-        }
-
-        function toggleStaff() {
-            if ($('#staff_checkbox').is(':checked')) {
-                $(".staff").show();
-            } else {
-                $(".staff").hide();
-            }
-            $("#filterBoxOne").trigger("keyup");
-        }
-
-        function updateImage(uri, label) {
-            $('#image_box_image').prop("src", uri);
-
-            $('#image_box_label').text(label);
-        }
-
-
-    </script>
 <% end %>
 
-<h1>Phone book</h1>
-<div class="right_link"><%= link_to 'See conference rooms', 'http://info.sv.cmu.edu/do/view/Main/CarnegieMellonSiliconValley' %>
-  <br/>
-  <%= link_to 'See photo book', :action => 'photo_book' %></div>
 
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
 
-<div style="float:none"><%= render :partial => "tablesorter_filter_box" %>
-  <label>Show Students</label>
-  <input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked"/>
-  <label>Show
-    Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked"/>
-</div>
+<div id="people_search">
 
-<!-- conference room url
-http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
--->
-
-<% content_for :image_box do %>
-    <div id="image_box">
-      <%= image_tag("/images/mascot.jpg", :width => "150", :alt => "Temporary Picture", :id => "image_box_image") %><%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :alt => "Close Me", :style => "float:right;cursor:pointer", :id => "close_image_box") %>
-      <div id='image_box_label'></div>
+    <div>
+      <%= render :partial => "people_search_box" %>
     </div>
-<% end %>
 
-<table id="people_table" class="tablesorter">
-  <thead>
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Phone</th>
-    <th>&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% for person in @people %>
-      <tr class="tablesorter
-        <% if person.is_student %>student
-        <% end %>
-        <% if person.is_staff %>staff
-        <% end %>" onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-        <td><%= link_to person.first_name, person_path(person.twiki_name) %></td>
-        <td><%= link_to person.last_name, person_path(person.twiki_name) %></td>
-        <td>
-          <% person.telephones.each { |phone| %><%= h phone %>
-              <br/>
-          <% } %></td>
-        <td><%= link_to 'Show', person_path(person) %></td>
+
+    <!-- conference room url
+    http://info.sv.cmu.edu/twiki/bin/view/Main/CarnegieMellonSiliconValley
+    -->
+    <input type="hidden" id="params_state" value='<%= @parameters_overridden %>'</input>
+
+    <hr>
+
+    <table id="key_contacts_table" class="tablesorter">
+      <thead>
+      <tr hidden="true">
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
       </tr>
-  <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+        <%if @user_override %>
+             <%
+                   user_description = "#{@user.human_name} | UserID: #{@user.id} | "
+                   user_description << (@user.is_student ? "Student" : "Staff")
+                   user_description << " | #{@user.masters_program}"  unless @user.masters_program.blank?
+                   user_description << " #{@user.masters_track}"  unless @user.masters_track.blank?
+             %>
+             <%= "You are showing results for:  #{user_description}" %>
+        <% end %>
+        <% unless @key_contact_results.blank? %>
+          <% @key_contact_results.each do |person| %>
+            <tr>
+              <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
+              <td>
+                <%= link_to(person[:human_name], person[:path]) %><br />
+                <%= person[:title] %>
+              </td>
+              <td>
+                <% person[:contact_dtls].each do |k, v| %>
+                    <% if !k.include? "Fax" %>
+                        <%= "#{k}: #{v}" %>  <br />
+                    <%end %>
+                <%end %>
+                <%= mail_to person[:email] %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+             <input type="button" class="export_button" value="Export List" />
+          </td>
+      </tr>
+      </tfoot>
+    </table>
+
+    <table id="people_table" class="tablesorter" hidden="true" >
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Contact Details</th>
+        <th>Program</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+        <tfoot>
+            <tr>
+              <td colspan="5">
+                 <input type="button" class="export_button" value="Export List" />
+              </td>
+          </tr>
+      </tfoot>
+    </table>
+
+    <div id="key_contacts_photobook" class="clearboth" hidden="true">
+        <% unless @key_contact_results.blank? %>
+        <div>
+        <% @key_contact_results.each do |person| %>
+          <a class="photobook_item" href="<%= person[:path] %>">
+            <%= image_tag(person[:image_uri]) %>
+            <p class="photobook_item_name"><%= person[:human_name] %> </p>
+          </a>
+        <% end %>
+        </div>
+        <div class="clearboth">
+            <input type="button" class="export_button" value="Export List" />
+        </div>
+
+      <% end %>
+    </div>
+
+    <div id="photobook_results" hidden="true" class="clearboth" >
+      <div id="photobook_results_main" class="clearboth" ></div>
+    </div>
+
+    <div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
+    <div id="empty_results" hidden="true" class="clearboth">No results found.</div>
+
+</div>
 
 <br/>
 
 <% if can? :create, User %>
     <%= link_to 'New person', new_person_path %>
 <% end %>
+
+<input type="hidden" id="hidden_field" value="off">

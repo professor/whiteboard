@@ -1,5 +1,5 @@
 <% content_for :title, @person.human_name + " - Contact Information" %>
-
+<%= javascript_include_tag 'people_search_export' %>
 
 <%= form_for(@person) do |f| %>
     <% if @person.errors.any? %>
@@ -14,158 +14,195 @@
         </div>
     <% end %>
 
+    <div id="user_profile_show">
+        <div class="user_profile_content">
+            <div class="user_profile_photo_social">
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+                <div class="user_profile_social clearboth">
 
-    <table class="layout_table">
-      <tr valign="top">
-        <td>
-          <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
-        </td>
-        <td>&nbsp;</td>
-        <td>
-          <h1><%= h @person.human_name %></h1>
+                    <% if !@person.linked_in.blank? %>
+                        <%= link_to image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account"), linked_in_path(@person) %>
+                    <% end %>
 
-          <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;">
-            <%= link_to 'Edit', edit_person_path(@person) %> |
-            <%= link_to 'Back', people_path %>
-          </div>
+                    <% if !@person.facebook.blank? %>
+                        <%= link_to image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account"), facebook_path(@person) %>
+                    <% end %>
 
-          <% unless @person.pronunciation.blank? %>
-              <div class="header_subtext">Pronounced <%= h @person.pronunciation %></div>
+                    <% if !@person.twitter.blank? %>
+                        <%= link_to image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account"), twitter_path(@person) %>
+                    <% end %>
+
+                    <% if !@person.google_plus.blank? %>
+                        <%= link_to image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account"), google_plus_path(@person) %>
+                    <% end %>
+
+                    <% if !@person.github.blank? %>
+                        <%= link_to image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account"), github_path(@person) %>
+                    <% end %>
+
+                </div>
+            </div>
+
+        <div class="user_profile_title">
+	    <input type="hidden" id="person_id" value="<%= @person.id %>" />
+            <h1 id="user_profile_name">
+                <%= h @person.first_name %> <%= h @person.last_name %>
+                <% if !(@person.pronunciation.blank?) %>
+                    <div class="user_profile_pron">Pronounced: <%= h @person.pronunciation %> <br /></div>
+                <% end %>
+            </h1>
+            <div class="user_profile_action">
+                <%= link_to 'Back', people_path %>
+              <%   if @person.id == current_user.id or current_user.is_admin? %>
+                 | <%= link_to 'Edit', edit_person_path(@person) %>
+                <% end %>
+            </div>
+            <div id="user_profile_dtls">
+                <% if @person.is_student %>
+                    <%= h @person.masters_program %>
+                    <% if !(@person.masters_track.blank?) %>(<%= h @person.masters_track %>)<% end %>
+                    <% if @person.is_part_time %>
+                        Part Time
+                    <% else %>
+                        Full Time
+                    <% end %>
+                    <% if !(@person.graduation_year.blank?) %>
+                        (<%= h @person.graduation_year %>)
+                    <% end %>
+                <% elsif @person.is_staff %>
+                    <%= @person.title %>
+                <% end %>
+                <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
+                        <br /><%= link_to "My teams", my_teams_path(@person) %>
+                <% end %>
+                <br/><a  href="#" class="export_button" >Download contact details</a>
+            </div>
+        </div>
+
+            <div class="user_profile_contact_details_content">
+                <table class="cmu_table">
+                    <tr>
+                        <td>Email</td>
+                        <td><a href='mailto:<%= @person.email %>'><%= h @person.email %></a></td>
+                    </tr>
+                    <%  @person.telephones_hash.each_with_index do |(key, value), index| %>
+                    <tr <% if index.even? %> <% end %> >
+                        <td><%= h "#{key}" %></td>
+                        <td><%= h "#{value}" %></td>
+                    </tr>
+                    <%  end %>
+                    <% if !(@person.skype.blank?) %>
+                    <tr>
+                        <td>Skype</td>
+                        <td><%= h @person.skype %></td>
+                    </tr>
+                    <% end %>
+                </table>
+
+            <table class="cmu_table">
+
+              <% if (!@person.organization_name.blank?) || (!@person.title.blank?) %>
+                <tr>
+                    <td>Organization</td>
+                    <td>
+                        <% if @person.organization_name %>
+                            <% if @person.title %>
+                                <%= h @person.title %> <br />
+                            <% end %>
+                            <%= h @person.organization_name %>
+                        <% else %>
+                            &nbsp;
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <% if display_location(@person) %><%= h display_location(@person) %>
+                        <% else %>&nbsp;
+                        <% end %>
+                    </td>
+                </tr>
+            </table>
+
+            </div><!--  user_profile_contact_details -->
+
+
+
+        <div class="clearboth">
+          <% if !@person.biography.blank? %>
+            <h2>Biography:</h2>
+            <div class="user_profile_content_body"><%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %></div>
           <% end %>
-          <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
-            <tr class="cmu_table_odd">
-              <td>Organization:</td>
-              <td>
-                <% if @person.organization_name %>
-                    <% if @person.title %><%= h @person.title %>
-                        <br/>
-                        <% end %><%= h @person.organization_name %>
-                <% else %>&nbsp;
-                <% end %></td>
-            </tr>
-            <tr class="cmu_table_even">
-              <td>Location:</td>
-              <td>
-                <% if display_location(@person) %><%= h display_location(@person) %>
-                <% else %>&nbsp;
-                <% end %></td>
-            </tr>
-            <tr class="cmu_table_odd">
-              <td><p>Telephone:</p></td>
-              <td><%= render :partial => 'show_telephones' %></td>
-            </tr>
-            <tr class="cmu_table_even">
-              <td>E-mail:</td>
-              <td><%= h @person.email %>
-                <%= link_to image_tag("/images/email.gif", :id => "icon", :width => "12", :height => "9", :alt => "Email", :title => "Email" + @person.email), "mailto:" + @person.email %>
+        </div>
+
+
+
+        <div class="clearboth ">
+            <% if !(@person.user_text.blank?) %>
+            <h2>About Me:</h2>
+            <div class="user_profile_content_body">
+              <% if display_location(@person) %>
+                <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
+                <% end %>
+            </div>
+            <% end %>
+
+        </div><!-- user_profile_about -->
+
+        <div class="clearboth ">
+            <h2>Other Information:</h2>
+            <table class="cmu_table">
+
+              <% if !@person.personal_email.blank? %>
+                <tr class="">
+                <tr>
+                    <td>Personal Email</td>
+                    <td><a href='mailto:<%= @person.personal_email %>'><%= h @person.personal_email %></a></td>
+                </tr>
+              <% end %>
+                <tr class="">
+                    <td>Andrew Email</td>
+                    <td><a href='mailto:<%= @person.webiso_account %>'><%= h @person.webiso_account %></a></td>
+                </tr>
+
                 <% if @person.is_staff %>
-                <tr class="cmu_table_odd">
+                <% if !@person.office.blank? %>
+                <tr>
                   <td>Office:</td>
                   <td><%= h @person.office %></td>
                 </tr>
-                <tr class="cmu_table_even">
+
+                <% end %>
+                <% if !@person.office_hours.blank? %>
+                <tr class="">
                   <td>Office Hours:</td>
                   <td><%= h @person.office_hours %></td>
                 </tr>
-            <% end %>
-
-            <% if @person.is_student %>
-                <tr class="cmu_table_odd">
-                  <td colspan="2">
-                    I am a
-                    <% if @person.is_part_time %> part time
-                    <% else %> full time
-                    <% end %> student in the <%= h @person.masters_program %> program
-                    <% if !(@person.masters_track.nil? || @person.masters_track.empty?) %>
-                        (<%= h @person.masters_track %> Track)
-                    <% end %>.
-                    <% if !(@person.graduation_year.nil? || @person.graduation_year.empty?) %>
-                        Class of <%= h @person.graduation_year %>.
-                    <% end %>
-                    <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
-                        <br/> I am a  <%= h @person.local_near_remote.downcase %> student.
-                    <% end %>
-                  </td>
-                </tr>
-            <% end %>
-            <tr class="cmu_table_odd">
-              <td>&nbsp;</td>
-              <td>
-                <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
-                    <%= link_to "My teams", my_teams_path(@person) %>
-                    <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width => "16", :height => "16", :alt => "My Teams", :title => "My Teams"), my_teams_path(@person) %>
                 <% end %>
-              </td>
-            </tr>
+                <% elsif @person.is_student %>
+                <% unless @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %>
+                <tr>
+                  <td>Availability:</td>
+                  <td>I am a  <%= h @person.local_near_remote.downcase %> student.</td>
+                </tr>
+                <% end %>
+                <% end %>
+            </table>
+        </div>
 
-          </table>
 
 
-        </td>
-      </tr>
-    </table>
+    </div> <!-- user_profile_content -->
 
-
-    <%= sanitize @person.biography, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
-
-    <h2>Helpful info</h2>
-    Skype: <%= h @person.skype %><br />
-    <% unless @person.tigris.blank? %>Tigris: <%= h @person.tigris %><br />
-    <% end %>
-    Github: <%= h @person.github %><br />
-    Personal email: <%= h @person.personal_email %><br />
-
-    <%= sanitize @person.user_text, :tags => %w(table tr td p br span img a h1 h2 h3 ul ol li), :attributes => %w(id class style) %>
-
-    <h2>Strength Finders</h2>
-    <p>For more information about Clifton's Strength Finders, visit
-      <a href="http://www.strengthquest.com">Strength Quest</a></p>
-    <%= render :partial => 'show_strength_theme', :locals => {:number => 1, :strength_theme => @person.strength1} %>
-    <%= render :partial => 'show_strength_theme', :locals => {:number => 2, :strength_theme => @person.strength2} %>
-    <%= render :partial => 'show_strength_theme', :locals => {:number => 3, :strength_theme => @person.strength3} %>
-    <%= render :partial => 'show_strength_theme', :locals => {:number => 4, :strength_theme => @person.strength4} %>
-    <%= render :partial => 'show_strength_theme', :locals => {:number => 5, :strength_theme => @person.strength5} %>
-    <% if @person.strength1.nil? %>
-    <% end %>
-
-    <h1><%= h @person.human_name %></h1>
-    <div class="rounded staff">
-      <%= professor_image %>
-      <span class="instructions">These fields can be edited by faculty.</span>
-      <%= render :partial => 'show_faculty_fields', :locals => {:f => f, :person => @person} %>
+    <div class="user_profile_action">
+        <%= link_to 'Back', people_path %>
+        <%   if @person.id == current_user.id or current_user.is_admin? %>
+            | <%= link_to 'Edit', edit_person_path(@person) %>
+        <% end %>
     </div>
-
-    <div class="rounded admin">
-      <%= admin_image %>
-      <span class="instructions">These fields can be edited by admin.</span>
-      <%= render :partial => 'show_admin_fields', :locals => {:f => f, :person => @person} %>
-    </div>
-
+    </div><!-- user_profile_show -->
 
 <% end %>
-
-<br/><br/>
-
-
-<% for version in @person.versions.reverse %>
-    Version <%= version.version %>
-    <%= link_to '(revert)', {:action => 'revert_to_version', :version_id => version.version, :id => @person}, {:confirm => "Are you sure?"} %>
-    <% if @person.version == version.version %>
-        (currently on page)
-    <% else %>
-        <%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
-    <% end %>
-    <% updated_by = Person.find(:first, :conditions => ["id = ?", version.updated_by_user_id]) %>
-    <% if !updated_by.nil? %>by <%= h updated_by.human_name %>
-    <% end %>
-    on <%= l version.updated_at, :format => :detailed %>
-    <br/>
-<% end %>
-<br/><br/>
-
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
-
-
-
-

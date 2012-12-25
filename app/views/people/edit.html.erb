@@ -12,54 +12,42 @@
         });
     <% end %>
 
-    <%= javascript_include_tag 'tiny_mce/tiny_mce.js' %>
+    <%= javascript_include_tag 'ckeditor/ckeditor.js' %>
+    <%= javascript_include_tag 'ckeditor/adapters/jquery.js' %>
 
     <script type="text/javascript">
-        tinyMCE.init({
-            // General options
-            mode:"textareas",
-            theme:"advanced",
-            //plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-            plugins:"table,advhr,searchreplace,contextmenu,safari,fullscreen,inlinepopups,paste,codeprotect",
 
-            // Theme options
-            theme_advanced_buttons1:"charmap,|,sub,sup,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect",
-            theme_advanced_buttons2:"pasteword,|,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,image,advhr, table, cleanup,removeformat,|,code,visualaid,fullscreen",
-            theme_advanced_buttons3:"",
-
-//    theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-//	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-//	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-//	theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
-            theme_advanced_toolbar_location:"top",
-            theme_advanced_toolbar_align:"left",
-            theme_advanced_statusbar_location:"bottom",
-            theme_advanced_resizing:true,
-
-            // Example content CSS (should be your site CSS)
-            content_css:"css/example.css",
-
-            // Drop lists for link/image/media/template dialogs
-            template_external_list_url:"js/template_list.js",
-            external_link_list_url:"js/link_list.js",
-            external_image_list_url:"js/image_list.js",
-            media_external_list_url:"js/media_list.js",
-
-            // Replace values for the template plugin
-            template_replace_values:{
-                username:"Some User",
-                staffid:"991234"
-            }
+        // jQuery script to show an upload button when hovering over the user profile picture
+        $(function() {
+            $(".user_profile_photo_imgHover").hover(
+                function() {
+                    $(this).children("img").fadeTo(200, 0.5).end().children(".user_profile_photo_hover").show();
+                },
+                function() {
+                    $(this).children("img").fadeTo(200, 1).end().children(".user_profile_photo_hover").hide();
+                });
+            CKEDITOR.replace( 'user_biography',
+            {
+                skin : 'kama',
+                toolbar: 'CMUSV_SIMPLE',
+                removePlugins: 'elementspath',
+                width: "93%",
+                height: "300px" 
+            });
+            CKEDITOR.replace( 'user_user_text',
+            {
+                skin : 'kama',
+                toolbar: 'CMUSV_SIMPLE',
+                removePlugins: 'elementspath',
+                width: "93%",
+                height: "300px" 
+            });
         });
+
     </script>
 <% end %>
 
-
-
-<h1>Editing <%= h @person.human_name %> </h1>
-
-This account was last updated on <%= l @person.updated_at, :format => :chatty %>
-
+<!-- start modified user profile edit -->
 <%= form_for @person, :html => {:multipart => true} do |f| %>
     <% if @person.errors.any? %>
         <div id="error_explanation">
@@ -73,280 +61,223 @@ This account was last updated on <%= l @person.updated_at, :format => :chatty %>
         </div>
     <% end %>
 
-    <table class="layout_table">
-      <tr valign="top">
-        <td>
-          <div class="user_photo"><%= image_tag(@person.image_uri) %></div>
-        </td>
-        <td>&nbsp;</td>
-        <td>
+    <div class="user_profile_content edit_user_profile">
+        <div class="user_profile_photo_social">
 
-          <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;">
-            <%= link_to 'Back', @person %>
-          </div>
 
-          <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
-            <tr class="cmu_table_odd">
-              <td class="field_label" width=80><%= f.label "Preferred first name" %>:</td>
-              <td>
-                <%= f.text_field :first_name %>
-              </td>
-            </tr>
-            <tr class="cmu_table_even">
-              <td class="field_label"><%= f.label :legal_first_name %>:</td>
-              <td>
-                <%= f.text_field :legal_first_name %>
-                <br/>
-                <span class="help_text">Ok to leave blank</span>
-              </td>
-            </tr>
-            <tr class="cmu_table_odd">
-              <td class="field_label"><%= f.label :last_name %>:</td>
-              <td>
-                <%= f.text_field :last_name %>
-              </td>
-            </tr>
-            <tr class="cmu_table_even">
-              <td class="field_label"><%= f.label :pronunciation %>:</td>
-              <td>
-                <%= f.text_field :pronunciation %>
-              </td>
-            </tr>
-            <tr class="cmu_table_odd">
-              <td class="field_label">Organization:</td>
-              <td>
-                <%= f.label :title %>:
-                <%= f.text_field :title %>
-                <br/>
-                <%= f.label :organization_name, "Company" %>:
-                <%= f.text_field :organization_name %>
-              </td>
-            </tr>
-            <tr class="cmu_table_even">
-              <td>Location:</td>
-              <td>
-                <%= f.label :work_city %>:
-                <%= f.text_field :work_city %>
-                <br/>
-                <%= f.label :work_state %>:
-                <%= f.text_field :work_state %>
-                <br/>
-                <%= f.label :work_country %>:
-                <%= f.text_field :work_country %>
+            <% if can? :upload_photo, User %>
+              </fieldset>
+              <div class="user_profile_photo_imgHover">
+                <div class="user_profile_photo_hover">
+                    <div class="user_profile_photo_upload">
+                      <%= f.label :upload_photo, "Upload new photo" %>
+                      <%= f.file_field :photo %>
+                    </div>
                 </div>
-              </td>
-            </tr>
-            <tr class="cmu_table_odd">
-              <td class="field_label"><p>Telephone:</p></td>
-              <td>
-                <span class="label"><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></span>
-                <%= f.text_field :telephone1 %>
-                <br/>
-                <span class="label"><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></span>
-                <%= f.text_field :telephone2 %>
-                <br/>
-                <span class="label"><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></span>
-                <%= f.text_field :telephone3 %>
-                <br/>
-                <span class="label"><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></span>
-                <%= f.text_field :telephone4 %>
-              </td>
-            </tr>
-            <% if @person.is_student %>
-                <tr class="cmu_table_even">
-                  <td class="field_label"><%= f.label :local_near_remote %>:</td>
-                  <td>
-                    <%= f.select :local_near_remote, %w{ Unknown Local Near Remote } %>
-                    <br/>
-                    <span class="help_text">Local - I'm able to come to campus once or twice a week. </span><br/>
-                    <span class="help_text">Near - I live near Silicon Valley. I can drive in for final presentations or weekend events. </span><br/>
-                    <span class="help_text">Remote - I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation. </span>
-                  </td>
-                </tr>
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+            </div>
+            <% else %>
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
             <% end %>
-            <tr class="cmu_table_even">
-              <td class="field_label">&nbsp;</td>
-              <td>
-                <% if (current_user.is_staff? || current_user.is_admin?) && @person.teams.count > 0 %>
-                    <%= link_to "My teams", my_teams_path(@person) %>
-                    <%= link_to image_tag("/images/my_teams2.gif", :id => "icon", :width => "16", :height => "16", :alt => "My Teams", :title => "My Teams"), my_teams_path(@person) %>
-                <% end %>
-              </td>
-            </tr>
 
-          </table>
+            <div class="user_profile_social clearboth">
+                <table>
+                    <tr>
+                        <td  class="user_profile_social_edit"><%= image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account") %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :linked_in, :placeholder => "LinkedIn URL", :size => "16" %></td>
+                    </tr>
+                    <tr>
+                        <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account") %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :facebook, :placeholder => "Facebook handle", :size => "16" %></td>
+                    </tr>
+                    <tr>
+                        <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account") %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :twitter, :placeholder => "Twitter handle", :size => "16" %></td>
+                    </tr>
+                    <tr>
+                        <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account") %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :google_plus, :placeholder => "Google+ URL", :size => "16" %></td>
+                    </tr>
+                    <tr>
+                        <td  class="user_profile_social_edit"><%= image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account") %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :github, :placeholder => "github handle", :size => "16" %></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="user_profile_title">
+            <div class="user_profile_action">
+                <%= link_to 'Back', @person %> |
+                <%= f.submit "Update" %>
+            </div>
+            <h1 id="user_profile_name">
+                <%= f.text_field :first_name, :placeholder => "Preferred First Name" %>
+                <%= f.text_field :last_name, :placeholder => "Last Name" %>
+                <%= f.text_field :pronunciation, :placeholder => "Enter Pronounciation of your name" %>
+            </h1>
+        </div> <!-- user_profile_title -->
 
 
-        </td>
-      </tr>
-    </table>
 
+        <div class="user_profile_content_body">
+            <table class="cmu_table">
+                <tr class="">
+                    <td>Personal Email</td>
+                    <td><%= f.text_field :personal_email, :placeholder => "Enter your personal email" %></td>
 
-    <div class="formItem">
-      <%= f.label :biography %>
-      <%= f.text_area :biography, :size => "80x30", :class => "tinymce" %>
+                    </td>
+                </tr>
+                <tr>
+                    <td><%= f.select :telephone1_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone1 , :placeholder => "Enter telephone number" %>
+                </tr>
+                <tr class="">
+                    <td><%= f.select :telephone2_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone2, :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr>
+                    <td><%= f.select :telephone3_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone3 , :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr class="">
+                    <td><%= f.select :telephone4_label, ["", "Work", "Mobile", "Home", "Fax", "Google Voice"] %></td>
+                    <td><%= f.text_field :telephone4 , :placeholder => "Enter telephone number" %></td>
+                </tr>
+                <tr>
+                    <td>Skype</td>
+                    <td><%= f.text_field :skype, :placeholder => "Enter your skype id" %></td>
+                </tr>
+            </table>
+        </div>
+        <div class="user_profile_content_body">
+            <table class="cmu_table">
+                <tr class="">
+                    <td>Organization</td>
+                    <td>
+                        <%= f.text_field :title, :placeholder => "Title" %>
+                        <%= f.text_field :organization_name, :placeholder => "Company" %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <%= f.text_field :work_country, :placeholder => "Work Country" %>
+                        <%= f.text_field :work_state, :placeholder => "Work State" %>
+                        <%= f.text_field :work_city, :placeholder => "Work City" %>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <% if @person.is_student %>
+        <div class="user_profile_campus_proximity user_profile_content_body">
+            <table class="cmu_table">
+                <tr>
+                    <td>Unknown<input type="radio" name="user[local_near_remote]" value="Unknown" <% if @person.local_near_remote.blank? || @person.local_near_remote=="Unknown" %> checked <% end %> ></td>
+                    <td>Not really sure.</td>
+                </tr>
+                <tr>
+                    <td>Local<input type="radio" name="user[local_near_remote]" value="Local" <% if @person.local_near_remote=="Local" %>checked<% end %> ></td>
+                    <td>I'm able to come to campus once or twice a week. </td>
+                </tr>
+                <tr>
+                    <td>Near<input type="radio" name="user[local_near_remote]" value="Near" <% if @person.local_near_remote=="Near" %>checked<% end %> ></td>
+                    <td>I live near Silicon Valley. I can drive in for final presentations or weekend events.</td>
+                </tr>
+                <tr>
+                    <td>Remote<input type="radio" name="user[local_near_remote]" value="Remote" <% if @person.local_near_remote=="Remote" %>checked<% end %> ></td>
+                    <td>I live out of the area. I can fly in for Orientation, The Gatherings, and Graduation.</td>
+                </tr>
+            </table>
+
+        </div> <!-- user_profile_campus_proximity -->
+        <% end %>
+
+        <div class="clearboth">
+            <h2><%= f.label :biography %>:</h2>
+            <div class="user_profile_bio_edit_content">
+                <div class="formItem">
+                  <%= f.text_area :biography %>
+                </div>
+            </div>
+        </div>
+
+        <div class="user_profile_about_edit clearboth">
+            <h2>About Me:</h2>
+            <div class="user_profile_about_edit_content">
+                <div class="formItem">
+                  <%= f.text_area :user_text %>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:none">
+            <fieldset>
+              <legend>Strength Finders</legend>
+              For more information about Clifton's Strength Finders, visit
+              <a href="http://www.strengthquest.com">Strength Quest</a>
+
+              <div class="formItem">
+                <%= f.label :strength1, "Strength 1" %>
+                <%= f.collection_select :strength1_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength2, "Strength 2" %>
+                <%= f.collection_select :strength2_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength3, "Strength 3" %>
+                <%= f.collection_select :strength3_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength4, "Strength 4" %>
+                <%= f.collection_select :strength4_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+              <div class="formItem">
+                <%= f.label :strength5, "Strength 5" %>
+                <%= f.collection_select :strength5_id, @strength_themes, :id, :theme, :include_blank => true %>
+              </div>
+            </fieldset>
+        </div>
+
+        <%= render :partial => 'show_faculty_fields', :locals => {:f => f, :person => @person} %>
+        <%= render :partial => 'show_admin_fields', :locals => {:f => f, :person => @person} %>
+
+    </div> <!-- user_profile_content div ends -->
+
+    <div class="user_profile_action">
+        <%= link_to 'Back', @person %> |
+        <%= f.submit "Update" %>
     </div>
 
-    <h2>Helpful info</h2>
-    <%= f.label :skype %>: <%= f.text_field :skype %><br />
-    <%= f.label :github %>: <%= f.text_field :github %><br />
-    <span class="help_text">ie (Required for all SE, INI, and FT SM students)</span><br/>
-    <%= f.label :personal_email %>: <%= f.text_field :personal_email %><br />
-
-    <div class="formItem">
-      <%= f.label :user_text %>
-      <%= f.text_area :user_text, :size => "80x30", :class => "tinymce" %>
+    <div class="user_profile_debugging clearboth">
+        <h4>Versions</h4>
+        <% for version in @person.versions.reverse %>
+            Version <%= version.version %>
+            <%= link_to '(revert)', {:action => 'revert_to_version', :version_id => version.version, :id => @person}, {:confirm => "Are you sure?"} %>
+            <% if @person.version == version.version %>
+                (currently on page)
+            <% else %>
+                <%= link_to '(preview)', :action => 'show', :version_id => version.version, :id => @person %>
+            <% end %>
+            <% updated_by = Person.find(:first, :conditions => ["id = ?", version.updated_by_user_id]) %>
+            <% if !updated_by.nil? %>by <%= h updated_by.human_name %>
+            <% end %>
+            on <%= l version.updated_at, :format => :detailed %>
+            <br/>
+        <% end %>
+        <br/><br/>
     </div>
-    </fieldset>
-    <fieldset>
-      <legend>Strength Finders</legend>
-      For more information about Clifton's Strength Finders, visit
-      <a href="http://www.strengthquest.com">Strength Quest</a>
-
-      <div class="formItem">
-        <%= f.label :strength1, "Strength 1" %>
-        <%= f.collection_select :strength1_id, @strength_themes, :id, :theme, :include_blank => true %>
-      </div>
-      <div class="formItem">
-        <%= f.label :strength2, "Strength 2" %>
-        <%= f.collection_select :strength2_id, @strength_themes, :id, :theme, :include_blank => true %>
-      </div>
-      <div class="formItem">
-        <%= f.label :strength3, "Strength 3" %>
-        <%= f.collection_select :strength3_id, @strength_themes, :id, :theme, :include_blank => true %>
-      </div>
-      <div class="formItem">
-        <%= f.label :strength4, "Strength 4" %>
-        <%= f.collection_select :strength4_id, @strength_themes, :id, :theme, :include_blank => true %>
-      </div>
-      <div class="formItem">
-        <%= f.label :strength5, "Strength 5" %>
-        <%= f.collection_select :strength5_id, @strength_themes, :id, :theme, :include_blank => true %>
-      </div>
-    </fieldset>
-
-    <div class="rounded staff">
-      <%= professor_image %>
-      <span class="instructions">These fields can be edited by faculty.</span>
-
-      <% if !(current_user.is_admin? || current_user.is_staff?) %>
-          <%= render :partial => 'show_faculty_fields', :locals => {:f => f, :person => @person} %>
-      <% else %>
-          <fieldset>
-            <legend>Student information</legend>
-            <div class="formItem">
-              <%= f.label :graduation_year, "Graduation year (or class identifier)" %>
-              <%= f.text_field :graduation_year %>
-              <br/>
-              <span class="help_text">ie 2020, MSIT-28</span>
-            </div>
-            <div class="formItem">
-              <%= f.label :masters_program, "Graduate program" %>
-              <%= f.text_field :masters_program %>
-            </div>
-            <div class="formItem">
-              <%= f.label :masters_track, "Graduate track" %>
-              <%= f.text_field :masters_track %>
-            </div>
-            <div class="formItem">
-              <%= f.label :is_part_time, "Is part time student?" %>
-              <%= f.check_box :is_part_time %>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Faculty information</legend>
-            <div class="formItem">
-              <%= f.label :office, "Office number" %>
-              <%= f.text_field :office %>
-            </div>
-            <div class="formItem">
-              <%= f.label :office_hours %>
-              <%= f.text_field :office_hours %>
-            </div>
-          </fieldset>
-      <% end %>
-
-    </div>
-    <div class="rounded admin">
-      <%= admin_image %>
-      <span class="instructions">These fields can be edited by admin.</span>
-      <% if !(current_user.is_admin?) %>
-          <%= render :partial => 'show_admin_fields', :locals => {:f => f, :person => @person} %>
-      <% else %>
-
-          <fieldset>
-            <legend>User Roles</legend>
-            <div class="formItem">
-              <%= f.label :is_student %>
-              <%= f.check_box :is_student %>
-            </div>
-            <div class="formItem">
-              <%= f.label :is_alumnus %>
-              <%= f.check_box :is_alumnus %>
-            </div>
-            <div class="formItem">
-              <%= f.label :is_staff %>
-              <%= f.check_box :is_staff %>
-            </div>
-            <div class="formItem">
-              <%= f.label :is_active %>
-              <%= f.check_box :is_active %>
-            </div>
-            <div class="formItem">
-              <%= f.label :is_admin %><%= f.check_box :is_admin, :disabled => 'disabled' %>
-              <br/>
-              <span class="help_text">Admin accounts can only be granted through SQL</span>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Account information</legend>
-            <div class="formItem">
-              <%= f.label :is_adobe_connect_host %>
-              <%= f.check_box :is_adobe_connect_host %>
-            </div>
-            <div class="formItem">
-              <%= f.label :image_uri %>
-              <%= f.text_field :image_uri %>
-            </div>
-            <div class="formItem">
-              <%= f.label :email, "CMU-SV email address" %>
-              <%= f.text_field :email %>
-            </div>
-            <div class="formItem">
-              <%= f.label :webiso_account %>
-              <%= f.text_field :webiso_account %>
-            </div>
-            <div class="formItem">
-              <%= f.label :twiki_name, "TWiki name" %>
-              <%= f.text_field :twiki_name %>
-            </div>
-            <div class="formItem">
-              <%= f.label "Display name" %>
-              <%= f.text_field :human_name %>
-            </div>
-            <div class="formItem">
-              <%= f.label "Expires at" %>
-              <%= f.text_field :expires_at, :size => 10 %>
-            </div>
-          </fieldset>
-      <% end %>
-      <% if can? :upload_photo, User %>
-          <fieldset>
-            <legend>Actions</legend>
-            <div class="formItem">
-              <%= f.label :upload_photo %>
-              <%= f.file_field :photo %>
-            </div>
-          </fieldset>
-      <% end %>
-    </div>
-    <p>
-      <%= f.submit "Update" %>
-    </p>
 
 
-<% end %>
+<% end %> <!-- form end script -->
 
-<%= link_to 'Back', @person %>
+
+
+
+
+<!-- end -->
+
 
 <!-- Checkbox can be done with this html character code: &#x2714; -->
