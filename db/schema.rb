@@ -34,13 +34,11 @@ ActiveRecord::Schema.define(:version => 20121129012448) do
     t.boolean  "remind_about_effort"
     t.string   "short_name"
     t.integer  "year"
-    t.boolean  "configure_class_mailinglist",     :default => false
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
-    t.boolean  "configure_teams_name_themselves", :default => true
     t.string   "curriculum_url"
-    t.boolean  "configure_course_twiki",          :default => false
-    t.boolean  "is_configured",                   :default => false
+    t.boolean  "configure_course_twiki",       :default => false
+    t.boolean  "is_configured",                :default => false
     t.integer  "updated_by_user_id"
     t.integer  "configured_by_user_id"
     t.boolean  "updating_email"
