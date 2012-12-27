@@ -1,6 +1,7 @@
 class CourseMailer < ActionMailer::Base
   default :from => "CMU-SV Official Communication <help@sv.cmu.edu>",
-          :bcc => "todd.sedano@sv.cmu.edu"
+          :bcc => ["todd.sedano@sv.cmu.edu", "rails.app@sv.cmu.edu"]
+
 
   def configure_course_faculty_email(course, options = {})
     @course = course
