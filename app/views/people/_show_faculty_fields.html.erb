@@ -1,32 +1,68 @@
-<fieldset>
-  <legend>Student information</legend>
-  <div class="formItem">
-    <%= f.label :graduation_year, "Graduation year (or class identifier)" %>
-    <%= f.text_field :graduation_year, :disabled => 'disabled' %>
-    <br/>
-    <span class="help_text">ie 2020, MSIT-28</span>
-  </div>
-  <div class="formItem">
-    <%= f.label :masters_program, "Graduate program" %>
-    <%= f.text_field :masters_program, :disabled => 'disabled' %>
-  </div>
-  <div class="formItem">
-    <%= f.label :masters_track, "Graduate track" %>
-    <%= f.text_field :masters_track, :disabled => 'disabled' %>
-  </div>
-  <div class="formItem">
-    <%= f.label :is_part_time, "Is part time student?" %>
-    <%= f.check_box :is_part_time, :disabled => 'disabled' %>
-  </div>
-</fieldset>
-<fieldset>
-  <legend>Faculty information</legend>
-  <div class="formItem">
-    <%= f.label :office, "Office number" %>
-    <%= f.text_field :office, :disabled => 'disabled' %>
-  </div>
-  <div class="formItem">
-    <%= f.label :office_hours %>
-    <%= f.text_field :office_hours, :disabled => 'disabled' %>
-  </div>
-</fieldset>
+<% if @person.is_student %>
+<div class="clearboth">
+    <h2>Editable by Faculty:</h2>
+    <table class="cmu_table user_profile_content_faculty_editable">
+        <% if !(current_user.is_admin? || current_user.is_staff?) %>
+        <tr>
+            <td><%= f.label :masters_program, "Program"%></td>
+            <td><%= f.text_field :masters_program, :placeholder => "Masters Program", :disabled => 'disabled' %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :masters_track, "Track" %></td>
+            <td><%= f.text_field :masters_track,  :placeholder => "Program Track", :disabled => 'disabled' %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :graduation_year, "Graduation Year"%></td>
+            <td><%= f.text_field :graduation_year,  :placeholder => "Graduation Year", :disabled => 'disabled' %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :is_part_time%></td>
+            <td><%= f.check_box :is_part_time, :disabled => 'disabled' %></td>
+        </tr>
+
+        <% else %>
+        <tr>
+            <td><%= f.label :masters_program, "Graduate Program"%></td>
+            <td><%= f.text_field :masters_program, :placeholder => "Masters Program" %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :masters_track, "Program Track" %></td>
+            <td><%= f.text_field :masters_track,  :placeholder => "Program Track" %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :graduation_year, "Graduation Year"%></td>
+            <td><%= f.text_field :graduation_year,  :placeholder => "Graduation Year" %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :is_part_time%></td>
+            <td><%= f.check_box :is_part_time %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+<% elsif (@person.is_staff? || @person.is_admin?) %>
+<div class="clearboth">
+    <h2>Staff Information:</h2>
+    <table class="cmu_table user_profile_content_faculty_editable">
+        <% if !(current_user.is_admin? || current_user.is_staff?) %>
+        <tr>
+            <td><%= f.label :office, "Office number" %></td>
+            <td><%= f.text_field :office, :placeholder => "Building 23 Room #109", :disabled => 'disabled' %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :office_hours%></td>
+            <td><%= f.text_field :office_hours,  :placeholder => "9:00am-6:00pm", :disabled => 'disabled' %></td>
+        </tr>
+        <% else %>
+        <tr>
+            <td><%= f.label :office, "Office number" %></td>
+            <td><%= f.text_field :office, :placeholder => "Building 23 Room #109" %></td>
+        </tr>
+        <tr>
+            <td><%= f.label :office_hours%></td>
+            <td><%= f.text_field :office_hours,  :placeholder => "9:00am-6:00pm" %></td>
+        </tr>
+        <% end %>
+    </table>
+</div>
+<% end %>

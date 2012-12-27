@@ -1,3 +1,6 @@
+require 'csv'
+require 'vpim/vcard'
+
 class PeopleController < ApplicationController
   include ActionView::Helpers::AssetTagHelper
 
@@ -16,18 +19,96 @@ class PeopleController < ApplicationController
 #  auto_complete_for :person, :human_name
 #  protect_from_forgery :only => [:create, :update, :destroy] #required for auto complete to work
 
-# GET /people
-# GET /people.xml
+
+  # GET /people
+  # GET /people.xml
+  #
+  # 1. This method checks to see if the logged in user has entered sufficient information in his own profile
+  #    to use the people_search functionality (lovingly called carrot & stick)
+  # 2. This method loads the search bar and default/key contacts for that user.
+  #
   def index
-    @people = User.where(:is_active => true).order("first_name ASC, last_name ASC").all
+    # 1. carrot & stick
+    if !current_user.is_profile_valid?
+      flash[:notice] = "<div align='center'><b>Warning:</b><br/> You have to update your profile details.<br/> If you do not do so in 4 weeks, you will lose access to the search profile features.<br/><a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a></div>".html_safe
+      flash[:error] = nil
+      if current_user.should_be_redirected?
+        flash[:notice] = nil
+        flash[:error] = "<div align='center'><b>Warning:</b><br/> Your access to the user search features have temporarily been disabled. <br/>To continue, please update your biography/phone numbers and social handles.</div>".html_safe
+       redirect_to edit_person_path(current_user) and return
+      end
+    end
+
+    # 2. default/key contacts for that user
+    @people = get_default_key_contacts
+    # pick only the fields required to be shown in the view and return as a Hash
+    @key_contact_results = @people.collect { |default_person| Hash[
+        :image_uri => default_person.user.image_uri,
+        :title => default_person.user.title,
+        :human_name => default_person.user.human_name,
+        :contact_dtls => default_person.user.telephones_hash,
+        :email => default_person.user.email,
+        :path => person_path(default_person.user),
+        # first_name and last_name required for photobook view
+        :first_name => default_person.user.first_name,
+        :last_name => default_person.user.last_name
+    ]}
+    @key_contact_results.uniq!
+    respond_to do |format|
+      format.html { render :html => @key_contact_results }
+      format.json { render :json => @key_contact_results }
+    end
+  end
+  def advanced
+    index
+  end
+  def photo_book
+    index
+  end
+
+  # GET /people_search.json
+  #
+  # Ajax call for people search results using params[:filterBoxOne].
+  # Sends back json object with search results (from database)
+  #
+  # Number of requesting coming in here is controlled through a javascript timer
+  # (see js in views/people/index.html.erb for more details.)
+  def search
+    # call the function that actually finds all releveant search results from database
+    @people = search_db_fields
+    #
+    priority_results = prioritize_search_results
+
+    # pick only the fields required to be shown in the view and return as a Hash
+    @people_hash = @people.collect do |person|
+      # program, the user is enrolled in needs to be constructed to include addtional info like full-time/part-time
+      program = ''
+      if person.is_student
+        program += (person.masters_program + ' ') unless person.masters_program.blank?
+        program += person.masters_track unless person.masters_track.blank?
+        if person.is_part_time
+          program += ' (PT)'
+        else
+          program += ' (FT)'
+        end
+      elsif person.is_staff
+        program += 'Staff'
+      end
+      # constructing Hash/json containing results
+      Hash[:id => person.twiki_name,
+           :first_name => person.first_name,
+           :last_name => person.last_name,
+           :image_uri => person.image_uri,
+           :program => program,
+           :contact_dtls => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
+           :email => person.email,
+           :path => person_path(person),
+           :priority => priority_results.include?(person.id)
+      ]
+    end
 
     respond_to do |format|
-      format.html { render :html => @people }
-      format.json { render :json => @people.collect { |person| Hash["id" => person.twiki_name,
-                                                                    "first_name" => person.first_name,
-                                                                    "last_name" => person.last_name,
-                                                                    "image_uri" => person.image_uri,
-                                                                    "email" => person.email].merge(person.telephones_hash) }, :layout => false }
+      format.json { render :json =>  @people_hash, :layout => false }
     end
   end
 
@@ -43,21 +124,12 @@ class PeopleController < ApplicationController
     end
   end
 
-  def advanced
-    index
-  end
-
-  def photo_book
-    index
-  end
-
-
   # GET /people/1
   # GET /people/1.xml
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    @person = User.find_by_param(params[:id]) 
+    @person = Person.find_by_param(params[:id])
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|
@@ -165,7 +237,12 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
+
+    unless @person.id == current_user.id or current_user.is_admin?
+      flash[:error] = "You're not allowed to edit this user's profile."
+      redirect_to user_path(@person)
+    end
 #    authorize! :update, @person
 
     @strength_themes = StrengthTheme.all
@@ -227,8 +304,8 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = User.find_by_param(params[:id]) 
-#    authorize! :update, @person
+    @person = User.find_by_param(params[:id])
+    # authorize! :update, @person
 
     Rails.logger.info("People#update #{request.env["REQUEST_PATH"]} #{current_user.human_name} #{params}")
 
@@ -239,6 +316,15 @@ class PeopleController < ApplicationController
       @person.attributes = params[:user]
       @person.photo = params[:user][:photo] if can? :upload_photo, User
       @person.expires_at = params[:user][:expires_at] if current_user.is_admin?
+
+      if (@person.biography.blank? && @person.facebook.blank? && @person.twitter.blank? && @person.google_plus.blank? && @person.linked_in.blank?) or (@person.telephone1.blank? && @person.telephone2.blank? && @person.telephone3.blank? && @person.telephone4.blank?)
+          flash[:error] = "Please update your (social handles or biography) and your contact information"
+          @person.is_profile_valid = false
+          attribute = "biography" #if @person.biography.blank?
+          @person.notify_about_missing_field(attribute, "Please update these fields!")
+      else
+          @person.is_profile_valid= true
+        end
 
       if @person.save
         flash[:notice] = 'Person was successfully updated.'
@@ -285,7 +371,7 @@ class PeopleController < ApplicationController
   end
 
   def revert_to_version
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
@@ -303,7 +389,7 @@ class PeopleController < ApplicationController
       redirect_to(people_url) and return
     end
 
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     @person.destroy
 
     respond_to do |format|
@@ -314,7 +400,7 @@ class PeopleController < ApplicationController
 
 
   def my_teams
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -341,7 +427,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -359,7 +445,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses_verbose
-    @person = User.find_by_param(params[:id]) 
+    @person = User.find_by_param(params[:id])
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
@@ -413,6 +499,207 @@ class PeopleController < ApplicationController
       else
         format.html { render :layout => "cmu_sv" } # index.html.erb
       end
+    end
+  end
+
+  # GET /people/download_csv
+  #
+  # Export the search results in csv format
+  def download_csv
+    if params[:search_id].blank?
+        # this is for multiple contacts
+        @people = get_search_or_key_contacts(params)
+    else
+        # this is for a single contact
+        @people = []
+        @people << User.find_by_id(params[:search_id])
+    end
+    respond_to do |format|
+      format.csv do
+        csv_string = CSV.generate do |csv|
+          csv << ["Name","Given Name","Additional Name","Family Name","Yomi Name","Given Name Yomi","Additional Name Yomi","Family Name Yomi","Name Prefix","Name Suffix","Initials","Nickname","Short Name","Maiden Name","Birthday","Gender","Location","Billing Information","Directory Server","Mileage","Occupation","Hobby","Sensitivity","Priority","Subject","Notes","Group Membership","E-mail 1 - Type","E-mail 1 - Value","E-mail 2 - Type","E-mail 2 - Value","Phone 1 - Type","Phone 1 - Value","Phone 2 - Type","Phone 2 - Value","Phone 3 - Type","Phone 3 - Value","Phone 4 - Type","Phone 4 - Value","Organization 1 - Type", "Organization 1 - Name", "Organization 1 - Yomi Name", "Organization 1 - Title", "Organization 1 - Department", "Organization 1 - Symbol", "Organization 1 - Location", "Organization 1 - Job Description"]
+          @people.each do |user|
+            org = user.organization_name.nil? ? "" : user.organization_name
+            title = user.title.nil? ? "" : user.title
+            csv << [user.first_name,user.first_name,"",user.last_name,"","","","","","","","","","","","","","","","","","","","","","","",user.is_staff? ? "Work" : "Other",user.email,"Home",user.personal_email,
+
+                csv_name_converter(user.telephone1_label),user.telephone1,
+                csv_name_converter(user.telephone2_label),user.telephone2,
+                csv_name_converter(user.telephone3_label),user.telephone3,
+                csv_name_converter(user.telephone4_label),user.telephone4,
+                "",org,"",title,"","","",""]
+          end
+        end
+        send_data csv_string,
+                  :type=>"text/csv; charset=utf-8",
+                  :disposition =>"attachment; filename=contact.csv"
+      end
+    end
+  end
+
+  # GET /people/download_vcf
+  #
+  # Export the search results in vCard format
+  def download_vcf
+    if params[:search_id].blank?
+        # this is for multiple contacts
+        @people = get_search_or_key_contacts(params)
+    else
+        # this is for a single contact
+        @people = []
+        @people << User.find_by_id(params[:search_id])
+    end
+    vcard_str=""
+    @people.each do |user|
+      card = Vpim::Vcard::Maker.make2 do |maker|
+        maker.add_name do |name|
+          name.prefix = ''
+          name.given = user.first_name
+          name.family = user.last_name
+        end
+        phones_hash = user.telephones_hash
+        if(!user.email.blank?)
+          maker.add_email(user.email) { |e| e.location = user.is_staff? ? 'work' : 'other' }
+        end
+        if(!user.personal_email.blank?)
+          maker.add_email(user.personal_email) { |e| e.location = 'home' }
+        end
+        maker.title = user.title unless user.title.nil?
+        maker.org = user.organization_name unless user.organization_name.nil?
+
+        phones_hash.each do |k,v|
+        # ignore empty telephone fields
+          if(!v.blank?)
+            maker.add_tel(v) do |tel|
+              tel.location = "work" if k == "Work"
+              tel.location = "home" if k == "Home"
+              tel.location = "fax" if k == "Fax"
+              tel.location = "cell" if k == "Mobile"
+              tel.location = "voice" if k == "Google Voice"
+            end
+          end
+        end
+      end
+      vcard_str << card.to_s
+    end
+    send_data vcard_str,
+              :type=>"text/vcf; charset=utf-8",
+              :disposition =>"attachment; filename=contact.vcf"
+  end
+
+  private
+
+  # Private function that does the heavy lifting for all search
+  #
+  # search params:
+  #     user_type
+  #         F => Faculty
+  #         S => Students
+  #         T => Staff
+  #         P => Part Time students
+  #         L => Full Time students
+  #         (can be clubbed e.g. SL for Full time students)
+  #     filterBoxOne
+  #         keywords typed in the search box
+  #     graduation_year
+  #     masters_program
+  #     is_active
+  def search_db_fields
+    people = User.scoped
+
+    # check user_type
+    if !params[:user_type].blank?
+        where_clause_string = ""
+        if params[:user_type].include? "F" or params[:user_type].include? "S"  or params[:user_type].include? "T"
+        # if (params[:user_type] =~ /[FST]/) == 0
+            where_clause_string << "("
+            where_clause_string << " is_faculty = 't' OR " if params[:user_type].include?("F")
+            where_clause_string << " is_student = 't' OR " if params[:user_type].include?("S")
+            where_clause_string << " is_staff = 't' OR " if params[:user_type].include?("T")
+            # remove last OR
+            where_clause_string= where_clause_string[0..-4]
+            where_clause_string << ")"
+        end
+        people = people.where(where_clause_string) unless where_clause_string.blank?
+        # user_type - P => Part Time students
+        people = people.where("is_part_time = 't'") if params[:user_type].include?("P")
+        # user_type - L => Full Time students
+        people = people.where("is_part_time = 'f'") if params[:user_type].include?("L")
+    end
+
+    # search more db fields (checks all entered keywords with db fields)
+    if !params[:filterBoxOne].blank?
+      params[:filterBoxOne].split.each do |query|
+        query = '%'+query+'%'
+        people = people.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR title ILIKE ? OR webiso_account ILIKE ? OR organization_name ILIKE ? OR personal_email ILIKE ? OR work_city ILIKE ? OR work_state ILIKE ? OR work_country ILIKE ?",query, query, query, query, query,query,query, query, query, query, query,query)
+      end
+    end
+
+    # advanced search filter parameters
+    people = people.where("graduation_year = ?","#{params[:graduation_year]}") unless params[:graduation_year].blank?
+    people = people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
+    people = people.where("is_active = 't'") unless params[:search_inactive] == 't'
+    people = people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
+    people = people.order("first_name ASC, last_name ASC")
+  end
+
+  # helper function that prioritizes the search results (if name was entered as part of search result, that is shown first vs it being found in bio/profile etc)
+  def prioritize_search_results
+    priority_results = User.scoped
+    if !params[:filterBoxOne].blank?
+      params[:filterBoxOne].split.each do |query|
+        query = '%'+query+'%'
+        priority_results = priority_results.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ? OR organization_name ILIKE ?",query, query, query, query)
+      end
+    end
+    priority_results = priority_results.collect{ |result| result.id }
+  end
+
+  # Private function to get the key_contacts for a logged in user
+  # (lovingly called group_box)
+  def get_default_key_contacts
+    @user = current_user
+    if (current_user.is_admin? || current_user.is_staff?)
+      if !params[:id].blank?
+        @user_override = true
+        @user = User.find_by_param(params[:id])
+      end
+    end
+    results = PeopleSearchDefault.default_search_results(@user)
+  end
+
+  # Private helper function currently used by download_vcf and download_csv
+  # to decide whether to return key_contacts or search_results from the search_params
+  def get_search_or_key_contacts(search_params)
+    if !search_params[:filterBoxOne].blank? || !search_params[:advanced_search_toggled].blank?
+        # a specific search was issued, so return the exact search results for exporting contact details
+        search_db_fields
+    else
+        # no specific search issues, return key_contact results
+        @defaults = get_default_key_contacts
+        @people = []
+        @defaults.each do |default|
+            @people << User.find(default.user_id)
+        end
+        return @people.uniq
+    end
+  end
+
+  # private helper function to get correct keyname mappings for csv
+  def csv_name_converter(origin)
+    case origin
+      when "Work"
+        return "work"
+      when "Home"
+        return "home"
+      when "Fax"
+        return "fax"
+      when "Mobile"
+        return "cell"
+      when "Google Voice"
+        return "voice"
+      else
+        return ""
     end
   end
 
