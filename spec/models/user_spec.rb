@@ -9,6 +9,7 @@ describe User do
     @faculty_frank = FactoryGirl.create(:faculty_frank)
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     @admin_andy = FactoryGirl.create(:admin_andy)
+
   end
 
   describe "abilities" do
@@ -24,6 +25,22 @@ describe User do
       it{ should be_able_to(:manage, SponsoredProject.new) }
     end
   end
+
+  describe 'list of user related information' do
+
+    before do
+      @student_sam = FactoryGirl.create(:student_sam, :graduation_year=>"2012", :masters_program=>"SE")
+    end
+
+    it 'should get list of all graduation years available in the database'  do
+      User.get_all_years.should include("2012")
+    end
+    it 'should get list of all programs available in the database' do
+      User.get_all_programs.should include("SE")
+    end
+
+  end
+
 
 
 
@@ -272,9 +289,36 @@ describe User do
 
   end
 
-
     # More tests
     # Effort log should only be set for person that is_student - tested in effort_log
     # Graduation_year should be set for person that is_student
+  context "user should update profile" do
+    before(:each) do
+
+      @student_sam = FactoryGirl.create(:student_sam)
+
+      @student_sam.is_profile_valid = false
+    end
+
+  it "a student should be redirected if first_access is more than 4 weeks ago" do
+
+
+    #@student_sam.first_access= DateTime.strptime('01/01/2010 12:00:00', '%d/%m/%Y %H:%M:%S')
+    @student_sam.people_search_first_accessed_at = Time.now - 5.weeks
+
+
+    @student_sam.should_be_redirected?.should == true
+
+  end
+
+  it "a student should not be redirected if first_access is less than 4 weeks ago" do
+
+
+    @student_sam.people_search_first_accessed_at = Time.now - 3.weeks
+
+    @student_sam.should_be_redirected?.should == false
+
+  end
+    end
 
 end

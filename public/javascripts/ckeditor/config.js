@@ -81,4 +81,18 @@ CKEDITOR.editorConfig = function( config )
 /*          ['Image', 'Attachment', 'Flash', 'Embed'], */
           ['Table','HorizontalRule']
       ];
+
+      config.toolbar = 'CMUSV_SIMPLE';
+
+      config.toolbar_CMUSV_SIMPLE =
+      [
+
+          ['Source','Maximize'],
+          ['Cut','Copy','Paste','PasteText','PasteFromWord','RemoveFormat'],
+          ['Link','Unlink','Anchor'],
+          ['Outdent','Indent','Blockquote'],
+          '/',
+          ['Format'],['Bold','Italic','Underline','Strike','Subscript', 'Superscript'],
+          ['NumberedList','BulletedList'],['Table']
+      ];
 };
