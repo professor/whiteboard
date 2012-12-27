@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108224510) do
+ActiveRecord::Schema.define(:version => 20121129012448) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -293,6 +293,15 @@ ActiveRecord::Schema.define(:version => 20121108224510) do
   add_index "peer_evaluation_reviews", ["recipient_id"], :name => "index_peer_evaluation_reviews_on_recipient_id"
   add_index "peer_evaluation_reviews", ["team_id"], :name => "index_peer_evaluation_reviews_on_team_id"
 
+  create_table "people_search_defaults", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "student_staff_group"
+    t.string   "program_group"
+    t.string   "track_group"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "presentation_feedback_answers", :force => true do |t|
     t.integer  "feedback_id"
     t.integer  "question_id"
@@ -563,6 +572,12 @@ ActiveRecord::Schema.define(:version => 20121108224510) do
     t.datetime "remember_created_at"
     t.date     "expires_at"
     t.string   "course_index_view"
+    t.string   "linked_in"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "google_plus"
+    t.datetime "people_search_first_accessed_at"
+    t.boolean  "is_profile_valid"
   end
 
   create_table "users", :force => true do |t|
@@ -635,6 +650,12 @@ ActiveRecord::Schema.define(:version => 20121108224510) do
     t.datetime "remember_created_at"
     t.date     "expires_at"
     t.string   "course_index_view"
+    t.string   "linked_in"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.string   "google_plus"
+    t.datetime "people_search_first_accessed_at"
+    t.boolean  "is_profile_valid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

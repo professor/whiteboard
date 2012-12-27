@@ -62,6 +62,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_profile_status_check
+     if !current_user.profile_updated?
+       if current_user.should_be_redirected?
+         redirect_to root_path
+       else
+         #popup a box
+       end
+     end
+  end
+
   #Return to the page the user was trying to access after a login
   def after_sign_in_path_for(resource)
     # This should work, but session is lost. See https://github.com/plataformatec/devise/issues/1357

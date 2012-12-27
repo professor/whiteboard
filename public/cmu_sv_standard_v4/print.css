@@ -124,13 +124,13 @@ h1#titleHead {
 {
 	list-style-type:decimal;
 	list-style-position:outside;
-	margin: 4px 0px 9px 0px; 
+	margin: 4px 0px 9px 0px;
 	padding-left: 25px;
 }
 
 ol.letterList{
 	list-style-type:lower-alpha
-} 
+}
 
 .content ul
 {
@@ -216,32 +216,32 @@ ol.letterList{
 
 .content table {
 	width: 100%;
-	border-collapse:collapse; 
-	border-style: none; 
-	margin: 3px 5px 3px 1px; 
+	border-collapse:collapse;
+	border-style: none;
+	margin: 3px 5px 3px 1px;
 	background-color: transparent;
 }
 
 .content  tr {}
 
 .content tbody td {
-	font-size:11px; 
-	text-decoration:none; 
-	font-weight:normal; 
-	border: 1px solid #d4d4d4; 
-	padding: 5px 3px 11px 5px;  
-	margin: 0px; 
+	font-size:11px;
+	text-decoration:none;
+	font-weight:normal;
+	border: 1px solid #d4d4d4;
+	padding: 5px 3px 11px 5px;
+	margin: 0px;
 	vertical-align: top;
 }
 .content thead td, .content thead th {
 	font-size:10px;
-	text-decoration:none; 
-	font-weight:bold; 
-	border-style: none; 
-	padding:4px 4px 9px 5px; 
-	margin-top: 5px; 
-	text-transform:uppercase; 
-	vertical-align: bottom; 
+	text-decoration:none;
+	font-weight:bold;
+	border-style: none;
+	padding:4px 4px 9px 5px;
+	margin-top: 5px;
+	text-transform:uppercase;
+	vertical-align: bottom;
 	text-align: left;
 }
 .content table p {padding:0px !important;margin:0px !important;}
@@ -332,3 +332,23 @@ h2.newsHeadline {
 .eventCalendarListView .dayEnd {height: 10px;}
 
 .bioContactInfo {padding: 2px 0px 2px 0px;}
+
+
+.user_profile_photo_social{
+    float:left;
+    margin-bottom: 5px;
+}
+.user_profile_title, .user_profile_contact_details_content{
+    float: left;
+    width: 70%;
+    margin: 0 0 5px 15px;
+    padding: 0px 0 0 20px;
+}
+.user_profile_action, .export_button, #suggestion_link {
+	display : none;
+}
+.user_profile_contact_details_content table tr td:first-child{
+	width: 30%;
+	text-align: right;
+	vertical-align: middle;
+}

@@ -87,6 +87,11 @@ CMUEducation::Application.routes.draw do
   match '/effort_reports/course/:course_id' => 'effort_reports#course'
   resources :effort_reports
   match '/people_autocomplete' => 'people#index_autocomplete'
+  match '/people_search' => 'people#search'
+
+  match '/people_csv' => 'people#download_csv'
+  match '/people_vcf' => 'people#download_vcf'
+
   match '/people/class_profile' => 'people#class_profile'
   match '/people/ajax_check_if_email_exists' => 'people#ajax_check_if_email_exists'
   match '/people/ajax_check_if_webiso_account_exists' => 'people#ajax_check_if_webiso_account_exists'
