@@ -43,7 +43,7 @@ class PeopleController < ApplicationController
     @people = get_default_key_contacts
     # pick only the fields required to be shown in the view and return as a Hash
     @key_contact_results = @people.collect { |default_person| Hash[
-        :image_uri => default_person.user.image_uri,
+        :image_uri => image_path(default_person.user.image_uri),
         :title => default_person.user.title,
         :human_name => default_person.user.human_name,
         :contact_dtls => default_person.user.telephones_hash,
@@ -98,7 +98,7 @@ class PeopleController < ApplicationController
       Hash[:id => person.twiki_name,
            :first_name => person.first_name,
            :last_name => person.last_name,
-           :image_uri => person.image_uri,
+           :image_uri => image_path(person.image_uri),
            :program => program,
            :contact_dtls => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
            :email => person.email,
