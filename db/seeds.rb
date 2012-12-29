@@ -139,7 +139,6 @@ FactoryGirl.define do
       FactoryGirl.create(:charlie_moss, teams:[team])
     }
   end
-end
 
 
   factory :your_name_here, :parent => :person do
