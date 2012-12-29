@@ -93,7 +93,7 @@ class CoursesController < ApplicationController
   # GET /courses/new.xml
   def new
     authorize! :create, Course
-    @course = Course.new
+    @course = Course.new(:grading_rule => GradingRule.new)
     @course.semester = AcademicCalendar.next_semester
     @course.year = AcademicCalendar.next_semester_year
 
@@ -105,8 +105,12 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @is_in_grade_book = true
     store_previous_location
     @course = Course.find(params[:id])
+    if @course.grading_rule.nil?
+      @course.grading_rule = GradingRule.new
+    end
     authorize! :update, @course
   end
 
@@ -164,7 +168,7 @@ class CoursesController < ApplicationController
         format.html { redirect_back_or_default(course_path(@course)) }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "configure" }
         format.xml { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end

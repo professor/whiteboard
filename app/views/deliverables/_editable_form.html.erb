@@ -14,21 +14,17 @@
           </ul>
         </div>
     <% end %>
-    <p>
-      <%= f.label :name, "Name" %>
-      <%= f.text_field :name, :size => "50" %>
-    </p>
+
+  <% unless  @deliverable.creator.registered_for_these_courses_during_current_semester[0].nil?%>
     <p>
       <%= f.label :course_id, "Select Course" %>
-      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => true) %>
+      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+      <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
     </p>
     <p>
-      <%= f.label :task_number, "Task Number" %>
-      <%= f.text_field :task_number, :size => "3" %>
-    </p>
-    <p>
-      <%= label_tag :is_team_deliverable, "Team Deliverable?" %>
-      <%= check_box_tag :is_team_deliverable, 1, @deliverable.is_team_deliverable? %>
+      <%= f.label :assignment_id, "Deliverable" %>
+      <%= f.collection_select(:assignment_id, @deliverable.creator.registered_for_these_courses_during_current_semester[0].assignments.all(:conditions => ["is_submittable = ?", true]), :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+
     </p>
     <div class="deliverable_attachment">
       <%= fields_for :deliverable_attachment do |attachment_form| -%>
@@ -48,3 +44,26 @@
       <%= f.submit button_name %>
     </p>
 <% end %>
+<% end %>
+<script>
+  $("#deliverable_course_id").change(function(){
+      $("#loading").show();
+    $.ajax({
+        url: "get_assignments_for_student",
+        type: "get",
+        dataType: "json",
+        data: {course_id: $("#deliverable_course_id").val()},
+        success: function(result){
+            $("#deliverable_assignment_id").empty();
+            $.each(result,function(idx, value){
+                        $("#deliverable_assignment_id").append("<option value='"+value["assignment"]["id"]+"'>" + value["assignment"]["name"]+"</option>");
+                    }
+
+            );
+
+            $("#loading").hide();
+        }
+    });
+
+  }    );
+</script>

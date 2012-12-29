@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>Class: GradeBooksController</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/grade_books_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ApplicationController
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-create">#create</a>
+    
+    <li><a href="#method-i-get_course">#get_course</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Assignment.html">Assignment</a>
+  
+    <li><a href="./AssignmentsController.html">AssignmentsController</a>
+  
+    <li><a href="./GradeBook.html">GradeBook</a>
+  
+    <li><a href="./GradeBooksController.html">GradeBooksController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class GradeBooksController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/grade_books_controller.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;in create&quot;</span>
+
+  <span class="ruby-identifier">scoreArrayList</span>=<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;scoreArrayList&quot;</span>]
+  <span class="ruby-identifier">error</span>=<span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">scoreArrayList</span>.<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">scoreArrayList</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span><span class="ruby-operator">|</span><span class="ruby-identifier">scoreValue</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">grade_book</span> = <span class="ruby-constant">GradeBook</span>.<span class="ruby-identifier">get_grade_books</span>(<span class="ruby-identifier">scoreValue</span>[<span class="ruby-string">&quot;course_id&quot;</span>], <span class="ruby-identifier">scoreValue</span>[<span class="ruby-string">&quot;assignment_id&quot;</span>],<span class="ruby-identifier">scoreValue</span>[<span class="ruby-string">&quot;student_id&quot;</span>])
+      <span class="ruby-keyword">if</span>  <span class="ruby-identifier">grade_book</span>.<span class="ruby-identifier">blank?</span>
+        <span class="ruby-identifier">grade_book_entry</span>=<span class="ruby-constant">GradeBook</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">scoreValue</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">grade_book_entry</span>.<span class="ruby-identifier">save</span>
+          <span class="ruby-identifier">error</span>=<span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;update score&quot;</span>
+          <span class="ruby-keyword">unless</span> <span class="ruby-identifier">grade_book</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">scoreValue</span>)
+            <span class="ruby-identifier">error</span>=<span class="ruby-keyword">true</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span>
+          <span class="ruby-identifier">error</span>=<span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">scoreSubmitted</span>=<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;scoreSubmitted&quot;</span>]
+   <span class="ruby-keyword">if</span> (<span class="ruby-identifier">scoreSubmitted</span><span class="ruby-operator">==</span><span class="ruby-keyword">true</span>)
+     <span class="ruby-identifier">courseAssignment</span>=<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;courseAssignment&quot;</span>]
+     <span class="ruby-constant">GradeBook</span>.<span class="ruby-identifier">update_grade_book</span>(<span class="ruby-identifier">courseAssignment</span>[<span class="ruby-string">&quot;course_id&quot;</span>],<span class="ruby-identifier">courseAssignment</span>[<span class="ruby-string">&quot;assignment_id&quot;</span>])   
+   <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">error</span><span class="ruby-operator">==</span><span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> ({<span class="ruby-string">&quot;success&quot;</span>=<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;true&quot;</span>,<span class="ruby-string">&quot;message&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;Success&quot;</span> })
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;input format is wrong&quot;</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> ({<span class="ruby-string">&quot;success&quot;</span>=<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;false&quot;</span>})
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+      <div id="method-i-get_course" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_course</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_course-source">
+            <pre><span class="ruby-comment"># File app/controllers/grade_books_controller.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_course</span>
+  <span class="ruby-ivar">@course</span>=<span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_course-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_course-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/grade_books_controller.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-ivar">@no_pad</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@students</span> = <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">registered_students</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;first_name ASC&quot;</span>)
+  <span class="ruby-ivar">@assignments</span> = <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">assignments</span>
+  <span class="ruby-ivar">@grade_books</span> = {}
+  <span class="ruby-ivar">@students</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@grade_books</span>[<span class="ruby-identifier">student</span>] =  <span class="ruby-constant">GradeBook</span>.<span class="ruby-identifier">get_grade_books</span>(<span class="ruby-ivar">@course</span>, <span class="ruby-identifier">student</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.10.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -36,8 +36,6 @@ cmusv*gz
 pull*.dat
 push*.dat
 
-db/seeds.rb
-
 # OS files
 .DS_Store
 

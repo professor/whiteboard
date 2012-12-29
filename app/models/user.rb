@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
 
   has_many :people_search_defaults, :dependent => :destroy
 
+  has_many :grades
+
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
   belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
@@ -97,6 +99,10 @@ class User < ActiveRecord::Base
     courses_assigned_on_teams = Course.find_by_sql(sql_str)
 
     @registered_courses = hub_registered_courses | courses_assigned_on_teams
+  end
+
+  def registered_for_these_courses_during_past_semesters
+    self.registered_courses - self.registered_for_these_courses_during_current_semester
   end
 
 

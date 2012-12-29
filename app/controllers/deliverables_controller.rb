@@ -3,6 +3,11 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
+  before_filter :render_grade_book_menu, :only=>[:index_for_course, :show]
+
+  def render_grade_book_menu
+    @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
+  end
 
   # GET /deliverables
   # GET /deliverables.xml
@@ -50,7 +55,10 @@ class DeliverablesController < ApplicationController
     end
     @current_deliverables = Deliverable.find_current_by_user(user)
     @past_deliverables = Deliverable.find_past_by_user(user)
-
+    @current_assignments = Assignment.list_assignments_for_student(user.id , :current)
+    @current_courses = user.registered_for_these_courses_during_current_semester()
+    @past_assignments = Assignment.list_assignments_for_student(user.id ,:past)
+    @past_courses = user.registered_for_these_courses_during_past_semesters()
     respond_to do |format|
       format.html { render :action => "index" }
       format.xml { render :xml => @deliverables }
@@ -61,7 +69,8 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1.xml
   def show
     @deliverable = Deliverable.find(params[:id])
-
+    @course = @deliverable.course
+    @hostname_with_port = request.host_with_port
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
       redirect_to root_path and return
@@ -81,9 +90,6 @@ class DeliverablesController < ApplicationController
 
     unless params[:course_id].nil?
       @deliverable.course_id = params[:course_id]
-    end
-    unless params[:task_number].nil?
-      @deliverable.task_number = params[:task_number]
     end
 
     respond_to do |format|
@@ -108,8 +114,7 @@ class DeliverablesController < ApplicationController
     # Make sure that a file was specified
     @deliverable = Deliverable.new(params[:deliverable])
     @deliverable.creator = current_user
-
-    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+    @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
@@ -211,28 +216,47 @@ class DeliverablesController < ApplicationController
     @deliverable = Deliverable.find(params[:id])
   end
 
+
+
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
-    @deliverable.feedback_comment = params[:deliverable][:feedback_comment]
-    unless params[:deliverable][:feedback].blank?
-      @deliverable.feedback = params[:deliverable][:feedback]
+
+    # check is save and email is clicked or save as draft is clicked
+    is_student_visible=true
+    if params[:submit]
+      is_student_visible=true
+    elsif params[:draft]
+      is_student_visible=false
     end
-    if @deliverable.has_feedback?
-      @deliverable.feedback_updated_at = Time.now
-    end
-    respond_to do |format|
-      if @deliverable.save
+
+    flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    if @deliverable.update_feedback_and_notes(params[:deliverable])
+      if is_student_visible==true
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
-        flash[:notice] = 'Feedback successfully saved.'
-        format.html { redirect_to(@deliverable) }
-        format.xml { render :xml => @deliverable, :status => :updated, :location => @deliverable }
-      else
-        flash[:error] = 'Unable to save feedback'
-        format.html { redirect_to(@deliverable) }
-        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
       end
+    else
+      flash[:error] << 'Unable to save feedback'
+    end
+
+    respond_to do |format|
+       if flash[:error].blank?
+         flash[:error] = nil
+         flash[:notice] = 'Feedback successfully saved.'
+         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+       else
+         flash[:error] = flash[:error].join("<br>")
+         format.html { redirect_to(@deliverable) }
+       end
     end
   end
 
+  def get_assignments_for_student
+    unless params[:course_id].nil?
+      @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
+      respond_to do |format|
+        format.json { render json: @assignments }
+      end
+    end
+  end
 
 end

@@ -412,7 +412,7 @@
           <div class="method-source-code" id="search-source">
             <pre><span class="ruby-comment"># File app/controllers/search_controller.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">query</span>)
-  <span class="ruby-identifier">index_tank</span>.<span class="ruby-identifier">search</span>(<span class="ruby-node">&quot;#{query} OR title:#{query}&quot;</span>, <span class="ruby-value">:fetch=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">'timestamp,url,text,title'</span>, <span class="ruby-value">:snippet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'text'</span>)
+  <span class="ruby-identifier">index_tank</span>.<span class="ruby-identifier">search</span>(<span class="ruby-node">&quot;#{query} OR title:#{query}&quot;</span>, <span class="ruby-value">:fetch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'timestamp,url,text,title'</span>, <span class="ruby-value">:snippet</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'text'</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- search-source -->
           

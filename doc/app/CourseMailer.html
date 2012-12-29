@@ -413,10 +413,10 @@
             <pre><span class="ruby-comment"># File app/mailers/course_mailer.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">configure_course_faculty_email</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-ivar">@course</span> = <span class="ruby-identifier">course</span>
-  
- <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:to</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">faculty</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span> },
-         <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:subject</span>] <span class="ruby-operator">||</span> <span class="ruby-node">&quot;Please let us know about your course #{course.name} (#{course.semester} #{course.year})&quot;</span>,
-         <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
+
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:to</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">faculty</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span> },
+       <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:subject</span>] <span class="ruby-operator">||</span> <span class="ruby-node">&quot;Please let us know about your course #{course.name} (#{course.semester} #{course.year})&quot;</span>,
+       <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- configure_course_faculty_email-source -->
           

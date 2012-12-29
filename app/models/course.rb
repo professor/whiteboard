@@ -27,13 +27,18 @@
 # has "configured" the course. (Or verified it's settings.) If this doesn't happen, the system should periodically
 # remind faculty about the change.)
 #
-#
+# Course has grading rules. These include grading cut_offs for grade's like A,A-,B+ etc.
 
 class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
+  has_many :assignments ,:order => "assignment_order"
+
+
+ #----- delete this when implementing deliverable-----#
+  has_many :deliverables
 
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :user
@@ -42,6 +47,12 @@ class Course < ActiveRecord::Base
   has_many :registered_students, :through => :registrations, :source => :user
 
   has_many :presentations
+
+  has_many :grades, :through => :assignments
+
+  has_one :grading_rule, :dependent => :destroy
+  accepts_nested_attributes_for :grading_rule
+  attr_accessible :grading_rule_attributes
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty

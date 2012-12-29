@@ -10,7 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129012448) do
+ActiveRecord::Schema.define(:version => 20121120105902) do
+
+  create_table "assignments", :force => true do |t|
+    t.string   "name"
+    t.float    "maximum_score"
+    t.boolean  "is_team_deliverable", :default => false
+    t.datetime "due_date"
+    t.integer  "course_id"
+    t.integer  "assignment_order"
+    t.integer  "task_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_submittable",      :default => false
+    t.string   "short_name"
+  end
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -104,10 +118,10 @@ ActiveRecord::Schema.define(:version => 20121129012448) do
   end
 
   create_table "deliverables", :force => true do |t|
-    t.text     "name"
+    t.text     "name"                  #column used for legacy data
     t.integer  "team_id"
     t.integer  "course_id"
-    t.string   "task_number"
+    t.string   "task_number"           #column used for legacy data
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -116,7 +130,12 @@ ActiveRecord::Schema.define(:version => 20121129012448) do
     t.string   "feedback_content_type"
     t.integer  "feedback_file_size"
     t.datetime "feedback_updated_at"
+    t.integer  "assignment_id"
+    t.string   "private_note"
+    t.boolean  "is_student_visible"
   end
+
+  add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
 
   create_table "effort_log_line_items", :force => true do |t|
     t.integer  "effort_log_id"
@@ -158,6 +177,32 @@ ActiveRecord::Schema.define(:version => 20121129012448) do
 
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+
+  create_table "grades", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "student_id"
+    t.integer  "assignment_id"
+    t.text     "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_student_visible"
+  end
+
+  create_table "grading_rules", :force => true do |t|
+    t.string   "grade_type"
+    t.float    "A_grade_min"
+    t.float    "A_minus_grade_min"
+    t.float    "B_plus_grade_min"
+    t.float    "B_grade_min"
+    t.float    "B_minus_grade_min"
+    t.float    "C_plus_grade_min"
+    t.float    "C_grade_min"
+    t.float    "C_minus_grade_min"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_nomenclature_deliverable"
+  end
 
   create_table "individual_contribution_for_courses", :force => true do |t|
     t.integer "individual_contribution_id"

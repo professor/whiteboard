@@ -1,14 +1,14 @@
 development:
-  username: 
-  password: 
-  google_domain: 
+  username: court.makr@gmail.com
+  password: prabhjot
+  google_domain: gmail.com
 
 test:
-  username: 
-  password: 
-  google_domain: 
+  username: fall.2010.mfse@sandbox.sv.cmu.edu
+  password: 5tgb6yhn
+  google_domain: sandbox.sv.cmu.edu
 
 production:
-  username: 
-  password: 
-  google_domain: 
+  username: fall.2010.mfse@sandbox.sv.cmu.edu
+  password: 5tgb6yhn
+  google_domain: sandbox.sv.cmu.edu

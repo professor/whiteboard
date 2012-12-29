@@ -9,7 +9,8 @@ FactoryGirl.define do
     association :course, :factory => :course
 #    after(:create) { |team| FactoryGirl.create(:student_sam, :teams => [team], :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
 #    after(:create) { |team| FactoryGirl.create(:student_sam_user, :teams => [team], :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
-    after(:create) { |team| FactoryGirl.create(:student_sam_user, :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu") }
+    after(:create) { |team| FactoryGirl.create(:student_john_user , :teams => [team])}
+    after(:create) { |team| FactoryGirl.create(:student_john_user, :teams => [team]) }
   end
 
 end

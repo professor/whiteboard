@@ -962,7 +962,7 @@
           <div class="method-source-code" id="get_campus_week_data-source">
             <pre><span class="ruby-comment"># File app/controllers/effort_reports_controller.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_campus_week_data</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">week_number</span>)
-  <span class="ruby-identifier">effort_logs</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:week_number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:sum</span>.<span class="ruby-identifier">gt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">effort_logs</span> = <span class="ruby-constant">EffortLog</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;week_number=? AND year=? AND sum&gt;0&quot;</span>, <span class="ruby-identifier">week_number</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">year</span>.<span class="ruby-identifier">to_i</span>)
 
   <span class="ruby-identifier">course_id_to_value_array_hash</span> = {}
   <span class="ruby-identifier">effort_logs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">effort_log</span><span class="ruby-operator">|</span>

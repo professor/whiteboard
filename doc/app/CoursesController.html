@@ -396,7 +396,7 @@
 
           
           <div class="method-source-code" id="configure-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 116</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">configure</span>
   <span class="ruby-identifier">edit</span>
 <span class="ruby-keyword">end</span></pre>
@@ -426,7 +426,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 122</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">Course</span>
   <span class="ruby-ivar">@last_offering</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">last_offering</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course</span>][<span class="ruby-value">:number</span>])
@@ -478,7 +478,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 185</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_permissions_or_redirect</span>(<span class="ruby-value">:admin</span>, <span class="ruby-identifier">root_path</span>)
     <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
@@ -516,7 +516,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 110</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 107</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
   <span class="ruby-identifier">store_previous_location</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
@@ -548,7 +548,7 @@
 
           
           <div class="method-source-code" id="export_to_csv-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 231</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">export_to_csv</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>])
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:team_formation</span>, <span class="ruby-ivar">@course</span>
@@ -556,13 +556,13 @@
   <span class="ruby-identifier">report</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-string">'Person'</span>, <span class="ruby-string">'Current Team'</span>, <span class="ruby-string">'Past Teams'</span>, <span class="ruby-string">&quot;Part Time&quot;</span>, <span class="ruby-string">&quot;Local/Near/Remote&quot;</span>, <span class="ruby-string">&quot;Program&quot;</span>, <span class="ruby-string">&quot;State&quot;</span>, <span class="ruby-string">&quot;Company Name&quot;</span>]
     <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">registered_students</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">current_team</span> = <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span> <span class="ruby-identifier">team</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">user</span>) }.<span class="ruby-identifier">compact</span>
-        <span class="ruby-identifier">part_time</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_part_time</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;PT&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;FT&quot;</span>
-        <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">formatted_teams</span>(<span class="ruby-identifier">current_team</span>), <span class="ruby-identifier">user</span>.<span class="ruby-identifier">formatted_teams</span>(<span class="ruby-identifier">user</span>.<span class="ruby-identifier">past_teams</span>), <span class="ruby-identifier">part_time</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">local_near_remote</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">masters_program</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">masters_track</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">work_state</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">organization_name</span>]
+      <span class="ruby-identifier">current_team</span> = <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">teams</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">team</span><span class="ruby-operator">|</span> <span class="ruby-identifier">team</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">user</span>) }.<span class="ruby-identifier">compact</span>
+      <span class="ruby-identifier">part_time</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_part_time</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;PT&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;FT&quot;</span>
+      <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">formatted_teams</span>(<span class="ruby-identifier">current_team</span>), <span class="ruby-identifier">user</span>.<span class="ruby-identifier">formatted_teams</span>(<span class="ruby-identifier">user</span>.<span class="ruby-identifier">past_teams</span>), <span class="ruby-identifier">part_time</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">local_near_remote</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">masters_program</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">masters_track</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">work_state</span>, <span class="ruby-identifier">user</span>.<span class="ruby-identifier">organization_name</span>]
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">report</span>, <span class="ruby-value">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">'text/csv;charset=iso-8859-1;'</span>, <span class="ruby-value">:filename=</span><span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;past_teams_for_#{@course.display_course_name}.csv&quot;</span>,
-            <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">'attachment'</span>, <span class="ruby-value">:encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'utf8'</span>)
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">report</span>, <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'text/csv;charset=iso-8859-1;'</span>, <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;past_teams_for_#{@course.display_course_name}.csv&quot;</span>,
+            <span class="ruby-value">:disposition</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'attachment'</span>, <span class="ruby-value">:encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'utf8'</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- export_to_csv-source -->
           
@@ -626,8 +626,9 @@
             <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index_for_semester</span>
   <span class="ruby-ivar">@all_courses</span> = <span class="ruby-keyword">false</span>
-  (<span class="ruby-ivar">@semester</span>, <span class="ruby-ivar">@year</span>) = <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">semester_and_year</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:semester</span>])
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@semester</span>.<span class="ruby-identifier">nil?</span>
+  (<span class="ruby-ivar">@semester</span>, <span class="ruby-ivar">@year</span>) = <span class="ruby-constant">AcademicCalendar</span>.<span class="ruby-identifier">valid_semester_and_year</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:semester</span>])
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@semester</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@year</span>.<span class="ruby-identifier">blank?</span>
     <span class="ruby-identifier">current_semester</span> = <span class="ruby-node">&quot;#{AcademicCalendar.current_semester()}#{Date.today.year}&quot;</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-node">&quot;The requested url #{request.path} does not look like /courses/semester/#{current_semester} -- Thus we brought you to the current semester.&quot;</span>
     <span class="ruby-identifier">redirect_to</span>(<span class="ruby-node">&quot;/courses/semester/#{current_semester}&quot;</span>)
@@ -635,9 +636,9 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-ivar">@courses</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">for_semester</span>(<span class="ruby-ivar">@semester</span>, <span class="ruby-ivar">@year</span>)
-  <span class="ruby-ivar">@semester_length_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Both&quot;</span>}
-  <span class="ruby-ivar">@mini_a_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;A&quot;</span>}
-  <span class="ruby-ivar">@mini_b_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;B&quot;</span>}
+  <span class="ruby-ivar">@semester_length_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Both&quot;</span> }
+  <span class="ruby-ivar">@mini_a_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;A&quot;</span> }
+  <span class="ruby-ivar">@mini_b_courses</span> = <span class="ruby-ivar">@courses</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">mini</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;B&quot;</span> }
 
   <span class="ruby-identifier">index_core</span>
 <span class="ruby-keyword">end</span></pre>
@@ -667,7 +668,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 97</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:create</span>, <span class="ruby-constant">Course</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>
@@ -705,7 +706,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 63</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
 
@@ -718,8 +719,6 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-ivar">@registered</span> =
-
   <span class="ruby-ivar">@students</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@course</span>.<span class="ruby-identifier">registered_students</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span>
     <span class="ruby-ivar">@students</span>[<span class="ruby-identifier">student</span>.<span class="ruby-identifier">human_name</span>] = {<span class="ruby-value">:hub</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>}
@@ -729,8 +728,6 @@
       <span class="ruby-ivar">@students</span>[<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>] = (<span class="ruby-ivar">@students</span>[<span class="ruby-identifier">user</span>.<span class="ruby-identifier">human_name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>).<span class="ruby-identifier">merge</span>({<span class="ruby-value">:team</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:team_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">team</span>.<span class="ruby-identifier">name</span>})
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">tmp</span> = <span class="ruby-ivar">@students</span>
-
 
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
@@ -763,7 +760,7 @@
 
           
           <div class="method-source-code" id="team_formation_tool-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 220</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 217</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">team_formation_tool</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:course_id</span>])
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:team_formation</span>, <span class="ruby-ivar">@course</span>
@@ -799,7 +796,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 150</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
   <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:update</span>, <span class="ruby-ivar">@course</span>
@@ -858,7 +855,7 @@
 
           
           <div class="method-source-code" id="upload-source">
-            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 197</span>
+            <pre><span class="ruby-comment"># File app/controllers/courses_controller.rb, line 194</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">upload</span>
   <span class="ruby-identifier">require</span> <span class="ruby-string">'HUB_class_roster_handler'</span>
 

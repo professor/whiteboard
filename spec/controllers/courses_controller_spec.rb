@@ -215,7 +215,7 @@ describe CoursesController do
         end
 
         it "re-renders the 'edit' template" do
-          response.should render_template("edit")
+          response.should render_template("configure")
         end
       end
 

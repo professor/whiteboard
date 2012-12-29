@@ -74,7 +74,7 @@ FactoryGirl.define do
     first_name "Awe"
     last_name "Smith"
     human_name "Awe Smith"
-    image_uri "/images/staff/ElodieJaneSims.jpg"
+    image_uri "/images/mascot.jpg"
     email "awe.smith@sv.cmu.edu"
     webiso_account "awesm@andrew.cmu.edu"
   end
@@ -89,7 +89,7 @@ FactoryGirl.define do
     first_name "Betty"
     last_name "Ross"
     human_name "Betty Ross"
-    image_uri "/images/staff/EricPark.jpg"
+    image_uri "/images/mascot.jpg"
     email "betty.ross@sv.cmu.edu"
     webiso_account "bross@andrew.cmu.edu"
   end
@@ -106,7 +106,7 @@ FactoryGirl.define do
     first_name "Charlie"
     last_name "Moss"
     human_name "Charlie Moss"
-    image_uri "/images/staff/FlorianSelch.jpg"
+    image_uri "/images/mascot.jpg"
     email "charlie.moss@sv.cmu.edu"
     webiso_account "cmoss@andrew.cmu.edu"
   end
@@ -138,8 +138,8 @@ FactoryGirl.define do
       FactoryGirl.create(:betty_ross, teams:[team])
       FactoryGirl.create(:charlie_moss, teams:[team])
     }
-
   end
+end
 
 
   factory :your_name_here, :parent => :person do
@@ -169,8 +169,9 @@ ed = Factory.create(:ed)
 Factory.create(:your_name_here)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
+FactoryGirl.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
+FactoryGirl.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
 
-Factory.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
-Factory.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")
-Factory.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
-Factory.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
+

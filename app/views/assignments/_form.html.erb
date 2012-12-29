@@ -1,0 +1,90 @@
+<%= javascript_tag do %>
+  $(function() {
+    $(".datepicker").datepicker({
+      showButtonPanel: true,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+<% end %>
+<%= form_for([@course,@assignment]) do |f| %>
+  <% if @assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+      <ul>
+        <% @assignment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+    <% customised_name=get_customised_name %>
+    <% cutomised_grade_type=get_customised_grade_type %>
+  <table class='layout_table'>
+
+    <% if customised_name =="Deliverable"  %>
+        <tr>
+          <td style="width: 135px;"><%= f.label(:task_number) %></td>
+          <td><%= f.text_field(:task_number, :size=>3) %></td>
+        </tr>
+    <% end %>
+    <tr>
+      <td><%= f.label(:name, "#{customised_name} Name") %></td>
+      <td><%= f.text_field(:name, :size=>60) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label(:short_name, "#{customised_name} Abbreviation") %></td>
+      <td><%= f.text_field(:short_name, :size=>6, :maxlength=>5) %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label(:is_team_deliverable, "Type") %></td>
+      <td>
+        <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label(:is_submittable, "Submission Required?") %></td>
+
+      <td>
+        <% f.object.is_submittable= true if f.object.maximum_score.nil? %>
+        <%= f.radio_button(:is_submittable, "true")%> Yes <br/>
+
+        <%= f.radio_button(:is_submittable, "false") %> No (e.g. effort log, class participation, etc.)
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
+      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type=="Points")?"Pts":"%" %></td>
+    </tr>
+    <tr>
+      <td><%= f.label(:due_date) %></td>
+      <td>
+        <%= text_field :due_date, :date, :class => "datepicker", :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%Y-%m-%d"), :size=>"11", :placeholder=>"YYYY-MM-DD" %>
+        &nbsp;&nbsp;&nbsp;<%= text_field :due_date, :hour, :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%H"), :size=>2,:placeholder=>"HH" ,:type=>"number", :max=>23, :min=>0%>:
+        <%= text_field :due_date, :minute, :value => (f.object.due_date.blank?)?"":f.object.due_date.strftime("%M"), :size=>2, :placeholder=>"MM",:type=>"number", :max=>59, :min=>0 %>
+      </td>
+      
+    </tr>
+    <tr>
+      <td></td>
+      <td class="actions">
+
+        <% if controller.action_name == 'new' %>
+            <%= f.submit "Create #{customised_name}"%>
+        <% elsif controller.action_name == 'edit' %>
+            <%= f.submit "Update #{customised_name}"%>
+         <% else %>
+            <%= f.submit%>
+        <% end %>
+
+      </td>
+    </tr>
+
+
+  </table>
+
+<% end %>
