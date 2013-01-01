@@ -21,9 +21,9 @@ class AcademicCalendar
   def self.current_semester_year
     cweek = Date.today.cweek()
     if cweek > 51
-      Date.today.year + 1
+      Date.today.cwyear + 1
     else
-      Date.today.year
+      Date.today.cwyear
     end
   end
 
@@ -68,9 +68,9 @@ class AcademicCalendar
 
   def self.next_semester_year
     if AcademicCalendar.next_semester == "Spring" || Date.today.cweek > 51
-        return Date.today.year + 1
+        return Date.today.cwyear + 1
       else
-        return Date.today.year
+        return Date.today.cwyear
     end
   end
 
