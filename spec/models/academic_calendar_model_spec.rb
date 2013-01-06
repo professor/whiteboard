@@ -316,7 +316,7 @@ describe AcademicCalendar do
       next_year = Date.today.year + 1
       (semester, year) = AcademicCalendar.valid_semester_and_year('Spring' + next_year.to_s)
       semester.should == "Spring"
-      year.should == 2013
+      year.should == next_year
     end
 
     it 'works for the lowercase semesters' do
