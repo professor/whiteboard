@@ -79,7 +79,7 @@
           <li class="standard"><a href="/courses">Courses</a></li>
           <ul>
             <li class="standard">
-              <a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}" %>><%= AcademicCalendar.current_semester() %> <%= Date.today.year %>
+              <a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{AcademicCalendar.current_semester_year()}" %>><%= AcademicCalendar.current_semester() %> <%= AcademicCalendar.current_semester_year() %>
                 Courses</a></li>
 
             <% if AcademicCalendar.next_semester_is_soon %>

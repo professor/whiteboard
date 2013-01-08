@@ -9,11 +9,22 @@ class AcademicCalendar
 # Spring starts roughly around Christmas and ends 1 week after last day of semester
 # Summer starts 1 week before and end 1 week after semester
 # Fall starts 1 week before and goes to roughly around Christmas
+#
+# In reality, this should be based upon when grades are due.
   def self.current_semester
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
     return "Summer" if cweek < AcademicCalendar.semester_start("Fall", Date.today.cwyear) - 1
     return "Fall"
+  end
+
+  def self.current_semester_year
+    cweek = Date.today.cweek()
+    if cweek > 51
+      Date.today.cwyear + 1
+    else
+      Date.today.cwyear
+    end
   end
 
   def self.current_mini
@@ -56,11 +67,10 @@ class AcademicCalendar
   end
 
   def self.next_semester_year
-    case AcademicCalendar.next_semester
-      when "Spring"
-        return Date.today.year + 1
+    if AcademicCalendar.next_semester == "Spring" || Date.today.cweek > 51
+        return Date.today.cwyear + 1
       else
-        return Date.today.year
+        return Date.today.cwyear
     end
   end
 
@@ -92,6 +102,8 @@ class AcademicCalendar
 
   def self.spring_break(year)
     case year
+      when 2013
+        return 10..11
       when 2012
         return 10..11
       when 2011
