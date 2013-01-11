@@ -53,7 +53,7 @@ class TeamsController < ApplicationController
   # generate the team table for a course on a page hosted on the twiki server
   def twiki_index
     @show_teams_for_many_courses = false
-    @machine_name = "http://rails.sv.cmu.edu"
+    @machine_name = "http://whiteboard.sv.cmu.edu"
 
     url = get_twiki_http_referer()
     @course = Course.where(:twiki_url => url).first
