@@ -105,7 +105,7 @@ class SuggestionsController < ApplicationController
                :subject => "Suggestion #{status}",
                :message => message,
                :url_label => "Show this suggestion",
-               :url => "http://rails.sv.cmu.edu" + suggestion_path(suggestion)
+               :url => "http://whiteboard.sv.cmu.edu" + suggestion_path(suggestion)
     }
     GenericMailer.email(options).deliver
 
