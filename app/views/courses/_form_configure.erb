@@ -131,15 +131,15 @@ background-color: #FFBABA;
       <%= f.text_field(:secondary_faculty_label, :size => 40) %>
     </p>
     -->
+    <h3>Grading Tool</h3>
     <%= f.fields_for :grading_rule do |rule| %>
-      <p>
-      <%= rule.label :grade_type, "How does your syllabus determine grades?" %><br/>
-      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weights']])  %> <br/>
-
-      </p>
       <p>
       <%=rule.label :is_nomenclature_deliverable, "What nomenclature do you prefer: assignments or deliverables?" %> <br/>
       <%=rule.select(:is_nomenclature_deliverable, [["Assignments", false], ["Deliverables in a task", true]]) %>
+      </p>
+      <p>
+      <%= rule.label :grade_type, "How does your syllabus determine grades?" %><br/>
+      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weights']])  %> <br/>
       </p>
       <br/>
       Grading Criteria

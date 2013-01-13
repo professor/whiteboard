@@ -17,6 +17,7 @@
   }
 </script>
 <% customised_name= get_customised_name %>
+<%=  render :partial=>"layouts/grade_book_sub_menu" %>
 <h1>Listing <%= customised_name %></h1>
 <%= link_to "New #{customised_name}", new_course_assignment_path %>
 <table class='cmu_table'>
