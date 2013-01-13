@@ -20,6 +20,9 @@
 <%=  render :partial=>"layouts/grade_book_sub_menu" %>
 <h1>Listing <%= customised_name %></h1>
 <%= link_to "New #{customised_name}", new_course_assignment_path %>
+
+
+<% unless @assignments.empty? %>
 <table class='cmu_table'>
   <tr>
   <% if customised_name=="Deliverable" %>
@@ -50,6 +53,7 @@
  <% end %>
 <% end %>
 </table>
+<% end %>
 <br />
 <div style="width:97%" >
   <div  style="float:right;text-align: right;" id="total"></div>

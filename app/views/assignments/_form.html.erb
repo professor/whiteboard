@@ -32,11 +32,11 @@
         </tr>
     <% end %>
     <tr>
-      <td><%= f.label(:name, "#{customised_name} Name") %></td>
+      <td><%= f.label(:name, "Name") %></td>
       <td><%= f.text_field(:name, :size=>60) %></td>
     </tr>
     <tr>
-      <td><%= f.label(:short_name, "#{customised_name} Abbreviation") %></td>
+      <td><%= f.label(:short_name, "Abbreviation") %></td>
       <td><%= f.text_field(:short_name, :size=>6, :maxlength=>5) %></td>
     </tr>
 
@@ -46,6 +46,15 @@
         <%= f.select(:is_team_deliverable, [['Team', true], ['Individual', false]]) %>
       </td>
     </tr>
+    <tr id="team_radio">
+      <td>Type</td>
+      <td>
+        <%= f.radio_button :is_team_deliverable, true, checked: @assignment.new_record? || !@assignment.is_team_deliverable ? false : true %> <%= f.label :is_team_deliverable_true, "Team Deliverable" %>
+        <br/>
+        <%= f.radio_button :is_team_deliverable, false, checked: !@assignment.is_team_deliverable ? true : false %> <%= f.label :is_team_deliverable_false, "Individual Deliverable" %>
+      </td>
+    </tr>
+
     <tr>
       <td><%= f.label(:is_submittable, "Submission Required?") %></td>
 
@@ -53,9 +62,24 @@
         <% f.object.is_submittable= true if f.object.maximum_score.nil? %>
         <%= f.radio_button(:is_submittable, "true")%> Yes <br/>
 
-        <%= f.radio_button(:is_submittable, "false") %> No (e.g. effort log, class participation, etc.)
+        <%= f.radio_button(:is_submittable, "false") %> No (e.g. class participation, effort log, etc.)
       </td>
     </tr>
+    <tr>
+      <td>Can students submit<br/> this assignment?</td>
+      <td>
+        <% if @assignment.new_record? %>
+          <%= f.radio_button :is_submittable, true, checked: true %> <%= f.label :is_submittable_true, "Yes" %>
+          <br/>
+          <%= f.radio_button :is_submittable, false %> <%= f.label :is_submittable_false, "No (e.g. class participation, effort log, etc.)" %>
+        <% else %>
+          <%= f.radio_button :is_submittable, true, checked: @assignment.is_submittable %> <%= f.label :is_submittable_true, "Yes" %>
+          <br/>
+          <%= f.radio_button :is_submittable, false, checked: !@assignment.is_submittable %> <%= f.label :is_submittable_false, "No (e.g. class participation, effort log, etc.)" %>
+      <% end %>
+      </td>
+    </tr>
+
     <tr>
       <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
       <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type=="Points")?"Pts":"%" %></td>
