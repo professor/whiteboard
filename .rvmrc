@@ -1,1 +1,1 @@
-rvm --create use ruby-1.9.2-p180@rails3
+rvm --create use ruby-1.9.2-p180@whiteboard
