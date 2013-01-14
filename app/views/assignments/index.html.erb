@@ -28,13 +28,12 @@
   <% if customised_name=="Deliverable" %>
     <th>Task Number</th>
   <% end %>
-    <th><%=customised_name  %> Name</th>
+    <th width=25%>Name</th>
     <th>Due Date</th>
     <th>Type</th>
-    <th>Submission Required</th>
+    <th>Can Submit?</th>
     <th><%=get_customised_grade_type%></th>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th colspan="2">Actions</th>
   </tr>
 
 <% @assignments.each do |assignment| %>
@@ -60,3 +59,53 @@
 </div>
 <div style="clear:both"></div>
 <br><br>
+
+<% unless @assignments.empty? %>
+<!--Div that will hold the pie chart-->
+<div id="chart_div" style='text-align: left;'></div>
+<%
+  assignment_sum = @assignments.to_a.sum(&:maximum_score)
+  assignment_array = @assignments.map {|assignment| "[\"#{assignment.name}\", #{assignment.maximum_score}],"}
+
+  if !@assignments.empty? && get_customised_grade_type=="Weight"
+    if (100 - assignment_sum) > 0
+      assignment_array << "['Unassigned', #{100 - assignment_sum}]"
+    end
+  end
+%>
+
+
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Assignment');
+    data.addColumn('number', 'Weight');
+    data.addRows([<%= assignment_array.join.html_safe %>]);
+
+    // Set chart options
+    var options = {'title':'<%= customised_name %> <%= get_customised_grade_type %> Distribution',
+      'width':696,
+      'height':300,
+      'backgroundColor':'transparent',
+      'sliceVisibilityThreshold':0};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+<% end %>
