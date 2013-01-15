@@ -31,14 +31,18 @@
         <% end %>
 
         <% if customised_name=="Deliverable" %>
-            <td><%= h deliverable.assignment.task_number %></td>
-         <% end %>
+            <% if deliverable.assignment.nil? %> <!-- guard against old data -->
+                <td>&nbsp;</td>
+            <% else %>
+                <td><%= h deliverable.assignment.task_number %></td>
+            <% end %>
+        <% end %>
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
         <% latest_attachment = deliverable.attachment_versions.first %>
         <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%=deliverable.assignment.name%> (<%= link_to "download", latest_attachment.attachment.url %>)</td>
+            <td><%= deliverable.assignment_name%> (<%= link_to "download", latest_attachment.attachment.url %>)</td>
         <% else %>
-            <td><%= deliverable.assignment.name %></td>
+            <td><%= deliverable.assignment_name %></td>
         <% end %>
 
         <td>

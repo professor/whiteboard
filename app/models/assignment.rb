@@ -42,6 +42,19 @@ class Assignment < ActiveRecord::Base
     self.is_submittable = true if self.is_submittable.nil?
   end
 
+  def name_with_type
+    unless self.course.grading_rule.nil?
+      nomenclature = self.course.grading_rule.to_display
+    end
+    nomenclature ||= "test"
+
+    if self.is_team_deliverable?
+      self.name + " (Team " + nomenclature + ")"
+    else
+      self.name + " (Individual " + nomenclature + ")"
+    end
+  end
+
   # To check whether the deliverable is submitted or not.
   def is_deliverable_submitted
     self.deliverables.size<=0

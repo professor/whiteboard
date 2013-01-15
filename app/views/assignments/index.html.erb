@@ -16,9 +16,11 @@
       $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
   }
 </script>
-<% customised_name= get_customised_name %>
+
+<h1><%= @course.display_for_course_page %></h1>
 <%=  render :partial=>"layouts/grade_book_sub_menu" %>
-<h1>Listing <%= customised_name %></h1>
+<% customised_name= get_customised_name %>
+<h2>Listing <%= customised_name %></h2>
 <%= link_to "New #{customised_name}", new_course_assignment_path %>
 
 

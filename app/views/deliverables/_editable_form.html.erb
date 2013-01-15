@@ -23,7 +23,7 @@
     </p>
     <p>
       <%= f.label :assignment_id, "Deliverable" %>
-      <%= f.collection_select(:assignment_id, @deliverable.creator.registered_for_these_courses_during_current_semester[0].assignments.all(:conditions => ["is_submittable = ?", true]), :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+      <%= f.collection_select(:assignment_id, @deliverable.creator.registered_for_these_courses_during_current_semester[0].assignments.all(:conditions => ["is_submittable = ?", true]), :id, :name_with_type, :include_blank => false, :onchange=>"set_assignments();") %>
 
     </p>
     <div class="deliverable_attachment">

@@ -116,6 +116,15 @@ class DeliverablesController < ApplicationController
     @deliverable.creator = current_user
     @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
+    if @deliverable.is_team_deliverable && @deliverable.team == nil
+      flash[:error] = "You are not on a team in this course, so you can't submit a team deliverable"
+      respond_to do |format|
+        format.html { render :action => "new" }
+        format.xml { render :xml => @deliverable.errors, :status => :unprocessable_entity }
+      end
+      return
+    end
+
     if !params[:deliverable_attachment][:attachment]
       flash[:error] = 'Must specify a file to upload'
       respond_to do |format|
@@ -250,9 +259,13 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  #Todo: rename this method
+  #get_assginemments_for_course
+  #shouldn't this be in the assignments controller?
   def get_assignments_for_student
     unless params[:course_id].nil?
       @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
+      #Todo: add in "name_with_type" for each assignment
       respond_to do |format|
         format.json { render json: @assignments }
       end

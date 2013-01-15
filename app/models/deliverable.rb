@@ -262,6 +262,16 @@ class Deliverable < ActiveRecord::Base
     error_msg
   end
 
+  # Todo: update this when we are no longer using old data
+  def assignment_name
+    if self.assignment.nil?
+      self.name
+    else
+      self.assignment.name
+    end
+  end
+
+  #Todo: rename get_grade_status to grade_status
   # To get the status of the deliverable for whether it is graded or not.
   def get_grade_status
     if self.is_team_deliverable?
@@ -277,8 +287,10 @@ class Deliverable < ActiveRecord::Base
     end
   end
 
+  #Todo: rename get_status_for_every_individual to status_for_every_individual
   # To get the status of deliverable by student for is it graded or not.
   def get_status_for_every_individual  (student_id)
+    return :unknonwn if self.assignment.nil? #(guard for old deliverables)
     grade = Grade.get_grade(self.assignment.id, student_id)
     if grade.nil?
       return :ungraded

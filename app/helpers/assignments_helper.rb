@@ -1,6 +1,8 @@
 module AssignmentsHelper
 
+  #Todo: rename this to deliverable_nomenclature
   def get_customised_name
+    #Todo: simplify this by using existing methods on grading_rule
     if @course.nil? || @course.grading_rule.nil? || @course.grading_rule.is_nomenclature_deliverable?
       return "Deliverable"
     else

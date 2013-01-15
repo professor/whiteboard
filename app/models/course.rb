@@ -82,6 +82,38 @@ class Course < ActiveRecord::Base
     result.gsub(" ", "")
   end
 
+  def display_for_course_page
+# Consider this
+#    "#{self.number} #{self.name} (#{self.short_name}) #{self.display_semester}"
+    "#{self.number} #{self.name} (#{self.short_name})"
+  end
+
+  def display_name
+    return self.name if self.short_name.blank?
+    return self.name + " (" + self.short_name + ")"
+  end
+
+  def short_or_full_name
+    unless self.short_name.blank?
+      self.short_name
+    else
+      self.name
+    end
+  end
+
+  def short_or_course_number
+    unless self.short_name.blank?
+      self.short_name
+    else
+      self.number
+    end
+  end
+
+  def display_semester
+    mini_text = self.mini == "Both" ? "" : self.mini + " "
+    return self.semester + " " + mini_text + self.year.to_s
+  end
+
   #before_validation :set_updated_by_user -- this needs to be done by the controller
   before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
   after_save :update_distribution_list
@@ -156,31 +188,7 @@ class Course < ActiveRecord::Base
     self.year.to_i * 100 + self.course_end
   end
 
-  def display_name
-    return self.name if self.short_name.blank?
-    return self.name + " (" + self.short_name + ")"
-  end
 
-  def short_or_full_name
-    unless self.short_name.blank?
-      self.short_name
-    else
-      self.name
-    end
-  end
-
-  def short_or_course_number
-    unless self.short_name.blank?
-      self.short_name
-    else
-      self.number
-    end
-  end
-
-  def display_semester
-    mini_text = self.mini == "Both" ? "" : self.mini + " "
-    return self.semester + " " + mini_text + self.year.to_s
-  end
 
   def self.remind_about_effort_course_list
     courses = Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => "Both").all

@@ -1,5 +1,5 @@
-<%=  render :partial=>"layouts/grade_book_sub_menu" %>
-<h1 xmlns="http://www.w3.org/1999/html">Course: <%= @course.display_name %></h1>
+<h1><%= @course.display_for_course_page %></h1>
+<%= render :partial=>"layouts/grade_book_sub_menu" %>
 <h2>Submitted <%=get_customised_name%>s</h2>
 
 <div class="rounded staff">
