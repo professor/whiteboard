@@ -1,5 +1,5 @@
 <% content_for :javascript do %>
-    <script type="text/javascript">
+    <script type="text/javascript" xmlns="http://www.w3.org/1999/html">
         $(document).ready(function () {
             $('#course_configure_peer_evaluation').change(function () {
                 if ($(this).is(':checked')) {
@@ -11,12 +11,46 @@
                     $('#course_peer_evaluation_second_email').val("");
                 }
             });
+            $(".letter").change(function(){
+                var error = "";
+                $(".letter").each(function(){
+                    var max = $(this).parents("tr").prev("tr").find(".letter").val();
+                    var min = $(this).parents("tr").next("tr").find(".letter").val();
+                    if(max!=undefined && $(this).val() >= max){
+                        error = "The grading criteria should be in decending order.";
+                    }
+                    if($(this).val() <= min){
+                        error = "The grading criteria should be in decending order.";
+                    }
+                });
+                if(error !=""){
+                    $("#decending-error").text(error);
+                    $("#decending-error").show();
+                    $("#course_submit").attr("disabled", true);
+                    $(this).focus();
+
+                }
+                else{
+                    $("#decending-error").hide();
+                    $("#course_submit").attr("disabled", false);
+                }
+
+
+            });
 
         });
     </script>
 
 <% end %>
-
+<style>
+#decending-error{
+border: 1px solid;
+padding: 5px 5px 5px 5px;
+background-position: 10px center;
+color: #D8000C;
+background-color: #FFBABA;
+}
+</style>
 <div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
@@ -86,10 +120,7 @@
         <br/>
       </p>
 
-      <p>
-        <%= f.hidden_field :is_configured, :value => true %>
-        <%= f.submit button_name %>
-      </p>
+
       <!--
     <p>
       <%= f.label :primary_faculty_label %><br/>
@@ -99,9 +130,39 @@
       <%= f.label :secondary_faculty_label %><br/>
       <%= f.text_field(:secondary_faculty_label, :size => 40) %>
     </p>
--->
+    -->
+    <h3>Grading Tool</h3>
+    <%= f.fields_for :grading_rule do |rule| %>
+      <p>
+      <%=rule.label :is_nomenclature_deliverable, "What nomenclature do you prefer: assignments or deliverables?" %> <br/>
+      <%=rule.select(:is_nomenclature_deliverable, [["Assignments", false], ["Deliverables in a task", true]]) %>
+      </p>
+      <p>
+      <%= rule.label :grade_type, "How does your syllabus determine grades?" %><br/>
+      <%= rule.select(:grade_type, [['Points (e.g. project is 150 points)', 'points'],['Weight or percentage (e.g. final is 50%) ','weights']])  %> <br/>
+      </p>
+      <br/>
+      Grading Criteria
+      <table>
+        <%[[:A_grade_min, "A", "94"],[:A_minus_grade_min, "A-", "90"],[:B_plus_grade_min, "B+", "88"], [:B_grade_min, "B", "84"],[:B_minus_grade_min, "B-", "80"],[:C_plus_grade_min, "C+", "78"], [:C_grade_min, "C", "74"],[:C_minus_grade_min, "C-", "70"]].each do |entry| %>
+          <tr>
+            <td>     <%= rule.label entry[0], entry[1]%><br/></td>
+            <td>     <%= rule.text_field(entry[0], :size => 5 , :class=>"letter", :placeholder=>entry[2],:type=>"number",:step=>".1",:min=>0 )%></td>
+          </tr>
+        <%end%>
+      </table>
+    <%end%>
 
-  <% end %>
+      </br></br>
 
-</div>
+      <p>
+      <%= f.hidden_field :is_configured, :value => true %>
+
+      <%= f.submit button_name %>
+        <span  id="decending-error" style="display: none;"></span>
+      </p>
+
+    <% end %>
+
+  </div>
 

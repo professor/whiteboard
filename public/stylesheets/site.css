@@ -380,8 +380,8 @@ tr.staff {
     margin_left: 10px;
 }
 
-.cmu_table .course_tools td {
-    width: 140px;
+.layout_table .course_tools td {
+    width: 130px;
 }
 
 #semester_length_courses_table {
@@ -425,7 +425,7 @@ border-width:1px;
     vertical-align: top;
 }
 
-.cmu_table_odd {
+.cmu_table_odd, .cmu_table tr:nth-child(odd) {
 /*    background-color:#EBEBEB;*/
 /*    background-color:#F2F3F6;*/
     background-color:#FbFbFb;

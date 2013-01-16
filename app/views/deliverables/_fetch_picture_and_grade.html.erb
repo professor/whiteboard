@@ -1,0 +1,20 @@
+
+<div class='team_member_photo'>
+
+  <div class="label">
+    <%= fields_for :grade do |grade| %>
+      <%= grade.text_field :grade_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "5x1", :tabindex=>member.id%>
+      <% if deliverable_type == "individual" %>
+
+        /<%= display_maximum_score %>
+
+      <% end %>
+    <% end %>
+  </div>
+  <div style="text-align: center;">
+  <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
+    <%= image_tag(member.image_uri, :border => 0, :height => 100, :alt => member.human_name+" image") %></a>
+  </div>
+  <div class='label'> <%= member.human_name %></div>
+
+  </div>

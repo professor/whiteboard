@@ -56,11 +56,18 @@ describe DeliverablesController do
 
     describe "GET my_deliverables" do
       before(:each) do
-        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
+        @current_course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @past_course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 41)
+        @deliverable = stub_model(Deliverable, :course_id => @current_course.id, :owner_id => @student_sam.id)
+        @current_assignment = stub_model(Assignment, :course_id => @current_course.id)
+        @past_assignment = stub_model(Assignment, :course_id => @past_course.id)
         Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
         Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
-        Course.stub(:find).and_return(@course)
+        Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :current).and_return([@current_assignment])
+        Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :past).and_return([@past_assignment])
+        Course.stub(:find).and_return(@current_course)
+        User.any_instance.stub(:registered_for_these_courses_during_current_semester).and_return([@current_course])
+        User.any_instance.stub(:registered_for_these_courses_during_past_semesters).and_return([@past_course])
       end
 
       context "as the owner of the deliverable" do
@@ -70,8 +77,12 @@ describe DeliverablesController do
 
         it 'assigns deliverables' do
           get :my_deliverables, :id => @student_sam.id
-          assigns(:current_deliverables).should == [@deliverable, @deliverable]
-          assigns(:past_deliverables).should == [@deliverable, @deliverable]
+          #assigns(:current_deliverables).should == [@deliverable, @deliverable]
+          #assigns(:past_deliverables).should == [@deliverable, @deliverable]
+          assigns(:current_courses).should == [@current_course]
+          assigns(:past_courses).should == [@past_course]
+          assigns(:current_assignments).should == [@current_assignment]
+          assigns(:past_assignments).should == [@past_assignment]
         end
       end
 
@@ -101,12 +112,13 @@ describe DeliverablesController do
 
     describe "GET show" do
       before(:each) do
-        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :is_team_deliverable => true)
+        @current_course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+        @current_assignment = mock_model(Assignment, :course_id=>@current_course.id, :is_team_deliverable => true)
+        @deliverable = stub_model(Deliverable, :course_id => @current_course.id, :owner_id => @student_sam.id, :assignment=>@current_assignment)
         @team = stub_model(Team)
         Deliverable.stub(:find).and_return(@deliverable)
         @deliverable.stub(:team).and_return(@team)
-        Course.stub(:find).and_return(@course)
+        Course.stub(:find).and_return(@current_course)
       end
 
       context "for a team deliverable" do

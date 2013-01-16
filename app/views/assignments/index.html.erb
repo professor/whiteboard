@@ -1,0 +1,113 @@
+<script>
+  $(window).load(function(){
+    calculate();
+  });
+  function calculate(){
+      var total_score = 0, individual_score = 0, team_score = 0;
+      $(".max_score").each(function(){
+          total_score += parseFloat($(this).text());
+          if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Individual")
+              individual_score += parseFloat($(this).text());
+          if($.trim($(this).parents("tr").find("td.deliverable_type").text())=="Team")
+              team_score += parseFloat($(this).text());
+      });
+      var unit=" Pts";
+      if("<%=get_customised_grade_type%>" != "Points") unit = " %";
+      $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
+  }
+</script>
+
+<h1><%= @course.display_for_course_page %></h1>
+<%=  render :partial=>"layouts/grade_book_sub_menu" %>
+<% customised_name= get_customised_name %>
+<h2>Listing <%= customised_name %></h2>
+<%= link_to "New #{customised_name}", new_course_assignment_path %>
+
+
+<% unless @assignments.empty? %>
+<table class='cmu_table'>
+  <tr>
+  <% if customised_name=="Deliverable" %>
+    <th>Task Number</th>
+  <% end %>
+    <th width=25%>Name</th>
+    <th>Due Date</th>
+    <th>Type</th>
+    <th>Can Submit?</th>
+    <th><%=get_customised_grade_type%></th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% @assignments.each do |assignment| %>
+  <%= content_tag_for(:tr, assignment) do %>
+    <% if customised_name=="Deliverable" %>
+         <td><%=assignment.task_number  %> </td>
+    <% end %>
+    <td><%=assignment.name  %> </td>
+    <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
+    <td class="deliverable_type"><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
+    <td><%=(assignment.is_submittable)?"Yes":"No"  %> </td>
+    <td class="max_score"><%=assignment.maximum_score  %> </td>
+    <td><%= link_to 'Edit', edit_course_assignment_path(@course,assignment) %></td>
+    <td><%= link_to 'Delete', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
+  </tr>
+ <% end %>
+<% end %>
+</table>
+<% end %>
+<br />
+<div style="width:97%" >
+  <div  style="float:right;text-align: right;" id="total"></div>
+</div>
+<div style="clear:both"></div>
+<br><br>
+
+<% unless @assignments.empty? %>
+<!--Div that will hold the pie chart-->
+<div id="chart_div" style='text-align: left;'></div>
+<%
+  assignment_sum = @assignments.to_a.sum(&:maximum_score)
+  assignment_array = @assignments.map {|assignment| "[\"#{assignment.name}\", #{assignment.maximum_score}],"}
+
+  if !@assignments.empty? && get_customised_grade_type=="Weight"
+    if (100 - assignment_sum) > 0
+      assignment_array << "['Unassigned', #{100 - assignment_sum}]"
+    end
+  end
+%>
+
+
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Assignment');
+    data.addColumn('number', 'Weight');
+    data.addRows([<%= assignment_array.join.html_safe %>]);
+
+    // Set chart options
+    var options = {'title':'<%= customised_name %> <%= get_customised_grade_type %> Distribution',
+      'width':696,
+      'height':300,
+      'backgroundColor':'transparent',
+      'sliceVisibilityThreshold':0};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+<% end %>

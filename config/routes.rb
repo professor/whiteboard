@@ -14,7 +14,11 @@ CMUEducation::Application.routes.draw do
   end
 
   resources :search, :only => [:index]
+  #get    "/deliverables/get_assignments_for_student(.:format)" =>  "deliverables#get_assignments_for_student"
+
+  match '/deliverables/get_assignments_for_student(.:format)'=> 'deliverables#get_assignments_for_student' ,:as=> :get_assignments_for_student
   resources :deliverables
+
   match '/people/:id/my_deliverables' => 'deliverables#my_deliverables', :as => :my_deliverables
   match '/people/:id/my_presentations' => 'presentations#my_presentations', :as => :my_presentations
 
@@ -45,10 +49,21 @@ CMUEducation::Application.routes.draw do
   match '/effort_logs/effort_for_unregistered_courses' => 'effort_logs#effort_for_unregistered_courses'
   resources :effort_logs
   resources :effort_log_line_items
+  resources :effort_log_line_items
   resources :course_numbers
   resources :course_configurations
+
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
-  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
+  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semestrseer
+  match '/course/:course_id/grades/send_final_grade' => 'grades#send_final_grade', :as=>:send_final_grade, :via => :post
+  match '/course/:course_id/grades/post_drafted_and_send' => 'grades#post_drafted_and_send', :as=>:post_drafted_and_send, :via => :post
+  match '/course/:course_id/grades/save' => 'grades#save', :as=>:save, :via => :post
+  match '/course/:course_id/grades/export' => 'grades#export', :as=>:export, :via => :post
+  match '/course/:course_id/grades/import' => 'grades#import', :as=>:import, :via => :post
+  resources :courses do
+    resources :assignments
+    resources :grades
+  end
 
 
   constraints({:id => /.*/}) do
@@ -125,6 +140,8 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/team_formation_tool' => 'courses#team_formation_tool', :as => :team_formation_tool
   match 'courses/:course_id/deliverables' => 'deliverables#index_for_course', :as => :course_deliverables
   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
+
+
 
   #match 'courses/:course_id/presentations/update' => 'presentations#create',:via => :post, :as => :new_course_presentation
   #match 'courses/:course_id/presentations/edit' => 'presentations#edit', :as => :new_course_presentation

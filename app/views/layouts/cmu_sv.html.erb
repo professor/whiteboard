@@ -101,6 +101,9 @@
           <hr>
         </div>
         <%= yield :left_nav %>
+        <% if @is_in_grade_book %>
+            <%=  render :partial=>"layouts/grade_book_menu" %>
+        <% end %>
       </div>
     </div>
     <div id="topnav">
@@ -159,7 +162,7 @@
                     <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
                       <p style="color: red; margin-top: 5px;">
                         <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                        <%= flash[:error] %></p>
+                        <%= flash[:error].html_safe%></p>
                     </div>
                   </div>
               <% end %>

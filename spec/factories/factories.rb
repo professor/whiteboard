@@ -1,6 +1,3 @@
-#puts "....factories loaded....."
-#puts caller.join("\n")
-
 FactoryGirl.define do
 
   factory :course, class: Course do
@@ -10,6 +7,7 @@ FactoryGirl.define do
     mini 'Both'
     number '96-700'
     updated_by_user_id 10
+    association :grading_rule, :factory => :grading_rule_points
   end
 
 
@@ -17,6 +15,7 @@ FactoryGirl.define do
   end
 
   factory :deliverable do
+    association :assignment, :factory => :assignment
     association :course, :factory => :course
     association :creator, :factory => :student_sally
   end
@@ -159,8 +158,19 @@ FactoryGirl.define do
     deleted false
   end
 
-  factory :registration, class: Registration do
+  factory :registration do
+    course_id 1
+    user  
+  end
 
+  factory :faculty_assignment, class: FacultyAssignment do
+    course_id 1
+    user_id 999
+  end
+
+  factory :course_fse_with_students, :parent=>:fse do  |c|
+    registered_students { |registered_students| [registered_students.association(:team_member)] }
+    c.after(:build) {|c| c.registered_students.each  { |s|  FactoryGirl.build(:registration, :course_id=>c.id, :user_id => s.id) } }
   end
 
 end

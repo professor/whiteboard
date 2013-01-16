@@ -1,4 +1,5 @@
-<h1>Presentations for <%= @course.display_name %></h1>
+<h1><%= @course.display_for_course_page %></h1>
+<h2>Presentations</h2>
 <div class="right_link"><%= link_to "Today's presentations", today_presentations_url %>
   <br/><%= link_to "All presentations", presentations_url %></div>
 

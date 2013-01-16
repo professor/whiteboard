@@ -27,13 +27,18 @@
 # has "configured" the course. (Or verified it's settings.) If this doesn't happen, the system should periodically
 # remind faculty about the change.)
 #
-#
+# Course has grading rules. These include grading cut_offs for grade's like A,A-,B+ etc.
 
 class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
 #  has_and_belongs_to_many :users, :join_table=>"courses_users"
+  has_many :assignments ,:order => "assignment_order"
+
+
+ #----- delete this when implementing deliverable-----#
+  has_many :deliverables
 
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :user
@@ -42,6 +47,12 @@ class Course < ActiveRecord::Base
   has_many :registered_students, :through => :registrations, :source => :user
 
   has_many :presentations
+
+  has_many :grades, :through => :assignments
+
+  has_one :grading_rule, :dependent => :destroy
+  accepts_nested_attributes_for :grading_rule
+  attr_accessible :grading_rule_attributes
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty
@@ -69,6 +80,38 @@ class Course < ActiveRecord::Base
     mini_text = self.mini == "Both" ? "" : self.mini
     result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
     result.gsub(" ", "")
+  end
+
+  def display_for_course_page
+# Consider this
+#    "#{self.number} #{self.name} (#{self.short_name}) #{self.display_semester}"
+    "#{self.number} #{self.name} (#{self.short_name})"
+  end
+
+  def display_name
+    return self.name if self.short_name.blank?
+    return self.name + " (" + self.short_name + ")"
+  end
+
+  def short_or_full_name
+    unless self.short_name.blank?
+      self.short_name
+    else
+      self.name
+    end
+  end
+
+  def short_or_course_number
+    unless self.short_name.blank?
+      self.short_name
+    else
+      self.number
+    end
+  end
+
+  def display_semester
+    mini_text = self.mini == "Both" ? "" : self.mini + " "
+    return self.semester + " " + mini_text + self.year.to_s
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
@@ -145,31 +188,7 @@ class Course < ActiveRecord::Base
     self.year.to_i * 100 + self.course_end
   end
 
-  def display_name
-    return self.name if self.short_name.blank?
-    return self.name + " (" + self.short_name + ")"
-  end
 
-  def short_or_full_name
-    unless self.short_name.blank?
-      self.short_name
-    else
-      self.name
-    end
-  end
-
-  def short_or_course_number
-    unless self.short_name.blank?
-      self.short_name
-    else
-      self.number
-    end
-  end
-
-  def display_semester
-    mini_text = self.mini == "Both" ? "" : self.mini + " "
-    return self.semester + " " + mini_text + self.year.to_s
-  end
 
   def self.remind_about_effort_course_list
     courses = Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => "Both").all

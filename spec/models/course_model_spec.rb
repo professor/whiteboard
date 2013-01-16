@@ -18,7 +18,6 @@ describe Course do
     end
   end
 
-
   context "custom finders" do
 
     specify { Course.should respond_to(:last_offering) }

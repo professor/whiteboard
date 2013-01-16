@@ -8,16 +8,22 @@ describe Deliverable do
     }.should change(Deliverable, :count).by(1)
   end
 
+  context "is valid" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:deliverable)
+    end
+  end
+
   context "is not valid" do
 
-    [:course, :creator].each do |attr|
+    [:course, :assignment, :creator].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid
         subject.errors[attr].should_not be_empty
       end
     end
 
-    context "when a duplicate deliverable for the same course, task and owner" do
+    context "when a duplicate deliverable for the same course, assignment and owner" do
       [:team_deliverable, :individual_deliverable].each do |symbol|
         it "for a team/individual deliverable" do
           original = FactoryGirl.build(symbol)
@@ -26,8 +32,7 @@ describe Deliverable do
           duplicate = Deliverable.new()
           duplicate.stub(:update_team)
           duplicate.creator_id = original.creator_id
-          duplicate.course = original.course
-          duplicate.task_number = original.task_number
+          duplicate.assignment = original.assignment
           duplicate.team_id = original.team_id
           duplicate.should_not be_valid
         end
@@ -117,12 +122,75 @@ describe Deliverable do
     end
   end
 
+  context "for an individual deliverable's grading status" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:individual_deliverable)
+    end
 
+    it "is visible if the grade is published" do
+      grade = FactoryGirl.build(:grade_visible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.is_visible_to_student?.should be_true
+    end
 
+    it "is invisible if the grade is not published" do
+      grade = FactoryGirl.build(:grade_invisible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.is_visible_to_student?.should be_false
+    end
 
+    it "is invisible if it is not graded" do
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+      @deliverable.is_visible_to_student?.should be_false
+    end
+    
+    it "is graded if grade is given and published" do
+      grade = FactoryGirl.build(:grade_visible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.get_grade_status.should eq(:graded)
+    end
+    
+    it "is ungraded if grade is not given" do
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+      @deliverable.get_grade_status.should eq(:ungraded)
+    end
+    
+    it "is drafted if grade is given but not published" do
+      grade = FactoryGirl.build(:grade_invisible)
+      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      @deliverable.get_grade_status.should eq(:drafted)
+    end
+  end
 
+  context "for a team deliverable's grading status" do
+    before(:each) do
+      @deliverable = FactoryGirl.build(:team_deliverable)
+    end
 
-
+    it "is graded if all of members' grades are given and published" do
+      @deliverable.team.members.each do | member |
+        grade = FactoryGirl.build(:grade_visible, :student_id => member.id)
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+      end
+      @deliverable.get_grade_status.should eq(:graded)
+    end
+    
+    it "is drafted if any of the member's grade is given but not published" do
+      grade = FactoryGirl.build(:grade_invisible)
+      @deliverable.team.members.each do | member |
+        grade = FactoryGirl.build(:grade_invisible, :student_id => member.id)
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+      end
+      @deliverable.get_grade_status.should eq(:drafted)
+    end
+    
+    it "is ungraded if any of the member's grade is not given" do
+      @deliverable.team.members.each do | member |
+        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(nil)
+      end
+      @deliverable.get_grade_status.should eq(:ungraded)
+    end
+  end
 end
 
 
