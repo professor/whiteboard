@@ -360,7 +360,7 @@ class User < ActiveRecord::Base
                  :subject => "Your user account needs updating",
                  :message => message,
                  :url_label => "Modify your profile",
-                 :url => Rails.application.routes.url_helpers.edit_user_url(self, :host => "rails.sv.cmu.edu")
+                 :url => Rails.application.routes.url_helpers.edit_user_url(self, :host => "whiteboard.sv.cmu.edu")
       }
       GenericMailer.email(options).deliver
     end

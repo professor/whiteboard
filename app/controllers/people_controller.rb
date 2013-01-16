@@ -157,7 +157,7 @@ class PeopleController < ApplicationController
       return
     end
 
-    @machine_name = "http://rails.sv.cmu.edu"
+    @machine_name = "http://whiteboard.sv.cmu.edu"
 
     twiki_name = params[:twiki_name]
     @person = User.find_by_twiki_name(twiki_name)
@@ -186,7 +186,7 @@ class PeopleController < ApplicationController
                  :subject => "rails user account automatically created for #{twiki_name}",
                  :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
                  :url_label => "Edit this person's information",
-                 :url => "http://rails.sv.cmu.edu" + edit_person_path(@person)
+                 :url => "http://whiteboard.sv.cmu.edu" + edit_person_path(@person)
       }
       GenericMailer.email(options).deliver
     end

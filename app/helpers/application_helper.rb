@@ -7,7 +7,7 @@ module ApplicationHelper
 
 
   def scotty_dog_landscape
-    image_tag("http://rails.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69")
+    image_tag("http://whiteboard.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69")
   end
 
   def scotty_dog_portrait
