@@ -215,14 +215,15 @@ class DeliverablesController < ApplicationController
   end
 
   def edit_feedback
-    # Only staff can provide feedback
-    if !current_user.is_staff?
-      flash[:error] = "Only faculty can provide feedback on deliverables."
+    @deliverable = Deliverable.find(params[:id])
+    @course = @deliverable.course
+    @hostname_with_port = request.host_with_port
+
+    if !@deliverable.assignment.course.faculty.include?(current_user)
+      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
     end
-
-    @deliverable = Deliverable.find(params[:id])
   end
 
 

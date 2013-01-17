@@ -733,3 +733,10 @@ div.modified {
 #cke_bottom_user_user_text, #cke_bottom_user_biography{
     display: none;
 }
+
+
+/* Grade book styling */
+.team_member_photo{width:156px}
+.team_member_photo img {height:150px}
+
+.student_scores{ overflow:auto; margin-top: 15px; }

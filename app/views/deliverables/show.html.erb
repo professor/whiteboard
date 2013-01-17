@@ -71,10 +71,10 @@
 <br/>
 
 <% if @current_user.is_staff? %>
-     <%= render :partial => "edit_student_feedback", :locals => {:button_name => "Submit"} %>
-<% elsif @current_user.is_student? %>
+     <%# render :partial => "edit_student_feedback", :locals => {:button_name => "Submit"} %>
+    <%=  link_to "Alter feedback", deliverable_feedback_path(@deliverable) %>
+<% end %>
     <%= render :partial => "view_feedback_by_professor" %>
- <% end %>
 
 
 

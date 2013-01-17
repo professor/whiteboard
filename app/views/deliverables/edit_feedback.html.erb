@@ -1,27 +1,113 @@
+<script xmlns="http://www.w3.org/1999/html">
+  function change_team_scores(){
+      var score = $("#team_scores").val();
+      $(".student_scores input[type='text']").each(function(){
+          $(this).val(score);
+      });
+  }
+
+</script>
+
+<script>
+  $(function() {
+    $('#apply_team_grade').bind('click', function() {
+        var score = $("#team_grade").val();
+        $(".student_scores input[type='text']").each(function(){
+              $(this).val(score);
+          });
+    });
+  });
+</script>
+
 <% content_for :title, "Provide Feedback" %>
 
-<% if @deliverable.is_team_deliverable? %>
-    <h1>Provide Team Feedback for <%= @deliverable.team.name -%></h1>
+<h1><%= @course.display_for_course_page %></h1>
+<%=  render :partial=>"layouts/grade_book_sub_menu" %>
+
+<% if @deliverable.is_team_deliverable?  %>
+<h2>Grade Team <%=  get_customised_name %>: <%= @deliverable.assignment.name %></h2>
 <% else %>
-    <h1>Provide Individual Feedback for <%= @deliverable.creator.human_name -%></h1>
+<h2>Grade Individual <%=  get_customised_name %>: <%= @deliverable.assignment.name %></h2>
 <% end %>
+
 
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-    <p>
-      <%= f.label :feedback, "Feedback file to upload" %>
-      <%= f.file_field :feedback %>
-    </p>
-    <p>
-      <%= f.label :feedback_comment, "Feedback Comments" %>
-      <br>
-      <%= f.text_area :feedback_comment, :size => "90x10" %>
-    </p>
-    <p>
-      <%= f.submit "Submit Feedback" %>
-    </p>
-<% end %>
+    <%# render 'shared/error_messages', object: f.object %>
+    <div>
+      <% if get_customised_grade_type == "Percentage" %>
+        <p>
+          <%= "Weight: #{@deliverable.assignment.weight}%" %>
+        </p>
+      <% end %>
+      <p>
+        <% if @deliverable.current_attachment.blank? %>
+          Deliverable: None
+        <% else %>
+          Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+        <% end %>
+      </p>
+      <p>
+        <%= f.label :feedback, "Feedback file to upload" %>
+        <%= f.file_field :feedback %>
+      </p>
+      <p>
+        <%= f.label :feedback_comment, "Feedback Comments" %>
+        (<%= link_to 'View History and Feedback', @deliverable %>)
+        <br>
+        <%= f.text_area :feedback_comment, :size => "70x10" %>
+      </p>
+    </div>
 
-<%= link_to 'Cancel', deliverable_path(@deliverable) %>
-<br/>
-<br/>
+
+    <% if @deliverable.get_grade_status == :drafted %>
+        This is draft feedback
+    <% end %>
+
+    <% if @deliverable.is_team_deliverable? %>
+        Team Score: <%= text_field_tag "team_grade", '', :size => 4 %> / <%= display_maximum_score %>
+        <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+    <% end %>
+
+    <div class="student_scores">
+      <% if @deliverable.is_team_deliverable? %>
+            <% for member in @deliverable.team.members %>
+              <% grade_obj = Grade.get_grade(@deliverable.assignment_id, member.id)%>
+              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+            <% end %>
+      <% else %>
+        <% grade_obj = Grade.get_grade(@deliverable.assignment_id, @deliverable.creator_id)%>
+        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+      <% end %>
+    </div>
+
+
+      <br />
+
+      <div class="rounded staff">
+        <%= professor_image %>
+        <span class="instructions">Only faculty can see this information</span>
+
+        <h1>
+          Professor's Notes
+        </h1>
+
+        <p>
+        <%= f.text_area :private_note, :size => "90x10" %>
+        </p>
+      </div>
+
+      <br /><br /><br />
+
+      <p>
+      <div style="float: left; width: auto;">
+        <%= f.submit "Save and Email" , :name=>"submit"%>
+        <%= f.submit "Save as Draft" , :name=>"draft" %>
+        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
+      </div><div style='clear:both;'></div>
+      </p>
+    <% end %>
+
+    <!-- <%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
+    <br/>
+    <br/>
