@@ -234,7 +234,12 @@
           <th> Team </th>
           <% @assignments.each do |assignment| %>
             <th style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
-              <%="#{assignment.try(:short_name) || assignment.try(:name) || ''}"%><br/>
+              <% unless assignment.short_name.blank? %>
+                  <%= assignment.short_name %>
+              <% else %>
+                  <%= assignment.name %>
+              <% end %>
+                  <br/>
               <span style="font-weight: normal;white-space: nowrap;">(
               <% case GradingRule.get_grade_type @course.id %>
               <%when "points" %>
