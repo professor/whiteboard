@@ -1,7 +1,7 @@
 <% if @deliverable.course %>
-  <% title = "#{get_customised_name} for " + @deliverable.course.name + " (" + @deliverable.assignment.name + ")" %>
+  <% title = "#{get_customised_name} for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
 <% else %>
-    <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment.name + ")" %>
+    <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
 <% end %>
 <% content_for :title, title %>
 <h1><%= title %></h1>
@@ -21,7 +21,6 @@
 
 
 <h1>Attachment Version History</h1>
-<%@assignment = @deliverable.assignment%>
 <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <th>Submission Date</th>
@@ -48,8 +47,8 @@
           <% else %>
               <%= display_timestamp(version.submission_date) -%>
             <% end %>
-            <%if !@assignment.due_date.nil? && version.submission_date > @assignment.due_date %>
-              <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @assignment.due_date)%> Late!)</span>
+            <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
+              <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> Late!)</span>
             <%end%>
         </td>
 

@@ -55,6 +55,20 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
+  #Guard for legacy data
+  def assignment_name
+    if self.assignment
+      self.assignment.name
+    end
+  end
+
+  #Guard for legacy data
+  def assignment_due_date
+    if self.assignment
+      self.assignment.due_date
+    end
+  end
+
   # To get the owner of the deliverable
   def unique_course_task_owner?
     if self.is_team_deliverable?
