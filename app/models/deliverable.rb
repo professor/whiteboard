@@ -55,6 +55,8 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
+
+
   # To get the owner of the deliverable
   def unique_course_task_owner?
     if self.is_team_deliverable?
@@ -268,6 +270,13 @@ class Deliverable < ActiveRecord::Base
       self.name
     else
       self.assignment.name
+    end
+  end
+
+  # Todo: update this when we are no longer using old data
+  def assignment_due_date
+    if self.assignment
+      self.assignment.due_date
     end
   end
 
