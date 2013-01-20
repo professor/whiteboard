@@ -39,7 +39,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
         :subject => "PersonJob had an error on person id = #{person.id}",
         :message => message,
         :url_label => "Show which person",
-        :url => "http://rails.sv.cmu.edu/people/#{person.id}" #+ person_path(person)
+        :url => "http://whiteboard.sv.cmu.edu/people/#{person.id}" #+ person_path(person)
       ).deliver
     end
   end
