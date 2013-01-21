@@ -163,7 +163,8 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable = Deliverable.find(params[:id])
 
-    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+#    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+    @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
@@ -215,14 +216,13 @@ class DeliverablesController < ApplicationController
   end
 
   def edit_feedback
-    # Only staff can provide feedback
-    if !current_user.is_staff?
-      flash[:error] = "Only faculty can provide feedback on deliverables."
+    @deliverable = Deliverable.find(params[:id])
+
+    if !@deliverable.assignment.course.faculty.include?(current_user)
+      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
       redirect_to :controller => "welcome", :action => "index"
       return
     end
-
-    @deliverable = Deliverable.find(params[:id])
   end
 
 

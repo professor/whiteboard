@@ -124,10 +124,10 @@ describe HUBClassRosterHandler do
       @person1 = FactoryGirl.create(:student_sam)
       @person2 = FactoryGirl.create(:student_sally)
 
-      @expected_start = "** This is an experimental feature. ** By loading in HUB data we can auto create class email distribution lists. Also, if you create teams with the rails system, then you can see who has not been assigned to a team. This does not currently track students on wait-lists. We only have access to students registered in 96-xxx courses.<br/><br/>"
-      @expected_start += "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>.<br/><br/>"
-      @expected_start += "The HUB does not provide us with registration information on a daily basis. Periodically, we manually upload HUB registrations. This is a summary of changes since the last time we updated information from the HUB.<br/><br/>"
-      @expected_end = "<br/>The system will be updating your course mailing list (#{@course.email}) For more information, see your <a href='http://rails.sv.cmu.edu/courses/#{@course.id}'>course tools</a><br/><br/>"
+      @experimental_feature_text = "** This is an experimental feature. **"
+      @official_registration_text = "The official registration list for your course can be <a href='https://acis.as.cmu.edu/grades/'>found here</a>"
+      @updating_email_text = "The system will be updating your course mailing list (#{@course.email}) For more information, see your <a href='http://whiteboard.sv.cmu.edu/courses/#{@course.id}'>course tools</a>"
+
     end
 
     it "course is nil" do
@@ -143,13 +143,17 @@ describe HUBClassRosterHandler do
     it "nil added, dropped, and not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, nil, nil, nil)
 
-      message.should == @expected_start + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @official_registration_text
+      message.should include @updating_email_text
     end
 
     it "empty added, dropped, and not_in_system" do
       message = HUBClassRosterHandler.roster_change_message(@course, [], [], [])
 
-      message.should == @expected_start + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @official_registration_text
+      message.should include @updating_email_text
     end
 
     it "with added students" do
@@ -161,7 +165,9 @@ describe HUBClassRosterHandler do
       expected_body += "&nbsp;&nbsp;&nbsp;#{@person1.first_name} #{@person1.last_name}<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;&lt;script&gt;cool &lt;script&gt;hacker<br/>"
 
-      message.should == @expected_start + expected_body + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @updating_email_text
+      message.should include expected_body
     end
 
     it "with one added student" do
@@ -179,7 +185,9 @@ describe HUBClassRosterHandler do
       expected_body += "&nbsp;&nbsp;&nbsp;#{@person1.first_name} #{@person1.last_name}<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;&lt;script&gt;cool &lt;script&gt;hacker<br/>"
 
-      message.should == @expected_start + expected_body + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @updating_email_text
+      message.should include expected_body
     end
 
     it "with one dropped student" do
@@ -196,7 +204,9 @@ describe HUBClassRosterHandler do
       expected_body += "&nbsp;&nbsp;&nbsp;&lt;script&gt;hacker@andrew.cmu.edu<br/>"
       expected_body += "We can easily create accounts for these 2 students. Please forward this email to help@sv.cmu.edu indicating which students you want added. (The rails system will create google and twiki accounts.)<br/><br/>"
 
-      message.should == @expected_start + expected_body + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @updating_email_text
+      message.should include expected_body
     end
 
     it "with one student not_in_system" do
@@ -217,7 +227,9 @@ describe HUBClassRosterHandler do
       expected_body += "1 student was dropped from the course:<br/>"
       expected_body += "&nbsp;&nbsp;&nbsp;#{@person2.first_name} #{@person2.last_name}<br/>"
 
-      message.should == @expected_start + expected_body + @expected_end
+      message.should include @experimental_feature_text
+      message.should include @updating_email_text
+      message.should include expected_body
     end
   end
 end
