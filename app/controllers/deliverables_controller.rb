@@ -163,7 +163,8 @@ class DeliverablesController < ApplicationController
   def update
     @deliverable = Deliverable.find(params[:id])
 
-    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+#    params[:is_team_deliverable] ? @deliverable.update_team : @deliverable.team = nil
+    @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
