@@ -56,7 +56,7 @@
         success: function(result){
             $("#deliverable_assignment_id").empty();
             $.each(result,function(idx, value){
-                        $("#deliverable_assignment_id").append("<option value='"+value["assignment"]["id"]+"'>" + value["assignment"]["name"]+"</option>");
+                        $("#deliverable_assignment_id").append("<option value='"+value["assignment"]["id"]+"'>" + value["assignment"]["name_with_type"]+"</option>");
                     }
 
             );

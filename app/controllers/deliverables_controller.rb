@@ -265,9 +265,9 @@ class DeliverablesController < ApplicationController
   def get_assignments_for_student
     unless params[:course_id].nil?
       @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
-      #Todo: add in "name_with_type" for each assignment
+      @assignments_array =  @assignments.collect{ |assignment| {:assignment => assignment.attributes.merge({:name_with_type => assignment.name_with_type}) }}
       respond_to do |format|
-        format.json { render json: @assignments }
+        format.json { render json:  @assignments_array }
       end
     end
   end

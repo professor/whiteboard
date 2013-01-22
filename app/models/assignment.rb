@@ -48,10 +48,16 @@ class Assignment < ActiveRecord::Base
     end
     nomenclature ||= "test"
 
-    if self.is_team_deliverable?
-      self.name + " (Team " + nomenclature + ")"
+    if self.task_number.blank?
+      task = ""
     else
-      self.name + " (Individual " + nomenclature + ")"
+      task = "Task #{self.task_number}. "
+    end
+
+    if self.is_team_deliverable?
+      task + self.name + " (Team " + nomenclature + ")"
+    else
+      task + self.name + " (Individual " + nomenclature + ")"
     end
   end
 
