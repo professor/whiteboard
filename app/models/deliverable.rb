@@ -55,6 +55,7 @@ class Deliverable < ActiveRecord::Base
 
   default_scope :order => "created_at DESC"
 
+  after_save :inaccurate_course_and_assignment_check
 
 
   # To get the owner of the deliverable
@@ -307,6 +308,17 @@ class Deliverable < ActiveRecord::Base
       return :drafted
     else
       return :graded
+    end
+  end
+
+
+  def inaccurate_course_and_assignment_check
+    if self.assignment
+      if self.assignment.course_id != self.course_id
+        options = {:to => "todd.sedano@sv.cmu.edu", :subject => "inaccurate_course_and_assignment_check #{self.id}",
+                   :message => "The subject says it all", :url => "", :url_label => ""}
+        GenericMailer.email(options).deliver
+      end
     end
   end
 end
