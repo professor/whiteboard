@@ -15,15 +15,15 @@
         </div>
     <% end %>
 
-  <% unless  @deliverable.creator.registered_for_these_courses_during_current_semester[0].nil?%>
+  <% if @courses %>
     <p>
       <%= f.label :course_id, "Select Course" %>
-      <%= f.collection_select(:course_id, @deliverable.creator.registered_for_these_courses_during_current_semester, :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
+      <%= f.collection_select(:course_id, @courses, :id, :name, :include_blank => false, :onchange=>"set_assignments();") %>
       <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
     </p>
     <p>
       <%= f.label :assignment_id, "Deliverable" %>
-      <%= f.collection_select(:assignment_id, @deliverable.creator.registered_for_these_courses_during_current_semester[0].assignments.all(:conditions => ["is_submittable = ?", true]), :id, :name_with_type, :include_blank => false, :onchange=>"set_assignments();") %>
+      <%= f.collection_select(:assignment_id, @assignments, :id, :name_with_type, :include_blank => false, :onchange=>"set_assignments();") %>
 
     </p>
     <div class="deliverable_attachment">
