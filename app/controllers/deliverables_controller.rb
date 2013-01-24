@@ -87,10 +87,15 @@ class DeliverablesController < ApplicationController
   def new
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
+    @courses = current_user.registered_for_these_courses_during_current_semester
 
-    unless params[:course_id].nil?
+    if params[:course_id]
       @deliverable.course_id = params[:course_id]
+      @assignments = Course.find(params[:course_id]).assignments.where(:is_submittable => true)
+    else
+      @assignments = @courses[0].assignments.where(:is_submittable => true)
     end
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -101,6 +106,9 @@ class DeliverablesController < ApplicationController
   # GET /deliverables/1/edit
   def edit
     @deliverable = Deliverable.find(params[:id])
+
+    @courses = current_user.registered_for_these_courses_during_current_semester
+    @assignments = @deliverable.course.assignments.where(:is_submittable => true)
 
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)

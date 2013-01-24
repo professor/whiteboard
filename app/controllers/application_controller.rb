@@ -51,9 +51,8 @@ class ApplicationController < ActionController::Base
 
 #  In development, if you want to pretend to be a different user, you can set it easily here
 #  def current_user
+#    User.find_by_id(725) #Cecile
 #    User.last
-##\    @current_user = User.find_by_id(802) #Aristide
-#    @current_user = User.find_by_id(725)  #cecile
 #  end
 
   def authenticate_user!
