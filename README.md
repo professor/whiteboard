@@ -5,17 +5,11 @@ Welcome to the CMU-SV rails project for the Education group.
 
 ## Documentation
 
-* {Course Course}
-* {Deliverable Deliverable}
-* {PeerEvaluationReview Peer Evaluation}
-* {Person Person (aka User)}
-* {Presentation Presentation}
-
-* [Course](Course)
+* [Course](http://rubydoc.info/github/professor/cmusv/Course)
 * [Deliverable](http://rubydoc.info/github/professor/cmusv/Deliverable)
-* [PeerEvaluationReview](Peer Evaluation)
-* [Person](Person (aka User))
-* [Presentation](Presentation)
+* [Peer Evaluation](http://rubydoc.info/github/professor/cmusv/PeerEvaluation)
+* [Person / User](http://rubydoc.info/github/professor/cmusv/Person)
+* [Presentation](http://rubydoc.info/github/professor/cmusv/Presentation)
 
 See http://rubydoc.info/github/professor/cmusv/frames or run "rake doc:app" or run "yard" to generate API documentation for your models, controllers, helpers, and libraries.
 
@@ -26,7 +20,7 @@ a repository to work from. Each new feature should be done in its own branch.
 
 [Installation Directions](http://github.com/professor/cmusv/blob/master/CMUSV_Students.md)
                                              
-[Installation Directions](CMUSV_Students.md)
+[Installation Directions](/blob/readme/CMUSV_Students.md)
 
 
 ## Getting involved
@@ -46,11 +40,11 @@ Your url will look something like this: git@github.com:USERNAME/cmusv.git -- add
 
 The criteria for code being accepted is as follows:
 
-   1. there must be test cases for all code written, we already have enough code that was test by hand
-      (please use rspec for new test cases)
-   2. the code should solve a need experienced by many of our users
-   3. the code must be relatively well written
-   4. if you are considering using new gems, run your ideas by the maintainers first
+    1. there must be test cases for all code written, we already have enough code that was test by hand
+       (please use rspec for new test cases)
+    2. the code should solve a need experienced by many of our users
+    3. the code must be relatively well written
+    4. if you are considering using new gems, run your ideas by the maintainers first
 
 
 ## Conventions
