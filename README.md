@@ -20,7 +20,7 @@ a repository to work from. Each new feature should be done in its own branch.
 
 [Installation Directions](http://github.com/professor/cmusv/blob/master/CMUSV_Students.md)
                                              
-[Installation Directions](/blob/readme/CMUSV_Students.md)
+[Installation Directions](cmusv/blob/master/CMUSV_Students.md)
 
 
 ## Getting involved
