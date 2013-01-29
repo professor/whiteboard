@@ -3,7 +3,7 @@
     <legend>Course tools</legend>
     <p><%= link_to "Course website", course.curriculum_url %> </p>
     <p><a href="/courses/<%= course.id %>/teams_photos">Teams</a></p>
-    <p><a href="/people?course_id=<%= course.id %>">Student Contacts</a></p>
+    <p><a href="/people?course_id=<%= course.id %>&photobook=true">Photo Roster</a></p>
     <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
   </fieldset>
 </div>
