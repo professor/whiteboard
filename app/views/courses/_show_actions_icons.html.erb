@@ -17,6 +17,12 @@
 
           <p><a href="/courses/<%= course.id %>/teams_photos">Teams</a></p>
         </td>
+        <td valign="bottom">
+          <%= link_to image_tag("/images/teams_webpage.png", :class => "icon", :width => "75", :height => "75", :alt => "Photo Roster", :title => "Photo Roster"), "/people?course_id=#{course.id}&photobook=true" %>
+          <br/>
+
+          <p><a href="/people?course_id=<%= course.id %>&photobook=true">Photo Roster</a></p>
+        </td>
         <td>
           <%= link_to image_tag("/images/presentations.png", :class => "icon", :size => "90x75", :alt => "Presentations", :title => "Presentations"), course_presentations_path(@course) %>
           <br/>

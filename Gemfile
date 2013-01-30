@@ -4,7 +4,7 @@ gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrat
 gem 'thin'
 gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
-gem 'rails', '3.0.19'
+gem 'rails', '3.0.20'
 gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-sdk'
 gem 'mechanize'

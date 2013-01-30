@@ -48,7 +48,7 @@
 
         <select id="filter_course">
             <option value="">All courses</option>
-        <% Course.all.each do |c| %>
+        <% Course.current_semester_courses.each do |c| %>
             <option value="<%= c.id %>"><%= c.name %></option>
         <% end %>
         </select>
