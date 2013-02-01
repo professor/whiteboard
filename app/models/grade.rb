@@ -213,12 +213,12 @@ private
       feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
     feedback +=self.course.name
-
-
-    feedback += "\nGrade earned for this assignment is: "
-    feedback += self.score.to_s
-    feedback+= " /"
-    feedback+= self.assignment.maximum_score.to_s
+    feedback += "\nGrade earned for this "
+    feedback += self.course.try(:grading_rule).preferred_word_for_assignment || "assignment"
+    feedback += " is: "
+    feedback += given_grade.score.to_s
+    feedback+= " / "
+    feedback += self.course.try(:grading_rule).convert_max_score(self.assignment.maximum_score) || self.assignment.maximum_score.to_s
     feedback += "\n"
   end
 
