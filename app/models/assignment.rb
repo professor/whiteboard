@@ -61,7 +61,7 @@ class Assignment < ActiveRecord::Base
     if self.course.nil? || self.course.grading_rule.nil? || self.course.grading_rule.grade_type=="points"
       self.maximum_score.to_s
     else
-      "100%"
+      "100"
     end
   end
 
