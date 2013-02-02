@@ -57,6 +57,14 @@ class Assignment < ActiveRecord::Base
     Grade.get_grade(self.id, student_id)
   end
 
+  def formatted_maximum_score
+    if self.course.nil? || self.course.grading_rule.nil? || self.course.grading_rule.grade_type=="points"
+      self.maximum_score.to_s
+    else
+      "100%"
+    end
+  end
+
   # To get list of all the assignments for the student from the courses he has registered.
   def self.list_assignments_for_student student_id , type= :all
     student = User.find(student_id)

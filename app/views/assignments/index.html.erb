@@ -12,11 +12,11 @@
               team_score += parseFloat($(this).text());
       });
       var unit=" Pts";
-      if("<%=get_customised_grade_type%>" != "Points") unit = " %";
-      $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
+      if("<%=grade_type_points_or_weights%>" != "Points") unit = " %";
+      $("#total").html("Total <%=grade_type_points_or_weights%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
   }
 </script>
-<% customised_name= get_customised_name %>
+<% customised_name= nomenclature_assignment_or_deliverable %>
 <h1>Listing <%= customised_name %></h1>
 <%= link_to "New #{customised_name}", new_course_assignment_path %>
 <table class='cmu_table'>
@@ -28,7 +28,7 @@
     <th>Due Date</th>
     <th>Type</th>
     <th>Submission Required</th>
-    <th><%=get_customised_grade_type%></th>
+    <th><%=grade_type_points_or_weights%></th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>

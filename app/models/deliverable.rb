@@ -171,11 +171,11 @@ class Deliverable < ActiveRecord::Base
     given_grade=Grade.get_grade(self.assignment_id, member_id)
     unless  given_grade.nil?
       feedback += "\nGrade earned for this "
-      feedback += self.course.try(:grading_rule).preferred_word_for_assignment || "assignment"
+      feedback += self.course.nomenclature_assignment_or_deliverable
       feedback += " is: "
       feedback += given_grade.score.to_s
       feedback+= " / "
-      feedback += self.course.try(:grading_rule).convert_max_score(self.assignment.maximum_score) || self.assignment.maximum_score.to_s
+      feedback += self.assignment.formatted_maximum_score
       feedback += "\n"
     end
 

@@ -271,6 +271,22 @@ class Course < ActiveRecord::Base
     self.email = build_email
   end
 
+  def nomenclature_assignment_or_deliverable
+    if self.grading_rule.nil? || self.grading_rule.is_nomenclature_deliverable?
+      "deliverable"
+    else
+      "assignment"
+    end
+  end
+
+  def grade_type_points_or_weights
+    if self.grading_rule.nil? || self.grading_rule.grade_type=="points"
+      "points"
+    else
+      "weights"
+    end
+  end
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|
@@ -304,6 +320,5 @@ class Course < ActiveRecord::Base
   def map_faculty_strings_to_users(faculty_assignments_override_list)
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
-
 
 end

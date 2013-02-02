@@ -71,25 +71,6 @@ class GradingRule < ActiveRecord::Base
     end
   end
 
-  def convert_max_score(max_score)
-    case grade_type
-      when "letter"
-        return "A"
-      when "points"
-        return max_score.to_s
-      when "weights"
-        return "100%"
-    end
-  end
-
-  def preferred_word_for_assignment
-    if self.is_nomenclature_deliverable?
-      "deliverable"
-    else
-      "assignment"
-    end
-  end
-
   # To format the score is correct format before saving into the database.
   def self.format_score (course_id, raw_score)
     raw_score=raw_score.to_s
@@ -101,15 +82,6 @@ class GradingRule < ActiveRecord::Base
     else
       return raw_score
    end
-  end
-
-  # To display the preferred name of assignment
-  def to_display
-    if self.is_nomenclature_deliverable?
-      "Deliverable"
-    else
-      "Assignment"
-    end
   end
 
   # To get the grade type of the course, i.e. it is points or weights

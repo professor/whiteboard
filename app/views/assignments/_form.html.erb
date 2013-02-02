@@ -21,22 +21,22 @@
 
 
 
-    <% customised_name=get_customised_name %>
-    <% cutomised_grade_type=get_customised_grade_type %>
+  <% nomenclature=nomenclature_assignment_or_deliverable %>
+  <% grade_type=grade_type_points_or_weights %>
   <table class='layout_table'>
 
-    <% if customised_name =="Deliverable"  %>
+    <% if nomenclature =="Deliverable"  %>
         <tr>
           <td style="width: 135px;"><%= f.label(:task_number) %></td>
           <td><%= f.text_field(:task_number, :size=>3) %></td>
         </tr>
     <% end %>
     <tr>
-      <td><%= f.label(:name, "#{customised_name} Name") %></td>
+      <td><%= f.label(:name, "#{nomenclature} Name") %></td>
       <td><%= f.text_field(:name, :size=>60) %></td>
     </tr>
     <tr>
-      <td><%= f.label(:short_name, "#{customised_name} Abbreviation") %></td>
+      <td><%= f.label(:short_name, "#{nomenclature} Abbreviation") %></td>
       <td><%= f.text_field(:short_name, :size=>6, :maxlength=>5) %></td>
     </tr>
 
@@ -57,8 +57,8 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label(:maximum_score, "Maximum #{cutomised_grade_type}*")  %> </td>
-      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(get_customised_grade_type=="Points")?"Pts":"%" %></td>
+      <td><%= f.label(:maximum_score, "Maximum #{grade_type}*")  %> </td>
+      <td><%= f.text_field(:maximum_score, :size=>5) %> <%=(grade_type_points_or_weights=="Points")?"Pts":"%" %></td>
     </tr>
     <tr>
       <td><%= f.label(:due_date) %></td>
@@ -74,9 +74,9 @@
       <td class="actions">
 
         <% if controller.action_name == 'new' %>
-            <%= f.submit "Create #{customised_name}"%>
+            <%= f.submit "Create #{nomenclature}"%>
         <% elsif controller.action_name == 'edit' %>
-            <%= f.submit "Update #{customised_name}"%>
+            <%= f.submit "Update #{nomenclature}"%>
          <% else %>
             <%= f.submit%>
         <% end %>
