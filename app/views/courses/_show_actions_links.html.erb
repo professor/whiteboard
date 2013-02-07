@@ -13,14 +13,14 @@
       <span class="instructions">Only faculty and course instructors can see this information.</span>
       <fieldset>
         <legend>Faculty tools</legend>
-        <p><%= link_to "Grading #{get_customised_name}s", course_deliverables_path(course) %></p>
+        <p><%= link_to "Grading #{nomenclature_assignment_or_deliverable}s", course_deliverables_path(course) %></p>
         <p><%= link_to "Grade Book", course_grades_path(@course) %> </p>
         <p><%= link_to 'Peer evaluations', peer_evaluations_path(course) %></p>
       </fieldset>
       <fieldset>
         <legend>Initial Course Configuration</legend>
         <p><%= link_to 'Configure course', configure_course_path(course) %></p>
-        <p><%= link_to "Manage #{get_customised_name}s", course_assignments_path(@course) %> </p>
+        <p><%= link_to "Manage #{nomenclature_assignment_or_deliverable}s", course_assignments_path(@course) %> </p>
         <p><%= link_to 'Team Formation', past_teams_list_path(course) %></p>
 
         <p><%= link_to "Edit Curriculum Navigation", course_navigation_path(Course.first_offering_for_course_name(course.name)) %></p>

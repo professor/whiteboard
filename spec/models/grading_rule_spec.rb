@@ -26,10 +26,6 @@ describe GradingRule do
       @course_grading_rule.letter_grades.should eql(letter_grades)
     end
 
-    it "should display th preferred name of assignment" do
-      @course_grading_rule.to_display.should eql("Assignment")
-    end
-
     it "should be able to tell the users about the grade type" do
       GradingRule.get_grade_type(@course_fse.id).should eql("points")
     end
