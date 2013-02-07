@@ -14,8 +14,14 @@
 
     <%= javascript_include_tag 'ckeditor/ckeditor.js' %>
     <%= javascript_include_tag 'ckeditor/adapters/jquery.js' %>
+    <%= javascript_include_tag 'http://code.jquery.com/jquery-1.9.0.js' %>
+    <%= javascript_include_tag 'http://code.jquery.com/ui/1.10.0/jquery-ui.js' %>
+    <%= stylesheet_link_tag 'http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css', :rel => "stylesheet" %>
 
     <script type="text/javascript">
+
+        // Enabling tooltips
+        $(document).tooltip();
 
         // jQuery script to show an upload button when hovering over the user profile picture
         $(function() {
@@ -32,7 +38,7 @@
                 toolbar: 'CMUSV_SIMPLE',
                 removePlugins: 'elementspath',
                 width: "93%",
-                height: "300px" 
+                height: "300px"
             });
             CKEDITOR.replace( 'user_user_text',
             {
@@ -40,7 +46,7 @@
                 toolbar: 'CMUSV_SIMPLE',
                 removePlugins: 'elementspath',
                 width: "93%",
-                height: "300px" 
+                height: "300px"
             });
         });
 
@@ -84,23 +90,23 @@
                 <table>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account") %></td>
-                        <td  class="user_profile_social_edit"><%= f.text_field :linked_in, :placeholder => "LinkedIn URL", :size => "16" %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :linked_in, :placeholder => "LinkedIn URL", :size => "16", :title => "Go to the \"View Profile Page\" on LinkedIn and paste the url you see there besides the icon. If you've setup a LinkedIn username enter that instead. " %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account") %></td>
-                        <td  class="user_profile_social_edit"><%= f.text_field :facebook, :placeholder => "Facebook handle", :size => "16" %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :facebook, :placeholder => "Facebook handle", :size => "16", :title => "Enter your facebook username directly or your profile homepage url" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account") %></td>
-                        <td  class="user_profile_social_edit"><%= f.text_field :twitter, :placeholder => "Twitter handle", :size => "16" %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :twitter, :placeholder => "Twitter handle", :size => "16", :title => "Enter your twitter handle or  homepage url." %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account") %></td>
-                        <td  class="user_profile_social_edit"><%= f.text_field :google_plus, :placeholder => "Google+ URL", :size => "16" %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :google_plus, :placeholder => "Google+ URL", :size => "16", :title => "Unfortunately G+ doesn't allow usernames directly. Go to plus.google.com, hit the profile icon, then copy the convoluted url you see at the top. Paste the url here (remove the trailing /posts if you want to keep it clean)" %></td>
                     </tr>
                     <tr>
                         <td  class="user_profile_social_edit"><%= image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account") %></td>
-                        <td  class="user_profile_social_edit"><%= f.text_field :github, :placeholder => "github handle", :size => "16" %></td>
+                        <td  class="user_profile_social_edit"><%= f.text_field :github, :placeholder => "github handle", :size => "16", :title => "Enter your github username or github homepage url." %></td>
                     </tr>
                 </table>
             </div>

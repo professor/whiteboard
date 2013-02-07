@@ -2,7 +2,7 @@
 db/*.sqlite3
 log/*.log
 tmp/
-                      
+
 .svn
 .gems
 .gems_old
@@ -19,6 +19,8 @@ config/systems.yml
 coverage/*
 nbproject/*
 .idea/*
+*.sublime-project
+*.sublime-workspace
 MfSE/*
 lib/views/*
 coverage/*
