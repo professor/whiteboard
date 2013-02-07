@@ -26,8 +26,8 @@
       <![endif]><![endif]-->
   <%= stylesheet_link_tag '/cmu_sv_standard_v4/khaki-content.css', :media => "screen", :rel => "stylesheet" %>
   <%= stylesheet_link_tag '/cmu_sv_standard_v4/print.css', :media => "print" %>
+  <%= stylesheet_link_tag 'site_print.css', :media => "print" %>
   <%= stylesheet_link_tag 'scaffold' %>
-
 
   <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
   <%= yield :javascript %>
