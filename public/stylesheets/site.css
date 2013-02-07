@@ -535,10 +535,10 @@ div.modified {
     margin-top: 10px;
 }
 .user_profile_content table.cmu_table{ background-color: #FBFBFB; }
-.user_profile_content table.cmu_table.user_profile_content_admin_editable{ background: #D5D6C1; }
-.user_profile_content table.cmu_table.user_profile_content_faculty_editable{ background: #D9E7E6; }
-
-
+.user_profile_content table.cmu_table.user_profile_content_admin_editable,
+.user_profile_content table.cmu_table.user_profile_content_admin_editable tr:nth-child(odd) { background: #D5D6C1; }
+.user_profile_content table.cmu_table.user_profile_content_faculty_editable,
+.user_profile_content table.cmu_table.user_profile_content_faculty_editable tr:nth-child(odd){ background: #D9E7E6; }
 
 .user_profile_content h2{
     padding-top: 5px;
