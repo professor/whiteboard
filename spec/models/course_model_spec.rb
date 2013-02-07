@@ -327,6 +327,16 @@ describe Course do
     end
   end
 
+  context 'nomenclature assignment or deliverable' do
+    it "should display the preferred name of assignment" do
+      @course_fse = FactoryGirl.create(:fse)
+      @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id=> @course_fse.id)
+      @course_fse.grading_rule = @course_grading_rule
+
+      @course_fse.nomenclature_assignment_or_deliverable.should eql("assignment")
+    end
+
+  end
 
 #these tests are the same with team
   context 'generated email address' do

@@ -25,16 +25,16 @@
 <%=  render :partial=>"layouts/grade_book_sub_menu" %>
 
 <% if @deliverable.is_team_deliverable?  %>
-<h2>Grade Team <%=  get_customised_name %>: <%= @deliverable.assignment.name %></h2>
+<h2>Grade Team <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
 <% else %>
-<h2>Grade Individual <%=  get_customised_name %>: <%= @deliverable.assignment.name %></h2>
+<h2>Grade Individual <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
 <% end %>
 
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
     <%# render 'shared/error_messages', object: f.object %>
     <div>
-      <% if get_customised_grade_type == "Percentage" %>
+      <% if grade_type_points_or_weights == "Percentage" %>
         <p>
           <%= "Weight: #{@deliverable.assignment.weight}%" %>
         </p>

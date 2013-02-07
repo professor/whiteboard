@@ -12,14 +12,14 @@
               team_score += parseFloat($(this).text());
       });
       var unit=" Pts";
-      if("<%=get_customised_grade_type%>" != "Points") unit = " %";
-      $("#total").html("Total <%=get_customised_grade_type%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
+      if("<%= grade_type_points_or_weights%>" != "Points") unit = " %";
+      $("#total").html("Total <%= grade_type_points_or_weights%>: " + total_score + unit+ "&nbsp;<br/>(Individual: " + individual_score + unit +")<br/>(Team: " + team_score +unit + ")");
   }
 </script>
 
 <h1><%= @course.display_for_course_page %></h1>
 <%=  render :partial=>"layouts/grade_book_sub_menu" %>
-<% customised_name= get_customised_name %>
+<% customised_name = nomenclature_assignment_or_deliverable %>
 <h2>Listing <%= customised_name %></h2>
 <%= link_to "New #{customised_name}", new_course_assignment_path %>
 
@@ -34,7 +34,7 @@
     <th>Due Date</th>
     <th>Type</th>
     <th>Can Submit?</th>
-    <th><%=get_customised_grade_type%></th>
+    <th><%= grade_type_points_or_weights %></th>
     <th colspan="2">Actions</th>
   </tr>
 
@@ -69,7 +69,7 @@
   assignment_sum = @assignments.to_a.sum(&:maximum_score)
   assignment_array = @assignments.map {|assignment| "[\"#{assignment.name}\", #{assignment.maximum_score}],"}
 
-  if !@assignments.empty? && get_customised_grade_type=="Weight"
+  if !@assignments.empty? && grade_type_points_or_weights == "Weight"
     if (100 - assignment_sum) > 0
       assignment_array << "['Unassigned', #{100 - assignment_sum}]"
     end
@@ -99,7 +99,7 @@
     data.addRows([<%= assignment_array.join.html_safe %>]);
 
     // Set chart options
-    var options = {'title':'<%= customised_name %> <%= get_customised_grade_type %> Distribution',
+    var options = {'title':'<%= customised_name %> <%= grade_type_points_or_weights %> Distribution',
       'width':696,
       'height':300,
       'backgroundColor':'transparent',
