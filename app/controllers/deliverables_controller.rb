@@ -93,7 +93,11 @@ class DeliverablesController < ApplicationController
       @deliverable.course_id = params[:course_id]
       @assignments = Course.find(params[:course_id]).assignments.where(:is_submittable => true)
     else
-      @assignments = @courses[0].assignments.where(:is_submittable => true)
+      if @courses.empty?
+        @assignments = []
+      else
+        @assignments = @courses[0].assignments.where(:is_submittable => true)
+      end
     end
 
 

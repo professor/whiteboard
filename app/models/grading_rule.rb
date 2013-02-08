@@ -84,15 +84,6 @@ class GradingRule < ActiveRecord::Base
    end
   end
 
-  # To display the preferred name of assignment
-  def to_display
-    if self.is_nomenclature_deliverable?
-      "Deliverable"
-    else
-      "Assignment"
-    end
-  end
-
   # To get the grade type of the course, i.e. it is points or weights
   def self.get_grade_type (course_id)
     grading_rule = GradingRule.find_by_course_id(course_id)

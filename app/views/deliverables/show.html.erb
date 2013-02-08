@@ -1,5 +1,5 @@
 <% if @deliverable.course %>
-  <% title = "#{get_customised_name} for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
+  <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
 <% else %>
     <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
 <% end %>
@@ -10,9 +10,9 @@
 
 <p>
   <% if @deliverable.is_team_deliverable? %>
-    Team <%=get_customised_name%> for Team <%= @deliverable.team.name -%>
+    Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name -%>
   <% else %>
-    Individual <%=get_customised_name %> for <%= @deliverable.creator.human_name -%>
+    Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name -%>
   <% end %>
 <% if current_user.is_student %>
     (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
@@ -24,7 +24,7 @@
 <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <th>Submission Date</th>
-    <th><%=get_customised_name %> File</th>
+    <th><%= nomenclature_assignment_or_deliverable %> File</th>
     <th>Comments</th>
   </tr>
 

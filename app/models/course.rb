@@ -299,6 +299,22 @@ class Course < ActiveRecord::Base
 
 
 
+  def nomenclature_assignment_or_deliverable
+    if self.grading_rule.nil? || self.grading_rule.is_nomenclature_deliverable?
+      "deliverable"
+    else
+      "assignment"
+    end
+  end
+
+  def grade_type_points_or_weights
+    if self.grading_rule.nil? || self.grading_rule.grade_type=="points"
+      "points"
+    else
+      "weights"
+    end
+  end
+
   protected
   def strip_whitespaces
     @attributes.each do |attr, value|

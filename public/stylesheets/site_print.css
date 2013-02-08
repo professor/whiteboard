@@ -1,0 +1,62 @@
+
+/* People Search Results */
+#advanced_search_filters{
+  clear: left;
+}
+
+#filterBoxUserSearch #filterBoxOne {
+    width: 98%;
+    float: left;
+    padding: 3px;
+    font-size: 1em;
+}
+.photobook_item{
+    float:left;
+    display: block;
+    background-color: white;
+    margin: 5px;
+    text-align: center;
+}
+.photobook_item .photobook_item_name{
+    overflow: auto;
+    padding-bottom:2px;
+    border:1px solid lightgray;
+    border-top: none;
+    white-space: nowrap;
+    width: 90px;
+}
+#photobook_results a.photobook_item, #key_contacts_photobook a.photobook_item{
+    text-decoration: none;
+}
+a.photobook_item img{
+    width:90px;
+    height:110px;
+    border:1px solid lightgray;
+    border-bottom:none;
+    padding:0;
+}
+
+
+/* User profile page */
+
+.bioContactInfo {padding: 2px 0px 2px 0px;}
+
+
+.user_profile_photo_social{
+    float:left;
+    margin-bottom: 5px;
+}
+.user_profile_title, .user_profile_contact_details_content{
+    float: left;
+    width: 70%;
+    margin: 0 0 5px 15px;
+    padding: 0px 0 0 20px;
+}
+.user_profile_action, .export_button, #suggestion_link {
+  display : none;
+}
+.user_profile_contact_details_content table tr td:first-child{
+  width: 30%;
+  text-align: right;
+  vertical-align: middle;
+}

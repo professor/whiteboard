@@ -205,7 +205,6 @@ class Grade < ActiveRecord::Base
     grade_book.write(file_path)
   end
 
-private
   # To make the email body for the assignment graded by professor
   def make_feedback_for_one_assignment
     feedback = "Grade has been submitted for "
@@ -213,12 +212,12 @@ private
       feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
     end
     feedback +=self.course.name
-
-
-    feedback += "\nGrade earned for this assignment is: "
+    feedback += "\nGrade earned for this "
+    feedback += self.course.nomenclature_assignment_or_deliverable
+    feedback += " is: "
     feedback += self.score.to_s
-    feedback+= " /"
-    feedback+= self.assignment.maximum_score.to_s
+    feedback += " / "
+    feedback += self.assignment.formatted_maximum_score
     feedback += "\n"
   end
 
@@ -246,6 +245,7 @@ private
     GenericMailer.email(options).deliver
   end
 
+private
   # To validate the course and assignment when importing a file
   def self.validate_first_row(row, current_course_id)
     num_cols = row.length

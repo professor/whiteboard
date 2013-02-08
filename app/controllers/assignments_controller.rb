@@ -12,7 +12,7 @@ class AssignmentsController < ApplicationController
   layout 'cmu_sv'
   def get_course
     @course=Course.find(params[:course_id])
-    @wording = @course.try(:grading_rule).try(:to_display) || "Assignment"
+    @wording = @course.nomenclature_assignment_or_deliverable
   end
 
   def render_grade_book_menu
