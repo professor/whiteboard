@@ -21,8 +21,8 @@ module UsersHelper
     return "http://www.twitter.com/#{person.twitter}"
   end
   def google_plus_path(person)
-    return "http://plus.google.com/u/1/#{$1}" if person.google_plus =~ /[https?:\/\/]?plus\.google\.com\/u\/1\/(.*)\/?/
-    return "http://plus.google.com/u/1/#{person.google_plus}"
+    return "http://plus.google.com/#{$1}" if person.google_plus =~ /[https?:\/\/]?plus\.google\.com\/(.*)\/posts\/?/
+    return "http://plus.google.com/#{person.google_plus}"
   end
   def github_path(person)
     return "http://www.github.com/#{$1}" if person.github =~ /[https?:\/\/]?[www\.]?github\.com\/(.*)\/?/
