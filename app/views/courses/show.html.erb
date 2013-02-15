@@ -14,10 +14,10 @@
     <td><%= @course.display_semester %></td>
   </tr>
   <tr class="cmu_table_even">
-    <td>Instructors for this course:</td>
+    <td>Instructors:</td>
     <td>
       <% @course.faculty.each do |faculty| %>
-          <p><%= faculty.human_name %></p>
+          <p><%= link_to faculty.human_name, user_path(faculty) %></p>
       <% end %>
     </td>
   </tr>
