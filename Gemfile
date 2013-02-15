@@ -64,7 +64,7 @@ end
 
 group :development, :test do
 #  gem 'mongrel', '>= 1.2.0.pre2', :require => nil
-
+  gem 'launchy'
   gem 'taps'
 #  gem 'rake'
   gem 'ruby-debug19'
