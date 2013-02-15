@@ -230,11 +230,11 @@ class DeliverablesController < ApplicationController
   def edit_feedback
     @deliverable = Deliverable.find(params[:id])
 
-    if !@deliverable.assignment.course.faculty.include?(current_user)
-      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
-    end
+#    if !@deliverable.assignment.course.faculty.include?(current_user)
+#      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables. #{current_user.human_name}"
+#      redirect_to :controller => "welcome", :action => "index"
+#      return
+#    end
   end
 
 

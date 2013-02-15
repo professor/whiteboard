@@ -54,6 +54,8 @@ RSpec.configure do |config|
 
   if ENV['CI'] == "true"
     config.filter_run_excluding :skip_on_build_machine => true
+  else
+    config.filter_run_excluding :skip_on_local_machine => true
   end
 
 #  config.include ControllerMacros, :type => :controller
@@ -68,6 +70,7 @@ end
 
 Capybara.default_host = 'http://rails.sv.cmu.edu'
 
+FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
 include ControllerMacros
 
