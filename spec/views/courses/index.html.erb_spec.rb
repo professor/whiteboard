@@ -19,6 +19,14 @@ describe "courses/index.html.erb" do
       stub_model(Course,:name => "mini_b_1"),
       stub_model(Course,:name => "mini_b_2")
     ])
+    assign(:registered_for_these_courses_during_current_semester, [
+        stub_model(Course, :name => "student_course1"),
+        stub_model(Course, :name => "student_course2")
+    ])
+    assign(:teaching_these_courses_during_current_semester, [
+        stub_model(Course, :name => "instructor_course1"),
+        stub_model(Course, :name => "instructor_course2")
+    ])
     assign(:all_courses, true)
   end
 
