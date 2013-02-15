@@ -33,7 +33,7 @@ class GradesController < ApplicationController
 
   def index
     @no_pad = true
-    @students = @course.registered_students.order("first_name ASC")
+    @students = @course.registered_students_or_on_teams
     @assignments = @course.assignments
     @grades = {}
     @students.each do |student|

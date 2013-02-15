@@ -28,7 +28,7 @@ describe GradesController do
   describe "GET index for grades" do
 
     before(:each) do
-      @course.registered_students.stub(:order).and_return([@student_sam, @student_sally])
+      @course.stub(:registered_students_or_on_teams).and_return([@student_sam, @student_sally])
       @course.stub(:teams).and_return([Team.new, Team.new])
       Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sam).and_return({@assign_1.id=>@grade_sam_assign1})
       Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sally).and_return({@assign_1.id=>@grade_sally_assign1})

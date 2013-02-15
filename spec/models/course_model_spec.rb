@@ -418,6 +418,17 @@ describe Course do
     course.email_faculty_to_configure_course_unless_already_configured
   end
 
+  it "registered_students_or_on_teams should list all students in a course" do
+    Course.any_instance.stub(:registered_students).and_return([
+        stub_model(User, :human_name => "student 1"),
+        stub_model(User, :human_name => "student 2")
+    ])
+    Course.any_instance.stub(:teams).and_return([
+        stub_model(Team, :members => [stub_model(User, :human_name => "student 3")] )
+    ])
+    subject.registered_students_or_on_teams.count.should == 3
+  end
+
   # Tests for has_and_belongs_to_many relationship
   it { should have_many(:faculty) }
   it { should have_many(:registered_students) }
