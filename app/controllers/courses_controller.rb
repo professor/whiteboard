@@ -10,6 +10,8 @@ class CoursesController < ApplicationController
     @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
+    @registered_for_these_courses_during_current_semester = current_person.registered_for_these_courses_during_current_semester
+    @teaching_these_courses_during_current_semester = current_person.teaching_these_courses_during_current_semester
   end
 
   def index_for_semester

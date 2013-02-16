@@ -86,7 +86,7 @@ class Grade < ActiveRecord::Base
     grading_result = false
     student = User.find(student_id)
     course = Course.find(course_id)
-    if course.registered_students.include?(student)
+    if course.registered_students_or_on_teams.include?(student)
       grade = Grade.get_grade(assignment_id, student_id)
       if grade.nil?
         grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
@@ -179,7 +179,7 @@ class Grade < ActiveRecord::Base
     grade_sheet[1, FIRST_GRADE_COL+assignment_count] = "Final Grade"
 
     # print students' names and grades
-    students = course.registered_students.sort do |x, y|
+    students = course.registered_students_or_on_teams.sort do |x, y|
       r = (self.find_student_team(course.id, x.id).try(:name) || "" )<=> (self.find_student_team(course.id, y.id).try(:name) || "")
       r = x.first_name <=> y.first_name if r == 0
       r = x.last_name <=> y.last_name if r == 0
@@ -307,7 +307,7 @@ private
         return false
       end
 
-      unless course.registered_students.include?(student)
+      unless course.registered_students_or_on_teams.include?(student)
         return false
       end
     end

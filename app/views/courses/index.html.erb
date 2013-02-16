@@ -27,6 +27,7 @@
 
 <% if @all_courses %>
     <% content_for :title, 'All courses' %>
+    <%= render :partial => "my_courses" %>
     <h1>All Courses</h1>
     <div class="right_link"><%= link_to 'See current semester', :action => "current_semester" %></div>
     <%= render :partial => "index_courses_for_a_semester", :locals => {:style => nil} %>
@@ -115,7 +116,7 @@
       <span class="instructions">Only certain admin roles can see this information.</span>
 
       <h2>Upload Roster File</h2>
-      <% form_tag '/courses/upload', :multipart => true do %>
+      <%= form_tag '/courses/upload', :multipart => true do %>
           <%= file_field_tag "file" %>
           <%= submit_tag "Upload" %>
       <% end %>
