@@ -116,7 +116,7 @@
       <span class="instructions">Only certain admin roles can see this information.</span>
 
       <h2>Upload Roster File</h2>
-      <% form_tag '/courses/upload', :multipart => true do %>
+      <%= form_tag '/courses/upload', :multipart => true do %>
           <%= file_field_tag "file" %>
           <%= submit_tag "Upload" %>
       <% end %>
