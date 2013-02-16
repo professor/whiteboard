@@ -8,6 +8,8 @@ describe Grade do
     @course_fse.grading_rule = @course_grading_rule
     @course_grading_rule.save
 
+    Course.any_instance.stub(:registered_students_or_on_teams).and_return([@student_sam])
+
     @assignment_1 = FactoryGirl.create(:assignment_fse)
     @course_fse.assignments << @assignment_1
 
