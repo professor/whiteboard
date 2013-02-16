@@ -75,7 +75,7 @@ class GradesController < ApplicationController
   end
 
   def export
-    temp_file_path = File.expand_path('~') + "/Downloads/export.xls"
+    temp_file_path = File.expand_path("#{Rails.root}/tmp/#{Process.pid}_") + "export.xls"
     Grade.export_grade_book_to_spreadsheet(@course, temp_file_path)
     flash[:notice] = "grade book was exported to " + temp_file_path
     send_file(temp_file_path, :filename=>"GradeBook_#{@course.name}.xls")
