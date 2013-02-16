@@ -9,23 +9,23 @@ module UsersHelper
   #end
 
   def linked_in_path(person)
-    return "http://www.linkedin.com/in/#{$1}" if person.linked_in =~ /[https?:\/\/]?[www\.]?linkedin\.com\/in\/(.*)\/?/
+    return "http#{$1}://www.linkedin.com/in/#{$2}" if person.linked_in =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?linkedin\.com\/in\/(.*)\/?/
     return "http://www.linkedin.com/in/#{person.linked_in}"
   end
   def facebook_path(person)
-    return "http://www.facebook.com/#{$1}" if person.facebook =~ /[https?:\/\/]?[www\.]?facebook\.com\/(.*)\/?/
+    return "http#{$1}://www.facebook.com/#{$2}" if person.facebook =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?facebook\.com\/(.*)\/?/
     return "http://www.facebook.com/#{person.facebook}"
   end
   def twitter_path(person)
-    return "http://www.twitter.com/#{$1}" if person.twitter =~ /[https?:\/\/]?[www\.]?twitter\.com\/(.*)\/?/
+    return "http#{$1}://www.twitter.com/#{$2}" if person.twitter =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?twitter\.com\/(.*)\/?/
     return "http://www.twitter.com/#{person.twitter}"
   end
   def google_plus_path(person)
-    return "http://plus.google.com/#{$1}" if person.google_plus =~ /[https?:\/\/]?plus\.google\.com\/(.*)\/posts\/?/
+    return "http#{$1}://plus.google.com/#{$2}" if person.google_plus =~ /[http]?(s)?:\/\/plus.google.com\/(\d+)[\/posts]?/
     return "http://plus.google.com/#{person.google_plus}"
   end
   def github_path(person)
-    return "http://www.github.com/#{$1}" if person.github =~ /[https?:\/\/]?[www\.]?github\.com\/(.*)\/?/
+    return "http#{$1}://www.github.com/#{$2}" if person.github =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?github\.com\/(.*)\/?/
     return "http://www.github.com/#{person.github}"
   end
 
