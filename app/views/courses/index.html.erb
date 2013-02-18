@@ -12,7 +12,8 @@
                 $search.focus();
             }
             $("#courses_table").tablesorter({
-                widgets: ['zebra']
+                widgets: ['zebra'],
+                headers:{5:{sorter:false}}
             });
             $search.quicksearch('#courses_table tbody tr');
 
