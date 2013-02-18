@@ -18,7 +18,7 @@ class DeliverablesController < ApplicationController
   def index_for_course
     @course = Course.find(params[:course_id])
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.find_all_by_course_id(@course.id)
+      @deliverables = Deliverable.where(:course_id => @course.id).all
     else
       has_permissions_or_redirect(:admin, root_path)
     end
