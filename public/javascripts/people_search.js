@@ -15,12 +15,12 @@ $(document).ready(function() {
     /****************************************
                 SETUP INITIAL STATE
     *****************************************/
-
+    var $search = $("#filterBoxOne");
     // setting up the search box  (filterBoxOne)
-    if ($("#filterBoxOne").prop("disabled") == true) {
-        $('#filterBoxOne').val('');
-        $('#filterBoxOne').removeAttr("disabled");
-        $('#filterBoxOne').focus();
+    if ($search.prop("disabled") == true) {
+        $search.val('');
+        $search.removeAttr("disabled");
+        $search.focus();
     };
 
     // Setup the initial state of tables with tablesorter (styling & sortable headers)
@@ -30,11 +30,6 @@ $(document).ready(function() {
             widgets:['zebra'],
             // don't allow sorting on the picture and contact details columns
             headers:{0:{sorter:false}, 3:{sorter:false}}
-        })
-        .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-            filterClearContainer:$("#filterClearOne"),
-            filterColumns:[0, 1, 2],
-            filterCaseSensitive:false
         });
 
     // These are handled by the updateView function already but forcing it here to give a quick ui response to the user.
