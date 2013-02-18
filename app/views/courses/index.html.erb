@@ -12,10 +12,7 @@
                 $search.focus();
             }
             $("#courses_table").tablesorter({
-                widgets: ['zebra', 'filter'],
-                widgetOptions : {
-                    filter_columnFilters : true
-                }
+                widgets: ['zebra']
             });
             $search.quicksearch('#courses_table tbody tr');
 
