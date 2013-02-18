@@ -19,6 +19,12 @@
             <% if !@all_courses %>
             $(".all_courses").hide();
             <% end %>
+
+            /* making the whole row of courses_table clickable
+            ***************************************************/
+            $('#courses_table tbody').on("click", "tr", function () {
+                window.location = $(this).find('a').attr('href');
+            });
         });
         
     </script>

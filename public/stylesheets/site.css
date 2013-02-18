@@ -114,6 +114,15 @@ td.today {
     #filter_course{width:97%}
 
 
+/* ----- making whole row clickable --------*/
+
+#key_contacts_table tbody tr:hover td,
+#people_table tbody tr:hover td,
+#courses_table tbody tr:hover td {
+    background-color: #E1EAEA;
+    cursor: pointer;
+}
+
 /**************************************************
   * tables - https://github.com/Mottie/tablesorter
 ***************************************************/
@@ -728,12 +737,7 @@ div.modified {
     color: gray;
 }
 
-/*making whole row clickable*/
-#key_contacts_table tbody tr:hover td,
-#people_table tbody tr:hover td{
-    background-color: #E1EAEA;
-    cursor: pointer;
-}
+
 #photobook_results a.photobook_item:hover, #key_contacts_photobook a.photobook_item:hover{
     opacity:0.7;
     filter:alpha(opacity=70); /* For IE8 and earlier */
