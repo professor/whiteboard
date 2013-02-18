@@ -127,14 +127,10 @@
     <div id="contentWrapper">
       <div id="headerImage"><%= image_tag("/cmu_sv_standard_v4/pros_stds.jpg", :id => "pageHeaderPhoto") %></div>
       <div id="breadcrumbs">
-        |<a class="home" href="http://www.cmu.edu/silicon-valley/index.html" title="Silicon Valley Campus Home Page">Silicon
-        Valley Campus</a>|
-
+        | <%= link_to "Whiteboard LMS", "/" %> |
         <% if controller.controller_name != "welcome" %>
-            <%= link_to "Whiteboard LMS", "/" %> |
             &gt; <%= controller.controller_name.humanize %>
         <% else %>
-            &gt; Whiteboard LMS
         <% end %>
       </div>
       <a name="access"></a>
