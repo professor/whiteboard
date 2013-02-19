@@ -72,7 +72,7 @@ GEM
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
     cocaine (0.2.0)
-    columnize (0.3.6)
+    columnize (0.3.4)
     daemons (1.1.4)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
@@ -116,7 +116,7 @@ GEM
       thor (~> 0.14)
     json (1.7.6)
     json_pure (1.6.1)
-    linecache19 (0.5.13)
+    linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     log4r (1.1.9)
     macaddr (1.4.0)
@@ -235,12 +235,12 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby_core_source (>= 0.1.4)
-    ruby-debug-base19x (0.11.30.pre10)
+    ruby-debug-base19x (0.11.29)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       rake (>= 0.8.1)
       ruby_core_source (>= 0.1.4)
-    ruby-debug-ide (0.4.17.beta16)
+    ruby-debug-ide (0.4.16)
       rake (>= 0.8.1)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
@@ -310,7 +310,6 @@ DEPENDENCIES
   indextank
   jasmine
   jquery-rails (>= 1.0.3)
-  linecache19 (= 0.5.13)
   mechanize
   newrelic_rpm
   omniauth (= 0.3.0.rc3)
@@ -322,8 +321,8 @@ DEPENDENCIES
   rdoc
   rmagick
   rspec-rails
-  ruby-debug-base19x (= 0.11.30.pre10)
-  ruby-debug-ide (= 0.4.17.beta16)
+  ruby-debug-base19x
+  ruby-debug-ide
   ruby-debug19
   seedbank
   shoulda
