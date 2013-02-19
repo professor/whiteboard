@@ -1,8 +1,10 @@
 
 <% content_for :title, 'People - Phone book' %>
 <% content_for :tablesorter do %>
-    <%= javascript_include_tag 'tablesorter.2.0.5b' %>
-    <%= javascript_include_tag 'tablesorter_filter' %>
+
+    <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+    <%= javascript_include_tag 'jquery.quicksearch.js' %>
+
     <%= javascript_include_tag 'people_search' %>
     <%= javascript_include_tag 'people_search_export' %>
     <%= javascript_include_tag 'jquery.session' %>
