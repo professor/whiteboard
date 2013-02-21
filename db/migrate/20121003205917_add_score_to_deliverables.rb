@@ -6,10 +6,10 @@ class AddScoreToDeliverables < ActiveRecord::Migration
     add_index :deliverables, :assignment_id
   end
 
-  def self.down
+  def self.down     
+    remove_index :deliverables, :assignment_id
     remove_column :deliverables, :private_note
     remove_column :deliverables, :assignment_id
     remove_column :deliverables, :score
-    #remove_index :deliverables, :assignment_id
   end
 end
