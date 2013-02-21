@@ -78,6 +78,7 @@ group :development, :test do
   gem 'factory_girl_rails', '3.4.0'
   gem 'capybara'
   gem 'jasmine'
+  gem 'launchy'
 
 #  gem 'morning_glory'
 
