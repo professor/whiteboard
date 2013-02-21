@@ -26,9 +26,7 @@
             $search.val('');
             $search.removeAttr("disabled");
           }
-          $(".sortable").tablesorter({
-            widgets:['zebra']
-          });
+          $(".sortable").tablesorter();
           $search.quicksearch('.sortable tbody tr');
           // $(".sortable").tablesorter().tablesorterFilter({
           //     filterContainer: '#filterInputBox',
