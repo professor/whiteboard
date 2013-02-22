@@ -53,6 +53,14 @@ describe DeliverablesController do
       end
     end
 
+    describe "GET student_deliverables_for_course" do
+
+      it 'assigns deliverables' do
+
+      end
+
+    end
+
 
     describe "GET my_deliverables" do
       before(:each) do
