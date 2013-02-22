@@ -10,6 +10,9 @@
         });
     });
 </script>
+<% if user.nil? %>
+    <% user = current_user %>
+<% end %>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
   <thead>
   <tr>
@@ -35,7 +38,7 @@
         <% end %>
       <% end %>
       <td><%= assignment.task_number %></td>
-      <td><%= assignment.name %></td>
+      <td><%= assignment.name_with_type %></td>
       <% deliverable = assignment.get_student_deliverable(current_user.id) %>
       <td>
         <%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")}"  %>
@@ -64,15 +67,15 @@
   <% if skip_course_column %>
       <tr>
        <td colspan=5 align="right">Earned Grade (Performance)</td>
-       <td><%= Grade.get_final_grade(courses[0].id, current_user.id).presence %></td>
+       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
      </tr>
       <tr>
        <td colspan=5 align="right">Earned Grade Letter</td>
-       <td><%= Grade.get_final_grade(courses[0].id, current_user.id).presence %></td>
+       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
      </tr>
      <tr>
       <td colspan=5 align="right">Final Letter Grade</td>
-      <td><%= Grade.get_final_grade(courses[0].id, current_user.id).presence %></td>
+      <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
     </tr>
   <% end %>
 </table>

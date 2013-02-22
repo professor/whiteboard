@@ -6,8 +6,12 @@
       See" <%= link_to "My courses", my_courses_path(current_user) %></p></div>
 <% end %>
 
-<h2>Your <%= nomenclature_assignment_or_deliverable %>s</h2>
+<% if @user.id == current_user.id  %>
+    <h2>Your <%= nomenclature_assignment_or_deliverable %>s</h2>
+<% else %>
+    <h2><%= nomenclature_assignment_or_deliverable %>s for <%= @user.human_name %></h2>
+<% end %>
 <br/>
-    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @assignments, :skip_course_column => true, :courses => [@course]} %>
+    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @assignments, :skip_course_column => true, :courses => [@course], :user => @user} %>
 <br/>
 <br/>

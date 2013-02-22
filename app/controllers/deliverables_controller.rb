@@ -46,14 +46,18 @@ class DeliverablesController < ApplicationController
 
   def student_deliverables_and_grades_for_course
     @course = Course.find(params[:course_id])
-#    user = User.find_by_param(params[:id])
-#    if (current_user.id != user.id)
-#      unless (current_user.is_staff?)||(current_user.is_admin?)
-#        flash[:error] = I18n.t(:not_your_deliverable)
-#        redirect_to root_path
-#        return
-#      end
-#    end
+    if (params[:user_id])
+      @user = User.find_by_param(params[:user_id])
+    else
+      @user = current_user
+    end
+    if (current_user.id != @user.id)
+      unless (@course.faculty.include?(current_user))||(current_user.is_admin?)
+        flash[:error] = I18n.t(:not_your_deliverable)
+        redirect_to root_path
+        return
+      end
+    end
     @assignments = @course.assignments
     respond_to do |format|
       format.html { render :action => "student_deliverables" }

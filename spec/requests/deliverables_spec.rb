@@ -45,9 +45,9 @@ describe "deliverables" do
     end
 
     it " I can not be able to view professor's notes" do
-      action_link = @grade.score + "/" + @assignment.maximum_score.to_s
-      page.should have_content(action_link)
-      click_link action_link
+      grade = @grade.score + "/" + @assignment.maximum_score.to_s
+      page.should have_content(grade)
+      click_link "Resubmit"
    #   visit deliverable_path(@team_deliverable)
 
       page.should have_content("Attachment Version History")

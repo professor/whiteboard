@@ -49,6 +49,10 @@ class Ability
     end
     can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => {:id => user.id} #Useful for TAs.
 
+    if (user.human_name == "Todd Sedano" || user.human_name == "Kaushik Gopal")
+      can :see_student_grades, Course #experimental feature
+    end
+
 
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
