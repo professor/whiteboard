@@ -129,7 +129,7 @@ td.today {
 
 .tablesorter-default .header,
 .tablesorter-default .tablesorter-header {
-    background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+    /*background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);*/
     background-position: center right;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -148,9 +148,7 @@ td.today {
     background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
     border-bottom: #000 2px solid;
 }
-.sorter-false.tablesorter-header {
-    background-image: none;
-}
+.sorter-false.tablesorter-header {background-image: none;}
 
 table.tablesorter {
 	font-family:arial;
@@ -168,6 +166,33 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	padding: 4px;
 	text-transform: none;
 }
+table.tablesorter thead tr .header {
+    background-image: url(../images/tablesorter/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    text-transform: none;
+}
+table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: middle;
+}
+table.tablesorter tbody td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+    height: 82px;
+}
+
+/* ------- people search tables */
+
+table.tablesorter tbody td.photobook-img img {padding:0;}
+table.tablesorter tbody tr.odd td {background-color:#F0F0F6;}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp { background-color: #8dbdd8;}
+table.tablesorter tbody tr.hover td { background-color: #FFFFCC; }
+
 #key_contacts_table th:first-child, #key_contacts_table td{
     overflow: auto;
 }
@@ -239,38 +264,9 @@ a.photobook_item img{
     padding:0;
 }
 
-table.tablesorter thead tr .header {
-	background-image: url(../images/tablesorter/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-    text-transform: none;
-}
-table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
-	vertical-align: middle;
-}
-table.tablesorter tbody td.photobook-img {
-    padding: 0px;
-    margin: 0px;
-    width: 60px;
-    height: 82px;
-}
-table.tablesorter tbody td.photobook-img img {
-    padding:0;
-}
-table.tablesorter tbody tr.odd td {
-	background-color:#F0F0F6;
-}
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-    background-color: #8dbdd8;
-}
+/* ------- Courses table */
+#courses_table th:nth-child(2) {width: 335px;}
 
-table.tablesorter tbody tr.hover td {
-    background-color: #FFFFCC;
-}
 
 
 .comment_text {

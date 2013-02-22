@@ -12,7 +12,6 @@
                 $search.focus();
             }
             $("#courses_table").tablesorter({
-                widgets: ['zebra'],
                 headers:{5:{sorter:false}}
             });
             $search.quicksearch('#courses_table tbody tr');
@@ -24,7 +23,7 @@
             /* making the whole row of courses_table clickable
             ***************************************************/
             $('#courses_table tbody').on("click", "tr", function () {
-                window.location = $(this).find('a').attr('href');
+                window.location = $(this).find('a:last-child').attr('href');
             });
         });
         

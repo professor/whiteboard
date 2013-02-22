@@ -27,7 +27,7 @@ $(document).ready(function() {
     $("#people_table")
         .tablesorter({
             // add zebra striping style
-            widgets:['zebra'],
+            // widgets:['zebra'],
             // don't allow sorting on the picture and contact details columns
             headers:{0:{sorter:false}, 3:{sorter:false}}
         });
