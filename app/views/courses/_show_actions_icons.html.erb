@@ -29,7 +29,12 @@
 
           <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
         </td>
-        <td>&nbsp;</td>
+        <% if can? :see_student_grades, @course %>
+        <td>
+          <%= link_to image_tag("/images/gradebook_icon.png", :class => "icon", :size => "108x75", :alt => "#{nomenclature_assignment_or_deliverable}s and grades", :title => "Grade Book"), course_student_grades_path(course) %>
+          <p><%= link_to "#{nomenclature_assignment_or_deliverable}s and Grade", course_student_grades_path(@course) %> </p>
+        </td>
+        <% end %>
       </tr>
     </table>
   </fieldset>

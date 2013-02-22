@@ -5,6 +5,9 @@
     <p><a href="/courses/<%= course.id %>/teams_photos">Teams</a></p>
     <p><a href="/people?course_id=<%= course.id %>&photobook=true">Photo Roster</a></p>
     <p><%= link_to "Presentations", course_presentations_path(@course) %> </p>
+    <% if can? :see_student_grades, @course %>
+       <p><%= link_to "#{nomenclature_assignment_or_deliverable}s and Grade", course_student_grades_path(@course) %> </p>
+    <% end %>
   </fieldset>
 </div>
 <% if can? :teach, @course %>

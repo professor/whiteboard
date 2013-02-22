@@ -10,12 +10,12 @@
 
 <% if !@current_deliverables.empty? %>
     <h2><%= @current_semester %> <%= @current_year %>Current Semester Deliverables</h2>
-    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @current_assignments, :skip_course_column => false, :courses => @current_courses} %>
+    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @current_assignments, :skip_course_column => false, :courses => @current_courses, :user => current_user} %>
     <br>
 <% end %>
 <% if !@past_deliverables.empty? %>
     <h2>Previous Semesters' Deliverables</h2>
-    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @past_assignments, :skip_course_column => false, :courses => @past_courses} %>
+    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @past_assignments, :skip_course_column => false, :courses => @past_courses, :user => current_user} %>
     <br><br>
 <% end %>
 
