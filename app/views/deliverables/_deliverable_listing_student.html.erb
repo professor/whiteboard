@@ -10,6 +10,9 @@
         });
     });
 </script>
+<% if user.nil? %>
+    <% user = current_user %>
+<% end %>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
   <thead>
   <tr>
@@ -17,64 +20,67 @@
         <th>Course</th>
     <% end %>
     <th>Task</th>
-    <th><%=nomenclature_assignment_or_deliverable%> Name</th>
-    <th>Type</th>
+    <th>Name</th>
     <th>Due Date <br/>(Pacific)</th>
-    <th style="width:100px;">Grade</th>
+    <th>Feedback</th>
+    <th>Actions</th>
+    <th>Grade</th>
   </tr>
   </thead>
 
   <% assignments.each do |assignment| %>
-    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+    <tr class=<%= cycle('twikiTableEven', 'twikiTableOdd') %>>
       <% unless skip_course_column %>
         <% if assignment.course %>
-          <td><%= h assignment.course.try(:short_name) || assignment.course.name[0..4] %></td>
+          <td><%= assignment.course.try(:short_name) || assignment.course.name[0..4] %></td>
         <% else %>
           <td>&nbsp;</td>
         <% end %>
       <% end %>
-      <td><%= h assignment.task_number %></td>
-      <td><%= assignment.name %></td>
+      <td><%= assignment.task_number %></td>
+      <td><%= assignment.name_with_type %></td>
       <% deliverable = assignment.get_student_deliverable(current_user.id) %>
-      <td>
-        <%if assignment.is_team_deliverable? %>
-          T
-        <% else  %>
-          I
-        <% end %>
-      </td>
       <td>
         <%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")}"  %>
       </td>
+      <td>
+        <% if deliverable && deliverable.get_grade_status == :graded %>
+            <%= link_to 'Feedback', deliverable %>
+        <% end %>
+      </td>
+      <td>
+        <% if deliverable.nil? && assignment.is_submittable %>
+            <%= link_to 'Submit', new_deliverable_path(:course_id => assignment.course.id, :assignment_id => assignment.id) %>
+        <% end %>
+        <% if deliverable && assignment.is_submittable %>
+            <%= link_to 'Resubmit', deliverable %>
+        <% end %>
+      </td>
       <% grade = assignment.get_student_grade(current_user.id)  %>
       <td>
-        <% if grade.nil? || !grade.is_student_visible %>
-
-            <% if deliverable.nil? && assignment.is_submittable %>
-                <%= link_to 'Submit deliverable', new_deliverable_path %>
-            <% elsif grade.nil? || !grade.is_student_visible %>
-                Not graded
-                <% if assignment.is_submittable %>
-                    <br/><%= link_to 'Resubmit deliverable', deliverable %>
-                <%end%>
-            <%end%>
-        <% else %>
-          <%= link_to "#{grade.score}/#{assignment.maximum_score}", deliverable  %>
-        <% end  %>
+        <% if !grade.nil? && grade.is_student_visible %>
+        <%= "#{grade.score}/#{assignment.maximum_score}" %>
+        <% end %>
       </td>
     </tr>
   <% end %>
-  <% courses.each do |course| %>
-    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-      <% unless skip_course_column %>
-        <td><%= h course.try(:short_name) || course.name[0..4] %></td>
-      <% end %>
-      <td>&nbsp;</td>
-      <td>Final Grade</td>
-      <td>I</td>
-      <td></td>
-      <td><%= Grade.get_final_grade(course.id, current_user.id).presence || "Not graded"%></td>
-      <td>&nbsp;</td>
+  <% if skip_course_column %>
+      <tr>
+       <td colspan=5 align="right">Earned Grade (Performance)</td>
+       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
+     </tr>
+      <tr>
+       <td colspan=5 align="right">Earned Grade Letter</td>
+       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
+     </tr>
+     <tr>
+      <td colspan=5 align="right">Final Letter Grade</td>
+      <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
     </tr>
   <% end %>
 </table>
+
+<% if skip_course_column %>
+<br/>
+Note: In the middle of a course, earned grade will only calculate the grade based upon submitted deliverables to date.
+<% end %>

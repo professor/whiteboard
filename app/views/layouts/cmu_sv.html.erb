@@ -10,11 +10,11 @@
   <%= stylesheet_link_tag 'site' %>
   <%= stylesheet_link_tag 'twiki' %>
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js",
-                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
-                             "jquery_ujs.js",
+  <%= javascript_include_tag 'http://code.jquery.com/jquery-1.9.0.min.js',
+                             'http://code.jquery.com/ui/1.10.0/jquery-ui.min.js',
+                             # "jquery_ujs.js",
                              "application" %>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href='http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css' type="text/css" media="all"/>
 
   <%= yield :tablesorter %>
 

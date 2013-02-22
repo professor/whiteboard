@@ -1,4 +1,16 @@
+# For each model in the system, include one factory that creates the bare minimum necessary to save the object.
+# In other words, it should pass all validations, but have nothing extra
 FactoryGirl.define do
+
+  factory :assignment do
+    association :course, :factory => :fse
+    maximum_score 20.0
+    name "MyString"
+    is_team_deliverable false
+    due_date "2012-10-03 12:48:24"
+    task_number 1
+    is_submittable true
+  end
 
   factory :course, class: Course do
     name 'Course'

@@ -1,0 +1,17 @@
+<h1><%= @course.display_for_course_page %></h1>
+
+<% if current_user.is_staff %>
+    <div class="staff"><p>Note that this view is intended for students. To find deliverables submitted for a course,
+      first select the course and then pick "deliverabes.
+      See" <%= link_to "My courses", my_courses_path(current_user) %></p></div>
+<% end %>
+
+<% if @user.id == current_user.id  %>
+    <h2>Your <%= nomenclature_assignment_or_deliverable %>s</h2>
+<% else %>
+    <h2><%= nomenclature_assignment_or_deliverable %>s for <%= @user.human_name %></h2>
+<% end %>
+<br/>
+    <%= render :partial => "deliverable_listing_student", :locals => {:assignments => @assignments, :skip_course_column => true, :courses => [@course], :user => @user} %>
+<br/>
+<br/>
