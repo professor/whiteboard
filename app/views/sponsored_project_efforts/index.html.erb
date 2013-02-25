@@ -1,40 +1,31 @@
 <% content_for :tablesorter do %>
-    <!-- Note that 2.0.5b does not work with tablesorter_filer. On 1/10/13, I tried use a github clone of
-         tablesorter: https://github.com/Mottie/tablesorter, but the latest version did not work either.
-         Mottie claimed in April 2012 that it did work -->
-    <%= javascript_include_tag 'tablesorter.2.0.3' %>
-    <%= javascript_include_tag 'tablesorter_filter' %>
+
+    <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+    <%= javascript_include_tag 'jquery.quicksearch.js' %>
+
     <script type="text/javascript">
         $(document).ready(function () {
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
-
-                    $("#effort_table").tablesorter({widgets:['zebra'],
-                        headers:{6:{sorter:false}  },
-                        sortList:[
-                            [0, 0],
-                            [1, 0]
-                        ]})
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2, 3],
-                                filterCaseSensitive:false
-                            });
-
-
-                    //hovering over a line selects it
-                    $("tr").hover(
-                            function () {
-                                $(this).addClass("hover");
-                            },
-                            function () {
-                                $(this).removeClass("hover");
-                            });
-                }
-        );
+            var $search = $("#filterBoxOne");
+            if ($search.prop("disabled") == true) {
+                $search.val('');
+                $search.removeAttr("disabled");
+                $search.focus();
+            }
+            $("#effort_table").tablesorter({
+                headers:{6:{sorter:false}  },
+                sortList:[
+                  [0, 0],
+                  [1, 0]
+                ]
+            });
+            $search.quicksearch('#effort_table tbody tr');
+            //hovering over a line selects it
+            $("tr").hover(function () {
+                $(this).addClass("hover");
+            },function () {
+                $(this).removeClass("hover");
+            });
+        });
     </script>
 <% end %>
 

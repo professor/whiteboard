@@ -1,28 +1,34 @@
 <% content_for :tablesorter do %>
-    <!-- Note that 2.0.5b does not work with tablesorter_filer. On 1/10/13, I tried use a github clone of
-         tablesorter: https://github.com/Mottie/tablesorter, but the latest version did not work either.
-         Mottie claimed in April 2012 that it did work -->
-    <%= javascript_include_tag 'tablesorter.2.0.3' %>
-    <%= javascript_include_tag 'tablesorter_filter' %>
+
+    <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+    <%= javascript_include_tag 'jquery.quicksearch.js' %>
+    
     <script type="text/javascript">
         $(document).ready(function () {
-                    if ($("#filterBoxOne").prop("disabled") == true) {
-                        $('#filterBoxOne').val('');
-                        $('#filterBoxOne').removeAttr("disabled");
-                        $('#filterBoxOne').focus();
-                    }
-                    $("#courses_table").tablesorter({widgets:['zebra']})
-                            .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-                                filterClearContainer:$("#filterClearOne"),
-                                filterColumns:[0, 1, 2, 4],
-                                filterCaseSensitive:false
-                            });
-                    <% if !@all_courses %>
-                    $(".all_courses").hide();
-                    <% end %>
-                }
-        );
+            var $search = $("#filterBoxOne");
+            if ($search.prop("disabled") == true) {
+                $search.val('');
+                $search.removeAttr("disabled");
+                $search.focus();
+            }
+            $("#courses_table").tablesorter({
+                headers:{5:{sorter:false}}
+            });
+            $search.quicksearch('#courses_table tbody tr');
+
+            <% if !@all_courses %>
+            $(".all_courses").hide();
+            <% end %>
+
+            /* making the whole row of courses_table clickable
+            ***************************************************/
+            $('#courses_table tbody').on("click", "tr", function () {
+                window.location = $(this).find('a:last-child').attr('href');
+            });
+        });
+        
     </script>
+
 <% end %>
 
 <% if @all_courses %>

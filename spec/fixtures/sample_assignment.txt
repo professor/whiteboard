@@ -1,0 +1,2 @@
+This is a sample assignment.
+The document is created to test the file upload functionality.

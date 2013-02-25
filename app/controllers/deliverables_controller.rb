@@ -44,6 +44,27 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  def student_deliverables_and_grades_for_course
+    @course = Course.find(params[:course_id])
+    if (params[:user_id])
+      @user = User.find_by_param(params[:user_id])
+    else
+      @user = current_user
+    end
+    if (current_user.id != @user.id)
+      unless (@course.faculty.include?(current_user))||(current_user.is_admin?)
+        flash[:error] = I18n.t(:not_your_deliverable)
+        redirect_to root_path
+        return
+      end
+    end
+    @assignments = @course.assignments
+    respond_to do |format|
+      format.html { render :action => "student_deliverables" }
+      format.xml { render :xml => @assignments }
+    end
+  end
+
   def my_deliverables
     user = User.find_by_param(params[:id])
     if (current_user.id != user.id)
@@ -230,11 +251,11 @@ class DeliverablesController < ApplicationController
   def edit_feedback
     @deliverable = Deliverable.find(params[:id])
 
-    if !@deliverable.assignment.course.faculty.include?(current_user)
-      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables."
-      redirect_to :controller => "welcome", :action => "index"
-      return
-    end
+#    if !@deliverable.assignment.course.faculty.include?(current_user)
+#      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables. #{current_user.human_name}"
+#      redirect_to :controller => "welcome", :action => "index"
+#      return
+#    end
   end
 
 

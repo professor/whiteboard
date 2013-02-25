@@ -1,14 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :assignment do
-    name "MyString"
-    maximum_score 20.0
+
+  factory :assignment_individual, :parent=>:assignment do
     is_team_deliverable false
-    due_date "2012-10-03 12:48:24"
-    task_number 1
-    association :course, :factory => :fse
-    is_submittable true
   end
 
   factory :assignment_team, :parent=>:assignment do

@@ -15,26 +15,21 @@ $(document).ready(function() {
     /****************************************
                 SETUP INITIAL STATE
     *****************************************/
-
+    var $search = $("#filterBoxOne");
     // setting up the search box  (filterBoxOne)
-    if ($("#filterBoxOne").prop("disabled") == true) {
-        $('#filterBoxOne').val('');
-        $('#filterBoxOne').removeAttr("disabled");
-        $('#filterBoxOne').focus();
+    if ($search.prop("disabled") == true) {
+        $search.val('');
+        $search.removeAttr("disabled");
+        $search.focus();
     };
 
     // Setup the initial state of tables with tablesorter (styling & sortable headers)
     $("#people_table")
         .tablesorter({
             // add zebra striping style
-            widgets:['zebra'],
+            // widgets:['zebra'],
             // don't allow sorting on the picture and contact details columns
             headers:{0:{sorter:false}, 3:{sorter:false}}
-        })
-        .tablesorterFilter({ filterContainer:$("#filterBoxOne"),
-            filterClearContainer:$("#filterClearOne"),
-            filterColumns:[0, 1, 2],
-            filterCaseSensitive:false
         });
 
     // These are handled by the updateView function already but forcing it here to give a quick ui response to the user.
@@ -198,11 +193,11 @@ $(document).ready(function() {
     /* making the whole row of key_contacts clickable
     ***************************************************/
     // apply on key_contacts
-    $('#key_contacts_table tbody tr').click(function () {
+    $('#key_contacts_table tbody').on("click", "tr", function () {
         window.location = $(this).find('a').attr('href');
     });
     // apply on people_table
-    $('#people_table tbody tr').live( "click", function(){
+    $('#people_table tbody').on("click", 'tr', function(){
         window.location = $(this).find('a').attr('href');
     });
 
@@ -281,28 +276,30 @@ function buildSearchResults(search_results_json) {
         if(photobook_toggled){
             // build row number i
             // first do high priority results, then low priority results
+            $photobook_results_main = $('#photobook_results_main');
             for (var i in search_results_json){
                 if(search_results_json[i].priority)
-                    buildResultRowPhotoBookFormat(search_results_json[i]);
+                    buildResultRowPhotoBookFormat(search_results_json[i]).appendTo($photobook_results_main);
             }
             for (var i in search_results_json){
                 if(!search_results_json[i].priority)
-                    buildResultRowPhotoBookFormat(search_results_json[i]);
+                    buildResultRowPhotoBookFormat(search_results_json[i]).appendTo($photobook_results_main);
             }
             // apped the export list row button
-            $('#photobook_results_main').append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" /></div>'));
+            $photobook_results_main.append($('<div class="clearboth"><input type="button" class="export_button" value="Export List" /></div>'));
         } else{
             // build row number i
             // first do high priority results, then low priority results
+            var $people_table = $("#people_table");
             for (var i in search_results_json){
                 if(search_results_json[i].priority)
-                    buildResultRowListFormat(search_results_json[i]);
+                    buildResultRowListFormat(search_results_json[i]).appendTo($people_table);
             }
             for (var i in search_results_json){
                 if(!search_results_json[i].priority)
-                    buildResultRowListFormat(search_results_json[i]);
+                    buildResultRowListFormat(search_results_json[i]).appendTo($people_table);
             }
-            $("#people_table").trigger("update");
+            $people_table.trigger("update");
         }
     }
 }
@@ -315,22 +312,20 @@ function buildResultRowListFormat (search_results_json) {
     for(var i in search_results_json.contact_dtls)
        contactDtls_string += search_results_json.contact_dtls[i] + "<br />";
     contactDtls_string += "<a href='mailto:" + search_results_json.email + "'>" + search_results_json.email + "</a>";
-    $('<tr />')
+    return $('<tr />')
         .append($('<td class="photobook-img" />').append($(loadImage(search_results_json.image_uri))))
         .append($('<td><a href="'+search_results_json.path+'">'+search_results_json.first_name+'</a></td>'))
         .append($('<td><a href="'+search_results_json.path+'">'+search_results_json.last_name+'</a></td>'))
         .append($('<td>'+contactDtls_string+'</td>'))
-        .append($('<td>'+search_results_json.program+'</td>'))
-    .appendTo('#people_table tbody');
+        .append($('<td>'+search_results_json.program+'</td>'));
 }
 function buildResultRowPhotoBookFormat(search_results_json){
-    $(loadImage(search_results_json.image_uri))
+    return $(loadImage(search_results_json.image_uri))
         .appendTo($('<a class="photobook_item" href="' + search_results_json.path + '"/>'))
         // jQuery chaining refers always to the first element (so still img)
         .parent()
         // now you're in the photobook_item element
-        .append($('<p class="photobook_item_name" />').html(search_results_json.first_name+" "+search_results_json.last_name))
-        .appendTo('#photobook_results_main');
+        .append($('<p class="photobook_item_name" />').html(search_results_json.first_name+" "+search_results_json.last_name));
 }
 
 /* helper function that shows/hides the correct table(s) depending on search parameters & toggled states

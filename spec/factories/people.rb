@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   factory :student_sam, :parent => :person do
-#    id 42
+#    id 143
     email "student.sam@sv.cmu.edu"
     webiso_account "sam@andrew.cmu.edu"
     is_student true
@@ -21,7 +21,7 @@ FactoryGirl.define do
     last_name "Sam"
     human_name "Student Sam"
     twiki_name "StudentSam"
-#    initialize_with { Person.find_or_create_by_id(id)}
+#    initialize_with { Person.find_or_initialize_by_id(id)}
   end
 
   factory :student_sally, :parent => :person do

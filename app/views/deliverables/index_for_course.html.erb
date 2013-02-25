@@ -8,10 +8,9 @@
 </div>
 
 
-
 <div>
-  <%= javascript_include_tag "tablesorter" %>
-  <%= javascript_include_tag 'tablesorter_filter' %>
+  <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+  <%= javascript_include_tag 'jquery.quicksearch.js' %>
   <%= javascript_include_tag 'jquery.session' %>
 
   <script>
@@ -21,18 +20,20 @@
        name_column_index = 1;
     }
 
-
       $(document).ready(function(){
-          if ($("#filterInputBox").prop("disabled") == true) {
-              $('#filterInputBox').val('');
-              $('#filterInputBox').removeAttr("disabled");
-
+          var $search = $("#filterBoxOne");
+          if ($search.prop("disabled") == true) {
+            $search.val('');
+            $search.removeAttr("disabled");
           }
-          $(".sortable").tablesorter().tablesorterFilter({
-              filterContainer: '#filterInputBox',
-              filterClearContainer: '#filterClearOne',
-              filterColumns:[name_column_index,name_column_index+1]
-          }) ;
+          $(".sortable").tablesorter();
+          $search.quicksearch('.sortable tbody tr');
+          // $(".sortable").tablesorter().tablesorterFilter({
+          //     filterContainer: '#filterInputBox',
+          //     filterClearContainer: '#filterClearOne',
+          //     filterColumns:[name_column_index,name_column_index+1]
+          // }) ;
+          
           $("#filter_student").change(update_filter);
           $("#filter_assignment").change(update_filter);
           $("#filter_graded").removeAttr("checked", false);
@@ -93,6 +94,6 @@
       <% if current_user.is_staff? ||  current_user.is_admin? %>
         <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
       <% else %>
-        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :skip_course_column => true, :user => current_user} %>
       <% end %>
       <br/>
