@@ -112,61 +112,87 @@ class PeerEvaluationController < ApplicationController
 
 
   def complete_evaluation
-    @questions = @@questions
+    ex = nil
 
-    @team = Team.find(params[:id])
-    @users = @team.members
+    begin
+      @questions = @@questions
 
-    @author = User.find(current_user.id)
+      @team = Team.find(params[:id])
+      @users = @team.members
 
-    user_counter = 0
-    question_counter = 0
-    @users.each do |user|
-      @questions.each do |question|
-        @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => user.id, :team_id => @team.id, :question => question).first
-        if (@evaluation.nil?)
-          @evaluation = PeerEvaluationReview.new(
-              :author_id => @author.id,
-              :recipient_id => user.id,
-              :team_id => @team.id,
-              :question => question,
-              :answer => params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer],
-              :sequence_number => question_counter
-          )
-        else
-          @evaluation.answer = params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer]
+      @author = User.find(current_user.id)
+
+      user_counter = 0
+      question_counter = 0
+      @users.each do |user|
+        @questions.each do |question|
+          @evaluation = PeerEvaluationReview.where(:author_id => @author.id, :recipient_id => user.id, :team_id => @team.id, :question => question).first
+          if (@evaluation.nil?)
+            @evaluation = PeerEvaluationReview.new(
+                :author_id => @author.id,
+                :recipient_id => user.id,
+                :team_id => @team.id,
+                :question => question,
+                :answer => params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer],
+                :sequence_number => question_counter
+            )
+          else
+            @evaluation.answer = params[:peer_evaluation_review][(@questions.size*user_counter + question_counter).to_s][:answer]
+          end
+          @evaluation.save!
+          question_counter += 1
         end
-        @evaluation.save!
-        question_counter += 1
+
+        user_counter += 1
+        question_counter = 0
       end
 
-      user_counter += 1
-      question_counter = 0
-    end
+      alloc_counter = 0
+      alloc_answer = ""
+      @users.each do |user|
+        alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter.to_s] + " "
+        alloc_counter += 1
+      end
 
-    alloc_counter = 0
-    alloc_answer = ""
-    @users.each do |user|
-      alloc_answer << user.human_name + ":" + params[:allocations][alloc_counter.to_s] + " "
-      alloc_counter += 1
-    end
+      allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
+      if (allocation.nil?)
+        allocation = PeerEvaluationReview.new(
+            :author_id => @author.id,
+            :team_id => @team.id,
+            :question => @@point_allocation,
+            :answer => alloc_answer,
+            :sequence_number => question_counter
+        )
+      else
+        allocation.answer = alloc_answer
+      end
+      allocation.save!
+    rescue => e
+       ex = e
+    ensure
+      respond_to do |format|
+        # html request
+        format.html do
+          # an exception was thrown, just re-throw the exception because the original code did not provide a user friendly message for exceptions
+          unless ex.nil?
+            raise ex
+          end
 
-    allocation = PeerEvaluationReview.where(:author_id => @author.id, :team_id => @team.id, :question => @@point_allocation).first
-    if (allocation.nil?)
-      allocation = PeerEvaluationReview.new(
-          :author_id => @author.id,
-          :team_id => @team.id,
-          :question => @@point_allocation,
-          :answer => alloc_answer,
-          :sequence_number => question_counter
-      )
-    else
-      allocation.answer = alloc_answer
-    end
-    allocation.save!
+          flash[:notice] = "Thank you for completing the peer evaluation form."
+          redirect_to(peer_evaluation_path(@team.course, @team.id))
+        end
 
-    flash[:notice] = "Thank you for completing the peer evaluation form."
-    redirect_to(peer_evaluation_path(@team.course, @team.id))
+        # ajax request
+        format.json do
+          unless ex.nil?
+            render :json => {:code => "failed", :message => "Automatic save failed."}
+          else
+            render :json => {:code => "success", :message => ""} # auto-save success message won't be shown by client
+          end
+        end
+      end
+
+    end # begin..rescue..ensure..end
   end
 
   def edit_report
