@@ -42,7 +42,8 @@ class User < ActiveRecord::Base
 
 
   before_validation :update_webiso_account
-  before_save :person_before_save
+  before_save :person_before_save,
+              :update_is_profile_valid
 
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
@@ -392,6 +393,15 @@ class User < ActiveRecord::Base
     Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
   end
 
+  def update_is_profile_valid
+    if ((self.biography.blank? && self.facebook.blank? && self.twitter.blank? && self.google_plus.blank? && self.linked_in.blank?) or
+        (self.telephone1.blank? && self.telephone2.blank? && self.telephone3.blank? && self.telephone4.blank?))
+      self.is_profile_valid = false
+    else
+      self.is_profile_valid= true
+    end
+    return true
+  end
 
 
 
