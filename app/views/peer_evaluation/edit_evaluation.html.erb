@@ -43,7 +43,11 @@
                         error:function (x, t, m) {
                             // ignore timeout error
                             if ("timeout" != t) {
-                                showErrors(m);
+                                if(m) {
+                                    showErrors(m);
+                                } else {
+                                   showErrors("Unable to auto-save. Perhaps the server is down.");
+                                }
                             }
                         },
                         complete:function (data) {
@@ -53,10 +57,10 @@
                 }
             }, 10000);
 
-            // note: "change" event doesn't work here. To fire "change" event, user has to focus out the control
-            $("#new_peer_evaluation_review textarea").live("keydown",function () {
+            $("#new_peer_evaluation_review").on('keydown', 'textarea', function(){
                 isUpdated = true;
             });
+
         });
 
     </script>
