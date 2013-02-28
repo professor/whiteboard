@@ -1,7 +1,25 @@
 <% content_for :title, 'Peer evaluation for ' + @team.name %>
+<%= javascript_include_tag 'jquery.autosave.min.js' %>
 <script type="text/javascript">
     var confirmation_needed = true;
     window.onbeforeunload = confirmExit;
+    $(document).ready(function (){
+        $("form").autosave({
+           callbacks: {
+               save: {
+                   method: "ajax",
+                   // Any option that jQuery.ajax accepts can go here
+                   options: {
+                        type: "POST",
+                        url: "/peer_evaluation/complete_evaluation_update?id=<%= @team.id %>",
+                        error: function() {
+                            alert("Autosave Failed!");
+                        }
+                   }
+               }
+           }
+        });
+    });
 </script>
 
 <h1>Peer evaluation form completed by <%= @author.human_name %></h1>
