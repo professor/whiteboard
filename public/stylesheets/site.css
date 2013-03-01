@@ -759,3 +759,15 @@ div.modified {
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
+
+
+
+/************************
+ * Course Tools page
+*************************/
+#course_tools .item-wrapper {float:left; margin: 10px; width: 100px}
+    #course_tools .item-wrapper .item-link, 
+    #course_tools .item-wrapper .item-icon { text-align: center;}
+#course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
+    #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
+    #course_tools .item-wrapper.links .item-icon {display: none;}
