@@ -51,6 +51,11 @@ FactoryGirl.define do
     association :user, :factory => :student_sam_user
   end
 
+  factory :faculty_assignment, class: FacultyAssignment do
+    course_id 1
+    user_id 999
+  end
+
   factory :page, class: Page do
     title "My page "
     url "my_page"
@@ -170,19 +175,46 @@ FactoryGirl.define do
     deleted false
   end
 
+  factory :presentation_feedback_answer, class: PresentationFeedbackAnswer do
+    rating 2
+    association :question, :factory => :presentation_feedback_questions
+    association :feedback, :factory => :feedback_from_sam
+  end
+
   factory :registration do
     course_id 1
-    user  
+    user
   end
 
-  factory :faculty_assignment, class: FacultyAssignment do
-    course_id 1
-    user_id 999
+
+
+
+
+  factory :feedback_from_sam, class: PresentationFeedback do
+    association :evaluator, :factory => :student_sam
+    association :presentation, :factory => :presentation
   end
 
-  factory :course_fse_with_students, :parent=>:fse do  |c|
-    registered_students { |registered_students| [registered_students.association(:team_member)] }
-    c.after(:build) {|c| c.registered_students.each  { |s|  FactoryGirl.build(:registration, :course_id=>c.id, :user_id => s.id) } }
+  factory :feedback_from_sam_with_id, class: PresentationFeedback do
+
+    association :evaluator, evaluator
+    association :presentation, presentation
   end
+
+
+
+
+  factory :presentation_feedback_answer_with_question_text, class: PresentationFeedbackAnswer do
+    rating 3
+    association :question, :factory => :presentation_feedback_questions, :text => "q1"
+    association :feedback, :factory => :feedback_from_sam
+  end  
+
+  factory :presentation_feedback_answer_with_question_text_and_comment, class: PresentationFeedbackAnswer do
+    rating 3
+    comment "Comment 1"
+    association :question, :factory => :presentation_feedback_questions, :text => "q1"
+    association :feedback, :factory => :feedback_from_sam
+  end 
 
 end
