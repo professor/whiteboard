@@ -1,25 +1,25 @@
 <% content_for :left_nav do %>
 
-    <% unless @page.course.blank? %>
+    <% unless page.course.blank? %>
         <ul>
           <li class="standard">
-            <span class="secondaryNavTop"><%= link_to @page.course.name, @page.course.pages[0] %></span></li>
+            <span class="secondaryNavTop"><%= link_to page.course.name, page.course.pages[0] %></span></li>
 
           <li class="standard"><span class="secondaryNavTop">
-  <% unless @current_semester_course.nil? %>
-  <%= link_to "Course Tools", course_path(@current_semester_course) %>
+  <% unless current_semester_course.nil? %>
+  <%= link_to "Course Tools", course_path(current_semester_course) %>
   <% else %>
   <%= link_to "Course Tools (This works when the course is offered this semester)", "", :title => "This course is not offered in the current semester." %>
   <% end %>
   </span></li>
 
-          <% for page in @page.course.pages %>
-              <li class="standard"><span class="secondaryNavTop"><%= link_to page.title, page %></span></li>
+          <% for course_page in page.course.pages %>
+              <li class="standard"><span class="secondaryNavTop"><%= link_to course_page.title, course_page %></span></li>
           <% end %>
 
           <% if current_user.is_staff || current_user.is_admin %>
               <li class="standard">
-                <span class="secondaryNavTop"><%= link_to "(Edit Order)", course_navigation_path(@page.course) %></span>
+                <span class="secondaryNavTop"><%= link_to "(Edit Order)", course_navigation_path(page.course) %></span>
               </li>
           <% end %>
 

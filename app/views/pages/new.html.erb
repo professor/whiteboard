@@ -1,6 +1,6 @@
 <% content_for :title, 'New page' %>
 
-<%= render :partial => "left_nav" %>
+<%= render :partial => "left_nav", :locals => {:current_semester_course => @page.current_semester_course, :page => @page} %>
 
 <h1>New page</h1>
 <%= render :partial => "editable_form", :locals => {:button_name => "Create"} %> | <%= link_to 'Back', pages_path %>

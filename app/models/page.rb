@@ -95,6 +95,17 @@ class Page < ActiveRecord::Base
     index.document(self.id.to_s).delete
   end
 
+  def current_semester_course
+    #This little bit of magic finds the current offering of a course. This is handy for deliverable submission
+    #and team lists where the static curriculum website points to the latest offering of the course.
+    unless self.course.blank? || self.course.number.blank?
+      Course.in_current_semester_with_course_number(self.course.number).first
+    else
+     nil
+    end
+  end
+
+
   protected
   def update_url
     self.url = self.title if self.url.blank?
