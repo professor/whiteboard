@@ -22,7 +22,6 @@ FactoryGirl.define do
     association :grading_rule, :factory => :grading_rule_points
   end
 
-
   factory :delayed_system_job do
   end
 
@@ -35,7 +34,6 @@ FactoryGirl.define do
   factory :deliverable_attachment do
     association :deliverable, :factory => :deliverable
   end
-
 
   factory :effort_log_line_item, class: EffortLogLineItem do
     association :course, :factory => :fse
@@ -54,6 +52,11 @@ FactoryGirl.define do
   factory :faculty_assignment, class: FacultyAssignment do
     course_id 1
     user_id 999
+  end
+
+  factory :feedback_from_sam, class: PresentationFeedback do
+    association :evaluator, :factory => :student_sam
+    association :presentation, :factory => :presentation
   end
 
   factory :page, class: Page do
@@ -97,6 +100,32 @@ FactoryGirl.define do
 #  remember_created_at Time.now.to_f.to_s
   end
 
+  factory :people_search_default, class: PeopleSearchDefault do
+  end
+
+  factory :presentation do
+    name "Test Presentation"
+    description "Desc"
+    task_number "1"
+    presentation_date Date.new(2011, 1, 1)
+    association :course, :factory => :course
+    association :team, :factory => :team
+  end
+
+  factory :presentation_feedback_questions, class: PresentationQuestion do
+    deleted false
+  end
+
+  factory :presentation_feedback_answer, class: PresentationFeedbackAnswer do
+    rating 2
+    association :question, :factory => :presentation_feedback_questions
+    association :feedback, :factory => :feedback_from_sam
+  end
+
+  factory :registration do
+    course_id 1
+    user
+  end
 
   factory :scotty_dog_saying, class: ScottyDogSaying do
     association :user, :factory => :student_sam
@@ -111,13 +140,13 @@ FactoryGirl.define do
     confirmed false
   end
 
-  factory :sponsored_project_sponsor, class: SponsoredProjectSponsor do
-    sequence(:name) { |n| "Sponsor #{n}" }
-  end
-
   factory :sponsored_project, class: SponsoredProject do
     sequence(:name) { |n| "Project #{n}" }
     association :sponsor, :factory => :sponsored_project_sponsor
+  end
+
+  factory :sponsored_project_sponsor, class: SponsoredProjectSponsor do
+    sequence(:name) { |n| "Sponsor #{n}" }
   end
 
   factory :sponsored_project_allocation, class: SponsoredProjectAllocation do
@@ -157,64 +186,5 @@ FactoryGirl.define do
     email Time.now.to_f.to_s + "@andrew.cmu.edu"
 #  remember_created_at Time.now.to_f.to_s
   end
-
-
-  factory :people_search_default, class: PeopleSearchDefault do
-  end
-
-  factory :presentation do
-    name "Test Presentation"
-    description "Desc"
-    task_number "1"
-    presentation_date Date.new(2011, 1, 1)
-    association :course, :factory => :course
-    association :team, :factory => :team
-  end
-
-  factory :presentation_feedback_questions, class: PresentationQuestion do
-    deleted false
-  end
-
-  factory :presentation_feedback_answer, class: PresentationFeedbackAnswer do
-    rating 2
-    association :question, :factory => :presentation_feedback_questions
-    association :feedback, :factory => :feedback_from_sam
-  end
-
-  factory :registration do
-    course_id 1
-    user
-  end
-
-
-
-
-
-  factory :feedback_from_sam, class: PresentationFeedback do
-    association :evaluator, :factory => :student_sam
-    association :presentation, :factory => :presentation
-  end
-
-  factory :feedback_from_sam_with_id, class: PresentationFeedback do
-
-    association :evaluator, evaluator
-    association :presentation, presentation
-  end
-
-
-
-
-  factory :presentation_feedback_answer_with_question_text, class: PresentationFeedbackAnswer do
-    rating 3
-    association :question, :factory => :presentation_feedback_questions, :text => "q1"
-    association :feedback, :factory => :feedback_from_sam
-  end  
-
-  factory :presentation_feedback_answer_with_question_text_and_comment, class: PresentationFeedbackAnswer do
-    rating 3
-    comment "Comment 1"
-    association :question, :factory => :presentation_feedback_questions, :text => "q1"
-    association :feedback, :factory => :feedback_from_sam
-  end 
 
 end
