@@ -29,14 +29,14 @@ describe Presentation do
   end
 
   it 'should return the human name when not the presentation is not owned by a team' do
-  	sam = FactoryGirl.build(:student_sam)
-  	pres = FactoryGirl.build(:presentation, :team_id => nil, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam)
+  	pres = FactoryGirl.create(:presentation, :team_id => nil, :user_id => sam.id)
   	pres.presenter.should == "Student Sam"
   end
 
   it 'should return true when the current user is the presenter' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :team_id => nil, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :team_id => nil, :user_id => sam.id)
   	pres.presenter?(sam).should be_true
   end
 
@@ -70,13 +70,13 @@ describe Presentation do
   end
 
   it 'should return a list of presentations that a presenter owns' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :team_id => nil, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :team_id => nil, :user_id => sam.id)
   	Presentation.find_by_presenter(sam).length.should == 1
   end
 
   it 'should return a list of presentations for a user that is on a team that owns the presentations' do
-  	pres = FactoryGirl.build(:presentation)
+  	pres = FactoryGirl.create(:presentation)
   	Presentation.find_by_presenter(pres.team.members.first).length.should == 1
   end
 
@@ -87,15 +87,15 @@ describe Presentation do
   end  
 
   it 'should return a list of presentations for the given user and team if they are owned by the user or team' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :user_id => sam.id)
   	Presentation.find_by_user_and_teams(sam, [pres.team]).length.should == 1
   end
 
   it 'should return a list of presentations for the given team if the team owns a presentation and user does not' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	sally = FactoryGirl.build(:student_sally_user)
-  	pres = FactoryGirl.build(:presentation, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	sally = FactoryGirl.create(:student_sally_user)
+  	pres = FactoryGirl.create(:presentation, :user_id => sam.id)
   	Presentation.find_by_user_and_teams(sally, [pres.team]).length.should == 1
   end
 
@@ -107,8 +107,8 @@ describe Presentation do
   end
 
   it 'should return true for a user who can see feedback on a presentation, for which he is the presenter' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :user_id => sam.id)
   	pres.can_view_feedback?(sam).should be_true
   end
 
@@ -140,14 +140,14 @@ describe Presentation do
   end
 
   it 'should return the user email when there is no teams' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :team_id => nil, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :team_id => nil, :user_id => sam.id)
   	pres.user_email.should == "student.sam@sv.cmu.edu"
   end
 
   it 'should deliver an email to the subject' do
-  	sam = FactoryGirl.build(:student_sam_user)
-  	pres = FactoryGirl.build(:presentation, :team_id => nil, :user_id => sam.id)
+  	sam = FactoryGirl.create(:student_sam_user)
+  	pres = FactoryGirl.create(:presentation, :team_id => nil, :user_id => sam.id)
   	
   	expect {
   	message_text = pres.send_presentation_feedback_email("http://example.com")
