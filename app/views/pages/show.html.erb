@@ -4,7 +4,7 @@
     <% content_for :title, @page.course.name + " - " + @page.title %>
 <% end %>
 
-<%= render :partial => "left_nav" %>
+<%= render :partial => "left_nav", :locals => {:current_semester_course => @page.current_semester_course, :page => @page} %>
 
 <!-- necessary for the left navigation li items not to interfer with the height of the four tab interface -->
 <style type="text/css">

@@ -6,7 +6,9 @@
   <%= link_to 'Back', :back %>
 </div>
 
-
+<% if @whiteboard_curriculum_page %>
+<%= render :partial => "pages/left_nav", :locals => {:current_semester_course => @course, :page => @whiteboard_curriculum_page} %>
+<% end %>
 
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
   <tr class="cmu_table_odd">
