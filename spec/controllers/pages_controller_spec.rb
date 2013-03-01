@@ -67,8 +67,55 @@ describe PagesController do
       end
       it_should_behave_like "finding page"
     end
+    describe "GET show with non-exist page" do
+      it "redirects to the pages index" do
+        @page_name = 'some_new_page_i_made_up'
+        @stylized_page_name = 'Some New Page I Made Up'
+        get :show, :id => @page_name
+        response.code.should == "302"
+        response.should redirect_to(new_page_url(:url => @page_name))
+        flash[:error].should == "Page with an id of #{@page_name} is not in this system. You may create it using the form below."
+      end
 
+      it "new should handle the title GET parameter and assign it to page title and page url" do
+        @page_name = 'some_new_page_i_made_up'
+        @stylized_page_name = 'Some New Page I Made Up'
+        get :new, :url => @page_name
+        response.code.should == "200"
+        assigns(:page).title.should == @stylized_page_name
+        assigns(:page).url.should == @page_name
+      end
+
+      it "should handle titles with no underscores" do
+        @page_name = "hello"
+        @stylized_page_name = "Hello"
+        get :new, :url => @page_name
+        response.code.should == "200"
+        assigns(:page).title.should == @stylized_page_name
+        assigns(:page).url.should == @page_name
+      end
+
+      it "should handle title with non-alphabetic characters after an underscore" do
+        @page_name = "page_name_%goes_$here"
+        @stylized_page_name = "Page Name %goes $here"
+        get :new, :url => @page_name
+        response.code.should == "200"
+        assigns(:page).title.should == @stylized_page_name
+        assigns(:page).url.should == @page_name
+      end
+
+      it "should truncate underscores that are at the end of the title" do
+        @page_name = "page_name_with_trailing_underscore_"
+        @stylized_page_name = "Page Name With Trailing Underscore"
+        get :new, :url => @page_name
+        response.code.should == "200"
+        assigns(:page).title.should == @stylized_page_name
+        assigns(:page).url.should == @page_name
+      end
+    end
   end
+
+
 
   context "as a student can" do
     before do
