@@ -1,11 +1,13 @@
 <script xmlns="http://www.w3.org/1999/html">
-  function change_team_scores(){
-      var score = $("#team_scores").val();
-      $(".team_scores input[type='text']").each(function(){
-          $(this).val(score);
-      });
-  }
+    // Enabling tooltips
+    $(document).tooltip();
 
+    function apply_team_grade_to_individuals() {
+        var score = $("#team_grade").val();
+        $(".student_scores input[type='text']").each(function () {
+            $(this).val(score);
+        });
+    }
 </script>
 
 <script>
@@ -65,8 +67,8 @@
     <% end %>
 
     <% if @deliverable.is_team_deliverable? %>
-        Team Score: <%= text_field_tag "team_grade", '', :size => 4 %> / <%= display_maximum_score %>
-        <%= submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
+        <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
 
     <% end %>
 
