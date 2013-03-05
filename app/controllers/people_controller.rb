@@ -162,35 +162,6 @@ class PeopleController < ApplicationController
     twiki_name = params[:twiki_name]
     @person = User.find_by_twiki_name(twiki_name)
 
-    if @person.nil?
-      @person = User.new
-      @person.twiki_name = twiki_name
-      names = User.parse_twiki(twiki_name)
-      @person.first_name = names[0] unless names.nil?
-      @person.last_name = names[1] unless names.nil?
-      @person.webiso_account = Time.now.to_f.to_s #This line probably not necessary since I added it to User.before_validation
-      @person.is_active = true
-      @person.updated_by_user_id = current_user.id if current_user
-      @person.image_uri = "/images/mascot.jpg"
-      @person.local_near_remote = "Unknown"
-
-      if !@person.save
-        respond_to do |format|
-          flash[:error] = 'User could not be saved.'
-          format.html { redirect_to(people_url) and return }
-          format.xml { render :xml => @person.errors, :status => :unprocessable_entity and return }
-        end
-      end
-
-      options = {:to => "help@sv.cmu.edu", :cc => "todd.sedano@sv.cmu.edu",
-                 :subject => "rails user account automatically created for #{twiki_name}",
-                 :message => "Action Required: update this user's andrew id in the rails database.<br/><br/>The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.<br/>Note: this person can not edit their own information until their record is updated with their andrew login.<br/><br/>first_name: #{@person.first_name}<br/>last_name: #{@person.last_name}<br/>email: #{@person.email}<br/>is_active?: #{@person.is_active?}",
-                 :url_label => "Edit this person's information",
-                 :url => "http://whiteboard.sv.cmu.edu" + edit_person_path(@person)
-      }
-      GenericMailer.email(options).deliver
-    end
-
     respond_to do |format|
       if @person.nil?
         flash[:error] = "Person #{params[:twiki_name]} is not in this system."
