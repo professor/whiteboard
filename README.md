@@ -133,7 +133,7 @@ or a very simple layout (see attached image)
       </tr>
     </table>
 
-![Example use of layout_table](master/doc/form_layout.png)
+![Example use of layout_table](doc/form_layout.png)
 
 If you need a tooltip, then please use :title => "My tip here" on the input tag.
 
