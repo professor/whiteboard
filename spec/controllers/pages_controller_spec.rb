@@ -138,13 +138,13 @@ describe PagesController do
       end
     end
 
-   describe "POST update" do
+    describe "POST update" do
       it "but not for a page that is editable only by faculty" do
-      @page.is_editable_by_all = false
-      @page.save
-      post :update, :page => @page.attributes, :id => @page.to_param
-      response.should redirect_to(page_url)
-      flash[:error].should == "You don't have permission to do this action."
+        @page.is_editable_by_all = false
+        @page.save
+        post :update, :page => @page.attributes, :id => @page.to_param
+        response.should redirect_to(page_url)
+        flash[:error].should == "You don't have permission to do this action."
       end
 
       it "will update updated_by_user_id"
@@ -175,33 +175,40 @@ describe PagesController do
           get :edit, :id => @page.to_param
         end
         it_should_behave_like "finding page"
-      end
 
+        it "should show a notice when someone else is editing the page" do
+          sign_out @current_user
+          login(FactoryGirl.create(:faculty_fagan))
+          get :edit, :id => @page.to_param
+          flash[:notice].should include("Faculty Frank")
+        end
+
+        it "shouldn't show a notice when someone has been editing the page for more than 30 minutes" do
+          sign_out @current_user
+          login(FactoryGirl.create(:faculty_fagan))
+          @page.updating_started_at = 30.minutes.ago
+          @page.save
+          get :edit, :id => @page.to_param
+          flash[:notice].should be_nil
+        end
+
+        it "shouldn't show a notice when someone has finished editing a page" do
+          post :update, :page => @page.attributes, :id => @page.to_param
+          sign_out @current_user
+          login(FactoryGirl.create(:faculty_fagan))
+          get :edit, :id => @page.to_param
+          flash[:notice].should_not include("editing")
+        end
+
+        it "shouldn't show a notice when the same person is editing the page" do
+          get :edit, :id => @page.to_param
+          flash[:notice].should be_nil
+        end
+      end
     end
   end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 #  it "allows named pages in the url" do
 #     @ppm = FactoryGirl.create(:ppm)
 #       { :get => "/pages/#{@ppm.url}" }.should be_routable

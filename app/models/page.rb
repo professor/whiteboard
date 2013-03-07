@@ -11,6 +11,7 @@ class Page < ActiveRecord::Base
   validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
 
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
+  belongs_to :current_updater, :class_name => 'User', :foreign_key => 'updater_user_id'
 
   has_many :page_attachments, :order => "position"
   belongs_to :course
