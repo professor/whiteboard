@@ -81,10 +81,30 @@ class PagesController < ApplicationController
       redirect_to(page_url) and return
     end
 
+    now = Time.now
+    if @page.updater_user_id.nil? ||
+        @page.updating_started_at.nil?||
+        ((now - @page.updating_started_at) / 1.minute).round >= 30 ||
+        @page.updater_user_id == current_user.id
+      @page.updater_user_id=current_user.id
+      @page.updating_started_at=now
+      @page.save!
+    else
+      flash[:notice] = "#{@page.current_updater.human_name} started editing this page
+                        #{pluralize(((now - @page.updating_started_at) / 1.minute).round, 'minute')} ago at
+                       '#{@page.updating_started_at.getlocal.strftime('%Y-%m-%d %I:%M:%S %p')}'"
+    end
+
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @page }
     end
+  end
+
+  def pluralize(number, text)
+    return number.to_s+' '+text.pluralize if number != 1
+    number.to_s+' '+text
   end
 
   # POST /pages
@@ -122,6 +142,12 @@ class PagesController < ApplicationController
     #@page.course = course
 
     @page.updated_by_user_id = current_user.id if current_user
+
+    #only reset the editor if the person saving the changes was the person that started updating
+    if @page.updated_by_user_id==@page.updater_user_id
+      @page.updater_user_id=nil
+    end
+
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
