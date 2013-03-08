@@ -106,9 +106,17 @@ To run delayed jobs from a development environment, type "rake jobs:work"
 
 ## Style Guide
 
+### Tooltips
+If you need a tooltip, then please use :title => "My tip here" on the input tag.
+
+### Layout
+
 If you really need a hidden table to present tabular information:
+
     <table class="layout_table">
+    
 If you want to show a table to the user:
+
     <table class="cmu_table">
 
 If you want to display a form, consider the formItem class (used in
@@ -135,7 +143,6 @@ or a very simple layout (see attached image)
 
 ![Example use of layout_table](doc/form_layout.png)
 
-If you need a tooltip, then please use :title => "My tip here" on the input tag.
 
 ##Additional References
 To learn about unobtrusive javascript, check out:
