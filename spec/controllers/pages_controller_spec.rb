@@ -186,7 +186,7 @@ describe PagesController do
         it "shouldn't show a notice when someone has been editing the page for more than 30 minutes" do
           sign_out @current_user
           login(FactoryGirl.create(:faculty_fagan))
-          @page.updating_started_at = 30.minutes.ago
+          @page.current_edit_started_at = 30.minutes.ago
           @page.save
           get :edit, :id => @page.to_param
           flash[:notice].should be_nil
