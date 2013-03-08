@@ -104,6 +104,39 @@ same time.
 ### Delayed Job
 To run delayed jobs from a development environment, type "rake jobs:work"
 
+## Style Guide
+
+If you really need a hidden table to present tabular information:
+    <table class="layout_table">
+If you want to show a table to the user:
+    <table class="cmu_table">
+
+If you want to display a form, consider the formItem class (used in
+person profile)
+
+            <div class="formItem">
+              <%= f.label :masters_program, "Graduate program" %>
+              <%= f.text_field :masters_program %>
+            </div>
+
+or a very simple layout (see attached image)
+
+    <table class="layout_table">
+      <tr>
+        <td><%= f.label :name %></td>
+        <td><%= f.text_field :name, :size => "95" %></td>
+      </tr>
+      <tr><td></td></tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit button_name %></td>
+      </tr>
+    </table>
+
+![Example use of layout_table](doc/form_layout.png)
+
+If you need a tooltip, then please use :title => "My tip here" on the input tag.
+
 ##Additional References
 To learn about unobtrusive javascript, check out:
 * http://www.simonecarletti.com/blog/2010/06/unobtrusive-javascript-in-rails-3/

@@ -81,10 +81,30 @@ class PagesController < ApplicationController
       redirect_to(page_url) and return
     end
 
+    if @page.is_someone_else_currently_editing_page(current_user) && @page.timeout_has_not_passed
+
+
+      flash[:notice] = "#{@page.current_edit_by.human_name} started editing this page
+                        #{pluralize(((Time.now - @page.current_edit_started_at) / 1.minute).round, 'minute')} ago at
+                        #{l @page.current_edit_started_at, :format => :detailed }"
+      redirect_to(page_url) and return
+    end
+
+    @page.skip_version do
+      @page.current_edit_by = current_user
+      @page.current_edit_started_at = Time.now
+      @page.save!
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @page }
     end
+  end
+
+  def pluralize(number, text)
+    return number.to_s+' '+text.pluralize if number != 1
+    number.to_s+' '+text
   end
 
   # POST /pages
@@ -122,6 +142,9 @@ class PagesController < ApplicationController
     #@page.course = course
 
     @page.updated_by_user_id = current_user.id if current_user
+    @page.current_edit_by = nil
+    @page.current_edit_started_at = nil
+
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
