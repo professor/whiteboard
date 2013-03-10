@@ -11,6 +11,7 @@ class Page < ActiveRecord::Base
   validates_format_of :url, :allow_blank => true, :message => "can not be a number", :with => /^.*\D+.*$/ #it can not be a number
 
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
+  belongs_to :current_edit_by, :class_name => 'User', :foreign_key => 'current_edit_by_user_id'
 
   has_many :page_attachments, :order => "position"
   belongs_to :course
@@ -105,6 +106,19 @@ class Page < ActiveRecord::Base
     end
   end
 
+
+
+  def is_someone_else_currently_editing_page(current_user)
+    self.current_edit_by != current_user
+  end
+
+  def timeout_has_not_passed
+    if self.current_edit_started_at.nil?
+      false
+    else
+      Time.now - self.current_edit_started_at < 5.minute
+    end
+  end
 
   protected
   def update_url

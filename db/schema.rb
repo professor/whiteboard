@@ -291,9 +291,11 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.integer  "version"
     t.string   "version_comments"
     t.string   "url"
-    t.boolean  "is_editable_by_all",     :default => false
-    t.boolean  "is_duplicated_page",     :default => false
-    t.boolean  "is_viewable_by_all",     :default => true
+    t.boolean  "is_editable_by_all",      :default => false
+    t.boolean  "is_duplicated_page",      :default => false
+    t.boolean  "is_viewable_by_all",      :default => true
+    t.integer  "current_edit_by_user_id"
+    t.datetime "current_edit_started_at"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
