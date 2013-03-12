@@ -42,7 +42,7 @@ CMUEducation::Application.routes.draw do
   resources :delayed_system_jobs
   resources :rss_feeds
   resources :page_comment_types
-  resources :page_comments
+#  resources :page_comments
   resources :scotty_dog_sayings
   resources :task_types
   match '/effort_logs/update_task_type_select' => 'effort_logs#update_task_type_select', :as => :update_task_type_select
