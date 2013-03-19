@@ -20,7 +20,8 @@ class Ability
       can :upload, Course
     end
 
-    if (user.human_name == "Jazz Sabian"  || user.human_name == "Albert Liu" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
+    #  This next line is for testing purposes only when working on managing active directory from whiteboard
+    if (user.human_name == "Edward Akoto" || user.human_name == "Jazz Sabian"  || user.human_name == "Albert Liu" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
       can :create, User
     else
       cannot :create, User
