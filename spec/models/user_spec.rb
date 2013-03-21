@@ -289,36 +289,57 @@ describe User do
 
   end
 
-    # More tests
-    # Effort log should only be set for person that is_student - tested in effort_log
-    # Graduation_year should be set for person that is_student
-  context "user should update profile" do
+  context "should check if profile is valid" do
     before(:each) do
+      @student_sam = FactoryGirl.build(:student_sam, is_active: true)
+    end
+    it "- profile should be invalid if bio/social profile and telephone number fields are missing" do
+      @student_sam.send(:update_is_profile_valid)  
+      @student_sam.is_profile_valid.should == false
+    end
+    it "- profile should valid if biography text and one telephone number present" do
+      @student_sam.biography = "This is a fake biography. This text should represent pure awesomeness about the individual. populate accordingly."
+      @student_sam.telephone1 = "9999999"
+      @student_sam.send(:update_is_profile_valid)
+      @student_sam.is_profile_valid.should == true
+    end
+    it "- profile should valid if one social profile and one telephone number present" do
+      @student_sam.facebook = "sam_fb_id"
+      @student_sam.telephone1 = "9999999"
+      @student_sam.send(:update_is_profile_valid)
+      @student_sam.is_profile_valid.should == true
+    end
+    it "notify about missing fields should send out an email" do
+      @student_sam.send(:update_is_profile_valid)  
+      ActionMailer::Base.delivery_method = :test
+      ActionMailer::Base.perform_deliveries = true
+      ActionMailer::Base.deliveries = []
+      @student_sam.notify_about_missing_field(:biography, "Please update your profile page on whiteboard. You can provide biography information or even just a link to your social profile.")
+      ActionMailer::Base.deliveries.size.should == 1
+    end
+  end
 
+  # carrot and stick functionality
+  context "should maintain an updated profile" do
+    before(:each) do
       @student_sam = FactoryGirl.create(:student_sam)
-
       @student_sam.is_profile_valid = false
     end
-
-  it "a student should be redirected if first_access is more than 4 weeks ago" do
-
-
-    #@student_sam.first_access= DateTime.strptime('01/01/2010 12:00:00', '%d/%m/%Y %H:%M:%S')
-    @student_sam.people_search_first_accessed_at = Time.now - 5.weeks
-
-
-    @student_sam.should_be_redirected?.should == true
-
-  end
-
-  it "a student should not be redirected if first_access is less than 4 weeks ago" do
-
-
-    @student_sam.people_search_first_accessed_at = Time.now - 3.weeks
-
-    @student_sam.should_be_redirected?.should == false
-
-  end
+    it "- student should be redirected if first_access is more than 4 weeks ago" do
+      #@student_sam.first_access= DateTime.strptime('01/01/2010 12:00:00', '%d/%m/%Y %H:%M:%S')
+      @student_sam.people_search_first_accessed_at = Time.now - 5.weeks
+      @student_sam.should_be_redirected?.should == true
     end
+    it "- student should not be redirected if first_access is less than 4 weeks ago" do
+      @student_sam.people_search_first_accessed_at = Time.now - 3.weeks
+      @student_sam.should_be_redirected?.should == false
+    end
+  end
+
+
+  # More tests
+  # Effort log should only be set for person that is_student - tested in effort_log
+  # Graduation_year should be set for person that is_student
+
 
 end

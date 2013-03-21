@@ -12,11 +12,11 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         # or use the below command if you're comfortable with the terminal
         sudo gem install vagrant --no-ri --no-rdoc -V
 
-1. Install cmusv custom VM box
+1. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
 
         vagrant box add cmusv_professor vm_cmusv_professor.box
 
-1. Setup vagrant config (alternatively we could have this also checked in to the github cmusv repo)
+1. Setup vagrant config
 
         # below steps create the Vagrant file on your own.
         vagrant init cmusv_professor

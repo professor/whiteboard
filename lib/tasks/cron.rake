@@ -32,6 +32,13 @@ task :cron do
    puts "----done."
  end
 
+ if Date.today.day == 1 && Date.today.month.odd? # run on first day of an odd month
+   # orientation is in Aug, so we want it to run in Sep
+   puts "----Send cmu:email_users_to_update profile email"
+   Rake::Task['cmu:email_users_to_update_profile'].invoke
+   puts "----done."
+ end
+
  if Date.today.day == 10 || Date.today.day == 15
    puts "----Send cmu:sponsored_projects email"
    Rake::Task['cmu:sponsored_projects:emails_staff_requesting_confirmation_for_allocations'].invoke

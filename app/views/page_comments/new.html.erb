@@ -1,21 +1,5 @@
 <h1>New comment</h1>
 
-<% if @page_comment.url.nil? %>
-    <div id="errorExplanation">
-      You want to add a comment to a page, but this tool does not know how you got here. This tool uses the browser's
-      HTTP_REFERER. Unfortunately it is empty. =(
-      Please notify Todd.Sedano@sv.cmu.edu with how this situation came about. Please include the following information:
-      <ul>
-        <li>browser (IE, Firefox, Safari),</li>
-        <li>browser version,</li>
-        <li>operating system</li>
-        <li>the page you wanted to annotate</li>
-      </ul>
-      Thank you!
-    </div>
-<% else %>
-
-
     <%= form_for(@page_comment) do |f| %>
         <% if @page_comment.errors.any? %>
             <div id="error_explanation">
@@ -29,13 +13,6 @@
             </div>
         <% end %>
 
-        <%= f.hidden_field :url %>
-
-
-        <p>
-          <%= f.label :url %><br/>
-          <%= h @page_comment.url %>
-        </p>
         <p>
           <%= f.label :comment %><br/>
           <%= f.text_area :comment, :size => "80x10" %>
@@ -48,7 +25,7 @@
         <% end %>
         <p>
           <%= f.label :type %><br/>
-          <%= f.collection_select(:curriculum_comment_type_id, @types, :id, :name) %>
+          <%= f.collection_select(:page_comment_type_id, @types, :id, :name) %>
         </p>
         <% if current_user %>
             <%= f.label :notify_me, "Email me if other people add comments to the same page" %>
@@ -59,6 +36,5 @@
         </p>
     <% end %>
 
-    <%= link_to 'Back', @page_comment.url unless @page_comment.url.nil? %>
+    <% link_to 'Back', request.env["HTTP_REFERER"] %>
 
-<% end %>

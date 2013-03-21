@@ -1,6 +1,6 @@
 class PageComment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :type, :class_name => "PageCommentType", :foreign_key => "curriculum_comment_type_id"
+  belongs_to :type, :class_name => "PageCommentType", :foreign_key => "page_comment_type_id"
   belongs_to :page
 
   validates_presence_of :comment
