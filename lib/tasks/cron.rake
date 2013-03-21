@@ -48,4 +48,5 @@ task :cron do
   #Run every day
   Rake::Task['cmu:please_do_peer_evaluation_email'].invoke
   Rake::Task['cmu:rss'].invoke
+  Rake::Task['cmu:notify_last_page_editor_to_update_contents_of_page'].invoke
 end
