@@ -89,7 +89,7 @@ module HUBClassRosterHandler
 
   def self.send_emails roster_changes
     roster_changes.each do |course, info|
-      next if info[:added].blank? && info[:dropped].blank?
+      next if info[:added].blank? && info[:dropped].blank? && info[:not_in_system].blank?
       email_professors_about_added_and_dropped_students(course, info)
     end
   end

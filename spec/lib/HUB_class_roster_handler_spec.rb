@@ -5,7 +5,7 @@ describe HUBClassRosterHandler do
   context "When processing a roster file that lists Sam and Sally as participants in a course," do
     context "and they are not already in the course," do
       before :each do
-        @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
+        @roster_file = File.read("#{Rails.root}/spec/data/student_addnew_with_missing.txt")
         # @older_course = FactoryGirl.create(:fse_fall_2011, :year => 1900)
         @course = FactoryGirl.create(:fse_fall_2011)
         @student_sam = FactoryGirl.create(:student_sam)
@@ -44,7 +44,7 @@ describe HUBClassRosterHandler do
 
     context "and they are already in the course," do
       before :each do
-        @roster_file = File.read("#{Rails.root}/spec/data/student_addnew.txt")
+        @roster_file = File.read("#{Rails.root}/spec/data/student_addnew_with_no_missing.txt")
         @course = FactoryGirl.create(:fse_fall_2011)
         @course.registered_students << @student_sam = FactoryGirl.create(:student_sam_user)
         @course.registered_students << @student_sally = FactoryGirl.create(:student_sally_user)
@@ -55,18 +55,33 @@ describe HUBClassRosterHandler do
         expect { HUBClassRosterHandler.handle(@roster_file) }.to_not change { @course.registered_students.reload.count }
       end
 
-      it "should notify help@sv.cmu.edu about missing students" do
-        subject.should_receive(:email_help_about_missing_student).exactly(1).times
-        subject.handle(@roster_file)
-      end
-
       it "should not notify the profs" do
         subject.should_receive(:email_professors_about_added_and_dropped_students).exactly(0).times
         subject.handle(@roster_file)
       end
 
-      it "should send the emails" do
-        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      it "should not send any emails" do
+        expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(0)
+      end
+
+      context "with a student who is not in the system," do
+        before :each do
+          @roster_file = File.read("#{Rails.root}/spec/data/student_addnew_with_missing.txt")
+        end
+
+        it "should notify help@sv.cmu.edu about missing students" do
+          subject.should_receive(:email_help_about_missing_student).exactly(1).times
+          subject.handle(@roster_file)
+        end
+
+        it "should notify the profs" do
+          subject.should_receive(:email_professors_about_added_and_dropped_students).exactly(1).times
+          subject.handle(@roster_file)
+        end
+
+        it "should send the emails" do
+          expect { HUBClassRosterHandler.handle(@roster_file) }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        end
       end
     end
   end

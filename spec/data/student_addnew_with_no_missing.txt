@@ -1,0 +1,17 @@
+
+                                 CLASS ROSTER
+
+Run Date: 18-jul-2011      Course: 96700  Sect: A   FOUNDATNS SW ENG
+Semester: F11              College:  CIT  Department:  SV
+
+                          Instructor(s): SEDANO, A.
+                                         KATZ, E.
+
+Name                      Class  Col Dept G/O  Units UserID                 Mid Fin Def
+_______________________________________________________________________________________
+
+SAM, STUDENT         	  Master CIT SV   M    24.0  sam
+
+SALLY, STUDENT              Master CIT SV   M    24.0  sally
+
+Total Number Of Students In Course  96700  Section  A   is        2
