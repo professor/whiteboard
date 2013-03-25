@@ -6,18 +6,17 @@ Here are the directions on how to create the metrics for software engineering (M
 git clone git@github.com:professor/cmusv.git
 cd cmusv
 
-4. create a filelist
+3. create a filelist
 (Note: there are better ways of doing this)
 find ./ *.* > alldirnfiles.txt
 
-#...How to updat this next one?
-5. alter environment.rb, remove todd.sedano@sv.cmu.edu, change secret key
-vi config/environment.rb
+4. change secret token
+vi config/initializers/secret_token.rb
 
-6. remove 'scotty.dog@sv.cmu.edu' in these files:
+5. remove 'scotty.dog@sv.cmu.edu' in these files:
 vi app/mailers/effort_log_mailer.rb
 
-7. split code into segments
+6. split code into segments
 
 What do I want in every team segment?
 Gemfile
@@ -26,11 +25,17 @@ app/controllers/application_controller.rb
 app/helpers/application_helper.rb
 app/mailers/generic_mailer.rb
 app/views/generic_mailer/*
-
+app/models/academic_calendar.rb
 
 thor mfse_split_code_base:copy_common_files Pages
 
 
+GradebookFrontEnd
+GradebookBackEnd and Assignments
+Pages (and multi editors warning)
+People Search
+User
+CourseConfiguration
 
 
 
