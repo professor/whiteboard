@@ -3,13 +3,13 @@
 <script>
   var changed_grades = {}
   var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
-  $(document).ready(function() { 
+  $(document).ready(function() {
     // call the tablesorter plugin
-    $(".sortable").tablesorter({ 
-      // define a custom text extraction function 
+    $(".sortable").tablesorter({
+      // define a custom text extraction function
         sortList: [[2,0],[0,0],[1,0]],
         textExtraction: function(node) {
-        // extract data from markup and return it 
+        // extract data from markup and return it
         if ($(node).find("input").length > 0) return $(node).find("input").val();
         return $(node).text();
       }
@@ -22,7 +22,7 @@
      // Calculate initial Earned Grades
     $("tr[id^='s_']").each(function(){
       var student_id = $(this).attr("id").replace("s_","");
-      grades.earned_grade(student_id);    
+      grades.earned_grade(student_id);
 //      grades.updateFinalGrade(student_id);
     });
 
@@ -146,7 +146,7 @@
   <style>
     th, td#notify-all {
         background-color: #696969;
-        color: white;
+        /*color: white;*/
         font-size: 8pt;
         font-weight: normal;
     }
@@ -213,23 +213,23 @@
   <div id="result"></div>
   <div style="width:100%;">
     <table id="legend">
-     <tr></tr>
+     <tr>
         <td style="width:100px;padding:0 10px;">
           <input style="width:10px;height:10px;border:0px;" size="1" type="'text" class="draft" >
-        Draft</td>
-
-      <td style="width:150px;padding:0 10px;"><input class="changedScore" style="width:10px;height:10px;" size="1" type="'text" /> Unsaved changes</td>
-      <td style="width:250px;padding:0 10px;"><%=image_tag("doubleclick.png", :size=>"25x25",:style=>"vertical-align:middle;")%> Double click to toggle draft</td>
+          Draft
+        </td>
+        <td style="width:150px;padding:0 10px;"><input class="changedScore" style="width:10px;height:10px;" size="1" type="'text" /> Unsaved changes</td>
+        <td style="width:250px;padding:0 10px;"><%=image_tag("doubleclick.png", :size=>"25x25",:style=>"vertical-align:middle;")%> Double click to toggle draft</td>
       </tr>
     </table>
   </div>
+
   <div>
   <div class="score">
     <table class="cmu_table sortable" style="border-width: 0;">
       <thead>
         <tr>
-          <th style='max-width:78px; word-wrap:break-word;'> First Name
-          </th>
+          <th style='max-width:78px; word-wrap:break-word;'> First Name</th>
           <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
           <th> Team </th>
           <% @assignments.each do |assignment| %>
@@ -254,51 +254,14 @@
           <th style="white-space: nowrap;">Earned <br/> Letter Grades</th>
           <th style="white-space: nowrap;">Final <br/> Letter Grades</th>
         </tr>
-
-        <!--
-        <tr>
-          <% @assignments.each do |assignment| %>
-            <td>
-              <% case GradingRule.get_grade_type @course.id %>
-              <%when "points" %>
-                <span>Max</span> <%="#{assignment.maximum_score}"%>
-              <%else%>
-                Weight <%="#{assignment.maximum_score}"%> %
-              <%end%>
-            </td>
-          <% end %>
-        </tr>
-        -->
       </thead>
       <tbody>
-      <input type="hidden" id="course_id" value=<%=@course.id%> />
-      <% @grades.each do |student, grade_entries| %>
-      <tr id="s_<%=student.id%>" class="hover">
-        <td><%=student.first_name%></td>
-        <td><%=student.last_name%></td>
-        <td><%=@team_assignment[student.id].try(:name) || "" %></td>
-        <% @assignments.each do |assignment|%>
-          <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
-            <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
-                   value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
-                   type="text" size="4" width="100%"
-                   tabindex="<%=(assignment.try(:task_number) || 0)*10+assignment.assignment_order %>"
-                   class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
-          </td>
-        <% end %>
-        <td class='earned' style="background-color: white;"></td>
-        <td class='performance' style="background-color:white;text-align: center;"></td>
-        <td class='final grade'>
-          <input id="<%= @course.id %>_final_<%=student.id%>"
-                 value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
-                 type="text" size="4" width="100%"
-                 style="text-align:center;font-size:10.5pt;"
-                 class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
-         </td>
-        <td style="border-width: 0;background-color: white;">&nbsp</td>
-      </tr>
-      <%end%>
-      </tbody>
+
+        <input type="hidden" id="course_id" value=<%=@course.id%> />
+
+        <%= render :partial => "grade_spreadsheet", :locals => {:assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
+
+
         <tr style="background-color:white;">
           <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 5 %>">
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
@@ -306,27 +269,25 @@
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
             <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
           </td>
-          <td style="border-width: 0;text-align: center;">
-
-          </td>
+          <td style="border-width: 0;text-align: center;"> </td>
         </tr>
+      </tbody>
     </table>
-   </div>
-   </div>
-<div class="indicator" id="gradebook_indicator">Please save changes</div>
+  </div>
+  </div>
 
-    <div>
-      <h2>Import Grade Book</h2>
-      <%= form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
-        <%= f.file_field :spreadsheet -%>
-        <%= submit_tag 'Import' %>
-      <% end %>
-    </div>
-    <div>
-      <h2>Export Grade Book</h2>
-      <%= form_for :export, :url=>{:controller=>"grades", :action=>"export"} do |f| %>
-        <%= submit_tag 'Export' %>
-      <% end %>
-    </div>
+  <div class="indicator" id="gradebook_indicator">Please save changes</div>
 
-
+  <div>
+    <h2>Import Grade Book</h2>
+    <%= form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
+      <%= f.file_field :spreadsheet -%>
+      <%= submit_tag 'Import' %>
+    <% end %>
+  </div>
+  <div>
+    <h2>Export Grade Book</h2>
+    <%= form_for :export, :url=>{:controller=>"grades", :action=>"export"} do |f| %>
+      <%= submit_tag 'Export' %>
+    <% end %>
+  </div>
