@@ -48,10 +48,11 @@ Email to teams:
 I have divided the application into several parts. You get to inject defects into the code found in this email's attachment. When you are done, please send the resulting zip to me (and cc your course instructor) and I will combine all the code from each team back into the product that will then be sent out to everyone.
 
 Based upon feedback from last year, this year I'm also providing these files. Please DO NOT inject any defects into the following files. I will be using the master version of these files.
+Gemfile
+db/schema.rb
 app/controllers/application_controller.rb
 app/helpers/application_helper.rb
-db/schema.rb
-Gemfile
+app/models/academic_calendar.rb
 and the GenericMailer code
 
 If there is anything else that you'd like to know, let me know. I may not be able to provide it, but I'll try.
@@ -60,4 +61,15 @@ Happy Defect Injecting,
 
 Todd
 
+Ps. Since gradebook is such a large piece of code base, I have divided the code into different use cases.
 
+
+TeamCourseConfigurationAndAssignments -- this is the ability to configure a course and create assignments. Note that TeamDeliverables has models/grading_rule.rb
+
+TeamDeliverables -- this is the student submission of a deliverable plus the faculty grading it
+
+TeamGradebook -- this is the spreadsheet that allows the faculty to change any grades for a course. Note that you will probably want to work with TeamDeliverables on the controller/grades_controller.rb import and export method and models/grade.rb file. I suspect you will own the methods below import_grade_book_from_spreadsheet. I wanted to split up these two files, but it became too tricky to manage.
+
+TeamPageComments -- note that this code is currently NOT live.
+TeamPages --
+TeamPeopleSearch -- pretty straightforward
