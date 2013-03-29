@@ -76,8 +76,7 @@ describe GradesController do
       @assignment = FactoryGirl.build(:assignment)
       Course.stub(:find).and_return(@course)
       @course.stub(:assignments).and_return([@assignment])
-      tmp = get :student_deliverables_and_grades_for_course, :course_id => @course.id
-      puts "tmp = #{tmp}"
+      get :student_deliverables_and_grades_for_course, :course_id => @course.id
       assigns(:assignments).should == [@assignment]
     end
   end
