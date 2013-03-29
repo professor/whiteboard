@@ -5,7 +5,7 @@ class GradesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_course
   before_filter :render_grade_book_menu
-  before_filter :validate_permission
+  before_filter :validate_permission, :except => [:student_deliverables_and_grades_for_course]
   before_filter :get_team_assignment, :only => [:index, :student_deliverables_and_grades_for_course]
 
 
