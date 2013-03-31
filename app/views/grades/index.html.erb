@@ -14,6 +14,7 @@
         return $(node).text();
       }
     });
+
       // bind double click event for changing visibility of a grade
     $(".grade input[type='text']").dblclick(function(event){
         $(this).toggleClass("draft");
@@ -143,70 +144,6 @@
       })
     }
   </script>
-  <style>
-    th, td#notify-all {
-        background-color: #696969;
-        /*color: white;*/
-        font-size: 8pt;
-        font-weight: normal;
-    }
-    td#notify-all{
-        margin: 0;
-        max-height: 10px;
-        border-top-width: 0;
-    }
-    td.grade.changedScore, td.changedScore, input.changedScore{
-        border: 2px solid red;
-    }
-    .draft{
-      background-color: #E7E7E7;
-    }
-    td.grade input{
-      width: 99%;
-      height: 100%;
-      text-align: right;
-      border-width: 0;
-      margin: 0px;
-      padding: 0px;
-      padding-right: 1px;
-    }
-    td.grade{
-      border-width: 1px;
-      padding: 0;
-      border-color: #696969;
-    }
-     tr.hover:hover td {
-         border-bottom: 2pt solid #0066cc;
-         border-top: 2pt solid #0066cc;
-     }
-    tr.hover:hover td:first-child {
-        border-left: 2pt solid #0066cc;
-    }
-    tr.hover:hover td:nth-last-child(2) {
-        border-right: 2pt solid #0066cc;
-    }
-    /*.hover:hover input {background-color: #8db1ff; } */
-    /* .draft:hover input {background-color: #ffffbe; }  */
-    #legend{
-      border:0;
-      border-collapse: collapse;
-
-    }
-    #legend td{
-      border: 0;
-    }
-    div.indicator{
-      border: 1px solid;
-      padding: 5px 5px 5px 5px;
-      background-position: 10px center;
-      color: #D8000C;
-      background-color: #FFBABA;
-    }
-    .final{
-        border-right-width: 1px;
-    }
-
-  </style>
   <h1><%= @course.display_for_course_page %></h1>
   <%=  render :partial=>"layouts/grade_book_sub_menu" %>
 
@@ -226,7 +163,9 @@
 
   <div>
   <div class="score">
-    <table class="cmu_table sortable" style="border-width: 0;">
+    <input type="hidden" id="course_id" value=<%=@course.id%> />
+
+    <table class="cmu_table sortable" id="grade_table">
       <thead>
         <tr>
           <th style='max-width:78px; word-wrap:break-word;'> First Name</th>
@@ -256,22 +195,18 @@
         </tr>
       </thead>
       <tbody>
-
-        <input type="hidden" id="course_id" value=<%=@course.id%> />
-
         <%= render :partial => "grade_spreadsheet", :locals => {:assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
-
-
+      </tbody>
+      <tfoot>
         <tr style="background-color:white;">
-          <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 5 %>">
+          <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 6 %>">
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
             <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
           </td>
-          <td style="border-width: 0;text-align: center;"> </td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   </div>
   </div>

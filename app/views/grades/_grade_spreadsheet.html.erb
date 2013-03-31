@@ -12,15 +12,14 @@
              class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
     </td>
     <% end %>
-    <td class='earned' style="background-color: white;"></td>
+    <td class='earned' ></td>
     <td class='performance' style="background-color:white;text-align: center;"></td>
     <td class='final grade'>
       <input id="<%= @course.id %>_final_<%=student.id%>"
              value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
              type="text" size="4" width="100%"
-             style="text-align:center;font-size:10.5pt;"
              class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
     </td>
-    <td style="border-width: 0;background-color: white;">&nbsp</td>
+
   </tr>
 <%end%>
