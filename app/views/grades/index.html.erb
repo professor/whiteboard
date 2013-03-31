@@ -129,6 +129,11 @@
           type: "POST",
           data: JSON.stringify(data, null, 1),
           dataType: "json",
+          //beforeSend is needed for devise 1.4.5 and rails 3.0.9
+          //http://stackoverflow.com/questions/7393871/devise-not-setting-current-user-on-ajax-post-even-though-correct-x-csrf-token-is
+          beforeSend: function(jqXHR, settings) {
+              jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
           success:function(data){
               if(data["message"] == "true"){
                   location.reload(false);
