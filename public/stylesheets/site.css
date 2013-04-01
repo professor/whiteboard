@@ -767,7 +767,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 #grade_table td { background-color: #FFF; text-align:center; padding: 10px;}
 #grade_table td:nth-child(1),   /* First Name */
-#grade_table td:nth-child(2),   /* Last Name */
+#grade_table td:nth-child(2)   /* Last Name */
 { text-align:left; max-width:78px; word-wrap:break-word;}
 #grade_table td:nth-child(3)    /* Team Name */
 { text-align:left; }
