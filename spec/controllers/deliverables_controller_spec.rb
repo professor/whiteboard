@@ -53,20 +53,6 @@ describe DeliverablesController do
       end
     end
 
-    describe "GET student_deliverables_for_course" do
-
-      it 'assigns assignments' do
-        login(@student_sam)
-        @course = FactoryGirl.build(:course)
-        @assignment = FactoryGirl.build(:assignment)
-        Course.stub(:find).and_return(@course)
-        @course.stub(:assignments).and_return([@assignment])
-        get :student_deliverables_and_grades_for_course, :course_id => @course.id
-        assigns(:assignments).should == [@assignment]
-      end
-
-    end
-
 
     describe "GET my_deliverables" do
       before(:each) do
