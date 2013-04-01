@@ -151,12 +151,12 @@
   <div style="width:100%;">
     <table id="legend">
      <tr>
-        <td style="width:100px;padding:0 10px;">
+        <td>
           <input style="width:10px;height:10px;border:0px;" size="1" type="'text" class="draft" >
           Draft
         </td>
-        <td style="width:150px;padding:0 10px;"><input class="changedScore" style="width:10px;height:10px;" size="1" type="'text" /> Unsaved changes</td>
-        <td style="width:250px;padding:0 10px;"><%=image_tag("doubleclick.png", :size=>"25x25",:style=>"vertical-align:middle;")%> Double click to toggle draft</td>
+        <td><input class="changedScore" style="width:10px;height:10px;" size="1" type="'text" /> Unsaved changes</td>
+        <td><%=image_tag("doubleclick.png", :size=>"25x25",:style=>"vertical-align:middle;")%> Double click to toggle draft</td>
       </tr>
     </table>
   </div>
@@ -168,8 +168,8 @@
     <table class="cmu_table sortable" id="grade_table">
       <thead>
         <tr>
-          <th style='max-width:78px; word-wrap:break-word;'> First Name</th>
-          <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
+          <th> First Name</th>
+          <th> Last Name </th>
           <th> Team </th>
           <% @assignments.each do |assignment| %>
             <th class="assignment_grade" title="<%=assignment.name%>">

@@ -13,7 +13,7 @@
     </td>
     <% end %>
     <td class='earned' ></td>
-    <td class='performance' style="background-color:white;text-align: center;"></td>
+    <td class='performance'></td>
     <td class='final grade'>
       <input id="<%= @course.id %>_final_<%=student.id%>"
              value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'

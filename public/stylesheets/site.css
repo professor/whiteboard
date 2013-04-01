@@ -768,12 +768,13 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #grade_table td { background-color: #FFF; text-align:center; padding: 10px;}
 #grade_table td:nth-child(1),   /* First Name */
 #grade_table td:nth-child(2),   /* Last Name */
+{ text-align:left; max-width:78px; word-wrap:break-word;}
 #grade_table td:nth-child(3)    /* Team Name */
 { text-align:left; }
 #grade_table td:nth-child(10){ text-align: left;}   /* Earned Grade */
 
 #grade_table td input { text-align:center; font-size: 13px; }
-
+#grade_table td.performance { background-color:white; text-align: center; }
 
 #grade_table .tablesorter-header, #grade_table td#notify-all {
     background-color: #696969;
@@ -824,14 +825,12 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 /*.hover:hover input {background-color: #8db1ff; } */
 /* .draft:hover input {background-color: #ffffbe; }  */
 
-#legend{
-  border:0;
-  border-collapse: collapse;
+#legend { border: 0; border-collapse: collapse; }
+#legend td { border: 0;  padding:0 10px; }
+#legend td:nth-child(1) { width:100px;}
+#legend td:nth-child(2) { width:150px; padding:0 10px; }
+#legend td:nth-child(3) { width:250px; padding:0 10px; }
 
-}
-#legend td{
-  border: 0;
-}
 #gradebook_indicator{
   border: 1px solid;
   padding: 5px 5px 5px 5px;
