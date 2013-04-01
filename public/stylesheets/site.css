@@ -786,10 +786,12 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     max-height: 10px;
     border-top-width: 0;
 }
-#grade_table td.grade.changedScore, #grade_table td.changedScore, #grade_table input.changedScore{
+#grade_table td.grade.changedScore, #grade_table td.changedScore, #grade_table input.changedScore,
+#legend td.grade.changedScore, #legend td.changedScore, #legend input.changedScore{
     border: 2px solid red;
 }
-#grade_table .draft{
+#grade_table .draft,
+#legend .draft {
   background-color: #E7E7E7;
 }
 #grade_table td.grade input{
