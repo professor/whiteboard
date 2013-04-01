@@ -53,13 +53,12 @@
     });
 
     $(document).ready(function () {
-
         //Attach event to tab selection & save selected tab in cookie
-        $('#tabs').bind('tabsselect', function (event, tab) {
-            $.cookie('selected_tab', tab.index);
+        $('#tabs').on('click', "a", function(event) {
+            tab_id = Number($(this).attr("href").split("-").pop())-1;
+            $.cookie('selected_tab', tab_id);
         });
-
-        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+        $("#tabs").tabs({ active: parseInt($.cookie('selected_tab')) });
     });
 
 </script>
