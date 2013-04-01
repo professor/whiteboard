@@ -762,24 +762,27 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 #grade_table { border-width: 0; }
 
+#grade_table th.assignment_grade { min-width:59px; padding-left:15px; }
+#grade_table th:nth-child(10){ min-width: 100px; }   /* Earned Grade */
 
-#grade_table .tablesorter-header {
-    background-color: rgb(105, 105, 105);
-    color: white;
-}
-#grade_table td { background-color: #FFF; text-align:center;}
-#grade_table td:nth-child(1),
-#grade_table td:nth-child(2),
-#grade_table td:nth-child(3) { text-align:left;}
+#grade_table td { background-color: #FFF; text-align:center; padding: 10px;}
+#grade_table td:nth-child(1),   /* First Name */
+#grade_table td:nth-child(2),   /* Last Name */
+#grade_table td:nth-child(3)    /* Team Name */
+{ text-align:left; }
+#grade_table td:nth-child(10){ text-align: left;}   /* Earned Grade */
 
 #grade_table td input { text-align:center; font-size: 13px; }
 
 
-#grade_table th, #grade_table td#notify-all {
+#grade_table .tablesorter-header, #grade_table td#notify-all {
     background-color: #696969;
-    /*color: white;*/
-    font-size: 8pt;
+    color: white;
     font-weight: normal;
+}
+#grade_table .tablesorter-header{
+    padding: 10px 20px 10px 10px;
+    border-color: black;
 }
 #grade_table td#notify-all{
     margin: 0;

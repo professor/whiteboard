@@ -172,7 +172,7 @@
           <th style='max-width:78px; word-wrap:break-word;'> Last Name </th>
           <th> Team </th>
           <% @assignments.each do |assignment| %>
-            <th style='min-width:59px;padding-left:15px;' title="<%=assignment.name%>">
+            <th class="assignment_grade" title="<%=assignment.name%>">
               <% unless assignment.short_name.blank? %>
                   <%= assignment.short_name %>
               <% else %>
