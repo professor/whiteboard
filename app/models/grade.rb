@@ -120,7 +120,7 @@ class Grade < ActiveRecord::Base
     draft_grades.each do |grade|
       grade.is_student_visible = true
       grade.save
-      unless (grade.score.nil? || grade.score.empty?)
+      unless (grade.score.blank?)
         grade.send_feedback_to_student(hostname)
       end
     end
@@ -130,7 +130,7 @@ class Grade < ActiveRecord::Base
   def self.mail_final_grade(course_id, hostname)
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
     final_grades.each do |grade|
-      unless (grade.score.nil? || grade.score.empty?)
+      unless (grade.score.blank?)
         grade.is_student_visible = true
         grade.save
         grade.send_feedback_to_student(hostname)
@@ -343,7 +343,7 @@ private
   # To encrypt the final scores.
   def self.encrypt_score(raw_score, course_id, student_id)
     # FIXME: get salt from somewhere else
-    if raw_score.nil? || raw_score.empty?
+    if raw_score.blank?
       return raw_score
     else
       return Digest::SHA2.hexdigest(salt+raw_score+course_id.to_s+student_id.to_s)
@@ -352,7 +352,7 @@ private
 
   # To decrypt the score for showing it to the professor.
   def self.decrypt_score(encrypted_score, course_id, student_id)
-    if encrypted_score.nil? || encrypted_score.empty?
+    if encrypted_score.blank?
       return ""
     end
 
