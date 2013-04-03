@@ -13,6 +13,8 @@ en:
   no_permission: You don't have permission to access this page.
   not_editable: You don't have permission to edit this object.
   no_person: This person doesn't exist in the system.
+  no_grading_rule_for_course: Please configure your course. Gradebook won't work until you do so.
+  default_grading_rule_for_course: You still need to define the grading ranges for an A, A-, B+, etc. Please configure your course.
   not_your_deliverable: You don't have permission to see another person's deliverables.
   not_your_presentation: You don't have permission to see another person's presentation feedback.
   presentation_feedback_updated: Your feedback has been updated.
