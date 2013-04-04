@@ -249,7 +249,7 @@ class Course < ActiveRecord::Base
   #Find the last time this course was offered
   def self.last_offering(course_number)
     #TODO: move this sorting into the database
-    offerings = Course.find_all_by_number(course_number)
+    offerings = Course.where(:number => course_number).all
     offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     return offerings.first
   end
@@ -350,6 +350,7 @@ class Course < ActiveRecord::Base
   end
 
   def map_faculty_strings_to_users(faculty_assignments_override_list)
+#    faculty_assignments_override_list.map { |member_name| User.where(:human_name => member_name).first }
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 

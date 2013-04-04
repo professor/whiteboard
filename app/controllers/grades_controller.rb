@@ -33,6 +33,13 @@ class GradesController < ApplicationController
   end
 
   def index
+    if @course.grading_rule.nil?
+      flash[:error] = I18n.t(:no_grading_rule_for_course)
+      redirect_to course_path(@course) and return
+    end
+    if @course.grading_rule.default_values?
+      flash.now[:error] = I18n.t(:default_grading_rule_for_course)
+    end
     @no_pad = true
     @students = @course.registered_students_or_on_teams
     @assignments = @course.assignments
@@ -40,6 +47,7 @@ class GradesController < ApplicationController
     @students.each do |student|
       @grades[student] =  Grade.get_grades_for_student_per_course(@course, student)
     end
+    render
   end
 
   def student_deliverables_and_grades_for_course
@@ -52,8 +60,7 @@ class GradesController < ApplicationController
     if (current_user.id != @user.id)
       unless (@course.faculty.include?(current_user))||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
-        redirect_to root_path
-        return
+        redirect_to root_path and return
       end
     end
     @assignments = @course.assignments
