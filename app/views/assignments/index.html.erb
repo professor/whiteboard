@@ -44,9 +44,9 @@
          <td><%=assignment.task_number  %> </td>
     <% end %>
     <td><%=assignment.name  %> </td>
-    <td><%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
+    <td><%=(assignment.due_date.blank?) ? "" : "#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")} (Pacific)"  %></td>
     <td class="deliverable_type"><%=(assignment.is_team_deliverable)?"Team":"Individual"  %> </td>
-    <td><%=(assignment.is_submittable)?"Yes":"No"  %> </td>
+    <td><%=(assignment.is_submittable) ? "Yes" : "No"  %> </td>
     <td class="max_score"><%=assignment.maximum_score  %> </td>
     <td><%= link_to 'Edit', edit_course_assignment_path(@course,assignment) %></td>
     <td><%= link_to 'Delete', [@course,assignment], :confirm => 'Are you sure?', :method => :delete, :remote=>true %></td>
