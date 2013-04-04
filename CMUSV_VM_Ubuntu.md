@@ -35,9 +35,9 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         cp config/systems.default.yml config/systems.yml
             # no need to configure
         cp config/amazon_s3.default.yml config/amazon_s3.yml
-            # edit settings as mentioned in this page: http://rails.sv.cmu.edu/pages/amazon_s3.yml
+            # edit settings as mentioned in this page: http://whiteboard.sv.cmu.edu/pages/amazon_s3.yml
         cp config/google_apps.default.yml config/google_apps.yml
-            # edit settings as mentioned in this page: http://rails.sv.cmu.edu/pages/google_apps.yml
+            # edit settings as mentioned in this page: http://whiteboard.sv.cmu.edu/pages/google_apps.yml
 
 
 1. Start up the virtual machine
