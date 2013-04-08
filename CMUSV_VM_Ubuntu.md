@@ -18,8 +18,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 5. Setup vagrant config
 
-<!-- code -->
-
         # below steps create the Vagrant file on your own.
         vagrant init cmusv_professor
 
@@ -29,8 +27,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         # config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
 6. CMUSV rails project specific project settings
-
-<!-- code -->
 
         cp config/database.default.yml config/database.yml
             # see instructor for username and password
@@ -44,8 +40,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
             # edit settings as mentioned in this page: http://whiteboard.sv.cmu.edu/pages/google_apps.yml
 
 7. Start up the virtual machine
-
-<!-- code -->
 
         vagrant up
         # will prompt you for your machine's admin password (for port forwarding rights)
@@ -68,13 +62,9 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 10. Update apt-get to latest version
 
-<!-- code -->
-
         sudo apt-get update --fix-missing
 
 11. Load CMUSV project data
-
-<!-- code -->
 
         cd /vagrant
 
@@ -89,8 +79,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         bundle exec rake RAILS_ENV="test" db:schema:load
 
 12. Bring up the cmusv rails server
-
-<!-- code -->
 
         bundle exec rails s thin
 
@@ -116,19 +104,13 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 3. Download and install [vagrant](http://vagrantup.com/)
 4. Add the Ubuntu Lucid (10.04) 32-bit VM vagrant box
 
-<!-- code -->
-
         vagrant box add lucid32 http://files.vagrantup.com/lucid32.box
 
 5. Initialize the Vagrant project
 
-<!-- code -->
-
         vagrant init lucid32
 
 6. setup vagrant config
-
-<!-- code -->
 
         # add/uncomment following lines in the generated VagrantFile
         config.vm.forward_port 3000, 3142
@@ -136,14 +118,10 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 7. bring up Vagrant VM
 
-<!-- code -->
-
         vagrant up
         # see Troubleshooting section if you face issues.
 
 8. ssh into the machine for setting up environment
-
-<!-- code -->
 
         vagrant ssh
         cd /vagrant
@@ -151,8 +129,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         sudo apt-get install build-essential zlib1g-dev curl git-core sqlite3 libsqlite3-dev
 
 9. install ruby
-
-<!-- code -->
 
         git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
         echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
@@ -168,16 +144,12 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 10. get Rails running
 
-<!-- code -->
-
         gem install bundler
         rbenv rehash
         bundle
         bundle exec rails s thin
 
 11. CMUSV project specific settings
-
-<!-- code -->
 
         # install postgres
         sudo apt-get install postgresql libpq-dev
@@ -201,8 +173,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         see [nokogiri page](http://nokogiri.org/tutorials/installing_nokogiri.html) and follow steps for Ubuntu
 
 12. package the box for easy deployment
-
-<!-- code -->
 
         vagrant package
         mv package.box vm_cmusv_professor.box
