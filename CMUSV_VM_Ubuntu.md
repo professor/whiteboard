@@ -6,17 +6,19 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
         git clone git@github.com:professor/cmusv.git
 
-1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-1. Download and install [vagrant](http://vagrantup.com/)
+2. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+3. Download and install [vagrant](http://vagrantup.com/)
 
         # or use the below command if you're comfortable with the terminal
         sudo gem install vagrant --no-ri --no-rdoc -V
 
-1. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
+4. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
 
         vagrant box add cmusv_professor vm_cmusv_professor.box
 
-1. Setup vagrant config
+5. Setup vagrant config
+
+<!-- code -->
 
         # below steps create the Vagrant file on your own.
         vagrant init cmusv_professor
@@ -26,7 +28,9 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         config.vm.forward_port 3000, 3142
         # config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
-1. CMUSV rails project specific project settings
+6. CMUSV rails project specific project settings
+
+<!-- code -->
 
         cp config/database.default.yml config/database.yml
             # see instructor for username and password
@@ -39,36 +43,38 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         cp config/google_apps.default.yml config/google_apps.yml
             # edit settings as mentioned in this page: http://whiteboard.sv.cmu.edu/pages/google_apps.yml
 
+7. Start up the virtual machine
 
-1. Start up the virtual machine
+<!-- code -->
 
         vagrant up
         # will prompt you for your machine's admin password (for port forwarding rights)
 
-1. (Windows users only)
-
+8. (Windows users only)
     * Download and install [PuTTY & PuTTYGen](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
-
     * Run PuTTyGen to convert the private key to a PuTTY key
         * File -> Load private key and open the private key file mentioned by 'vagrant ssh'
         * Save private key
 
-1. ssh into your VM
+9. ssh into your VM
     * (Windows users only) Run PuTTY to SSH into the VM
         * Enter in the host 127.0.0.1 and port 2222 as provided by vagrant.
         * Under Connection -> Data enter vagrant for the auto-login username
         * Under Connection -> SSH -> Auth  Browse to the generated ppk key saved in the previous step
         * Under Session save the session settings
         * Open the session
-
     * (Non-Windows users)
         * vagrant ssh
 
-1. Update apt-get to latest version
+10. Update apt-get to latest version
+
+<!-- code -->
 
         sudo apt-get update --fix-missing
 
-1. Load CMUSV project data
+11. Load CMUSV project data
+
+<!-- code -->
 
         cd /vagrant
 
@@ -82,12 +88,13 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
             # to load the seeds.rb data
         bundle exec rake RAILS_ENV="test" db:schema:load
 
-1. Bring up the cmusv rails server
+12. Bring up the cmusv rails server
+
+<!-- code -->
 
         bundle exec rails s thin
 
-1. open http://localhost:3142 in your local browser.
-
+13. open http://localhost:3142 in your local browser.
 
 # vagrant commands #
 
@@ -102,38 +109,50 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
     vagrant destroy
 
 
-
 # Creating the VM #
 
 1. Install cmusv rails project (see [cmusv page](https://github.com/professor/cmusv/blob/master/CMUSV_Students.md))
-1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-1. Download and install [vagrant](http://vagrantup.com/)
-1. Add the Ubuntu Lucid (10.04) 32-bit VM vagrant box
+2. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+3. Download and install [vagrant](http://vagrantup.com/)
+4. Add the Ubuntu Lucid (10.04) 32-bit VM vagrant box
+
+<!-- code -->
 
         vagrant box add lucid32 http://files.vagrantup.com/lucid32.box
 
-1. Initialize the Vagrant project
+5. Initialize the Vagrant project
+
+<!-- code -->
 
         vagrant init lucid32
 
-1. setup vagrant config
+6. setup vagrant config
+
+<!-- code -->
 
         # add/uncomment following lines in the generated VagrantFile
         config.vm.forward_port 3000, 3142
         config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
-1. bring up Vagrant VM
+7. bring up Vagrant VM
+
+<!-- code -->
 
         vagrant up
+        # see Troubleshooting section if you face issues.
 
-1. ssh into the machine for setting up environment
+8. ssh into the machine for setting up environment
+
+<!-- code -->
 
         vagrant ssh
         cd /vagrant
         sudo apt-get upgrade
         sudo apt-get install build-essential zlib1g-dev curl git-core sqlite3 libsqlite3-dev
 
-1. install ruby
+9. install ruby
+
+<!-- code -->
 
         git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
         echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
@@ -147,14 +166,18 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         rbenv rehash
         rbenv global 1.9.2-p180
 
-1. get Rails running
+10. get Rails running
+
+<!-- code -->
 
         gem install bundler
         rbenv rehash
         bundle
         bundle exec rails s thin
 
-1. CMUSV project specific settings
+11. CMUSV project specific settings
+
+<!-- code -->
 
         # install postgres
         sudo apt-get install postgresql libpq-dev
@@ -177,12 +200,16 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
         see [nokogiri page](http://nokogiri.org/tutorials/installing_nokogiri.html) and follow steps for Ubuntu
 
-1. package the box for easy deployment
+12. package the box for easy deployment
+
+<!-- code -->
 
         vagrant package
         mv package.box vm_cmusv_professor.box
 
+# Troubleshooting
 
+If you've used vagrant before, there's a chance that the VM may be accessible. You will need to unregister the VM as instructed [in this page](http://daniel.hepper.net/blog/2011/03/fixing-a-messed-up-vagrant-installation/).
 
 # References #
 
