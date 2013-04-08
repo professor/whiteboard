@@ -6,17 +6,25 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
         git clone git@github.com:professor/cmusv.git
 
-2. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-3. Download and install [vagrant](http://vagrantup.com/)
+1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+1. Download and install [vagrant](http://vagrantup.com/)
 
         # or use the below command if you're comfortable with the terminal
         sudo gem install vagrant --no-ri --no-rdoc -V
 
-4. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
+1. Change your current working directory to the codebase folder
 
+        cd cmusv
+
+1. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
+
+        # copy the VM box to your working directory
+        cp ~/Downloads/vm_cmusv_professor.box .
+
+        # install the VM
         vagrant box add cmusv_professor vm_cmusv_professor.box
 
-5. Setup vagrant config
+1. Setup vagrant config
 
         # below steps create the Vagrant file on your own.
         vagrant init cmusv_professor
@@ -26,10 +34,11 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         config.vm.forward_port 3000, 3142
         # config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
-6. CMUSV rails project specific project settings
+1. CMUSV rails project specific project settings
 
         cp config/database.default.yml config/database.yml
-            # see instructor for username and password
+            # try the username "cmusv_user" without any password
+            # see instructor for username and password if that doesn't work
         cp config/morning_glory.mfse.yml config/morning_glory.yml
             # no need to configure
         cp config/systems.default.yml config/systems.yml
@@ -39,18 +48,18 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         cp config/google_apps.default.yml config/google_apps.yml
             # edit settings as mentioned in this page: http://whiteboard.sv.cmu.edu/pages/google_apps.yml
 
-7. Start up the virtual machine
+1. Start up the virtual machine
 
         vagrant up
         # will prompt you for your machine's admin password (for port forwarding rights)
 
-8. (Windows users only)
+1. (Windows users only)
     * Download and install [PuTTY & PuTTYGen](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
     * Run PuTTyGen to convert the private key to a PuTTY key
         * File -> Load private key and open the private key file mentioned by 'vagrant ssh'
         * Save private key
 
-9. ssh into your VM
+1. ssh into your VM
     * (Windows users only) Run PuTTY to SSH into the VM
         * Enter in the host 127.0.0.1 and port 2222 as provided by vagrant.
         * Under Connection -> Data enter vagrant for the auto-login username
@@ -58,13 +67,14 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         * Under Session save the session settings
         * Open the session
     * (Non-Windows users)
-        * vagrant ssh
 
-10. Update apt-get to latest version
+            vagrant ssh
+
+1. Update apt-get to latest version
 
         sudo apt-get update --fix-missing
 
-11. Load CMUSV project data
+1. Load CMUSV project data
 
         cd /vagrant
 
@@ -73,16 +83,18 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
         # modify the db/seeds.rb and modify the example :your_name_here with your details. See step 12 on this page https://github.com/professor/cmusv/blob/master/CMUSV_Students.md
 
+        bundle install
+
         bundle exec rake db:schema:load
         bundle exec rake db:setup
             # to load the seeds.rb data
         bundle exec rake RAILS_ENV="test" db:schema:load
 
-12. Bring up the cmusv rails server
+1. Bring up the cmusv rails server
 
         bundle exec rails s thin
 
-13. open http://localhost:3142 in your local browser.
+1. open http://localhost:3142 in your local browser.
 
 # vagrant commands #
 
