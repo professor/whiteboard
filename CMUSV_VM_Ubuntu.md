@@ -38,7 +38,6 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
         cp config/database.default.yml config/database.yml
             # try the username "cmusv_user" without any password
-            # see instructor for username and password if that doesn't work
         cp config/morning_glory.mfse.yml config/morning_glory.yml
             # no need to configure
         cp config/systems.default.yml config/systems.yml
