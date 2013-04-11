@@ -18,4 +18,4 @@ development:
 test:
     adapter: postgresql
     database: cmu_education_test
-    username: cmusv_user
+    username: postgres
