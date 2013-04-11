@@ -400,9 +400,7 @@ a.photobook_item img{
     */
 }
 
-.formItem .indented {
-    margin_left: 10px;
-}
+.formItem .indented { margin-left: 10px; }
 
 .layout_table .course_tools td {
     width: 130px;
