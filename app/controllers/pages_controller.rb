@@ -111,7 +111,6 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
-#    @courses = Course.all
     @courses = Course.unique_course_names
 
     @page.updated_by_user_id = current_user.id if current_user
