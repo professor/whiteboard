@@ -4,6 +4,7 @@ class PageComment < ActiveRecord::Base
   belongs_to :page
 
   validates_presence_of :comment
+  validates_presence_of :user_id
 
   def editable?(current_user)
     if (current_user && current_user.is_admin?)
@@ -18,7 +19,7 @@ class PageComment < ActiveRecord::Base
 
   def notify_us()
 #todo add current
-    curriculum_comments = PageComment.find(:all, :conditions => ["url = ? and notify_me = true and user_id is not null", self.url])
+    curriculum_comments = PageComment.where(:page_id => self.page_id, :notify_me => true).all
     email_addresses = []
     curriculum_comments.each { |comment| email_addesses << curriculum_commments.user.email_address }
     return email_addresses
