@@ -9,27 +9,26 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-sdk'
 gem 'mechanize'
 
-gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
+#gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
+gem "webrobots", "~> 0.1.1"
 
-gem 'omniauth', '0.3.0.rc3'
+#gem 'omniauth', '0.3.0.rc3'
+gem 'omniauth', '1.1.4'
+gem 'omniauth-google-apps', :git => 'git://github.com/sishen/omniauth-google-apps.git'
 gem 'devise'
 
 
 gem "ckeditor", "3.6.3"
 
-#gem 'ruby-openid'
-#gem 'ruby-openid-apps-discovery'
-#gem 'rack-openid'
 
 gem 'bundler'
-gem 'delayed_job' #, '2.1.0.pre'
+gem 'delayed_job', '2.1.4'
+#gem 'delayed_job_active_record'
 
 gem 'indextank'
 
-#gem 'oauth'
-
 #gem 'heroku'
-gem 'paperclip'
+gem 'paperclip', '2.5.0'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'acts_as_versioned'
@@ -63,7 +62,6 @@ group :production do
 end
 
 group :development, :test do
-#  gem 'mongrel', '>= 1.2.0.pre2', :require => nil
   gem 'launchy'
   gem 'taps'
 #  gem 'rake'
@@ -76,7 +74,8 @@ group :development, :test do
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec-rails'
   gem 'factory_girl_rails', '3.4.0'
-  gem 'capybara'
+#  gem 'capybara'
+  gem 'capybara', '1.1.1'
   gem 'jasmine'
   gem 'launchy'
 

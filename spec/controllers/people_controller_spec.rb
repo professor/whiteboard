@@ -130,7 +130,7 @@ describe PeopleController do
     describe "POST create" do
       it "should not be allowed" do
         expect { new_person = FactoryGirl.build(:faculty_frank_user)
-        post :create, :person => new_person }.should_not change { User.count }
+        post :create, :person => new_person }.to_not change { User.count }
 
       end
     end
