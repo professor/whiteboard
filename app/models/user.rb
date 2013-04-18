@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
 
 
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
-    data = access_token['user_info']
+    data = access_token['info']
     email = switch_west_to_sv(data["email"]).downcase
     User.find_by_email(email)
   end
