@@ -28,16 +28,6 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  # GET /assignments/1
-  # GET /assignments/1.xml
-  def show
-    @assignment = Assignment.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @assignment }
-    end
-  end
-
   # GET /assignments/new
   # GET /assignments/new.xml
   def new
