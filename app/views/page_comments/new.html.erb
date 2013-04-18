@@ -24,7 +24,7 @@
             </p>
         <% end %>
         <p>
-          <%= f.label :type %><br/>
+          <%= f.label :page_comment_type_id, "Type" %><br/>
           <%= f.collection_select(:page_comment_type_id, @types, :id, :name) %>
         </p>
         <% if current_user %>

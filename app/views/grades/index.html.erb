@@ -54,7 +54,7 @@
         }
 
         var visible = !$(this).hasClass("draft");
-        var previousVisible = $(this).hasClass("default_draft")?false:true;
+        var previousVisible = !$(this).hasClass("default_draft");
         grades.earned_grade(grade_attrs.student_id);
 //    grades.updateFinalGrade(grade_attrs.student_id);
         if(previousValue != score || visible != previousVisible)

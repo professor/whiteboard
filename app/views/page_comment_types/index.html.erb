@@ -3,20 +3,23 @@
 
 
 <% unless @page_comment_types.nil? %>
+<table>
     <% @page_comment_types.each do |type| %>
+      <tr><td>
         <div class="rounded comment comment_type_<%= h type.name %>" style="padding: 5px; margin-right: 5px; background-color: <%=h type.background_color %>;">
           <%= h type.name %>
           <%= h type.background_color %>
+        </div></td>
           <td><%= link_to 'Show', type %></td>
-          <% if current_user.is_staff || current_user.is_admin %>
+          <% if current_user.is_staff? || current_user.is_admin? %>
               <td><%= link_to 'Edit', edit_page_comment_type_path(type) %></td>
           <% end %>
           <% if current_user.is_admin %>
               <td><%= link_to 'Destroy', type, :confirm => 'Are you sure?', :method => :delete %></td>
           <% end %>
-        </div>
-        <br/>
+      </tr>
     <% end %>
+</table>
 <% end %>
 <br/>
 
