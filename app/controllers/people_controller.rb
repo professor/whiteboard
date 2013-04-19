@@ -235,32 +235,10 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
 
-#      error_message = ""
-#      if params[:create_google_email]
-#         password = 'just4now' + Time.now.to_f.to_s[-4,4] # just4now0428
-#         status = @person.create_google_email(password)
-#         if status.is_a?(String)
-#           error_message += "Google account not created. " + status + "</br></br>"
-#         else
-#          send_email([@person.personal_email, @person.email], @person.email, generate_message(@person, password))
-#         end
-#      end
-#      if params[:create_twiki_account]
-#        status = @person.create_twiki_account
-#        error_message +=  'TWiki account was not created.<br/></br>' unless status
-#        status = @person.reset_twiki_password
-#        error_message +=  'TWiki account password was not reset.</br>' unless status
-#      end
-
       if @person.save
         create_google_email = params[:create_google_email]
         create_twiki_account = params[:create_twiki_account]
-        create_yammer_account = false #params[:create_yammer_account]
-        Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? && params[:create_twiki_account].nil? && params[:create_yammer_account].nil?
-                                      #          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
-                                      #          job.perform
-
-                                      #        flash[:error] = error_message unless error_message.blank?
+        Delayed::Job.enqueue(PersonJob.new(@person.id, create_google_email, create_twiki_account)) unless create_google_email.nil? && create_twiki_account.nil?
 
         flash[:notice] = 'Person was successfully created.'
         format.html { redirect_to(@person) }
