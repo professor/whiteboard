@@ -65,9 +65,11 @@ group :development, :test do
   gem 'launchy'
   gem 'taps'
 #  gem 'rake'
-  gem 'ruby-debug19'
-  gem 'ruby-debug-base19x'
-  gem 'ruby-debug-ide' #'0.4.6'
+
+  gem 'debugger'
+  # gem 'ruby-debug19'
+  # gem 'ruby-debug-base19x'
+  # gem 'ruby-debug-ide' #'0.4.6'
 
   gem 'shoulda'
 #  gem 'hanna'
