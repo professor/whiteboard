@@ -9,7 +9,7 @@
         if (checkbox.prop('checked')) {
             $tabs = $('#tabs').tabs();
             $tabs.tabs('option', 'disabled', []); //enables the tabs
-            $tabs.tabs('option', 'selected', parseInt($.cookie('selected_tab')));
+            $tabs.tabs('option', 'selected', parseInt($.cookie('selected_tab'), 10));
             $('.ui-tabs-nav').css('display', 'block');
             $('#email_header').css('display', 'block');
             $('.page_or_task').html("task");
@@ -37,7 +37,7 @@
         //enable_tabs($(this));  //does not seem to be required
 
         //select tab according to index saved in cookie
-        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab')));
+        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab'), 10));
         $.cookie('selected_tab', null);   //clear cookie
     });
 </script>
