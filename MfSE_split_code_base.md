@@ -3,7 +3,7 @@ Here are the directions on how to create the metrics for software engineering (M
 1. Go to a new directory
 
 2. checkout the code
-git clone git@github.com:professor/cmusv.git
+git clone git@github.com:professor/whiteboard.git
 cd cmusv
 
 3. create a filelist

@@ -315,24 +315,24 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_yammer_account
-    #See lib/yammer.rb for code that would create the user account.
-    #We can't use the yammer API until we upgrade the service
-
-    #The most simple way here is to invite the user to register
-    #Note that yammer requires https://www.yammer.com/
-    require 'mechanize'
-    agent = Mechanize.new
-    agent.get('https://www.yammer.com/') do |page|
-      result_page = page.form_with(:action => '/users') do |invite_page|
-        invite_page['user[email]'] = self.email
-      end.submit
-    end
-
-    self.yammer_created = Time.now()
-    self.save
-    return true
-  end
+  #def create_yammer_account
+  #  #See lib/yammer.rb for code that would create the user account.
+  #  #We can't use the yammer API until we upgrade the service
+  #
+  #  #The most simple way here is to invite the user to register
+  #  #Note that yammer requires https://www.yammer.com/
+  #  require 'mechanize'
+  #  agent = Mechanize.new
+  #  agent.get('https://www.yammer.com/') do |page|
+  #    result_page = page.form_with(:action => '/users') do |invite_page|
+  #      invite_page['user[email]'] = self.email
+  #    end.submit
+  #  end
+  #
+  #  self.yammer_created = Time.now()
+  #  self.save
+  #  return true
+  #end
 
 
 #   def create_adobe_connect

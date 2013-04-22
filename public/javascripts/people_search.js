@@ -46,7 +46,6 @@ $(document).ready(function() {
 
     // check to see if any valid search parameters were entered
     // also check if any of the search params were advanced search params and toggle the advanced search filter box
-    check_url_params_loop :
     for (var i in valid_params_list) {
         if(getURLParameter(valid_params_list[i])){
             load_using_custom_params = true;
@@ -54,7 +53,7 @@ $(document).ready(function() {
                 advanced_search_toggled = true;
         }
         if (advanced_search_toggled && load_using_custom_params)
-            break check_url_params_loop;
+            break;
     }
     // check to see if photobook needs to be toggled
     if(getURLParameter('photobook') == "true")

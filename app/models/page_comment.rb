@@ -21,7 +21,7 @@ class PageComment < ActiveRecord::Base
 #todo add current
     curriculum_comments = PageComment.where(:page_id => self.page_id, :notify_me => true).all
     email_addresses = []
-    curriculum_comments.each { |comment| email_addesses << curriculum_commments.user.email_address }
+    curriculum_comments.each { |comment| email_addesses << comment.user.email }
     return email_addresses
   end
 

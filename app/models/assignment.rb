@@ -16,21 +16,22 @@
 # * maximum_score is a required field. Professor should give a maximum score (>=0 ) for each assignment.
 # * is_team_deliverable tells the assignment is a team deliverable or individual deliverable
 # * is_submittable is designed for those assignment that don't required any submission, e.g., course participation, effort log. 
-# * is_deliverable_submitted tells whether there are any deliverable submmited for this  assignment. If so, the professor could not delete this assignment. 
+# * verify_deliverables_submitted tells whether there are any deliverable submmited for this assignment. If so, the professor could not delete this assignment.
 
 
 
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :course_id, :maximum_score, :is_team_deliverable, :due_date, :assignment_order, :task_number, :is_submittable, :short_name
 
-  validates :maximum_score , :presence=>true,  :numericality =>{ :greater_than_or_equal_to=>0}
+  validates :maximum_score, :presence => true,  :numericality => { :greater_than_or_equal_to => 0}
   validates_presence_of :course_id
+  validates_inclusion_of :is_team_deliverable, :is_submittable, :in => [true, false]
 
   belongs_to :course
   has_many :grades
   has_many :deliverables
 
-  before_destroy :is_deliverable_submitted
+  before_destroy :verify_deliverables_submitted
 
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   default_scope :order => 'task_number ASC, assignment_order ASC'
@@ -45,8 +46,9 @@ class Assignment < ActiveRecord::Base
   def name_with_type
     unless self.course.grading_rule.nil?
       nomenclature = self.course.nomenclature_assignment_or_deliverable.capitalize
+    else
+      nomenclature = "deliverable"
     end
-    nomenclature ||= "test"
 
     if self.task_number.blank?
       task = ""
@@ -62,8 +64,8 @@ class Assignment < ActiveRecord::Base
   end
 
   # To check whether the deliverable is submitted or not.
-  def is_deliverable_submitted
-    self.deliverables.size<=0
+  def verify_deliverables_submitted
+    self.deliverables.size <= 0
   end
 
   # To get the list of deliverables submitted by the student.

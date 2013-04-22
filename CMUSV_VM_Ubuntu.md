@@ -4,7 +4,7 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 1. Clone the Rails repository
 
-        git clone git@github.com:professor/cmusv.git
+        git clone git@github.com:professor/whiteboard.git
 
 1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 1. Download and install [vagrant](http://vagrantup.com/)
@@ -80,7 +80,7 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         # you may have to change to a different directory, if you setup your repo clone and vagrant in a different subfolder. e.g:
         # cd /vagrant/cmusv
 
-        # modify the db/seeds.rb and modify the example :your_name_here with your details. See step 12 on this page https://github.com/professor/cmusv/blob/master/CMUSV_Students.md
+        # modify the db/seeds.rb and modify the example :your_name_here with your details. See step 12 on this page https://github.com/professor/whiteboard/blob/master/CMUSV_Students.md
 
         bundle install
 
@@ -110,7 +110,7 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 # Creating the VM #
 
-1. Install cmusv rails project (see [cmusv page](https://github.com/professor/cmusv/blob/master/CMUSV_Students.md))
+1. Install cmusv rails project (see [cmusv page](https://github.com/professor/whiteboard/blob/master/CMUSV_Students.md))
 2. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 3. Download and install [vagrant](http://vagrantup.com/)
 4. Add the Ubuntu Lucid (10.04) 32-bit VM vagrant box

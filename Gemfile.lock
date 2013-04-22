@@ -50,7 +50,6 @@ GEM
     acts_as_versioned (0.6.0)
       activerecord (~> 3.0.0.beta4)
     addressable (2.3.4)
-    archive-tar-minitar (0.5.2)
     arel (2.0.10)
     aws-sdk (1.8.5)
       json (~> 1.4)
@@ -76,6 +75,12 @@ GEM
     cocaine (0.2.0)
     columnize (0.3.6)
     daemons (1.1.9)
+    debugger (1.5.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.0)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.2.0)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -120,8 +125,6 @@ GEM
     json (1.7.7)
     launchy (2.3.0)
       addressable (~> 2.3)
-    linecache19 (0.5.13)
-      ruby_core_source (>= 0.1.4)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -205,27 +208,10 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug-base19x (0.11.29)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      rake (>= 0.8.1)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug-ide (0.4.16)
-      rake (>= 0.8.1)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
     ruby-ole (1.2.11.6)
     ruby-openid (2.2.3)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.9)
     seedbank (0.2.1)
     selenium-webdriver (2.32.1)
@@ -284,6 +270,7 @@ DEPENDENCIES
   capybara (= 1.1.1)
   ckeditor (= 3.6.3)
   daemons (~> 1.1.4)
+  debugger
   delayed_job (= 2.1.4)
   devise
   exception_notification
@@ -304,9 +291,6 @@ DEPENDENCIES
   rdoc
   rmagick
   rspec-rails
-  ruby-debug-base19x
-  ruby-debug-ide
-  ruby-debug19
   seedbank
   shoulda
   spreadsheet
