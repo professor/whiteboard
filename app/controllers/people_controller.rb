@@ -573,7 +573,7 @@ class PeopleController < ApplicationController
     # search more db fields (checks all entered keywords with db fields)
     if !params[:filterBoxOne].blank?
       params[:filterBoxOne].split.each do |query|
-        query = '%'+query+'%'
+        query = "%#{query}%"
         people = people.where( "first_name ILIKE ? OR last_name ILIKE ? OR human_name ILIKE ? OR biography ILIKE ? OR email ILIKE ? OR title ILIKE ? OR webiso_account ILIKE ? OR organization_name ILIKE ? OR personal_email ILIKE ? OR work_city ILIKE ? OR work_state ILIKE ? OR work_country ILIKE ?",query, query, query, query, query,query,query, query, query, query, query,query)
       end
     end

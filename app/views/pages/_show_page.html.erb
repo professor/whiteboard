@@ -58,7 +58,7 @@
             tab_id = Number($(this).attr("href").split("-").pop())-1;
             $.cookie('selected_tab', tab_id);
         });
-        $("#tabs").tabs({ active: parseInt($.cookie('selected_tab')) });
+        $("#tabs").tabs({ active: parseInt($.cookie('selected_tab'), 10) });
     });
 
 </script>
