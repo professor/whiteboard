@@ -7,7 +7,7 @@ describe "people/show.html.erb" do
         assign(:person, person)
     end
 
-    it "renders attributes in <p>" do
+    it "renders the page" do
         render
     end
 
