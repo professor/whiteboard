@@ -1,4 +1,4 @@
-<% if @assignment.is_deliverable_submitted %>
+<% if @assignment.verify_deliverables_submitted %>
     $('#<%= dom_id(@assignment) %>').fadeOut(400, function(){
         $('#<%= dom_id(@assignment) %>').remove();
         calculate();
