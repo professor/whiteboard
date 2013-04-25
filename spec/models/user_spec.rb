@@ -336,6 +336,21 @@ describe User do
     end
   end
 
+  describe "when there are expired accounts" do
+    before(:each) do
+      @student_sam = FactoryGirl.create(:student_sam, is_active: true, expires_at: Date.today - 1.day)
+      @student_sally = FactoryGirl.create(:student_sally, is_active: true, expires_at: Date.today - 1.month)
+    end
+    it "should send email to IT about expired accounts" do
+      ActionMailer::Base.delivery_method = :test
+      ActionMailer::Base.perform_deliveries = true
+      ActionMailer::Base.deliveries = []
+      User.notify_it_about_expired_accounts()
+      ActionMailer::Base.deliveries.size.should == 1
+      ActionMailer::Base.deliveries.first.to_s.should include Rails.application.routes.url_helpers.user_url(@student_sam, :host => "whiteboard.sv.cmu.edu").to_s
+      ActionMailer::Base.deliveries.first.to_s.should include Rails.application.routes.url_helpers.user_url(@student_sally, :host => "whiteboard.sv.cmu.edu").to_s
+    end
+  end
 
   # More tests
   # Effort log should only be set for person that is_student - tested in effort_log
