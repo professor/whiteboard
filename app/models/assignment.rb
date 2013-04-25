@@ -110,13 +110,7 @@ class Assignment < ActiveRecord::Base
 
   #Re-position: change the sequence of Assignments
   def self.reposition(ids)
-
-    #update_all(["assignment_order = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], {:id => ids})
-    update_all("assignment_order = 33")
-
-    #logger.debug("CCHEK")
-    #logger.debug(ids)
-
+    update_all(["assignment_order = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], {:id => ids})
   end
 
 end
