@@ -59,9 +59,11 @@ describe PageAttachmentsController do
       end
 
       it "should delete the attachment", :skip_on_build_machine => true  do
-        expect do
-          do_delete
-        end.to change { PageAttachment.count }.by(-1)
+        @attachment.page.should_receive(:editable?).and_return(true)
+        @attachment.should_receive(:destroy)
+
+        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+        do_delete
       end
 
       it "should flash a notice", :skip_on_build_machine => true do
