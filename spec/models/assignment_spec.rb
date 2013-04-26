@@ -90,7 +90,19 @@ describe Assignment do
     before do
       @course = FactoryGirl.create(:course)
     end
-    
+
+    it "should increment automatically by 1 for specific course" do
+
+      course2 = FactoryGirl.create(:mfse)
+      course_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
+      course_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
+      course2_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => course2)
+      course_assignment1.assignment_order.should eq(1)
+      course_assignment2.assignment_order.should eq(2)
+      course2_assignment1.assignment_order.should eq(1)
+
+    end
+
     it "should increment automatically by 1 if there are other assignment added" do
       @task1_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
       @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
