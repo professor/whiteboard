@@ -33,7 +33,6 @@ class Assignment < ActiveRecord::Base
 
   before_destroy :verify_deliverables_submitted
 
-  #acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   acts_as_list :column=>"assignment_order"
   default_scope :order => 'task_number ASC, assignment_order ASC'
 
