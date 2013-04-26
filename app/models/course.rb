@@ -72,6 +72,8 @@ class Course < ActiveRecord::Base
                   :curriculum_url, :configure_course_twiki,
                   :faculty_assignments_override
 
+  after_save :copy_peer_evaluation_dates_to_teams
+
 #  def to_param
 #    display_course_name
 #  end
@@ -352,6 +354,14 @@ class Course < ActiveRecord::Base
   def map_faculty_strings_to_users(faculty_assignments_override_list)
 #    faculty_assignments_override_list.map { |member_name| User.where(:human_name => member_name).first }
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
+  end
+
+  def copy_peer_evaluation_dates_to_teams
+    
+    self.teams.each do |team|
+      team.peer_evaluation_first_email = self.peer_evaluation_first_email
+      team.peer_evaluation_second_email = self.peer_evaluation_second_email
+    end
   end
 
 end

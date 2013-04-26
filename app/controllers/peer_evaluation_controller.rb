@@ -285,18 +285,18 @@ class PeerEvaluationController < ApplicationController
     #teams = Team.find(:all, :conditions => ["id = ? ", "215"])
     teams.each do |team|
       #puts "Team: " + team.name + " (" + team.id.to_s + ") "
-      unless team.peer_evaluation_first_email.nil? && team.peer_evaluation_second_email.nil?
-        first_date_p = Date.today == team.peer_evaluation_first_email.to_date unless team.peer_evaluation_first_email.nil?
-        second_date_p = Date.today == team.peer_evaluation_second_email.to_date unless team.peer_evaluation_second_email.nil?
+      unless team.course.peer_evaluation_first_email.nil? && team.course.peer_evaluation_second_email.nil?
+        first_date_p = Date.today == team.course.peer_evaluation_first_email.to_date unless team.course.peer_evaluation_first_email.nil?
+        second_date_p = Date.today == team.course.peer_evaluation_second_email.to_date unless team.course.peer_evaluation_second_email.nil?
         if ((first_date_p) ||
             (second_date_p))
 
           puts "Team: " + team.name + " (" + team.id.to_s + ") "
-          puts "First email date: " + team.peer_evaluation_first_email.to_s
-          puts "Second email date: " + team.peer_evaluation_second_email.to_s
+          puts "First email date: " + team.course.peer_evaluation_first_email.to_s
+          puts "Second email date: " + team.course.peer_evaluation_second_email.to_s
           puts "Today: " + Date.today.to_s
-          puts "1st comparison is true " if Date.today == team.peer_evaluation_first_email.to_date
-          puts "2nd comparison is true " if Date.today == team.peer_evaluation_second_email.to_date
+          puts "1st comparison is true " if Date.today == team.course.peer_evaluation_first_email.to_date
+          puts "2nd comparison is true " if Date.today == team.course.peer_evaluation_second_email.to_date
           puts ""
 
           #from_address = "scotty.dog@sv.cmu.edu"
@@ -314,7 +314,7 @@ class PeerEvaluationController < ApplicationController
             to_address_done = []
             to_address_incomplete = []
             team.members.each do |user|
-              if PeerEvaluationReview.is_complete_for?(user_id, team_id)
+              if PeerEvaluationReview.is_completed_for?(user.id, team.id)
                 to_address_done << user.email
               else
                 to_address_incomplete << user.email
