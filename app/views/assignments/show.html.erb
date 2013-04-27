@@ -1,0 +1,59 @@
+<% content_for :title, @course.name %>
+
+<!--         url: '/course_navigations/reposition'})
+              url: '/generic_ajax/reposition'});
+
+ -->
+
+
+<% content_for :javascript do %>
+    <script type="text/javascript">
+        $(function () {
+
+            $('#sortable').sortable({
+                cursor:'hand',
+                dropOnEmpty:false,
+                opacity:0.5,
+                update:function () {
+                    console.log($("#sortable").sortable('serialize'));
+                    $.ajax({
+                        type:'post',
+                        data:$('#sortable').sortable('serialize') + '&id=<%=@course.id-%>',
+                        dataType:'script',
+                        //beforeSend is needed for devise 1.4.5 and rails 3.0.9
+                        //http://stackoverflow.com/questions/7393871/devise-not-setting-current-user-on-ajax-post-even-though-correct-x-csrf-token-is
+                        beforeSend: function(jqXHR, settings) {
+                            jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        },
+                        complete:function (request) {
+                            $('#sortable').effect('highlight');
+                        },
+                        url:'/course/<%=@course.id-%>/assignments/reposition'});
+                }
+            });
+            $("#sortable").disableSelection();
+            console.log($("#sortable").sortable('serialize'));
+        })
+    </script>
+<% end %>
+
+
+
+
+<h1><%= @course.display_for_course_page %></h1>
+<h2>Curriculum Navigation</h2>
+
+<p>To reorder pages, drag them around. Changes are automatically saved.</p>
+<ul id="sortable">
+  <% for assignment in @assignments %>
+      <li id="assignment_<%= assignment.id -%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+        <span class="SecondaryNav_Link"><%= assignment.name  %></span>
+      </li>
+  <% end %>
+
+</ul>
+<%#= link_to 'New Assignment', new_assignment_path(:course_id => @course.id) %>
+
+<br/>
+<!--This is a test <span class="ui-icon ui-icon-arrowthick-1-w"></span>-->
+<!--This is a test <span class="ui-icon ui-icon-arrowthick-1-e"></span>-->
