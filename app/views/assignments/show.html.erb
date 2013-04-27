@@ -15,7 +15,6 @@
                 dropOnEmpty:false,
                 opacity:0.5,
                 update:function () {
-                    console.log($("#sortable").sortable('serialize'));
                     $.ajax({
                         type:'post',
                         data:$('#sortable').sortable('serialize') + '&id=<%=@course.id-%>',
@@ -28,11 +27,10 @@
                         complete:function (request) {
                             $('#sortable').effect('highlight');
                         },
-                        url:'/course/<%=@course.id-%>/assignments/reposition'});
+                        url:'<%= assignments_reposition_path%>'});
                 }
             });
             $("#sortable").disableSelection();
-            console.log($("#sortable").sortable('serialize'));
         })
     </script>
 <% end %>
@@ -41,9 +39,10 @@
 
 
 <h1><%= @course.display_for_course_page %></h1>
-<h2>Curriculum Navigation</h2>
+<h2>Reordering</h2>
+<%= link_to "Back", course_assignments_path %>
+<p>To reorder assignments/tasks, drag them around. Changes are automatically saved.</p>
 
-<p>To reorder pages, drag them around. Changes are automatically saved.</p>
 <ul id="sortable">
   <% for assignment in @assignments %>
       <li id="assignment_<%= assignment.id -%>" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>

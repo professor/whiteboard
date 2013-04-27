@@ -65,8 +65,9 @@ CMUEducation::Application.routes.draw do
     resources :assignments
     resources :grades
   end
-  match '/course/:course_id/assignments/show' => 'assignments#show', :as=>:show, :via => :get
-  match '/course/:course_id/assignments/reposition' => 'assignments#reposition', :as=>:reposition, :via => :post
+
+  match '/course/:course_id/assignments/reposition' => 'assignments#show', :as=>:assignments_show, :via => :get
+  match '/course/:course_id/assignments/reposition' => 'assignments#reposition', :as=>:assignments_reposition, :via => :post
 
   constraints({:id => /.*/}) do
     resources :mailing_lists
