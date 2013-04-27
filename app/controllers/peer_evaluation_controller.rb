@@ -312,13 +312,13 @@ class PeerEvaluationController < ApplicationController
 
   private
 
-  def log_peer_evaluation(team, first_date, second_date)
+  def log_peer_evaluation(team, today_is_first_date, today_is_second_date)
     puts "Team: " + team.name + " (" + team.id.to_s + ") "
     puts "First email date: " + team.course.peer_evaluation_first_email.to_s
     puts "Second email date: " + team.course.peer_evaluation_second_email.to_s
     puts "Today: " + Date.today.to_s
-    puts "1st comparison is true " if first_date
-    puts "2nd comparison is true " if second_date
+    puts "1st comparison is true " if today_is_first_date
+    puts "2nd comparison is true " if today_is_second_date
     puts ""
 
   end
