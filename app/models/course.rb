@@ -51,7 +51,7 @@ class Course < ActiveRecord::Base
   has_many :grades, :through => :assignments
 
   has_one :grading_rule, :dependent => :destroy
-  accepts_nested_attributes_for :grading_rule
+  accepts_nested_attributes_for :grading_rule, :teams
   attr_accessible :grading_rule_attributes
 
   validates_presence_of :semester, :year, :mini, :name
@@ -72,7 +72,7 @@ class Course < ActiveRecord::Base
                   :curriculum_url, :configure_course_twiki,
                   :faculty_assignments_override
 
-  after_save :copy_peer_evaluation_dates_to_teams
+  before_save :copy_peer_evaluation_dates_to_teams
 
 #  def to_param
 #    display_course_name
@@ -357,7 +357,6 @@ class Course < ActiveRecord::Base
   end
 
   def copy_peer_evaluation_dates_to_teams
-    
     self.teams.each do |team|
       team.peer_evaluation_first_email = self.peer_evaluation_first_email
       team.peer_evaluation_second_email = self.peer_evaluation_second_email

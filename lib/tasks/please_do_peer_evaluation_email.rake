@@ -8,7 +8,7 @@ namespace :cmu do
     a = PeerEvaluationController.new()
     number = a.create_please_do_evaluation_email()
 
-    puts "Examined Peer Evaluation dates to see if any emails should be sent. #{number} teams were emailed"
+    puts "Examined Peer Evaluation dates to see if any emails should be sent. #{number} emails were sent"
 
 end
 end
