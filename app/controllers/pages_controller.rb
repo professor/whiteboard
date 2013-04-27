@@ -1,9 +1,8 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!
 
-#  layout 'cmu_sv_no_pad'
+  #  layout 'cmu_sv_no_pad'
   layout 'cmu_sv'
-
   # GET /pages
   # GET /pages.xml
   def index
@@ -57,7 +56,7 @@ class PagesController < ApplicationController
     @page.title = params[:url].split('_').collect { |w| w.capitalize + ' ' }.join().chomp(' ') if params[:url]
     @page.url = params[:url]
     @page.course_id = params[:course_id].to_i
-#    @courses = Course.all
+    #    @courses = Course.all
     @courses = Course.unique_course_names
 
     respond_to do |format|
@@ -82,7 +81,6 @@ class PagesController < ApplicationController
     end
 
     if @page.is_someone_else_currently_editing_page(current_user) && @page.timeout_has_not_passed
-
 
       flash[:notice] = "#{@page.current_edit_by.human_name} started editing this page
                         #{pluralize(((Time.now - @page.current_edit_started_at) / 1.minute).round, 'minute')} ago at
@@ -156,15 +154,30 @@ class PagesController < ApplicationController
     end
   end
 
-  # DELETE /pages/1
-  # DELETE /pages/1.xml
-  #  def destroy
-  #    @page = Page.find(params[:id])
-  #    @page.destroy
-  #
-  #    respond_to do |format|
-  #      format.html { redirect_to(pages_url) }
-  #      format.xml  { head :ok }
-  #    end
-  #  end
+  def revert
+    @page = Page.find_by_url params[:id]
+
+    respond_to do |format|
+      if @page.revert_to! params[:version].to_i
+        flash[:notice] = 'Page was successfully reverted.'
+        format.html { redirect_to(@page) }
+        format.xml { head :ok }
+      else
+        format.html { redirect_to page_path(@page, :history => true) }
+        format.xml { render :xml => @page.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+# DELETE /pages/1
+# DELETE /pages/1.xml
+#  def destroy
+#    @page = Page.find(params[:id])
+#    @page.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(pages_url) }
+#      format.xml  { head :ok }
+#    end
+#  end
 end

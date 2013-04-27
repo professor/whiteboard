@@ -281,5 +281,8 @@
 
 <% if @page.editable?(current_user) %>
     <%= link_to 'Edit', edit_page_path(@page) %> |
+    <% if params[:version] %>
+    	<%= link_to "Revert to this version", revert_page_path(:version => params[:version]), :method => "post" %> |
+    <% end %>
 <% end %>
 <%= link_to 'Back', pages_path %> <br/>
