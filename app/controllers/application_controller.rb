@@ -16,6 +16,20 @@ class ApplicationController < ActionController::Base
     request.user_agent =~ bot
   end
 
+  # Reference https://github.com/rails/rails/issues/3855
+  # Add a fallback for html, for the case where, eg, 'index.html.erb' exists,
+  # but not 'index.mobile.erb'
+  class MobileFallbackResolver < ::ActionView::FileSystemResolver
+    def find_templates(name, prefix, partial, details)
+      if details[:formats] == [:mobile]
+        details = details.dup
+        details[:formats] = [:mobile, :html]
+      end
+      super
+    end
+  end
+  append_view_path MobileFallbackResolver.new('app/views')
+
   private
   def get_http_referer
     if request.env["HTTP_REFERER"].nil? then
