@@ -67,7 +67,10 @@ describe PageAttachmentsController do
       end
 
       it "should flash a notice", :skip_on_build_machine => true do
-        PageAttachment.stub(:destroy)
+        @attachment.page.should_receive(:editable?).and_return(true)
+        @attachment.stub(:destroy)
+        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+
         do_delete
         flash[:notice].should_not be_nil
       end
