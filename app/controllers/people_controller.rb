@@ -29,15 +29,15 @@ class PeopleController < ApplicationController
   #
   def index
     # 1. carrot & stick
-    if !current_user.is_profile_valid?
-      flash[:notice] = "<div align='center'><b>Warning:</b><br/> You have to update your profile details.<br/> If you do not do so in 4 weeks, you will lose access to the search profile features.<br/><a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a></div>".html_safe
-      flash[:error] = nil
-      if current_user.should_be_redirected?
-        flash[:notice] = nil
-        flash[:error] = "<div align='center'><b>Warning:</b><br/> Your access to the user search features have temporarily been disabled. <br/>To continue, please update your biography/phone numbers and social handles.</div>".html_safe
-       redirect_to edit_person_path(current_user) and return
-      end
-    end
+    # if !current_user.is_profile_valid?
+    #   flash[:notice] = "<div align='center'><b>Warning:</b><br/> You have to update your profile details.<br/> If you do not do so in 4 weeks, you will lose access to the search profile features.<br/><a href='#{url_for(edit_person_path(current_user))}'>Click here to edit your profile.</a></div>".html_safe
+    #   flash[:error] = nil
+    #   if current_user.should_be_redirected?
+    #     flash[:notice] = nil
+    #     flash[:error] = "<div align='center'><b>Warning:</b><br/> Your access to the user search features have temporarily been disabled. <br/>To continue, please update your biography/phone numbers and social handles.</div>".html_safe
+    #    redirect_to edit_person_path(current_user) and return
+    #   end
+    # end
 
     # 2. default/key contacts for that user
     @people = get_default_key_contacts
@@ -55,7 +55,7 @@ class PeopleController < ApplicationController
     ]}
     @key_contact_results.uniq!
     respond_to do |format|
-      format.html { render :html => @key_contact_results }
+      format.html { render :html => @key_contact_results, layout: mobile_device? ? 'mobile' : 'cmu_sv' }
       format.json { render :json => @key_contact_results }
     end
   end

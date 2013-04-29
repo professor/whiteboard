@@ -43,3 +43,6 @@ push*.dat
 
 # Vagrant files
 .vagrant
+
+*.swp
+*seeds.rb

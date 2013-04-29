@@ -1,0 +1,36 @@
+<div id="nav">
+  <%# link_to image_tag("/images/whiteboard.jpg", :alt => "Whiteboard logo", :border => 0, :width => "30%"), root_path %>
+  <%= link_to image_tag("/images/whiteboard.jpg", :alt => "Whiteboard logo", :border => 0, :width => "60%"), root_path %>
+  <ul>
+    <li class="standard"><a href="/people">People</a></li>
+    <li class="standard"><a href="/courses">Courses</a></li>
+    <ul>
+      <li class="standard">
+        <a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{AcademicCalendar.current_semester_year()}" %>><%= AcademicCalendar.current_semester() %> <%= AcademicCalendar.current_semester_year() %>
+          Courses</a></li>
+
+      <% if AcademicCalendar.next_semester_is_soon %>
+          <li class="standard">
+            <a href=<%= "/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}" %>><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %>
+              Courses</a></li>
+      <% end %>
+    </ul>
+    <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
+    <% if current_user %>
+        <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.twiki_name), :class => "Lv1NavLink" %></li>
+        <li class="standard"><%= link_to "My Teams", my_teams_path(current_user.twiki_name), :class => "Lv1NavLink" %></li>
+        <li class="standard"><%= link_to "Logout " + current_user.first_name, destroy_user_session_path, :class => "Lv1NavLink" %></li>
+    <% else %>
+        <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
+        <li class="standard"><font color="#626262">My Teams (Login required)</font></li>
+        <li class="standard"><%= link_to "Login ", user_omniauth_authorize_path(:google_apps), :class => "Lv1NavLink" %></li>
+    <% end %>
+  </ul>
+  <div class="hr">
+    <hr>
+  </div>
+  <%= yield :left_nav %>
+  <% if @is_in_grade_book %>
+      <%=  render :partial=>"layouts/grade_book_menu" %>
+  <% end %>
+</div>

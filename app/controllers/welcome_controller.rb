@@ -13,7 +13,11 @@ class WelcomeController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      if mobile_device?
+        format.html { render file: 'welcome/_navigation', layout: 'mobile' }
+      else
+        format.html { render layout: 'cmu_sv' }
+      end
       format.xml { render :xml => @courses }
     end
   end

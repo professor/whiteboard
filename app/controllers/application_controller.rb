@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  before_filter :make_available_for_exception_notification, :prepare_for_mobile
+  before_filter :make_available_for_exception_notification
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -126,11 +126,6 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :mobile_device?
-
-  def prepare_for_mobile
-    session[:mobile_param] = params[:mobile] if params[:mobile]
-    request.format = :mobile if mobile_device?
-  end
 
   protected
   def make_available_for_exception_notification
