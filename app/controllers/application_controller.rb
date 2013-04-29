@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  before_filter :make_available_for_exception_notification
+  before_filter :make_available_for_exception_notification, :prepare_for_mobile
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -115,6 +115,22 @@ class ApplicationController < ActionController::Base
   #def american_date
   #  '%m/%d/%Y'
   #end
+
+  # Source: http://railscasts.com/episodes/199-mobile-devices
+  private 
+  def mobile_device?
+    if session[:mobile_param]
+      session[:mobile_param] == "1"
+    else
+      request.user_agent =~ /Mobile|webOS/
+    end
+  end
+  helper_method :mobile_device?
+
+  def prepare_for_mobile
+    session[:mobile_param] = params[:mobile] if params[:mobile]
+    request.format = :mobile if mobile_device?
+  end
 
   protected
   def make_available_for_exception_notification
