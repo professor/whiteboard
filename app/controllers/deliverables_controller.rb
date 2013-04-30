@@ -61,6 +61,7 @@ class DeliverablesController < ApplicationController
     @past_courses = user.registered_for_these_courses_during_past_semesters()
     respond_to do |format|
       format.html { render :action => "index" }
+      format.mobile { render :action => "index" }
       format.xml { render :xml => @deliverables }
     end
   end

@@ -1,0 +1,45 @@
+<% content_for :title, 'Whiteboard LMS for CMU-SV (Mobile)' %>
+
+<%# render :partial=>'rss_feeds/index', :locals => {:rss_feeds => @rss_feeds} %>
+
+<h1>Whiteboard.sv.cmu.edu</h1>
+
+<form action="<%= search_index_path %>" id="searchform" method="get" role="search">
+  <div>
+    <label for="s" class="screen-reader-text">Search for:</label>
+    <input type="text" id="query" name="query" value="">
+    <input type="submit" value="Search" id="searchsubmit">
+    (Note: searches through curriculum pages)
+  </div>
+</form>
+
+<% if current_user %>
+    <table class="layout_table">
+      <tr>
+        <td>
+          <%= render :partial => "/courses/my_courses" %>
+        </td>
+        <td>
+          <h1>Pages</h1>
+          <%= link_to "Orientation", "/pages/orientation" %>
+        </td>
+      </tr>
+    </table>
+<% end %>
+
+
+<% if current_user && (current_user.is_staff || current_user.is_admin) %>
+    <h2>Faculty views</h2>
+    <p><a href="/teams">All teams</a></p>
+    <h2>Admin notes</h2>
+    <p>The current semester is <%= current_semester() %>. The current time is <%= l Time.now, :format => :chatty %> </p>
+<% end %>
+
+<h2>New features</h2>
+<p><%= link_to "New Features", new_features_path %></p>
+<p><%= link_to "Google Mailing Lists", mailing_lists_path %></p>
+
+<% if current_user && current_user.is_admin %>
+    <h2>Admin only</h2>
+    <p><%= link_to "Config", config_path %></p>
+<% end %>
