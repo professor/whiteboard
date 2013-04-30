@@ -115,8 +115,6 @@ describe PagesController do
     end
   end
 
-
-
   context "as a student can" do
     before do
       Page.delete_all
@@ -152,7 +150,7 @@ describe PagesController do
     
     describe "POST revert" do
       it "a page that is editable by all" do
-        @page.update_attribute :is_editable_by_all, true
+        @page.update_attributes :is_viewable_by_all => true, :is_editable_by_all => true
         post :revert, :id => @page.to_param, :version => 1
         current_version = @page.versions.find_by_number 3
         current_version.reverted_from.should == 1
