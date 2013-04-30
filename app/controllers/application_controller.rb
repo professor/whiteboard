@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     def find_templates(name, prefix, partial, details)
       if details[:formats] == [:mobile]
         details = details.dup
-        details[:formats] = [:mobile, :html]
+        details[:formats] = [:mobile, :html, :json]
       end
       super
     end
