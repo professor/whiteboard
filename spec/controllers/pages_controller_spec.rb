@@ -149,11 +149,24 @@ describe PagesController do
 
       it "will update updated_by_user_id"
     end
-
+    
+    describe "POST revert" do
+      it "a page that is editable by all" do
+        @page.update_attribute :is_editable_by_all, true
+        post :revert, :id => @page.to_param, :version => 1
+        current_version = @page.versions.find_by_number 3
+        current_version.reverted_from.should == 1
+        response.should redirect_to(page_url)
+      end
+      
+      it "but not for a page that is editable only by faculty" do
+        post :revert, :id => @page.to_param, :version => 1
+        response.should redirect_to(page_url)
+      end
+    end
   end
 
   context "as a faculty member can" do
-
     before do
       login(FactoryGirl.create(:faculty_frank))
 
@@ -204,6 +217,16 @@ describe PagesController do
           get :edit, :id => @page.to_param
           flash[:notice].should be_nil
         end
+      end
+    end
+    
+    describe "POST revert" do
+      it "a page that is editable by faculty" do
+        @page.update_attribute :title, "the title for next version"
+        post :revert, :id => @page.to_param, :version => 1
+        current_version = @page.versions.find_by_number 3
+        current_version.reverted_from.should == 1
+        response.should redirect_to(page_url)
       end
     end
   end

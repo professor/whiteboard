@@ -69,25 +69,10 @@ class PagesController < ApplicationController
   def edit
     @page = Page.find_by_url(params[:id])
     @courses = Course.unique_course_names
-
-    if @page.blank?
-      flash[:error] = "Page with an id of #{params[:id]} is not in this system."
-      redirect_to(pages_url) and return
-    end
-
-    unless @page.editable?(current_user)
-      flash[:error] = "You don't have permission to do this action."
-      redirect_to(page_url) and return
-    end
-
-    if @page.is_someone_else_currently_editing_page(current_user) && @page.timeout_has_not_passed
-
-      flash[:notice] = "#{@page.current_edit_by.human_name} started editing this page
-                        #{pluralize(((Time.now - @page.current_edit_started_at) / 1.minute).round, 'minute')} ago at
-                        #{l @page.current_edit_started_at, :format => :detailed }"
-      redirect_to(page_url) and return
-    end
-
+    
+    redirect_to(pages_url) and return unless blank?
+    redirect_to(page_url) and return unless editable?
+   
     @page.skip_version do
       @page.current_edit_by = current_user
       @page.current_edit_started_at = Time.now
@@ -155,7 +140,10 @@ class PagesController < ApplicationController
   end
 
   def revert
-    @page = Page.find_by_url params[:id]
+    @page = Page.find_by_url(params[:id])
+    
+    redirect_to(pages_url) and return unless blank?
+    redirect_to(page_url) and return unless editable?
 
     respond_to do |format|
       if @page.revert_to! params[:version].to_i
@@ -180,4 +168,34 @@ class PagesController < ApplicationController
 #      format.xml  { head :ok }
 #    end
 #  end
+
+  private
+  def blank?
+    blank = true
+    
+    if @page.blank?
+      flash[:error] = "Page with an id of #{params[:id]} is not in this system."
+      blank = false
+    end
+    
+    blank
+  end
+  
+  def editable?
+    editable = true
+    
+    unless @page.editable?(current_user)
+      flash[:error] = "You don't have permission to do this action."
+      editable = false
+    end
+
+    if @page.is_someone_else_currently_editing_page(current_user) && @page.timeout_has_not_passed
+      flash[:notice] = "#{@page.current_edit_by.human_name} started editing this page
+                        #{pluralize(((Time.now - @page.current_edit_started_at) / 1.minute).round, 'minute')} ago at
+                        #{l @page.current_edit_started_at, :format => :detailed }"
+      editable = false
+    end 
+    
+    editable 
+  end
 end
