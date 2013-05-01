@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <meta content="Carnegie Mellon University" name="author">
+  <meta content="index,follow" name="robots">
+  <meta content="31 days" name="revisit-after">
+
+  <%# stylesheet_link_tag '/cmu_sv_standard_v4/reset.css', :media => "all", :rel => "stylesheet" %>
+  <%= stylesheet_link_tag 'site' %>
+  <%= stylesheet_link_tag 'twiki' %>
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag 'http://code.jquery.com/jquery-1.9.0.min.js',
+                             'http://code.jquery.com/ui/1.10.0/jquery-ui.min.js',
+                             "jquery_ujs.js",
+                             "application" %>
+  <link rel="stylesheet" href='http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css' type="text/css" media="all"/>
+
+  <%= yield :tablesorter %>
+
+  <%= stylesheet_link_tag '/cmu_sv_standard_v4/screen' %>
+  <!--[if gte IE 5.5000]><![if lt IE 7]>
+ 	        <%= stylesheet_link_tag '/cmu_sv_standard_v4/ie.css', :media => "screen", :rel => "stylesheet" %>
+        <![endif]><![endif]--><!--[if gte IE 7]><![if lt IE 8]>
+ 	        <%= stylesheet_link_tag '/cmu_sv_standard_v4/ie7.css', :media => "screen", :rel => "stylesheet" %>
+      <![endif]><![endif]-->
+  <%= stylesheet_link_tag '/cmu_sv_standard_v4/khaki-content.css', :media => "screen", :rel => "stylesheet" %>
+  <%= stylesheet_link_tag '/cmu_sv_standard_v4/print.css', :media => "print" %>
+  <%= stylesheet_link_tag 'site_print.css', :media => "print" %>
+  <%= stylesheet_link_tag 'scaffold' %>
+
+  <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
+  <%= yield :javascript %>
+  <%= yield :head %>
+</head>
+
+<body>
+  <%= yield %>
+</body>
+</html>
