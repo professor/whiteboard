@@ -22,13 +22,16 @@
 
         // jQuery script to show an upload button when hovering over the user profile picture
         $(function() {
-            $(".user_profile_photo_imgHover").hover(
-                function() {
-                    $(this).children("img").fadeTo(200, 0.5).end().children(".user_profile_photo_hover").show();
-                },
-                function() {
-                    $(this).children("img").fadeTo(200, 1).end().children(".user_profile_photo_hover").hide();
-                });
+
+            $(".photo-upload-button").click(function() {
+              $("#dialog").css("z-index", 500);
+              $("#dialog").show();
+              $(".close-dialog").click(function() {
+                $("#dialog").css("z-index", -500);
+                $("#dialog").hide();
+              });
+            });
+
             CKEDITOR.replace( 'user_biography',
             {
                 skin : 'kama',
@@ -50,6 +53,75 @@
     </script>
 <% end %>
 
+<%= form_for @person, :html => {:multipart => true, :id => "photo-upload-form"},
+    :url => people_photo_upload_path(@person) do |f| %>
+    <div id="dialog">
+      <div class="title-in-upload">
+        <a class="close-dialog">close</a>
+      </div>
+      <div class="image-candidates">
+        <div class="image-candidate">
+          <%= image_tag(@person.image_uri_first,:class=>"user_profile_photo") %>
+        </div>
+      <div>
+        <p>
+          <%= f.radio_button :photo_selection, 'first', :checked => 'first' == @person.photo_selection %>Use this photo
+        </p>
+        <% if can? :it_upload_photo, User %>
+          <p>
+            <%= f.label :it_upload_photo, "Upload new photo" %>
+            <%= f.file_field :photo_first %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+    <div class="image-candidates">
+      <div class="image-candidate">
+        <%= image_tag(@person.image_uri_second,:class=>"user_profile_photo") %>
+      </div>
+      <div>
+        <p>
+          <%= f.radio_button :photo_selection, 'second', :checked => 'second' == @person.photo_selection %>Use this photo
+        </p>
+        <% if can? :upload_photo, User %>
+          <p>
+            <%= f.label :upload_photo, "Upload new photo" %>
+            <%= f.file_field :photo_second %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+    <div class="image-candidates">
+      <div class="image-candidate">
+        <%= image_tag(@person.image_uri_custom,:class=>"user_profile_photo") %>
+      </div>
+      <div>
+        <p>
+          <%= f.radio_button :photo_selection, 'custom', :checked => 'custom' == @person.photo_selection %>Use this photo
+        </p>
+        <p>
+          <%= f.label :it_upload_photo, "Upload new photo" %>
+          <%= f.file_field :photo_custom %>
+        </p>
+      </div>
+    </div>
+    <div class="image-candidates">
+      <div class="image-candidate">
+        <img src="/images/mascot.jpg">
+      </div>
+      <div>
+        <p>
+          <%= f.radio_button :photo_selection, 'anonymous', :checked => 'anonymous' == @person.photo_selection %>Use this photo
+        </p>
+      </div>
+    </div>
+    <div>
+      <%= f.submit "Update" %>
+    </div>
+  </div>
+  
+<% end %>
+
 <!-- start modified user profile edit -->
 <%= form_for @person, :html => {:multipart => true} do |f| %>
     <% if @person.errors.any? %>
@@ -67,22 +139,15 @@
     <div class="user_profile_content edit_user_profile">
         <div class="user_profile_photo_social">
 
-
-            <% if can? :upload_photo, User %>
               </fieldset>
-              <div class="user_profile_photo_imgHover">
-                <div class="user_profile_photo_hover">
-                    <div class="user_profile_photo_upload">
-                      <%= f.label :upload_photo, "Upload new photo" %>
-                      <%= f.file_field :photo %>
-                    </div>
-                </div>
-                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
-            </div>
-            <% else %>
-                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
-            <% end %>
 
+              
+              <div class="user_profile_photo_edit">
+                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+              </div>
+              <div>
+                <input class="photo-upload-button" type="button" value="Upload Photo"/>
+              </div>
             <div class="user_profile_social clearboth">
                 <table>
                     <tr>
