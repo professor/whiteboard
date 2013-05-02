@@ -92,7 +92,7 @@
             </div>
             <% if can? :it_upload_photo, User %>
             <div class="upload-new-photo">
-            <%= f.label :it_upload_photo, "Upload new photo" %>
+            <%= f.label :upload_new_photo, "Upload new photo" %>
             <%= f.file_field :photo_first %>
             </div>
             <% end %>
@@ -109,9 +109,9 @@
             <div class="use-this-photo">
               <%= f.radio_button :photo_selection, 'second', :checked => 'second' == @person.photo_selection %>Use this photo
             </div>
-            <% if can? :upload_photo, User %>
+            <% if can? :it_upload_photo, User %>
             <div class="upload-new-photo">
-              <%= f.label :upload_photo, "Upload new photo" %>
+              <%= f.label :upload_new_photo, "Upload new photo" %>
               <%= f.file_field :photo_second %>
             </div>
             <% end %>
@@ -129,7 +129,7 @@
               <%= f.radio_button :photo_selection, 'custom', :checked => 'custom' == @person.photo_selection %>Use this photo
             </div>
             <div class="upload-new-photo">
-              <%= f.label :it_upload_photo, "Upload new photo" %>
+              <%= f.label :upload_new_photo, "Upload new photo" %>
               <%= f.file_field :photo_custom %>
             </div>
           </div>
