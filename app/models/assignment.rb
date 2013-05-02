@@ -22,6 +22,7 @@
 
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :course_id, :maximum_score, :is_team_deliverable, :due_date, :assignment_order, :task_number, :is_submittable, :short_name
+  attr_accessor :date, :hour, :minute
 
   validates :maximum_score, :presence => true,  :numericality => { :greater_than_or_equal_to => 0}
   validates_presence_of :course_id
@@ -32,6 +33,8 @@ class Assignment < ActiveRecord::Base
   has_many :deliverables
 
   before_destroy :verify_deliverables_submitted
+  before_save :set_due_datetime
+  before_update :set_due_datetime
 
   acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
   default_scope :order => 'task_number ASC, assignment_order ASC'
@@ -105,6 +108,31 @@ class Assignment < ActiveRecord::Base
                   student.registered_for_these_courses_during_past_semesters
     end
     assignments = Assignment.unscoped.find_all_by_course_id(courses.map(&:id), :order => "course_id ASC, id ASC")
+  end
+
+  def inject_due_date date, hour, minute
+    self.date = date
+    self.hour = hour
+    self.minute = minute
+  end
+
+  def set_due_datetime
+    if self.date.blank?
+      self.due_date = nil
+      return true
+    end
+
+    if self.hour.blank? && self.minute.blank?
+      self.hour = "22"
+      self.minute = "0"
+    elsif hour.blank?
+      self.hour = "0"
+    elsif minute.blank?
+      self.minute = "0"
+    end
+    self.due_date = self.date + " " + self.hour + ":" + self.minute
+
+    return true
   end
 
 end
