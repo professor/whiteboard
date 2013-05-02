@@ -568,7 +568,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 .user_profile_social{ text-align: center; }
 .user_profile_photo_social{
     float:left;
-    margin-left: 5px;
+    /*margin-left: 5px;*/
 }
 .user_profile_content tbody td.user_profile_social_edit{
     border: none;
@@ -576,11 +576,6 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     vertical-align: middle;
 }
 
-.user_profile_photo{
-    width:155px;
-    float:left;
-    margin-bottom: 5px;
-}
 .user_profile_photo_upload{
     background:white;
     padding:10px;
@@ -588,17 +583,18 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     width:90%;
     text-align: center;
 }
-.user_profile_photo_imgHover {
-    display: inline;
+.user_profile_photo_edit {
+    display: block;
     position: relative;
+    min-height: 100px;
 }
 .user_profile_photo_imgHover .user_profile_photo_hover {
     display: none;
     position: absolute;
-    top: 90px;
+    top: 48%;
+    left: 20%;
     z-index: 2;
 }
-
 
 .user_profile_title, .user_profile_contact_details_content{
     float: left;
@@ -831,7 +827,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #legend td:nth-child(2) { width:150px; padding:0 10px; }
 #legend td:nth-child(3) { width:250px; padding:0 10px; }
 
-#gradebook_indicator{
+#gradebook_indicator {
   border: 1px solid;
   padding: 5px 5px 5px 5px;
   background-position: 10px center;
@@ -839,15 +835,99 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
   background-color: #FFBABA;
 }
 
+.image-candidates {
+  width: 180px;
+  margin-left: 5px;
+  margin-right: 5px;
+  float: left;
+}
 
+.image-candidate {
+  height: 220px;
+  width: 100%;
+  display: table;
+}
 
+.image-candidate img {
+  margin-left: auto;
+  margin-right: auto; 
+  display: table-cell;
+  vertical-align: middle;
+}
 
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
 
+#dialog {
+  width: 760px;
+  border: 1px solid #D3D3D3;   
+  z-index: -500;
+  position: absolute;
+  background-color: #fff;
+  display: none;
+  height: 360px;
+  padding: 20px 10px 5px 10px
+}
 
+.title-in-upload {
+  height: 20px;
+}
 
+.title-in-upload .close-dialog {
+  display: block;
+  float: right;
+  margin: 1px 0;
+  cursor: pointer;
+  margin-right: 10px;
+}
 
+.photo-upload-button {
+  display: block;
+  margin: 0 auto;  
+}
 
+.photo-profile {
+  height: 335px;
+}
 
+.title-in-upload a {
+  display: block;
+}
+
+.image-action div {
+    margin: 8px auto;
+}
+
+.image-action .use-this-photo {
+    width: 120px;
+}
+
+.image-action label {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.image-candidates > p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.photo-upload-actions {
+    border-top: 1px solid #D3D3D3;
+}
+
+.photo-upload-actions input {
+    float: right;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.user_profile_photo_imgHover {
+    position: relative;
+}
 
 /************************
  * Course Tools page
