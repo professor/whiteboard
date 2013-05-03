@@ -837,9 +837,15 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .image-candidates {
   width: 180px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 4px;
+  margin-right: 4px;
   float: left;
+  height: 335px;
+  border-left: 1px solid #D3D3D3;;
+}
+
+#photo-first {
+ border-left: none;   
 }
 
 .image-candidate {
@@ -889,6 +895,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .photo-profile {
   height: 335px;
+  margin-bottom: 5px;
 }
 
 .title-in-upload a {

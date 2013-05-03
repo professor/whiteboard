@@ -1,6 +1,73 @@
 require "spec_helper"
 
 describe PeopleController do
+  context "admin user can" do
+    before do
+      @admin_andy = FactoryGirl.create(:admin_andy)
+      login(@admin_andy)
+    end
+
+    describe "POST people#upload_photo" do
+      before(:each) do
+        @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+        @photo = fixture_file_upload('/sample_photo.png', 'image/png')
+      end
+
+      it "can upload first photo" do
+        @faculty_frank.photo_first = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
+        User.find(@faculty_frank.id).image_uri_first.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can upload second photo" do
+        @faculty_frank.photo_second = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
+        User.find(@faculty_frank.id).image_uri_second.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can upload custom photo" do
+        @faculty_frank.photo_custom = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_custom => @faculty_frank.photo_custom}) }
+        User.find(@faculty_frank.id).image_uri_custom.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select first photo" do
+        @faculty_frank.photo_first = @photo
+        @faculty_frank.photo_selection = "first"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select second photo" do
+        @faculty_frank.photo_second = @photo
+        @faculty_frank.photo_selection = "second"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select custom photo" do
+        @faculty_frank.photo_custom = @photo
+        @faculty_frank.photo_selection = "custom"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_custom}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select anonymous photo" do
+        @faculty_frank.photo_selection = "anonymous"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
+        User.find(@faculty_frank.id).image_uri.should == "/images/mascot.jpg"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+    end
+  end
+
+
   context "any user can" do
     before do
       @student_sam = FactoryGirl.create(:student_sam_user, :is_part_time=>'f', :masters_program=>'SE', :is_active=>'t')
@@ -18,7 +85,64 @@ describe PeopleController do
     #     assigns(:people).should == [@student_sam]
     #   end
     # end
+    describe "POST people#upload_photo" do
+      before(:each) do
+        @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+        @photo = fixture_file_upload('/sample_photo.png', 'image/png')
+      end
 
+      it "cannot upload first photo" do
+        @faculty_frank.photo_first = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
+        User.find(@faculty_frank.id).image_uri_first.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "cannot upload second photo" do
+        @faculty_frank.photo_second = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
+        User.find(@faculty_frank.id).image_uri_second.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can upload custom photo" do
+        @faculty_frank.photo_custom = @photo
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_custom => @faculty_frank.photo_custom}) }
+        User.find(@faculty_frank.id).image_uri_custom.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select first photo" do
+        @faculty_frank.photo_first = @photo
+        @faculty_frank.photo_selection = "first"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select second photo" do
+        @faculty_frank.photo_second = @photo
+        @faculty_frank.photo_selection = "second"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select custom photo" do
+        @faculty_frank.photo_custom = @photo
+        @faculty_frank.photo_selection = "custom"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_custom}) }
+        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+
+      it "can select anonymous photo" do
+        @faculty_frank.photo_selection = "anonymous"
+        post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
+        User.find(@faculty_frank.id).image_uri.should == "/images/mascot.jpg"
+        response.should redirect_to(edit_person_path(@faculty_frank))
+      end
+    end
     describe "GET people#search" do
         before(:each) do
             @faculty_frank = FactoryGirl.create(:faculty_frank_user)

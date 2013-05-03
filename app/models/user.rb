@@ -392,6 +392,7 @@ class User < ActiveRecord::Base
     self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
 
     # update the image_uri if a photo was uploaded
+
     self.image_uri_first = self.photo_first.url(:profile).split('?')[0] unless (self.photo_first.blank? || self.photo_first.url == "/photo_firsts/original/missing.png")
     self.image_uri_second = self.photo_second.url(:profile).split('?')[0] unless (self.photo_second.blank? || self.photo_second.url == "/photo_seconds/original/missing.png")
     self.image_uri_custom = self.photo_custom.url(:profile).split('?')[0] unless (self.photo_custom.blank? || self.photo_custom.url == "/photo_customs/original/missing.png")
