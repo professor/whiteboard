@@ -79,7 +79,7 @@
     :url => people_photo_upload_path(@person) do |f| %>
     <div id="dialog">
       <div class="photo-profile">
-        <div class="image-candidates">
+        <div id="photo-first" class="image-candidates">
           <p>
             Photo 1
           </p>  
@@ -98,7 +98,7 @@
             <% end %>
           </div>
         </div>
-        <div class="image-candidates">
+        <div id="photo-second" class="image-candidates">
           <p>
             Photo 2
           </p>
@@ -117,7 +117,7 @@
             <% end %>
           </div>
         </div>
-        <div class="image-candidates">
+        <div id="photo-custom" class="image-candidates">
           <p>
             Custom Photo
           </p>
@@ -134,7 +134,7 @@
             </div>
           </div>
         </div>
-        <div class="image-candidates">
+        <div id="photo-anonymous" class="image-candidates">
           <p>
             Scotty Dog Photo
           </p>
