@@ -117,6 +117,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def set_due_datetime
+    
     if self.date.blank?
       self.due_date = nil
       return true
@@ -130,8 +131,7 @@ class Assignment < ActiveRecord::Base
     elsif minute.blank?
       self.minute = "0"
     end
-    self.due_date = self.date + " " + self.hour + ":" + self.minute
-
+    self.due_date = "#{self.date} #{self.hour}:#{self.minute}"
     return true
   end
 

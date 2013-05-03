@@ -141,4 +141,42 @@ describe Assignment do
     end
 
   end
+
+  context "Due date of Assignment" do
+    before :each do
+      @course = FactoryGirl.create(:course)
+      @assignment = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
+    end
+
+    it "should have a due date when update" do
+      @assignment.inject_due_date("2013-12-3", "05", "02")
+      @assignment.save
+      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 05:02"
+    end
+    
+    it "should be blank if the date is blank" do
+      @assignment.inject_due_date("", "05", "02")
+      @assignment.save
+      @assignment.due_date.blank?.should == true
+    end
+
+    it "should be 22 PM if the hour and minute are blank" do
+      @assignment.inject_due_date("2013-12-3", "", "")
+      @assignment.save
+      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 22:00"
+    end
+
+    it "should be 0 if only miss the hour" do
+      @assignment.inject_due_date("2013-12-3", "", "10")
+      @assignment.save
+      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 00:10"
+    end
+
+    it "should be 0 if only miss the minute" do
+      @assignment.inject_due_date("2013-12-3", "13", "")
+      @assignment.save
+      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 13:00"
+    end
+    
+  end
 end
