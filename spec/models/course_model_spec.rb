@@ -433,4 +433,28 @@ describe Course do
   it { should have_many(:faculty) }
   it { should have_many(:registered_students) }
 
+  context "Update peer review reminder dates" do 
+
+    it "should propagate course's first reminder date to the teams" do
+      course = FactoryGirl.build(:course)
+      team = FactoryGirl.build(:team)
+      course.teams << team
+
+      course.peer_evaluation_first_email = Date.today
+      course.save
+      team.peer_evaluation_first_email.should eq (course.peer_evaluation_first_email)
+
+    end
+
+    it "should propagate course's second reminder date to the teams" do
+      course = FactoryGirl.build(:course)
+      team = FactoryGirl.build(:team)
+      course.teams << team
+
+      course.peer_evaluation_second_email = Date.today
+      course.save
+      team.peer_evaluation_second_email.should eq (course.peer_evaluation_second_email)
+
+    end
+  end
 end
