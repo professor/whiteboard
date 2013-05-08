@@ -354,4 +354,15 @@ class Course < ActiveRecord::Base
     faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
+  # convenience method for an admin. destination_course_id is the first time that course was offered
+  def copy_pages_to_another_course(destination_course_id, url_prefix)
+    self.pages.each do |page|
+      new = page.clone
+      new.course_id = destination_course_id
+      new.url = url_prefix + page.url
+      new.save
+    end
+  end
+
 end
+

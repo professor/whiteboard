@@ -234,7 +234,7 @@ class Grade < ActiveRecord::Base
     else
       feedback = make_feedback_for_final_grade
     end
-    url = hostname + "/people/#{self.student_id}/my_deliverables"
+    url = hostname + "/courses/#{self.course.id}/student_grades"
     options = {:to => self.student.email,
                :subject => "Grade for " + self.course.name,
                :message => feedback,

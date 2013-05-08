@@ -35,34 +35,7 @@
 </p>
 
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
-    <h2>Step 1: Setup the tool for this team</h2>
-    <p><%= link_to "Edit each team member's learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
-
-    <p>The tool will send out two reminder emails to the students. Select the dates here.</p>
-    <%= form_for :team, :url => peer_evaluation_update_path(@course, @team) do |f| %>
-        <table class="layout_table">
-          <tr>
-            <td valign="top">First Email Date:<br/>"Heads up" notification</td>
-            <td align="left" style="padding-left:1.5em">
-              <%= f.text_field :peer_evaluation_first_email, :size => 10 %>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td valign="top">Second Email Date:<br/>"Do it today" reminder</td>
-            <td align="left" style="padding-left:1.5em">
-              <%= f.text_field :peer_evaluation_second_email, :size => 10 %>
-            </td>
-          </tr>
-        </table>
-
-        <%= submit_tag 'Save Dates' %><br/><br/>
-    <% end %>
-
-    <h2>Step 2: Generate feedback for these students</h2>
+    <h2>Step 1: Generate feedback for these students</h2>
     <p><%= link_to "Edit the peer evaluation reports", :action => "edit_report", :id => params[:id], :controller => "peer_evaluation" %></p>
 
 <% end %>
