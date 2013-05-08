@@ -47,7 +47,7 @@ class AssignmentsController < ApplicationController
   # POST /assignments.xml
   def create
     @assignment = @course.assignments.new(params[:assignment])
-    @assignment.inject_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
+    @assignment.set_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
     respond_to do |format|
       if @assignment.save
         format.html { redirect_to(course_assignments_path, :notice => "#{@wording}  #{@assignment.name} was successfully created.") }
@@ -63,7 +63,7 @@ class AssignmentsController < ApplicationController
   # PUT /assignments/1.xml
   def update
     @assignment = Assignment.find(params[:id])
-    @assignment.inject_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
+    @assignment.set_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
     deliverable_submitted=Deliverable.find_all_by_assignment_id(@assignment.id).first
     deliverable_status=0;
     unless deliverable_submitted.nil?

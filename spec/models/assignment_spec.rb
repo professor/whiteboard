@@ -12,16 +12,16 @@ describe Assignment do
     it {should belong_to(:course)}
     it {should have_many(:grades)}
   end
-  
+
   context "maximum score" do
     it "should be a number" do
       subject.maximum_score = "just for test"
       subject.maximum_score.should_not  be_a(Fixnum)
       subject.should_not be_valid
-    end  
+    end
 
     it 'should not be negative' do
-      subject.maximum_score = -1.0 
+      subject.maximum_score = -1.0
       subject.should_not be_valid
     end
   end
@@ -96,29 +96,29 @@ describe Assignment do
       @task2_assignment1 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
       @assignment.assignment_order.should eq(1)
       @task2_assignment1.assignment_order.should eq(1)
-    end 
-    
+    end
+
     it "should increment automatically by 1 if there are other assignment with the same task number " do
       @task1_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
       @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
       @task1_assignment2.assignment_order.should eq(2)
     end
-    
+
 
     it "should increment by 1 on the basis of task number" do
       @task1_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
       @task2_assignment1 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
       @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
       @task1_assignment2.assignment_order.should eq(2)
-    end 
-    
+    end
+
     it "should be assignned  even if the task number is blank" do
       @assignment1 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
       @assignment2 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
       @assignment1.assignment_order.should eq(1)
       @assignment2.assignment_order.should eq(2)
     end
-  
+
   end
   context "Delete Assignment" do
     before :each do
@@ -149,34 +149,29 @@ describe Assignment do
     end
 
     it "should have a due date when update" do
-      @assignment.inject_due_date("2013-12-3", "05", "02")
-      @assignment.save
+      @assignment.set_due_date("2013-12-3", "05", "02")
       @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 05:02"
     end
-    
+
     it "should be blank if the date is blank" do
-      @assignment.inject_due_date("", "05", "02")
-      @assignment.save
+      @assignment.set_due_date("", "05", "02")
       @assignment.due_date.blank?.should == true
     end
 
-    it "should be 22 PM if the hour and minute are blank" do
-      @assignment.inject_due_date("2013-12-3", "", "")
-      @assignment.save
+    it "should be 10 PM if the hour and minute values are blank" do
+      @assignment.set_due_date("2013-12-3", "", "")
       @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 22:00"
     end
 
-    it "should be 0 if only miss the hour" do
-      @assignment.inject_due_date("2013-12-3", "", "10")
-      @assignment.save
-      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 00:10"
+    it "should be 10 PM if an hour value is not entered" do
+      @assignment.set_due_date("2013-12-3", "", "10")
+      @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 22:00"
     end
 
-    it "should be 0 if only miss the minute" do
-      @assignment.inject_due_date("2013-12-3", "13", "")
-      @assignment.save
+    it "should be reset to 0 minutes if only an hour value is entered" do
+      @assignment.set_due_date("2013-12-3", "13", "")
       @assignment.due_date.strftime("%Y-%m-%d %H:%M").should == "2013-12-03 13:00"
     end
-    
+
   end
 end
