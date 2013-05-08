@@ -66,7 +66,7 @@ group :development, :test do
   gem 'taps'
 #  gem 'rake'
 
-  gem 'debugger'
+  gem 'debugger' unless ENV["RM_INFO"]
   # gem 'ruby-debug19'
   # gem 'ruby-debug-base19x'
   # gem 'ruby-debug-ide' #'0.4.6'
