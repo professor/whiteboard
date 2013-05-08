@@ -91,26 +91,23 @@ describe Assignment do
       @course = FactoryGirl.create(:course)
     end
 
-    it "should assign assignment_order as 1 for each new task number" do
-      @assignment = FactoryGirl.create(:assignment, :task_number=> 1, :course => @course)
-      @task2_assignment1 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
-      @assignment.assignment_order.should eq(1)
-      @task2_assignment1.assignment_order.should eq(1)
-    end 
-    
-    it "should increment automatically by 1 if there are other assignment with the same task number " do
+    it "should increment automatically by 1 for specific course" do
+
+      course2 = FactoryGirl.create(:mfse)
+      course_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
+      course_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
+      course2_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => course2)
+      course_assignment1.assignment_order.should eq(1)
+      course_assignment2.assignment_order.should eq(2)
+      course2_assignment1.assignment_order.should eq(1)
+
+    end
+
+    it "should increment automatically by 1 if there are other assignment added" do
       @task1_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
-      @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
+      @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
       @task1_assignment2.assignment_order.should eq(2)
     end
-    
-
-    it "should increment by 1 on the basis of task number" do
-      @task1_assignment1 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
-      @task2_assignment1 = FactoryGirl.create(:assignment, :task_number => 2, :course => @course)
-      @task1_assignment2 = FactoryGirl.create(:assignment, :task_number => 1, :course => @course)
-      @task1_assignment2.assignment_order.should eq(2)
-    end 
     
     it "should be assignned  even if the task number is blank" do
       @assignment1 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
@@ -118,13 +115,21 @@ describe Assignment do
       @assignment1.assignment_order.should eq(1)
       @assignment2.assignment_order.should eq(2)
     end
+
+    it "should re-order the assignment order number when reposition is called" do
+      @assignment1 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
+      @assignment2 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
+      @assignment3 = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
+      desired_order = [@assignment3.id, @assignment2.id, @assignment1.id]
+      Assignment.reposition(desired_order)
+      new_order = Assignment.all.collect(&:id)
+      new_order.should eq(desired_order)
+    end
   
   end
   context "Delete Assignment" do
     before :each do
       @course = FactoryGirl.create(:course)
-
-
     end
     it "should be able to delete assignment if no student submit for it" do
       assignment = FactoryGirl.create(:assignment, :task_number => nil, :course => @course)
