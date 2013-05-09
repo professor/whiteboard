@@ -4,8 +4,8 @@
 
 <script type="text/javascript">
     var confirmation_needed = true;
-    var isUpdated = false;
-    var timeSinceLastUpdate = current_time();
+    var needs_to_be_saved = false;
+    var time_since_last_key_down = current_time();
 
     window.onbeforeunload = confirmExit;
 
@@ -33,12 +33,12 @@
 
         ['page_tab_one_contents', 'page_tab_two_contents', 'page_tab_three_contents', 'page_faculty_notes'].forEach(function (editor) {
             CKEDITOR.instances[editor].on('key', function () {
-                isUpdated = true;
+                needs_to_be_saved = true;
             });
         })
 
         setInterval(function () {
-            if (isUpdated) {
+            if (needs_to_be_saved) {
                 var instance;
                 for (instance in CKEDITOR.instances) {
                     CKEDITOR.instances[instance].updateElement();
@@ -56,6 +56,7 @@
                             postPath = data['new_post_path'];
                             $('#edit-form').attr('action', postPath);
                             hideAjaxError();
+                            needs_to_be_saved = false;
                         } else {
                             showAjaxError(data['message']);
                         }
@@ -71,7 +72,7 @@
                         }
                     },
                     complete: function (data) {
-                        isUpdated = false;
+                        needs_to_be_saved = false;
                     }
                 });
             }
@@ -84,8 +85,8 @@
 
     function enableFiveMinuteTimeout() {
         setInterval(function () {
-            if((current_time() - timeSinceLastUpdate) >= (5 * 60 * 1000)) {
-                $("#timeout-msg").val("Timeout! 5 minutes elapsed since last change. Page successfully updated.");
+            if((current_time() - time_since_last_key_down) >= (5 * 60 * 1000)) {
+                $("#timeout-flag").val("true");
                 // Disable popup warning user that they are leaving the page.
                 window.onbeforeunload = null;
                 $("#edit-form").submit();
@@ -94,8 +95,8 @@
     }
 
     $(document).ready(function () {
-        var shouldEnableAutoSave = <%= enable_auto_save ? "true" : "false" %>;
-        var shouldEnableTimeout = <%= enable_timeout ? "true" : "false" %>;
+        var auto_save_enabled = <%= enable_auto_save ? "true" : "false" %>;
+        var timeout_enabled = <%= enable_timeout ? "true" : "false" %>;
 
         $('#tabs').tabs();
         $('.selector').tabs({ cookie:{ name:'selected_tab', expires:30 } });
@@ -105,23 +106,23 @@
 
         enable_tabs($('#page_is_task'));
 
-        if (shouldEnableAutoSave || shouldEnableTimeout) {
+        if (auto_save_enabled || timeout_enabled) {
           $('.auto-save-on-change').change(function () {
-              isUpdated = true;
-              timeSinceLastUpdate = current_time();
+              needs_to_be_saved = true;
+              time_since_last_key_down = current_time();
           });
 
           $('.auto-save-on-keydown').keydown(function () {
-              isUpdated = true;
-              timeSinceLastUpdate = current_time();
+              needs_to_be_saved = true;
+              time_since_last_key_down = current_time();
           });
         }
 
-        if (shouldEnableAutoSave) {
+        if (auto_save_enabled) {
             enableAutoSave();
         }
 
-        if (shouldEnableTimeout) {
+        if (timeout_enabled) {
             enableFiveMinuteTimeout();
         }
 
@@ -221,6 +222,6 @@
     <p>
       <%= f.submit button_name, :onclick => "confirmation_needed = false;" %>
     </p>
-    <input id="timeout-msg" type="hidden" name="timeout_message" value="">
+    <input id="timeout-flag" type="hidden" name="timeout_flag" value="">
 <% end %>
 

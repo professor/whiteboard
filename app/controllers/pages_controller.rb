@@ -141,8 +141,8 @@ class PagesController < ApplicationController
       format.html do
         update_page_edit_info(@page)
         if @page.update_attributes(params[:page])
-          if !params[:timeout_message].blank?
-            flash[:notice] = params[:timeout_message]
+          unless params[:timeout_flag].blank?
+            flash[:notice] = "We thought you left, so we saved your page for you."
           else
             flash[:notice] = 'Page was successfully updated.'
           end
