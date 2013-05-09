@@ -7,12 +7,15 @@ describe ReminderHandler do
     context "updating pages," do
       before :each do
         @current_time = Time.now
-        @user = FactoryGirl.create(:faculty_frank_user)
-        @page1 = FactoryGirl.create(:ppm, updated_by_user_id: @user.id,
+        @user = FactoryGirl.build_stubbed(:faculty_frank_user)
+        @page1 = FactoryGirl.build_stubbed(:ppm, updated_by_user_id: @user.id,
                                           updated_at: @current_time - 1.year)
-        @page2 = FactoryGirl.create(:ppm, url: "page2",
+        @page2 = FactoryGirl.build_stubbed(:ppm, url: "page2",
                                           updated_by_user_id: @user.id,
                                           updated_at: @current_time - 13.months)
+        Page.stub(:all).and_return([@page1, @page2])
+        @page1.stub(:updated_by).and_return(@user)
+        @page2.stub(:updated_by).and_return(@user)
       end
 
       context "should only include pages that were last updated at the specified time (same day and month) in previous years" do
