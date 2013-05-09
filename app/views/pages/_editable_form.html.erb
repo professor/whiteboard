@@ -1,8 +1,12 @@
+<%= javascript_include_tag "ajax-error.js" %>
 <%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
-
 <%= javascript_include_tag 'jquery.cookie' %>
+
 <script type="text/javascript">
     var confirmation_needed = true;
+    var isUpdated = false;
+    var timeSinceLastUpdate = current_time();
+
     window.onbeforeunload = confirmExit;
 
     function enable_tabs(checkbox) {
@@ -24,26 +28,110 @@
         }
     }
 
-    $(function () {
+    function enableAutoSave() {
+        var postPath = $('#edit-form').attr('action');
+
+        ['page_tab_one_contents', 'page_tab_two_contents', 'page_tab_three_contents', 'page_faculty_notes'].forEach(function (editor) {
+            CKEDITOR.instances[editor].on('key', function () {
+                isUpdated = true;
+            });
+        })
+
+        setInterval(function () {
+            if (isUpdated) {
+                var instance;
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
+
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('#edit-form').serialize(),
+                    timeout: 8000,
+                    url: postPath,
+                    success: function (data) {
+                        if (data.code == 'success') {
+                            // Update the form with the (possibly) new path
+                            postPath = data['new_post_path'];
+                            $('#edit-form').attr('action', postPath);
+                            hideAjaxError();
+                        } else {
+                            showAjaxError(data['message']);
+                        }
+                    },
+                    error: function (request, status, message) {
+                        // ignore timeout error
+                        if ("timeout" != status) {
+                            if(message) {
+                                showAjaxError(message);
+                            } else {
+                                showAjaxError("Unable to auto-save. Perhaps the server is down.");
+                            }
+                        }
+                    },
+                    complete: function (data) {
+                        isUpdated = false;
+                    }
+                });
+            }
+        }, 10000);
+    }
+
+    function current_time() {
+        return new Date().getTime();
+    }
+
+    function enableFiveMinuteTimeout() {
+        setInterval(function () {
+            if((current_time() - timeSinceLastUpdate) >= (5 * 60 * 1000)) {
+                $("#timeout-msg").val("Timeout! 5 minutes elapsed since last change. Page successfully updated.");
+                // Disable popup warning user that they are leaving the page.
+                window.onbeforeunload = null;
+                $("#edit-form").submit();
+            }
+        }, 10000);
+    }
+
+    $(document).ready(function () {
+        var shouldEnableAutoSave = <%= enable_auto_save ? "true" : "false" %>;
+        var shouldEnableTimeout = <%= enable_timeout ? "true" : "false" %>;
+
         $('#tabs').tabs();
         $('.selector').tabs({ cookie:{ name:'selected_tab', expires:30 } });
         $('#page_is_task').change(function () {
             enable_tabs($(this));
         })
-    });
 
-    $(document).ready(function () {
         enable_tabs($('#page_is_task'));
-        //enable_tabs($(this));  //does not seem to be required
+
+        if (shouldEnableAutoSave || shouldEnableTimeout) {
+          $('.auto-save-on-change').change(function () {
+              isUpdated = true;
+              timeSinceLastUpdate = current_time();
+          });
+
+          $('.auto-save-on-keydown').keydown(function () {
+              isUpdated = true;
+              timeSinceLastUpdate = current_time();
+          });
+        }
+
+        if (shouldEnableAutoSave) {
+            enableAutoSave();
+        }
+
+        if (shouldEnableTimeout) {
+            enableFiveMinuteTimeout();
+        }
 
         //select tab according to index saved in cookie
-        $("#tabs").tabs().tabs('select', parseInt($.cookie('selected_tab'), 10));
+        $("#tabs").tabs().tabs('option', 'active', parseInt($.cookie('selected_tab'), 10));
         $.cookie('selected_tab', null);   //clear cookie
     });
 </script>
 
-
-<%= form_for(@page) do |f| %>
+<%= form_for(@page, :html => {:id => "edit-form"}) do |f| %>
     <% if @page.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
@@ -62,16 +150,16 @@
     </p>
     <p>
       <%= f.label :course_name %><br/>
-      <%= f.collection_select(:course_name, @courses, :name, :name, :include_blank => true) %>
+      <%= f.collection_select :course_name, @courses, :name, :name, {:include_blank => true}, {:class => 'auto-save-on-change'} %>
       <%# select_tag 'course_name', options_from_collection_for_select(@courses, :name, :name), { :include_blank => true } %>
     </p>
     <p>
       <%= f.label :title %><br/>
-      <%= f.text_field :title %>(*)
+      <%= f.text_field(:title, :class => 'auto-save-on-keydown') %>(*)
     </p>
     <p>
       <%= f.label :url, "Named page" %><br/>
-      (Optional) http://whiteboard.sv.cmu.edu/pages/<%= f.text_field :url %><br/>
+      (Optional) http://whiteboard.sv.cmu.edu/pages/<%= f.text_field :url, :class =>'auto-save-on-keydown' %><br/>
       <span class="help_text">This must be unique for all pages in the system.</span>
     </p>
     <!--
@@ -82,7 +170,7 @@
 -->
     <p>
       <%= f.label :is_task, 'Is this a task page for a course?' %>
-      <%= f.check_box :is_task %>
+      <%= f.check_box(:is_task, :class => 'auto-save-on-change') %>
     </p>
 
     <div id="tabs">
@@ -97,9 +185,9 @@
       <div id="tabs-1">
         <div id="email_header">
           <div id="email_from_header">From:</div>
-          <div id="email_from_contents"><%= f.text_field :tab_one_email_from %></div>
+          <div id="email_from_contents"><%= f.text_field :tab_one_email_from, :class =>'auto-save-on-keydown' %></div>
           <div id="email_subject_header">Subject:</div>
-          <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject %></div>
+          <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject, :class =>'auto-save-on-keydown' %></div>
         </div>
         <div id="email_details">
           <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
@@ -120,19 +208,19 @@
 
     <p>
       <%= f.label :task_duration %><br/>
-      <%= f.text_field :task_duration, :size => 2 %> weeks
+      <%= f.text_field :task_duration, :size => 2, :class => 'auto-save-on-keydown' %> weeks
     </p>
     <p>This <span class="page_or_task">page</span> is editable by<br/>
-      <%= f.radio_button :is_editable_by_all, "false" %> Faculty and staff<br/>
-      <%= f.radio_button :is_editable_by_all, "true" %> Any registered user<br/>
+      <%= f.radio_button :is_editable_by_all, "false", :class => 'auto-save-on-change' %> Faculty and staff<br/>
+      <%= f.radio_button :is_editable_by_all, "true", :class => 'auto-save-on-change' %> Any registered user<br/>
     </p>
     <p>This <span class="page_or_task">page</span> is viewable by<br/>
-      <%= f.radio_button :is_viewable_by_all, "false" %> Faculty and staff<br/>
-      <%= f.radio_button :is_viewable_by_all, "true" %> Any registered user<br/>
+      <%= f.radio_button :is_viewable_by_all, "false", :class => 'auto-save-on-change' %> Faculty and staff<br/>
+      <%= f.radio_button :is_viewable_by_all, "true", :class => 'auto-save-on-change' %> Any registered user<br/>
     </p>
     <p>
-
       <%= f.submit button_name, :onclick => "confirmation_needed = false;" %>
     </p>
+    <input id="timeout-msg" type="hidden" name="timeout_message" value="">
 <% end %>
 
