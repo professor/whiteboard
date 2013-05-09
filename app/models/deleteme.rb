@@ -1,11 +1,14 @@
 class User < ActiveRecord::Base
+
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable, :rememberable, :trackable, :timeoutable
   #, :database_authenticatable, :registerable,
 
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid
+  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid, :auth_token
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
@@ -45,8 +48,11 @@ class User < ActiveRecord::Base
   before_save :person_before_save,
               :update_is_profile_valid
 
+  before_create { generate_token(:auth_token) }
+
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
+
 
   has_attached_file :photo, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
                     :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
@@ -108,7 +114,7 @@ class User < ActiveRecord::Base
 
 
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
-    data = access_token['user_info']
+    data = access_token['info']
     email = switch_west_to_sv(data["email"]).downcase
     User.find_by_email(email)
   end
@@ -263,52 +269,6 @@ class User < ActiveRecord::Base
   end
 
   #
-  # Creates an Active Directory account for the user
-  # If this fails, it returns an error message as a string, else it returns true
-  #
-  def create_active_directory_account
-    if !is_directory_enabled?
-      require 'activedirectory/active_directory'
-      # reject blank emails
-      return "Empty email address" if self.email.blank?
-
-      # log what is currently happening
-      logger.debug("Attempting to create active directory account for " + self.email)
-
-      # extract domain from email
-      domain = self.email.split('@')[1]
-
-      # Confirm domain name accuracy
-      if domain != GOOGLE_DOMAIN
-        logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
-        return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
-      end
-
-      # Try to transact against active directory, rescue any exceptions
-      begin
-        # Establishes Standard/SSL connection to Active Directory server, returns an ldap connection
-        connection = Ldap.configure
-
-        # Add this user to active directory
-        connection.add(:dn=>get_dn,:attributes=>get_attributes)
-        logger.debug(connection.get_operation_result)
-
-        # Activate user account #still not activating, I need to find out why so
-        connection.replace_attribute get_dn, :userAccountControl, "512"
-        logger.debug(connection.get_operation_result)
-
-      rescue Net::LDAP::LdapError=>e
-        logger.debug(e)
-        return e
-      end
-      self.directory_enabled_at = Time.now()
-      self.save
-      return true
-    end
-
-  end
-
-  #
   # Creates a twiki account for the user
   #
   # You may need to modify mechanize as seen here
@@ -380,24 +340,51 @@ class User < ActiveRecord::Base
     return true
   end
 
+  #
+  # Creates an Active Directory account for the user
+  # If this fails, it returns an error message as a string, else it returns true
+  #
+  def create_active_directory_account
+    if !is_directory_enabled?
+      require 'activedirectory/activedirectory'
+      # reject blank emails
+      return "Empty email address" if self.email.blank?
 
-#   def create_adobe_connect
-#     require 'mechanize'
-#     agent = Mechanize.new
-#     agent.get(ADOBE_CONNECT_NEW_USER_URL) do |login_page|
-#       login_page.login = ADOBE_CONNECT_USERNAME
-#       login_page.password = ADOBE_CONNECT_PASSWORD
-#       reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
-#           reset_page.LoginName = self.twiki_name
-#       end.submit
-#
-#       return false if reset_result_page.parser.css('.patternTopic h3').text == " Password reset failed "
-#       return true if reset_result_page.link_with(:text => 'change password')
-#
-#       return true
-#     end
-#   end
+      # log what is currently happening
+      logger.debug("Attempting to create active directory account for " + self.email)
 
+      # extract domain from email
+      domain = self.email.split('@')[1]
+
+      # Confirm domain name accuracy
+      if domain != GOOGLE_DOMAIN
+        logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+        return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
+      end
+
+      # Try to transact against active directory, rescue any exceptions
+      begin
+        # Establishes Standard/SSL connection to Active Directory server, returns an ldap connection
+        connection = Ldap.configure
+
+        # Add this user to active directory
+        connection.add(:dn=>get_dn,:attributes=>get_attributes)
+        logger.debug(connection.get_operation_result)
+
+        # Activate user account #still not activating, I need to find out why so
+        connection.replace_attribute get_dn, :userAccountControl, "512"
+        logger.debug(connection.get_operation_result)
+
+      rescue Net::LDAP::LdapError=>e
+        logger.debug(e)
+        return e
+      end
+      self.directory_enabled_at = Time.now()
+      self.save
+      return true
+    end
+
+  end
 
 # attribute :github
 # If the user has not set this attribute, then ask the user to do so
@@ -425,31 +412,7 @@ class User < ActiveRecord::Base
     #false
   end
 
-  #protected
-  def person_before_save
-    # We populate some reasonable defaults, but this can be overridden in the database
-    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
-    self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
 
-    logger.debug("self.photo.blank? #{self.photo.blank?}")
-    logger.debug("photo.url #{photo.url}")
-    # update the image_uri if a photo was uploaded
-    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
-
-    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
-  end
-
-  def update_is_profile_valid
-    if ((self.biography.blank? && self.facebook.blank? && self.twitter.blank? && self.google_plus.blank? && self.linked_in.blank?) or
-        (self.telephone1.blank? && self.telephone2.blank? && self.telephone3.blank? && self.telephone4.blank?))
-      self.is_profile_valid = false
-    else
-      self.is_profile_valid= true
-    end
-    return true
-  end
-
-  # The following are helper methods for creating active directory user account
   # This method builds a dn for this user
   def get_dn
     dn = "cn=#{self.human_name},"
@@ -490,4 +453,52 @@ class User < ActiveRecord::Base
       return true
     end
   end
+
+  # Pending tests
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+
+  # Generate a password reset token
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
+
+  # Generate initial password
+  def generate_initial_password
+    return 'just4now' + Time.now.to_f.to_s[-4,4] # just4now0428
+  end
+
+
+  protected
+  def person_before_save
+    # We populate some reasonable defaults, but this can be overridden in the database
+    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
+    self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+
+    logger.debug("self.photo.blank? #{self.photo.blank?}")
+    logger.debug("photo.url #{photo.url}")
+    # update the image_uri if a photo was uploaded
+    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
+  end
+
+  def update_is_profile_valid
+    if ((self.biography.blank? && self.facebook.blank? && self.twitter.blank? && self.google_plus.blank? && self.linked_in.blank?) or
+        (self.telephone1.blank? && self.telephone2.blank? && self.telephone3.blank? && self.telephone4.blank?)) && self.personal_email.blank?
+      self.is_profile_valid = false
+    else
+      self.is_profile_valid= true
+    end
+    return true
+  end
+
+
+
 end
