@@ -1,0 +1,14 @@
+development:
+  host: anyhost
+  username: anyone
+  password: anysecret
+
+test:
+  host: anyhost
+  username: anyone
+  password: anysecret
+
+production:
+  host: anyhost
+  username: anyone
+  password: anysecret

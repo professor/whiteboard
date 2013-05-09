@@ -1,0 +1,15 @@
+development:
+  host: "10.0.0.130"
+  username: "edward.akoto@cmusv.sv.cmu.local"
+  password: "Just4now"
+
+test:
+  host: anyhost
+  port: anyport
+  username: anyone
+  password: anysecret
+
+production:
+  host: anyhost
+  username: anyone
+  password: anysecret
