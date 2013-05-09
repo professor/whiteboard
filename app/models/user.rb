@@ -379,6 +379,24 @@ class User < ActiveRecord::Base
     #false
   end
 
+  def self.expired_users_in_the_last_month
+    User.where(is_active: true).where("expires_at >= ? AND expires_at < ?", Date.today - 1.month, Date.today)
+  end
+
+  def self.notify_it_about_expired_accounts
+    email_list = ""
+    self.expired_users_in_the_last_month.each do |user|
+      email_list += "-" + Rails.application.routes.url_helpers.user_url(user, :host => "whiteboard.sv.cmu.edu") + "\n"
+    end
+    if email_list.length > 0
+      options = { :to => 'help@sv.cmu.edu',
+                  :subject => "Expired accounts between #{(Date.today - 1.month).to_s} and #{(Date.today - 1.day).to_s}",
+                  :message => "\n#{email_list} \n\n Please executed the processes defined for expired accounts."
+      }
+      GenericMailer.email(options).deliver
+    end
+  end
+
   protected
   def person_before_save
     # We populate some reasonable defaults, but this can be overridden in the database

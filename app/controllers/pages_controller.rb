@@ -137,21 +137,40 @@ class PagesController < ApplicationController
       redirect_to(page_url) and return
     end
 
-    #course = Course.with_course_name(params[:course_name]).first
-    #@page.course = course
-
-    @page.updated_by_user_id = current_user.id if current_user
-    @page.current_edit_by = nil
-    @page.current_edit_started_at = nil
-
     respond_to do |format|
-      if @page.update_attributes(params[:page])
-        flash[:notice] = 'Page was successfully updated.'
-        format.html { redirect_to(@page) }
-        format.xml { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @page.errors, :status => :unprocessable_entity }
+      format.html do
+        update_page_edit_info(@page)
+        if @page.update_attributes(params[:page])
+          unless params[:timeout_flag].blank?
+            flash[:notice] = "We thought you left, so we saved your page for you."
+          else
+            flash[:notice] = 'Page was successfully updated.'
+          end
+
+          redirect_to(@page)
+        else
+          render :action => "edit"
+        end
+      end
+
+      format.xml do
+        update_page_edit_info(@page)
+        if @page.update_attributes(params[:page])
+          head :ok
+        else
+          render :xml => @page.errors, :status => :unprocessable_entity
+        end
+      end
+
+      format.json do
+        # Do not bump up the version number for auto save
+        @page.skip_version do
+          if @page.update_attributes(params[:page])
+            render :json => {:code => "success", :message => "", :new_post_path => page_path(@page) }
+          else
+            render :json => {:code => "failed", :message => "Automatic save failed" }
+          end
+        end
       end
     end
   end
@@ -167,4 +186,11 @@ class PagesController < ApplicationController
   #      format.xml  { head :ok }
   #    end
   #  end
+
+  private
+  def update_page_edit_info(page)
+    page.updated_by_user_id = current_user.id if current_user
+    page.current_edit_by = nil
+    page.current_edit_started_at = nil
+  end
 end

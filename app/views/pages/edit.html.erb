@@ -3,4 +3,4 @@
 <%= render :partial => "left_nav", :locals => {:current_semester_course => @page.current_semester_course, :page => @page} %>
 
 <h1>Edit page</h1>
-<%= render :partial => "editable_form", :locals => {:button_name => "Update"} %> | <%= link_to 'Back', @page %> |
+<%= render :partial => "editable_form", :locals => {:button_name => "Update", :enable_auto_save => true, :enable_timeout => true} %> | <%= link_to 'Back', @page %> |
