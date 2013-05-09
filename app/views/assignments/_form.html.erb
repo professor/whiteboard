@@ -60,9 +60,6 @@
 <% end %>
 <%= form_for([@course,@assignment]) do |f| %>
 
-  <div id="error_explanation">
-    <h2 class="custom_error"> </h2>
-  </div>
   <% if @assignment.errors.any? %>
   <div id="error_explanation">
       <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
