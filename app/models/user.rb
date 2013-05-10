@@ -267,7 +267,7 @@ class User < ActiveRecord::Base
   # If this fails, it returns an error message as a string, else it returns true
   #
   def create_active_directory_account
-    if !is_directory_enabled?
+    if !is_directory_already_created?
       require 'activedirectory/active_directory'
       # reject blank emails
       return "Empty email address" if self.email.blank?
@@ -483,7 +483,7 @@ class User < ActiveRecord::Base
   end
 
   # Check whether user is active directory enabled
-  def is_directory_enabled?
+  def is_directory_already_created?
     if self.directory_enabled_at.nil?
       return false
     else
