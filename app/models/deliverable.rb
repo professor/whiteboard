@@ -287,6 +287,7 @@ class Deliverable < ActiveRecord::Base
   # To get the status of the deliverable for whether it is graded or not.
   def get_grade_status
     if self.is_team_deliverable?
+      return :ungraded if self.team.nil?
       self.team.members.each do |member|
         status = self.get_status_for_every_individual (member.id)
         if status != :graded

@@ -1,0 +1,25 @@
+ <% grades.each do |student, grade_entries| %>
+  <tr id="s_<%=student.id%>" class="hover">
+    <td><%=student.first_name%></td>
+    <td><%=student.last_name%></td>
+    <td><%=@team_assignment[student.id].try(:name) || "" %></td>
+    <% @assignments.each do |assignment|%>
+    <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
+      <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
+             value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
+             type="text" size="4" width="100%"
+             tabindex="<%=(assignment.try(:task_number) || 0)*10+assignment.assignment_order %>"
+             class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
+    </td>
+    <% end %>
+    <td class='earned' ></td>
+    <td class='performance'></td>
+    <td class='final grade'>
+      <input id="<%= @course.id %>_final_<%=student.id%>"
+             value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
+             type="text" size="4" width="100%"
+             class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
+    </td>
+
+  </tr>
+<%end%>

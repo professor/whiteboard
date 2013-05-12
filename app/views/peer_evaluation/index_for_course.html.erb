@@ -6,7 +6,18 @@
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Only faculty can see this information.</span>
 
+  <p>The Peer Evaluation Tool allows teams to provide constructive feedback to each other.
+    <%= link_to "Here is an example.", :action => "edit_evaluation", :id => @course.teams[0], :controller => "peer_evaluation" %>
+    The faculty can input an optional personal learning objective for the course. At the end of the form, students distribute points reflective of work done on the project. Each student answers these questions:
+  <ul><li>What was this team member's most significant positive contribution to the team?</li>
+  <li>In what ways could this team member improve his/her contribution to team meetings?</li>
+    <li>In what ways could this team member improve his/her contribution to the team's deliverables?</li>
+<li>Please provide feedback on the progress of each individual's improvement objective:</li>
+  </ul>
 
+  <%= link_to "Configure Course", configure_course_path(@course)%> to set the due dates for the peer evaluation.</p>
+  <br/>
+  <H2>Status</H2>
   <table class="tablesorter">
     <tr>
       <th>Team's Peer Evaluation</th>

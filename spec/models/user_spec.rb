@@ -336,6 +336,43 @@ describe User do
     end
   end
 
+  describe "notifies when there are expired accounts" do
+    before(:each) do
+      ActionMailer::Base.delivery_method = :test
+      ActionMailer::Base.perform_deliveries = true
+      ActionMailer::Base.deliveries = []
+    end
+    it "should send email to IT about expired accounts within the last month" do
+      @student_sam = FactoryGirl.create(:student_sam, is_active: true, expires_at: Date.today - 1.day)
+      @student_sally = FactoryGirl.create(:student_sally, is_active: true, expires_at: Date.today - 1.month)
+      User.notify_it_about_expired_accounts()
+      ActionMailer::Base.deliveries.size.should == 1
+      ActionMailer::Base.deliveries.first.to_s.should include Rails.application.routes.url_helpers.user_url(@student_sam, :host => "whiteboard.sv.cmu.edu").to_s
+      ActionMailer::Base.deliveries.first.to_s.should include Rails.application.routes.url_helpers.user_url(@student_sally, :host => "whiteboard.sv.cmu.edu").to_s
+    end
+
+    it "should NOT send email for accounts that do not expire" do
+      @student_sam = FactoryGirl.create(:student_sam, is_active: true, expires_at: nil)
+      User.notify_it_about_expired_accounts()
+      ActionMailer::Base.deliveries.size.should == 0
+    end
+
+    it "should NOT send email for accounts expired more than month ago but should DO send email for accounts expired within one month ago" do
+      @student_sam = FactoryGirl.create(:student_sam, is_active: true, expires_at: Date.today - 1.month - 1.day)
+      @student_sally = FactoryGirl.create(:student_sally, is_active: true, expires_at: Date.today - 1.month + 1.day)
+      User.notify_it_about_expired_accounts()
+      ActionMailer::Base.deliveries.size.should == 1
+      ActionMailer::Base.deliveries.first.to_s.should_not include Rails.application.routes.url_helpers.user_url(@student_sam, :host => "whiteboard.sv.cmu.edu").to_s
+      ActionMailer::Base.deliveries.first.to_s.should include Rails.application.routes.url_helpers.user_url(@student_sally, :host => "whiteboard.sv.cmu.edu").to_s
+    end
+
+    it "should NOT send for inactive accounts" do
+      @student_sam = FactoryGirl.create(:student_sam, is_active: false, expires_at: Date.today - 1.day)
+      User.notify_it_about_expired_accounts()
+      ActionMailer::Base.deliveries.size.should == 0
+    end
+
+  end
 
   # More tests
   # Effort log should only be set for person that is_student - tested in effort_log

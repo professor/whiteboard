@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
 
 
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
-    data = access_token['user_info']
+    data = access_token['info']
     email = switch_west_to_sv(data["email"]).downcase
     User.find_by_email(email)
   end
@@ -315,24 +315,24 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_yammer_account
-    #See lib/yammer.rb for code that would create the user account.
-    #We can't use the yammer API until we upgrade the service
-
-    #The most simple way here is to invite the user to register
-    #Note that yammer requires https://www.yammer.com/
-    require 'mechanize'
-    agent = Mechanize.new
-    agent.get('https://www.yammer.com/') do |page|
-      result_page = page.form_with(:action => '/users') do |invite_page|
-        invite_page['user[email]'] = self.email
-      end.submit
-    end
-
-    self.yammer_created = Time.now()
-    self.save
-    return true
-  end
+  #def create_yammer_account
+  #  #See lib/yammer.rb for code that would create the user account.
+  #  #We can't use the yammer API until we upgrade the service
+  #
+  #  #The most simple way here is to invite the user to register
+  #  #Note that yammer requires https://www.yammer.com/
+  #  require 'mechanize'
+  #  agent = Mechanize.new
+  #  agent.get('https://www.yammer.com/') do |page|
+  #    result_page = page.form_with(:action => '/users') do |invite_page|
+  #      invite_page['user[email]'] = self.email
+  #    end.submit
+  #  end
+  #
+  #  self.yammer_created = Time.now()
+  #  self.save
+  #  return true
+  #end
 
 
 #   def create_adobe_connect
@@ -377,6 +377,24 @@ class User < ActiveRecord::Base
     ((Time.now - self.people_search_first_accessed_at)>4.weeks)? true: false
     #true
     #false
+  end
+
+  def self.expired_users_in_the_last_month
+    User.where(is_active: true).where("expires_at >= ? AND expires_at < ?", Date.today - 1.month, Date.today)
+  end
+
+  def self.notify_it_about_expired_accounts
+    email_list = ""
+    self.expired_users_in_the_last_month.each do |user|
+      email_list += "-" + Rails.application.routes.url_helpers.user_url(user, :host => "whiteboard.sv.cmu.edu") + "\n"
+    end
+    if email_list.length > 0
+      options = { :to => 'help@sv.cmu.edu',
+                  :subject => "Expired accounts between #{(Date.today - 1.month).to_s} and #{(Date.today - 1.day).to_s}",
+                  :message => "\n#{email_list} \n\n Please executed the processes defined for expired accounts."
+      }
+      GenericMailer.email(options).deliver
+    end
   end
 
   protected

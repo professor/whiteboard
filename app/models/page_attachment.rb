@@ -18,10 +18,6 @@
 #
 # The system records who uploads and replaces the file and when this happens, and versions this information.
 #
-# AWS S3 allows
-#
-#
-#
 
 class PageAttachment < ActiveRecord::Base
   belongs_to :page
