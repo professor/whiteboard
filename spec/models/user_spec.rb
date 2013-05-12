@@ -1,5 +1,7 @@
 require 'spec_helper'
 require "cancan/matchers"
+require "activedirectory/active_directory"
+
 
 describe User do
 
@@ -267,6 +269,56 @@ describe User do
         status.should be_is_a(String)
       end
     end
+
+  context "can create_active_directory_account" do
+    context "get dn" do
+      it "returns valid dn for a staff user" do
+        @faculty_frank.get_dn.should eq("cn=Faculty Frank,ou=Staff,ou=Sync,dc=cmusv,dc=sv,dc=cmu,dc=local")
+      end
+
+      it "returns valid dn for a student user" do
+        @student_sam = FactoryGirl.create(:student_sam, masters_program: 'SE')
+        @student_sam.get_dn.should eq("cn=Student Sam,ou=SE,ou=Students,ou=Sync,dc=cmusv,dc=sv,dc=cmu,dc=local")
+      end
+    end
+
+    context "get attributes" do
+      it "returns necessary attributes for user account" do
+        @faculty_frank.get_attributes.should include(:cn=>"Faculty Frank",
+                                                     :mail=>"faculty.frank@sv.cmu.edu",
+                                                     :objectclass=>["top", "person", "organizationalPerson", "user"],
+                                                     :userPrincipalName=>"faculty.frank")
+      end
+    end
+
+    it "errors when user has non-google domain email" do
+        @student_sam = FactoryGirl.create(:student_sam, email: "student.sam@anyother.sv.cmu.edu")
+        @student_sam.create_active_directory_account.should be_is_a(String)
+    end
+
+    context "contacts active directory" do
+
+      before do
+        @ldap_server = Ladle::Server.new(:quiet => true, :port=>3897).start
+        @student_sam = FactoryGirl.create(:student_sam, email: "student.sam@sandbox.sv.cmu.edu")
+      end
+
+      after do
+        @ldap_server.stop if @ldap_server
+      end
+
+      it "carries an operation on active directory" do
+        connection = LDAP.configure
+        connection.add(:dn=>@student_sam.get_dn,:attributes=>@student_sam.get_attributes)
+        connection.get_operation_result.message.should be_is_a(String)
+      end
+
+      it "and saves timestamp of account creation on whiteboard" do
+        @student_sam.create_active_directory_account
+        @student_sam.directory_enabled_at.should be_is_a(Time)
+      end
+    end
+  end
 
 
   context "registered_for_these_courses_during_current_semester" do

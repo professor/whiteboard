@@ -1,15 +1,21 @@
+# Just specify host, username and password
 development:
   host: "10.0.0.130"
+  port: 636 # For SSL connection
   username: "edward.akoto@cmusv.sv.cmu.local"
   password: "Just4now"
+  encrypted: True
 
+# Needs no modification
 test:
-  host: anyhost
-  port: anyport
-  username: anyone
-  password: anysecret
+  host: "127.0.0.1"
+  port: 3897 # For Ladle Test LDAP
+  encrypted: False
 
+# Just specify host, username and password
 production:
   host: anyhost
+  port: 636 # For SSL connection
   username: anyone
   password: anysecret
+  encrypted: True

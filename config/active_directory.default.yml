@@ -1,14 +1,20 @@
 development:
   host: anyhost
+  port: 636 # For SSL connection
   username: anyone
   password: anysecret
+  encrypted: True
 
 test:
   host: anyhost
+  port: 3897 # For Ladle Test LDAP
   username: anyone
   password: anysecret
+  encrypted: False
 
 production:
   host: anyhost
+  port: 636 # For SSL connection
   username: anyone
   password: anysecret
+  encrypted: True

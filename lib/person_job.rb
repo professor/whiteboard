@@ -1,4 +1,6 @@
-class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_account)
+
+class PersonJob < Struct.new(:person_id, :create_google_email, :create_directory_account, :create_twiki_account, :create_yammer_account)
+
   def perform
 #    Delayed::Worker.logger.debug("person_id #{person_id}, create_google_email #{create_google_email}, create_twiki_account #{create_google_email}")
 
@@ -15,6 +17,13 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
          sleep 5
          PersonMailer.welcome_email(person, password).deliver
        end
+    end
+    if create_directory_account && person.directory_enabled_at.blank?
+      status = person.create_active_directory_account
+      if status.is_a?(String)
+        error_message += "Active Directory account not created for #{person.human_name}. " + status + ""
+        logger.log(error_message)
+      end
     end
     if create_twiki_account && person.twiki_created.blank?
       status = person.create_twiki_account

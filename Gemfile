@@ -16,6 +16,7 @@ gem "webrobots", "~> 0.1.1"
 gem 'omniauth', '1.1.4'
 gem 'omniauth-google-apps', :git => 'git://github.com/sishen/omniauth-google-apps.git'
 gem 'devise'
+gem 'ladle', '~> 0.2.0'
 
 
 gem "ckeditor", "3.6.3"

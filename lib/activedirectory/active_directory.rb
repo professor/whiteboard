@@ -1,16 +1,18 @@
 require 'net/ldap'
 
 # This class establishes an encrypted connection to active directory, and authenticates users against active directory.
-class Ldap
+class LDAP
 
   # Configure parameters for an encrypted connection to LDAP server
   def self.configure
     # Get configurations from initialized ActiveDirectory class
     conn = Net::LDAP.new
-    conn.host = ActiveDirectory.host #LDAP host
-    conn.port = 636 # 636 for SSL, 389 for non-SSL
-    conn.encryption(:method=>:simple_tls)
-    conn.auth ActiveDirectory.username, ActiveDirectory.password # Create a special account for this
+    conn.host = LDAPConnection.host #LDAP host
+    conn.port = LDAPConnection.port # 636 for SSL, 389 for non-SSL
+    conn.encryption(:method=>:simple_tls) if LDAPConnection.is_encrypted?
+    if !LDAPConnection.username.nil? && !LDAPConnection.password.nil?
+      conn.auth LDAPConnection.username, LDAPConnection.password # Create a special account for these
+    end
     return conn
   end
 
