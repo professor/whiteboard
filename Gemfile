@@ -40,6 +40,7 @@ gem 'rmagick'
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
+gem 'net-ldap'
 
 gem 'cancan'
 

@@ -308,9 +308,7 @@ describe User do
       end
 
       it "carries an operation on active directory" do
-        connection = LDAP.configure
-        connection.add(:dn=>@student_sam.get_dn,:attributes=>@student_sam.get_attributes)
-        connection.get_operation_result.message.should be_is_a(String)
+        @student_sam.create_active_directory_account.should be_is_a(OpenStruct)
       end
 
       it "and saves timestamp of account creation on whiteboard" do

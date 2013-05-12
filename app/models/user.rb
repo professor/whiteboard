@@ -291,7 +291,8 @@ class User < ActiveRecord::Base
 
         # Add this user to active directory
         connection.add(:dn=>get_dn,:attributes=>get_attributes)
-        logger.debug(connection.get_operation_result)
+        result = connection.get_operation_result
+        logger.debug(result)
 
         # Activate user account
         connection.replace_attribute get_dn, :userAccountControl, "512"
@@ -303,7 +304,7 @@ class User < ActiveRecord::Base
       end
       self.directory_enabled_at = Time.now()
       self.save
-      return true
+      return result
     end
 
   end
