@@ -2,21 +2,21 @@
 
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
-   font-family: verdana, arial, helvetica, sans-serif;
-   font-size:   13px;
-   line-height: 18px;
-  }
+ font-family: verdana, arial, helvetica, sans-serif;
+ font-size:   13px;
+ line-height: 18px;
+}
 
 div.sv_main_contents p {
     margin-top: 13px;
     margin-bottom: 13px;
 }
 
- body div.content, div.content p,  div.content ol, div.content ul,  div.content td {
-   font-family: verdana, arial, helvetica, sans-serif;
-   font-size:   13px;
-   line-height: 18px;
-  }
+body div.content, div.content p,  div.content ol, div.content ul,  div.content td {
+ font-family: verdana, arial, helvetica, sans-serif;
+ font-size:   13px;
+ line-height: 18px;
+}
 
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 div#topnav ul {
@@ -39,12 +39,12 @@ div#topnav ul {
 
 
 td.log_sum {
-   padding-left: 10px;
-   text-align: right;
+ padding-left: 10px;
+ text-align: right;
 }
 
 td.log_remove {
-   padding-left: 10px;
+ padding-left: 10px;
 }
 
 td.log_weeknumber {
@@ -72,9 +72,9 @@ td.today {
 
 /***************************
   *Advanced search filter
-**************************/
+  **************************/
 
-#filterBoxUserSearch {
+  #filterBoxUserSearch {
     width:100%;
     overflow: auto;
     margin-bottom: 5px;
@@ -109,9 +109,9 @@ td.today {
     float:left;
     width:50%;
 }
-    #filter_program{width:60%}
-    #filter_year{width:35%}
-    #filter_course{width:97%}
+#filter_program{width:60%}
+#filter_year{width:35%}
+#filter_course{width:97%}
 
 
 /* ----- making whole row clickable --------*/
@@ -125,10 +125,10 @@ td.today {
 
 /**************************************************
   * tables - https://github.com/Mottie/tablesorter
-***************************************************/
+  ***************************************************/
 
-.tablesorter-default .header,
-.tablesorter-default .tablesorter-header {
+  .tablesorter-default .header,
+  .tablesorter-default .tablesorter-header {
     /*background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);*/
     background-position: center right;
     background-repeat: no-repeat;
@@ -150,7 +150,7 @@ td.today {
 }
 .sorter-false.tablesorter-header {background-image: none;}
 
-table.tablesorter {
+/*table.tablesorter {
 	font-family:arial;
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
@@ -158,15 +158,15 @@ table.tablesorter {
 	width: 100%;
 	text-align: left;
 	table-layout: fixed;
-}
-table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background-color: #e6EEEE;
-	border: 1px solid #FFF;
-	font-size: 8pt;
-	padding: 4px;
-	text-transform: none;
-}
-table.tablesorter thead tr .header {
+    }*/
+    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+       background-color: #e6EEEE;
+       border: 1px solid #FFF;
+       font-size: 8pt;
+       padding: 4px;
+       text-transform: none;
+   }
+   table.tablesorter thead tr .header {
     background-image: url(../images/tablesorter/bg.gif);
     background-repeat: no-repeat;
     background-position: center right;
@@ -210,22 +210,22 @@ table.tablesorter tbody tr.hover td { background-color: #FFFFCC; }
 }
 
 #people_table th:first-child, #people_table td {
-/* this is required for making sure cells with too much data don't throw the layout for a toss */
+    /* this is required for making sure cells with too much data don't throw the layout for a toss */
     white-space:nowrap;
     overflow: auto;
 }
 #people_table th:first-child {
-/* this is the the header for the picture*/
+    /* this is the the header for the picture*/
     padding: 0;
     width: 60px;
 }
 #people_table th:nth-child(2),#people_table th:nth-child(3){
-/* first name and last name columns */
-   width: 100px;
+    /* first name and last name columns */
+    width: 100px;
 }
 #people_table th:nth-child(4) {
-/* program(track)/staff column */
-   width: 290px;
+    /* program(track)/staff column */
+    width: 290px;
 }
 #people_table td.photobook-img {
     padding: 0px;
@@ -297,83 +297,83 @@ a.photobook_item img{
     background-color:#DDDDCC;
     background-color:#acc;
 
-*/
-.comment {
-    padding: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
+    */
+    .comment {
+        padding: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
 
-.comment_type_none {
-    background-color: #DDDDCC;
-}
+    .comment_type_none {
+        background-color: #DDDDCC;
+    }
 
-.help_text {
-    margin-left: 10px;
-    font-size: 10px;
-}
+    .help_text {
+        margin-left: 10px;
+        font-size: 10px;
+    }
 
-.checkboxed_form {
-    margin-left: 24px;
-}
+    .checkboxed_form {
+        margin-left: 24px;
+    }
 
-.user_photo {
-    float: right;
-}
-
-
-div.student {
-    padding: 5px;
-    margin: 5px;
-/*    background-color: rgb(247, 225, 171); */
-    border-radius: 10px;
-}
-
-div.staff {
-    padding: 5px;
-    margin: 5px;
-    background-color: rgb(224, 235, 235);
-    border-radius: 10px;
-}
-
-div.admin {
-    padding: 5px;
-    margin: 5px;
-    background-color: rgb(221, 221, 204);
-    border-radius: 10px;
-}
-
-div.system {
-    padding: 5px;
-    margin: 5px;
-    background-color: rgb(219, 232, 154);
-    border-radius: 10px;
-}
-
-tr.staff {
-    background-color: rgb(224, 235, 235);
-}
+    .user_photo {
+        float: right;
+    }
 
 
+    div.student {
+        padding: 5px;
+        margin: 5px;
+        /*    background-color: rgb(247, 225, 171); */
+        border-radius: 10px;
+    }
 
-.student .instructions {
-    vertical-align: top;
-}
-.staff .instructions {
-    vertical-align: top;
-}
-.admin .instructions {
-    vertical-align: top;
-}
+    div.staff {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(224, 235, 235);
+        border-radius: 10px;
+    }
+
+    div.admin {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(221, 221, 204);
+        border-radius: 10px;
+    }
+
+    div.system {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(219, 232, 154);
+        border-radius: 10px;
+    }
+
+    tr.staff {
+        background-color: rgb(224, 235, 235);
+    }
 
 
-.formItem {
+
+    .student .instructions {
+        vertical-align: top;
+    }
+    .staff .instructions {
+        vertical-align: top;
+    }
+    .admin .instructions {
+        vertical-align: top;
+    }
+
+
+    .formItem {
 /*
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
-*/
+    */
     padding: 6px 12px 8px;
-/*    display: block;  */
+    /*    display: block;  */
 }
 
 .formItem .help_text {
@@ -382,14 +382,14 @@ tr.staff {
 }
 
 .formItem label {
-     display: inline-block;
-     width: 180px;
-     font-size: 13px;
+   display: inline-block;
+   width: 180px;
+   font-size: 13px;
 }
 .formItem .label {
-     display: inline-block;
-     width: 180px;
-     background-repeat: no-repeat;
+   display: inline-block;
+   width: 180px;
+   background-repeat: no-repeat;
 }
 .formItem input {
     border: 1px solid #999999;
@@ -397,12 +397,10 @@ tr.staff {
 /*
     display: block;
     margin: 0 0 2px 190px;
-*/
-    }
-
-.formItem .indented {
-    margin_left: 10px;
+    */
 }
+
+.formItem .indented { margin-left: 10px; }
 
 .layout_table .course_tools td {
     width: 130px;
@@ -417,15 +415,15 @@ tr.staff {
 }
 
 #image_box {
-position: absolute;
-top: 0; right: 0;
-z-index: 10;
-background:#ffc;
-padding:5px;
-border:1px solid #CCCCCC;
-text-align:center;
-font-weight:bold;
-width:200px;
+    position: absolute;
+    top: 0; right: 0;
+    z-index: 10;
+    background:#ffc;
+    padding:5px;
+    border:1px solid #CCCCCC;
+    text-align:center;
+    font-weight:bold;
+    width:200px;
 }
 
 div.right_link {
@@ -434,9 +432,9 @@ div.right_link {
 }
 
 .cmu_table {
-border-collapse:collapse;
-border-style:solid;
-border-width:1px;
+    border-collapse:collapse;
+    border-style:solid;
+    border-width:1px;
     border-color: #EAE5E5;
 }
 
@@ -450,8 +448,8 @@ border-width:1px;
 }
 
 .cmu_table_odd, .cmu_table tr:nth-child(odd) {
-/*    background-color:#EBEBEB;*/
-/*    background-color:#F2F3F6;*/
+    /*    background-color:#EBEBEB;*/
+    /*    background-color:#F2F3F6;*/
     background-color:#FbFbFb;
 }
 
@@ -514,8 +512,8 @@ div.modified {
 
 /************************
  * Search Box styling
-*************************/
-#filterBoxUserSearch {
+ *************************/
+ #filterBoxUserSearch {
     width:100%;
     overflow: auto;
     margin-bottom: 5px;
@@ -530,8 +528,8 @@ div.modified {
 
 #filterBoxOne_filter {
 /* After removing morning glory and upgrading to rails 3.2, then go back to abolute paths
-   background:url(/images/people_filtering_sprite.png)  0px 0; */
-    background:url(../images/people_filtering_sprite.png)  0px 0;
+background:url(/images/people_filtering_sprite.png)  0px 0; */
+background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 #filterBoxOne_photobook{
     background:url(../images/people_photobook_sprite.png) 0px 0;
@@ -552,9 +550,9 @@ div.modified {
 }
 /************************
  * User Profile Page
-*************************/
+ *************************/
 
-.user_profile_content{
+ .user_profile_content{
     overflow: hidden;
     margin-top: 10px;
 }
@@ -572,34 +570,34 @@ div.modified {
     float:left;
     margin-left: 5px;
 }
-     .user_profile_content tbody td.user_profile_social_edit{
-        border: none;
-        padding: 2px 0;
-        vertical-align: middle;
-    }
+.user_profile_content tbody td.user_profile_social_edit{
+    border: none;
+    padding: 2px 0;
+    vertical-align: middle;
+}
 
-    .user_profile_photo{
-        width:155px;
-        float:left;
-        margin-bottom: 5px;
-    }
-        .user_profile_photo_upload{
-            background:white;
-            padding:10px;
-            border:1px solid gray;
-            width:90%;
-            text-align: center;
-        }
-            .user_profile_photo_imgHover {
-                display: inline;
-                position: relative;
-            }
-            .user_profile_photo_imgHover .user_profile_photo_hover {
-                display: none;
-                position: absolute;
-                top: 90px;
-                z-index: 2;
-            }
+.user_profile_photo{
+    width:155px;
+    float:left;
+    margin-bottom: 5px;
+}
+.user_profile_photo_upload{
+    background:white;
+    padding:10px;
+    border:1px solid gray;
+    width:90%;
+    text-align: center;
+}
+.user_profile_photo_imgHover {
+    display: inline;
+    position: relative;
+}
+.user_profile_photo_imgHover .user_profile_photo_hover {
+    display: none;
+    position: absolute;
+    top: 90px;
+    z-index: 2;
+}
 
 
 .user_profile_title, .user_profile_contact_details_content{
@@ -608,15 +606,15 @@ div.modified {
     margin: 0 0 5px 15px;
     padding: 0px 0 0 20px;
 }
-    #user_profile_name{
-        float:left;
-        margin:0;
-        font-weight: bold;
-    }
-    .edit_user_profile #user_profile_name{
-        width: 458px;
-        margin-top: 10px;
-    }
+#user_profile_name{
+    float:left;
+    margin:0;
+    font-weight: bold;
+}
+.edit_user_profile #user_profile_name{
+    width: 458px;
+    margin-top: 10px;
+}
 
 .edit_user_profile #user_pronunciation{ width: 99% }
 .edit_user_profile #user_first_name, .edit_user_profile #user_last_name {
@@ -629,47 +627,47 @@ div.modified {
 
 .edit_user_profile #user_last_name{float:right}
 
-    .user_profile_action{
-        float:right;
-    }
-    #user_profile_dtls{
-        float:left;
-        clear:left;
-    }
-        .user_profile_pron{
-            line-height: 18px;
-            font: normal 13px verdana, arial, helvetica, sans-serif;
-            color: #424545;
-        }
+.user_profile_action{
+    float:right;
+}
+#user_profile_dtls{
+    float:left;
+    clear:left;
+}
+.user_profile_pron{
+    line-height: 18px;
+    font: normal 13px verdana, arial, helvetica, sans-serif;
+    color: #424545;
+}
 .user_profile_contact_details_content{
     width: 68%;
     margin: 3px 0 15px 15px;
 }
-    .user_profile_contact_details_content .cmu_table{
-        width: 100%;
-    }
-    .user_profile_contact_details_content table:nth-child(2){
-        margin-top: 20px;
-    }
+.user_profile_contact_details_content .cmu_table{
+    width: 100%;
+}
+.user_profile_contact_details_content table:nth-child(2){
+    margin-top: 20px;
+}
 
 .user_profile_contact_details{
     float:left;
     margin: 15px 0 0 15px;
     padding: 0px 20px;
 }
-    .user_profile_about_header,
-    .user_profile_content .clearboth h2 {
-        text-align: right;
-        float: left;
-        width: 24%;
-        margin-top: 5px;
+.user_profile_about_header,
+.user_profile_content .clearboth h2 {
+    text-align: right;
+    float: left;
+    width: 24%;
+    margin-top: 5px;
 
-    }
-        .user_profile_about_me_text {
-            width: 450px;
-            float: right;
-            margin: 20px 0 0 0;
-        }
+}
+.user_profile_about_me_text {
+    width: 450px;
+    float: right;
+    margin: 20px 0 0 0;
+}
 
 .user_profile_org_edit{
     width: 65%;
@@ -677,49 +675,49 @@ div.modified {
     margin: 0;
     width: 474px;
 }
-    .user_profile_bio_edit_content, .user_profile_about_edit_content,
-    .user_profile_content_body,
-    .user_profile_content .clearboth table.cmu_table {
-            float: right;
-            margin:0 15px 10px 0;
-            padding:0;
-            width: 458px;
-    }
-    .user_profile_content .clearboth table.cmu_table {text-align: left;}
-    .user_profile_content .cmu_table .help_text{margin:0}
+.user_profile_bio_edit_content, .user_profile_about_edit_content,
+.user_profile_content_body,
+.user_profile_content .clearboth table.cmu_table {
+    float: right;
+    margin:0 15px 10px 0;
+    padding:0;
+    width: 458px;
+}
+.user_profile_content .clearboth table.cmu_table {text-align: left;}
+.user_profile_content .cmu_table .help_text{margin:0}
 
-    .user_profile_content .clearboth table.user_profile_content_admin_editable{margin-bottom:10px;}
+.user_profile_content .clearboth table.user_profile_content_admin_editable{margin-bottom:10px;}
 
-    .user_profile_bio_edit_content, .user_profile_about_edit_content{
-        width: 77%;
-        margin:0 -30px 0 0;
+.user_profile_bio_edit_content, .user_profile_about_edit_content{
+    width: 77%;
+    margin:0 -30px 0 0;
 
-    }
-        .user_profile_org table,{
-            width: 450px;
-        }
-        .user_profile_content_body table{
-            width:100%;
-        }
+}
+.user_profile_org table,{
+    width: 450px;
+}
+.user_profile_content_body table{
+    width:100%;
+}
 
-        .user_profile_content_body table td:first-child{
-            width:114px;
-        }
-        .edit_user_profile .user_profile_campus_proximity table td:nth-child(2) {text-align: left;}
-            .user_profile_content_body table td input[type="text"],
-            .user_profile_content .clearboth table.cmu_table td input[type="text"] {
-                width:99%;
-            }
+.user_profile_content_body table td:first-child{
+    width:114px;
+}
+.edit_user_profile .user_profile_campus_proximity table td:nth-child(2) {text-align: left;}
+.user_profile_content_body table td input[type="text"],
+.user_profile_content .clearboth table.cmu_table td input[type="text"] {
+    width:99%;
+}
 
 
-    .user_profile_org table tr td:first-child,
-    .user_profile_content_body table tr td:first-child,
-    .user_profile_contact_details_content table tr td:first-child,
-    .user_profile_content .clearboth table.cmu_table tr td:first-child {
-        width: 30%;
-        text-align: right;
-        vertical-align: middle;
-    }
+.user_profile_org table tr td:first-child,
+.user_profile_content_body table tr td:first-child,
+.user_profile_contact_details_content table tr td:first-child,
+.user_profile_content .clearboth table.cmu_table tr td:first-child {
+    width: 30%;
+    text-align: right;
+    vertical-align: middle;
+}
 
 .user_profile_debugging{
     background-color: white;
@@ -753,21 +751,110 @@ div.modified {
     display: none;
 }
 
+/* ------- Grade book */
 
-/* Grade book styling */
 .team_member_photo{width:156px}
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
 
+#grade_table { border-width: 0; }
+
+#grade_table th.assignment_grade { min-width:59px; padding-left:15px; }
+#grade_table th:nth-child(10){ min-width: 100px; }   /* Earned Grade */
+
+#grade_table td { background-color: #FFF; text-align:center; padding: 10px;}
+#grade_table td:nth-child(1),   /* First Name */
+#grade_table td:nth-child(2)   /* Last Name */
+{ text-align:left; max-width:78px; word-wrap:break-word;}
+#grade_table td:nth-child(3)    /* Team Name */
+{ text-align:left; }
+#grade_table td:nth-child(10){ text-align: left;}   /* Earned Grade */
+
+#grade_table td input { text-align:center; font-size: 13px; }
+#grade_table td.performance { background-color:white; text-align: center; }
+
+#grade_table .tablesorter-header, #grade_table td#notify-all {
+    background-color: #696969;
+    color: white;
+    font-weight: normal;
+}
+#grade_table .tablesorter-header{
+    padding: 10px 20px 10px 10px;
+    border-color: black;
+}
+#grade_table td#notify-all{
+    margin: 0;
+    max-height: 10px;
+    border-top-width: 0;
+}
+#grade_table td.grade.changedScore, #grade_table td.changedScore, #grade_table input.changedScore,
+#legend td.grade.changedScore, #legend td.changedScore, #legend input.changedScore{
+    border: 2px solid red;
+}
+#grade_table .draft,
+#legend .draft {
+  background-color: #E7E7E7;
+}
+#grade_table td.grade input{
+  width: 99%;
+  height: 100%;
+  /*text-align: right;*/
+  border-width: 0;
+  margin: 0px;
+  padding: 0px;
+  padding-right: 1px;
+}
+#grade_table td.grade{
+  border-width: 1px;
+  padding: 0;
+  border-color: #696969;
+}
+#grade_table tr.hover:hover td {
+   border-bottom: 2pt solid #0066cc;
+   border-top: 2pt solid #0066cc;
+}
+#grade_table tr.hover:hover td:first-child {
+    border-left: 2pt solid #0066cc;
+}
+#grade_table tr.hover:hover td:nth-last-child(2) {
+    border-right: 2pt solid #0066cc;
+}
+.final{ border-right-width: 1px;}
+
+/*.hover:hover input {background-color: #8db1ff; } */
+/* .draft:hover input {background-color: #ffffbe; }  */
+
+#legend { border: 0; border-collapse: collapse; }
+#legend td { border: 0;  padding:0 10px; }
+#legend td:nth-child(1) { width:100px;}
+#legend td:nth-child(2) { width:150px; padding:0 10px; }
+#legend td:nth-child(3) { width:250px; padding:0 10px; }
+
+#gradebook_indicator{
+  border: 1px solid;
+  padding: 5px 5px 5px 5px;
+  background-position: 10px center;
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+
+
+
+
+
+
+
+
 
 
 /************************
  * Course Tools page
-*************************/
-#course_tools .item-wrapper {float:left; margin: 10px; width: 100px}
-    #course_tools .item-wrapper .item-link, 
-    #course_tools .item-wrapper .item-icon { text-align: center;}
-#course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
-    #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
-    #course_tools .item-wrapper.links .item-icon {display: none;}
+ *************************/
+ #course_tools .item-wrapper {float:left; margin: 10px; width: 100px}
+ #course_tools .item-wrapper .item-link,
+ #course_tools .item-wrapper .item-icon { text-align: center;}
+ #course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
+ #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
+ #course_tools .item-wrapper.links .item-icon {display: none;}

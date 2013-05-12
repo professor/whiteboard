@@ -1,4 +1,4 @@
-class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_account, :create_yammer_account)
+class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_account)
   def perform
 #    Delayed::Worker.logger.debug("person_id #{person_id}, create_google_email #{create_google_email}, create_twiki_account #{create_google_email}")
 
@@ -21,11 +21,6 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
       error_message +=  "TWiki account #{person.twiki_name} was not created.<br/><br/>" unless status
       status = person.reset_twiki_password
       error_message +=  'TWiki account password was not reset.<br/>' unless status
-    end
-
-    if create_yammer_account && person.yammer_created.blank?
-      status = person.create_yammer_account
-      error_message +=  'Yammer account was not created.<br/><br/>' unless status
     end
 
 

@@ -33,7 +33,7 @@
           //     filterClearContainer: '#filterClearOne',
           //     filterColumns:[name_column_index,name_column_index+1]
           // }) ;
-          
+
           $("#filter_student").change(update_filter);
           $("#filter_assignment").change(update_filter);
           $("#filter_graded").removeAttr("checked", false);
@@ -49,7 +49,7 @@
               $("#filter_" + value ).prop("checked", "true");
             }
           });
-          
+
           $(".filter_status").change(function(){
             var status = $(this).attr("id").replace("filter_", "");
             filter(status);
@@ -94,6 +94,6 @@
       <% if current_user.is_staff? ||  current_user.is_admin? %>
         <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
       <% else %>
-        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :skip_course_column => true, :user => current_user} %>
+        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :show_course_grade => false, :skip_course_column => true, :user => current_user} %>
       <% end %>
       <br/>

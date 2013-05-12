@@ -1,15 +1,18 @@
 <% reset_cycle %>
-<%= javascript_include_tag "tablesorter" %>
+<%= javascript_include_tag "grade.js" %>
+
+<% if show_course_grade %>
 <script>
+    var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
     $(document).ready(function(){
-        $(".sortable").tablesorter({
-            sortList: [[0,0],[1,0]] ,
-            headers: {
-                1: { sorter: "digit", empty: "top" }
-            } // non-numeric content is treated as a MAX value
+        $("tr[id^='s_']").each(function(){
+          var student_id = $(this).attr("id").replace("s_","");
+          grades.earned_grade(student_id);
         });
     });
 </script>
+<% end %>
+
 <% if user.nil? %>
     <% user = current_user %>
 <% end %>
@@ -39,7 +42,7 @@
       <% end %>
       <td><%= assignment.task_number %></td>
       <td><%= assignment.name_with_type %></td>
-      <% deliverable = assignment.get_student_deliverable(current_user.id) %>
+      <% deliverable = assignment.get_student_deliverable(user.id) %>
       <td>
         <%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")}"  %>
       </td>
@@ -56,29 +59,36 @@
             <%= link_to 'Resubmit', deliverable %>
         <% end %>
       </td>
-      <% grade = assignment.get_student_grade(current_user.id)  %>
+      <% grade = assignment.get_student_grade(user.id)  %>
       <td>
         <% if !grade.nil? && grade.is_student_visible %>
-        <%= "#{grade.score}/#{assignment.maximum_score}" %>
+        <%= "#{grade.score}/#{assignment.formatted_maximum_score}" %>
         <% end %>
       </td>
     </tr>
   <% end %>
-  <% if skip_course_column %>
-      <tr>
+  <% if show_course_grade %>
+      <tr id="s_<%= user.id%>">
        <td colspan=5 align="right">Earned Grade (Performance)</td>
-       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
+       <td class="earned"></td>
      </tr>
-      <tr>
+      <tr id="s_<%= user.id%>">
        <td colspan=5 align="right">Earned Grade Letter</td>
-       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
+       <td class="performance"></td>
      </tr>
-     <tr>
+      <tr id="s_<%= user.id%>">
       <td colspan=5 align="right">Final Letter Grade</td>
       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
     </tr>
   <% end %>
 </table>
+
+
+<% if show_course_grade %>
+<table style="visibility: hidden">
+  <%= render :partial => "grade_spreadsheet", :locals => {:assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
+</table>
+<% end %>
 
 <% if skip_course_column %>
 <br/>

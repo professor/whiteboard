@@ -43,6 +43,11 @@ class GradingRule < ActiveRecord::Base
 
   belongs_to :course
 
+  def default_values?
+    attribute_values = self.attributes.values
+    attribute_values.include?(nil)
+  end
+
   # To perform letter grade validation for the given score.
   def validate_letter_grade(raw_score)
     mapping_rule.has_key?(raw_score.to_s.upcase)

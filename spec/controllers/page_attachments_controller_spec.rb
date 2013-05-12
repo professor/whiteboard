@@ -36,14 +36,20 @@ describe PageAttachmentsController do
       end
 
       context "if there is no file" do
+        before do
+          @blank_attachment = FactoryGirl.build(:blank_page_attachment, :page => @page)
+        end
+
         def do_post
-          post :create, :page_attachment => FactoryGirl.build(:blank_page_attachment, :page_id => @page.id).attributes
+          post :create, :page_attachment => @blank_attachment.attributes
         end
 
         it "should not create the attachment" do
-          expect do
-            do_post
-          end.to change { PageAttachment.count }.by(0)
+          PageAttachment.stub(:new).and_return(@blank_attachment)
+          @blank_attachment.page.should_receive(:editable?).and_return(true)
+          @blank_attachment.page_attachment.should_receive(:present?)
+          @blank_attachment.should_not_receive(:save)
+          do_post
         end
 
         it "should flash an error" do
@@ -59,13 +65,18 @@ describe PageAttachmentsController do
       end
 
       it "should delete the attachment", :skip_on_build_machine => true  do
-        expect do
-          do_delete
-        end.to change { PageAttachment.count }.by(-1)
+        @attachment.page.should_receive(:editable?).and_return(true)
+        @attachment.should_receive(:destroy)
+
+        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+        do_delete
       end
 
       it "should flash a notice", :skip_on_build_machine => true do
-        PageAttachment.stub(:destroy)
+        @attachment.page.should_receive(:editable?).and_return(true)
+        @attachment.stub(:destroy)
+        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+
         do_delete
         flash[:notice].should_not be_nil
       end

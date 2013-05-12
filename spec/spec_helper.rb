@@ -31,7 +31,7 @@ module IntegrationSpecHelper
   def login_with_oauth(user, service = :google_apps)
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(:google_apps, {
-       :user_info => {:email => user.email,
+       :info => {:email => user.email,
           :name => user.human_name,
           :first_name => user.first_name,
           :last_name => user.last_name }

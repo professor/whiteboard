@@ -1,18 +1,12 @@
-<p></p>
-
 <br/>
 <p>"<%= @page_comment.comment %>"</p>
 <p>
-  <% if !@page_comment.user_id.nil? %>
-      by <%= h User.find(@page_comment.user_id).human_name %>
+  <% unless @page_comment.user.nil? %>
+      by <%= @page_comment.user.human_name %>
   <% end %>
 </p>
 <br/>
-<p>This comment was <%= @status %> on this page:<br/>
-  <%= @page_comment.url %> </p>
-<!--
-<p><%= link_to "Page", page_url(@page_comment.page) %> </p>
--->
+<p>This comment was <%= @status %> on this <%= link_to "page", page_url(@page_comment.page) %></p>
 <br/>
 <br/>
 <p>Patrolling the campus,</p>

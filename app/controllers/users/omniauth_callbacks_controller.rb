@@ -1,12 +1,20 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
 
+  def failure
+    puts "*******FAILURE*****"
+    puts params[:message]
+    puts "*******FAILURE*****"
+    flash[:notice] = params[:message] # if using sinatra-flash or rack-flash
+    redirect_to root_url
+  end
+
   def google_apps
     # You need to implement the method below in your model
     @user = User.find_for_google_apps_oauth(env["omniauth.auth"], current_user)
 
     omniauth = env["omniauth.auth"]
-    email = switch_west_to_sv(omniauth["user_info"]["email"])
+    email = switch_west_to_sv(omniauth["info"]["email"])
 
     if @user
       remember_me(@user)
