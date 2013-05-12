@@ -16,7 +16,6 @@ gem "webrobots", "~> 0.1.1"
 gem 'omniauth', '1.1.4'
 gem 'omniauth-google-apps', :git => 'git://github.com/sishen/omniauth-google-apps.git'
 gem 'devise'
-gem 'ladle', '~> 0.2.0'
 
 
 gem "ckeditor", "3.6.3"
@@ -40,7 +39,10 @@ gem 'rmagick'
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
+
+
 gem 'net-ldap'
+
 
 gem 'cancan'
 
@@ -82,6 +84,7 @@ group :development, :test do
   gem 'capybara', '1.1.1'
   gem 'jasmine'
   gem 'launchy'
+  gem 'ladle', '~> 0.2.0'
 
 #  gem 'morning_glory'
 
@@ -91,6 +94,7 @@ group :development, :test do
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
 end
+
 
 
 

@@ -6,10 +6,8 @@ development:
   encrypted: True
 
 test:
-  host: anyhost
+  host: "127.0.0.1"
   port: 3897 # For Ladle Test LDAP
-  username: anyone
-  password: anysecret
   encrypted: False
 
 production:
