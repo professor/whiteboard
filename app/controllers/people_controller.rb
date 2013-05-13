@@ -240,9 +240,9 @@ class PeopleController < ApplicationController
         create_twiki_account = params[:create_twiki_account]
 
         create_yammer_account = false #params[:create_yammer_account]
-        Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_directory_account], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? && params[:create_twiki_account].nil? && params[:create_yammer_account].nil?
-                                      #          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_directory_account], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
-                                      #          job.perform
+        #Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_directory_account], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? && params[:create_directory_account].nil? && params[:create_twiki_account].nil? && params[:create_yammer_account].nil?
+                                                job = PersonJob.new(@person.id, params[:create_google_email], params[:create_directory_account], params[:create_twiki_account]) unless params[:create_google_email].nil? && params[:create_directory_account].nil? &&  params[:create_twiki_account].nil?
+                                                job.perform
 
                                       #        flash[:error] = error_message unless error_message.blank?
 
