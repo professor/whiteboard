@@ -19,7 +19,7 @@ class WelcomeController < ApplicationController
   end
 
   def new_features
-
+    PeerEvaluationEmail.please_do_peer_evaluation_email
   end
 
   def configuration
