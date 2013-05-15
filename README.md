@@ -43,6 +43,13 @@ The criteria for code being accepted is as follows:
     3. the code must be relatively well written
     4. if you are considering using new gems, run your ideas by the maintainers first
 
+## Running the tests
+
+    # run all the tests
+    bundle exec rake
+
+    # run just fast tests
+    bundle exec rspec ./spec_no_rails/
 
 ## Conventions
 Please use JQuery and JQuery UI. Whenever possible, AJAX should degrade
