@@ -145,6 +145,15 @@ class Course < ActiveRecord::Base
                              AcademicCalendar.next_semester_year())
   end
 
+  def self.first_email_on_peer_evaluation_is_today
+    Course.where(:peer_evaluation_first_email => Date.today).all
+  end
+
+  def self.second_email_on_peer_evaluation_is_today
+    Course.where(:peer_evaluation_second_email => Date.today).all
+  end
+
+
   def course_length
     if self.mini == "Both" then
       if semester == "Summer" then

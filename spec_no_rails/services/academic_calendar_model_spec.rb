@@ -3,7 +3,7 @@ require 'spec_helper'
 #
 # Note: to check future dates, use the following code. Date.new(2010, 8, 23).cweek
 #
-  
+
 
 describe AcademicCalendar do
 
@@ -24,6 +24,13 @@ describe AcademicCalendar do
        Date.stub!(:today).and_return(Date.new(2011, 7, 1))
        AcademicCalendar.current_semester.should == "Summer"
     end
+
+    it 'should return Spring until the spring semesters grading due date' do
+      Date.stub!(:today).and_return(Date.new(2013, 5, 13))
+      AcademicCalendar.current_semester.should == "Spring"
+    end
+
+
   end
 
   context 'next semester' do
@@ -343,6 +350,16 @@ describe AcademicCalendar do
       year.should == ""
     end
 
+  end
+
+  context "grades are due" do
+    it 'are correct for Spring semester' do
+      AcademicCalendar.grades_due_for("Spring", 2013) == Date.new(2013, 5, 22)
+    end
+
+    it 'are correct for Summer semester' do
+      AcademicCalendar.grades_due_for("Summer", 2013) == Date.new(2013, 8, 13)
+    end
   end
 
 

@@ -19,7 +19,6 @@ class WelcomeController < ApplicationController
   end
 
   def new_features
-
   end
 
   def configuration

@@ -17,6 +17,8 @@ en:
   default_grading_rule_for_course: You still need to define the grading ranges for an A, A-, B+, etc. Please configure your course.
   not_your_deliverable: You don't have permission to see another person's deliverables.
   not_your_presentation: You don't have permission to see another person's presentation feedback.
+  peer_evaluation_message_two_done: According to my records, you have finished the peer evaluation. If you wanted to make any last minute changes to it, do it today.
+  peer_evaluation_message_two_incomplete: "Action Required: please do this peer evaluation survey NOW. \n\n Today is your last day to do the peer evaluation."
   presentation_feedback_updated: Your feedback has been updated.
   unauthorized:
     manage:
