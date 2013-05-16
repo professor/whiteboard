@@ -11,25 +11,29 @@ class ActiveDirectory
     @connection.auth LDAPConfig.username, LDAPConfig.password unless LDAPConfig.username.nil? || LDAPConfig.password.nil?
   end
 
-  # Create user account in active directory
+  # Create a user account in active directory
+  # Return message as "Success", "Unwilling to perform", "Entry exists" or "No such object"
   def create_account(user)
     @connection.add(:dn=>user.ldap_distinguished_name(user), :attributes=>ldap_attributes(user))
     result = @connection.get_operation_result
     logger.debug(result)
-    return result
+    return result.message
   end
 
-  # Build account attributes
   protected
+  # Build attributes for active directory account
+  # Code 512 creates standard user account and enables it
   def ldap_attributes(user)
     attributes = {
         :cn => user.human_name,
+        :mail => user.email,
         :objectclass => ["top", "person", "organizationalPerson", "user"],
+        :unicodePwd=> password_encode('Just4now' + Time.now.to_f.to_s[-4,4]),
+        :userAccountControl=>"512",
+        :userPrincipalName =>user.email,
         :sn => user.last_name,
         :givenName => user.first_name,
-        :displayName => user.human_name,
-        :userPrincipalName =>user.email,
-        :mail => user.email
+        :displayName => user.human_name
     }
     return attributes
   end
@@ -38,7 +42,6 @@ class ActiveDirectory
   def ldap_distinguished_name(user)
     distinguished_name = "cn=#{user.human_name},"
     base_distinguished_name = "dc=cmusv,dc=sv,dc=cmu,dc=local"
-
 
     if user.is_staff
       distinguished_name+="ou=Staff,ou=Sync,"
@@ -53,4 +56,11 @@ class ActiveDirectory
     return distinguished_name
   end
 
+  # Convert password to unicode format
+  def password_encode(pwd)
+    ret = ""
+    pwd = "\"" + pwd + "\""
+    pwd.length.times{|i| ret+= "#{pwd[i..i]}\000" }
+    ret
+  end
 end

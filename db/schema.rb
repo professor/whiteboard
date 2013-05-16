@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516191849) do
+ActiveRecord::Schema.define(:version => 20130516223145) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -625,7 +625,6 @@ ActiveRecord::Schema.define(:version => 20130516191849) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
-    t.datetime "active_directory_account_created_at"
   end
 
   create_table "users", :force => true do |t|
@@ -704,7 +703,7 @@ ActiveRecord::Schema.define(:version => 20130516191849) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
-    t.datetime "active_directory_account_created_at"
+    t.datetime "active_directory_account_created"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

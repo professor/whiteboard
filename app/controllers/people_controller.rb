@@ -238,7 +238,8 @@ class PeopleController < ApplicationController
       if @person.save
         create_google_email = params[:create_google_email]
         create_twiki_account = params[:create_twiki_account]
-        Delayed::Job.enqueue(PersonJob.new(@person.id, create_google_email, create_twiki_account)) unless create_google_email.nil? && create_twiki_account.nil?
+        create_active_directory_account = params[:creative_active_directory_account]
+        Delayed::Job.enqueue(PersonJob.new(@person.id, create_google_email, create_twiki_account, create_active_directory_account)) unless create_google_email.nil? && create_twiki_account.nil? && create_active_directory_account.nil?
 
         flash[:notice] = 'Person was successfully created.'
         format.html { redirect_to(@person) }
