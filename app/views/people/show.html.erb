@@ -1,6 +1,20 @@
 <% content_for :title, @person.human_name + " - Contact Information" %>
 <%= javascript_include_tag 'people_search_export' %>
 
+<% content_for :javascript do %>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var current_sign_in_ip = "<%= @person.current_sign_in_ip if can? :see_current_sign_in_ip, User %>";
+            if(current_sign_in_ip != ""){
+                $.get("http://api.hostip.info/get_json.php?ip=" + current_sign_in_ip, function(data,status){
+                    if(status == 'success')
+                        $("#geo_ip").html('<a href="https://maps.google.com/maps?q='+ data.city + '">' + data.city + '</a>');
+                });
+            }
+        });
+    </script>
+<% end %>
+
 <%= form_for(@person) do |f| %>
     <% if @person.errors.any? %>
         <div id="error_explanation">
@@ -44,7 +58,7 @@
             </div>
 
         <div class="user_profile_title">
-	    <input type="hidden" id="person_id" value="<%= @person.id %>" />
+      <input type="hidden" id="person_id" value="<%= @person.id %>" />
             <h1 id="user_profile_name">
                 <%= h @person.first_name %> <%= h @person.last_name %>
                 <% if !(@person.pronunciation.blank?) %>
@@ -112,8 +126,8 @@
                             <%= h @person.organization_name %>
                         <% else %>
                             &nbsp;
+                        <% end %>
                     </td>
-                  <% end %>
                 </tr>
               <% end %>
 
@@ -125,6 +139,12 @@
                         <% end %>
                     </td>
                 </tr>
+                <% if can? :see_current_sign_in_ip, User %>
+                    <tr>
+                        <td>Last signed in</td>
+                        <td id="geo_ip">&nbsp;</td>
+                    </tr>
+                <% end %>
             </table>
 
             </div><!--  user_profile_contact_details -->

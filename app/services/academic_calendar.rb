@@ -11,11 +11,18 @@ class AcademicCalendar
 # Fall starts 1 week before and goes to roughly around Christmas
 #
 # In reality, this should be based upon when grades are due.
-  def self.current_semester
+  def self.current_semester_old
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
     return "Summer" if cweek < AcademicCalendar.semester_start("Fall", Date.today.cwyear) - 1
     return "Fall"
+  end
+
+  def self.current_semester
+    return "Spring" if Date.today <= AcademicCalendar.grades_due_for("Spring", Date.today.year)
+    return "Summer" if Date.today <= AcademicCalendar.grades_due_for("Summer", Date.today.year)
+    return "Fall"   if Date.today <= AcademicCalendar.grades_due_for("Fall", Date.today.year)
+    return "Spring"
   end
 
   def self.current_semester_year
@@ -166,15 +173,68 @@ class AcademicCalendar
     end
   end
 
-  def self.semester_start(semester, year)
+  def self.grades_due_for(semester, year)
+    case year
+      when 2013
+        case semester
+          when "Spring"
+            return Date.new(2013, 5, 22)
+          when "Summer"
+            return  Date.new(2013, 8, 13)
+          when "Fall"
+            return  Date.new(2013, 12, 31)
+        end
+      when 2012
+        case semester
+          when "Spring"
+            return Date.new(2012, 5, 22)
+          when "Summer"
+            return  Date.new(2012, 8, 14)
+          when "Fall"
+            return  Date.new(2012, 12, 20)
+        end
+      when 2011
+        case semester
+          when "Spring"
+            return Date.new(2011, 5, 17)
+          when "Summer"
+            return  Date.new(2011, 8, 9)
+          when "Fall"
+            return  Date.new(2011, 12, 22)
+        end
+      when 2010
+        case semester
+          when "Spring"
+            return Date.new(2010, 5, 18)
+          when "Summer"
+            return  Date.new(2010, 8, 10)
+          when "Fall"
+            return  Date.new(2010, 12, 16)
+        end
+      else
+        options = {:to => "todd.sedano@sv.cmu.edu",
+                   :subject => "Academic Calendar needs updating: grades_due_for",
+                   :message => "Please modify app/models/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
+                   :url_label => "",
+                   :url => ""
+        }
+        GenericMailer.email(options).deliver
+    end
 
+
+  end
+
+  #Historically we have used semester start to determine what is the current semester, moving forward, lets do this
+  #around the grades due deadline
+
+  def self.semester_start(semester, year)
     case year
       when 2013
         case semester
           when "Spring"
             return 3
           when "Summer"
-            return 21
+            return 22
           when "Fall" #Not official yet (1/2/2012)
             return 35
         end

@@ -43,7 +43,11 @@ class Ability
 
     if (user.is_admin?)
       can :manage, Course
+      can :see_current_sign_in_ip, User
+    else
+      cannot :see_current_sign_in_ip, User
     end
+
     if  (user.is_staff?)
       can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
       can [:manage ], Assignment
