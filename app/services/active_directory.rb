@@ -20,7 +20,6 @@ class ActiveDirectory
     return result.message
   end
 
-  protected
   # Build attributes for active directory account
   # Code 512 creates standard user account and enables it
   def ldap_attributes(user)
