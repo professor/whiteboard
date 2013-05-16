@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   #, :database_authenticatable, :registerable,
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid
+  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid, :directory_enabled_at
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
@@ -263,6 +263,53 @@ class User < ActiveRecord::Base
   end
 
   #
+  # Creates an Active Directory account for the user
+  # If this fails, it returns an error message as a string, else it returns true
+  #
+  def create_active_directory_account
+    if !is_directory_already_created?
+      require 'activedirectory/active_directory'
+      # reject blank emails
+      return "Empty email address" if self.email.blank?
+
+      # log what is currently happening
+      logger.debug("Attempting to create active directory account for " + self.email)
+
+      # extract domain from email
+      domain = self.email.split('@')[1]
+
+      # Confirm domain name accuracy
+      if domain != GOOGLE_DOMAIN
+        logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+        return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
+      end
+
+      # Try to transact against active directory, rescue any exceptions
+      begin
+        # Establishes Standard/SSL connection to Active Directory server, returns an ldap connection
+        connection = LDAP.configure
+
+        # Add this user to active directory
+        connection.add(:dn=>get_dn,:attributes=>get_attributes)
+        result = connection.get_operation_result
+        logger.debug(result)
+
+        # Activate user account
+        connection.replace_attribute get_dn, :userAccountControl, "512"
+        logger.debug(connection.get_operation_result)
+
+      rescue Net::LDAP::LdapError=>e
+        logger.debug(e)
+        return e
+      end
+      self.directory_enabled_at = Time.now()
+      self.save
+      return result
+    end
+
+  end
+
+  #
   # Creates a twiki account for the user
   #
   # You may need to modify mechanize as seen here
@@ -379,6 +426,8 @@ class User < ActiveRecord::Base
     #false
   end
 
+  #protected
+
   def self.expired_users_in_the_last_month
     User.where(is_active: true).where("expires_at >= ? AND expires_at < ?", Date.today - 1.month, Date.today)
   end
@@ -394,6 +443,72 @@ class User < ActiveRecord::Base
                   :message => "\n#{email_list} \n\n Please executed the processes defined for expired accounts."
       }
       GenericMailer.email(options).deliver
+    end
+  end
+
+  def person_before_save
+    # We populate some reasonable defaults, but this can be overridden in the database
+    self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
+    self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
+
+    logger.debug("self.photo.blank? #{self.photo.blank?}")
+    logger.debug("photo.url #{photo.url}")
+    # update the image_uri if a photo was uploaded
+    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
+
+    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
+  end
+
+  def update_is_profile_valid
+    if ((self.biography.blank? && self.facebook.blank? && self.twitter.blank? && self.google_plus.blank? && self.linked_in.blank?) or
+        (self.telephone1.blank? && self.telephone2.blank? && self.telephone3.blank? && self.telephone4.blank?))
+      self.is_profile_valid = false
+    else
+      self.is_profile_valid= true
+    end
+    return true
+  end
+
+  # The following are helper methods for creating active directory user account
+  # This method builds a dn for this user
+  def get_dn
+    dn = "cn=#{self.human_name},"
+    base_dn = "dc=cmusv,dc=sv,dc=cmu,dc=local" # change this to match your base dn
+
+    if self.is_staff
+      dn+="ou=Staff,ou=Sync,"
+    elsif !self.masters_program.blank?
+      dn+= "ou="+self.masters_program+",ou=Students,ou=Sync,"
+    else
+      dn+="ou=Sync,"
+    end
+
+    dn+=base_dn
+    logger.debug(dn)
+
+    return dn
+  end
+
+  # This method initializes attribute values for this user
+  def get_attributes
+    attr = {
+        :cn => self.human_name,
+        :objectclass => ["top", "person", "organizationalPerson", "user"],
+        :sn => self.last_name,
+        :givenName => self.first_name,
+        :displayName => self.human_name,
+        :userPrincipalName =>self.email.split("@")[0],
+        :mail => self.email
+    }
+    return attr
+  end
+
+  # Check whether user is active directory enabled
+  def is_directory_already_created?
+    if self.directory_enabled_at.nil?
+      return false
+    else
+      return true
     end
   end
 
@@ -420,7 +535,6 @@ class User < ActiveRecord::Base
     end
     return true
   end
-
 
 
 end
