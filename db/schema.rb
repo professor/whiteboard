@@ -625,6 +625,7 @@ ActiveRecord::Schema.define(:version => 20130516223145) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.datetime "active_directory_account_created"
   end
 
   create_table "users", :force => true do |t|

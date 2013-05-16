@@ -1,9 +1,9 @@
 # Just specify host, username and password
 development:
-  host: anyhost
+  host: "10.0.0.131"
   port: 636 # For SSL connection
-  username: anyone
-  password: anysecret
+  username: "edward.akoto@cmusv.sv.cmu.local"
+  password: "Just4now"
   encrypted: True
 
 # Needs no modification

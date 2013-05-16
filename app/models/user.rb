@@ -290,8 +290,6 @@ class User < ActiveRecord::Base
       end
   end
 
-
-
   #
   # Creates a twiki account for the user
   #
