@@ -270,7 +270,7 @@ class User < ActiveRecord::Base
       # reject blank emails
       return "Empty email address" if self.email.blank?
 
-      # log what is currently happening
+      # log what is happening
       logger.debug("Attempting to create active directory account for " + self.email)
 
       # extract domain from email

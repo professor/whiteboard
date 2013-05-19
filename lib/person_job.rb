@@ -22,7 +22,6 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
       status = person.reset_twiki_password
       error_message +=  'TWiki account password was not reset.<br/>' unless status
     end
-
     if create_active_directory_account && person.active_directory_account_created.blank?
       status = person.create_active_directory_account
       error_message +=  "Active directory account for #{person.human_name} was not created.<br/><br/>" unless status

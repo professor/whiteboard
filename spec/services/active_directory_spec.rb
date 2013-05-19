@@ -1,8 +1,10 @@
+require "spec_helper"
+
 describe "ActiveDirectory" do
 
   before do
     @ldap_server = Ladle::Server.new(:quiet => true, :port=>3897).start
-    @faculty_frank = FactoryGirl.create(:@faculty_frank, email: "faculty.frank@sandbox.sv.cmu.edu")
+    @faculty_frank = FactoryGirl.create(:faculty_frank, email: "faculty.frank@sandbox.sv.cmu.edu")
     @active_directory_service = ActiveDirectory.new
   end
 
@@ -21,9 +23,9 @@ describe "ActiveDirectory" do
 
   it 'ldap_attributes method returns necessary ldap attributes' do
     @active_directory_service.ldap_attributes(@faculty_frank).should include( :cn=>"Faculty Frank",
-                                                                              :mail=>"faculty.frank@sv.cmu.edu",
+                                                                              :mail=>"faculty.frank@sandbox.sv.cmu.edu",
                                                                               :objectclass=>["top", "person", "organizationalPerson", "user"],
-                                                                              :userPrincipalName=>"faculty.frank")
+                                                                              :userPrincipalName=>"faculty.frank@sandbox.sv.cmu.edu")
   end
 
   it 'password_encode method encodes password to hexadecimal base 64' do
