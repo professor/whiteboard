@@ -1,7 +1,6 @@
 require 'net/ldap'
 
 # This class provides active directory services
-
 class ActiveDirectory
 
   # Initialize connection to active directory
@@ -12,12 +11,10 @@ class ActiveDirectory
   end
 
   # Create a user account in active directory
-  # Return message as "Success", "Unwilling to perform", "Entry exists" or "No such object"
+  # Return message as "Success", "Unwilling to perform", "Entity exists" or "No such object"
   def create_account(user)
     @connection.add(:dn=>user.ldap_distinguished_name(user), :attributes=>ldap_attributes(user))
-    result = @connection.get_operation_result
-    logger.debug(result)
-    return result.message
+    return @connection.get_operation_result.message
   end
 
   # Build attributes for active directory account
@@ -27,9 +24,9 @@ class ActiveDirectory
         :cn => user.human_name,
         :mail => user.email,
         :objectclass => ["top", "person", "organizationalPerson", "user"],
+        :userPrincipalName =>user.email,
         :unicodePwd=> password_encode('Just4now' + Time.now.to_f.to_s[-4,4]),
         :userAccountControl=>"512",
-        :userPrincipalName =>user.email,
         :sn => user.last_name,
         :givenName => user.first_name,
         :displayName => user.human_name
@@ -51,15 +48,14 @@ class ActiveDirectory
     end
 
     distinguished_name+=base_distinguished_name
-    logger.debug(distinguished_name)
     return distinguished_name
   end
 
   # Convert password to unicode format
-  def password_encode(pwd)
-    ret = ""
-    pwd = "\"" + pwd + "\""
-    pwd.length.times{|i| ret+= "#{pwd[i..i]}\000" }
-    ret
+  def password_encode(password)
+    result = ""
+    password = "\"" + pwd + "\""
+    password.length.times{|i| result+= "#{password[i..i]}\000" }
+    result
   end
 end
