@@ -15,6 +15,7 @@ config/morning_glory.yml
 config/systems.cc.yml.yml
 config/adobe_cnnect.yml
 config/systems.yml
+config/active_directory.yml
 
 coverage/*
 nbproject/*
