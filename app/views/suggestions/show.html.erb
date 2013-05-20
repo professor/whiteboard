@@ -27,7 +27,7 @@
       </tr>
       <tr>
         <td>User Name:</td>
-        <td><%= h User.find(@suggestion.user_id).email %></td>
+        <td><%= h @suggestion.user.email %></td>
       </tr>
   <% end %>
 
