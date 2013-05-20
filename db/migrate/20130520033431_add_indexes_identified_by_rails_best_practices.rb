@@ -2,8 +2,6 @@ class AddIndexesIdentifiedByRailsBestPractices < ActiveRecord::Migration
   def self.up
     add_index :assignments, :course_id
     add_index :courses, :course_number_id
-    add_index :courses_users, :course_id
-    add_index :courses_users, :user_id
     add_index :curriculum_comments, :user_id
     add_index :curriculum_comments, :curriculum_comment_type_id
     add_index :deliverable_attachment_versions, :deliverable_id
@@ -21,8 +19,6 @@ class AddIndexesIdentifiedByRailsBestPractices < ActiveRecord::Migration
     add_index :people_search_defaults, :user_id
     add_index :presentations, :team_id
     add_index :presentations, :user_id
-    add_index :projects, :project_type_id
-    add_index :projects, :course_id
     add_index :teams, :primary_faculty_id
     add_index :teams, :secondary_faculty_id
     add_index :user_versions, :user_id
@@ -36,8 +32,6 @@ class AddIndexesIdentifiedByRailsBestPractices < ActiveRecord::Migration
   def self.down
     remove_index :assignments, :course_id
     remove_index :courses, :course_number_id
-    remove_index :courses_users, :course_id
-    remove_index :courses_users, :user_id
     remove_index :curriculum_comments, :user_id
     remove_index :curriculum_comments, :curriculum_comment_type_id
     remove_index :deliverable_attachment_versions, :deliverable_id
@@ -55,8 +49,6 @@ class AddIndexesIdentifiedByRailsBestPractices < ActiveRecord::Migration
     remove_index :people_search_defaults, :user_id
     remove_index :presentations, :team_id
     remove_index :presentations, :user_id
-    remove_index :projects, :project_type_id
-    remove_index :projects, :course_id
     remove_index :teams, :primary_faculty_id
     remove_index :teams, :secondary_faculty_id
     remove_index :user_versions, :user_id
