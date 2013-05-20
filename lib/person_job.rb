@@ -1,4 +1,4 @@
-class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_account)
+class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_account, :create_active_directory_account)
   def perform
 #    Delayed::Worker.logger.debug("person_id #{person_id}, create_google_email #{create_google_email}, create_twiki_account #{create_google_email}")
 
