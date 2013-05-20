@@ -29,7 +29,7 @@ describe "ActiveDirectory" do
   end
 
   it 'password_encode method encodes password to hexadecimal base 64' do
-
+    @active_directory_service.password_encode("pass").should == "\"\x00p\x00a\x00s\x00s\x00\"\x00"
   end
 
 end

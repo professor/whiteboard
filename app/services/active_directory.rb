@@ -54,7 +54,7 @@ class ActiveDirectory
   # Convert password to unicode format
   def password_encode(password)
     result = ""
-    password = "\"" + pwd + "\""
+    password = "\"" + password + "\""
     password.length.times{|i| result+= "#{password[i..i]}\000" }
     result
   end
