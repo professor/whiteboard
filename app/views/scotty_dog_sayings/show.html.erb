@@ -12,14 +12,14 @@
     <td><%= h @scotty_dog_saying.updated_at.to_s(:long) %></td>
   </tr>
 
-  <% if !@scotty_dog_saying.user_id.nil? %>
+  <% unless @scotty_dog_saying.user_id.nil? %>
       <tr>
         <td>User Id:</td>
         <td><%= h @scotty_dog_saying.user_id %></td>
       </tr>
       <tr>
         <td>User Name:</td>
-        <td><%= h User.find(@scotty_dog_saying.user_id).email %></td>
+        <td><%= h @scotty_dog_saying.user.email %></td>
       </tr>
   <% end %>
 
