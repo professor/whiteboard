@@ -33,7 +33,6 @@ class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
-#  has_and_belongs_to_many :users, :join_table=>"courses_users"
   has_many :assignments ,:order => "assignment_order"
 
 
@@ -144,6 +143,15 @@ class Course < ActiveRecord::Base
     return self.for_semester(AcademicCalendar.next_semester(),
                              AcademicCalendar.next_semester_year())
   end
+
+  def self.first_email_on_peer_evaluation_is_today
+    Course.where(:peer_evaluation_first_email => Date.today).all
+  end
+
+  def self.second_email_on_peer_evaluation_is_today
+    Course.where(:peer_evaluation_second_email => Date.today).all
+  end
+
 
   def course_length
     if self.mini == "Both" then

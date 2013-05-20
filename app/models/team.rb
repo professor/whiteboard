@@ -141,16 +141,8 @@ class Team < ActiveRecord::Base
   end
 
   def peer_evaluation_message_one
-    return "Action Required: please do this peer evaluation survey\n\n by the end of " + self.peer_evaluation_second_email.to_date.to_formatted_s(:long)
+    return "Action Required: please do this peer evaluation survey\n\n by the end of " + self.course.peer_evaluation_second_email.to_date.to_formatted_s(:long)
 
-  end
-
-  def peer_evaluation_message_two_done
-    return "According to my records, you have finished the peer evaluation. If you wanted to make any last minute changes to it, do it today."
-  end
-
-  def peer_evaluation_message_two_incomplete
-    return "Action Required: please do this peer evaluation survey NOW. \n\n Today is your last day to do the peer evaluation."
   end
 
   def clone_to_another_course(destination_course_id)

@@ -114,16 +114,6 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
--- Name: courses_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE courses_users (
-    course_id integer,
-    user_id integer
-);
-
-
---
 -- Name: curriculum_comment_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -893,72 +883,6 @@ CREATE SEQUENCE presentations_id_seq
 --
 
 ALTER SEQUENCE presentations_id_seq OWNED BY presentations.id;
-
-
---
--- Name: project_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE project_types (
-    id integer NOT NULL,
-    name character varying(255),
-    description character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: project_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE project_types_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: project_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE project_types_id_seq OWNED BY project_types.id;
-
-
---
--- Name: projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE projects (
-    id integer NOT NULL,
-    name character varying(255),
-    project_type_id integer,
-    course_id integer,
-    is_closed boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE projects_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE projects_id_seq OWNED BY projects.id;
 
 
 --
@@ -2031,23 +1955,6 @@ ALTER TABLE ONLY presentation_questions
 
 ALTER TABLE ONLY presentations
     ADD CONSTRAINT presentations_pkey PRIMARY KEY (id);
-
-
---
--- Name: project_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY project_types
-    ADD CONSTRAINT project_types_pkey PRIMARY KEY (id);
-
-
---
--- Name: projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY projects
-    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: rss_feeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
