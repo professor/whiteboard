@@ -1,4 +1,4 @@
-# This file initializes active directory configuration using parameters from active_directory.yml during initialization
+# This file initializes active directory configuration parameters from active_directory.yml
 CONFIG = YAML.load_file("#{Rails.root}/config/active_directory.yml")[Rails.env]
 
 class LDAPConfig
