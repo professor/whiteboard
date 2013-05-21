@@ -58,4 +58,7 @@ class ActiveDirectory
     password.length.times{|i| result+= "#{password[i..i]}\000" }
     result
   end
+
+  # Reset user password
+
 end
