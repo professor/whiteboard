@@ -18,11 +18,9 @@ class CreateTeams < ActiveRecord::Migration
       t.integer :team_id
       t.integer :person_id
     end
-    
+
     add_index :teams_people, :team_id
     add_index :teams_people, :person_id 
-    
-    
   end
 
   def self.down

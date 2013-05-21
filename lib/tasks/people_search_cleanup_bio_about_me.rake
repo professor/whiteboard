@@ -26,7 +26,7 @@ namespace :whiteboard do
 
               # clear text from user_text field
               # u.user_text = nil
-              u.save
+              u.save!
           end
     end
 end

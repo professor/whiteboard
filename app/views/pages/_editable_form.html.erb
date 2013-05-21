@@ -28,12 +28,17 @@
         }
     }
 
+    function change_detected() {
+        needs_to_be_saved = true;
+        time_since_last_key_down = current_time();
+    }
+
     function enableAutoSave() {
         var postPath = $('#edit-form').attr('action');
 
         ['page_tab_one_contents', 'page_tab_two_contents', 'page_tab_three_contents', 'page_faculty_notes'].forEach(function (editor) {
             CKEDITOR.instances[editor].on('key', function () {
-                needs_to_be_saved = true;
+                change_detected();
             });
         })
 
@@ -85,6 +90,7 @@
 
     function enableFiveMinuteTimeout() {
         setInterval(function () {
+            console.log("current_time  " + current_time() + "     time_since_last_key_down  " + time_since_last_key_down)
             if((current_time() - time_since_last_key_down) >= (5 * 60 * 1000)) {
                 $("#timeout-flag").val("true");
                 // Disable popup warning user that they are leaving the page.
@@ -108,13 +114,11 @@
 
         if (auto_save_enabled || timeout_enabled) {
           $('.auto-save-on-change').change(function () {
-              needs_to_be_saved = true;
-              time_since_last_key_down = current_time();
+              change_detected();
           });
 
           $('.auto-save-on-keydown').keydown(function () {
-              needs_to_be_saved = true;
-              time_since_last_key_down = current_time();
+              change_detected();
           });
         }
 

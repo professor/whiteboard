@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218170328) do
+ActiveRecord::Schema.define(:version => 20130520033431) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.datetime "updated_at"
     t.string   "short_name"
   end
+
+  add_index "assignments", ["course_id"], :name => "index_assignments_on_course_id"
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -60,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.string   "email"
   end
 
+  add_index "courses", ["course_number_id"], :name => "index_courses_on_course_number_id"
   add_index "courses", ["mini"], :name => "index_courses_on_mini"
   add_index "courses", ["number"], :name => "index_courses_on_number"
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
@@ -91,8 +94,10 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.boolean  "notify_me"
   end
 
+  add_index "curriculum_comments", ["curriculum_comment_type_id"], :name => "index_curriculum_comments_on_curriculum_comment_type_id"
   add_index "curriculum_comments", ["semester"], :name => "index_curriculum_comments_on_semester"
   add_index "curriculum_comments", ["url"], :name => "index_curriculum_comments_on_url"
+  add_index "curriculum_comments", ["user_id"], :name => "index_curriculum_comments_on_user_id"
   add_index "curriculum_comments", ["year"], :name => "index_curriculum_comments_on_year"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -118,6 +123,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.text     "comment"
   end
 
+  add_index "deliverable_attachment_versions", ["deliverable_id"], :name => "index_deliverable_attachment_versions_on_deliverable_id"
+
   create_table "deliverables", :force => true do |t|
     t.text     "name"
     t.integer  "team_id"
@@ -136,6 +143,9 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
+  add_index "deliverables", ["course_id"], :name => "index_deliverables_on_course_id"
+  add_index "deliverables", ["creator_id"], :name => "index_deliverables_on_creator_id"
+  add_index "deliverables", ["team_id"], :name => "index_deliverables_on_team_id"
 
   create_table "effort_log_line_items", :force => true do |t|
     t.integer  "effort_log_id"
@@ -154,7 +164,9 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.integer  "position"
   end
 
+  add_index "effort_log_line_items", ["course_id"], :name => "index_effort_log_line_items_on_course_id"
   add_index "effort_log_line_items", ["effort_log_id"], :name => "index_effort_log_line_items_on_effort_log_id"
+  add_index "effort_log_line_items", ["task_type_id"], :name => "index_effort_log_line_items_on_task_type_id"
 
   create_table "effort_logs", :force => true do |t|
     t.integer  "user_id"
@@ -188,6 +200,10 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.boolean  "is_student_visible"
   end
 
+  add_index "grades", ["assignment_id"], :name => "index_grades_on_assignment_id"
+  add_index "grades", ["course_id"], :name => "index_grades_on_course_id"
+  add_index "grades", ["student_id"], :name => "index_grades_on_student_id"
+
   create_table "grading_rules", :force => true do |t|
     t.string   "grade_type"
     t.float    "A_grade_min"
@@ -203,6 +219,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.datetime "updated_at"
     t.boolean  "is_nomenclature_deliverable"
   end
+
+  add_index "grading_rules", ["course_id"], :name => "index_grading_rules_on_course_id"
 
   create_table "individual_contribution_for_courses", :force => true do |t|
     t.integer "individual_contribution_id"
@@ -244,6 +262,7 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
   add_index "page_attachments", ["is_active"], :name => "index_page_attachments_on_is_active"
   add_index "page_attachments", ["page_id"], :name => "index_page_attachments_on_page_id"
   add_index "page_attachments", ["position"], :name => "index_page_attachments_on_position"
+  add_index "page_attachments", ["user_id"], :name => "index_page_attachments_on_user_id"
 
   create_table "page_comment_types", :force => true do |t|
     t.string   "name"
@@ -265,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.datetime "updated_at"
   end
 
+  add_index "page_comments", ["page_comment_type_id"], :name => "index_page_comments_on_page_comment_type_id"
   add_index "page_comments", ["page_id"], :name => "index_page_comments_on_page_id"
   add_index "page_comments", ["semester"], :name => "index_page_comments_on_semester"
   add_index "page_comments", ["user_id"], :name => "index_page_comments_on_user_id"
@@ -349,6 +369,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.datetime "updated_at"
   end
 
+  add_index "people_search_defaults", ["user_id"], :name => "index_people_search_defaults_on_user_id"
+
   create_table "presentation_feedback_answers", :force => true do |t|
     t.integer  "feedback_id"
     t.integer  "question_id"
@@ -393,6 +415,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
 
   add_index "presentations", ["course_id"], :name => "index_presentations_on_course_id"
   add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
+  add_index "presentations", ["team_id"], :name => "index_presentations_on_team_id"
+  add_index "presentations", ["user_id"], :name => "index_presentations_on_user_id"
 
   create_table "project_types", :force => true do |t|
     t.string   "name"
@@ -547,6 +571,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
   end
 
   add_index "teams", ["course_id"], :name => "index_teams_on_course_id"
+  add_index "teams", ["primary_faculty_id"], :name => "index_teams_on_primary_faculty_id"
+  add_index "teams", ["secondary_faculty_id"], :name => "index_teams_on_secondary_faculty_id"
 
   create_table "user_versions", :force => true do |t|
     t.integer  "user_id"
@@ -626,6 +652,8 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
   end
+
+  add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "webiso_account"
@@ -711,6 +739,11 @@ ActiveRecord::Schema.define(:version => 20130218170328) do
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
   add_index "users", ["is_student"], :name => "index_users_on_is_student"
+  add_index "users", ["strength1_id"], :name => "index_users_on_strength1_id"
+  add_index "users", ["strength2_id"], :name => "index_users_on_strength2_id"
+  add_index "users", ["strength3_id"], :name => "index_users_on_strength3_id"
+  add_index "users", ["strength4_id"], :name => "index_users_on_strength4_id"
+  add_index "users", ["strength5_id"], :name => "index_users_on_strength5_id"
   add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
 
   create_table "versions", :force => true do |t|

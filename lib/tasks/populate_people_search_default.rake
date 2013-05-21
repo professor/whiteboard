@@ -26,7 +26,7 @@ namespace :whiteboard do
        {:twiki_name => "GerryPanelo", :student_staff_group => "All", :program_group => nil, :track_group => nil},
       ].each do |ps|
           u = User.find_by_twiki_name(ps[:twiki_name])
-          PeopleSearchDefault.create(:user_id => u.id, :student_staff_group => ps[:student_staff_group], :program_group => ps[:program_group], :track_group => ps[:track_group])
+          PeopleSearchDefault.create!(:user_id => u.id, :student_staff_group => ps[:student_staff_group], :program_group => ps[:program_group], :track_group => ps[:track_group])
       end
   end
 
