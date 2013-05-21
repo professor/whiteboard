@@ -59,6 +59,18 @@ class ActiveDirectory
     result
   end
 
-  # Reset user password
+  # Send active directory password reset token
+  def send_password_reset_token(user)
+    user.generate_token(:password_reset_token)
+    user.password_reset_sent_at = Time.zone.now
+    user.save!
+    PasswordMailer.password_reset(user).deliver
+  end
 
+  # Reset active directory password
+  def reset_password(user, new_pass)
+    distinguished_name = ldap_distinguished_name(user)
+    @connection.replace_attribute distinguished_name, :unicodePwd, password_encode(new_pass)
+    return @connection.get_operation_result.message
+  end
 end

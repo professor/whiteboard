@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521171512) do
+ActiveRecord::Schema.define(:version => 20130521171705) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -706,6 +706,8 @@ ActiveRecord::Schema.define(:version => 20130521171512) do
     t.boolean  "is_profile_valid"
     t.datetime "active_directory_account_created"
     t.string   "auth_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
