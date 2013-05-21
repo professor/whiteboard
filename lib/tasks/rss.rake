@@ -16,7 +16,7 @@ namespace :cmu do
     MaxRSSItems = 4
     rss = RSS::Parser.parse(open('http://www.cmu.edu/silicon-valley/news-events/rss-news.rss').read, false).items[0..MaxRSSItems-1]
     if rss.size > 0
-        @rss_feeds = RssFeed.find(:all)
+        @rss_feeds = RssFeed.all
         @rss_feeds.each do |feed| feed.destroy() end
     end
     rss.each do |item|
@@ -31,7 +31,7 @@ namespace :cmu do
       month = Date::ABBR_MONTHNAMES.index($2)
       feed.publication_date = DateTime.new(y=$3.to_i,m=month,d=$1.to_i, h=$4.to_i,min=$5.to_i,s=$6.to_i)
       feed.description = item.description
-      feed.save()
+      feed.save!
     end
     puts "RSS table updated"
   end
