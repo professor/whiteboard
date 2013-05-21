@@ -95,6 +95,7 @@
               <li class="standard"><font color="#626262">My Deliverables (Login required)</font></li>
               <li class="standard"><font color="#626262">My Teams (Login required)</font></li>
               <li class="standard"><%= link_to "Login ", user_omniauth_authorize_path(:google_apps), :class => "Lv1NavLink" %></li>
+              <%= link_to "Forgot password", new_password_reset_path%>
           <% end %>
         </ul>
         <div class="hr">
