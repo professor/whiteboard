@@ -1,12 +1,12 @@
-
 class PasswordResetsController < ApplicationController
   layout 'cmu_sv'
 
+  # Display new password reset page
   def index
     redirect_to new_password_reset_path
   end
 
-  # Create new reset request
+  # Create new password reset request
   def create
     @user = User.find_by_email(params[:primaryEmail])
     @active_directory_service = ActiveDirectory.new
