@@ -10,11 +10,27 @@ class ActiveDirectory
     @connection.auth LDAPConfig.username, LDAPConfig.password unless LDAPConfig.username.nil? || LDAPConfig.password.nil?
   end
 
+  # Attempt to bind to active directory, time out after N seconds, return true or false
+  def bind
+    return false unless !@connection.nil?
+    begin
+      Timeout::timeout(10) do
+        return (@connection.bind) ? true : false
+      end
+    rescue Timeout::Error
+      return false
+    end
+  end
+
   # Create a user account in active directory
   # Return message as "Success", "Unwilling to perform", "Entity exists" or "No such object"
   def create_account(user)
-    @connection.add(:dn=>user.ldap_distinguished_name(user), :attributes=>ldap_attributes(user))
-    return @connection.get_operation_result.message
+    if self.bind
+      @connection.add(:dn=>user.ldap_distinguished_name(user), :attributes=>ldap_attributes(user))
+      return @connection.get_operation_result.message
+    else
+      return false
+    end
   end
 
   # Build attributes for active directory account
@@ -56,7 +72,7 @@ class ActiveDirectory
     result = ""
     password = "\"" + password + "\""
     password.length.times{|i| result+= "#{password[i..i]}\000" }
-    result
+    return result
   end
 
   # Send active directory password reset token
@@ -69,8 +85,12 @@ class ActiveDirectory
 
   # Reset active directory password
   def reset_password(user, new_pass)
-    distinguished_name = ldap_distinguished_name(user)
-    @connection.replace_attribute distinguished_name, :unicodePwd, password_encode(new_pass)
-    return @connection.get_operation_result.message
+    if self.bind
+      distinguished_name = ldap_distinguished_name(user)
+      @connection.replace_attribute distinguished_name, :unicodePwd, password_encode(new_pass)
+      return @connection.get_operation_result.message
+    else
+      return false
+    end
   end
 end
