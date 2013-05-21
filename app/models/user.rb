@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
   belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
   belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
-
+  belongs_to :updated_by_user, :class_name => "User"
 
   before_validation :update_webiso_account
   before_save :person_before_save,
