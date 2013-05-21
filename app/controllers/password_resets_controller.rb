@@ -18,7 +18,7 @@ class PasswordResetsController < ApplicationController
         flash[:error] = "Your entries do not match records"
         redirect_to new_password_reset_path and return
       end
-      redirect_to root_url, :notice => "Instructions have been sent to your secondary email account."
+      redirect_to root_url, :notice => "Password reset instructions have been sent to your secondary email account."
     else
       flash[:error] = "Verification code is wrong"
       redirect_to new_password_reset_path
