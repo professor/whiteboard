@@ -1,4 +1,8 @@
+<%= stylesheet_link_tag "alertify.core.css", media: "all" %>
+<%= stylesheet_link_tag "alertify.default.css", media: "all" %>
+
 <%= javascript_include_tag "ajax-error.js" %>
+<%= javascript_include_tag "alertify.min.js" %>
 <%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
 <%= javascript_include_tag 'jquery.cookie' %>
 
@@ -62,6 +66,7 @@
                             $('#edit-form').attr('action', postPath);
                             hideAjaxError();
                             needs_to_be_saved = false;
+                            alertify.log("Changes auto-saved");
                         } else {
                             showAjaxError(data['message']);
                         }
