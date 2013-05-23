@@ -66,7 +66,6 @@
                             $('#edit-form').attr('action', postPath);
                             hideAjaxError();
                             needs_to_be_saved = false;
-                            alertify.log("Changes auto-saved");
                         } else {
                             showAjaxError(data['message']);
                         }
@@ -95,7 +94,7 @@
 
     function enableFiveMinuteTimeout() {
         setInterval(function () {
-            console.log("current_time  " + current_time() + "     time_since_last_key_down  " + time_since_last_key_down)
+            // console.log("current_time  " + current_time() + "     time_since_last_key_down  " + time_since_last_key_down)
             if((current_time() - time_since_last_key_down) >= (5 * 60 * 1000)) {
                 $("#timeout-flag").val("true");
                 // Disable popup warning user that they are leaving the page.
@@ -129,6 +128,7 @@
 
         if (auto_save_enabled) {
             enableAutoSave();
+            alertify.log("Auto save is enabled. We'll save your changes every 10 seconds");
         }
 
         if (timeout_enabled) {
