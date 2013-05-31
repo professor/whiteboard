@@ -171,7 +171,7 @@ class Deliverable < ActiveRecord::Base
       feedback += self.feedback_comment
       feedback += "\n"
     end
-    given_grade=Grade.get_grade(self.assignment_id, member_id)
+    given_grade=Grade.get_grade(self.course.id, self.assignment_id, member_id)
     unless  given_grade.nil?
       feedback += "\nGrade earned for this "
       feedback += self.course.nomenclature_assignment_or_deliverable
@@ -223,7 +223,7 @@ class Deliverable < ActiveRecord::Base
 
   def update_team
     # Look up the team this user is on if it is a team deliverable
-    Team.where(:course_id => self.course_id).each do |team|
+    Team.where(:course_id => self.course.id).each do |team|
       answer = team.members.include?(self.creator)
       self.team = team if team.members.include?(self.creator)
     end
@@ -231,7 +231,7 @@ class Deliverable < ActiveRecord::Base
 
   # To check if the grade received for this deliverable is visible to the students or not.
   def is_visible_to_student?
-    grade = Grade.get_grade(self.assignment.id, creator_id)
+    grade = Grade.get_grade(self.course.id, self.assignment.id, creator_id)
     grade.try(:is_student_visible) || false
   end
 
@@ -304,7 +304,7 @@ class Deliverable < ActiveRecord::Base
   # To get the status of deliverable by student for is it graded or not.
   def get_status_for_every_individual  (student_id)
     return :unknonwn if self.assignment.nil? #(guard for old deliverables)
-    grade = Grade.get_grade(self.assignment.id, student_id)
+    grade = Grade.get_grade(self.course.id, self.assignment.id, student_id)
     if grade.nil?
       return :ungraded
     elsif !grade.is_student_visible?

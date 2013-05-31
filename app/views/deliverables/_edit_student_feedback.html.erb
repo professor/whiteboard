@@ -75,11 +75,11 @@
     <div class="student_scores">
       <% if @deliverable.is_team_deliverable? %>
             <% for member in @deliverable.team.members %>
-              <% grade_obj = Grade.get_grade(@deliverable.assignment_id, member.id)%>
+              <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
               <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
             <% end %>
       <% else %>
-        <% grade_obj = Grade.get_grade(@deliverable.assignment_id, @deliverable.creator_id)%>
+        <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
         <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
       <% end %>
     </div>

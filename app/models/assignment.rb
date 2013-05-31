@@ -84,7 +84,7 @@ class Assignment < ActiveRecord::Base
 
   # To get the student grade for an assignment.
   def get_student_grade student_id
-    Grade.get_grade(self.id, student_id)
+    Grade.get_grade(self.course.id, self.id, student_id)
   end
 
   def formatted_maximum_score
