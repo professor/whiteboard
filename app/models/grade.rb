@@ -367,9 +367,8 @@ private
     return encrypted_score
   end
 
-  # To load salt from yml file
   def self.salt
-    @salt = YAML.load_file("#{Rails.root}/config/salt.yml")[Rails.env]['salt']
+    ENV['WHITEBOARD_SALT'] || 'I am salt with lot of iodine'
   end
 
 end
