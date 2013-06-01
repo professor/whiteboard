@@ -133,7 +133,7 @@ class Grade < ActiveRecord::Base
       unless (grade.score.blank?)
         grade.is_student_visible = true
         grade.save
-        grade.send_feedback_to_student(hostname)
+#        grade.send_feedback_to_student(hostname)
       end
     end
   end
