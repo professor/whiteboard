@@ -7,8 +7,8 @@ class AssignmentsController < ApplicationController
   load_and_authorize_resource
 
 
-
   layout 'cmu_sv'
+
   def get_course
     @course=Course.find(params[:course_id])
     @wording = @course.nomenclature_assignment_or_deliverable
@@ -23,7 +23,7 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @assignments }
+      format.xml { render :xml => @assignments }
     end
   end
 
@@ -34,7 +34,7 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @assignment }
+      format.xml { render :xml => @assignment }
     end
   end
 
@@ -51,10 +51,10 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       if @assignment.save
         format.html { redirect_to(course_assignments_path, :notice => "#{@wording}  #{@assignment.name} was successfully created.") }
-        format.xml  { render :xml => @assignment, :status => :created, :location => @assignment }
+        format.xml { render :xml => @assignment, :status => :created, :location => @assignment }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @assignment.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -78,16 +78,16 @@ class AssignmentsController < ApplicationController
       respond_to do |format|
         if @assignment.update_attributes(params[:assignment])
           format.html { redirect_to(course_assignments_path, :notice => "Assignment #{@assignment.name} was successfully updated.") }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         else
-          format.html { render :action => "edit"}
-          format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
+          format.html { render :action => "edit" }
+          format.xml { render :xml => @assignment.errors, :status => :unprocessable_entity }
         end
       end
     else
       respond_to do |format|
-          format.html { render :action => "edit"}
-          format.xml  { render :xml => @assignment.errors, :status => :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.xml { render :xml => @assignment.errors, :status => :unprocessable_entity }
       end
     end
 
@@ -102,8 +102,29 @@ class AssignmentsController < ApplicationController
     respond_to do |format|
       format.js
     end
-
-
-
   end
+
+
+  # GET /course/assignment_reorder/1
+  def show
+    @no_pad = true
+    @assignments = @course.assignments
+
+    respond_to do |format|
+      format.html # showml.erb
+    end
+  end
+
+  #Inspiration for this technique comes from two sources
+  # A: http://awesomeful.net/posts/47-sortable-lists-with-jquery-in-rails (yield javascript, jquery ui code)
+  # B: http://henrik.nyh.se/2008/11/rails-jquery-sortables#comment-17220662 (model update code)
+
+  def reposition
+    order = params[:assignment]
+    Rails.logger.debug(order)
+    Assignment.reposition(order)
+    render :text => order.inspect
+  end
+
+
 end
