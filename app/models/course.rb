@@ -251,6 +251,8 @@ class Course < ActiveRecord::Base
     new_course.updated_at = Time.now
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
+    new_course.grading_rule = self.grading_rule.clone
+    self.assignments.each { |assignment| new_course.assignments << assignment.clone }
     return new_course
   end
 
