@@ -19,12 +19,11 @@
 # * verify_deliverables_submitted tells whether there are any deliverable submmited for this assignment. If so, the professor could not delete this assignment.
 
 
-
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :course_id, :maximum_score, :is_team_deliverable, :due_date, :assignment_order, :task_number, :is_submittable, :short_name
   attr_accessor :date, :hour, :minute
 
-  validates :maximum_score, :presence => true,  :numericality => { :greater_than_or_equal_to => 0}
+  validates :maximum_score, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
   validates_presence_of :course_id
   validates_inclusion_of :is_team_deliverable, :is_submittable, :in => [true, false]
 
@@ -34,7 +33,7 @@ class Assignment < ActiveRecord::Base
 
   before_destroy :verify_deliverables_submitted
 
-  acts_as_list :column=>"assignment_order" , :scope => [:course_id]
+  acts_as_list :column => "assignment_order", :scope => [:course_id]
   default_scope :order => 'assignment_order ASC'
 
   after_initialize :init
@@ -95,7 +94,7 @@ class Assignment < ActiveRecord::Base
   end
 
   # To get list of all the assignments for the student from the courses he has registered.
-  def self.list_assignments_for_student student_id , type= :all
+  def self.list_assignments_for_student student_id, type= :all
     student = User.find(student_id)
     courses = case type
                 when :all
@@ -104,7 +103,7 @@ class Assignment < ActiveRecord::Base
                   student.registered_for_these_courses_during_current_semester
                 when :past
                   student.registered_for_these_courses_during_past_semesters
-    end
+              end
     assignments = Assignment.unscoped.find_all_by_course_id(courses.map(&:id), :order => "course_id ASC, id ASC")
   end
 

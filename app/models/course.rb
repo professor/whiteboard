@@ -33,10 +33,10 @@ class Course < ActiveRecord::Base
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"
-  has_many :assignments ,:order => "assignment_order"
+  has_many :assignments, :order => "assignment_order"
 
 
- #----- delete this when implementing deliverable-----#
+  #----- delete this when implementing deliverable-----#
   has_many :deliverables
 
   has_many :faculty_assignments
@@ -197,7 +197,6 @@ class Course < ActiveRecord::Base
   end
 
 
-
   def self.remind_about_effort_course_list
     courses = Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => "Both").all
     courses = courses + Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => AcademicCalendar.current_mini).all
@@ -306,7 +305,6 @@ class Course < ActiveRecord::Base
   def email_faculty_to_configure_course_unless_already_configured
     CourseMailer.configure_course_faculty_email(self).deliver unless self.is_configured?
   end
-
 
 
   def nomenclature_assignment_or_deliverable
