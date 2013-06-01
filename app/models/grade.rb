@@ -60,13 +60,13 @@ class Grade < ActiveRecord::Base
   end
 
   # To fetch the entry with matching course, assignment and student.
-  def self.get_grade(assignment_id, student_id)
-    Grade.find_by_assignment_id_and_student_id(assignment_id, student_id)
+  def self.get_grade(course_id, assignment_id, student_id)
+    grade = Grade.where(course_id: course_id).where(student_id: student_id).where(:assignment_id => assignment_id).first
   end
 
   # To get the final grade of the student for a particular course.
   def self.get_final_grade(course_id, student_id)
-    grade = Grade.where(course_id: course_id).where(student_id: student_id).where(:assignment_id => -1)[0]
+    grade = Grade.where(course_id: course_id).where(student_id: student_id).where(:assignment_id => -1).first
     if grade.nil?
       ""
     else
@@ -76,8 +76,8 @@ class Grade < ActiveRecord::Base
 
   # To returns a specific grade for one assignment of given course_id, student_id and assignment_id. This function is
   #   useful for controller to test whether the score is exists or not.
-  def self.give_grade(course_id, assignment_id, student_id, score,is_student_visible=nil)
-    if assignment_id>0
+  def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible=nil)
+    if assignment_id > 0
       if Assignment.find(assignment_id).nil?
         return false
       end
@@ -87,20 +87,20 @@ class Grade < ActiveRecord::Base
     student = User.find(student_id)
     course = Course.find(course_id)
     if course.registered_students_or_on_teams.include?(student)
-      grade = Grade.get_grade(assignment_id, student_id)
+      grade = Grade.get_grade(course_id, assignment_id, student_id)
       if grade.nil?
-        grade = Grade.new({:course_id=>course_id, :assignment_id => assignment_id, :student_id=> student_id,
-                           :score =>score,:is_student_visible=>is_student_visible})
+        grade = Grade.new({:course_id => course_id, :assignment_id => assignment_id, :student_id => student_id,
+                           :score => score, :is_student_visible => is_student_visible})
       end
 
       if course.grading_rule.validate_score(score)
-        grade.score=score.upcase
+        grade.score = score.upcase
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
         end
         grading_result = grade.save
       else
-        grading_result=false
+        grading_result = false
       end
     end
     grading_result
@@ -191,7 +191,7 @@ class Grade < ActiveRecord::Base
       grade_sheet[FIRST_GRADE_ROW+i, 2] = student.last_name
       grade_sheet[FIRST_GRADE_ROW+i, 3] = self.find_student_team(course.id, student.id).try(:name)
       course.assignments.each_with_index do |assignment, j|
-        score=Grade.get_grade(assignment.id, student.id).try(:score) || ""
+        score=Grade.get_grade(course.id, assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)
           unless score.blank?
              score=score.to_f
@@ -367,9 +367,8 @@ private
     return encrypted_score
   end
 
-  # To load salt from yml file
   def self.salt
-    @salt = YAML.load_file("#{Rails.root}/config/salt.yml")[Rails.env]['salt']
+    ENV['WHITEBOARD_SALT'] || 'I am salt with lot of iodine'
   end
 
 end

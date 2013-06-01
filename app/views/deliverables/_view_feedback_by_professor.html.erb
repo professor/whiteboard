@@ -9,9 +9,9 @@
 
 
 
-<% grade_obj = Grade.get_grade(@deliverable.assignment_id, current_user.id)%>
+<% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, current_user.id)%>
 <% if grade_obj.try(:is_student_visible) || false %>
-    <p><b> Score received: </b><%= Grade.get_grade(@deliverable.assignment_id, current_user.id).try(:score) %> </p>
+    <p><b> Score received: </b><%= Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, current_user.id).try(:score) %> </p>
 <% end %>
 
 <b>Comments: </b> </br>
