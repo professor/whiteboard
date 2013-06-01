@@ -34,9 +34,8 @@ class Assignment < ActiveRecord::Base
 
   before_destroy :verify_deliverables_submitted
 
-
-  acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
-  default_scope :order => 'task_number ASC, assignment_order ASC'
+  acts_as_list :column=>"assignment_order" , :scope => [:course_id]
+  default_scope :order => 'assignment_order ASC'
 
   after_initialize :init
 
@@ -107,6 +106,11 @@ class Assignment < ActiveRecord::Base
                   student.registered_for_these_courses_during_past_semesters
     end
     assignments = Assignment.unscoped.find_all_by_course_id(courses.map(&:id), :order => "course_id ASC, id ASC")
+  end
+
+  #Re-position: change the sequence of Assignments
+  def self.reposition(ids)
+    update_all(["assignment_order = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], {:id => ids})
   end
 
   def set_due_date date, hour, minute
