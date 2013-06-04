@@ -14,12 +14,12 @@
 
             $("#course_peer_evaluation_first_email").datepicker({
               showButtonPanel: true,
-              disabled: true,
+              disabled: <%= @course.peer_evaluation_first_email.blank? %>,
               dateFormat: 'yy-mm-dd'
             });
             $("#course_peer_evaluation_second_email").datepicker({
               showButtonPanel: true,
-              disabled: true,
+              disabled: <%= @course.peer_evaluation_second_email.blank? %>,
               dateFormat: 'yy-mm-dd'
             });
 
@@ -121,7 +121,7 @@ background-color: #FFBABA;
         <% else %>
           <input type="checkbox" id="course_configure_peer_evaluation" checked="checked">
         <% end %>
-        I plan on using the Peer Evaluation Tool <br/>
+        <%= f.label :configure_peer_evaluation, "I plan on using the Peer Evaluation Tool" %><br/>
         <%= f.text_field :peer_evaluation_first_email, :size => 11, :class => "checkboxed_form" %> On this date, email
         the teams telling them about the peer evaluation. <br/>
         <%= f.text_field :peer_evaluation_second_email, :size => 11, :class => "checkboxed_form" %> Due Date (An email
