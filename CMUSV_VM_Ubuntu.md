@@ -137,7 +137,7 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         vagrant ssh
         cd /vagrant
         sudo apt-get upgrade
-        sudo apt-get install build-essential zlib1g-dev curl git-core sqlite3 libsqlite3-dev
+        sudo apt-get install build-essential zlib1g-dev curl git-core sqlite3 libsqlite3-dev nfs-kernel-server
 
 9. install ruby
 
