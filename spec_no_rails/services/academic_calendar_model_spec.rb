@@ -1,4 +1,8 @@
-require 'spec_helper'
+# require 'spec_helper'
+require 'date'
+require 'action_mailer'
+require_relative '../../app/services/academic_calendar.rb'
+require_relative '../../app/mailers/generic_mailer.rb'
 
 #
 # Note: to check future dates, use the following code. Date.new(2010, 8, 23).cweek
@@ -140,10 +144,10 @@ describe AcademicCalendar do
 
     Date.stub!(:today).and_return(Date.new(2011, 8, 29))
     AcademicCalendar.current_mini.should == "A"
-	
+
 	Date.stub!(:today).and_return(Date.new(2011, 10, 17))
 	AcademicCalendar.current_mini.should == "Unknown"
-	
+
 	Date.stub!(:today).and_return(Date.new(2011, 10, 24))
 	AcademicCalendar.current_mini.should == "B"
   end
