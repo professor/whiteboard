@@ -3,14 +3,27 @@
         $(document).ready(function () {
             $('#course_configure_peer_evaluation').change(function () {
                 if ($(this).is(':checked')) {
-                    $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>");
-                    $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>")
+                    $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>").datepicker( "option", "disabled", false);
+                    $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>").datepicker( "option", "disabled", false);
                 }
                 else {
-                    $('#course_peer_evaluation_first_email').val("");
-                    $('#course_peer_evaluation_second_email').val("");
+                    $('#course_peer_evaluation_first_email').val("").datepicker( "option", "disabled", true);
+                    $('#course_peer_evaluation_second_email').val("").datepicker( "option", "disabled", true);
                 }
             });
+
+            $("#course_peer_evaluation_first_email").datepicker({
+              showButtonPanel: true,
+              disabled: true,
+              dateFormat: 'yy-mm-dd'
+            });
+            $("#course_peer_evaluation_second_email").datepicker({
+              showButtonPanel: true,
+              disabled: true,
+              dateFormat: 'yy-mm-dd'
+            });
+
+
             $(".letter").change(function(){
                 var error = "";
                 $(".letter").each(function(){
