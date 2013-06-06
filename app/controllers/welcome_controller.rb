@@ -14,6 +14,7 @@ class WelcomeController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.mobile {render file: 'welcome/_navigation', layout: 'mobile' }
       format.xml { render :xml => @courses }
     end
   end

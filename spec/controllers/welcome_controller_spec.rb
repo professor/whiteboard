@@ -23,5 +23,12 @@ describe WelcomeController do
     end
   end
 
+  describe 'GET /index for mobile' do
+    it 'should be successful' do
+      get 'index', format: 'mobile'
+      response.should be_success
+    end
+  end
+
 end
 

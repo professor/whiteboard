@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  before_filter :make_available_for_exception_notification
+  before_filter :make_available_for_exception_notification, :prepare_for_mobile
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -15,6 +15,20 @@ class ApplicationController < ActionController::Base
     bot = /(Baidu|bot|Google|SiteUptime|Slurp|WordPress|ZIBB|ZyBorg)/i
     request.user_agent =~ bot
   end
+
+  # Reference https://github.com/rails/rails/issues/3855
+  # Add a fallback for html, for the case where, eg, 'index.html.erb' exists,
+  # but not 'index.mobile.erb'
+  class MobileFallbackResolver < ::ActionView::FileSystemResolver
+    def find_templates(name, prefix, partial, details)
+      if details[:formats] == [:mobile]
+        details = details.dup
+        details[:formats] = [:mobile, :html, :json]
+      end
+      super
+    end
+  end
+  append_view_path MobileFallbackResolver.new('app/views')
 
   private
   def get_http_referer
@@ -115,6 +129,22 @@ class ApplicationController < ActionController::Base
   #def american_date
   #  '%m/%d/%Y'
   #end
+
+  # Source: http://railscasts.com/episodes/199-mobile-devices
+  private 
+  def mobile_device?
+    if session[:mobile_param]
+      session[:mobile_param] == "1"
+    else
+      request.user_agent =~ /Mobile|webOS/
+    end
+  end
+  helper_method :mobile_device?
+
+  def prepare_for_mobile
+    session[:mobile_param] = params[:mobile] if params[:mobile]
+    request.format = :mobile if mobile_device?
+  end
 
   protected
   def make_available_for_exception_notification

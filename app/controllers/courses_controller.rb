@@ -247,6 +247,7 @@ class CoursesController < ApplicationController
   def index_core
     respond_to do |format|
       format.html { render :action => "index" }
+      format.mobile { render :action => "index" }
       format.xml { render :xml => @courses }
     end
   end

@@ -56,6 +56,7 @@ class PeopleController < ApplicationController
     @key_contact_results.uniq!
     respond_to do |format|
       format.html { render :html => @key_contact_results }
+      format.mobile { render :mobile => @key_contact_results, layout: 'mobile' }
       format.json { render :json => @key_contact_results }
     end
   end
@@ -108,6 +109,7 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
+      format.mobile { render :json =>  @people_hash, :layout => false }
       format.json { render :json =>  @people_hash, :layout => false }
     end
   end
