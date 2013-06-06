@@ -49,7 +49,7 @@ The criteria for code being accepted is as follows:
     bundle exec rake
 
     # run just fast tests
-    bundle exec rspec ./spec_no_rails/
+    rspec spec_no_rails/
 
 ## Conventions
 Please use JQuery and JQuery UI. Whenever possible, AJAX should degrade
