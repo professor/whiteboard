@@ -651,6 +651,16 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.string   "image_uri_first"
+    t.string   "image_uri_second"
+    t.string   "image_uri_custom"
+    t.string   "photo_first_file_name"
+    t.string   "photo_first_content_type"
+    t.string   "photo_second_file_name"
+    t.string   "photo_second_content_type"
+    t.string   "photo_custom_file_name"
+    t.string   "photo_custom_content_type"
+    t.string   "photo_selection"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -705,7 +715,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count",                                        :default => 0,                    :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -731,6 +741,16 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.string   "image_uri_first",                                      :default => "/images/mascot.jpg"
+    t.string   "image_uri_second",                                     :default => "/images/mascot.jpg"
+    t.string   "image_uri_custom",                                     :default => "/images/mascot.jpg"
+    t.string   "photo_first_file_name"
+    t.string   "photo_first_content_type"
+    t.string   "photo_second_file_name"
+    t.string   "photo_second_content_type"
+    t.string   "photo_custom_file_name"
+    t.string   "photo_custom_content_type"
+    t.string   "photo_selection"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
