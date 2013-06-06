@@ -76,6 +76,7 @@ CMUEducation::Application.routes.draw do
         post :reposition
         get :changed
       end
+      member {post :revert}
     end
   end
 
