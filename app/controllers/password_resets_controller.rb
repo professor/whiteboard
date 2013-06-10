@@ -43,7 +43,7 @@ class PasswordResetsController < ApplicationController
               flash[:notice] = "Password has been reset!"
               format.html {redirect_to root_url}
             else
-              flash[:error]="Operation was unsuccessful."
+              flash[:error]="Password reset was unsuccessful."
               redirect_to edit_password_reset_path and return
             end
         end
