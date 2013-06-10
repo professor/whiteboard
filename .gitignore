@@ -12,6 +12,7 @@ config/google_apps.yml
 config/morning_glory.yml
 config/systems.cc.yml.yml
 config/systems.yml
+config/active_directory.yml
 
 coverage/*
 nbproject/*
