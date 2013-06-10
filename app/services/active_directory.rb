@@ -1,7 +1,7 @@
 require 'net/ldap'
 
 # This class provides active directory services
-class ActiveDirectory
+class ActiveDirectoryServices
 
   # Initialize connection to active directory
   def self.initialize

@@ -285,8 +285,8 @@ class User < ActiveRecord::Base
       end
 
       # Attempt to create active directory account
-      active_directory_service = ActiveDirectory.new
-      if active_directory_service.create_account(self) == "Success"
+      active_directory_services = ActiveDirectoryServices.new
+      if active_directory_services.create_account(self) == "Success"
         self.active_directory_account_created_at = Time.now()
         self.save
       end
