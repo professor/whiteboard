@@ -4,7 +4,7 @@ describe Grade do
   before(:each) do
     @student_sam = FactoryGirl.create(:student_sam_user)
     @course_fse = FactoryGirl.create(:course_fse_with_students, registered_students: [@student_sam])
-    @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id=> @course_fse.id)
+    @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id => @course_fse.id)
     @course_fse.grading_rule = @course_grading_rule
     @course_grading_rule.save
 
@@ -100,7 +100,7 @@ describe Grade do
     it 'should be able to fetch one student\'s grade earned from one assignment' do
       @grade.save
       score_value = {:course_id=>@course_fse.id, :student_id=>@student_sam.id, :assignment_id=>@assignment_1.id}
-      one_grade = Grade.get_grade(@assignment_1.id, @student_sam.id)
+      one_grade = Grade.get_grade(@course_fse.id, @assignment_1.id, @student_sam.id)
       @grade.eql?(one_grade)
     end
 
@@ -146,5 +146,21 @@ describe Grade do
       score = "A"
       Grade.give_grade(@course_fse.id, -1, @student_sam.id, score).should be_true
     end
+
+    it "when given, should not update other course grades" do
+      Course.any_instance.stub(:update_distribution_list).and_return(true)
+      @course_ise = FactoryGirl.create(:course_ise_with_students, registered_students: [@student_sam])
+      @ise_grading_rule = FactoryGirl.build_stubbed(:grading_rule_points, :course_id => @course_ise.id)
+      @course_ise.grading_rule.stub(:validate_score).and_return(true)
+
+      fse_final_grade = "B+"
+      ise_final_grade = "A-"
+      Grade.give_grade(@course_fse.id, -1, @student_sam.id, fse_final_grade).should be_true
+      Grade.give_grade(@course_ise.id, -1, @student_sam.id, ise_final_grade).should be_true
+      Grade.get_final_grade(@course_fse.id, @student_sam.id).should eql(fse_final_grade)
+      Grade.get_final_grade(@course_ise.id, @student_sam.id).should eql(ise_final_grade)
+
+    end
+
   end
 end
