@@ -129,35 +129,35 @@ describe Deliverable do
 
     it "is visible if the grade is published" do
       grade = FactoryGirl.build(:grade_visible)
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
       @deliverable.is_visible_to_student?.should be_true
     end
 
     it "is invisible if the grade is not published" do
       grade = FactoryGirl.build(:grade_invisible)
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
       @deliverable.is_visible_to_student?.should be_false
     end
 
     it "is invisible if it is not graded" do
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
       @deliverable.is_visible_to_student?.should be_false
     end
     
     it "is graded if grade is given and published" do
       grade = FactoryGirl.build(:grade_visible)
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
       @deliverable.get_grade_status.should eq(:graded)
     end
     
     it "is ungraded if grade is not given" do
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
       @deliverable.get_grade_status.should eq(:ungraded)
     end
     
     it "is drafted if grade is given but not published" do
       grade = FactoryGirl.build(:grade_invisible)
-      Grade.stub(:get_grade).with(@deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
       @deliverable.get_grade_status.should eq(:drafted)
     end
   end
@@ -170,7 +170,7 @@ describe Deliverable do
     it "is graded if all of members' grades are given and published" do
       @deliverable.team.members.each do | member |
         grade = FactoryGirl.build(:grade_visible, :student_id => member.id)
-        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
       end
       @deliverable.get_grade_status.should eq(:graded)
     end
@@ -179,14 +179,14 @@ describe Deliverable do
       grade = FactoryGirl.build(:grade_invisible)
       @deliverable.team.members.each do | member |
         grade = FactoryGirl.build(:grade_invisible, :student_id => member.id)
-        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(grade)
+        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
       end
       @deliverable.get_grade_status.should eq(:drafted)
     end
     
     it "is ungraded if any of the member's grade is not given" do
       @deliverable.team.members.each do | member |
-        Grade.stub(:get_grade).with(@deliverable.assignment.id, member.id).and_return(nil)
+        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(nil)
       end
       @deliverable.get_grade_status.should eq(:ungraded)
     end

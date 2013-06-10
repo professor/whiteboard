@@ -60,11 +60,14 @@ CMUEducation::Application.routes.draw do
   match '/course/:course_id/grades/save' => 'grades#save', :as=>:save, :via => :post
   match '/course/:course_id/grades/export' => 'grades#export', :as=>:export, :via => :post
   match '/course/:course_id/grades/import' => 'grades#import', :as=>:import, :via => :post
+
   resources :courses do
     resources :assignments
     resources :grades
   end
 
+  match '/course/:course_id/assignments/reposition' => 'assignments#show', :as=>:assignments_show, :via => :get
+  match '/course/:course_id/assignments/reposition' => 'assignments#reposition', :as=>:assignments_reposition, :via => :post
 
   constraints({:id => /.*/}) do
     resources :mailing_lists
@@ -73,6 +76,7 @@ CMUEducation::Application.routes.draw do
         post :reposition
         get :changed
       end
+      member {post :revert}
     end
   end
 

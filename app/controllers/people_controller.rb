@@ -186,6 +186,7 @@ class PeopleController < ApplicationController
     @person.webiso_account = params[:webiso_account]
     @person.personal_email = params[:personal_email]
     @person.is_student = params[:is_student]
+    @person.is_staff = params[:is_staff]
     @person.first_name = params[:first_name]
     @person.last_name = params[:last_name]
     @person.masters_program = params[:program]

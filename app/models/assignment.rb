@@ -19,12 +19,11 @@
 # * verify_deliverables_submitted tells whether there are any deliverable submmited for this assignment. If so, the professor could not delete this assignment.
 
 
-
 class Assignment < ActiveRecord::Base
   attr_accessible :name, :course_id, :maximum_score, :is_team_deliverable, :due_date, :assignment_order, :task_number, :is_submittable, :short_name
   attr_accessor :date, :hour, :minute
 
-  validates :maximum_score, :presence => true,  :numericality => { :greater_than_or_equal_to => 0}
+  validates :maximum_score, :presence => true, :numericality => {:greater_than_or_equal_to => 0}
   validates_presence_of :course_id
   validates_inclusion_of :is_team_deliverable, :is_submittable, :in => [true, false]
 
@@ -34,9 +33,8 @@ class Assignment < ActiveRecord::Base
 
   before_destroy :verify_deliverables_submitted
 
-
-  acts_as_list :column=>"assignment_order", :scope => [:course_id, :task_number]
-  default_scope :order => 'task_number ASC, assignment_order ASC'
+  acts_as_list :column => "assignment_order", :scope => [:course_id]
+  default_scope :order => 'assignment_order ASC'
 
   after_initialize :init
 
@@ -84,7 +82,7 @@ class Assignment < ActiveRecord::Base
 
   # To get the student grade for an assignment.
   def get_student_grade student_id
-    Grade.get_grade(self.id, student_id)
+    Grade.get_grade(self.course.id, self.id, student_id)
   end
 
   def formatted_maximum_score
@@ -96,7 +94,7 @@ class Assignment < ActiveRecord::Base
   end
 
   # To get list of all the assignments for the student from the courses he has registered.
-  def self.list_assignments_for_student student_id , type= :all
+  def self.list_assignments_for_student student_id, type= :all
     student = User.find(student_id)
     courses = case type
                 when :all
@@ -105,8 +103,13 @@ class Assignment < ActiveRecord::Base
                   student.registered_for_these_courses_during_current_semester
                 when :past
                   student.registered_for_these_courses_during_past_semesters
-    end
+              end
     assignments = Assignment.unscoped.find_all_by_course_id(courses.map(&:id), :order => "course_id ASC, id ASC")
+  end
+
+  #Re-position: change the sequence of Assignments
+  def self.reposition(ids)
+    update_all(["assignment_order = STRPOS(?, ','||id||',')", ",#{ids.join(',')},"], {:id => ids})
   end
 
   def set_due_date date, hour, minute

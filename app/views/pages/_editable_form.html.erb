@@ -1,4 +1,8 @@
+<%= stylesheet_link_tag "alertify.core.css", media: "all" %>
+<%= stylesheet_link_tag "alertify.default.css", media: "all" %>
+
 <%= javascript_include_tag "ajax-error.js" %>
+<%= javascript_include_tag "alertify.min.js" %>
 <%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
 <%= javascript_include_tag 'jquery.cookie' %>
 
@@ -90,7 +94,7 @@
 
     function enableFiveMinuteTimeout() {
         setInterval(function () {
-            console.log("current_time  " + current_time() + "     time_since_last_key_down  " + time_since_last_key_down)
+            // console.log("current_time  " + current_time() + "     time_since_last_key_down  " + time_since_last_key_down)
             if((current_time() - time_since_last_key_down) >= (5 * 60 * 1000)) {
                 $("#timeout-flag").val("true");
                 // Disable popup warning user that they are leaving the page.
@@ -124,6 +128,7 @@
 
         if (auto_save_enabled) {
             enableAutoSave();
+            alertify.log("Auto save is enabled. We'll save your changes every 10 seconds");
         }
 
         if (timeout_enabled) {

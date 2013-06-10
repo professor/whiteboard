@@ -154,7 +154,7 @@ set_up_course(course_req)
 team_cooper = Team.find_by_name("Cooper")
 assignment_validation = Assignment.find_by_name("Elaboration and Validation")
 team_cooper.members.each do |member|
-  grade = Grade.get_grade(assignment_validation.id, member.id)
+  grade = Grade.get_grade(course_req.id, assignment_validation.id, member.id)
   grade.destroy
 end
 

@@ -1,4 +1,8 @@
+<%= stylesheet_link_tag "alertify.core.css", media: "all" %>
+<%= stylesheet_link_tag "alertify.default.css", media: "all" %>
+
 <%= javascript_include_tag "ajax-error.js" %>
+<%= javascript_include_tag "alertify.min.js" %>
 
 <% content_for :title, 'Peer evaluation for ' + @team.name %>
 <% content_for :javascript do %>
@@ -44,6 +48,8 @@
             $("#new_peer_evaluation_review").on('keydown', 'textarea', function(){
                 isUpdated = true;
             });
+
+            alertify.log("Auto save is enabled. We'll save your changes every 10 seconds");
 
         });
 

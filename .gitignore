@@ -3,17 +3,14 @@ db/*.sqlite3
 log/*.log
 tmp/
 
-.svn
 .gems
-.gems_old
 20090827190915_mfse_add_people.rb
 
+config/amazon_s3.yml
 config/database.yml
 config/google_apps.yml
-config/amazon_s3.yml
 config/morning_glory.yml
 config/systems.cc.yml.yml
-config/adobe_cnnect.yml
 config/systems.yml
 config/active_directory.yml
 
@@ -28,9 +25,6 @@ coverage/*
 
 README_personal
 
-#sensitive student info
-#db/migrate/2008*
-#db/migrate/2009*
 public/images/staff/*
 public/images/students/*
 
