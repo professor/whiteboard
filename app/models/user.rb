@@ -263,6 +263,34 @@ class User < ActiveRecord::Base
   end
 
   #
+  # Creates an Active Directory account for the user
+  # If this fails, it returns an error message as a string, else it returns true
+  #
+  def create_active_directory_account
+      # reject blank emails
+      return "Empty email address" if self.email.blank?
+
+      # log what is happening
+      logger.debug("Attempting to create active directory account for " + self.email)
+
+      # extract domain from email
+      domain = self.email.split('@')[1]
+
+      # Confirm domain name accuracy
+      if domain != GOOGLE_DOMAIN
+        logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+        return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
+      end
+
+      # Attempt to create active directory account
+      active_directory_service = ActiveDirectory.new
+      if active_directory_service.create_account(self) == "Success"
+        self.active_directory_account_created = Time.now()
+        self.save
+      end
+  end
+
+  #
   # Creates a twiki account for the user
   #
   # You may need to modify mechanize as seen here

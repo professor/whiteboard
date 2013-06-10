@@ -1,0 +1,21 @@
+# Specify host, username and password
+development:
+  host: anyhost
+  port: 636 # For SSL connection
+  username: anyone
+  password: anysecret
+  encrypted: True
+
+# Needs no modification
+test:
+  host: "127.0.0.1"
+  port: 3897 # For Testing LDAP with Ladle
+  encrypted: False
+
+# Specify host, username and password
+production:
+  host: anyhost
+  port: 636 # For SSL connection
+  username: anyone
+  password: anysecret
+  encrypted: True
