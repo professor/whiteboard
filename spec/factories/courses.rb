@@ -5,7 +5,17 @@ FactoryGirl.define do
     short_name 'FSE'
   end
 
-  factory :course_fse_with_students, :parent=>:fse do  |c|
+  factory :ise, :parent => :course do
+    name 'Introduction to Software Engineering'
+    short_name 'ISE'
+  end
+
+  factory :course_fse_with_students, :parent => :fse do  |c|
+    registered_students { |registered_students| [registered_students.association(:team_member)] }
+    c.after(:build) {|c| c.registered_students.each  { |s|  FactoryGirl.build(:registration, :course_id=>c.id, :user_id => s.id) } }
+  end
+
+  factory :course_ise_with_students, :parent => :ise do  |c|
     registered_students { |registered_students| [registered_students.association(:team_member)] }
     c.after(:build) {|c| c.registered_students.each  { |s|  FactoryGirl.build(:registration, :course_id=>c.id, :user_id => s.id) } }
   end

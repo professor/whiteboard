@@ -74,7 +74,7 @@ describe "deliverables" do
           visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
         }
 
-        it "it should save when an attachment is present", :skip_on_local_machine => false do
+        it "it should save when an attachment is present", :skip_on_build_machine => true do
           attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
           expect { click_button 'Create' }.to change(Deliverable, :count).by(1)
         end
