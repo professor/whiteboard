@@ -651,7 +651,6 @@ ActiveRecord::Schema.define(:version => 20130521194045) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
-    t.datetime "active_directory_account_created"
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
