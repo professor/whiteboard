@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ActiveDirectory" do
+describe "ActiveDirectoryServices" do
 
   before do
     @ldap_server = Ladle::Server.new(:quiet => true, :port=>3897).start
