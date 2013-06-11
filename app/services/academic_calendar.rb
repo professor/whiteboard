@@ -19,7 +19,6 @@ class AcademicCalendar
   end
 
   def self.current_semester
-    return "Spring"
     return "Spring" if Date.today <= AcademicCalendar.grades_due_for("Spring", Date.today.year)
     return "Summer" if Date.today <= AcademicCalendar.grades_due_for("Summer", Date.today.year)
     return "Fall"   if Date.today <= AcademicCalendar.grades_due_for("Fall", Date.today.year)
