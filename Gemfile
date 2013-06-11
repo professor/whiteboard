@@ -40,6 +40,10 @@ gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
 
+gem 'net-ldap'
+
+gem "recaptcha", :require => "recaptcha/rails"
+
 gem 'cancan'
 
 # gem 'smtp_tls'           # Used for sending mail to gmail
@@ -80,6 +84,7 @@ group :development, :test do
   gem 'capybara', '1.1.1'
   gem 'jasmine'
   gem 'launchy'
+  gem 'ladle', '~> 0.2.0'
 
 #  gem 'morning_glory'
 

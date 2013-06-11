@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
   before_save :person_before_save,
               :update_is_profile_valid
 
+  before_create { generate_token(:auth_token) }
+
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
 
@@ -263,6 +265,34 @@ class User < ActiveRecord::Base
   end
 
   #
+  # Creates an Active Directory account for the user
+  # If this fails, it returns an error message as a string, else it returns true
+  #
+  def create_active_directory_account
+      # reject blank emails
+      return "Empty email address" if self.email.blank?
+
+      # log what is happening
+      logger.debug("Attempting to create active directory account for " + self.email)
+
+      # extract domain from email
+      domain = self.email.split('@')[1]
+
+      # Confirm domain name accuracy
+      if domain != GOOGLE_DOMAIN
+        logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+        return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
+      end
+
+      # Attempt to create active directory account
+      active_directory_services = ActiveDirectoryServices.new
+      if active_directory_services.create_account(self) == "Success"
+        self.active_directory_account_created_at = Time.now()
+        self.save
+      end
+  end
+
+  #
   # Creates a twiki account for the user
   #
   # You may need to modify mechanize as seen here
@@ -395,6 +425,13 @@ class User < ActiveRecord::Base
       }
       GenericMailer.email(options).deliver
     end
+  end
+
+  # Generate password reset token
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
   end
 
   protected

@@ -1,0 +1,21 @@
+<%= javascript_include_tag 'password_reset' %>
+
+<%= form_for @user, { :url => password_reset_path(params[:id]) }  do |f| %>
+    <p>
+    <h1> <%=@user.human_name %> </h1>
+    </p>
+    <p>
+      <b>Instructions</b>
+      <br/>Your new password must have a digit character, a capital letter, and a minimum of eight characters.
+    </p>
+    <p>
+      <label for="p" class="screen-reader-text">New password:</label><br/>
+      <input type="password" id="newPassword" name="newPassword" value="">
+    </p>
+    <p>
+      <label for="p" class="screen-reader-text">Confirm password:</label><br/>
+      <input type="password" id="confirmPassword" name="confirmPassword" value="">
+    </p>
+    <div id="password_mismatch_warning"></div> <br/>
+    <div class="actions"><%= f.submit "Update Password", :onclick=>"return validateEditForm()" %></div>
+<% end %>

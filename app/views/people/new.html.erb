@@ -185,6 +185,7 @@
       <%= f.label :email %><br/>
       <%= f.text_field :email, :onblur => "check_email()" %>
       <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
+      <%= check_box_tag("create_active_directory_account", 1, false) %> Create active directory account?
       <div id="email_warning"></div>
     </p>
     <p>
