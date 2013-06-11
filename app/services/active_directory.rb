@@ -90,7 +90,7 @@ class ActiveDirectoryServices
       @connection.replace_attribute distinguished_name, :unicodePwd, password_encode(new_pass)
       return @connection.get_operation_result.message
     else
-      return false
+      return true
     end
   end
 end

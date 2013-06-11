@@ -16,13 +16,14 @@ describe PasswordResetsController do
       @student_sam = FactoryGirl.create(:student_sam_user,
                                         :password_reset_token=>"ToKeN",
                                         :password_reset_sent_at=>Time.now)
+        @active_directory_services = ActiveDirectoryServices.new
     end
 
     context "valid personal email" do
       it 'should send password reset instructions' do
         User.stub(:find_by_email) { @student_sam }
-        ActiveDirectory.stub(:new) { @active_directory_service }
-        @active_directory_service.should_receive(:send_password_reset_token)
+        ActiveDirectoryServices.stub(:new) { @active_directory_services }
+        @active_directory_services.should_receive(:send_password_reset_token)
         post :create, :primaryEmail=>@student_sam.email
       end
     end
@@ -58,7 +59,8 @@ describe PasswordResetsController do
       @student_sam = FactoryGirl.create(:student_sam_user,
                                         :password_reset_token=>"ToKeN",
                                         :password_reset_sent_at=>Time.now)
-      ActiveDirectory.stub(:new) { @active_directory_service }
+      @active_directory_services = ActiveDirectoryServices.new
+      ActiveDirectoryServices.stub(:new).and_return(@active_directory_services)
     end
     after do
       @ldap_server.stop if @ldap_server
@@ -66,7 +68,7 @@ describe PasswordResetsController do
 
     context "success" do
       before do
-        @active_directory_service.should_receive(:reset_password).with(@student_sam, "newPass") { "Success" }
+        @active_directory_services.stub(:reset_password).with(@student_sam, "newPass").and_return("Success")
         put :update, :id => @student_sam.password_reset_token, :newPassword=>"newPass"
       end
       it 'should flash notice with success' do
@@ -79,7 +81,7 @@ describe PasswordResetsController do
 
     context "failure" do
       before do
-        @active_directory_service.should_receive(:reset_password).with(@student_sam, "newPass") { "Any other message" }
+        @active_directory_services.stub(:reset_password).with(@student_sam, "newPass").and_return("Any other message")
         put :update, :id => @student_sam.password_reset_token, :newPassword=>"newPass"
       end
       it 'should flash error' do
