@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521194045) do
+ActiveRecord::Schema.define(:version => 20130520033431) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -651,9 +651,6 @@ ActiveRecord::Schema.define(:version => 20130521194045) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
-    t.string   "auth_token"
-    t.string   "password_reset_token"
-    t.datetime "password_reset_sent_at"
     t.datetime "active_directory_account_created_at"
   end
 
@@ -709,7 +706,7 @@ ActiveRecord::Schema.define(:version => 20130521194045) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count",                                        :default => 0,                    :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -735,9 +732,6 @@ ActiveRecord::Schema.define(:version => 20130521194045) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
-    t.string   "auth_token"
-    t.string   "password_reset_token"
-    t.datetime "password_reset_sent_at"
     t.datetime "active_directory_account_created_at"
   end
 
