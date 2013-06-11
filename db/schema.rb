@@ -652,6 +652,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
     t.datetime "active_directory_account_created_at"
+
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -733,6 +734,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
     t.datetime "active_directory_account_created_at"
+
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

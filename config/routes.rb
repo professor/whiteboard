@@ -1,5 +1,6 @@
 CMUEducation::Application.routes.draw do
 
+
   #temporary for Mel
   match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course', :as => :individual_deliverables
   match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course', :as => :team_deliverables
@@ -15,6 +16,8 @@ CMUEducation::Application.routes.draw do
 
   resources :search, :only => [:index]
   #get    "/deliverables/get_assignments_for_student(.:format)" =>  "deliverables#get_assignments_for_student"
+
+  resources :password_resets
 
   match '/deliverables/get_assignments_for_student(.:format)'=> 'deliverables#get_assignments_for_student' ,:as=> :get_assignments_for_student
   resources :deliverables
