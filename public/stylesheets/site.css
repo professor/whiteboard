@@ -858,3 +858,6 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  #course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
  #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
  #course_tools .item-wrapper.links .item-icon {display: none;}
+ 
+ /* css for page history */
+ #history_table, #history_table td { border: 0; }

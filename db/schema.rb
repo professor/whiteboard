@@ -651,6 +651,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.datetime "active_directory_account_created_at"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -705,7 +706,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count",                                        :default => 0,                    :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -731,6 +732,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.datetime "active_directory_account_created_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -1,14 +1,35 @@
 <h2>Version History</h2>
-<% @page.versions.reverse_each do |version| %>
-    <%= link_to "Version #{version.number}", :version => version.number %> by <%= version.user.human_name %> <%= time_ago_in_words(version.updated_at) %> ago
-    <br/>
-<% end %>
-<% if @page.versions.size == 0 %>
-    There is no history for this page.
-<% else %>
-    <%= link_to "Version 1", :version => 1 %> <%= time_ago_in_words(@page.created_at) %> ago<br/>
-<% end %>
-
-<br/>
+<% versions = @page.versions.sort_by { |version| version.number} %>
+<table id="history_table">
+	<% versions.reverse_each do |version| %>
+		<tr>
+			<td>
+				<%= link_to "Version #{version.number}", :version => version.number %> by <%= version.user.human_name %> 
+				<%= time_ago_in_words(version.updated_at) %> ago
+				<% if version.reverted_from %> 
+					(Reverted from Version <%= version.reverted_from %>) 
+				<% end %>
+			</td>
+			<% if @page.editable?(current_user) %>
+				<td>				
+					<%= link_to "Revert to this version", revert_page_path(:version => version.number), :method => "post" unless @page.version == version.number %>	
+				</td>
+			<% end %>
+		</tr>
+	<% end %>
+	<tr>
+		<% if @page.versions.size == 0 %> 
+			There is no history for this page.
+		<% else %>
+			<td>
+				<%= link_to "Version 1", :version => 1 %> <%= time_ago_in_words(@page.created_at) %> ago 
+			</td>
+			<% if @page.editable?(current_user) %>
+				<td>
+					<%= link_to "Revert to this version", revert_page_path(:version => 1), :method => "post" unless @page.version == 1 %>	
+				</td>
+			<% end %>
+		<% end %>
+	</tr>
+</table> <br />
 <%= link_to "Back", @page %>
-<br/>

@@ -262,6 +262,8 @@ class User < ActiveRecord::Base
     return(user)
   end
 
+
+
   #
   # Creates a twiki account for the user
   #
