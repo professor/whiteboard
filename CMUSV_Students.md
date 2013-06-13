@@ -1,7 +1,6 @@
 CMU-SV Students
 ===============
 
-
 ## Getting Started for Students
 1. install rails using railsinstaller.org        
 1. rvm install ruby-1.9.2-p180
