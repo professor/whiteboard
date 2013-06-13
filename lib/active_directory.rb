@@ -108,7 +108,7 @@ class ActiveDirectory
   # Send active directory password reset token
   def send_password_reset_token(user)
     user.set_password_reset_token
-    self.password_reset_sent_at = Time.zone.now
+    user.password_reset_sent_at = Time.zone.now
     user.save!
     PasswordMailer.password_reset(user).deliver
   end
