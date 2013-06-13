@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   #, :database_authenticatable, :registerable,
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_content_type, :photo_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid,  :current_sign_in_ip
-  #These attributes are not accessible , :created_at, :current_sign_in_at, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
+  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_first_content_type, :photo_first_file_name, :photo_second_content_type, :photo_second_file_name, :photo_custom_content_type, :photo_custom_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid, :image_uri_first, :image_uri_second, :image_uri_custom, :photo_selection
+  #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
   acts_as_versioned :table_name => 'user_versions', :foreign_key => :user_id, :if => Proc.new { |user| !(user.effort_log_warning_email_changed? ||
@@ -48,10 +48,16 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
 
-  has_attached_file :photo, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/photo/:id/:style/:filename"
-  validates_attachment_content_type :photo, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo.file?"
+  has_attached_file :photo_first, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_first/:style/:filename"
+  has_attached_file :photo_second, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_second/:style/:filename"
+  has_attached_file :photo_custom, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
+                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_custom/:style/:filename"
 
+  validates_attachment_content_type :photo_first, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_first.file?"
+  validates_attachment_content_type :photo_second, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_second.file?"
+  validates_attachment_content_type :photo_custom, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_custom.file?"
 
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
 
@@ -405,12 +411,23 @@ class User < ActiveRecord::Base
     self.human_name = self.first_name + " " + self.last_name if self.human_name.blank?
     self.email = self.first_name.gsub(" ", "") + "." + self.last_name.gsub(" ", "") + "@sv.cmu.edu" if self.email.blank?
 
-    logger.debug("self.photo.blank? #{self.photo.blank?}")
-    logger.debug("photo.url #{photo.url}")
     # update the image_uri if a photo was uploaded
-    self.image_uri = self.photo.url(:profile).split('?')[0] unless (self.photo.blank? || self.photo.url == "/photos/original/missing.png")
 
-    Rails.logger.info("User#person_before_save id: #{self.id} changed attributes: #{self.changed}")
+    self.image_uri_first = self.photo_first.url(:profile).split('?')[0] unless (self.photo_first.blank? || self.photo_first.url == "/photo_firsts/original/missing.png")
+    self.image_uri_second = self.photo_second.url(:profile).split('?')[0] unless (self.photo_second.blank? || self.photo_second.url == "/photo_seconds/original/missing.png")
+    self.image_uri_custom = self.photo_custom.url(:profile).split('?')[0] unless (self.photo_custom.blank? || self.photo_custom.url == "/photo_customs/original/missing.png")
+
+    case self.photo_selection
+      when "first"
+        self.image_uri = self.image_uri_first
+      when "second"
+        self.image_uri = self.image_uri_second
+      when "custom"
+        self.image_uri = self.image_uri_custom
+      when "anonymous"
+        self.image_uri = "/images/mascot.jpg"
+    end
+
   end
 
   def update_is_profile_valid

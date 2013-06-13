@@ -86,7 +86,7 @@
             <td>
               <% team.members.each do |user| %>
                   <% if show_student_photos %>
-                      <%= render :partial => 'people/twiki_photo_link', :locals => {:person => user} %>
+                      <%= render :partial => 'people/profile_photo', :locals => {:person => user} %>
                   <% else %>
                       <%= link_to user.human_name, person_path(user.twiki_name) %>
                   <% end %>

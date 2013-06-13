@@ -28,9 +28,9 @@ class Ability
     end
 
     if (user.is_admin? || user.human_name == "Kaushik Gopal")
-      can :upload_photo, User
+      can :upload_official_photo, User
     else
-      cannot :upload_photo, User
+      cannot :upload_official_photo, User
     end
 
     #Contracts manager

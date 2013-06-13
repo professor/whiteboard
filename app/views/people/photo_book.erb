@@ -5,6 +5,6 @@
 <%# link_to 'See advanced', :action=>'advanced' %></div>
 
 <% for person in @people %>
-    <div width="200"><%= render :partial => 'people/twiki_photo_link', :locals => {:person => person} %></div>
+    <div width="200"><%= render :partial => 'people/profile_photo', :locals => {:person => person} %></div>
 <% end %>
 <br/>

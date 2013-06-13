@@ -651,6 +651,16 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.string   "image_uri_first"
+    t.string   "image_uri_second"
+    t.string   "image_uri_custom"
+    t.string   "photo_first_file_name"
+    t.string   "photo_first_content_type"
+    t.string   "photo_second_file_name"
+    t.string   "photo_second_content_type"
+    t.string   "photo_custom_file_name"
+    t.string   "photo_custom_content_type"
+    t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
   end
 
@@ -732,6 +742,16 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "google_plus"
     t.datetime "people_search_first_accessed_at"
     t.boolean  "is_profile_valid"
+    t.string   "image_uri_first",                                      :default => "/images/mascot.jpg"
+    t.string   "image_uri_second",                                     :default => "/images/mascot.jpg"
+    t.string   "image_uri_custom",                                     :default => "/images/mascot.jpg"
+    t.string   "photo_first_file_name"
+    t.string   "photo_first_content_type"
+    t.string   "photo_second_file_name"
+    t.string   "photo_second_content_type"
+    t.string   "photo_custom_file_name"
+    t.string   "photo_custom_content_type"
+    t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
   end
 
