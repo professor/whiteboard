@@ -16,21 +16,21 @@ describe PeopleController do
       it "can upload first photo" do
         @faculty_frank.photo_first = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
-        User.find(@faculty_frank.id).image_uri_first.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_first.should include "people/46/photo_first/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "can upload second photo" do
         @faculty_frank.photo_second = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
-        User.find(@faculty_frank.id).image_uri_second.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_second.should include "people/46/photo_second/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "can upload custom photo" do
         @faculty_frank.photo_custom = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_custom => @faculty_frank.photo_custom}) }
-        User.find(@faculty_frank.id).image_uri_custom.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_custom.should include "people/46/photo_custom/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -38,7 +38,7 @@ describe PeopleController do
         @faculty_frank.photo_first = @photo
         @faculty_frank.photo_selection = "first"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_first/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -46,7 +46,7 @@ describe PeopleController do
         @faculty_frank.photo_second = @photo
         @faculty_frank.photo_selection = "second"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_second/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -54,14 +54,14 @@ describe PeopleController do
         @faculty_frank.photo_custom = @photo
         @faculty_frank.photo_selection = "custom"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_custom}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_custom/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "can select anonymous photo" do
         @faculty_frank.photo_selection = "anonymous"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
-        User.find(@faculty_frank.id).image_uri.should == "/images/mascot.jpg"
+        User.find(@faculty_frank.id).image_uri.should include "/images/mascot.jpg"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
     end
@@ -77,7 +77,7 @@ describe PeopleController do
     # describe "GET index" do
     #   it "should assign all active people to people" do
     #     get :index
-    #     assigns(:people).should == [@student_sam]
+    #     assigns(:people).should  == [@student_sam]
     #   end
 
     #   it "should sort people by name" do
@@ -94,21 +94,21 @@ describe PeopleController do
       it "cannot upload first photo" do
         @faculty_frank.photo_first = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
-        User.find(@faculty_frank.id).image_uri_first.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_first.should include "people/46/photo_first/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "cannot upload second photo" do
         @faculty_frank.photo_second = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
-        User.find(@faculty_frank.id).image_uri_second.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_second.should include "people/46/photo_second/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "can upload custom photo" do
         @faculty_frank.photo_custom = @photo
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_custom => @faculty_frank.photo_custom}) }
-        User.find(@faculty_frank.id).image_uri_custom.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri_custom.should include "people/46/photo_custom/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -116,7 +116,7 @@ describe PeopleController do
         @faculty_frank.photo_first = @photo
         @faculty_frank.photo_selection = "first"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_first}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_first/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_first/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -124,7 +124,7 @@ describe PeopleController do
         @faculty_frank.photo_second = @photo
         @faculty_frank.photo_selection = "second"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_second => @faculty_frank.photo_second}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_second/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_second/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
@@ -132,14 +132,14 @@ describe PeopleController do
         @faculty_frank.photo_custom = @photo
         @faculty_frank.photo_selection = "custom"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes.merge({:photo_first => @faculty_frank.photo_custom}) }
-        User.find(@faculty_frank.id).image_uri.should == "http://s3.amazonaws.com/cmusv-rails-mfse-test/people/photo_custom/46/profile/sample_photo.png"
+        User.find(@faculty_frank.id).image_uri.should include "people/46/photo_custom/profile/sample_photo.png"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
 
       it "can select anonymous photo" do
         @faculty_frank.photo_selection = "anonymous"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
-        User.find(@faculty_frank.id).image_uri.should == "/images/mascot.jpg"
+        User.find(@faculty_frank.id).image_uri.should include "/images/mascot.jpg"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
     end

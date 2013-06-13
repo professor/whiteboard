@@ -79,12 +79,29 @@
     :url => people_photo_upload_path(@person) do |f| %>
     <div id="dialog">
       <div class="photo-profile">
+        <div id="photo-custom" class="image-candidates">
+          <p>
+            Your Own Photo
+          </p>
+          <div class="image-candidate">
+            <%= image_tag(@person.image_uri_custom, :class=>"user_profile_photo") %>
+          </div>
+          <div class="image-action">
+            <div class="use-this-photo">
+              <%= f.radio_button :photo_selection, 'custom', :checked => 'custom' == @person.photo_selection %>Use this photo
+            </div>
+            <div class="upload-new-photo">
+              <%= f.label :upload_new_photo, "Upload new photo" %>
+              <%= f.file_field :photo_custom %>
+            </div>
+          </div>
+        </div>
         <div id="photo-first" class="image-candidates">
           <p>
-            Photo 1
+            Taken at Orientation
           </p>  
           <div class="image-candidate">
-            <%= image_tag(@person.image_uri_first,:class=>"user_profile_photo") %>
+            <%= image_tag(@person.image_uri_first, :class=>"user_profile_photo") %>
           </div>
           <div class="image-action">
             <div class="use-this-photo">
@@ -100,10 +117,10 @@
         </div>
         <div id="photo-second" class="image-candidates">
           <p>
-            Photo 2
+            Taken at Orientation
           </p>
           <div class="image-candidate">
-            <%= image_tag(@person.image_uri_second,:class=>"user_profile_photo") %>
+            <%= image_tag(@person.image_uri_second, :class=>"user_profile_photo") %>
           </div>
           <div class="image-action">
             <div class="use-this-photo">
@@ -115,23 +132,6 @@
               <%= f.file_field :photo_second %>
             </div>
             <% end %>
-          </div>
-        </div>
-        <div id="photo-custom" class="image-candidates">
-          <p>
-            Custom Photo
-          </p>
-          <div class="image-candidate">
-            <%= image_tag(@person.image_uri_custom,:class=>"user_profile_photo") %>
-          </div>
-          <div class="image-action">
-            <div class="use-this-photo">
-              <%= f.radio_button :photo_selection, 'custom', :checked => 'custom' == @person.photo_selection %>Use this photo
-            </div>
-            <div class="upload-new-photo">
-              <%= f.label :upload_new_photo, "Upload new photo" %>
-              <%= f.file_field :photo_custom %>
-            </div>
           </div>
         </div>
         <div id="photo-anonymous" class="image-candidates">
@@ -149,8 +149,8 @@
         </div>
       </div>
       <div class="photo-upload-actions">
-        <input class="close-dialog" type="button" value="Close" length="10">
         <%= f.submit "Update" %>
+        <input class="close-dialog" type="button" value="Close" length="10">
       </div>
     </div>
 <% end %>
@@ -178,7 +178,7 @@
                         <input class="photo-upload-button" type="button" value="Upload Photo"/>
                     </div>
                 </div>
-                <%= image_tag(@person.image_uri,:class=>"user_profile_photo") %>
+                <%= image_tag(@person.image_uri, :class=>"user_profile_photo") %>
               </div>
               
             <div class="user_profile_social clearboth">

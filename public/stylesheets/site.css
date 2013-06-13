@@ -576,6 +576,11 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     vertical-align: middle;
 }
 
+.user_profile_photo{
+    max-height: 200px;
+    max-width:  150px;
+}
+
 .user_profile_photo_upload{
     background:white;
     padding:10px;
@@ -844,7 +849,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
   border-left: 1px solid #D3D3D3;;
 }
 
-#photo-first {
+#photo-custom {
  border-left: none;   
 }
 
