@@ -61,23 +61,62 @@ describe User do
       @student_sam = FactoryGirl.create(:student_sam)
     end
 
-
-      it "accepts PNG files" do
-        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
+      it "accepts PNG files for the first photo" do
+        @student_sam.photo_first = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
         @student_sam.should be_valid
       end
 
-      it "accepts GIF files" do
-        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
+      it "accepts GIF files for the first photo" do
+        @student_sam.photo_first = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
         @student_sam.should be_valid
       end
 
-      it "should update image_uri after photo is uploaded", :skip_on_build_machine => true do
-        @student_sam.photo = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
+      it "should update image_uri after photo_first is uploaded if the selection is the first one", :skip_on_build_machine => true do
+        @student_sam.photo_first = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
+        @student_sam.photo_selection = "first"
         @student_sam.save!
-        @student_sam.image_uri.should eql(@student_sam.photo.url(:profile).split('?')[0])
+        @student_sam.image_uri.should eql(@student_sam.photo_first.url(:profile).split('?')[0])
       end
 
+      it "accepts PNG files for the second photo" do
+        @student_sam.photo_second = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
+        @student_sam.should be_valid
+      end
+
+      it "accepts GIF files for the second photo" do
+        @student_sam.photo_second = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
+        @student_sam.should be_valid
+      end
+
+      it "should update image_uri after photo_first is uploaded if the selection is the second one", :skip_on_build_machine => true do
+        @student_sam.photo_second = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
+        @student_sam.photo_selection = "second"
+        @student_sam.save!
+        @student_sam.image_uri.should eql(@student_sam.photo_second.url(:profile).split('?')[0])
+      end
+
+      it "accepts PNG files for the custom photo" do
+        @student_sam.photo_custom = File.new(File.join(Rails.root, 'spec', 'fixtures', 'sample_photo.png'))
+        @student_sam.should be_valid
+      end
+
+      it "accepts GIF files for the custom photo" do
+        @student_sam.photo_custom = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.gif"))
+        @student_sam.should be_valid
+      end
+
+      it "should update image_uri after photo_first is uploaded if the selection is the custom one", :skip_on_build_machine => true do
+        @student_sam.photo_custom = File.new(File.join(Rails.root, 'spec', 'fixtures', "sample_photo.jpg"))
+        @student_sam.photo_selection = "custom"
+        @student_sam.save!
+        @student_sam.image_uri.should eql(@student_sam.photo_custom.url(:profile).split('?')[0])
+      end
+
+      it "should update image_uri after photo_first is uploaded if the selection is the custom one", :skip_on_build_machine => true do
+        @student_sam.photo_selection = "anonymous"
+        @student_sam.save!
+        @student_sam.image_uri.should eql("/images/mascot.jpg")
+      end
   end
 
   context "webiso account" do
