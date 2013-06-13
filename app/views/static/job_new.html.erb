@@ -1,0 +1,110 @@
+<h1>Create a new job</h1>
+
+<div>
+
+<form action="#" class="" id="edit_job" method="post">
+
+  <input id="job_desc" name="job[desc]" placeholder="Enter a one line description for this project" size="100%" type="text">
+  <input id="job_req_must" name="job[req_must]" placeholder='Enter the "must have" qualifications or skills required' size="100%" type="text">
+  <textarea id="job_req_desired" name="job[req_desired]" placeholder='Enter the "nice to have" qualifications that are desired of a candidate' rows="4" cols="100%" ></textarea>
+  <input id="job_duration" name="job[duration]" placeholder='Enter the duration of the project' size="100%" type="text">
+
+
+  <div>
+    <table class="cmu_table" style="width:46%; float:left">
+      <tr>
+        <td>Pick sponsors/contact people</td>
+      </tr>
+      <tr>
+        <td>
+          <select id="job_sponsors" name="job[sponsors]">
+            <option value="">Pick Contact People/Sponsors:</option>
+            <option value="ToddSedano">Todd Sedano</option>
+            <option value="MartinGris">Martin Gris</option>
+            <option value="SteveRay">Steve Ray</option>
+          </select>
+          + -
+        </td>
+      </tr>
+    </table>
+
+    <table class="cmu_table" style="width:47%">
+      <tr>
+        <td>Pick candidates</td>
+      </tr>
+      <tr>
+        <td>
+          <select id="job_candidates" name="job[candidates]">
+            <option value="">Pick Candidates:</option>
+            <option value="StudentA">Student A</option>
+            <option value="StudentV">Student B</option>
+            <option value="StudentC">Student C</option>
+          </select>
+          + -
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <table class="cmu_table" id="project_state">
+    <tr><td  colspan="2">Project State:</td></tr>
+    <tr>
+      <td id="project_state_first_col">
+        <table>
+          <tbody>
+            <tr>
+                <td><input type="radio" name="job[can_accept_candidates]" value="true"></td>
+                <td>Accepting more candidates</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="job[can_accept_candidates]" value="false"></td>
+                <td>Not accepting any more candidates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <input id="job_close_proj" name="Close project" type="submit" value="Close project" />
+      </td>
+    </tr>
+  </table>
+
+  <table class="cmu_table faculty-editable">
+    <tr><td  colspan="2">Funding source:</td></tr>
+    <tr>
+      <td>
+         <select id="job_funding_source" name="job[funding_source]">
+            <option value="">Pick Funding Source</option>
+            <option value="Work">Oracle</option>
+            <option value="Mobile">Ericsson</option>
+            <option value="Home">CMU</option>
+          </select>
+      </td>
+      <td>
+        <input id="job_oracle_string" name="job[oracle_string]" placeholder='or enter the Oracle string' size="40%" type="text">
+      </td>
+    </tr>
+  </table>
+
+
+  <br />
+  <br />
+  <input id="job_create_proj" name="Create the project" type="submit" value="Create the project" />
+  <!-- <a href="job#create" id="job_create_proj" >Create project</a> -->
+
+</form>
+
+</div>
+
+
+<br/>
+
+
+
+<br/>
+
+<br/>
+<br/>
+<br/>
+<br/>
