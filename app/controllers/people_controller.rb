@@ -232,11 +232,6 @@ class PeopleController < ApplicationController
     @person.image_uri_second = "/images/mascot.jpg"
     @person.image_uri_custom = "/images/mascot.jpg"
     @person.photo_selection = "first"
-    @person.biography = "<p>I was raised by sheepherders on the hills of BoingBoing while they were selling chunky bacon. Because I have a ring, I need help with putting on my clothes. After working hard they promoted me to garbage man. They told me the reason for this new responsibility was show me the money. I looked for a treasure map and tools, but I never did find the fourteen minutes. People's trash clearly isn't multitudinous. I hope to put my real biography here one day.</p>"
-    if @person.is_student
-      @person.user_text = "<h2>About Me</h2><p>I'd like to accomplish the following three goals (professional or personal) by the time I graduate:<ol><li>Goal 1</li><li>Goal 2</li><li>Goal 3</li></ol></p>"
-    end
-
 
     respond_to do |format|
 
@@ -257,10 +252,10 @@ class PeopleController < ApplicationController
 
   def upload_photo
     @person = User.find_by_param(params[:id])
-    if (can? :it_upload_photo, User) && !params[:user][:photo_first].blank?
+    if (can? :upload_official_photo, User) && !params[:user][:photo_first].blank?
       @person.photo_first = params[:user][:photo_first]
     end
-    if (can? :it_upload_photo, User) && !params[:user][:photo_second].blank?
+    if (can? :upload_official_photo, User) && !params[:user][:photo_second].blank?
       @person.photo_second = params[:user][:photo_second]
     end
 
