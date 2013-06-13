@@ -10,12 +10,12 @@
     </p>
     <p>
       <label for="p" class="screen-reader-text">New password:</label><br/>
-      <input type="password" id="newPassword" name="newPassword" value="">
+      <input type="password" id="new_password" name="new_password" value="">
     </p>
     <p>
       <label for="p" class="screen-reader-text">Confirm password:</label><br/>
-      <input type="password" id="confirmPassword" name="confirmPassword" value="">
+      <input type="password" id="confirm_password" name="confirm_password" value="">
     </p>
     <div id="password_mismatch_warning"></div> <br/>
-    <div class="actions"><%= f.submit "Update Password", :onclick=>"return validateEditForm()" %></div>
+    <div class="actions"><%= f.submit "Update Password", :onclick=>"return validatePasswordEditForm()" %></div>
 <% end %>

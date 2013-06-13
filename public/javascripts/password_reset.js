@@ -4,8 +4,8 @@
 
 
 // Helper function to validate reset form
-function validateResetForm(){
-    if ( ($("#primaryEmail").val()=="") || ($("#personalEmail").val()=="")  ){
+function validatePasswordResetForm(){
+    if ( ($("#cmu_mail").val()=="") || ($("#personal_mail").val()=="")  ){
         return warn_blank_fields()
     } else{
         return true
@@ -13,9 +13,9 @@ function validateResetForm(){
 }
 
 // Helper function to validate edit form
-function validateEditForm(){
-    var newPass = $("#newPassword").val()
-    var oldPass = $("#confirmPassword").val()
+function validatePasswordEditForm(){
+    var newPass = $("#new_password").val()
+    var oldPass = $("#confirm_password").val()
     if ((newPass==oldPass) && newPass!="") {
         return true
     }else{
