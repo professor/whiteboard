@@ -3,32 +3,31 @@ require 'net/ldap'
 # This class provides active directory services
 class ActiveDirectory
 
-
-  #
-  # Creates an Active Directory account for the user
-  # If this fails, it returns an error message as a string, else it returns true
-  #
-  def create_active_directory_account(user)
-    # reject blank emails
+  # Create an Active Directory account for a user
+  # Error out if user's email address is blank or domain is not Google domain
+  # If this fails, return an error message as a string, else return void
+  # The return message is "Success", "Unwilling to perform", "Entity exists", "No such object", "Could not bind to server"
+  def create_account(user)
     return "Empty email address" if user.email.blank?
 
-    # log what is happening
-    logger.debug("Attempting to create active directory account for " + user.email)
-
-    # extract domain from email
     domain = user.email.split('@')[1]
-
-    # Confirm domain name accuracy
     if domain != GOOGLE_DOMAIN
-      logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
       return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
     end
 
-    # Attempt to create active directory account
-    active_directory_service = ActiveDirectory.new
-    if active_directory_service.create_account(user) == "Success"
-      user.active_directory_account_created = Time.now()
-      user.save
+    if self.bind
+      @connection.add(:dn => user.ldap_distinguished_name(user), :attributes => ldap_attributes(user))
+
+      message = @connection.get_operation_result.message
+      if message == "Success"
+        user.active_directory_account_created_at=Time.now()
+        user.save
+      else
+        return message
+      end
+
+    else
+      return "Could not bind to active directory server."
     end
   end
 
@@ -48,17 +47,6 @@ class ActiveDirectory
         return (@connection.bind) ? true : false
       end
     rescue Timeout::Error
-      return false
-    end
-  end
-
-  # Create a user account in active directory
-  # Return message as "Success", "Unwilling to perform", "Entity exists" or "No such object"
-  def create_account(user)
-    if self.bind
-      @connection.add(:dn => user.ldap_distinguished_name(user), :attributes => ldap_attributes(user))
-      return @connection.get_operation_result.message
-    else
       return false
     end
   end
@@ -108,7 +96,7 @@ class ActiveDirectory
   # Send active directory password reset token
   def send_password_reset_token(user)
     user.set_password_reset_token
-    self.password_reset_sent_at = Time.zone.now
+    user.password_reset_sent_at = Time.zone.now
     user.save!
     PasswordMailer.password_reset(user).deliver
   end

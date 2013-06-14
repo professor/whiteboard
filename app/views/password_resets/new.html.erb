@@ -1,23 +1,47 @@
+<% content_for :javascript do %>
+
+
 <script type="text/javascript">
+
+    // Option for recaptcha theme
     var RecaptchaOptions = {
         theme : 'clean'
-    };
+    }
+
+    // Validate password reset form
+    function validatePasswordResetForm(){
+        if ( ($("#cmu_email").val()=="") || ($("#personal_email").val()=="")  ){
+            return warnBlankFields()
+        } else{
+            return true
+        }
+    }
+
+    // Warn if any email input field is blank
+    function warnBlankEmailFields(){
+        $("#blank_email_warning").empty()
+        $("#blank_email_warning").append($('<div/>').css('color', 'red').text('Blank fields are not allowed'));
+        return false
+    }
+
+
+
 </script>
 
+<% end %>
 
-<% content_for :title, 'Whiteboard LMS for CMU-SV' %>
 
-<%= javascript_include_tag 'password_reset' %>
+<% content_for :title, 'Whiteboard Password Reset' %>
 
 <h1 xmlns="http://www.w3.org/1999/html">Reset account password</h1>
 
-<form action="<%= password_resets_path%>" id="resetForm" method="post" role="reset" onsubmit="return validateResetForm()">
+<form action="<%= password_resets_path%>" id="password_reset_form" method="post" role="reset" onsubmit="return validatePasswordResetForm()">
 
   <div>
-    <label for="pe" class="screen-reader-text">Primary email</label> </br>
-    <input type="text" id="primaryEmail" name="primaryEmail" value="" placeholder=<%="@#{GOOGLE_DOMAIN}"%>></br> </br>
-    <label for="se" class="screen-reader-text">Secondary email</label> </br>
-    <input type="text" id="personalEmail" name="personalEmail" value=""></br> </br>
+    <label for="pe" class="screen-reader-text">CMU email</label> </br>
+    <input type="text" id="cmu_email" name="cmu_email" value="" placeholder=<%="@#{GOOGLE_DOMAIN}"%>></br> </br>
+    <label for="se" class="screen-reader-text">Personal email</label> </br>
+    <input type="text" id="personal_email" name="personal_email" value=""></br> </br>
     <div id="blank_email_warning"></div> <br/>
     <%= recaptcha_tags :ssl => true %>
     </br>

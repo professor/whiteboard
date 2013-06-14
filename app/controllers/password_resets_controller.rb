@@ -8,17 +8,17 @@ class PasswordResetsController < ApplicationController
 
   # Create new password reset request
   def create
-    @user = User.find_by_email(params[:primaryEmail])
+    @user = User.find_by_email(params[:cmu_email])
     @active_directory_services = ActiveDirectory.new
 
     if verify_recaptcha(:model => @user, :attribute => "verification code")
-      if @user && @user.personal_email == params[:personalEmail]
+      if @user && @user.personal_email == params[:personal_email]
         @active_directory_services.send_password_reset_token(@user)
       else
-        flash[:error] = "Your entries do not match records"
+        flash[:error] = "Your email entries did not match our records. Please try again or contact help@sv.cmu.edu"
         redirect_to new_password_reset_path and return
       end
-      redirect_to root_url, :notice => "Password reset instructions have been sent to your secondary email account."
+      redirect_to root_url, :notice => "Password reset instructions have been sent to #{@user.personal_email}."
     else
       flash[:error] = "Verification code is wrong"
       redirect_to new_password_reset_path
@@ -29,7 +29,7 @@ class PasswordResetsController < ApplicationController
   def edit
     @user = User.find_by_password_reset_token!(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to new_password_reset_path, :flash => {:error => "Password reset link has expired."}
+    redirect_to new_password_reset_path, :flash => {:error => "Password reset link is invalid."}
   end
 
   # Do actual password reset
@@ -38,14 +38,17 @@ class PasswordResetsController < ApplicationController
     @active_directory_services = ActiveDirectory.new
     respond_to do |format|
       if @user.password_reset_sent_at > 2.hours.ago
-        if params[:newPassword]
-          if @active_directory_services.reset_password(@user, params[:newPassword]) == "Success"
+        if params[:new_password]
+          if @active_directory_services.reset_password(@user, params[:new_password]) == "Success"
             flash[:notice] = "Password has been reset!"
             format.html { redirect_to root_url }
           else
-            flash[:error]="Password reset was unsuccessful."
+            flash[:error]="Password reset was unsuccessful. Read the instructions below or contact help@sv.cmu.edu"
             redirect_to edit_password_reset_path and return
           end
+        else
+          flash[:error]="Invalid new password parameter. Contact help@sv.cmu.edu"
+          redirect_to edit_password_reset_path and return
         end
       else
         flash[:error] = "Password reset link has expired."
