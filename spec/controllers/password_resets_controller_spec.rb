@@ -49,7 +49,7 @@ describe PasswordResetsController do
       response.should redirect_to( new_password_reset_path )
     end
     it 'should flash error if reset_link is invalid' do
-      flash[:error].should == "Password reset link has expired."
+      flash[:error].should == "Password reset link is invalid."
     end
   end
 
@@ -69,7 +69,7 @@ describe PasswordResetsController do
     context "success" do
       before do
         @active_directory_services.stub(:reset_password).with(@student_sam, "newPass").and_return("Success")
-        put :update, :id => @student_sam.password_reset_token, :newPassword=>"newPass"
+        put :update, :id => @student_sam.password_reset_token, :new_password=>"newPass"
       end
       it 'should flash notice with success' do
         flash[:notice].should == "Password has been reset!"
@@ -82,7 +82,7 @@ describe PasswordResetsController do
     context "failure" do
       before do
         @active_directory_services.stub(:reset_password).with(@student_sam, "newPass").and_return("Any other message")
-        put :update, :id => @student_sam.password_reset_token, :newPassword=>"newPass"
+        put :update, :id => @student_sam.password_reset_token, :new_password=>"newPass"
       end
       it 'should flash error' do
         flash[:error].should_not be_nil
