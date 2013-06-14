@@ -16,8 +16,8 @@
 
         // Warn if new password and confirmation password mismatches
         function warnPasswordMismatch(){
-            $("#password_blank_or_mismatch_warning").empty()
-            $("#password_blank_or_mismatch_warning").append($('<div/>').css('color', 'red').text('Password mismatch'));
+            $("#password_mismatch_warning").empty()
+            $("#password_mismatch_warning").append($('<div/>').css('color', 'red').text('Password mismatch'));
             return false
         }
 
@@ -42,6 +42,6 @@
       <label for="p" class="screen-reader-text">Confirm password:</label><br/>
       <input type="password" id="confirm_password" name="confirm_password" value="">
     </p>
-    <div id="password_blank_or_mismatch_warning"></div> <br/>
+    <div id="password_mismatch_warning"></div> <br/>
     <div class="actions"><%= f.submit "Update Password", :onclick=>"return validatePasswordEditForm()" %></div>
 <% end %>
