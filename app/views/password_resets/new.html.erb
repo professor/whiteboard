@@ -17,12 +17,14 @@
         }
     }
 
-    // Warn if email fields are blank
-    function warnBlankFields(){
+    // Warn if any email input field is blank
+    function warnBlankEmailFields(){
         $("#blank_email_warning").empty()
         $("#blank_email_warning").append($('<div/>').css('color', 'red').text('Blank fields are not allowed'));
         return false
     }
+
+
 
 </script>
 
