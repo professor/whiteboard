@@ -1,12 +1,36 @@
-<%= javascript_include_tag 'password_reset' %>
+<% content_for :javascript do %>
+
+    <script type="text/javascript">
+
+        // Check whether the new password matches with the confirmation password
+        function validatePasswordEditForm(){
+            var newPass = $("#new_password").val()
+            var confirmPass = $("#confirm_password").val()
+            if ((newPass == confirmPass) && newPass!="") {
+                return true
+            }else{
+                return warnPasswordMismatch()
+            }
+        }
+
+        // Warn if new password and confirmation password mismatches
+        function warnPasswordMismatch(){
+            $("#password_mismatch_warning").empty()
+            $("#password_mismatch_warning").append($('<div/>').css('color', 'red').text('Password mismatch'));
+            return false
+        }
+
+    </script>
+
+<% end %>
 
 <%= form_for @user, { :url => password_reset_path(params[:id]) }  do |f| %>
     <p>
-    <h1> <%= @user.human_name %> </h1>
+    <h1> Resetting password for <%= @user.human_name %>'s account.</h1>
     </p>
     <p>
       <b>Instructions</b>
-      <br/>Your new password must have a digit character, a capital letter, and a minimum of eight characters.
+      <br/>The new password must have a digit character, a capital letter, and a minimum of eight characters.
     </p>
     <p>
       <label for="p" class="screen-reader-text">New password:</label><br/>

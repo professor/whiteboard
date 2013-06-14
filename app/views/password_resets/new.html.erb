@@ -1,13 +1,35 @@
+<% content_for :javascript do %>
+
+
 <script type="text/javascript">
+
+    // Option for recaptcha theme
     var RecaptchaOptions = {
         theme : 'clean'
-    };
+    }
+
+    // Validate password reset form
+    function validatePasswordResetForm(){
+        if ( ($("#cmu_email").val()=="") || ($("#personal_email").val()=="")  ){
+            return warnBlankFields()
+        } else{
+            return true
+        }
+    }
+
+    // Warn if email fields are blank
+    function warnBlankFields(){
+        $("#blank_email_warning").empty()
+        $("#blank_email_warning").append($('<div/>').css('color', 'red').text('Blank fields are not allowed'));
+        return false
+    }
+
 </script>
 
+<% end %>
 
-<% content_for :title, 'Whiteboard LMS for CMU-SV' %>
 
-<%= javascript_include_tag 'password_reset' %>
+<% content_for :title, 'Whiteboard Password Reset' %>
 
 <h1 xmlns="http://www.w3.org/1999/html">Reset account password</h1>
 

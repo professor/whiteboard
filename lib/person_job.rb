@@ -24,7 +24,7 @@ class PersonJob < Struct.new(:person_id, :create_google_email, :create_twiki_acc
     end
     if create_active_directory_account && person.active_directory_account_created_at.blank?
       status = ActiveDirectory.create_active_directory_account(person)
-      error_message +=  "Active directory account for #{person.human_name} was not created.<br/><br/>" unless status
+      error_message +=  "Active directory account for #{person.human_name} was not created. The error was #{status}<br/><br/>" unless status
     end
 
 

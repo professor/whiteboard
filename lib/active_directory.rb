@@ -25,9 +25,13 @@ class ActiveDirectory
     end
 
     # Attempt to create active directory account
-    if create_account(user) == "Success"
-      user.active_directory_account_created_at = Time.now()
+    # Return void unless there is an error message
+    message = create_account(user)
+    if message == "Success"
+      user.active_directory_account_created_at=Time.now()
       user.save
+    else
+      return message
     end
   end
 
