@@ -756,13 +756,18 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  * Jobs page
  *************************/
 
-/* ------- Edit Job Page */
+#edit_job .cmu_table,
+#job-quick-list-container .cmu_table,
+#job-detail-list-container .cmu_table { background-color: #FbFbFb }
 
-#edit_job .cmu_table { background-color: #FbFbFb; }
+#edit_job .cmu_table td,
+#job-quick-list-container .cmu_table td,
+#job-detail-list-container .cmu_table td { vertical-align: middle }
+
+/* ------- Edit Job Page */
 #edit_job .cmu_table.faculty-editable tr { background-color: #D9E7E6; }
 #edit_job .cmu_table table td { border-color: transparent; }
 
-#edit_job .cmu_table tbody td { vertical-align: middle; }
 
 #edit_job { width: 60%; }
 #edit_job .input-field {
@@ -774,8 +779,30 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #project_state_first_col { width: 81% }
 #edit_job input { padding: 4px 2px; }
 
+#job-detail-list-container .header-row, #job-detail-list-container .top  {
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
 /* ------- Job list page */
 
+#job-quick-list-container, #job-detail-list-container { margin-top: 40px; }
+#job-quick-list-container .cmu_table td:nth-child(1) { width: 60px }
+#job-quick-list-container .cmu_table td:nth-child(3) { width: 100px }
+#job-quick-list-container .cmu_table tr:hover td { border-left: 1px solid #85000a; }
+#job-quick-list-container .cmu_table td { cursor: pointer; }
+
+
+#job-detail-list-container .cmu_table { margin: 30px 0;}
+#job-detail-list-container .cmu_table td:nth-child(1) { width: 115px }
+#job-detail-list-container .input-field {
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+#job-detail-list-container .top:hover { border-left: 1px solid #85000a; }
 
 /************************
  * Grade book
