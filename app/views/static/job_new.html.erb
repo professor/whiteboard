@@ -1,53 +1,60 @@
+<script type="text/javascript">
+  $(document).tooltip({
+      position: { my: "left+10 center", at: "right center" },
+      open: function (event, ui) {
+        ui.tooltip.css("max-width", "250px");
+      }
+  });
+</script>
+
 <h1>Create a new job</h1>
 
-<div>
+<div id="job-container">
 
 <form action="#" class="" id="edit_job" method="post">
 
-  <input id="job_desc" name="job[desc]" placeholder="Enter a one line description for this project" size="100%" type="text">
-  <input id="job_req_must" name="job[req_must]" placeholder='Enter the "must have" qualifications or skills required' size="100%" type="text">
-  <textarea id="job_req_desired" name="job[req_desired]" placeholder='Enter the "nice to have" qualifications that are desired of a candidate' rows="4" cols="100%" ></textarea>
-  <input id="job_duration" name="job[duration]" placeholder='Enter the duration of the project' size="100%" type="text">
+  <input id="job_desc" class="input-field" name="job[desc]" placeholder="Enter a one line description for this project" title="Enter a one line description for this project" type="text">
+  <input id="job_req_must" class="input-field" name="job[req_must]" placeholder='Enter the "must have" qualifications or skills required' title='Enter the "must have" qualifications or skills required' type="text">
+  <textarea id="job_req_desired" class="input-field" name="job[req_desired]" placeholder='Enter the "nice to have" qualifications that are desired of a candidate' title='Enter the "nice to have" qualifications that are desired of a candidate' rows="4"></textarea>
+  <input id="job_duration" class="input-field" name="job[duration]" placeholder='Enter the duration of the project' title='Enter the duration of the project' type="text">
 
 
-  <div>
-    <table class="cmu_table" style="width:46%; float:left">
-      <tr>
-        <td>Pick sponsors/contact people</td>
-      </tr>
-      <tr>
-        <td>
-          <select id="job_sponsors" name="job[sponsors]">
-            <option value="">Pick Contact People/Sponsors:</option>
-            <option value="ToddSedano">Todd Sedano</option>
-            <option value="MartinGris">Martin Gris</option>
-            <option value="SteveRay">Steve Ray</option>
-          </select>
-          + -
-        </td>
-      </tr>
-    </table>
+  <table class="cmu_table input-field">
+    <tr>
+      <td>Pick sponsors/contact people</td>
+    </tr>
+    <tr>
+      <td>
+        <select id="job_sponsors" name="job[sponsors]">
+          <option value="">Pick Contact People/Sponsors:</option>
+          <option value="ToddSedano">Todd Sedano</option>
+          <option value="MartinGris">Martin Gris</option>
+          <option value="SteveRay">Steve Ray</option>
+        </select>
+        + -
+      </td>
+    </tr>
+  </table>
 
-    <table class="cmu_table" style="width:47%">
-      <tr>
-        <td>Pick candidates</td>
-      </tr>
-      <tr>
-        <td>
-          <select id="job_candidates" name="job[candidates]">
-            <option value="">Pick Candidates:</option>
-            <option value="StudentA">Student A</option>
-            <option value="StudentV">Student B</option>
-            <option value="StudentC">Student C</option>
-          </select>
-          + -
-        </td>
-      </tr>
-    </table>
-  </div>
+  <table class="cmu_table input-field">
+    <tr>
+      <td>Pick candidates</td>
+    </tr>
+    <tr>
+      <td>
+        <select id="job_candidates" name="job[candidates]">
+          <option value="">Pick Candidates:</option>
+          <option value="StudentA">Student A</option>
+          <option value="StudentV">Student B</option>
+          <option value="StudentC">Student C</option>
+        </select>
+        + -
+      </td>
+    </tr>
+  </table>
 
 
-  <table class="cmu_table" id="project_state">
+  <table class="cmu_table input-field" id="project_state">
     <tr><td  colspan="2">Project State:</td></tr>
     <tr>
       <td id="project_state_first_col">
@@ -70,7 +77,7 @@
     </tr>
   </table>
 
-  <table class="cmu_table faculty-editable">
+  <table class="cmu_table input-field faculty-editable">
     <tr><td  colspan="2">Funding source:</td></tr>
     <tr>
       <td>
@@ -82,14 +89,10 @@
           </select>
       </td>
       <td>
-        <input id="job_oracle_string" name="job[oracle_string]" placeholder='or enter the Oracle string' size="40%" type="text">
+        <input id="job_oracle_string" name="job[oracle_string]" placeholder='or enter the Oracle string' title='enter the Oracle string' type="text">
       </td>
     </tr>
   </table>
-
-
-  <br />
-  <br />
   <input id="job_create_proj" name="Create the project" type="submit" value="Create the project" />
   <!-- <a href="job#create" id="job_create_proj" >Create project</a> -->
 

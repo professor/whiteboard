@@ -752,7 +752,34 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     display: none;
 }
 
-/* ------- Grade book */
+/************************
+ * Jobs page
+ *************************/
+
+/* ------- Edit Job Page */
+
+#edit_job .cmu_table { background-color: #FbFbFb; }
+#edit_job .cmu_table.faculty-editable tr { background-color: #D9E7E6; }
+#edit_job .cmu_table table td { border-color: transparent; }
+
+#edit_job .cmu_table tbody td { vertical-align: middle; }
+
+#edit_job { width: 60%; }
+#edit_job .input-field {
+    width: 397px;
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+#edit_job .cmu_table { width: 403px; }
+#project_state_first_col { width: 81% }
+#edit_job input { padding: 4px 2px; }
+
+/* ------- Job list page */
+
+
+/************************
+ * Grade book
+ *************************/
 
 .team_member_photo{width:156px}
 .team_member_photo img {height:150px}
@@ -850,7 +877,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 #photo-custom {
- border-left: none;   
+ border-left: none;
 }
 
 .image-candidate {
@@ -861,7 +888,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .image-candidate img {
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
   display: table-cell;
   vertical-align: middle;
 }
@@ -872,7 +899,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 #dialog {
   width: 760px;
-  border: 1px solid #D3D3D3;   
+  border: 1px solid #D3D3D3;
   z-index: -500;
   position: absolute;
   background-color: #fff;
@@ -895,7 +922,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .photo-upload-button {
   display: block;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
 
 .photo-profile {
@@ -950,6 +977,6 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  #course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
  #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
  #course_tools .item-wrapper.links .item-icon {display: none;}
- 
+
  /* css for page history */
  #history_table, #history_table td { border: 0; }
