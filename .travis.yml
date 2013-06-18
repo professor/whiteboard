@@ -10,11 +10,12 @@ before_script:
   - cp config/systems.default.yml config/systems.yml
   - bundle exec rake db:schema:load RAILS_ENV='test' --trace
   - echo "hello"
+  - mkdir tmpdir
 
 # script: bundle exec rake --verbose --trace
 
 env:
-  - LDAP_HOST=anyhost LDAP_PORT=636 LDAP_USERNAME=anyone LDAP_PASSWORD=anysecret LDAP_ENCRYPTED=true SEARCHIFY_API_URL=foo SEARCHIFY_INDEX=cmux_test SEARCHIFY_STAFF_INDEX=cmu_staffx_test WHITEBOARD_SALT=I_am_salt_with_no_iodine
+  - LDAP_HOST="127.0.0.1" LDAP_PORT=3897 LDAP_USERNAME=anyone LDAP_PASSWORD=anysecret LDAP_ENCRYPTED=false SEARCHIFY_API_URL=foo SEARCHIFY_INDEX=cmux_test SEARCHIFY_STAFF_INDEX=cmu_staffx_test WHITEBOARD_SALT=I_am_salt_with_no_iodine TMPDIR=tmpdir
 
 
 notifications:
