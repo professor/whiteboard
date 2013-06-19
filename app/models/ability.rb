@@ -54,6 +54,7 @@ class Ability
     end
     can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => {:id => user.id} #Useful for TAs.
 
+    #Experimental Features
     if (user.human_name == "Todd Sedano" || user.human_name == "Kaushik Gopal")
       can :see_student_grades, Course #experimental feature
     end
