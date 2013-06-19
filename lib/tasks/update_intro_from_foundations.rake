@@ -44,8 +44,8 @@ require 'rails'
 
 
 namespace :cmu do
-  desc "Update Intro to SE from Foundations pages"
-  task(:update_intro => :environment) do
+  desc "Update ISE from FSE pages"
+  task(:update_ise => :environment) do
 
     urls = ["fse", "fse_calendar", "fse_announcements", "fse_class_notes",
             "fse_rails_faq",
@@ -55,6 +55,6 @@ namespace :cmu do
       update_ise_from_fse(url)
     end
 
-    puts "Update Intro finished"
+    puts "Update ISE finished"
   end
 end
