@@ -21,6 +21,61 @@
             return false
         }
 
+        // Password strength meter
+
+        var shortPass = 'Too short'
+        var badPass = 'Bad'
+        var goodPass = 'Good'
+        var strongPass = 'Strong'
+
+
+        function passwordStrength(password){
+            score = 0
+
+            // password length should be greater than 8
+            if (password.length < 8 ) { return shortPass }
+
+            // password has a number
+            if (password.match(/(.*[0-9])/))  score += 5
+
+            // password has 3 numbers
+            if (password.match(/(.*[0-9].*[0-9].*[0-9])/))  score += 5
+
+            // password has a symbol
+            if (password.match(/(.*[!,@,#,$,%,^,&,*,?,_,~])/)) score += 5
+
+            // password has upper and lower chars
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/))  score += 10
+
+            // password has number and chars
+            if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/))  score += 15
+            //
+            // password has number and symbol
+            if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/) && password.match(/([0-9])/))  score += 15
+
+            // password has char and symbol
+            if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/) && password.match(/([a-zA-Z])/))  score += 15
+
+            // password is just numbers or chars
+            if (password.match(/^\w+$/) || password.match(/^\d+$/) )  score -= 10
+
+            // ensure 0 < score < 100
+            if ( score < 0 )  score = 0
+            if ( score > 100 )  score = 100
+
+            if (score < 20 )  return badPass
+            if (score >= 20 && score < 25  )  return goodPass
+
+            return strongPass
+        }
+
+        // jQuery script to show password strength
+        $(function() {
+            $("#new_password").keyup(
+                    function() {
+                        $('#result').html(passwordStrength($('#new_password').val()))
+                    });
+        });
 
     </script>
 
@@ -37,6 +92,7 @@
     <p>
       <label for="p" class="screen-reader-text">New password:</label><br/>
       <input type="password" id="new_password" name="new_password" value="">
+      <span style="color:green" id='result'></span>
     </p>
     <p>
       <label for="p" class="screen-reader-text">Confirm password:</label><br/>
