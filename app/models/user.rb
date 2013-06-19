@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
   before_save :person_before_save,
               :update_is_profile_valid
 
+  before_create :set_new_user_token
+
   validates_uniqueness_of :webiso_account, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
 
@@ -404,6 +406,15 @@ class User < ActiveRecord::Base
       GenericMailer.email(options).deliver
     end
   end
+
+  def set_new_user_token
+    self.new_user_token = SecureRandom.urlsafe_base64
+  end
+
+  def set_password_reset_token
+    self.password_reset_token = SecureRandom.urlsafe_base64
+  end
+
 
   protected
   def person_before_save
