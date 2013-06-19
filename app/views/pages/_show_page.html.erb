@@ -67,14 +67,14 @@
     //<![CDATA[
     $(document).ready(function () {
         var url = location.pathname;
-        if (url.indexOf("intro_to_se") != -1) {
+        if ((url.indexOf("intro_to_se") != -1) || (url.indexOf("ise") != -1)) {
             $(".courseTitle").text("Introduction to Software Engineering");
             $(".taskHeaderDiv").text("Introduction to Software Engineering");
             document.title = "Introduction to Software Engineering";
             $(".title").text("Introduction to Software Engineering");
             $(".foundations").hide();
         }
-        if (url.indexOf("foundations") != -1) {
+        if ((url.indexOf("foundations") != -1)|| (url.indexOf("fse") != -1)) {
             $(".intro_se").hide();
         }
     });
