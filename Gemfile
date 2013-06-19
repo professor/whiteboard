@@ -42,6 +42,8 @@ gem 'pg'
 
 gem 'net-ldap'
 
+gem "recaptcha", :require => "recaptcha/rails"
+
 gem 'cancan'
 
 # gem 'smtp_tls'           # Used for sending mail to gmail

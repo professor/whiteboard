@@ -25,8 +25,12 @@ CMUEducation::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   ActionMailer::Base.perform_deliveries = false
-  #ActionMailer::Base.perform_deliveries = true
+  # ActionMailer::Base.perform_deliveries = true
 
+  # This is the host url for the token links in the emails we send to users
+  config.action_mailer.default_url_options = {
+      :host => ENV['HOST_NAME'] || "localhost:3000"
+  }
 
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",

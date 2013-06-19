@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520033431) do
+ActiveRecord::Schema.define(:version => 20130521194045) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -662,6 +662,9 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -716,7 +719,7 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.datetime "twiki_created"
     t.datetime "adobe_created"
     t.datetime "msdnaa_created"
-    t.integer  "sign_in_count",                                        :default => 0,                    :null => false
+    t.integer  "sign_in_count",                                        :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -753,6 +756,9 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
