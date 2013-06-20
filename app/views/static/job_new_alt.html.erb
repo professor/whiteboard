@@ -1,0 +1,122 @@
+<script type="text/javascript">
+  $(document).tooltip({
+      position: { my: "left+10 center", at: "right center" },
+      open: function (event, ui) {
+        ui.tooltip.css("max-width", "250px");
+      }
+  });
+</script>
+
+<h1>Create a new job</h1>
+
+<div id="job-container">
+
+<form action="#" class="ngb" id="edit_job" method="post">
+
+  <label for="job[desc]">Name</label>
+  <input id="job_desc" class="input-field" name="job[desc]" placeholder="Enter a one line description for this project" title="Enter a one line description for this project" type="text">
+
+  <label for="job[req_must]">Must Haves</label>
+  <input id="job_req_must" class="input-field" name="job[req_must]" placeholder='Enter the "must have" qualifications or skills required' title='Enter the "must have" qualifications or skills required' type="text">
+
+  <label for="job[req_desired]">Nice to Haves</label>
+  <textarea id="job_req_desired" class="input-field" name="job[req_desired]" placeholder='Enter the "nice to have" qualifications that are desired of a candidate' title='Enter the "nice to have" qualifications that are desired of a candidate' rows="2"></textarea>
+
+  <label for="job[req_desc_full]">Description</label>
+  <textarea id="job_desc_full" class="input-field" name="job[req_desc_full]" placeholder='Enter a detailed description for the Project here' title='Enter a detailed description for the Project here' rows="8"></textarea>
+
+  <label for="job[duration]">Duration</label>
+  <input id="job_duration" class="input-field" name="job[duration]" placeholder='Enter the duration of the project' title='Enter the duration of the project' type="text">
+
+  <table class="cmu_table input-field" style="margin-top: 20px">
+    <tr>
+      <td>Sponsors</td>
+    </tr>
+    <tr>
+      <td>
+        <select id="job_sponsors" name="job[sponsors]">
+          <option value="">Pick Contact People/Sponsors:</option>
+          <option value="ToddSedano">Todd Sedano</option>
+          <option value="MartinGris">Martin Gris</option>
+          <option value="SteveRay">Steve Ray</option>
+        </select>
+        + -
+      </td>
+    </tr>
+  </table>
+
+  <table class="cmu_table input-field" style="margin-top: 30px">
+    <tr>
+      <td>Candidates</td>
+    </tr>
+    <tr>
+      <td>
+        <select id="job_candidates" name="job[candidates]">
+          <option value="">Pick Candidates:</option>
+          <option value="StudentA">Student A</option>
+          <option value="StudentV">Student B</option>
+          <option value="StudentC">Student C</option>
+        </select>
+        + -
+      </td>
+    </tr>
+  </table>
+
+
+  <table class="cmu_table input-field" id="project_state" style="margin-top: 20px">
+    <tr><td  colspan="2">Project State</td></tr>
+    <tr>
+      <td id="project_state_first_col">
+        <table>
+          <tbody>
+            <tr>
+                <td><input type="radio" checked="checked" name="job[can_accept_candidates]" value="true"></td>
+                <td>Accepting more candidates</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="job[can_accept_candidates]" value="false"></td>
+                <td>Not accepting any more candidates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <input id="job_close_proj" name="Close project" type="submit" value="Close project" />
+      </td>
+    </tr>
+  </table>
+
+  <table class="cmu_table input-field faculty-visible" title="Only shown to faculty & admin" style="margin-top: 20px">
+    <tr><td  colspan="2">Funding</td></tr>
+    <tr>
+      <td>
+         <select id="job_funding_source" name="job[funding_source]">
+            <option value="">Pick Funding Source</option>
+            <option value="Work">Oracle</option>
+            <option value="Mobile">Ericsson</option>
+            <option value="Home">CMU</option>
+          </select>
+      </td>
+      <td>
+        <input id="job_oracle_string" name="job[oracle_string]" placeholder='or enter the Oracle string' title='enter the Oracle string' type="text">
+      </td>
+    </tr>
+  </table>
+  <input id="job_create_proj" name="Create the project" type="submit" value="Create the project" />
+  <!-- <a href="job#create" id="job_create_proj" >Create project</a> -->
+
+</form>
+
+</div>
+
+
+<br/>
+
+
+
+<br/>
+
+<br/>
+<br/>
+<br/>
+<br/>
