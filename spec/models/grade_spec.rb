@@ -136,10 +136,16 @@ describe Grade do
   end
 
   context "final grade" do
-    it "should be able to find final grades if they are given" do
+    it "should be able to find final grades if they are given and are student visible" do
       final_grade = "A"
-      Grade.give_grade(@course_fse.id, -1, @student_sam.id, final_grade)
+      Grade.give_grade(@course_fse.id, -1, @student_sam.id, final_grade, true)
       Grade.get_final_grade(@course_fse.id, @student_sam.id).should eql(final_grade)
+    end
+
+    it "should be not able to find final grades if they are given and are student invisible" do
+      final_grade = "A"
+      Grade.give_grade(@course_fse.id, -1, @student_sam.id, final_grade, false)
+      Grade.get_final_grade(@course_fse.id, @student_sam.id).should eql("")
     end
 
     it "should be able to give final grades" do
@@ -147,7 +153,7 @@ describe Grade do
       Grade.give_grade(@course_fse.id, -1, @student_sam.id, score).should be_true
     end
 
-    it "when given, should not update other course grades" do
+    it "when given and are student visible, should not update other course grades" do
       Course.any_instance.stub(:update_distribution_list).and_return(true)
       @course_ise = FactoryGirl.create(:course_ise_with_students, registered_students: [@student_sam])
       @ise_grading_rule = FactoryGirl.build_stubbed(:grading_rule_points, :course_id => @course_ise.id)
@@ -155,8 +161,8 @@ describe Grade do
 
       fse_final_grade = "B+"
       ise_final_grade = "A-"
-      Grade.give_grade(@course_fse.id, -1, @student_sam.id, fse_final_grade).should be_true
-      Grade.give_grade(@course_ise.id, -1, @student_sam.id, ise_final_grade).should be_true
+      Grade.give_grade(@course_fse.id, -1, @student_sam.id, fse_final_grade, true).should be_true
+      Grade.give_grade(@course_ise.id, -1, @student_sam.id, ise_final_grade, true).should be_true
       Grade.get_final_grade(@course_fse.id, @student_sam.id).should eql(fse_final_grade)
       Grade.get_final_grade(@course_ise.id, @student_sam.id).should eql(ise_final_grade)
 

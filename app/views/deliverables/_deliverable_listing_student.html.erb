@@ -76,6 +76,7 @@
        <td colspan=5 align="right">Earned Grade Letter</td>
        <td class="performance"></td>
      </tr>
+
       <tr id="s_<%= user.id%>">
       <td colspan=5 align="right">Final Letter Grade</td>
       <td><%= Grade.get_final_grade(courses[0].id,user.id).presence %></td>
@@ -86,7 +87,7 @@
 
 <% if show_course_grade %>
 <table style="visibility: hidden">
-  <%= render :partial => "grade_spreadsheet", :locals => {:assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
+  <%= render :partial => "grade_spreadsheet", :locals => {:hide_draft_grades => true, :assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
 </table>
 <% end %>
 

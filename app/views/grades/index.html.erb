@@ -200,7 +200,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= render :partial => "grade_spreadsheet", :locals => {:assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
+        <%= render :partial => "grade_spreadsheet", :locals => {:hide_draft_grades => false, :assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
       </tbody>
       <tfoot>
         <tr style="background-color:white;">
