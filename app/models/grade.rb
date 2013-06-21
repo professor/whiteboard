@@ -67,7 +67,7 @@ class Grade < ActiveRecord::Base
   # To get the final grade of the student for a particular course.
   def self.get_final_grade(course_id, student_id)
     grade = Grade.where(course_id: course_id).where(student_id: student_id).where(:assignment_id => -1).first
-    if grade.nil?
+    if grade.nil? || !grade.is_student_visible?
       ""
     else
       Grade.decrypt_score(grade.score, grade.course_id, grade.student_id)

@@ -7,3 +7,8 @@ class Rails::Application
 end
 
 CMUEducation::Application.load_tasks
+
+
+#task :jasmine_spec do
+#  exec "ruby spec/jasmine_self_test_spec.rb"
+#end

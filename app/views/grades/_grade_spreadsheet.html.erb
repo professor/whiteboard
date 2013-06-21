@@ -4,22 +4,25 @@
     <td><%=student.last_name%></td>
     <td><%=@team_assignment[student.id].try(:name) || "" %></td>
     <% @assignments.each do |assignment|%>
-    <td class='grade <%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft":""%>'>
+        <% draft_grade = (grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible) %>
+        <% next if hide_draft_grades && draft_grade %>
+    <td class='grade <%= draft_grade ? "draft" : "" %>'>
       <input id="<%= @course.id %>_<%=assignment.id%>_<%=student.id%>"
              value='<%=(grade_entries.has_key?(assignment.id))?(grade_entries[assignment.id].score):""%>'
              type="text" size="4" width="100%"
              tabindex="<%=(assignment.try(:task_number) || 0)*10+assignment.assignment_order %>"
-             class='<%=(grade_entries.has_key?(assignment.id) && !grade_entries[assignment.id].is_student_visible)?"draft default_draft":" default_publish"%>' />
+             class='<%= draft_grade ? "draft default_draft" : " default_publish" %>' />
     </td>
     <% end %>
     <td class='earned' ></td>
     <td class='performance'></td>
+    <% unless hide_draft_grades %>
     <td class='final grade'>
       <input id="<%= @course.id %>_final_<%=student.id%>"
              value='<%=(grade_entries.has_key?("final"))?(grade_entries["final"].score):""%>'
              type="text" size="4" width="100%"
              class='<%=(grade_entries.has_key?("final") && !grade_entries["final"].is_student_visible)?"draft default_draft":" default_publish"%>' />
     </td>
-
+    <% end %>
   </tr>
 <%end%>

@@ -51,6 +51,12 @@ The criteria for code being accepted is as follows:
     # run just fast tests
     rspec spec_no_rails/
 
+    # run jasmine tests
+    bundle exec rake jasmine
+    # or from a build process
+    bundle exec rake jasmine:ci
+
+
 ## Conventions
 Please use JQuery and JQuery UI. Whenever possible, AJAX should degrade
 gracefully. Ie, there should be a way to do the same action without AJAX.
