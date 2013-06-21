@@ -752,7 +752,75 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     display: none;
 }
 
-/* ------- Grade book */
+/************************
+ * Jobs page
+ *************************/
+
+#edit_job .cmu_table,
+#job-quick-list-container .cmu_table,
+#job-detail-list-container .cmu_table { background-color: #FbFbFb }
+
+#edit_job .cmu_table td,
+#job-quick-list-container .cmu_table td,
+#job-detail-list-container .cmu_table td { vertical-align: middle }
+
+#edit_job .cmu_table.faculty-visible tr,
+#job-detail-list-container tr.faculty-visible { background-color: #D9E7E6; }
+
+/* ------- Edit Job Page */
+
+#edit_job .cmu_table table td { border-color: transparent; }
+#edit_job { width: 60%; }
+#edit_job .input-field {
+    width: 397px;
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+
+/* TODO: we're testing ngb - integrate to main style if this is chosen */
+#edit_job.ngb .input-field {
+    border: none;
+    border: 1px solid #999999;
+}
+
+/* TODO: testing with label names, remove comment if this is chosen */
+#edit_job label {
+    display: block;
+    margin-top: 15px;
+}
+
+
+#edit_job .cmu_table { width: 403px; }
+#project_state_first_col { width: 81% }
+#edit_job input { padding: 4px 2px; }
+
+#job-detail-list-container .header-row, #job-detail-list-container .top  {
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* ------- Job list page */
+#job-quick-list-container, #job-detail-list-container { margin-top: 40px; }
+/*#job-quick-list-container .cmu_table td:nth-child(1) { width: 60px }*/
+#job-quick-list-container .cmu_table td:nth-child(2) { width: 100px }
+#job-quick-list-container .cmu_table tr:hover td { border-left: 1px solid #85000a; }
+#job-quick-list-container .cmu_table td, td[inline-page-link] { cursor: pointer; }
+
+
+#job-detail-list-container .cmu_table { margin: 30px 0; width: 100% }
+#job-detail-list-container .cmu_table td:nth-child(1) { width: 115px }
+#job-detail-list-container .input-field {
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+#job-detail-list-container .top:hover { border-left: 1px solid #85000a; }
+
+/************************
+ * Grade book
+ *************************/
 
 .team_member_photo{width:156px}
 .team_member_photo img {height:150px}
@@ -850,7 +918,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 #photo-custom {
- border-left: none;   
+ border-left: none;
 }
 
 .image-candidate {
@@ -861,7 +929,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .image-candidate img {
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
   display: table-cell;
   vertical-align: middle;
 }
@@ -872,7 +940,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 #dialog {
   width: 760px;
-  border: 1px solid #D3D3D3;   
+  border: 1px solid #D3D3D3;
   z-index: -500;
   position: absolute;
   background-color: #fff;
@@ -895,7 +963,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
 .photo-upload-button {
   display: block;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
 
 .photo-profile {
@@ -950,6 +1018,6 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  #course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
  #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
  #course_tools .item-wrapper.links .item-icon {display: none;}
- 
+
  /* css for page history */
  #history_table, #history_table td { border: 0; }
