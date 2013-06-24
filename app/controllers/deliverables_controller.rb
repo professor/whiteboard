@@ -17,6 +17,15 @@ class DeliverablesController < ApplicationController
 
   def index_for_course
     @course = Course.find(params[:course_id])
+
+    if @course.grading_rule.nil?
+      flash[:error] = I18n.t(:no_grading_rule_for_course)
+      redirect_to course_path(@course) and return
+    end
+    if @course.grading_rule.default_values?
+      flash.now[:error] = I18n.t(:default_grading_rule_for_course)
+    end
+
     if (current_user.is_admin? || @course.faculty.include?(current_user))
       @deliverables = Deliverable.where(:course_id => @course.id).all
     else
@@ -74,6 +83,16 @@ class DeliverablesController < ApplicationController
     unless @deliverable.editable?(current_user)
       flash[:error] = I18n.t(:not_your_deliverable)
       redirect_to root_path and return
+    end
+
+    if current_user.is_staff?
+      if @course.grading_rule.nil?
+        flash[:error] = I18n.t(:no_grading_rule_for_course)
+        redirect_to course_path(@course) and return
+      end
+      if @course.grading_rule.default_values?
+        flash.now[:error] = I18n.t(:default_grading_rule_for_course)
+      end
     end
 
     respond_to do |format|
@@ -228,6 +247,11 @@ class DeliverablesController < ApplicationController
   end
 
   def edit_feedback
+    if @course.grading_rule.nil?
+      flash[:error] = I18n.t(:no_grading_rule_for_course)
+      redirect_to course_path(@course) and return
+    end
+
     @deliverable = Deliverable.find(params[:id])
 
 #    if !@deliverable.assignment.course.faculty.include?(current_user)
