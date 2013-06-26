@@ -1,0 +1,94 @@
+<% content_for :tablesorter do %>
+
+    <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+    <%= javascript_include_tag 'jquery.quicksearch.js' %>
+
+    <%= javascript_include_tag 'people_search' %>
+    <%= javascript_include_tag 'people_search_export' %>
+    <%= javascript_include_tag 'jquery.session' %>
+
+<% end %>
+
+<script type="text/javascript">
+  $(function() {
+    $("td[inline-page-link]").parent().bind('click', function (event) {
+        var $target = $(this).children(":first");
+        $('html, body').stop().animate({
+            scrollTop: $($target.attr("inline-page-link")).offset().top
+        }, 500, 'swing');
+    });
+
+    $("#job-list-match-student").tablesorter({ headers:{3:{sorter:false}} });
+    $("#job-list-project-match").tablesorter({ headers:{3:{sorter:false}} });
+
+
+  });
+</script>
+
+<h1>Job list Matches</h1>
+
+<div>
+  <h2>Student assignments</h2>
+  <table class="cmu_table" id="job-list-match-student">
+  <thead>
+    <tr>
+      <th colspan="2">Student</th>
+      <th>Project Title</th>
+      <th>Faculty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/YuvaDatla">Yuva Datla</a></td>
+      <td>&#x2713;</td>
+      <td>Semantic Harmonization of Smart Grid Concepts</td>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>
+    </tr>
+    <tr>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/MarkHennessy">Mark Hennessy</a></td>
+      <td>&#x2713;</td>
+      <td>An Interchange Ontology for Mobile Sensor Platforms in Home Health Management</td>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>    </tr>
+    <tr>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/KaushikGopal">Kaushik Gopal</a></td>
+      <td>&nbsp;</td>
+      <td>Ruby on Rails development</td>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/ToddSedano">todd.sedano@sv.cmu.edu</a></td>
+    </tr>
+  </tbody>
+  </table>
+
+  <br />
+
+  <h2>Project assignments</h2>
+  <table class="cmu_table" id="job-list-project-match">
+  <thead>
+    <tr>
+      <th>Project Title</th>
+      <th>Faculty</th>
+      <th>Student(s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ruby on Rails development</td>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/ToddSedano">todd.sedano@sv.cmu.edu</a></td>
+      <td><a href="http://whiteboard.sv.cmu.edu/people/KaushikGopal">Kaushik Gopal</a> <br /> <a href="http://whiteboard.sv.cmu.edu/people/KaushikGopal">Kaushik Gopal</a></td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+
+
+
+<br/>
+
+
+
+<br/>
+
+<br/>
+<br/>
+<br/>
+<br/>

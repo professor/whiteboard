@@ -70,6 +70,13 @@ td.today {
     background-color: #eae5da;
 }
 
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
 /***************************
   *Advanced search filter
   **************************/
@@ -757,6 +764,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  *************************/
 
 #edit_job .cmu_table,
+#job-list-match-container-student,
 #job-quick-list-container .cmu_table,
 #job-detail-list-container .cmu_table { background-color: #FbFbFb }
 
@@ -817,6 +825,17 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border: 2px solid #999999;
 }
 #job-detail-list-container .top:hover { border-left: 1px solid #85000a; }
+
+/* ------- Job List match Page */
+#job-list-match-student td:nth-child(1) { width: 23% }
+#job-list-match-student td:nth-child(2) { width: 1% }
+#job-list-match-student td:nth-child(3) { width: 50% }
+#job-list-match-student td:nth-child(4) { width: 25% }
+
+#job-list-project-match td:nth-child(1) { width: 40% }
+#job-list-project-match td:nth-child(2) { width: 30% }
+#job-list-project-match td:nth-child(3) { width: 30% }
+
 
 /************************
  * Grade book
