@@ -7,7 +7,7 @@
 <div class="person_in_a_collection">
   <div class="formItem indented ui-widget">
     <p>
-      <%= member_label %>:
+      <span class="member-label"><%= member_label %></span>:
       <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%= person %>"/>
 
       <script type="text/javascript">
@@ -16,7 +16,7 @@
               minLength:2
           });
       </script>
-      <a href="#" class="remove_person" onclick="$(this).parents('div.person_in_a_collection').remove();">remove</a>
+      <a href="#" class="remove_person" onclick="event.preventDefault();$(this).parents('div.person_in_a_collection').remove();">remove</a>
     </p>
   </div>
 </div>

@@ -16,7 +16,7 @@ class CreateJobs < ActiveRecord::Migration
     end
 
     create_table :job_supervisors do |t|
-    	t.integer :user_id
+      t.integer :user_id
       t.timestamps
     end
 

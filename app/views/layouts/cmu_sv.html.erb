@@ -86,6 +86,7 @@
                     Courses</a></li>
             <% end %>
           </ul>
+          <li class="standard"><a href="/jobs">Jobs</a></li>
           <li class="standard"><%= link_to "Presentations", today_presentations_url, :class => "Lv1NavLink" %></li>
           <% if current_user %>
               <li class="standard"><%= link_to "My Deliverables", my_deliverables_path(current_user.twiki_name), :class => "Lv1NavLink" %></li>

@@ -1,0 +1,39 @@
+<h1>Listing jobs</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Skills must haves</th>
+    <th>Skills nice haves</th>
+    <th>Duration</th>
+    <th>Funding source</th>
+    <th>Funding oracle string</th>
+    <th>Is accepting</th>
+    <th>Is closed</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @jobs.each do |job| %>
+  <tr>
+    <td><%= job.title %></td>
+    <td><%= job.description %></td>
+    <td><%= job.skills_must_haves %></td>
+    <td><%= job.skills_nice_haves %></td>
+    <td><%= job.duration %></td>
+    <td><%= job.funding_source %></td>
+    <td><%= job.funding_oracle_string %></td>
+    <td><%= job.is_accepting %></td>
+    <td><%= job.is_closed %></td>
+    <td><%= link_to 'Show', job %></td>
+    <td><%= link_to 'Edit', edit_job_path(job) %></td>
+    <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Job', new_job_path %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130520033431) do
+ActiveRecord::Schema.define(:version => 20130627174920) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -246,6 +246,36 @@ ActiveRecord::Schema.define(:version => 20130520033431) do
   add_index "individual_contributions", ["user_id"], :name => "index_individual_contributions_on_user_id"
   add_index "individual_contributions", ["week_number"], :name => "index_individual_contributions_on_week_number"
   add_index "individual_contributions", ["year"], :name => "index_individual_contributions_on_year"
+
+  create_table "job_employees", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "job_employees", ["user_id"], :name => "index_job_employees_on_user_id"
+
+  create_table "job_supervisors", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "job_supervisors", ["user_id"], :name => "index_job_supervisors_on_user_id"
+
+  create_table "jobs", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "skills_must_haves"
+    t.string   "skills_nice_haves"
+    t.string   "duration"
+    t.string   "funding_source"
+    t.string   "funding_oracle_string"
+    t.boolean  "is_accepting",          :default => true
+    t.boolean  "is_closed",             :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "page_attachments", :force => true do |t|
     t.integer  "page_id"

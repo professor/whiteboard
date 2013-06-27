@@ -31,6 +31,8 @@ CMUEducation::Application.routes.draw do
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
+  resources :jobs
+
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
   match '/sponsored_project_sponsors/:id/archive' => 'sponsored_project_sponsors#archive', :as => :archive_sponsored_project_sponsor
   match '/sponsored_project_allocations/:id/archive' => 'sponsored_project_allocations#archive', :as => :archive_sponsored_project_allocation
