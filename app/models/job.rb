@@ -10,7 +10,7 @@
   def validate_supervisors
     tmp = self.supervisors_override
     puts "\n\n\n******** Entering validate_supervisors"
-    validate_members("supervisors_override")
+    validate_members("supervisors_override=", supervisors_override)
   end
 
 

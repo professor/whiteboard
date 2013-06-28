@@ -1,7 +1,7 @@
 module PeopleInACollection
 
 
-	def validate_members(member_assignments_override)
+	def validate_members(method_name, member_assignments_override)
     puts "\n\n\n******** Entering validate_members"
 
     puts "\n\n\n******** var member_assignments_override is #{member_assignments_override}"
@@ -10,7 +10,7 @@ module PeopleInACollection
 
     puts "\n\n\n******** corssing return"
 
-    send(self.member_assignments_override, member_assignments_override.select { |name| name != nil && name.strip != "" })
+    send(method_name, member_assignments_override.select { |name| name != nil && name.strip != "" })
     list = map_member_strings_to_users(member_assignments_override)
     list.each_with_index do |user, index|
       if user.nil?
