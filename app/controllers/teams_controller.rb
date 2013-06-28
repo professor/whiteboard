@@ -181,7 +181,7 @@ class TeamsController < ApplicationController
   # POST /courses/1/teams.xml
   def create
     if has_permissions_or_redirect(:staff, root_path)
-      params[:team][:members_override] = params[:people]
+      params[:team][:members_override] = params[:persons]
       @team = Team.new(params[:team])
 
       @team.course_id = params[:course_id]
@@ -206,7 +206,7 @@ class TeamsController < ApplicationController
   # PUT /courses/1/teams/1
   # PUT /courses/1/teams/1.xml
   def update
-    params[:team][:members_override] = params[:people]
+    params[:team][:members_override] = params[:persons]
     @team = Team.find(params[:id])
     @course = @team.course
     if has_permissions_or_redirect(:staff, course_team_path(@course, @team))

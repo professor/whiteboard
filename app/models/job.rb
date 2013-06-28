@@ -1,4 +1,4 @@
-class Job < ActiveRecord::Base
+  class Job < ActiveRecord::Base
 
   include PeopleInACollection
 
@@ -8,8 +8,9 @@ class Job < ActiveRecord::Base
   validate :validate_supervisors
 
   def validate_supervisors
+    tmp = self.supervisors_override
     puts "\n\n\n******** Entering validate_supervisors"
-    validate_members(self.supervisors_override)
+    validate_members("supervisors_override")
   end
 
 

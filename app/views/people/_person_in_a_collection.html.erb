@@ -2,13 +2,14 @@
    #Parameters: member_label, name
    member_label = local_assigns[:member_label].nil? ? "Person" : local_assigns[:member_label]
    person = local_assigns[:person]
+   collection_name = member_label.downcase + "s" #We don't do pluralize as this is tough to reproduce in javascript
 %>
 
 <div class="person_in_a_collection">
   <div class="formItem indented ui-widget">
     <p>
       <span class="member-label"><%= member_label %></span>:
-      <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%= person %>"/>
+      <input type="text" size="30" name="<%= collection_name %>[]" class="people_name" id="people_name" value="<%= person %>"/>
 
       <script type="text/javascript">
           $(".people_name").autocomplete({

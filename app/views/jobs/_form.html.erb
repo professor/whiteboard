@@ -91,6 +91,7 @@
                 var member_label = $people_in_collection.attr("data-member-label");
                 $people_in_collection.append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>");
                 $people_in_collection.last().find(".person_in_a_collection:last .member-label").html(member_label);
+                $people_in_collection.last().find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
             });
 
         });

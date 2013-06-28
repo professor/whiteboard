@@ -10,7 +10,7 @@ module PeopleInACollection
 
     puts "\n\n\n******** corssing return"
 
-    self.member_assignments_override = member_assignments_override.select { |name| name != nil && name.strip != "" }
+    send(self.member_assignments_override, member_assignments_override.select { |name| name != nil && name.strip != "" })
     list = map_member_strings_to_users(member_assignments_override)
     list.each_with_index do |user, index|
       if user.nil?

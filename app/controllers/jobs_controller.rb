@@ -26,7 +26,10 @@ class JobsController < ApplicationController
   # POST /jobs
   # POST /jobs.xml
   def create
+    params[:job][:supervisors_override] = params[:supervisors]
+    params[:job][:employees_override] = params[:students]
     @job = Job.new(params[:job])
+
 
     respond_to do |format|
       if @job.save

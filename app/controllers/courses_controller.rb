@@ -164,7 +164,7 @@ class CoursesController < ApplicationController
       @course.configured_by_user_id = current_user.id
     end
 
-    params[:course][:faculty_assignments_override] = params[:people]
+    params[:course][:faculty_assignments_override] = params[:teachers]
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       @course.attributes = params[:course]
