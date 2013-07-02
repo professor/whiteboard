@@ -5,14 +5,11 @@
   validates :title, :presence => true
 
   before_save :update_faculty
-  validate :validate_supervisors
+  validate :validate_supervisors_and_employees
 
-  def validate_supervisors
-    tmp = self.supervisors_override
-    puts "\n\n\n******** Entering validate_supervisors"
- #   map_member_stings_to_users nil
-#    validate_members_old("supervisors_override=", supervisors_override)
-    validate_members(:supervisors_override)
+  def validate_supervisors_and_employees
+    validate_members :supervisors_override
+    validate_members :employees_override
   end
 
 
