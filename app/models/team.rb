@@ -8,23 +8,27 @@ class Team < ActiveRecord::Base
 
   has_many :presentations
 
-  validate :validate_members
+  validate :validate_team_members
   validates_presence_of :course_id, :name
   validates_uniqueness_of :email, :allow_blank => true, :message => "The team name has already be used in this semester. Pick another name"
 
   attr :team_members_list_changed, true
-
-  #When assigning faculty to a page, the user types in a series of strings that then need to be processed
-  #:members_override is a temporary variable that is used to do validation of the strings (to verify
-  # that they are people in the system) and then to save the people in the faculty association.
-  attr_accessor :members_override
-
 
   before_validation :clean_up_data, :update_email_address
   before_save :copy_peer_evaluation_dates_from_course, :need_to_update_google_list?, :update_members
   after_save :update_mailing_list
 
   before_destroy :remove_google_group
+
+  #When assigning faculty to a page, the user types in a series of strings that then need to be processed
+  #:members_override is a temporary variable that is used to do validation of the strings (to verify
+  # that they are people in the system) and then to save the people in the faculty association.
+  attr_accessor :members_override
+
+  include PeopleInACollection
+  def validate_team_members
+    validate_members :members_override
+  end
 
   def clean_up_data
     self.name = self.name.strip() unless self.name.blank?
@@ -79,18 +83,6 @@ class Team < ActiveRecord::Base
 
   #When modifying validate_members or update_members, modify the same code in course.rb
   #Todo - move to a higher class or try as a mixin
-  def validate_members
-    return "" if members_override.nil?
-
-    self.members_override = members_override.select { |name| name != nil && name.strip != "" }
-    list = map_member_stings_to_users(members_override)
-    list.each_with_index do |id, index|
-      if id.nil?
-        self.errors.add(:base, "Person " + members_override[index] + " not found")
-      end
-    end
-  end
-
   def update_members
     return "" if members_override.nil?
 
@@ -167,10 +159,6 @@ class Team < ActiveRecord::Base
     google_apps_connection.delete_group(self.email)
   rescue GDataError => e
     logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
-  end
-
-  def map_member_stings_to_users(members_override_list)
-    members_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
 end

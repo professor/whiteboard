@@ -1,16 +1,12 @@
   class Job < ActiveRecord::Base
 
-  include PeopleInACollection
 
   validates :title, :presence => true
 
   before_save :update_faculty
   validate :validate_supervisors_and_employees
 
-  def validate_supervisors_and_employees
-    validate_members :supervisors_override
-    validate_members :employees_override
-  end
+
 
 
 	has_many :job_supervisors
@@ -31,23 +27,12 @@
       						:supervisors_override,
       						:employees_override
 
+  include PeopleInACollection
+  def validate_supervisors_and_employees
+    validate_members :supervisors_override
+    validate_members :employees_override
+  end
 
-  # ..call :faculty, :faculty_assignments_override
-
-  # #When modifying validate_faculty or update_faculty, modify the same code in team.rb
-  # #Todo - move to a higher class or try as a mixin
-
-  # def validate_faculty
-  #   return "" if faculty_assignments_override.nil?
-
-  #   self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
-  #   list = map_faculty_strings_to_users(faculty_assignments_override)
-  #   list.each_with_index do |user, index|
-  #     if user.nil?
-  #       self.errors.add(:base, "Person " + faculty_assignments_override[index] + " not found")
-  #     end
-  #   end
-  # end
 
   def update_faculty
     return "" if supervisors_override.nil?
