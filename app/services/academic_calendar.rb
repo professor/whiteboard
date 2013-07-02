@@ -234,7 +234,7 @@ class AcademicCalendar
           when "Spring"
             return 3
           when "Summer"
-            return 22
+            return 21
           when "Fall" #Not official yet (1/2/2012)
             return 35
         end
