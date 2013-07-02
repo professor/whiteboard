@@ -73,11 +73,12 @@ GEM
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
     cocaine (0.2.0)
-    daemons (1.1.9)            
     columnize (0.3.6)
+    daemons (1.1.9)
     debugger (1.6.0)
-    debugger-linecache (~> 1.2.0)
-    debugger-ruby_core_source (~> 1.2.1)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.1)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
     delayed_job (2.1.4)
@@ -273,7 +274,7 @@ DEPENDENCIES
   cancan
   capybara (= 1.1.1)
   ckeditor (= 3.6.3)
-  daemons (~> 1.1.4)     
+  daemons (~> 1.1.4)
   debugger
   delayed_job (= 2.1.4)
   devise
