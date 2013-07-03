@@ -772,6 +772,8 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #job-quick-list-container .cmu_table td,
 #job-detail-list-container .cmu_table td { vertical-align: middle }
 
+#edit_job .cmu_table.faculty-visible input.input-field { width: 165px }
+
 #edit_job .cmu_table.faculty-visible tr,
 #job-detail-list-container tr.faculty-visible { background-color: #D9E7E6; }
 

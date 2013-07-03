@@ -36,12 +36,6 @@
       </tr>
       <tr>
         <td>
-          <!-- <select id="job_sponsors" name="job[sponsors]">
-            <option value="">Pick Contact People/Sponsors:</option>
-            <option value="ToddSedano">Todd Sedano</option>
-            <option value="MartinGris">Martin Gris</option>
-            <option value="SteveRay">Steve Ray</option>
-          </select> -->
             <% if @job.supervisors_override.nil? %>
                 <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
             <% else %>
@@ -59,6 +53,7 @@
       <tr>
         <td>Assigned students:</td>
       </tr>
+
       <tr>
         <td>
             <% if @job.employees_override.nil? %>
@@ -74,17 +69,41 @@
     </table>
 
 
-    <%= f.label :funding_source %>
-    <%= f.text_field :funding_source %>
+    <table class="cmu_table input-field" id="project_state" style="margin-top: 20px">
+      <tr><td  colspan="2">Project State</td></tr>
+      <tr>
+        <td id="project_state_first_col">
+          <table>
+            <tbody>
+              <tr>
+                  <td><%= f.radio_button :is_accepting, 'true', :checked => true %></td>
+                  <td>Accepting - accepting more students</td>
+              </tr>
+              <tr>
+                  <td><%= f.radio_button :is_accepting, 'false' %></td>
+                  <td>Filled - not accepting any more students.</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td> <%= link_to 'Close Project' %> </td>
+      </tr>
+    </table>
 
-    <%= f.label :funding_oracle_string %>
-    <%= f.text_field :funding_oracle_string %>
 
-    <%= f.label :is_accepting %>
-    <%= f.check_box :is_accepting %>
+   <table class="cmu_table input-field faculty-visible" title="Only shown to faculty & admin" style="margin-top: 20px">
+    <tr><td  colspan="2">Funding</td></tr>
+    <tr>
+      <td>
+         <%= f.text_field :funding_source, :width => "150px", :class => 'input-field', :placeholder => 'Enter the Funding source', :title => 'Enter the Funding source' %>
+      </td>
+      <td>
+        <%= f.text_field :funding_oracle_string, :width => "150px", :class => 'input-field', :placeholder => 'or enter the Oracle string', :title => 'Enter the Oracle string' %>
+      </td>
+    </tr>
+  </table>
 
-    <%= f.label :is_closed %>
-    <%= f.check_box :is_closed %>
+
 
   <div class="actions">
     <%= f.submit %>
@@ -92,6 +111,8 @@
 <% end %>
 
 </div>
+
+<br /><br />
 
 <%# content_for :javascript do %>
     <%# javascript_tag do %>
