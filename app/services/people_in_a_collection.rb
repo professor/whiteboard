@@ -1,5 +1,9 @@
 module PeopleInACollection
 
+  # When assigning faculty to a page, the user types in a series of strings that then need to be processed
+  #:members_override is a temporary variable that is used to do validation of the strings (to verify
+  # that they are people in the system) and then to save the people in the faculty association.
+
   def validate_members(method_symbol)
      list_of_strings = send(method_symbol)
      return "" if list_of_strings.nil?
@@ -21,6 +25,28 @@ module PeopleInACollection
 
   def map_member_strings_to_users(members_override_list)
     members_override_list.map { |member_name| User.find_by_human_name(member_name) }
+  end
+
+
+  def update_collection_members override_symbol, attribute_symbol
+    return "" if send(override_symbol).nil?
+    original_list_of_users = send "#{attribute_symbol}"
+
+    list_of_strings = remove_empty_fields(list_of_strings)
+    list_changed = detect_if_list_changed(list_of_strings, original_list_of_users)
+
+    send "#{attribute_symbol}=", []  #I don't think this is necessary
+    send "#{override_symbol}=", list_of_strings
+
+    list_of_users = map_member_strings_to_users(list_of_strings)
+    raise "Error converting supervisors_override to IDs!" if list_of_users.include?(nil)
+    send "#{attribute_symbol}=", list_of_users
+    send "#{override_symbol}=", nil
+    return list_changed
+  end
+
+  def detect_if_list_changed(override_list_of_strings, original_list_of_users)
+    return (list_of_strings.sort != original_list_of_users.collect { |person| person.human_name }.sort)
   end
 
 end

@@ -112,13 +112,13 @@ describe Team do
 
     it "validates that the people are in the system" do
       @team.members_override = [@student_sam.human_name, @student_sally.human_name]
-      @team.validate_members
+      @team.validate_team_members
       @team.should be_valid
     end
 
     it "for people not in the system, it sets an error" do
       @team.members_override = [@student_sam.human_name, "Someone not in the system", @student_sally.human_name]
-      @team.validate_members
+      @team.validate_team_members
       @team.should_not be_valid
       @team.errors[:base].should include("Person Someone not in the system not found")
     end

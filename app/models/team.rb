@@ -90,7 +90,7 @@ class Team < ActiveRecord::Base
     #if the list has changed
     if (self.members_override.sort != self.members.collect { |person| person.human_name }.sort)
       self.updating_email = true
-      list = map_member_stings_to_users(self.members_override)
+      list = map_member_strings_to_users(self.members_override)
       raise "Error converting members_override to IDs!" if list.include?(nil)
       self.members = list
     end

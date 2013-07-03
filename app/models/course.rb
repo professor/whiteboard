@@ -227,7 +227,7 @@ class Course < ActiveRecord::Base
     self.faculty = []
 
     self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
-    list = map_faculty_strings_to_users(self.faculty_assignments_override)
+    list = map_member_strings_to_users(self.faculty_assignments_override)
     raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
     self.faculty = list
     faculty_assignments_override = nil

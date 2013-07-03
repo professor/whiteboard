@@ -234,13 +234,13 @@ describe Course do
 
     it "validates that the people are in the system" do
       @course.faculty_assignments_override = [@faculty_frank.human_name, @faculty_fagan.human_name]
-      @course.validate_faculty
+      @course.validate_faculty_assignments
       @course.should be_valid
     end
 
     it "for people not in the system, it sets an error" do
       @course.faculty_assignments_override = [@faculty_frank.human_name, "Someone not in the system", @faculty_fagan.human_name]
-      @course.validate_faculty
+      @course.validate_faculty_assignments
       @course.should_not be_valid
       @course.errors[:base].should include("Person Someone not in the system not found")
     end
