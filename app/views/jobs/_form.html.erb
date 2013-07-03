@@ -1,4 +1,6 @@
-<%= form_for(@job) do |f| %>
+<div id="job-container">
+
+<%= form_for @job, :html => { :class => "ngb", :id => "edit_job" }  do |f| %>
   <% if @job.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
@@ -11,74 +13,85 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :skills_must_haves %><br />
-    <%= f.text_field :skills_must_haves %>
-  </div>
-  <div class="field">
-    <%= f.label :skills_nice_haves %><br />
-    <%= f.text_field :skills_nice_haves %>
-  </div>
-  <div class="field">
-    <%= f.label :duration %><br />
-    <%= f.text_field :duration %>
-  </div>
 
-    <div id="supervisors_in_a_collection" data-member-label="Supervisor">
-      <p>Contact people: </p>
+    <%= f.label :title %>
+    <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project", :title => "Enter a one line description for this project" %>
 
-      <% if @job.supervisors_override.nil? %>
-          <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-      <% else %>
-          <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors_override, :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-      <% end %>
-    </div>
+    <%= f.label :skills_must_haves, 'Must Haves' %>
+    <%= f.text_field :skills_must_haves, :class => 'input-field', :placeholder => 'Enter the "must have" qualifications or skills required', :title => 'Enter the "must have" qualifications or skills required' %>
 
-    <div class="formItem indented"><p><%= link_to "Add a supervisor", "#", :class => "add_person" %></p></div>
+    <%= f.label :skills_nice_haves, 'Nice to Haves' %>
+    <%= f.text_field :skills_nice_haves, :class => 'input-field', :placeholder => 'Enter the "nice to have" qualifications desired of a candidate', :title => 'Enter the "nice to have" qualifications that are desired of a candidate' %>
+
+    <%= f.label :description %>
+    <%= f.text_area :description, :class => 'input-field', :placeholder => 'Enter a detailed description for the Project here', :title => 'Enter a detailed description for the Project here', :rows => "8" %>
+
+    <%= f.label :duration %>
+    <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Enter the duration of the project' %>
 
 
-    <div id="employees_in_a_collection" data-member-label="Student">
-      <p>Assigned students: </p>
+    <table class="cmu_table input-field" style="margin-top: 20px" id="supervisors_in_a_collection" data-member-label="Supervisor">
+      <tr>
+        <td>Contact People:</td>
+      </tr>
+      <tr>
+        <td>
+          <!-- <select id="job_sponsors" name="job[sponsors]">
+            <option value="">Pick Contact People/Sponsors:</option>
+            <option value="ToddSedano">Todd Sedano</option>
+            <option value="MartinGris">Martin Gris</option>
+            <option value="SteveRay">Steve Ray</option>
+          </select> -->
+            <% if @job.supervisors_override.nil? %>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
+            <% else %>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors_override, :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
+            <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><div class="formItem indented"><p><%= link_to "Add a supervisor", "#", :class => "add_person" %></p></div></td>
+      </tr>
+    </table>
 
-      <% if @job.employees_override.nil? %>
-          <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-      <% else %>
-          <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-      <% end %>
-    </div>
 
-    <div class="formItem indented"><p><%= link_to "Add a student", "#", :class => "add_person" %></p></div>
+    <table class="cmu_table input-field" style="margin-top: 20px" id="employees_in_a_collection" data-member-label="Student">
+      <tr>
+        <td>Assigned students:</td>
+      </tr>
+      <tr>
+        <td>
+            <% if @job.employees_override.nil? %>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+            <% else %>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+            <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><div class="formItem indented"><p><%= link_to "Add a student", "#", :class => "add_person" %></p></div></td>
+      </tr>
+    </table>
 
 
-  <div class="field">
-    <%= f.label :funding_source %><br />
+    <%= f.label :funding_source %>
     <%= f.text_field :funding_source %>
-  </div>
-  <div class="field">
-    <%= f.label :funding_oracle_string %><br />
+
+    <%= f.label :funding_oracle_string %>
     <%= f.text_field :funding_oracle_string %>
-  </div>
-  <div class="field">
-    <%= f.label :is_accepting %><br />
+
+    <%= f.label :is_accepting %>
     <%= f.check_box :is_accepting %>
-  </div>
-  <div class="field">
-    <%= f.label :is_closed %><br />
+
+    <%= f.label :is_closed %>
     <%= f.check_box :is_closed %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
 
+</div>
 
 <%# content_for :javascript do %>
     <%# javascript_tag do %>
@@ -87,14 +100,24 @@
 
             $(".add_person").click(function (event) {
                 event.preventDefault();
-                var $people_in_collection = $(this).parent().parent().prev();
+                // var $people_in_collection = $(this).parent().parent().prev();
+                var $people_in_collection = $(this).closest('table');
                 var member_label = $people_in_collection.attr("data-member-label");
-                $people_in_collection.append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>");
-                $people_in_collection.last().find(".person_in_a_collection:last .member-label").html(member_label);
-                $people_in_collection.last().find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
+
+                var $row = ($('<tr>')
+                              .append($('<td>')
+                                .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
+                              )
+                            );
+                $people_in_collection.find('tbody tr:nth-last-child(2)').after($row);
+                $row.find(".person_in_a_collection:last .member-label").html(member_label);
+                $row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
+                // $people_in_collection.last().find(".person_in_a_collection:last .member-label").html(member_label);
+                // $people_in_collection.last().find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
             });
 
         });
     </script>
     <%# end %>
 <%# end %>
+
