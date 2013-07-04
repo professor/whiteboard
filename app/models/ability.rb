@@ -21,7 +21,7 @@ class Ability
     end
 
     #  This next line is for testing purposes only when working on managing active directory from whiteboard
-    if (user.human_name == "Edward Akoto" || user.human_name == "Jazz Sabian"  || user.human_name == "Albert Liu" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano")
+    if (user.human_name == "Edward Akoto" || user.human_name == "Jazz Sabian"  || user.human_name == "Albert Liu" || user.human_name == "Stacy Marshall" || user.human_name == "Todd Sedano" || user.human_name == "Gerry Elizondo")
       can :create, User
     else
       cannot :create, User
