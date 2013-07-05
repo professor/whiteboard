@@ -16,17 +16,21 @@ class CreateJobs < ActiveRecord::Migration
     end
 
     create_table :job_supervisors do |t|
+      t.integer :job_id
       t.integer :user_id
       t.timestamps
     end
 
     create_table :job_employees do |t|
+      t.integer :job_id
       t.integer :user_id
       t.timestamps
     end
 
     add_index :job_supervisors, :user_id
+    add_index :job_supervisors, :job_id
     add_index :job_employees, :user_id
+    add_index :job_employees, :job_id
 
   end
 
