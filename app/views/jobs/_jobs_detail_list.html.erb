@@ -5,51 +5,51 @@
     <% @jobs.each do |job| %>
     <table class="cmu_table" id="project-<%= job.id %>">
       <tr>
-        <td colspan="2" class="header-row">
-          <%= job_title_formatted(job).html_safe %>
+	<td colspan="2" class="header-row">
+	  <%= job_title_formatted(job).html_safe %>
       </tr>
       <tr>
-          <td colspan="2"><%= job.description %></td>
+	  <td colspan="2"><%= job.description %></td>
       </tr>
       <tr>
-          <td>Must have skills:</td>
-          <td><%= job.skills_must_haves %></td>
+	  <td>Must have skills:</td>
+	  <td><%= job.skills_must_haves %></td>
       </tr>
       <% if job.skills_nice_haves %>
       <tr>
-          <td>Nice to have:</td>
-          <td><%= job.skills_nice_haves %></td>
+	  <td>Nice to have:</td>
+	  <td><%= job.skills_nice_haves %></td>
       </tr>
       <% end %>
       <% if job.duration %>
       <tr>
-          <td>Duration:</td>
-          <td><%= job.duration %></td>
+	  <td>Duration:</td>
+	  <td><%= job.duration %></td>
       </tr>
       <% end %>
       <tr>
-          <td>Contact People:</td>
-          <td><%= job_person_names(job.job_supervisors).html_safe %></td>
+	  <td>Contact People:</td>
+	  <td><%= job_person_names(job.job_supervisors).html_safe %></td>
       </tr>
       <tr>
-          <td>Assigned:</td>
-          <td><%= job_person_names(job.job_employees).html_safe %></td>
+	  <td>Assigned:</td>
+	  <td><%= job_person_names(job.job_employees).html_safe %></td>
       </tr>
       <tr>
-          <td>Posted on:</td>
-          <td><%= job.created_at %></td>
+	  <td>Posted on:</td>
+	  <td><%= job.created_at %></td>
       </tr>
       <% if can? :see_job_details, Job %>
       <tr class="faculty-visible">
-          <td>Funding:</td>
-          <td><%= job.funding_source %></td>
+	  <td>Funding:</td>
+	  <td><%= job.funding_source %></td>
       </tr>
       <tr>
-          <td colspan="2"><%= link_to 'Edit', edit_job_path(job) %> | <%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
+	  <td colspan="2"><%= link_to 'Edit', edit_job_path(job) %> | <%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>
       <% end %>
       <tr>
-          <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
+	  <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
       </tr>
     </table>
     <% end %>

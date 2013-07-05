@@ -19,7 +19,7 @@
 
   attr_accessible :title, :description, :skills_must_haves, :skills_nice_haves,
       						:duration, :funding_source, :funding_oracle_string, :is_accepting,
-      						:is_closed, :created_at,
+						:is_closed, :created_at,
       						:supervisors_override,
       						:employees_override
 
