@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627174920) do
+ActiveRecord::Schema.define(:version => 20130627210642) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -262,20 +262,6 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
   end
 
   add_index "job_supervisors", ["user_id"], :name => "index_job_supervisors_on_user_id"
-
-  create_table "jobs", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.string   "skills_must_haves"
-    t.string   "skills_nice_haves"
-    t.string   "duration"
-    t.string   "funding_source"
-    t.string   "funding_oracle_string"
-    t.boolean  "is_accepting",          :default => true
-    t.boolean  "is_closed",             :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "page_attachments", :force => true do |t|
     t.integer  "page_id"
@@ -692,6 +678,9 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -783,6 +772,9 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

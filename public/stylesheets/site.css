@@ -766,7 +766,8 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #edit_job .cmu_table,
 #job-list-match-container-student,
 #job-quick-list-container .cmu_table,
-#job-detail-list-container .cmu_table { background-color: #FbFbFb }
+#job-detail-list-container .cmu_table,
+#job-notice-container { background-color: #FbFbFb }
 
 #edit_job .cmu_table td,
 #job-quick-list-container .cmu_table td,
@@ -775,7 +776,8 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #edit_job .cmu_table.faculty-visible input.input-field { width: 165px }
 
 #edit_job .cmu_table.faculty-visible tr,
-#job-detail-list-container tr.faculty-visible { background-color: #D9E7E6; }
+#job-detail-list-container tr.faculty-visible,
+#job-notice-container .faculty-visible { background-color: #D9E7E6; }
 
 /* ------- Edit Job Page */
 
@@ -813,15 +815,18 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 /* ------- Job list page */
-#job-quick-list-container, #job-detail-list-container { margin-top: 40px; }
+#job-quick-list-container { margin-top: 40px; }
 /*#job-quick-list-container .cmu_table td:nth-child(1) { width: 60px }*/
 #job-quick-list-container .cmu_table td:nth-child(2) { width: 100px }
 #job-quick-list-container .cmu_table tr:hover td { border-left: 1px solid #85000a; }
 #job-quick-list-container .cmu_table td, td[inline-page-link] { cursor: pointer; }
 
 
+#job-detail-list-container { margin-top: 40px }
 #job-detail-list-container .cmu_table { margin: 30px 0; width: 100% }
+#job-detail-list-container .cmu_table tr:nth-child(2) td { padding: 20px; }
 #job-detail-list-container .cmu_table td:nth-child(1) { width: 115px }
+#job-detail-list-container .cmu_table tr:nth-last-child(2) td { text-align: center; }
 #job-detail-list-container .input-field {
     margin: 10px 0;
     border: 2px solid #999999;

@@ -12,9 +12,7 @@ class Ability
     #   end
 
     can :manage, User, :id => user.id
-
     can :update, PageAttachment
-
 
     if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Elizondo")
       can :upload, Course
@@ -28,9 +26,11 @@ class Ability
     end
 
     if (user.is_admin? || user.human_name == "Kaushik Gopal")
+      can :see_job_details, Job # TODO: testing. Todd will assign accordingly when releasing live
       can :upload_official_photo, User
     else
       cannot :upload_official_photo, User
+      cannot :see_job_details, Job
     end
 
     #Contracts manager

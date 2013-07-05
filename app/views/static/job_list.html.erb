@@ -1,42 +1,32 @@
-<script type="text/javascript">
-  $(function() {
-    $("td[inline-page-link]").parent().bind('click', function (event) {
-        var $target = $(this).children(":first");
-        $('html, body').stop().animate({
-            scrollTop: $($target.attr("inline-page-link")).offset().top
-        }, 500, 'swing');
-    });
-  });
-</script>
-
 <h1>Job listings</h1>
 
-
 <div id="job-detail-list-container">
-
-<table class="cmu_table">
-  <tr>
-    <td>
-This is an open marketplace process where faculty and students interview each other to find the best match.  Matches are made on a first-come, first-served basis, when both the owner and the student agree on the match.
-<br/><br/>
-When a match has occurred, the owner adds the student to their project. An email will be sent to the student telling them how to fill out the necessary paperwork.
-<br/><br/>
-If a student is taking more than 36 units, we limit the hours to 10 hours per week. If the students is taking 36 or less units,  we limit the hours to 20 hours per
+  <table class="cmu_table">
+    <tr>
+      <td>
+        This is an open marketplace process where faculty and students interview each other to find the best match.  Matches are made on a first-come, first-served basis, when both the owner and the student agree on the match.
+        <br/><br/>
+        When a match has occurred, the owner adds the student to their project. An email will be sent to the student telling them how to fill out the necessary paperwork.
+        <br/><br/>
+        If a student is taking more than 36 units, we limit the hours to 10 hours per week. If the students is taking 36 or less units,  we limit the hours to 20 hours per
         week. Note that some projects might only have enough funding for 10 hours per week.
-      <br/><br/>
-    </td>
-  </tr>
-  <tr class="faculty-visible">
-    <td>
-The cost of a graduate assistant is as follows. (Namely $600 / month)
-<ul><li>Fall - $2,400</li>
-  <li>Spring - $2,400</li>
-  <li>Summer - $2,400</li></ul>
+        <br/><br/>
+      </td>
+    </tr>
 
-      Under normal circumstances, we do not expect the students to be working over their breaks.
-    </td>
-  </tr>
-</table>
+    <tr class="faculty-visible">
+      <td>
+        The cost of a graduate assistant is as follows. (Namely $600 / month)
+        <ul>
+          <li>Fall - $2,400</li>
+          <li>Spring - $2,400</li>
+          <li>Summer - $2,400</li>
+        </ul>
+        Under normal circumstances, we do not expect the students to be working over their breaks.
+      </td>
+    </tr>
+
+  </table>
 </div>
 
 
@@ -45,27 +35,27 @@ The cost of a graduate assistant is as follows. (Namely $600 / month)
   <h2>Quick listing</h2>
 
   <table class="cmu_table">
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th width=100%>Description</th>
-    </tr>
-  </thead>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th width=100%>Description</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr>
-      <td inline-page-link="#project-1">Accepting</td>
-      <td inline-page-link="#project-1">Semantic Harmonization of Smart Grid Concepts (Steve Ray)</td>
-    </tr>
-    <tr>
-      <td inline-page-link="#project-2">Filled</td>
-      <td inline-page-link="#project-2"><strike>An Interchange Ontology for Mobile Sensor Platforms in Home Health Management (Ted Selker)</strike></td>
-    </tr>
-    <tr>
-      <td inline-page-link="#project-3">Filled</td>
-      <td inline-page-link="#project-3"><strike>Ruby on Rails development (Todd Sedano)</strike></td>
-    </tr>
-  </tbody>
+    <tbody>
+      <tr>
+        <td inline-page-link="#project-1">Accepting</td>
+        <td inline-page-link="#project-1">Semantic Harmonization of Smart Grid Concepts (Steve Ray)</td>
+      </tr>
+      <tr>
+        <td inline-page-link="#project-2">Filled</td>
+        <td inline-page-link="#project-2"><strike>An Interchange Ontology for Mobile Sensor Platforms in Home Health Management (Ted Selker)</strike></td>
+      </tr>
+      <tr>
+        <td inline-page-link="#project-3">Filled</td>
+        <td inline-page-link="#project-3"><strike>Ruby on Rails development (Todd Sedano)</strike></td>
+      </tr>
+    </tbody>
   </table>
 
 </div>
@@ -74,146 +64,145 @@ The cost of a graduate assistant is as follows. (Namely $600 / month)
 
 <div id="job-detail-list-container">
   <h2>Complete Job details</h2>
-
   <div>
-      <table class="cmu_table" id="project-1">
-        <tr>
-          <td colspan="2" class="header-row">Semantic Harmonization of Smart Grid Concepts</td>
-        </tr>
-        <tr>
-          <td colspan="2">This project is in year 2 of a 3-year grant, and concerns the application of semantic modeling and querying techniques to demonstrate how the smart grid community can manage the large challenge of harmonizing definitions and relations among the standards being defined. The particular research will involve extending the work of Year 1, where a student developed a semantic query tool running on the Amazon cloud (see http://fsgim.sv.cmu.edu) that allowed arbitrarySPARQL queries to be applied to a model defined in OWL. A number of queries were predefined to allow people not familiar with SPARQL to explore the model. The point of this tool was to support validation of the model, checking, for example, how the datatypes were declared. Supporting this web application is a sophisticated commercial semantic modeling tool called TopBraid Composer, sold by TopQuadrant.
+    <table class="cmu_table" id="project-1">
+      <tr>
+        <td colspan="2" class="header-row">Semantic Harmonization of Smart Grid Concepts</td>
+      </tr>
+      <tr>
+        <td colspan="2">This project is in year 2 of a 3-year grant, and concerns the application of semantic modeling and querying techniques to demonstrate how the smart grid community can manage the large challenge of harmonizing definitions and relations among the standards being defined. The particular research will involve extending the work of Year 1, where a student developed a semantic query tool running on the Amazon cloud (see http://fsgim.sv.cmu.edu) that allowed arbitrarySPARQL queries to be applied to a model defined in OWL. A number of queries were predefined to allow people not familiar with SPARQL to explore the model. The point of this tool was to support validation of the model, checking, for example, how the datatypes were declared. Supporting this web application is a sophisticated commercial semantic modeling tool called TopBraid Composer, sold by TopQuadrant.
           In Year 2, we plan to: apply the same techniques to several other standards; extend the web query tool to allow navigation among the classes and relations via hyperlinks, using a technology called SPARQL Web Pages; explore automated suggestions for improvements to the models using automated reasoning techniques. You would be part of a team of four: one research faculty at CMU, two employees at TopQuadrant under contract to CMU, and yourself. You would be responsible for the web query tool.
           This project supports a major national effort to modernize the electrical grid, involving hundreds of companies and thousands of engineering professionals. You will have an opportunity to write a paper and present results at a national meeting.
-          </td>
-        </tr>
-        <tr>
-          <td>Must have skills:</td>
-          <td>Experience with interactive web page design using Javascript</td>
-        </tr>
-        <tr>
-          <td>Nice to have:</td>
-          <td>Some experience with Semantic Web technology (RDF, OWL, SPARQL)</td>
-        </tr>
-        <tr>
-          <td>Duration:</td>
-          <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year.</td>
-        </tr>
-        <tr>
-          <td>Contact People:</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>
-        </tr>
-        <tr>
-          <td>Assigned Students:</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/YuvaDatla">Yuva Datla</a></td>
-        </tr>
-        <tr>
-          <td>Posted on:</td>
-          <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
-        </tr>
-        <tr class="faculty-visible">
-          <td>Funding:</td>
-          <td>Oracle</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
-        </tr>
+        </td>
+      </tr>
+      <tr>
+        <td>Must have skills:</td>
+        <td>Experience with interactive web page design using Javascript</td>
+      </tr>
+      <tr>
+        <td>Nice to have:</td>
+        <td>Some experience with Semantic Web technology (RDF, OWL, SPARQL)</td>
+      </tr>
+      <tr>
+        <td>Duration:</td>
+        <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year.</td>
+      </tr>
+      <tr>
+        <td>Contact People:</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>
+      </tr>
+      <tr>
+        <td>Assigned Students:</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/YuvaDatla">Yuva Datla</a></td>
+      </tr>
+      <tr>
+        <td>Posted on:</td>
+        <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
+      </tr>
+      <tr class="faculty-visible">
+        <td>Funding:</td>
+        <td>Oracle</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
+      </tr>
+    </table>
 
-      </table>
-
-      <table class="cmu_table" id="project-2">
-        <tr>
-          <td colspan="2" class="header-row"><strike>An Interchange Ontology for Mobile Sensor Platforms in Home Health Management</strike></td>
-        </tr>
-        <tr>
-          <td colspan="2">This project is in year 2 of a 3-year grant, and concerns the application of ontological engineering methods to the use of mobile sensor platforms in the home health management domain. To date we have defined a simple ontology and a mapping to a standard (IEEE 11073) for exchanging health monitoring data, such as blood pressure, pulse rate, temperature, etc. This year we will explore two tasks:
+    <table class="cmu_table" id="project-2">
+      <tr>
+        <td colspan="2" class="header-row"><strike>An Interchange Ontology for Mobile Sensor Platforms in Home Health Management</strike></td>
+      </tr>
+      <tr>
+        <td colspan="2">This project is in year 2 of a 3-year grant, and concerns the application of ontological engineering methods to the use of mobile sensor platforms in the home health management domain. To date we have defined a simple ontology and a mapping to a standard (IEEE 11073) for exchanging health monitoring data, such as blood pressure, pulse rate, temperature, etc. This year we will explore two tasks:
           1.    Building a proof of concept smart phone app that automatically converts health monitoring data into IEEE 11073-compatible form using the ontology,
           2.    Apply automated reasoning techniques to validate portions of the IEEE 11073 standard after converting it into an OWLrepresentation.
-          </td>
-        </tr>
-        <tr>
-          <td>Must have skills:</td>
-          <td>Experience with mobile device app development</td>
-        </tr>
-        <tr>
-          <td>Nice to have:</td>
-          <td>Some experience with Semantic Web technology (RDF, OWL, SPARQL) would be preferred</td>
-        </tr>
-        <tr>
-          <td>Duration:</td>
-          <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year</td>
-        </tr>
-        <tr>
-          <td>Contact People:</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>
-        </tr>
-        <tr>
-          <td>Assigned People</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/MarkHennessy">Mark Hennessy</a></td>
-        </tr>
-        <tr class="faculty-visible">
-          <td>Funding</td>
-          <td>Oracle</td>
-        </tr>
-        <tr>
-          <td>Posted on:</td>
-          <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
-        </tr>
+        </td>
+      </tr>
+      <tr>
+        <td>Must have skills:</td>
+        <td>Experience with mobile device app development</td>
+      </tr>
+      <tr>
+        <td>Nice to have:</td>
+        <td>Some experience with Semantic Web technology (RDF, OWL, SPARQL) would be preferred</td>
+      </tr>
+      <tr>
+        <td>Duration:</td>
+        <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year</td>
+      </tr>
+      <tr>
+        <td>Contact People:</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/SteveRRay">steve.ray@sv.cmu.edu</a></td>
+      </tr>
+      <tr>
+        <td>Assigned People</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/MarkHennessy">Mark Hennessy</a></td>
+      </tr>
+      <tr class="faculty-visible">
+        <td>Funding</td>
+        <td>Oracle</td>
+      </tr>
+      <tr>
+        <td>Posted on:</td>
+        <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
+      </tr>
 
-      </table>
+    </table>
 
-      <table class="cmu_table" id="project-3">
-        <tr>
-          <td colspan="2" class="header-row"><strike>Ruby on Rails development</strike></td>
-        </tr>
-        <tr>
-          <td colspan="2">We’ll be modifying and enhancing two open sourced Ruby on Rails websites. The first site is our education rails application. The second is a destination site for the software craftsmanship community. The student will also help promote the site with the community. Ideally, I'm looking for someone who loves working with Rails and may be interested in using it in their next job.</td>
-        </tr>
-        <tr>
-          <td>Must have skills:</td>
-          <td>Experience working with Ruby on Rails</td>
-        </tr>
-        <tr>
-          <td>Duration:</td>
-          <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year</td>
-        </tr>
-        <tr>
-          <td>Contact People:</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/ToddSedano">todd.sedano@sv.cmu.edu</a></td>
-        </tr>
-        <tr>
-          <td>Assigned People</td>
-          <td><a href="http://whiteboard.sv.cmu.edu/people/KaushikGopal">Kaushik Gopal</a></td>
-        </tr>
-        <tr>
-          <td>Posted on:</td>
-          <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
-        </tr>
-        <tr class="faculty-visible">
-          <td>Funding</td>
-          <td>CMUSV</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
-        </tr>
+    <table class="cmu_table" id="project-3">
+      <tr>
+        <td colspan="2" class="header-row"><strike>Ruby on Rails development</strike></td>
+      </tr>
+      <tr>
+        <td colspan="2">We’ll be modifying and enhancing two open sourced Ruby on Rails websites. The first site is our education rails application. The second is a destination site for the software craftsmanship community. The student will also help promote the site with the community. Ideally, I'm looking for someone who loves working with Rails and may be interested in using it in their next job.</td>
+      </tr>
+      <tr>
+        <td>Must have skills:</td>
+        <td>Experience working with Ruby on Rails</td>
+      </tr>
+      <tr>
+        <td>Duration:</td>
+        <td>Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year</td>
+      </tr>
+      <tr>
+        <td>Contact People:</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/ToddSedano">todd.sedano@sv.cmu.edu</a></td>
+      </tr>
+      <tr>
+        <td>Assigned People</td>
+        <td><a href="http://whiteboard.sv.cmu.edu/people/KaushikGopal">Kaushik Gopal</a></td>
+      </tr>
+      <tr>
+        <td>Posted on:</td>
+        <td>Sun Jun 09 2013, 06:15 PM (Pacific)</td>
+      </tr>
+      <tr class="faculty-visible">
+        <td>Funding</td>
+        <td>CMUSV</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="top" inline-page-link="#job-quick-list-container">Go to quick list</td>
+      </tr>
 
-      </table>
-
-
+    </table>
   </div>
 
 </div>
 
 
 <br/>
-
-
-
 <br/>
 
-<br/>
-<br/>
-<br/>
-<br/>
+<script type="text/javascript">
+  $(function() {
+    $("td[inline-page-link]").parent().bind('click', function (event) {
+      var $target = $(this).children(":first");
+      $('html, body').stop().animate({
+        scrollTop: $($target.attr("inline-page-link")).offset().top
+      }, 500, 'swing');
+    });
+  });
+</script>
