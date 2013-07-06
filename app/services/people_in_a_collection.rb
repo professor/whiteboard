@@ -29,16 +29,19 @@ module PeopleInACollection
 
 
   def update_collection_members override_symbol, attribute_symbol
-    return "" if send(override_symbol).nil?
-    original_list_of_users = send "#{attribute_symbol}"
+    override_list_of_strings = send(override_symbol)
+    return "" if override_list_of_strings.nil?
 
-    list_of_strings = remove_empty_fields(list_of_strings)
-    list_changed = detect_if_list_changed(list_of_strings, original_list_of_users)
+    original_list_of_users = send "#{attribute_symbol}"
+    original_list_of_strings = original_list_of_users.collect { |person| person.human_name }
+
+    override_list_of_strings = remove_empty_fields(override_list_of_strings)
+    list_changed = detect_if_list_changed(override_list_of_strings, original_list_of_users)
 
     send "#{attribute_symbol}=", []  #I don't think this is necessary
-    send "#{override_symbol}=", list_of_strings
+    send "#{override_symbol}=", override_list_of_strings
 
-    list_of_users = map_member_strings_to_users(list_of_strings)
+    list_of_users = map_member_strings_to_users(override_list_of_strings)
     raise "Error converting supervisors_override to IDs!" if list_of_users.include?(nil)
     send "#{attribute_symbol}=", list_of_users
     send "#{override_symbol}=", nil
@@ -46,8 +49,17 @@ module PeopleInACollection
   end
 
   def detect_if_list_changed(override_list_of_strings, original_list_of_users)
-    return (list_of_strings.sort != original_list_of_users.collect { |person| person.human_name }.sort)
+    return (override_list_of_strings.sort != original_list_of_users.collect { |person| person.human_name }.sort)
   end
+
+  def added_people(override_list_of_strings, original_list_of_users)
+    return (override_list_of_strings.sort - original_list_of_users.collect { |person| person.human_name }.sort)
+  end
+
+  def removed_people(override_list_of_strings, original_list_of_users)
+    return (original_list_of_users.collect { |person| person.human_name }.sort - override_list_of_strings.sort)
+  end
+
 
 end
 
