@@ -1,50 +1,54 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Job Details</h1>
+
+<div id="job-container">
+
 <p>
-  <b>Title:</b>
+  <b>Title:</b><br />
   <%= @job.title %>
 </p>
 
 <p>
-  <b>Description:</b>
+  <b>Description:</b><br />
   <%= @job.description %>
 </p>
 
 <p>
-  <b>Skills must haves:</b>
+  <b>Skills must haves:</b><br />
   <%= @job.skills_must_haves %>
 </p>
 
 <p>
-  <b>Skills nice haves:</b>
+  <b>Skills nice haves:</b><br />
   <%= @job.skills_nice_haves %>
 </p>
 
 <p>
-  <b>Duration:</b>
+  <b>Duration:</b><br />
   <%= @job.duration %>
 </p>
 
 <p>
-  <b>Funding source:</b>
+  <b>Funding source:</b><br />
   <%= @job.funding_source %>
 </p>
 
 <p>
-  <b>Funding oracle string:</b>
+  <b>Funding oracle string:</b><br />
   <%= @job.funding_oracle_string %>
 </p>
 
 <p>
-  <b>Is accepting:</b>
+  <b>Is accepting:</b><br />
   <%= @job.is_accepting %>
 </p>
 
 <p>
-  <b>Is closed:</b>
+  <b>Is closed:</b><br />
   <%= @job.is_closed %>
 </p>
-
+</div>
 
 <%= link_to 'Edit', edit_job_path(@job) %> |
 <%= link_to 'Back', jobs_path %>

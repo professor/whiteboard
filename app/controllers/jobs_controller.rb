@@ -47,10 +47,13 @@ class JobsController < ApplicationController
   # PUT /jobs/1.xml
   def update
     @job = Job.find(params[:id])
-    params[:job][:is_accepting] = false if params[:job][:is_closed]
+    if params[:job][:is_closed]
+      params[:job][:is_accepting] = false
+      notice_msg = "Job was closed."
+    end
     respond_to do |format|
       if @job.update_attributes(params[:job])
-        format.html { redirect_to(@job, :notice => 'Job was successfully updated.') }
+        format.html { redirect_to(@job, :notice => notice_msg || 'Job was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
