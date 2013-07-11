@@ -3,7 +3,8 @@ class JobsController < ApplicationController
 
   # GET /jobs
   def index
-    @jobs = Job.all
+    @jobs = Job.scoped
+    @jobs = @jobs.where('is_closed IS NULL OR is_closed != ?', true) if params[:show_all] != "true"
   end
 
   # GET /jobs/1
@@ -46,7 +47,7 @@ class JobsController < ApplicationController
   # PUT /jobs/1.xml
   def update
     @job = Job.find(params[:id])
-
+    params[:job][:is_accepting] = false if params[:job][:is_closed]
     respond_to do |format|
       if @job.update_attributes(params[:job])
         format.html { redirect_to(@job, :notice => 'Job was successfully updated.') }
