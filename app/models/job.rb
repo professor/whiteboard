@@ -2,7 +2,7 @@
 
   validates :title, :presence => true
 
-  # before_save :update_faculty
+  before_save :update_supervisors_and_employees
   validate :validate_supervisors_and_employees
 
   has_many :job_supervisors
@@ -29,16 +29,6 @@
     validate_members :employees_override
   end
 
-
-  def update_faculty
-    return "" if supervisors_override.nil?
-    self.faculty = []
-
-    self.supervisors_override = supervisors_override.select { |name| name != nil && name.strip != "" }
-    list = map_faculty_strings_to_users(self.supervisors_override)
-    raise "Error converting supervisors_override to IDs!" if list.include?(nil)
-    self.faculty = list
-    supervisors_override = nil
   end
 
 end

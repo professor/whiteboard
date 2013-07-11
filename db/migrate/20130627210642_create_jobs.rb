@@ -27,10 +27,10 @@ class CreateJobs < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :job_supervisors, :user_id
     add_index :job_supervisors, :job_id
-    add_index :job_employees, :user_id
+    add_index :job_supervisors, :user_id
     add_index :job_employees, :job_id
+    add_index :job_employees, :user_id
 
   end
 

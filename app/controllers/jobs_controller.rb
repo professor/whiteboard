@@ -7,11 +7,6 @@ class JobsController < ApplicationController
     @jobs = @jobs.where('is_closed IS NULL OR is_closed != ?', true) if params[:show_all] != "true"
   end
 
-  # GET /jobs/1
-  def show
-    @job = Job.find(params[:id])
-  end
-
   # GET /jobs/new
   def new
     @job = Job.new
@@ -25,20 +20,16 @@ class JobsController < ApplicationController
   end
 
   # POST /jobs
-  # POST /jobs.xml
   def create
     params[:job][:supervisors_override] = params[:supervisors]
     params[:job][:employees_override] = params[:students]
     @job = Job.new(params[:job])
 
-
     respond_to do |format|
       if @job.save
-        format.html { redirect_to(@job, :notice => 'Job was successfully created.') }
-        format.xml  { render :xml => @job, :status => :created, :location => @job }
+        format.html { redirect_to(jobs_path, :notice => 'Job was successfully created.') }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @job.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -46,6 +37,8 @@ class JobsController < ApplicationController
   # PUT /jobs/1
   # PUT /jobs/1.xml
   def update
+    params[:job][:supervisors_override] = params[:supervisors]
+    params[:job][:employees_override] = params[:students]
     @job = Job.find(params[:id])
     if params[:job][:is_closed]
       params[:job][:is_accepting] = false
