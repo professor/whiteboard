@@ -1,13 +1,9 @@
   class Job < ActiveRecord::Base
 
-
   validates :title, :presence => true
 
   before_save :update_supervisors_and_employees
   validate :validate_supervisors_and_employees
-
-
-
 
 	has_many :job_supervisors
 	has_many :supervisors, :through => :job_supervisors, :source => :user
@@ -23,7 +19,7 @@
 
   attr_accessible :title, :description, :skills_must_haves, :skills_nice_haves,
       						:duration, :funding_source, :funding_oracle_string, :is_accepting,
-      						:is_closed,
+						:is_closed, :created_at,
       						:supervisors_override,
       						:employees_override
 
@@ -37,10 +33,5 @@
     update_collection_members :supervisors_override, :supervisors
     update_collection_members :employees_override, :employees
   end
-
-
-
-
-
 
 end

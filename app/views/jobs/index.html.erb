@@ -1,37 +1,48 @@
-<h1>Listing jobs</h1>
+<h1>Job listings</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Skills must haves</th>
-    <th>Skills nice haves</th>
-    <th>Duration</th>
-    <th>Funding source</th>
-    <th>Funding oracle string</th>
-    <th>Is accepting</th>
-    <th>Is closed</th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @jobs.each do |job| %>
-  <tr>
-    <td><%= job.title %></td>
-    <td><%= job.description %></td>
-    <td><%= job.skills_must_haves %></td>
-    <td><%= job.skills_nice_haves %></td>
-    <td><%= job.duration %></td>
-    <td><%= job.funding_source %></td>
-    <td><%= job.funding_oracle_string %></td>
-    <td><%= job.is_accepting %></td>
-    <td><%= job.is_closed %></td>
-    <td><%= link_to 'Edit', edit_job_path(job) %></td>
-    <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<div id="job-notice-container">
+    <table class="cmu_table">
+      <tr>
+	<td>
+	    This is an open marketplace process where faculty and students interview each other to find the best match.  Matches are made on a first-come, first-served basis, when both the owner and the student agree on the match.
+	    <br/><br/>
+	    When a match has occurred, the owner adds the student to their project. An email will be sent to the student telling them how to fill out the necessary paperwork.
+	    <br/><br/>
+	    If a student is taking more than 36 units, we limit the hours to 10 hours per week. If the students is taking 36 or less units,  we limit the hours to 20 hours per
+	    week. Note that some projects might only have enough funding for 10 hours per week.
+	    <br/><br/>
+	</td>
+    </tr>
+    <% if can? :see_job_details, Job %>
+    <tr class="faculty-visible">
+      <td>
+	The cost of a graduate assistant is as follows. (Namely $600 / month)
+	<ul>
+	    <li>Fall - $2,400</li>
+	    <li>Spring - $2,400</li>
+	    <li>Summer - $2,400</li>
+	</ul>
+	Under normal circumstances, we do not expect the students to be working over their breaks.
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= render partial: "jobs_quick_list", :locals => { jobs: @jobs } %>
+<%= render partial: "jobs_detail_list", :locals => { jobs: @jobs } %>
 
 <br />
 
 <%= link_to 'New Job', new_job_path %>
+
+<script type="text/javascript">
+  $(function() {
+    $(".cmu_table tbody").on('click', "tr:last-child", function (event) {
+      $('html, body').stop().animate({
+	    scrollTop: $($(this).children().first().attr("inline-page-link")).offset().top
+      }, 500, 'swing');
+    });
+  });
+</script>
