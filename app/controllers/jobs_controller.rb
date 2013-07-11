@@ -6,11 +6,6 @@ class JobsController < ApplicationController
     @jobs = Job.all
   end
 
-  # GET /jobs/1
-  def show
-    @job = Job.find(params[:id])
-  end
-
   # GET /jobs/new
   def new
     @job = Job.new
