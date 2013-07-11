@@ -30,9 +30,10 @@
   </table>
 </div>
 
-<%= render partial: "jobs_quick_list", :locals => { jobs: @jobs } %>
-<%= render partial: "jobs_detail_list", :locals => { jobs: @jobs } %>
-
+<% unless @jobs.blank? %>
+  <%= render partial: "jobs_quick_list", :locals => { jobs: @jobs } %>
+  <%= render partial: "jobs_detail_list", :locals => { jobs: @jobs }%>
+<% end %>
 <br />
 
 <%= link_to 'New Job', new_job_path %>

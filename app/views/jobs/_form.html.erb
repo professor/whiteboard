@@ -86,7 +86,11 @@
             </tbody>
           </table>
         </td>
-        <td> <%= link_to 'Close Project' %> </td>
+        <td>
+          <%= f.hidden_field :is_closed, :id => 'close-job', :value => "" %>
+          <input id="close-proj" type="button" value="Close Project" />
+        </td>
+
       </tr>
     </table>
 
@@ -118,7 +122,6 @@
 
             $(".add_person").click(function (event) {
                 event.preventDefault();
-                // var $people_in_collection = $(this).parent().parent().prev();
                 var $people_in_collection = $(this).closest('table');
                 var member_label = $people_in_collection.attr("data-member-label");
 
@@ -130,10 +133,12 @@
                 $people_in_collection.find('tbody tr:nth-last-child(2)').after($row);
                 $row.find(".person_in_a_collection:last .member-label").html(member_label);
                 $row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
-                // $people_in_collection.last().find(".person_in_a_collection:last .member-label").html(member_label);
-                // $people_in_collection.last().find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
             });
 
+            $("#close-proj").click(function(event) {
+              $("#close-job").val("true");
+              $(this).closest("form").submit();
+            });
         });
     </script>
     <%# end %>

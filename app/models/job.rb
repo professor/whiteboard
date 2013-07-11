@@ -5,11 +5,11 @@
   before_save :update_supervisors_and_employees
   validate :validate_supervisors_and_employees
 
-	has_many :job_supervisors
-	has_many :supervisors, :through => :job_supervisors, :source => :user
+  has_many :job_supervisors
+  has_many :supervisors, :through => :job_supervisors, :source => :user
 
   has_many :job_employees
-	has_many :employees, :through => :job_employees, :source => :user
+  has_many :employees, :through => :job_employees, :source => :user
 
   belongs_to :sponsored_project
 
@@ -21,7 +21,7 @@
 
   attr_accessible :title, :description, :skills_must_haves, :skills_nice_haves,
       						:duration, :sponsored_project_id, :funding_description, :is_accepting,
-						      :is_closed, :created_at,
+						    :is_closed, :created_at,
       						:supervisors_override,
       						:employees_override
 
