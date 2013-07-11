@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627174920) do
+ActiveRecord::Schema.define(:version => 20130627210642) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -68,11 +68,6 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
   add_index "courses", ["semester"], :name => "index_courses_on_semester"
   add_index "courses", ["twiki_url"], :name => "index_courses_on_twiki_url"
   add_index "courses", ["year"], :name => "index_courses_on_year"
-
-  create_table "courses_users", :id => false, :force => true do |t|
-    t.integer "course_id"
-    t.integer "user_id"
-  end
 
   create_table "curriculum_comment_types", :force => true do |t|
     t.string   "name"
@@ -222,45 +217,24 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
 
   add_index "grading_rules", ["course_id"], :name => "index_grading_rules_on_course_id"
 
-  create_table "individual_contribution_for_courses", :force => true do |t|
-    t.integer "individual_contribution_id"
-    t.integer "course_id"
-    t.text    "answer1"
-    t.float   "answer2"
-    t.text    "answer3"
-    t.text    "answer4"
-    t.text    "answer5"
-  end
-
-  add_index "individual_contribution_for_courses", ["course_id"], :name => "index_individual_contribution_for_courses_on_course_id"
-  add_index "individual_contribution_for_courses", ["individual_contribution_id"], :name => "individual_contribution_for_courses_icid"
-
-  create_table "individual_contributions", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "year"
-    t.integer  "week_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "individual_contributions", ["user_id"], :name => "index_individual_contributions_on_user_id"
-  add_index "individual_contributions", ["week_number"], :name => "index_individual_contributions_on_week_number"
-  add_index "individual_contributions", ["year"], :name => "index_individual_contributions_on_year"
-
   create_table "job_employees", :force => true do |t|
+    t.integer  "job_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "job_employees", ["job_id"], :name => "index_job_employees_on_job_id"
   add_index "job_employees", ["user_id"], :name => "index_job_employees_on_user_id"
 
   create_table "job_supervisors", :force => true do |t|
+    t.integer  "job_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "job_supervisors", ["job_id"], :name => "index_job_supervisors_on_job_id"
   add_index "job_supervisors", ["user_id"], :name => "index_job_supervisors_on_user_id"
 
   create_table "jobs", :force => true do |t|
@@ -447,26 +421,6 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
   add_index "presentations", ["presentation_date"], :name => "index_presentations_on_presentation_date"
   add_index "presentations", ["team_id"], :name => "index_presentations_on_team_id"
   add_index "presentations", ["user_id"], :name => "index_presentations_on_user_id"
-
-  create_table "project_types", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "project_types", ["name"], :name => "index_project_types_on_name"
-
-  create_table "projects", :force => true do |t|
-    t.string   "name"
-    t.integer  "project_type_id"
-    t.integer  "course_id"
-    t.boolean  "is_closed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "projects", ["name"], :name => "index_projects_on_name"
 
   create_table "registrations", :id => false, :force => true do |t|
     t.integer  "course_id",  :null => false
@@ -692,6 +646,9 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -783,6 +740,9 @@ ActiveRecord::Schema.define(:version => 20130627174920) do
     t.string   "photo_custom_content_type"
     t.string   "photo_selection"
     t.datetime "active_directory_account_created_at"
+    t.string   "new_user_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
