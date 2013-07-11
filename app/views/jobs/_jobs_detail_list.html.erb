@@ -42,7 +42,10 @@
       <% if can? :see_job_details, Job %>
       <tr class="faculty-visible">
 	  <td>Funding:</td>
-	  <td><%= job.funding_source %></td>
+        <% if job.sponsored_project.present? %>
+      <td><%= job.sponsored_project.sponsor.name %> - <%= job.sponsored_project.name %></td>
+            <% end %>
+	  <td><%= job.funding_description %></td>
       </tr>
       <tr>
 	  <td colspan="2"><%= link_to 'Edit', edit_job_path(job) %> | <%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>

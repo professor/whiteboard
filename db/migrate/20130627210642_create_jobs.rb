@@ -6,14 +6,16 @@ class CreateJobs < ActiveRecord::Migration
       t.string :skills_must_haves
       t.string :skills_nice_haves
       t.string :duration
-      t.string :funding_source
-      t.string :funding_oracle_string
+      t.string :sponsored_project_id
+      t.text :funding_description
 
       t.boolean :is_accepting, :default => true
       t.boolean :is_closed, :default => false
 
       t.timestamps
     end
+
+    add_index :jobs, :sponsored_project_id
 
     create_table :job_supervisors do |t|
       t.integer :job_id

@@ -11,6 +11,8 @@
   has_many :job_employees
 	has_many :employees, :through => :job_employees, :source => :user
 
+  belongs_to :sponsored_project
+
   #When assigning faculty to a job, the user types in a series of strings that then need to be processed
   # :job_supervisors_override is a temporary variable that is used to do validation of the strings (to verify
   # that they are people in the system) and then to save the people in the job_supervisors association.
@@ -18,8 +20,8 @@
   attr_accessor :employees_override
 
   attr_accessible :title, :description, :skills_must_haves, :skills_nice_haves,
-      						:duration, :funding_source, :funding_oracle_string, :is_accepting,
-						:is_closed, :created_at,
+      						:duration, :sponsored_project_id, :funding_description, :is_accepting,
+						      :is_closed, :created_at,
       						:supervisors_override,
       						:employees_override
 

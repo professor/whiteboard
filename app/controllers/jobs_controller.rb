@@ -11,11 +11,13 @@ class JobsController < ApplicationController
     @job = Job.new
     # @job.supervisors << current_user
     @job.supervisors << User.first
+    @projects = SponsoredProject.current
   end
 
   # GET /jobs/1/edit
   def edit
     @job = Job.find(params[:id])
+    @projects = SponsoredProject.current
   end
 
   # POST /jobs
@@ -23,6 +25,7 @@ class JobsController < ApplicationController
     params[:job][:supervisors_override] = params[:supervisors]
     params[:job][:employees_override] = params[:students]
     @job = Job.new(params[:job])
+    @projects = SponsoredProject.current
 
     respond_to do |format|
       if @job.save
@@ -39,14 +42,13 @@ class JobsController < ApplicationController
     params[:job][:supervisors_override] = params[:supervisors]
     params[:job][:employees_override] = params[:students]
     @job = Job.find(params[:id])
+    @projects = SponsoredProject.current
 
     respond_to do |format|
       if @job.update_attributes(params[:job])
         format.html { redirect_to(@job, :notice => 'Job was successfully updated.') }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @job.errors, :status => :unprocessable_entity }
       end
     end
   end

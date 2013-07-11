@@ -93,13 +93,10 @@
 
    <table class="cmu_table input-field faculty-visible" title="Only shown to faculty & admin" style="margin-top: 20px">
     <tr><td  colspan="2">Funding</td></tr>
-    <tr>
-      <td>
-         <%= f.text_field :funding_source, :class => 'input-field', :placeholder => 'Enter the Funding source', :title => 'Enter the Funding source' %>
-      </td>
-      <td>
-        <%= f.text_field :funding_oracle_string, :class => 'input-field', :placeholder => 'or enter the Oracle string', :title => 'Enter the Oracle string' %>
-      </td>
+    <tr><td>Select either a sponsored project, or describe where the funding is coming from.</td>
+    </tr>
+    <tr><td><%= f.select :sponsored_project_id, @projects.collect { |item| [item.sponsor.name + " - " + item.name[0..50], item.id] }, {include_blank: 'Select sponsored project'} %></td></tr>
+    <tr><td><%= f.text_area :funding_description, :size => "60x10", :class => 'input-field', :placeholder => 'Enter the funding source', :title => 'Enter the funding source' %></td></tr>
     </tr>
   </table>
 
