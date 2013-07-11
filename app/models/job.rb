@@ -1,4 +1,4 @@
-  class Job < ActiveRecord::Base
+class Job < ActiveRecord::Base
 
   validates :title, :presence => true
 
@@ -20,12 +20,13 @@
   attr_accessor :employees_override
 
   attr_accessible :title, :description, :skills_must_haves, :skills_nice_haves,
-      						:duration, :sponsored_project_id, :funding_description, :is_accepting,
-						    :is_closed, :created_at,
-      						:supervisors_override,
-      						:employees_override
+                  :duration, :sponsored_project_id, :funding_description, :is_accepting,
+                  :is_closed, :created_at,
+                  :supervisors_override,
+                  :employees_override
 
   include PeopleInACollection
+
   def validate_supervisors_and_employees
     validate_members :supervisors_override
     validate_members :employees_override
