@@ -13,7 +13,6 @@
     <th>Is closed</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @jobs.each do |job| %>
@@ -27,7 +26,6 @@
     <td><%= job.funding_oracle_string %></td>
     <td><%= job.is_accepting %></td>
     <td><%= job.is_closed %></td>
-    <td><%= link_to 'Show', job %></td>
     <td><%= link_to 'Edit', edit_job_path(job) %></td>
     <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
