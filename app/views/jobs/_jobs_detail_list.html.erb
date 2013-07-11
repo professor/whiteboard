@@ -37,7 +37,7 @@
       </tr>
       <tr>
 	  <td>Posted on:</td>
-	  <td><%= job.created_at %></td>
+    <td><%= job.created_at.strftime("%a %b %d %Y, %I:%M %p (%Z)") %></td>
       </tr>
       <% if can? :see_job_details, Job %>
       <tr class="faculty-visible">
