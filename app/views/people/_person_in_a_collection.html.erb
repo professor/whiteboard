@@ -16,8 +16,17 @@
               source:'/people_autocomplete.json',
               minLength:2
           });
+	  function removeParent(event, $remove_link_element) {
+	    event.preventDefault();
+	    var $personInACollectionDiv = $remove_link_element.parents('div.person_in_a_collection');
+	    if($personInACollectionDiv.parent().is("td")){
+	      $personInACollectionDiv.parent().remove();
+	    }else{
+	      $personInACollectionDiv.remove();
+	    }
+	  }
       </script>
-      <a href="#" class="remove_person" onclick="event.preventDefault();$(this).parents('div.person_in_a_collection').remove();">remove</a>
+      <a href="#" class="remove_person" onclick="removeParent(event, $(this));">remove</a>
     </p>
   </div>
 </div>
