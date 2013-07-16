@@ -11,7 +11,9 @@
           <% @jobs.each do |job| %>
             <tr>
       	<td inline-page-link="#project-<%= job.id %>"><%= (job.is_accepting) ? "Accepting" : "Filled" %></td>
-      	<td><%= job_title_formatted(job).html_safe %> <%= "(#{job_person_names(job.job_supervisors).html_safe})" unless job.job_supervisors.blank? %> </td>
+	<td><%= job_title_formatted(job).html_safe %>
+	    <% if job.job_supervisors.present? %> (<%= (job_person_names(job.job_supervisors)).html_safe  %>) <% end %>
+	</td>
       </tr>
     <% end %>
     </tbody>
