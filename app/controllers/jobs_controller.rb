@@ -9,6 +9,7 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
+    authorize! :create, Job
     @job = Job.new
     # @job.supervisors << current_user
     @job.supervisors << User.first
@@ -18,11 +19,13 @@ class JobsController < ApplicationController
   # GET /jobs/1/edit
   def edit
     @job = Job.find(params[:id])
+    authorize! :update, @job
     @projects = SponsoredProject.current
   end
 
   # POST /jobs
   def create
+    authorize! :create, Job
     params[:job][:supervisors_override] = params[:supervisors]
     params[:job][:employees_override] = params[:students]
     @job = Job.new(params[:job])
@@ -43,6 +46,7 @@ class JobsController < ApplicationController
     params[:job][:supervisors_override] = params[:supervisors]
     params[:job][:employees_override] = params[:students]
     @job = Job.find(params[:id])
+    authorize! :update, @job
     if params[:job][:is_closed]
       params[:job][:is_accepting] = false
       notice_msg = "Job was closed."
@@ -55,18 +59,6 @@ class JobsController < ApplicationController
       else
         format.html { render :action => "edit" }
       end
-    end
-  end
-
-  # DELETE /jobs/1
-  # DELETE /jobs/1.xml
-  def destroy
-    @job = Job.find(params[:id])
-    @job.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(jobs_url) }
-      format.xml  { head :ok }
     end
   end
 end

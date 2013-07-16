@@ -14,7 +14,8 @@
 	    <br/><br/>
 	</td>
     </tr>
-    <% if can? :see_job_details, Job %>
+    <% if true %>
+    <%# if can? :see_job_details, Job %>
     <tr class="faculty-visible">
       <td>
 	The cost of a graduate assistant is as follows. (Namely $600 / month)
@@ -36,7 +37,9 @@
 <% end %>
 <br />
 
+<% if can? :create, Course %>
 <%= link_to 'New Job', new_job_path %>
+<% end %>
 
 <script type="text/javascript">
   $(function() {
