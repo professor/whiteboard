@@ -87,12 +87,12 @@
           </table>
         </td>
         <td>
-	  <% if !!(@job.is_closed) %>
-	    Job Closed
-	  <% else %>
-	    <input id="close-proj" type="button" value="Close Project" />
-	  <% end %>
-	  <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
+    <% if !!(@job.is_closed) %>
+      Job Closed
+    <% else %>
+      <input id="close-proj" type="button" value="Close Project" />
+    <% end %>
+    <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
 
         </td>
 
@@ -125,32 +125,32 @@
     <script type="text/javascript">
         $(function () {
 
-            $(".add_person").click(function (event) {
-                event.preventDefault();
-                var $people_in_collection = $(this).closest('table');
-                var member_label = $people_in_collection.attr("data-member-label");
+	  $(".add_person").click(function (event) {
+	      event.preventDefault();
+	      var $people_in_collection = $(this).closest('table');
+	      var member_label = $people_in_collection.attr("data-member-label");
 
-                var $row = ($('<tr>')
-                              .append($('<td>')
-                                .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
-                              )
-                            );
-                $people_in_collection.find('tbody tr:nth-last-child(2)').after($row);
-                $row.find(".person_in_a_collection:last .member-label").html(member_label);
-                $row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
-            });
+	      var $row = ($('<tr>')
+			    .append($('<td>')
+			      .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
+			    )
+			  );
+	      $people_in_collection.find('tbody tr:nth-last-child(2)').after($row);
+	      $row.find(".person_in_a_collection:last .member-label").html(member_label);
+	      $row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
+	  });
 
-            $("#close-proj").click(function(event) {
-              $("#close-job").val("true");
-              $(this).closest("form").submit();
-            });
+	  $("#close-proj").click(function(event) {
+	    $("#close-job").val("true");
+	    $(this).closest("form").submit();
+	  });
 
-	    $(document).tooltip({
-		position: { my: "left+10 center", at: "right center" },
-		open: function (event, ui) {
-		  ui.tooltip.css("max-width", "250px");
-		}
-	    });
+	  $(document).tooltip({
+	    position: { my: "left+10 center", at: "right center" },
+	    open: function (event, ui) {
+	      ui.tooltip.css("max-width", "250px");
+	    }
+	  });
 
         });
     </script>
