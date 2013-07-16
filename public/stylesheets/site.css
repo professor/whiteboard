@@ -801,10 +801,12 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     margin-top: 15px;
 }
 
-
 #edit_job .cmu_table { width: 403px; }
 #project_state_first_col { width: 81% }
 #edit_job input { padding: 4px 2px; }
+#edit_job label[for="employees_in_a_collection"],
+#edit_job label[for="project_state"] { margin-top: 2em }
+
 
 #job-detail-list-container .header-row, #job-detail-list-container .top  {
     padding: 5px;

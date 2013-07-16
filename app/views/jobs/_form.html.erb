@@ -29,11 +29,8 @@
     <%= f.label :duration %>
     <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Enter the duration of the project' %>
 
-
-    <table class="cmu_table input-field" style="margin-top: 20px" id="supervisors_in_a_collection" data-member-label="Supervisor">
-      <tr>
-        <td>Contact People:</td>
-      </tr>
+    <label for="supervisors_in_a_collection">Contact People</label>
+    <table class="cmu_table input-field" id="supervisors_in_a_collection" data-member-label="Supervisor">
       <tr>
         <td>
             <% if @job.supervisors_override.nil? %>
@@ -49,11 +46,8 @@
     </table>
 
 
-    <table class="cmu_table input-field" style="margin-top: 20px" id="employees_in_a_collection" data-member-label="Student">
-      <tr>
-        <td>Assigned students:</td>
-      </tr>
-
+    <label for="employees_in_a_collection">Assigned students</label>
+    <table class="cmu_table input-field" id="employees_in_a_collection" data-member-label="Student">
       <% if @job.employees_override.nil? %>
 	<% if @job.employees.present? %>
 	<tr>
@@ -75,9 +69,8 @@
       </tr>
     </table>
 
-
-    <table class="cmu_table input-field" id="project_state" style="margin-top: 20px">
-      <tr><td  colspan="2">Project State</td></tr>
+    <label for="project_state">Project State</label>
+    <table class="cmu_table input-field" id="project_state">
       <tr>
         <td id="project_state_first_col">
           <table>
@@ -136,15 +129,21 @@
 	      event.preventDefault();
 	      var $people_in_collection = $(this).closest('table');
 	      var member_label = $people_in_collection.attr("data-member-label");
-
-	      var $row = ($('<tr>')
+	      var $row_collection = $people_in_collection.find('tbody tr');
+	      var $new_row = ($('<tr>')
 			    .append($('<td>')
 			      .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
 			    )
 			  );
-	      $people_in_collection.find('tbody tr:nth-last-child(2)').after($row);
-	      $row.find(".person_in_a_collection:last .member-label").html(member_label);
-	      $row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
+
+	      if($row_collection.length == 1){
+		$($row_collection[0]).before($new_row);
+	      }else{
+		$($row_collection[$row_collection.length - 2]).after($new_row);
+	      // $people_in_collection.find('tbody tr:nth-last-child(2)').after($new_row);
+	      }
+	      $new_row.find(".person_in_a_collection:last .member-label").html(member_label);
+	      $new_row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
 	  });
 
 	  $("#close-proj").click(function(event) {
