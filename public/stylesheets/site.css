@@ -806,7 +806,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 #edit_job input { padding: 4px 2px; }
 #edit_job label[for="employees_in_a_collection"],
 #edit_job label[for="project_state"] { margin-top: 2em }
-
+#project_state tr:nth-child(2) td { text-align: center; }
 
 #job-detail-list-container .header-row, #job-detail-list-container .top  {
     padding: 5px;

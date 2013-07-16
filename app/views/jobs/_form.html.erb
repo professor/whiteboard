@@ -86,16 +86,16 @@
             </tbody>
           </table>
         </td>
-        <td>
-    <% if !!(@job.is_closed) %>
-      Job Closed
-    <% else %>
-      <input id="close-proj" type="button" value="Close Project" />
-    <% end %>
-    <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
-
+      </tr>
+      <tr>
+	<td colspan="2">
+	<% if !!(@job.is_closed) %>
+	  Job Closed
+	<% else %>
+	  <input id="close-proj" type="button" value="Close Project" />
+	<% end %>
+	<%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
         </td>
-
       </tr>
     </table>
 
