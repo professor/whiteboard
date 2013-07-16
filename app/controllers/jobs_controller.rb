@@ -55,7 +55,7 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.update_attributes(params[:job])
-        format.html { redirect_to(@job, :notice => notice_msg || 'Job was successfully updated.') }
+	format.html { redirect_to(jobs_path, :notice => notice_msg || 'Job was successfully updated.') }
       else
         format.html { render :action => "edit" }
       end
