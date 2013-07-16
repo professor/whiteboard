@@ -54,15 +54,22 @@
         <td>Assigned students:</td>
       </tr>
 
+      <% if @job.employees_override.nil? %>
+	<% if @job.employees.present? %>
+	<tr>
+	  <td>
+	    <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+	  </td>
+	</tr>
+	<% end %>
+      <% else %>
       <tr>
         <td>
-            <% if @job.employees_override.nil? %>
-                <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-            <% else %>
-                <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-            <% end %>
+	  <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
         </td>
       </tr>
+      <% end %>
+
       <tr>
         <td><div class="formItem indented"><p><%= link_to "Add a student", "#", :class => "add_person" %></p></div></td>
       </tr>
