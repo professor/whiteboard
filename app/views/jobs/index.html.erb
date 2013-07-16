@@ -43,8 +43,9 @@
 <script type="text/javascript">
   $(function() {
     $(".cmu_table tbody").on('click', "tr", function (event) {
+      var $this = $(this);
       $('html, body').stop().animate({
-	scrollTop: $($(this).children().first().attr("inline-page-link")).offset().top
+	scrollTop: $($this.children().first().attr("inline-page-link")).offset().top
       }, 500, 'swing');
     });
     $(document).tooltip({
