@@ -34,7 +34,13 @@ class Job < ActiveRecord::Base
 
   def update_supervisors_and_employees
     update_collection_members :supervisors_override, :supervisors
-    update_collection_members :employees_override, :employees
+    update_collection_members :employees_override, :employees, :notify_people
+  end
+
+  def notify_people added_people, removed_people
+    JobMailer.notify_hr(self, added_people, removed_people).deliver
+    JobMailer.notify_added_employees(self, added_people).deliver
+    JobMailer.notify_removed_employees(self, removed_people).deliver
   end
 
 end
