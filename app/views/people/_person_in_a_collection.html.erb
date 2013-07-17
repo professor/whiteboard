@@ -2,21 +2,31 @@
    #Parameters: member_label, name
    member_label = local_assigns[:member_label].nil? ? "Person" : local_assigns[:member_label]
    person = local_assigns[:person]
+   collection_name = member_label.downcase + "s" #We don't do pluralize as this is tough to reproduce in javascript
 %>
 
 <div class="person_in_a_collection">
   <div class="formItem indented ui-widget">
     <p>
-      <%= member_label %>:
-      <input type="text" size="30" name="people[]" class="people_name" id="people_name" value="<%= person %>"/>
+      <span class="member-label"><%= member_label %></span>:
+      <input type="text" size="30" name="<%= collection_name %>[]" class="people_name" id="people_name" value="<%= person %>"/>
 
       <script type="text/javascript">
           $(".people_name").autocomplete({
               source:'/people_autocomplete.json',
               minLength:2
           });
+	  function removeParent(event, $remove_link_element) {
+	    event.preventDefault();
+	    var $personInACollectionDiv = $remove_link_element.parents('div.person_in_a_collection');
+	    if($personInACollectionDiv.parent().is("td")){
+	      $personInACollectionDiv.parent().remove();
+	    }else{
+	      $personInACollectionDiv.remove();
+	    }
+	  }
       </script>
-      <a href="#" class="remove_person" onclick="$(this).parents('div.person_in_a_collection').remove();">remove</a>
+      <a href="#" class="remove_person" onclick="removeParent(event, $(this));">remove</a>
     </p>
   </div>
 </div>

@@ -1,0 +1,21 @@
+<div id="job-quick-list-container">
+  <h2>Quick listing</h2>
+  <table class="cmu_table">
+    <thead>
+      <tr>
+	<th>Status</th>
+	<th width=100%>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @jobs.each do |job| %>
+            <tr>
+	<td inline-page-link="#project-<%= job.id %>"><%= (job.is_accepting) ? "Accepting" : "Filled" %></td>
+	  <td><%= job_title_formatted(job).html_safe %>
+	      <% if job.job_supervisors.present? %> (<%= (job_person_names(job.job_supervisors)).html_safe  %>) <% end %>
+	  </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

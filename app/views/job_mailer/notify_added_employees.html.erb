@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+
+<body>
+You've been added to job <%= @job.title %> Your supervisor(s) is <%= @job.supervisors.collect { |user| user.email } %> <br/>
+<br/>
+Before you can begin your GA position, you MUST email Sylvia.Arifin@sv.cmu.edu to complete new hire paperwork. Forms include:<br/>
+- I-9: Employment Eligibility Verification Form <br/>
+(Official ID required. Examples: US driver's license and Social Security card, passport, green card. F-1 students must show: Passport, visa sticker, I-94, and I-20.)<br/>
+- W-4: Tax withholding allowance<br/>
+- Intellectual Property Policy Agreement Form (CMU's Intellectual Property Policy: http://www.cmu.edu/policies/documents/IntellProp.html)<br/>
+- Direct deposit authorization (please bring a voided check)<br/>
+<br/>
+* If you do not already have a Social Security Number, please contact Gerry Elizondo to begin the process. It usually takes 2 - 3 weeks. You cannot get paid until you have a SSN.<br/>
+
+
+<br/>
+<br/>
+
+<p>Patrolling the campus,</p>
+
+<p>Scotty Dog</p>
+<br/>
+<%= image_tag("http://whiteboard.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %>
+</body>
+</html>
