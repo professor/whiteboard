@@ -36,7 +36,6 @@ module PeopleInACollection
     original_list_of_strings = original_list_of_users.collect { |person| person.human_name }
 
     override_list_of_strings = remove_empty_fields(override_list_of_strings)
-    send "#{attribute_symbol}=", []  #I don't think this is necessary
     send "#{override_symbol}=", override_list_of_strings
 
     override_list_of_users = map_member_strings_to_users(override_list_of_strings)
@@ -57,11 +56,13 @@ module PeopleInACollection
   end
 
   def added_people(override_list_of_users, original_list_of_users)
-    return (override_list_of_users.sort - original_list_of_users.sort)
+    tmp =  (override_list_of_users - original_list_of_users)
+    return tmp
   end
 
   def removed_people(override_list_of_users, original_list_of_users)
-    return (original_list_of_users.sort - override_list_of_users.sort)
+    tmp =  (original_list_of_users - override_list_of_users)
+    return tmp
   end
 
 end

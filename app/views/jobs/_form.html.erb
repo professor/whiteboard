@@ -16,19 +16,19 @@
 
 
     <label for="job_title">Title *</label>
-    <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project", :title => "Enter a one line description for this project" %>
+    <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project" %>
 
     <%= f.label :skills_must_haves, 'Must Haves' %>
-    <%= f.text_field :skills_must_haves, :class => 'input-field', :placeholder => 'Enter the "must have" qualifications or skills required', :title => 'Enter the "must have" qualifications or skills required' %>
+    <%= f.text_field :skills_must_haves, :class => 'input-field', :placeholder => 'Enter the "must have" qualifications or skills required', :title => 'Any candidate must have these skills' %>
 
     <%= f.label :skills_nice_haves, 'Nice to Haves' %>
     <%= f.text_field :skills_nice_haves, :class => 'input-field', :placeholder => 'Enter the "nice to have" qualifications desired of a candidate', :title => 'Enter the "nice to have" qualifications that are desired of a candidate' %>
 
     <%= f.label :description %>
-    <%= f.text_area :description, :class => 'input-field', :placeholder => 'Enter a detailed description for the Project here', :title => 'Enter a detailed description for the Project here', :rows => "8" %>
+    <%= f.text_area :description, :class => 'input-field', :placeholder => 'Enter a detailed description for the project here', :rows => "8" %>
 
     <%= f.label :duration %>
-    <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Enter the duration of the project' %>
+    <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Be specific about which semesters you need help.' %>
 
     <label for="supervisors_in_a_collection">Contact People</label>
     <table class="cmu_table input-field" id="supervisors_in_a_collection" data-member-label="Supervisor">
@@ -106,7 +106,7 @@
     <tr><td>Select either a sponsored project, or describe where the funding is coming from.</td>
     </tr>
     <tr><td><%= f.select :sponsored_project_id, @projects.collect { |item| [item.sponsor.name + " - " + item.name[0..50], item.id] }, {include_blank: 'Select sponsored project'} %></td></tr>
-    <tr><td><%= f.text_area :funding_description, :size => "60x10", :class => 'input-field', :placeholder => 'Enter the funding source', :title => 'Enter the funding source' %></td></tr>
+    <tr><td><%= f.text_area :funding_description, :size => "60x10", :class => 'input-field', :placeholder => 'Describe where the funding is coming from', :title => 'Describe where the funding is coming from' %></td></tr>
     </tr>
   </table>
 

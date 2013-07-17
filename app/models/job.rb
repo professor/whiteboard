@@ -33,14 +33,25 @@ class Job < ActiveRecord::Base
   end
 
   def update_supervisors_and_employees
-    update_collection_members :supervisors_override, :supervisors
+    update_collection_members :supervisors_override, :supervisors, :update_log
     update_collection_members :employees_override, :employees, :notify_people
   end
 
-  def notify_people added_people, removed_people
-    JobMailer.notify_hr(self, added_people, removed_people).deliver
-    JobMailer.notify_added_employees(self, added_people).deliver
-    JobMailer.notify_removed_employees(self, removed_people).deliver
+  def notify_people added_users, removed_users
+    update_log(added_users, removed_users)
+    JobMailer.notify_hr(self, added_users, removed_users).deliver
+    JobMailer.notify_added_employees(self, added_users).deliver
+    JobMailer.notify_removed_employees(self, removed_users).deliver
+  end
+
+  def update_log added_users, removed_users
+    self.log = "" if self.log.nil?
+    if added_users.present?
+      added_users.each { |user| self.log += Time.now.to_s + " - added " + user.human_name + "<br/>" }
+    end
+    if removed_users.present?
+      removed_users.each { |user| self.log += Time.now.to_s + " - removed " + user.human_name + "<br/>" }
+    end
   end
 
 end
