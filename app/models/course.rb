@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
   attr_accessible :grading_rule_attributes
 
   validates_presence_of :semester, :year, :mini, :name
-  validate :validate_faculty
+  validate :validate_faculty_assignments
 
   versioned
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
@@ -70,6 +70,11 @@ class Course < ActiveRecord::Base
                   :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :curriculum_url, :configure_course_twiki,
                   :faculty_assignments_override
+
+  include PeopleInACollection
+  def validate_faculty_assignments
+    validate_members :faculty_assignments_override
+  end
 
 #  def to_param
 #    display_course_name
@@ -217,24 +222,12 @@ class Course < ActiveRecord::Base
 
   #When modifying validate_faculty or update_faculty, modify the same code in team.rb
   #Todo - move to a higher class or try as a mixin
-  def validate_faculty
-    return "" if faculty_assignments_override.nil?
-
-    self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
-    list = map_faculty_strings_to_users(faculty_assignments_override)
-    list.each_with_index do |user, index|
-      if user.nil?
-        self.errors.add(:base, "Person " + faculty_assignments_override[index] + " not found")
-      end
-    end
-  end
-
   def update_faculty
     return "" if faculty_assignments_override.nil?
     self.faculty = []
 
     self.faculty_assignments_override = faculty_assignments_override.select { |name| name != nil && name.strip != "" }
-    list = map_faculty_strings_to_users(self.faculty_assignments_override)
+    list = map_member_strings_to_users(self.faculty_assignments_override)
     raise "Error converting faculty_assignments_override to IDs!" if list.include?(nil)
     self.faculty = list
     faculty_assignments_override = nil
@@ -355,11 +348,6 @@ class Course < ActiveRecord::Base
       recipients = self.faculty | self.registered_students_or_on_teams
       Delayed::Job.enqueue(GoogleMailingListJob.new(self.email, self.email, recipients, self.email, "Course distribution list", self.id, "courses"))
     end
-  end
-
-  def map_faculty_strings_to_users(faculty_assignments_override_list)
-#    faculty_assignments_override_list.map { |member_name| User.where(:human_name => member_name).first }
-    faculty_assignments_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
   # convenience method for an admin. destination_course_id is the first time that course was offered

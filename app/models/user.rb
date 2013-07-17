@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
 
   has_many :grades
 
+  has_many :jobs_as_employee, :through => :job_employees, :source => :job
+  has_many :jobs_as_supervisor, :through => :job_supervisors, :source => :job
+
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
   belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
   belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"

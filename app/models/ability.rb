@@ -12,7 +12,6 @@ class Ability
     #   end
 
     can :manage, User, :id => user.id
-
     can :update, PageAttachment
 
 
@@ -43,6 +42,7 @@ class Ability
 
     if (user.is_admin?)
       can :manage, Course
+      can :manage, Job
       can :see_current_sign_in_ip, User
     else
       cannot :see_current_sign_in_ip, User
@@ -50,11 +50,13 @@ class Ability
 
     if  (user.is_staff?)
       can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
-      can [:manage ], Assignment
+      can :manage, Assignment
+      can [:create, :see_job_details], Job
     end
     can [:teach, :update, :peer_evaluation, :team_formation], Course, :faculty => {:id => user.id} #Useful for TAs.
+    can :update, Job, :supervisors => {:id => user.id}
 
-    #Experimental Features
+
     if (user.human_name == "Todd Sedano" || user.human_name == "Kaushik Gopal")
       can :see_student_grades, Course #experimental feature
     end
