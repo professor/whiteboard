@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627210642) do
+ActiveRecord::Schema.define(:version => 20130717161049) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(:version => 20130627210642) do
     t.boolean  "is_closed",            :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "log"
   end
 
   add_index "jobs", ["sponsored_project_id"], :name => "index_jobs_on_sponsored_project_id"

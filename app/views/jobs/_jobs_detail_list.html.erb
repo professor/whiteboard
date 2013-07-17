@@ -37,16 +37,20 @@
       </tr>
       <tr>
 	  <td>Posted on:</td>
-    <td><%= job.created_at.strftime("%a %b %d %Y, %I:%M %p (%Z)") %></td>
+    <td><%= l job.created_at, :format => :detailed %></td>
       </tr>
-      <%# if true %>
       <% if can? :see_job_details, Job %>
       <tr class="faculty-visible" title="Only shown to faculty & admin">
-	  <td>Funding:</td>
+	  <td valign="top">Funding:</td>
+      <td>
         <% if job.sponsored_project.present? %>
-      <td><%= job.sponsored_project.sponsor.name %> - <%= job.sponsored_project.name %></td>
-            <% end %>
-	  <td><%= job.funding_description %></td>
+        <%= job.sponsored_project.sponsor.name %> - <%= job.sponsored_project.name %><br/>
+        <% end %>
+	  <%= job.funding_description %></td>
+      </tr>
+      <tr class="faculty-visible" title="Only shown to faculty & admin">
+      <td valign="top">Log:</td>
+      <td><%= sanitize_trusted job.log %></td>
       </tr>
       <% end %>
       <% if can? :update, job %>
