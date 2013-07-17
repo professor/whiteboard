@@ -13,6 +13,12 @@ class Job < ActiveRecord::Base
 
   belongs_to :sponsored_project
 
+  scope :active, where('is_closed IS NULL OR is_closed != ?', true)
+
+  scope :part_time_class_of, lambda { |program, year|
+    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
+  }
+
   #When assigning faculty to a job, the user types in a series of strings that then need to be processed
   # :job_supervisors_override is a temporary variable that is used to do validation of the strings (to verify
   # that they are people in the system) and then to save the people in the job_supervisors association.

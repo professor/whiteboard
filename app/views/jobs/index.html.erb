@@ -24,6 +24,9 @@
       <li>Summer - $2,400</li>
   </ul>
   Under normal circumstances, we do not expect the students to be working over their breaks.
+        <% if can? :create, Job %><br/><br/>
+        <%= link_to 'Post a Job', new_job_path %>
+        <% end %>
       </td>
     </tr>
     <% end %>
