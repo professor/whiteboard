@@ -1,6 +1,8 @@
 class JobsController < ApplicationController
   layout "cmu_sv"
 
+  before_filter :authenticate_user!
+
   # GET /jobs
   def index
     @jobs = Job.scoped
