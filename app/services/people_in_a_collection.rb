@@ -56,12 +56,12 @@ module PeopleInACollection
   end
 
   def added_people(override_list_of_users, original_list_of_users)
-    tmp =  (override_list_of_users.sort - original_list_of_users.sort)
+    tmp =  (override_list_of_users - original_list_of_users)
     return tmp
   end
 
   def removed_people(override_list_of_users, original_list_of_users)
-    tmp =  (original_list_of_users.sort - override_list_of_users.sort)
+    tmp =  (original_list_of_users - override_list_of_users)
     return tmp
   end
 
