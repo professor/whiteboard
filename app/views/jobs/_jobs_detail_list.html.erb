@@ -41,7 +41,7 @@
       </tr>
       <%# if true %>
       <% if can? :see_job_details, Job %>
-      <tr class="faculty-visible">
+      <tr class="faculty-visible" title="Only shown to faculty & admin">
 	  <td>Funding:</td>
         <% if job.sponsored_project.present? %>
       <td><%= job.sponsored_project.sponsor.name %> - <%= job.sponsored_project.name %></td>

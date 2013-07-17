@@ -144,6 +144,14 @@
               $("#close-job").val("true");
               $(this).closest("form").submit();
             });
+
+	    $(document).tooltip({
+		position: { my: "left+10 center", at: "right center" },
+		open: function (event, ui) {
+		  ui.tooltip.css("max-width", "250px");
+		}
+	    });
+
         });
     </script>
     <%# end %>
