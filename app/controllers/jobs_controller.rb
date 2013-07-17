@@ -6,15 +6,14 @@ class JobsController < ApplicationController
   # GET /jobs
   def index
     @jobs = Job.scoped
-    @jobs = @jobs.where('is_closed IS NULL OR is_closed != ?', true) if params[:show_all] != "true"
+    @jobs = @jobs.active if params[:show_all] != "true"
   end
 
   # GET /jobs/new
   def new
     authorize! :create, Job
     @job = Job.new
-    # @job.supervisors << current_user
-    @job.supervisors << User.first
+    @job.supervisors << current_user
     @projects = SponsoredProject.current
   end
 
