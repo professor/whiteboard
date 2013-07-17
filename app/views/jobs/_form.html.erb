@@ -87,8 +87,13 @@
           </table>
         </td>
         <td>
-          <%= f.hidden_field :is_closed, :id => 'close-job', :value => "" %>
-          <input id="close-proj" type="button" value="Close Project" />
+	  <% if !!(@job.is_closed) %>
+	    Job Closed
+	  <% else %>
+	    <input id="close-proj" type="button" value="Close Project" />
+	  <% end %>
+	  <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
+
         </td>
 
       </tr>

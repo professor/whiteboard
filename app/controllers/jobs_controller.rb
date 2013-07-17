@@ -47,15 +47,18 @@ class JobsController < ApplicationController
     params[:job][:employees_override] = params[:students]
     @job = Job.find(params[:id])
     authorize! :update, @job
-    if params[:job][:is_closed]
-      params[:job][:is_accepting] = false
+    if  params[:job][:is_closed].present? && params[:job][:is_closed] == "true"
       notice_msg = "Job was closed."
+      # If project is cancelled, project stops accepting candidates.
+      if params[:job][:is_accepting].blank? || params[:job][:is_accepting] == "true"
+        params[:job][:is_accepting] = false
+      end
     end
     @projects = SponsoredProject.current
 
     respond_to do |format|
       if @job.update_attributes(params[:job])
-	format.html { redirect_to(jobs_path, :notice => notice_msg || 'Job was successfully updated.') }
+        format.html { redirect_to(jobs_path, :notice => notice_msg || 'Job was successfully updated.') }
       else
         format.html { render :action => "edit" }
       end
