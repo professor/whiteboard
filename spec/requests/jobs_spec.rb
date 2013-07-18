@@ -40,6 +40,6 @@ describe "Jobs" do
 
 # test the required field title
 
-    
+
 	end
 end
