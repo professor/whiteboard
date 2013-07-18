@@ -9,12 +9,12 @@ describe "Jobs" do
 	   @user = FactoryGirl.create(:faculty_frank)
 	   login_with_oauth @user
 	   click_link "Jobs"
-	   click_link "New Job"
+	   click_link "Post a job"
    end
 
 
 	  it "The job sponsors includes the current user" do
-	  	find_field('people[]').value.should eq 'Faculty Frank'
+	  	find_field('supervisors[]').value.should eq 'Faculty Frank'
 	  end
 
 	  context "And the user fills in no fields" do
@@ -38,8 +38,7 @@ describe "Jobs" do
 		  end
 		end
 
-# required fields
-# one contact person (by default user)
+# test the required field title
 
 
 	end

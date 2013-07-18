@@ -27,7 +27,14 @@ module PeopleInACollection
     members_override_list.map { |member_name| User.find_by_human_name(member_name) }
   end
 
-
+  # Example:
+  #      include PeopleInACollection
+  #      update_collection_members :supervisors_override, :supervisors, :update_log
+  #
+  #
+  # override_symbol - the holds a string array of people's names
+  # attribute_symbol - the association that needs to be updated
+  # update_method_symbol - (optional) method to call with a list of added and removed users
   def update_collection_members override_symbol, attribute_symbol, update_method_symbol = nil
     override_list_of_strings = send(override_symbol)
     return "" if override_list_of_strings.nil?
