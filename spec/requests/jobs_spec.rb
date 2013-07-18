@@ -9,7 +9,7 @@ describe "Jobs" do
 	   @user = FactoryGirl.create(:faculty_frank)
 	   login_with_oauth @user
 	   click_link "Jobs"
-	   click_link "New Job"
+	   click_link "Post a job"
    end
 
 
@@ -38,9 +38,8 @@ describe "Jobs" do
 		  end
 		end
 
-# required fields
-# one contact person (by default user)
+# test the required field title
 
-
+    
 	end
 end
