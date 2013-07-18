@@ -14,7 +14,7 @@ describe "Jobs" do
 
 
 	  it "The job sponsors includes the current user" do
-	  	find_field('people[]').value.should eq 'Faculty Frank'
+	  	find_field('supervisors[]').value.should eq 'Faculty Frank'
 	  end
 
 	  context "And the user fills in no fields" do
