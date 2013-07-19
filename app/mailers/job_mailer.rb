@@ -20,7 +20,8 @@ class JobMailer < ActionMailer::Base
       end
     end
 
-    options = {:to => "sylvia.arifin@sv.cmu.edu",
+    options = {#:to => "sylvia.arifin@sv.cmu.edu",
+               :to => "todd.sedano@sv.cmu.edu",
                :subject => "GA Jobs - people assigned to a project changed - " + job.title,
                :message => message,
                :url_label => "View this job",

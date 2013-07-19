@@ -5,14 +5,16 @@
 </head>
 
 <body>
-You've been added to job <%= @job.title %>.<br/>
+You've been added to the job <%= @job.title %>.<br/><br/>
 The project supervisors are: <% @job.supervisors.each { |user| %> <%= mail_to user.email %>, <% } %> <br/>
 <br/>
-Before you can begin your GA position, you MUST email <%= mail_to "Sylvia.Arifin@sv.cmu.edu", :subject => "GA Job Paperwork" %> to complete new hire paperwork. Forms include:<br/>
+Before you can begin your GA position, you MUST email <%= mail_to "Sylvia.Arifin@sv.cmu.edu", "Sylvia Arifin", :subject => "GA Job Paperwork" %> to complete new hire paperwork.<br/><br/>
+
+Please include these forms:<br/>
 - I-9: Employment Eligibility Verification Form <br/>
 (Official ID required. Examples: US driver's license and Social Security card, passport, green card. F-1 students must show: Passport, visa sticker, I-94, and I-20.)<br/>
 - W-4: Tax withholding allowance<br/>
-- Intellectual Property Policy Agreement Form (CMU's Intellectual Property Policy: <a href="http://www.cmu.edu/policies/documents/IntellProp.html"/>)<br/>
+- Intellectual Property Policy Agreement Form (<a href="http://www.cmu.edu/policies/documents/IntellProp.html">CMU's Intellectual Property Policy)</a><br/>
 - Direct deposit authorization (please bring a voided check)<br/>
 <br/>
 * If you do not already have a Social Security Number, please contact <%= mail_to "Gerry.Elizondo@sv.cmu.edu" %> to begin the process. It usually takes 2 - 3 weeks. You cannot get paid until you have a SSN.<br/>
