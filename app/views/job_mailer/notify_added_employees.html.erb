@@ -8,23 +8,24 @@
 You've been added to the job <%= @job.title %>.<br/><br/>
 The project supervisors are: <% @job.supervisors.each { |user| %> <%= mail_to user.email %>, <% } %> <br/>
 <br/>
-Before you can begin your GA position, you MUST email <%= mail_to "Sylvia.Arifin@sv.cmu.edu", "Sylvia Arifin", :subject => "GA Job Paperwork" %> to complete new hire paperwork.<br/><br/>
+Before you can begin your GA position, you must complete the following forms and bring them to <a href="http://whiteboard.sv.cmu.edu/people/SylviaArifin">Sylvia Arifin</a> to complete new hire paperwork.<br/><br/>
 
-Please include these forms:<br/>
-- I-9: Employment Eligibility Verification Form <br/>
-(Official ID required. Examples: US driver's license and Social Security card, passport, green card. F-1 students must show: Passport, visa sticker, I-94, and I-20.)<br/>
-- W-4: Tax withholding allowance<br/>
-- Intellectual Property Policy Agreement Form (<a href="http://www.cmu.edu/policies/documents/IntellProp.html">CMU's Intellectual Property Policy)</a><br/>
-- Direct deposit authorization (please bring a voided check)<br/>
-<br/>
-* If you do not already have a Social Security Number, please contact <%= mail_to "Gerry.Elizondo@sv.cmu.edu" %> to begin the process. It usually takes 2 - 3 weeks. You cannot get paid until you have a SSN.<br/>
-
-
+Please download <a href="https://www.dropbox.com/s/lqb2nuaknwb8yu7/ga_job_forms.zip">these forms</a>, fill them out, and print them:<br/>
+- California withholding allowance<br/>
+- Direct deposit authorization (please attach a voided check)<br/>
+- Emergency Contact Information<br/>
+- IP Policy agreement form<br/>
+- W-4 Tax withholding allowance (note: foreign nationals should contact Sylvia for specific instructions)<br/>
+- Worker's Compensation Acknowledgment <br/>
+- Worker's Compensation Information Signature <br/>
 <br/>
 <br/>
-
+If you do not already have a Social Security Number, please contact <%= mail_to "Gerry.Elizondo@sv.cmu.edu", "Gerry.Elizondo@sv.cmu.edu", :subject => "Help getting SSN for GA Job" %> %> to begin the process. It usually takes 2 - 3 weeks. You cannot get paid until you have a SSN.<br/>
+<br/>
+Once the forms are completed, you should bring them to <a href="http://whiteboard.sv.cmu.edu/people/SylviaArifin">Sylvia Arifin</a>. When you meet with Sylvia you will need to bring Official ID required. Examples: US driver's license and Social Security card, passport, green card. F-1 students must show: Passport, visa sticker, I-94, and I-20.)<br/>
+<br/>
+<br/>
 <p>Patrolling the campus,</p>
-
 <p>Scotty Dog</p>
 <br/>
 <%= image_tag("http://whiteboard.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69", :alt => "Picture of Scotty Dog") %>
