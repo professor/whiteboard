@@ -20,13 +20,20 @@ class JobMailer < ActionMailer::Base
       end
     end
 
+    if job.id.present?
+      url_label = "View this job"
+      url = Rails.application.routes.url_helpers.edit_job_url(job, :host => "whiteboard.sv.cmu.edu")
+    else
+      url_label = ""
+      url = ""
+    end
+
     options = {#:to => "sylvia.arifin@sv.cmu.edu",
                :to => "todd.sedano@sv.cmu.edu",
                :subject => "GA Jobs - people assigned to a project changed - " + job.title,
                :message => message,
-               :url_label => "View this job",
-               :url => "http://whiteboard.sv.cmu.edu/jobs",
-#               :url => Rails.application.routes.url_helpers.edit_job_url(job, :host => "whiteboard.sv.cmu.edu"),
+               :url_label => url_label,
+               :url => url,
                :template_path => 'generic_mailer',
                :template_name => 'email',
                :date => Time.now
