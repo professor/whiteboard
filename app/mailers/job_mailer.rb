@@ -46,7 +46,7 @@ class JobMailer < ActionMailer::Base
                    :subject => "GA Jobs - you've been added to " + job.title,
                    :date => Time.now,
         }
-        mail(options)
+        mail(options).deliver
       end
     end
 

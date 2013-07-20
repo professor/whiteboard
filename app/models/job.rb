@@ -46,7 +46,7 @@ class Job < ActiveRecord::Base
   def notify_people added_users, removed_users
     update_log(added_users, removed_users)
     JobMailer.notify_hr(self, added_users, removed_users)
-    JobMailer.notify_added_employees(self, added_users).deliver
+    JobMailer.notify_added_employees(self, added_users)
     JobMailer.notify_removed_employees(self, removed_users)
   end
 
