@@ -12,19 +12,22 @@
       <input type="text" size="30" name="<%= collection_name %>[]" class="people_name" id="people_name" value="<%= person %>"/>
 
       <script type="text/javascript">
-          $(".people_name").autocomplete({
-              source:'/people_autocomplete.json',
-              minLength:2
-          });
-	  function removeParent(event, $remove_link_element) {
-	    event.preventDefault();
-	    var $personInACollectionDiv = $remove_link_element.parents('div.person_in_a_collection');
-	    if($personInACollectionDiv.parent().is("td")){
-	      $personInACollectionDiv.parent().remove();
-	    }else{
-	      $personInACollectionDiv.remove();
-	    }
-	  }
+      $(".people_name").autocomplete({
+          source:'/people_autocomplete.json',
+          minLength:2
+      });
+      function removeParent(event, $remove_link_element) {
+        event.preventDefault();
+        var $personInACollectionDiv = $remove_link_element.parents('div.person_in_a_collection');
+        if($personInACollectionDiv.parent().is("td") && $personInACollectionDiv.siblings().size() == 0 ){
+          // Remove the complete row, if this is the last element
+          $personInACollectionDiv.parents("tr").remove();
+          delete $personInACollectionDiv.parents("tr");
+        }else{
+          $personInACollectionDiv.remove();
+          delete $personInACollectionDiv;
+        }
+      }
       </script>
       <a href="#" class="remove_person" onclick="removeParent(event, $(this));">remove</a>
     </p>
