@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717161049) do
+ActiveRecord::Schema.define(:version => 20130725220022) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20130717161049) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.text     "comment"
+    t.text     "stored_filename"
   end
 
   add_index "deliverable_attachment_versions", ["deliverable_id"], :name => "index_deliverable_attachment_versions_on_deliverable_id"
