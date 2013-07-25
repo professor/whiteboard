@@ -834,6 +834,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border: 2px solid #999999;
 }
 #job-detail-list-container .top:hover { border-left: 1px solid #85000a; }
+#job-detail-list-container .cmu_table:nth-child(1) { margin-top: 0}
 
 /* ------- Job List match Page */
 #job-list-match-student td:nth-child(1) { width: 23% }
