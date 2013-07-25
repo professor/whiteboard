@@ -32,15 +32,19 @@
 
     <label for="supervisors_in_a_collection">Contact People</label>
     <table class="cmu_table input-field" id="supervisors_in_a_collection" data-member-label="Supervisor">
+            <% if @job.supervisors_override.nil? %>
       <tr>
         <td>
-            <% if @job.supervisors_override.nil? %>
                 <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-            <% else %>
-                <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors_override, :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-            <% end %>
         </td>
       </tr>
+            <% else %>
+      <tr>
+        <td>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors_override, :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
+        </td>
+      </tr>
+            <% end %>
       <tr>
         <td><div class="formItem indented"><p><%= link_to "Add a supervisor", "#", :class => "add_person" %></p></div></td>
       </tr>
@@ -50,17 +54,17 @@
     <label for="employees_in_a_collection">Assigned students</label>
     <table class="cmu_table input-field" id="employees_in_a_collection" data-member-label="Student">
       <% if @job.employees_override.nil? %>
-	<% if @job.employees.present? %>
-	<tr>
-	  <td>
-	    <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-	  </td>
-	</tr>
-	<% end %>
+  <% if @job.employees.present? %>
+  <tr>
+    <td>
+      <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+    </td>
+  </tr>
+  <% end %>
       <% else %>
       <tr>
         <td>
-	  <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+    <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
         </td>
       </tr>
       <% end %>
@@ -78,24 +82,24 @@
             <tbody>
               <tr>
                   <td><%= f.radio_button :is_accepting, 'true', :checked => true %></td>
-		  <td>Accepting more students</td>
+      <td>Accepting more students</td>
               </tr>
               <tr>
                   <td><%= f.radio_button :is_accepting, 'false' %></td>
-		  <td>Not accepting any more students</td>
+      <td>Not accepting any more students</td>
               </tr>
             </tbody>
           </table>
         </td>
       </tr>
       <tr>
-	<td colspan="2">
-	<% if !!(@job.is_closed) %>
-	  Job Closed
-	<% else %>
-	  <input id="close-proj" type="button" value="Close Project" />
-	<% end %>
-	<%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
+  <td colspan="2">
+  <% if !!(@job.is_closed) %>
+    Job Closed
+  <% else %>
+    <input id="close-proj" type="button" value="Close Project" />
+  <% end %>
+  <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
         </td>
       </tr>
     </table>
@@ -126,38 +130,39 @@
     <script type="text/javascript">
         $(function () {
 
-	  $(".add_person").click(function (event) {
-	      event.preventDefault();
-	      var $people_in_collection = $(this).closest('table');
-	      var member_label = $people_in_collection.attr("data-member-label");
-	      var $row_collection = $people_in_collection.find('tbody tr');
-	      var $new_row = ($('<tr>')
-			    .append($('<td>')
-			      .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
-			    )
-			  );
+    $(".add_person").click(function (event) {
+        event.preventDefault();
+        var $people_in_collection_table = $(this).closest('table');
+        var $people_in_collection_table_rows = $people_in_collection_table.find('tr');
+        var member_label = $people_in_collection_table.attr("data-member-label");
 
-	      if($row_collection.length == 1){
-		$($row_collection[0]).before($new_row);
-	      }else{
-		$($row_collection[$row_collection.length - 2]).after($new_row);
-	      // $people_in_collection.find('tbody tr:nth-last-child(2)').after($new_row);
-	      }
-	      $new_row.find(".person_in_a_collection:last .member-label").html(member_label);
-	      $new_row.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
-	  });
+        if ($people_in_collection_table_rows.size() > 1){
+          // insert div only
+          $people_in_collection_table_rows.find('td div.person_in_a_collection').last()
+                      .after( "<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>" );
+        }else{
+          // insert with a tr
+          $people_in_collection_table_rows.first().before(($('<tr>')
+                                                              .append( $('<td>')
+                                                                  .append( "<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>" )
+                                                          )));
+        }
+        // Change label for Person
+        $people_in_collection_table.find(".person_in_a_collection:last .member-label").html(member_label);
+        $people_in_collection_table.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
+    });
 
-	  $("#close-proj").click(function(event) {
-	    $("#close-job").val("true");
-	    $(this).closest("form").submit();
-	  });
+    $("#close-proj").click(function(event) {
+      $("#close-job").val("true");
+      $(this).closest("form").submit();
+    });
 
-	  $(document).tooltip({
-	    position: { my: "left+10 center", at: "right center" },
-	    open: function (event, ui) {
-	      ui.tooltip.css("max-width", "250px");
-	    }
-	  });
+    $(document).tooltip({
+      position: { my: "left+10 center", at: "right center" },
+      open: function (event, ui) {
+        ui.tooltip.css("max-width", "250px");
+      }
+    });
 
         });
     </script>
