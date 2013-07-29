@@ -5,7 +5,7 @@ class JobsController < ApplicationController
 
   # GET /jobs
   def index
-    @jobs = Job.scoped
+    @jobs = Job.scoped.order("is_accepting DESC, updated_at DESC")
     @jobs = @jobs.active if params[:show_all] != "true"
   end
 
@@ -50,10 +50,6 @@ class JobsController < ApplicationController
     authorize! :update, @job
     if  params[:job][:is_closed].present? && params[:job][:is_closed] == "true"
       notice_msg = "Job was closed."
-      # Stop accepting candidates if project is closed.
-      if params[:job][:is_accepting].blank? || params[:job][:is_accepting] == "true"
-        params[:job][:is_accepting] = false
-      end
     end
     @projects = SponsoredProject.current
 

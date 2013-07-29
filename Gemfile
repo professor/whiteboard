@@ -70,10 +70,10 @@ group :development, :test do
   gem 'taps'
 #  gem 'rake'
 
-  gem 'debugger' unless ENV["RM_INFO"]
-  # gem 'ruby-debug19'
-  # gem 'ruby-debug-base19x'
-  # gem 'ruby-debug-ide' #'0.4.6'
+  # see this link for details on which gem to install for debugger
+  # http://stackoverflow.com/questions/10323119/cannot-load-such-file-script-rails-getting-this-error-while-remote-debuggin/10325110#10325110
+  gem 'ruby-debug-base19x'
+  gem 'ruby-debug-ide'
 
   gem 'shoulda'
 #  gem 'hanna'

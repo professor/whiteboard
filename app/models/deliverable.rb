@@ -79,7 +79,7 @@ class Deliverable < ActiveRecord::Base
 
   # To check the current attachment for the deliverable
   def current_attachment
-    attachment_versions.find(:first)
+    attachment_versions.first
   end
 
   # To get the name of the person/team who has submitted the deliverable
@@ -88,6 +88,14 @@ class Deliverable < ActiveRecord::Base
       team.name
     else
       creator.human_name
+    end
+  end
+
+  def owner_name_for_filename
+    if self.is_team_deliverable?
+      team.name
+    else
+      "#{creator.last_name} #{creator.first_name}"
     end
   end
 

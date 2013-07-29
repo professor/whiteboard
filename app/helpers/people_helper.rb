@@ -7,11 +7,11 @@ module PeopleHelper
   end
 
   def linked_in_path(person)
-    return "http#{$1}://www.linkedin.com/in/#{$2}" if person.linked_in =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?linkedin\.com\/in\/(.*)\/?/
+    return "http#{$2}://www.linkedin.com/in/#{$7}" if person.linked_in =~ /(http)?(s)?(:\/\/)?(www.)?(linkedin.com\/)?(.*\/)?(.*)/
     return "http://www.linkedin.com/in/#{person.linked_in}"
   end
   def facebook_path(person)
-    return "http#{$1}://www.facebook.com/#{$2}" if person.facebook =~ /\[http\]?(s)?:\/\/\]?\[www\.\]?facebook\.com\/(.*)\/?/
+    return "http#{$2}://www.facebook.com/#{$7}" if person.facebook =~ /(http)?(s)?(:\/\/)?(www.)?(facebook.com\/)?(.*\/)?(.*)/
     return "http://www.facebook.com/#{person.facebook}"
   end
   def twitter_path(person)
@@ -19,7 +19,7 @@ module PeopleHelper
     return "http://www.twitter.com/#{person.twitter}"
   end
   def google_plus_path(person)
-    return "http#{$1}://plus.google.com/#{$2}" if person.google_plus =~ /[http]?(s)?:\/\/plus.google.com\/(\d+)[\/posts]?/
+    return "http#{$2}://plus.google.com/#{$7}" if person.google_plus =~ /(http)?(s)?(:\/\/)?(www.)?(plus.google.com\/)?(.*\/)?(\d+)(.*)/
     return "http://plus.google.com/#{person.google_plus}"
   end
   def github_path(person)
