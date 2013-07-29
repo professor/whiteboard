@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'ckeditor/ckeditor.js' %>
+<%= javascript_include_tag 'ckeditor/adapters/jquery.js' %>
 <div id="job-container">
 
 <%= form_for @job, :html => { :class => "ngb", :id => "edit_job" }  do |f| %>
@@ -25,8 +27,7 @@
     <%= f.text_field :skills_nice_haves, :class => 'input-field', :placeholder => 'Enter the "nice to have" qualifications desired of a candidate', :title => 'Enter the "nice to have" qualifications that are desired of a candidate' %>
 
     <%= f.label :description %>
-    <%= f.text_area :description, :class => 'input-field', :placeholder => 'Enter a detailed description for the project here', :rows => "8" %>
-
+      <%= f.cktext_area :description, :toolbar => 'CMUSV_SIMPLE', :class => 'input-field', :placeholder => 'Enter a detailed description for the project here', :rows => "8", :cols => "80" %>
     <%= f.label :duration %>
     <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Be specific about which semesters you need help.' %>
 
@@ -166,6 +167,7 @@
 
         });
     </script>
+
     <%# end %>
 <%# end %>
 

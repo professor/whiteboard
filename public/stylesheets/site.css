@@ -782,7 +782,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 /* ------- Edit Job Page */
 
 #edit_job .cmu_table table td { border-color: transparent; }
-#edit_job { width: 60%; }
+#edit_job { width: 458px; }
 #edit_job .input-field {
     width: 397px;
     margin: 10px 0;
