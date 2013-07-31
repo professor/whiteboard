@@ -227,15 +227,35 @@ class AcademicCalendar
   #Historically we have used semester start to determine what is the current semester, moving forward, lets do this
   #around the grades due deadline
 
+
+  # First day of class
+  # August 26, 2013
+  # January 13, 2014
+  # May 19, 2014
+
+  # Last day of class
+  # December 6, 2013
+  # May 2, 2013
+  # August 7, 2014
+
   def self.semester_start(semester, year)
     case year
-      when 2013
+      when 2014
         case semester
           when "Spring"
             return 3
           when "Summer"
             return 21
           when "Fall" #Not official yet (1/2/2012)
+            return 35
+        end
+      when 2013
+        case semester
+          when "Spring"
+            return 3
+          when "Summer"
+            return 21
+          when "Fall"
             return 35
         end
       when 2012
