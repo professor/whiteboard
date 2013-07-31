@@ -243,8 +243,8 @@ class Course < ActiveRecord::Base
     new_course.updated_at = Time.now
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
-    new_course.grading_rule = self.grading_rule.clone
-    self.assignments.each { |assignment| new_course.assignments << assignment.clone }
+    new_course.grading_rule = self.grading_rule.clone if self.grading_rule.present?
+    self.assignments.each { |assignment| new_course.assignments << assignment.clone } if self.assignments.present?
     return new_course
   end
 
@@ -260,6 +260,7 @@ class Course < ActiveRecord::Base
     next_year = year + 1
     if Course.for_semester(semester, next_year).empty?
       Course.for_semester(semester, year).each do |last_year_course|
+        puts last_year_course.id
         next_year_course = last_year_course.copy_as_new_course
         next_year_course.peer_evaluation_first_email += 1.year if next_year_course.peer_evaluation_first_email
         next_year_course.peer_evaluation_second_email += 1.year if next_year_course.peer_evaluation_second_email
