@@ -2,172 +2,192 @@
 <%= javascript_include_tag 'ckeditor/adapters/jquery.js' %>
 <div id="job-container">
 
-<%= form_for @job, :html => { :class => "ngb", :id => "edit_job" }  do |f| %>
-  <% if @job.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
+  <%= form_for @job, :html => {:class => "ngb", :id => "edit_job"} do |f| %>
+      <% if @job.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
 
-      <ul>
-      <% @job.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+            <ul>
+              <% @job.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
 
 
-    <label for="job_title">Title *</label>
-    <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project" %>
+      <label for="job_title">Title *</label>
+      <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project" %>
 
-    <%= f.label :skills_must_haves, 'Must Haves' %>
-    <%= f.text_field :skills_must_haves, :class => 'input-field', :placeholder => 'Enter the "must have" qualifications or skills required', :title => 'Any candidate must have these skills' %>
+      <%= f.label :skills_must_haves, 'Must Haves' %>
+      <%= f.text_field :skills_must_haves, :class => 'input-field', :placeholder => 'Enter the "must have" qualifications or skills required', :title => 'Any candidate must have these skills' %>
 
-    <%= f.label :skills_nice_haves, 'Nice to Haves' %>
-    <%= f.text_field :skills_nice_haves, :class => 'input-field', :placeholder => 'Enter the "nice to have" qualifications desired of a candidate', :title => 'Enter the "nice to have" qualifications that are desired of a candidate' %>
+      <%= f.label :skills_nice_haves, 'Nice to Haves' %>
+      <%= f.text_field :skills_nice_haves, :class => 'input-field', :placeholder => 'Enter the "nice to have" qualifications desired of a candidate', :title => 'Enter the "nice to have" qualifications that are desired of a candidate' %>
 
-    <%= f.label :description %>
+      <%= f.label :description %>
       <%= f.cktext_area :description, :toolbar => 'CMUSV_SIMPLE', :class => 'input-field', :placeholder => 'Enter a detailed description for the project here', :rows => "8", :cols => "80" %>
-    <%= f.label :duration %>
-    <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Be specific about which semesters you need help.' %>
+      <%= f.label :duration %>
+      <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Be specific about which semesters you need help.' %>
 
-    <label for="supervisors_in_a_collection">Contact People</label>
-    <table class="cmu_table input-field" id="supervisors_in_a_collection" data-member-label="Supervisor">
-            <% if @job.supervisors_override.nil? %>
-      <tr>
-        <td>
+      <label for="supervisors_in_a_collection">Contact People</label>
+      <table class="cmu_table input-field" id="supervisors_in_a_collection" data-member-label="Supervisor">
+        <% if @job.supervisors_override.nil? %>
+            <tr>
+              <td>
                 <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-        </td>
-      </tr>
-            <% else %>
-      <tr>
-        <td>
+              </td>
+            </tr>
+        <% else %>
+            <tr>
+              <td>
                 <%= render :partial => '/people/person_in_a_collection', :collection => @job.supervisors_override, :as => :person, :locals => {:collection_form => f, :member_label => "Supervisor"} %>
-        </td>
-      </tr>
+              </td>
+            </tr>
+        <% end %>
+        <tr>
+          <td>
+            <div class="formItem indented"><p><%= link_to "Add a supervisor", "#", :class => "add_person" %></p></div>
+          </td>
+        </tr>
+      </table>
+
+
+      <label for="employees_in_a_collection">Assigned students</label>
+      <table class="cmu_table input-field" id="employees_in_a_collection" data-member-label="Student">
+        <% if @job.employees_override.nil? %>
+            <% if @job.employees.present? %>
+                <tr>
+                  <td>
+                    <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+                  </td>
+                </tr>
             <% end %>
-      <tr>
-        <td><div class="formItem indented"><p><%= link_to "Add a supervisor", "#", :class => "add_person" %></p></div></td>
-      </tr>
-    </table>
+        <% else %>
+            <tr>
+              <td>
+                <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
+              </td>
+            </tr>
+        <% end %>
 
+        <tr>
+          <td>
+            <div class="formItem indented"><p><%= link_to "Add a student", "#", :class => "add_person" %></p></div>
+          </td>
+        </tr>
+      </table>
 
-    <label for="employees_in_a_collection">Assigned students</label>
-    <table class="cmu_table input-field" id="employees_in_a_collection" data-member-label="Student">
-      <% if @job.employees_override.nil? %>
-  <% if @job.employees.present? %>
-  <tr>
-    <td>
-      <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-    </td>
-  </tr>
-  <% end %>
-      <% else %>
-      <tr>
-        <td>
-    <%= render :partial => '/people/person_in_a_collection', :collection => @job.employees_override, :as => :person, :locals => {:collection_form => f, :member_label => "Student"} %>
-        </td>
-      </tr>
-      <% end %>
-
-      <tr>
-        <td><div class="formItem indented"><p><%= link_to "Add a student", "#", :class => "add_person" %></p></div></td>
-      </tr>
-    </table>
-
-    <label for="project_state">Project State</label>
-    <table class="cmu_table input-field" id="project_state">
-      <tr>
-        <td id="project_state_first_col">
-          <table>
-            <tbody>
+      <label for="project_state">Project State</label>
+      <table class="cmu_table input-field" id="project_state">
+        <tr>
+          <td id="project_state_first_col">
+            <table>
+              <tbody>
               <tr>
-                  <td><%= f.radio_button :is_accepting, 'true', :checked => true %></td>
-      <td>Accepting more students</td>
+                <td><%= f.radio_button :is_accepting, 'true', :checked => true %></td>
+                <td>Accepting more students</td>
               </tr>
               <tr>
-                  <td><%= f.radio_button :is_accepting, 'false' %></td>
-      <td>Not accepting any more students</td>
+                <td><%= f.radio_button :is_accepting, 'false' %></td>
+                <td>Not accepting any more students</td>
               </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-      <tr>
-  <td colspan="2">
-  <% if !!(@job.is_closed) %>
-    Job Closed
-  <% else %>
-    <input id="close-proj" type="button" value="Close Project" />
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <% if !!(@job.is_closed) %>
+                Job Closed
+            <% else %>
+                <input id="close-proj" type="button" value="Close Project"/>
+            <% end %>
+            <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
+          </td>
+        </tr>
+      </table>
+
+
+      <table class="cmu_table input-field faculty-visible" title="Only shown to faculty & admin" style="margin-top: 20px">
+        <tr>
+          <td colspan="2">Funding</td>
+        </tr>
+        <tr>
+          <td>Select either a sponsored project, or describe where the funding is coming from.</td>
+        </tr>
+        <tr>
+          <td><%= f.select :sponsored_project_id, @projects.collect { |item| [item.sponsor.name + " - " + item.name[0..50], item.id] }, {include_blank: 'Select sponsored project'} %></td>
+        </tr>
+        <tr>
+          <td><%= f.text_area :funding_description, :size => "60x10", :class => 'input-field', :placeholder => 'Describe where the funding is coming from', :title => 'Describe where the funding is coming from' %></td>
+        </tr>
+        </tr>
+      </table>
+
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
   <% end %>
-  <%= f.hidden_field :is_closed, :id => 'close-job', :value => (@job.is_closed) %>
-        </td>
-      </tr>
-    </table>
-
-
-   <table class="cmu_table input-field faculty-visible" title="Only shown to faculty & admin" style="margin-top: 20px">
-    <tr><td  colspan="2">Funding</td></tr>
-    <tr><td>Select either a sponsored project, or describe where the funding is coming from.</td>
-    </tr>
-    <tr><td><%= f.select :sponsored_project_id, @projects.collect { |item| [item.sponsor.name + " - " + item.name[0..50], item.id] }, {include_blank: 'Select sponsored project'} %></td></tr>
-    <tr><td><%= f.text_area :funding_description, :size => "60x10", :class => 'input-field', :placeholder => 'Describe where the funding is coming from', :title => 'Describe where the funding is coming from' %></td></tr>
-    </tr>
-  </table>
-
-
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
 
 </div>
 
-<br /><br />
+<br/><br/>
 
 <%# content_for :javascript do %>
-    <%# javascript_tag do %>
-    <script type="text/javascript">
-        $(function () {
+<%# javascript_tag do %>
+<script type="text/javascript">
+    $(function () {
 
-    $(".add_person").click(function (event) {
-        event.preventDefault();
-        var $people_in_collection_table = $(this).closest('table');
-        var $people_in_collection_table_rows = $people_in_collection_table.find('tr');
-        var member_label = $people_in_collection_table.attr("data-member-label");
+        $(".add_person").click(function (event) {
+            event.preventDefault();
+            var $people_in_collection_table = $(this).closest('table');
+            var $people_in_collection_table_rows = $people_in_collection_table.find('tr');
+            var member_label = $people_in_collection_table.attr("data-member-label");
 
-        if ($people_in_collection_table_rows.size() > 1){
-          // insert div only
-          $people_in_collection_table_rows.find('td div.person_in_a_collection').last()
-                      .after( "<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>" );
-        }else{
-          // insert with a tr
-          $people_in_collection_table_rows.first().before(($('<tr>')
-                                                              .append( $('<td>')
-                                                                  .append( "<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>" )
-                                                          )));
-        }
-        // Change label for Person
-        $people_in_collection_table.find(".person_in_a_collection:last .member-label").html(member_label);
-        $people_in_collection_table.find(".person_in_a_collection:last input").attr("name",  member_label.toLowerCase() + "s[]");
-    });
-
-    $("#close-proj").click(function(event) {
-      $("#close-job").val("true");
-      $(this).closest("form").submit();
-    });
-
-    $(document).tooltip({
-      position: { my: "left+10 center", at: "right center" },
-      open: function (event, ui) {
-        ui.tooltip.css("max-width", "250px");
-      }
-    });
-
+            if ($people_in_collection_table_rows.size() > 1) {
+                // insert div only
+                $people_in_collection_table_rows.find('td div.person_in_a_collection').last()
+                        .after("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>");
+            } else {
+                // insert with a tr
+                $people_in_collection_table_rows.first().before(($('<tr>')
+                        .append($('<td>')
+                                .append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Person"} )) %>")
+                        )));
+            }
+            // Change label for Person
+            $people_in_collection_table.find(".person_in_a_collection:last .member-label").html(member_label);
+            $people_in_collection_table.find(".person_in_a_collection:last input").attr("name", member_label.toLowerCase() + "s[]");
         });
-    </script>
 
-    <%# end %>
+        $("#close-proj").click(function (event) {
+            $("#close-job").val("true");
+            $(this).closest("form").submit();
+        });
+
+        $(document).tooltip({
+            position: { my: "left+10 center", at: "right center" },
+            open: function (event, ui) {
+                ui.tooltip.css("max-width", "250px");
+            }
+        });
+
+        // Disable file attachment on insert url link
+        CKEDITOR.on('dialogDefinition', function (ev) {
+            var dialogName = ev.data.name;
+            var dialogDefinition = ev.data.definition;
+            if (dialogName == 'image' || dialogName == 'link') {
+                dialogDefinition.removeContents('Upload');
+                dialogDefinition.removeContents('upload');
+            }
+        });
+
+    });
+</script>
+
+<%# end %>
 <%# end %>
 
