@@ -12,8 +12,9 @@ before_script:
   - echo "hello"
   - mkdir tmpdir
 
-#script:
-#  - bundle exec rake --verbose --trace
+script:
+  - rspec spec_no_rails/
+  - bundle exec rake --verbose --trace
 #  - rake jasmine:ci
 
 env:
