@@ -13,7 +13,7 @@ before_script:
   - mkdir tmpdir
 
 script:
-  - rspec spec_no_rails/
+  - bundle exec rspec spec_no_rails/
   - bundle exec rake --verbose --trace
 #  - rake jasmine:ci
 
