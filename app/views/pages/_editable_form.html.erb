@@ -139,6 +139,7 @@
         $("#tabs").tabs().tabs('option', 'active', parseInt($.cookie('selected_tab'), 10));
         $.cookie('selected_tab', null);   //clear cookie
 
+        // Disable file attachment on insert url link
         CKEDITOR.on( 'dialogDefinition', function( ev ) {
             var dialogName = ev.data.name;
             var dialogDefinition = ev.data.definition;

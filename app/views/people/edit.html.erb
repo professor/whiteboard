@@ -59,6 +59,8 @@
                 width: "93%",
                 height: "300px"
             });
+            
+            // Disable file attachment on insert url link
             CKEDITOR.on( 'dialogDefinition', function( ev ) {
                 var dialogName = ev.data.name;
                 var dialogDefinition = ev.data.definition;
