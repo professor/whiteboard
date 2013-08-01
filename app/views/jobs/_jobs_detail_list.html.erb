@@ -9,7 +9,7 @@
 	  <%= job_title_formatted(job).html_safe %>
       </tr>
       <tr>
-	  <td colspan="2"><%= job.description %></td>
+	  <td colspan="2"><%= sanitize_trusted job.description %></td>
       </tr>
       <tr>
 	  <td>Must have skills:</td>

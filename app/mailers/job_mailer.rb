@@ -1,6 +1,6 @@
 class JobMailer < ActionMailer::Base
   default :from => 'CMU-SV Official Communication <help@sv.cmu.edu>',
-          :bcc => ["todd.sedano@sv.cmu.edu", "rails.app@sv.cmu.edu"]
+          :bcc => ["todd.sedano@sv.cmu.edu", "todd.sedano@sv.cmu.edu", "rails.app@sv.cmu.edu"]
 
   def notify_hr(job, added_people, removed_people)
     message = "Action required: please update billing records<br/>"
@@ -20,13 +20,19 @@ class JobMailer < ActionMailer::Base
       end
     end
 
-    options = {#:to => "sylvia.arifin@sv.cmu.edu",
-               :to => "todd.sedano@sv.cmu.edu",
+    if job.id.present?
+      url_label = "View this job"
+      url = Rails.application.routes.url_helpers.edit_job_url(job, :host => "whiteboard.sv.cmu.edu")
+    else
+      url_label = ""
+      url = ""
+    end
+
+    options = {:to => "sylvia.arifin@sv.cmu.edu",
                :subject => "GA Jobs - people assigned to a project changed - " + job.title,
                :message => message,
-               :url_label => "View this job",
-               :url => "http://whiteboard.sv.cmu.edu/jobs",
-#               :url => Rails.application.routes.url_helpers.edit_job_url(job, :host => "whiteboard.sv.cmu.edu"),
+               :url_label => url_label,
+               :url => url,
                :template_path => 'generic_mailer',
                :template_name => 'email',
                :date => Time.now
@@ -42,11 +48,10 @@ class JobMailer < ActionMailer::Base
       added_people.each do |user|
         options = {:to => user.email,
                    :cc => job.supervisors.collect { |user| user.email },
-                   :bcc => ["sylvia.arifin@sv.cmu.edu", "todd.sedano@sv.cmu.edu"],
                    :subject => "GA Jobs - you've been added to " + job.title,
                    :date => Time.now,
         }
-        mail(options)
+        mail(options).deliver
       end
     end
 
@@ -59,7 +64,6 @@ class JobMailer < ActionMailer::Base
       removed_people.each do |user|
         options = {:to => user.email,
                    :cc => job.supervisors.collect { |user| user.email },
-                   :bcc => ["sylvia.arifin@sv.cmu.edu", "todd.sedano@sv.cmu.edu"],
                    :subject => "GA Jobs - you've been removed from " + job.title,
                    :message => message,
                    :date => Time.now,

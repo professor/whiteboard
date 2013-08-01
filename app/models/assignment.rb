@@ -39,8 +39,8 @@ class Assignment < ActiveRecord::Base
   after_initialize :init
 
   def init
-    self.is_team_deliverable = false if self.is_team_deliverable.nil?
-    self.is_submittable = true if self.is_submittable.nil?
+    self.is_team_deliverable = false if self.is_team_deliverable.blank?
+    self.is_submittable = true if self.is_submittable.blank?
   end
 
   def name_with_type
