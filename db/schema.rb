@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725220022) do
+ActiveRecord::Schema.define(:version => 20130801073809) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -653,6 +653,7 @@ ActiveRecord::Schema.define(:version => 20130725220022) do
     t.string   "new_user_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.boolean  "is_ga_promised"
   end
 
   add_index "user_versions", ["user_id"], :name => "index_user_versions_on_user_id"
@@ -747,6 +748,7 @@ ActiveRecord::Schema.define(:version => 20130725220022) do
     t.string   "new_user_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.boolean  "is_ga_promised"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
