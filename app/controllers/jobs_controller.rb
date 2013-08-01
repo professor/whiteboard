@@ -65,4 +65,10 @@ class JobsController < ApplicationController
       end
     end
   end
+
+  def match
+    @jobs = Job.scoped.order("is_accepting DESC, updated_at DESC").active
+    @all_employees = User.all_employees
+  end
+
 end

@@ -34,6 +34,7 @@ CMUEducation::Application.routes.draw do
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
+  match '/jobs/match' => 'jobs#match'
   resources :jobs
 
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
