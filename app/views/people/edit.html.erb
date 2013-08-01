@@ -59,18 +59,18 @@
                 width: "93%",
                 height: "300px"
             });
-            CKEDITOR.replace( 'user_user_text',
-            {
-                skin : 'kama',
-                toolbar: 'CMUSV_SIMPLE',
-                removePlugins: 'elementspath',
-                width: "93%",
-                height: "300px"
+            CKEDITOR.on( 'dialogDefinition', function( ev ) {
+                var dialogName = ev.data.name;
+                var dialogDefinition = ev.data.definition;
+                if ( dialogName == 'image' || dialogName == 'link' ) {
+                  dialogDefinition.removeContents('Upload');
+                  dialogDefinition.removeContents('upload');
+                }
             });
         });
 
-        
-        
+
+
 
     </script>
 <% end %>
@@ -99,7 +99,7 @@
         <div id="photo-first" class="image-candidates">
           <p>
             Taken at Orientation
-          </p>  
+          </p>
           <div class="image-candidate">
             <%= image_tag(@person.image_uri_first, :class=>"user_profile_photo") %>
           </div>
@@ -180,7 +180,7 @@
                 </div>
                 <%= image_tag(@person.image_uri, :class=>"user_profile_photo") %>
               </div>
-              
+
             <div class="user_profile_social clearboth">
                 <table>
                     <tr>
