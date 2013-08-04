@@ -63,7 +63,7 @@ class Job < ActiveRecord::Base
   protected
 
   def self.all_employees
-    active_gas = User.where(:is_active => true).
+    active_ga_ids = User.where(:is_active => true).
                       where( :is_ga_promised => true).
                       select(:id).
                       collect(&:id)
