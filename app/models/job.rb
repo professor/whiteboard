@@ -68,7 +68,7 @@ class Job < ActiveRecord::Base
                       select(:id).
                       collect(&:id)
     current_employee_ids = JobEmployee.select(:user_id).collect(&:user_id)
-    all_employee_ids = active_gas.push(*current_employee_ids).uniq.sort
+    all_employee_ids = active_ga_ids.push(*current_employee_ids).uniq.sort
     User.find(all_employee_ids, :order => :is_ga_promised)
   end
 
