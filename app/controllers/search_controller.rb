@@ -16,6 +16,7 @@ class SearchController < ApplicationController
   end
 
   def index
-    @docs = SearchController.search(params[:query]) if params[:query].present?
+    query_string = params[:query].gsub(/[^0-9a-zA-Z.\s]/, "").strip if params[:query]
+    @docs = SearchController.search(query_string) if query_string.present?
   end
 end
