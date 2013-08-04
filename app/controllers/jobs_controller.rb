@@ -62,9 +62,10 @@ class JobsController < ApplicationController
     end
   end
 
-  def match
+  def assignments
+    authorize! :see_job_details, Job
     @jobs = Job.scoped.order("is_accepting DESC, updated_at DESC").active
-    @all_employees = User.all_employees
+    @all_employees = Job.all_employees
   end
 
 end
