@@ -13,6 +13,8 @@ class Job < ActiveRecord::Base
 
   belongs_to :sponsored_project
 
+  default_scope order("is_accepting DESC, updated_at DESC")
+
   scope :active, where('is_closed IS NULL OR is_closed != ?', true)
 
   scope :part_time_class_of, lambda { |program, year|
