@@ -609,7 +609,7 @@ class PeopleController < ApplicationController
     people = people.where("masters_program = ?","#{params[:masters_program]}") unless params[:masters_program].blank?
     people = people.where("is_active = 't'") unless params[:search_inactive] == 't'
     people = people.joins(:registrations).where("registrations.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
-    people = people.joins(:teams).where("teams.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
+#    people = people.joins(:teams).where("teams.course_id=?","#{params[:course_id]}") unless params[:course_id].blank?
     people = people.order("first_name ASC, last_name ASC")
   end
 
