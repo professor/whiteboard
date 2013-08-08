@@ -13809,8 +13809,8 @@ $.widget( "ui.tabs", {
 		}
 
 		switch ( event.keyCode ) {
-			case $.ui.keyCode.RIGHT:
-			// case $.ui.keyCode.DOWN:
+            case $.ui.keyCode.RIGHT:
+			// case $.ui.keyCode.DOWN:  //Kaushik Gopal customized this for CMU-SV Whiteboard. When a user clicks on a tab, then keydown will not change tabs
 				selectedIndex++;
 				break;
 			// case $.ui.keyCode.UP:
