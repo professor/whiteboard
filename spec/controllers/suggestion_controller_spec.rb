@@ -25,7 +25,7 @@ describe SuggestionsController do
 
 # Michael Hartl's way
 #      before(:each) do
-#        @attr = { :comment => "This is a suggestion", :page => "http://rails.sv.cmu.edu",
+#        @attr = { :comment => "This is a suggestion", :page => "http://whiteboard.sv.cmu.edu",
 #        :email => "" }
 #        @suggestion = FactoryGirl.create(:suggestion, @attr)
 #        Suggestion.stub!(:new).and_return(@suggestion)
@@ -38,7 +38,7 @@ describe SuggestionsController do
       let (:suggestion) { mock_model(Suggestion).as_null_object }
 
       before do
-        @attr = { :comment => "This is a suggestion", :page => "http://rails.sv.cmu.edu",
+        @attr = { :comment => "This is a suggestion", :page => "http://whiteboard.sv.cmu.edu",
                   :email => "" }        
         Suggestion.stub(:new).and_return(suggestion)
         Suggestion.stub(:save).and_return(suggestion)

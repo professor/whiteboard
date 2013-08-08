@@ -34,8 +34,8 @@ CMUEducation::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = "http://cmusv-rails-production.s3.amazonaws.com"
-  #config.action_controller.asset_host = "http://assets0.rails.sv.cmu.edu"
-  #config.action_controller.asset_host = "http://assets%d.rails.sv.cmu.edu"
+  #config.action_controller.asset_host = "http://assets0.whiteboard.sv.cmu.edu"
+  #config.action_controller.asset_host = "http://assets%d.whiteboard.sv.cmu.edu"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

@@ -11,8 +11,8 @@ CMU-SV Students
 1. $ cp config/database.default.yml config/database.yml -- see instructor for username and password
 1. $ cp config/morning_glory.mfse.yml config/morning_glory.yml -- no need to configure
 1. $ cp config/systems.default.yml config/systems.yml -- no need to configure
-    1. create a config/amazon_s3.yml from (http://rails.sv.cmu.edu/pages/amazon_s3.yml)
-1. create a config/google_apps.yml from (http://rails.sv.cmu.edu/pages/google_apps.yml)
+    1. create a config/amazon_s3.yml from (http://whiteboard.sv.cmu.edu/pages/amazon_s3.yml)
+1. create a config/google_apps.yml from (http://whiteboard.sv.cmu.edu/pages/google_apps.yml)
 1. set your environment variables (optional step, only needed if you plan to work on these features)
    1. (Mac OS X) read http://david-martinez.tumblr.com/post/28083831730/environment-variables-and-mountain-lion (if you set them in bash, then RubyMine doesn't pick them up.)
    1. Note: This requires a restart. Source: http://www.rubicode.com/Software/RCEnvironment/
@@ -28,7 +28,7 @@ CMU-SV Students
       1. WHITEBOARD_SALT="I am salt without any iodine"
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
     * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
-1. install postgres see http://rails.sv.cmu.edu/pages/postgres_rails
+1. install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails
 1. install a postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
 1. install imagemagick
    1. (Directions for a mac)
@@ -61,7 +61,7 @@ Run installer, accept license agreement, accept default installation directory, 
 * All users, from the terminal window or the command line, execute these commands but put in your own name and email address
    * git config --global user.name "Andrew Carnegie"
    * git config --global user.email andrew.carnegie@sv.cmu.edu
-   * Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://rails.sv.cmu.edu/people/AndrewCarnegie)
+   * Create a user account on GitHub. Let the faculty know what your github user account is by modifying your profile page (e.g. http://whiteboard.sv.cmu.edu/people/AndrewCarnegie)
    * Setup your ssh keys with GitHub http://help.github.com/key-setup-redirect
 
 #### Nokogiri issues

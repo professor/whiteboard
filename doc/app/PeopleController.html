@@ -1082,7 +1082,7 @@
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-ivar">@machine_name</span> = <span class="ruby-string">&quot;http://rails.sv.cmu.edu&quot;</span>
+  <span class="ruby-ivar">@machine_name</span> = <span class="ruby-string">&quot;http://whiteboard.sv.cmu.edu&quot;</span>
 
   <span class="ruby-identifier">twiki_name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:twiki_name</span>]
   <span class="ruby-ivar">@person</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_twiki_name</span>(<span class="ruby-identifier">twiki_name</span>)
@@ -1111,7 +1111,7 @@
                <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;rails user account automatically created for #{twiki_name}&quot;</span>,
                <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Action Required: update this user's andrew id in the rails database.&lt;br/&gt;&lt;br/&gt;The twiki page for #{twiki_name} was rendered on the twiki server. This page asked rails to generate user data from the rails database. This user did not exist in the rails database, so rails created it.&lt;br/&gt;Note: this person can not edit their own information until their record is updated with their andrew login.&lt;br/&gt;&lt;br/&gt;first_name: #{@person.first_name}&lt;br/&gt;last_name: #{@person.last_name}&lt;br/&gt;email: #{@person.email}&lt;br/&gt;is_active?: #{@person.is_active?}&quot;</span>,
                <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Edit this person's information&quot;</span>,
-               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://rails.sv.cmu.edu&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">edit_person_path</span>(<span class="ruby-ivar">@person</span>)
+               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://whiteboard.sv.cmu.edu&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">edit_person_path</span>(<span class="ruby-ivar">@person</span>)
     }
     <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
   <span class="ruby-keyword">end</span>

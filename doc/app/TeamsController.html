@@ -912,7 +912,7 @@
             <pre><span class="ruby-comment"># File app/controllers/teams_controller.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">twiki_index</span>
   <span class="ruby-ivar">@show_teams_for_many_courses</span> = <span class="ruby-keyword">false</span>
-  <span class="ruby-ivar">@machine_name</span> = <span class="ruby-string">&quot;http://rails.sv.cmu.edu&quot;</span>
+  <span class="ruby-ivar">@machine_name</span> = <span class="ruby-string">&quot;http://whiteboard.sv.cmu.edu&quot;</span>
 
   <span class="ruby-identifier">url</span> = <span class="ruby-identifier">get_twiki_http_referer</span>()
   <span class="ruby-ivar">@course</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:twiki_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>).<span class="ruby-identifier">first</span>
