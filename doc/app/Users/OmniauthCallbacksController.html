@@ -404,7 +404,7 @@
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-node">&quot;Sorry, no user with this email (#{email}) exists in the system. help@sv.cmu.edu was just notified of this issue.&quot;</span>
     <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;help@sv.cmu.edu&quot;</span>,
                <span class="ruby-value">:from</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;help@sv.cmu.edu&quot;</span>,
-               <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Login problem to on rails.sv.cmu.edu for user #{email}&quot;</span>,
+               <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Login problem to on whiteboard.sv.cmu.edu for user #{email}&quot;</span>,
                <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. &lt;br&gt;&lt;br&gt;The email address is #{email}&quot;</span>,
                <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>,
                <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;&quot;</span>,
@@ -427,7 +427,7 @@
   <span class="ruby-comment">#end</span>
   <span class="ruby-comment">#      User.create(:email =&gt; data[&quot;email&quot;], :first_name =&gt; data[&quot;first_name&quot;], :last_name =&gt; data[&quot;last_name&quot;], :human_name =&gt; &quot;name&quot;)</span>
   <span class="ruby-comment">#      options = {:to =&gt; &quot;help@sv.cmu.edu&quot;,</span>
-  <span class="ruby-comment">#                 :subject =&gt; &quot;Login problem to on rails.sv.cmu.edu for user #{email}&quot;,</span>
+  <span class="ruby-comment">#                 :subject =&gt; &quot;Login problem to on whiteboard.sv.cmu.edu for user #{email}&quot;,</span>
   <span class="ruby-comment">#                 :message =&gt; &quot;A user tried to log into the rails application. They were authenticated by google, however, their email address does not exist as a person in the system. Either 1) the person is already in the system, but there is a typo with their email address or 2)the person needs to be added to the system. &lt;br&gt;&lt;br&gt;The email address is #{email}&quot;,</span>
   <span class="ruby-comment">#                 :url_label =&gt; &quot;&quot;,</span>
   <span class="ruby-comment">#                 :url =&gt; &quot;&quot;,</span>

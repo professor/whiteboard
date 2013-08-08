@@ -157,7 +157,7 @@ FactoryGirl.define do
   end
 
   factory :suggestion do
-    page "http://rails.sv.cmu.edu"
+    page "http://whiteboard.sv.cmu.edu"
     comment "This is the best website ever"
   end
 

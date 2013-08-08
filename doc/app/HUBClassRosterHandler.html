@@ -382,7 +382,7 @@
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email_help_about_missing_student</span> <span class="ruby-identifier">webiso_account</span>, <span class="ruby-identifier">course</span>
     <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;todd.sedano@sv.cmu.edu&quot;</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;Need to add this user #{webiso_account}@andrew.cmu.edu&quot;</span>,
                <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;We were adding registered HUB users to the course #{course.name}, but they are not in the system.&quot;</span>,
-               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://rails.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&amp;is_student=true&quot;</span>,
+               <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://whiteboard.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&amp;is_student=true&quot;</span>,
                <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Add person&quot;</span>}
     <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
 <span class="ruby-keyword">end</span></pre>
@@ -420,12 +420,12 @@
                  <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">roster_change_message</span>(<span class="ruby-identifier">course</span>, <span class="ruby-identifier">info</span>[<span class="ruby-value">:added</span>], <span class="ruby-identifier">info</span>[<span class="ruby-value">:dropped</span>], <span class="ruby-identifier">info</span>[<span class="ruby-value">:not_in_system</span>])}
 <span class="ruby-comment"># The message handles this well...</span>
 <span class="ruby-comment">#                 :url_label =&gt; &quot;Your course: &quot; + course.number + &quot; &quot; + course.short_or_full_name,</span>
-<span class="ruby-comment">#                 :url =&gt; &quot;http://rails.sv.cmu.edu/courses/#{course.id}&quot; }</span>
+<span class="ruby-comment">#                 :url =&gt; &quot;http://whiteboard.sv.cmu.edu/courses/#{course.id}&quot; }</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">options</span> = {<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;chris.ziese@sv.cmu.edu&quot;</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please add faculty to this course&quot;</span>,
                    <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;The HUB importer code was just run, however this course no faculty assigned to it. Thus I could not email them.&quot;</span>,
                    <span class="ruby-value">:url_label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;The course: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">number</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">short_or_full_name</span>,
-                   <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://rails.sv.cmu.edu/courses/#{course.id}&quot;</span> }
+                   <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;http://whiteboard.sv.cmu.edu/courses/#{course.id}&quot;</span> }
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-constant">GenericMailer</span>.<span class="ruby-identifier">email</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">deliver</span>
@@ -607,7 +607,7 @@
     <span class="ruby-identifier">dropped</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">student</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;#{student.first_name} #{student.last_name}&lt;br/&gt;&quot;</span> }
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;br/&gt;The system will be updating your course mailing list (#{course.email}) For more information, see your &lt;a href='http://rails.sv.cmu.edu/courses/#{course.id}'&gt;course tools&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>
+  <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;br/&gt;The system will be updating your course mailing list (#{course.email}) For more information, see your &lt;a href='http://whiteboard.sv.cmu.edu/courses/#{course.id}'&gt;course tools&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&quot;</span>
 
   <span class="ruby-identifier">message</span>
 <span class="ruby-keyword">end</span></pre>
