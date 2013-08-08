@@ -6,7 +6,7 @@
 <script type="text/javascript">
   $(function() {
     $("#job-list-match-student").tablesorter({ headers:{3:{sorter:false}} });
-    $("#job-list-project-match").tablesorter({ headers:{2:{sorter:false}} });
+    $("#job-list-project-match").tablesorter({ headers:{1:{sorter:false}, 2:{sorter:false}} });
   });
 </script>
 
@@ -28,8 +28,8 @@
     <tr>
       <td><%= job_person_names([employee]).html_safe %></td>
       <td><%= "&#x2713;".html_safe if employee.is_ga_promised %></td>
-      <td><%= JobEmployee.get_projects_for_user(employee.id) %></td>
-      <td><%= job_person_names(JobEmployee.get_supervisors_for_user(employee.id)).html_safe %></td>
+      <td><%= job_titles_formatted(employee.jobs_as_employee).html_safe %></td>
+      <td><%= job_person_names(JobSupervisor.get_supervisors(employee.jobs_as_employee)).html_safe %></td>
     </tr>
     <% end %>
   </tbody>
