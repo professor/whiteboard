@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801210451) do
+ActiveRecord::Schema.define(:version => 20130808222435) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -321,7 +321,6 @@ ActiveRecord::Schema.define(:version => 20130801210451) do
     t.string   "url"
     t.boolean  "is_editable_by_all",      :default => false
     t.boolean  "is_duplicated_page",      :default => false
-    t.boolean  "is_viewable_by_all",      :default => true
     t.integer  "current_edit_by_user_id"
     t.datetime "current_edit_started_at"
     t.string   "viewable_by",             :default => "users"
