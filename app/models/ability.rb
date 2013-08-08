@@ -32,6 +32,11 @@ class Ability
       cannot :upload_official_photo, User
     end
 
+    #HR Manager
+    if (user.is_admin? || user.human_name == "Sylvia Arifin")
+      can :view_assignments, Job
+    end
+
     #Contracts manager
     if (user.is_admin? || user.human_name == "Ngoc Ho" || user.human_name == "Hector Rastrullo")
       can :manage, SponsoredProjectAllocation
