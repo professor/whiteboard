@@ -38,6 +38,13 @@ module IntegrationSpecHelper
       })
     visit "/users/auth/#{service}"
   end
+
+  def login_with_warden(user, service = :google_apps)
+    Warden.test_mode!
+    @current_user = User.find(user.id)
+    login_as(@current_user, :scope => :user, :run_callbacks => false)
+  end
+
 end
 
 RSpec.configure do |config|
@@ -58,17 +65,18 @@ RSpec.configure do |config|
     config.filter_run_excluding :skip_on_local_machine => true
   end
 
-#  config.include ControllerMacros, :type => :controller
   config.include IntegrationSpecHelper, :type => :request
 
   config.include Devise::TestHelpers, :type => :controller
   config.include Devise::TestHelpers, :type => :view
 
   config.include Paperclip::Shoulda::Matchers
+
+
 #  config.include Helpers
 end
 
-Capybara.default_host = 'http://rails.sv.cmu.edu'
+Capybara.default_host = 'http://whiteboard.sv.cmu.edu'
 
 FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 

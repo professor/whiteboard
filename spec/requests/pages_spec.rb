@@ -14,13 +14,13 @@ describe "Pages" do
       before(:each) do
         @page = FactoryGirl.create(:page, :viewable_by => 'users')
       end
-      pending "are viewable by registered users" do
+      it "are viewable by registered users" do
         visit ('/')
         @user = FactoryGirl.create(:student_sam)
         login_with_oauth @user
 
         visit (page_path(@page))
-        # save_and_open_page
+#        save_and_open_page
         page.should have_content(@page.title)
         page.should have_content(@page.tab_one_contents)
       end
@@ -35,7 +35,7 @@ describe "Pages" do
       before(:each) do
         @page = FactoryGirl.create(:page, :viewable_by => 'staff')
       end
-      pending "are viewable by staff and faculty" do
+      it "are viewable by staff and faculty" do
         visit ('/')
         @faculty_fagan = FactoryGirl.create(:faculty_fagan)
         login_with_oauth @faculty_fagan
