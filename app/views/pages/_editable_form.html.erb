@@ -237,8 +237,9 @@
       <%= f.radio_button :is_editable_by_all, "true", :class => 'auto-save-on-change' %> Any registered user<br/>
     </p>
     <p>This <span class="page_or_task">page</span> is viewable by<br/>
-      <%= f.radio_button :is_viewable_by_all, "false", :class => 'auto-save-on-change' %> Faculty and staff<br/>
-      <%= f.radio_button :is_viewable_by_all, "true", :class => 'auto-save-on-change' %> Any registered user<br/>
+      <%= f.radio_button :viewable_by, "staff", :class => 'auto-save-on-change' %> Faculty and staff<br/>
+      <%= f.radio_button :viewable_by, "users", :class => 'auto-save-on-change' %> Any registered user<br/>
+      <%= f.radio_button :viewable_by, "world", :class => 'auto-save-on-change' %> Everyone<br/>
     </p>
     <p>
       <%= f.submit button_name, :onclick => "confirmation_needed = false;" %>

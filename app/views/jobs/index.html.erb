@@ -17,7 +17,7 @@
     <% if can? :see_job_details, Job %>
     <tr class="faculty-visible" title="Only shown to faculty & admin" >
       <td>
-  The cost of a graduate assistant is as follows. (Namely $600 / month)
+  The cost for a 10 hour per week graduate assistant is as follows. (Namely $600 / month)
   <ul>
       <li>Fall - $2,400</li>
       <li>Spring - $2,400</li>
@@ -25,7 +25,10 @@
   </ul>
   Under normal circumstances, we do not expect the students to be working over their breaks.
         <% if can? :create, Job %><br/><br/>
-        <%= link_to 'Post a Job', new_job_path %>
+          <%= link_to 'Post a Job', new_job_path %>
+        <% end %>
+        <% if can? :view_assignments, Job %><br/>
+          <%= link_to 'View Assignments', job_assignments_path %>
         <% end %>
       </td>
     </tr>

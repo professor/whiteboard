@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
   attr_accessible :course_id, :title, :position, :indentation_level, :is_task, :tab_one_contents, :tab_two_contents,
                   :tab_three_contents, :task_duration, :tab_one_email_from, :tab_one_email_subject, :tips_and_traps, :faculty_notes,
-                  :url, :is_editable_by_all, :is_viewable_by_all, :version_comments, :course_name
+                  :url, :is_editable_by_all, :is_viewable_by_all, :viewable_by, :version_comments, :course_name
 
   versioned
 
@@ -24,13 +24,18 @@ class Page < ActiveRecord::Base
 
   def editable?(current_user)
     return false if self.is_duplicated_page?
+    return false if current_user.blank?
     return true if self.is_editable_by_all?
     return (current_user.is_staff? || current_user.is_admin?)
   end
 
   def viewable?(current_user)
-    return true if self.is_viewable_by_all?
-    return (current_user.is_staff? || current_user.is_admin?)
+    return self.viewable_by == "world" if current_user.blank?
+    if self.viewable_by == "users"
+      return current_user.present?
+    else
+      return (current_user.is_staff? || current_user.is_admin?)
+    end
   end
 
   def to_param
@@ -64,11 +69,11 @@ class Page < ActiveRecord::Base
   end
 
   def update_search_index
-    if self.is_viewable_by_all
+    if self.viewable_by == "staff"
+      update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
+    else
       update_search_index_for_index(ENV['SEARCHIFY_INDEX'] || 'cmux')
     end
-
-    update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
   end
 
   def update_search_index_for_index(index_name)

@@ -34,7 +34,7 @@ CMUEducation::Application.routes.draw do
   match '/presentations/today' => 'presentations#today', :as => :today_presentations
   resources :presentations, :only => [:index]
 
-  match '/jobs/match' => 'jobs#match'
+  match '/jobs/assignments' => 'jobs#assignments', :as => :job_assignments
   resources :jobs
 
   match '/sponsored_projects/:id/archive' => 'sponsored_projects#archive', :as => :archive_sponsored_project
@@ -60,7 +60,7 @@ CMUEducation::Application.routes.draw do
   resources :course_configurations
 
   match '/courses/current_semester' => redirect("/courses/semester/#{AcademicCalendar.current_semester()}#{Date.today.year}"), :as => :current_semester
-  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semestrseer
+  match '/courses/next_semester' => redirect("/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}"), :as => :next_semester
   match '/course/:course_id/grades/send_final_grade' => 'grades#send_final_grade', :as=>:send_final_grade, :via => :post
   match '/course/:course_id/grades/post_drafted_and_send' => 'grades#post_drafted_and_send', :as=>:post_drafted_and_send, :via => :post
   match '/course/:course_id/grades/save' => 'grades#save', :as=>:save, :via => :post

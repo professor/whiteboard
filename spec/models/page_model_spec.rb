@@ -59,7 +59,7 @@ describe Page do
     it "that defaults from the title field" do
       @page.url = ""
       @page.should be_valid
-      @page.url.should == @page.title      
+      @page.url.should == @page.title
     end
 
     it "should able to update indentation level" do
@@ -90,27 +90,27 @@ describe Page do
     @page.should be_editable(FactoryGirl.create(:student_sam))
   end
 
-
-  it "is viewable by anyone if permissions are set that way" do
-    @page.should respond_to(:is_viewable_by_all)
-    @page.is_viewable_by_all = true
-    @page.should be_viewable(FactoryGirl.create(:student_sam))
+  describe "is viewable" do
+    it "by anyone if the permission is set to 'world'" do
+      @page.should respond_to(:viewable_by)
+      @page.viewable_by = "world"
+      @page.should be_viewable(nil)
+    end
+    it "only to registered users if the permission is set to 'users'" do
+      @page.should respond_to(:viewable_by)
+      @page.viewable_by = "users"
+      @page.should be_viewable(FactoryGirl.create(:student_sam))
+    end
+    it "only to staff if the permission is set to 'staff'" do
+      @page.should respond_to(:viewable_by)
+      @page.viewable_by = "staff"
+      @page.should be_viewable(FactoryGirl.create(:faculty_frank))
+    end
   end
-
-  it "is not viewable by students when permissions are set that way " do
-    @page.should respond_to(:is_viewable_by_all)
-    @page.is_viewable_by_all = false
-    @page.should_not be_viewable(FactoryGirl.create(:student_sam))
-  end
-
-  it "is always viewable by faculty and admins" do
-    @page.should be_viewable(FactoryGirl.create(:faculty_frank))
-  end
-
 
   it "is versioned" do
     @page.should respond_to(:version)
-    @page.save   
+    @page.save
     version_number = @page.version
     @page.title = "A Brave New Title"
     @page.save
@@ -134,7 +134,7 @@ describe Page do
       @page.title = "Task 7: Something Wonderful"
       @page.task_number.should == "7"
     end
-    
+
     it "with a number that is two digits" do
       @page.title = "Task 15: Something Even Better Than Before"
       @page.task_number.should == "15"
@@ -143,5 +143,5 @@ describe Page do
   end
 
   it { should have_many :page_attachments }
-  
+
 end

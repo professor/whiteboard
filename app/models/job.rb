@@ -13,6 +13,8 @@ class Job < ActiveRecord::Base
 
   belongs_to :sponsored_project
 
+  default_scope order("is_accepting DESC, updated_at DESC")
+
   scope :active, where('is_closed IS NULL OR is_closed != ?', true)
 
   scope :part_time_class_of, lambda { |program, year|
@@ -58,6 +60,18 @@ class Job < ActiveRecord::Base
     if removed_users.present?
       removed_users.each { |user| self.log += Time.now.to_s + " - removed " + user.human_name + "<br/>" }
     end
+  end
+
+  protected
+
+  def self.all_employees
+    active_ga_ids = User.where(:is_active => true).
+                      where( :is_ga_promised => true).
+                      select(:id).
+                      collect(&:id)
+    current_employee_ids = JobEmployee.select(:user_id).collect(&:user_id)
+    all_employee_ids = active_ga_ids.push(*current_employee_ids).uniq.sort
+    User.find(all_employee_ids, :order => :is_ga_promised)
   end
 
 end

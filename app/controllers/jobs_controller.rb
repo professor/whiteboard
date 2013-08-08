@@ -5,7 +5,7 @@ class JobsController < ApplicationController
 
   # GET /jobs
   def index
-    @jobs = Job.scoped.order("is_accepting DESC, updated_at DESC")
+    @jobs = Job.scoped
     @jobs = @jobs.active if params[:show_all] != "true"
   end
 
@@ -62,9 +62,10 @@ class JobsController < ApplicationController
     end
   end
 
-  def match
-    @jobs = Job.scoped.order("is_accepting DESC, updated_at DESC").active
-    @all_employees = User.all_employees
+  def assignments
+    authorize! :see_job_details, Job
+    @jobs = Job.active
+    @all_employees = Job.all_employees
   end
 
 end

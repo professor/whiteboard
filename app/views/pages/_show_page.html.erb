@@ -92,7 +92,7 @@
         <li><a href="#tabs-1">Project Requirements</a></li>
         <li><a href="#tabs-2">Getting help</a></li>
         <li><a href="#tabs-3">Submitting your work</a></li>
-        <% if current_user.is_staff || current_user.is_admin %>
+        <% if current_user.present? && (current_user.is_staff || current_user.is_admin) %>
             <li><a href="#tabs-4">Faculty notes</a></li>
         <% end %>
       </ul>
@@ -118,10 +118,9 @@
 
         <p><%= sanitize_trusted(@page.tab_three_contents) %></p>
       </div>
-      <% if current_user.is_staff || current_user.is_admin %>
+      <% if current_user.present? && (current_user.is_staff || current_user.is_admin) %>
           <div id="tabs-4">
             <p>Students can not see the contents of this tab. Students do not see a Faculty Notes tab.</p>
-
             <p><%= sanitize_trusted(@page.faculty_notes) %></p>
           </div>
       <% end %>

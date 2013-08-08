@@ -119,7 +119,7 @@ describe PagesController do
     before do
       Page.delete_all
       login(FactoryGirl.create(:student_sam))
-      @page = FactoryGirl.create(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+      @page = FactoryGirl.create(:page, :title => "new title", :viewable_by => "staff", :is_editable_by_all => false)
     end
 
     describe "GET show" do
@@ -147,16 +147,16 @@ describe PagesController do
 
       it "will update updated_by_user_id"
     end
-    
+
     describe "POST revert" do
       it "a page that is editable by all" do
-        @page.update_attributes :is_viewable_by_all => true, :is_editable_by_all => true
+        @page.update_attributes :viewable_by => "users", :is_editable_by_all => true
         post :revert, :id => @page.to_param, :version => 1
         current_version = @page.versions.find_by_number 3
         current_version.reverted_from.should == 1
         response.should redirect_to(page_url)
       end
-      
+
       it "but not for a page that is editable only by faculty" do
         post :revert, :id => @page.to_param, :version => 1
         response.should redirect_to(page_url)
@@ -168,7 +168,7 @@ describe PagesController do
     before do
       login(FactoryGirl.create(:faculty_frank))
 
-      @page = FactoryGirl.create(:page, :title => "new title", :is_viewable_by_all => false, :is_editable_by_all => false)
+      @page = FactoryGirl.create(:page, :title => "new title", :viewable_by => "staff", :is_editable_by_all => false)
     end
 
     describe "GET show" do
@@ -217,7 +217,7 @@ describe PagesController do
         end
       end
     end
-    
+
     describe "POST revert" do
       it "a page that is editable by faculty" do
         @page.update_attribute :title, "the title for next version"

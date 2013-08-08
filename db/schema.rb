@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801073809) do
+ActiveRecord::Schema.define(:version => 20130801210451) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.boolean  "is_viewable_by_all",      :default => true
     t.integer  "current_edit_by_user_id"
     t.datetime "current_edit_started_at"
+    t.string   "viewable_by",             :default => "users"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
