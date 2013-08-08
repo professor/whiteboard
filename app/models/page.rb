@@ -24,12 +24,9 @@ class Page < ActiveRecord::Base
 
   def editable?(current_user)
     return false if self.is_duplicated_page?
+    return false if current_user.blank?
     return true if self.is_editable_by_all?
-    if current_user.present?
-      return (current_user.is_staff? || current_user.is_admin?)
-    else
-      return false
-    end
+    return (current_user.is_staff? || current_user.is_admin?)
   end
 
   def viewable?(current_user)
@@ -72,12 +69,11 @@ class Page < ActiveRecord::Base
   end
 
   def update_search_index
-    # if self.is_viewable_by_all
-    if self.viewable_by == "world"
+    if self.viewable_by == "staff"
+      update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
+    else
       update_search_index_for_index(ENV['SEARCHIFY_INDEX'] || 'cmux')
     end
-
-    update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
   end
 
   def update_search_index_for_index(index_name)

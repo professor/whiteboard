@@ -22,8 +22,7 @@
     <% end %>
 <% end %>
 
-<%
-if @page.viewable?(current_user) && @page.editable?(current_user) %>
+<% if @page.editable?(current_user) %>
     <div class="right_link">
       <%= link_to 'Edit Page', edit_page_path(@page) %>
     </div>

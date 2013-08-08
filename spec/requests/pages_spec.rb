@@ -14,16 +14,17 @@ describe "Pages" do
       before(:each) do
         @page = FactoryGirl.create(:page, :viewable_by => 'users')
       end
-      xit "are viewable by registered users" do
+      pending "are viewable by registered users" do
         visit ('/')
         @user = FactoryGirl.create(:student_sam)
         login_with_oauth @user
+
         visit (page_path(@page))
         # save_and_open_page
         page.should have_content(@page.title)
         page.should have_content(@page.tab_one_contents)
       end
-      it "are not viewable by non-registerd users" do
+      it "are not viewable by non-registered users" do
         visit "/logout"
         visit (page_path(@page))
         page.should have_content("You don't have permission to do this action.")
@@ -34,11 +35,12 @@ describe "Pages" do
       before(:each) do
         @page = FactoryGirl.create(:page, :viewable_by => 'staff')
       end
-      xit "are viewable by staff and faculty" do
+      pending "are viewable by staff and faculty" do
         visit ('/')
         @faculty_fagan = FactoryGirl.create(:faculty_fagan)
         login_with_oauth @faculty_fagan
 
+        visit (page_path(@page))
         page.should have_content(@page.title)
         page.should have_content(@page.tab_one_contents)
       end
