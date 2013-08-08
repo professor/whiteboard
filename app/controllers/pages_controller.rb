@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
 
   #  layout 'cmu_sv_no_pad'
   layout 'cmu_sv'
