@@ -34,7 +34,9 @@ class User < ActiveRecord::Base
 
   has_many :grades
 
+  has_many :job_employees
   has_many :jobs_as_employee, :through => :job_employees, :source => :job
+  has_many :job_supervisors
   has_many :jobs_as_supervisor, :through => :job_supervisors, :source => :job
 
   belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
@@ -419,17 +421,6 @@ class User < ActiveRecord::Base
   end
 
   protected
-
-  def self.all_employees
-    active_gas = User.where(:is_active => true).
-                      where( :is_ga_promised => true).
-                      select(:id).
-                      collect(&:id)
-    current_employee_ids = JobEmployee.select(:user_id).collect(&:user_id)
-    all_employee_ids = active_gas.push(*current_employee_ids).uniq.sort
-    User.find(all_employee_ids, :order => :is_ga_promised)
-  end
-
 
   def person_before_save
     # We populate some reasonable defaults, but this can be overridden in the database
