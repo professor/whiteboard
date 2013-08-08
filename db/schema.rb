@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801073809) do
+ActiveRecord::Schema.define(:version => 20130801210451) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -50,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
-    t.integer  "year"
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.string   "curriculum_url"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "year"
     t.integer  "user_id"
     t.integer  "curriculum_comment_type_id"
-    t.string   "comment",                    :limit => 4000
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "human_name"
@@ -183,7 +183,6 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.datetime "updated_at"
   end
 
-  add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
 
   create_table "grades", :force => true do |t|
@@ -324,6 +323,7 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.boolean  "is_viewable_by_all",      :default => true
     t.integer  "current_edit_by_user_id"
     t.datetime "current_edit_started_at"
+    t.string   "viewable_by",             :default => "users"
   end
 
   add_index "pages", ["course_id"], :name => "index_pages_on_course_id"
@@ -545,6 +545,7 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "email"
     t.string   "twiki_space"
     t.string   "tigris_space"
+    t.integer  "course_id"
     t.integer  "primary_faculty_id"
     t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
@@ -554,7 +555,6 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
-    t.integer  "course_id"
     t.boolean  "updating_email"
   end
 
@@ -619,14 +619,14 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"
@@ -714,14 +714,14 @@ ActiveRecord::Schema.define(:version => 20130801073809) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
     t.integer  "strength1_id"
     t.integer  "strength2_id"
     t.integer  "strength3_id"
     t.integer  "strength4_id"
     t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"
