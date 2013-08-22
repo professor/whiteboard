@@ -17,7 +17,7 @@
               <li class="standard"><span class="secondaryNavTop"><%= link_to course_page.title, course_page %></span></li>
           <% end %>
 
-          <% if current_user.is_staff || current_user.is_admin %>
+          <% if current_user.present? && (current_user.is_staff || current_user.is_admin) %>
               <li class="standard">
                 <span class="secondaryNavTop"><%= link_to "(Edit Order)", course_navigation_path(page.course) %></span>
               </li>
