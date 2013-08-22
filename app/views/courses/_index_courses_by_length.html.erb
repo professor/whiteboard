@@ -63,7 +63,7 @@
               <% if course.curriculum_url.blank? %>
                   <td><%= course.name %></td>
               <% else %>
-                  <td><%= link_to course.name, course.curriculum_url %></td>
+                  <td><%= link_to course.name, course_path(course) %></td>
               <% end %>
             </tr>
         <% end %>

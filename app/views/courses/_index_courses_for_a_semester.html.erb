@@ -18,7 +18,7 @@
           <% if course.curriculum_url.blank? %>
               <td><%= course.display_name %></td>
           <% else %>
-              <td><%= link_to course.display_name, course.curriculum_url %></td>
+              <td><%= link_to course.display_name, course_path(course) %></td>
           <% end %>
           <td class="all_courses"><%= h course.semester %></td>
           <td><%= course.mini %></td>
