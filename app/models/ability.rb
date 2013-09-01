@@ -13,6 +13,7 @@ class Ability
 
     can :manage, User, :id => user.id
     can :update, PageAttachment
+    can :see_student_grades, Course
 
 
     if (user.human_name == "Todd Sedano" ||user.human_name == "Chris Zeise" || user.human_name == "Gerry Panelo Elizondo")
@@ -26,7 +27,7 @@ class Ability
       cannot :create, User
     end
 
-    if (user.is_admin? || user.human_name == "Kaushik Gopal")
+    if (user.is_admin? || user.human_name == "Rofaida Abdelaal")
       can :upload_official_photo, User
     else
       cannot :upload_official_photo, User
@@ -62,9 +63,6 @@ class Ability
     can :update, Job, :supervisors => {:id => user.id}
 
 
-    if (user.human_name == "Todd Sedano" || user.human_name == "Kaushik Gopal")
-      can :see_student_grades, Course #experimental feature
-    end
 
 
     # The first argument to `can` is the action you are giving the user permission to do.
