@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808222435) do
+ActiveRecord::Schema.define(:version => 20130903011741) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -504,14 +504,6 @@ ActiveRecord::Schema.define(:version => 20130808222435) do
   add_index "sponsored_projects", ["name"], :name => "index_sponsored_projects_on_name"
   add_index "sponsored_projects", ["sponsor_id"], :name => "index_sponsored_projects_on_sponsor_id"
 
-  create_table "strength_themes", :force => true do |t|
-    t.string   "theme"
-    t.string   "brief_description"
-    t.text     "long_description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "suggestions", :force => true do |t|
     t.integer  "user_id"
     t.text     "comment"
@@ -619,11 +611,6 @@ ActiveRecord::Schema.define(:version => 20130808222435) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.integer  "strength1_id"
-    t.integer  "strength2_id"
-    t.integer  "strength3_id"
-    t.integer  "strength4_id"
-    t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
@@ -714,11 +701,6 @@ ActiveRecord::Schema.define(:version => 20130808222435) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
-    t.integer  "strength1_id"
-    t.integer  "strength2_id"
-    t.integer  "strength3_id"
-    t.integer  "strength4_id"
-    t.integer  "strength5_id"
     t.datetime "sponsored_project_effort_last_emailed"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
@@ -757,11 +739,6 @@ ActiveRecord::Schema.define(:version => 20130808222435) do
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_staff"], :name => "index_users_on_is_staff"
   add_index "users", ["is_student"], :name => "index_users_on_is_student"
-  add_index "users", ["strength1_id"], :name => "index_users_on_strength1_id"
-  add_index "users", ["strength2_id"], :name => "index_users_on_strength2_id"
-  add_index "users", ["strength3_id"], :name => "index_users_on_strength3_id"
-  add_index "users", ["strength4_id"], :name => "index_users_on_strength4_id"
-  add_index "users", ["strength5_id"], :name => "index_users_on_strength5_id"
   add_index "users", ["twiki_name"], :name => "index_users_on_twiki_name"
 
   create_table "versions", :force => true do |t|
