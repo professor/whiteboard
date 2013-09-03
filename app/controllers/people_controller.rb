@@ -198,8 +198,6 @@ class PeopleController < ApplicationController
       @domain = "sv.cmu.edu"
     end
 
-    @strength_themes = StrengthTheme.all
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -217,7 +215,6 @@ class PeopleController < ApplicationController
     end
 #    authorize! :update, @person
 
-    @strength_themes = StrengthTheme.all
   end
 
   # POST /people
@@ -286,7 +283,6 @@ class PeopleController < ApplicationController
     Rails.logger.info("People#update #{request.env["REQUEST_PATH"]} #{current_user.human_name} #{params}")
 
     @person.updated_by_user_id = current_user.id
-    @strength_themes = StrengthTheme.all
 
     respond_to do |format|
       @person.attributes = params[:user]
