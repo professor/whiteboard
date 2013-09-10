@@ -7,11 +7,6 @@ describe "people/edit.html.erb" do
       person = FactoryGirl.create(:student_sam)
       login(person)
       @person = assign(:person, person)
-      
-      assign(:strength_themes, [
-        stub_model(StrengthTheme),
-        stub_model(StrengthTheme)
-      ])
     end
 
     it "renders the edit page form" do
@@ -40,11 +35,6 @@ describe "people/edit.html.erb" do
       person = FactoryGirl.create(:admin_andy)
       login(person)
       @person = assign(:person, person)
-      
-      assign(:strength_themes, [
-        stub_model(StrengthTheme),
-        stub_model(StrengthTheme)
-      ])
     end
 
     it "Has the option to upload the custom photo" do
