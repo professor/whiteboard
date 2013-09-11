@@ -18,8 +18,8 @@ See http://rubydoc.info/github/professor/whiteboard/frames or run "rake doc:app"
 For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
 a repository to work from. Each new feature should be done in its own branch.
 
-[Installation Directions](CMUSV_Students.md)
-[Installation with Virtual Machine Directions](CMUSV_VM_Ubuntu.md)
+* [Installation Directions](CMUSV_Students.md)
+* [Installation with Virtual Machine Directions](CMUSV_VM_Ubuntu.md)
 
 ## Getting involved
 
