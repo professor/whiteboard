@@ -91,9 +91,5 @@
         <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label> </br>
       </div>
 
-      <% if current_user.is_staff? ||  current_user.is_admin? %>
-        <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-      <% else %>
-        <%= render :partial => "deliverable_listing_student", :locals => {:deliverables => @deliverables, :show_course_grade => false, :skip_course_column => true, :user => current_user} %>
-      <% end %>
+      <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
       <br/>

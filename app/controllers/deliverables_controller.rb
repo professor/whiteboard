@@ -3,7 +3,7 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
-  before_filter :render_grade_book_menu, :only=>[:index_for_course, :show]
+  before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -15,7 +15,7 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
-  def index_for_course
+  def grading_queue_for_course
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
