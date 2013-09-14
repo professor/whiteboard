@@ -212,6 +212,8 @@ class Deliverable < ActiveRecord::Base
 
   # To check if the current user can change/edit the deliverable
   def editable?(current_user)
+    return true if self.course.faculty.include?(current_user)
+
     if self.is_team_deliverable?
       unless self.team.is_user_on_team?(current_user)
         unless (current_user.is_staff?)||(current_user.is_admin?)
