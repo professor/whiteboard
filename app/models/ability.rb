@@ -29,6 +29,7 @@ class Ability
 
     if (user.is_admin? || user.human_name == "Rofaida Abdelaal")
       can :upload_official_photo, User
+      can :update, User
     else
       cannot :upload_official_photo, User
     end
@@ -50,6 +51,7 @@ class Ability
     if (user.is_admin?)
       can :manage, Course
       can :manage, Job
+      can :manage, User
       can :see_current_sign_in_ip, User
     else
       cannot :see_current_sign_in_ip, User

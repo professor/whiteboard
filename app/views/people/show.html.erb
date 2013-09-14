@@ -67,7 +67,7 @@
             </h1>
             <div class="user_profile_action">
                 <%= link_to 'Back', people_path %>
-              <%   if @person.id == current_user.id or current_user.is_admin? %>
+              <% if can? :update, @person %>
                  | <%= link_to 'Edit', edit_person_path(@person) %>
                 <% end %>
             </div>

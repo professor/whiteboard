@@ -85,7 +85,7 @@ class DeliverablesController < ApplicationController
       redirect_to root_path and return
     end
 
-    if current_user.is_staff?
+    if (current_user.is_admin? || @course.faculty.include?(current_user))
       if @course.grading_rule.nil?
         flash[:error] = I18n.t(:no_grading_rule_for_course)
         redirect_to course_path(@course) and return
@@ -265,6 +265,11 @@ class DeliverablesController < ApplicationController
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
+
+    unless (current_user.is_admin? || @deliverable.course.faculty.include?(current_user))
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
+    end
 
     # check is save and email is clicked or save as draft is clicked
     is_student_visible=true

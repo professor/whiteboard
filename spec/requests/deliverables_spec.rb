@@ -102,6 +102,7 @@ describe "deliverables" do
     before do
       @faculty = FactoryGirl.create(:faculty_fagan)
       login_with_oauth @faculty
+      @team_deliverable.course.faculty = [@faculty]
       visit deliverable_path(@team_deliverable)
     end
 
@@ -110,7 +111,6 @@ describe "deliverables" do
     end
 
     it "I should be able to view deliverable page" do
-   #   page.should have_content("Deliverable for")
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
