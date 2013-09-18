@@ -15,7 +15,7 @@ CMU-SV Students
 1. create a config/google_apps.yml from (http://whiteboard.sv.cmu.edu/pages/google_apps.yml)
 1. set your environment variables (optional step, only needed if you plan to work on these features)
    1. (Mac OS X) read http://david-martinez.tumblr.com/post/28083831730/environment-variables-and-mountain-lion (if you set them in bash, then RubyMine doesn't pick them up.)
-   1. Note: This requires a restart. Source: http://www.rubicode.com/Software/RCEnvironment/
+   1. Note: This requires a restart. 
    1. Set these environment variables
       1. setenv LDAP_HOST anyhost
       1. setenv LDAP_PORT 636
