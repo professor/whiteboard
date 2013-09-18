@@ -1,7 +1,6 @@
-$LOAD_PATH << File.dirname(__FILE__) + "/db/seeds/development"
-
+require File.dirname(__FILE__) + '/seeds_helper'
 require 'factory_girl'
-require 'seeds_helper'
+
 
 FactoryGirl.define do
 
