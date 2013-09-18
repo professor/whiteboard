@@ -36,13 +36,6 @@ class Assignment < ActiveRecord::Base
   acts_as_list :column => "assignment_order", :scope => [:course_id]
   default_scope :order => 'assignment_order ASC'
 
-  after_initialize :init
-
-  def init
-    self.is_team_deliverable = false if self.new_record?
-    self.is_submittable = true if self.new_record?
-  end
-
   def name_with_type
     unless self.course.grading_rule.nil?
       nomenclature = self.course.nomenclature_assignment_or_deliverable.capitalize

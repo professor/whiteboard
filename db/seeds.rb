@@ -78,16 +78,6 @@ FactoryGirl.define do
 
   sleep(0.02)
 
-#factory :architecture, :class => Course do |c|
-# c.name "Architecture"
-# c.number "96-705"
-# c.semester "Summer"
-# c.mini "Both"
-# c.year "2008"
-#end
-
-  sleep(0.02)
-
   factory :team_terrific, :class => Team do
     name "Team Terrific"
     email "terrific@sv.cmu.edu"

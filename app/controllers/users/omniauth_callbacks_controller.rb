@@ -11,9 +11,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_apps
     # You need to implement the method below in your model
-    @user = User.find_for_google_apps_oauth(env["omniauth.auth"], current_user)
+    @user = User.find_for_google_apps_oauth(env["omniauth.auth"].except("extra"), current_user)
 
-    omniauth = env["omniauth.auth"]
+    omniauth = env["omniauth.auth"].except("extra")
     email = switch_west_to_sv(omniauth["info"]["email"])
 
     if @user
