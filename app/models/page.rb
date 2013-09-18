@@ -30,7 +30,8 @@ class Page < ActiveRecord::Base
   end
 
   def viewable?(current_user)
-    return self.viewable_by == "world" if current_user.blank?
+    return true if self.viewable_by == "world"
+    return false if current_user.blank?
     if self.viewable_by == "users"
       return current_user.present?
     else

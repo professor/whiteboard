@@ -3,7 +3,7 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
-  before_filter :render_grade_book_menu, :only=>[:index_for_course, :show]
+  before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -15,7 +15,7 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
-  def index_for_course
+  def grading_queue_for_course
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -85,7 +85,7 @@ class DeliverablesController < ApplicationController
       redirect_to root_path and return
     end
 
-    if current_user.is_staff?
+    if (current_user.is_admin? || @course.faculty.include?(current_user))
       if @course.grading_rule.nil?
         flash[:error] = I18n.t(:no_grading_rule_for_course)
         redirect_to course_path(@course) and return
@@ -265,6 +265,11 @@ class DeliverablesController < ApplicationController
 
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
+
+    unless (current_user.is_admin? || @deliverable.course.faculty.include?(current_user))
+      flash[:error] = I18n.t(:not_your_deliverable)
+      redirect_to root_path and return
+    end
 
     # check is save and email is clicked or save as draft is clicked
     is_student_visible=true

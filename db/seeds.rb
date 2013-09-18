@@ -9,41 +9,6 @@
 
 require 'factory_girl'
 
-Factory.create(:achiever)
-Factory.create(:activator)
-Factory.create(:adaptability)
-Factory.create(:analytical)
-Factory.create(:arranger)
-Factory.create(:belief)
-Factory.create(:command)
-Factory.create(:communication)
-Factory.create(:competition)
-Factory.create(:connectedness)
-Factory.create(:consistency)
-Factory.create(:context)
-Factory.create(:deliberative)
-Factory.create(:developer)
-Factory.create(:discipline)
-Factory.create(:empathy)
-Factory.create(:focus)
-Factory.create(:futuristic)
-Factory.create(:harmony)
-Factory.create(:ideation)
-Factory.create(:includer)
-Factory.create(:individualization)
-Factory.create(:input)
-Factory.create(:intellection)
-Factory.create(:learner)
-Factory.create(:maximizer)
-Factory.create(:positivity)
-Factory.create(:relator)
-Factory.create(:responsibility)
-Factory.create(:restorative)
-Factory.create(:self_assurance)
-Factory.create(:significance)
-Factory.create(:strategic)
-Factory.create(:woo)
-
 FactoryGirl.define do
   factory :todd, :parent => :person do
     first_name "Todd"

@@ -18,7 +18,8 @@ See http://rubydoc.info/github/professor/whiteboard/frames or run "rake doc:app"
 For teams doing project work for a course, please follow the directions provided in the course. We'll probably give you
 a repository to work from. Each new feature should be done in its own branch.
 
-[Installation Directions](master/CMUSV_Students.md)
+* [Installation Directions](CMUSV_Students.md)
+* [Installation with Virtual Machine Directions](CMUSV_VM_Ubuntu.md)
 
 ## Getting involved
 
@@ -26,7 +27,7 @@ For individual maintainers, please fork the project on github, make your changes
 
 ### How do I submit a bug fix?
 
-If you never used git, read [Git Directions](master/doc/Git_Directions.rdoc)
+If you never used git, read [Git Directions](doc/Git_Directions.rdoc)
 
 This is the same process you would use in working with any open source project. If you want detailed directions with screen snapshots,
 see http://help.github.com/forking/ -- Go to github and login with your account. Then click on "fork" this project.

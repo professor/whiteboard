@@ -69,7 +69,7 @@
 <br/>
 <br/>
 
-<% if current_user.is_staff? %>
+<% if current_user.is_admin? || @course.faculty.include?(current_user) %>
      <%= render :partial => "edit_student_feedback", :locals => {:button_name => "Submit"} %>
      <%#  link_to "Alter feedback", deliverable_feedback_path(@deliverable) %>
 <% elsif current_user.is_student? %>

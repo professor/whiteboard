@@ -198,8 +198,6 @@ class PeopleController < ApplicationController
       @domain = "sv.cmu.edu"
     end
 
-    @strength_themes = StrengthTheme.all
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -211,13 +209,10 @@ class PeopleController < ApplicationController
   def edit
     @person = User.find_by_param(params[:id])
 
-    unless @person.id == current_user.id or current_user.is_admin?
+    unless can? :update, @person #@person.id == current_user.id or current_user.is_admin?
       flash[:error] = "You're not allowed to edit this user's profile."
       redirect_to user_path(@person)
     end
-#    authorize! :update, @person
-
-    @strength_themes = StrengthTheme.all
   end
 
   # POST /people
@@ -281,12 +276,11 @@ class PeopleController < ApplicationController
   # PUT /people/1.xml
   def update
     @person = User.find_by_param(params[:id])
-    # authorize! :update, @person
+    authorize! :update, @person
 
     Rails.logger.info("People#update #{request.env["REQUEST_PATH"]} #{current_user.human_name} #{params}")
 
     @person.updated_by_user_id = current_user.id
-    @strength_themes = StrengthTheme.all
 
     respond_to do |format|
       @person.attributes = params[:user]

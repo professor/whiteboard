@@ -55,14 +55,6 @@ FactoryGirl.define do
     twiki_name "FacultyFagan"
   end
 
-  factory :strength_quest, :parent => :person do
-    association :strength1, :factory => :achiever
-    association :strength2, :factory => :activator
-    association :strength3, :factory => :adaptability
-    association :strength4, :factory => :analytical
-    association :strength5, :factory => :arranger
-  end
-
   factory :team_member, :parent => :person do
     email "team.member@sv.cmu.edu"
     webiso_account "teammember@andrew.cmu.edu"

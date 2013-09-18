@@ -29,7 +29,7 @@ describe DeliverablesController do
         end
 
         it 'assigns @deliverables' do
-          get :index_for_course, :course_id => @course.id
+          get :grading_queue_for_course, :course_id => @course.id
           assigns(:deliverables).should == [@deliverable, @deliverable]
         end
       end
@@ -41,7 +41,7 @@ describe DeliverablesController do
         end
 
         it 'assigns @deliverables' do
-          get :index_for_course, :course_id => @course.id
+          get :grading_queue_for_course, :course_id => @course.id
           assigns(:deliverables).should == [@deliverable, @deliverable]
         end
       end
@@ -49,7 +49,7 @@ describe DeliverablesController do
       context "as any other user" do
         before do
           login(@faculty_fagan)
-          get :index_for_course, :course_id => @course.id
+          get :grading_queue_for_course, :course_id => @course.id
         end
 
         it_should_behave_like "permission denied"

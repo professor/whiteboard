@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   #, :database_authenticatable, :registerable,
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_ga_promised, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_first_content_type, :photo_first_file_name, :photo_second_content_type, :photo_second_file_name, :photo_custom_content_type, :photo_custom_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :strength1_id, :strength2_id, :strength3_id, :strength4_id, :strength5_id, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid, :image_uri_first, :image_uri_second, :image_uri_custom, :photo_selection
+  attr_accessible :adobe_created, :biography, :email, :first_name, :github, :graduation_year, :human_name, :image_uri, :is_active, :is_adobe_connect_host, :is_ga_promised, :is_alumnus, :is_part_time, :is_staff, :is_student, :last_name, :legal_first_name, :local_near_remote, :login, :masters_program, :masters_track, :msdnaa_created, :office, :office_hours, :organization_name, :personal_email, :photo_first_content_type, :photo_first_file_name, :photo_second_content_type, :photo_second_file_name, :photo_custom_content_type, :photo_custom_file_name, :pronunciation, :skype, :sponsored_project_effort_last_emailed, :telephone1, :telephone1_label, :telephone2, :telephone2_label, :telephone3, :telephone3_label, :telephone4, :telephone4_label, :tigris, :title, :twiki_name, :user_text, :webiso_account, :work_city, :work_country, :work_state, :linked_in, :facebook, :twitter, :google_plus, :people_search_first_accessed_at, :is_profile_valid, :image_uri_first, :image_uri_second, :image_uri_custom, :photo_selection
   #These attributes are not accessible , :created_at, :current_sign_in_at, :current_sign_in_ip, :effort_log_warning_email, :google_created, :is_admin, :last_sign_in_at, :last_sign_in_ip, :remember_created_at,  :sign_in_count,  :sign_in_count_old,  :twiki_created,  :updated_at,  :updated_by_user_id,  :version,  :yammer_created, :course_tools_view, :course_index_view, :expires_at
 
   #We version the user table except for some system change reasons e.g. the Scotty Dog effort log warning email caused this save to happen
@@ -39,11 +39,6 @@ class User < ActiveRecord::Base
   has_many :job_supervisors
   has_many :jobs_as_supervisor, :through => :job_supervisors, :source => :job
 
-  belongs_to :strength1, :class_name => "StrengthTheme", :foreign_key => "strength1_id"
-  belongs_to :strength2, :class_name => "StrengthTheme", :foreign_key => "strength2_id"
-  belongs_to :strength3, :class_name => "StrengthTheme", :foreign_key => "strength3_id"
-  belongs_to :strength4, :class_name => "StrengthTheme", :foreign_key => "strength4_id"
-  belongs_to :strength5, :class_name => "StrengthTheme", :foreign_key => "strength5_id"
   belongs_to :updated_by_user, :class_name => "User"
 
   before_validation :update_webiso_account
