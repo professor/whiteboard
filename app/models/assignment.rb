@@ -36,7 +36,7 @@ class Assignment < ActiveRecord::Base
   acts_as_list :column => "assignment_order", :scope => [:course_id]
   default_scope :order => 'assignment_order ASC'
 
-  after_initialize :init
+  #after_initialize :init
 
   def init
     self.is_team_deliverable = false if self.new_record?
