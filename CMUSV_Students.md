@@ -17,15 +17,15 @@ CMU-SV Students
    1. (Mac OS X) read http://david-martinez.tumblr.com/post/28083831730/environment-variables-and-mountain-lion (if you set them in bash, then RubyMine doesn't pick them up.)
    1. Note: This requires a restart. Source: http://www.rubicode.com/Software/RCEnvironment/
    1. Set these environment variables
-      1. LDAP_HOST=anyhost
-      1. LDAP_PORT=636
-      1. LDAP_USERNAME=anyone
-      1. LDAP_PASSWORD=anysecret
-      1. LDAP_ENCRYPTED=true
-      1. SEARCHIFY_API_URL=http://somethingrandom
-      1. SEARCHIFY_INDEX=cmux_dev
-      1. SEARCHIFY_STAFF_INDEX=cmu_staffx_dev
-      1. WHITEBOARD_SALT="I am salt without any iodine"
+      1. setenv LDAP_HOST anyhost
+      1. setenv LDAP_PORT 636
+      1. setenv LDAP_USERNAME anyone
+      1. setenv LDAP_PASSWORD anysecret
+      1. setenv LDAP_ENCRYPTED true
+      1. setenv SEARCHIFY_API_URL http://somethingrandom
+      1. setenv SEARCHIFY_INDEX cmux_dev
+      1. setenv SEARCHIFY_STAFF_INDEX cmu_staffx_dev
+      1. setenv WHITEBOARD_SALT "I am salt without any iodine"
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
     * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
 1. install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails
