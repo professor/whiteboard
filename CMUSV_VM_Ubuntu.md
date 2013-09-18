@@ -14,7 +14,7 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
 
 1. Change your current working directory to the codebase folder
 
-        cd cmusv
+        cd whiteboard
 
 1. Install cmusv custom VM box. You can [download it from here](https://www.dropbox.com/s/k46n4zfalgwydcz/vm_cmusv_professor.box).
 
