@@ -13,6 +13,7 @@ FactoryGirl.define do
   factory :todd, :parent => :person do
     first_name "Todd"
     last_name "Sedano"
+    twiki_name "ToddSedano"
     human_name "Todd Sedano"
     email "todd.sedano@sv.cmu.edu"
     is_staff 1
@@ -23,6 +24,7 @@ FactoryGirl.define do
   factory :ed, :parent => :person do
     first_name "Ed"
     last_name "Katz"
+    twiki_name "EdKatz"
     human_name "Ed Katz"
     email "ed.katz@sv.cmu.edu"
     is_staff 1
