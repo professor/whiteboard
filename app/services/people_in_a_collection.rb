@@ -53,7 +53,7 @@ module PeopleInACollection
     send "#{attribute_symbol}=", override_list_of_users
     send "#{override_symbol}=", nil
 
-    if update_method_symbol
+    if update_method_symbol && (added.any? || removed.any?)
       send update_method_symbol, added, removed
     end
   end
