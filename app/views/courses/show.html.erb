@@ -1,6 +1,6 @@
 <% content_for :title, @course.name %>
 
-<h1><%= @course.display_for_course_page %></h1>
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;">
   <%= link_to 'Edit', edit_course_path(@course) %> |
   <%= link_to 'Back', :back %>
