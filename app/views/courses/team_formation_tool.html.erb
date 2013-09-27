@@ -1,6 +1,6 @@
 <% content_for :title, 'Teams for ' + @course.name %>
 
-<h1><%= @course.display_for_course_page %></h1>
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <h2>Team Formation Tool</h2>
 <div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>

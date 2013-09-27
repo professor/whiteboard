@@ -1050,3 +1050,8 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 
  /* css for page history */
  #history_table, #history_table td { border: 0; }
+
+h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
+    text-decoration: none;
+    color: #990000;
+}
