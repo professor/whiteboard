@@ -50,7 +50,6 @@
         <%# end %>
         -->
         <td>
-
           <% if deliverable.get_grade_status==:graded %>
              Yes
           <% elsif deliverable.get_grade_status==:drafted %>
@@ -58,15 +57,7 @@
           <% elsif deliverable.get_grade_status==:ungraded %>
              No
           <% end %>
-
-          <!-- 9/27/2103 -> people can submit a deliverable and then drop a course
-          <%# unless deliverable.is_team_deliverable? %>
-             <%# unless course.registered_students_or_on_teams.collect { |x| x.id }.include?(deliverable.creator_id) %>
-                 <br/> User isn't in course
-             <%# end %>
-          <%# end %>
         </td>
-        --<
 
 
               <% if  deliverable.get_grade_status==:graded %>
