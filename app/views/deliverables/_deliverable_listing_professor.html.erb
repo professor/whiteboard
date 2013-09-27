@@ -10,13 +10,13 @@
         <th>Task Number</th>
     <% end %>
 
+    <th><%=nomenclature_assignment_or_deliverable%></th>
     <th>Owner</th>
+<!--
     <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
+-->
     <th>Graded</th>
     <th>Actions</th>
-    <!--
-        <th>File</th>
-    -->
   </tr>
   </thead>
 
@@ -33,18 +33,22 @@
         <% if customised_name=="Deliverable" %>
             <% if deliverable.assignment.nil? %> <!-- guard against old data -->
                 <td>&nbsp;</td>
+                <td>&nbsp;</td>
             <% else %>
                 <td><%= h deliverable.assignment.task_number %></td>
+                <td><%= h deliverable.assignment.name %></td>
             <% end %>
         <% end %>
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
-        <% latest_attachment = deliverable.attachment_versions.first %>
-        <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%= deliverable.assignment_name%> (<%= link_to "download", latest_attachment.attachment.url %>)</td>
-        <% else %>
-            <td><%= deliverable.assignment_name %></td>
-        <% end %>
 
+        <!-- commented this out on 9/27/2013 to increase performance
+        <%# latest_attachment = deliverable.attachment_versions.first %>
+        <%# unless latest_attachment.attachment_file_name.nil? %>
+            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
+        <%# else %>
+            <td><%# deliverable.assignment_name %></td>
+        <%# end %>
+        -->
         <td>
 
           <% if deliverable.get_grade_status==:graded %>
@@ -54,6 +58,13 @@
           <% elsif deliverable.get_grade_status==:ungraded %>
              No
           <% end %>
+
+          <% unless deliverable.is_team_deliverable? %>
+             <% unless course.registered_students_or_on_teams.collect { |x| x.id }.include?(deliverable.creator_id) %>
+                 <br/> User isn't in course
+             <% end %>
+          <% end %>
+
         </td>
 
 
@@ -63,13 +74,6 @@
                 <td><%= link_to 'Give Grade', deliverable %></td>
             <%end%>
 
-        <!--
-      <td>
-          <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
-              <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
-          <% end %>
-      </td>
--->
       </tr>
   <% end %>
 </table>
