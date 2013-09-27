@@ -24,14 +24,14 @@ This document lists down the steps to get the Ruby on Rails project (cmusv) up a
         # install the VM
         vagrant box add cmusv_professor vm_cmusv_professor.box
 
-1. Setup vagrant config
-
+1. Setup vagrant 2.x config
+        
         # below steps create the Vagrant file on your own.
         vagrant init cmusv_professor
 
         # add/uncomment following lines in the generated VagrantFile
         config.vm.box = "cmusv_professor"
-        config.vm.forward_port 3000, 3142
+        config.vm.network "forwarded_port", guest: 3000, host: 3142
         # config.vm.provision :shell, :inline => "apt-get update --fix-missing"
 
 1. CMUSV rails project specific project settings
