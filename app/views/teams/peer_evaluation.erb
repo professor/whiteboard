@@ -35,7 +35,10 @@
 </p>
 
 <% if current_user && (current_user.is_staff || current_user.is_admin) %>
-    <h2>Step 1: Generate feedback for these students</h2>
+    <h2>Step 1: Input Individual Learning Objectives</h2>
+    <p><%= link_to "Input learning objectives", :action => "edit_setup", :id => params[:id], :controller => "peer_evaluation" %></p>
+
+    <h2>Step 2: Generate feedback for these students</h2>
     <p><%= link_to "Edit the peer evaluation reports", :action => "edit_report", :id => params[:id], :controller => "peer_evaluation" %></p>
 
 <% end %>

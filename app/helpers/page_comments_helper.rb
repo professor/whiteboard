@@ -1,2 +1,0 @@
-module PageCommentsHelper
-end
