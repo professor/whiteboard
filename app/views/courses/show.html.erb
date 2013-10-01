@@ -238,7 +238,7 @@
       <p><b>github</b></p>
       <table>
         <% @course.teams.each do |team| %>
-            <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
+            <% project_name = "#{@course.semester}-#{@course.year}-#{@course.number.gsub(/-/, '')}-#{team.name.gsub(/\s+/, '-')}" %>
             <tr>
               <td colspan=3><%= project_name %></td>
             </tr>
