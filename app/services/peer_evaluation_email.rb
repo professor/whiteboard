@@ -38,8 +38,8 @@ class PeerEvaluationEmail
         to_address_incomplete << user.email
       end
     end
-    send_email(team, faculty, to_address_done, done_message)
-    send_email(team, faculty, to_address_incomplete, incomplete_message)
+    send_email(team, faculty, to_address_done, done_message) unless to_address_done.empty?
+    send_email(team, faculty, to_address_incomplete, incomplete_message) unless to_address_incomplete.empty?
   end
 
 
