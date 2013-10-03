@@ -24,10 +24,10 @@ env:
 notifications:
   email:
     recipients:
-#      - anubhav.aeron@sv.cmu.edu
-#      - bo.liu@sv.cmu.edu
-#      - ching.lun.lin@sv.cmu.edu
-#      - surya.kiran@sv.cmu.edu
+      - anubhav.aeron@sv.cmu.edu
+      - bo.liu@sv.cmu.edu
+      - ching.lun.lin@sv.cmu.edu
+      - surya.kiran@sv.cmu.edu
       - tushar.dadlani@sv.cmu.edu
     # on_success: [always|never|change] # default: change
     # on_failure: [always|never|change] # default: always
