@@ -27,7 +27,8 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.where(:course_id => @course.id).all
+      faculty_id = current_user.id
+      @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
     else
       has_permissions_or_redirect(:admin, root_path)
     end
