@@ -31,7 +31,7 @@ describe PeerEvaluationLearningObjective do
     end
   end
 
- describe "is protected against mass assignment"
+ describe "is protected against mass assignment" do
    it { should_not allow_mass_assignment_of(:user_id) }
    it { should_not allow_mass_assignment_of(:team_id) }
    it { should_not allow_mass_assignment_of(:learning_objective) }
