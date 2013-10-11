@@ -242,6 +242,10 @@ GEM
       rack (>= 1.0)
     spreadsheet (0.8.3)
       ruby-ole (>= 1.0)
+    strong_parameters (0.2.1)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+      railties (~> 3.0)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -309,6 +313,7 @@ DEPENDENCIES
   seedbank
   shoulda
   spreadsheet
+  strong_parameters
   taps
   thin
   vestal_versions!
