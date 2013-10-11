@@ -30,4 +30,11 @@ describe PeerEvaluationLearningObjective do
       pelo.errors[:learning_objective].should_not be_empty
     end
   end
+
+ describe "is protected against mass assignment"
+   it { should_not allow_mass_assignment_of(:user_id) }
+   it { should_not allow_mass_assignment_of(:team_id) }
+   it { should_not allow_mass_assignment_of(:learning_objective) }
+  end
+
 end
