@@ -38,6 +38,8 @@
           $("#filter_assignment").change(update_filter);
           $("#filter_graded").removeAttr("checked", false);
 
+          $("#filter_my_teams, #filter_all_teams").change(update_teams);
+
           var statuses = ["graded", "ungraded", "drafted"];
           $.each(["graded", "ungraded", "drafted"], function(index, value){
             if($.session.get(value) == "false"){
@@ -71,6 +73,10 @@
         function filter(status){
           $("tr."+ status).toggle();
         }
+
+        function update_teams() {
+          alert("todo");          
+        }
       </script>
       <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
@@ -85,6 +91,9 @@
           <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
           <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>
         </div></br>
+        Teams: <input type="radio" id="filter_my_teams" name="teams" checked/><label for="filter_my_teams">My Teams</label>
+        <input type="radio" id="filter_all_teams" name="teams"/><label for="filter_all_teams">All Teams</label>
+        </br>
         Filter by <%= nomenclature_assignment_or_deliverable %> status:
   <input id="filter_graded" class="filter_status" type="checkbox" checked="true" /><label for="filter_graded">Graded</label>&nbsp; &nbsp;
         <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label> &nbsp; &nbsp;
