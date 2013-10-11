@@ -48,4 +48,10 @@ describe EffortLogLineItem do
       end
     end
 
+    describe "are protected against mass assignment" do
+      it { should_not allow_mass_assignment_of(:effort_log_id) }
+      it { should_not allow_mass_assignment_of(:sum) }
+      it { should_not allow_mass_assignment_of(:position) }
+    end
+
   end
