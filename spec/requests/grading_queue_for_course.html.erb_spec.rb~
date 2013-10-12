@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "deliverables/grading_queue_for_course" do
   before :each do
-    @faculty = FactoryGirl.create(:faculty_frank)
+    @faculty = FactoryGirl.create(:faculty_smith_user)
     login_with_oauth @faculty
     @course = FactoryGirl.create(:fse)
     @course.faculty = [@faculty]
