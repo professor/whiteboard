@@ -28,10 +28,11 @@
 # and integrated by Todd Sedano. Student teams can provide 360 review feedback
 # when prompted by the faculty.
 class PeerEvaluationReview < ActiveRecord::Base
-
   belongs_to :team
   belongs_to :author, :class_name => "User"
   belongs_to :recipient, :class_name => "User"
+
+  attr_accessible :answer
 
   def self.is_completed_for?(user_id, team_id)
     !PeerEvaluationReview.where({:team_id => team_id, :author_id => user_id}).empty?
