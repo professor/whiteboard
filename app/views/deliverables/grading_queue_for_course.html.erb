@@ -38,7 +38,11 @@
           $("#filter_assignment").change(update_filter);
           $("#filter_graded").removeAttr("checked", false);
 
-          $("#filter_my_teams, #filter_all_teams").change(update_teams);
+          //only display teams/individuals assigned to the professor/TA by default
+          $.session.set("allTeamsFetched", false);
+          $("#filter_my_teams, #filter_all_teams").change(function() {
+            update_teams($(this));
+          });
 
           var statuses = ["graded", "ungraded", "drafted"];
           $.each(["graded", "ungraded", "drafted"], function(index, value){
@@ -74,8 +78,33 @@
           $("tr."+ status).toggle();
         }
 
-        function update_teams() {
-          alert("todo");          
+        function update_teams(elem) {
+//          $("tr.Clyde").toggle();
+          if(elem.attr('value') === 'my_teams') {
+            $("tr.other_teams").hide();
+          } else if(elem.attr('value') === 'all_teams') {
+            if ($.session.get("allTeamsFetched") === "false") {
+              fetch_all_team_deliverables();
+            } else {
+              $("tr.other_teams").show();
+            }
+          }
+        }
+        // call controller to fetch all deliverables
+        function fetch_all_team_deliverables(cache) {
+          // call ajax
+          $.getJSON("all_deliverables", {
+            
+          }).done(function(data) {
+            add_rows(data);
+          });      
+          $.session.set("allTeamsFetched", true); 
+          add_rows();
+
+        }
+        // add rows to existring table
+        function add_rows(deliverables) {
+          $('#grading_queue_table > tbody:last').append('<tr class="other_teams"><td>test</td></tr'); 
         }
       </script>
       <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
@@ -91,8 +120,8 @@
           <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
           <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>
         </div></br>
-        Teams: <input type="radio" id="filter_my_teams" name="teams" checked/><label for="filter_my_teams">My Teams</label>
-        <input type="radio" id="filter_all_teams" name="teams"/><label for="filter_all_teams">All Teams</label>
+        Teams: <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked/><label for="filter_my_teams">My Teams</label>
+        <input type="radio" id="filter_all_teams" name="teams" value="all_teams"/><label for="filter_all_teams">All Teams</label>
         </br>
         Filter by <%= nomenclature_assignment_or_deliverable %> status:
   <input id="filter_graded" class="filter_status" type="checkbox" checked="true" /><label for="filter_graded">Graded</label>&nbsp; &nbsp;
