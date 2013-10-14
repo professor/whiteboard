@@ -13,8 +13,8 @@ FactoryGirl.define do
       team.members << find_user("Owen Chu", :owen)
       team.members << find_user("Madhok Shivaratre", :madhok)
       team.members << find_user("David Liu", :david)
-      team.primary_faculty_id = find_user("Prabhjot Singh",:prabhjot).id
-      team.secondary_faculty_id = find_user("Kate Liu",:kate).id
+      team.primary_faculty_id = find_user("P Singh",:prof_singh).id
+      team.secondary_faculty_id = find_user("YC Liu",:prof_liu).id
     }
   end
 
@@ -24,11 +24,11 @@ FactoryGirl.define do
     email "fall-2012-team-leopard@west.cmu.edu"
     after(:create) { |team|
       team.members = []
-      team.members << find_user("Prabhjot Singh", :prabhjot)
-      team.members << find_user("Lydian Lee", :lydian)
-      team.members << find_user("Kate Liu", :kate)
-      team.primary_faculty_id = find_user("Prabhjot Singh",:prabhjot).id
-      team.secondary_faculty_id = find_user("Kate Liu",:kate).id
+      team.members << find_user("P Singh", :prof_singh)
+      team.members << find_user("TY Lee", :prof_lee)
+      team.members << find_user("YC Liu", :prof_liu)
+      team.primary_faculty_id = find_user("P Singh",:prof_singh).id
+      team.secondary_faculty_id = find_user("YC Liu",:prof_liu).id
     }
   end
 
@@ -42,7 +42,7 @@ FactoryGirl.define do
       team.members << find_user("Aristide Niyungeko", :aristide)
       team.members << find_user("Sky Hu", :sky)
       team.members << find_user("Norman Xin", :norman)
-      team.primary_faculty_id = find_user("Prabhjot Singh",:prabhjot).id
+      team.primary_faculty_id = find_user("P Singh",:prof_singh).id
     }
   end
 
@@ -56,7 +56,7 @@ FactoryGirl.define do
       team.members << find_user("Kaushik Gopal", :kaushik)
       team.members << find_user("Edward Akoto", :edward)
       team.members << find_user("Zhipeng Li", :zhipeng)
-      team.primary_faculty_id = find_user("Lydian Lee",:lydian).id
+      team.primary_faculty_id = find_user("TY Lee",:prof_lee).id
     }
   end
 
@@ -70,8 +70,8 @@ FactoryGirl.define do
       team.members << find_user("Clyde Li", :clyde)
       team.members << find_user("Shama Rajeev", :shama)
       team.members << find_user("Vidya Pissaye", :vidya)
-      team.primary_faculty_id = find_user("Lydian Lee",:lydian).id
-      team.secondary_faculty_id = find_user("Kate Liu",:kate).id
+      team.primary_faculty_id = find_user("TY Lee",:prof_lee).id
+      team.secondary_faculty_id = find_user("YC Liu",:prof_liu).id
     }
   end
 
@@ -84,7 +84,7 @@ FactoryGirl.define do
       team.members << find_user("Sean Xiao", :sean)
       team.members << find_user("Mark Hennessy", :mark)
       team.members << find_user("Sumeet Kumar", :sumeet)
-      team.primary_faculty_id = find_user("Lydian Lee",:lydian).id
+      team.primary_faculty_id = find_user("TY Lee",:prof_lee).id
     }
   end
 
