@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :student_se_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
     sequence(:email) {|n| "sestudent#{n}@sv.cmu.edu"}
@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :student_sm_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SM"
     masters_track "Tech"
     sequence(:email) {|n| "smstudent#{n}@sv.cmu.edu"}
@@ -25,7 +25,7 @@ FactoryGirl.define do
   factory :student_magic_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "MG"
     masters_track "Magic"
     sequence(:email) {|n| "mgstudent#{n}@sv.cmu.edu"}
@@ -68,25 +68,11 @@ FactoryGirl.define do
     human_name "Edward Akoto"
   end
 
-  factory :kate, :parent => :student_se_full_time do
-    twiki_name "KateLiu"
-    first_name "Kate"
-    last_name "Liu"
-    human_name "Kate Liu"
-  end
-
   factory :kaushik, :parent => :student_se_full_time do
     twiki_name "KaushikGopal"
     first_name "Kaushik"
     last_name "Gopal"
     human_name "Kaushik Gopal"
-  end
-
-  factory :lydian, :parent => :student_se_full_time do
-    twiki_name "LydianLee"
-    first_name "Lydian"
-    last_name "Lee"
-    human_name "Lydian Lee"
   end
 
   factory :madhok, :parent => :student_se_full_time do
@@ -123,13 +109,6 @@ FactoryGirl.define do
     last_name "Chu"
     human_name "Owen Chu"
     image_uri "http://s3.amazonaws.com/cmusv-rails-production/people/photo/791/profile/057_OwenChu.jpg"
-  end
-
-  factory :prabhjot, :parent => :student_se_full_time do
-    twiki_name "PrabhjotSingh"
-    first_name "Prabhjot"
-    last_name "Singh"
-    human_name "Prabhjot Singh"
   end
 
   factory :rashmi, :parent => :student_se_full_time do
