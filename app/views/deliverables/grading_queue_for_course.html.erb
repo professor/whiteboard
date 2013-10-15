@@ -13,102 +13,108 @@
   <%= javascript_include_tag 'jquery.quicksearch.js' %>
   <%= javascript_include_tag 'jquery.session' %>
 
-  <script>
-    var assignment = "<%= nomenclature_assignment_or_deliverable %>";
-    var name_column_index = 0;
-    if (assignment=="Deliverable"){
-       name_column_index = 1;
-    }
-
-      $(document).ready(function(){
-          var $search = $("#filterBoxOne");
-          if ($search.prop("disabled") == true) {
-            $search.val('');
-            $search.removeAttr("disabled");
-          }
-          $(".sortable").tablesorter();
-          $search.quicksearch('.sortable tbody tr');
-          // $(".sortable").tablesorter().tablesorterFilter({
-          //     filterContainer: '#filterInputBox',
-          //     filterClearContainer: '#filterClearOne',
-          //     filterColumns:[name_column_index,name_column_index+1]
-          // }) ;
-
-          $("#filter_student").change(update_filter);
-          $("#filter_assignment").change(update_filter);
-          $("#filter_graded").removeAttr("checked", false);
-
-          //only display teams/individuals assigned to the professor/TA by default
-          $.session.set("allTeamsFetched", false);
-          $("#filter_my_teams, #filter_all_teams").change(function() {
-            update_teams($(this));
-          });
-
-          var statuses = ["graded", "ungraded", "drafted"];
-          $.each(["graded", "ungraded", "drafted"], function(index, value){
-            if($.session.get(value) == "false"){
-              $("#filter_" + value).removeAttr("checked");
-              filter(value);
-            }
-            else
-            {
-              $("#filter_" + value ).prop("checked", "true");
-            }
-          });
-
-          $(".filter_status").change(function(){
-            var status = $(this).attr("id").replace("filter_", "");
-            filter(status);
-            $.session.set(status, $("#filter_" + status).is(":checked"));
-          });
-
-        });
-        function update_filter(){
-          var filters = [];
-          if($("#filter_student").is(':checked')){
-            filters.push(name_column_index);
-          }
-          if($("#filter_assignment").is(':checked')){
-            filters.push(name_column_index+1);
-          }
-          $(".sortable")[0].config.filter[0].filterColumns=filters;
-          $(".sortable").trigger("doFilter");
-        }
-        function filter(status){
-          $("tr."+ status).toggle();
-        }
-
-        function update_teams(elem) {
-//          $("tr.Clyde").toggle();
-          if(elem.attr('value') === 'my_teams') {
-            $("tr.other_teams").hide();
-          } else if(elem.attr('value') === 'all_teams') {
-            if ($.session.get("allTeamsFetched") === "false") {
-              fetch_all_team_deliverables();
-            } else {
-              $("tr.other_teams").show();
-            }
-          }
-        }
-        // call controller to fetch all deliverables
-        function fetch_all_team_deliverables(cache) {
-          // call ajax
-          $.getJSON("all_deliverables", {
-            
-          }).done(function(data) {
-            add_rows(data);
-          });      
-          $.session.set("allTeamsFetched", true); 
-          add_rows();
-
-        }
-        // add rows to existring table
-        function add_rows(deliverables) {
-          $('#grading_queue_table > tbody:last').append('<tr class="other_teams"><td>test</td></tr'); 
-        }
-      </script>
       <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
+      <script>
+var assignment = "<%= nomenclature_assignment_or_deliverable %>";
+var name_column_index = 0;
+if (assignment=="Deliverable"){
+  name_column_index = 1;
+}
+
+$(document).ready(function(){
+  var $search = $("#filterBoxOne");
+  if ($search.prop("disabled") == true) {
+    $search.val('');
+    $search.removeAttr("disabled");
+  }
+  $(".sortable").tablesorter();
+  $search.quicksearch('.sortable tbody tr');
+  // $(".sortable").tablesorter().tablesorterFilter({
+  //     filterContainer: '#filterInputBox',
+  //     filterClearContainer: '#filterClearOne',
+  //     filterColumns:[name_column_index,name_column_index+1]
+  // }) ;
+
+  $("#filter_student").change(update_filter);
+  $("#filter_assignment").change(update_filter);
+  $("#filter_graded").removeAttr("checked", false);
+
+  //only display teams/individuals assigned to the professor/TA by default
+  $("#filter_my_teams, #filter_all_teams").change(function() {
+    update_teams($(this));
+  });
+
+  var statuses = ["graded", "ungraded", "drafted"];
+  $.each(["graded", "ungraded", "drafted"], function(index, value){
+    if($.session.get(value) == "false"){
+      $("#filter_" + value).removeAttr("checked");
+      filter(value);
+    }
+    else
+      {
+        $("#filter_" + value ).prop("checked", "true");
+      }
+  });
+
+  $(".filter_status").change(function(){
+    var status = $(this).attr("id").replace("filter_", "");
+    filter(status);
+    $.session.set(status, $("#filter_" + status).is(":checked"));
+  });
+
+});
+function update_filter(){
+  var filters = [];
+  if($("#filter_student").is(':checked')){
+    filters.push(name_column_index);
+  }
+  if($("#filter_assignment").is(':checked')){
+    filters.push(name_column_index+1);
+  }
+  $(".sortable")[0].config.filter[0].filterColumns=filters;
+  $(".sortable").trigger("doFilter");
+}
+function filter(status){
+  $("tr."+ status).toggle();
+}
+
+function update_teams(elem) {
+  //          $("tr.Clyde").toggle();
+  if(elem.attr('value') === 'my_teams') {
+    fetch_my_team_deliverables();
+  } else if(elem.attr('value') === 'all_teams') {
+    fetch_all_team_deliverables();
+  }
+}
+function fetch_all_team_deliverables() {
+  // call ajax
+  $.get("deliverables", {
+    teams: "all_teams"
+  }).done(function(data) {
+    update_grading_queue_table(data);
+  });      
+  $.session.set("allTeamsFetched", true); 
+
+}
+function fetch_my_team_deliverables() {
+  // call ajax
+  $.get("deliverables", {
+    teams: "my_teams"
+  }).done(function(data) {
+    update_grading_queue_table(data);
+  });      
+  $.session.set("allTeamsFetched", true); 
+
+}
+// add rows to existring table
+function update_grading_queue_table(deliverables) {
+  $('#grading_queue_table').empty();
+  $('#grading_queue_table').html($(deliverables).find('#grading_queue_table').html());
+  $(".sortable").tablesorter();
+  $search.quicksearch('.sortable tbody tr');
+}
+      </script>
 
         <h2>Search</h2>
 
@@ -129,5 +135,7 @@
         <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label> </br>
       </div>
 
+      <div id="grading_queue_table">
       <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+    </div>
       <br/>
