@@ -27,7 +27,7 @@ $(document).ready(function(){
   if ($search.prop("disabled") == true) {
     $search.val('');
     $search.removeAttr("disabled");
-  }
+  } 
   $(".sortable").tablesorter();
   $search.quicksearch('.sortable tbody tr');
   // $(".sortable").tablesorter().tablesorterFilter({
@@ -80,7 +80,6 @@ function filter(status){
 }
 
 function update_teams(elem) {
-  //          $("tr.Clyde").toggle();
   if(elem.attr('value') === 'my_teams') {
     fetch_my_team_deliverables();
   } else if(elem.attr('value') === 'all_teams') {
