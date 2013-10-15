@@ -12,6 +12,8 @@
   <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
   <%= javascript_include_tag 'jquery.quicksearch.js' %>
   <%= javascript_include_tag 'jquery.session' %>
+  <%= javascript_include_tag 'jquery-ui.min.js' %>
+  <%= stylesheet_link_tag 'jquery-ui.css' %>
 
       <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
@@ -23,6 +25,8 @@ if (assignment=="Deliverable"){
 }
 
 $(document).ready(function(){
+
+  $( "#tabs" ).tabs();
   var $search = $("#filterBoxOne");
   if ($search.prop("disabled") == true) {
     $search.val('');
@@ -108,10 +112,14 @@ function fetch_my_team_deliverables() {
 }
 // add rows to existring table
 function update_grading_queue_table(deliverables) {
-  $('#grading_queue_table').empty();
-  $('#grading_queue_table').html($(deliverables).find('#grading_queue_table').html());
+  //$('#grading_queue_table').empty();
+  //$('#grading_queue_table').html($(deliverables).find('#grading_queue_table').html());
+  $('#tab-1').empty();
+  $('#tab-1').html($(deliverables).find('#tab-1').html());
+  $('#tab-2').empty();
+  $('#tab-2').html($(deliverables).find('#tab-2').html());
+  $( "#tabs" ).tabs();
   $(".sortable").tablesorter();
-  $search.quicksearch('.sortable tbody tr');
 }
       </script>
 
@@ -135,6 +143,17 @@ function update_grading_queue_table(deliverables) {
       </div>
 
       <div id="grading_queue_table">
-      <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-    </div>
+        <div id="tabs">
+          <ul>
+            <li><a href="#tab-1">Team Deliverables</a></li>
+            <li><a href="#tab-2">Individual Deliverables</a></li>
+          </ul>
+          <div id="tab-1">
+            <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @deliverables, :skip_course_column => true} %>
+          </div>
+          <div id="tab-2">
+            <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+          </div>
+        </div>
+      </div>
       <br/>
