@@ -20,6 +20,7 @@ FactoryGirl.define do
     course_id 1
     name "Leopard"
     email "fall-2012-team-leopard@west.cmu.edu"
+    primary_faculty_id 35
     after(:create) { |team|
       team.members = []
       team.members << find_user("Prabhjot Singh", :prabhjot)
