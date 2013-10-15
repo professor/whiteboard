@@ -27,13 +27,17 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      if params[:teams] == "Mine"   
-        faculty_id = current_user.id
-        @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
+        if params[:teams] == "Mine"   
+            faculty_id = current_user.id
+            @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
+            if @deliverables.empty?
+                @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.secondary_faculty_id = " + faculty_id.to_s)
+            end
 
-      else
-          @deliverables = Deliverable.where(:course_id => @course.id).all
-      end
+        elsif params[:teams] == "All"
+            @deliverables = Deliverable.where(:course_id => @course.id).joins(:team)
+        #else if params[:individual] == "Mine"
+        end
     
     else
       has_permissions_or_redirect(:admin, root_path)
