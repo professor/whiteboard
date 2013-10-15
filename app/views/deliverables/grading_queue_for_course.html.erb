@@ -89,7 +89,7 @@ function update_teams(elem) {
 }
 function fetch_all_team_deliverables() {
   // call ajax
-  $.get("deliverables", {
+  $.get("deliverables", { 
     teams: "all_teams"
   }).done(function(data) {
     update_grading_queue_table(data);
