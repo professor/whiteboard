@@ -27,16 +27,27 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
+        # Get parameter teams=my_team
         if params[:teams] == "my_team"   
+        course_deliverables = Deliverable.where(:course_id => @course.id)
             faculty_id = current_user.id
-            @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
+            @deliverables = course_deliverables.joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
+            # if there are no deliverables as primary faculty check secondary
+            # faculty
             if @deliverables.empty?
-                @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.secondary_faculty_id = " + faculty_id.to_s)
+                @deliverables = course_deliverables.joins(:team).where("teams.secondary_faculty_id = " + faculty_id.to_s)
             end
 
-        elsif params[:teams] == "All"
-            @deliverables = Deliverable.where(:course_id => @course.id).joins(:team)
-        #else if params[:individual] == "Mine"
+            #GET params teams=all
+        elsif params[:teams] == "all"
+            @deliverables = course_deliverables.joins(:team)
+            #GET params individual=all
+        elsif params[:individual] == "all"
+            # if team_id is nil then it is assumed to be an individual
+            # deliverable
+            @deliverables = course_deliverables.find_all_by_team_id(nil)
+        else
+            @deliverables = course_deliverables
         end
     else
       has_permissions_or_redirect(:admin, root_path)
