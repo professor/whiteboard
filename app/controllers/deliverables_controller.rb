@@ -16,8 +16,6 @@ class DeliverablesController < ApplicationController
   end
 
   def grading_queue_for_course
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts params[:teams]
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -32,7 +30,11 @@ class DeliverablesController < ApplicationController
       if (params[:teams] == "all_teams") 
         @deliverables = Deliverable.where(:course_id => @course.id).all
       else
-        @deliverables = Deliverable.where(:course_id => @course.id, :team_id => "8").all
+        # @deliverables = Deliverable.where(:course_id => @course.id, :team_id => "8").all
+        faculty_id = current_user.id
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts faculty_id
+        @deliverables = Deliverable.where(:course_id => @course.id).joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
       end
     else
       has_permissions_or_redirect(:admin, root_path)
