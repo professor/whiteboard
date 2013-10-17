@@ -6,6 +6,20 @@ describe "deliverables/grading_queue_for_course" do
     login_with_oauth @faculty
     @course = FactoryGirl.create(:fse)
     @course.faculty = [@faculty]
+#    @team = FactoryGirl.create(:team_triumphant)
+#    @team.course_id = [@course.id]
+#    @team.primary_faculty_id = [@faculty.id]
+
+    @assignment = FactoryGirl.create(:assignment_team)
+    @assignment.name = "Assignment 1"
+
+    @deliverable = FactoryGirl.create(:team_deliverable)
+    @deliverable.course_id = [@course.id]
+    @deliverable.name = "FSE Deliverable 1"
+
+    @deliverable.creator_id = [@faculty.id]
+    @deliverable.assignment_id = [@assignment.id]
+
     visit ("/courses/#{@course.id}/deliverables")
   end
 
@@ -14,7 +28,7 @@ describe "deliverables/grading_queue_for_course" do
     expect(page).to have_content("All Teams")
   end
 
-  it "should have a column that indicates who is reponsible for grading this deliverable" do
+  it "should have a column that indicates who is responsible for grading this deliverable" do
 #    expect(page).to have_content("Advisor")    
   end
 
@@ -24,6 +38,8 @@ describe "deliverables/grading_queue_for_course" do
 #    expect(page).to have_content("todo")
   end
 
-
+  it "should shows deliverables" do
+#    expect(page).to have_content("FSE Deliverable 1")
+  end
 
 end

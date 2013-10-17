@@ -26,7 +26,6 @@ FactoryGirl.define do
       team.members = []
       team.members << find_user("Kaushik Gopal", :kaushik)
       team.members << find_user("Rashmi Devarahalli", :rashmi)
-      team.members << find_user("Kate Liu", :kate)
       team.members << find_user("Norman Xin", :norman)
     }
   end
@@ -39,7 +38,6 @@ FactoryGirl.define do
       team.members = []
       team.members << find_user("Oscar Sandoval", :oscar)
       team.members << find_user("Madhok Shivaratre", :madhok)
-      team.members << find_user("Lydian Li", :lydian)
       team.members << find_user("Edward Akoto", :edward)
     }
   end
@@ -51,7 +49,6 @@ FactoryGirl.define do
     after(:create) { |team|
       team.members = []
       team.members << find_user("Shama Rajeev", :shama)
-      team.members << find_user("Prabhjot Singh", :prabhjot)
       team.members << find_user("Mark Hennessy", :mark)
       team.members << find_user("Zhipeng Li", :zhipeng)
     }
