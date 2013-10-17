@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :team_gryffindor, :class => Team do
     course_id 1
     name "Gryffindor"
-    email "fall-2012-team-gryffindor@west.cmu.edu"
+    email "fall-2013-team-gryffindor@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Harry Potter", :harry)
@@ -20,7 +20,7 @@ FactoryGirl.define do
   factory :team_slytherin, :class => Team do
     course_id 1
     name "Slytherin"
-    email "fall-2012-team-slytherin@west.cmu.edu"
+    email "fall-2013-team-slytherin@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Draco Malfoy", :draco)
@@ -30,14 +30,14 @@ FactoryGirl.define do
   factory :assignment_charm, :parent=>:assignment_team do
     name "Patronous Charm"
     maximum_score 80
-    due_date "2012-11-06 23:59:59"
+    due_date "2013-11-06 23:59:59"
     task_number 1
   end
 
   factory :assignment_dda_participation, :parent=>:assignment_unsubmissible do
     name "Class Participation"
     maximum_score 10
-    due_date "2012-11-06 22:00:00"
+    due_date "2013-11-06 22:00:00"
     task_number 3
   end
 
@@ -46,10 +46,10 @@ FactoryGirl.define do
     is_nomenclature_deliverable true
   end
 
-  factory :dda_2012, :parent => :course do
+  factory :dda_2013, :parent => :course do
     name "Defence against the Dark Arts"
     semester "Fall"
-    year 2012
+    year 2013
     after(:create) { |course|
       course.grading_rule = FactoryGirl.create(:grading_rule_dda)
 
@@ -68,7 +68,7 @@ FactoryGirl.define do
 
 end
 
-course_dda = FactoryGirl.create(:dda_2012)
+course_dda = FactoryGirl.create(:dda_2013)
 set_up_course(course_dda)
 
 team = Team.find_by_name("Gryffindor")

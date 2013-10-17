@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :team_bulls, :class => Team do
     course_id 1
     name "Bulls"
-    email "fall-2012-team-bulls@west.cmu.edu"
+    email "fall-2013-team-bulls@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << FactoryGirl.create(:michael)
@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :assignment_indi, :parent=>:assignment do
     name "Individual Assignment"
     maximum_score 30
-    due_date "2012-10-12 22:00:00"
+    due_date "2013-10-12 22:00:00"
     task_number 1
   end
 
@@ -32,14 +32,14 @@ FactoryGirl.define do
   factory :assignment_team_proj, :parent=>:assignment_team do
     name "Team Project Assignment"
     maximum_score 50
-    due_date "2012-12-05 22:00:00"
+    due_date "2013-12-05 22:00:00"
     task_number 3
   end
 
-  factory :ine_2012, :parent => :course do
+  factory :ine_2013, :parent => :course do
     name "Innovation and Entrepreneurship"
     semester "Fall"
-    year 2012
+    year 2013
     after(:create) { |course|
       course.grading_rule = FactoryGirl.create(:grading_rule_weights)
 
@@ -57,5 +57,5 @@ FactoryGirl.define do
 
 end
 
-course_ine = FactoryGirl.create(:ine_2012)
+course_ine = FactoryGirl.create(:ine_2013)
 set_up_course(course_ine)

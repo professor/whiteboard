@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :student_se_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
     sequence(:email) {|n| "sestudent#{n}@sv.cmu.edu"}
@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :student_sm_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SM"
     masters_track "Tech"
     sequence(:email) {|n| "smstudent#{n}@sv.cmu.edu"}
@@ -25,25 +25,46 @@ FactoryGirl.define do
   factory :student_magic_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "MG"
     masters_track "Magic"
     sequence(:email) {|n| "mgstudent#{n}@sv.cmu.edu"}
     sequence(:webiso_account) {|n| "mgstudent#{n}@andrew.cmu.edu"}
   end
 
-  factory :aristide, :parent => :student_se_full_time do
-    twiki_name "AristideNiyungeko"
-    first_name "Aristide"
-    last_name "Niyungeko"
-    human_name "Aristide Niyungeko"
+  factory :shishir, :parent => :student_se_full_time do
+    twiki_name "ShishirKinkar"
+    first_name "Shishir"
+    last_name "Kinkar"
+    human_name "Shishir Kinkar"
   end
 
-  factory :clyde, :parent => :student_se_full_time do
-    twiki_name "ClydeLi"
-    first_name "Clyde"
-    last_name "Li"
-    human_name "Clyde Li"
+  factory :anirudh, :parent => :student_se_full_time do
+    twiki_name "AnirudhBhargava"
+    first_name "Anirudh"
+    last_name "Bhargava"
+    human_name "Anirudh Bhargava"
+  end
+
+  factory :nelson, :parent => :student_se_full_time do
+    twiki_name "NelsonPollard"
+    first_name "Nelson"
+    last_name "Pollard"
+    human_name "Nelson Pollard"
+  end
+
+  factory :joe, :parent => :student_se_full_time do
+    twiki_name "XueqiaoxuXu"
+    first_name "Xueqiaoxu"
+    last_name "Xu"
+    human_name "Xueqiaoxu Xu"
+  end
+
+  factory :gonghan, :parent => :student_se_full_time do
+    twiki_name "GonghanWang"
+    first_name "Gonghan"
+    last_name "Wang"
+    human_name "Gonghan Wan"
   end
 
   factory :david, :parent => :student_se_full_time do
@@ -241,7 +262,7 @@ FactoryGirl.define do
     first_name "Draco"
     last_name "Malfoy"
     human_name "Draco Malfoy"
-    image_uri "http://2ch-tachiyomi.com/image/2012-11/30/20352-0.jpg"
+    image_uri "http://2ch-tachiyomi.com/image/2014-11/30/20352-0.jpg"
   end
 
 end
