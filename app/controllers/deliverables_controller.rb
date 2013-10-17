@@ -28,8 +28,8 @@ class DeliverablesController < ApplicationController
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
         # Get parameter teams=my_team
-        if params[:teams] == "my_team"   
         course_deliverables = Deliverable.where(:course_id => @course.id)
+        if params[:teams] == "my_team"   
             faculty_id = current_user.id
             @deliverables = course_deliverables.joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
             # if there are no deliverables as primary faculty check secondary
