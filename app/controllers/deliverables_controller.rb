@@ -26,6 +26,9 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
+    # This will be used for the 'Assignments including' select one box
+    @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
+
     if (current_user.is_admin? || @course.faculty.include?(current_user))
         # Get parameter teams=my_team
         course_deliverables = Deliverable.where(:course_id => @course.id)

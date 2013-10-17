@@ -127,4 +127,8 @@ class Assignment < ActiveRecord::Base
     self.due_date = "#{self.date} #{self.hour}:#{self.minute}"
   end
 
+  def self.fetch_submittable_assignments_by_course_id course_id
+    Assignment.where(:course_id => course_id, :is_submittable => 't').order('id ASC')
+  end
+
 end

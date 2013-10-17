@@ -81,7 +81,7 @@ td.today {
   *Advanced search filter
   **************************/
 
-  #filterBoxUserSearch {
+  #filterBoxSearch {
     width:100%;
     overflow: auto;
     margin-bottom: 5px;
@@ -107,7 +107,12 @@ td.today {
 #advanced_search_filters .filter_col table tbody td { border-style: none; padding: 0 5px 0 0; text-align: right }
 #advanced_search_filters .filter_col table tbody td:first-child {padding: 2px 20px 0 0;}
 
-
+#advanced_search_filters_div {
+    background-color: #E1EAEA;
+    border: 1px solid white;
+    margin: 10px 0px 15px 0;
+    padding: 10px;
+}
 
 .filter_option, .filter_label{
     float:left;
@@ -520,13 +525,13 @@ div.modified {
 /************************
  * Search Box styling
  *************************/
- #filterBoxUserSearch {
+ #filterBoxSearch {
     width:100%;
     overflow: auto;
     margin-bottom: 5px;
 }
 
-#filterBoxUserSearch #filterBoxOne{
+#filterBoxSearch #filterBoxOne{
     width: 82%;
     float: left;
     padding: 5px;
