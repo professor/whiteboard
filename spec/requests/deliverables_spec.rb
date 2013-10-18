@@ -103,17 +103,30 @@ describe "deliverables" do
       @faculty = FactoryGirl.create(:faculty_fagan)
       login_with_oauth @faculty
       @team_deliverable.course.faculty = [@faculty]
-      visit deliverable_path(@team_deliverable)
     end
 
     after do
       @faculty.delete
     end
 
-    it "I should be able to view deliverable page" do
+    it "when I visit @team_deliverable, I should be able to view deliverable page" do
+      visit deliverable_path(@team_deliverable)
+      #save_and_open_page
+
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
+    end
+
+    context ' when I visit the course page' do
+      before do
+
+      end
+      context ' and navigate to Grade Deliverables page' do
+        it '' do
+
+        end
+      end
     end
   end
 
@@ -142,7 +155,7 @@ describe "deliverables" do
         login_with_oauth @professor
         # visit deliverable_feedback_path(Deliverable.last)  #if we separate out the feedback page
         visit deliverable_path(Deliverable.last)
-        save_and_open_page
+        #save_and_open_page
         page.should have_content("Grade Team Deliverable")
       }
 

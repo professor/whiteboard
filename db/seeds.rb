@@ -111,6 +111,21 @@ FactoryGirl.define do
     email "surya.kiran@sv.cmu.edu"
     webiso_account "slaskar@andrew.cmu.edu"
   end
+  factory :tushar, :parent => :person do
+    is_student 1
+    is_part_time 0
+    graduation_year "2014"
+    masters_program "SE"
+    masters_track "Tech"
+    twiki_name "TusharDadlani"
+    first_name "Tushar"
+    last_name "Dadlani"
+    human_name "Tushar Dadlani"
+    email "tushar.dadlani@sv.cmu.edu"
+    webiso_account "tdadlani@andrew.cmu.edu"
+  end
+
+
 
 end
 

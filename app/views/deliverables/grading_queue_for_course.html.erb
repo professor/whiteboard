@@ -1,159 +1,182 @@
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
-<%= render :partial=>"layouts/grade_book_sub_menu" %>
-<h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
+<%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+<%= javascript_include_tag 'jquery.quicksearch.js' %>
+<%= javascript_include_tag 'jquery.session' %>
+<%= javascript_include_tag 'jquery-ui.min.js' %>
+<%= stylesheet_link_tag 'jquery-ui.css' %>
 
-<div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
-  <span class="instructions">Note: we will be improving this screen during the Spring 2013 semester by integrating in new student code. </span>
-</div>
+
+<% content_for :title, "Grading Queue - #{@course.name}" %>
+
+
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
+<%= render :partial => "layouts/grade_book_sub_menu" %>
+<h2>Submitted <%= nomenclature_assignment_or_deliverable %>s</h2>
+
+<!--<div class="rounded staff">-->
+  <!--<%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>-->
+  <!--<span class="instructions">Note: we will be improving this screen during the Spring 2013 semester by integrating in new student code. </span>-->
+<!--</div>-->
 
 
 <div>
-  <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
-  <%= javascript_include_tag 'jquery.quicksearch.js' %>
-  <%= javascript_include_tag 'jquery.session' %>
-  <%= javascript_include_tag 'jquery-ui.min.js' %>
-  <%= stylesheet_link_tag 'jquery-ui.css' %>
+  <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
-      <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
+  <div>
+    <div id='filterBoxSearch'>
+      <input id='filterBoxOne' placeholder='Student name / Team name / Deliverable' maxlength='30' size='30' type='text'/>
+    </div>
 
-      <script>
-var assignment = "<%= nomenclature_assignment_or_deliverable %>";
-var name_column_index = 0;
-if (assignment=="Deliverable"){
-  name_column_index = 1;
-}
+    <div id='advanced_search_filters_div'>
+      <table style="width: 100%; border-color: transparent;">
+        <tr>
+          <td>
+            Teams: <br/>
+            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked/><label for="filter_my_teams">My
+            Teams</label> <br/>
+            <input type="radio" id="filter_all_teams" name="teams" value="all_teams"/><label for="filter_all_teams">All
+            Teams</label>
+          </td>
+          <td>
+            Assignments including: <br/>
+            <select>
+              <% @assignments.each do |assignment| %>
+                  <option value="<%= assignment.id %>"><%= assignment.assignment_order %> . <%= assignment.name %></option>
+              <% end %>
+            </select>
+          </td>
+          <td>
+            Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
+            <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label>
+            <br/>
+            <input id="filter_drafted" class="filter_status" type="checkbox"/><label for="filter_drafted">Drafted</label><br/>
+            <input id="filter_graded" class="filter_status" type="checkbox"/><label for="filter_graded">Graded</label>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--<h2>Search</h2>-->
+</div>
 
-$(document).ready(function(){
+<!--<div>-->
+  <!--Legend for Grade Indicator:-->
+  <!--<div id="graded">&nbsp;&nbsp;&nbsp;&nbsp;Graded</div>-->
+  <!--<div id="drafted">&nbsp;&nbsp;&nbsp;&nbsp;Drafted</div>-->
+  <!--<div id="ungraded">&nbsp;&nbsp;&nbsp;&nbsp;Ungraded</div>-->
+<!--</div>-->
 
-  $( "#tabs" ).tabs();
-  var $search = $("#filterBoxOne");
-  if ($search.prop("disabled") == true) {
-    $search.val('');
-    $search.removeAttr("disabled");
-  } 
-  $(".sortable").tablesorter();
-  $search.quicksearch('.sortable tbody tr');
-  // $(".sortable").tablesorter().tablesorterFilter({
-  //     filterContainer: '#filterInputBox',
-  //     filterClearContainer: '#filterClearOne',
-  //     filterColumns:[name_column_index,name_column_index+1]
-  // }) ;
+<div id="grading_queue_table">
+  <div id="tabs">
+    <ul>
+      <li><a href="#tab-1">Team Deliverables</a></li>
+      <li><a href="#tab-2">Individual Deliverables</a></li>
+    </ul>
+    <div id="tab-1">
+      <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @deliverables, :skip_course_column => true} %>
+    </div>
+    <div id="tab-2">
+      <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+    </div>
+  </div>
+</div>
+<br/>
 
-  $("#filter_student").change(update_filter);
-  $("#filter_assignment").change(update_filter);
-  $("#filter_graded").removeAttr("checked", false);
-
-  //only display teams/individuals assigned to the professor/TA by default
-  $("#filter_my_teams, #filter_all_teams").change(function() {
-    update_teams($(this));
-  });
-
-  var statuses = ["graded", "ungraded", "drafted"];
-  $.each(["graded", "ungraded", "drafted"], function(index, value){
-    if($.session.get(value) == "false"){
-      $("#filter_" + value).removeAttr("checked");
-      filter(value);
+<script>
+    var assignment = "<%= nomenclature_assignment_or_deliverable %>";
+    var name_column_index = 0;
+    if (assignment == "Deliverable") {
+        name_column_index = 1;
     }
-    else
-      {
-        $("#filter_" + value ).prop("checked", "true");
-      }
-  });
 
-  $(".filter_status").change(function(){
-    var status = $(this).attr("id").replace("filter_", "");
-    filter(status);
-    $.session.set(status, $("#filter_" + status).is(":checked"));
-  });
+    $(document).ready(function () {
+        $("#tabs").tabs();
+        var $search = $("#filterBoxOne");
+        if ($search.prop("disabled") == true) {
+            $search.val('');
+            $search.removeAttr("disabled");
+        }
+        $(".sortable").tablesorter();
+        $search.quicksearch('.sortable tbody tr');
 
-});
-function update_filter(){
-  var filters = [];
-  if($("#filter_student").is(':checked')){
-    filters.push(name_column_index);
-  }
-  if($("#filter_assignment").is(':checked')){
-    filters.push(name_column_index+1);
-  }
-  $(".sortable")[0].config.filter[0].filterColumns=filters;
-  $(".sortable").trigger("doFilter");
-}
-function filter(status){
-  $("tr."+ status).toggle();
-}
+        $("#filter_student").change(update_filter);
+        $("#filter_assignment").change(update_filter);
+//        $("#filter_graded").removeAttr("checked", false);
 
-function update_teams(elem) {
-  if(elem.attr('value') === 'my_teams') {
-    fetch_my_team_deliverables();
-  } else if(elem.attr('value') === 'all_teams') {
-    fetch_all_team_deliverables();
-  }
-}
-function fetch_all_team_deliverables() {
-  // call ajax
-  $.get("deliverables", { 
-    teams: "all_teams"
-  }).done(function(data) {
-    update_grading_queue_table(data);
-  });      
-  $.session.set("allTeamsFetched", true); 
+        //only display teams/individuals assigned to the professor/TA by default
+        $("#filter_my_teams, #filter_all_teams").change(function () {
+            update_teams($(this));
+        });
 
-}
-function fetch_my_team_deliverables() {
-  // call ajax
-  $.get("deliverables", {
-    teams: "my_teams"
-  }).done(function(data) {
-    update_grading_queue_table(data);
-  });      
-  $.session.set("allTeamsFetched", true); 
+        var statuses = ["graded", "ungraded", "drafted"];
+        $.each(["graded", "ungraded", "drafted"], function (index, value) {
+            if ($.session.get(value) == "false") {
+                $("#filter_" + value).removeAttr("checked");
+                filter(value);
+            }
+//            else {
+//                alert('Checking the checkbox with true');
+//                $("#filter_" + value).prop("checked", "true");
+//            }
+        });
 
-}
-// add rows to existring table
-function update_grading_queue_table(deliverables) {
-  //$('#grading_queue_table').empty();
-  //$('#grading_queue_table').html($(deliverables).find('#grading_queue_table').html());
-  $('#tab-1').empty();
-  $('#tab-1').html($(deliverables).find('#tab-1').html());
-  $('#tab-2').empty();
-  $('#tab-2').html($(deliverables).find('#tab-2').html());
-  $( "#tabs" ).tabs();
-  $(".sortable").tablesorter();
-}
-      </script>
+        $(".filter_status").change(function () {
+            var status = $(this).attr("id").replace("filter_", "");
+            filter(status);
+            $.session.set(status, $("#filter_" + status).is(":checked"));
+        });
 
-        <h2>Search</h2>
+    });
+    function update_filter() {
+        var filters = [];
+        if ($("#filter_student").is(':checked')) {
+            filters.push(name_column_index);
+        }
+        if ($("#filter_assignment").is(':checked')) {
+            filters.push(name_column_index + 1);
+        }
+        $(".sortable")[0].config.filter[0].filterColumns = filters;
+        $(".sortable").trigger("doFilter");
+    }
+    function filter(status) {
+        $("tr." + status).toggle();
+    }
 
+    function update_teams(elem) {
+        if (elem.attr('value') === 'my_teams') {
+            fetch_my_team_deliverables();
+        } else if (elem.attr('value') === 'all_teams') {
+            fetch_all_team_deliverables();
+        }
+    }
+    function fetch_all_team_deliverables() {
+        // call ajax
+        $.get("deliverables", {
+            teams: "all_teams"
+        }).done(function (data) {
+                    update_grading_queue_table(data);
+                });
+        $.session.set("allTeamsFetched", true);
 
-        <div id='filterBox'>
-          <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text' placeholder="Enter search keywords"/>
-          <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
-          Search by:
-          <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
-          <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>
-        </div></br>
-        Teams: <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked/><label for="filter_my_teams">My Teams</label>
-        <input type="radio" id="filter_all_teams" name="teams" value="all_teams"/><label for="filter_all_teams">All Teams</label>
-        </br>
-        Filter by <%= nomenclature_assignment_or_deliverable %> status:
-  <input id="filter_graded" class="filter_status" type="checkbox" checked="true" /><label for="filter_graded">Graded</label>&nbsp; &nbsp;
-        <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label> &nbsp; &nbsp;
-        <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label> </br>
-      </div>
+    }
+    function fetch_my_team_deliverables() {
+        // call ajax
+        $.get("deliverables", {
+            teams: "my_teams"
+        }).done(function (data) {
+                    update_grading_queue_table(data);
+                });
+        $.session.set("allTeamsFetched", true);
 
-      <div id="grading_queue_table">
-        <div id="tabs">
-          <ul>
-            <li><a href="#tab-1">Team Deliverables</a></li>
-            <li><a href="#tab-2">Individual Deliverables</a></li>
-          </ul>
-          <div id="tab-1">
-            <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @deliverables, :skip_course_column => true} %>
-          </div>
-          <div id="tab-2">
-            <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-          </div>
-        </div>
-      </div>
-      <br/>
+    }
+    // add rows to existring table
+    function update_grading_queue_table(deliverables) {
+        //$('#grading_queue_table').empty();
+        //$('#grading_queue_table').html($(deliverables).find('#grading_queue_table').html());
+        $('#tab-1').empty();
+        $('#tab-1').html($(deliverables).find('#tab-1').html());
+        $('#tab-2').empty();
+        $('#tab-2').html($(deliverables).find('#tab-2').html());
+        $("#tabs").tabs();
+        $(".sortable").tablesorter();
+    }
+</script>
