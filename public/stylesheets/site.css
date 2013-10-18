@@ -1,5 +1,4 @@
 
-
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
  font-family: verdana, arial, helvetica, sans-serif;
@@ -1059,4 +1058,22 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
     text-decoration: none;
     color: #990000;
+}
+
+#ungraded {
+    background-color: indianred;
+    width: 18px;
+    height: 18px;
+}
+
+#graded {
+    background-color: lightgreen;
+    width: 18px;
+    height: 18px;
+}
+
+#drafted {
+    background-color: coral;
+    width: 18px;
+    height: 18px;
 }

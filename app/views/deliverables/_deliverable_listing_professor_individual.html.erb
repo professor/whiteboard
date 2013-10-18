@@ -15,7 +15,7 @@
     <!--
     <th>Latest <%= nomenclature_assignment_or_deliverable %></th>
 -->
-    <th>Graded</th>
+    <th>Indicator</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -49,11 +49,11 @@
         -->
             <td>
               <% if deliverable.get_grade_status==:graded %>
-                  Yes
+                  <div id="graded">&nbsp;</div>
               <% elsif deliverable.get_grade_status==:drafted %>
-                  No (Draft)
+                  <div id="drafted">&nbsp;</div>
               <% elsif deliverable.get_grade_status==:ungraded %>
-                  No
+                  <div id="ungraded">&nbsp;</div>
               <% end %>
             </td>
             <% if  deliverable.get_grade_status==:graded %>
