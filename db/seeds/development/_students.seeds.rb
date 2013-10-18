@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :student_se_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
     sequence(:email) {|n| "sestudent#{n}@sv.cmu.edu"}
@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :student_sm_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SM"
     masters_track "Tech"
     sequence(:email) {|n| "smstudent#{n}@sv.cmu.edu"}
@@ -25,7 +25,7 @@ FactoryGirl.define do
   factory :student_magic_full_time, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "MG"
     masters_track "Magic"
     sequence(:email) {|n| "mgstudent#{n}@sv.cmu.edu"}

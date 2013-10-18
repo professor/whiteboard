@@ -98,18 +98,18 @@ FactoryGirl.define do
   end
 
 
-  factory :your_name_here, :parent => :person do
+  factory :surya, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "FirstLast"
-    first_name "First"
-    last_name "Last"
-    human_name "Your Name"
-    email "your.email@sv.cmu.edu"
-    webiso_account "your.name@andrew.cmu.edu"
+    twiki_name "SuryaKiran"
+    first_name "Surya"
+    last_name "Kiran"
+    human_name "Surya Kiran"
+    email "surya.kiran@sv.cmu.edu"
+    webiso_account "slaskar@andrew.cmu.edu"
   end
 
 end
@@ -122,8 +122,8 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:your_name_here)
-Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
+surya = Factory.create(:surya)
+team_terrific = Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 FactoryGirl.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
 FactoryGirl.create(:presentation_feedback_questions, :label => "Organization", :text => "How logical was the organization? How smooth were transactions between points and parts of the talk?  Was the talk focused? To the point?  Were the main points clearly stated? easy to find?")

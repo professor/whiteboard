@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :team_cooper, :class => Team do
     course_id 1
     name "Cooper"
-    email "fall-2012-team-cooper@west.cmu.edu"
+    email "fall-2013-team-cooper@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("David Pfeffer", :david_p)
@@ -15,97 +15,102 @@ FactoryGirl.define do
       team.members << find_user("Owen Chu", :owen)
       team.members << find_user("Sumeet Kumar", :sumeet)
       team.members << find_user("Clyde Li", :clyde)
+      team.primary_faculty_id = find_user("Cecile Peraire", :prof_peraire).id
     }
   end
 
   factory :team_cockburn, :class => Team do
     course_id 1
     name "Cockburn"
-    email "fall-2012-team-cockburn@west.cmu.edu"
+    email "fall-2013-team-cockburn@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Kaushik Gopal", :kaushik)
       team.members << find_user("Rashmi Devarahalli", :rashmi)
       team.members << find_user("Norman Xin", :norman)
+      team.primary_faculty_id = find_user("Cecile Peraire", :prof_peraire).id
     }
   end
 
   factory :team_wiegers, :class => Team do
     course_id 1
     name "Wiegers"
-    email "fall-2012-team-wiegers@west.cmu.edu"
+    email "fall-2013-team-wiegers@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Oscar Sandoval", :oscar)
       team.members << find_user("Madhok Shivaratre", :madhok)
       team.members << find_user("Edward Akoto", :edward)
+      team.primary_faculty_id = find_user("Cecile Peraire", :prof_peraire).id
     }
   end
 
   factory :team_miller, :class => Team do
     course_id 1
     name "Miller"
-    email "fall-2012-team-miller@west.cmu.edu"
+    email "fall-2013-team-miller@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Shama Rajeev", :shama)
       team.members << find_user("Mark Hennessy", :mark)
       team.members << find_user("Zhipeng Li", :zhipeng)
+      team.primary_faculty_id = find_user("Patrick Malholand", :prof_patrickm).id
     }
   end
 
   factory :team_leffingwell, :class => Team do
     course_id 1
     name "Leffingwell"
-    email "fall-2012-team-leffingwell@west.cmu.edu"
+    email "fall-2013-team-leffingwell@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("David Liu", :david)
       team.members << find_user("Vidya Pissaye", :vidya)
       team.members << find_user("Aristide Niyungeko", :aristide)
       team.members << find_user("Sean Xiao", :sean)
+      team.primary_faculty_id = find_user("Patrick Malholand", :prof_patrickm).id
     }
   end
 
   factory :assignment_elicitation, :parent=>:assignment_team do
     name "Elicitation"
     maximum_score 20
-    due_date "2012-09-09 22:00:00"
+    due_date "2013-09-09 22:00:00"
     task_number 1
   end
 
   factory :assignment_envision, :parent=>:assignment_team do
     name "Envisioning"
     maximum_score 20
-    due_date "2012-09-23 22:00:00"
+    due_date "2013-09-23 22:00:00"
     task_number 2
   end
 
   factory :assignment_elaboration, :parent=>:assignment_team do
     name "Elaboration and Validation"
     maximum_score 20
-    due_date "2012-10-04 22:00:00"
+    due_date "2013-10-04 22:00:00"
     task_number 3
   end
 
   factory :assignment_req_presentation, :parent=>:assignment do
     name "Individual Presentation"
     maximum_score 10
-    due_date "2012-10-06 22:00:00"
+    due_date "2013-10-06 22:00:00"
     task_number 4
   end
 
   factory :assignment_req_presentation_slides, :parent=>:assignment_team do
     name "Presentation Slides"
     maximum_score 10
-    due_date "2012-10-06 22:00:00"
+    due_date "2013-10-06 22:00:00"
     task_number 4
   end
 
   factory :assignment_req_participation, :parent=>:assignment_unsubmissible do
     name "Class Participation"
     maximum_score 20
-    due_date "2012-10-09 22:00:00"
+    due_date "2013-10-09 22:00:00"
     task_number 5
   end
 
@@ -115,15 +120,16 @@ FactoryGirl.define do
   end
 
 
-  factory :req_2012, :parent => :course do
+  factory :req_2013, :parent => :course do
     name "Requirements Engineering"
     semester "Fall"
-    year 2012
+    year 2013
     after(:create) { |course|
       course.grading_rule = FactoryGirl.create(:grading_rule_req)
 
       course.faculty = []
       course.faculty << FactoryGirl.create(:prof_peraire)
+      course.faculty << FactoryGirl.create(:prof_patrickm)
 
       course.teams = []
       course.teams << FactoryGirl.create(:team_cooper)
@@ -144,7 +150,7 @@ FactoryGirl.define do
 
 end
 
-course_req = FactoryGirl.create(:req_2012)
+course_req = FactoryGirl.create(:req_2013)
 set_up_course(course_req)
 
 team_cooper = Team.find_by_name("Cooper")
