@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130918084505) do
+ActiveRecord::Schema.define(:version => 20131004230118) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -332,7 +332,7 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
     t.integer  "user_id"
     t.integer  "team_id"
-    t.string   "learning_objective"
+    t.text     "learning_objective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
