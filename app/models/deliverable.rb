@@ -334,4 +334,10 @@ class Deliverable < ActiveRecord::Base
       end
     end
   end
+
+  def advisor_name
+    if not self.team.nil? and not self.team.primary_faculty.nil?
+      self.team.primary_faculty.human_name
+    end
+  end
 end
