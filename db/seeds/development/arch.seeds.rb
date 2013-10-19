@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :team_1, :class => Team do
     course_id 1
     name "Project 1"
-    email "fall-2013-team-1@west.cmu.edu"
+    email "fall-2012-team-1@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Oscar Sandoval", :oscar)
@@ -22,7 +22,7 @@ FactoryGirl.define do
   factory :team_2, :class => Team do
     course_id 1
     name "Project 2"
-    email "fall-2013-team-2@west.cmu.edu"
+    email "fall-2012-team-2@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Owen Chu", :owen)
@@ -36,7 +36,7 @@ FactoryGirl.define do
   factory :team_3, :class => Team do
     course_id 1
     name "Project 3"
-    email "fall-2013-team-3@west.cmu.edu"
+    email "fall-2012-team-3@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("Rashmi Devarahalli", :rashmi)
@@ -50,7 +50,7 @@ FactoryGirl.define do
   factory :team_4, :class => Team do
     course_id 1
     name "Project 4"
-    email "fall-2013-team-4@west.cmu.edu"
+    email "fall-2012-team-4@west.cmu.edu"
     after(:create) { |team|
       team.members = []
       team.members << find_user("David Pfeffer", :david_p)
@@ -61,59 +61,45 @@ FactoryGirl.define do
     }
   end
 
-  factory :team_5, :class => Team do
-    course_id 1
-    name "Project 5"
-    email "fall-2013-team-5@west.cmu.edu"
-    after(:create) { |team|
-      team.members = []
-      team.members << find_user("Shishir Kinkar", :shishir)
-      team.members << find_user("Anirudh Bhargava", :anirudh)
-      team.members << find_user("Nelson Pollard", :nelson)
-      team.members << find_user("Xueqiaoxu XU", :joe)
-      team.members << find_user("Gonghan Wang", :gonghan)
-    }
-  end
-
   factory :assignment_evaluation, :parent=>:assignment_team do
     name "Compose and Evaluate an Architecture"
     maximum_score 20
-    due_date "2013-11-13 23:59:59"
+    due_date "2012-11-13 23:59:59"
     task_number 1
   end
 
   factory :assignment_analyzation, :parent=>:assignment_team do
     name "Analyze an Architecture"
     maximum_score 20
-    due_date "2013-11-20 23:59:59"
+    due_date "2012-11-20 23:59:59"
     task_number 2
   end
 
   factory :assignment_realization, :parent=>:assignment_team do
     name "Realize and Evaluate an Architecture"
     maximum_score 35
-    due_date "2013-11-27 23:59:59"
+    due_date "2012-11-27 23:59:59"
     task_number 3
   end
 
   factory :assignment_report, :parent=>:assignment_team do
     name "Write a Paper and a Technical Report"
     maximum_score 15
-    due_date "2013-12-04 23:59:59"
+    due_date "2012-12-04 23:59:59"
     task_number 4
   end
 
   factory :assignment_arch_participation, :parent=>:assignment do
     name "Individual Participation"
     maximum_score 7
-    due_date "2013-12-04 23:59:59"
+    due_date "2012-12-04 23:59:59"
     task_number 5
   end
 
-  factory :arch_2013, :parent => :course do
+  factory :arch_2012, :parent => :course do
     name "Architecture and Design"
     semester "Fall"
-    year 2013
+    year 2012
     after(:create) { |course|
       course.grading_rule = FactoryGirl.create(:grading_rule_points)
 
@@ -125,7 +111,6 @@ FactoryGirl.define do
       course.teams << FactoryGirl.create(:team_2)
       course.teams << FactoryGirl.create(:team_3)
       course.teams << FactoryGirl.create(:team_4)
-      course.teams << FactoryGirl.create(:team_5)
 
       course.assignments = []
       course.assignments << FactoryGirl.create(:assignment_evaluation, :course_id=>course.id)
@@ -138,5 +123,5 @@ FactoryGirl.define do
 
 end
 
-course_arch = FactoryGirl.create(:arch_2013)
+course_arch = FactoryGirl.create(:arch_2012)
 set_up_course(course_arch)
