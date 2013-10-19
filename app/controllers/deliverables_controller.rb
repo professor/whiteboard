@@ -15,7 +15,9 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
+
   def grading_queue_for_course
+
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -27,7 +29,12 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.where(:course_id => @course.id).all
+
+      #@deliverables = Deliverable.where(:course_id => @course.id).all
+
+      # Isil - Team Turing
+      @deliverables = Deliverable.new.grading_queue_display(params[:course_id], Assignment.find_by_course_id(params[:course_id]).id)
+
     else
       has_permissions_or_redirect(:admin, root_path)
     end
