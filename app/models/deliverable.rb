@@ -346,7 +346,7 @@ class Deliverable < ActiveRecord::Base
         '       when grades.is_student_visible is null then \'ungraded\' ' +
         '  end as grading_status ' +
         ', assignments.is_team_deliverable ' +
-        ', deliverables.id as delivarable_id ' +
+        ', deliverables.id as deliverable_id ' +
         ', deliverables.team_id ' +
         ', deliverables.course_id ' +
         ', deliverables.assignment_id ' +
@@ -382,7 +382,7 @@ class Deliverable < ActiveRecord::Base
         '       when grades.is_student_visible is null then \'ungraded\'  ' +
         '  end as grading_status ' +
         ', assignments.is_team_deliverable ' +
-        ', deliverables.id as delivarable_id ' +
+        ', deliverables.id as deliverable_id ' +
         ', deliverables.team_id ' +
         ', deliverables.course_id ' +
         ', deliverables.assignment_id ' +

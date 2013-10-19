@@ -41,9 +41,9 @@
 
             <td>
               <% if  grade_status=='graded' %>
-                  <%= link_to 'Review Grade', deliverable %>
+                  <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] %>
               <% else %>
-                  <%= link_to 'Give Grade', deliverable %>
+                  <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'] %>
               <% end %>
             </td>
           </tr>
