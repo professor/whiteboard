@@ -22,7 +22,7 @@
 
   <% deliverables.each do |deliverable| %>
       <% if not deliverable.is_team_deliverable? %>
-          <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> ">
+          <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> <%= deliverable.assignment.id%>">
             <% unless skip_course_column %>
                 <% if deliverable.course %>
                     <td><%= deliverable.course.name %></td>

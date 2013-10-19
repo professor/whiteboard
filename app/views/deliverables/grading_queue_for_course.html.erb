@@ -38,9 +38,9 @@
           </td>
           <td>
             Assignments including: <br/>
-            <select>
+            <select id="selected_assignment">
               <% @assignments.each do |assignment| %>
-                  <option value="<%= assignment.id %>"><%= assignment.assignment_order %> . <%= assignment.name %></option>
+                  <option value="<%= assignment.id%>"><%= assignment.assignment_order %> . <%= assignment.name %></option>
               <% end %>
             </select>
           </td>
@@ -90,6 +90,10 @@
 
     $(document).ready(function () {
         $("#tabs").tabs();
+
+        //cache assignment id
+        cache_assignments(); 
+
         var $search = $("#filterBoxOne");
         if ($search.prop("disabled") == true) {
             $search.val('');
@@ -125,6 +129,12 @@
             $.session.set(status, $("#filter_" + status).is(":checked"));
         });
 
+        $("#selected_assignment").change(function(){
+          $("#selected_assignment option:selected").each(function(){
+            hide_unselected_assignments($(this).attr('value'));
+            
+          });
+        }).trigger("change");
     });
     function update_filter() {
         var filters = [];
@@ -178,5 +188,28 @@
         $('#tab-2').html($(deliverables).find('#tab-2').html());
         $("#tabs").tabs();
         $(".sortable").tablesorter();
+    }
+
+
+    function hide_unselected_assignments(selectedIdString){
+      var selectedId = parseInt(selectedIdString);
+      var assignmentsId = $("#grading_queue_table").data('assignmentsId');
+      assignmentsId.forEach(function(idString){
+        var id = parseInt(idString);
+        if(id > selectedId) {
+          $("tr." + id).hide();
+        } else {
+          $("tr." + id).show();
+        }
+      });
+    }
+
+    function cache_assignments(){
+      var assignments = []
+      $("#selected_assignment option").each(function() {
+        assignments.push($(this).attr('value'));
+      });
+
+      $("#grading_queue_table").data('assignmentsId', assignments);
     }
 </script>
