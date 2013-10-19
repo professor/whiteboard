@@ -50,7 +50,7 @@ class EffortLogLineItemsController < ApplicationController
   # POST /effort_log_line_items
   # POST /effort_log_line_items.xml
   def create
-    @effort_log_line_item = EffortLogLineItem.new(effort_line_params)
+    @effort_log_line_item = EffortLogLineItem.new(params[:effort_log_line_item])
 
     respond_to do |format|
       if @effort_log_line_item.save
@@ -70,7 +70,7 @@ class EffortLogLineItemsController < ApplicationController
     @effort_log_line_item = EffortLogLineItem.find(params[:id])
 
     respond_to do |format|
-      if @effort_log_line_item.update_attributes(effort_line_params)
+      if @effort_log_line_item.update_attributes(params[:effort_log_line_item])
         flash[:notice] = 'EffortLogLineItem was successfully updated.'
         format.html { redirect_to(@effort_log_line_item) }
         format.xml { head :ok }
