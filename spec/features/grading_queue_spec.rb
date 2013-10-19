@@ -5,12 +5,14 @@ describe "grading_queue_for_course" do
 
   before do
     # add_faculty
+
     # add courses
     # add deliverables
   end
 
   describe "GET /deliverables" do
     before do
+      visit ('/deliverables')
       # login as faculty
       # go to courses
       # select a course
