@@ -30,28 +30,21 @@ class DeliverablesController < ApplicationController
     @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-        # Get parameter teams=my_team
-        course_deliverables = Deliverable.where(:course_id => @course.id)
-        if params[:teams] == "my_teams"   
-            faculty_id = current_user.id
-            @deliverables = course_deliverables.joins(:team).where("teams.primary_faculty_id = " + faculty_id.to_s)
-            # if there are no deliverables as primary faculty check secondary
-            # faculty
-            if @deliverables.empty?
-                @deliverables = course_deliverables.joins(:team).where("teams.secondary_faculty_id = " + faculty_id.to_s)
-            end
+      if params[:teams] == "my_teams"
+        faculty_id = current_user.id
 
-            #GET params teams=all
-        elsif params[:teams] == "all_teams"
-            @deliverables = course_deliverables.joins(:team)
-            #GET params individual=all
-        elsif params[:individual] == "all"
-            # if team_id is nil then it is assumed to be an individual
-            # deliverable
-            @deliverables = course_deliverables.find_all_by_team_id(nil)
-        else
-            @deliverables = course_deliverables
-        end
+        where_clause = ' and (teams.primary_faculty_id = ? or teams.secondary_faculty_id = ?) '
+        team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course.id, where_clause, faculty_id, faculty_id)
+
+        where_clause = ' and stud_course_team_advisor_view.advisor_name = ? '
+        individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course.id, where_clause, current_user.human_name)
+      else
+        team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course.id)
+        individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course.id)
+      end
+
+      # Return all team deliverables and Individual deliverables for the current course
+      @deliverables = [team_deliverables.to_a, individual_deliverables.to_a].flatten
     else
       has_permissions_or_redirect(:admin, root_path)
     end
