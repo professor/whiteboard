@@ -9,61 +9,46 @@
     <% if customised_name=="Deliverable" %>
         <th>Task Number</th>
     <% end %>
-
     <th><%= nomenclature_assignment_or_deliverable %></th>
+    <th>Advisor</th>
     <th>Owner</th>
-    <!--<th>Advisor</th>-->
-    <!--
-    <th>Latest <%= nomenclature_assignment_or_deliverable %></th>
--->
     <th>Indicator</th>
     <th>Actions</th>
   </tr>
   </thead>
 
-  <% deliverables.each do |deliverable| %>
-      <% if deliverable.is_team_deliverable? %>
-          <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> <%= deliverable.assignment.id%>">
-            <% unless skip_course_column %>
-                <% if deliverable.course %>
-                    <td><%= deliverable.course.name %></td>
-                <% else %>
-                    <td>&nbsp;</td>
-                <% end %>
-            <% end %>
 
+
+
+
+  <% deliverables.each do |deliverable| %>
+      <% grade_status = deliverable['grading_status'] %>
+      <% if deliverable['is_team_deliverable'] == 't' %>
+          <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> ">
+            <% unless skip_course_column %>
+                <td><%= deliverable['course_name'] %></td>
+            <% end %>
 
             <% if customised_name=="Deliverable" %>
-                <td><%= deliverable.assignment.task_number %></td>
+                <td><%= deliverable['task_number'] %></td>
             <% end %>
-            <td><%= deliverable.assignment.name %></td>
 
-            <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
+            <td><%= deliverable['deliverable_name'] %></td>
 
-            <!-- removed the <td> describing team.advisor -->
-            <!-- commented this out on 9/27/2013 to increase performance
-        <%# latest_attachment = deliverable.attachment_versions.first %>
-        <%# unless latest_attachment.attachment_file_name.nil? %>
-            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%# deliverable.assignment_name %></td>
-        <%# end %>
-        -->
+            <td><%= deliverable['advisor_name']%></td>
+
+            <td>Team&nbsp;<%= deliverable['owner_name'] %></td>
+
             <td>
-              <% if deliverable.get_grade_status==:graded %>
-                  <div id="graded">&nbsp;</div>
-              <% elsif deliverable.get_grade_status==:drafted %>
-                  <div id="drafted">&nbsp;</div>
-              <% elsif deliverable.get_grade_status==:ungraded %>
-                  <div id="ungraded">&nbsp;</div>
-              <% end %>
+              <div id="<%=grade_status%>">&nbsp;</div>
             </td>
+
             <td>
-                <% if  deliverable.get_grade_status==:graded %>
-                    <%= link_to 'Review Grade', deliverable %>
-                <% else %>
-                    <%= link_to 'Give Grade', deliverable %>
-                <% end %>
+              <% if  grade_status=='graded' %>
+                  <%= link_to 'Review Grade', deliverable %>
+              <% else %>
+                  <%= link_to 'Give Grade', deliverable %>
+              <% end %>
             </td>
           </tr>
       <% end %>
