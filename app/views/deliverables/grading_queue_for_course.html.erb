@@ -21,7 +21,7 @@
 <div>
   <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
-  <div>
+  <div id='filters'>
     <div id='filterBoxSearch'>
       <input id='filterBoxOne' placeholder='Student name / Team name / Deliverable' maxlength='30' size='30' type='text'/>
     </div>
@@ -112,20 +112,24 @@
         });
 
         var statuses = ["graded", "ungraded", "drafted"];
+        $('#filters').data('statuses', statuses);
+        /*
         $.each(["graded", "ungraded", "drafted"], function (index, value) {
             if ($.session.get(value) == "false") {
                 $("#filter_" + value).removeAttr("checked");
                 filter(value);
             }
+            */
 //            else {
 //                alert('Checking the checkbox with true');
 //                $("#filter_" + value).prop("checked", "true");
 //            }
-        });
+       // });
 
         $(".filter_status").change(function () {
             var status = $(this).attr("id").replace("filter_", "");
-            filter(status);
+            //filter(status);
+            $("#selected_assignment").trigger("change");
             $.session.set(status, $("#filter_" + status).is(":checked"));
         });
 
@@ -146,9 +150,6 @@
         }
         $(".sortable")[0].config.filter[0].filterColumns = filters;
         $(".sortable").trigger("doFilter");
-    }
-    function filter(status) {
-        $("tr." + status).toggle();
     }
 
     function update_teams(elem) {
@@ -188,21 +189,45 @@
         $('#tab-2').html($(deliverables).find('#tab-2').html());
         $("#tabs").tabs();
         $(".sortable").tablesorter();
+        $("#selected_assignment").change(function(){
+          $("#selected_assignment option:selected").each(function(){
+            hide_unselected_assignments($(this).attr('value'));
+            
+          });
+        }).trigger("change");
     }
-
+    
+    function hide_all_rows() {
+      $("#grading_queue_table tbody tr").hide(); 
+    }
 
     function hide_unselected_assignments(selectedIdString){
       var selectedId = parseInt(selectedIdString);
       var assignmentsId = $("#grading_queue_table").data('assignmentsId');
+
+      hide_all_rows();
       assignmentsId.forEach(function(idString){
         var id = parseInt(idString);
-        if(id > selectedId) {
-          $("tr." + id).hide();
-        } else {
-          $("tr." + id).show();
+        if(id <= selectedId) {
+          $('#filters').data('statuses').forEach(function(s){
+            if ($("#filter_" + s).is(':checked')){
+              $("tr." + s + "." + id).show();
+            } 
+          });
         }
       });
     }
+/*
+    function filter(status) {
+      $('#filters').data('statuses').forEach(function(s){
+        if ($("#filter_" + s).is(':checked')){
+          $("tr." + s).show();
+        } else {
+          $("tr." + s).hide();
+        }
+      });
+    }
+ */
 
     function cache_assignments(){
       var assignments = []
