@@ -93,6 +93,9 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
+
+# Team Turing: add this for static code analysis
+  gem 'rails_best_practices'
 end
 
 

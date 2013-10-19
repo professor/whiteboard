@@ -32,6 +32,11 @@
   <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
   <%= yield :javascript %>
   <%= yield :head %>
+
+  <!-- 10/16/2013 David Lee -->
+  <%= stylesheet_link_tag "/stylesheets/bootstrap.min.css", :media => "screen", :rel => "stylesheet" %>
+  <%= javascript_include_tag 'collapse.js', 'transition.js' %>
+
 </head>
 
 <body>
