@@ -56,5 +56,4 @@ describe "deliverables/grading_queue_for_course" do
         choose('filter_my_teams')
         expect(page).not_to have_content("Team Bean Counters")
     end
-
 end
