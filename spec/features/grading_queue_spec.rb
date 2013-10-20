@@ -1,39 +1,52 @@
 require 'spec_helper'
+include IntegrationSpecHelper
+include ControllerMacros
 
-
-describe "grading_queue_for_course" do
+describe "Login Page" do
 
   before do
-    # add_faculty
-
-    # add courses
-    # add deliverables
+    visit ('/')
+    @faculty_fagan = FactoryGirl.create(:faculty_fagan_user)
+    login_with_oauth @faculty_fagan
   end
 
-  describe "GET /deliverables" do
-    before do
-      visit ('/deliverables')
-      # login as faculty
-      # go to courses
-      # select a course
-      # go to grading assignment
+  context "user should be able to login" do
+    it "should have logout on the page" do
+      page.should have_link("Logout")
     end
 
-    context "display the filters and headers"
-    it "shows the checkboxes for Individual, Team and Graded" do
-      page.should have_content("Show Individual")
-      page.should have_content("Show Team")
-      page.should have_content("Graded")
+    it "should have courses on the page" do
+      page.should have_link("Courses")
+    end
+  end
+
+  context "On the courses page" do
+    before(:each) do
+      visit('/')
+      click_link "Courses"
+      @semester = AcademicCalendar.current_semester()
+      @year = Date.today.year
+      @deliverable = FactoryGirl.create(:deliverable)
+      @assignment=FactoryGirl.create(:assignment_fse)
+      @course = @assignment.course
+      @student = FactoryGirl.create(:student_sam)
+      @faculty_assignment = FactoryGirl.create(:faculty_assignment)
+      @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
+      @course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
     end
 
-    it "shows a tabular display of deliverables" do
-      render :partial => "deliverables/deliverable_listing_professor.html.erb"
-      #:locals => {:style => nil, :state => "length" }
-      page.should have_content("Name")
-      page.should have_content("Task")
-      page.should have_content("Content")
-      page.should have_content("Grade")
+    it "shows my courses on page faculty" do
+      page.should have_content("My courses")
     end
 
+    it "shows all courses on page for faculty" do
+      page.should have_content("All Courses")
+    end
+
+    it "defaults to a listing of all courses in the semester" do
+      page.should have_selector("#courses_for_a_semester")
+    end
   end
 end
+
+

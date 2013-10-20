@@ -98,10 +98,11 @@ FactoryGirl.define do
   end
 
 
+
   factory :Shishir, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
     twiki_name "ShishirKinkar"
