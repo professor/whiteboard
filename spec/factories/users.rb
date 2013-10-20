@@ -24,7 +24,6 @@ FactoryGirl.define do
     human_name "Student Sam"
     twiki_name "StudentSam"
     initialize_with { User.find_or_initialize_by_id(id) }
-#    initialize_with { User.where(:id => id).first_or_initialize } #Rails 4 way
   end
 
   factory :student_sally_user, :parent => :user do
