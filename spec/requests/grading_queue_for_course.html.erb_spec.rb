@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "deliverables/grading_queue_for_course" do
-    before :all do
+    before :each do
         @faculty = FactoryGirl.create(:faculty_frank_user)
 #        @faculty_not_me = FactoryGirl.create(:faculty_fagan_user)
         @course = FactoryGirl.create(:fse)
