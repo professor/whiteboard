@@ -5,6 +5,7 @@ describe "deliverables/grading_queue_for_course" do
         @faculty = FactoryGirl.create(:faculty_frank_user)
 #        @faculty_not_me = FactoryGirl.create(:faculty_fagan_user)
         @course = FactoryGirl.create(:fse)
+        @course.faculty << @faculty
 #        @student_sally = FactoryGirl.create(:student_sally)
 #        @student_sam = FactoryGirl.create(:student_sam)
 #        @team_mine = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :course => @course, :primary_faculty => @faculty )
@@ -47,11 +48,13 @@ describe "deliverables/grading_queue_for_course" do
         expect(page).to have_content("Advisor")    
     end
 
-    it "should shows deliverables" do
-        expect(page).to have_content("Assignment 1")
+    it "should shows submitted deliverables" do
+        pending
+#        expect(page).to have_content("Assignment 1")
     end
 
     it "should not show teams don't belong to me after selecting My Team" do
+        pending
 #        choose('filter_my_teams')
 #        expect(page).not_to have_content("Team Bean Counters")
     end
