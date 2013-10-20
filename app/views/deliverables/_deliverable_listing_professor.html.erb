@@ -1,5 +1,19 @@
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
+
+<% if deliverables.nil? %>
+    <p>No deliverables!</p>
+<% else %>
+    <% deliverables.each do |deliverable| %>
+        <p><%= deliverable.attributes['task_number'] %></p>
+        <p><%= deliverable.attributes['owner_name'] %></p>
+        <p><%= deliverable.attributes['assignment_name'] %></p>
+        <p><%= deliverable.attributes['updated_at'] %></p>
+        <p><%= deliverable.get_grade_status %></p>
+    <% end %>
+<% end %>
+
+
 <div class="row">
  <div class="panel panel-default">
    <div class="panel-body" style="background-color: #f5f5f5;border-radius: 5px;padding: 10px">
@@ -28,7 +42,7 @@
   </thead>
 
   <% deliverables.each do |deliverable| %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> "data-toggle="collapse" data-target="#collapse<%= deliverable.id %>">
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> "data-toggle="collapse" data-target="#collapse<%= deliverable.attributes['deliverable_id'] %>">
         <% unless skip_course_column %>
             <% if deliverable.course %>
                 <td><%= h deliverable.course.name %></td>
@@ -44,43 +58,43 @@
                 <td><%= h deliverable.assignment.task_number %></td>
             <% end %>
         <% end %>
-        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
-        <% latest_attachment = deliverable.attachment_versions.first %>
-        <% unless latest_attachment.attachment_file_name.nil? %>
-            <td><%= deliverable.assignment_name%> (<%= link_to "download", latest_attachment.attachment.url %>)</td>
-        <% else %>
-            <td><%= deliverable.assignment_name %></td>
-        <% end %>
+        <td><%#= "Team " if deliverable.is_team_deliverable? %><%#= deliverable.attributes[:owner] %></td>
+        <%# latest_attachment = deliverable.attributes[:attachment_versions] %>
+        <%# unless latest_attachment.attributes[:attachment_file_name].nil? %>
+            <td><%#= deliverable.assignment_name %> (<%#= link_to "download", latest_attachment.attachment.url %>)</td>
+        <%# else %>
+            <td><%#= deliverable.assignment_name %></td>
+        <% #end %>
 
         <td>
 
-          <% if deliverable.get_grade_status==:graded %>
+          <% #if deliverable.get_grade_status==:graded %>
               Yes
-          <% elsif deliverable.get_grade_status==:drafted %>
+          <% #elsif deliverable.get_grade_status==:drafted %>
               No (Draft)
-          <% elsif deliverable.get_grade_status==:ungraded %>
+          <% #elsif deliverable.get_grade_status==:ungraded %>
               No
-          <% end %>
+          <% #end %>
         </td>
 
 
-        <% if  deliverable.get_grade_status==:graded %>
-            <td><%= link_to 'Review Grade', deliverable %></td>
-        <%else%>
-            <td><%= link_to 'Give Grade', deliverable %></td>
-        <%end%>
+        <% #if  #deliverable.get_grade_status==:graded %>
+            <td><%#= link_to 'Review Grade', deliverable %></td>
+        <%#else%>
+            <td><%#= link_to 'Give Grade', deliverable %></td>
+        <%#end%>
 
         <!--
       <td>
-          <% if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
-              <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
-          <% end %>
+          <%# if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
+              <%#= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
+          <%# end %>
       </td>
 -->
       </tr>
       <tr>
         <td colspan="4">
-          <div id="collapse<%= deliverable.id %>" class="panel-collapse collapse">
+          <div id="collapse<%= deliverable.attributes['deliverable_id'] %>" class="panel-collapse collapse">
             <div class="panel-body">
               Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </div>

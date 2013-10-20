@@ -33,7 +33,7 @@ class DeliverablesController < ApplicationController
       #@deliverables = Deliverable.where(:course_id => @course.id).all
 
       # Isil - Team Turing
-      @deliverables = Deliverable.new.grading_queue_display(params[:course_id], Assignment.find_by_course_id(params[:course_id]).id)
+      @deliverables = Deliverable.new.grading_queue_display(params[:course_id], current_user.id)
 
     else
       has_permissions_or_redirect(:admin, root_path)
