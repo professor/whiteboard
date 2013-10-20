@@ -22,4 +22,34 @@ FactoryGirl.define do
     association :course, :factory => :course
   end
 
+  ## beg add turing
+  factory :team_turing, class: Team do
+    name "Turing"
+    email "turing@sv.cmu.edu"
+    primary_faculty_id 46
+    updating_email false
+    tigris_space "http://team.turing.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+
+    association :course, :factory => :fse
+
+    after(:create) { |team| FactoryGirl.create(:student_john_user , :teams => [team])}
+
+  end
+
+
+  factory :team_test, class: Team do
+    name "Test"
+    email "test@sv.cmu.edu"
+    primary_faculty_id 47
+    updating_email false
+    tigris_space "http://team.test.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+
+    association :course, :factory => :fse
+
+
+  end
+
+  ## end add turing
 end

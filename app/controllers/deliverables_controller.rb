@@ -28,10 +28,10 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if current_user.is_admin?
+      @deliverables = Deliverable.where(:course_id => @course.id).all
 
-      #@deliverables = Deliverable.where(:course_id => @course.id).all
-
+    elsif @course.faculty.include?(current_user)
       # Isil - Team Turing
       @deliverables = Deliverable.new.grading_queue_display(params[:course_id], current_user.id)
 

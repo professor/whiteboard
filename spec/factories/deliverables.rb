@@ -14,5 +14,30 @@ FactoryGirl.define do
     private_note "My private notes"
   end
 
+  ## beg add turing
+  factory :team_turing_deliverable_1, :parent => :deliverable do
+    association :assignment, :factory => :assignment
+    association :team, :factory => :team_turing
+    association :creator, :factory => :student_john_user
+    association :course, :factory => :fse
+    private_note "My first deliverable"
+  end
+
+  factory :team_turing_deliverable_2, :parent => :deliverable do
+    association :assignment, :factory => :assignment
+    association :team, :factory => :team_turing
+    association :creator, :factory => :student_john_user
+    association :course, :factory => :fse
+    private_note "My second deliverable"
+  end
+
+  factory :team_test_deliverable_1, :parent => :deliverable do
+    association :assignment, :factory => :assignment
+    association :team, :factory => :team_test
+    association :course, :factory => :fse
+    association :creator, :factory => :student_Test_user
+    private_note "Test team  first deliverable"
+  end
+  ## end add turing
 
 end
