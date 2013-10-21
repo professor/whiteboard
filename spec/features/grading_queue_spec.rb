@@ -1,6 +1,5 @@
 require 'spec_helper'
 include IntegrationSpecHelper
-include ControllerMacros
 
 describe "Login Page" do
 
@@ -10,9 +9,9 @@ describe "Login Page" do
     login_with_oauth @faculty_fagan
   end
 
-  context "user should be able to login" do
+  context "/" do
     it "should have logout on the page" do
-      page.should have_link("Logout")
+      page.should have_link("Logout #{@faculty_fagan.first_name}")
     end
 
     it "should have courses on the page" do
@@ -22,17 +21,19 @@ describe "Login Page" do
 
   context "On the courses page" do
     before(:each) do
+      @course = FactoryGirl.create(:mfse)
+      @faculty_assignment = FactoryGirl.create(:faculty_assignment, :user=>@faculty_fagan, :course => @course)
+      @course.faculty_assignments << @faculty_assignment
+      @course_assignments = FactoryGirl.create(:registration, :user=>@faculty_fagan, :course=>@course)
+      @faculty_fagan.registrations << @course_assignments
       visit('/')
       click_link "Courses"
       @semester = AcademicCalendar.current_semester()
       @year = Date.today.year
       @deliverable = FactoryGirl.create(:deliverable)
       @assignment=FactoryGirl.create(:assignment_fse)
-      @course = @assignment.course
       @student = FactoryGirl.create(:student_sam)
-      @faculty_assignment = FactoryGirl.create(:faculty_assignment)
       @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
-      @course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
     end
 
     it "shows my courses on page faculty" do
@@ -46,7 +47,13 @@ describe "Login Page" do
     it "defaults to a listing of all courses in the semester" do
       page.should have_selector("#courses_for_a_semester")
     end
+
+    it "should contain a link to Metrics of Software Engineering" do
+      page.should have_content("#{@course.name} (#{@course.short_name})")
+    end
+
+    it"should display the page" do
+      save_and_open_page
+    end
   end
 end
-
-
