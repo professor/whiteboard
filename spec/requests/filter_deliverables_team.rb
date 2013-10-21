@@ -8,7 +8,7 @@ describe 'grading assignments page' do
     @course = FactoryGirl.create(:fse)
     @faculty_assignment = FactoryGirl.create(:faculty_assignment,:user => @faculty , :course => @course)
     @course.faculty_assignments << @faculty_assignment
-    @assignment = FactoryGirl.create(:assignment, :is_team_deliverable => true)
+    @assignment = FactoryGirl.create(:assignment, :is_team_deliverable => true, :course => @course)
     @deliverable = FactoryGirl.create(:deliverable, :assignment => @assignment , :team => @team, :course => @course, :creator => @student_sally)   
     @deliverable_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable, :submitter => @student_sally )
 
