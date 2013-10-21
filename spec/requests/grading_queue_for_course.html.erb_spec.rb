@@ -3,32 +3,20 @@ require 'spec_helper'
 describe "deliverables/grading_queue_for_course" do
     before :each do
         @faculty = FactoryGirl.create(:faculty_frank_user)
-#        @faculty_not_me = FactoryGirl.create(:faculty_fagan_user)
+        @faculty_not_me = FactoryGirl.create(:faculty_fagan_user)
+        @student_sally = FactoryGirl.create(:student_sally)
+        @student_sam = FactoryGirl.create(:student_sam)
+        @team = FactoryGirl.create(:team_triumphant, :members => [@student_sally] )
+        @team_not_mine = FactoryGirl.create(:team_bean_counters, :members => [@student_sam] )
         @course = FactoryGirl.create(:fse)
-        @course.faculty << @faculty
-#        @student_sally = FactoryGirl.create(:student_sally)
-#        @student_sam = FactoryGirl.create(:student_sam)
-#        @team_mine = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :course => @course, :primary_faculty => @faculty )
-#        @team_not_mine = FactoryGirl.create(:team_bean_counters, :members => [@student_sam], :course => @course, :primary_faculty => @faculty_not_me)
-
-#        @faculty_assignment = FactoryGirl.create(:faculty_assignment,:user => @faculty , :course => @course)
-#        @course.faculty_assignments << @faculty_assignment
-#        @assignment = FactoryGirl.create(:assignment, :is_team_deliverable => true, :course => @course, :name => "Assignment 1")
-
-#        Registration.create(user_id: @student_sally, course_id: @course.id)
-#        Registration.create(user_id: @student_sam, course_id: @course.id)
-
-#        login_with_oauth @student_sally
-#        visit new_deliverable_path(course_id: @course.id, assignment_id: @assignment.id)
-#        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
-#        click_button "Create"
-#        visit "/logout"
-
-#        login_with_oauth @student_sam
-#        visit new_deliverable_path(course_id: @course.id, assignment_id: @assignment.id)
-#        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
-#        click_button "Create"
-#        visit "/logout"
+        @faculty_assignment = FactoryGirl.create(:faculty_assignment,:user => @faculty , :course => @course)
+        @course.faculty_assignments << @faculty_assignment
+        @assignment = FactoryGirl.create(:assignment, :is_team_deliverable => true, :course => @course)
+        
+        @deliverable = FactoryGirl.create(:deliverable, :assignment => @assignment , :team => @team, :course => @course, :creator => @student_sally)   
+        @deliverable_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable, :submitter => @student_sally )
+        @deliverable_not_mine = FactoryGirl.create(:deliverable, :assignment => @assignment , :team => @team_not_mine, :course => @course, :creator => @student_sam)   
+        @deliverable_attachment_not_mine = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_not_mine, :submitter => @student_sam )
 
         login_with_oauth @faculty
         visit("/courses/#{@course.id}/deliverables")
@@ -48,9 +36,22 @@ describe "deliverables/grading_queue_for_course" do
         expect(page).to have_content("Advisor")    
     end
 
+    it "should have checkboxes that provide different filtering conditions" do
+        expect(page).to have_content 'Ungraded'
+        expect(page).to have_content 'Graded'
+        expect(page).to have_content 'Drafted'
+        check 'Ungraded'
+        check 'Graded'
+        check 'Drafted'
+    end
+
+    it "Should have the following selected in assignments inlcuding" do
+        expect(page).to have_content('selected_assignment')
+        expect(page).to have_content(@assignment.name)
+    end
+
     it "should shows submitted deliverables" do
         pending
-#        expect(page).to have_content("Assignment 1")
     end
 
     it "should not show teams don't belong to me after selecting My Team" do
