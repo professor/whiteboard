@@ -28,7 +28,11 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if current_user.is_admin?
+
+      @deliverables = Deliverable.where(:course_id => @course.id).all
+
+    elsif @course.faculty.include?(current_user)
 
       #@deliverables = Deliverable.where(:course_id => @course.id).all
 
