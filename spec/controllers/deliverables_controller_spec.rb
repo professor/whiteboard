@@ -81,7 +81,7 @@ describe DeliverablesController do
         (@deliver[1].deliverable_id).to_i.should == @deliverable1.id
       end
 
-      ## end add turing
+      ## end add Team turing
 
     end
 
