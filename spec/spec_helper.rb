@@ -8,7 +8,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
 #include Capybara::DSL
-include 'db/seeds/development'
 
 require 'shoulda'
 require 'paperclip/matchers'
