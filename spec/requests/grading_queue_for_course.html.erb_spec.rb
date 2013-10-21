@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "In the grading queue," do
-    before :all do
+    before :each do
         @faculty = FactoryGirl.create(:faculty_frank_user)
         @faculty_not_me = FactoryGirl.create(:faculty_fagan_user)
         @student_sally = FactoryGirl.create(:student_sally)
@@ -19,9 +19,6 @@ describe "In the grading queue," do
         @deliverable_attachment_not_mine = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_not_mine, :submitter => @student_sam )
 
         login_with_oauth @faculty
-    end
-
-    before :each do
         visit("/courses/#{@course.id}/deliverables")
     end
 
