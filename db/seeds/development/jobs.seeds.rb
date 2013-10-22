@@ -11,7 +11,7 @@
   ],
   [
     "An Interchange Ontology for Mobile Sensor Platforms in Home Health Management",
-    %q(This project is in year 2 of a 3-year grant, and concerns the application of ontological engineering methods to the use of mobile sensor platforms in the home health management domain. To date we have defined a simple ontology and a mapping to a standard (IEEE 11073) for exchanging health monitoring data, such as blood pressure, pulse rate, temperature, etc. This year we will explore two tasks: 1.    Building a proof of concept smart phone app that automatically converts health monitoring data into IEEE 11073-compatible form using the ontology, 2.    Apply automated reasoning techniques to validate portions of the IEEE 11073 standard after converting it into an OWLrepresentation.),
+    %q(This project is in year 2 of a 3-year grant, and concerns the application of ontological engineering methods to the use of mobile sensor platforms in the home health management domain. To date we have defined a simple ontology and a mapping to a standard (IEEE 11073) for exchanging health monitoring data, such as blood pressure, pulse rate, temperature, etc. This year we will explore two tasks: 1. Building a proof of concept smart phone app that automatically converts health monitoring data into IEEE 11073-compatible form using the ontology, 2. Apply automated reasoning techniques to validate portions of the IEEE 11073 standard after converting it into an OWLrepresentation.),
     "Experience with mobile device app development",
      "some experience with Semantic Web technology (RDF, OWL, SPARQL) would be preferred",
      " Fall, Spring and Summer semesters, 10 hours per week. Would like a commitment for the full year",
