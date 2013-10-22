@@ -24,7 +24,11 @@ env:
 notifications:
   email:
     recipients:
-      - fall-2013-turing@west.cmu.edu
+      - emilia.torino@west.cmu.edu
+      - mia.manalastas@sv.cmu.edu
+      - ira.jain@sv.cmu.edu
+      - david.lee@sv.cmu.edu
+      - isil.demir@sv.cmu.edu
       #- todd.sedano@sv.cmu.edu
       #- rofaida.abdelaal@sv.cmu.edu
     # on_success: [always|never|change] # default: change
