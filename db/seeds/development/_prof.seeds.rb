@@ -6,13 +6,6 @@ FactoryGirl.define do
     is_staff 1
   end
 
-  factory :prof_todd, :parent => :prof do
-    first_name "Todd"
-    last_name "Sedano"
-    human_name "Todd Sedano"
-    email "Todd.Sedano@sv.cmu.edu"
-  end
-
   factory :prof_liu, :parent => :prof do
     first_name "YC"
     last_name "Liu"
@@ -33,7 +26,6 @@ FactoryGirl.define do
     first_name "TY"
     last_name "Lee"
     human_name "TY Lee"
-    email "Tylian.lee@sv.cmu.edu"
   end
 
   factory :prof_evans, :parent => :prof do
@@ -61,17 +53,11 @@ FactoryGirl.define do
   end
 
   factory :prof_snape, :parent => :prof do
-    first_name "Severus"
+    first_name "Snape"
     last_name "Snape"
     human_name "Severus Snape"
     twiki_name "SeverusSnape"
     email "severus.snape@sv.cmu.edu"
   end
 
-  factory :prof_snape, :parent => :prof do
-    first_name "Gladys"
-    last_name "Mercier"
-    human_name "Gladys Mercier"
-    email "gladys.mercier@sv.cmu.edu"
-  end
 end
