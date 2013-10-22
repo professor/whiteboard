@@ -43,7 +43,7 @@ describe DeliverablesController do
 =end
     ## end del turing
 
-    ## beg add turing
+    ## beg add Team turing
     before(:each) do
       @course = FactoryGirl.create(:fse, faculty: [@faculty_frank])
       @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
