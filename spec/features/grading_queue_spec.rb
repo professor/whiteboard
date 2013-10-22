@@ -41,6 +41,8 @@ describe "Login Page" do
       @student = FactoryGirl.create(:student_sam) 
       @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
       #@course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
+
+  
     end
 
     it "shows my courses on page faculty" do
@@ -54,10 +56,6 @@ describe "Login Page" do
     it "defaults to a listing of all courses in the semester" do
       page.should have_selector("#courses_for_a_semester")
     end
-    
-    it "should contain a course with name Metrics of Software Engineering" do
-      page.should have_content("#{@course.name} (#{@course.short_name})")
-    end 
 
     it "should have a link for MSFE" do
       page.should have_link("Metrics for Software Engineers (MfSE)")
