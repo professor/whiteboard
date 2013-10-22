@@ -24,7 +24,7 @@ env:
 notifications:
   email:
     recipients:
-      - emilia.torino@sv.cmu.edu
+      - fall-2013-turing@west.cmu.edu
       #- todd.sedano@sv.cmu.edu
       #- rofaida.abdelaal@sv.cmu.edu
     # on_success: [always|never|change] # default: change
