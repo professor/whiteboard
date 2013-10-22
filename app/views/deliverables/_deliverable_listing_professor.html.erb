@@ -9,10 +9,11 @@
     <% if customised_name=="Deliverable" %>
         <th>Task Number</th>
     <% end %>
-
+    <th>Task number</th>
     <th><%=nomenclature_assignment_or_deliverable%></th>
+
     <th>Owner</th>
-<!--
+    <!--
     <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
 -->
     <th>Graded</th>
@@ -34,6 +35,7 @@
         <% if customised_name=="Deliverable" %>
             <td><%= deliverable.assignment.task_number %></td>
         <% end %>
+        <td><%= deliverable.assignment.task_number %></td>
         <td><%= deliverable.assignment.name %></td>
 
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
@@ -48,20 +50,20 @@
         -->
         <td>
           <% if deliverable.get_grade_status==:graded %>
-             Yes
+              Yes
           <% elsif deliverable.get_grade_status==:drafted %>
-             No (Draft)
+              No (Draft)
           <% elsif deliverable.get_grade_status==:ungraded %>
-             No
+              No
           <% end %>
         </td>
 
 
-              <% if  deliverable.get_grade_status==:graded %>
-                  <td><%= link_to 'Review Grade', deliverable %></td>
-              <%else%>
-                <td><%= link_to 'Give Grade', deliverable %></td>
-            <%end%>
+        <% if  deliverable.get_grade_status==:graded %>
+            <td><%= link_to 'Review Grade', deliverable %></td>
+        <%else%>
+            <td><%= link_to 'Give Grade', deliverable %></td>
+        <%end%>
 
       </tr>
   <% end %>
