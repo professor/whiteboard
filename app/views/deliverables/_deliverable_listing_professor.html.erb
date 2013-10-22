@@ -8,18 +8,55 @@
       <th>Grade</th>
   </thead>
 
-  <tbody>
-       <% deliverables.each do |deliverable| %>
-          <tr class="tablesorter">
-            <td><%= deliverable.owner_name %></td>
-            <td><%= deliverable.assignment.task_number %></td>
-            <td><%= deliverable.course.name %></td>
-            <td><%= deliverable.get_grade_status %></td>
-          </tr>
-      <% end %>
-  </tbody>
+  <% deliverables.each do |deliverable| %>
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
+        <% unless skip_course_column %>
+            <% if deliverable.course %>
+                <td><%= deliverable.course.name %></td>
+            <% else %>
+                <td>&nbsp;</td>
+            <% end %>
+        <% end %>
 
-  <!--Commented out original code
+
+        <% if customised_name=="Deliverable" %>
+            <td><%= deliverable.assignment.task_number %></td>
+        <% end %>
+        <td><%= deliverable.assignment.name %></td>
+
+        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
+
+        <!--&lt;!&ndash; commented this out on 9/27/2013 to increase performance-->
+
+        <% latest_attachment = deliverable.attachment_versions.first %>
+        <% unless latest_attachment.attachment_file_name.nil? %>
+        <td><% deliverable.assignment_name%> (<% link_to "download", latest_attachment.attachment.url %>)</td>
+        <% else %>
+        <td><% deliverable.assignment_name %></td>
+        <% end %>
+        <td>
+          <% if deliverable.get_grade_status==:graded %>
+              Yes
+          <% elsif deliverable.get_grade_status==:drafted %>
+              <!--No (Draft)-->
+          <% elsif deliverable.get_grade_status==:ungraded %>
+              <!--No-->
+          <% end %>
+        </td>
+
+
+        <% if  deliverable.get_grade_status==:graded %>
+            <td><%= link_to 'Review Grade', deliverable %></td>
+        <%else%>
+            <td><%= link_to 'Give Grade', deliverable %></td>
+        <%end%>
+
+      </tr>
+  <% end %>
+
+
+
+
   <tr>
     <% unless skip_course_column %>
         <th>Course</th>
@@ -30,9 +67,9 @@
 
     <th><%=nomenclature_assignment_or_deliverable%></th>
     <th>Owner</th>
-&lt;!&ndash;
+
     <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
-&ndash;&gt;
+
     <th>Graded</th>
     <th>Actions</th>
   </tr>
@@ -56,14 +93,14 @@
 
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
 
-        &lt;!&ndash; commented this out on 9/27/2013 to increase performance
-        <%# latest_attachment = deliverable.attachment_versions.first %>
-        <%# unless latest_attachment.attachment_file_name.nil? %>
-            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%# deliverable.assignment_name %></td>
-        <%# end %>
-        &ndash;&gt;
+      <!-- &lt;!&ndash; commented this out on 9/27/2013 to increase performance-->
+        <% latest_attachment = deliverable.attachment_versions.first %>
+        <% unless latest_attachment.attachment_file_name.nil? %>
+            <td><% deliverable.assignment_name%> (<% link_to "download", latest_attachment.attachment.url %>)</td>
+        <% else %>
+            <td><% deliverable.assignment_name %></td>
+        <% end %>
+        
         <td>
           <% if deliverable.get_grade_status==:graded %>
              Yes
@@ -82,5 +119,5 @@
             <%end%>
 
       </tr>
-  <% end %>--> 
+  <% end %> 
 </table>

@@ -1,5 +1,6 @@
 require 'spec_helper'
 include IntegrationSpecHelper
+include ControllerMacros
 
 describe "Login Page" do
 
@@ -20,21 +21,26 @@ describe "Login Page" do
   end
 
   context "On the courses page" do
-    before(:each) do
-      @course = FactoryGirl.create(:mfse)
-      @faculty_assignment = FactoryGirl.create(:faculty_assignment, :user=>@faculty_fagan, :course => @course)
-      @course.faculty_assignments << @faculty_assignment
-      @course_assignments = FactoryGirl.create(:registration, :user=>@faculty_fagan, :course=>@course)
-      @faculty_fagan.registrations << @course_assignments
+    before do
+      @course = FactoryGirl.create(:mfse_current_semester)
+      @faculty_assignment = FactoryGirl.create(:faculty_assignment,:course_id=>@course.id,:user_id=>@faculty_fagan.id)
+      @course.faculty_assignments<<@faculty_assignment
+      #@course.save 
+      #@faculty_fagan.faculty_assignments<<@faculty_assignment
+      #@faculty_assignment = FactoryGirl.create(:faculty_assignment, :user=>@faculty_fagan, :course => @course)
+      #@course.faculty_assignments << @faculty_assignment
+      #@person_fagan = FactoryGirl.create(:faculty_fagan)
+      #@course_assignments = FactoryGirl.create(:course => @course,:faculty =>[@faculty_fagan])
+      #@faculty_fagan.teaching_these_courses << @course_assignments 
       visit('/')
       click_link "Courses"
       @semester = AcademicCalendar.current_semester()
       @year = Date.today.year
       @deliverable = FactoryGirl.create(:deliverable)
       @assignment=FactoryGirl.create(:assignment_fse)
-      @student = FactoryGirl.create(:student_sam)
+      @student = FactoryGirl.create(:student_sam) 
       @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
-    end
+      #@course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
 
     it "shows my courses on page faculty" do
       page.should have_content("My courses")
@@ -47,14 +53,17 @@ describe "Login Page" do
     it "defaults to a listing of all courses in the semester" do
       page.should have_selector("#courses_for_a_semester")
     end
-
-    it "should contain a link to Metrics of Software Engineering" do
+    
+    it "should contain a course with name Metrics of Software Engineering" do
       page.should have_content("#{@course.name} (#{@course.short_name})")
-    end
+    end 
 
+    it "should have a link for MSFE" do
+      page.should have_link("Metrics for Software Engineers (MfSE)")
+    end 
+ 
     it"should display the page" do
       save_and_open_page
-    end
+    end 
   end
 end
-
