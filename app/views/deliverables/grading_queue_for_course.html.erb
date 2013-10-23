@@ -13,6 +13,7 @@
   <%= javascript_include_tag 'jquery.session' %>
 
   <script>
+/*
       var assignment = "<%= nomenclature_assignment_or_deliverable %>";
       var name_column_index = 0;
       if (assignment=="Deliverable"){
@@ -70,6 +71,7 @@
       function filter(status){
           $("tr."+ status).toggle();
       }
+      */
   </script>
   <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
@@ -84,7 +86,7 @@
         <!--<input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>-->
         <input id="show_individual" class="filter_status" type="checkbox" checked="true" /><label for="show_individual">Show Individual</label>
         <input id="show_team" class="filter_status" type="checkbox" checked="true" /><label for="show_team">Show Team</label></n>
-        <input id="show_graded" class="filter_status" type="checkbox" checked="false" /><label for="show_graded">Show Graded</label>
+        <input id="show_graded" class="filter_status" type="checkbox" /><label for="show_graded">Show Graded</label>
       <!--<input id="show_drafted" class="filter_status" checked="true" type="checkbox"/><label for="show_drafted">Show Drafted</label>-->
   </div>
   <!--Filter by <%= nomenclature_assignment_or_deliverable %> status:-->

@@ -37,4 +37,14 @@
 
 <script type="text/javascript">
   $('#sortable').tablesorter();
+
+  function updateShowGraded() {
+      if ($('#show_graded').is(':checked')) {
+          $('tr').show();
+      } else {
+          $('tr:contains("Review Grade")').hide();
+      }
+  }
+  $('#show_graded').click(updateShowGraded);
+  updateShowGraded();
 </script>
