@@ -75,7 +75,7 @@ team = Team.find_by_name("Gryffindor")
 assignment = Assignment.find_by_name("Patronous Charm")
 team.members.each do |member|
   grade = Grade.get_grade(course_dda.id, assignment.id, member.id)
-  grade.destroy
+  grade.destroy if grade
 end
 
 deliverable = Deliverable.find_by_assignment_id_and_team_id(assignment.id, team.id)
