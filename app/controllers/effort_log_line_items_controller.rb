@@ -98,8 +98,4 @@ class EffortLogLineItemsController < ApplicationController
     redirect_to :controller => :effort_logs, :action => :index
   end
 
-  private
-  def effort_line_params
-    params.require(:effort_log_line_item).permit(:course_id, :task_type_id, :day1, :day2, :day3, :day4, :day5, :day6, :day7)
-  end
 end

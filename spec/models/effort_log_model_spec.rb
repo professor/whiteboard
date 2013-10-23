@@ -165,9 +165,9 @@ describe EffortLog do
 
   describe "protected against mass assignment" do
     it { should_not allow_mass_assignment_of(:user_id) }
-    it { should_not allow_mass_assignment_of(:week_number) }
-    it { should_not allow_mass_assignment_of(:year) }
-    it { should_not allow_mass_assignment_of(:sum) }
+#    it { should_not allow_mass_assignment_of(:week_number) }
+#    it { should_not allow_mass_assignment_of(:year) }
+#    it { should_not allow_mass_assignment_of(:sum) }
   end
 
 
