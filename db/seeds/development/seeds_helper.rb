@@ -14,11 +14,13 @@ def set_up_course(course)
       course.teams.each do |team|
         deliverable=FactoryGirl.create(:team_deliverable_simple, :team_id=>team.id, :creator_id=>team.members.first.id, :course_id=>course.id, :assignment_id=>assignment.id)
         FactoryGirl.create(:deliverable_attachment, :deliverable_id=>deliverable.id, :submitter_id=>team.members.first.id, :attachment_file_name=>"#{team.name}_new_file", :submission_date=>Time.now)
-        score = 1+Random.rand(assignment.maximum_score)
-        team.members.each do |member|
-          grade = FactoryGirl.create(:grade_points, :course_id=>course.id, :assignment => assignment, :student_id => member.id, :is_student_visible => true)
-          grade.score = score
-          grade.save
+        if Random.rand > 0.5
+          score = 1+Random.rand(assignment.maximum_score)
+          team.members.each do |member|
+            grade = FactoryGirl.create(:grade_points, :course_id=>course.id, :assignment => assignment, :student_id => member.id, :is_student_visible => true)
+            grade.score = score
+            grade.save
+          end
         end
       end
     elsif assignment.is_submittable

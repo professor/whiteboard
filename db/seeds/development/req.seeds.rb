@@ -154,7 +154,7 @@ team_cooper = Team.find_by_name("Cooper")
 assignment_validation = Assignment.find_by_name("Elaboration and Validation")
 team_cooper.members.each do |member|
   grade = Grade.get_grade(course_req.id, assignment_validation.id, member.id)
-  grade.destroy
+  grade.destroy if grade
 end
 
 deliverable = Deliverable.find_by_assignment_id_and_team_id(assignment_validation.id, team_cooper.id)
