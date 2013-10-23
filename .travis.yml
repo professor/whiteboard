@@ -2,6 +2,12 @@ language: ruby
 
 rvm: 1.9.2
 
+branches:
+  only:
+    - master
+    - staged
+
+
 before_script:
   - "psql -c 'create database cmu_education_test;' -U postgres >/dev/null"
   - cp config/amazon_s3.default.yml config/amazon_s3.yml
