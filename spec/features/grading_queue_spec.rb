@@ -42,7 +42,6 @@
         @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
         #@course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
 
-
       end
 
       it "shows my courses on page faculty" do
@@ -61,30 +60,11 @@
         page.should have_link("Metrics for Software Engineers (MfSE)")
       end
 
-      it"should display the page" do
+      it"should display the grading queue page" do
+        visit course_deliverables_path(@course)	
         save_and_open_page
       end
     end
 
-    it 'As a faculty, I can sort all assignments or deliverables by task numbers' do
-      #visit this web page
-      @course=FactoryGirl.create(:fse_fall_2011,:course_number_id=>100)
-      visit course_deliverables_path(@course)
-      assignment1=FactoryGirl.create(:assignment1_fse)
-      assignment2=FactoryGirl.create(:assignment2_fse)
-      assignment3=FactoryGirl.create(:assignment3_fse)
-      deliverable1=FactoryGirl.create(:deliverable1)
-      deliverable2=FactoryGirl.create(:deliverable2)
-      deliverable3=FactoryGirl.create(:deliverable3)
-      deliverable1.stub(:get_grade_status).an_return(:graded)
-      deliverable2.stub(:get_grade_status).an_return(:graded)
-      deliverable3.stub(:get_grade_status).an_return(:graded)
-
-      #create three assignments, create one deliverable for each assignment
-      #assignment should have task_number, name
-      #deliverable should have get_grade_status
-
-
-    end
 
   end

@@ -21,31 +21,25 @@ FactoryGirl.define do
     association :course, :factory => :fse
   end
 
-  factory :individual_deliverable2, :parent => :deliverable do
-    id 112
-    association :creator_id, :factory => :student_sally_user
-    association :assignment, :factory => :assignment_fse_individual
+  #factory :individual_deliverable2, :parent => :deliverable do
+  #  id 112
+  #  association :creator_id, :factory => :student_sally_user
+  #  association :assignment, :factory => :assignment_fse_individual
+  #  association :course, :factory => :fse
+  #end
+
+  factory :individual_deliverable3, :parent => :deliverable do
+    id 113
+    association :creator_id, :factory => :student_john_user
+    association :assignment, :factory => :assignment_fse_individual2
     association :course, :factory => :fse
   end
 
-  factory :deliverable1,:parent=>:deliverable do
-    id 211
-    #association :creator_id,:factory => :student_sally_user
-    association :assignment,:factory=>:assignment1_fse
-    association :course, :factory => :fse_fall_2011
+  factory :individual_deliverable4, :parent => :deliverable do
+    id 114
+    association :creator_id, :factory => :student_frank_user
+    association :assignment, :factory => :assignment_fse_individual3
+    association :course, :factory => :fse
   end
 
-  factory :deliverable2,:parent=>:deliverable do
-    id 212
-    #association :creator_id,:factory=>:student_sally_user
-    association :assignment,:factory=>:assignment2_fse
-    association :course, :factory => :fse_fall_2011
-  end
-
-  factory :deliverable3,:parent=>:deliverable do
-    id 213
-    #association :creator_id,:factory=>:student_sally_user
-    association :assignment,:factory=>:assignment3_fse
-    association :course, :factory => :fse_fall_2011
-  end
 end
