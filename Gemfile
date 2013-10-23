@@ -85,7 +85,7 @@ group :development, :test do
   gem 'jasmine'
   gem 'launchy'
   gem 'ladle', '~> 0.2.0'
-
+  gem 'capybara-webkit','0.13.0'
 #  gem 'morning_glory'
 
 #  gem 'autotest-rails' if RUBY_PLATFORM =~ /darwin/

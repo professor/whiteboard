@@ -16,17 +16,17 @@ FactoryGirl.define do
 
   factory :individual_deliverable1, :parent => :deliverable do
     id 111
-    association :creator_id, :factory => :student_sam_user
+    #association :creator_id, :factory => :student_sam_user
     association :assignment, :factory => :assignment_fse_individual
     association :course, :factory => :fse
   end
 
-  #factory :individual_deliverable2, :parent => :deliverable do
-  #  id 112
-  #  association :creator_id, :factory => :student_sally_user
-  #  association :assignment, :factory => :assignment_fse_individual
-  #  association :course, :factory => :fse
-  #end
+  factory :individual_deliverable2, :parent => :deliverable do
+    id 112
+    #association :creator_id, :factory => :student_sally_user
+    association :assignment, :factory => :assignment_fse_individual
+    association :course, :factory => :fse
+  end
 
   factory :individual_deliverable3, :parent => :deliverable do
     id 113
