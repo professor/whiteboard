@@ -1,4 +1,5 @@
 class DeliverableAttachment < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   set_table_name "deliverable_attachment_versions"
 
   belongs_to :submitter, :class_name => "User", :foreign_key => "submitter_id"

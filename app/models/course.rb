@@ -30,6 +30,7 @@
 # Course has grading rules. These include grading cut_offs for grade's like A,A-,B+ etc.
 
 class Course < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   has_many :teams
   belongs_to :course_number
   has_many :pages, :order => "position"

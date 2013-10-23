@@ -1,4 +1,5 @@
 class Team < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   belongs_to :course
   belongs_to :primary_faculty, :class_name => 'User', :foreign_key => "primary_faculty_id"
   belongs_to :secondary_faculty, :class_name => 'User', :foreign_key => "secondary_faculty_id"
