@@ -124,7 +124,9 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
     @courses = current_user.registered_for_these_courses_during_current_semester
-
+    
+    # permitting parameters to protect against mass assignment
+    params.permit(:course_id)
     if params[:course_id]
       @deliverable.course_id = params[:course_id]
       @assignments = Course.find(params[:course_id]).assignments.where(:is_submittable => true)
@@ -159,8 +161,9 @@ class DeliverablesController < ApplicationController
   # POST /deliverables
   # POST /deliverables.xml
   def create
+
     # Make sure that a file was specified
-    @deliverable = Deliverable.new(params[:deliverable])
+    @deliverable = Deliverable.new(deliverable_params)
     @deliverable.creator = current_user
     @deliverable.is_team_deliverable ? @deliverable.update_team : @deliverable.team = nil
 
@@ -181,7 +184,7 @@ class DeliverablesController < ApplicationController
       end
       return
     end
-    @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+    @attachment = DeliverableAttachment.new(deliverable_attachment_params)
     @attachment.submitter = @deliverable.creator
     @deliverable.attachment_versions << @attachment
     @attachment.deliverable = @deliverable
@@ -328,6 +331,16 @@ class DeliverablesController < ApplicationController
         format.json { render json:  @assignments_array }
       end
     end
+  end
+
+  private
+  # Permitted params
+  def deliverable_params
+      params.require(:deliverable).permit(:assignment_id,:course_id)
+  end
+
+  def deliverable_attachment_params
+      params.require(:deliverable_attachment).permit(:comment,:attachment)
   end
 
 end

@@ -129,7 +129,7 @@ class CoursesController < ApplicationController
     authorize! :create, Course
     @last_offering = Course.last_offering(params[:course][:number])
     if @last_offering.nil?
-      @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+      @course = Course.new(course_params)
     else
       @course = @last_offering.copy_as_new_course
     end
@@ -164,10 +164,11 @@ class CoursesController < ApplicationController
       @course.configured_by_user_id = current_user.id
     end
 
+    params.permit(:teachers => [])
     params[:course][:faculty_assignments_override] = params[:teachers]
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
-      @course.attributes = params[:course]
+      @course.attributes = course_params
       if @course.save
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_back_or_default(course_path(@course)) }
@@ -250,4 +251,9 @@ class CoursesController < ApplicationController
       format.xml { render :xml => @courses }
     end
   end
+
+  def course_params
+      params.require(:course).permit(:number,:short_name,:name,:semester,:mini, :year)
+  end
+
 end
