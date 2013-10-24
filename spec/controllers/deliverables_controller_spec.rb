@@ -74,11 +74,12 @@ describe DeliverablesController do
 
 
       it 'shows deliverables of only my teams' do
-        #get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
-        #:deliverables.should have(2).items
-        #:deliverables[0].should == @deliverable2
-        #:deliverables[1].should == @deliverable1
-        pending
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        @expected_deliverable = assigns(:deliverables)
+
+        @expected_deliverable.should have(2).items
+        @expected_deliverable[0].should == @deliverable1
+        @expected_deliverable[1].should == @deliverable2
       end
 
       ## end add Team turing
@@ -95,12 +96,9 @@ describe DeliverablesController do
       end
 
       it 'assigns @deliverables' do
-        ## beg chg turing
-        # get :grading_queue_for_course, :course_id => @course.id
-        # assigns(:deliverables).should == [@deliverable, @deliverable]
-
-        #get :grading_queue_for_course, :course_id => @course.id
-        #:deliverables.should == [@deliverable3, @deliverable2, @deliverable1]
+        get :grading_queue_for_course, :course_id => @course.id
+        @expected_deliverable = assigns(:deliverables)
+        @expected_deliverable.should == [@deliverable3, @deliverable2, @deliverable1]
         ## end chg turing
         pending
       end
