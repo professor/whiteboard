@@ -10,6 +10,11 @@ FactoryGirl.define do
     team_id nil
   end
 
+  factory :turing_individual_deliverable, :parent => :deliverable do
+    team_id nil
+    association :course, :factory => :fse
+  end
+
   factory :team_deliverable_simple, :class => Deliverable do
     private_note "My private notes"
   end

@@ -33,7 +33,7 @@ class DeliverablesController < ApplicationController
 
     elsif @course.faculty.include?(current_user)
       # Isil - Team Turing
-      @deliverables = Deliverable.new.grading_queue_display(params[:course_id], current_user.id)
+      @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     else
       has_permissions_or_redirect(:admin, root_path)
