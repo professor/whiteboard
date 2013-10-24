@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004230118) do
+ActiveRecord::Schema.define(:version => 20131023224716) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(:version => 20131004230118) do
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
+  add_index "deliverables", ["course_id", "creator_id", "assignment_id"], :name => "index_deliverables_on_course_id_and_creator_id_and_assgnmnt_id"
+  add_index "deliverables", ["course_id", "team_id", "assignment_id"], :name => "index_deliverables_on_course_id_and_team_id_and_assignment_id"
   add_index "deliverables", ["course_id"], :name => "index_deliverables_on_course_id"
   add_index "deliverables", ["creator_id"], :name => "index_deliverables_on_creator_id"
   add_index "deliverables", ["team_id"], :name => "index_deliverables_on_team_id"
@@ -184,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20131004230118) do
   end
 
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+  add_index "faculty_assignments", ["course_id"], :name => "index_faculty_assignments_on_course_id"
 
   create_table "grades", :force => true do |t|
     t.integer  "course_id"
@@ -196,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20131004230118) do
   end
 
   add_index "grades", ["assignment_id"], :name => "index_grades_on_assignment_id"
+  add_index "grades", ["course_id", "student_id", "assignment_id"], :name => "index_grades_on_course_id_and_student_id_and_assignment_id"
   add_index "grades", ["course_id"], :name => "index_grades_on_course_id"
   add_index "grades", ["student_id"], :name => "index_grades_on_student_id"
 
