@@ -18,6 +18,24 @@
   <%= javascript_include_tag 'jquery.session' %>
 
   <script>
+      $(document).ready(function() {
+          $('.ajax').on('click', function() {
+              console.log('deliverables/' + $(this).find('#deliverable_id').text());
+              $.get('http://localhost:3000/deliverables/' + $(this).find('#deliverable_id').text(),
+                    function(response){
+                        console.log(response);
+                    }
+              )
+              $(this).removeClass('ajax');
+          });
+
+          $('.deliverable').on('click', function() {
+              $(this).siblings().slideToggle();
+          });
+      });
+  </script>
+
+  <script>
     var assignment = "<%= nomenclature_assignment_or_deliverable %>";
     var name_column_index = 0;
     if (assignment=="Deliverable"){
