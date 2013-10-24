@@ -1,4 +1,5 @@
 class JobSupervisor < ActiveRecord::Base
+  attr_accessible :user_id
   belongs_to :job
   belongs_to :user
   delegate :human_name, :to => :user

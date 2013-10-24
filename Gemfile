@@ -98,3 +98,5 @@ end
 
 
 #gem 'gchartrb'
+
+#gem 'strong_parameters'
