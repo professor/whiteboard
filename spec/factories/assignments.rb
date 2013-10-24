@@ -26,4 +26,18 @@ FactoryGirl.define do
     sequence(:maximum_score) {|i| i*3}
     sequence(:assignment_order) {|i| i}
   end
+
+  ## beg add turing
+
+  factory :assignment_1, :parent=>:assignment do
+    is_team_deliverable true
+    association :course, :factory => :fse
+  end
+
+  factory :assignment_2, :parent=>:assignment do
+    is_team_deliverable true
+    association :course, :factory => :fse
+  end
+
+  ## end add turing
 end

@@ -57,60 +57,50 @@ class Deliverable < ActiveRecord::Base
 
   after_save :inaccurate_course_and_assignment_check
 
-
-  # Grading queue
-  def grading_queue_display(course_id, faculty_id, options = nil)
+  def self.grading_queue_display(course_id, faculty_id, options = nil)
 
     # Default grading queue filters
     options = {"ungraded" => 1, "drafted" => 0, "graded" => 0, "is_my_teams" => 1, "deliverable_name" => ''} if options.nil?
 
-    queue = nil
+    queue = []
 
-    # Check: Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
-    # or by individuals in a faculty's teams.
+    # 1. Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
+    # 2. If there are no teams in the course, and if this deliverable is an individual deliverable,
+    # show deliverables for individuals who are in the faculty's teams only.
+    # 3. Otherwise, show every deliverable
 
-    course_has_teams = Team.find_by_sql(["SELECT * FROM teams WHERE course_id = ? LIMIT 1", course_id])
+    course_has_teams = Team.where(:course_id => course_id).first
 
-    if course_has_teams.empty?
-      # Show them everyone in the course
-      #queue = Deliverable.where(:course_id => course_id).all
-      queue = Deliverable.find_by_sql(["SELECT * FROM deliverables WHERE course_id = ?", course_id])
+    if course_has_teams.nil?
 
-    else
+      queue = Deliverable.where(:course_id => course_id).all
+
+    else # The course has teams
       # By default, the faculty see their teams or individuals in their teams with ungraded deliverables
       if options['is_my_teams'] == 1
 
-        sql = "SELECT a.name AS assignment_name, d.id AS deliverable_id, d.updated_at, a.task_number, t.name AS owner_name, d.creator_id, dav.attachment_file_name AS attachment_file_name, a.is_team_deliverable, dav.id AS attachment_versions, c.name AS course_name
-                FROM deliverables d
-                INNER JOIN assignments a ON d.assignment_id = a.id
-                INNER JOIN teams t ON t.id = d.team_id
-                INNER JOIN courses c ON c.id = a.course_id
-                INNER JOIN deliverable_attachment_versions dav ON dav.deliverable_id = d.id
-              WHERE d.course_id = ? AND t.primary_faculty_id = ?"
-
-        #queue = Deliverable.find_by_sql([sql, course_id, assignment_id])
-        queue = Deliverable.find_by_sql([sql, course_id, faculty_id])
+        queue = Deliverable.joins(:team).where(:course_id => course_id, "teams.primary_faculty_id" => faculty_id).all
 
         # This course may have teams, but this deliverable may not be a team deliverable. In that case:
         if queue.nil?
-          sql = "SELECT a.name AS assignment_name, d.updated_at AS last_updated, a.task_number,
-              u.human_name AS owner_name, d.creator_id, dav.attachment_file_name AS attachment_file_name, a.is_team_deliverable,
-              dav.id AS attachment_versions
-             FROM deliverables d
-             INNER JOIN assignments a ON d.assignment_id = a.id
-             INNER JOIN users u ON u.id = d.creator_id
-             INNER JOIN deliverable_attachment_versions dav ON dav.deliverable_id = d.id
-             WHERE d.course_id = ? AND a.id = ?"
+          #sql = "SELECT a.name AS assignment_name, d.updated_at AS last_updated, a.task_number,
+          #    u.human_name AS owner_name, d.creator_id, dav.attachment_file_name AS attachment_file_name, a.is_team_deliverable,
+          #    dav.id AS attachment_versions
+          #   FROM deliverables d
+          #   INNER JOIN assignments a ON d.assignment_id = a.id
+          #   INNER JOIN users u ON u.id = d.creator_id
+          #   INNER JOIN deliverable_attachment_versions dav ON dav.deliverable_id = d.id
+          #   WHERE d.course_id = ? AND a.id = ?"
 
-          queue = Deliverable.find_by_sql([sql, course_id, assignment_id])
+          #queue = Deliverable.find_by_sql([sql, course_id, assignment_id])
+          #queue = Deliverable.joins('INNER JOIN users ON users.id = deliverables.creator_id').where(:course_id => course_id, "users.id" => faculty_id).all
+          queue = Deliverable.where(:course_id => course_id).all
 
         end # end 'Teams in course but individual deliverable'
 
-      else
+      else # Do not filter by my teams, show every deliverable
 
-        # Do not filter by my teams, show everyone
-        #queue = Deliverable.where(:course_id => course_id).all
-        queue = Deliverable.find_by_sql(["SELECT * FROM deliverables WHERE course_id = ?", course_id])
+        queue = Deliverable.where(:course_id => course_id).all
 
       end # end 'Filter by my teams'
 

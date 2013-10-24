@@ -3,18 +3,26 @@ require 'controllers/permission_behavior'
 
 describe DeliverablesController do
 
-    before do
-      @admin_andy = FactoryGirl.create(:admin_andy)
-      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
-      @faculty_fagan = FactoryGirl.create(:faculty_fagan)
-      @student_sam = FactoryGirl.create(:student_sam)
-      @student_sally = FactoryGirl.create(:student_sally)
-    end
+  before do
+    @admin_andy = FactoryGirl.create(:admin_andy)
+    @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+    @faculty_fagan = FactoryGirl.create(:faculty_fagan)
+    @student_sam = FactoryGirl.create(:student_sam)
+    @student_sally = FactoryGirl.create(:student_sally)
 
-    describe "GET index for course" do
+
+  end
+
+  describe "GET index for course" do
+
+    ## beg del turing
+=begin
       before(:each) do
+
+
         @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
         @deliverable = stub_model(Deliverable, :course_id => @course.id)
+
         Deliverable.stub_chain(:where, :all).and_return([@deliverable, @deliverable])
 
         @course.stub(:grading_rule).and_return(true)
@@ -32,135 +40,185 @@ describe DeliverablesController do
           get :grading_queue_for_course, :course_id => @course.id
           assigns(:deliverables).should == [@deliverable, @deliverable]
         end
+=end
+    ## end del turing
+
+    ## beg add Team turing
+    before(:each) do
+      @course = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+      @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
+      @assignment2 = FactoryGirl.create(:assignment_1,:course => @course)
+
+      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
+      @team_test =  FactoryGirl.create(:team_test, :course=>@course)
+
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment1)
+      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment2)
+      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1)
+
+      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
+
+      @course.stub(:grading_rule).and_return(true)
+      @course.stub_chain(:grading_rule, :default_values?).and_return(true)
+      Course.stub(:find).and_return(@course)
+
+    end
+
+    context "as the faculty owner of the course" do
+      before do
+        Deliverable.stub(:grading_queue_display).and_return([@deliverable1,@deliverable2])
+        login(@faculty_frank)
       end
 
-      context "as an admin" do
 
-        before do
-          login(@admin_andy)
-        end
+      it 'shows deliverables of only my teams' do
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        @expected_deliverable = assigns(:deliverables)
 
-        it 'assigns @deliverables' do
-          get :grading_queue_for_course, :course_id => @course.id
-          assigns(:deliverables).should == [@deliverable, @deliverable]
-        end
+        @expected_deliverable.should have(2).items
+        @expected_deliverable[0].should == @deliverable1
+        @expected_deliverable[1].should == @deliverable2
       end
 
-      context "as any other user" do
-        before do
-          login(@faculty_fagan)
-          get :grading_queue_for_course, :course_id => @course.id
-        end
+      ## end add Team turing
 
-        it_should_behave_like "permission denied"
-      end
     end
 
 
-    describe "GET my_deliverables" do
-      before(:each) do
-        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @past_course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 41)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
-        @current_assignment = stub_model(Assignment, :course_id => @course.id)
-        @past_assignment = stub_model(Assignment, :course_id => @past_course.id)
-        Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
-        Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
-        Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :current).and_return([@current_assignment])
-        Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :past).and_return([@past_assignment])
-        Course.stub(:find).and_return(@course)
-        User.any_instance.stub(:registered_for_these_courses_during_current_semester).and_return([@course])
-        User.any_instance.stub(:registered_for_these_courses_during_past_semesters).and_return([@past_course])
+    context "as an admin" do
+      before do
+        ## beg add turing
+        Deliverable.stub(:grading_queue_display).and_return([@deliverable3,@deliverable2,@deliverable1])
+        ## end add turing
+        login(@admin_andy)
       end
 
-      context "as the owner of the deliverable" do
-        before do
-          login(@student_sam)
-        end
+      it 'assigns @deliverables' do
+        get :grading_queue_for_course, :course_id => @course.id
+        @expected_deliverable = assigns(:deliverables)
+        @expected_deliverable.should == [@deliverable3, @deliverable2, @deliverable1]
+        ## end chg turing
+        pending
+      end
+    end
 
-        it 'assigns deliverables' do
-          get :my_deliverables, :id => @student_sam.id
-          #assigns(:current_deliverables).should == [@deliverable, @deliverable]
-          #assigns(:past_deliverables).should == [@deliverable, @deliverable]
-          assigns(:current_courses).should == [@course]
-          assigns(:past_courses).should == [@past_course]
-          assigns(:current_assignments).should == [@current_assignment]
-          assigns(:past_assignments).should == [@past_assignment]
-        end
+    context "as any other user" do
+      before do
+        login(@faculty_fagan)
+        get :grading_queue_for_course, :course_id => @course.id
       end
 
-      context "as an faculty" do
+      it_should_behave_like "permission denied"
+    end
+  end
 
-        before do
-          login(@faculty_frank)
-        end
 
-        it 'assigns @deliverables' do
-          get :my_deliverables, :id => @student_sam.id
-          assigns(:current_deliverables).should == [@deliverable, @deliverable]
-          assigns(:past_deliverables).should == [@deliverable, @deliverable]
-        end
+  describe "GET my_deliverables" do
+    before(:each) do
+      @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+      @past_course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 41)
+      @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id)
+      @current_assignment = stub_model(Assignment, :course_id => @course.id)
+      @past_assignment = stub_model(Assignment, :course_id => @past_course.id)
+      Deliverable.stub(:find_current_by_user).and_return([@deliverable, @deliverable])
+      Deliverable.stub(:find_past_by_user).and_return([@deliverable, @deliverable])
+      Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :current).and_return([@current_assignment])
+      Assignment.stub(:list_assignments_for_student).with(@student_sam.id , :past).and_return([@past_assignment])
+      Course.stub(:find).and_return(@course)
+      User.any_instance.stub(:registered_for_these_courses_during_current_semester).and_return([@course])
+      User.any_instance.stub(:registered_for_these_courses_during_past_semesters).and_return([@past_course])
+    end
+
+    context "as the owner of the deliverable" do
+      before do
+        login(@student_sam)
       end
 
-      context "as any other student" do
+      it 'assigns deliverables' do
+        get :my_deliverables, :id => @student_sam.id
+        #assigns(:current_deliverables).should == [@deliverable, @deliverable]
+        #assigns(:past_deliverables).should == [@deliverable, @deliverable]
+        assigns(:current_courses).should == [@course]
+        assigns(:past_courses).should == [@past_course]
+        assigns(:current_assignments).should == [@current_assignment]
+        assigns(:past_assignments).should == [@past_assignment]
+      end
+    end
+
+    context "as an faculty" do
+
+      before do
+        login(@faculty_frank)
+      end
+
+      it 'assigns @deliverables' do
+        get :my_deliverables, :id => @student_sam.id
+        assigns(:current_deliverables).should == [@deliverable, @deliverable]
+        assigns(:past_deliverables).should == [@deliverable, @deliverable]
+      end
+    end
+
+    context "as any other student" do
+      before do
+        login(@student_sally)
+        get :my_deliverables, :id => @student_sam.id
+      end
+
+      it_should_behave_like "permission denied for person deliverable"
+    end
+  end
+
+
+  describe "GET show" do
+    before(:each) do
+      @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
+      @current_assignment = mock_model(Assignment, :course_id => @course.id, :is_team_deliverable => true)
+      @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :assignment=>@current_assignment)
+      @team = stub_model(Team)
+      Deliverable.stub(:find).and_return(@deliverable)
+      @deliverable.stub(:team).and_return(@team)
+
+      @course.stub(:grading_rule).and_return(true)
+      @course.stub_chain(:grading_rule, :default_values?).and_return(true)
+      Course.stub(:find).and_return(@course)
+    end
+
+    context "for a team deliverable" do
+
+      it 'the owner can see it' do
+        login(@student_sam)
+        @team.stub(:is_user_on_team?).and_return(true)
+        get :show, :id => @deliverable.id
+        assigns(:deliverable).should == @deliverable
+      end
+
+      it "someone else on the team can see it" do
+        login(@student_sam)
+        @team.stub(:is_user_on_team?).and_return(true)
+        get :show, :id => @deliverable.id
+        assigns(:deliverable).should == @deliverable
+      end
+
+      it "any faculty can see it" do
+        login(@faculty_frank)
+        @team.stub(:is_user_on_team?).and_return(false)
+        get :show, :id => @deliverable.id
+        assigns(:deliverable).should == @deliverable
+      end
+
+      context "no other student can see it" do
         before do
+          @team.stub(:is_user_on_team?).and_return(false)
           login(@student_sally)
-          get :my_deliverables, :id => @student_sam.id
+          get :show, :id => @deliverable.id
         end
 
         it_should_behave_like "permission denied for person deliverable"
       end
     end
-
-
-    describe "GET show" do
-      before(:each) do
-        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @current_assignment = mock_model(Assignment, :course_id => @course.id, :is_team_deliverable => true)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :assignment=>@current_assignment)
-        @team = stub_model(Team)
-        Deliverable.stub(:find).and_return(@deliverable)
-        @deliverable.stub(:team).and_return(@team)
-
-        @course.stub(:grading_rule).and_return(true)
-        @course.stub_chain(:grading_rule, :default_values?).and_return(true)
-        Course.stub(:find).and_return(@course)
-      end
-
-      context "for a team deliverable" do
-
-        it 'the owner can see it' do
-          login(@student_sam)
-          @team.stub(:is_user_on_team?).and_return(true)
-          get :show, :id => @deliverable.id
-          assigns(:deliverable).should == @deliverable
-        end
-
-        it "someone else on the team can see it" do
-          login(@student_sam)
-          @team.stub(:is_user_on_team?).and_return(true)
-          get :show, :id => @deliverable.id
-          assigns(:deliverable).should == @deliverable
-        end
-
-        it "any faculty can see it" do
-          login(@faculty_frank)
-          @team.stub(:is_user_on_team?).and_return(false)
-          get :show, :id => @deliverable.id
-          assigns(:deliverable).should == @deliverable
-        end
-
-        context "no other student can see it" do
-          before do
-            @team.stub(:is_user_on_team?).and_return(false)
-            login(@student_sally)
-            get :show, :id => @deliverable.id
-          end
-
-          it_should_behave_like "permission denied for person deliverable"
-        end
-      end
-    end
+  end
 
 
 #    describe "GET edit" do

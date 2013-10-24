@@ -29,15 +29,20 @@ class DeliverablesController < ApplicationController
     end
 
     if current_user.is_admin?
+<<<<<<< HEAD
 
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
 
       #@deliverables = Deliverable.where(:course_id => @course.id).all
+=======
+      @deliverables = Deliverable.where(:course_id => @course.id).all
+>>>>>>> 42769ad276e901970294f999bb574ecacd965a02
 
+    elsif @course.faculty.include?(current_user)
       # Isil - Team Turing
-      @deliverables = Deliverable.new.grading_queue_display(params[:course_id], current_user.id)
+      @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     else
       has_permissions_or_redirect(:admin, root_path)

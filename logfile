@@ -1,0 +1,95 @@
+LOG:  database system was shut down at 2013-10-02 15:19:32 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "mariaemiliatorino" does not exist
+ERROR:  role "metorino" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER metorino ENCODING 'UTF8';
+	
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-10-02 16:02:46 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  role "metorino" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER metorino ENCODING 'UTF8';
+	
+ERROR:  role "metorino" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER metorino ENCODING 'UTF8';
+	
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-10-02 16:06:57 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  role "metorino" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER metorino ENCODING 'UTF8';
+	
+FATAL:  role "postgres" does not exist
+FATAL:  database "du" does not exist
+ERROR:  role "metorino" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER metorino ENCODING 'UTF8';
+	
+ERROR:  role "Emi" does not exist
+STATEMENT:  CREATE DATABASE cmu_education OWNER "Emi" ENCODING 'UTF8';
+	
+FATAL:  role "root" does not exist
+FATAL:  role "root" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  database "cmu_education_test" does not exist
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-10-02 17:16:07 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "cmu_education_test" does not exist
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-10-03 10:00:58 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "cmu_education_test" does not exist
+LOG:  automatic vacuum of table "cmu_education_test.public.users": could not (re)acquire exclusive lock for truncate scan
+LOG:  database system was interrupted; last known up at 2013-10-03 10:08:16 PDT
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  record with zero length at 0/293B450
+LOG:  redo is not required
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 1422) running in data directory "/usr/local/var/postgres"?
+ERROR:  column "SeverusSnape" does not exist at character 31
+STATEMENT:  update users set twiki_name = "SeverusSnape" where id=29
+ERROR:  column "SeverusSnape" does not exist at character 31
+STATEMENT:  update users set twiki_name = "SeverusSnape" where id=29
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-10-16 05:51:07 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 1288) running in data directory "/usr/local/var/postgres"?
+LOG:  automatic vacuum of table "cmu_education_test.public.registrations": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.user_versions": could not (re)acquire exclusive lock for truncate scan
+FATAL:  database "cmu_education_test" does not exist
+LOG:  automatic vacuum of table "cmu_education_test.public.courses": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.registrations": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.users": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.delayed_jobs": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.registrations": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.teams": could not (re)acquire exclusive lock for truncate scan
+LOG:  automatic vacuum of table "cmu_education_test.public.users": could not (re)acquire exclusive lock for truncate scan
+FATAL:  database "cmu_education_test" does not exist
+FATAL:  database "cmu_education_test" does not exist

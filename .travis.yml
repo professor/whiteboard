@@ -24,9 +24,14 @@ env:
 notifications:
   email:
     recipients:
-      - todd.sedano@sv.cmu.edu
-      - rofaida.abdelaal@sv.cmu.edu
+      - emilia.torino@west.cmu.edu
+      - mia.manalastas@sv.cmu.edu
+      - ira.jain@sv.cmu.edu
+      - david.lee@sv.cmu.edu
+      - isil.demir@sv.cmu.edu
+      #- todd.sedano@sv.cmu.edu
+      #- rofaida.abdelaal@sv.cmu.edu
     # on_success: [always|never|change] # default: change
     # on_failure: [always|never|change] # default: always
-    on_success: change
+    on_success: always
     on_failure: always
