@@ -1,1 +1,1 @@
-rvm --create use ruby-1.9.2-p180@whiteboard
+rvm --create use ruby-1.9.3-p448@whiteboard

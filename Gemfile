@@ -1,10 +1,17 @@
 source 'http://rubygems.org'
+ruby '1.9.3'
 
 gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
 gem 'thin'
 gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
-gem 'rails', '3.0.20'
+#gem 'rails', '3.0.20'
+gem 'rails', '3.1.12'
+group :assets do
+  gem 'sass-rails',   "~> 3.1.5"
+  gem 'coffee-rails', "~> 3.1.1"
+  gem 'uglifier',     ">= 1.0.3"
+end
 gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-sdk'
 gem 'mechanize'
@@ -31,12 +38,12 @@ gem 'indextank'
 gem 'paperclip', '2.5.0'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
-gem 'acts_as_versioned'
+gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
 gem 'acts_as_list'
 
 gem 'rmagick'
 
-gem 'exception_notification', :require => 'exception_notifier'
+gem 'exception_notification'#, :require => 'exception_notifier'
 
 gem 'pg'
 
@@ -72,8 +79,13 @@ group :development, :test do
 
   # see this link for details on which gem to install for debugger
   # http://stackoverflow.com/questions/10323119/cannot-load-such-file-script-rails-getting-this-error-while-remote-debuggin/10325110#10325110
-  gem 'ruby-debug-base19x'
-  gem 'ruby-debug-ide'
+  #gem 'ruby-debug-base19x'
+  #gem 'ruby-debug-ide'
+  #gem 'linecache19', '>= 0.5.13', :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
+  gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
+  gem 'ruby-debug-ide', '>= 0.4.17.beta14'
+  gem 'ruby-debug19', :require => 'ruby-debug'
+
 
   gem 'shoulda'
 #  gem 'hanna'
