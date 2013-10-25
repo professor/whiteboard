@@ -37,10 +37,15 @@
             Teams</label>
           </td>
           <td>
-            Assignments including: <br/>
+            Assignment: <br/>
             <select id="selected_assignment">
+              <option value="-1">All</option>
               <% @assignments.each do |assignment| %>
-                  <option value="<%= assignment.id%>"><%= assignment.assignment_order %> . <%= assignment.name %></option>
+                  <% last_option_selected = '' %>
+                  <% if assignment == @assignments.last then last_option_selected = ' selected="true"' end %>
+                  <option value="<%= assignment.id%>" <%=last_option_selected%> >
+                    <%= assignment.assignment_order %> . <%= assignment.name %>
+                  </option>
               <% end %>
             </select>
           </td>
@@ -48,7 +53,7 @@
             Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
             <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label>
             <br/>
-            <input id="filter_drafted" class="filter_status" type="checkbox"/><label for="filter_drafted">Drafted</label><br/>
+            <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label><br/>
             <input id="filter_graded" class="filter_status" type="checkbox"/><label for="filter_graded">Graded</label>
           </td>
         </tr>
