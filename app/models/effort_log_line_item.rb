@@ -1,6 +1,4 @@
 class EffortLogLineItem < ActiveRecord::Base
-  attr_accessible :day1, :day2, :day3, :day4, :day5, :day6, :day7
-  attr_protected :position
   acts_as_list :scope => :effort_log
 
   belongs_to :effort_log
