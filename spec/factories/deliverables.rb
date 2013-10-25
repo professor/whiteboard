@@ -27,4 +27,16 @@ FactoryGirl.define do
     association :assignment, :factory => :assignment_fse_individual
     association :course, :factory => :fse
   end
+  factory :individual_deliverable3, :parent => :deliverable do
+    id 113
+    association :creator_id, :factory => :student_setech_user
+    association :assignment, :factory => :assignment_fse_individual 
+    association :course, :factory => :fse
+  end
+    factory :individual_deliverable4, :parent => :deliverable do
+    id 114
+    association :creator_id, :factory => :student_phd_user
+    association :assignment, :factory => :assignment_fse_individual 
+    association :course, :factory => :fse
+  end
 end

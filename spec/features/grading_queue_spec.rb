@@ -22,7 +22,7 @@ describe "Login Page" do
 
   context "On the courses page" do
     before do
-      @course = FactoryGirl.create(:mfse_current_semester)
+      @course = FactoryGirl.create(:fse_current_semester)
       @faculty_assignment = FactoryGirl.create(:faculty_assignment,:course_id=>@course.id,:user_id=>@faculty_fagan.id)
       @course.faculty_assignments<<@faculty_assignment
       #@course.save 
@@ -58,11 +58,11 @@ describe "Login Page" do
     end
 
     it "should have a link for MSFE" do
-      page.should have_link("Metrics for Software Engineers (MfSE)")
+      page.should have_link("Foundations of Software Engineering (FSE)")
     end 
  
-    it"should display the page" do
-      save_and_open_page
-    end 
+    # it"should display the page" do
+    #   save_and_open_page
+    # end 
   end
 end
