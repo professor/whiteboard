@@ -75,10 +75,10 @@
       <li><a href="#tab-2">Individual Deliverables</a></li>
     </ul>
     <div id="tab-1">
-      <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @deliverables, :skip_course_column => true} %>
+      <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @team_deliverables, :skip_course_column => true} %>
     </div>
     <div id="tab-2">
-      <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+      <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @individual_deliverables, :skip_course_column => true} %>
     </div>
   </div>
 </div>

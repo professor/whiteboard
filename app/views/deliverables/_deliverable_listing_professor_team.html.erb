@@ -17,40 +17,34 @@
   </tr>
   </thead>
 
-
-
-
-
   <% deliverables.each do |deliverable| %>
       <% grade_status = deliverable['grading_status'] %>
-      <% if deliverable['is_team_deliverable'] == 't' %>
-          <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> ">
-            <% unless skip_course_column %>
-                <td><%= deliverable['course_name'] %></td>
-            <% end %>
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> ">
+        <% unless skip_course_column %>
+            <td><%= deliverable['course_name'] %></td>
+        <% end %>
 
-            <% if customised_name=="Deliverable" %>
-                <td><%= deliverable['task_number'] %></td>
-            <% end %>
+        <% if customised_name=="Deliverable" %>
+            <td><%= deliverable['task_number'] %></td>
+        <% end %>
 
-            <td><%= deliverable['deliverable_name'] %></td>
+        <td><%= deliverable['deliverable_name'] %></td>
 
-            <td><%= deliverable['advisor_name']%></td>
+        <td><%= deliverable['advisor_name']%></td>
 
-            <td>Team&nbsp;<%= deliverable['owner_name'] %></td>
+        <td>Team&nbsp;<%= deliverable['owner_name'] %></td>
 
-            <td>
-              <div id="<%=grade_status%>">&nbsp;</div>
-            </td>
+        <td>
+          <div id="<%=grade_status%>">&nbsp;</div>
+        </td>
 
-            <td>
-              <% if  grade_status=='graded' %>
-                  <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] %>
-              <% else %>
-                  <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'] %>
-              <% end %>
-            </td>
-          </tr>
-      <% end %>
+        <td>
+          <% if  grade_status=='graded' %>
+              <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] %>
+          <% else %>
+              <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'] %>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
 </table>
