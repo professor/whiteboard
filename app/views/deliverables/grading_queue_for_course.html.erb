@@ -41,9 +41,7 @@
             <select id="selected_assignment">
               <option value="-1">All</option>
               <% @assignments.each do |assignment| %>
-                  <% last_option_selected = '' %>
-                  <% if assignment == @assignments.last then last_option_selected = ' selected="true"' end %>
-                  <option value="<%= assignment.id%>" <%=last_option_selected%> >
+                  <option value="<%= assignment.id%>">
                     <%= assignment.name %>
                   </option>
               <% end %>
