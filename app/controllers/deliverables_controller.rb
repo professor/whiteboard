@@ -1,5 +1,4 @@
 class DeliverablesController < ApplicationController
-
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
@@ -30,21 +29,19 @@ class DeliverablesController < ApplicationController
     @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
+      # By Default fetch data for all teams
+      team_selection = DeliverableQueryHelper::TeamSelection::ALL_TEAMS
+
+      # If data is requested for MY_TEAMS, filter so.
       if params[:teams] == "my_teams"
-        faculty_id = current_user.id
-
-        where_clause = ' and (teams.primary_faculty_id = ? or teams.secondary_faculty_id = ?) '
-        team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course.id, where_clause, faculty_id, faculty_id)
-
-        where_clause = ' and stud_course_team_advisor_view.advisor_name = ? '
-        individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course.id, where_clause, current_user.human_name)
-      else
-        team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course.id)
-        individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course.id)
+        team_selection = DeliverableQueryHelper::TeamSelection::MY_TEAMS
       end
 
-      # Return all team deliverables and Individual deliverables for the current course
-      @deliverables = [team_deliverables.to_a, individual_deliverables.to_a].flatten
+      @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
+      @individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course, current_user, team_selection)
+
+      # Return all team deliverables and Individual deliverables for the current course in 1 object
+      @deliverables = [@team_deliverables.to_a, @individual_deliverables.to_a].flatten
     else
       has_permissions_or_redirect(:admin, root_path)
     end
