@@ -44,7 +44,7 @@
                   <% last_option_selected = '' %>
                   <% if assignment == @assignments.last then last_option_selected = ' selected="true"' end %>
                   <option value="<%= assignment.id%>" <%=last_option_selected%> >
-                    <%= assignment.assignment_order %> . <%= assignment.name %>
+                    <%= assignment.name %>
                   </option>
               <% end %>
             </select>
