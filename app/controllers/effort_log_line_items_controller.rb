@@ -97,4 +97,5 @@ class EffortLogLineItemsController < ApplicationController
   def redirect_to_effort_log_index
     redirect_to :controller => :effort_logs, :action => :index
   end
+
 end
