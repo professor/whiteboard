@@ -3,7 +3,7 @@ include IntegrationSpecHelper
 
 describe 'Grading queue' do
 
-  it 'As a faculty, I can sort all assignments or deliverables by task numbers' do
+  it 'As a faculty, I can sort all assignments or deliverables by task numbers', js:true do
 
     @course=FactoryGirl.create(:fse)
     @faculty_fagan = FactoryGirl.create(:faculty_fagan_user)
@@ -19,17 +19,13 @@ describe 'Grading queue' do
     @deliverable2=FactoryGirl.create(:individual_deliverable2, course_id: @course.id, creator_id: @student.id)
     @deliverable3=FactoryGirl.create(:individual_deliverable3, course_id: @course.id, creator_id: @student.id)
     @deliverable4=FactoryGirl.create(:individual_deliverable4, course_id: @course.id, creator_id: @student.id)
-    @deliverable1.stub(:get_grade_status).and_return(:graded)
-    @deliverable2.stub(:get_grade_status).and_return(:graded)
-    @deliverable3.stub(:get_grade_status).and_return(:graded)
-    @deliverable4.stub(:get_grade_status).and_return(:graded)
 
     visit course_deliverables_path(@course)
     #save_and_open_page
     #click task_number
     expect(page.find('th',text:'Task number').text).to eq('Task number')
     find('th', text: 'Task number').click
-    save_and_open_page
+    #save_and_open_page
 
   end
 end
