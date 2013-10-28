@@ -28,6 +28,7 @@ gem 'delayed_job', '2.1.4'
 gem 'indextank'
 
 #gem 'heroku'
+gem "cocaine", "0.3.2"
 gem 'paperclip', '2.5.0'
 
 gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
@@ -54,6 +55,7 @@ gem 'vpim'  # user for exporting contacts to vCard and iCalendar support
 gem 'seedbank'
 gem 'spreadsheet'
 
+gem 'strong_parameters'
 
 group :production do
   gem 'thin'
@@ -100,4 +102,4 @@ end
 
 #gem 'gchartrb'
 
-#gem 'strong_parameters'
+
