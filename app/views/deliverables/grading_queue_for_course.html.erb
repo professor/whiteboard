@@ -31,7 +31,7 @@
           </td>
           <td>
             Assignment: <br/>
-            <select id="selected_assignment">
+            <select id="selected_assignment" onchange="updateResultTablesToMatchFilter();">
               <option value="-1">All</option>
               <% @assignments.each do |assignment| %>
                   <option value="<%= assignment.id%>">
@@ -42,10 +42,14 @@
           </td>
           <td>
             Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
-            <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label>
+            <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_ungraded">Ungraded</label>
             <br/>
-            <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label><br/>
-            <input id="filter_graded" class="filter_status" type="checkbox"/><label for="filter_graded">Graded</label>
+            <input id="filter_drafted" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_drafted">Drafted</label>
+            <br/>
+            <input id="filter_graded" class="filter_status" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_graded">Graded</label>
           </td>
         </tr>
       </table>
@@ -144,9 +148,42 @@
         $search.quicksearch('.sortable tbody tr');
 
         // 3. Update the table rows to suite Assignment and Grade Status selections.
+        updateResultTablesToMatchFilter();
 
     }
 
-    // Invoke the below function at page load.
-    preparePageToMatchFilter();
+    function updateResultTablesToMatchFilter() {
+        // Hide all the rows in the individual and team tables
+        $("#grading_queue_table tbody tr").hide();
+
+        // Get the selected assignment
+        var selected_item_val = $("#selected_assignment option:selected").attr('value');
+
+        // Filter by grading status
+        var selected_grading_status = new Array();
+
+        if ($("#filter_ungraded").is(':checked')) { selected_grading_status.push('ungraded'); }
+        if ($("#filter_drafted").is(':checked')) { selected_grading_status.push('drafted'); }
+        if ($("#filter_graded").is(':checked')) { selected_grading_status.push('graded'); }
+
+        // For all elements that are selected, show them in the result tables
+        for(var i = 0; i < selected_grading_status.length; i++) {
+            var show_for_status = selected_grading_status[i];
+
+            var rows;
+            if(selected_item_val == -1) {
+                // If all assignments is selected .. then
+                rows = $("tr."+show_for_status);
+            } else {
+                // If a specific assignment is selected ... then include that in the filter criteria
+                rows = $("tr." + show_for_status + "." + selected_item_val);
+            }
+            rows.show();
+        }
+    }
+
+    $(document).ready(function () {
+        // Invoke the below function at page load.
+        preparePageToMatchFilter();
+    });
 </script>
