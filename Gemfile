@@ -82,6 +82,7 @@ group :development, :test do
   gem 'factory_girl_rails', '3.4.0'
 #  gem 'capybara'
   gem 'capybara', '1.1.1'
+  gem 'capybara-webkit'
   gem 'jasmine'
   gem 'launchy'
   gem 'ladle', '~> 0.2.0'

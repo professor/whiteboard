@@ -196,12 +196,15 @@ class User < ActiveRecord::Base
     return phones
   end
 
+  # The regular expression matches on twiki usernames. Ie AliceSmithJones re
+  # This does not work with numbers or characters in the firstname field
+  # http://rubular.com/
+  def self.camelcase_twiki_regex
+    /([A-Z][a-z]*)([A-Z][\w]*)/
+  end
 
   def self.parse_twiki(username)
-    # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
-    # This does not work with numbers or characters in the firstname field
-    # http://rubular.com/
-    match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
+    match = username.match camelcase_twiki_regex
     if match.nil?
       return nil
     else
