@@ -140,7 +140,6 @@ class CoursesController < ApplicationController
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       if @course.save
-
         flash[:notice] = 'Course was successfully created.'
         format.html { redirect_to edit_course_path(@course) }
         format.xml { render :xml => @course, :status => :created, :location => @course }
@@ -253,7 +252,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-      params.require(:course).permit(:number,:short_name,:name,:semester,:mini, :year)
+      params.require(:course).permit(:number,:name,:short_name,:semester,:mini, :year)
   end
 
 end
