@@ -83,10 +83,11 @@ class Deliverable < ActiveRecord::Base
 
         # This course may have teams, but this deliverable may not be a team deliverable. In that case:
         if queue.empty?
-          sql = "SELECT * FROM deliverables WHERE course_id = ? AND creator_id IN (
+          # team_id in deliverable is null when it's an individual deliverable
+          sql = "SELECT * FROM deliverables d WHERE course_id = ? AND creator_id IN (
           SELECT ta.user_id FROM teams t
           INNER JOIN team_assignments ta ON t.id = ta.team_id
-          WHERE t.primary_faculty_id = ?)"
+          WHERE t.primary_faculty_id = ? AND d.team_id IS NULL)"
 
           queue = Deliverable.find_by_sql([sql, course_id, faculty_id])
 

@@ -44,6 +44,12 @@ FactoryGirl.define do
     association :creator, :factory => :student_Test_user
     private_note "Test team  first deliverable"
   end
+
+  factory :test_individual_deliverable, :parent => :deliverable do
+    team_id nil
+    association :creator, :factory => :student_sally_user
+    association :course, :factory => :fse
+  end
   ## end add turing
 
 end
