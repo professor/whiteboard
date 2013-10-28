@@ -222,12 +222,12 @@ class DeliverablesController < ApplicationController
     there_is_an_attachment = params[:deliverable_attachment][:attachment]
     if there_is_an_attachment
 
-      @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+      @attachment = DeliverableAttachment.new(deliverable_attachment_params)
       @attachment.submitter = current_user
       @deliverable.attachment_versions << @attachment
       @attachment.deliverable = @deliverable
 
-      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(deliverable_params)
         @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully updated.'
         redirect_to(@deliverable)
@@ -235,7 +235,7 @@ class DeliverablesController < ApplicationController
         render :action => "edit"
       end
     else
-      if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+      if @deliverable.valid? and @deliverable.update_attributes(deliverable_params)
         flash[:notice] = 'Deliverable was successfully updated.'
         redirect_to(@deliverable)
       else
