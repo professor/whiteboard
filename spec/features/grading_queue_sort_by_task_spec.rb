@@ -24,8 +24,8 @@ describe 'Grading queue' do
 #      @student = mock_model("User", human_name: "Bob Bobberson", id: 99999)
 #      @deliverableAttachment1=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable 1",:deliverable_id=>@deliverable1.id,:submitter_id=>@student.id)
 
-      visit course_deliverables_path(@course)
-      save_and_open_page
+#      visit course_deliverables_path(@course)
+#      save_and_open_page
 
     end
 end

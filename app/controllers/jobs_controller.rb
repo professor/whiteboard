@@ -44,7 +44,7 @@ class JobsController < ApplicationController
   # PUT /jobs/1
   # PUT /jobs/1.xml
   def update
-    params[:job][:supervisors_override] = params[:supervisors]
+    params[:job][:supervisors_override] = params[job_sv_params]
     params[:job][:employees_override] = params[:students]
     @job = Job.find(params[:id])
     authorize! :update, @job
@@ -67,5 +67,10 @@ class JobsController < ApplicationController
     @jobs = Job.active
     @all_employees = Job.all_employees
   end
+  
+  private
+    def job_sv_params
+      params.require(:supervisors).permit(:user_id)
+    end
 
 end

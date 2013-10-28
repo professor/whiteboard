@@ -74,10 +74,7 @@ GEM
     ckeditor (3.6.3)
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
-    cocaine (0.5.3)
-      climate_control (>= 0.0.3, < 1.0)
+    cocaine (0.3.2)
     columnize (0.3.6)
     daemons (1.1.9)
     delayed_job (2.1.4)
@@ -304,6 +301,7 @@ DEPENDENCIES
   capybara (= 1.1.1)
   capybara-webkit
   ckeditor (= 3.6.3)
+  cocaine (= 0.3.2)
   daemons (~> 1.1.4)
   delayed_job (= 2.1.4)
   devise
