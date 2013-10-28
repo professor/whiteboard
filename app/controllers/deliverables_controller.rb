@@ -29,16 +29,8 @@ class DeliverablesController < ApplicationController
     end
 
     if current_user.is_admin?
-<<<<<<< HEAD
 
       @deliverables = Deliverable.where(:course_id => @course.id).all
-
-    elsif @course.faculty.include?(current_user)
-
-      #@deliverables = Deliverable.where(:course_id => @course.id).all
-=======
-      @deliverables = Deliverable.where(:course_id => @course.id).all
->>>>>>> 42769ad276e901970294f999bb574ecacd965a02
 
     elsif @course.faculty.include?(current_user)
       # Isil - Team Turing
