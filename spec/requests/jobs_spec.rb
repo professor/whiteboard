@@ -1,6 +1,5 @@
 require "spec_helper"
 
-
 describe "Jobs" do
 
   context "When the user is on the new job page" do
@@ -99,7 +98,6 @@ describe "Jobs" do
       click_link "Add a student"
       fill_in "people_name", :with => "Student Sam"
       click_button('Update Job')
-
       page.should have_content("Job was successfully updated.")
       page.should have_content("#{@job.title} (Student Sam)")
     end
@@ -107,10 +105,13 @@ describe "Jobs" do
       @job.employees << @student_sam
       @job.save
       visit edit_job_path(@job)
+      save_and_open_page
       within("#employees_in_a_collection") do
         click_on("remove")
       end
+      save_and_open_page
       click_button('Update Job')
+      save_and_open_page
       page.should have_no_content("#{@job.title} (Student Sam)")
     end
 
