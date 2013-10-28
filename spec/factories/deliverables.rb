@@ -12,6 +12,7 @@ FactoryGirl.define do
 
   factory :turing_individual_deliverable, :parent => :deliverable do
     team_id nil
+    association :creator, :factory => :student_john_user
     association :course, :factory => :fse
   end
 
