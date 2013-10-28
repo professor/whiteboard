@@ -1,3 +1,5 @@
+require_relative('../../app/models/deliverable_query_helper')
+
 class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
@@ -30,11 +32,11 @@ class DeliverablesController < ApplicationController
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
       # By Default fetch data for all teams
-      team_selection = DeliverableQueryHelper::TeamSelection::ALL_TEAMS
+      team_selection = TeamSelection::ALL_TEAMS
 
       # If data is requested for MY_TEAMS, filter so.
       if params[:teams] == "my_teams"
-        team_selection = DeliverableQueryHelper::TeamSelection::MY_TEAMS
+        team_selection = TeamSelection::MY_TEAMS
       end
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
