@@ -76,7 +76,7 @@ GEM
       orm_adapter (~> 0.0.5)
     climate_control (0.0.3)
       activesupport (>= 3.0)
-    cocaine (0.5.3)
+    cocaine (0.2.0)
       climate_control (>= 0.0.3, < 1.0)
     columnize (0.3.6)
     daemons (1.1.9)
@@ -300,6 +300,7 @@ DEPENDENCIES
   capybara (= 1.1.1)
   capybara-webkit
   ckeditor (= 3.6.3)
+  cocaine (= 0.2.0)
   daemons (~> 1.1.4)
   delayed_job (= 2.1.4)
   devise

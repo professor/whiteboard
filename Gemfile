@@ -35,6 +35,7 @@ gem 'acts_as_versioned'
 gem 'acts_as_list'
 
 gem 'rmagick'
+gem 'cocaine', '0.2.0'
 
 gem 'exception_notification', '3.0.0', :require => 'exception_notifier'
 
