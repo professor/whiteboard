@@ -2,14 +2,14 @@
     <thead>
         <tr>
           <th>Name</th>
-          <th>Task Number</th>
+          <th>Task</th>
           <th><%= nomenclature_assignment_or_deliverable %></th>
           <th>Grade</th>
         </tr>
     </thead>
     <tbody>
         <% deliverables.each do |deliverable| %>
-            <tr>
+            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>">
                 <td>
                     <%= 'Team' if deliverable.is_team_deliverable? %>
                     <%= deliverable.owner_name %>
@@ -47,4 +47,10 @@
   }
   $('#show_graded').click(updateShowGraded);
   updateShowGraded();
+
+  function updateShowTeamAndOrIndividual() {
+        $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
+        $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
+  }
+  $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
 </script>
