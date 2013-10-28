@@ -149,12 +149,18 @@
 
         // 3. Update the table rows to suite Assignment and Grade Status selections.
         updateResultTablesToMatchFilter();
-
     }
 
+    // This function looks at the Assignment and Grading Status selections
+    // and updates the results in the team and individual deliverables
+    // tables accordingly.
     function updateResultTablesToMatchFilter() {
         // Hide all the rows in the individual and team tables
         $("#grading_queue_table tbody tr").hide();
+
+        // Reset the state of No results messages if there was data previously
+        if( $("#indiDelDiv").show() ) { $("#noIndiDelDiv").hide(); }
+        if( $("#teamDelDiv").show() ) { $("#noTeamDelDiv").hide(); }
 
         // Get the selected assignment
         var selected_item_val = $("#selected_assignment option:selected").attr('value');
@@ -180,10 +186,30 @@
             }
             rows.show();
         }
+
+        showNoRowsMessageIfNeeded();
+    }
+
+    // This function shows human readable no data to show messages if
+    // there is no resulting data after filtration.
+    function showNoRowsMessageIfNeeded() {
+        // Check if there are no rows under team deliverables table
+        var numOfVisibleRows = $("#teamDelDiv tr:visible").length;
+        if(numOfVisibleRows && numOfVisibleRows == 1) {
+            $("#noTeamDelDiv").show();
+            $("#teamDelDiv").hide();
+        }
+
+        // Check if there are no rows under individual deliverables table
+        numOfVisibleRows = $("#indiDelDiv tr:visible").length;
+        if(numOfVisibleRows && numOfVisibleRows == 1) {
+            $("#noIndiDelDiv").show();
+            $("#indiDelDiv").hide();
+        }
     }
 
     $(document).ready(function () {
-        // Invoke the below function at page load.
+        // Invoke the below function on page load.
         preparePageToMatchFilter();
     });
 </script>

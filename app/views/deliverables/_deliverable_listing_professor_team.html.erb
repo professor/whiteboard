@@ -1,7 +1,11 @@
 <% reset_cycle %>
+<div id="noTeamDelDiv" hidden="hidden">
+  <h3>No Team deliverables match the selected filter criteria.</h3>
+</div>
 <% if @deliverables.empty? %>
-    <h3>No Individual deliverables match the selected filter criteria.</h3>
+    <script>$("#noTeamDelDiv").show();</script>
 <% else %>
+<div id="teamDelDiv">
 <% customised_name= nomenclature_assignment_or_deliverable %>
 <table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="100%">
   <thead>
@@ -51,4 +55,5 @@
       </tr>
   <% end %>
 </table>
+</div>
 <% end %>
