@@ -114,6 +114,12 @@ describe 'When I visit the grading queue page,' do
         find('div#teamDelDiv').text.should_not have_content(@faculty_fagan.human_name)
         find('div#teamDelDiv').text.should_not have_content('Review Grade')
       end
+
+      it "should have a column that indicates the grading status of each assignment" do
+        page.should have_css('#tab-1', :text => 'Indicator')
+        save_and_open_page
+        page.should have_css('#ungraded', :count => 1)
+      end
     end
   end
 end
