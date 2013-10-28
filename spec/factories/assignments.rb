@@ -32,25 +32,24 @@ FactoryGirl.define do
     sequence(:assignment_order) {|i| i}
   end
 
-    factory :assignment_fse_individual, :parent=>:assignment do
-      name "fse assignment individual"
-      task_number 9
-      is_team_deliverable false
-      association :course, :factory => :fse
-    end
+  factory :assignment_fse_individual, :parent=>:assignment do
+    name "fse assignment individual"
+    task_number 9
+    is_team_deliverable false
+    association :course, :factory => :fse
+  end
 
-    factory :assignment_fse_individual2, :parent=>:assignment do
-      name "fse assignment individual"
-      task_number 9
-      is_team_deliverable false
-      association :course, :factory => :fse
-    end
-    
-    factory :assignment_fse_individual3, :parent=>:assignment do
-      name "fse assignment individual"
-      task_number 9
-      is_team_deliverable false
-      association :course, :factory => :fse
-    end
+  factory :assignment_fse_individual2, :parent=>:assignment do
+    name "fse assignment individual 2"
+    task_number 2
+    is_team_deliverable false
+    association :course, :factory => :fse
+  end
 
+  factory :assignment_fse_individual3, :parent=>:assignment do
+    name "fse assignment individual 3"
+    task_number 3
+    is_team_deliverable false
+    association :course, :factory => :fse
+  end
 end

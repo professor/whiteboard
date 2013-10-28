@@ -38,5 +38,7 @@ FactoryGirl.define do
     association :creator_id, :factory => :student_phd_user
     association :assignment, :factory => :assignment_fse_individual 
     association :course, :factory => :fse_current_semester
+
   end
+
 end
