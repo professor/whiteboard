@@ -27,8 +27,8 @@ class JobsController < ApplicationController
   # POST /jobs
   def create
     authorize! :create, Job
-    params[:job][:supervisors_override] = params[:supervisors]
-    params[:job][:employees_override] = params[:students]
+    params[:job][:supervisors_override] = supervisors_params
+    params[:job][:employees_override] = params[:students] #students_params
     @job = Job.new(params[:job])
     @projects = SponsoredProject.current
 
@@ -44,8 +44,9 @@ class JobsController < ApplicationController
   # PUT /jobs/1
   # PUT /jobs/1.xml
   def update
-    params[:job][:supervisors_override] = job_sv_params
-    params[:job][:employees_override] = job_emp_params
+    puts params.inspect
+    params[:job][:supervisors_override] = supervisors_params
+    params[:job][:employees_override] = params[:students] #students_params
     @job = Job.find(params[:id])
     authorize! :update, @job
     if  params[:job][:is_closed].present? && params[:job][:is_closed] == "true"
@@ -69,13 +70,16 @@ class JobsController < ApplicationController
   end
   
   private
-    def job_sv_params
-      params.require(:supervisors).permit(:user_id)
+    def supervisors_params
+      params.require(:supervisors)
     end
 
-    def job_emp_params
-      params.require(:students).permit(:user_id)
+    def supervisor_params(supervisor)
+      supervisor.permit(:people_name)
     end
 
+    def students_params
+      params.permit(:students => [])
+    end
 
 end
