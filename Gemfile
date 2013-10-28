@@ -100,4 +100,5 @@ end
 
 #gem 'gchartrb'
 
-#gem 'strong_parameters'
+gem 'strong_parameters'
+
