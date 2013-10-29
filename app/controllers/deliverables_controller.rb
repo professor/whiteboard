@@ -1,5 +1,3 @@
-require_relative('../../app/models/deliverable_query_helper')
-
 class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
@@ -32,11 +30,11 @@ class DeliverablesController < ApplicationController
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
       # By Default fetch data for all teams
-      team_selection = TeamSelection::ALL_TEAMS
+      team_selection = 2 # ALL_TEAMS
 
       # If data is requested for MY_TEAMS, filter so.
       if params[:teams] == "my_teams"
-        team_selection = TeamSelection::MY_TEAMS
+        team_selection = 1 # MY_TEAMS
       end
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
@@ -123,7 +121,7 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
     @courses = current_user.registered_for_these_courses_during_current_semester
-    
+
     # permitting parameters to protect against mass assignment
     params.permit(:course_id)
     if params[:course_id]
@@ -308,14 +306,14 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-       if flash[:error].blank?
-         flash[:error] = nil
-         flash[:notice] = 'Feedback successfully saved.'
-         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
-       else
-         flash[:error] = flash[:error].join("<br>")
-         format.html { redirect_to(@deliverable) }
-       end
+      if flash[:error].blank?
+        flash[:error] = nil
+        flash[:notice] = 'Feedback successfully saved.'
+        format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+      else
+        flash[:error] = flash[:error].join("<br>")
+        format.html { redirect_to(@deliverable) }
+      end
     end
   end
 
@@ -335,11 +333,11 @@ class DeliverablesController < ApplicationController
   private
   # Permitted params
   def deliverable_params
-      params.require(:deliverable).permit(:assignment_id,:course_id)
+    params.require(:deliverable).permit(:assignment_id,:course_id)
   end
 
   def deliverable_attachment_params
-      params.require(:deliverable_attachment).permit(:comment,:attachment)
+    params.require(:deliverable_attachment).permit(:comment,:attachment)
   end
 
 end
