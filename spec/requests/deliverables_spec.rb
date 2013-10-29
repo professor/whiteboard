@@ -142,7 +142,7 @@ describe "deliverables" do
         login_with_oauth @professor
         # visit deliverable_feedback_path(Deliverable.last)  #if we separate out the feedback page
         visit deliverable_path(Deliverable.last)
-        save_and_open_page
+        #save_and_open_page
         page.should have_content("Grade Team Deliverable")
       }
 

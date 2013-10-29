@@ -105,13 +105,10 @@ describe "Jobs" do
       @job.employees << @student_sam
       @job.save
       visit edit_job_path(@job)
-      save_and_open_page
       within("#employees_in_a_collection") do
         click_on("remove")
       end
-      save_and_open_page
       click_button('Update Job')
-      save_and_open_page
       page.should have_no_content("#{@job.title} (Student Sam)")
     end
 

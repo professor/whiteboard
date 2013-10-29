@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     #User.find_by_id 725 #Cecile
     #User.last
     #User.find_by_twiki_name("EdKatz")
-    #User.find_by_twiki_name "ToddSedano"
+    #User.find_by_human_name "Todd Sedano"
   #end
 
   def authenticate_user!
