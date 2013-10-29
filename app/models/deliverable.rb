@@ -82,16 +82,16 @@ class Deliverable < ActiveRecord::Base
         queue = Deliverable.joins(:team).where(:course_id => course_id, "teams.primary_faculty_id" => faculty_id).all
 
         # This course may have teams, but this deliverable may not be a team deliverable. In that case:
-        if queue.empty?
-          # team_id in deliverable is null when it's an individual deliverable
-          sql = "SELECT * FROM deliverables d WHERE course_id = ? AND creator_id IN (
-          SELECT ta.user_id FROM teams t
-          INNER JOIN team_assignments ta ON t.id = ta.team_id
-          WHERE t.primary_faculty_id = ? AND d.team_id IS NULL)"
+        sql = "SELECT * FROM deliverables d WHERE course_id = ? AND creator_id IN (
+        SELECT ta.user_id FROM teams t
+        INNER JOIN team_assignments ta ON t.id = ta.team_id
+        WHERE t.primary_faculty_id = ? AND d.team_id IS NULL)" # team_id in deliverable is null when it's an individual deliverable
 
-          queue = Deliverable.find_by_sql([sql, course_id, faculty_id])
+        results = Deliverable.find_by_sql([sql, course_id, faculty_id])
 
-        end # end 'Teams in course but individual deliverable'
+        results.each do |result|
+          queue << result
+        end
 
       else # Do not filter by my teams, show every deliverable
 
