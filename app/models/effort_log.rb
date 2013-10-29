@@ -1,5 +1,4 @@
 class EffortLog < ActiveRecord::Base
-  attr_accessible :user, :week_number, :year, :sum
   has_many :effort_log_line_items, :dependent => :destroy
   belongs_to :user
 

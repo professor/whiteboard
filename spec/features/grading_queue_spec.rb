@@ -60,9 +60,9 @@
         page.should have_link("Metrics for Software Engineers (MfSE)")
       end
 
-      # it"should display the grading queue page" do
-      #   visit course_deliverables_path(@course)	
-      #   save_and_open_page
-      # end
+      it"should display the grading queue page" do
+        visit course_deliverables_path(@course)	
+        #save_and_open_page
+      end
     end
   end
