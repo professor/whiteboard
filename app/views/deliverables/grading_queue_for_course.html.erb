@@ -195,14 +195,14 @@
     function showNoRowsMessageIfNeeded() {
         // Check if there are no rows under team deliverables table
         var numOfVisibleRows = $("#teamDelDiv tr:visible").length;
-        if(numOfVisibleRows && numOfVisibleRows == 1) {
+        if(numOfVisibleRows && numOfVisibleRows <= 1) {
             $("#noTeamDelDiv").show();
             $("#teamDelDiv").hide();
         }
 
         // Check if there are no rows under individual deliverables table
         numOfVisibleRows = $("#indiDelDiv tr:visible").length;
-        if(numOfVisibleRows && numOfVisibleRows == 1) {
+        if(numOfVisibleRows && numOfVisibleRows <= 1) {
             $("#noIndiDelDiv").show();
             $("#indiDelDiv").hide();
         }
