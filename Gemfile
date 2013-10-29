@@ -36,7 +36,7 @@ gem 'acts_as_list'
 
 gem 'rmagick'
 
-gem 'exception_notification', '3.0.0', :require => 'exception_notifier'
+gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
 
@@ -100,6 +100,6 @@ end
 
 #gem 'gchartrb'
 
-#gem 'strong_parameters'
+gem 'strong_parameters'
 
 gem 'cocaine', '0.3.2'
