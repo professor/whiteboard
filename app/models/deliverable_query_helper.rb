@@ -104,7 +104,7 @@ class DeliverableQueryHelper
         ' and stud.is_student = \'t\' ' +
         ' and assignments.is_submittable = \'t\' ' +
         ' and assignments.is_team_deliverable = \'f\' '+
-        ') student_deliverables join ' +
+        ') student_deliverables left outer join ' +
         ' (select courses.id as course_id, courses.name as course_name ' +
         ' , max(prof.human_name) as advisor_name ' +
         ' , max(teams.id) as team_id, max(teams.name) as team_name ' +
