@@ -121,5 +121,19 @@ describe 'When I visit the grading queue page,' do
         page.should have_css('#ungraded', :count => 1)
       end
     end
+
+    it "should display all teams when clicking on All Teams radio button" do
+      page.choose('filter_all_teams')
+      visit("/courses/#{@course.id}/deliverables?teams=all_teams")
+      save_and_open_page
+      # Content we expect to see on the page
+      find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
+      find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
+      find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
+      find('div#teamDelDiv').text.should have_content(@deliverable_2.assignment.name)
+      find('div#teamDelDiv').text.should have_content(@deliverable_2.team.name)
+      find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
+    end
+
   end
 end
