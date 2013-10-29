@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :team_triumphant, :parent => :team do
-    name "Triumphant"
+    name "Team Triumphant"
     email "triumphant@sv.cmu.edu"
     tigris_space "http://triumphantigris.org/servlets/ProjectDocumentList"
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
