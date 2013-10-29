@@ -62,9 +62,7 @@
 
       it"should display the grading queue page" do
         visit course_deliverables_path(@course)	
-        save_and_open_page
+        #save_and_open_page
       end
     end
-
-
   end

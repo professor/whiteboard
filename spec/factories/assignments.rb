@@ -19,6 +19,11 @@ FactoryGirl.define do
     name "fse assignment 1"
     association :course, :factory => :fse
   end
+  
+  factory :assignment_fse2, :parent=>:assignment do
+    name "fse assignment 2"
+    association :course, :factory => :fse
+  end
 
   factory :assignment_seq, :parent=>:assignment  do
     course_id 1
@@ -47,7 +52,4 @@ FactoryGirl.define do
     is_team_deliverable false
     association :course, :factory => :fse
   end
-
-
-
 end

@@ -42,8 +42,8 @@ describe EffortLogsController do
 
       context "and there are effort logs" do
         before do
-          @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12, :sum => 8),
-                          EffortLog.new(:year => 2011, :week_number => 12, :sum => 8)]
+          @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12),
+                          EffortLog.new(:year => 2011, :week_number => 12)]
           EffortLog.stub(:find_effort_logs).and_return(@effort_logs)
         end
 
@@ -81,8 +81,8 @@ describe EffortLogsController do
 
       context "and there are effort logs" do
         before do
-          @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12, :sum => 8),
-                          EffortLog.new(:year => 2011, :week_number => 12, :sum => 8)]
+          @effort_logs = [EffortLog.new(:year => 2011, :week_number => 12),
+                          EffortLog.new(:year => 2011, :week_number => 12)]
           EffortLog.stub(:find_effort_logs).and_return(@effort_logs)
         end
 

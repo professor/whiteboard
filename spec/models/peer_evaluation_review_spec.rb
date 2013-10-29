@@ -11,12 +11,5 @@ describe PeerEvaluationReview do
     PeerEvaluationReview.is_completed_for?(nil, nil).should be_false
   end
 
-  describe "is protected against mass assignment" do
-    it { should_not allow_mass_assignment_of(:team_id) }
-    it { should_not allow_mass_assignment_of(:author_id) }
-    it { should_not allow_mass_assignment_of(:recipient_id) }
-    it { should_not allow_mass_assignment_of(:question) }
-    it { should_not allow_mass_assignment_of(:sequence_number) }
-  end
 end
 
