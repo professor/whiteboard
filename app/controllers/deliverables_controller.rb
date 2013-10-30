@@ -32,8 +32,10 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
-      # Isil - Team Turing
       @deliverables = default_deliverables(params[:course_id], current_user.id)
+      #@default_deliverables = default_deliverables(params[:course_id], current_user.id)
+      #@filtered_deliverables = @default_deliverables
+      #@deliverables = @filtered_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
 
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -323,6 +325,6 @@ class DeliverablesController < ApplicationController
 
   private
   def default_deliverables(course_id, faculty_id)
-    @deliverables = Deliverable.grading_queue_display(course_id, faculty_id)
+    @default_deliverables = Deliverable.grading_queue_display(course_id, faculty_id)
   end
 end

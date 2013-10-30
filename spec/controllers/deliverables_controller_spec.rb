@@ -77,7 +77,8 @@ describe DeliverablesController do
 
     context "as the faculty owner of the course" do
       before do
-        Deliverable.stub(:grading_queue_display).and_return([@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
+        Deliverable.stub(:grading_queue_display).and_return([@deliverable_turing_ungraded, @deliverable_turing_drafted,
+                                                             @deliverable_turing_graded])
         login(@faculty_frank)
       end
 
@@ -87,9 +88,22 @@ describe DeliverablesController do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         @expected_deliverable = assigns(:deliverables)
 
-        @expected_deliverable.should have(3).items
-        #@expected_deliverable[0].should == @deliverable1
-        #@expected_deliverable[1].should == @deliverable2
+        #@expected_deliverable.should have(2).items
+        #@expected_deliverable[0].should == @deliverable_turing_ungraded
+        #@expected_deliverable[1].should == @deliverable_turing_drafted
+        pending
+      end
+
+      it 'shows graded deliverables of only my teams if graded buttons is clicked' do
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        pending
+
+      end
+
+      it 'shows draft deliverables of only my teams if draft buttons is clicked' do
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        pending
+
       end
 
       it 'shows graded and ungraded deliverables of only my teams if graded and ungraded buttons are clicked' do
