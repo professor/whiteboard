@@ -4,6 +4,7 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
+  helper_method :default_deliverables
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -15,9 +16,7 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
-
   def grading_queue_for_course
-
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -34,11 +33,12 @@ class DeliverablesController < ApplicationController
 
     elsif @course.faculty.include?(current_user)
       # Isil - Team Turing
-      @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+      @deliverables = default_deliverables(params[:course_id], current_user.id)
 
     else
       has_permissions_or_redirect(:admin, root_path)
     end
+
   end
 
   #temporary for mel
@@ -321,4 +321,8 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  private
+  def default_deliverables(course_id, faculty_id)
+    @deliverables = Deliverable.grading_queue_display(course_id, faculty_id)
+  end
 end
