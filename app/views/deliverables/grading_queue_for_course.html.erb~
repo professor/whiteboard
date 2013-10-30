@@ -1,0 +1,215 @@
+<%= javascript_include_tag 'jquery.tablesorter.min.js' %>
+<%= javascript_include_tag 'jquery.quicksearch.js' %>
+<%= javascript_include_tag 'jquery.session' %>
+<%= javascript_include_tag 'jquery-ui.min.js' %>
+<%= stylesheet_link_tag 'jquery-ui.css' %>
+
+
+<% content_for :title, "Grading Queue - #{@course.name}" %>
+
+
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
+<%= render :partial => "layouts/grade_book_sub_menu" %>
+<h2>Submitted <%= nomenclature_assignment_or_deliverable %>s</h2>
+
+
+<div>
+  <div id='filters'>
+    <div id='filterBoxSearch'>
+      <input id='filterBoxOne' placeholder='Filter Grading Queue data by Owner / Advisor / Deliverable' maxlength='30' size='30' type='text'/>
+    </div>
+
+    <div id='advanced_search_filters_div'>
+      <table style="width: 100%; border-color: transparent;">
+        <tr>
+          <td>
+            Teams: <br/>
+            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked onchange="update_teams($(this))" /><label for="filter_my_teams">My
+            Teams</label> <br/>
+            <input type="radio" id="filter_all_teams" name="teams" value="all_teams" onchange="update_teams($(this))"/><label for="filter_all_teams">All
+            Teams</label>
+          </td>
+          <td>
+            Assignment: <br/>
+            <select id="selected_assignment" onchange="updateResultTablesToMatchFilter();">
+              <option value="-1">All</option>
+              <% @assignments.each do |assignment| %>
+                  <option value="<%= assignment.id%>">
+                    <%= assignment.name %>
+                  </option>
+              <% end %>
+            </select>
+          </td>
+          <td>
+            Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
+            <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_ungraded">Ungraded</label>
+            <br/>
+            <input id="filter_drafted" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_drafted">Drafted</label>
+            <br/>
+            <input id="filter_graded" class="filter_status" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
+                <label for="filter_graded">Graded</label>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--<div>-->
+  <!--Legend for Grade Indicator:-->
+  <!--<div id="graded">&nbsp;&nbsp;&nbsp;&nbsp;Graded</div>-->
+  <!--<div id="drafted">&nbsp;&nbsp;&nbsp;&nbsp;Drafted</div>-->
+  <!--<div id="ungraded">&nbsp;&nbsp;&nbsp;&nbsp;Ungraded</div>-->
+<!--</div>-->
+
+<div id="grading_queue_table">
+  <div id="tabs">
+    Quick Links: &nbsp; <a href="#tab-1">Team Deliverables</a> &nbsp; &nbsp;
+    <a href="#tab-2">Individual Deliverables</a> <br/> <br/>
+    <div id="tab-1">
+      <h2>Team Deliverables</h2>
+      <%= render :partial => "deliverable_listing_professor_team", :locals => {:perspect => "team", :deliverables => @team_deliverables, :skip_course_column => true} %>
+    </div>
+    <div id="tab-2">
+      <h2>Individual Deliverables</h2>
+      <%= render :partial => "deliverable_listing_professor_individual", :locals => {:deliverables => @individual_deliverables, :skip_course_column => true} %>
+    </div>
+  </div>
+</div>
+<br/>
+
+<script>
+    // Function that is called when selection changes between my_teams and all_teams
+    // This makes an AJAX call to the server to get updated content and update
+    // team deliverables and individual deliverables divs.
+    function update_teams(elem) {
+        if (elem.attr('value') === 'my_teams') {
+            fetch_my_team_deliverables();
+        } else if (elem.attr('value') === 'all_teams') {
+            fetch_all_team_deliverables();
+        }
+    }
+    // Method which invokes the AJAX call when All teams radio is selected.
+    function fetch_all_team_deliverables() {
+        // call ajax
+        $.get("deliverables", {
+            teams: "all_teams"
+        }).done(function (data) {
+                    update_grading_queue_table(data);
+                });
+        $.session.set("allTeamsFetched", true);
+
+    }
+    // Method which invokes the AJAX call when My teams radio is selected.
+    function fetch_my_team_deliverables() {
+        // call ajax
+        $.get("deliverables", {
+            teams: "my_teams"
+        }).done(function (data) {
+                    update_grading_queue_table(data);
+                });
+        $.session.set("allTeamsFetched", true);
+
+    }
+    // Utility method which is called after data is retrieved from the AJAX
+    // call from the server.
+    function update_grading_queue_table(deliverables) {
+        // 1. Update the team and individual deliverables divs
+        $('#tab-1').empty();
+        $('#tab-1').html($(deliverables).find('#tab-1').html());
+        $('#tab-2').empty();
+        $('#tab-2').html($(deliverables).find('#tab-2').html());
+
+        // 2. Prep the page to suite the filter criteria
+        preparePageToMatchFilter();
+    }
+
+    // Make the table headers sortable
+    function makeTableHeadersSortable() {
+        $(".sortable").tablesorter();
+    }
+
+    // Utility method which will update the team and individual results
+    // tables to display data only which matches the Assignment and Grade
+    // status selections.
+    function preparePageToMatchFilter() {
+        // 1. Make the newly formed table's headers to be sortable.
+        makeTableHeadersSortable();
+
+        // 2. Link search box with the table data
+        var $search = $("#filterBoxOne");
+        // Enable the search box if it is disabled by anychance
+        if ($search.prop("disabled") == true) {
+            $search.val('');
+            $search.removeAttr("disabled");
+        }
+        $search.quicksearch('.sortable tbody tr');
+
+        // 3. Update the table rows to suite Assignment and Grade Status selections.
+        updateResultTablesToMatchFilter();
+    }
+
+    // This function looks at the Assignment and Grading Status selections
+    // and updates the results in the team and individual deliverables
+    // tables accordingly.
+    function updateResultTablesToMatchFilter() {
+        // Hide all the rows in the individual and team tables
+        $("#grading_queue_table tbody tr").hide();
+
+        // Reset the state of No results messages if there was data previously
+        if( $("#indiDelDiv").show() ) { $("#noIndiDelDiv").hide(); }
+        if( $("#teamDelDiv").show() ) { $("#noTeamDelDiv").hide(); }
+
+        // Get the selected assignment
+        var selected_item_val = $("#selected_assignment option:selected").attr('value');
+
+        // Filter by grading status
+        var selected_grading_status = new Array();
+
+        if ($("#filter_ungraded").is(':checked')) { selected_grading_status.push('ungraded'); }
+        if ($("#filter_drafted").is(':checked')) { selected_grading_status.push('drafted'); }
+        if ($("#filter_graded").is(':checked')) { selected_grading_status.push('graded'); }
+
+        // For all elements that are selected, show them in the result tables
+        for(var i = 0; i < selected_grading_status.length; i++) {
+            var show_for_status = selected_grading_status[i];
+
+            var rows;
+            if(selected_item_val == -1) {
+                // If all assignments is selected .. then
+                rows = $("tr."+show_for_status);
+            } else {
+                // If a specific assignment is selected ... then include that in the filter criteria
+                rows = $("tr." + show_for_status + "." + selected_item_val);
+            }
+            rows.show();
+        }
+
+        showNoRowsMessageIfNeeded();
+    }
+
+    // This function shows human readable no data to show messages if
+    // there is no resulting data after filtration.
+    function showNoRowsMessageIfNeeded() {
+        // Check if there are no rows under team deliverables table
+        var numOfVisibleRows = $("#teamDelDiv tr:visible").length;
+        if(numOfVisibleRows && numOfVisibleRows == 1) {
+            $("#noTeamDelDiv").show();
+            $("#teamDelDiv").hide();
+        }
+
+        // Check if there are no rows under individual deliverables table
+        numOfVisibleRows = $("#indiDelDiv tr:visible").length;
+        if(numOfVisibleRows && numOfVisibleRows == 1) {
+            $("#noIndiDelDiv").show();
+            $("#indiDelDiv").hide();
+        }
+    }
+
+    $(document).ready(function () {
+        // Invoke the below function on page load.
+        preparePageToMatchFilter();
+    });
+</script>
