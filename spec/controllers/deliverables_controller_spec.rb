@@ -47,22 +47,32 @@ describe DeliverablesController do
     before(:each) do
       @course = FactoryGirl.create(:fse, faculty: [@faculty_frank])
 
-      @grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam)
-      @grade_drafted = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam)
-      @grade_ungraded = nil
-
       @assignment_ungraded = FactoryGirl.create(:assignment_1,:course => @course)
       @assignment_drafted = FactoryGirl.create(:assignment_1,:course => @course)
       @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment_ungraded_test = FactoryGirl.create(:assignment_1,:course => @course)
+
+      @turing_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam, :assignment => @assignment_graded)
+      @turing_grade_drafted = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_drafted)
+      @turing_grade_ungraded = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_ungraded)
+
+
+      @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
 
       @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
 
+      #Needs refactoring, Should work through teams assignments but for some reason it is not.
+      @team_turing.members = [@student_sam]
+      @team_test.members = [@student_sally]
+
+
+      #@team_turing_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+      #@team_test_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+
       @deliverable_turing_ungraded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_ungraded)
       @deliverable_turing_drafted = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_drafted)
       @deliverable_turing_graded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_graded)
-      @deliverable_test_ungraded = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment_ungraded_test)
+      @deliverable_test_ungraded = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment_ungraded)
 
       @da_turing_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_ungraded, :submitter => @student_sam)
       @da_turing_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_drafted, :submitter => @student_sam)
@@ -88,10 +98,9 @@ describe DeliverablesController do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         @expected_deliverable = assigns(:deliverables)
 
-        #@expected_deliverable.should have(2).items
-        #@expected_deliverable[0].should == @deliverable_turing_ungraded
-        #@expected_deliverable[1].should == @deliverable_turing_drafted
-        pending
+        @expected_deliverable.should have(2).items
+        @expected_deliverable[0].should == @deliverable_turing_ungraded
+        @expected_deliverable[1].should == @deliverable_turing_drafted
       end
 
       it 'shows graded deliverables of only my teams if graded buttons is clicked' do

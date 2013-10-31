@@ -32,10 +32,9 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
-      @deliverables = default_deliverables(params[:course_id], current_user.id)
-      #@default_deliverables = default_deliverables(params[:course_id], current_user.id)
-      #@filtered_deliverables = @default_deliverables
-      #@deliverables = @filtered_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
+      @default_deliverables = default_deliverables(params[:course_id], current_user.id)
+      @filtered_deliverables = @default_deliverables
+      @deliverables = @filtered_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
 
     else
       has_permissions_or_redirect(:admin, root_path)
