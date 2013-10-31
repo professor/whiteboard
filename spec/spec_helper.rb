@@ -57,7 +57,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   if ENV['CI'] == "true"
     config.filter_run_excluding :skip_on_build_machine => true
@@ -77,6 +77,7 @@ RSpec.configure do |config|
 end
 
 Capybara.default_host = 'http://whiteboard.sv.cmu.edu'
+Capybara.javascript_driver = :webkit
 
 FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
