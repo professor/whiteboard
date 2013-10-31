@@ -12,8 +12,8 @@ describe 'When I visit the grading queue page,' do
 
     # Create a course
     @course = FactoryGirl.create(:fse)
-    @faculty_assignment_1 = FactoryGirl.create(:faculty_assignment,:user => @faculty_frank , :course => @course)
-    @faculty_assignment_2 = FactoryGirl.create(:faculty_assignment,:user => @faculty_fagan , :course => @course)
+    @faculty_assignment_1 = FactoryGirl.create(:faculty_assignment, :user => @faculty_frank, :course => @course)
+    @faculty_assignment_2 = FactoryGirl.create(:faculty_assignment, :user => @faculty_fagan, :course => @course)
     @course.faculty_assignments << @faculty_assignment_1
     @course.faculty_assignments << @faculty_assignment_2
 
@@ -22,20 +22,20 @@ describe 'When I visit the grading queue page,' do
     @indi_assignment = FactoryGirl.create(:assignment, :name => 'Individual Assignment', :course => @course)
 
     # Creating teams
-    @team_triumphant = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :primary_faculty => @faculty_frank )
-    @team_bean_counters = FactoryGirl.create(:team_bean_counters, :members => [@student_sam], :primary_faculty => @faculty_fagan )
+    @team_triumphant = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :primary_faculty => @faculty_frank)
+    @team_bean_counters = FactoryGirl.create(:team_bean_counters, :members => [@student_sam], :primary_faculty => @faculty_fagan)
 
     # Team Deliverables
-    @deliverable_1 = FactoryGirl.create(:deliverable, :assignment => @team_assignment , :team => @team_triumphant, :course => @course, :creator => @student_sally)
-    @deliverable_1_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_1, :submitter => @student_sally )
-    @deliverable_2 = FactoryGirl.create(:deliverable, :assignment => @team_assignment , :team => @team_bean_counters , :course => @course, :creator => @student_sam)
-    @deliverable_2_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_2, :submitter => @student_sam )
+    @deliverable_1 = FactoryGirl.create(:deliverable, :assignment => @team_assignment, :team => @team_triumphant, :course => @course, :creator => @student_sally)
+    @deliverable_1_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_1, :submitter => @student_sally)
+    @deliverable_2 = FactoryGirl.create(:deliverable, :assignment => @team_assignment, :team => @team_bean_counters, :course => @course, :creator => @student_sam)
+    @deliverable_2_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_2, :submitter => @student_sam)
 
     # Individual Deliverables
-    @deliverable_3 = FactoryGirl.create(:deliverable, :assignment => @indi_assignment , :course => @course, :creator => @student_sally)
-    @deliverable_3_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_3, :submitter => @student_sally )
-    @deliverable_4 = FactoryGirl.create(:deliverable, :assignment => @indi_assignment , :course => @course, :creator => @student_sam)
-    @deliverable_4_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_4, :submitter => @student_sam )
+    @deliverable_3 = FactoryGirl.create(:deliverable, :assignment => @indi_assignment, :course => @course, :creator => @student_sally)
+    @deliverable_3_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_3, :submitter => @student_sally)
+    @deliverable_4 = FactoryGirl.create(:deliverable, :assignment => @indi_assignment, :course => @course, :creator => @student_sam)
+    @deliverable_4_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_4, :submitter => @student_sam)
 
     login_with_oauth @faculty_frank
   end
@@ -119,115 +119,55 @@ describe 'When I visit the grading queue page,' do
         page.should have_css('#tab-1', :text => 'Indicator')
       end
     end
-    
+
     context 'should show assignment which user selects in the drop down' do
-
       it 'show only the team assignments' do
-      
-      page.select('Team Assignment', :from => 'selected_assignment')
-
-      Capybara.default_wait_time = 3
-      
-      page.should have_content('No Individual deliverables match the selected filter criteria.')
-      
-      find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
-       
-
-     # page.should have_content('Team Assignment') 
-      
-     # save_and_open_page
-      
+        page.select('Team Assignment', :from => 'selected_assignment')
+        Capybara.default_wait_time = 3
+        page.should have_content('No Individual deliverables match the selected filter criteria.')
+        find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
       end
-           
-      
+
       it 'show only the individual assignments' do
- 
-
-      page.select('Individual Assignment', :from => 'selected_assignment')
-      
-      Capybara.default_wait_time = 5
-																																																													    	  page.should have_content('No Team deliverables match the selected filter criteria.')
-    
-      find('div#indiDelDiv').text.should_not have_content('No Individual deliverables match the selected filter criteria.')
-      
-      page.should have_content('Individual Assignment') 
-      
-     # save_and_open_page
-    
+        page.select('Individual Assignment', :from => 'selected_assignment')
+        Capybara.default_wait_time = 5
+        page.should have_content('No Team deliverables match the selected filter criteria.')
+        find('div#indiDelDiv').text.should_not have_content('No Individual deliverables match the selected filter criteria.')
+        page.should have_content('Individual Assignment')
       end
-      
+
       it 'show all the assignments' do
-
-      page.select('All', :from => 'selected_assignment')
-
-      Capybara.default_wait_time = 3
-      
-      find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
-      
-      find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
-     
-     # page.should have_content('Team Assignment') 
-   
-      find('div#teamDelDiv').text.should have_content(@team_assignment.name)   
-
-     # find('div#indiDelDiv').text.should have_content(@indi_assignment.name)   
-      
-     # save_and_open_page
-      
+        page.select('All', :from => 'selected_assignment')
+        Capybara.default_wait_time = 3
+        find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
+        find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
+        find('div#teamDelDiv').text.should have_content(@team_assignment.name)
       end
-      
+
       context 'should show all when team radio button selected' do
-      
-      before :each do
-      
-      choose('filter_all_teams')
-      
+        before :each do
+          choose('filter_all_teams')
+        end
+
+        it 'should show all' do
+          # Content we expect to see on the page
+          find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
+          find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
+          find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
+          find('div#teamDelDiv').text.should have_content('Give Grade')
+        end
       end
-      
-     
-      it 'should show all' do
-      
-      # Content we expect to see on the page
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-        find('div#teamDelDiv').text.should have_content('Give Grade')
-
-        # Content that should not be displayed
-       # find('div#indiDelDiv').text.should have_content(@indi_assignment.name)
-#        find('div#teamDelDiv').text.should have_content(@team_bean_counters.name)
-        #find('div#teamDelDiv').text.should have_content(@faculty_fagan.human_name)
-        #find('div#teamDelDiv').text.should have_content('Review Grade')
-
-#        save_and_open_page
-        
-      end
-
-      end
-
     end
 
-
-        
-
-     it "should display all teams when clicking on All Teams radio button" do
-
-     visit("/courses/#{@course.id}/deliverables?teams=all_teams")
-
+    it "should display all teams when clicking on All Teams radio button" do
+      visit("/courses/#{@course.id}/deliverables?teams=all_teams")
       # Content we expect to see on the page
-
       find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-
       find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-
       find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-
       find('div#teamDelDiv').text.should have_content(@deliverable_2.assignment.name)
-
       find('div#teamDelDiv').text.should have_content(@deliverable_2.team.name)
-
       find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
-
     end
 
   end
