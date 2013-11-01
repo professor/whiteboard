@@ -42,6 +42,23 @@ class DeliverablesController < ApplicationController
 
   end
 
+  def filter_deliverables
+    # Assign this values depending on how it comes from the view. We may follow something like:
+    #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
+    if params[:graded] = true
+      @selected_options = [:graded]
+    end
+
+    @filtered_deliverables = @default_deliverables
+
+    @deliverables = []
+    @selected_options.each do  |option|
+        @deliverables << @filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option }
+    end
+
+
+  end
+
   #temporary for mel
   def team_index_for_course
     @course = Course.find(params[:course_id])
