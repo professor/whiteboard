@@ -47,8 +47,6 @@ FactoryGirl.define do
     twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
 
     association :course, :factory => :fse
-
-
   end
 
   ## end add turing

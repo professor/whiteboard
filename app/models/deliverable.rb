@@ -76,27 +76,22 @@ class Deliverable < ActiveRecord::Base
       queue = Deliverable.where(:course_id => course_id).all
 
     else # The course has teams
-      # By default, the faculty see their teams or individuals in their teams with ungraded deliverables
+         # By default, the faculty see their teams or individuals in their teams with ungraded deliverables
       if options['is_my_teams'] == 1
 
         queue = Deliverable.joins(:team).where(:course_id => course_id, "teams.primary_faculty_id" => faculty_id).all
 
         # This course may have teams, but this deliverable may not be a team deliverable. In that case:
-        if queue.nil?
-          #sql = "SELECT a.name AS assignment_name, d.updated_at AS last_updated, a.task_number,
-          #    u.human_name AS owner_name, d.creator_id, dav.attachment_file_name AS attachment_file_name, a.is_team_deliverable,
-          #    dav.id AS attachment_versions
-          #   FROM deliverables d
-          #   INNER JOIN assignments a ON d.assignment_id = a.id
-          #   INNER JOIN users u ON u.id = d.creator_id
-          #   INNER JOIN deliverable_attachment_versions dav ON dav.deliverable_id = d.id
-          #   WHERE d.course_id = ? AND a.id = ?"
+        sql = "SELECT * FROM deliverables d WHERE course_id = ? AND creator_id IN (
+        SELECT ta.user_id FROM teams t
+        INNER JOIN team_assignments ta ON t.id = ta.team_id
+        WHERE t.primary_faculty_id = ? AND d.team_id IS NULL)" # team_id in deliverable is null when it's an individual deliverable
 
-          #queue = Deliverable.find_by_sql([sql, course_id, assignment_id])
-          #queue = Deliverable.joins('INNER JOIN users ON users.id = deliverables.creator_id').where(:course_id => course_id, "users.id" => faculty_id).all
-          queue = Deliverable.where(:course_id => course_id).all
+        results = Deliverable.find_by_sql([sql, course_id, faculty_id])
 
-        end # end 'Teams in course but individual deliverable'
+        results.each do |result|
+          queue << result
+        end
 
       else # Do not filter by my teams, show every deliverable
 

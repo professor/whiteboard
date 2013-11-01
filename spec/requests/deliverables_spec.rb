@@ -100,56 +100,14 @@ describe "deliverables" do
 
   context "As a professor" do
     before do
-      ## beg del Team Turing
-      #@faculty = FactoryGirl.create(:faculty_fagan)
-      #login_with_oauth @faculty
-      #@team_deliverable.course.faculty = [@faculty]
-      #
-      #@course = FactoryGirl.create(:fse)
-      #@faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
-      #                                         :user_id => @faculty.id)
-      #@team_deliverable.course = @course
-      ## end del Team Turing
-
-
-      ## beg add Team Turing
-      @faculty = FactoryGirl.create(:faculty_frank_user)
-      #users = User.all
+      @faculty = FactoryGirl.create(:faculty_fagan)
       login_with_oauth @faculty
       @team_deliverable.course.faculty = [@faculty]
+
       @course = FactoryGirl.create(:fse)
       @faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
                                                :user_id => @faculty.id)
       @team_deliverable.course = @course
-
-      #@course_fse = FactoryGirl.create(:fse, faculty: [@faculty])
-      #@course_ise = FactoryGirl.create(:ise, faculty: [@faculty])
-      @student_sam = FactoryGirl.create(:student_sam)
-      #@student_sally = FactoryGirl.create(:student_sally)
-
-
-      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
-      @team_test =  FactoryGirl.create(:team_test, :course=>@course)
-      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
-
-      @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment2 = FactoryGirl.create(:assignment_1,:course => @course)
-
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment1)
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment2)
-      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1)
-
-      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
-      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
-      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
-
-      @deliverables = Deliverable.grading_queue_display(@course.id, @faculty.id)
-      @deliverables.should have(2).items
-
-      @deliverables[0].should == @deliverable2
-      @deliverables[1].should == @deliverable1
-
-      ## end add Team Turing
 
     end
 
@@ -174,14 +132,18 @@ describe "deliverables" do
     it "I should be able to view deliverable page" do
       visit deliverable_path(@team_deliverable)
 
+<<<<<<< HEAD
       ## beg add Team Turing
       save_and_open_page
       ## end add Team Turing
 
+=======
+>>>>>>> 1a5c1ec92f3ccd46e3bdcc195ed297b20f7ac507
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
 
+<<<<<<< HEAD
       ## beg add Team Turing
       # TODO: Check new features
       # page.should have_content("Last graded by")
@@ -200,6 +162,14 @@ describe "deliverables" do
 
 
 
+=======
+  end
+
+    it "I should be able to view only my teams deliverables" do
+      visit course_deliverables_path(@course)
+      pending
+    end
+>>>>>>> 1a5c1ec92f3ccd46e3bdcc195ed297b20f7ac507
   end
 
 

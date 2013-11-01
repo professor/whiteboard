@@ -39,5 +39,10 @@ FactoryGirl.define do
     association :course, :factory => :fse
   end
 
+  factory :assignment_3, :parent=>:assignment do
+    is_team_deliverable false
+    association :course, :factory => :fse
+  end
+
   ## end add turing
 end
