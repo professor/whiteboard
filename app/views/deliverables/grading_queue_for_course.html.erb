@@ -20,10 +20,12 @@
   <script>
       $(document).ready(function() {
           $('.ajax').on('click', function() {
-              console.log('deliverables/' + $(this).find('#deliverable_id').text());
+              deliverable = $(this);
+              console.log($(this).find('#deliverable_id').text())
               $.get('http://localhost:3000/deliverables/' + $(this).find('#deliverable_id').text(),
                     function(response){
-                        console.log(response);
+                        console.log(response)
+                        deliverable.siblings().html(response)
                     }
               )
               $(this).removeClass('ajax');

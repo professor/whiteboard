@@ -2,14 +2,22 @@
 <% customised_name= nomenclature_assignment_or_deliverable %>
 
 <% deliverables.each do |deliverable| %>
-    <div class="row">
+    <div>
      <div class="panel panel-default">
        <div class="panel-body deliverable ajax" style="background-color: #f5f5f5;border-radius: 5px;padding: 10px">
          <div class="col-md-10">
-           <p>Task <%= deliverable.attributes['task_number'] %>: Team <%= deliverable.attributes['owner_name'] %></p>
-           <p><%= deliverable.attributes['assignment_name'] %></p>
-           <p><%= deliverable.attributes['updated_at'] %></p>
-           <p id="deliverable_id"><%= deliverable.attributes['deliverable_id'] %></p>
+           <% latest_version = deliverable.attachment_versions.first %>
+           <p>
+               <span style="font-size: 20px;font-weight: bold">Task <%= deliverable.task_number %></span>
+               <span style="font-size: 20px;font-weight: bold;color: #A1A1A1">: Team <%= deliverable.owner_name %></span>
+           </p>
+           <p style="font-size: 16px">
+               <% unless latest_version.attachment_file_name.nil? %>
+                   <%= link_to deliverable.assignment.name, latest_version.attachment.url %>
+               <% end %>
+           </p>
+           <%= latest_version.submission_date %>
+           <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
          </div>
          <div class="col-md-2">
            <% if deliverable.get_grade_status == :graded %>
@@ -22,7 +30,6 @@
          </div>
        </div>
        <div class="deliverable_detail" style="display: none">
-         aaaaaaaaaaaaaa
        </div>
      </div>
     </div>

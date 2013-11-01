@@ -21,99 +21,156 @@
   });
 </script>
 
-<% content_for :title, "Provide Feedback" %>
+<!-- # Beg Del Turing Ira
 
-<h1><%= @course.display_for_course_page %></h1>
-<%=  render :partial=>"layouts/grade_book_sub_menu" %>
+<%# content_for :title, "Provide Feedback" %>
 
-<% if @deliverable.is_team_deliverable?  %>
-<h2>Grade Team <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% else %>
-<h2>Grade Individual <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% end %>
+<h1><#%= @course.display_for_course_page %></h1>
+<#%=  render :partial=>"layouts/grade_book_sub_menu" %>
+
+<#% if @deliverable.is_team_deliverable?  %>
+<h2>Grade Team <#%= nomenclature_assignment_or_deliverable %>: <#%= @deliverable.assignment.name %></h2>
+<#% else %>
+<h2>Grade Individual <#%= nomenclature_assignment_or_deliverable %>: <#%= @deliverable.assignment.name %></h2>
+<#% end %>
+
+# End Del Turing Ira   -->
 
 
-<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-    <%# render 'shared/error_messages', object: f.object %>
-    <div>
-      <% if grade_type_points_or_weights == "Percentage" %>
-        <p>
-          <%= "Weight: #{@deliverable.assignment.weight}%" %>
-        </p>
-      <% end %>
-      <p>
-        <% if @deliverable.current_attachment.blank? %>
-          Deliverable: None
-        <% else %>
-          Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-        <% end %>
-      </p>
-      <p>
-        <%= f.label :feedback, "Feedback file to upload" %>
-        <%= f.file_field :feedback %>
-      </p>
-      <p>
-        <%= f.label :feedback_comment, "Feedback Comments" %>
-        (<%= link_to 'View History and Feedback', @deliverable %>)
-        <br>
-        <%= f.text_area :feedback_comment, :size => "70x10" %>
-      </p>
+<!--  Beg Add Turing Ira    -->
+<div class = container style="padding-left: 10px;" >
+    <div class = row>
+     <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;a" >
+     <h2> <font color = white> Grades </font> </h2>
+     </div>
     </div>
 
-    <% if @deliverable.get_grade_status == :drafted %>
-        <div class="rounded staff" style="background-color:#dedede;">
-           This is draft feedback
-         </div>
-    <% end %>
+    <div class = row style ="background-color: white;">
+ <!--  End Add Turing Ira    -->
 
-    <% if @deliverable.is_team_deliverable? %>
-        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
-        <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+        <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+      <%# render 'shared/error_messages', object: f.object %>
 
-    <% end %>
+           <div>
+                <% if grade_type_points_or_weights == "Percentage" %>
+                   <p>
+                       <%= "Weight: #{@deliverable.assignment.weight}%" %>
+                   </p>
+                <% end %>
 
-    <div class="student_scores">
-      <% if @deliverable.is_team_deliverable? %>
-            <% for member in @deliverable.team.members %>
-              <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+           </div>
+
+<!-- # Beg Del Turing ira
+              <#% if @deliverable.current_attachment.blank? %>
+                Deliverable: None
+              <#% else %>
+                Deliverable: <#%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+              <#% end %>
+
+            </p>
+# End Del Turing -->
+
+        <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%" >
+            <tr>
+              <td>
+                <% if @deliverable.is_team_deliverable? %>
+                    Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
+                <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+
+                <% end %>
+              </td>
+
+              <td>Last graded by:<%= %> </td>
+            </tr>
+        </table>
+
+        <div class="student_scores">
+             <% if @deliverable.is_team_deliverable? %>
+               <% for member in @deliverable.team.members %>
+                  <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
+                  <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+               <% end %>
+             <% else %>
+                <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
+               <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+             <% end %>
+        </div>
+
+  </div>
+
+<!--  Beg Add Turing Ira    -->
+          <div class = row >
+            <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;" >
+              <h2><font color = white>Feedback</font></h2>
+            </div>
+          </div>
+
+          <div class = row style ="background-color: white;">
+<!--  End Add Turing Ira    -->
+            <div>
+              <br />
+              <p>
+                <%= f.label :feedback, "Feedback file to upload" %>
+                <%= f.file_field :feedback %>
+              </p>
+              <p>
+                <%= f.label :feedback_comment, "Feedback Comments" %>
+                (<%= link_to 'View History and Feedback', @deliverable %>)
+                <br>
+                <%= f.text_area :feedback_comment, :size => "70x10" %>
+              </p>
+            </div>
+
+            <% if @deliverable.get_grade_status == :drafted %>
+                <div class="rounded staff" style="background-color:#dedede;">
+                  This is draft feedback
+                </div>
             <% end %>
-      <% else %>
-        <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
-        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+
+
+            <div class="rounded staff">
+              <%= professor_image %>
+              <span class="instructions">Only faculty can see this information</span>
+
+              <h1>
+                Professor's Notes
+              </h1>
+
+              <p>
+                <%= f.text_area :private_note, :size => "90x10" %>
+              </p>
+            </div>
+          </div>
+
+          <div style="float: left; width: auto;">
+            <%= f.submit "Save as Draft" , :name=>"draft" %>
+          </div>
+
+          <br /><br /><br />
+
+
+          <div style="float: left; width: auto;">
+            <!-- Beg Chg Turing Ira -->
+            <!--%= f.submit "Save and Email" , :name=>"submit"%>  -->
+            <input type="checkbox" value="True">
+            Send a copy to myself
+            <%= f.submit "Finalize and Email" , :name=>"submit"%>
+            <%#= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
+            <!-- End Chg Turing Ira -->
+          </div>
+
+          <div style='clear:both;'></div>
+
       <% end %>
-    </div>
+  </div>
 
-
-    <br />
-
-    <div class="rounded staff">
-      <%= professor_image %>
-      <span class="instructions">Only faculty can see this information</span>
-
-      <h1>
-        Professor's Notes
-      </h1>
-
-      <p>
-      <%= f.text_area :private_note, :size => "90x10" %>
-      </p>
-    </div>
-
-    <br /><br /><br />
+</div>
 
 
 
 
-      <p>
-      <div style="float: left; width: auto;">
-        <%= f.submit "Save and Email" , :name=>"submit"%>
-        <%= f.submit "Save as Draft" , :name=>"draft" %>
-        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
-      </div><div style='clear:both;'></div>
-      </p>
-    <% end %>
 
-    <!-- <%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
-    <br/>
-    <br/>
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
+    <!-- <#%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
+    <!--br/> <br /> -->

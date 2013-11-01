@@ -22,100 +22,188 @@ describe "deliverables" do
     #@user.delete
     #@deliverableAttachment.delete
   end
-
-  context "As a student" do
-    before do
-     visit('/')
-     login_with_oauth @user
-     click_link "My Deliverables"
-    end
-
-    context "My deliverables" do
-      it "renders my deliverables page" do
-        page.should have_content("Listing Deliverables")
-        page.should have_link("New deliverable")
-      end
-
-      it "lets the user create new deliverable"  do
-        click_link "New deliverable"
-        page.should have_content("New deliverable")
-        page.should have_selector("select#deliverable_course_id")
-        page.should have_button("Create")
-      end
-    end
-
-    it " I can not be able to view professor's notes" do
-      grade = @grade.score + "/" + @assignment.maximum_score.to_s
-      page.should have_content(grade)
-      click_link "Resubmit"
-   #   visit deliverable_path(@team_deliverable)
-
-      page.should have_content("Attachment Version History")
-      page.should_not have_content("Professor's Notes")
-      page.should_not have_content("My private notes")
-    end
-
-
-    context "when I submit an assignment," do
-      before {
-        @assignment = FactoryGirl.create(:assignment)
-        @course_mfse = FactoryGirl.create(:mfse)
-        Registration.create(user_id: @user.id, course_id: @assignment.course.id)
-      }
-
-      it "I see all my registered courses " do
-        # Add one for the empty option
-        visit new_deliverable_path
-        page.should have_selector("select#deliverable_course_id > option", count: @user.registered_for_these_courses_during_current_semester.count)
-      end
-
-      context "with course_id and assignment_id from the url" do
-        before {
-          visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
-        }
-
-        it "it should save when an attachment is present", :skip_on_build_machine => true do
-          attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
-          expect { click_button 'Create' }.to change(Deliverable, :count).by(1)
-        end
-
-        it "should not save when there is no attachment" do
-          expect { click_button 'Create' }.to_not change(Deliverable, :count)
-
-          page.should have_selector("h1", text: "New deliverable")
-          page.should have_selector(".ui-state-error")
-        end
-      end
-
-      it "without course_id and assignment_id selected, then it should not save" do
-        visit new_deliverable_path
-        expect { click_button 'Create' }.to change(Deliverable, :count).by(0)
-
-        page.should have_selector("h1", text: "New deliverable")
-        page.should have_selector(".ui-state-error")
-      end
-    end
-  end
+  #
+  #context "As a student" do
+  #  before do
+  #   visit('/')
+  #   login_with_oauth @user
+  #   click_link "My Deliverables"
+  #  end
+  #
+  #  context "My deliverables" do
+  #    it "renders my deliverables page" do
+  #      page.should have_content("Listing Deliverables")
+  #      page.should have_link("New deliverable")
+  #    end
+  #
+  #    it "lets the user create new deliverable"  do
+  #      click_link "New deliverable"
+  #      page.should have_content("New deliverable")
+  #      page.should have_selector("select#deliverable_course_id")
+  #      page.should have_button("Create")
+  #    end
+  #  end
+  #
+  #  it " I can not be able to view professor's notes" do
+  #    grade = @grade.score + "/" + @assignment.maximum_score.to_s
+  #    page.should have_content(grade)
+  #    click_link "Resubmit"
+  # #   visit deliverable_path(@team_deliverable)
+  #
+  #    page.should have_content("Attachment Version History")
+  #    page.should_not have_content("Professor's Notes")
+  #    page.should_not have_content("My private notes")
+  #  end
+  #
+  #
+  #  context "when I submit an assignment," do
+  #    before {
+  #      @assignment = FactoryGirl.create(:assignment)
+  #      @course_mfse = FactoryGirl.create(:mfse)
+  #      Registration.create(user_id: @user.id, course_id: @assignment.course.id)
+  #    }
+  #
+  #    it "I see all my registered courses " do
+  #      # Add one for the empty option
+  #      visit new_deliverable_path
+  #      page.should have_selector("select#deliverable_course_id > option", count: @user.registered_for_these_courses_during_current_semester.count)
+  #    end
+  #
+  #    context "with course_id and assignment_id from the url" do
+  #      before {
+  #        visit new_deliverable_path(course_id: @assignment.course.id, assignment_id: @assignment.id)
+  #      }
+  #
+  #      it "it should save when an attachment is present", :skip_on_build_machine => true do
+  #        attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
+  #        expect { click_button 'Create' }.to change(Deliverable, :count).by(1)
+  #      end
+  #
+  #      it "should not save when there is no attachment" do
+  #        expect { click_button 'Create' }.to_not change(Deliverable, :count)
+  #
+  #        page.should have_selector("h1", text: "New deliverable")
+  #        page.should have_selector(".ui-state-error")
+  #      end
+  #    end
+  #
+  #    it "without course_id and assignment_id selected, then it should not save" do
+  #      visit new_deliverable_path
+  #      expect { click_button 'Create' }.to change(Deliverable, :count).by(0)
+  #
+  #      page.should have_selector("h1", text: "New deliverable")
+  #      page.should have_selector(".ui-state-error")
+  #    end
+  #  end
+  #end
 
 
   context "As a professor" do
     before do
-      @faculty = FactoryGirl.create(:faculty_fagan)
+      ## beg del Team Turing
+      #@faculty = FactoryGirl.create(:faculty_fagan)
+      #login_with_oauth @faculty
+      #@team_deliverable.course.faculty = [@faculty]
+      #
+      #@course = FactoryGirl.create(:fse)
+      #@faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
+      #                                         :user_id => @faculty.id)
+      #@team_deliverable.course = @course
+      ## end del Team Turing
+
+
+      ## beg add Team Turing
+      @faculty = FactoryGirl.create(:faculty_frank_user)
+      #users = User.all
       login_with_oauth @faculty
       @team_deliverable.course.faculty = [@faculty]
-      visit deliverable_path(@team_deliverable)
+      @course = FactoryGirl.create(:fse)
+      @faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
+                                               :user_id => @faculty.id)
+      @team_deliverable.course = @course
+
+      #@course_fse = FactoryGirl.create(:fse, faculty: [@faculty])
+      #@course_ise = FactoryGirl.create(:ise, faculty: [@faculty])
+      @student_sam = FactoryGirl.create(:student_sam)
+      #@student_sally = FactoryGirl.create(:student_sally)
+
+
+      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
+      @team_test =  FactoryGirl.create(:team_test, :course=>@course)
+      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+
+      @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
+      @assignment2 = FactoryGirl.create(:assignment_1,:course => @course)
+
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment1)
+      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment2)
+      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1)
+
+      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
+
+      @deliverables = Deliverable.grading_queue_display(@course.id, @faculty.id)
+      @deliverables.should have(2).items
+
+      @deliverables[0].should == @deliverable2
+      @deliverables[1].should == @deliverable1
+
+      ## end add Team Turing
+
     end
 
     after do
       @faculty.delete
     end
 
+    ## beg add Team Turing
+    #it "I should be able to view only my teams deliverables", :js => true do
+    it "I should be able to view only my teams deliverables" do
+      visit course_deliverables_path(@course)
+      save_and_open_page
+      page.should have_content("Task")
+    end
+
+    it "I should be able to view the icons of each deliverable" do
+      pending
+    end
+
+    ## end add Team Turing
+
     it "I should be able to view deliverable page" do
+      visit deliverable_path(@team_deliverable)
+
+      ## beg add Team Turing
+      save_and_open_page
+      ## end add Team Turing
+
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
-    end
+
+      ## beg add Team Turing
+      # TODO: Check new features
+      # page.should have_content("Last graded by")
+      # page.should have_content("Send a copy to myself")
+      # TODO: Check new checkboxes passing the label text
+      # page.check 'Send a copy to myself'
+      # page.uncheck 'Send a copy to myself'
+      # TODO: Click buttons
+      # page.should have_button("Save as Draft")
+      # click_button 'Save as Draft'
+      # page.should have_button("Finalize and Email")
+      # click_button 'Finalize and Email'
+      ## end add Team Turing
+
   end
+
+
+
+  end
+
+
+
 
 
   it "test user" do

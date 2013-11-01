@@ -1,73 +1,95 @@
-<% if @deliverable.course %>
-  <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
-<% else %>
-    <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
-<% end %>
-<% content_for :title, title %>
-<h1><%= title %></h1>
-
-
-
-<p>
-  <% if @deliverable.is_team_deliverable? %>
-    Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name -%>
-  <% else %>
-    Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name -%>
-  <% end %>
+<!-- Beg Add Turing Ira -->
 <% if current_user.is_student %>
+<!-- End Add Turing Ira -->
+    <% if @deliverable.course %>
+     <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
+    <% else %>
+      <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
+    <% end %>
+    <% content_for :title, title %>
+    <h1><%= title %></h1>
+
+
+
+
+    <p>
+     <% if @deliverable.is_team_deliverable? %>
+      Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name -%>
+     <% else %>
+      Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name -%>
+     <% end %>
+    </p>
+
+
+<!-- Beg Del Turing Ira -->
+<%# if current_user.is_student %>
+<!-- End Del turing Ira -->
     (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
 <% end %>
-</p>
+
+<!-- Beg Add Turing Ira -->
+<div id="container" style="padding-left: 10px;">
+
+  <div class = row>
+    <div class="span12" style="background-color: #8f0400;height: 30px;width: 100%;padding-left: 15px; " >
+     <h2><font color = white>Attachment Version History</font></h2>
+    </div>
+  </div>
+  <div class = row style ="background-color: white;">
+<!-- End Add Turing Ira -->
+
+      <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <th>Submission Date</th>
+          <th><%= nomenclature_assignment_or_deliverable %> File</th>
+          <th>Comments</th>
+        </tr>
+
+        <% if current_user.is_student %>
+            <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+              <td>
+                <% if current_user.is_student %>
+                    (<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
+                <% end %>
+              </td>
+              <td colspan="2">&nbsp;</td>
+            </tr>
+        <% end %>
+
+        <% @deliverable.attachment_versions.each_with_index do |version, index| %>
+            <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+              <td>
+                <% if index == 0 %>
+                    <%= display_timestamp(version.submission_date, :class => "latest") -%>
+                <% else %>
+                    <%= display_timestamp(version.submission_date) -%>
+                <% end %>
+                <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
+                    <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> Late!)</span>
+                <%end%>
+              </td>
 
 
-<h1>Attachment Version History</h1>
-<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-    <th>Submission Date</th>
-    <th><%= nomenclature_assignment_or_deliverable %> File</th>
-    <th>Comments</th>
-  </tr>
+              <td>
+                <% unless version.attachment_file_name.nil? %>
+                    <%= link_to version.attachment_file_name, version.attachment.url %>
+                <% end %>
+              </td>
 
-      <% if current_user.is_student %>
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-    <td>
-      <% if current_user.is_student %>
-      (<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
-      <% end %>
-    </td>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-    <% end %>
+              <td>
+                <%= h version.comment -%>
+              </td>
 
-  <% @deliverable.attachment_versions.each_with_index do |version, index| %>
-      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-        <td>
-          <% if index == 0 %>
-              <%= display_timestamp(version.submission_date, :class => "latest") -%>
-          <% else %>
-              <%= display_timestamp(version.submission_date) -%>
-            <% end %>
-            <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
-              <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> Late!)</span>
-            <%end%>
-        </td>
+            </tr>
+        <% end %>
+      </table>
+  </div>
+</div>
 
 
-        <td>
-          <% unless version.attachment_file_name.nil? %>
-              <%= link_to version.attachment_file_name, version.attachment.url %>
-          <% end %>
-        </td>
-        <td>
-          <%= h version.comment -%>
-        </td>
-      </tr>
-  <% end %>
-</table>
-
+<!--br/>
 <br/>
-<br/>
-<br/>
+<br/>  -->
 
 <% if current_user.is_admin? || @course.faculty.include?(current_user) %>
      <%= render :partial => "edit_student_feedback", :locals => {:button_name => "Submit"} %>
@@ -75,6 +97,13 @@
 <% elsif current_user.is_student? %>
     <%= render :partial => "view_feedback_by_professor" %>
  <% end %>
+
+
+
+
+
+
+
 
 
 
