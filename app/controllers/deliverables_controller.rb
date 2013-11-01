@@ -52,8 +52,13 @@ class DeliverablesController < ApplicationController
     @filtered_deliverables = @default_deliverables
 
     @deliverables = []
+
     @selected_options.each do  |option|
-        @deliverables << @filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option }
+      @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    end
+
+    respond_to do |format|
+      format.html { render :action => "index" }
     end
 
 

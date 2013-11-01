@@ -104,9 +104,9 @@ describe DeliverablesController do
       end
 
       it 'shows graded deliverables if graded buttons is clicked' do
-        pending
-        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted,
-                                  @deliverable_turing_graded])
+
+        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
+
         get :filter_deliverables, :graded => true
 
         @expected_deliverable = assigns(:deliverables)
@@ -137,6 +137,11 @@ describe DeliverablesController do
       end
 
       it 'shows ungraded and drafted deliverables of only my teams if ungraded and draft buttons are clicked' do
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        pending
+      end
+
+      it 'shows deliverables filtered by deliverable name when deliverable name is selected from dropdown' do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         pending
       end
