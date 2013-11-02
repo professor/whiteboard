@@ -17,6 +17,7 @@ class DeliverablesController < ApplicationController
   end
 
   def grading_queue_for_course
+
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -49,20 +50,23 @@ class DeliverablesController < ApplicationController
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
+    @course = Course.find_by_id(3)
+
     @selected_options = []
-    if params[:graded] == 1
+    if params[:filter_options][:graded] == '1'
       @selected_options << :graded
     end
 
-    if params[:ungraded] == 1
+    if params[:filter_options][:ungraded] == '1'
       @selected_options << :ungraded
     end
 
-    if params[:drafted] == 1
+    if params[:filter_options][:drafted] == '1'
       @selected_options << :drafted
     end
 
-    @filtered_deliverables = @default_deliverables
+    # Don't hit the model again!
+    @filtered_deliverables = default_deliverables(3, current_user.id)
 
     @deliverables = []
 
@@ -75,7 +79,7 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :action => "index" }
+      format.html { render course_deliverables_path(@course) }
     end
 
   end
