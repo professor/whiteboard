@@ -47,9 +47,9 @@ describe DeliverablesController do
     before(:each) do
       @course = FactoryGirl.create(:fse, faculty: [@faculty_frank])
 
-      @assignment_ungraded = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment_drafted = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course)
+      @assignment_ungraded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Ungraded", :task_number => 1)
+      @assignment_drafted = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Drafted", :task_number => 3)
+      @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Graded", :task_number => 2)
 
       @turing_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam, :assignment => @assignment_graded)
       @turing_grade_drafted = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_drafted)
@@ -92,6 +92,16 @@ describe DeliverablesController do
         login(@faculty_frank)
       end
 
+      it 'shows the assignments names for my course only' do
+        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
+        @expected_assignments = assigns(:assignments)
+
+        @expected_assignments.should have(3).items
+        @expected_assignments[0].should == @assignment_ungraded
+        @expected_assignments[1].should == @assignment_graded
+        @expected_assignments[2].should == @assignment_drafted
+
+      end
 
       #default behavior
       it 'shows ungraded deliverables of only my teams both, team and individual deliverables' do
@@ -104,9 +114,9 @@ describe DeliverablesController do
       end
 
       it 'shows graded deliverables if graded buttons is clicked' do
-        pending
-        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted,
-                                  @deliverable_turing_graded])
+
+        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
+
         get :filter_deliverables, :graded => true
 
         @expected_deliverable = assigns(:deliverables)
@@ -139,6 +149,17 @@ describe DeliverablesController do
       it 'shows ungraded and drafted deliverables of only my teams if ungraded and draft buttons are clicked' do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         pending
+      end
+
+      it 'shows deliverables filtered by deliverable name when deliverable name is selected from dropdown' do
+        pending
+        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
+
+        get :filter_deliverables, :deliverable_id => @deliverable_turing_drafted.id
+
+        @expected_deliverable = assigns(:deliverables)
+        @expected_deliverable.should have(1).items
+        @expected_deliverable[0].should == @deliverable_turing_drafted
       end
 
       ## end add Team turing

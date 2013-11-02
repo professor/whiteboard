@@ -27,6 +27,8 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
+    # Retrieving assignments names for the course to be able to filter by deliverable name later on.
+    @assignments = Assignment.where(:course_id => @course.id).all.sort_by(&:task_number)
     if current_user.is_admin?
 
       @deliverables = Deliverable.where(:course_id => @course.id).all
@@ -52,8 +54,13 @@ class DeliverablesController < ApplicationController
     @filtered_deliverables = @default_deliverables
 
     @deliverables = []
+
     @selected_options.each do  |option|
-        @deliverables << @filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option }
+      @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    end
+
+    respond_to do |format|
+      format.html { render :action => "index" }
     end
 
 
