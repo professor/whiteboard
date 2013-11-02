@@ -1,105 +1,35 @@
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
-
-<% if deliverables.nil? %>
-    <p>No deliverables!</p>
-<% else %>
-    <% deliverables.each do |deliverable| %>
-        <p><%= deliverable.attributes['task_number'] %></p>
-        <p><%= deliverable.attributes['owner_name'] %></p>
-        <p><%= deliverable.attributes['assignment_name'] %></p>
-        <p><%= deliverable.attributes['updated_at'] %></p>
-        <p><%= deliverable.get_grade_status %></p>
-    <% end %>
+<% deliverables.each do |deliverable| %>
+    <div>
+     <div class="panel panel-default">
+       <div class="panel-body deliverable ajax" style="background-color: #f5f5f5;border-radius: 5px;padding: 10px">
+         <div class="col-md-10">
+           <% latest_version = deliverable.attachment_versions.first %>
+           <p>
+               <span style="font-size: 20px;font-weight: bold">Task <%= deliverable.task_number %></span>
+               <span style="font-size: 20px;font-weight: bold;color: #A1A1A1">: Team <%= deliverable.owner_name %></span>
+           </p>
+           <p style="font-size: 16px">
+               <% unless latest_version.attachment_file_name.nil? %>
+                   <%= link_to deliverable.assignment.name, latest_version.attachment.url %>
+               <% end %>
+           </p>
+           <%= latest_version.submission_date %>
+           <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
+         </div>
+         <div class="col-md-2">
+           <% if deliverable.get_grade_status == :graded %>
+             <%= image_tag("/images/deliverables_graded.png") %>
+           <% elsif deliverable.get_grade_status == :drafted %>
+             <%= image_tag("/images/deliverables_drafted.png") %>
+           <% elsif deliverable.get_grade_status == :ungraded %>
+               <%= image_tag("/images/deliverables_ungraded.png") %>
+           <% end %>
+         </div>
+       </div>
+       <div class="deliverable_detail" style="display: none">
+       </div>
+     </div>
+    </div>
 <% end %>
-
-
-<div class="row">
- <div class="panel panel-default">
-   <div class="panel-body" style="background-color: #f5f5f5;border-radius: 5px;padding: 10px">
-     panel-bodypanel-bodypanel-bodypanel-bodypanel-bodypanel-bodypanel-bodypanel-bodypanel-bodypanel-body
-   </div>
- </div>
-</div>
-<table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
-  <thead>
-  <tr>
-    <% unless skip_course_column %>
-        <th>Course</th>
-    <% end %>
-    <% if customised_name=="Deliverable" %>
-        <th>Task Number</th>
-    <% end %>
-
-    <th>Owner</th>
-    <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
-    <th>Graded</th>
-    <th>Actions</th>
-    <!--
-        <th>File</th>
-    -->
-  </tr>
-  </thead>
-
-  <% deliverables.each do |deliverable| %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %> "data-toggle="collapse" data-target="#collapse<%= deliverable.attributes['deliverable_id'] %>">
-        <% unless skip_course_column %>
-            <% if deliverable.course %>
-                <td><%= h deliverable.course.name %></td>
-            <% else %>
-                <td>&nbsp;</td>
-            <% end %>
-        <% end %>
-
-        <% if customised_name=="Deliverable" %>
-            <% if deliverable.assignment.nil? %> <!-- guard against old data -->
-                <td>&nbsp;</td>
-            <% else %>
-                <td><%= h deliverable.assignment.task_number %></td>
-            <% end %>
-        <% end %>
-        <td><%#= "Team " if deliverable.is_team_deliverable? %><%#= deliverable.attributes[:owner] %></td>
-        <%# latest_attachment = deliverable.attributes[:attachment_versions] %>
-        <%# unless latest_attachment.attributes[:attachment_file_name].nil? %>
-            <td><%#= deliverable.assignment_name %> (<%#= link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%#= deliverable.assignment_name %></td>
-        <% #end %>
-
-        <td>
-
-          <% #if deliverable.get_grade_status==:graded %>
-              Yes
-          <% #elsif deliverable.get_grade_status==:drafted %>
-              No (Draft)
-          <% #elsif deliverable.get_grade_status==:ungraded %>
-              No
-          <% #end %>
-        </td>
-
-
-        <% #if  #deliverable.get_grade_status==:graded %>
-            <td><%#= link_to 'Review Grade', deliverable %></td>
-        <%#else%>
-            <td><%#= link_to 'Give Grade', deliverable %></td>
-        <%#end%>
-
-        <!--
-      <td>
-          <%# if deliverable.current_attachment != nil and deliverable.current_attachment.attachment_file_name != nil %>
-              <%#= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
-          <%# end %>
-      </td>
--->
-      </tr>
-      <tr>
-        <td colspan="4">
-          <div id="collapse<%= deliverable.attributes['deliverable_id'] %>" class="panel-collapse collapse">
-            <div class="panel-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </td>
-      </tr>
-  <% end %>
-</table>

@@ -143,8 +143,13 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @deliverable }
+      if (current_user.is_admin? || @course.faculty.include?(current_user))
+        format.html { render layout: false }
+      else
+        format.html # show.html.erb
+        format.xml { render :xml => @deliverable }
+      end
+
     end
   end
 
