@@ -18,6 +18,26 @@
   <%= javascript_include_tag 'jquery.session' %>
 
   <script>
+      $(document).ready(function() {
+          $('.ajax').on('click', function() {
+              deliverable = $(this);
+              console.log($(this).find('#deliverable_id').text())
+              $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
+                    function(response){
+                        console.log(response)
+                        deliverable.siblings().html(response)
+                    }
+              )
+              $(this).removeClass('ajax');
+          });
+
+          $('.deliverable').on('click', function() {
+              $(this).siblings().slideToggle();
+          });
+      });
+  </script>
+
+  <script>
     var assignment = "<%= nomenclature_assignment_or_deliverable %>";
     var name_column_index = 0;
     if (assignment=="Deliverable"){
@@ -98,9 +118,56 @@
 -->
 
   <div id="container" style="background-color: #ffffff">
-    <div id="filter_search_box" style="padding: 10px">
-      Placeholder for search and filter box.
-    </div>
+    <!--<div id="filter_search_box" style="padding: 10px">-->
+      <!--Placeholder for search and filter box.-->
+    <!--</div>-->
+
+    <!-- beg add Team Turing -->
+    <form class="navbar-search pull-left col-md-12">
+      <input type="text" class="form-control" placeholder="Search">
+    </form>
+
+
+    <div id="filter_buttons">
+      <%= form_tag(controller: "deliverables", action: "tmp_method", method: "post") do %>
+          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px">
+            <label class="btn btn-primary">
+              <input type="checkbox" name="filters[ungraded]" onclick="this.parentNode.submit();"> Ungraded
+            </label>
+            <label class="btn btn-primary">
+              <input type="checkbox" name="filters[drafted]"> Drafted
+            </label>
+            <label class="btn btn-primary">
+              <input type="checkbox" name="filters[graded]"> Graded
+            </label>
+          </div>
+
+          <!--<input type="hidden" value="submit">-->
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="font-weight: normal; margin-top: 10px">
+              Deliverable
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Requirements Template</a></li>
+              <li><a href="#">Burndown Chart</a></li>
+              <li><a href="#">XP Process Review</a></li>
+            </ul>
+          </div>
+
+          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px">
+            <label class="btn btn-primary">
+              <input type="radio" name="options" id="option1"> My Teams
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="options" id="option2"> Everyone
+            </label>
+          </div>
+          </div>
+          </div>
+      <% end %>
+      <!-- end add Team Turing -->
 
     <hr>
 

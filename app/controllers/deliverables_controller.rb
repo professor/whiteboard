@@ -27,6 +27,9 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
+    # Retrieving assignments names for the course to be able to filter by deliverable name later on.
+    @assignments = Assignment.where(:course_id => @course.id).all.sort_by(&:task_number)
+
     if current_user.is_admin?
 
       @deliverables = Deliverable.where(:course_id => @course.id).all
@@ -46,8 +49,17 @@ class DeliverablesController < ApplicationController
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
-    if params[:filter_options][:graded] = true
-      @selected_options = [:graded]
+    @selected_options = []
+    if params[:graded] == 1
+      @selected_options << :graded
+    end
+
+    if params[:ungraded] == 1
+      @selected_options << :ungraded
+    end
+
+    if params[:drafted] == 1
+      @selected_options << :drafted
     end
 
     @filtered_deliverables = @default_deliverables
@@ -57,6 +69,10 @@ class DeliverablesController < ApplicationController
     @selected_options.each do  |option|
       @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
+
+    #if params[:assignment_id] != nil
+    #  @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
+    #end
 
     respond_to do |format|
       format.html { render :action => "index" }
@@ -127,8 +143,13 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @deliverable }
+      if (current_user.is_admin? || @course.faculty.include?(current_user))
+        format.html { render layout: false }
+      else
+        format.html # show.html.erb
+        format.xml { render :xml => @deliverable }
+      end
+
     end
   end
 
