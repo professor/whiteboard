@@ -32,6 +32,8 @@ CMUEducation::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.time_zone = "UTC"
  
 # This next line was left over from rails2 code, do we still need it?
 #  config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
