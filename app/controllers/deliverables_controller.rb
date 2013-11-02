@@ -45,7 +45,8 @@ class DeliverablesController < ApplicationController
   def filter_deliverables
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
-    if params[:graded] = true
+
+    if params[:filter_options][:graded] = true
       @selected_options = [:graded]
     end
 
@@ -60,7 +61,6 @@ class DeliverablesController < ApplicationController
     respond_to do |format|
       format.html { render :action => "index" }
     end
-
 
   end
 
