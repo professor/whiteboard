@@ -69,9 +69,9 @@ class DeliverablesController < ApplicationController
       @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
 
-    #if params[:assignment_id] != nil
-    #  @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
-    #end
+    if params[:assignment_id] != nil
+      @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
+    end
 
     respond_to do |format|
       format.html { render :action => "index" }
