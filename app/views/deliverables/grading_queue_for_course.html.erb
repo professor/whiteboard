@@ -22,7 +22,7 @@
           $('.ajax').on('click', function() {
               deliverable = $(this);
               console.log($(this).find('#deliverable_id').text())
-              $.get('http://localhost:3000/deliverables/' + $(this).find('#deliverable_id').text(),
+              $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
                     function(response){
                         console.log(response)
                         deliverable.siblings().html(response)
