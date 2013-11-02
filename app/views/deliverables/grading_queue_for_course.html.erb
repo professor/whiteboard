@@ -128,35 +128,38 @@
     </form>
 
 
-    <div id="filter_buttons">
-      <%= form_tag(controller: "deliverables", action: "tmp_method", method: "post") do %>
-          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px">
+    <div id="filter_search_box" style="padding: 10px; z-index: 100;">
+      <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]} do |f| %>
+
+          <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary">
-              <input type="checkbox" name="filters[ungraded]" onclick="this.parentNode.submit();"> Ungraded
+              <%= f.check_box :ungraded %> <%= f.label "Ungraded" %>
             </label>
             <label class="btn btn-primary">
-              <input type="checkbox" name="filters[drafted]"> Drafted
+              <%= f.check_box :drafted %> <%= f.label "Drafted" %>
             </label>
             <label class="btn btn-primary">
-              <input type="checkbox" name="filters[graded]"> Graded
+              <%= f.check_box :graded %> <%= f.label "Graded" %>
             </label>
           </div>
 
-          <!--<input type="hidden" value="submit">-->
+
+          <%#= f.submit %>
+          <% end %>
 
           <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="font-weight: normal; margin-top: 10px">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="font-weight: normal; margin-top: 10px;">
               Deliverable
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#">Requirements Template</a></li>
-              <li><a href="#">Burndown Chart</a></li>
-              <li><a href="#">XP Process Review</a></li>
+              <% @assignments.each do |assignment| %>
+                <li><a href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a></li>
+              <% end %>
             </ul>
           </div>
 
-          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px">
+          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px;">
             <label class="btn btn-primary">
               <input type="radio" name="options" id="option1"> My Teams
             </label>
@@ -164,9 +167,11 @@
               <input type="radio" name="options" id="option2"> Everyone
             </label>
           </div>
-          </div>
-          </div>
-      <% end %>
+
+      </div>
+    </div>
+
+
       <!-- end add Team Turing -->
 
     <hr>
