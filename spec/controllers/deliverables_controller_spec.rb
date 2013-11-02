@@ -115,10 +115,10 @@ describe DeliverablesController do
 
       #default behavior
       it 'shows the deliverables that matches the selected deliverable name' do
-        pending
         subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-        get :filter_deliverables, :assignment_id => @assignment_ungraded.id, :graded => true
+        get :filter_deliverables, :assignment_id => @assignment_ungraded.id,  :graded => 1, :ungraded => 1, :drafted => 1
 
+        @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(1).items
         @expected_deliverable[0].should == @deliverable_turing_ungraded
       end
