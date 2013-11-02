@@ -158,18 +158,6 @@ describe DeliverablesController do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         pending
       end
-
-      it 'shows deliverables filtered by deliverable name when deliverable name is selected from dropdown' do
-        pending
-        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-
-        get :filter_deliverables, :deliverable_id => @deliverable_turing_drafted.id
-
-        @expected_deliverable = assigns(:deliverables)
-        @expected_deliverable.should have(1).items
-        @expected_deliverable[0].should == @deliverable_turing_drafted
-      end
-
       ## end add Team turing
 
     end
