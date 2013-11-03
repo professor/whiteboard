@@ -8,6 +8,7 @@ FactoryGirl.define do
 
   factory :assignment_team, :parent=>:assignment do
     is_team_deliverable true
+    task_number 3
   end
 
   factory :assignment_unsubmissible, :parent=>:assignment do
@@ -17,11 +18,13 @@ FactoryGirl.define do
 
   factory :assignment_fse, :parent=>:assignment do
     name "fse assignment 1"
+    task_number 1
     association :course, :factory => :fse
   end
   
   factory :assignment_fse2, :parent=>:assignment do
     name "fse assignment 2"
+    task_number 2
     association :course, :factory => :fse
   end
 

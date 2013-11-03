@@ -94,6 +94,8 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
+
+  gem 'database_cleaner'
 end
 
 
