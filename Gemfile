@@ -99,5 +99,7 @@ end
 
 
 #gem 'gchartrb'
+
 gem 'strong_parameters'
+
 gem 'cocaine', '0.3.2'

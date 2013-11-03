@@ -88,8 +88,6 @@ it "should display graded along with ungraded in the grading queue" do
  page.has_link?"Review Grade"
   end
 
-
-
 # it "should not display teams when show team checkbox is unchecked" do
 
 #  page.uncheck('Show Team')
@@ -103,9 +101,6 @@ it "should display graded along with ungraded in the grading queue" do
 #  page.should_not have_content 'Student Sally' 
 #  page.should not_have_content 'Student Sam'
 #     end
-
-
-
 
 # it "should show display the page" do
   
