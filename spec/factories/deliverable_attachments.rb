@@ -8,7 +8,6 @@ FactoryGirl.define do
     submission_date DateTime.now
     association :deliverable, :factory => :team_deliverable
     association :submitter, :factory => :student_john_user
-
   end
 
   ## end add turing

@@ -114,7 +114,6 @@ describe "deliverables" do
 
       ## beg add Team Turing
       @faculty = FactoryGirl.create(:faculty_frank_user)
-      #users = User.all
       login_with_oauth @faculty
       @team_deliverable.course.faculty = [@faculty]
       @course = FactoryGirl.create(:fse)
@@ -133,21 +132,23 @@ describe "deliverables" do
       @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
 
       @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment2 = FactoryGirl.create(:assignment_1,:course => @course)
+      @assignment2 = FactoryGirl.create(:assignment_2,:course => @course)
 
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment1)
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment2)
-      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1)
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing, :assignment => @assignment1, :attachment_versions => [])
+      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team => @team_turing,:assignment => @assignment2, :attachment_versions => [])
+      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1, :attachment_versions => [])
 
       @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
       @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
       @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
 
-      @deliverables = Deliverable.grading_queue_display(@course.id, @faculty.id)
-      @deliverables.should have(2).items
+      @dav1.attachment_file_name = "Attachment 1"
+      @dav2.attachment_file_name = "Attachment 2"
+      @dav3.attachment_file_name = "Attachment 3"
 
-      @deliverables[0].should == @deliverable2
-      @deliverables[1].should == @deliverable1
+      @deliverable1.attachment_versions << @dav1
+      @deliverable2.attachment_versions << @dav2
+      @deliverable3.attachment_versions << @dav3
 
       ## end add Team Turing
 
@@ -157,45 +158,68 @@ describe "deliverables" do
       @faculty.delete
     end
 
+
     ## beg add Team Turing
-    #it "I should be able to view only my teams deliverables", :js => true do
-    it "I should be able to view only my teams deliverables" do
+
+    it "I should be able to view only my teams deliverables", :js => true do
       visit course_deliverables_path(@course)
-      page.should have_content("Task")
+
+      page.should have_content("Task 1")
+      page.should have_content("Task 2")
+      page.should_not have_content("Task 3")
+
+      page.should have_content("Team Turing")
+      page.should_not have_content("Team Test")
+
+      page.should have_link("Assignment 1")
+      page.should have_link("Assignment 2")
+      page.should_not have_link("Assignment 3")
+
+      # Click deliverable to open accordion and check the content of grading page
+      find("#deliverable_" + @deliverable1.id.to_s).click
+      page.should have_content("Attachment Version History")
+      page.should have_content("Professor's Notes")
+      page.should have_content("My first deliverable")
+      page.should have_content("Last graded by")
+      page.should have_content("Send a copy to myself")
+      page.should have_button("Save as Draft")
+      page.should have_button("Finalize and Email")
+
+      # Check ungraded icon
+      page.should have_xpath("//img[contains(@src, \"deliverables_ungraded.png\")]")
+
       save_and_open_page
-      # TODO: Click deliverable to open accordion
-      # TODO: Check ungraded icon
+
     end
 
     ## end add Team Turing
 
-    it "I should be able to view deliverable page" do
-      visit deliverable_path(@team_deliverable)
-
-      ## beg add Team Turing
-      #save_and_open_page
-      ## end add Team Turing
-
-      page.should have_content("Attachment Version History")
-      page.should have_content("Professor's Notes")
-      page.should have_content("My private notes")
-
-      ## beg add Team Turing
-      # Check new features
-      page.should have_content("Last graded by")
-      page.should have_content("Send a copy to myself")
-      # TODO: Check new checkboxes passing the label text
-      #check "Send a copy to myself"
-      #uncheck "Send a copy to myself"
-      # TODO: Click buttons
-      page.should have_button("Save as Draft")
-      #click_button "Save as Draft"
-      page.should have_button("Finalize and Email")
-      #click_button "Finalize and Email"
-      # For debugging
-      save_and_open_page
-      # end add Team Turing
-    end
+    #it "I should be able to view deliverable page" do
+    #  visit deliverable_path(@team_deliverable)
+    #
+    #  page.should have_content("Attachment Version History")
+    #  page.should have_content("Professor's Notes")
+    #  page.should have_content("My private notes")
+    #
+    #  ## beg add Team Turing
+    #  # Check new features
+    #  page.should have_content("Last graded by")
+    #  page.should have_content("Send a copy to myself")
+    #  # TODO: Check new checkboxes passing the label text
+    #  #check "Send a copy to myself"
+    #  #uncheck "Send a copy to myself"
+    #  # TODO: Click buttons
+    #  page.should have_button("Save as Draft")
+    #  #click_button "Save as Draft"
+    #  page.should have_button("Finalize and Email")
+    #  #click_button "Finalize and Email"
+    #
+    #  # For debugging
+    #  #save_and_open_page
+    #
+    #  # end add Team Turing
+    #
+    #end
 
   end
 
