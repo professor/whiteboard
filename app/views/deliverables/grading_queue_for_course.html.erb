@@ -96,6 +96,20 @@
           $("tr."+ status).toggle();
         }
       </script>
+
+  <!-- Begin Team Turing -->
+  <script type='text/javascript'>
+
+      $(document).ready(function() {
+          $(".dropdown-menu li a").click(function(){
+              var selText = $(this).text();
+              $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+          });
+      });
+
+  </script>
+  <!-- End Team Turing -->
+
       <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
 
 <!--
@@ -117,62 +131,81 @@
       </div>
 -->
 
-  <div id="container" style="background-color: #ffffff">
+  <div id="container" class="container">
     <!--<div id="filter_search_box" style="padding: 10px">-->
       <!--Placeholder for search and filter box.-->
     <!--</div>-->
 
-    <!-- beg add Team Turing -->
-    <form class="navbar-search pull-left col-md-12">
-      <input type="text" class="form-control" placeholder="Search">
-    </form>
+    <!-- Begin Team Turing -->
+
+    <!-- Search -->
+    <div class="row">
+
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for student, team, assignment...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Search</button>
+            </span>
+      </div><!-- /input-group -->
+
+    </div><!-- /.row -->
+
+    <hr>
+
+    <!-- Filters -->
+    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]} do |f| %>
+        <div class="row">
+
+          <div class="pull-left">
+
+            <div class="btn-group btn-group-sm" data-toggle="buttons">
+              <label class="btn btn-default">
+                <%= f.check_box :ungraded %> Ungraded
+              </label>
+              <label class="btn btn-default">
+                <%= f.check_box :drafted %> Drafted
+              </label>
+              <label class="btn btn-default">
+                <%= f.check_box :graded %> Graded
+              </label>
+
+              <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Deliverable
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <% @assignments.each do |assignment| %>
+                      <li><a href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+
+          </div> <!-- /pull-left -->
+
+          <div class="pull-right">
+
+            <div class="btn-group btn-group-sm" data-toggle="buttons">
+              <label class="btn btn-default">
+                <input type="radio" name="options" id="option1"> My Teams
+              </label>
+              <label class="btn btn-default">
+                <input type="radio" name="options" id="option2"> Everyone
+              </label>
+            </div>
+
+          </div> <!-- /pull-left -->
+
+        </div> <!-- /row -->
+    <%#= f.submit %>
+    <% end %>
+    <!-- /Filters -->
 
 
-    <div id="filter_search_box" style="padding: 10px; z-index: 100;">
-      <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]} do |f| %>
+    </div> <!-- /container -->
 
-          <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary">
-              <%= f.check_box :ungraded %> <%= f.label "Ungraded" %>
-            </label>
-            <label class="btn btn-primary">
-              <%= f.check_box :drafted %> <%= f.label "Drafted" %>
-            </label>
-            <label class="btn btn-primary">
-              <%= f.check_box :graded %> <%= f.label "Graded" %>
-            </label>
-          </div>
-
-
-          <%#= f.submit %>
-          <% end %>
-
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="font-weight: normal; margin-top: 10px;">
-              Deliverable
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <% @assignments.each do |assignment| %>
-                <li><a href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a></li>
-              <% end %>
-            </ul>
-          </div>
-
-          <div class="btn-group" data-toggle="buttons" style="margin-top: 10px;">
-            <label class="btn btn-primary">
-              <input type="radio" name="options" id="option1"> My Teams
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="options" id="option2"> Everyone
-            </label>
-          </div>
-
-      </div>
-    </div>
-
-
-      <!-- end add Team Turing -->
+    <!-- End Team Turing -->
 
     <hr>
 
