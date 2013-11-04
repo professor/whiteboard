@@ -79,6 +79,7 @@ GEM
     cocaine (0.3.2)
     columnize (0.3.6)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -290,6 +291,7 @@ DEPENDENCIES
   ckeditor (= 3.6.3)
   cocaine (= 0.3.2)
   daemons (~> 1.1.4)
+  database_cleaner
   delayed_job (= 2.1.4)
   devise
   exception_notification
