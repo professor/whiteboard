@@ -4,7 +4,6 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
-  helper_method :default_deliverables
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -36,9 +35,8 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
-      @default_deliverables = default_deliverables(params[:course_id], current_user.id)
-      @filtered_deliverables = @default_deliverables
-      @deliverables = @filtered_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
+      @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+      @deliverables = @faculty_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
 
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -50,7 +48,7 @@ class DeliverablesController < ApplicationController
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
-    @course = Course.find_by_id(3)
+    @course = Course.find_by_id(params[:course_id])
 
     @selected_options = []
     if params[:filter_options][:graded] == '1'
@@ -66,12 +64,13 @@ class DeliverablesController < ApplicationController
     end
 
     # Don't hit the model again!
-    @filtered_deliverables = default_deliverables(3, current_user.id)
+    #@filtered_deliverables = default_deliverables(3, current_user.id)
+    @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     @deliverables = []
 
     @selected_options.each do  |option|
-      @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+      @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
 
     if params[:assignment_id] != nil
@@ -79,7 +78,8 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render course_deliverables_path(@course) }
+      format.html { redirect_to course_deliverables_path(@course) }
+      format.js
     end
 
   end
@@ -369,8 +369,4 @@ class DeliverablesController < ApplicationController
     end
   end
 
-  private
-  def default_deliverables(course_id, faculty_id)
-    @default_deliverables = Deliverable.grading_queue_display(course_id, faculty_id)
-  end
 end
