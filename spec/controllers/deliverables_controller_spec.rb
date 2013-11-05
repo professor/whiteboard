@@ -56,7 +56,7 @@ describe DeliverablesController do
       @turing_grade_ungraded = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_ungraded)
 
 
-      @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
+     @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
 
       @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
