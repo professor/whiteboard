@@ -65,9 +65,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.xml
   def show
     @course = Course.find(params[:id])
-    if @course.curriculum_url && @course.curriculum_url.include?("whiteboard.sv.cmu.edu/pages/")
-      @whiteboard_curriculum_page = Page.where(:url => @course.curriculum_url.split("/pages/")[1]).first
-    end
+    first_version_of_course = Course.first_offering_for_course_name(@course.name)
+    @whiteboard_curriculum_page = first_version_of_course.pages[0] if first_version_of_course.pages.present?
 
     teams = Team.where(:course_id => params[:id])
 
