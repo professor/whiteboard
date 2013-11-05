@@ -298,6 +298,50 @@ describe Deliverable do
     end
 
   end
+
+  #Beg add Turing Ira
+  context " for a individual deliverable last graded by"   do
+    before (:each) do
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @course_fse = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+      @student_sam = FactoryGirl.create(:student_sam)
+      @assignment = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @deliverable = FactoryGirl.create(:turing_individual_deliverable, :course=>@course_fse, :assignment => @assignment, :creator => @student_sam)
+
+      @grade = FactoryGirl.create(:last_graded_visible,:course_id => @course_fse.id,:assignment_id=> @assignment.id,:student_id => @student_sam.id)
+    end
+
+
+    it " should get last graded by"  do
+      # Get last graded by
+      Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(@grade)
+      @deliverable.get_graded_by.should eq('Faculty Frank')
+    end
+
+
+  end
+  context " for a team deliverable last graded by"   do
+    before (:each) do
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @course_fse = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+
+      @assignment = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      #@deliverable = FactoryGirl.create(:turing_individual_deliverable, :course=>@course_fse, :assignment => @assignment, :creator => @student_sam)
+      @deliverable = FactoryGirl.build(:team_deliverable,:course_id => @course_fse.id)
+    end
+
+
+    it " should get last graded by"  do
+      # Get last graded by
+      @grade = FactoryGirl.create(:grade_invisible, :course_id =>@deliverable.course.id,:assignment_id => @deliverable.assignment.id, :last_graded_by => @faculty_frank.id, :student_id =>@deliverable.team.members[0].id)
+      Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.team.members[0].id).and_return(@grade)
+      @deliverable.get_graded_by.should eq('Faculty Frank')
+    end
+
+
+  end
+
+  #End add Turing Ira
 end
 
 

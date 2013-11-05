@@ -76,7 +76,11 @@ class Grade < ActiveRecord::Base
 
   # To returns a specific grade for one assignment of given course_id, student_id and assignment_id. This function is
   #   useful for controller to test whether the score is exists or not.
-  def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible=nil)
+
+  # Beg Chg Turing Ira
+  #def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible=nil)
+  def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible = nil, last_graded_by = nil)
+  # End Chg Turing Ira
     if assignment_id > 0
       if Assignment.find(assignment_id).nil?
         return false
@@ -89,8 +93,12 @@ class Grade < ActiveRecord::Base
     if course.registered_students_or_on_teams.include?(student)
       grade = Grade.get_grade(course_id, assignment_id, student_id)
       if grade.nil?
+        # Beg Chg Turing Ira
+        # grade = Grade.new({:course_id => course_id, :assignment_id => assignment_id, :student_id => student_id,
+        #                    :score => score, :is_student_visible => is_student_visible})
         grade = Grade.new({:course_id => course_id, :assignment_id => assignment_id, :student_id => student_id,
-                           :score => score, :is_student_visible => is_student_visible})
+                           :score => score, :is_student_visible => is_student_visible, :last_graded_by => last_graded_by})
+        # End Chg Turing Ira
       end
 
       if course.grading_rule.validate_score(score)
@@ -98,6 +106,11 @@ class Grade < ActiveRecord::Base
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
         end
+        # Beg Add Turing Ira
+        unless last_graded_by.nil?
+          grade.last_graded_by = last_graded_by
+        end
+        # End Add Turing Ira
         grading_result = grade.save
       else
         grading_result = false
