@@ -293,7 +293,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To update the feedback and the private notes by faculty
-  def update_feedback_and_notes (params)
+  def update_feedback_and_notes(params)
     self.feedback_comment = params[:feedback_comment]
     self.private_note = params[:private_note]
     unless params[:feedback].blank?
@@ -306,18 +306,28 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To update the grade received by the student
-  def update_grade (params, is_student_visible)
+  # Beg chg Turing Ira
+  # def update_grade (params, is_student_visible
+  def update_grade(params, is_student_visible, current_user_id)
+    # End chg Turing Ira
     error_msg = []
     if self.assignment.is_team_deliverable?
       self.team.members.each do |user|
         score = params[:"#{user.id}"]
-        if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible)==false
+        # Beg chg Turing Ira
+        #if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible)==false
+        if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible, current_user_id)==false
+        # End chg Turing Ira
           error_msg << "Grade given to " + user.human_name + " is invalid!"
         end
       end
     else
       score = params[:"#{self.creator_id}"]
-      unless Grade.give_grade(self.course_id, self.assignment.id, self.creator_id, score, is_student_visible)
+      # Beg chg Turing Ira
+      #unless Grade.give_grade(self.course_id, self.assignment.id, self.creator_id, score, is_student_visible)
+      unless Grade.give_grade(self.course_id, self.assignment.id, self.creator_id, score, is_student_visible, current_user_id)
+      # End chg Turing Ira
+
         error_msg << "Grade given to " + self.creator.human_name + " is invalid!"
       end
     end
@@ -346,7 +356,7 @@ class Deliverable < ActiveRecord::Base
     if self.is_team_deliverable?
       return :ungraded if self.team.nil?
       self.team.members.each do |member|
-        status = self.get_status_for_every_individual (member.id)
+        status = self.get_status_for_every_individual(member.id)
         if status != :graded
           return status
         end
@@ -359,7 +369,7 @@ class Deliverable < ActiveRecord::Base
 
   #Todo: rename get_status_for_every_individual to status_for_every_individual
   # To get the status of deliverable by student for is it graded or not.
-  def get_status_for_every_individual  (student_id)
+  def get_status_for_every_individual(student_id)
     return :unknonwn if self.assignment.nil? #(guard for old deliverables)
     grade = Grade.get_grade(self.course.id, self.assignment.id, student_id)
     if grade.nil?
@@ -381,4 +391,26 @@ class Deliverable < ActiveRecord::Base
       end
     end
   end
+
+  #Beg add Turing Ira
+
+  def get_graded_by
+    if self.is_team_deliverable?
+      return self.last_graded_by_for_every_individual(self.team.members[0].id)
+    else
+      return self.last_graded_by_for_every_individual(self.creator_id)
+    end
+  end
+
+  def last_graded_by_for_every_individual(student_id)
+    return :unknonwn if self.assignment.nil? #(guard for old deliverables)
+    grade = Grade.get_grade(self.course.id, self.assignment.id, student_id)
+    if grade.nil?
+      return nil
+    else
+      return User.find_by_id(grade.last_graded_by).human_name unless grade.last_graded_by.nil?
+    end
+  end
+
+  #End add Turing Ira
 end

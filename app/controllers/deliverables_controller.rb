@@ -335,7 +335,10 @@ class DeliverablesController < ApplicationController
       is_student_visible=false
     end
 
-    flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    # Beg chg Turing Ira
+    #flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    flash[:error] = @deliverable.update_grade(params, is_student_visible, current_user.id)
+    # End chg Turing Ira
     if @deliverable.update_feedback_and_notes(params[:deliverable])
       if is_student_visible==true
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))

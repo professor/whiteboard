@@ -169,4 +169,20 @@ describe Grade do
     end
 
   end
+
+  # Beg Add Turing Ira
+
+  context " It should save last graded by while giving grades" do
+
+    it "should be able to give a updated grade to a registered student" do
+      faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      faculty = faculty_frank.id
+      score = "10"
+
+      Grade.give_grade(@course_fse.id, @assignment_1.id, @student_sam.id, score,nil,faculty).should be_true
+      Grade.find_by_assignment_id_and_student_id(@assignment_1.id, @student_sam.id).last_graded_by.should eq(faculty)
+    end
+  end
+
+# End Add Turing Ira
 end
