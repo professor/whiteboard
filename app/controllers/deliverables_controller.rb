@@ -27,7 +27,24 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.where(:course_id => @course.id).all
+
+      @my_teams = Team.where(:primary_faculty_id => current_user.id)
+      team_array  = Array.new
+      @my_teams.each do |team|
+        team_array << team[:id]
+      end
+      @my_individuals = TeamAssignment.where(:team_id => team_array)
+      individuals_array = Array.new
+      puts @my_individuals.inspect
+      @my_individuals.each do |ind|
+        individuals_array << ind[:user_id]
+      end
+
+      if (current_user.is_admin? || team_array.empty?)
+        @deliverables = Deliverable.where(:course_id => @course.id).all
+      elsif (@course.faculty.include?(current_user) && !team_array.empty?)
+        @deliverables = Deliverable.where(:course_id => @course.id, :team_id => team_array, :creator_id => individuals_array)
+      end
     else
       has_permissions_or_redirect(:admin, root_path)
     end
