@@ -182,21 +182,25 @@
 <script type="text/javascript">
     $('#sortable').tablesorter();
 
-    function updateShowGraded() {
+    function update() {
+
+        function updateShowTeamAndOrIndividual() {
+            $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
+            $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
+        }
+
         if ($('#show_graded').is(':checked')) {
             $('tr').show();
+            updateShowTeamAndOrIndividual();
         } else {
+            updateShowTeamAndOrIndividual();
             $('tr:contains("Review Grade")').hide();
         }
     }
-    $('#show_graded').click(updateShowGraded);
-    updateShowGraded();
+    $('#show_graded').click(update);
+    update();
 
-    function updateShowTeamAndOrIndividual() {
-        $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
-        $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
-    }
-    $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
+    $('#show_team, #show_individual').click(update);
 
 
     var $dropdown = $('#dropdown');
