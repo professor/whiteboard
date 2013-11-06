@@ -36,7 +36,7 @@ gem 'acts_as_list'
 
 gem 'rmagick'
 
-gem 'exception_notification', '3.0.0', :require => 'exception_notifier'
+gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
 
@@ -82,7 +82,6 @@ group :development, :test do
   gem 'factory_girl_rails', '3.4.0'
 #  gem 'capybara'
   gem 'capybara', '1.1.1'
-  gem 'capybara-webkit'
   gem 'jasmine'
   gem 'launchy'
   gem 'ladle', '~> 0.2.0'
@@ -96,10 +95,6 @@ group :development, :test do
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
 end
 
-
-
-#gem 'gchartrb'
-
 gem 'strong_parameters'
 
-gem 'cocaine', '0.3.2'
+#gem 'gchartrb'
