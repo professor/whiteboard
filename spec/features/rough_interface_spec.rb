@@ -13,7 +13,7 @@ before :each do
 @student_sam= FactoryGirl.create(:student_sam_user)
 
 #creating a teams
-@team_triumphant=FactoryGirl.create(:team_triumphant,:members=>[@student_sally],:primary_faculty=>@faculty_fagan)
+@team_triumphant=FactoryGirl.create(:team_triumphant,:name=>"Triumphant",:members=>[@student_sally],:primary_faculty=>@faculty_fagan)
 @team_bean_counters=FactoryGirl.create(:team_bean_counters,:members=>[@student_sam],:primary_faculty=>@faculty_fagan)
 
 #creating a course and assigning a faculty to it.
@@ -88,13 +88,16 @@ it "should display graded along with ungraded in the grading queue" do
  page.has_link?"Review Grade"
   end
 
-# it "should not display teams when show team checkbox is unchecked" do
+describe "run javascripts" , :js => true do
 
-# page.uncheck('Show Team')
-# page.should_not have_content 'Team Triumphant'
-# page.should not_have_content 'Team Bean Counters'
-# end
+ it "should not display teams when show team checkbox is unchecked"  do
  
+ uncheck "show_team"
+ page.find(:xpath, "//table/tbody/tr/td['Team Triumphant']" ,:visible => false )
+# page.should not_have_content 'Team Bean Counters'
+ save_and_open_page
+ end
+end 
 # it "should not display individuals when show individual checkbox is unchecked" do
 
 # page.uncheck('Show Individual')
@@ -102,11 +105,11 @@ it "should display graded along with ungraded in the grading queue" do
 # page.should not_have_content 'Student Sam'
 # end
 
-# it "should show display the page" do
+ # it "should show display the page" do
   
-#         save_and_open_page
+ #         save_and_open_page
   
-#          end
+ #          end
 
 
   end
