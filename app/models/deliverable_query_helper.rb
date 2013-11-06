@@ -1,12 +1,17 @@
-# This class is used to generate the Query that helps fetch the result set
+# This class is used to generate the Query that helps to fetch the result set
 # for Grading Queue page for a professor or TA.
 #
 # Author - Surya Kiran
 # Change log:
 # 10/27 - Initial Add
+# 11/06 - Improving query performance for team and individual deliverables
+# 11/06 - Adding code comments
 #
 
 class DeliverableQueryHelper
+  # This method will be called from the Model Class to generate the team deliverables query.
+  # Depending on what options were selected for fetching the results, it calls the
+  # get_team_deliverables_query method to prepare the actual custom SQL query.
   def self.generate_query_for_team_deliverables(course, current_user, team_selection)
     if team_selection == TeamSelection::MY_TEAMS
       faculty_id = current_user.id
@@ -19,6 +24,9 @@ class DeliverableQueryHelper
     end
   end
 
+  # This method will be called from the Model Class to generate the individual deliverables query.
+  # Depending on what options were selected for fetching the results, it calls the
+  # get_individual_deliverables_query method to prepare the actual custom SQL query.
   def self.generate_query_for_individual_deliverables(course, current_user, team_selection)
     if team_selection == TeamSelection::MY_TEAMS
       where_clause = " where advisor_name = '#{current_user.human_name}' "
@@ -29,7 +37,21 @@ class DeliverableQueryHelper
     end
   end
 
+  # This method populates the query based on the course and any custom where clause provided
   def self.get_team_deliverables_query(course_id, append_where_clause = '')
+
+    # Logic on how the query is formed --
+    # As this query is to fetch deliverable details submitted by teams, we join the following
+    # tables : deliverables with teams, team_assignments, assignments, courses, users and grades
+    # to fetch the following details --
+    # Course Name from courses table
+    # Task Number from Assignments table
+    # Deliverable Name from Assignments table
+    # Team name as owner name from teams table
+    # Advisor name from users table
+    # Grading status of whether the deliverable is graded, ungraded or drafted from grades table
+    # and other details like whether the deliverable is a team deliverable versus individual deliverable,
+    # what is the deliverable id, assignment id, team id, course id etc from their respective tables.
     sql_query = ' select distinct courses.name as course_name , assignments.task_number , ' +
         ' assignments.name as deliverable_name , teams.name as owner_name , ' +
         ' users.human_name as advisor_name , ' +
@@ -58,14 +80,30 @@ class DeliverableQueryHelper
     return sql_query
   end
 
+  # This method populates the query based on the course and any custom where clause provided
   def self.get_individual_deliverables_query(course_id, append_where_clause = '')
+
+    # Logic on how the query is formed --
+    # There are 2 sub queries in this main query:
+    # 1) student_deliverables - This query lists which deliverables are submitted by
+    # which student for what course
+    # 2) student_coach_map - This query lists the details of which student has which
+    # professor assigned as coach by looking at the course to team mapping, and combining
+    # those details with team to student allocation.
+    # The outer query then joins these 2 sub queries to individual deliverable details
+    # with the advisor/coach name
+    # If you notice, there is an outer "select * from (<outer_query>) where advisor_name = 'XX'"
+    # This query will be useful when we are filtering out deliverables of my_teams from all_teams
+    #
     sql_query = ' select * from  ' +
+        # Outer query begins ...
         ' (select student_deliverables.course_name , student_deliverables.task_number ,  ' +
         ' student_deliverables.deliverable_name , student_deliverables.owner_name ,  ' +
         ' student_coach_map.advisor_name , student_deliverables.grading_status ,  ' +
         ' student_deliverables.is_team_deliverable , student_deliverables.deliverable_id ,  ' +
         ' student_deliverables.team_id , student_deliverables.course_id ,  ' +
         ' student_deliverables.assignment_id , student_deliverables.assignment_order  ' +
+        # Inner query 1 - student_deliverables begins ...
         ' from (select courses.name as course_name , assignments.task_number ,  ' +
         ' 	assignments.name as deliverable_name , stud.id as student_id ,  ' +
         ' 	stud.human_name as owner_name ,  ' +
@@ -87,6 +125,8 @@ class DeliverableQueryHelper
         ' 	where courses.id = ' + course_id.to_s + ' and stud.is_student = \'t\'  ' +
         ' 		and assignments.is_submittable = \'t\'  ' +
         ' 		and assignments.is_team_deliverable = \'f\' ) student_deliverables  ' +
+        # Inner query 1 - ends
+        # Inner query 2 - student_coach_map begins ...
         ' left join (select courses.id as course_id, courses.name as course_name,  ' +
         ' 		prof.id as prof_id, prof.human_name as advisor_name, teams.id as team_id,  ' +
         ' 		teams.name as team_name, stud.id as stud_id, stud.human_name as stud_name ' +
@@ -95,9 +135,12 @@ class DeliverableQueryHelper
         ' 		join users stud on stud.id = team_assignments.user_id  ' +
         ' 		join users prof on prof.id = coalesce(teams.primary_faculty_id, teams.secondary_faculty_id) ' +
         ' 	where stud.is_student = \'t\' and courses.id = ' + course_id.to_s + ') student_coach_map  ' +
+        # Inner query 2 - ends
         ' on student_deliverables.student_id = student_coach_map.stud_id  ' +
         ' 	and student_deliverables.course_id = student_coach_map.course_id ' +
-        ' order by task_number, assignment_order, advisor_name, owner_name) indi_deliv ' + append_where_clause
+        ' order by task_number, assignment_order, advisor_name, owner_name) indi_deliv ' +
+        # Outer query ends
+        append_where_clause
 
     return sql_query
   end
