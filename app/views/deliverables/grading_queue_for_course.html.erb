@@ -208,8 +208,42 @@
         }
     }
 
+    //TODO
+    function prepareSinglePageFunctions(){
+//        $(".grading_action").click(showGradingDetail);   
+        console.log($(".grade_row").attr('class'));
+        $(".grade_row").click(showGradingDetail);   
+    }
+
+    //TODO
+    function showGradingDetail(event){
+        event.preventDefault();
+        //var url = $(this).find("td").find("a").attr("href");
+        var url = $(this).find("td a").attr("href");
+        var that = $(this);
+  //      $.get(url).done(function (data) {
+  //          showPopupWindow(data);
+  //      });
+        $.get(url).done(showPopupWindow(that));
+    }
+
+    //TODO
+    function showPopupWindow(that){
+      return function(data){
+          //console.log($(that).closest('tr').attr('class'));
+          console.log($(that).attr('class'));
+          var content = '<div>' + $(data).find("#mainContent .content").html() + '</div>';
+          console.log(content);
+          //$(that).closest('tr').after(content); 
+          $(that).after(content); 
+      }
+    }
+
     $(document).ready(function () {
         // Invoke the below function on page load.
         preparePageToMatchFilter();
+
+        // Hook listener functions for all grading in the same page features
+        prepareSinglePageFunctions();
     });
 </script>

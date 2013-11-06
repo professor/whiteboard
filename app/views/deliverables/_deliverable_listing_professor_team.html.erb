@@ -26,7 +26,7 @@
 
   <% deliverables.each do |deliverable| %>
       <% grade_status = deliverable['grading_status'] %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> ">
+      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> grade_row">
         <% unless skip_course_column %>
             <td><%= deliverable['course_name'] %></td>
         <% end %>
@@ -47,9 +47,9 @@
 
         <td>
           <% if  grade_status=='graded' %>
-              <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] %>
-          <% else %>
-              <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'] %>
+            <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] , {:class => 'grading_action', :disabled => 'disabled'}%>
+        <% else %>
+            <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'], {:class => 'grading_action', :disabled => 'disabled'}%>
           <% end %>
         </td>
       </tr>
