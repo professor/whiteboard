@@ -170,5 +170,15 @@ describe 'When I visit the grading queue page,' do
       find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
     end
 
+    it "should show the grade of a graded assignment" do
+      area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
+      within(area) do
+        area.should have_content(@deliverable_1.team.name)
+        area.should_not have_content(@deliverable_2.team.name)
+        click_link('Give Grade')
+#TODO: To be extended in the future
+        page.should have_css('mainContent')
+      end
+    end
   end
 end
