@@ -63,29 +63,31 @@ class DeliverablesController < ApplicationController
   end
 
   def filter_deliverables
-    # Assign this values depending on how it comes from the view. We may follow something like:
-    #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
     @course = Course.find_by_id(params[:course_id])
 
+    # Which filtering options are selected? (ungraded - drafted - graded)
     @selected_options = []
     params[:filter_options].collect do |grading_filter_option|
       @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
     end
 
-    # Don't hit the model again!
+    # TO DO: Don't hit the model again!
     @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     @deliverables = []
 
+    # Filter according to the selected grading options
     @selected_options.each do  |option|
       @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
 
-    if params[:assignment_id] != nil
-      @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
+    # Filter by assignment names in drop down menu
+    unless params[:filter_options][:assignment_id].empty?
+      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options][:assignment_id].to_i }
     end
 
+    # Sort by task number, ascending
     @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
 
     respond_to do |format|

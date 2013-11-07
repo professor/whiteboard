@@ -13,6 +13,9 @@
 <div id="grading_queue">
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
+<% if deliverables.empty? %>
+  <p>Hurray, nothing to do here!</p>
+<% end %>
 <% deliverables.each do |deliverable| %>
     <div>
      <div class="panel panel-default">
