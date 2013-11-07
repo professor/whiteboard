@@ -29,9 +29,6 @@ class DeliverablesController < ApplicationController
 
   def grading_queue_for_course
 
-    # Set default filtering options in the controller
-    #params[:filter_options][:ungraded] = '1'
-
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -73,7 +70,11 @@ class DeliverablesController < ApplicationController
     end
 
     # TO DO: Don't hit the model again!
-    @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+    if params[:filter_options][:is_my_teams] == 'yes'
+      @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+    else
+      @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id, { "is_my_teams" => 0 })
+    end
 
     @deliverables = []
 

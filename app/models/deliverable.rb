@@ -60,7 +60,7 @@ class Deliverable < ActiveRecord::Base
   def self.grading_queue_display(course_id, faculty_id, options = nil)
 
     # Default grading queue filters
-    options = {"ungraded" => 1, "drafted" => 0, "graded" => 0, "is_my_teams" => 1, "deliverable_name" => ''} if options.nil?
+    options = { "is_my_teams" => 1 } if options.nil?
 
     queue = []
 
