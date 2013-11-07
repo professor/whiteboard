@@ -175,7 +175,18 @@ describe "deliverables" do
       page.should have_link("Assignment 2")
       page.should_not have_link("Assignment 3")
 
-      # Click deliverable to open accordion and check the content of grading page
+    end
+
+    it "I should be able see the ungraded icon as default", :js => true do
+      visit course_deliverables_path(@course)
+
+      page.should have_xpath("//img[contains(@src, \"deliverables_ungraded.png\")]")
+
+    end
+
+    it "I should be able to click deliverable to open accordion and check content of grading page", :js => true do
+      visit course_deliverables_path(@course)
+
       find("#deliverable_" + @deliverable1.id.to_s).click
       page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
@@ -185,14 +196,25 @@ describe "deliverables" do
       page.should have_button("Save as Draft")
       page.should have_button("Finalize and Email")
 
-      # Check ungraded icon
-      page.should have_xpath("//img[contains(@src, \"deliverables_ungraded.png\")]")
+    end
 
-      save_and_open_page
+    it "I should be able to check tooltip for andrew ID", :js => true do
+      visit course_deliverables_path(@course)
+
+      pending
+
+      # hover over picture (or name) and show tooltip
+      # tooltip should show student's webiso_account
+      # page.find('#element').trigger(:mouseover)
+
+      # For debugging:
+      #save_and_open_page
 
     end
 
     ## end add Team Turing
+
+    ## beg del Team Turing
 
     #it "I should be able to view deliverable page" do
     #  visit deliverable_path(@team_deliverable)
@@ -220,6 +242,7 @@ describe "deliverables" do
     #  # end add Team Turing
     #
     #end
+    ## end del Team Turing
 
   end
 
@@ -251,7 +274,7 @@ describe "deliverables" do
         login_with_oauth @professor
         # visit deliverable_feedback_path(Deliverable.last)  #if we separate out the feedback page
         visit deliverable_path(Deliverable.last)
-        save_and_open_page
+        #save_and_open_page
         page.should have_content("Grade Team Deliverable")
       }
 
