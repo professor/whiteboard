@@ -1,7 +1,6 @@
 <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
 <%= javascript_include_tag 'jquery.quicksearch.js' %>
 <%= javascript_include_tag 'jquery.session' %>
-<%= javascript_include_tag 'jquery-ui.min.js' %>
 <%= stylesheet_link_tag 'jquery-ui.css' %>
 
 
@@ -212,8 +211,23 @@
     function prepareSinglePageFunctions(){
         console.log($(".grade_row").attr('class'));
         $(".grade_row").click(showGradingDetail);   
+        // Enabling tooltips
+
+        $('#apply_team_grade').bind('click', function() {
+          var score = $("#team_grade").val();
+          $(".student_scores input[type='text']").each(function(){
+            $(this).val(score);
+          });
+        });
     }
 
+    //to comment
+    function apply_team_grade_to_individuals() {
+      var score = $("#team_grade").val();
+      $(".student_scores input[type='text']").each(function () {
+        $(this).val(score);
+      });
+    }
     //to comment
     function showGradingDetail(event){
         event.preventDefault();
@@ -221,8 +235,8 @@
         var url = $(this).find("td a").attr("href");
         var deliverable_id = url.match(/\/([0-9]+)/)[1];
         var that = $(this);
-          if ($('div#' + deliverable_id).is(':visible')){
-            $('div#' + deliverable_id).remove();
+          if ($('tr#' + deliverable_id).is(':visible')){
+            $('tr#' + deliverable_id).remove();
           }
           else {
             $.get(url).done(showPopupWindow(that, deliverable_id));
@@ -233,13 +247,15 @@
     function showPopupWindow(that, deliverable_id){
         return function(data){
             console.log($(that).attr('class'));
-            var content = '<div id=' + deliverable_id+'>' + $(data).find("#mainContent .content").html() + '</div>';
-            console.log(content);
+            var content = '<tr id="' + deliverable_id+'"><td colspan="5">' + $(data).find("#mainContent .content").html() + '</td></tr>';
             $(that).after(content); 
+            //$(that).after('<tr>fdsfd</tr>'); 
         }
     }
 
     $(document).ready(function () {
+        $(document).tooltip();
+
         // Invoke the below function on page load.
         preparePageToMatchFilter();
 
