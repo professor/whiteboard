@@ -35,4 +35,13 @@ FactoryGirl.define do
     assignment
   end
 
+  # Beg add Turing Ira
+  factory :last_graded_visible, :parent=>:grade do
+    course_id 1
+    student_id 999
+    assignment_id 1
+    is_student_visible true
+    last_graded_by 46
+  end
+  # End add Turing Ira
 end

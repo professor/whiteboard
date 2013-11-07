@@ -5,7 +5,7 @@ class DeliverablesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
   #before_filter :filter_options, :only => [:grading_queue_for_course, :filter_deliverables]
-  helper_method :default_deliverables
+  #helper_method :default_deliverables
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -66,42 +66,25 @@ class DeliverablesController < ApplicationController
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
-    @course = Course.find_by_id(2)
+    @course = Course.find_by_id(params[:course_id])
 
     @selected_options = []
-    if params[:filter_options][:graded] == '1'
-      @selected_options << :graded
-    end
-
-    if params[:filter_options][:ungraded] == '1'
-      @selected_options << :ungraded
-    end
-
-    if params[:filter_options][:drafted] == '1'
-      @selected_options << :drafted
+    params[:filter_options].collect do |grading_filter_option|
+      @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
     end
 
     # Don't hit the model again!
-    @filtered_deliverables = default_deliverables(3, current_user.id)
+    @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     @deliverables = []
 
-    @filtered_deliverables.each do |filt|
-      @deliverables << filt
+    @selected_options.each do  |option|
+      @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
 
-
-
-
-    #@deliverables = []
-    #
-    #@selected_options.each do  |option|
-    #  @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
-    #end
-    #
-    #if params[:assignment_id] != nil
-    #  @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
-    #end
+    if params[:assignment_id] != nil
+      @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
+    end
 
     respond_to do |format|
       format.js #{ redirect_to course_deliverables_path(@course) }
@@ -360,7 +343,10 @@ class DeliverablesController < ApplicationController
       is_student_visible=false
     end
 
-    flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    # Beg chg Turing Ira
+    #flash[:error] = @deliverable.update_grade(params, is_student_visible)
+    flash[:error] = @deliverable.update_grade(params, is_student_visible, current_user.id)
+    # End chg Turing Ira
     if @deliverable.update_feedback_and_notes(params[:deliverable])
       if is_student_visible==true
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
@@ -394,8 +380,4 @@ class DeliverablesController < ApplicationController
     end
   end
 
-  private
-  def default_deliverables(course_id, faculty_id)
-    @default_deliverables = Deliverable.grading_queue_display(course_id, faculty_id)
-  end
 end

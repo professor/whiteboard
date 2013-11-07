@@ -52,11 +52,11 @@ describe DeliverablesController do
       @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Graded", :task_number => 2)
 
       @turing_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam, :assignment => @assignment_graded)
-      @turing_grade_drafted = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_drafted)
-      @turing_grade_ungraded = FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sam, :assignment =>  @assignment_ungraded)
+      @turing_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course, :student => @student_sam, :assignment =>  @assignment_drafted)
+      @turing_grade_ungraded = nil
 
 
-      @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
+     @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
 
       @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
@@ -116,7 +116,7 @@ describe DeliverablesController do
       #default behavior
       it 'shows the deliverables that matches the selected deliverable name' do
         subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-        get :filter_deliverables, :assignment_id => @assignment_ungraded.id,  :graded => 1, :ungraded => 1, :drafted => 1
+        get :filter_deliverables, :assignment_id => @assignment_ungraded.id,  :filter_options => {:graded => "1", :ungraded => "1", :drafted => "1"}, :course_id =>  @course.id
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(1).items
@@ -125,7 +125,7 @@ describe DeliverablesController do
 
       it 'shows graded deliverables if graded buttons is clicked' do
         subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-        get :filter_deliverables, :graded => 1, :ungraded => 0, :drafted => 0
+        get :filter_deliverables, :filter_options => {:graded => "1", :ungraded => 0, :drafted => 0}, :course_id =>  @course.id
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(1).items
@@ -141,12 +141,12 @@ describe DeliverablesController do
       it 'shows graded and ungraded deliverables of only my teams if graded and ungraded buttons are clicked' do
 
         subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-        get :filter_deliverables, :graded => true, :ungraded => true
+        get :filter_deliverables, :filter_options => {:graded => "1", :ungraded => "1"}, :course_id =>  @course.id
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(2).items
-        @expected_deliverable[0].should == @deliverable_turing_ungraded
-        @expected_deliverable[1].should == @deliverable_turing_graded
+        @expected_deliverable[0].should == @deliverable_turing_graded
+        @expected_deliverable[1].should == @deliverable_turing_ungraded
 
       end
 
@@ -164,18 +164,6 @@ describe DeliverablesController do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         pending
       end
-
-      it 'shows deliverables filtered by deliverable name when deliverable name is selected from dropdown' do
-        pending
-        subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
-
-        get :filter_deliverables, :deliverable_id => @deliverable_turing_drafted.id
-
-        @expected_deliverable = assigns(:deliverables)
-        @expected_deliverable.should have(1).items
-        @expected_deliverable[0].should == @deliverable_turing_drafted
-      end
-
       ## end add Team turing
 
     end

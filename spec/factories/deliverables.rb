@@ -26,7 +26,6 @@ FactoryGirl.define do
     association :team, :factory => :team_turing
     association :creator, :factory => :student_john_user
     association :course, :factory => :fse
-    association :attachment_versions, :factory => :attachment_1
     private_note "My first deliverable"
     task_number 1
   end
@@ -36,7 +35,6 @@ FactoryGirl.define do
     association :team, :factory => :team_turing
     association :creator, :factory => :student_john_user
     association :course, :factory => :fse
-    association :attachment_versions, :factory => :attachment_1
     private_note "My second deliverable"
     task_number 2
   end
@@ -46,7 +44,6 @@ FactoryGirl.define do
     association :team, :factory => :team_test
     association :course, :factory => :fse
     association :creator, :factory => :student_Test_user
-    association :attachment_versions, :factory => :attachment_1
     private_note "Test team  first deliverable"
     task_number 1
   end
