@@ -208,36 +208,35 @@
         }
     }
 
-    //TODO
+    //to comment
     function prepareSinglePageFunctions(){
         console.log($(".grade_row").attr('class'));
         $(".grade_row").click(showGradingDetail);   
     }
 
-    //TODO
+    //to comment
     function showGradingDetail(event){
         event.preventDefault();
         //var url = $(this).find("td").find("a").attr("href");
         var url = $(this).find("td a").attr("href");
+        var deliverable_id = url.match(/\/([0-9]+)/)[1];
         var that = $(this);
-        $.get(url).done(showPopupWindow(that));
-    }
-
-    //TODO
-    function showPopupWindow(that){
-      return function(data){
-          var url = $(that).find("td a").attr("href");
-          var deliverable_id = url.match(/\/([0-9]+)/)[1];
           if ($('div#' + deliverable_id).is(':visible')){
             $('div#' + deliverable_id).remove();
           }
           else {
+            $.get(url).done(showPopupWindow(that, deliverable_id));
+          }
+    }
+
+    //to comment
+    function showPopupWindow(that, deliverable_id){
+        return function(data){
             console.log($(that).attr('class'));
             var content = '<div id=' + deliverable_id+'>' + $(data).find("#mainContent .content").html() + '</div>';
             console.log(content);
             $(that).after(content); 
-          }
-      }
+        }
     }
 
     $(document).ready(function () {
