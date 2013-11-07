@@ -1,5 +1,4 @@
 class DeliverablesController < ApplicationController
-
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
@@ -26,8 +25,23 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
+    # This will be used for the 'Assignments including' select one box
+    @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
+
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.where(:course_id => @course.id).all
+      # By Default fetch data for all teams
+      team_selection = 2 # ALL_TEAMS
+
+      # If data is requested for MY_TEAMS, filter so.
+      if params[:teams] == "my_teams"
+        team_selection = 1 # MY_TEAMS
+      end
+
+      @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
+      @individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course, current_user, team_selection)
+
+      # Return all team deliverables and Individual deliverables for the current course in 1 object
+      @deliverables = [@team_deliverables.to_a, @individual_deliverables.to_a].flatten
     else
       has_permissions_or_redirect(:admin, root_path)
     end
@@ -107,7 +121,6 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
     @courses = current_user.registered_for_these_courses_during_current_semester
-    
     # permitting parameters to protect against mass assignment
     params.permit(:course_id)
     if params[:course_id]
@@ -208,12 +221,12 @@ class DeliverablesController < ApplicationController
     there_is_an_attachment = params[:deliverable_attachment][:attachment]
     if there_is_an_attachment
 
-      @attachment = DeliverableAttachment.new(params[:deliverable_attachment])
+      @attachment = DeliverableAttachment.new(deliverable_attachment_params)
       @attachment.submitter = current_user
       @deliverable.attachment_versions << @attachment
       @attachment.deliverable = @deliverable
 
-      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+      if @attachment.valid? and @deliverable.valid? and @deliverable.update_attributes(deliverable_params)
         @deliverable.send_deliverable_upload_email(url_for(@deliverable))
         flash[:notice] = 'Deliverable was successfully updated.'
         redirect_to(@deliverable)
@@ -221,7 +234,7 @@ class DeliverablesController < ApplicationController
         render :action => "edit"
       end
     else
-      if @deliverable.valid? and @deliverable.update_attributes(params[:deliverable])
+      if @deliverable.valid? and @deliverable.update_attributes(deliverable_params)
         flash[:notice] = 'Deliverable was successfully updated.'
         redirect_to(@deliverable)
       else
@@ -292,14 +305,14 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-       if flash[:error].blank?
-         flash[:error] = nil
-         flash[:notice] = 'Feedback successfully saved.'
-         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
-       else
-         flash[:error] = flash[:error].join("<br>")
-         format.html { redirect_to(@deliverable) }
-       end
+      if flash[:error].blank?
+        flash[:error] = nil
+        flash[:notice] = 'Feedback successfully saved.'
+        format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+      else
+        flash[:error] = flash[:error].join("<br>")
+        format.html { redirect_to(@deliverable) }
+      end
     end
   end
 
