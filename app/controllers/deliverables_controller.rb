@@ -51,20 +51,11 @@ class DeliverablesController < ApplicationController
     @course = Course.find_by_id(params[:course_id])
 
     @selected_options = []
-    if params[:filter_options][:graded] == '1'
-      @selected_options << :graded
-    end
-
-    if params[:filter_options][:ungraded] == '1'
-      @selected_options << :ungraded
-    end
-
-    if params[:filter_options][:drafted] == '1'
-      @selected_options << :drafted
+    params[:filter_options].collect do |grading_filter_option|
+      @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
     end
 
     # Don't hit the model again!
-    #@filtered_deliverables = default_deliverables(3, current_user.id)
     @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
     @deliverables = []
