@@ -11,6 +11,7 @@ group :assets do
   gem 'sass-rails',   "~> 3.1.5"
   gem 'coffee-rails', "~> 3.1.1"
   gem 'uglifier',     ">= 1.0.3"
+  gem 'asset_sync'
 end
 gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-sdk'
@@ -37,7 +38,7 @@ gem 'indextank'
 #gem 'heroku'
 gem 'paperclip', '2.5.0'
 
-gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
+gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
 gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
 gem 'acts_as_list'
 

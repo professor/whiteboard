@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name = "viewport" content = "initial-scale = 0.9">
+  <title>jQuery Corners</title>
+
+  <script src="http://www.google.com/jsapi"></script>
+  <script>google.load("jquery", "1.2.6")</script>
+  <script src="jquery.corners.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.rounded').corners();
+    $('.rounded').corners(); /* test for double rounding */
+    $('table', $('#featureTabsContainer .tab')[0]).each(function(){$('.native').hide();});
+    $('#featureTabsContainer').show();
+    tab(0);
+  });
+  function tab(n) {
+    $('#featureTabsContainer .tab').removeClass('tab_selected');
+    $($('#featureTabsContainer .tab')[n]).addClass('tab_selected');
+    $('#featureElementsContainer .feature').hide();
+    $($('#featureElementsContainer .feature')[n]).show();
+  }
+  </script>
+
+  <style type="text/css" media="screen">
+  html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border:0;font-variant:normal;}sup {vertical-align:text-top;}sub {vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}body {font:13px/1.231 helvetica,arial,clean,sans-serif;*font-size:small;*font:x-small;}table {font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+
+  body {
+    margin: 10px;
+  }
+  
+  * html .body {
+    width: 45em;
+  }
+  
+  .body {
+    max-width: 45em;
+  }
+  
+  p {
+    margin-bottom: 0.7em;
+  }
+
+  h1 {
+    margin-bottom: 1em;
+    font-size: 138.5%;
+    font-weight:bold;
+    text-align: center;
+  }
+  
+  code {
+    display: block;
+    background-color: #ddc;
+    margin: 10px;
+    padding: 5px;
+  }
+
+  dt {
+    font-weight:bold;
+  }
+  
+  dd {
+    margin-left: 1em;
+  }
+  
+  input {
+    vertical-align: middle;
+  }
+
+  ul { 
+    margin-left: 1em; 
+  } 
+
+  ul li {
+    list-style: disc outside; 
+  }
+  
+  a.rounded, .button {
+    outline: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: -moz-inline-box;
+    display: inline-block;
+    overflow: visible;
+  }
+  
+  .button {
+    color: #000;
+    background-color: #acc;
+    padding: 5px 7px;
+  }
+
+  .button:hover {
+    background-color: #cee;
+  }
+  
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .title {
+    background-color: #eee;
+  }
+  
+  .benefits {
+    color: #fff;
+    background-color: #3F2929;
+    padding: 0 10px;
+    vertical-align: top;
+  }
+
+  a.tab {
+    background-color: #603F3F;
+    color: #fff;
+    font-size: 108%;
+    font-weight: bold;
+    padding: 5px 7px 4px 7px;
+    margin-top: 0.3em;
+    border-bottom: solid 2px #fff;
+  }
+
+  a.tab:hover {
+    background-color: #3F2929;
+    color: #ffff00;
+  }
+  
+  a.tab_selected {
+    border-bottom-color: #3F2929;
+    background-color: #3F2929;
+  }
+  
+  #featureTabsContainer {
+    display: none;
+  }
+  
+  #featureElementsContainer {
+    background-color: #3F2929;
+    padding: 10px;
+  }
+  
+  .feature {
+    background-color: #fff;
+    padding: 10px;
+  }
+  
+  .swatches {
+    padding: 5px 0;
+  }
+
+  .swatches a {
+    background-color: #000;
+    color: #fff;
+    padding: 8px 12px;
+  }
+  
+  </style>
+
+</head>
+
+<body>
+
+  <div class="body center">
+    <table>
+      <tr>
+        <td colspan=5 class="title rounded {15px top}" style="padding-top:15px">
+          <h1>jQuery Corners 0.3</h1>
+        </td>
+      </tr>
+      <!-- Safari corners miss the background color in the table row -->
+      <tr class="title">
+        <td>
+        </td>
+        <td class="benefits rounded {top 10px no-webkit}" style="padding-top:10px">
+        </td>
+        <td>
+        </td>
+        <td class="benefits rounded {top 10px no-webkit}" style="padding-top:10px">
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr class="title">
+        <td style="width:0.85em">
+        </td>
+        <td class="benefits">
+          <p>This jQuery plugin will easily create beautifully rounded corners.
+          No images or obtrusive markup necessary.</p>
+          <div><span style="font-weight:bold">Architectural features:</span>
+          <ul>
+            <li>Less than 8000 bytes after yui compression.</li>
+            <li>Beautiful and fast anti-aliasing for older or stubborn browsers.</li>
+            <li>Degrades well for browsers with javascript turned off.</li>
+            <li>Native browser corners used on Safari, iPhone, and Firefox 3.</li>
+            <li>Form and anchor buttons are easily styled and rounded.</li>
+            <li>Documentation and test coverage (this file).</li>
+          </ul>
+          </div>
+          
+        </td>
+        <td style="width:0.85em">
+        </td>
+        <td class="benefits" style="white-space:nowrap">
+          <p>Works with:</p>
+          <ul>
+            <li>iPhone</li>
+            <li>Chrome</li>
+            <li>Firefox</li>
+            <li>Safari 2+</li>
+            <li>Opera 9.0+</li>
+            <li>Internet Explorer 6+</li>
+            <li>and probably more...</li>
+          </ul>
+        </td>
+        <td style="width:0.85em">
+        </td>
+      </tr>
+      <tr class="title">
+        <td>
+        </td>
+        <td class="benefits rounded {bottom 10px no-webkit}" style="padding-bottom:10px">
+        </td>
+        <td>
+        </td>
+        <td class="benefits rounded {bottom 10px no-webkit}" style="padding-bottom:10px">
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=5 class="title rounded {15px bottom}" style="padding-bottom:15px">
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="body center" style="margin-top:0.5em">
+    <div id="featureTabsContainer">
+      <a href="javascript:" onclick="tab(0)" class="tab rounded {top transparent}">Introduction</a>
+      <a href="javascript:" onclick="tab(1)" class="tab rounded {top transparent}">Options</a>
+      <a href="javascript:" onclick="tab(2)" class="tab rounded {top transparent}">Buttons</a>
+      <a href="javascript:" onclick="tab(3)" class="tab rounded {top transparent}">Swatches</a>
+      <a href="javascript:" onclick="tab(4)" class="tab rounded {top transparent}">Miscellaneous</a>
+    </div>
+    
+    <div id="featureElementsContainer" class="rounded {right bottom}">
+
+      <div class="feature">
+        Once jQuery and jQuery.corners scripts are loaded, rounding corners is easy.
+        <code>
+          &lt;div style="background-color:#acc; padding:5px" class="rounded"&gt;<br />
+          &nbsp;&nbsp;Simple Example<br />
+          &lt;/div&gt;<br />
+          &lt;script&gt;$(document).ready( function(){<br />
+          &nbsp;&nbsp;$('.rounded').corners();<br />
+          });&lt;/script&gt;<br />
+        </code>
+        <div style="background-color:#acc;padding:5px" class="rounded">
+          Simple Example
+        </div>
+        <br />
+        The rounding algorithm accepts options.
+        <code>
+          &lt;div style="background-color:#acc; padding:10px" class="rounded"&gt;<br />
+          &nbsp;&nbsp;Example with different x and y sizes.<br />
+          &lt;/div&gt;<br />
+          &lt;script&gt;$(document).ready( function(){<br />
+          &nbsp;&nbsp;$('.rounded').corners("30px 10px");<br />
+          });&lt;/script&gt;<br />
+        </code>
+        <div style="background-color:#acc;padding:10px" class="rounded {30px 10px}">
+          Example with different x and y sizes.
+        </div>
+        <br />
+        You may override the options in the element's class.
+        <code>
+          &lt;div style="background-color:#acc; padding:10px" class="rounded {10px}"&gt;<br />
+          &nbsp;&nbsp;class="rounded {10px}"<br />
+          &lt;/div&gt;<br />
+          &lt;script&gt;$(document).ready( function(){<br />
+          &nbsp;&nbsp;$('.rounded').corners("4px");<br />
+          });&lt;/script&gt;<br />
+        </code>
+        <div style="background-color:#acc;padding:10px" class="rounded {10px}">
+          class="rounded {10px}"
+        </div>
+      </div>
+
+      <div class="feature">
+        Options are passed as a string.  For example: <tt>"6px transparent top";</tt>
+        <br />
+        <br />
+        <dl>
+          <dt>5px</dt>
+          <dd>Sets the corner radius.  Default is 5.</dd>
+          <dt>10px 6px</dt>
+          <dd>Sets the x and y radii to different values.</dd>
+          <dt>anti-alias</dt>
+          <dd>Corners are anti-aliased.  Default.</dd>
+          <dt>transparent</dt>
+          <dd>For background images or hover states, use this transparent style.</dd>
+          <dt>no-native</dt>
+          <dd>Disables all of the following border-radius extensions.  Mostly used for testing.</dd>
+          <dt>webkit</dt>
+          <dd>Enables use of <tt>-webkit-border-radius</tt> on compatible browsers such as Safari and iPhone.  Currently disabled for Google Chrome.  Default.</dd>
+          <dt>no-webkit</dt>
+          <dd>Will not use <tt>-webkit-border-radius</tt> on any browser.</dd>
+          <dt>mozilla</dt>
+          <dd>Enables use of <tt>-moz-border-radius</tt> on Firefox 3+ and other Mozilla based browsers.  Default.</dd>
+          <dt>no-mozilla</dt>
+          <dd>Will not use <tt>-moz-border-radius</tt> on any browser.</dd>
+          <dt>top</dt>
+          <dt>right</dt>
+          <dt>bottom</dt>
+          <dt>left</dt>
+          <dt>top-left</dt>
+          <dt>top-right</dt>
+          <dt>bottom-left</dt>
+          <dt>bottom-right</dt>
+          <dd>Mix and match to round only specific corners.</dd>
+        </dl>
+      </div>
+
+      <div class="feature">
+        Anchor <tt>&lt;a&gt;</tt> elements can be turned into rounded buttons.
+        <code>
+          &lt;a href="javascript:" onclick="alert('Hello, World!')" class="rounded {transparent} button"&gt;<br />
+          &nbsp;&nbsp;Press<br />
+          &lt;/a&gt; for a greeting.
+        </code>
+        <span><a href="javascript:" onclick="alert('Hello, World!')" class="rounded {transparent} button">
+          Press
+        </a> for a greeting.</span><br />
+        <br />
+        Form buttons too.  Input elements are transmogrified to an anchor.
+        Browsers without javascript render buttons like the square examples here.
+        <code>
+          &lt;form action="?"&gt;<br />
+          &lt;input type="submit" value="Submit" class="button"&gt;&amp;nbsp;<br />
+          &lt;input type="submit" value="Submit" class="rounded {transparent} button"&gt;&amp;nbsp;<br />
+          &lt;input type="button" value="Javascript" class="button" onclick="alert('OK!'); return false;"&gt;&amp;nbsp;<br />
+          &lt;input type="button" value="Javascript" class="rounded {transparent} button" onclick="alert('OK!'); return false;"&gt;<br />
+          &lt;/form&gt;<br />
+        </code>
+        <form action="?">
+          <input type="submit" value="Submit" class="button">&nbsp;
+          <input type="submit" value="Submit" class="rounded {transparent} button">&nbsp;
+          <input type="button" value="Javascript" class="button" onclick="alert('OK!'); return false;">&nbsp;
+          <input type="button" value="Javascript" class="rounded {transparent} button" onclick="alert('OK!'); return false;">
+        </form>
+        <br />
+        Anchors and buttons require CSS like so.
+        <code>
+          a.rounded, .button {<br />
+          &nbsp;&nbsp;outline: none;<br />
+          &nbsp;&nbsp;border: none;<br />
+          &nbsp;&nbsp;text-decoration: none;<br />
+          &nbsp;&nbsp;cursor: pointer;<br />
+          &nbsp;&nbsp;white-space: nowrap;<br />
+          &nbsp;&nbsp;vertical-align: middle; /* or top */<br />
+          &nbsp;&nbsp;display: -moz-inline-box;<br />
+          &nbsp;&nbsp;display: inline-block;<br />
+          &nbsp;&nbsp;overflow: visible; /* IE6 form button fix */ <br />
+          }<br />
+          .button {<br />
+          &nbsp;&nbsp;color: #000;<br />
+          &nbsp;&nbsp;background-color: #acc;<br />
+          &nbsp;&nbsp;padding: 5px 7px;<br />
+          }<br />
+          .button:hover {<br />
+          &nbsp;&nbsp;background-color: #cee;<br />
+          }
+        </code>
+      </div>
+
+      <div class="feature">
+        <div class="native">
+          Your browser has a supported border-radius extension.  You deserve a cookie.
+          <div class="swatches">
+            <a href="javascript:" class="rounded {8px}">8</a>
+            <a href="javascript:" class="rounded {7px}">7</a>
+            <a href="javascript:" class="rounded {6px}">6</a>
+            <a href="javascript:" class="rounded {5px}">5</a>
+            <a href="javascript:" class="rounded {4px}">4</a>
+            <a href="javascript:" class="rounded {3px}">3</a>
+            <a href="javascript:" class="rounded {2px}">2</a>
+            <a href="javascript:" class="rounded {1px}">1</a>
+          </div>
+          <br />
+        </div>
+        jQuery Corners contains its own algorithm to create anti-aliased corners.
+        <span class="native">Native browser support has been disabled here.</span>
+        <div class="swatches">
+          <a href="javascript:" class="rounded {8px no-native}">8</a>
+          <a href="javascript:" class="rounded {7px no-native}">7</a>
+          <a href="javascript:" class="rounded {6px no-native}">6</a>
+          <a href="javascript:" class="rounded {5px no-native}">5</a>
+          <a href="javascript:" class="rounded {4px no-native}">4</a>
+          <a href="javascript:" class="rounded {3px no-native}">3</a>
+          <a href="javascript:" class="rounded {2px no-native}">2</a>
+          <a href="javascript:" class="rounded {1px no-native}">1</a>
+        </div>
+        <br />
+        If you plan on using a background image or hover state, this transparent style will do the trick.
+        <span class="native">Your browser has border-radius support and will normally display these like the first example.</span>
+        <div class="swatches">
+          <a href="javascript:" class="rounded {8px transparent no-native}">8</a>
+          <a href="javascript:" class="rounded {7px transparent no-native}">7</a>
+          <a href="javascript:" class="rounded {6px transparent no-native}">6</a>
+          <a href="javascript:" class="rounded {5px transparent no-native}">5</a>
+          <a href="javascript:" class="rounded {4px transparent no-native}">4</a>
+          <a href="javascript:" class="rounded {3px transparent no-native}">3</a>
+          <a href="javascript:" class="rounded {2px transparent no-native}">2</a>
+          <a href="javascript:" class="rounded {1px transparent no-native}">1</a>
+        </div>
+        <br />
+        Width, height, margin and padding attributes supported.
+        <div class="rounded {20PX}" style="margin:5px 0 0 50px; width:50px; height:50px; padding:20px; background-color:#000">
+        </div>
+        <br />
+        No-native floating right test.
+        <div class="rounded {20PX no-native}" style="float:right; margin:5px 0 0 50px; width:50px; height:50px; padding:20px; background-color:#000">
+        </div>
+        <br style="clear:both"/>
+        &nbsp;
+      </div>
+
+      <div class="feature">
+        Obtain support and the latest version at: <a href="http://plugins.jquery.com/project/corners">http://plugins.jquery.com/project/corners</a>
+        <br />
+        <br />
+        There needs to be enough padding to insert corners otherwise the layout
+        will not look the same across browsers or with javascript disabled.
+        If jQuery.corners doesn't find enough padding and you have Firebug or Firebug Lite running,
+        an error will be logged to the console.  Note that if your browser supports border-radius
+        extensions then you will need to apply "no-native" to the elements you want checked.
+        <br />
+        <br />
+        Elements can only be rounded once.  This allows for easier ajax support since you can
+        use the same callback for $(document).ready and ajaxComplete.
+        <br />
+        <br />
+        If you're having trouble on your own pages, make sure you're not in 
+        <a href="http://en.wikipedia.org/wiki/Quirks_mode">quirks mode.</a>
+        <br />
+        <br />
+        Fun things to try with this page:  
+        View the source for more examples.
+        View it with an iPhone.
+        Turn off javascript and reload.
+        Increase or decrease the font size with your browser.
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
+</html>

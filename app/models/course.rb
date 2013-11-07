@@ -235,7 +235,7 @@ class Course < ActiveRecord::Base
   end
 
   def copy_as_new_course
-    new_course = self.clone
+    new_course = self.dup
     new_course.is_configured = false
     new_course.configured_by = nil
     new_course.updated_by = nil
@@ -243,8 +243,8 @@ class Course < ActiveRecord::Base
     new_course.updated_at = Time.now
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
-    new_course.grading_rule = self.grading_rule.clone if self.grading_rule.present?
-    self.assignments.each { |assignment| new_course.assignments << assignment.clone } if self.assignments.present?
+    new_course.grading_rule = self.grading_rule.dup if self.grading_rule.present?
+    self.assignments.each { |assignment| new_course.assignments << assignment.dup } if self.assignments.present?
     return new_course
   end
 
@@ -354,7 +354,7 @@ class Course < ActiveRecord::Base
   # convenience method for an admin. destination_course_id is the first time that course was offered
   def copy_pages_to_another_course(destination_course_id, url_prefix)
     self.pages.each do |page|
-      new = page.clone
+      new = page.dup
       new.course_id = destination_course_id
       new.url = url_prefix + page.url
       new.save

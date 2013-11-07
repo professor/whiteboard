@@ -1,4 +1,7 @@
+
+
 CMUEducation::Application.configure do
+
 
 
   # Settings specified here will take precedence over those in config/application.rb
@@ -24,7 +27,13 @@ CMUEducation::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  ActionMailer::Base.perform_deliveries = false
+  # Do not compress assets
+  config.assets.compress = false
+
+# Expands the lines which load the assets
+  config.assets.debug = true
+
+  ActionMailer::Base.perform_deliveries = true
   # ActionMailer::Base.perform_deliveries = true
 
   # Specify host url for password reset links in email
@@ -39,7 +48,37 @@ CMUEducation::Application.configure do
     :password => ENV['GMAIL_SMTP_PASSWORD'],
     :enable_starttls_auto => true
   }
+
+
+
+
+
+  config.serve_static_assets = false
+  config.assets.enabled = true
+
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
+# Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = true
+
+# Generate digests for assets URLs
+  config.assets.digest = true
+  config.assets.initialize_on_precompile = true
+
+  # Enable serving of images, stylesheets, and javascripts from an asset server
+  # config.action_controller.asset_host = "http://assets.example.com"
+  #config.action_controller.asset_host = "http://cmusv-rails-mfse-development.s3.amazonaws.com"
+
+  config.action_controller.asset_host = Proc.new do |source, request|
+    scheme = request.ssl? ? "https" : "http"
+    "#{scheme}://cmusv-rails-mfse-development.s3.amazonaws.com"
+  end
+
+
 end
+
+
 
 
 
