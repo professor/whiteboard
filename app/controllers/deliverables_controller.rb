@@ -86,6 +86,8 @@ class DeliverablesController < ApplicationController
       @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
     end
 
+    @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
+
     respond_to do |format|
       format.js #{ redirect_to course_deliverables_path(@course) }
     end
