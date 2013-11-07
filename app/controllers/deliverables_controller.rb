@@ -4,6 +4,7 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
+  #before_filter :filter_options, :only => [:grading_queue_for_course, :filter_deliverables]
   helper_method :default_deliverables
 
   def render_grade_book_menu
@@ -16,7 +17,20 @@ class DeliverablesController < ApplicationController
     redirect_to my_deliverables_path(current_user)
   end
 
+  #def filter_options
+    #@filter_options = Hash.new
+    # Default filter values
+    #@filter_options[:ungraded] = '1'
+    #@filter_options[:drafted] = '1'
+    #@filter_options[:graded] = '1'
+    #@filter_options[:deliverable] = 'Deliverable'
+    #@filter_options[:is_my_teams] = '1'
+  #end
+
   def grading_queue_for_course
+
+    # Set default filtering options in the controller
+    #params[:filter_options][:ungraded] = '1'
 
     @course = Course.find(params[:course_id])
 
@@ -36,9 +50,11 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
-      @default_deliverables = default_deliverables(params[:course_id], current_user.id)
-      @filtered_deliverables = @default_deliverables
-      @deliverables = @filtered_deliverables.select { |deliverable| deliverable.get_grade_status != :graded }
+      #@default_deliverables = default_deliverables(params[:course_id], current_user.id)
+      #@filtered_deliverables = @default_deliverables
+      @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
+      @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
 
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -50,7 +66,7 @@ class DeliverablesController < ApplicationController
     # Assign this values depending on how it comes from the view. We may follow something like:
     #http://stackoverflow.com/questions/13108794/ruby-on-rails-how-can-check-a-radio-button-created-by-simple-form-is-checked
 
-    @course = Course.find_by_id(3)
+    @course = Course.find_by_id(2)
 
     @selected_options = []
     if params[:filter_options][:graded] == '1'
@@ -70,16 +86,25 @@ class DeliverablesController < ApplicationController
 
     @deliverables = []
 
-    @selected_options.each do  |option|
-      @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    @filtered_deliverables.each do |filt|
+      @deliverables << filt
     end
 
-    if params[:assignment_id] != nil
-      @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
-    end
+
+
+
+    #@deliverables = []
+    #
+    #@selected_options.each do  |option|
+    #  @deliverables.concat(@filtered_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    #end
+    #
+    #if params[:assignment_id] != nil
+    #  @deliverables = @deliverables.select{|deliverable| deliverable.assignment_id == params[:assignment_id]}
+    #end
 
     respond_to do |format|
-      format.html { render course_deliverables_path(@course) }
+      format.js #{ redirect_to course_deliverables_path(@course) }
     end
 
   end

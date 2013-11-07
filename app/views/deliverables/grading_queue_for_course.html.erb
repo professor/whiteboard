@@ -18,23 +18,23 @@
   <%= javascript_include_tag 'jquery.session' %>
 
   <script>
-      $(document).ready(function() {
-          $('.ajax').on('click', function() {
-              deliverable = $(this);
-              console.log($(this).find('#deliverable_id').text())
-              $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
-                    function(response){
-                        console.log(response)
-                        deliverable.siblings().html(response)
-                    }
-              )
-              $(this).removeClass('ajax');
-          });
 
-          $('.deliverable').on('click', function() {
-              $(this).siblings().slideToggle();
-          });
+      $(document).on('click', '.ajax', function() {
+          var deliverable = $(this);
+          console.log($(this).find('#deliverable_id').text())
+          $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
+                function(response){
+                    console.log(response)
+                    deliverable.siblings().html(response)
+                }
+          )
+          $(this).removeClass('ajax');
       });
+
+      $(document).on('click', '.deliverable', function() {
+          $(this).siblings().slideToggle();
+      });
+
   </script>
 
   <script>
@@ -103,7 +103,10 @@
       $(document).ready(function() {
           $(".dropdown-menu li a").click(function(){
               var selText = $(this).text();
+              var length_limit = 40;
+              selText = (selText.length >= length_limit ? selText.substr(0, length_limit-3) + "..." : selText);
               $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+              $("#filter_options_assignment_id").val($(this).attr("id"));
           });
       });
 
@@ -142,7 +145,7 @@
     <div class="row">
 
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for student, team, assignment...">
+        <input type="text" class="form-control" placeholder="Search for student or team name...">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">Search</button>
             </span>
@@ -153,30 +156,38 @@
     <hr>
 
     <!-- Filters -->
-    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]} do |f| %>
+    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]}, :remote => true do |f| %>
+    <%#= form_tag(filter_deliverables_path, remote: true) %>
         <div class="row">
 
           <div class="pull-left">
 
             <div class="btn-group btn-group-sm" data-toggle="buttons">
-              <label class="btn btn-default">
-                <%= f.check_box :ungraded %> Ungraded
+              <label class="btn btn-default active">
+                <%= f.check_box :ungraded, { checked: true } %> Ungraded
+                <%#= check_box_tag "filter_options[ungraded]", @filter_options[:ungraded], (@filter_options[:ungraded] == '1' ? true : false) %>
               </label>
               <label class="btn btn-default">
                 <%= f.check_box :drafted %> Drafted
+                <%#= check_box_tag "filter_options[drafted]", @filter_options[:drafted] %>
               </label>
               <label class="btn btn-default">
                 <%= f.check_box :graded %> Graded
+                <%#= check_box_tag "filter_options[graded]", @filter_options[:graded] %>
               </label>
+
+              <%= f.hidden_field :assignment_id, { value: '' } %>
 
               <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   Deliverable
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="list-style: none; margin:0; padding-left:0; padding-right:0; z-index: 200; ">
                   <% @assignments.each do |assignment| %>
-                      <li><a href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a></li>
+                      <li>
+                        <a id="<%= assignment.id %>" href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a>
+                      </li>
                   <% end %>
                 </ul>
               </div>
@@ -187,18 +198,20 @@
           <div class="pull-right">
 
             <div class="btn-group btn-group-sm" data-toggle="buttons">
-              <label class="btn btn-default">
-                <input type="radio" name="options" id="option1"> My Teams
+              <label class="btn btn-default active">
+                <%= f.radio_button :is_my_teams, "yes", { checked: true }  %> My teams
+                <!--<input type="radio" name="options" id="option1"> My Teams-->
               </label>
               <label class="btn btn-default">
-                <input type="radio" name="options" id="option2"> Everyone
+                <%= f.radio_button :is_my_teams, "no", { checked: false }  %> Everyone
+                <!--<input type="radio" name="options" id="option2"> Everyone-->
               </label>
             </div>
 
-          </div> <!-- /pull-left -->
+          </div> <!-- /pull-right -->
 
         </div> <!-- /row -->
-    <%#= f.submit %>
+    <br/><%= f.submit %>
     <% end %>
     <!-- /Filters -->
 
@@ -209,7 +222,7 @@
 
     <hr>
 
-    <div id="deliverables" style="padding: 10px">
+    <div id="deliverables">
       <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
 
     </div>
