@@ -27,3 +27,4 @@ FactoryGirl.define do
     sequence(:assignment_order) {|i| i}
   end
 end
+

@@ -1,6 +1,5 @@
 require "spec_helper"
 
-
 describe "Jobs" do
 
   context "When the user is on the new job page" do
@@ -99,7 +98,6 @@ describe "Jobs" do
       click_link "Add a student"
       fill_in "people_name", :with => "Student Sam"
       click_button('Update Job')
-
       page.should have_content("Job was successfully updated.")
       page.should have_content("#{@job.title} (Student Sam)")
     end

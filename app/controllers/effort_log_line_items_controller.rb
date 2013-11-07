@@ -50,7 +50,7 @@ class EffortLogLineItemsController < ApplicationController
   # POST /effort_log_line_items
   # POST /effort_log_line_items.xml
   def create
-    @effort_log_line_item = EffortLogLineItem.new(params[:effort_log_line_item])
+    @effort_log_line_item = EffortLogLineItem.new(elli_params)
 
     respond_to do |format|
       if @effort_log_line_item.save
@@ -70,7 +70,7 @@ class EffortLogLineItemsController < ApplicationController
     @effort_log_line_item = EffortLogLineItem.find(params[:id])
 
     respond_to do |format|
-      if @effort_log_line_item.update_attributes(params[:effort_log_line_item])
+      if @effort_log_line_item.update_attributes(elli_params)
         flash[:notice] = 'EffortLogLineItem was successfully updated.'
         format.html { redirect_to(@effort_log_line_item) }
         format.xml { head :ok }
@@ -97,4 +97,10 @@ class EffortLogLineItemsController < ApplicationController
   def redirect_to_effort_log_index
     redirect_to :controller => :effort_logs, :action => :index
   end
+
+  private
+  def elli_params
+    params.require(:effort_log_line_items).permit(:day1, :day2, :day3, :day4, :day5, :day6, :day7)
+  end
+
 end

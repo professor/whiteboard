@@ -95,6 +95,6 @@ group :development, :test do
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
 end
 
-
+gem 'strong_parameters'
 
 #gem 'gchartrb'

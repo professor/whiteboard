@@ -1,4 +1,5 @@
 class EffortLogLineItem < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   acts_as_list :scope => :effort_log
 
   belongs_to :effort_log

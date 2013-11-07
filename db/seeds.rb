@@ -98,18 +98,19 @@ FactoryGirl.define do
   end
 
 
-  factory :your_name_here, :parent => :person do
+
+  factory :Shishir, :parent => :person do
     is_student 1
     is_part_time 0
-    graduation_year "2012"
+    graduation_year "2014"
     masters_program "SE"
     masters_track "Tech"
-    twiki_name "FirstLast"
-    first_name "First"
-    last_name "Last"
-    human_name "Your Name"
-    email "your.email@sv.cmu.edu"
-    webiso_account "your.name@andrew.cmu.edu"
+    twiki_name "ShishirKinkar"
+    first_name "Shishir"
+    last_name "Kinkar"
+    human_name "Shishir Kinkar"
+    email "shishir.kinkar@sv.cmu.edu"
+    webiso_account "shishir.kinkar@andrew.cmu.edu"
   end
 
 end
@@ -122,7 +123,7 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:your_name_here)
+Factory.create(:Shishir)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 FactoryGirl.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
