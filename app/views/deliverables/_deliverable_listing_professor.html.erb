@@ -1,69 +1,56 @@
-<% reset_cycle %>
-<% customised_name= nomenclature_assignment_or_deliverable %>
-<table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
-  <thead>
-  <tr>
-    <% unless skip_course_column %>
-        <th>Course</th>
-    <% end %>
-    <% if customised_name=="Deliverable" %>
-        <th>Task Number</th>
-    <% end %>
-
-    <th><%=nomenclature_assignment_or_deliverable%></th>
-    <th>Owner</th>
-<!--
-    <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
--->
-    <th>Graded</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-
-  <% deliverables.each do |deliverable| %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
-        <% unless skip_course_column %>
-            <% if deliverable.course %>
-                <td><%= deliverable.course.name %></td>
-            <% else %>
-                <td>&nbsp;</td>
-            <% end %>
+<table id="sortable">
+    <thead>
+        <tr>
+          <th>Name</th>
+          <th id="mysuperfuntimeid">Task</th>
+          <th><%= nomenclature_assignment_or_deliverable %></th>
+          <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% deliverables.each do |deliverable| %>
+            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>">
+                <td id ="teams">
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                </td>
+                <td><%= deliverable.assignment.task_number %></td>
+                <td>
+                    <% latest_attachment = deliverable.attachment_versions.first %>
+                    <% unless latest_attachment.attachment_file_name.nil? %>
+                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
+                    <% else %>
+                        <%= deliverable.assignment_name %>
+                    <% end %>
+                </td>
+                <td>
+                      <% if deliverable.get_grade_status == :ungraded %>
+                          <%= link_to 'Give Grade', deliverable %>
+                      <% else %>
+                          <%= link_to 'Review Grade', deliverable %>
+                      <% end %>
+                </td>
+            </tr>
         <% end %>
-
-
-        <% if customised_name=="Deliverable" %>
-            <td><%= deliverable.assignment.task_number %></td>
-        <% end %>
-        <td><%= deliverable.assignment.name %></td>
-
-        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
-
-        <!-- commented this out on 9/27/2013 to increase performance
-        <%# latest_attachment = deliverable.attachment_versions.first %>
-        <%# unless latest_attachment.attachment_file_name.nil? %>
-            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%# deliverable.assignment_name %></td>
-        <%# end %>
-        -->
-        <td>
-          <% if deliverable.get_grade_status==:graded %>
-             Yes
-          <% elsif deliverable.get_grade_status==:drafted %>
-             No (Draft)
-          <% elsif deliverable.get_grade_status==:ungraded %>
-             No
-          <% end %>
-        </td>
-
-
-              <% if  deliverable.get_grade_status==:graded %>
-                  <td><%= link_to 'Review Grade', deliverable %></td>
-              <%else%>
-                <td><%= link_to 'Give Grade', deliverable %></td>
-            <%end%>
-
-      </tr>
-  <% end %>
+    </tbody>
 </table>
 
+<script type="text/javascript">
+  $('#sortable').tablesorter();
+
+  function updateShowGraded() {
+      if ($('#show_graded').is(':checked')) {
+          $('tr').show();
+      } else {
+          $('tr:contains("Review Grade")').hide();
+      }
+  }
+  $('#show_graded').click(updateShowGraded);
+  updateShowGraded();
+
+  function updateShowTeamAndOrIndividual() {
+        $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
+        $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
+  }
+  $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
+</script>

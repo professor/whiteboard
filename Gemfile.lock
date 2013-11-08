@@ -68,14 +68,18 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    capybara-webkit (0.13.1)
+      capybara (>= 1.0.0, < 1.2)
+      json
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     ckeditor (3.6.3)
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
-    cocaine (0.2.0)
+    cocaine (0.3.2)
     columnize (0.3.6)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -283,8 +287,11 @@ DEPENDENCIES
   bundler
   cancan
   capybara (= 1.1.1)
+  capybara-webkit
   ckeditor (= 3.6.3)
+  cocaine (= 0.3.2)
   daemons (~> 1.1.4)
+  database_cleaner
   delayed_job (= 2.1.4)
   devise
   exception_notification
