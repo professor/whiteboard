@@ -408,7 +408,7 @@ class Deliverable < ActiveRecord::Base
     if grade.nil?
       return nil
     else
-      return User.find_by_id(grade.last_graded_by).human_name unless grade.last_graded_by.nil?
+      return User.find_by_id(grade.last_graded_by) unless grade.last_graded_by.nil?
     end
   end
 

@@ -3,10 +3,10 @@
 
   <div class="label">
     <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
+        <font color = black> Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
       <%# if deliverable_type == "individual" %>
 
-        /<%= display_maximum_score %>
+        /<%= display_maximum_score %>    </font>
 
       <%# end %>
     <% end %>
@@ -15,6 +15,6 @@
   <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
     <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image") %></a>
   </div>
-  <div class='label'> <%= member.human_name %></div>
+  <div class='label'><font color = black> <%= member.human_name %></font></div>
 
   </div>

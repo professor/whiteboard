@@ -315,7 +315,7 @@ describe Deliverable do
     it " should get last graded by"  do
       # Get last graded by
       Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(@grade)
-      @deliverable.get_graded_by.should eq('Faculty Frank')
+      @deliverable.get_graded_by.should eq(@faculty_frank)
     end
 
 
@@ -335,7 +335,7 @@ describe Deliverable do
       # Get last graded by
       @grade = FactoryGirl.create(:grade_invisible, :course_id =>@deliverable.course.id,:assignment_id => @deliverable.assignment.id, :last_graded_by => @faculty_frank.id, :student_id =>@deliverable.team.members[0].id)
       Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.team.members[0].id).and_return(@grade)
-      @deliverable.get_graded_by.should eq('Faculty Frank')
+      @deliverable.get_graded_by.should eq(@faculty_frank)
     end
 
 

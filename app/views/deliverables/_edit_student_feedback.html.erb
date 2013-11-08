@@ -40,7 +40,7 @@
 <!--  Beg Add Turing Ira    -->
 <div class = container style="padding-left: 10px;" >
     <div class = row>
-     <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;a" >
+     <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;" >
      <h2> <font color = white> Grades </font> </h2>
      </div>
     </div>
@@ -78,13 +78,14 @@
                 <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
                 <% end %>
               </td>
-              <td>
-                <% if @deliverable.is_team_deliverable? %>
+              <td width = 40%>
+
                     <% graded_by = @deliverable.get_graded_by %>
-                  <% else %>
-                    <% graded_by = @deliverable.get_graded_by %>
+
+                Last graded by:
+                <% unless graded_by.nil? %>
+                    <a href='http://<%=@hostname_with_port%>/people/<%= graded_by.twiki_name %>' target='_top'><%= graded_by.human_name %></a>
                 <% end %>
-                Last graded by:<%= (graded_by.nil?)?"":graded_by %>
               </td>
             </tr>
         </table>
