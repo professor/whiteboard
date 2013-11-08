@@ -88,16 +88,24 @@ it "should display graded along with ungraded in the grading queue" do
  page.has_link?"Review Grade"
   end
 
-describe "run javascripts" , :js => true do
 
- it "should not display teams when show team checkbox is unchecked"  do
- 
- uncheck "show_team"
- page.find(:xpath, "//table/tbody/tr/td['Team Triumphant']" ,:visible => false )
-# page.should not_have_content 'Team Bean Counters'
- save_and_open_page
- end
-end 
+#  describe "use javascripts" ,:js=>true do
+#  it "should not display teams when show team checkbox is unchecked"  do
+  
+#  page.uncheck("Show Team") 
+
+#  page.find(:xpath, "//table/tbody/tr/td['Team Triumphant']" ,:visible => false )
+# # page.should not_have_content 'Team Bean Counters'
+#  save_and_open_page
+# end
+
+# it "should not display teams when show team checkbox is unchecked" do
+  
+#  page.uncheck("Show Individual") 
+
+#  page.find(:xpath, "//table/tbody/tr/td['Student Sally']" ,:visible => false )
+# end 
+#end 
 # it "should not display individuals when show individual checkbox is unchecked" do
 
 # page.uncheck('Show Individual')
