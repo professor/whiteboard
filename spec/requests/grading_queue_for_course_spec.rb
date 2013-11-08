@@ -1,15 +1,13 @@
 require 'spec_helper'
 
 describe 'When I visit the grading queue page,' do
-  before :all do
+  before :each do
     # Create Faculty
     @faculty_frank = FactoryGirl.create(:faculty_frank_user)
     @faculty_fagan = FactoryGirl.create(:faculty_fagan_user)
 
     # Create Students
     @student_sally = FactoryGirl.create(:student_sally)
-puts
-puts @student_sally.id
     @student_sam = FactoryGirl.create(:student_sam)
 
     # Create a course
@@ -173,14 +171,13 @@ puts @student_sally.id
     end
 
     it "should show the grading page of an graded assignment when" do
-#TODO
-#      area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
-#      within(area) do
-#        area.should have_content(@deliverable_1.team.name)
-#        area.should_not have_content(@deliverable_2.team.name)
-#        click_link('Give Grade')
-#        page.should have_css('mainContent')
-#      end
+      pending("Nothing happened after clicking items within the row")
+      area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
+      within(area) do
+        area.find('div#ungraded').click
+        id = "#" + @deliverable_1.id.to_s
+        should have_css(id)
+      end
     end
   end
 end
