@@ -105,3 +105,5 @@ gem 'strong_parameters'
 gem 'strong_parameters'
 
 gem 'cocaine', '0.3.2'
+
+gem 'headless', '1.0.1'
