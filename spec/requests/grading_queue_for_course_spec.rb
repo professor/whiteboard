@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When I visit the grading queue page,' do
+describe 'When I visit the grading queue page,', :js => true do
   before :each do
     # Create Faculty
     @faculty_frank = FactoryGirl.create(:faculty_frank_user)
@@ -170,14 +170,12 @@ describe 'When I visit the grading queue page,' do
       find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
     end
 
-    it "should show the grading page of an graded assignment when" do
-      pending("Nothing happened after clicking items within the row")
+    it "should show the grading page of an assignment when I click on it" do
+#      pending("Nothing happened after clicking items within the row")
       area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
-      within(area) do
-        area.find('div#ungraded').click
-        id = "#" + @deliverable_1.id.to_s
-        should have_css(id)
-      end
+      id = "#" + @deliverable_1.id.to_s
+      area.find('div#ungraded').click
+      page.should have_css(id)
     end
   end
 end
