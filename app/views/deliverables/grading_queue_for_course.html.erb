@@ -85,8 +85,12 @@
     // team deliverables and individual deliverables divs.
     function update_teams(elem) {
         if (elem.attr('value') === 'my_teams') {
+            $("#filter_my_teams").attr("checked", "checked");
+            $("#filter_all_teams").removeAttr("checked");
             fetch_my_team_deliverables();
         } else if (elem.attr('value') === 'all_teams') {
+            $("#filter_all_teams").attr("checked", "checked");
+            $("#filter_my_teams").removeAttr("checked");
             fetch_all_team_deliverables();
         }
     }
@@ -148,6 +152,8 @@
 
         // 3. Update the table rows to suite Assignment and Grade Status selections.
         updateResultTablesToMatchFilter();
+
+        prepareSinglePageFunctions();
     }
 
     // This function looks at the Assignment and Grading Status selections
@@ -219,6 +225,7 @@
             $(this).val(score);
           });
         });
+
     }
 
     //to comment
@@ -249,7 +256,35 @@
             console.log($(that).attr('class'));
             var content = '<tr id="' + deliverable_id+'"><td colspan="5">' + $(data).find("#mainContent .content").html() + '</td></tr>';
             $(that).after(content); 
-            //$(that).after('<tr>fdsfd</tr>'); 
+
+            var form_id = $("#"+deliverable_id + " form").attr("id");
+            /*
+            $("#"+form_id).submit(function(e){
+              e.preventDefault();
+              var tmp = $(this);
+              tmp = $(this).serialize();
+              $.post($(this).attr("action"), $(this).serialize()).done(function(){
+                updateResultTablesToMatchFilter();
+              });
+            });
+            */
+            $("#"+form_id + " #deliverable_submit").click(function(e){
+              e.preventDefault();
+              var form = $(this).closest('form');
+              var formData = $(this).closest('form').serializeArray();
+              formData.push({
+                 name: this.name, value: this.value 
+              });
+              $.post($(form).attr("action"), formData).done(function(){
+                if ($("#filter_all_teams").attr("checked")){
+                  fetch_all_team_deliverables();
+                }
+                if ($("#filter_my_teams").attr("checked")){
+                  fetch_my_team_deliverables();
+                }
+                //updateResultTablesToMatchFilter();
+              });
+            });
         }
     }
 
