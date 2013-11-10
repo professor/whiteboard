@@ -60,9 +60,11 @@ describe 'When I visit the grading queue page,' do
     it 'should have a list box showing Assignments for the course' do
       page.should have_content('Assignment:')
       page.should have_content('#selected_assignment')
-      find_field('selected_assignment').should have_content('All')
-      find_field('selected_assignment').should have_content(@team_assignment.name)
-      find_field('selected_assignment').should have_content(@indi_assignment.name)
+
+      area = find_field('selected_assignment')
+      area.should have_content('All')
+      area.should have_content(@team_assignment.name)
+      area.should have_content(@indi_assignment.name)
     end
 
     it 'should have checkboxes that provide different filtering conditions by assignment status' do
@@ -102,17 +104,19 @@ describe 'When I visit the grading queue page,' do
 
     context 'should display my teams content ' do
       it 'under team deliverables table' do
+        area = find('div#teamDelDiv').text
+
         # Content we expect to see on the page
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-        find('div#teamDelDiv').text.should have_content('Give Grade')
+        area.should have_content(@deliverable_1.assignment.name)
+        area.should have_content(@deliverable_1.team.name)
+        area.should have_content(@deliverable_1.team.primary_faculty.human_name)
+        area.should have_content('Give Grade')
 
         # Content that should not be displayed
-        find('div#teamDelDiv').text.should_not have_content(@indi_assignment.name)
-        find('div#teamDelDiv').text.should_not have_content(@team_bean_counters.name)
-        find('div#teamDelDiv').text.should_not have_content(@faculty_fagan.human_name)
-        find('div#teamDelDiv').text.should_not have_content('Review Grade')
+        area.should_not have_content(@indi_assignment.name)
+        area.should_not have_content(@team_bean_counters.name)
+        area.should_not have_content(@faculty_fagan.human_name)
+        area.should_not have_content('Review Grade')
       end
 
       it 'under a table that has a column that indicates the grading status' do
@@ -138,34 +142,37 @@ describe 'When I visit the grading queue page,' do
 
       it 'show all the assignments' do
         page.select('All', :from => 'selected_assignment')
+        area = find('div#teamDelDiv').text
         Capybara.default_wait_time = 3
-        find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
-        find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
-        find('div#teamDelDiv').text.should have_content(@team_assignment.name)
+        area.should_not have_content('No Team deliverables match the selected filter criteria.')
+        area.should_not have_content('No Team deliverables match the selected filter criteria.')
+        area.should have_content(@team_assignment.name)
       end
     end
 
     context 'should show all team either when ' do
        it 'the radio button All Teams is schosen' do
         choose('filter_all_teams')
-
+        
         # Content we expect to see on the page
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-        find('div#teamDelDiv').text.should have_content('Give Grade')
+        area = find('div#teamDelDiv').text
+        area.should have_content(@deliverable_1.assignment.name)
+        area.should have_content(@deliverable_1.team.name)
+        area.should have_content(@deliverable_1.team.primary_faculty.human_name)
+        area.should have_content('Give Grade')
       end
 
       it 'the param teams equals to all_teams' do
         visit("/courses/#{@course.id}/deliverables?teams=all_teams")
 
         # Content we expect to see on the page
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_2.assignment.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_2.team.name)
-        find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
+        area = find('div#teamDelDiv').text
+        area.should have_content(@deliverable_1.assignment.name)
+        area.should have_content(@deliverable_1.team.name)
+        area.should have_content(@deliverable_1.team.primary_faculty.human_name)
+        area.should have_content(@deliverable_2.assignment.name)
+        area.should have_content(@deliverable_2.team.name)
+        area.should have_content(@deliverable_2.team.primary_faculty.human_name)
       end
     end
 
