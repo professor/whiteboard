@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'When I visit the grading queue page,', :js => true do
+describe 'When I visit the grading queue page,' do
   before :each do
     # Create Faculty
     @faculty_frank = FactoryGirl.create(:faculty_frank_user)
@@ -48,7 +48,7 @@ describe 'When I visit the grading queue page,', :js => true do
 
     # Write a set of test cases to check for basic content
     # that needs to be displayed no matter what on the page.
-    it 'should have a search text box ' do
+    it 'should have a search text box' do
       page.should have_content('filterBoxOne')
     end
 
@@ -57,7 +57,7 @@ describe 'When I visit the grading queue page,', :js => true do
       page.should have_content('All Teams')
     end
 
-    it 'should have a list box showing Assignments for the course ' do
+    it 'should have a list box showing Assignments for the course' do
       page.should have_content('Assignment:')
       page.should have_content('#selected_assignment')
       find_field('selected_assignment').should have_content('All')
@@ -76,7 +76,7 @@ describe 'When I visit the grading queue page,', :js => true do
       page.should have_link('Individual Deliverables')
     end
 
-    it 'should have two divs which display team deliverables and individual deliverables separately ' do
+    it 'should have two divs which display team deliverables and individual deliverables separately' do
       page.should have_content('Team Deliverables')
       page.should have_content('Individual Deliverables')
     end
@@ -115,20 +115,20 @@ describe 'When I visit the grading queue page,', :js => true do
         find('div#teamDelDiv').text.should_not have_content('Review Grade')
       end
 
-      it "should have a column that indicates the grading status of each assignment" do
+      it 'under a table that has a column that indicates the grading status' do
         page.should have_css('#tab-1', :text => 'Indicator')
       end
     end
 
-    context 'should show assignment which user selects in the drop down' do
-      it 'show only the team assignments' do
+    context 'should show assignment which I select in the drop down, either ' do
+      it 'only the team assignments' do
         page.select('Team Assignment', :from => 'selected_assignment')
         Capybara.default_wait_time = 3
         page.should have_content('No Individual deliverables match the selected filter criteria.')
         find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
       end
 
-      it 'show only the individual assignments' do
+      it 'only the individual assignments' do
         page.select('Individual Assignment', :from => 'selected_assignment')
         Capybara.default_wait_time = 5
         page.should have_content('No Team deliverables match the selected filter criteria.')
@@ -143,39 +143,43 @@ describe 'When I visit the grading queue page,', :js => true do
         find('div#teamDelDiv').text.should_not have_content('No Team deliverables match the selected filter criteria.')
         find('div#teamDelDiv').text.should have_content(@team_assignment.name)
       end
+    end
 
-      context 'should show all when team radio button selected' do
-        before :each do
-          choose('filter_all_teams')
-        end
+    context 'should show all team either when ' do
+       it 'the radio button All Teams is schosen' do
+        choose('filter_all_teams')
 
-        it 'should show all' do
-          # Content we expect to see on the page
-          find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-          find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-          find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-          find('div#teamDelDiv').text.should have_content('Give Grade')
-        end
+        # Content we expect to see on the page
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
+        find('div#teamDelDiv').text.should have_content('Give Grade')
+      end
+
+      it 'the param teams equals to all_teams' do
+        visit("/courses/#{@course.id}/deliverables?teams=all_teams")
+
+        # Content we expect to see on the page
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_2.assignment.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_2.team.name)
+        find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
       end
     end
 
-    it "should display all teams when clicking on All Teams radio button" do
-      visit("/courses/#{@course.id}/deliverables?teams=all_teams")
-      # Content we expect to see on the page
-      find('div#teamDelDiv').text.should have_content(@deliverable_1.assignment.name)
-      find('div#teamDelDiv').text.should have_content(@deliverable_1.team.name)
-      find('div#teamDelDiv').text.should have_content(@deliverable_1.team.primary_faculty.human_name)
-      find('div#teamDelDiv').text.should have_content(@deliverable_2.assignment.name)
-      find('div#teamDelDiv').text.should have_content(@deliverable_2.team.name)
-      find('div#teamDelDiv').text.should have_content(@deliverable_2.team.primary_faculty.human_name)
-    end
+    describe 'should hava a tab, which ', :js => true do
+        before :each do
+          @area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
+        end
 
-    it "should show the grading page of an assignment when I click on it" do
-#      pending("Nothing happened after clicking items within the row")
-      area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
-      id = "#" + @deliverable_1.id.to_s
-      area.find('div#ungraded').click
-      page.should have_css(id)
+        it "shows the grading page of an assignment when I click on it" do
+          @area.find('div#ungraded').click
+
+          id = "#" + @deliverable_1.id.to_s
+          page.should have_css(id)
+        end
     end
   end
 end
