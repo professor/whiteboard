@@ -8,13 +8,38 @@
     background-color: #f5f5f5;
     cursor: pointer;
 }
+
+.loading_indicator {
+    margin-top: 18px;
+    margin-left: 4px;
+}
+
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -16px; /* -1 * image width/2 */
+    margin-top: -16px;  /* -1 * image height/2 */
+    display: block;
+}
+#loading_ajax_request {
+    position:fixed;
+    top:40%;  /* 50% - height/2 */
+    left:42%; /* 50% - width/2 */
+    width:15%;
+    height:20%;
+    z-index:1000;
+    background-color: white;
+    opacity: .7;
+}
+
 </style>
 
 <div id="grading_queue">
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
 <% if deliverables.empty? %>
-  <p>Hurray, nothing to do here!</p>
+  <p style="text-align: center;">Hurray, nothing to do here!</p>
 <% end %>
 <% deliverables.each do |deliverable| %>
     <div>
@@ -36,6 +61,13 @@
            <span style="font-size:11px;"><%= latest_version.submission_date %></span>
            <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
          </div>
+
+         <!--<div class="col-md-2">
+           <div class="loading_indicator">
+             <%#= image_tag("/images/ajax-loader.gif", :id => "loading_indicator", :style => "display:none") %>
+           </div>
+         </div>-->
+
          <div class="col-md-2">
            <% if deliverable.get_grade_status == :graded %>
              <%= image_tag("/images/deliverables_graded.png") %>
