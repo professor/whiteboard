@@ -361,5 +361,18 @@ class Course < ActiveRecord::Base
     end
   end
 
+  public
+  def registered_students_and_students_on_teams_hash
+    students = Hash.new
+    self.registered_students.each do |student|
+      students[student.human_name] = {:hub => true}
+    end
+    self.teams.each do |team|
+      team.members.each do |user|
+        students[user.human_name] = (students[user.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
+      end
+    end
+    return students
+  end
 end
 

@@ -1,0 +1,70 @@
+<% if current_user && (current_user.is_admin) %>
+    <div class="rounded admin">
+      <%= admin_image %>
+      <span class="instructions">Only admin can see this information.</span>
+
+      <h2>Admin Helpers</h2>
+
+      <p><b>Google Distribution Lists</b> Here are all the email addresses for the students assigned to teams.
+        <% @emails.each do |name| %>
+          <div><%= h name %></div>
+      <% end %>
+      </p>
+      <p><b>Pivotal Tracker accounts</b>
+        <% @course.teams.each do |team| %>
+            <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
+          <div><%= project_name %></div>
+          <% team.members.each do |user| %>
+              <% person_entry = "#{user.human_name} (#{user.first_name[0]}#{user.last_name[0]}) <#{user.email}>" %>
+              <div><%= person_entry %></div>
+          <% end %>
+          <% person = team.primary_faculty %>
+          <% unless person.nil? %>
+              <% person_entry = "#{person.human_name} (#{person.first_name[0]}#{person.last_name[0]}) <#{person.email}>" %>
+              <div><%= person_entry %></div>
+          <% end %>
+          <br/>
+      <% end %>
+
+      <p><b>Pivotal Tracker accounts V2</b></p>
+      <% @course.teams.each do |team| %>
+          <% project_name = "#{@course.semester}-#{@course.year}-#{@course.short_name}-#{team.name.parameterize}" %>
+          <div><%= project_name %></div>
+          <%= render :partial => "pivotal_new_project", :locals => {:project_name => project_name} %>
+          <% team.members.each do |user| %>
+              <%= render :partial => "pivotal_add_membership", :locals => {:user => user} %>
+          <% end %>
+          <% user = team.primary_faculty %>
+          <% unless user.nil? %>
+              <%= render :partial => "pivotal_add_membership", :locals => {:user => user} %>
+          <% end %>
+          <br/>
+      <% end %>
+
+
+
+      <p><b>github</b></p>
+      <table>
+        <% @course.teams.each do |team| %>
+            <% project_name = "#{@course.semester}-#{@course.year}-#{@course.number.gsub(/-/, '')}-#{team.name.gsub(/\s+/, '-')}" %>
+            <tr>
+              <td colspan=3><%= project_name %></td>
+            </tr>
+            <% team.members.each do |user| %>
+                <% if user.github.blank? %>
+                    <% style = "style=font-color=red" %>
+                <% end %>
+                <tr>
+                  <td <%= style %>> <%= user.github %></td>
+                  <td><%= user.human_name %></td>
+                  <td><%= user.webiso_account %></td>
+                </tr>
+            <% end %>
+            <tr>
+              <td colspan=3>&nbsp;</td>
+            </tr>
+        <% end %>
+      </table>
+
+    </div>
+<% end %>
