@@ -94,10 +94,11 @@ group :development, :test do
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
 
+
   gem 'database_cleaner'
 end
 
-
+gem 'strong_parameters'
 
 #gem 'gchartrb'
 
@@ -106,4 +107,6 @@ end
 gem 'strong_parameters'
 
 gem 'cocaine', '0.3.2'
+
+gem 'headless', '1.0.1'
 

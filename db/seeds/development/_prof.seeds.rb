@@ -26,6 +26,8 @@ FactoryGirl.define do
     first_name "TY"
     last_name "Lee"
     human_name "TY Lee"
+    twiki_name "LydianLee"
+    email "lydian.lee@sv.cmu.edu"
   end
 
   factory :prof_evans, :parent => :prof do

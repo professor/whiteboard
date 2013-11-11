@@ -24,7 +24,7 @@
     <tbody>
         <% deliverables.each do |deliverable| %>
             <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>">
-                <td>
+                <td id ="teams">
                     <%= 'Team' if deliverable.is_team_deliverable? %>
                     <%= deliverable.owner_name %>
                 </td>

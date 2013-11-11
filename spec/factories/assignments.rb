@@ -55,4 +55,5 @@ FactoryGirl.define do
     is_team_deliverable false
     association :course, :factory => :fse
   end
+
 end

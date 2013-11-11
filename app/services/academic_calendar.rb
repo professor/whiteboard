@@ -175,6 +175,15 @@ class AcademicCalendar
 
   def self.grades_due_for(semester, year)
     case year
+      when 2014
+      case semester
+        when "Spring"
+          return Date.new(2014, 5, 21) #Academic calendar doesn't exaclty say?
+        when "Summer"
+          return  Date.new(2014, 8, 12)
+        when "Fall"
+          return  Date.new(2014, 12, 18)
+      end      
       when 2013
         case semester
           when "Spring"
@@ -182,7 +191,7 @@ class AcademicCalendar
           when "Summer"
             return  Date.new(2013, 8, 13)
           when "Fall"
-            return  Date.new(2013, 12, 31)
+            return  Date.new(2013, 12, 18)
         end
       when 2012
         case semester
@@ -214,7 +223,7 @@ class AcademicCalendar
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
                    :subject => "Academic Calendar needs updating: grades_due_for",
-                   :message => "Please modify app/models/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
+                   :message => "Please modify app/services/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
                    :url_label => "",
                    :url => ""
         }

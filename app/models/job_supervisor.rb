@@ -1,5 +1,5 @@
 class JobSupervisor < ActiveRecord::Base
-#  include ActiveModel::ForbiddenAttributesProtection
+  include ActiveModel::ForbiddenAttributesProtection
 
   belongs_to :job
   belongs_to :user
