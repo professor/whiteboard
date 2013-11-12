@@ -53,49 +53,38 @@
   <div class="row">
     <div class="table-responsive columnless">
     <table class="table table-striped table-hover">
-      <!--<thead>
-       <tr class="active">
-         <th>Submitted</th>
-         <th><%#= nomenclature_assignment_or_deliverable %> File</th>
-         <th>Comments</th>
-       </tr>
-      </thead>-->
       <tbody>
 
        <% if current_user.is_student %>
          <tr>
-           <td class="columnless">
+           <td>
              <% if current_user.is_student %>
                  <%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>
              <% end %>
            </td>
-           <td class="columnless">&nbsp;</td>
-           <!--<td>&nbsp;</td>-->
+           <td>&nbsp;</td>
          </tr>
        <% end %>
 
        <% @deliverable.attachment_versions.each_with_index do |version, index| %>
           <tr>
-            <td class="columnless">
+            <td>
               <% if index == 0 %>
                   <%= display_timestamp(version.submission_date, :class => "latest") -%>
               <% else %>
                   <%= display_timestamp(version.submission_date) -%>
               <% end %>
               <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
-                  <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> late!)</span>
+                  <span class="label label-danger"><%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> late!</span>
               <%end%>
               <br/>
               <%= h version.comment -%>
             </td>
-            <td class="columnless">
+            <td>
               <% unless version.attachment_file_name.nil? %>
                   <%= link_to version.attachment_file_name, version.attachment.url %>
               <% end %>
             </td>
-            <!--<td>
-              <%#= h version.comment -%>
-            </td>-->
           </tr>
       <% end %>
 

@@ -217,11 +217,9 @@
             <div class="btn-group btn-group-sm" data-toggle="buttons">
               <label class="btn btn-default active">
                 <%= f.radio_button :is_my_teams, "yes", { checked: true }  %> My teams
-                <!--<input type="radio" name="options" id="option1"> My Teams-->
               </label>
               <label class="btn btn-default">
                 <%= f.radio_button :is_my_teams, "no", { checked: false }  %> Everyone
-                <!--<input type="radio" name="options" id="option2"> Everyone-->
               </label>
             </div>
 
@@ -239,9 +237,8 @@
 
     </div> <!-- /container -->
 
-    <!-- End Team Turing -->
-
     <hr>
+    <!-- End Team Turing -->
 
     <div id="deliverables">
       <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
