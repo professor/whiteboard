@@ -43,6 +43,5 @@ describe 'Grading queue', :js => true do
 
       # Test that the rows are now sorted by task number in ascending order
       (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_tasks.sort
-     
   end
 end

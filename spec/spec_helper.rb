@@ -83,6 +83,11 @@ FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
 include ControllerMacros
 
+# don't run on the local machine (since we don't have xvfb running locally)
+if Rails.env.production?
+    headless = Headless.new
+    headless.start
+end
 ## Forces all threads to share the same connection. This works on
 ## Capybara because it starts the web server in a thread.
 #ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
