@@ -33,7 +33,7 @@ describe 'Grading queue', :js => true do
   end
   
   it 'As a faculty, I can sort all assignments or deliverables by task numbers' do
-      visit course_deliverables_path(@course)
+    visit course_deliverables_path(@course)
       
       # Grab the "Task" column: http://stackoverflow.com/questions/14745478/how-to-select-table-column-by-column-header-name-with-xpath
       unsorted_tasks = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }
@@ -43,6 +43,6 @@ describe 'Grading queue', :js => true do
 
       # Test that the rows are now sorted by task number in ascending order
       (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_tasks.sort
-
-     end
- end
+     
+  end
+end

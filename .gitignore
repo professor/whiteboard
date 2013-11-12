@@ -16,8 +16,6 @@ config/systems.cc.yml.yml
 config/systems.yml
 config/active_directory.yml
 
-*dump
-
 coverage/*
 nbproject/*
 .idea/*

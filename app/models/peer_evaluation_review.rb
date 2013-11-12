@@ -28,8 +28,6 @@
 # and integrated by Todd Sedano. Student teams can provide 360 review feedback
 # when prompted by the faculty.
 class PeerEvaluationReview < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   belongs_to :team
   belongs_to :author, :class_name => "User"
   belongs_to :recipient, :class_name => "User"

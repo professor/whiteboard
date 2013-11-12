@@ -1,6 +1,4 @@
 class EffortLog < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   has_many :effort_log_line_items, :dependent => :destroy
   belongs_to :user
 

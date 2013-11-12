@@ -98,7 +98,7 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-gem 'strong_parameters'
+
 
 #gem 'gchartrb'
 
