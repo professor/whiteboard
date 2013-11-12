@@ -37,144 +37,124 @@
 # End Del Turing Ira   -->
 
 
-<!--  Beg Add Turing Ira    -->
-<div class = container style="padding-left: 10px;" >
-    <div class = row>
-     <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;" >
-     <h2> <font color = white> Grades </font> </h2>
-     </div>
+<!-- Begin Team Turing -->
+<div class="container">
+  <div class="row" style="padding-top: 20px;"></div>
+  <div class="row deliverable_detail_header">
+    <div class="col-md-12">
+      <h2><strong>Grades</strong></h2>
     </div>
+  </div>
 
-    <div class = row style ="background-color: white;">
- <!--  End Add Turing Ira    -->
+  <!-- Grades -->
+  <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
 
-        <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-      <%# render 'shared/error_messages', object: f.object %>
+     <div class="row" style="padding-top: 10px;"></div>
 
-           <div>
-                <% if grade_type_points_or_weights == "Percentage" %>
-                   <p>
-                       <%= "Weight: #{@deliverable.assignment.weight}%" %>
-                   </p>
-                <% end %>
-
-           </div>
-
-<!-- # Beg Del Turing ira
-              <#% if @deliverable.current_attachment.blank? %>
-                Deliverable: None
-              <#% else %>
-                Deliverable: <#%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-              <#% end %>
-
-            </p>
-# End Del Turing -->
-
-        <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%" >
-            <tr>
-              <td>
-                <% if @deliverable.is_team_deliverable? %>
-                    Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
-                <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
-                <% end %>
-              </td>
-              <td width = 40%>
-
-                    <% graded_by = @deliverable.get_graded_by %>
-
-                Last graded by:
-                <% unless graded_by.nil? %>
-                    <a href='http://<%=@hostname_with_port%>/people/<%= graded_by.twiki_name %>' target='_top'><%= graded_by.human_name %></a>
-                <% end %>
-              </td>
-            </tr>
-        </table>
-
-        <div class="student_scores">
-             <% if @deliverable.is_team_deliverable? %>
-               <% for member in @deliverable.team.members %>
-                  <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
-                  <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
-               <% end %>
-             <% else %>
-                <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
-               <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
-             <% end %>
+      <div class="row">
+        <div class="col-md-12">
+          <% if grade_type_points_or_weights == "Percentage" %>
+              <p>
+                <%= "Weight: #{@deliverable.assignment.weight}%" %>
+              </p>
+          <% end %>
         </div>
+      </div>
 
-  </div>
-
-<!--  Beg Add Turing Ira    -->
-          <div class = row >
-            <div class="span12" style="background-color: #8f0400; height: 30px;width: 100%;padding-left: 15px;" >
-              <h2><font color = white>Feedback</font></h2>
-            </div>
-          </div>
-
-          <div class = row style ="background-color: white;">
-<!--  End Add Turing Ira    -->
-            <div>
-              <br />
-              <p>
-                <%= f.label :feedback, "Feedback file to upload" %>
-                <%= f.file_field :feedback %>
-              </p>
-              <p>
-                <%= f.label :feedback_comment, "Feedback Comments" %>
-                (<%= link_to 'View History and Feedback', @deliverable %>)
-                <br>
-                <%= f.text_area :feedback_comment, :size => "70x10" %>
-              </p>
-            </div>
-
-            <% if @deliverable.get_grade_status == :drafted %>
-                <div class="rounded staff" style="background-color:#dedede;">
-                  This is draft feedback
-                </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            <% if @deliverable.is_team_deliverable? %>
+                <strong>Team Score: </strong><%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <strong><%= display_maximum_score %></strong>
             <% end %>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <% graded_by = @deliverable.get_graded_by %>
+          <p class="pull-right"><strong>Last graded by: </strong>
+            <% unless graded_by.nil? %>
+                <a href='http://<%=@hostname_with_port%>/people/<%= graded_by.twiki_name %>' target='_blank'><%= graded_by.human_name %></a>
+            <% end %>
+          </p>
+        </div>
+      </div>
 
+      <div class="row student_scores">
 
-            <div class="rounded staff">
-              <%= professor_image %>
-              <span class="instructions">Only faculty can see this information</span>
+        <% if @deliverable.is_team_deliverable? %>
+            <% for member in @deliverable.team.members %>
+                <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
+                <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+            <% end %>
+        <% else %>
+            <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+        <% end %>
 
-              <h1>
-                Professor's Notes
-              </h1>
+      </div>
+      <!-- /Grades -->
 
-              <p>
-                <%= f.text_area :private_note, :size => "90x10" %>
-              </p>
-            </div>
+      <!-- Feedback -->
+      <div class="row" style="padding-top: 10px;"></div>
+
+      <div class="row deliverable_detail_header">
+        <div class="col-md-12">
+          <h2><strong>Feedback</strong></h2>
+        </div>
+      </div>
+
+      <% if @deliverable.get_grade_status == :drafted %>
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12">
+          <div class="alert alert-warning">
+            This is a draft feedback
           </div>
-
-          <div style="float: left; width: auto;">
-            <%= f.submit "Save as Draft" , :name=>"draft" %>
-          </div>
-
-          <br /><br /><br />
-
-
-          <div style="float: left; width: auto;">
-            <!-- Beg Chg Turing Ira -->
-            <!--%= f.submit "Save and Email" , :name=>"submit"%>  -->
-            <input type="checkbox" value="True">
-            Send a copy to myself
-            <%= f.submit "Finalize and Email" , :name=>"submit"%>
-            <%#= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
-            <!-- End Chg Turing Ira -->
-          </div>
-
-          <div style='clear:both;'></div>
-
+        </div>
+      </div>
       <% end %>
-  </div>
 
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12">
+            <p>
+              <%= f.label :feedback, "Upload feedback file" %>
+              <%= f.file_field :feedback %>
+            </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.label :feedback_comment, "Feedback Comments" %>
+          <%= link_to 'View History and Feedback', @deliverable %>
+          <br/>
+          <%= f.text_area :feedback_comment, :size => "95x10" %>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-success">
+            <h1><%= professor_image %> Professor&#39;s Notes
+              <span class="label label-success">Only faculty can see this information</span></h1>
+            <p>
+              <%= f.text_area :private_note, :size => "90x10" %>
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12">
+            <%= f.submit "Save as Draft", :name => "draft", :class => "btn btn-default" %>
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
+        <div class="col-md-12">
+          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;" %>
+          <input type="checkbox" value="true" checked="checked"> Send a copy to myself
+        </div>
+      </div>
 
-
-
-​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-
-    <!-- <#%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
-    <!--br/> <br /> -->
+  <% end %>
+</div> <!-- /.container -->
