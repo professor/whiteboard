@@ -30,19 +30,30 @@ describe 'Grading queue', :js => true do
     @deliverable4 = FactoryGirl.create(:team_deliverable, :assignment=>@team_assignment2,:course=>@course,:team=>@team_bean_counters,:creator=>@student_sam)
     @deliverable_attachment3 = FactoryGirl.create(:deliverable_attachment,:deliverable=>@deliverable4,:submitter=>@student_sam)
     login_with_oauth @faculty_fagan
-  end
+    visit course_deliverables_path(@course)
+   end
   
-  it 'As a faculty, I can sort all assignments or deliverables by task numbers' do
-      visit course_deliverables_path(@course)
+   it 'Can sort by task number' do 
+     # Grab the "Task" column: http://stackoverflow.com/questions/14745478/how-to-select-table-column-by-column-header-name-with-xpath
+     unsorted_tasks = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }
       
-      # Grab the "Task" column: http://stackoverflow.com/questions/14745478/how-to-select-table-column-by-column-header-name-with-xpath
-      unsorted_tasks = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }
-      
-      # Click "Tasks" so deliverables are sorted by ascending task number
-      find(:xpath, "//th", :text => "Task").click
+     # Click "Tasks" so deliverables are sorted by ascending task number
+     find(:xpath, "//th", :text => "Task").click
 
-      # Test that the rows are now sorted by task number in ascending order
-      (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_tasks.sort
+     # Test that the rows are now sorted by task number in ascending order
+     (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Task']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_tasks.sort
+   end
 
-     end
+   it 'Can sort by individual/team name' do
+     unsorted_names = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Name']/preceding-sibling::th)+1]").collect { |x| x.text }
+     find(:xpath, "//th", :text => "Name").click
+     (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Name']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_names.sort
+   end
+
+  it 'Can sort by assignment' do
+     unsorted_assg = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }
+     find(:xpath, "//th", :text => "Assignment").click
+     (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_assg.sort
+   end
+
  end
