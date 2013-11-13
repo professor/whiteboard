@@ -24,7 +24,7 @@
       before do
         @course = FactoryGirl.create(:mfse_current_semester)
         @faculty_assignment = FactoryGirl.create(:faculty_assignment,:course_id=>@course.id,:user_id=>@faculty_fagan.id)
-        @course.faculty_assignments<<@faculty_assignment
+        @course.faculty_assignments << @faculty_assignment
         #@course.save
         #@faculty_fagan.faculty_assignments<<@faculty_assignment
         #@faculty_assignment = FactoryGirl.create(:faculty_assignment, :user=>@faculty_fagan, :course => @course)
@@ -41,6 +41,12 @@
         @student = FactoryGirl.create(:student_sam)
         @deliverableAttachment=DeliverableAttachment.create(:attachment_file_name=>"Submitted deliverable",:deliverable_id=>@deliverable.id,:submitter_id=>@student.id)
         #@course.faculty.stub(:include?).with(@faculty_fagan).and_return(true)
+
+        @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+        @student_jack = FactoryGirl.create(:student_jack_user)
+        @student_jill = FactoryGirl.create(:student_jill_user)
+        @team_triumphant = FactoryGirl.create(:team_triumphant,:members=>[@student_jack],:primary_faculty=>@faculty_fagan)
+        @team_bean_counters = FactoryGirl.create(:team_bean_counters,:members=>[@student_jill],:primary_faculty=>@faculty_frank)
 
       end
 
@@ -61,8 +67,15 @@
       end
 
       it"should display the grading queue page" do
-        visit course_deliverables_path(@course)	
+        visit course_deliverables_path(@course)
         #save_and_open_page
       end
+
+      it "should show only those teams that are assigned to the staff member" do
+        visit course_deliverables_path(@course)
+        page.should_not have_content("Bean Counters")
+        save_and_open_page
+      end
+
     end
   end
