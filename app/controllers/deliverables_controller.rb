@@ -4,8 +4,8 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
-  #before_filter :filter_options, :only => [:grading_queue_for_course, :filter_deliverables]
-  #helper_method :default_deliverables
+  before_filter :load_last_filter_options
+  after_filter :save_last_filter_options
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -50,7 +50,17 @@ class DeliverablesController < ApplicationController
       #@default_deliverables = default_deliverables(params[:course_id], current_user.id)
       #@filtered_deliverables = @default_deliverables
       @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
-      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
+
+      if @last_filter_options == nil
+        @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
+      else
+        @temp = []
+        @last_filter_options.each do  |option|
+            @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] } if option[1] == "1")
+        end
+        @deliverables = @temp
+      end
+
       @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
 
     else
@@ -68,6 +78,10 @@ class DeliverablesController < ApplicationController
     params[:filter_options].collect do |grading_filter_option|
       @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
     end
+
+    #keeping last filtering options
+    @last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded],
+                            :drafted => params[:filter_options][:drafted]}
 
     # TO DO: Don't hit the model again!
     if params[:filter_options][:is_my_teams] == 'yes'
@@ -383,6 +397,15 @@ class DeliverablesController < ApplicationController
         format.json { render json:  @assignments_array }
       end
     end
+  end
+
+  private
+  def load_last_filter_options
+    @last_filter_options = session[:last_filter_options] || nil
+  end
+
+  def save_last_filter_options
+    session[:last_filter_options] = @last_filter_options
   end
 
 end
