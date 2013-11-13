@@ -56,7 +56,7 @@ class DeliverablesController < ApplicationController
       else
         @temp = []
         @last_filter_options.each do  |option|
-            @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] } if option[1] == "1")
+            @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] if option[1] == "1"})
         end
         @deliverables = @temp
       end
