@@ -28,7 +28,7 @@
       });
 
       $(document).on('click', '.ajax', function() {
-          $(this).find('#loading_indicator').show();
+          //$(this).find('#loading_indicator').show();
           var deliverable = $(this);
           $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
                 function(response){
@@ -37,9 +37,9 @@
                     //alert("started!");
                 }
           )
-          .always(function(data) {
-              deliverable.find('#loading_indicator').hide();
-          });
+          //.always(function(data) {
+          //    deliverable.find('#loading_indicator').hide();
+          //});
           $(this).removeClass('ajax');
       });
 
@@ -121,14 +121,26 @@
               selText = (selText.length >= length_limit ? selText.substr(0, length_limit-3) + "..." : selText);
               $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
               $("#filter_options_assignment_id").val($(this).attr("id"));
+              $('#filter_options_new').submit();
           });
       });
 
-      // Check checkbox when filter buttons are clicked (for triggering the 'onclick' event)
-      //$(document).ready(function() {
-          //alert($(this).attr('class'));
-          //var node = $("#filter_buttons").find('.btn btn-default').html('salak');
-      //});
+      var filter_graded = function() {
+          $('#filter_options_graded').prop('checked', !$('#filter_options_graded').is(':checked')); // if checked, uncheck it and vice versa
+          $('#filter_options_new').submit();
+      };
+      var filter_ungraded = function() {
+          $('#filter_options_ungraded').prop('checked', !$('#filter_options_ungraded').is(':checked')); // if checked, uncheck it and vice versa
+          $('#filter_options_new').submit();
+      };
+      var filter_drafted = function() {
+          $('#filter_options_drafted').prop('checked', !$('#filter_options_drafted').is(':checked')); // if checked, uncheck it and vice versa
+          $('#filter_options_new').submit();
+      };
+      var filter_by_my_teams = function() {
+          $('#filter_options_is_my_teams_yes').prop('checked', !$('#filter_options_is_my_teams_yes').is(':checked'));
+          $('#filter_options_new').submit();
+      };
 
   </script>
   <!-- End Team Turing -->
@@ -163,15 +175,9 @@
 
     <!-- Search -->
     <div class="row">
-
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for student or team name...">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Search</button>
-            </span>
-      </div><!-- /input-group -->
-
-    </div><!-- /.row -->
+      <input type="text" class="form-control" placeholder="Search for student, team, Andrew ID...">
+    </div>
+    <!-- /Search -->
 
     <hr>
 
@@ -182,15 +188,14 @@
           <div class="pull-left">
 
             <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter_buttons">
-              <label class="btn btn-default active">
+              <label class="btn btn-default active" onclick="filter_ungraded();">
                 <%= f.check_box :ungraded, { checked: true } %> Ungraded
               </label>
-              <label class="btn btn-default">
+              <label class="btn btn-default" onclick="filter_drafted();">
                 <%= f.check_box :drafted %> Drafted
               </label>
-              <label class="btn btn-default"> <!--onclick="$('#filter_options_graded').click(); $(this).attr('class').val('btn btn-default active'); -->
+              <label class="btn btn-default" id="filter_options_graded_label" onclick="filter_graded();">
                 <%= f.check_box :graded %> Graded
-                <%#= f.check_box(:graded, { :onclick => "$('#filter_options_new').submit();" }, 'yes', 'no') %>
               </label>
 
               <%= f.hidden_field :assignment_id, { value: '' } %>
@@ -201,6 +206,7 @@
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" style="list-style: none; margin:0; padding-left:0; padding-right:0; z-index: 200; ">
+                  <li><a id="-1" href="">All Deliverables</a></li>
                   <% @assignments.each do |assignment| %>
                       <li>
                         <a id="<%= assignment.id %>" href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a>
@@ -215,10 +221,10 @@
           <div class="pull-right">
 
             <div class="btn-group btn-group-sm" data-toggle="buttons">
-              <label class="btn btn-default active">
+              <label class="btn btn-default active" onclick="filter_by_my_teams();">
                 <%= f.radio_button :is_my_teams, "yes", { checked: true }  %> My teams
               </label>
-              <label class="btn btn-default">
+              <label class="btn btn-default" onclick="filter_by_my_teams();">
                 <%= f.radio_button :is_my_teams, "no", { checked: false }  %> Everyone
               </label>
             </div>
@@ -226,14 +232,8 @@
           </div> <!-- /pull-right -->
 
         </div> <!-- /row -->
-    <br/><%= f.submit %>
     <% end %>
     <!-- /Filters -->
-
-    <!-- Loading AJAX request -->
-    <!--<div id="loading_ajax_request" style="display: none; text-align: center;">-->
-      <!--Loading request... --><%#= image_tag("/images/ajax-loader-sm.gif") %>
-    <!--</div>-->
 
     </div> <!-- /container -->
 
@@ -242,7 +242,5 @@
 
     <div id="deliverables">
       <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-
     </div>
-  </div>
-<!--</div>-->
+</div>
