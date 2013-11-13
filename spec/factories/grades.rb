@@ -30,11 +30,4 @@ FactoryGirl.define do
     assignment
   end
 
-  factory :grade1, :parent=>:grade do
-    score "3"
-    association :course, :factory => :fse
-    association :student, :factory => :student_sally_user
-    association :assignment, :factory => :assignment_individual
-  end
-
 end
