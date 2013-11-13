@@ -155,7 +155,7 @@ describe "deliverables" do
     end
 
     after do
-      @faculty.delete
+#      @faculty.delete
     end
 
 
@@ -197,6 +197,17 @@ describe "deliverables" do
       page.should have_button("Finalize and Email")
 
     end
+
+    it "I should be able to see my last filter options after providing grade/feedback ", :js => true do
+      pending
+      visit course_deliverables_path(@course)
+
+      find("#deliverable_" + @deliverable1.id.to_s).click
+      click_button "Finalize and Email"
+      #page.should have_content("Task 1")
+
+    end
+
 
     it "I should be able to check tooltip for andrew ID", :js => true do
       visit course_deliverables_path(@course)
