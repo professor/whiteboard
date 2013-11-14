@@ -152,6 +152,7 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/student_grades' => 'grades#student_deliverables_and_grades_for_course', :as => :course_student_grades
   match 'courses/:course_id/deliverables' => 'deliverables#grading_queue_for_course', :as => :course_deliverables
   match 'courses/:course_id/filter_deliverables' => 'deliverables#filter_deliverables', :as => :filter_deliverables
+  match 'courses/:course_id/update_feedback' => 'deliverables#update_feedback', :as => :update_feedback
   match 'courses/:course_id/presentations' => 'presentations#index_for_course', :as => :course_presentations
 
 

@@ -4,8 +4,8 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
-  before_filter :load_last_filter_options
-  after_filter :save_last_filter_options
+  #before_filter :load_last_filter_options
+  #after_filter :save_last_filter_options
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -51,15 +51,16 @@ class DeliverablesController < ApplicationController
       #@filtered_deliverables = @default_deliverables
       @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
-      if @last_filter_options == nil
-        @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
-      else
-        @temp = []
-        @last_filter_options.each do  |option|
-            @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] if option[1] == "1"})
-        end
-        @deliverables = @temp
-      end
+      #if @last_filter_options == nil
+      #  @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
+      #else
+      #  @temp = []
+      #  @last_filter_options.each do  |option|
+      #      @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] if option[1] == "1"})
+      #  end
+      #  @deliverables = @temp
+      #end
+      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
 
       @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
 
@@ -80,8 +81,7 @@ class DeliverablesController < ApplicationController
     end
 
     #keeping last filtering options
-    @last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded],
-                            :drafted => params[:filter_options][:drafted]}
+    #@last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded], :drafted => params[:filter_options][:drafted]}
 
     # TO DO: Don't hit the model again!
     if params[:filter_options][:is_my_teams] == 'yes'
@@ -378,7 +378,9 @@ class DeliverablesController < ApplicationController
        if flash[:error].blank?
          flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
-         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         #format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         #format.js #{redirect_to(course_deliverables_path(@deliverable.course))}
+         format.js { redirect_to(@deliverable) }
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
@@ -399,13 +401,13 @@ class DeliverablesController < ApplicationController
     end
   end
 
-  private
-  def load_last_filter_options
-    @last_filter_options = session[:last_filter_options] || nil
-  end
-
-  def save_last_filter_options
-    session[:last_filter_options] = @last_filter_options
-  end
+  #private
+  #def load_last_filter_options
+  #  @last_filter_options = session[:last_filter_options] || nil
+  #end
+  #
+  #def save_last_filter_options
+  #  session[:last_filter_options] = @last_filter_options
+  #end
 
 end
