@@ -27,7 +27,6 @@ FactoryGirl.define do
     association :creator, :factory => :student_john_user
     association :course, :factory => :fse
     private_note "My first deliverable"
-    task_number 1
   end
 
   factory :team_turing_deliverable_2, :parent => :deliverable do
@@ -36,7 +35,6 @@ FactoryGirl.define do
     association :creator, :factory => :student_john_user
     association :course, :factory => :fse
     private_note "My second deliverable"
-    task_number 2
   end
 
   factory :team_test_deliverable_1, :parent => :deliverable do
@@ -45,7 +43,6 @@ FactoryGirl.define do
     association :course, :factory => :fse
     association :creator, :factory => :student_Test_user
     private_note "Test team  first deliverable"
-    task_number 1
   end
 
   factory :test_individual_deliverable, :parent => :deliverable do
