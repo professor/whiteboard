@@ -22,8 +22,8 @@ describe 'When I visit the grading queue page,' do
     @indi_assignment = FactoryGirl.create(:assignment, :name => 'Individual Assignment', :course => @course)
 
     # Creating teams
-    @team_triumphant = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :primary_faculty => @faculty_frank)
-    @team_bean_counters = FactoryGirl.create(:team_bean_counters, :members => [@student_sam], :primary_faculty => @faculty_fagan)
+    @team_triumphant = FactoryGirl.create(:team_triumphant, :members => [@student_sally], :primary_faculty => @faculty_frank, :course => @course)
+    @team_bean_counters = FactoryGirl.create(:team_bean_counters, :members => [@student_sam], :primary_faculty => @faculty_fagan, :course => @course)
 
     # Team Deliverables
     @deliverable_1 = FactoryGirl.create(:deliverable, :assignment => @team_assignment, :team => @team_triumphant, :course => @course, :creator => @student_sally)
