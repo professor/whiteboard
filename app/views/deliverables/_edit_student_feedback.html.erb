@@ -22,7 +22,13 @@
 
   // Team Turing Begin
   var toggle_slide = function() {
-      $('#deliverable_submit_draft').parents('.deliverable_detail').slideToggle();
+
+      //$('#deliverable_submit_draft').parent().parent().parent().parent().slideToggle();
+      //$('#deliverable_submit_draft').('.deliverable_detail').slideUp();
+      //$('#deliverable_submit_draft').closest('.deliverable_detail').slideToggle();
+      //$('#deliverable_submit_draft').('.deliverable_detail').siblings().slideUp();
+      //$('#deliverable_submit_draft').parents('.deliverable_detail').slideUp();
+      $('.deliverable_detail').slideUp();
   };
   // Team Turing End
 </script>
