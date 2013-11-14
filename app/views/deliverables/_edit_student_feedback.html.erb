@@ -22,9 +22,7 @@
 
   // Team Turing Begin
   var toggle_slide = function() {
-      //$(this).parents().find('').slideToggle();
-      //console.log($(this.parent().parents('.deliverable_detail')));
-      //$(this).parent().siblings().slideToggle();
+      $('#deliverable_submit_draft').parents('.deliverable_detail').slideToggle();
   };
   // Team Turing End
 </script>
@@ -152,14 +150,14 @@
       </div>
 
       <div class="row" style="padding-top: 10px;">
-        <div class="col-md-12">
+        <div class="col-md-12" id="deliverable_submit_draft">
             <%= f.submit "Save as Draft", :name => "draft", :class => "btn btn-default", :onclick => "toggle_slide();" %>
         </div>
       </div>
       <hr>
       <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
         <div class="col-md-12">
-          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;" %>
+          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;", :onclick => "toggle_slide();" %>
           <input type="checkbox" value="true" checked="checked"> Send a copy to myself
         </div>
       </div>
