@@ -1,0 +1,120 @@
+<% deliverable = @deliverable %>
+<h1>Attachment Version History</h1>
+<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <th>Submission Date</th>
+    <th><%= nomenclature_assignment_or_deliverable %> File</th>
+    <th>Comments</th>
+  </tr>
+
+  <% if current_user.is_student %>
+    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+    <td>
+      <% if current_user.is_student %>
+        (<%= link_to 'Upload New Version', edit_deliverable_path(deliverable) %>)
+    <% end %>
+    </td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+<% end %>
+
+  <% deliverable.attachment_versions.each_with_index do |version, index| %>
+    <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+    <td>
+      <% if index == 0 %>
+        <%= display_timestamp(version.submission_date, :class => "latest") -%>
+    <% else %>
+        <%= display_timestamp(version.submission_date) -%>
+    <% end %>
+      <%if !deliverable.assignment_due_date.nil? && version.submission_date > deliverable.assignment_due_date %>
+        <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, deliverable.assignment_due_date)%> Late!)</span>
+    <%end%>
+    </td>
+
+
+    <td>
+      <% unless version.attachment_file_name.nil? %>
+        <%= link_to version.attachment_file_name, version.attachment.url %>
+    <% end %>
+    </td>
+    <td>
+      <%= version.comment -%>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable} do |f| %>
+<div>
+  <% if grade_type_points_or_weights == "Percentage" %>
+    <p>
+  <%= "Weight: #{deliverable.assignment.weight}%" %>
+  </p>
+  <% end %>
+  <p>
+  <% if deliverable.current_attachment.blank? %>
+    Deliverable: None
+<% else %>
+    Deliverable: <%= link_to deliverable.current_attachment.attachment_file_name, deliverable.current_attachment.attachment.url %>
+  <% end %>
+  </p>
+  <p>
+  <%= f.label :feedback, "Feedback file to upload" %>
+  <%= f.file_field :feedback %>
+  </p>
+  <p>
+  <%= f.label :feedback_comment, "Feedback Comments" %>
+  (<%= link_to 'View History and Feedback', deliverable %>)
+  <br>
+  <%= f.text_area :feedback_comment, :size => "75x10" %>
+  </p>
+</div>
+
+<% if deliverable.get_grade_status == :drafted %>
+  <div class="rounded staff" style="background-color:#dedede;">
+  This is draft feedback
+  </div>
+<% end %>
+
+
+<div class="student_scores">
+  <% if deliverable.is_team_deliverable? %>
+    <% for member in deliverable.team.members %>
+      <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id)%>
+      <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+    <% end %>
+  <% else %>
+    <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, deliverable.creator_id)%>
+    <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => deliverable.creator, :deliverable_type => "individual"} %>
+  <% end %>
+</div>
+
+
+<br />
+
+<div class="rounded staff">
+  <%= professor_image %>
+  <span class="instructions">Only faculty can see this information</span>
+
+  <h1>
+    Professor's Notes
+  </h1>
+
+  <p>
+  <%= f.text_area :private_note, :size => "75x10" %>
+  </p>
+</div>
+
+<br /><br /><br />
+
+
+
+
+<p>
+<div style="float: left; width: auto;">
+  <%= f.submit "Save and Email" , :name=>"submit"%>
+  <%= f.submit "Save as Draft" , :name=>"draft" %>
+  <%= link_to "Back to Pending List", course_deliverables_path(deliverable.course) %>
+</div><div style='clear:both;'></div>
+</p>
+<% end %>
