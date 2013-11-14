@@ -249,7 +249,6 @@
         else {
           var callback = showPopupWindow(that, deliverable_id);
           $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {
-            alert(error);
           }
                                         );
         }
