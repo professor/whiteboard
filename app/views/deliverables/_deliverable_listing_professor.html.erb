@@ -1,56 +1,266 @@
+<style>
+    #dropdown {
+        display: none;
+        background: white;
+        position: absolute;
+        overflow: hidden;
+        margin-left: 1px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    #ifShowAllAssignments {
+        display: none;
+    }
+</style>
+
 <table id="sortable">
-    <thead>
-        <tr>
-          <th>Name</th>
-          <th id="mysuperfuntimeid">Task</th>
-          <th><%= nomenclature_assignment_or_deliverable %></th>
-          <th>Grade</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% deliverables.each do |deliverable| %>
-            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>">
-                <td id ="teams">
-                    <%= 'Team' if deliverable.is_team_deliverable? %>
-                    <%= deliverable.owner_name %>
-                </td>
-                <td><%= deliverable.assignment.task_number %></td>
-                <td>
-                    <% latest_attachment = deliverable.attachment_versions.first %>
-                    <% unless latest_attachment.attachment_file_name.nil? %>
-                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
-                    <% else %>
-                        <%= deliverable.assignment_name %>
-                    <% end %>
-                </td>
-                <td>
-                      <% if deliverable.get_grade_status == :ungraded %>
-                          <%= link_to 'Give Grade', deliverable %>
-                      <% else %>
-                          <%= link_to 'Review Grade', deliverable %>
-                      <% end %>
-                </td>
-            </tr>
-        <% end %>
-    </tbody>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th id="mysuperfuntimeid">Task</th>
+    <th><%= nomenclature_assignment_or_deliverable %></th>
+    <th>Grade</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% deliverables.each do |deliverable| %>
+      <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>">
+        <td id="teams">
+          <%= 'Team' if deliverable.is_team_deliverable? %>
+          <%= deliverable.owner_name %>
+          <% if deliverable.get_grade_status==:graded %>
+              <% if deliverable.get_grading_date< deliverable.attachment_versions.first.submission_date %>
+                  <span style='color:red'>(New Submission)</span>
+
+              <% end %>
+
+          <% end %>
+        </td>
+        <td><%= deliverable.assignment.task_number %></td>
+        <td>
+          <% latest_attachment = deliverable.attachment_versions.first %>
+          <% unless latest_attachment.attachment_file_name.nil? %>
+              <%= deliverable.assignment_name %> (
+              <% link_to 'download', latest_attachment.attachment.url %>)
+          <% else %>
+              <%= deliverable.assignment_name %>
+          <% end %>
+        </td>
+        <td>
+          <% if deliverable.get_grade_status == :ungraded %>
+              <%= link_to 'Give Grade', deliverable %>
+          <% else %>
+              <%= link_to 'Review Grade', deliverable %>
+          <% end %>
+        </td>
+
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 
+<div id="dropdown">
+  <h1>Attachment Version History</h1>
+  <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <th>Submission Date</th>
+      <th><%= nomenclature_assignment_or_deliverable %> File</th>
+      <th>Comments</th>
+    </tr>
+
+    <% if current_user.is_student %>
+        <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+          <td>
+            <% if current_user.is_student %>
+                (<%= link_to 'Upload New Version', edit_deliverable_path(deliverables[0]) %>)
+            <% end %>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+    <% end %>
+    <% #change deliverable_selected to the one really selected    %>
+    <% @deliverable = deliverables[0] %>
+    <% @deliverable.attachment_versions.each_with_index do |version, index| %>
+        <% if index == 0 %>
+            <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+
+              <td>
+                <span style='color:red'>(Latest)</span><%= display_timestamp(version.submission_date, :class => "latest") -%>
+        <% else %>
+            <tr id="ifShowAllAssignments" class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+              <td>
+                <%= display_timestamp(version.submission_date) -%>
+        <% end %>
+        <% if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
+              <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date) %>
+                Late!)</span>
+        <% end %>
+        </td>
+
+
+        <td>
+          <% unless version.attachment_file_name.nil? %>
+              <%= link_to version.attachment_file_name, version.attachment.url %>
+          <% end %>
+        </td>
+        <td>
+          <%= version.comment -%>
+        </td>
+        </tr>
+    <% end %>
+  </table>
+  <input id='showAllAssignments' type="checkbox" checked="false"/><label for="show_all_assignments">Show all
+  assignments</label>
+
+  <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
+      <%# render 'shared/error_messages', object: f.object %>
+      <div>
+        <% if grade_type_points_or_weights == "Percentage" %>
+            <p>
+              <%= "Weight: #{@deliverable.assignment.weight}%" %>
+            </p>
+        <% end %>
+        <p>
+          <% if @deliverable.current_attachment.blank? %>
+              Deliverable: None
+          <% else %>
+              Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
+          <% end %>
+        </p>
+
+        <p>
+          <%= f.label :feedback, "Feedback file to upload" %>
+          <%= f.file_field :feedback %>
+        </p>
+
+        <p>
+          <%= f.label :feedback_comment, "Feedback Comments" %>
+          (<%= link_to 'View History and Feedback', @deliverable %>)
+          <br>
+          <%= f.text_area :feedback_comment, :size => "75x10" %>
+        </p>
+      </div>
+
+      <% if @deliverable.get_grade_status == :drafted %>
+          <div class="rounded staff" style="background-color:#dedede;">
+            This is draft feedback
+          </div>
+      <% end %>
+
+      <% if @deliverable.is_team_deliverable? %>
+          Team
+          Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade" %>
+          / <%= display_maximum_score %>
+<%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+
+      <% end %>
+
+      <div class="student_scores">
+        <% if @deliverable.is_team_deliverable? %>
+            <% for member in @deliverable.team.members %>
+                <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id) %>
+                <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+            <% end %>
+        <% else %>
+            <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id) %>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+        <% end %>
+      </div>
+
+
+      <br/>
+
+      <div class="rounded staff">
+        <%= professor_image %>
+        <span class="instructions">Only faculty can see this information</span>
+
+        <h1>
+          Professor's Notes
+        </h1>
+
+        <p>
+          <%= f.text_area :private_note, :size => "75x10" %>
+        </p>
+      </div>
+
+      <br/><br/><br/>
+
+
+      <p>
+
+      <div style="float: left; width: auto;">
+        <%= f.submit "Save and Email", :name => "submit" %>
+        <%= f.submit "Save as Draft", :name => "draft" %>
+        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
+      </div>
+      <div style='clear:both;'></div>
+      </p>
+  <% end %>
+</div>
+
 <script type="text/javascript">
-  $('#sortable').tablesorter();
+    $('#sortable').tablesorter();
 
-  function updateShowGraded() {
-      if ($('#show_graded').is(':checked')) {
-          $('tr').show();
-      } else {
-          $('tr:contains("Review Grade")').hide();
-      }
-  }
-  $('#show_graded').click(updateShowGraded);
-  updateShowGraded();
+    function update() {
 
-  function updateShowTeamAndOrIndividual() {
-        $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
-        $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
-  }
-  $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
+        function updateShowTeamAndOrIndividual() {
+            $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
+            $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
+        }
+
+        if ($('#show_graded').is(':checked')) {
+            $('tr').show();
+            updateShowTeamAndOrIndividual();
+        } else {
+            updateShowTeamAndOrIndividual();
+            $('tr:contains("Review Grade")').hide();
+        }
+    }
+    $('#show_graded').click(update);
+    update();
+
+    function showAllAssignments() {
+        $('#ifShowAllAssignments').toggle($('#showAllAssignments').is(':checked'));
+    }
+    $('#showAllAssignments').click(showAllAssignments);
+
+
+    $('#show_team, #show_individual').click(update);
+
+
+    var $dropdown = $('#dropdown');
+
+    $('tbody tr').click(function () {
+        var $this = $(this);
+        var width = $this.width();
+        if ($this.data('expanded')) {
+            // shrink
+            $this.find('td').stop().animate({
+                paddingBottom: 4
+            });
+            $this.data('expanded', false);
+
+            $dropdown.animate({
+                height: 0
+            }, function () {
+                $dropdown.hide();
+            });
+        } else {
+            // expand
+            $this.find('td').stop().animate({
+                paddingBottom: 1055
+            });
+            $this.data('expanded', true);
+            $dropdown.show().css({
+                width: width - 2,
+                top: $this.position().top + 30,
+                height: 0
+            }).animate({
+                        height: 1049
+                    });
+        }
+    });
 </script>
