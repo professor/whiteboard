@@ -33,18 +33,21 @@ FactoryGirl.define do
     is_team_deliverable true
     association :course, :factory => :fse
     name "Assignment 1"
+    task_number 1
   end
 
   factory :assignment_2, :parent=>:assignment do
     is_team_deliverable true
     association :course, :factory => :fse
     name "Assignment 2"
+    task_number 2
   end
 
   factory :assignment_3, :parent=>:assignment do
     is_team_deliverable false
     association :course, :factory => :fse
     name "Assignment 3"
+    task_number 3
   end
 
   ## end add turing
