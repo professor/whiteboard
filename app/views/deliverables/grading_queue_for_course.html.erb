@@ -153,6 +153,7 @@
         // 3. Update the table rows to suite Assignment and Grade Status selections.
         updateResultTablesToMatchFilter();
 
+        // Hook listener functions for all grading in the same page features
         prepareSinglePageFunctions();
     }
 
@@ -236,18 +237,22 @@
       });
     }
     //to comment
-    function showGradingDetail(event){
+    function showGradingDetail(){
         event.preventDefault();
-        //var url = $(this).find("td").find("a").attr("href");
+//        event.stopPropagation();
         var url = $(this).find("td a").attr("href");
         var deliverable_id = url.match(/\/([0-9]+)/)[1];
         var that = $(this);
-          if ($('tr#' + deliverable_id).is(':visible')){
-            $('tr#' + deliverable_id).remove();
+        if ($('tr#' + deliverable_id).is(':visible')){
+          $('tr#' + deliverable_id).remove();
+        }
+        else {
+          var callback = showPopupWindow(that, deliverable_id);
+          $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {
+            alert(error);
           }
-          else {
-            $.get(url).done(showPopupWindow(that, deliverable_id));
-          }
+                                        );
+        }
     }
 
     //to comment
@@ -282,19 +287,17 @@
                 if ($("#filter_my_teams").attr("checked")){
                   fetch_my_team_deliverables();
                 }
-                //updateResultTablesToMatchFilter();
               });
             });
         }
     }
 
     $(document).ready(function () {
+
         $(document).tooltip();
 
         // Invoke the below function on page load.
         preparePageToMatchFilter();
 
-        // Hook listener functions for all grading in the same page features
-        prepareSinglePageFunctions();
     });
 </script>
