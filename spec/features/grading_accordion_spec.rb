@@ -37,7 +37,7 @@ describe 'Grading queue', :js => true do
   end
 
   it 'As a faculty, when I click a delivarable, a new accordion will show up' do
-
+    pending("Accordian is not fully implemented")
     visit course_deliverables_path(@course)
 
     #before I click the deliverable, no dropdown shows up.
@@ -58,6 +58,7 @@ describe 'Grading queue', :js => true do
 
 
   it 'Within the accordion, input some values' do
+    pending("Accordian is not fully implemented")
     visit course_deliverables_path(@course)
     find(:xpath, "//td", :text => "Team Assignment 1").click
     page.fill_in 'deliverable_feedback_comment', :with => 'Very good document. But still some grammar mistakes.'
