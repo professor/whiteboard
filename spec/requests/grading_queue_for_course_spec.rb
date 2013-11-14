@@ -12,6 +12,8 @@ describe 'When I visit the grading queue page,' do
 
     # Create a course
     @course = FactoryGirl.create(:fse)
+    @course.registered_students << @student_sally
+    @course.registered_students << @student_sam
     @faculty_assignment_1 = FactoryGirl.create(:faculty_assignment, :user => @faculty_frank, :course => @course)
     @faculty_assignment_2 = FactoryGirl.create(:faculty_assignment, :user => @faculty_fagan, :course => @course)
     @course.faculty_assignments << @faculty_assignment_1
@@ -179,13 +181,26 @@ describe 'When I visit the grading queue page,' do
     describe 'should hava a tab, which ', :js => true do
         before :each do
           @area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
+          @area.find('div#ungraded').click
         end
 
-        it "shows the grading page of an assignment when I click on it" do
-          @area.find('div#ungraded').click
-
+        it "shows the grading page of an assignment when I click on it " do
           id = "#" + @deliverable_1.id.to_s
           page.should have_css(id)
+        end
+       
+        context "shows the grading page of an assignment that " do
+
+          it "enables me to grade and save grades for team deliverables " do
+            id = "#" + @deliverable_1.id.to_s
+            page.find(id).fill_in('team_grade', :with => '5')
+            page.find("[name=draft]").click
+
+            visit("/courses/#{@course.id}/deliverables")
+
+            page.find('div#drafted').click
+            page.should have_field(@student_sally.id.to_s, :value => 5)
+          end
         end
     end
   end
