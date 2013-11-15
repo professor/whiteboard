@@ -23,9 +23,6 @@
 
 <% content_for :title, "Provide Feedback" %>
 
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
-<%=  render :partial=>"layouts/grade_book_sub_menu" %>
-
 <% if @deliverable.is_team_deliverable?  %>
 <h2>Grade Team <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
 <% else %>
@@ -109,7 +106,6 @@
       <div style="float: left; width: auto;">
         <%= f.submit "Save and Email" , :name=>"submit"%>
         <%= f.submit "Save as Draft" , :name=>"draft" %>
-        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
       </div><div style='clear:both;'></div>
       </p>
     <% end %>
