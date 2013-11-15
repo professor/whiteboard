@@ -4,11 +4,11 @@
   <div class="label">
     <%= fields_for :grade do |grade| %>
       Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
-      <%# if deliverable_type == "individual" %>
+      <% if deliverable_type == "individual" %>
 
         /<%= display_maximum_score %>
 
-      <%# end %>
+      <% end %>
     <% end %>
   </div>
   <div style="text-align: center;">
