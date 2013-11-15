@@ -68,13 +68,10 @@
 
       it"should display the grading queue page" do
         visit course_deliverables_path(@course)
-        #save_and_open_page
       end
 
       it "should show only those teams that are assigned to the staff member" do
-        visit course_deliverables_path(@course)
-        page.should_not have_content("Bean Counters")
-        save_and_open_page
+        pending
       end
 
     end

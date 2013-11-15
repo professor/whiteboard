@@ -1,0 +1,169 @@
+<style>
+    .dropdown {
+        display: none;
+        background: white;
+        position: absolute;
+        overflow: hidden;
+        margin-left: 1px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .dropdown textarea {
+      width: 99%;
+    }
+</style>
+
+<table id="sortable">
+    <thead>
+        <tr>
+          <th>Name</th>
+          <th>Task</th>
+          <th><%= nomenclature_assignment_or_deliverable %></th>
+          <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% deliverables.each do |deliverable| %>
+            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>"
+                id="deliverable-<%= deliverable.id %>">
+                <td>
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                </td>
+                <td><%= deliverable.assignment.task_number %></td>
+                <td>
+                    <% latest_attachment = deliverable.attachment_versions.first %>
+                    <% unless latest_attachment.attachment_file_name.nil? %>
+                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
+                    <% else %>
+                        <%= deliverable.assignment_name %>
+                    <% end %>
+                </td>
+                <td>
+                      <% if deliverable.get_grade_status == :ungraded %>
+                          Give Grade
+                      <% else %>
+                          Review Grade
+                      <% end %>
+                </td>
+
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<div id="dropdowns"></div>
+
+<div id="dropdown-copy">
+</div>
+
+<script type="text/javascript">
+    $('#sortable').tablesorter();
+
+    function update() {
+
+        function updateShowTeamAndOrIndividual() {
+            $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
+            $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
+        }
+
+        function updateColor() {
+          $('tr').filter(function () {
+              return $(this).is(':visible');
+          }).each(function (i) {
+              var $this = $(this);
+              if (i % 2) {
+                  $this.css({
+                      backgroundColor: '#ddd'
+                  });
+              }
+          });
+        }
+
+        if ($('#show_graded').is(':checked')) {
+            $('tr').show();
+            updateShowTeamAndOrIndividual();
+            updateColor();
+        } else {
+            updateShowTeamAndOrIndividual();
+            $('tr:contains("Review Grade")').hide();
+            updateColor();
+        }
+    }
+    $('#show_graded').click(update);
+    update();
+
+    $('#show_team, #show_individual').click(update);
+
+
+    var $dropdownCopy = $('#dropdown-copy');
+    var $expandedRow = null;
+    var $dropdowns = {};
+
+    $('tbody tr').click(function () {
+        var $this = $(this);
+        var id = $this.attr('id').split('-')[1];
+        var width = $this.width();
+        if ($this.data('expanded')) {
+            // shrink
+            $this.find('td').stop().animate({
+                paddingBottom: 4
+            });
+            $this.data('expanded', false);
+            
+            $dropdowns[id].animate({
+                height: 0
+            }, function () {
+                $dropdowns[id].hide();
+            });
+        } else {
+            // expand
+            $.ajax({
+                url: '/deliverables/' + id + '/dropdown',
+                type: 'GET',
+                success: function (data) {
+                    $dropdownCopy.html(data);
+                    var height = $dropdownCopy.height();
+
+                    var $dropdown = $('<div>').addClass('dropdown').html(data).appendTo('#dropdowns');
+                    $dropdowns[id] = $dropdown;
+
+                    $this.find('td').stop().animate({
+                        paddingBottom: height + 6
+                    });
+                    $this.data('expanded', true);
+                    $dropdown.show().css({
+                        width: width - 2,
+                        left: $this.position().left,
+                        top: $this.position().top + 30,
+                        height: 0
+                    }).animate({
+                        height: height
+                    });
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+  .dropdown {
+    overflow-y: scroll;
+    background-color: white;
+  }
+  tbody tr {
+    cursor: pointer;
+  }
+  tr:hover td {
+    background-color: #ddd;
+  }
+  #dropdown-copy {
+    visibility: hidden;
+    position: absolute;
+    left: -9999999;
+    top: -9999999;
+  }
+</style>
