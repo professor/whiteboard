@@ -84,8 +84,10 @@
         <div class="col-md-6">
           <% graded_by = @deliverable.get_graded_by %>
           <p class="pull-right"><strong>Last graded by: </strong>
-            <% unless graded_by.nil? %>
-                <a href='http://<%=@hostname_with_port%>/people/<%= graded_by.twiki_name %>' target='_blank'><%= graded_by.human_name %></a>
+            <% if graded_by.nil? %>
+                <%= link_to graded_by.human_name, person_path(graded_by.twiki_name), :target=> '_blank'%>
+            <%else%>
+                <i>Not graded yet</i>
             <% end %>
           </p>
         </div>
