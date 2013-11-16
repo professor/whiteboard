@@ -154,6 +154,8 @@ describe "deliverables" do
       @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
       @assignment2 = FactoryGirl.create(:assignment_2,:course => @course)
 
+      @grade1 = FactoryGirl.create(:last_graded_visible, :course => @course,:assignment => @assignment1, :last_graded_by => @faculty.id, :student =>@student_sam)
+
       @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing, :assignment => @assignment1, :attachment_versions => [])
       @deliverable2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team => @team_turing,:assignment => @assignment2, :attachment_versions => [])
       @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1, :attachment_versions => [])
@@ -219,6 +221,16 @@ describe "deliverables" do
       page.should have_content("Send a copy to myself")
       page.should have_button("Save as Draft")
       page.should have_button("Finalize and Email")
+
+    end
+
+    it "I should be able to see who last graded in the grading page", :js => true do
+      visit course_deliverables_path(@course)
+      find("#deliverable_" + @deliverable1.id.to_s).click
+      page.should have_content("Last graded by")
+      page.should have_content(@faculty.human_name)
+      #pending check the link :)
+      #page.should have_link(@faculty.human_name, {:href => '/clowns?ordered_by=clumsyness')
 
     end
 
