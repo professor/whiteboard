@@ -44,6 +44,25 @@ describe "deliverables" do
       end
     end
 
+    #turing
+    it "I can see who graded me" do
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @assignment1 = FactoryGirl.create(:assignment_team)
+      @grade1 = FactoryGirl.create(:last_graded_visible, :course_id => @assignment1.course.id,:assignment_id => @assignment1.id, :last_graded_by => @faculty_frank.id, :student_id =>@user.id)
+      @team_deliverable.course = @assignment1.course
+      @team_deliverable.assignment = @assignment1
+      @team_deliverable.creator = @user
+      Assignment.stub(:list_assignments_for_student).with(@user.id, :current).and_return([@assignment1])
+      Assignment.stub(:list_assignments_for_student).with(@user.id, :past).and_return([@assignment1])
+      @assignment1.stub(:get_student_grade).with(@user.id).and_return(@grade1)
+      Grade.stub(:get_grade).and_return(@grade1)
+      @assignment1.stub(:maximum_score).and_return(20.0)
+      click_link "Resubmit"
+      page.should have_content("Graded by")
+      page.should have_content(@faculty_frank.human_name)
+
+    end
+
     it " I can not be able to view professor's notes" do
       grade = @grade.score + "/" + @assignment.maximum_score.to_s
       page.should have_content(grade)
