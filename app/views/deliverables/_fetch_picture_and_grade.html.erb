@@ -1,14 +1,10 @@
+<%= javascript_include_tag %>
 
 <div class='team_member_photo'>
-
   <div class="label">
     <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
-      <%# if deliverable_type == "individual" %>
-
+      Grade <%= grade.text_field :_for_student, :name=>member.id, :value => ((grade_obj.nil?)?"":grade_obj.score), :size=> "3", :tabindex=>member.id, :onchange => "sendAlert($(this).val(), #{display_maximum_score})" %>
         /<%= display_maximum_score %>
-
-      <%# end %>
     <% end %>
   </div>
   <div style="text-align: center;">
@@ -18,3 +14,11 @@
   <div class='label'> <%= member.human_name %></div>
 
   </div>
+
+<script>
+  function sendAlert(score, max){
+    if(score > max){
+      alert("Invalid score, please check again!");
+    }
+  }
+</script>
