@@ -77,7 +77,7 @@ RSpec.configure do |config|
 end
 
 Capybara.default_host = 'http://whiteboard.sv.cmu.edu'
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :selenium
 
 FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
