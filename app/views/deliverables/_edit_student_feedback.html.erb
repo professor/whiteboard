@@ -31,6 +31,7 @@
     });
     
     if (isValid) {
+      save();
       return true;
     } else {
       alert("Invalid score, please check again");
@@ -39,7 +40,37 @@
   }
 </script>
 
+<script>
+  var hasEdited = false;
+  var hasSaved = false;
 
+  function edit(){
+    alert("Edit");
+    hasEdited = true;
+  }
+
+  function save(){
+    alert("Save");
+    hasSaved = true;
+  }
+
+  function closeEditorWarning(){
+      if (hasEdited && !hasSaved) return 'It seems like you have been editing something..';
+  }
+
+  window.onbeforeunload = closeEditorWarning
+</script>
+
+<script>
+  function sendAlert(score, max) {
+    if (isNaN(parseFloat(score)) || !isFinite(score) || score > max) {
+      alert("Invalid score, please check again");
+      return false;
+    } else {
+      return true;
+    }
+  }
+</script>
 
 <% content_for :title, "Provide Feedback" %>
 
@@ -73,7 +104,7 @@
         <%= f.label :feedback_comment, "Feedback Comments" %>
         (<%= link_to 'View History and Feedback', @deliverable %>)
         <br>
-        <%= f.text_area :feedback_comment, :size => "70x10" %>
+        <%= f.text_area :feedback_comment, :size => "70x10", :onchange=>"edit()" %>
       </p>
     </div>
 
@@ -84,7 +115,7 @@
     <% end %>
 
     <% if @deliverable.is_team_deliverable? %>
-        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
+        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "if(sendAlert($(this).val(), #{display_maximum_score})){apply_team_grade_to_individuals(); edit();}", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
         <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
 
     <% end %>
@@ -93,11 +124,11 @@
       <% if @deliverable.is_team_deliverable? %>
             <% for member in @deliverable.team.members %>
               <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"}, :onchange=>"edit()" %>
             <% end %>
       <% else %>
         <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
-        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"}, :onchange=>"edit()" %>
       <% end %>
     </div>
 
@@ -113,17 +144,23 @@
       </h1>
 
       <p>
-      <%= f.text_area :private_note, :size => "90x10" %>
+      <%= f.text_area :private_note, :size => "90x10", :onchange=>"edit()" %>
       </p>
     </div>
 
     <br /><br /><br />
 
       <p>
+
+<!--TODO: Validation during submit-->
       <div style="float: left; width: auto;">
         <% max_score = @deliverable.assignment.maximum_score %>
-        <%= f.submit "Save and Email" , :name=>"submit", :onclick => "isScoreValid(#{max_score});return false;" %>
-        <%= f.submit "Save as Draft" , :name=>"draft", :onclick => "isScoreValid(#{max_score});return false;" %>
+        <%= f.submit "Save and Email",
+          :name=>"submit",
+          :onclick=>"if(isScoreValid(#{max_score}))this.submit;" %>
+        <%= f.submit "Save as Draft", 
+          :name=>"draft", 
+          :onclick=>"if(isScoreValid(#{max_score}))this.submit;" %>
       </div><div style='clear:both;'></div>
       </p>
     <% end %>

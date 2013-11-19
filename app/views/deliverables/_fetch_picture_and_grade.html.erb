@@ -1,12 +1,10 @@
 <script>
   function sendAlert(score, max) {
-    if(isNaN(parseFloat(score)) || !isFinite(score)){
+    if (isNaN(parseFloat(score)) || !isFinite(score) || score > max) {
       alert("Invalid score, please check again");
-      return;
-    }
-    if(score > max){
-      alert("Invalid score, please check again");
-      return;
+      return false;
+    } else {
+      return true;
     }
   }
 </script>
@@ -19,9 +17,8 @@
     <% end %>
   </div>
   <div style="text-align: center;">
-  <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
-    <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image") %></a>
+    <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
+      <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image") %></a>
   </div>
   <div class='label'> <%= member.human_name %></div>
-
   </div>

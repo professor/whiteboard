@@ -1,12 +1,3 @@
-<script>
-
-function closeEditorWarning(){
-    return 'It seems like you have been editing something..'
-}
-
-window.onbeforeunload = closeEditorWarning
-</script>
-
 <% if @deliverable.course %>
   <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
 <% else %>
