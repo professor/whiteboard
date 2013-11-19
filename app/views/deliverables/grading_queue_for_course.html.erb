@@ -3,7 +3,7 @@
 <h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
 
 <div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
+  <%= image_tag("professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
   <span class="instructions">Note: we will be improving this screen during the Spring 2013 semester by integrating in new student code. </span>
 </div>
 
@@ -80,7 +80,7 @@
 
         <div id='filterBox'>
           <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text' placeholder="Enter search keywords"/>
-          <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
+          <%= image_tag("tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
           Search by:
           <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
           <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>

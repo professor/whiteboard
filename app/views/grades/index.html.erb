@@ -205,7 +205,7 @@
       <tfoot>
         <tr style="background-color:white;">
           <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 6 %>">
-            <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
+            <%= link_to image_tag("ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
             <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>

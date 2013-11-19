@@ -50,8 +50,8 @@
     <div class="right_link"><%= link_to 'See all courses', courses_path %></div>
     -->
     <!--
-      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
-      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("/images/courses_list_by_mini.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
+      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("courses_list.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
+      <div class="right_link" id="image_courses_for_a_semester"><%= link_to image_tag("courses_list_by_mini.png", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "url" %></div>
       -->
 
 
@@ -62,12 +62,12 @@
 -->
 
     <% if current_user.course_tools_view == "length" || params[:view] == "length" %>
-        <div class="right_link"><%= link_to image_tag("/images/courses_list_by_mini.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
+        <div class="right_link"><%= link_to image_tag("courses_list_by_mini.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
         <%= render :partial => "index_courses_by_length", :locals => {:style => nil, :state => "length"} %> <br/>
         <%= render :partial => "index_courses_for_a_semester", :locals => {:style => "display:none;"} %>
     <% else %>
         <%# This is the default option for those who have never hit the link %>
-        <div class="right_link"><%= link_to image_tag("/images/courses_list.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
+        <div class="right_link"><%= link_to image_tag("courses_list.png", :id => "course_tools_view_image", :class => "icon", :size => "90x55", :alt => "Courses in semester", :title => "Courses in semester"), "#" %></div>
         <%= render :partial => "index_courses_by_length", :locals => {:style => "display:none;", :state => "semester"} %>
         <br/>
         <%= render :partial => "index_courses_for_a_semester", :locals => {:style => nil} %>
@@ -90,7 +90,7 @@
                     $('#semester_length_courses').show('slow');
                     $('#mini_b_courses_table').show('slow');
                     $('#mini_a_courses_table').show('slow');
-                    $('#course_tools_view_image').attr("src", '/images/courses_list_by_mini.png');
+                    $('#course_tools_view_image').attr("src", 'courses_list_by_mini.png');
                 }
                 else {
                     new_state = "semester";
@@ -101,7 +101,7 @@
                     $('#semester_length_courses').hide('slow');
                     $('#mini_b_courses_table').hide('slow');
                     $('#mini_a_courses_table').hide('slow');
-                    $('#course_tools_view_image').attr("src", '/images/courses_list.png');
+                    $('#course_tools_view_image').attr("src", 'courses_list.png');
                 }
                 $.ajax({
                     type:'post',

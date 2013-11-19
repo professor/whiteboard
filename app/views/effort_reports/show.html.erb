@@ -15,10 +15,10 @@
 <% if current_user.is_staff || current_user.is_admin %>
     <h2>Pick a report format</h2>
     <a href="<%= url_for :action => "course_table", :id => params[:id], :only_path => true %>">
-      <%= image_tag("/images/effort_report_course_table.jpg", :size => "474x320", :border => "0", :alt => "Course Table") %></a>
+      <%= image_tag("effort_report_course_table.jpg", :size => "474x320", :border => "0", :alt => "Course Table") %></a>
     &nbsp;
     <a href="<%= url_for :action => "course", :id => params[:id], :week => nil, :only_path => true %>">
-      <%= image_tag("/images/effort_report_course.png", :size => "474x271", :border => "0", :alt => "Course View") %></a>
+      <%= image_tag("effort_report_course.png", :size => "474x271", :border => "0", :alt => "Course View") %></a>
 
     &nbsp;
 <% end %>

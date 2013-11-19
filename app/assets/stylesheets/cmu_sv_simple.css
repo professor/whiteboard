@@ -35,13 +35,15 @@ div.course a.active{color:#990000; text-decoration:none; font-weight:normal; pad
 
 
 td.note_top {
-    background-image: url(../cmu_sv_simple/content_top.gif); background-repeat: no-repeat;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_top.gif' %>); background-repeat: no-repeat;
+
     height: 18px;
     width: 727px;
     padding: 0px;
 }
 td.note_body {
-    background-image: url(../cmu_sv_simple/content_body.gif); background-repeat: repeat-y;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_body.gif' %>); background-repeat: repeat-y;
+
     padding-left: 22px;
     padding-right: 22px;
     width: 687px;
@@ -50,7 +52,8 @@ td.note_body {
     color:#424545;
     }
 td.note_bottom {
-    background-image: url(../cmu_sv_simple/content_bot.gif); background-repeat: no-repeat;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_bot.gif' %>); background-repeat: no-repeat;
+
     height: 15px;
     width: 727px;
     padding: 0px;
@@ -86,11 +89,12 @@ td.course_content_bottom {
 
 
 div.note_top {
-    background-image: url(../cmu_sv_simple/content_top.gif); background-repeat: no-repeat;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_top.gif' %>); background-repeat: no-repeat;
+
     height: 18px;
 }
 div.note_body {
-    background-image: url(../cmu_sv_simple/content_body.gif); background-repeat: repeat-y;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_body.gif' %>); background-repeat: repeat-y;
     padding-left: 22px;
     padding-right: 22px;
     margin-top: -13px;
@@ -99,7 +103,8 @@ div.note_body {
     clear: none;
     }
 div.note_bottom {
-    background-image: url(../cmu_sv_simple/content_bot.gif); background-repeat: no-repeat;
+    background-image: url(<%= image_path 'cmu_sv_simple/content_bot.gif' %>); background-repeat: no-repeat;
+
     height: 15px;
 }
 
