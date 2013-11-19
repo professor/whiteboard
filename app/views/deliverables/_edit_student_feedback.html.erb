@@ -21,6 +21,26 @@
   });
 </script>
 
+<script>
+  function isScoreValid(max_score) {
+    var score = 0;
+    var isValid = true;
+    $(".student_scores input[type='text']").each(function () {
+      score = $(this).val();
+      if(isNaN(parseFloat(score)) || !isFinite(score) || score > max_score) isValid = false;
+    });
+    
+    if (isValid) {
+      return true;
+    } else {
+      alert("Invalid score, please check again");
+      return false;
+    }
+  }
+</script>
+
+
+
 <% content_for :title, "Provide Feedback" %>
 
 <% if @deliverable.is_team_deliverable?  %>
@@ -99,13 +119,11 @@
 
     <br /><br /><br />
 
-
-
-
       <p>
       <div style="float: left; width: auto;">
-        <%= f.submit "Save and Email" , :name=>"submit"%>
-        <%= f.submit "Save as Draft" , :name=>"draft" %>
+        <% max_score = @deliverable.assignment.maximum_score %>
+        <%= f.submit "Save and Email" , :name=>"submit", :onclick => "isScoreValid(#{max_score});return false;" %>
+        <%= f.submit "Save as Draft" , :name=>"draft", :onclick => "isScoreValid(#{max_score});return false;" %>
       </div><div style='clear:both;'></div>
       </p>
     <% end %>

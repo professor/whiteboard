@@ -1,3 +1,12 @@
+<script>
+
+function closeEditorWarning(){
+    return 'It seems like you have been editing something..'
+}
+
+window.onbeforeunload = closeEditorWarning
+</script>
+
 <% if @deliverable.course %>
   <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
 <% else %>
@@ -74,12 +83,4 @@
      <%#  link_to "Alter feedback", deliverable_feedback_path(@deliverable) %>
 <% elsif current_user.is_student? %>
     <%= render :partial => "view_feedback_by_professor" %>
- <% end %>
-
-
-
-
-
-
-
-
+<% end %>

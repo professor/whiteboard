@@ -1,4 +1,15 @@
-<%= javascript_include_tag %>
+<script>
+  function sendAlert(score, max) {
+    if(isNaN(parseFloat(score)) || !isFinite(score)){
+      alert("Invalid score, please check again");
+      return;
+    }
+    if(score > max){
+      alert("Invalid score, please check again");
+      return;
+    }
+  }
+</script>
 
 <div class='team_member_photo'>
   <div class="label">
@@ -14,11 +25,3 @@
   <div class='label'> <%= member.human_name %></div>
 
   </div>
-
-<script>
-  function sendAlert(score, max){
-    if(score > max){
-      alert("Invalid score, please check again!");
-    }
-  }
-</script>
