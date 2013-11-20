@@ -132,12 +132,6 @@ describe DeliverablesController do
         @expected_deliverable[0].should == @deliverable_turing_graded
       end
 
-      it 'shows draft deliverables of only my teams if draft buttons is clicked' do
-        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
-        pending
-
-      end
-
       it 'shows graded and ungraded deliverables of only my teams if graded and ungraded buttons are clicked' do
 
         subject.instance_variable_set(:@default_deliverables, [@deliverable_turing_ungraded, @deliverable_turing_drafted, @deliverable_turing_graded])
@@ -148,21 +142,6 @@ describe DeliverablesController do
         @expected_deliverable[0].should == @deliverable_turing_graded
         @expected_deliverable[1].should == @deliverable_turing_ungraded
 
-      end
-
-      it 'shows graded, ungraded and drafted deliverables of only my teams if graded, ungraded and draft buttons are clicked' do
-        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
-        pending
-      end
-
-      it 'shows graded and drafted deliverables of only my teams if graded and draft buttons are clicked' do
-        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
-        pending
-      end
-
-      it 'shows ungraded and drafted deliverables of only my teams if ungraded and draft buttons are clicked' do
-        get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
-        pending
       end
       ## end add Team turing
 
