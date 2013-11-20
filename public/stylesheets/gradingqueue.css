@@ -1,0 +1,40 @@
+/*
+ * CSS for the grading queue UI
+ */
+
+#grading-filters{
+    margin:5px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+
+    overflow:auto;
+    float:left;
+}
+
+#grading-filters label {
+    float:left;
+    width:9.8em;
+    border:2px solid #D0D0D0;
+}
+
+#grading-filters label span {
+    text-align:center;
+    padding:10px 0px;
+    display:block;
+}
+
+#grading-filters label input {
+    position:absolute;
+    top:-20px;
+    margin-top: 5px;
+}
+
+#grading-filters input:checked + span {
+    background-color:#7F0E00;
+    color:#fff;
+}
+
+#grading-search input {
+    width:663px;
+    height:20px;
+}
