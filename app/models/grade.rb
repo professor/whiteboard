@@ -108,7 +108,9 @@ class Grade < ActiveRecord::Base
         end
         # Beg Add Turing Ira
         unless last_graded_by.nil?
-          grade.last_graded_by = last_graded_by
+          if grade.last_graded_by.nil?
+            grade.last_graded_by = last_graded_by
+          end
         end
         # End Add Turing Ira
         grading_result = grade.save
