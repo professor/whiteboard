@@ -36,26 +36,31 @@
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
 <% if deliverables.empty? %>
-  <p style="text-align: center;">Hurray, nothing to do here!</p>
+  <p style="text-align: center;">Hurray, nothing to do here!</p> <br/><br/><br/><br/><br/><br/>
 <% end %>
 <% deliverables.each do |deliverable| %>
     <div>
-     <div class="panel panel-default">
-       <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>">
-         <div class="col-md-10">
+     <div class="panel panel-default" style="margin-bottom: 10px;">
+       <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>" style="padding-top: 6px; padding-bottom: 6px;">
+
+         <div class="col-sm-1" style="padding-top: 16px; margin-left: 0;">
+           <%= image_tag("/images/show_deliverable_detail.png", :style => 'margin-left: -6px') %>
+         </div>
+
+         <div class="col-md-9" style="padding-top: 7px; border-right:thin solid #eee; border-left:thin solid #eee;">
            <% latest_version = deliverable.attachment_versions.first %>
-           <p style="margin-bottom: 1px; font-size:18px;">
+           <p style="margin-bottom: 0; font-size:17px;">
             <span>Task <%= deliverable.assignment.task_number %>: </span>
             <span style="color:#666">
               <%= (deliverable.is_team_deliverable ? 'Team ' : '') %><%= deliverable.owner_name %>
             </span>
            </p>
-           <p style="font-size:16px; margin-bottom: 1px;">
+           <p style="font-size:15px; margin-bottom:0; color:#d17702;">
+               <%= deliverable.assignment.name %>
                <% unless latest_version.attachment_file_name.nil? %>
-                   <%= link_to deliverable.assignment.name, latest_version.attachment.url %>
+                   <%= link_to image_tag("/images/download_deliverable.png", :size => '16x16', :alt => 'Download'), latest_version.attachment.url %>
                <% end %>
            </p>
-           <span style="font-size:11px;"><%= latest_version.submission_date %></span>
            <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
          </div>
 
@@ -65,13 +70,13 @@
            </div>
          </div>-->
 
-         <div class="col-md-2">
+         <div class="col-md-2" style="padding-top: 2px;">
            <% if deliverable.get_grade_status == :graded %>
-             <%= image_tag("/images/deliverables_graded.png") %>
+             <%= image_tag("/images/deliverables_graded.png", :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.get_grade_status == :drafted %>
-             <%= image_tag("/images/deliverables_drafted.png") %>
+             <%= image_tag("/images/deliverables_drafted.png", :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.get_grade_status == :ungraded %>
-               <%= image_tag("/images/deliverables_ungraded.png") %>
+               <%= image_tag("/images/deliverables_ungraded.png", :size => '54x54', :class => 'pull-right') %>
            <% end %>
          </div>
        </div>
