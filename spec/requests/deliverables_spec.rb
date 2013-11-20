@@ -186,9 +186,6 @@ describe "deliverables" do
     it "I should be able to view only my teams deliverables", :js => true do
       visit course_deliverables_path(@course)
 
-      #for debugging
-      save_and_open_page
-
       page.should have_content("Task 1")
       page.should have_content("Task 2")
       page.should_not have_content("Task 3")
