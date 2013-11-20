@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131023224716) do
+ActiveRecord::Schema.define(:version => 20131119222114) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20131023224716) do
     t.integer  "course_id"
     t.integer  "assignment_order"
     t.integer  "task_number"
-    t.boolean  "is_submittable",      :default => false
+    t.boolean  "is_submittable",      :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "short_name"
@@ -206,14 +206,14 @@ ActiveRecord::Schema.define(:version => 20131023224716) do
 
   create_table "grading_rules", :force => true do |t|
     t.string   "grade_type"
-    t.float    "A_grade_min"
-    t.float    "A_minus_grade_min"
-    t.float    "B_plus_grade_min"
-    t.float    "B_grade_min"
-    t.float    "B_minus_grade_min"
-    t.float    "C_plus_grade_min"
-    t.float    "C_grade_min"
-    t.float    "C_minus_grade_min"
+    t.float    "A_grade_min",                 :default => 94.0
+    t.float    "A_minus_grade_min",           :default => 90.0
+    t.float    "B_plus_grade_min",            :default => 87.0
+    t.float    "B_grade_min",                 :default => 83.0
+    t.float    "B_minus_grade_min",           :default => 80.0
+    t.float    "C_plus_grade_min",            :default => 78.0
+    t.float    "C_grade_min",                 :default => 74.0
+    t.float    "C_minus_grade_min",           :default => 70.0
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
