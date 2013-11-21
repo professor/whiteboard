@@ -1,6 +1,6 @@
 <h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <%= render :partial=>"layouts/grade_book_sub_menu" %>
-<!--<h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>-->
+<h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
 
 <!--<div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
@@ -116,3 +116,4 @@
 
 <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
 <br/>
+
