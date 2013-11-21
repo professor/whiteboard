@@ -263,7 +263,7 @@
     function showPopupWindow(that, deliverable_id){
         return function(data){
             console.log($(that).attr('class'));
-            var content = '<tr id="' + deliverable_id+'"><td colspan="5">' + $(data).find("#mainContent .content").html() + '</td></tr>';
+            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid orange;">' + $(data).find("#mainContent .content").html() + '</td></tr>';
             $(that).after(content); 
 
             var form_id = $("#"+deliverable_id + " form").attr("id");
