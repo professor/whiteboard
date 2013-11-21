@@ -12,7 +12,7 @@
 <% content_for :title, "Grading Queue - #{@course.name}" %>
 
 
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
+<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
 <%= render :partial => "layouts/grade_book_sub_menu" %>
 <h2>Submitted <%= nomenclature_assignment_or_deliverable %>s</h2>
 

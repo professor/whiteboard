@@ -1,4 +1,4 @@
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
+<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
 <h2>Presentations</h2>
 <div class="right_link"><%= link_to "Today's presentations", today_presentations_url %>
   <br/><%= link_to "All presentations", presentations_url %></div>

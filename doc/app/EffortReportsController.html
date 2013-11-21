@@ -634,7 +634,7 @@
   (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-ivar">@course</span>.<span class="ruby-identifier">course_length</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">week</span><span class="ruby-operator">|</span>
     <span class="ruby-ivar">@report_header</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;Wk #{week} &quot;</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-comment">#    @course.course_length.times do @report_header &lt;&lt; &quot;Wk  &quot;  end</span>
+  <span class="ruby-comment">#    CourseService.course_length(@course).times do @report_header &lt;&lt; &quot;Wk  &quot;  end</span>
 
   <span class="ruby-ivar">@report_lines</span> = []
 

@@ -183,7 +183,7 @@ class Deliverable < ActiveRecord::Base
     given_grade=Grade.get_grade(self.course.id, self.assignment_id, member_id)
     unless  given_grade.nil?
       feedback += "\nGrade earned for this "
-      feedback += self.course.nomenclature_assignment_or_deliverable
+      feedback += self.CourseService.nomenclature_assignment_or_deliverable(course)
       feedback += " is: "
       feedback += given_grade.score.to_s
       feedback+= " / "

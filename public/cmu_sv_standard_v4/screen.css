@@ -1112,6 +1112,18 @@ h2.newsHeadline {
         display: none;
 }
 
+a.back-to-top, a.back-to-top:visited{
+    text-decoration:none;
+    color:#FFFFFF;
+    position: fixed;
+    bottom: 5%; 
+    right: 5%;
+    background-color: #C0C0C0;
+    font-size: 11pt;
+    padding:3px 8px;
+    border-radius:5px;
+}
+
 
 .collapsible h2 {
 	padding-left: 16px;

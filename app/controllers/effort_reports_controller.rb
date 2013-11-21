@@ -77,7 +77,7 @@ class EffortReportsController < ApplicationController
 
     values_array = []
     course_id_to_value_array_hash.each do |course_id, values|
-      values_array << ([Course.find_by_id(course_id).short_or_full_name] + course_ranges_array(values))
+      values_array << ([CourseService.short_or_full_name(course_id)] + course_ranges_array(values))
     end
     return values_array
   end
@@ -397,19 +397,19 @@ class EffortReportsController < ApplicationController
     #given the course id, determine the start week and the end week of the semester
 
     @report_header = ["Team", "Person"]
-    (1..@course.course_length).each do |week|
+    (1..CourseService.course_length(@course)).each do |week|
       @report_header << "Wk #{week} "
     end
     #    @course.course_length.times do @report_header << "Wk  "  end
 
     @report_lines = []
 
-    blank_line = Array.new(@course.course_length, "-")
-    min_effort = Array.new(@course.course_length, 100)
-    max_effort = Array.new(@course.course_length, 0)
-    total_effort = Array.new(@course.course_length, 0)
-    count_effort = Array.new(@course.course_length, 0)
-    average_effort = Array.new(@course.course_length, 0)
+    blank_line = Array.new(CourseService.course_length(@course), "-")
+    min_effort = Array.new(CourseService.course_length(@course), 100)
+    max_effort = Array.new(CourseService.course_length(@course), 0)
+    total_effort = Array.new(CourseService.course_length(@course), 0)
+    count_effort = Array.new(CourseService.course_length(@course), 0)
+    average_effort = Array.new(CourseService.course_length(@course), 0)
 
 
     @course.teams.each do |team|
@@ -460,13 +460,13 @@ class EffortReportsController < ApplicationController
     person_effort_log_lines = EffortLog.find_by_sql(["SELECT effort_logs.week_number, effort_log_line_items.sum  FROM effort_log_line_items inner join effort_logs on effort_log_line_items.effort_log_id = effort_logs.id where effort_log_line_items.course_id = ? and effort_logs.user_id = ? order by effort_logs.week_number", course.id, person.id])
 
     person_result = []
-    @course.course_length.times do
+    CourseService.course_length(@course).times do
       person_result << 0
     end
     if !person_effort_log_lines.nil? && person_effort_log_lines.size != 0 then
       person_effort_log_lines.each do |line|
         week = line.week_number.to_i
-        if week >= @course.course_start && week <= @course.course_end then
+        if week >= @course.course_start && week <= CourseService.course_end(@course) then
           person_result[week - @course.course_start + 0] += line.sum.to_i #add two to skip the team and person label at the front of the array
         end
 
