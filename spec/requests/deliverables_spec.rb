@@ -186,9 +186,6 @@ describe "deliverables" do
     it "I should be able to view only my teams deliverables", :js => true do
       visit course_deliverables_path(@course)
 
-      #for debugging
-      save_and_open_page
-
       page.should have_content("Task 1")
       page.should have_content("Task 2")
       page.should_not have_content("Task 3")
@@ -229,7 +226,6 @@ describe "deliverables" do
       find("#deliverable_" + @deliverable1.id.to_s).click
       page.should have_content("Last graded by")
       page.should have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
-      page.should_not have_content("Not graded yet")
     end
 
     it "I should be able to see default message for last graded by in the grading page if not graded", :js => true do
@@ -237,7 +233,6 @@ describe "deliverables" do
       find("#deliverable_" + @deliverable2.id.to_s).click
       page.should have_content("Last graded by")
       page.should_not have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
-      page.should have_content("Not graded yet")
     end
 
     it "I should be able to see my last filter options after providing grade/feedback ", :js => true do

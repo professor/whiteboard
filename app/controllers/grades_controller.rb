@@ -80,7 +80,10 @@ class GradesController < ApplicationController
 
   def save
     grades = params["grades"]
-    Grade.give_grades(grades)
+    #Beg add Turing
+    #Grade.give_grades(grades)
+    Grade.give_grades(grades,current_user.id)
+    # End add Turing
     render :json => ({"message"=>"true"})
   end
 
