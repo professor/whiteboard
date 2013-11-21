@@ -17,16 +17,16 @@
         <th>Task Number</th>
     <% end %>
     <th><%= nomenclature_assignment_or_deliverable %></th>
-    <th>Advisor</th>
+    <th>Adviser</th>
     <th>Owner</th>
-    <th>Indicator</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
 
   <% deliverables.each do |deliverable| %>
       <% grade_status = deliverable['grading_status'] %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> grade_row">
+      <tr id='gr' class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= grade_status %> <%= deliverable['assignment_id']%> grade_row">
         <% unless skip_course_column %>
             <td><%= deliverable['course_name'] %></td>
         <% end %>
@@ -42,7 +42,7 @@
         <td><%= deliverable['owner_name'] %></td>
 
         <td>
-          <div id="<%=grade_status%>">&nbsp;</div>
+          <div id="<%=grade_status%>" style="float: left;">&nbsp;</div><%=grade_status.titlecase%>
         </td>
 
         <td>

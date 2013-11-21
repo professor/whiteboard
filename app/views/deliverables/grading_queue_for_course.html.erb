@@ -3,6 +3,11 @@
 <%= javascript_include_tag 'jquery.session' %>
 <%= stylesheet_link_tag 'jquery-ui.css' %>
 
+<style>
+  tr:hover {
+      background-color: #696969;
+  }
+</style>
 
 <% content_for :title, "Grading Queue - #{@course.name}" %>
 
@@ -15,11 +20,11 @@
 <div>
   <div id='filters'>
     <div id='filterBoxSearch'>
-      <input id='filterBoxOne' placeholder='Filter Grading Queue data by Owner / Advisor / Deliverable' maxlength='30' size='30' type='text'/>
+      <input id='filterBoxOne' placeholder='Filter Grading Queue data by Owner / Advisor / <%= nomenclature_assignment_or_deliverable %>' maxlength='30' size='30' type='text'/>
     </div>
 
     <div id='advanced_search_filters_div'>
-      <table style="width: 100%; border-color: transparent;">
+      <table style="width: 100%;" class="twikiTable cmu_table">
         <tr>
           <td>
             Teams: <br/>
@@ -42,13 +47,13 @@
           <td>
             Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
             <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_ungraded">Ungraded</label>
+                <label for="filter_ungraded">Ungraded</label><div id="ungraded" style="float: left;">&nbsp;</div>
             <br/>
             <input id="filter_drafted" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_drafted">Drafted</label>
+                <label for="filter_drafted">Drafted</label> <div id="drafted" style="float: left;">&nbsp;</div>
             <br/>
             <input id="filter_graded" class="filter_status" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_graded">Graded</label>
+                <label for="filter_graded">Graded</label> <div id="graded" style="float: left;">&nbsp;</div>
           </td>
         </tr>
       </table>
