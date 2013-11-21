@@ -78,15 +78,36 @@
 
   <!--<h2>Search</h2>-->
 
-  <div id='filterBox'>
-        <input id='filterInputBox' maxlength='30' size='30' type='text' placeholder="Search"/>
+  <div id='filterBox' style="width:100%;">
+    <div id = 'grading-search'>
+        <input id='gradingFilterInputBox' size='100%' type='text' placeholder="Search"/>
+    </div>
         <!--<%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %>-->
         <!--Search by:-->
         <!--<input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>-->
         <!--<input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>-->
-        <input id="show_individual" class="filter_status" type="checkbox" checked="true" /><label for="show_individual">Show Individual</label>
-        <input id="show_team" class="filter_status" type="checkbox" checked="true" /><label for="show_team">Show Team</label></n>
-        <input id="show_graded" class="filter_status" type="checkbox" /><label for="show_graded">Show Graded</label>
+    <div id = 'grading-filters'style="width:98%;">
+
+        <label for="show_individual">
+          <input id="show_individual" class="filter_status" type="checkbox" checked="true"/><span>Show Individuals</span>
+        </label>
+
+        <label for="show_team">
+          <input id="show_team" class="filter_status" type="checkbox" checked="true"/><span>Show Team</span>
+        </label>
+
+        <label for="show_graded">
+          <input id="show_graded" class="filter_status" type="checkbox"/><span>Show Graded</span>
+        </label>
+
+      <label for="show_ungraded">
+        <input id="show_ungraded" class="filter_status" type="checkbox"/><span>Hide Ungraded</span>
+      </label>
+
+      <label for="show_drafted">
+        <input id="show_drafted" class="filter_status" type="checkbox"/><span>Show Drafted</span>
+      </label>
+    </div>
       <!--<input id="show_drafted" class="filter_status" checked="true" type="checkbox"/><label for="show_drafted">Show Drafted</label>-->
   </div>
   <!--Filter by <%= nomenclature_assignment_or_deliverable %> status:-->
@@ -95,3 +116,4 @@
 
 <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
 <br/>
+
