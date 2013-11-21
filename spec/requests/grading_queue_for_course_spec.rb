@@ -123,7 +123,7 @@ describe 'When I visit the grading queue page,' do
       end
 
       it 'under a table that has a column that indicates the grading status' do
-        page.should have_css('#tab-1', :text => 'Indicator')
+        page.should have_css('#tab-1', :text => 'Status')
       end
     end
 
