@@ -8,7 +8,9 @@ class CoursesController < ApplicationController
   def index
     @all_courses = true
     @courses = Course.order("year DESC, semester DESC, number ASC").all
-    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+    @courses = @courses.sort_by { |c| -CourseService.sortable_value(@course) } # note the '-' is for desc sorting
+    #@courses_services = CourseServices.order("year DESC, semester DESC, number ASC").all
+    #@courses_services = @courses_services.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
     @registered_for_these_courses_during_current_semester = current_person.registered_for_these_courses_during_current_semester
     @teaching_these_courses_during_current_semester = current_person.teaching_these_courses_during_current_semester
@@ -130,6 +132,7 @@ class CoursesController < ApplicationController
     @last_offering = Course.last_offering(params[:course][:number])
     if @last_offering.nil?
       @course = Course.new(course_params)
+      #@course_services = CourseServices.new(course_params)
     else
       @course = @last_offering.copy_as_new_course
     end
@@ -229,6 +232,7 @@ class CoursesController < ApplicationController
 
   def export_to_csv
     @course = Course.find(params[:course_id])
+
     authorize! :team_formation, @course
 
     report = CSV.generate do |title|
@@ -239,7 +243,7 @@ class CoursesController < ApplicationController
         title << [user.human_name, user.formatted_teams(current_team), user.formatted_teams(user.past_teams), part_time, user.local_near_remote, user.masters_program + " " + user.masters_track, user.work_state, user.organization_name]
       end
     end
-    send_data(report, :type => 'text/csv;charset=iso-8859-1;', :filename => "past_teams_for_#{@course.display_course_name}.csv",
+    send_data(report, :type => 'text/csv;charset=iso-8859-1;', :filename => "past_teams_for_#{CourseService.display_course_name(@course)}.csv",
               :disposition => 'attachment', :encoding => 'utf8')
   end
 

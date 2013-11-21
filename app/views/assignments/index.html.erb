@@ -17,7 +17,7 @@
   }
 </script>
 
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
+<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
 <%=  render :partial=>"layouts/grade_book_sub_menu" %>
 <% customised_name = nomenclature_assignment_or_deliverable %>
 <h2>Listing <%= customised_name %></h2>
