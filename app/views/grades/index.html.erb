@@ -109,6 +109,7 @@
   }
 
   function post_drafted_and_send() {
+    if (!confirm("Do you want to finalize draft grades and send to students?")) return;  // Added by Team Turing
     post_grades('<%=post_drafted_and_send_path(@course)%>');
   }
 
@@ -206,9 +207,21 @@
         <tr style="background-color:white;">
           <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 6 %>">
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
+            <input type="checkbox" value="true" checked="checked"> Send a copy to myself <!-- Added by Team Turing -->
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
-            <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
-            <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
+            <!-- Begin Delete Team Turing -->
+            <!--<button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>-->
+            <!--<button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>-->
+            <!-- End Delete Team Turing -->
+            <!-- Begin Add Team Turing -->
+            <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Finalize and Email Students</button>
+            <div class="pull-right">
+              <div class="btn-group btn-group-sm" data-toggle="buttons">
+                <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
+              </div>
+
+            </div> <!-- /pull-right -->
+            <!-- End Add Team Turing -->
           </td>
         </tr>
       </tfoot>
