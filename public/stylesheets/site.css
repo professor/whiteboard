@@ -1078,7 +1078,9 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
     height: 18px;
 }
 
-tr#gr:hover{
-    background-color: blue;
+tr#gr:hover td{
+    background-color: #d3d3d3;
     cursor: pointer;
 }
+
+
