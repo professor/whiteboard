@@ -44,7 +44,7 @@
        <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>" style="padding-top: 6px; padding-bottom: 6px;">
 
          <div class="col-sm-1" style="padding-top: 16px; margin-left: 0;">
-           <%= image_tag("/images/show_deliverable_detail.png", :style => 'margin-left: -6px') %>
+           <%= image_tag("/images/show_deliverable_detail.png", :style => 'margin-left: -6px', :alt => 'View details') %>
          </div>
 
          <div class="col-md-9" style="padding-top: 7px; border-right:thin solid #eee; border-left:thin solid #eee;">
@@ -72,11 +72,11 @@
 
          <div class="col-md-2" style="padding-top: 2px;">
            <% if deliverable.get_grade_status == :graded %>
-             <%= image_tag("/images/deliverables_graded.png", :size => '54x54', :class => 'pull-right') %>
+             <%= image_tag("/images/deliverables_graded.png", :alt => 'Graded', :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.get_grade_status == :drafted %>
-             <%= image_tag("/images/deliverables_drafted.png", :size => '54x54', :class => 'pull-right') %>
+             <%= image_tag("/images/deliverables_drafted.png", :alt => 'Drafted', :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.get_grade_status == :ungraded %>
-               <%= image_tag("/images/deliverables_ungraded.png", :size => '54x54', :class => 'pull-right') %>
+               <%= image_tag("/images/deliverables_ungraded.png", :alt => 'Ungraded', :size => '54x54', :class => 'pull-right') %>
            <% end %>
          </div>
        </div>
