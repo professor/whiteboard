@@ -244,15 +244,22 @@
         var deliverable_id = url.match(/\/([0-9]+)/)[1];
         var that = $(this);
         if ($('tr#' + deliverable_id).is(':visible')){
-          $('tr#' + deliverable_id).remove();
+          if (isEdited()) {
+            var ans = confirm("Exists invalid score, are you sure to leave?");
+            if (ans) {
+              document.title = $("title").text().substr(9);
+              $('tr#' + deliverable_id).remove();
+              return;
+            }
+          } else $('tr#' + deliverable_id).remove();
         }
         else {
           var callback = showPopupWindow(that, deliverable_id);
-          $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {
-          }
-                                        );
+          $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {});
         }
     }
+
+    
 
     //to comment
     function showPopupWindow(that, deliverable_id){
@@ -299,4 +306,10 @@
         preparePageToMatchFilter();
 
     });
+
+    // Check if the grades or comments are edited
+    function isEdited(){
+      if ($("title").text().search("(Editing)") != -1) return true;
+      else return false;
+    }
 </script>

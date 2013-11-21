@@ -4,15 +4,30 @@
       alert("Invalid score, please check again");
       return false;
     } else {
+      edited();
       return true;
     }
+  }
+</script>
+
+<script>
+  function edited(){
+    if ($("title").text().search("(Editing)") != -1) return true;
+
+    var new_name = "(Editing)" + $("title").text();
+    document.title = new_name;
+  }
+
+  function isEdited(){
+    if ($("title").text().search("(Editing)") != -1) return true;
+    else return false;
   }
 </script>
 
 <div class='team_member_photo'>
   <div class="label">
     <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student, :name=>member.id, :value => ((grade_obj.nil?)?"":grade_obj.score), :size=> "3", :tabindex=>member.id, :onchange => "sendAlert($(this).val(), #{display_maximum_score})" %>
+      Grade <%= grade.text_field :_for_student, :name=>member.id, :value => ((grade_obj.nil?)?"":grade_obj.score), :size=> "3", :tabindex=>member.id, :onchange => "sendAlert($(this).val(), #{display_maximum_score}); edited();" %>
         /<%= display_maximum_score %>
     <% end %>
   </div>
