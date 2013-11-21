@@ -80,31 +80,31 @@ class Course < ActiveRecord::Base
 #  def to_param
 #    display_course_name
 #  end
+#Added
+#  def display_course_name
+#    mini_text = self.mini == "Both" ? "" : self.mini
+#    result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
+#    result.gsub(" ", "")
+#  end
 
-  def display_course_name
-    mini_text = self.mini == "Both" ? "" : self.mini
-    result = self.short_or_full_name + self.semester + mini_text + self.year.to_s
-    result.gsub(" ", "")
-  end
-
-  def display_for_course_page
+#  def display_for_course_page
 # Consider this
 #    "#{self.number} #{self.name} (#{self.short_name}) #{self.display_semester}"
-    "#{self.number} #{self.name} (#{self.short_name})"
-  end
-
+#    "#{self.number} #{self.name} (#{self.short_name})"
+#  end
+#Added
   def display_name
     return self.name if self.short_name.blank?
     return self.name + " (" + self.short_name + ")"
   end
 
-  def short_or_full_name
-    unless self.short_name.blank?
-      self.short_name
-    else
-      self.name
-    end
-  end
+#  def short_or_full_name
+#    unless self.short_name.blank?
+#      self.short_name
+#    else
+#      self.name
+#    end
+#  end
 
   def short_or_course_number
     unless self.short_name.blank?
@@ -113,11 +113,11 @@ class Course < ActiveRecord::Base
       self.number
     end
   end
-
-  def display_semester
-    mini_text = self.mini == "Both" ? "" : self.mini + " "
-    return self.semester + " " + mini_text + self.year.to_s
-  end
+#Added
+#  def display_semester
+#    mini_text = self.mini == "Both" ? "" : self.mini + " "
+#    return self.semester + " " + mini_text + self.year.to_s
+#  end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
   before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
@@ -159,48 +159,49 @@ class Course < ActiveRecord::Base
   end
 
 
-  def course_length
-    if self.mini == "Both" then
-      if semester == "Summer" then
-        return 12
-      elsif semester == "Fall" then
-        return 15
-      else
-        return 16
-      end
-    else
-      if semester == "Summer" then
-        return 6
-      else
-        return 7
-      end
-    end
-  end
+#  def course_length
+#   if self.mini == "Both" then
+#      if semester == "Summer" then
+#        return 12
+#      elsif semester == "Fall" then
+#        return 15
+#      else
+#        return 16
+#      end
+#    else
+#      if semester == "Summer" then
+#        return 6
+#      else
+#        return 7
+#      end
+#    end
+#  end
 
   # Return the week number of the year for the start of a course
-  def course_start
-    start = AcademicCalendar.semester_start(semester, year)
+#  def course_start
+#    start = AcademicCalendar.semester_start(semester, year)
 
-    if semester == "Spring" then
-      return self.mini == "B" ? start + 9 : start
-    end
-    if semester == "Summer" then
-      return self.mini == "B" ? start + 6 : start
-    end
-    if semester == "Fall" then
-      return self.mini == "B" ? start + 8 : start
-    end
-    return 0 #If the semester field isn't set
-  end
+#    if semester == "Spring" then
+#      return self.mini == "B" ? start + 9 : start
+#    end
+#    if semester == "Summer" then
+#      return self.mini == "B" ? start + 6 : start
+#    end
+#    if semester == "Fall" then
+#      return self.mini == "B" ? start + 8 : start
+#    end
+#    return 0 #If the semester field isn't set
+#  end
 
   # Return the week number of the year for the end of a course
-  def course_end
-    self.course_start + self.course_length - 1
-  end
+#Added
+#  def course_end
+#    self.course_start + self.course_length - 1
+#  end
 
-  def sortable_value
-    self.year.to_i * 100 + self.course_end
-  end
+#  def sortable_value
+#    self.year.to_i * 100 + self.course_end
+#  end
 
 
   def self.remind_about_effort_course_list
@@ -208,18 +209,18 @@ class Course < ActiveRecord::Base
     courses = courses + Course.where(:remind_about_effort => true, :year => Date.today.cwyear, :semester => AcademicCalendar.current_semester(), :mini => AcademicCalendar.current_mini).all
     return courses
   end
+#Added
+#  def auto_generated_twiki_url
+#    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{CourseService.short_or_full_name#(self.course_id)}/WebHome".delete(' ')
+#  end
 
-  def auto_generated_twiki_url
-    return "http://info.sv.cmu.edu/do/view/#{self.semester}#{self.year}/#{self.short_or_full_name}/WebHome".delete(' ')
-  end
+#  def auto_generated_peer_evaluation_date_start
+#    return Date.commercial(self.year, self.course_start + 6)
+#  end
 
-  def auto_generated_peer_evaluation_date_start
-    return Date.commercial(self.year, self.course_start + 6)
-  end
-
-  def auto_generated_peer_evaluation_date_end
-    return Date.commercial(self.year, self.course_start + 7)
-  end
+#  def auto_generated_peer_evaluation_date_end
+#    return Date.commercial(self.year, self.course_start + 7)
+#  end
 
   #When modifying validate_faculty or update_faculty, modify the same code in team.rb
   #Todo - move to a higher class or try as a mixin
@@ -253,7 +254,7 @@ class Course < ActiveRecord::Base
   def self.last_offering(course_number)
     #TODO: move this sorting into the database
     offerings = Course.where(:number => course_number).all
-    offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
+    offerings = offerings.sort_by { |c| -CourseService.sortable_value(c) } # note the '-' is for desc sorting
     return offerings.first
   end
 
@@ -302,21 +303,21 @@ class Course < ActiveRecord::Base
   end
 
 
-  def nomenclature_assignment_or_deliverable
-    if self.grading_rule.nil? || self.grading_rule.is_nomenclature_deliverable?
-      "deliverable"
-    else
-      "assignment"
-    end
-  end
+#  def nomenclature_assignment_or_deliverable
+#    if self.grading_rule.nil? || self.grading_rule.is_nomenclature_deliverable?
+#      "deliverable"
+#    else
+#      "assignment"
+#    end
+#  end
 
-  def grade_type_points_or_weights
-    if self.grading_rule.nil? || self.grading_rule.grade_type=="points"
-      "points"
-    else
-      "weights"
-    end
-  end
+#  def grade_type_points_or_weights
+#    if self.grading_rule.nil? || self.grading_rule.grade_type=="points"
+#      "points"
+#    else
+#      "weights"
+#    end
+#  end
 
   def registered_students_or_on_teams
     self.registered_students | self.teams.collect { |team| team.members }.flatten

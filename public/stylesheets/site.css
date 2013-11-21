@@ -1061,7 +1061,7 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
 }
 
 #ungraded {
-    background-color: indianred;
+    background-color: lightcoral;
     width: 18px;
     height: 18px;
 }
@@ -1073,7 +1073,12 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
 }
 
 #drafted {
-    background-color: coral;
+    background-color: yellow;
     width: 18px;
     height: 18px;
+}
+
+tr#gr:hover{
+    background-color: blue;
+    cursor: pointer;
 }

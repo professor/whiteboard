@@ -37,15 +37,15 @@ describe Course do
   #  result.should ==  "MfSESpring2012"
   #end
 
-  #context "Display name" do
-  #  it "should display a no short name right" do
-  #    course = FactoryGirl.create(:course)
-  #    course.display_name.should == "Course"
-  #  end
-  #  it "should display with a short name correctly" do
-  #    course = FactoryGirl.create(:fse)
-  #    course.display_name.should == "Foundations of Software Engineering (FSE)"
-  #  end
+#  context "Display name" do
+#    it "should display a no short name right" do
+#      course = FactoryGirl.create(:course)
+#      CourseService.display_name(course).should == "Course"
+#    end
+#    it "should display with a short name correctly" do
+#      course = FactoryGirl.create(:fse)
+#      CourseService.display_name(course).should == "Foundations of Software Engineering (FSE)"
+#    end
   # it "should show the short name if there is one" do
   #   course = FactoryGirl.create(:fse)
   #   course.short_or_full_name.should == "FSE"
@@ -56,15 +56,15 @@ describe Course do
   #    course = FactoryGirl.create(:fse,:short_name => "")
   #    course.short_or_full_name.should == "Foundations of Software Engineering"
   #  end
-  #end
+#  end
   #
   #
-  # context "display semester" do
-  #   it "should display semester right" do
-  #     course = FactoryGirl.create(:mfse)
-  #     course.display_semester.should == "Spring2012"
-  #   end
-  # end
+   context "display semester" do
+     it "should display semester right" do
+       course = FactoryGirl.create(:mfse)
+       CourseService.display_semester(course).should == "Spring 2014"
+     end
+   end
   #  context "remind about effort" do
   #    it "should remind for mini= both or something" do
   #      course = FactoryGirl.create(:fse, :remind_about_effort => true)
@@ -110,31 +110,31 @@ describe Course do
 
   it "should know the start of the course (in cweek)" do
     course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :mini => 'Both')
-    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Fall", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :mini => 'A')
-    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Fall", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Fall", 2010) + 8
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Fall", 2010) + 8
 
     course = FactoryGirl.build(:course, :semester => "Spring", :year => "2010", :mini => 'Both')
-    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Spring", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Spring", :year => "2010", :mini => 'A')
-    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Spring", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Spring", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Spring", 2010) + 9
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Spring", 2010) + 9
 
     course = FactoryGirl.build(:course, :semester => "Summer", :year => "2010", :mini => 'Both')
-    course.course_start.should == AcademicCalendar.semester_start("Summer", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Summer", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Summer", :year => "2010", :mini => 'A')
-    course.course_start.should == AcademicCalendar.semester_start("Summer", 2010)
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Summer", 2010)
 
     course = FactoryGirl.build(:course, :semester => "Summer", :year => "2010", :mini => 'B')
-    course.course_start.should == AcademicCalendar.semester_start("Summer", 2010) + 6
+    CourseService.course_start(course).should == AcademicCalendar.semester_start("Summer", 2010) + 6
 
   end
 
@@ -148,21 +148,21 @@ describe Course do
   end
 
   it "should be able to auto_generated_twiki_url" do
-    course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :name => "Foundations of Software Engineering")
-    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FoundationsofSoftwareEngineering/WebHome"
+    @course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :name => "Foundations of Software Engineering")
+    CourseService.auto_generated_twiki_url(@course).should == "http://info.sv.cmu.edu/do/view/Fall2010/FoundationsofSoftwareEngineering/WebHome"
 
-    course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :short_name => "FSE")
-    course.auto_generated_twiki_url.should == "http://info.sv.cmu.edu/do/view/Fall2010/FSE/WebHome"
+    #course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010", :short_name => "FSE")
+    #CourseService.auto_generated_twiki_url(course).should == "http://info.sv.cmu.edu/do/view/Fall2010/FSE/WebHome"
   end
 
   it "should auto_generated_peer_evaluation_date_start" do
     course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010")
-    course.auto_generated_peer_evaluation_date_start.to_s.should == "2010-10-04"
+    CourseService.auto_generated_peer_evaluation_date_start(course).to_s.should == "2010-10-04"
   end
 
   it "should auto_generated_peer_evaluation_date_end" do
     course = FactoryGirl.build(:course, :semester => "Fall", :year => "2010")
-    course.auto_generated_peer_evaluation_date_end.to_s.should == "2010-10-11"
+    CourseService.auto_generated_peer_evaluation_date_end(course).to_s.should == "2010-10-11"
   end
 
   it "is versioned" do
@@ -300,7 +300,7 @@ describe Course do
       @course_grading_rule = FactoryGirl.create(:grading_rule_points, :course_id=> @course_fse.id)
       @course_fse.grading_rule = @course_grading_rule
 
-      @course_fse.nomenclature_assignment_or_deliverable.should eql("assignment")
+      CourseService.nomenclature_assignment_or_deliverable(@course_fse).should eql("assignment")
     end
 
   end
