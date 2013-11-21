@@ -1083,4 +1083,7 @@ tr#gr:hover td{
     cursor: pointer;
 }
 
-
+tr#gr td#nw {
+    white-space: nowrap;
+    padding: 10px;
+}

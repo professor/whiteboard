@@ -37,15 +37,15 @@
 
         <td><%= deliverable['deliverable_name'] %></td>
 
-        <td><%= deliverable['advisor_name']%></td>
+        <td id="nw"><%= deliverable['advisor_name']%></td>
 
-        <td>Team&nbsp;<%= deliverable['owner_name'] %></td>
+        <td id="nw">Team&nbsp;<%= deliverable['owner_name'] %></td>
 
-        <td>
+        <td id="nw">
           <div id="<%=grade_status%>" style="float: left;">&nbsp;</div>&nbsp;<%=grade_status.titlecase%>
         </td>
 
-        <td>
+        <td id="nw">
           <% if  grade_status=='graded' %>
             <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'] , {:class => 'grading_action', :disabled => 'disabled'}%>
         <% else %>
