@@ -30,15 +30,12 @@
             <% end %>
         <% end %>
 
+
         <% if customised_name=="Deliverable" %>
-            <% if deliverable.assignment.nil? %> <!-- guard against old data -->
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            <% else %>
-                <td><%= deliverable.assignment.task_number %></td>
-                <td><%= deliverable.assignment.name %></td>
-            <% end %>
+            <td><%= deliverable.assignment.task_number %></td>
         <% end %>
+        <td><%= deliverable.assignment.name %></td>
+
         <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
 
         <!-- commented this out on 9/27/2013 to increase performance

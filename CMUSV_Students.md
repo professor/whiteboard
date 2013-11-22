@@ -10,22 +10,30 @@ CMU-SV Students
 1. read {file:doc/Git_Directions.rdoc Git Directions}
 1. $ cp config/database.default.yml config/database.yml -- see instructor for username and password
 1. $ cp config/morning_glory.mfse.yml config/morning_glory.yml -- no need to configure
-1. $ cp config/systems.default.yml config/systems.yml -- no need to configure
     1. create a config/amazon_s3.yml from (http://whiteboard.sv.cmu.edu/pages/amazon_s3.yml)
-1. create a config/google_apps.yml from (http://whiteboard.sv.cmu.edu/pages/google_apps.yml)
 1. set your environment variables (optional step, only needed if you plan to work on these features)
    1. (Mac OS X) read http://david-martinez.tumblr.com/post/28083831730/environment-variables-and-mountain-lion (if you set them in bash, then RubyMine doesn't pick them up.)
    1. Note: This requires a restart. 
    1. Set these environment variables
-      1. setenv LDAP_HOST anyhost
-      1. setenv LDAP_PORT 636
-      1. setenv LDAP_USERNAME anyone
-      1. setenv LDAP_PASSWORD anysecret
-      1. setenv LDAP_ENCRYPTED true
-      1. setenv SEARCHIFY_API_URL http://somethingrandom
-      1. setenv SEARCHIFY_INDEX cmux_dev
-      1. setenv SEARCHIFY_STAFF_INDEX cmu_staffx_dev
-      1. setenv WHITEBOARD_SALT "I am salt without any iodine"
+      1. see http://whiteboard.sv.cmu.edu/pages/environment_variables for values
+      1. LDAP_HOST 
+      1. LDAP_PORT 
+      1. LDAP_USERNAME
+      1. LDAP_PASSWORD
+      1. LDAP_ENCRYPTED 
+      1. SEARCHIFY_API_URL 
+      1. SEARCHIFY_INDEX 
+      1. SEARCHIFY_STAFF_INDEX 
+      1. WHITEBOARD_SALT
+      1. WHITEBOARD_GOOGLE_USERNAME
+      1. WHITEBOARD_GOOGLE_PASSWORD
+      1. WHITEBOARD_GOOGLE_DOMAIN
+      1. WHITEBOARD_S3_BUCKET
+      1. WHITEBOARD_S3_KEY
+      1. WHITEBOARD_S3_SECRET
+      1. WHITEBOARD_TWIKI_USERNAME
+      1. WHITEBOARD_TWIKI_PASSWORD
+      1. WHITEBOARD_TWIKI_URL
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
     * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
 1. install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails

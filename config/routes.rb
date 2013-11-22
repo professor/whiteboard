@@ -94,6 +94,7 @@ CMUEducation::Application.routes.draw do
     end
     member do
       get :configure
+      get :tool_support
     end
     resources :presentations, :only => [:new, :edit, :create, :update]
   end
