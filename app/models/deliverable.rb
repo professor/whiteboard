@@ -50,7 +50,9 @@ class Deliverable < ActiveRecord::Base
 
   has_attached_file :feedback,
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
                     :path => "deliverables/:course_year/:course_name/:random_hash/feedback/:id/:filename"
 
   default_scope :order => "created_at DESC"

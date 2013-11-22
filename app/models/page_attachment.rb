@@ -27,7 +27,9 @@ class PageAttachment < ActiveRecord::Base
 
   has_attached_file :page_attachment,
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
                     :path => "page_attachments/:page_id/:random_hash/:id/:filename"
 
   versioned
