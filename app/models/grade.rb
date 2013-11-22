@@ -122,10 +122,14 @@ class Grade < ActiveRecord::Base
   end
 
   # To assign grades for to multiple students.
-  def self.give_grades(grades)
+  # Beg Chg Turing
+  #def self.give_grades(grades)
+  def self.give_grades(grades,last_graded_by= nil)
+  #End Chg Turing
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
-      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible])
+     # self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible])
+      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible],last_graded_by)
     end
   end
 

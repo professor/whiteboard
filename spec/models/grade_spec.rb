@@ -195,6 +195,22 @@ describe Grade do
 
       Grade.find_by_assignment_id_and_student_id(@assignment_1.id, @student_sam.id).last_graded_by.should eq(faculty)
     end
+
+    it "should be able to update multiple grades with last graded by in grade book" do
+      faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      faculty = faculty_frank.id
+      grades = []
+
+      [@assignment_1, @assignment_2].each do |assignment|
+        grades << {:course_id=>@course_fse.id, :assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
+      end
+
+      Grade.give_grades(grades,faculty)
+      grades.each do |grade_entry|
+        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).last_graded_by.should eq(faculty)
+      end
+    end
+
   end
 
 # End Add Turing Ira
