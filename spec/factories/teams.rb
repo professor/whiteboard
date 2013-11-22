@@ -33,8 +33,6 @@ FactoryGirl.define do
 
     association :course, :factory => :fse
 
-    after(:create) { |team| FactoryGirl.create(:student_john_user , :teams => [team])}
-
   end
 
 

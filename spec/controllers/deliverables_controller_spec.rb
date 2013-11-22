@@ -69,9 +69,9 @@ describe DeliverablesController do
       #@team_turing_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
       #@team_test_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
 
-      @deliverable_turing_ungraded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_ungraded)
-      @deliverable_turing_drafted = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_drafted)
-      @deliverable_turing_graded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_graded)
+      @deliverable_turing_ungraded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_ungraded, :creator => @student_sam)
+      @deliverable_turing_drafted = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_drafted, :creator => @student_sam)
+      @deliverable_turing_graded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_graded, :creator => @student_sam)
       @deliverable_test_ungraded = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment_ungraded)
 
       @da_turing_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_ungraded, :submitter => @student_sam)
@@ -108,8 +108,9 @@ describe DeliverablesController do
         get :grading_queue_for_course, :course_id =>  @course.id , :faculty_id =>@faculty_frank.id
         @expected_deliverable = assigns(:deliverables)
 
-        @expected_deliverable.should have(1).items
+        @expected_deliverable.should have(2).items
         @expected_deliverable[0].should == @deliverable_turing_ungraded
+        @expected_deliverable[1].should == @deliverable_turing_drafted
       end
 
       #default behavior

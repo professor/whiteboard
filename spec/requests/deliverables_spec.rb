@@ -140,25 +140,23 @@ describe "deliverables" do
       @faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
                                                :user_id => @faculty.id)
       @team_deliverable.course = @course
-
-      #@course_fse = FactoryGirl.create(:fse, faculty: [@faculty])
-      #@course_ise = FactoryGirl.create(:ise, faculty: [@faculty])
       @student_sam = FactoryGirl.create(:student_sam)
-      #@student_sally = FactoryGirl.create(:student_sally)
-
 
       @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
+      @team_turing.members = [@student_sam]
+
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
       @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
 
       @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
       @assignment2 = FactoryGirl.create(:assignment_2,:course => @course)
 
-      @grade1 = FactoryGirl.create(:last_graded_visible, :course => @course,:assignment => @assignment1, :last_graded_by => @faculty.id, :student =>@student_sam)
+      @grade1 = FactoryGirl.create(:grade_invisible, :course => @course,:assignment => @assignment1, :last_graded_by => @faculty.id, :student =>@student_sam)
 
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing, :assignment => @assignment1, :attachment_versions => [])
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team => @team_turing,:assignment => @assignment2, :attachment_versions => [])
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing, :assignment => @assignment1, :attachment_versions => [], :creator => @student_sam)
+      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team => @team_turing,:assignment => @assignment2, :attachment_versions => [],  :creator => @student_sam)
       @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1, :attachment_versions => [])
+
 
       @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
       @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
@@ -208,13 +206,12 @@ describe "deliverables" do
 
     it "I should be able to click deliverable to open accordion and check content of grading page", :js => true do
       visit course_deliverables_path(@course)
-
       find("#deliverable_" + @deliverable1.id.to_s).click
     #  page.should have_content("Attachment Version History")
       page.should have_content("History")
       page.should have_content("Professor's Notes")
       page.should have_content("My first deliverable")
-      page.should have_content("Last graded by")
+      page.should have_content("Graded by")
       page.should have_content("Send a copy to myself")
       page.should have_button("Save as Draft")
       page.should have_button("Finalize and Email")
@@ -224,14 +221,14 @@ describe "deliverables" do
     it "I should be able to see who last graded in the grading page", :js => true do
       visit course_deliverables_path(@course)
       find("#deliverable_" + @deliverable1.id.to_s).click
-      page.should have_content("Last graded by")
+      page.should have_content("Graded by")
       page.should have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
     end
 
     it "I should be able to see default message for last graded by in the grading page if not graded", :js => true do
       visit course_deliverables_path(@course)
       find("#deliverable_" + @deliverable2.id.to_s).click
-      page.should have_content("Last graded by")
+      page.should have_content("Graded by")
       page.should_not have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
     end
 

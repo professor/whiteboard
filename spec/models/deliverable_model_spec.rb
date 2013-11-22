@@ -209,8 +209,8 @@ describe Deliverable do
       @assignment1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
       @assignment2 = FactoryGirl.create(:assignment_1,:course => @course_fse)
 
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1)
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment2)
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
+      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment2, :creator => @student_sam)
       @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course_fse, :team => @team_test,:assignment => @assignment1)
 
       @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
@@ -265,7 +265,7 @@ describe Deliverable do
       @assignment2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
 
       # Team deliverable
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1)
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
       # Individual deliverable 1
       @deliverable2 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
       # Individual deliverable 2
