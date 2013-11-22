@@ -47,21 +47,14 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.where(:course_id => @course.id).all
 
     elsif @course.faculty.include?(current_user)
-      #@default_deliverables = default_deliverables(params[:course_id], current_user.id)
-      #@filtered_deliverables = @default_deliverables
+
+      # Get all deliverables for this team/student or all students
       @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
 
-      #if @last_filter_options == nil
-      #  @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
-      #else
-      #  @temp = []
-      #  @last_filter_options.each do  |option|
-      #      @temp.concat(@deliverables.select { |deliverable| deliverable.get_grade_status == option[0] if option[1] == "1"})
-      #  end
-      #  @deliverables = @temp
-      #end
-      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded }
+      # Select all that are ungraded or drafted
+      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded || deliverable.get_grade_status == :drafted }
 
+      # Sort by task number
       @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
 
     else

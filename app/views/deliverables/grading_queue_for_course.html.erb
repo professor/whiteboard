@@ -28,25 +28,22 @@
       });
 
       $(document).on('click', '.ajax', function() {
-          //$(this).find('#loading_indicator').show();
           var deliverable = $(this);
           $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
                 function(response){
-                    //console.log(response)
                     deliverable.siblings().html(response);
-                    //alert("started!");
                 }
           )
-          //.always(function(data) {
-          //    deliverable.find('#loading_indicator').hide();
-          //});
           $(this).removeClass('ajax');
       });
 
       $(document).on('click', '.deliverable', function() {
-          //console.log("Correct toggle example:");
-          //console.log($(this));
           $(this).siblings().slideToggle();
+
+          // Figure out the toggle state to show + or - sign
+          var toggle_state = $(this).parent().find('#toggle_img').attr('src');
+          toggle_state = toggle_state.substr(0, 12) == '/images/show' ? '/images/hide_deliverable_detail.png' : '/images/show_deliverable_detail.png';
+          $(this).parent().find('#toggle_img').attr('src', toggle_state);
       });
 
   </script>
@@ -193,8 +190,8 @@
               <label class="btn btn-default active" onclick="filter_ungraded();">
                 <%= f.check_box :ungraded, { checked: true } %> Ungraded
               </label>
-              <label class="btn btn-default" onclick="filter_drafted();">
-                <%= f.check_box :drafted %> Drafted
+              <label class="btn btn-default active" onclick="filter_drafted();">
+                <%= f.check_box :drafted, { checked: true } %> Drafted
               </label>
               <label class="btn btn-default" id="filter_options_graded_label" onclick="filter_graded();">
                 <%= f.check_box :graded %> Graded

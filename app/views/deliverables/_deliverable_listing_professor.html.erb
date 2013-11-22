@@ -44,7 +44,7 @@
        <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>" style="padding-top: 6px; padding-bottom: 6px;">
 
          <div class="col-sm-1" style="padding-top: 16px; margin-left: 0;">
-           <%= image_tag("/images/show_deliverable_detail.png", :style => 'margin-left: -6px', :alt => 'View details') %>
+           <%= image_tag("/images/show_deliverable_detail.png", :size => '28x28', :style => 'margin-left: -6px', :alt => 'View details', :id => 'toggle_img') %>
          </div>
 
          <div class="col-md-9" style="padding-top: 7px; border-right:thin solid #eee; border-left:thin solid #eee;">
@@ -63,12 +63,6 @@
            </p>
            <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
          </div>
-
-         <!--<div class="col-md-2">
-           <div class="loading_indicator">
-             <%#= image_tag("/images/ajax-loader.gif", :id => "loading_indicator", :style => "display:none") %>
-           </div>
-         </div>-->
 
          <div class="col-md-2" style="padding-top: 2px;">
            <% if deliverable.get_grade_status == :graded %>
