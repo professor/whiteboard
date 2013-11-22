@@ -57,6 +57,97 @@ class Deliverable < ActiveRecord::Base
 
   after_save :inaccurate_course_and_assignment_check
 
+
+  def self.get_deliverables(course_id, faculty_id, options = nil)
+
+    sql_template = "SELECT d.id FROM deliverables d LEFT JOIN teams t ON d.team_id = t.id LEFT JOIN team_assignments ta ON t.id = ta.team_id LEFT JOIN users u1 ON d.creator_id = u1.id LEFT JOIN users u2 ON ta.user_id = u2.id"
+
+    where_clause_course = " WHERE d.course_id = ?"
+
+    where_clause_team_deliverable = " AND d.team_id IS NOT NULL AND t.primary_faculty_id = ?"
+
+    where_clause_individual_deliverable = " AND d.team_id IS NULL AND d.creator_id IN (SELECT inner_ta.user_id FROM teams inner_t, team_assignments inner_ta WHERE inner_t.id = inner_ta.team_id AND inner_t.primary_faculty_id = ?)"
+
+    where_clause_search = " AND (u1.first_name ILIKE ? OR u1.last_name ILIKE ? OR u1.human_name ILIKE ? OR u1.email ILIKE ? OR u2.first_name ILIKE ? OR u2.last_name ILIKE ? OR u2.human_name ILIKE ? OR u2.email ILIKE ? OR t.name ILIKE ?)"
+
+    queue = []
+
+    # Test setup
+    #options = {:is_my_team => 1, :search_string => "David"}
+
+    # 1. Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
+    # 2. If there are no teams in the course, and if this deliverable is an individual deliverable,
+    # show deliverables for individuals who are in the faculty's teams only.
+    # 3. Otherwise, show every deliverable
+
+    course_has_teams = Team.where(:course_id => course_id).any?
+
+    has_search_string = !options[:search_string].nil?
+    selected_my_team = (options[:is_my_team] == 1)
+
+    if has_search_string
+      search_string = options[:search_string]
+    end
+
+    if !course_has_teams
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_search
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
+      end
+
+    elsif selected_my_team
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_team_deliverable + where_clause_search
+        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+
+        sql = sql_template + where_clause_course + where_clause_individual_deliverable + where_clause_search
+        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course + where_clause_team_deliverable
+        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id]).uniq
+
+        sql = sql_template + where_clause_course + where_clause_individual_deliverable
+        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id]).uniq
+      end
+
+      deliverable_ids = []
+
+      team_deliverable_ids.each do |team_deliverable_id|
+        deliverable_ids << team_deliverable_id
+      end
+
+      individual_deliverable_ids.each do |individual_deliverable_id|
+        deliverable_ids << individual_deliverable_id
+      end
+
+    else
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_search
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
+      end
+
+    end
+
+    deliverables = []
+
+    deliverable_ids.each do |deliverable_id|
+      deliverables << Deliverable.find(deliverable_id)
+    end
+
+    return deliverables
+
+  end
+
+
   def self.grading_queue_display(course_id, faculty_id, options = nil)
 
     # Default grading queue filters

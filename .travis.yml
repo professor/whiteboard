@@ -2,6 +2,10 @@ language: ruby
 
 rvm: 1.9.2
 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 before_script:
   - "psql -c 'create database cmu_education_test;' -U postgres >/dev/null"
   - cp config/amazon_s3.default.yml config/amazon_s3.yml

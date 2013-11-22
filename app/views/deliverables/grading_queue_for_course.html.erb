@@ -122,6 +122,10 @@
               $("#filter_options_assignment_id").val($(this).attr("id"));
               $('#filter_options_new').submit();
           });
+
+          $('#search_box').keyup(function(){
+              $('#filter_options_new').submit();
+          });
       });
 
       var filter_graded = function() {
@@ -141,6 +145,16 @@
           $('#filter_options_new').submit();
       };
 
+
+      // TODO David will implement the search box keyup listener
+      $('#search_box').keyup(function(){
+          $('#filter_options_new').submit();
+      });
+
+      // TODO David will implement the function that saves selected options to session
+      function setSessionInfo() {
+
+      }
   </script>
   <!-- End Team Turing -->
 
@@ -172,16 +186,17 @@
       <%= image_tag("/images/ajax-loader.gif", :class => "ajax-loader") %>
     </div>
 
-    <!-- Search -->
-    <div class="row">
-      <input type="text" class="form-control" placeholder="Search for student, team, Andrew ID...">
-    </div>
-    <!-- /Search -->
-
-    <hr>
-
     <!-- Filters -->
-    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]}, :remote => true do |f| %>
+    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "get_deliverables", :id => params[:id]}, :remote => true do |f| %>
+    <%#= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]}, :remote => true do |f| %>
+        <!-- Search -->
+        <div class="row">
+          <%= f.text_field :search_box, { :id => "search_box", :class => "form-control", :placeholder => "Search for student, team, Andrew ID..." } %>
+        </div>
+        <!-- /Search -->
+
+        <hr>
+
         <div class="row">
 
           <div class="pull-left">
