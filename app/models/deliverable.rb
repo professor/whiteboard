@@ -305,7 +305,8 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To send the feedback to the each student along with the score received respectively.
-  def send_feedback_to_student(member_id, member_email, url)
+  #def send_feedback_to_student(member_id, member_email, url)  # Delete Team Turing
+  def send_feedback_to_student(member_id, member_email, url, other_email=nil)  # Add Team Turing
     feedback = "Feedback has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
       feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
@@ -328,7 +329,16 @@ class Deliverable < ActiveRecord::Base
       feedback += "\n"
     end
 
-    options = {:to => member_email,
+    # Begin Add Team Turing
+    if other_email == nil
+      recipient_list = member_email
+    else
+      recipient_list = [member_email, other_email]
+    end
+    # End Add Team Turing
+
+    #options = {:to => member_email,      # Delete Team Turing
+    options = {:to => recipient_list,     # Add Team Turing
                :subject => "Feedback for " + self.course.name,
                :message => feedback,
                :url_label => "View this deliverable",
@@ -337,16 +347,31 @@ class Deliverable < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
+  # Begin Delete Team Turing
+  ## To send the feedback in the email back to the students.
+  #def send_deliverable_feedback_email(url)
+  #  if self.is_team_deliverable?
+  #    self.team.members.each do |member|
+  #      send_feedback_to_student(member.id, member.email, url)
+  #    end
+  #  else
+  #    send_feedback_to_student(self.creator_id, self.creator.email, url)
+  #  end
+  #end
+  # End Delete Team Turing
+
+  # Begin Add Team Turing
   # To send the feedback in the email back to the students.
-  def send_deliverable_feedback_email(url)
+  def send_deliverable_feedback_email(url, other_email=nil)
     if self.is_team_deliverable?
       self.team.members.each do |member|
-        send_feedback_to_student(member.id, member.email, url)
+        send_feedback_to_student(member.id, member.email, url, other_email)
       end
     else
-      send_feedback_to_student(self.creator_id, self.creator.email, url)
+      send_feedback_to_student(self.creator_id, self.creator.email, url, other_email)
     end
   end
+  # End Add Team Turing
 
   # To check if the current user can change/edit the deliverable
   def editable?(current_user)

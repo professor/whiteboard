@@ -134,25 +134,25 @@ class Grade < ActiveRecord::Base
   end
 
   # To notify students about the grade that were drafted by professor till now.
-  def self.mail_drafted_grade(course_id, hostname)
+  def self.mail_drafted_grade(course_id, hostname, other_email=nil)
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
     draft_grades.each do |grade|
       grade.is_student_visible = true
       grade.save
       unless (grade.score.blank?)
-        grade.send_feedback_to_student(hostname)
+        grade.send_feedback_to_student(hostname, other_email)
       end
     end
   end
 
   # To send the final grade mail to students
-  def self.mail_final_grade(course_id, hostname)
+  def self.mail_final_grade(course_id, hostname, other_email=nil)
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
     final_grades.each do |grade|
       unless (grade.score.blank?)
         grade.is_student_visible = true
         grade.save
-        grade.send_feedback_to_student(hostname)
+        grade.send_feedback_to_student(hostname, other_email)
       end
     end
   end
@@ -247,14 +247,23 @@ class Grade < ActiveRecord::Base
   end
 
   # To send the feedback to the student.
-  def send_feedback_to_student(hostname)
+  #def send_feedback_to_student(hostname) # Delete Team Turing
+  def send_feedback_to_student(hostname, other_email=nil)  # Add Team Turing
     if assignment_id > 0
       feedback = make_feedback_for_one_assignment
     else
       feedback = make_feedback_for_final_grade
     end
     url = hostname + "/courses/#{self.course.id}/student_grades"
-    options = {:to => self.student.email,
+    # Begin Add Team Turing
+    if other_email == nil
+      recipient_list = self.student.email
+    else
+      recipient_list = [self.student.email, other_email]
+    end
+    # End Add Team Turing
+    #options = {:to => self.student.email,       # Delete Team Turing
+    options = {:to => recipient_list,            # Add Team Turing
                :subject => "Grade for " + self.course.name,
                :message => feedback,
                :url_label => "Click here to view grade",

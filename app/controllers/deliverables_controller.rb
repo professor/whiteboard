@@ -404,9 +404,16 @@ class DeliverablesController < ApplicationController
     #flash[:error] = @deliverable.update_grade(params, is_student_visible)
     flash[:error] = @deliverable.update_grade(params, is_student_visible, current_user.id)
     # End chg Turing Ira
+    # Begin Add Team Turing
+    other_email = nil
+    if params[:send_copy_to_myself] == "1"
+      other_email = current_user.email
+    end
+    # End Add Team Turing
     if @deliverable.update_feedback_and_notes(params[:deliverable])
       if is_student_visible==true
-        @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
+        #@deliverable.send_deliverable_feedback_email(url_for(@deliverable))  # Delete Team Turing
+        @deliverable.send_deliverable_feedback_email(url_for(@deliverable), other_email)   # Add Team Turing
       end
     else
       flash[:error] << 'Unable to save feedback'

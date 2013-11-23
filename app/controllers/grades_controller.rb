@@ -74,7 +74,14 @@ class GradesController < ApplicationController
 
   def post_drafted_and_send #and send email
     grades = params["grades"]
-    Grade.mail_drafted_grade(@course.id, request.host_with_port )
+    # Begin Add Team Turing
+    other_email = nil
+    if params[:send_copy_to_myself] == "1"
+      other_email = current_user.email
+    end
+    Grade.mail_drafted_grade(@course.id, request.host_with_port, other_email)
+    # End Add Team Turing
+    #Grade.mail_drafted_grade(@course.id, request.host_with_port ) # Delete Team Turing
     render :json => ({"message"=>"true"})
   end
 
@@ -89,7 +96,14 @@ class GradesController < ApplicationController
 
   def send_final_grade
     grades = params["grades"]
-    Grade.mail_final_grade(@course.id, request.host_with_port)
+    # Begin Add Team Turing
+    other_email = nil
+    if params[:send_copy_to_myself] == "1"
+      other_email = current_user.email
+    end
+    Grade.mail_final_grade(@course.id, request.host_with_port, other_email)
+    # End Add Team Turing
+    #Grade.mail_final_grade(@course.id, request.host_with_port)  # Delete Team Turing
     render :json => ({"message"=>"true"})
   end
 
