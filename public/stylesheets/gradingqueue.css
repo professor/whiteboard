@@ -4,7 +4,6 @@
 
 #grading-filters{
     margin:5px;
-    background-color:#EFEFEF;
     border-radius:4px;
     overflow:auto;
     float:left;
@@ -12,7 +11,8 @@
 
 #grading-filters label {
     float:left;
-    width:9.8em;
+    width:9.4em;
+    background-color:#EFEFEF;
     border:2px solid #D0D0D0;
 }
 
@@ -20,6 +20,7 @@
     text-align:center;
     padding:10px 0px;
     display:block;
+    background-color:#EFEFEF;
 }
 
 #grading-filters label input {
@@ -36,4 +37,17 @@
 #grading-search input {
     width:663px;
     height:20px;
+}
+
+#other-grading-filters label {
+    float:right;
+    width:9.0em;
+    border:2px solid #D0D0D0;
+}
+
+#other_grading_filters label span {
+    float: right;
+    text-align:right;
+    padding:10px 0px;
+    display:block;
 }

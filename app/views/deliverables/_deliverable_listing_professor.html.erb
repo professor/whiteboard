@@ -148,6 +148,87 @@
             });
         }
     });
+
+
+//    function toggleClassAndColor() {
+//        console.log("Inside Toggle");
+////        $(this)
+////        .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active')
+//        if ($(this).hasClass('active'))
+//            $(this).css({"background-color": "#7F0E00"});
+//        else
+//            $(this).css({"background-color": "#EFEFEF"});
+//    }
+
+    // Action on "Graded Deliverables" button
+    $("#graded_del").on("click", function(event){
+        event.stopPropagation();
+        $(this)
+                .text($(this).text() == 'Show Graded' ? 'Hide Graded' : 'Show Graded')
+                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#7F0E00"});
+        else
+            $(this).css({"background-color": "#EFEFEF"});
+    });
+
+    // Action on "Ungraded Deliverables" button
+    $("#ungraded_del").on("click", function(){
+        $(this)
+                .text($(this).text() == 'Show Ungraded' ? 'Hide Ungraded' : 'Show Ungraded')
+                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#7F0E00"});
+        else
+            $(this).css({"background-color": "#EFEFEF"});
+    });
+
+    // Action on "Drafted Deliverables" button
+    $("#drafted_del").on("click", function(){
+        $(this)
+                .text($(this).text() == 'Show Drafted' ? 'Hide Drafted' : 'Show Drafted')
+                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#7F0E00"});
+        else
+            $(this).css({"background-color": "#EFEFEF"});
+    });
+
+    // Action on "Individual Deliverables" button
+    $("#ind_del").on("click", function(){
+        $(this)
+                .text($(this).text() == 'Show Individuals' ? 'Hide Individuals' : 'Show Individuals')
+                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#7F0E00"});
+        else
+            $(this).css({"background-color": "#EFEFEF"});
+    });
+
+    // Action on "Team Deliverables" button
+    $("#team_del").on("click", function(){
+        $(this)
+                .text($(this).text() == 'Show Teams' ? 'Hide Teams' : 'Show Teams')
+                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#7F0E00"});
+        else
+            $(this).css({"background-color": "#EFEFEF"});
+    });
+
+    // Mouse-over event for all buttons
+    $("span").on("mouseenter",function(){
+        if ($(this).hasClass('active'))
+            $(this).css({"background-color": "#8F1E33"});
+        else
+            $(this).css({"background-color": "#E1E1E1"});
+    }).on("mouseleave",function(){
+                if ($(this).hasClass('active'))
+                    $(this).css({"background-color": "#7F0E00"});
+                else
+                    $(this).css({"background-color": "#EFEFEF"});
+            });
+
 </script>
 
 <style>
