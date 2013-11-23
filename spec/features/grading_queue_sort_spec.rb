@@ -1,7 +1,7 @@
 require 'spec_helper'
 include IntegrationSpecHelper
 
-describe 'Grading queue', :js => true do
+describe 'Grading queue', :skip_on_build_machine => true, :js => true do
 
   before :each do
     @faculty_fagan=FactoryGirl.create(:faculty_fagan_user)
