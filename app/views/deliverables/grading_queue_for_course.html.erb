@@ -1,6 +1,7 @@
 <h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <%= render :partial=>"layouts/grade_book_sub_menu" %>
-<h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
+
+<h2 style="font-size: 17pt; text-align: left;">Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
 
 <!--<div class="rounded staff">
   <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
@@ -89,24 +90,32 @@
     <div id = 'grading-filters'style="width:98%;">
 
         <label for="show_individual">
-          <input id="show_individual" class="filter_status" type="checkbox" checked="true"/><span>Show Individuals</span>
+          <input id="show_individual" class="filter_status" type="checkbox" checked="true"/>
+            <span id="ind_del" class="active">Hide Individuals</span>
         </label>
 
         <label for="show_team">
-          <input id="show_team" class="filter_status" type="checkbox" checked="true"/><span>Show Team</span>
+          <input id="show_team" class="filter_status" type="checkbox" checked="true"/>
+            <span id="team_del" class="active">Hide Teams</span>
+        </label>
+
+      <div id = 'other-grading-filters'>
+        <label for="show_drafted">
+          <input id="show_drafted" class="filter_status" type="checkbox"/>
+            <span id="drafted_del" class="inactive">Show Drafted</span>
+        </label>
+
+        <label for="show_ungraded">
+          <input id="show_ungraded" class="filter_status" type="checkbox"/>
+            <span id="ungraded_del" class="inactive">Show Ungraded</span>
         </label>
 
         <label for="show_graded">
-          <input id="show_graded" class="filter_status" type="checkbox"/><span>Show Graded</span>
+          <input id="show_graded" class="filter_status" type="checkbox"/>
+            <span id="graded_del" class="inactive">Show Graded</span>
         </label>
 
-      <label for="show_ungraded">
-        <input id="show_ungraded" class="filter_status" type="checkbox"/><span>Hide Ungraded</span>
-      </label>
-
-      <label for="show_drafted">
-        <input id="show_drafted" class="filter_status" type="checkbox"/><span>Show Drafted</span>
-      </label>
+      </div>
     </div>
       <!--<input id="show_drafted" class="filter_status" checked="true" type="checkbox"/><label for="show_drafted">Show Drafted</label>-->
   </div>
