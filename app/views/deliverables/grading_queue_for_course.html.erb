@@ -14,7 +14,6 @@
 
 <h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
 <%= render :partial => "layouts/grade_book_sub_menu" %>
-<h2>Submitted <%= nomenclature_assignment_or_deliverable %>s</h2>
 
 
 <div>
@@ -263,7 +262,7 @@
     function showPopupWindow(that, deliverable_id){
         return function(data){
             console.log($(that).attr('class'));
-            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid orange;">' + $(data).find("#mainContent .content").html() + '</td></tr>';
+            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid lightblue;">' + $(data).find("#contentToGrade").html() + '</td></tr>';
             $(that).after(content); 
 
             var form_id = $("#"+deliverable_id + " form").attr("id");
