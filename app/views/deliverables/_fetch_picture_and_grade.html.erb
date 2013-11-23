@@ -1,16 +1,4 @@
 <script>
-  function sendAlert(score, max) {
-    if (isNaN(parseFloat(score)) || !isFinite(score) || score > max) {
-      alert("Invalid score, please check again");
-      return false;
-    } else {
-      edited();
-      return true;
-    }
-  }
-</script>
-
-<script>
   function edited(){
     if ($("title").text().search("(Editing)") != -1) return true;
 
@@ -27,7 +15,7 @@
 <div class='team_member_photo'>
   <div class="label">
     <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student, :name=>member.id, :value => ((grade_obj.nil?)?"":grade_obj.score), :size=> "3", :tabindex=>member.id, :onchange => "sendAlert($(this).val(), #{display_maximum_score}); edited();" %>
+      Grade <%= grade.text_field :_for_student, :name=>member.id, :value => ((grade_obj.nil?)?"":grade_obj.score), :size=> "3", :tabindex=>member.id, :onchange => "edited();", :title =>"You can give score that exceeds the maximum score as an excellence prize" %>
         /<%= display_maximum_score %>
     <% end %>
   </div>

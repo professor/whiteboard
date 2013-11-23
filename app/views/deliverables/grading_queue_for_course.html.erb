@@ -243,7 +243,7 @@
         var that = $(this);
         if ($('tr#' + deliverable_id).is(':visible')){
           if (isEdited()) {
-            var ans = confirm("Exists invalid score, are you sure to leave?");
+            var ans = confirm("Exists unsaved changes, are you sure to leave?");
             if (ans) {
               document.title = $("title").text().substr(9);
               $('tr#' + deliverable_id).remove();

@@ -29,7 +29,7 @@ describe 'When I visit the grading queue page,' do
 
     # Team Deliverables
     @deliverable_1 = FactoryGirl.create(:deliverable, :assignment => @team_assignment, :team => @team_triumphant, :course => @course, :creator => @student_sally)
-    @deliverable_1_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_1, :submitter => @student_sally)
+    @deliverable_1_attachment_v1 = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_1, :submitter => @student_sally)
     @deliverable_1_attachment_v2 = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_1, :submitter => @student_sally)
     @deliverable_2 = FactoryGirl.create(:deliverable, :assignment => @team_assignment, :team => @team_bean_counters, :course => @course, :creator => @student_sam)
     @deliverable_2_attachment = FactoryGirl.create(:deliverable_attachment, :deliverable => @deliverable_2, :submitter => @student_sam)
@@ -205,12 +205,12 @@ describe 'When I visit the grading queue page,' do
             page.should have_field(@student_sally.id.to_s, :value => 5)
           end
 
-          #it "only shows the latest version of the submitted assignment" do
-          #  pending("Haven't implemented yet")
-          #  table = page.find("table.twikiTable")
-          #  table.find("tr.twikiTableOdd").should_not be_nil
-          #  table.find("tr.twikiTableEven").should_not be_nil
-          #end
+          it "only shows the latest version of the submitted assignment" do
+            pending("Haven't implemented yet")
+            table = page.find("table.twikiTable")
+            table.find("tr.twikiTableOdd").should_not be_nil
+            table.find("tr.twikiTableEven").should_not be_nil
+          end
         end
     end
   end
