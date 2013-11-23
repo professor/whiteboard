@@ -1,13 +1,12 @@
+<!-- Following 3 are included to support status notifications. -->
+<%= stylesheet_link_tag "alertify.core.css", media: "all" %>
+<%= stylesheet_link_tag "alertify.default.css", media: "all" %>
+<%= javascript_include_tag "alertify.min.js" %>
+
 <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
 <%= javascript_include_tag 'jquery.quicksearch.js' %>
 <%= javascript_include_tag 'jquery.session' %>
 <%= stylesheet_link_tag 'jquery-ui.css' %>
-
-<style>
-  tr:hover {
-      background-color: #696969;
-  }
-</style>
 
 <% content_for :title, "Grading Queue - #{@course.name}" %>
 
@@ -251,6 +250,7 @@
           } else $('tr#' + deliverable_id).remove();
         }
         else {
+          alertify.log("Loading <%= nomenclature_assignment_or_deliverable %> details. Please wait ... ");
           var callback = showPopupWindow(that, deliverable_id);
           $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {});
         }
@@ -302,6 +302,8 @@
         // Invoke the below function on page load.
         preparePageToMatchFilter();
 
+        // Set the default notification messages for 5 seconds
+        alertify.set({ delay: 3000 });
     });
 
     // Check if the grades or comments are edited
