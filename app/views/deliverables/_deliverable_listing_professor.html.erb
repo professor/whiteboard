@@ -20,7 +20,6 @@
     <thead>
         <tr>
           <th>Name</th>
-          <th>Task</th>
           <th><%= nomenclature_assignment_or_deliverable %></th>
           <th>Grade</th>
         </tr>
@@ -33,8 +32,10 @@
                     <%= 'Team' if deliverable.is_team_deliverable? %>
                     <%= deliverable.owner_name %>
                 </td>
-                <td><%= deliverable.assignment.task_number %></td>
                 <td>
+                  <% if deliverable.assignment.task_number %>
+                    <%= deliverable.assignment.task_number %>:
+                  <% end %>
                     <% latest_attachment = deliverable.attachment_versions.first %>
                     <% unless latest_attachment.attachment_file_name.nil? %>
                         <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
