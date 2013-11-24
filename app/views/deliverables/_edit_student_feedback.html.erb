@@ -129,12 +129,15 @@
     <br/>
     <!--TODO: How to stop a submission? -->
     <p>
-    <div style="float: left; width: auto;">
-      <% max_score = @deliverable.assignment.maximum_score %>
-      <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid('Submit')", :remote => true %>
-      <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid('Draft')", :remote => true %>
-      <a id="cl_<%= @deliverable.id %>" onclick="closeRow(<%= @deliverable.id %>)">Cancel</a>
+    <div width="100%">
+      <div style="float: left; width: auto;">
+        <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid('Draft')", :remote => true, :id => 'draftBtn' %>
+        <a id="cancelLink" onclick="closeRow(<%= @deliverable.id %>)">Cancel</a>
+      </div>
+      <div style="float: right;">
+        <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid('Submit')", :remote => true, :id => 'submitBtn' %>
+      </div>
     </div>
     </p>
 <% end %>
-<br/>
+<br/> <br/>
