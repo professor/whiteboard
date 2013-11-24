@@ -2,7 +2,7 @@
   function edited(){
     if ($("title").text().search("(Editing)") != -1) return true;
 
-    var new_name = "(Editing)" + $("title").text();
+    var new_name = "(Editing) " + $("title").text();
     document.title = new_name;
   }
 

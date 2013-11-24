@@ -28,7 +28,7 @@
     function edited() {
         if (isEdited()) return;
 
-        var new_name = "(Editing)" + $("title").text();
+        var new_name = "(Editing) " + $("title").text();
         document.title = new_name;
     }
 
@@ -40,11 +40,27 @@
     function closeEditorWarning() {
         if (isEdited() && !isSaved) return 'It seems like you have been editing something..';
         if (isEdited()) {
-            document.title = $("title").text().substr(9);
+            document.title = $("title").text().substr(10);
         }
     }
 
     window.onbeforeunload = closeEditorWarning
+
+    // This method can be called to close the assignment details row for a
+    // given deliverable ID.
+    function closeRow(deliverable_id) {
+        var message = closeEditorWarning();
+        if(!message || confirm(message + "\n\nDo you want to close anyway?")) {
+            var title_text = $("title").text();
+            if(title_text.indexOf('Editing') != -1) {
+                document.title = $("title").text().substr(10);
+            }
+
+            alertify.log("Closing <%= nomenclature_assignment_or_deliverable %> details");
+            var closestRow = $('tr#' + deliverable_id);
+            closestRow.fadeOut(1000);
+        }
+    }
 </script>
 
 <% content_for :title, "Provide Feedback" %>
@@ -127,11 +143,8 @@
       <% max_score = @deliverable.assignment.maximum_score %>
       <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid()" %>
       <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid()" %>
+      <a id="cl_<%= @deliverable.id %>" onclick="closeRow(<%= @deliverable.id %>)">Cancel</a>
     </div>
-    <div style='clear:both;'></div>
     </p>
 <% end %>
-
-<%= link_to 'Cancel', deliverable_path(@deliverable) %>
-<br/>
 <br/>

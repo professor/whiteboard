@@ -262,20 +262,10 @@
     function showPopupWindow(that, deliverable_id){
         return function(data){
             console.log($(that).attr('class'));
-            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid lightblue;">' + $(data).find("#contentToGrade").html() + '</td></tr>';
+            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid lightblue;">' + $(data).find("#contentToGrade_" + deliverable_id).html() + '</td></tr>';
             $(that).after(content); 
 
             var form_id = $("#"+deliverable_id + " form").attr("id");
-            /*
-            $("#"+form_id).submit(function(e){
-              e.preventDefault();
-              var tmp = $(this);
-              tmp = $(this).serialize();
-              $.post($(this).attr("action"), $(this).serialize()).done(function(){
-                updateResultTablesToMatchFilter();
-              });
-            });
-            */
             $("#"+form_id + " #deliverable_submit").click(function(e){
               e.preventDefault();
               var form = $(this).closest('form');
