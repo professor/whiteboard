@@ -18,9 +18,15 @@
         });
     });
 
-    function isScoreValid() {
+    function isScoreValid(status) {
         isSaved = true;
         closeEditorWarning();
+        if(status == 'Draft') {
+            alertify.log("Saving grade as draft. Please wait...");
+        } else {
+            alertify.log("Saving grade and sending email notification(s). Please wait...");
+        }
+
     }
 
     var isSaved = false;
@@ -125,8 +131,8 @@
     <p>
     <div style="float: left; width: auto;">
       <% max_score = @deliverable.assignment.maximum_score %>
-      <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid()" %>
-      <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid()" %>
+      <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid('Submit')", :remote => true %>
+      <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid('Draft')", :remote => true %>
       <a id="cl_<%= @deliverable.id %>" onclick="closeRow(<%= @deliverable.id %>)">Cancel</a>
     </div>
     </p>
