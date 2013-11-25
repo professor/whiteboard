@@ -2,6 +2,10 @@
     <div class="label">
         <%= fields_for :grade do |grade| %>
             Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
+        /
+        <span class="maximum-score">
+            <%= display_maximum_score %>
+        </span>
 <% end %>
     </div>
     <div style="text-align: center;">

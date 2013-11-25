@@ -350,6 +350,7 @@ class DeliverablesController < ApplicationController
 
   def dropdown
     @deliverable = Deliverable.find(params[:id])
+    @course = @deliverable.course
     @hostname_with_port = request.host_with_port
     render 'dropdown', :layout => false
   end

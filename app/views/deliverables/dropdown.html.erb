@@ -98,6 +98,10 @@
         <div class="team-grade">
           <span>Team Grade</span>
           <input type="text" class="team-grade-box">
+          / 
+          <span class="maximum-score">
+            <%= display_maximum_score %>
+          </span>
         </div>
       <% if deliverable.is_team_deliverable? %>
           <% for member in deliverable.team.members %>
