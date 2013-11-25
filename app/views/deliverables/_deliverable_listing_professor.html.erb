@@ -12,6 +12,8 @@
         list-style: none;
         border-bottom: 1px solid #ccc;
         background-color: white;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .deliverable .summary {
@@ -32,14 +34,28 @@
     }
 
     .deliverable .summary .assignment {
-        width: 300px;
+        width: 351px;
         display: inline-block;
         border-right: 1px solid #ccc;
+        padding-left: 5px;
     }
 
     .deliverable .summary .status {
         width: 100px;
         display: inline-block;
+        padding-left: 5px;
+    }
+
+    .deliverable .summary .status.graded {
+        background-color: #dfd;
+    }
+
+    .deliverable .summary .status.drafted {
+        background-color: #ffd;
+    }
+
+    .deliverable .summary .status.ungraded {
+        background-color: #fdd;
     }
 
     .deliverable .dropdown {
@@ -77,14 +93,16 @@
     }
 
     #deliverable-header .assignment {
-        width: 300px;
+        width: 351px;
         display: inline-block;
         border-right: 1px solid #ccc;
+        padding-left: 5px;
     }
 
     #deliverable-header .status {
         width: 100px;
         display: inline-block;
+        padding-left: 5px;
     }
 
     #filters {
@@ -144,9 +162,7 @@
 </div>
 
 <div id="deliverable-header">
-    <div class="name">Name</div>
-    <div class="assignment">Assignment</div>
-    <div class="status">Status</div>
+    <div class="name">Name</div><div class="assignment">Assignment</div><div class="status">Status</div>
 </div>
 <ul id="deliverables">
     <% deliverables.each do |deliverable| %>
@@ -155,8 +171,7 @@
                 <div class="name">
                     <%= 'Team' if deliverable.is_team_deliverable? %>
                     <%= deliverable.owner_name %>
-                </div>
-                <div class="assignment">
+                </div><div class="assignment">
                     <% if deliverable.assignment.task_number %>
                         <%= deliverable.assignment.task_number %>:
                     <% end %>
@@ -167,8 +182,7 @@
                     <% else %>
                         <%= deliverable.assignment_name %>
                     <% end %>
-                </div>
-                <div class="status">
+                </div><div class="status <%= deliverable.get_grade_status.to_s %>">
                     <% if deliverable.get_grade_status == :ungraded %>
                         Ungraded
                     <% elsif deliverable.get_grade_status == :drafted %>
@@ -338,5 +352,4 @@
             }
         });
     });
-
 </script>
