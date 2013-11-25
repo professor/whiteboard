@@ -16,51 +16,51 @@
     }
 </style>
 
-<table id="sortable" style="width: 668px;">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th><%= nomenclature_assignment_or_deliverable %></th>
-    <th>Grade</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% deliverables.each do |deliverable| %>
-      <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>"
-          id="deliverable-<%= deliverable.id %>">
-        <td>
-          <%= 'Team' if deliverable.is_team_deliverable? %>
-          <%= deliverable.owner_name %>
-          <% if deliverable.get_grade_status==:graded %>
-              <% if deliverable.get_grading_date< deliverable.attachment_versions.first.submission_date %>
-                  <span style='color:red'>(New Submission)</span>
-
-              <% end %>
-
-          <% end %>
-        </td>
-        <td>
-          <% if deliverable.assignment.task_number %>
-              <%= deliverable.assignment.task_number %>:
-          <% end %>
-          <% latest_attachment = deliverable.attachment_versions.first %>
-          <% unless latest_attachment.attachment_file_name.nil? %>
-              <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
-          <% else %>
-              <%= deliverable.assignment_name %>
-          <% end %>
-        </td>
-        <td>
-          <% if deliverable.get_grade_status == :ungraded %>
-              Give Grade
-          <% else %>
-              Review Grade
-          <% end %>
-        </td>
-
-      </tr>
-  <% end %>
-  </tbody>
+<table id="sortable" style="width: 668px; margin-top: 67px;">
+    <thead>
+        <tr>
+          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 280px;">Name</th>
+          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 280px;">
+            <%= nomenclature_assignment_or_deliverable %></th>
+          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 120px;">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% deliverables.each do |deliverable| %>
+            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>"
+                id="deliverable-<%= deliverable.id %>">
+                <td style="height: 25px; font: sans-serif; font-size: 13px;">
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                  <% if deliverable.get_grade_status==:graded %>
+                      <% if deliverable.get_grading_date< deliverable.attachment_versions.first.submission_date %>
+                          <span style='color:red'>(New Submission)</span>
+                      <% end %>
+                  <% end %>
+                </td>
+                <td style="height: 25px; font: sans-serif; font-size: 13px;">
+                  <% if deliverable.assignment.task_number %>
+                    <%= deliverable.assignment.task_number %>:
+                  <% end %>
+                    <% latest_attachment = deliverable.attachment_versions.first %>
+                    <% unless latest_attachment.attachment_file_name.nil? %>
+                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
+                    <% else %>
+                        <%= deliverable.assignment_name %>
+                    <% end %>
+                </td>
+                <td style="height: 25px; font: sans-serif; font-size: 13px;">
+                      <% if deliverable.get_grade_status == :ungraded %>
+                          Ungraded
+                      <% elsif deliverable.get_grade_status == :drafted %>
+                          Drafted
+                      <% else %>
+                          Graded
+                      <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <div id="dropdowns"></div>
@@ -71,45 +71,41 @@
 <script type="text/javascript">
     $('#sortable').tablesorter();
 
-    function update() {
-
         function updateShowTeamAndOrIndividual() {
             $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
             $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
         }
 
-        function updateColor() {
-            $('tr').filter(function () {
-                return $(this).is(':visible');
-            }).each(function (i) {
-                        var $this = $(this);
-                        if (i % 2) {
-                            $this.css({
-                                backgroundColor: '#ddd'
-                            });
-                        }
-                    });
+        function updateDrafted() {
+            ($('tr:contains("Drafted")').toggle(($('#show_drafted').is(':checked'))));
         }
 
-        if ($('#show_graded').is(':checked')) {
-            $('tr').show();
-            updateShowTeamAndOrIndividual();
-            updateColor();
-        } else {
-            updateShowTeamAndOrIndividual();
-            $('tr:contains("Review Grade")').hide();
-            updateColor();
+        function updateGraded() {
+            ($('tr:contains("Graded")').toggle(($('#show_graded').is(':checked'))));
         }
-    }
-    $('#show_graded').click(update);
-    update();
 
-    $('#show_team, #show_individual').click(update);
-    function updateAllAssignments() {
-        $('#allAssignments').show();
-        $('#show_all_assignments').hide();
-    }
+        function updateAllAssignments() {
+            $('#allAssignments').show();
+            $('#show_all_assignments').hide();
+        }
+
+        function updateUngraded() {
+            ($('tr:contains("Ungraded")').toggle(($('#show_ungraded').is(':checked'))));
+        }
+
+        function initialUpdate() {
+            updateDrafted();
+            updateGraded();
+            updateUngraded();
+        }
+
+    $('#show_graded').click(updateGraded);
+    $('#show_drafted').click(updateDrafted);
+    $('#show_ungraded').click(updateUngraded);
+    $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
     $(document).on('click', '#show_all_assignments', updateAllAssignments);
+    initialUpdate();
+
 
     var $dropdownCopy = $('#dropdown-copy');
     var $expandedRow = null;
@@ -161,19 +157,9 @@
     });
 
 
-    //    function toggleClassAndColor() {
-    //        console.log("Inside Toggle");
-    ////        $(this)
-    ////        .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active')
-    //        if ($(this).hasClass('active'))
-    //            $(this).css({"background-color": "#7F0E00"});
-    //        else
-    //            $(this).css({"background-color": "#EFEFEF"});
-    //    }
-
+// Manipulate the class and css of the filter buttons when clicked
     // Action on "Graded Deliverables" button
-    $("#graded_del").on("click", function(event){
-        event.stopPropagation();
+    $("#graded_del").on("click", function(){
         $(this)
                 .text($(this).text() == 'Show Graded' ? 'Hide Graded' : 'Show Graded')
                 .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');

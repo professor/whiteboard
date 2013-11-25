@@ -87,7 +87,7 @@
         <!--Search by:-->
         <!--<input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>-->
         <!--<input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>-->
-    <div id = 'grading-filters'style="width:98%;">
+    <div id = 'grading-filters'style="width:98%; margin-top: 12px">
 
         <label for="show_individual">
           <input id="show_individual" class="filter_status" type="checkbox" checked="true"/>
@@ -105,14 +105,14 @@
             <span id="drafted_del" class="inactive">Show Drafted</span>
         </label>
 
-        <label for="show_ungraded">
-          <input id="show_ungraded" class="filter_status" type="checkbox"/>
-            <span id="ungraded_del" class="inactive">Show Ungraded</span>
-        </label>
-
         <label for="show_graded">
           <input id="show_graded" class="filter_status" type="checkbox"/>
-            <span id="graded_del" class="inactive">Show Graded</span>
+          <span id="graded_del" class="inactive">Show Graded</span>
+        </label>
+
+        <label for="show_ungraded">
+          <input id="show_ungraded" class="filter_status" type="checkbox" checked="true"/>
+            <span id="ungraded_del" class="active">Hide Ungraded</span>
         </label>
 
       </div>

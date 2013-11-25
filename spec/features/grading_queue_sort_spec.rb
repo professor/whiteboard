@@ -45,6 +45,7 @@ describe 'Grading queue', :skip_on_build_machine => true, :js => true do
    end
 
   it 'Can sort by assignment' do
+    pending
      unsorted_assg = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }
      find(:xpath, "//th", :text => "Assignment").click
      (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_assg.sort
