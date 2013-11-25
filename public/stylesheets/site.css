@@ -1055,3 +1055,46 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
     text-decoration: none;
     color: #990000;
 }
+
+
+/********************
+* Grading queue
+********************/
+
+
+.dropdown {
+		display: none;
+		background: white;
+		position: absolute;
+		overflow: hidden;
+		margin-left: 1px;
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		box-sizing: border-box;
+		padding: 10px;
+		overflow-y: scroll;
+	  background-color: white;
+}
+
+#dropdown-copy {
+	visibility: hidden;
+	position: absolute;
+	left: -9999999;
+	top: -9999999;
+}
+
+.dropdown textarea {
+	width: 99%;
+}
+
+#sortable td.graded {
+	background-color: #B6FFC2;
+}
+
+#sortable td.drafted {
+  background-color: #FEFFB7;
+}
+
+#sortable td.ungraded {
+	background-color: #E58B8B;
+}
