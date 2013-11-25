@@ -88,7 +88,7 @@
     }
 
     #filters {
-        margin-top: 25px;
+        margin-top: 17px;
     }
 
     .filter {
@@ -111,7 +111,14 @@
         float: right;
         margin-right: 3px;
     }
+
+    #deliverables-search {
+        width: 665px;
+    }
 </style>
+
+
+<input id="deliverables-search" type="text" placeholder="Search">
 
 <div id="filters">
     <div id="individual-team-filters">
@@ -309,6 +316,27 @@
         var $this = $(this);
         $this.toggleClass('active');
         filter();
+    });
+
+    $('#deliverables-search').on('keyup', function () {
+        var $this = $(this);
+        var keyword = $this.val();
+        var matcher = new RegExp(keyword, 'i');
+
+        filter();
+
+        if (keyword.length === 0) {
+            return;
+        }
+
+        $deliverables.filter(':visible').each(function () {
+            var $this = $(this);
+            var name = $.trim($this.find('.name').text());
+            var assignment = $.trim($this.find('.assignment').text());
+            if (!matcher.test(name) && !matcher.test(assignment)) {
+                $this.hide();
+            }
+        });
     });
 
 </script>
