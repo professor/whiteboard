@@ -1087,14 +1087,14 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
 	width: 99%;
 }
 
-#sortable td.graded {
+#grading_queue td.graded {
 	background-color: #B6FFC2;
 }
 
-#sortable td.drafted {
+#grading_queue td.drafted {
   background-color: #FEFFB7;
 }
 
-#sortable td.ungraded {
+#grading_queue td.ungraded {
 	background-color: #E58B8B;
 }

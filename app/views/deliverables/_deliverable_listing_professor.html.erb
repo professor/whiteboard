@@ -7,7 +7,7 @@
           <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 120px;">Status</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="grading_queue">
         <% deliverables.each do |deliverable| %>
             <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>"
                 id="deliverable-<%= deliverable.id %>">
@@ -31,14 +31,16 @@
                         <%= deliverable.assignment_name %>
                     <% end %>
                 </td>
-                <td style="height: 25px; font: sans-serif; font-size: 13px;">
-                      <% if deliverable.get_grade_status == :ungraded %>
-                          Ungraded
-                      <% elsif deliverable.get_grade_status == :drafted %>
-                          Drafted
-                      <% else %>
-                          Graded
-                      <% end %>
+                <% if deliverable.get_grade_status == :ungraded %>
+                  <td class="ungraded">
+                    Ungraded
+                <% elsif deliverable.get_grade_status == :drafted %>
+                  <td class="drafted">
+                    Drafted
+                <% else %>
+                  <td class="graded">
+                    Graded
+                <% end %>
                 </td>
             </tr>
         <% end %>
