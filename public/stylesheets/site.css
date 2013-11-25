@@ -1116,6 +1116,16 @@ input.invalid {
   background-color: #ffd;
 }
 
+#nothing-to-show {
+  display: block;
+  background: #FFF;
+  text-align: center;
+  line-height: 30px;
+  border: 1px solid #CCC;
+  width: 668px;
+  margin-top: 20px;
+}
+
 
 /*.hover:hover input {background-color: #8db1ff; } */
 /* .draft:hover input {background-color: #ffffbe; }  */

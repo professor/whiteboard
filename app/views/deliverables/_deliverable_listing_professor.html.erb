@@ -62,6 +62,9 @@
         </li>
     <% end %>
 </ul>
+<div id="nothing-to-show">
+    Nothing to show. Choose a filter :)
+</div>
 
 
 <script type="text/javascript">
@@ -171,6 +174,10 @@
         return false;
     });
 
+    function checkNothingToShow() {
+        $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
+    }
+
         
     /////////////
     // Filters //
@@ -208,6 +215,8 @@
                 $this.show();
             }
         });
+
+        checkNothingToShow();
     }
 
     filter();
@@ -241,6 +250,8 @@
                 $this.hide();
             }
         });
+
+        checkNothingToShow();
     });
 
     ////////////////
