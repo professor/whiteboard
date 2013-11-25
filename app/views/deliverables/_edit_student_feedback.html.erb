@@ -20,6 +20,17 @@
     });
   });
 
+  var update_filter_options = function() {
+      var current_filter_options = {
+        "ungraded": ($('#filter_options_ungraded').is(':checked') ? '1' : ''),
+         "graded" : ($('#filter_options_graded').is(':checked') ? '1' : ''),
+         "drafted": ($('#filter_options_drafted').is(':checked') ? '1' : ''),
+         "is_my_teams" : ($('#filter_options_is_my_teams_yes').is(':checked') ? 'yes' : '')
+      }
+      $("#deliverable_current_filter_options").val('');
+      $("#deliverable_current_filter_options").val(JSON.stringify(current_filter_options));
+  };
+
   // Team Turing Begin
   var toggle_slide = function() {
 
@@ -30,6 +41,7 @@
       //$('#deliverable_submit_draft').parents('.deliverable_detail').slideUp();
       $('.deliverable_detail').slideUp();
   };
+
   // Team Turing End
 </script>
 
@@ -141,16 +153,18 @@
 
       <div class="row" style="padding-top: 10px;">
         <div class="col-md-12" id="deliverable_submit_draft">
-            <%= f.submit "Save as Draft", :name => "draft", :class => "btn btn-default" %>
+            <%= f.submit "Save as Draft", :name => "draft", :class => "btn btn-default", :onclick => "update_filter_options();" %>
         </div>
       </div>
       <hr>
       <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
         <div class="col-md-12">
-          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;", :onclick => "toggle_slide();" %>
+          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;", :onclick => "toggle_slide(); update_filter_options();" %>
           <input type="checkbox" value="true" checked="checked"> Send a copy to myself
         </div>
       </div>
+      <%= f.hidden_field :current_filter_options, { value: '' } %>
 
+      <!--<input type="hidden" value="" id="deliverable_current_filter_options" >-->
   <% end %>
 </div> <!-- /.container -->

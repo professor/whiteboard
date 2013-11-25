@@ -69,6 +69,7 @@ class DeliverablesController < ApplicationController
 
     @selected_options = []
 
+    # TODO! filter_options in now containing more values than graded, ungraded and drafted
     params[:filter_options].collect do |grading_filter_option|
       @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
     end
@@ -121,7 +122,6 @@ class DeliverablesController < ApplicationController
     #keeping last filtering options
     #@last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded], :drafted => params[:filter_options][:drafted]}
 
-    # TO DO: Don't hit the model again!
     if params[:filter_options][:is_my_teams] == 'yes'
       @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
     else
@@ -412,13 +412,46 @@ class DeliverablesController < ApplicationController
       flash[:error] << 'Unable to save feedback'
     end
 
+    #Obtain current selected filters
+    @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+
+    #Exctract in a new method for both actions:
+    @course = Course.find_by_id(@deliverable.course_id)
+
+    # Which filtering options are selected? (ungraded - drafted - graded)
+    @selected_options = []
+    @selected_filter_options.collect do |grading_filter_option|
+      @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
+    end
+
+    #keeping last filtering options
+    #@last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded], :drafted => params[:filter_options][:drafted]}
+
+    if @selected_filter_options[:is_my_teams.to_s] == 'yes'
+      @faculty_deliverables = Deliverable.grading_queue_display(@deliverable.course_id, current_user.id)
+    else
+      @faculty_deliverables = Deliverable.grading_queue_display(@deliverable.course_id, current_user.id, { "is_my_teams" => 0 })
+    end
+
+    @deliverables = []
+
+    # Filter according to the selected grading options
+    @selected_options.each do  |option|
+      @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    end
+
+    ## Filter by assignment names in drop down menu
+    #unless params[:filter_options][:assignment_id].empty? or params[:filter_options][:assignment_id] == '-1'
+    #  @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options][:assignment_id].to_i }
+    #end
+
+    # Sort by task number, ascending
+    @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
     respond_to do |format|
        if flash[:error].blank?
          flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
-         #format.html {redirect_to(course_deliverables_path(@deliverable.course))}
-         #format.js #{redirect_to(course_deliverables_path(@deliverable.course))}
-         format.js { redirect_to(@deliverable) }
+         format.js
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
