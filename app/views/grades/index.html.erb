@@ -109,13 +109,25 @@
   }
 
   function post_drafted_and_send() {
-    if (!confirm("Do you want to finalize draft grades and send to students?")) return;  // Added by Team Turing
-    post_grades('<%=post_drafted_and_send_path(@course)%>');
+    // Begin Add Team Turing
+    if (!confirm("Do you want to finalize draft grades and send to students?")) return;
+    if (document.getElementById("send_copy_to_myself").checked == true)
+        post_grades('<%=post_drafted_and_send_path(@course, :send_copy_to_myself => 1)%>');
+    else
+        post_grades('<%=post_drafted_and_send_path(@course, :send_copy_to_myself => 0)%>');
+    // End Add Team Turing
+//    post_grades('<%#=post_drafted_and_send_path(@course)%>');  // Delete Team Turing
   }
 
   function send_final_grade() {
     if (!confirm("Do you want to send all final letter grades (including draft grades) to students?")) return;
-    post_grades('<%=send_final_grade_path(@course)%>');
+    // Begin Add Team Turing
+    if (document.getElementById("send_copy_to_myself").checked == true)
+        post_grades('<%=send_final_grade_path(@course, :send_copy_to_myself => 1)%>');
+    else
+        post_grades('<%=send_final_grade_path(@course, :send_copy_to_myself => 0)%>');
+    // End Add Team Turing
+//    post_grades('<%#=send_final_grade_path(@course)%>');  // Delete Team Turing
   }
 
   function save() {
@@ -207,7 +219,7 @@
         <tr style="background-color:white;">
           <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 6 %>">
             <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
-            <input type="checkbox" value="true" checked="checked"> Send a copy to myself <!-- Added by Team Turing -->
+            <input type="checkbox" id="send_copy_to_myself" value="1" checked="checked"> Send a copy to myself <!-- Added by Team Turing -->
             <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
             <!-- Begin Delete Team Turing -->
             <!--<button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>-->

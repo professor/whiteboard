@@ -160,11 +160,10 @@
       <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
         <div class="col-md-12">
           <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;", :onclick => "toggle_slide(); update_filter_options();" %>
-          <input type="checkbox" value="true" checked="checked"> Send a copy to myself
+          <%= check_box_tag(:send_copy_to_myself, value ="1", checked = true) %>
+          <%= label_tag(:send_copy_to_myself, "Send a copy to myself") %>
         </div>
       </div>
       <%= f.hidden_field :current_filter_options, { value: '' } %>
-
-      <!--<input type="hidden" value="" id="deliverable_current_filter_options" >-->
   <% end %>
 </div> <!-- /.container -->
