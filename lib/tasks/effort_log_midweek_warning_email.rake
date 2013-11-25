@@ -11,7 +11,15 @@ namespace :cmu do
     #end
 
     a = EffortLogsController.new()
-    a.create_midweek_warning_email()
+    a.create_midweek_warning_email()    #this includes the warning to update the logs even if you already entered a value
+
+  end
+
+
+  desc "Create grace period warning email"
+  task(:effort_log_grace_period_email => :environment) do
+    a = EffortLogsController.new()
+    a.create_grace_period_expiring_warning_email
 
   end
 end

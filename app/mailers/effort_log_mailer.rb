@@ -12,6 +12,27 @@ class EffortLogMailer < ActionMailer::Base
 
   end
 
+  def update_effort_log_warning(user)
+    @user = user
+    saying = "Last chance to update your effort logs"
+    email_with_name = @user.human_name + ' <' + @user.email + '>'
+
+    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/public/images/ScottyDogLandscape.jpg")
+    mail(:to => @user.email, :subject => "Scotty Dog says: #{saying}", :date => Time.now)
+
+  end
+
+
+  def grace_period_expiring_warning(user)
+    @user = user
+    saying = "Grace period for updating this week's effort log is expiring!"
+    email_with_name = @user.human_name + ' <' + @user.email + '>'
+
+    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/public/images/ScottyDogLandscape.jpg")
+    mail(:to => @user.email, :subject => "Scotty Dog says: #{saying}", :date => Time.now)
+
+  end
+
   def midweek_warning_admin_report(saying, people_without_effort, people_with_effort)
     @saying = saying
     @people_without_effort = people_without_effort
