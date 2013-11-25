@@ -231,10 +231,34 @@
     ////////////////
     // Team Grade //
     ////////////////
+    function validateGradeHelper($input) {
+        var val = $input.val();
+        if (!val) {
+            return true;
+        }
+        var score = parseFloat(val);
+        if (isNaN(score)) {
+            return false;
+        }
+        var maximumScore = parseFloat($input.next().text());
+        return score <= maximumScore;
+    }
+
+    function validateGrade($input) {
+        $input.toggleClass('invalid', !validateGradeHelper($input));
+    }
+
+
     $deliverables.on('keyup', '.team-grade-box', function () {
         var $this = $(this);
         var $grades = $this.closest('.student_scores').find('.team_member_photo input');
-        $grades.val($this.val());
+        $grades.val($this.val()).each(function () {
+            validateGrade($(this));
+        });
     });
-    
+
+    $deliverables.on('keyup', '.student_scores input[type=text]', function () {
+        validateGrade($(this));
+    });
+
 </script>

@@ -1,4 +1,11 @@
 
+*:focus {
+  outline: none;
+}
+
+input[type=text], textarea {
+  border: 1px solid #ccc;
+}
 
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
@@ -1060,6 +1067,10 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 .team-grade-box {
     width: 40px;
+}
+input.invalid {
+   outline: 1px solid #f00;
+   border: 1px solid #f00;
 }
 
 
