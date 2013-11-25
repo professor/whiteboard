@@ -46,18 +46,24 @@ describe 'Grading queue', :skip_on_build_machine => true, :js => true do
   end
   
   it 'Can filter by individual' do
-    find(:text => 'Student Sam').visible?.should == true
+    page.should have_css('div.name', :text => 'Student Sam', :visible => true)
     find('div#show-individuals').click
-    find(:text => 'Student Sam').should == false
+    page.should_not have_css('div.name', :text => 'Student Sam', :visible => true)
   end
 
   it 'Can filter by team' do
-    find(:text => 'Team Triumphant').visible?.should == true
+    page.should have_css('div.name', :text => 'Team Bean Counters', :visible => true)
     find('div#show-teams').click
-    find(:text => 'Team Triumphant').should == false
+    page.should_not have_css('div.name', :text => 'Team Bean Counters', :visible => true)
   end
 
+  it 'Can filter by ungraded' do
+    pending
+    find('div#show-ungraded').click
+  end
+  
   it 'Can filter by graded' do
+    pending
     save_and_open_page
     find('div#show-graded').click
     save_and_open_page
