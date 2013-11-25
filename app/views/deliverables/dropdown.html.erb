@@ -1,3 +1,5 @@
+
+<div class="dropdown-main">
 <% deliverable = @deliverable %>
 <h1>Attachment Version History</h1>
 <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
@@ -81,7 +83,7 @@
         <%= f.label :feedback_comment, "Feedback Comments" %>
         (<%= link_to 'View History and Feedback', deliverable %>)
         <br>
-        <%= f.text_area :feedback_comment, :size => "75x10" %>
+        <%= f.text_area :feedback_comment, :size => "98x10" %>
       </p>
     </div>
 
@@ -93,6 +95,10 @@
 
 
     <div class="student_scores">
+        <div class="team-grade">
+          <span>Team Grade</span>
+          <input type="text" class="team-grade-box">
+        </div>
       <% if deliverable.is_team_deliverable? %>
           <% for member in deliverable.team.members %>
               <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id) %>
@@ -116,7 +122,7 @@
       </h1>
 
       <p>
-        <%= f.text_area :private_note, :size => "75x10" %>
+        <%= f.text_area :private_note, :size => "98x10" %>
       </p>
     </div>
 
@@ -133,3 +139,4 @@
     <div style='clear:both;'></div>
     </p>
 <% end %>
+</div>

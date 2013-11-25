@@ -1,213 +1,239 @@
-<table id="sortable" style="width: 668px; margin-top: 67px;">
-    <thead>
-        <tr>
-          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 280px;">Name</th>
-          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 280px;">
-            <%= nomenclature_assignment_or_deliverable %></th>
-          <th style="height: 25px;font: sans-serif; font-size: 15px; font-weight: normal; min-width: 120px;">Status</th>
-        </tr>
-    </thead>
-    <tbody id="grading_queue">
-        <% deliverables.each do |deliverable| %>
-            <tr class="<%= deliverable.is_team_deliverable ? 'team-deliverable' : 'individual-deliverable' %>"
-                id="deliverable-<%= deliverable.id %>">
-                <td style="height: 25px; font: sans-serif; font-size: 13px;">
+<input id="deliverables-search" type="text" placeholder="Search">
+
+<div id="filters">
+    <div id="individual-team-filters">
+        <div id="show-individual" class="filter active">
+            Show Individual
+        </div>
+        <div id="show-team" class="filter active">
+            Show Team
+        </div>
+    </div>
+
+    <div id="assignment-status-filters">
+        <div id="show-ungraded" class="filter active">
+            Show Ungraded
+        </div>
+        <div id="show-graded" class="filter">
+            Show Graded
+        </div>
+        <div id="show-draft" class="filter active">
+            Show Draft
+        </div>
+    </div>
+</div>
+
+<div id="deliverable-header">
+    <div class="name">Name</div><div class="assignment">Assignment</div><div class="status">Status</div>
+</div>
+<ul id="deliverables">
+    <% deliverables.each do |deliverable| %>
+        <li class="deliverable" id="deliverable-<%= deliverable.id %>">
+            <div class="summary">
+                <div class="name">
                     <%= 'Team' if deliverable.is_team_deliverable? %>
                     <%= deliverable.owner_name %>
-                  <% if deliverable.get_grade_status==:graded %>
-                      <% if deliverable.get_grading_date< deliverable.attachment_versions.first.submission_date %>
-                          <span style='color:red'>(New Submission)</span>
-                      <% end %>
-                  <% end %>
-                </td>
-                <td style="height: 25px; font: sans-serif; font-size: 13px;">
-                  <% if deliverable.assignment.task_number %>
-                    <%= deliverable.assignment.task_number %>:
-                  <% end %>
+                </div><div class="assignment">
+                    <% if deliverable.assignment.task_number %>
+                        <%= deliverable.assignment.task_number %>:
+                    <% end %>
+
                     <% latest_attachment = deliverable.attachment_versions.first %>
                     <% unless latest_attachment.attachment_file_name.nil? %>
                         <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
                     <% else %>
                         <%= deliverable.assignment_name %>
                     <% end %>
-                </td>
-                <% if deliverable.get_grade_status == :ungraded %>
-                  <td class="ungraded">
-                    Ungraded
-                <% elsif deliverable.get_grade_status == :drafted %>
-                  <td class="drafted">
-                    Drafted
-                <% else %>
-                  <td class="graded">
-                    Graded
-                <% end %>
-                </td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
-
-<div id="dropdowns"></div>
-
-<div id="dropdown-copy">
-</div>
+                </div><div class="status <%= deliverable.get_grade_status.to_s %>">
+                    <% if deliverable.get_grade_status == :ungraded %>
+                        Ungraded
+                    <% elsif deliverable.get_grade_status == :drafted %>
+                        Drafted
+                    <% else %>
+                        Graded
+                    <% end %>
+                </div>
+            </div>
+            <div class="dropdown-loader" style="display: none;">
+                <img src="/images/ajax-loader2.gif" alt="">
+            </div>
+            <div class="dropdown">
+            </div>
+        </li>
+    <% end %>
+</ul>
 
 <script type="text/javascript">
-    $('#sortable').tablesorter();
-
-        function updateShowTeamAndOrIndividual() {
-            $('tr.team-deliverable').toggle($('#show_team').is(':checked'));
-            $('tr.individual-deliverable').toggle($('#show_individual').is(':checked'));
-        }
-
-        function updateDrafted() {
-            ($('tr:contains("Drafted")').toggle(($('#show_drafted').is(':checked'))));
-        }
-
-        function updateGraded() {
-            ($('tr:contains("Graded")').toggle(($('#show_graded').is(':checked'))));
-        }
-
-        function updateAllAssignments() {
-            $('#allAssignments').show();
-            $('#show_all_assignments').hide();
-        }
-
-        function updateUngraded() {
-            ($('tr:contains("Ungraded")').toggle(($('#show_ungraded').is(':checked'))));
-        }
-
-        function initialUpdate() {
-            updateDrafted();
-            updateGraded();
-            updateUngraded();
-        }
-
-    $('#show_graded').click(updateGraded);
-    $('#show_drafted').click(updateDrafted);
-    $('#show_ungraded').click(updateUngraded);
-    $('#show_team, #show_individual').click(updateShowTeamAndOrIndividual);
-    $(document).on('click', '#show_all_assignments', updateAllAssignments);
-    initialUpdate();
+    var $deliverables = $('.deliverable');
 
 
-    var $dropdownCopy = $('#dropdown-copy');
-    var $expandedRow = null;
-    var $dropdowns = {};
+    ////////////////
+    // Accordion  //
+    ////////////////
+    $('#deliverables').on('click', '.deliverable .summary', function () {
+        var $deliverable = $(this).parent();
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        var $dropdownLoader = $deliverable.find('.dropdown-loader');
+        var deliverableId = $deliverable.attr('id').split('-')[1];
 
-    $('tbody tr').click(function () {
-        var $this = $(this);
-        var id = $this.attr('id').split('-')[1];
-        var width = $this.width();
-        if ($this.data('expanded')) {
-            // shrink
-            $this.find('td').stop().animate({
-                paddingBottom: 4
-            });
-            $this.data('expanded', false);
-
-            $dropdowns[id].animate({
+        if ($deliverable.data('expanded')) {
+            $deliverable.data('expanded', false);
+            $deliverableDropdown.animate({
                 height: 0
-            }, function () {
-                $dropdowns[id].hide();
             });
         } else {
-            // expand
+            $dropdownLoader.show();
             $.ajax({
-                url: '/deliverables/' + id + '/dropdown',
+                url: '/deliverables/' + deliverableId + '/dropdown',
                 type: 'GET',
                 success: function (data) {
-                    $dropdownCopy.html(data);
-                    var height = $dropdownCopy.height();
-
-                    var $dropdown = $('<div>').addClass('dropdown').html(data).appendTo('#dropdowns');
-                    $dropdowns[id] = $dropdown;
-
-                    $this.find('td').stop().animate({
-                        paddingBottom: height + 6
+                    $deliverableDropdown.html(data);
+                    var $dropdownMain = $deliverableDropdown.find('.dropdown-main');
+                    $deliverableDropdown.animate({
+                        height: $dropdownMain.height() + 50
                     });
-                    $this.data('expanded', true);
-                    $dropdown.show().css({
-                        width: width - 2,
-                        left: $this.position().left,
-                        top: $this.position().top + 30,
-                        height: 0
-                    }).animate({
-                                height: height
-                            });
+                    $deliverable.data('expanded', true);
+                    $dropdownLoader.hide();
                 }
             });
         }
     });
 
+    function strcmp(a, b) {
+        if (a > b) {
+            return 1;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 0;
+    }
 
-// Manipulate the class and css of the filter buttons when clicked
-    // Action on "Graded Deliverables" button
-    $("#graded_del").on("click", function(){
-        $(this)
-                .text($(this).text() == 'Show Graded' ? 'Hide Graded' : 'Show Graded')
-                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#7F0E00"});
-        else
-            $(this).css({"background-color": "#EFEFEF"});
+    /////////////
+    // Sorters //
+    /////////////
+    $('#deliverable-header').on('click', 'div', function () {
+        var $header = $(this);
+        var orderBy = $header.attr('class');
+        var order;
+
+        $('#deliverable-header>div').each(function () {
+            var $this = $(this);
+            var text = $this.text();
+            var endChar = text.substr(-1);
+            if (endChar === '▲' || endChar === '▼') {
+                $this.text(text.slice(0, -2));
+            }
+        });
+
+        var text = $header.text();
+        // 1 for ascending, -1 for descending
+        switch ($header.data('order')) {
+            case 1:
+                order = -1;
+                $header.text(text + ' ▲');
+                break;
+            case -1:
+                order = 1;
+                $header.text(text + ' ▼');
+                break;
+            default:
+                order = 1;
+                $header.text(text + ' ▼');
+        }
+        $header.data('order', order);
+
+        $deliverables.sort(function (a, b) {
+            var $a = $(a);
+            var $b = $(b);
+            var textA = $a.find('.' + orderBy).text();
+            var textB = $b.find('.' + orderBy).text();
+            return strcmp(textA, textB) * order;
+        });
+        $('#deliverables').empty().html($deliverables);
+
+        return false;
     });
 
-    // Action on "Ungraded Deliverables" button
-    $("#ungraded_del").on("click", function(){
-        $(this)
-                .text($(this).text() == 'Show Ungraded' ? 'Hide Ungraded' : 'Show Ungraded')
-                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#7F0E00"});
-        else
-            $(this).css({"background-color": "#EFEFEF"});
+        
+    /////////////
+    // Filters //
+    /////////////
+    function filter() {
+
+        var showIndividual = $('#show-individual').hasClass('active');
+        var showTeam = $('#show-team').hasClass('active');
+        var showUngraded = $('#show-ungraded').hasClass('active');
+        var showGraded = $('#show-graded').hasClass('active');
+        var showDraft = $('#show-draft').hasClass('active');
+
+        var selectedStatuses = [];
+        if (showUngraded) selectedStatuses.push('Ungraded');
+        if (showGraded) selectedStatuses.push('Graded');
+        if (showDraft) selectedStatuses.push('Drafted');
+
+        $deliverables.hide().each(function () {
+            var $this = $(this);
+            var show = false;
+
+            var name = $.trim($this.find('.name').text());
+            var status = $.trim($this.find('.status').text());
+
+            if (showIndividual && name.substr(0, 4) !== 'Team') {
+                show = true;
+            }
+            if (showTeam && name.substr(0, 4) === 'Team') {
+                show = true;
+            }
+
+            show = show && (selectedStatuses.indexOf(status) >= 0);
+
+            if (show) {
+                $this.show();
+            }
+        });
+    }
+
+    filter();
+
+    $('.filter').click(function () {
+        var $this = $(this);
+        $this.toggleClass('active');
+        filter();
     });
 
-    // Action on "Drafted Deliverables" button
-    $("#drafted_del").on("click", function(){
-        $(this)
-                .text($(this).text() == 'Show Drafted' ? 'Hide Drafted' : 'Show Drafted')
-                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#7F0E00"});
-        else
-            $(this).css({"background-color": "#EFEFEF"});
+
+    ///////////////
+    // SearchBox //
+    ///////////////
+    $('#deliverables-search').on('keyup', function () {
+        var $this = $(this);
+        var keyword = $this.val();
+        var matcher = new RegExp(keyword, 'i');
+
+        filter();
+
+        if (keyword.length === 0) {
+            return;
+        }
+
+        $deliverables.filter(':visible').each(function () {
+            var $this = $(this);
+            var name = $.trim($this.find('.name').text());
+            var assignment = $.trim($this.find('.assignment').text());
+            if (!matcher.test(name) && !matcher.test(assignment)) {
+                $this.hide();
+            }
+        });
     });
 
-    // Action on "Individual Deliverables" button
-    $("#ind_del").on("click", function(){
-        $(this)
-                .text($(this).text() == 'Show Individuals' ? 'Hide Individuals' : 'Show Individuals')
-                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#7F0E00"});
-        else
-            $(this).css({"background-color": "#EFEFEF"});
+    ////////////////
+    // Team Grade //
+    ////////////////
+    $deliverables.on('keyup', '.team-grade-box', function () {
+        var $this = $(this);
+        var $grades = $this.closest('.student_scores').find('.team_member_photo input');
+        $grades.val($this.val());
     });
-
-    // Action on "Team Deliverables" button
-    $("#team_del").on("click", function(){
-        $(this)
-                .text($(this).text() == 'Show Teams' ? 'Hide Teams' : 'Show Teams')
-                .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#7F0E00"});
-        else
-            $(this).css({"background-color": "#EFEFEF"});
-    });
-
-    // Mouse-over event for all buttons
-    $("span").on("mouseenter",function(){
-        if ($(this).hasClass('active'))
-            $(this).css({"background-color": "#8F1E33"});
-        else
-            $(this).css({"background-color": "#E1E1E1"});
-    }).on("mouseleave",function(){
-                if ($(this).hasClass('active'))
-                    $(this).css({"background-color": "#7F0E00"});
-                else
-                    $(this).css({"background-color": "#EFEFEF"});
-            });
-
+    
 </script>

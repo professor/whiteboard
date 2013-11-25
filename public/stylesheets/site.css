@@ -851,7 +851,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  * Grade book
  *************************/
 
-.team_member_photo{width:156px}
+.team_member_photo{width:149px}
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
@@ -919,6 +919,149 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border-right: 2pt solid #0066cc;
 }
 .final{ border-right-width: 1px;}
+
+#deliverables {
+    width: 668px;
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.deliverable {
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    background-color: white;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.deliverable .summary {
+    line-height: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.deliverable .summary:hover {
+    background-color: #fffdd6;
+}
+
+.deliverable .summary .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+.deliverable .summary .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+.deliverable .summary .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.deliverable .summary .status.graded {
+    background-color: #dfd;
+}
+
+.deliverable .summary .status.drafted {
+    background-color: #ffd;
+}
+
+.deliverable .summary .status.ungraded {
+    background-color: #fdd;
+}
+
+.deliverable .dropdown {
+    height: 0;
+    overflow: hidden;
+}
+
+.deliverable .dropdown .dropdown-main {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.deliverable .dropdown-loader {
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+#deliverable-header {
+    background-color: #CDE8F5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    margin-top: 67px;
+    line-height: 30px;
+    height: 30px;
+    width: 668px;
+    cursor: pointer;
+}
+
+#deliverable-header .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+#filters {
+    margin-top: 17px;
+}
+
+.filter {
+    background-color: #ccc;
+    padding: 5px 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.filter.active {
+    background-color: #900;
+    color: white;
+}
+
+#individual-team-filters {
+    float: left;
+}
+
+#assignment-status-filters {
+    float: right;
+    margin-right: 3px;
+}
+
+#deliverables-search {
+    width: 665px;
+}
+
+.team-grade {
+    margin: 5px 0 15px 28px;
+}
+.team-grade-box {
+    width: 40px;
+}
+
 
 /*.hover:hover input {background-color: #8db1ff; } */
 /* .draft:hover input {background-color: #ffffbe; }  */
@@ -1056,49 +1199,3 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
     color: #990000;
 }
 
-
-/********************
-* Grading queue
-********************/
-
-
-.dropdown {
-		display: none;
-		background: white;
-		position: absolute;
-		overflow: hidden;
-		margin-left: 1px;
-		border-top: 1px solid #ccc;
-		border-bottom: 1px solid #ccc;
-		box-sizing: border-box;
-		padding: 10px;
-		overflow-y: scroll;
-	  background-color: white;
-}
-
-#dropdown-copy {
-	visibility: hidden;
-	position: absolute;
-	left: -9999999;
-	top: -9999999;
-}
-
-.dropdown textarea {
-	width: 99%;
-}
-
-#grading_queue tr:hover {
-  cursor: pointer
-}
-
-#grading_queue td.graded {
-	background-color: #B6FFC2;
-}
-
-#grading_queue td.drafted {
-  background-color: #FEFFB7;
-}
-
-#grading_queue td.ungraded {
-	background-color: #E58B8B;
-}
