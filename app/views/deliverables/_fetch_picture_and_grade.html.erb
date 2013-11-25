@@ -1,15 +1,13 @@
-
 <div class='team_member_photo'>
+    <div class="label">
+        <%= fields_for :grade do |grade| %>
+            Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
+<% end %>
+    </div>
+    <div style="text-align: center;">
+        <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
+            <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image", :height => 150) %></a>
+    </div>
+    <div class='label'> <%= member.human_name %></div>
 
-  <div class="label">
-    <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
-    <% end %>
-  </div>
-  <div style="text-align: center;">
-  <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
-      <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image", :height => 150) %></a>
-  </div>
-  <div class='label'> <%= member.human_name %></div>
-
-  </div>
+</div>
