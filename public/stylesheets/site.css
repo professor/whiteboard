@@ -851,7 +851,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  * Grade book
  *************************/
 
-.team_member_photo{width:156px}
+.team_member_photo{width:149px}
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
