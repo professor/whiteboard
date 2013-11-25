@@ -11,6 +11,7 @@
         list-style: none;
         border-bottom: 1px solid #ccc;
         background-color: white;
+        cursor: pointer;
     }
 
     .deliverable .summary {
@@ -45,6 +46,11 @@
         padding: 15px;
         border-top: 1px solid #ccc;
     }
+
+    .deliverable .dropdown-loader {
+        text-align: center;
+        border-top: 1px solid #ccc;
+    }
 </style>
 
 <ul id="deliverables">
@@ -77,6 +83,9 @@
                     <% end %>
                 </div>
             </div>
+            <div class="dropdown-loader" style="display: none;">
+                <img src="/images/ajax-loader2.gif" alt="">
+            </div>
             <div class="dropdown">
             </div>
         </li>
@@ -88,6 +97,7 @@
     $('#deliverables').on('click', '.deliverable .summary', function () {
         var $deliverable = $(this).parent();
         var $deliverableDropdown = $deliverable.find('.dropdown');
+        var $dropdownLoader = $deliverable.find('.dropdown-loader');
         var deliverableId = $deliverable.attr('id').split('-')[1];
 
         if ($deliverable.data('expanded')) {
@@ -96,6 +106,7 @@
                 height: 0
             });
         } else {
+            $dropdownLoader.show();
             $.ajax({
                 url: '/deliverables/' + deliverableId + '/dropdown',
                 type: 'GET',
@@ -106,6 +117,7 @@
                         height: $dropdownMain.height() + 100
                     });
                     $deliverable.data('expanded', true);
+                    $dropdownLoader.hide();
                 }
             });
         }
