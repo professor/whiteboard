@@ -227,4 +227,14 @@
             }
         });
     });
+
+    ////////////////
+    // Team Grade //
+    ////////////////
+    $deliverables.on('keyup', '.team-grade-box', function () {
+        var $this = $(this);
+        var $grades = $this.closest('.student_scores').find('.team_member_photo input');
+        $grades.val($this.val());
+    });
+    
 </script>
