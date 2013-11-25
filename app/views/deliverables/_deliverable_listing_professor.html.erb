@@ -86,7 +86,55 @@
         width: 100px;
         display: inline-block;
     }
+
+    #filters {
+        margin-top: 25px;
+    }
+
+    .filter {
+        background-color: #ccc;
+        padding: 5px 10px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .filter.active {
+        background-color: #900;
+        color: white;
+    }
+
+    #individual-team-filters {
+        float: left;
+    }
+
+    #assignment-status-filters {
+        float: right;
+        margin-right: 3px;
+    }
 </style>
+
+<div id="filters">
+    <div id="individual-team-filters">
+        <div id="show-individual" class="filter active">
+            Show Individual
+        </div>
+        <div id="show-team" class="filter active">
+            Show Team
+        </div>
+    </div>
+
+    <div id="assignment-status-filters">
+        <div id="show-ungraded" class="filter active">
+            Show Ungraded
+        </div>
+        <div id="show-graded" class="filter">
+            Show Graded
+        </div>
+        <div id="show-draft" class="filter active">
+            Show Draft
+        </div>
+    </div>
+</div>
 
 <div id="deliverable-header">
     <div class="name">Name</div>
@@ -218,6 +266,49 @@
         return false;
     });
 
-    
+        
+    function filter() {
+
+        var showIndividual = $('#show-individual').hasClass('active');
+        var showTeam = $('#show-team').hasClass('active');
+        var showUngraded = $('#show-ungraded').hasClass('active');
+        var showGraded = $('#show-graded').hasClass('active');
+        var showDraft = $('#show-draft').hasClass('active');
+
+        var selectedStatuses = [];
+        if (showUngraded) selectedStatuses.push('Ungraded');
+        if (showGraded) selectedStatuses.push('Graded');
+        if (showDraft) selectedStatuses.push('Drafted');
+
+        $deliverables.hide().each(function () {
+            var $this = $(this);
+            var show = false;
+
+            var name = $.trim($this.find('.name').text());
+            var status = $.trim($this.find('.status').text());
+
+            if (showIndividual && name.substr(0, 4) !== 'Team') {
+                show = true;
+            }
+            if (showTeam && name.substr(0, 4) === 'Team') {
+                show = true;
+            }
+
+            show = show && (selectedStatuses.indexOf(status) >= 0);
+
+            if (show) {
+                $this.show();
+            }
+        });
+    }
+
+    filter();
+
+
+    $('.filter').click(function () {
+        var $this = $(this);
+        $this.toggleClass('active');
+        filter();
+    });
 
 </script>
