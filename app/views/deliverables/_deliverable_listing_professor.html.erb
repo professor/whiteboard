@@ -67,6 +67,10 @@
 <script type="text/javascript">
     var $deliverables = $('.deliverable');
 
+
+    ////////////////
+    // Accordion  //
+    ////////////////
     $('#deliverables').on('click', '.deliverable .summary', function () {
         var $deliverable = $(this).parent();
         var $deliverableDropdown = $deliverable.find('.dropdown');
@@ -106,6 +110,9 @@
         return 0;
     }
 
+    /////////////
+    // Sorters //
+    /////////////
     $('#deliverable-header').on('click', 'div', function () {
         var $header = $(this);
         var orderBy = $header.attr('class');
@@ -150,6 +157,9 @@
     });
 
         
+    /////////////
+    // Filters //
+    /////////////
     function filter() {
 
         var showIndividual = $('#show-individual').hasClass('active');
@@ -187,13 +197,16 @@
 
     filter();
 
-
     $('.filter').click(function () {
         var $this = $(this);
         $this.toggleClass('active');
         filter();
     });
 
+
+    ///////////////
+    // SearchBox //
+    ///////////////
     $('#deliverables-search').on('keyup', function () {
         var $this = $(this);
         var keyword = $this.val();
