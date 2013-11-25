@@ -39,12 +39,13 @@
 
           <% end %>
         </td>
-        <td><%= deliverable.assignment.task_number %></td>
         <td>
+          <% if deliverable.assignment.task_number %>
+              <%= deliverable.assignment.task_number %>:
+          <% end %>
           <% latest_attachment = deliverable.attachment_versions.first %>
           <% unless latest_attachment.attachment_file_name.nil? %>
-              <%= deliverable.assignment_name %> (
-              <% link_to 'download', latest_attachment.attachment.url %>)
+              <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
           <% else %>
               <%= deliverable.assignment_name %>
           <% end %>
@@ -104,7 +105,6 @@
     update();
 
     $('#show_team, #show_individual').click(update);
-
     function updateAllAssignments() {
         $('#allAssignments').show();
         $('#show_all_assignments').hide();
@@ -172,7 +172,7 @@
     //    }
 
     // Action on "Graded Deliverables" button
-    $("#graded_del").on("click", function (event) {
+    $("#graded_del").on("click", function(event){
         event.stopPropagation();
         $(this)
                 .text($(this).text() == 'Show Graded' ? 'Hide Graded' : 'Show Graded')
@@ -184,7 +184,7 @@
     });
 
     // Action on "Ungraded Deliverables" button
-    $("#ungraded_del").on("click", function () {
+    $("#ungraded_del").on("click", function(){
         $(this)
                 .text($(this).text() == 'Show Ungraded' ? 'Hide Ungraded' : 'Show Ungraded')
                 .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
@@ -195,7 +195,7 @@
     });
 
     // Action on "Drafted Deliverables" button
-    $("#drafted_del").on("click", function () {
+    $("#drafted_del").on("click", function(){
         $(this)
                 .text($(this).text() == 'Show Drafted' ? 'Hide Drafted' : 'Show Drafted')
                 .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
@@ -206,7 +206,7 @@
     });
 
     // Action on "Individual Deliverables" button
-    $("#ind_del").on("click", function () {
+    $("#ind_del").on("click", function(){
         $(this)
                 .text($(this).text() == 'Show Individuals' ? 'Hide Individuals' : 'Show Individuals')
                 .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
@@ -217,7 +217,7 @@
     });
 
     // Action on "Team Deliverables" button
-    $("#team_del").on("click", function () {
+    $("#team_del").on("click", function(){
         $(this)
                 .text($(this).text() == 'Show Teams' ? 'Hide Teams' : 'Show Teams')
                 .toggleClass($(this).hasClass() == 'active' ? 'inactive' : 'active');
@@ -228,12 +228,12 @@
     });
 
     // Mouse-over event for all buttons
-    $("span").on("mouseenter",function () {
+    $("span").on("mouseenter",function(){
         if ($(this).hasClass('active'))
             $(this).css({"background-color": "#8F1E33"});
         else
             $(this).css({"background-color": "#E1E1E1"});
-    }).on("mouseleave", function () {
+    }).on("mouseleave",function(){
                 if ($(this).hasClass('active'))
                     $(this).css({"background-color": "#7F0E00"});
                 else
@@ -247,15 +247,12 @@
         overflow-y: scroll;
         background-color: white;
     }
-
     tbody tr {
         cursor: pointer;
     }
-
     tr:hover td {
         background-color: #ddd;
     }
-
     #dropdown-copy {
         visibility: hidden;
         position: absolute;
