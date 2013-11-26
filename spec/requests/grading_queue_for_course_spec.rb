@@ -206,10 +206,10 @@ describe 'When I visit the grading queue page,' do
           end
 
           it "only shows the latest version of the submitted assignment" do
-            pending("Haven't implemented yet")
+            pending
             table = page.find("table.twikiTable")
             table.find("tr.twikiTableOdd").should_not be_nil
-            table.find("tr.twikiTableEven").should_not be_nil
+            table.find("tr.twikiTableEven").should be_nil
           end
         end
     end
