@@ -90,9 +90,13 @@ class DeliverablesController < ApplicationController
 
     @deliverables = []
 
-    # Filter according to the selected grading options
-    @selected_options.each do  |option|
-      @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+    # Filter according to the selected grading options. If no filter options are selected, display every deliverables
+    if @selected_options.size == 0
+      @deliverables = @faculty_deliverables
+    else
+      @selected_options.each do  |option|
+        @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+      end
     end
 
     # Filter by assignment names in drop down menu
