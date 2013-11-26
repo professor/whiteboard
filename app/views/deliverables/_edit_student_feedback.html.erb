@@ -64,17 +64,7 @@
           </p>
       <% end %>
       <p>
-        Deliverable:
-        <% if @deliverable.current_attachment.blank? %>
-            None
-        <% else %>
-            <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-        <% end %>
-      </p>
-
-      <p>
-        <%= f.label :feedback, "Feedback file to upload" %>
-        <br/>
+        <%= f.label :feedback, "Feedback file to upload:" %> &nbsp;
         <%= f.file_field :feedback %>
       </p>
 
