@@ -1058,7 +1058,10 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 #deliverables-search {
-    width: 665px;
+    line-height: 25px;
+    padding-left: 10px;
+    width: 658px;
+    margin-top: 8px;
 }
 
 .team-grade {

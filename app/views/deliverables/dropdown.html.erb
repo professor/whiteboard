@@ -59,7 +59,7 @@
 <% if deliverable.attachment_versions.length>1 %>
     <a id="show_all_assignments"><label >Show all assignment</label></a>
 <% end %>
-<%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable} do |f| %>
+<%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable }, :remote => true do |f| %>
     <div>
       <% if grade_type_points_or_weights == "Percentage" %>
           <p>
@@ -132,8 +132,10 @@
     </div>
 
     <div class='deliverable-submits'>
-      <%= f.submit "Save and Email", :name => "submit" %>
-      <%= f.submit "Save as Draft", :name => "draft" %>
+        <%= f.submit "Save and Email", :name => "submit" %>
+        <%= f.submit "Save as Draft", :name => "draft" %>
+        <span class="submit-loading-indicator">
+        </span>
     </div>
 <% end %>
 </div>

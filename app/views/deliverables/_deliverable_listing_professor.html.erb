@@ -1,4 +1,4 @@
-<input id="deliverables-search" type="text" placeholder="Search">
+<input id="deliverables-search" type="text" placeholder="Search by Team / Individual / Assignment Name">
 
 <div id="filters">
     <div id="individual-team-filters">
@@ -286,5 +286,23 @@
     $deliverables.on('keyup', '.student_scores input[type=text]', function () {
         validateGrade($(this));
     });
+
+    /////////////////////
+    // Form Submission //
+    /////////////////////
+    $('#deliverables')
+        .on('ajax:send', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.fadeIn().text('Processing ...');
+        })
+        .on('ajax:success', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.text('Processed.');
+            setTimeout(function () {
+                $indicator.fadeOut();
+            }, 3000);
+        });
 
 </script>

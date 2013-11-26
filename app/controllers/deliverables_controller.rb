@@ -328,9 +328,11 @@ class DeliverablesController < ApplicationController
          flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
          format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         format.js { render :nothing => true, :status => 200 }
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
+         format.js { render :json => flash[:error] }
        end
     end
   end
