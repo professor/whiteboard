@@ -1,5 +1,16 @@
 <div id="contentToGrade_<%=@deliverable.id%>">
-  <h2><%= nomenclature_assignment_or_deliverable %> submitted</h2>
+
+  <th><h2><%= nomenclature_assignment_or_deliverable %> submitted</h2></th>
+
+<% if true %>
+    <script>
+      $('#allDeliverablesDetails tbody tr').hide();
+      $('#title').show();
+      $('#version_0').show();
+    </script>
+<% end %>
+
+  <%= link_to_function "Show All", "if($(this).text().toString()==='Show Latest Version Only'){ $('#allDeliverablesDetails tbody tr').hide(); $('#title').show(); $('#version_0').show(); $(this).text('Show All'); }else{ $('#allDeliverablesDetails tbody tr').hide(); $('#allDeliverablesDetails tbody tr').show(); $(this).text('Show Latest Version Only'); }" %>
 
   <div id="latestDeliverableDetails">
 
@@ -7,7 +18,7 @@
 
   <div id="allDeliverablesDetails">
       <table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
+        <tr id="title">
           <th>Submission Date</th>
           <th><%= nomenclature_assignment_or_deliverable %> File</th>
           <th>Comments</th>
@@ -25,7 +36,7 @@
         <% end %>
 
         <% @deliverable.attachment_versions.each_with_index do |version, index| %>
-            <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+            <tr class= <%= cycle('twikiTableOdd', 'twikiTableEven') %>, id="version_<%=index%>" >
               <td>
                 <% if index == 0 %>
                     <%= display_timestamp(version.submission_date, :class => "latest") -%>
@@ -37,7 +48,6 @@
                       Late!)</span>
                 <% end %>
               </td>
-
 
               <td>
                 <% unless version.attachment_file_name.nil? %>
