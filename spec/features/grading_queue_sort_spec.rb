@@ -35,20 +35,20 @@ describe 'Grading queue', :skip_on_build_machine => true, :js => true do
  
   it 'Can sort by name' do
     unsorted_names = all(:xpath, '//div[@class="summary"]/div[@class="name"]').collect { |x| x.text }
-    find(:xpath, '//div[@class="deliverable-header"]/div[@class="name"]').click
+    find(:xpath, '//div[@id="deliverable-header"]/div[@class="name"]').click
     (all(:xpath, '//div[@class="summary"]/div[@class="name"]').collect { |x| x.text}).should == unsorted_names.sort
    end
 
 
   it 'Can sort by assignment' do
     unsorted_assg = all(:xpath, '//div[@class="summary"]/div[@class="assignment"]').collect { |x| x.text }
-    find(:xpath, '//div[@class="deliverable-header"]/div[@class="assignment"]').click
+    find(:xpath, '//div[@id="deliverable-header"]/div[@class="assignment"]').click
     (all(:xpath, '//div[@class="summary"]/div[@class="assignment"]').collect { |x| x.text}).should == unsorted_assg.sort
    end
 
   it 'Can sort by status' do
     unsorted_stats = all(:xpath, '//div[@class="summary"]/div[@class="status"]').collect { |x| x.text }
-    find(:xpath, '//div[@class="deliverable-header"]/div[@class="status"]').click
+    find(:xpath, '//div[@id="deliverable-header"]/div[@class="status"]').click
     (all(:xpath, '//div[@class="summary"]/div[@class="status"]').collect { |x| x.text}).should == unsorted_stats.sort
    end
 
