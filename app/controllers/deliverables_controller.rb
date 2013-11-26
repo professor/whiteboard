@@ -447,10 +447,10 @@ class DeliverablesController < ApplicationController
       @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
     end
 
-    ## Filter by assignment names in drop down menu
-    #unless params[:filter_options][:assignment_id].empty? or params[:filter_options][:assignment_id] == '-1'
-    #  @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options][:assignment_id].to_i }
-    #end
+    # Filter by assignment names in drop down menu
+      unless @selected_filter_options['assignment_id'] == '-1'
+      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == @selected_filter_options['assignment_id'].to_i }
+    end
 
     # Sort by task number, ascending
     @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
