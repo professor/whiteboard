@@ -1,4 +1,4 @@
-<input id="deliverables-search" type="text" placeholder="Search">
+<input id="deliverables-search" type="text" placeholder="Search by Team / Individual / Assignment Name">
 
 <div id="filters">
     <div id="individual-team-filters">
@@ -38,11 +38,12 @@
                         <%= deliverable.assignment.task_number %>:
                     <% end %>
 
-                    <% latest_attachment = deliverable.attachment_versions.first %>
-                    <% unless latest_attachment.attachment_file_name.nil? %>
-                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
-                    <% else %>
-                        <%= deliverable.assignment_name %>
+                    <%= deliverable.assignment_name %>
+
+                    <% if deliverable.get_grade_status==:graded %>
+                        <% if deliverable.get_grading_date < deliverable.attachment_versions.first.submission_date %>
+                            <span style='color:red'>  New!</span>
+                        <% end %>
                     <% end %>
                 </div><div class="status <%= deliverable.get_grade_status.to_s %>">
                     <% if deliverable.get_grade_status == :ungraded %>
@@ -62,6 +63,9 @@
         </li>
     <% end %>
 </ul>
+<div id="nothing-to-show">
+    Nothing to show. Choose a filter :)
+</div>
 
 <script type="text/javascript">
     var $deliverables = $('.deliverable');
@@ -79,7 +83,8 @@
         if ($deliverable.data('expanded')) {
             $deliverable.data('expanded', false);
             $deliverableDropdown.animate({
-                height: 0
+                height: 0,
+                opacity: 0
             });
         } else {
             $dropdownLoader.show();
@@ -90,14 +95,28 @@
                     $deliverableDropdown.html(data);
                     var $dropdownMain = $deliverableDropdown.find('.dropdown-main');
                     $deliverableDropdown.animate({
-                        height: $dropdownMain.height() + 50
+                        height: $dropdownMain.height() + 50,
+                        opacity: 1
                     });
                     $deliverable.data('expanded', true);
                     $dropdownLoader.hide();
                 }
             });
         }
+    }).on('click', '.collapse-button', function () {
+        var $deliverable = $(this).closest('.deliverable');
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        $deliverable.data('expanded', false);
+        $deliverableDropdown.animate({
+            height: 0,
+            opacity: 0
+        });
+        console.log($deliverable.position().top)
+        $('html, body').animate({
+            scrollTop: $deliverable.offset().top
+        });
     });
+
 
     function strcmp(a, b) {
         if (a > b) {
@@ -155,6 +174,10 @@
         return false;
     });
 
+    function checkNothingToShow() {
+        $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
+    }
+
         
     /////////////
     // Filters //
@@ -192,6 +215,8 @@
                 $this.show();
             }
         });
+
+        checkNothingToShow();
     }
 
     filter();
@@ -225,15 +250,59 @@
                 $this.hide();
             }
         });
+
+        checkNothingToShow();
     });
 
     ////////////////
     // Team Grade //
     ////////////////
+    function validateGradeHelper($input) {
+        var val = $input.val();
+        if (!val) {
+            return true;
+        }
+        var score = parseFloat(val);
+        if (isNaN(score)) {
+            return false;
+        }
+        var maximumScore = parseFloat($input.next().text());
+        return score <= maximumScore;
+    }
+
+    function validateGrade($input) {
+        $input.toggleClass('invalid', !validateGradeHelper($input));
+    }
+
+
     $deliverables.on('keyup', '.team-grade-box', function () {
         var $this = $(this);
         var $grades = $this.closest('.student_scores').find('.team_member_photo input');
-        $grades.val($this.val());
+        $grades.val($this.val()).each(function () {
+            validateGrade($(this));
+        });
     });
-    
+
+    $deliverables.on('keyup', '.student_scores input[type=text]', function () {
+        validateGrade($(this));
+    });
+
+    /////////////////////
+    // Form Submission //
+    /////////////////////
+    $('#deliverables')
+        .on('ajax:send', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.fadeIn().text('Processing ...');
+        })
+        .on('ajax:success', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.text('Processed.');
+            setTimeout(function () {
+                $indicator.fadeOut();
+            }, 3000);
+        });
+
 </script>

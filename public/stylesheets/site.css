@@ -1,4 +1,11 @@
 
+*:focus {
+  outline: none;
+}
+
+input[type=text], textarea {
+  border: 1px solid #ccc;
+}
 
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
@@ -337,10 +344,8 @@ a.photobook_item img{
     }
 
     div.staff {
-        padding: 5px;
-        margin: 5px;
+        padding: 10px;
         background-color: rgb(224, 235, 235);
-        border-radius: 10px;
     }
 
     div.admin {
@@ -851,7 +856,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  * Grade book
  *************************/
 
-.team_member_photo{width:149px}
+.team_member_photo{width:117px}
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
@@ -926,6 +931,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     margin-top: 0;
     list-style: none;
     border: 1px solid #ccc;
+    border-bottom: none;
     position: relative;
 }
 
@@ -1052,14 +1058,76 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 #deliverables-search {
-    width: 665px;
+    line-height: 25px;
+    padding-left: 10px;
+    width: 658px;
+    margin-top: 8px;
 }
 
 .team-grade {
-    margin: 5px 0 15px 28px;
+    margin: 5px 0 15px 10px;
 }
 .team-grade-box {
     width: 40px;
+}
+input.invalid {
+   outline: 1px solid #f00;
+   border: 1px solid #f00;
+}
+
+.deliverable-submits {
+  margin-top: 10px;
+}
+
+#deliverable_submit {
+  border: none;
+  background: #900;
+  color: white;
+  padding: 7px 12px;
+  cursor: pointer;
+  margin-left: 0 !important;
+}
+#deliverable_submit:hover {
+  background: #b00;
+}
+
+.deliverable-photo {
+  padding: 2px 2px 0 !important;
+  background-color: #900 !important;
+}
+
+.team_member_photo {
+  text-align: center;
+}
+
+.team-member-name {
+  display: inline-block;
+  background: #900;
+  color: white;
+  width: 117px;
+  line-height: 28px;
+}
+
+.collapse-button {
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+  line-height: 30px;
+  position: relative;
+  top: -11px;
+}
+.collapse-button:hover {
+  background-color: #ffd;
+}
+
+#nothing-to-show {
+  display: block;
+  background: #FFF;
+  text-align: center;
+  line-height: 30px;
+  border: 1px solid #CCC;
+  width: 668px;
+  margin-top: 20px;
 }
 
 

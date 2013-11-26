@@ -59,7 +59,7 @@
 <% if deliverable.attachment_versions.length>1 %>
     <a id="show_all_assignments"><label >Show all assignment</label></a>
 <% end %>
-<%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable} do |f| %>
+<%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable }, :remote => true do |f| %>
     <div>
       <% if grade_type_points_or_weights == "Percentage" %>
           <p>
@@ -81,9 +81,11 @@
 
       <p>
         <%= f.label :feedback_comment, "Feedback Comments" %>
+        <!--
         (<%= link_to 'View History and Feedback', deliverable %>)
+        -->
         <br>
-        <%= f.text_area :feedback_comment, :size => "98x10" %>
+        <%= f.text_area :feedback_comment, :size => "102x10" %>
       </p>
     </div>
 
@@ -98,22 +100,27 @@
         <div class="team-grade">
           <span>Team Grade</span>
           <input type="text" class="team-grade-box">
+          / 
+          <span class="maximum-score">
+            <%= display_maximum_score %>
+          </span>
         </div>
-      <% if deliverable.is_team_deliverable? %>
-          <% for member in deliverable.team.members %>
-              <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id) %>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
-          <% end %>
-      <% else %>
-          <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, deliverable.creator_id) %>
-          <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => deliverable.creator, :deliverable_type => "individual"} %>
-      <% end %>
+
+        <% if deliverable.is_team_deliverable? %>
+            <% for member in deliverable.team.members %>
+                <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id) %>
+                <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+            <% end %>
+        <% else %>
+            <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, deliverable.creator_id) %>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => deliverable.creator, :deliverable_type => "individual"} %>
+        <% end %>
     </div>
 
 
     <br/>
 
-    <div class="rounded staff">
+    <div class="staff">
       <%= professor_image %>
       <span class="instructions">Only faculty can see this information</span>
 
@@ -126,17 +133,14 @@
       </p>
     </div>
 
-    <br/><br/><br/>
-
-
-    <p>
-
-    <div style="float: left; width: auto;">
-      <%= f.submit "Save and Email", :name => "submit" %>
-      <%= f.submit "Save as Draft", :name => "draft" %>
-      <%= link_to "Back to Pending List", course_deliverables_path(deliverable.course) %>
+    <div class='deliverable-submits'>
+        <%= f.submit "Save and Email", :name => "submit" %>
+        <%= f.submit "Save as Draft", :name => "draft" %>
+        <span class="submit-loading-indicator">
+        </span>
     </div>
-    <div style='clear:both;'></div>
-    </p>
 <% end %>
+</div>
+<div class="collapse-button">
+    &#8679; Close
 </div>
