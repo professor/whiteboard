@@ -38,11 +38,12 @@
                         <%= deliverable.assignment.task_number %>:
                     <% end %>
 
-                    <% latest_attachment = deliverable.attachment_versions.first %>
-                    <% unless latest_attachment.attachment_file_name.nil? %>
-                        <%= deliverable.assignment_name%> (<% link_to 'download', latest_attachment.attachment.url %>)
-                    <% else %>
-                        <%= deliverable.assignment_name %>
+                    <%= deliverable.assignment_name %>
+
+                    <% if deliverable.get_grade_status==:graded %>
+                        <% if deliverable.get_grading_date < deliverable.attachment_versions.first.submission_date %>
+                            <span style='color:red'>  New!</span>
+                        <% end %>
                     <% end %>
                 </div><div class="status <%= deliverable.get_grade_status.to_s %>">
                     <% if deliverable.get_grade_status == :ungraded %>
