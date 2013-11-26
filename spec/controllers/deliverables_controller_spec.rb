@@ -142,6 +142,18 @@ describe DeliverablesController do
         @expected_deliverable[0].should == @deliverable_turing_ungraded
 
       end
+
+      it 'shows all deliverables of only my teams is clicked' do
+        get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes', :search_box => ""}, :course_id =>  @course.id
+
+        @expected_deliverable = assigns(:deliverables)
+        @expected_deliverable.should have(3).items
+        @expected_deliverable[1].should == @deliverable_turing_graded
+        @expected_deliverable[0].should == @deliverable_turing_ungraded
+        @expected_deliverable[2].should == @deliverable_turing_drafted
+
+      end
+
       ## end add Team turing
 
     end

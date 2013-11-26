@@ -113,46 +113,6 @@ class DeliverablesController < ApplicationController
 
   end
 
-  def filter_deliverables
-
-    @course = Course.find_by_id(params[:course_id])
-
-    # Which filtering options are selected? (ungraded - drafted - graded)
-    @selected_options = []
-    params[:filter_options].collect do |grading_filter_option|
-      @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
-    end
-
-    #keeping last filtering options
-    #@last_filter_options = {:graded => params[:filter_options][:graded], :ungraded => params[:filter_options][:ungraded], :drafted => params[:filter_options][:drafted]}
-
-    if params[:filter_options][:is_my_teams] == 'yes'
-      @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
-    else
-      @faculty_deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id, { "is_my_teams" => 0 })
-    end
-
-    @deliverables = []
-
-    # Filter according to the selected grading options
-    @selected_options.each do  |option|
-      @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
-    end
-
-    # Filter by assignment names in drop down menu
-    unless params[:filter_options][:assignment_id].empty? or params[:filter_options][:assignment_id] == '-1'
-      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options][:assignment_id].to_i }
-    end
-
-    # Sort by task number, ascending
-    @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
-
-    respond_to do |format|
-      format.js #{ redirect_to course_deliverables_path(@course) }
-    end
-
-  end
-
   #temporary for mel
   def team_index_for_course
     @course = Course.find(params[:course_id])
