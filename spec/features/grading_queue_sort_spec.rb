@@ -32,24 +32,26 @@ describe 'Grading queue', :skip_on_build_machine => true, :js => true do
     login_with_oauth @faculty_fagan
     visit course_deliverables_path(@course)
    end
-  
-   it 'Can sort by individual/team name' do
-     # Grab the "Names" column: http://stackoverflow.com/questions/14745478/how-to-select-table-column-by-column-header-name-with-xpath
-     unsorted_names = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Name']/preceding-sibling::th)+1]").collect { |x| x.text }
-     
-     # Click "Names" so deliverables are sorted
-     find(:xpath, "//th", :text => "Name").click
-     
-     # Test that the rows are now sorted
-     (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Name']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_names.sort
+ 
+  it 'Can sort by name' do
+    unsorted_names = all(:xpath, '//div[@class="summary"]/div[@class="name"]').collect { |x| x.text }
+    find(:xpath, '//div[@class="deliverable-header"]/div[@class="name"]').click
+    (all(:xpath, '//div[@class="summary"]/div[@class="name"]').collect { |x| x.text}).should == unsorted_names.sort
    end
 
+
   it 'Can sort by assignment' do
-    pending
-     unsorted_assg = all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }
-     find(:xpath, "//th", :text => "Assignment").click
-     (all(:xpath, "//table/tbody/tr/td[count(//table/thead/tr/th[.='Assignment']/preceding-sibling::th)+1]").collect { |x| x.text }).should == unsorted_assg.sort
+    unsorted_assg = all(:xpath, '//div[@class="summary"]/div[@class="assignment"]').collect { |x| x.text }
+    find(:xpath, '//div[@class="deliverable-header"]/div[@class="assignment"]').click
+    (all(:xpath, '//div[@class="summary"]/div[@class="assignment"]').collect { |x| x.text}).should == unsorted_assg.sort
    end
+
+  it 'Can sort by status' do
+    unsorted_stats = all(:xpath, '//div[@class="summary"]/div[@class="status"]').collect { |x| x.text }
+    find(:xpath, '//div[@class="deliverable-header"]/div[@class="status"]').click
+    (all(:xpath, '//div[@class="summary"]/div[@class="status"]').collect { |x| x.text}).should == unsorted_stats.sort
+   end
+
 
  end
 
