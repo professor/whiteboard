@@ -2,11 +2,11 @@
 
 <div id="filters">
     <div id="individual-team-filters">
-        <div id="show-individual" class="filter active">
-            Show Individual
+        <div id="show-individuals" class="filter active">
+            Show Individuals
         </div>
-        <div id="show-team" class="filter active">
-            Show Team
+        <div id="show-teams" class="filter active">
+            Show Teams
         </div>
     </div>
 
@@ -17,8 +17,8 @@
         <div id="show-graded" class="filter">
             Show Graded
         </div>
-        <div id="show-draft" class="filter active">
-            Show Draft
+        <div id="show-drafted" class="filter active">
+            Show Drafted
         </div>
     </div>
 </div>
@@ -184,11 +184,11 @@
     /////////////
     function filter() {
 
-        var showIndividual = $('#show-individual').hasClass('active');
-        var showTeam = $('#show-team').hasClass('active');
+        var showIndividual = $('#show-individuals').hasClass('active');
+        var showTeam = $('#show-teams').hasClass('active');
         var showUngraded = $('#show-ungraded').hasClass('active');
         var showGraded = $('#show-graded').hasClass('active');
-        var showDraft = $('#show-draft').hasClass('active');
+        var showDraft = $('#show-drafted').hasClass('active');
 
         var selectedStatuses = [];
         if (showUngraded) selectedStatuses.push('Ungraded');
