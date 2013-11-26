@@ -1218,3 +1218,7 @@ a#cancelLink {
     width: 130px;
     text-decoration: none;
 }
+
+.submissionHead {
+    color: #990000;
+}
