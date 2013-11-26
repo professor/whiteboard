@@ -100,8 +100,8 @@ class DeliverablesController < ApplicationController
     end
 
     # Filter by assignment names in drop down menu
-    unless params[:filter_options][:assignment_id].empty? or params[:filter_options][:assignment_id] == '-1'
-      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options][:assignment_id].to_i }
+    unless params[:filter_options]["assignment_id"] == '-1'
+      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == params[:filter_options]["assignment_id"].to_i }
     end
 
     # Sort by task number, ascending
