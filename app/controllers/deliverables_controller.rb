@@ -35,7 +35,7 @@ class DeliverablesController < ApplicationController
       # Check what the session value is ::
       if( session[:team_selection] != nil )
         team_selection = session[:team_selection]
-        puts ">>> Team selection used from session preference: #{team_selection}"
+        #puts ">>> Team selection used from session preference: #{team_selection}"
       end
 
       # Remember that user selection overrides the session preference
@@ -48,7 +48,7 @@ class DeliverablesController < ApplicationController
 
       # For future requests save this preference back in the session variable
       session[:team_selection] = team_selection
-      puts "<<< Team selection: #{team_selection} set to session as preference"
+      #puts "<<< Team selection: #{team_selection} set to session as preference"
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
       @individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course, current_user, team_selection)

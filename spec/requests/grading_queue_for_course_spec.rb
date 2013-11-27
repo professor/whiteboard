@@ -86,13 +86,6 @@ describe 'When I visit the grading queue page,' do
       page.should have_content('Individual Deliverables')
     end
 
-    # Now check for default selections that need to happen
-    it 'should have My Teams selected by default' do
-      # Check for My Teams vs All Teams radio button selection
-      page.should have_checked_field('filter_my_teams')
-      page.should_not have_checked_field('filter_all_teams')
-    end
-
     it 'should have All selected under Assignments select one box' do
       # Check for Assignment: select one box content
       find('#selected_assignment').value.should eq '-1'
