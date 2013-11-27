@@ -255,15 +255,8 @@ class Grade < ActiveRecord::Base
       feedback = make_feedback_for_final_grade
     end
     url = hostname + "/courses/#{self.course.id}/student_grades"
-    # Begin Add Team Turing
-    if other_email == nil
-      recipient_list = self.student.email
-    else
-      recipient_list = [self.student.email, other_email]
-    end
-    # End Add Team Turing
-    #options = {:to => self.student.email,       # Delete Team Turing
-    options = {:to => recipient_list,            # Add Team Turing
+    options = {:to => self.student.email,
+               :cc => other_email,    # Added Team Turing
                :subject => "Grade for " + self.course.name,
                :message => feedback,
                :url_label => "Click here to view grade",

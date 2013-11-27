@@ -328,17 +328,8 @@ class Deliverable < ActiveRecord::Base
       feedback += self.assignment.formatted_maximum_score
       feedback += "\n"
     end
-
-    # Begin Add Team Turing
-    if other_email == nil
-      recipient_list = member_email
-    else
-      recipient_list = [member_email, other_email]
-    end
-    # End Add Team Turing
-
-    #options = {:to => member_email,      # Delete Team Turing
-    options = {:to => recipient_list,     # Add Team Turing
+    options = {:to => member_email,
+               :cc => other_email,  # Added Team Turing
                :subject => "Feedback for " + self.course.name,
                :message => feedback,
                :url_label => "View this deliverable",
