@@ -13,40 +13,15 @@ class EffortLogsController < ApplicationController
     if (!EffortLog.log_effort_week?(Date.today.cwyear, Date.today.cweek))
       #We skip weeks that students aren't taking courses
       logger.info "There is no class this week, so we won't remind students to log effort"
-#      flash[:error] = 'Students are taking courses this week'
-#     redirect_to(root_path)
       return
     end
 
-    @people_with_effort = Array.new
-    @people_without_effort = Array.new
     random_scotty_saying = ScottyDogSaying.all.sample.saying
 
     courses = Course.remind_about_effort_course_list
     courses.each do |course_id|
       create_midweek_warning_email_for_course(random_scotty_saying, course_id)
     end
-
-    #No longer required for all SE students
-    #(with_effort, without_effort) = create_midweek_warning_email_for_se_students(random_scotty_saying)
-    #@people_with_effort = @people_with_effort + with_effort
-    #@people_without_effort = @people_without_effort + without_effort
-
-    EffortLogMailer.midweek_warning_admin_report(random_scotty_saying, @people_without_effort, @people_with_effort).deliver
-
-    logger.info "There were #{@people_without_effort.size} without effort."
-    @people_without_effort.each do |user|
-      logger.debug "#{user}"
-    end
-    logger.info "There were #{@people_with_effort.size} with effort."
-    @people_with_effort.each do |user|
-      logger.debug "#{user}"
-    end
-
-#   respond_to do |format|
-#      format.html # index.html.erb
-#    end
-#    render(:text => "E-Mail sent")
 
   end
 
@@ -60,49 +35,11 @@ class EffortLogsController < ApplicationController
       logger.debug "**    user #{user.human_name}"
       effort_log = EffortLog.where(:user_id => user.id, :week_number => week_number, :year => year).first
       if (!user.emailed_recently(:effort_log))
-        if ((effort_log.nil? || effort_log.sum == 0)&&(!user.emailed_recently(:effort_log)))
-          #            logger.debug "**  sent email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
-          create_midweek_warning_email_send_it(random_scotty_saying, user.id)
-          @people_without_effort << user.human_name
-        else
-          logger.debug "**  no   email to #{user.human_name} (#{user.id}) for #{week_number} of #{year} in course #{course_id}"
-          @people_with_effort << user.human_name
-        end
+        EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
         user.effort_log_warning_email = Time.now
         user.save
       end
     end
-  end
-
-  def create_midweek_warning_email_for_se_students(random_scotty_saying)
-    users_without_effort = []
-    users_with_effort = []
-    year = Date.today.cwyear
-    week_number = Date.today.cweek
-    users = User.where(:masters_program => "SE", :is_active => true, :is_alumnus => false)
-
-    users.each do |user|
-      effort_log = EffortLog.latest_for_user(user.id, week_number, year)
-      if (!user.emailed_recently(:effort_log))
-        if ((effort_log.nil? || effort_log.sum == 0)&&(!user.emailed_recently(:effort_log)))
-          create_midweek_warning_email_send_it(random_scotty_saying, user.id)
-          users_without_effort << user.human_name
-        else
-          users_with_effort << user.human_name
-        end
-        user.effort_log_warning_email = Time.now
-        user.save
-      end
-    end
-    return users_without_effort, users_with_effort
-  end
-
-
-  def create_midweek_warning_email_send_it(random_scotty_saying, id)
-    user = User.find_by_id(id)
-    EffortLogMailer.midweek_warning(random_scotty_saying, user).deliver
-    #render(:text => "<pre>" + email.encoded + "</pre>")
-
   end
 
   def create_endweek_faculty_email
