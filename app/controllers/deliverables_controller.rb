@@ -397,9 +397,6 @@ class DeliverablesController < ApplicationController
 
     # Sort by task number, ascending
     @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
-
-    #maybe not needed
-    return @deliverables
   end
 end
 
