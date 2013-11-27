@@ -18,7 +18,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @assignments = Assignment.all(:conditions => ["course_id = ?", @course.id])
-    authorize! :read, @course
+    authorize! :read, Assignment
 
     respond_to do |format|
       format.html # index.html.erb
