@@ -180,40 +180,39 @@ describe 'When I visit the grading queue page,' do
     end
 
     describe 'should hava a tab, which ', :js => true do
-        before :each do
-          pending("Travis does not support testing javascript with browser, while RSpec does")
-          visit("/courses/#{@course.id}/deliverables?teams=all_teams")
-          @area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
-          @area.find('div#ungraded').click
-        #end
+      before :each do
+        pending("Travis does not support testing javascript with browser, while RSpec does")
+        visit("/courses/#{@course.id}/deliverables?teams=all_teams")
+        @area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
+        @area.find('div#ungraded').click
+      end
 
-        it "shows the grading page of an assignment when I click on it " do
+      it "shows the grading page of an assignment when I click on it " do
+        pending("Travis does not support testing javascript with browser, while RSpec does")
+        id = "#" + @deliverable_1.id.to_s
+        page.should have_css(id)
+      end
+       
+      context "shows the grading page of an assignment that " do
+        it "enables me to grade and save grades for team deliverables " do
           pending("Travis does not support testing javascript with browser, while RSpec does")
           id = "#" + @deliverable_1.id.to_s
-          page.should have_css(id)
+          page.find(id).fill_in('team_grade', :with => '5')
+          page.find("[name=draft]").click
+
+          visit("/courses/#{@course.id}/deliverables")
+
+          page.find('div#drafted').click
+          page.should have_field(@student_sally.id.to_s, :value => 5)
         end
-       
-        context "shows the grading page of an assignment that " do
 
-          it "enables me to grade and save grades for team deliverables " do
-            pending("Travis does not support testing javascript with browser, while RSpec does")
-            id = "#" + @deliverable_1.id.to_s
-            page.find(id).fill_in('team_grade', :with => '5')
-            page.find("[name=draft]").click
-
-            visit("/courses/#{@course.id}/deliverables")
-
-            page.find('div#drafted').click
-            page.should have_field(@student_sally.id.to_s, :value => 5)
-          end
-
-          it "only shows the latest version of the submitted assignment" do
-            pending("Travis does not support testing javascript with browser, while RSpec does")
-            table = page.find("table.twikiTable")
-            table.find("tr.twikiTableOdd").should_not be_nil
-            table.find("tr.twikiTableEven").should be_nil
-          end
+        it "only shows the latest version of the submitted assignment" do
+          pending("Travis does not support testing javascript with browser, while RSpec does")
+          table = page.find("table.twikiTable")
+          table.find("tr.twikiTableOdd").should_not be_nil
+          table.find("tr.twikiTableEven").should be_nil
         end
+      end
     end
   end
 end
