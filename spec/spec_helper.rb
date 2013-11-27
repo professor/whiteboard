@@ -82,6 +82,7 @@ FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
 include ControllerMacros
 
+## Code in courtesy of Team Turing
 ## Forces all threads to share the same connection. This works on
 ## Capybara because it starts the web server in a thread.
 #ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
