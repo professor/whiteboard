@@ -236,6 +236,7 @@
     }
     //to comment
     function showGradingDetail(){
+        var event = jQuery.Event('click');
         event.preventDefault();
 //        event.stopPropagation();
         var url = $(this).find("td a").attr("href");
