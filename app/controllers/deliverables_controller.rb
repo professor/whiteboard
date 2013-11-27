@@ -4,8 +4,6 @@ class DeliverablesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
-  #before_filter :load_last_filter_options
-  #after_filter :save_last_filter_options
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -16,16 +14,6 @@ class DeliverablesController < ApplicationController
   def index
     redirect_to my_deliverables_path(current_user)
   end
-
-  #def filter_options
-    #@filter_options = Hash.new
-    # Default filter values
-    #@filter_options[:ungraded] = '1'
-    #@filter_options[:drafted] = '1'
-    #@filter_options[:graded] = '1'
-    #@filter_options[:deliverable] = 'Deliverable'
-    #@filter_options[:is_my_teams] = '1'
-  #end
 
   def grading_queue_for_course
 
@@ -323,7 +311,6 @@ class DeliverablesController < ApplicationController
     end
 
     # Beg chg Turing Ira
-    #flash[:error] = @deliverable.update_grade(params, is_student_visible)
     flash[:error] = @deliverable.update_grade(params, is_student_visible, current_user.id)
     # End chg Turing Ira
     # Begin Add Team Turing
@@ -334,15 +321,14 @@ class DeliverablesController < ApplicationController
     # End Add Team Turing
     if @deliverable.update_feedback_and_notes(params[:deliverable])
       if is_student_visible==true
-        #@deliverable.send_deliverable_feedback_email(url_for(@deliverable))  # Delete Team Turing
-        @deliverable.send_deliverable_feedback_email(url_for(@deliverable), other_email)   # Add Team Turing
+        @deliverable.send_deliverable_feedback_email(url_for(@deliverable), other_email)
       end
     else
       flash[:error] << 'Unable to save feedback'
     end
 
 
-    #Obtain current selected filters
+    #Obtain current selected filters to update the queue accordingly
     @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
     @deliverables = filter_deliverables(@deliverable.course_id, @selected_filter_options)
 
@@ -375,15 +361,7 @@ class DeliverablesController < ApplicationController
   def filter_deliverables (course_id, filter_options)
     @course = Course.find_by_id(course_id)
 
-    @selected_options = []
-
-    # TODO! filter_options in now containing more values than graded, ungraded and drafted
-    filter_options.collect do |grading_filter_option|
-      @selected_options << grading_filter_option[0].to_sym if grading_filter_option[1] == "1"
-    end
-
     options = {}
-
     if filter_options[:search_box] != ""
       options[:search_string] = filter_options[:search_box]
     end
@@ -394,11 +372,16 @@ class DeliverablesController < ApplicationController
       options[:is_my_team] = 0
     end
 
+
+    #Filter in the model by course, professor, my teams and search input
+    @deliverables = []
     @faculty_deliverables = Deliverable.get_deliverables(course_id, current_user.id, options)
 
-    @deliverables = []
-
-    # Filter according to the selected grading options. If no filter options are selected, display every deliverables
+    # Filter once again according to the selected grading options. If no filter options are selected, display every deliverables
+    @selected_options = []
+    filter_options.collect do |filter_option|
+      @selected_options << filter_option[0].to_sym if filter_option[1] == "1"
+    end
     if @selected_options.size == 0
       @deliverables = @faculty_deliverables
     else
