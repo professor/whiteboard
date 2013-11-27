@@ -78,11 +78,37 @@
 <script>
     // Function that applies the selection preferences from session to the screen
     function applySelectionPreferences() {
+        // Read user selection from session and select appropriate
+        // team selection option.
         var team_selection = <%=session[:team_selection]%>;
         if(team_selection == 1) {
             $('#filter_my_teams').attr('checked', true);
         } else {
             $('#filter_all_teams').attr('checked', true);
+        }
+
+        // Select the Assignment Option selected by User
+        var assignmentSelected = window.localStorage.getItem("assignmentSelected");
+        console.log("Selected Assignment:: " + assignmentSelected);
+        if(assignmentSelected) {
+            $("#selected_assignment").val(assignmentSelected);
+        }
+
+        // Select the grading status options selected by User
+        var gradingStatus = window.localStorage.getItem("gradingStatus");
+        console.log("Grading status :: " + gradingStatus);
+        if(gradingStatus != null) {
+            // Uncheck all the check boxes in grading status section
+            $(".filter_status").removeAttr('checked');
+
+            // Now, check only the selections that were made previously
+            console.log("Grading status is Array? : " + (gradingStatus instanceof Array) );
+            var gradingStatusArr = gradingStatus.split(",");
+            gradingStatusArr.forEach(function(status) {
+              console.log("Status >> " + status);
+              $("#filter_" + status).prop('checked', true);
+            })
+            //for(var i = 0 ; i < gradingStatusArr.length; i++ )
         }
     }
 
@@ -178,6 +204,7 @@
 
         // Get the selected assignment
         var selected_item_val = $("#selected_assignment option:selected").attr('value');
+        window.localStorage.setItem("assignmentSelected", selected_item_val);
 
         // Filter by grading status
         var selected_grading_status = new Array();
@@ -185,6 +212,8 @@
         if ($("#filter_ungraded").is(':checked')) { selected_grading_status.push('ungraded'); }
         if ($("#filter_drafted").is(':checked')) { selected_grading_status.push('drafted'); }
         if ($("#filter_graded").is(':checked')) { selected_grading_status.push('graded'); }
+
+        window.localStorage.setItem("gradingStatus", selected_grading_status);
 
         // For all elements that are selected, show them in the result tables
         for(var i = 0; i < selected_grading_status.length; i++) {

@@ -91,13 +91,6 @@ describe 'When I visit the grading queue page,' do
       find('#selected_assignment').value.should eq '-1'
     end
 
-    it 'should have Ungraded, Drafted selected for grading status check boxes' do
-      # Check for grading status check box selections
-      page.should have_unchecked_field('filter_graded')
-      page.should have_checked_field('filter_ungraded')
-      page.should have_checked_field('filter_drafted')
-    end
-
     context 'should display my teams content ' do
       it 'under team deliverables table' do
         area = find('div#teamDelDiv').text
