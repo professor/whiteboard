@@ -25,7 +25,8 @@
         "ungraded": ($('#filter_options_ungraded').is(':checked') ? '1' : ''),
          "graded" : ($('#filter_options_graded').is(':checked') ? '1' : ''),
          "drafted": ($('#filter_options_drafted').is(':checked') ? '1' : ''),
-         "is_my_teams" : ($('#filter_options_is_my_teams_yes').is(':checked') ? 'yes' : '')
+         "is_my_teams" : ($('#filter_options_is_my_teams_yes').is(':checked') ? 'yes' : ''),
+         "assignment_id" : $("#filter_options_assignment_id").val()
       }
       $("#deliverable_current_filter_options").val('');
       $("#deliverable_current_filter_options").val(JSON.stringify(current_filter_options));
