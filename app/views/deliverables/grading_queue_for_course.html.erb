@@ -26,7 +26,7 @@
         <tr>
           <td>
             Teams: <br/>
-            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked onchange="update_teams($(this))" /><label for="filter_my_teams">My
+            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" onchange="update_teams($(this))" /><label for="filter_my_teams">My
             Teams</label> <br/>
             <input type="radio" id="filter_all_teams" name="teams" value="all_teams" onchange="update_teams($(this))"/><label for="filter_all_teams">All
             Teams</label>
@@ -76,6 +76,16 @@
 <br/>
 
 <script>
+    // Function that applies the selection preferences from session to the screen
+    function applySelectionPreferences() {
+        var team_selection = <%=session[:team_selection]%>;
+        if(team_selection == 1) {
+            $('#filter_my_teams').attr('checked', true);
+        } else {
+            $('#filter_all_teams').attr('checked', true);
+        }
+    }
+
     // Function that is called when selection changes between my_teams and all_teams
     // This makes an AJAX call to the server to get updated content and update
     // team deliverables and individual deliverables divs.
@@ -298,6 +308,9 @@
     $(document).ready(function () {
 
         $(document).tooltip();
+
+        // Set the filter values with previous values from session
+        applySelectionPreferences();
 
         // Invoke the below function on page load.
         preparePageToMatchFilter();

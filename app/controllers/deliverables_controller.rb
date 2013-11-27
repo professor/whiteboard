@@ -32,10 +32,23 @@ class DeliverablesController < ApplicationController
       # By Default fetch data for my teams
       team_selection = 1 # MY_TEAMS
 
-      # If data is requested for MY_TEAMS, filter so.
+      # Check what the session value is ::
+      if( session[:team_selection] != nil )
+        team_selection = session[:team_selection]
+        puts ">>> Team selection used from session preference: #{team_selection}"
+      end
+
+      # Remember that user selection overrides the session preference
       if params[:teams] == "all_teams"
         team_selection = 2 # ALL_TEAMS
       end
+      if params[:teams] == 'my_teams'
+        team_selection = 1 # MY_TEAMS
+      end
+
+      # For future requests save this preference back in the session variable
+      session[:team_selection] = team_selection
+      puts "<<< Team selection: #{team_selection} set to session as preference"
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
       @individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course, current_user, team_selection)
