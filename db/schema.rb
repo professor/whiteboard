@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130918084505) do
+ActiveRecord::Schema.define(:version => 20131119222114) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "number"
     t.string   "semester"
     t.string   "mini"
-    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "primary_faculty_label"
@@ -51,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "twiki_url"
     t.boolean  "remind_about_effort"
     t.string   "short_name"
+    t.integer  "year"
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.string   "curriculum_url"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "year"
     t.integer  "user_id"
     t.integer  "curriculum_comment_type_id"
-    t.string   "comment"
+    t.string   "comment",                    :limit => 4000
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "human_name"
@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
+  add_index "deliverables", ["course_id", "creator_id", "assignment_id"], :name => "index_deliverables_on_course_id_and_creator_id_and_assgnmnt_id"
+  add_index "deliverables", ["course_id", "team_id", "assignment_id"], :name => "index_deliverables_on_course_id_and_team_id_and_assignment_id"
   add_index "deliverables", ["course_id"], :name => "index_deliverables_on_course_id"
   add_index "deliverables", ["creator_id"], :name => "index_deliverables_on_creator_id"
   add_index "deliverables", ["team_id"], :name => "index_deliverables_on_team_id"
@@ -183,7 +185,9 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.datetime "updated_at"
   end
 
+  add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_courses_people_on_course_id_and_person_id", :unique => true
   add_index "faculty_assignments", ["course_id", "user_id"], :name => "index_faculty_assignments_on_course_id_and_person_id", :unique => true
+  add_index "faculty_assignments", ["course_id"], :name => "index_faculty_assignments_on_course_id"
 
   create_table "grades", :force => true do |t|
     t.integer  "course_id"
@@ -196,19 +200,20 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
   end
 
   add_index "grades", ["assignment_id"], :name => "index_grades_on_assignment_id"
+  add_index "grades", ["course_id", "student_id", "assignment_id"], :name => "index_grades_on_course_id_and_student_id_and_assignment_id"
   add_index "grades", ["course_id"], :name => "index_grades_on_course_id"
   add_index "grades", ["student_id"], :name => "index_grades_on_student_id"
 
   create_table "grading_rules", :force => true do |t|
     t.string   "grade_type"
-    t.float    "A_grade_min"
-    t.float    "A_minus_grade_min"
-    t.float    "B_plus_grade_min"
-    t.float    "B_grade_min"
-    t.float    "B_minus_grade_min"
-    t.float    "C_plus_grade_min"
-    t.float    "C_grade_min"
-    t.float    "C_minus_grade_min"
+    t.float    "A_grade_min",                 :default => 94.0
+    t.float    "A_minus_grade_min",           :default => 90.0
+    t.float    "B_plus_grade_min",            :default => 87.0
+    t.float    "B_grade_min",                 :default => 83.0
+    t.float    "B_minus_grade_min",           :default => 80.0
+    t.float    "C_plus_grade_min",            :default => 78.0
+    t.float    "C_grade_min",                 :default => 74.0
+    t.float    "C_minus_grade_min",           :default => 70.0
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -332,7 +337,7 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
   create_table "peer_evaluation_learning_objectives", :force => true do |t|
     t.integer  "user_id"
     t.integer  "team_id"
-    t.string   "learning_objective"
+    t.text     "learning_objective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -536,7 +541,6 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "email"
     t.string   "twiki_space"
     t.string   "tigris_space"
-    t.integer  "course_id"
     t.integer  "primary_faculty_id"
     t.integer  "secondary_faculty_id"
     t.string   "livemeeting"
@@ -546,6 +550,7 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.date     "peer_evaluation_first_email"
     t.date     "peer_evaluation_second_email"
     t.boolean  "peer_evaluation_do_point_allocation"
+    t.integer  "course_id"
     t.boolean  "updating_email"
   end
 
@@ -610,9 +615,9 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
+    t.datetime "sponsored_project_effort_last_emailed"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
-    t.datetime "sponsored_project_effort_last_emailed"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"
@@ -700,9 +705,9 @@ ActiveRecord::Schema.define(:version => 20130918084505) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "yammer_created"
+    t.datetime "sponsored_project_effort_last_emailed"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
-    t.datetime "sponsored_project_effort_last_emailed"
     t.string   "github"
     t.string   "course_tools_view"
     t.string   "remember_token"

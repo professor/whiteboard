@@ -5,20 +5,24 @@ class PeerEvaluationEmail
 
     courses_with_first_date = Course.first_email_on_peer_evaluation_is_today
     courses_with_second_date = Course.second_email_on_peer_evaluation_is_today
+    sent_emails = 0
 
     courses_with_first_date.each do |course|
       course.teams.each do |team|
-        #puts "Team: " + team.name + " (" + team.id.to_s + ") "
+        puts "Team: " + team.name + " (" + team.id.to_s + ") "
         send_peer_evaluation_email(team, team.peer_evaluation_message_one, team.peer_evaluation_message_one)
+        sent_emails += 1
       end
     end
 
     courses_with_second_date.each do |course|
       course.teams.each do |team|
-        #puts "Team: " + team.name + " (" + team.id.to_s + ") "
+        puts "Team: " + team.name + " (" + team.id.to_s + ") "
         send_peer_evaluation_email(team, I18n.t(:peer_evaluation_message_two_done), I18n.t(:peer_evaluation_message_two_incomplete))
+        sent_emails += 1
       end
     end
+    sent_emails
   end
 
 
@@ -34,8 +38,8 @@ class PeerEvaluationEmail
         to_address_incomplete << user.email
       end
     end
-    send_email(team, faculty, to_address_done, done_message)
-    send_email(team, faculty, to_address_incomplete, incomplete_message)
+    send_email(team, faculty, to_address_done, done_message) unless to_address_done.empty?
+    send_email(team, faculty, to_address_incomplete, incomplete_message) unless to_address_incomplete.empty?
   end
 
 

@@ -65,32 +65,29 @@ class CoursesController < ApplicationController
   # GET /courses/1.xml
   def show
     @course = Course.find(params[:id])
-    if @course.curriculum_url && @course.curriculum_url.include?("whiteboard.sv.cmu.edu/pages/")
-      @whiteboard_curriculum_page = Page.where(:url => @course.curriculum_url.split("/pages/")[1]).first
+    first_version_of_course = Course.first_offering_for_course_name(@course.name)
+    @whiteboard_curriculum_page = first_version_of_course.pages[0] if first_version_of_course.pages.present?
+
+     if (can? :teach, @course) || current_user.is_admin?
+      @students = @course.registered_students_and_students_on_teams_hash
+     end
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml { render :xml => @course }
     end
+  end
+
+  def tool_support
+    @course = Course.find(params[:id])
+    authorize! :teach, @course
 
     teams = Team.where(:course_id => params[:id])
-
     @emails = []
     teams.each do |team|
       team.members.each do |user|
         @emails << user.email
       end
-    end
-
-    @students = Hash.new
-    @course.registered_students.each do |student|
-      @students[student.human_name] = {:hub => true}
-    end
-    @course.teams.each do |team|
-      team.members.each do |user|
-        @students[user.human_name] = (@students[user.human_name] || Hash.new).merge({:team => true, :team_name => team.name})
-      end
-    end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @course }
     end
   end
 

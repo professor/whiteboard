@@ -51,11 +51,20 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
 
   has_attached_file :photo_first, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_first/:style/:filename"
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :path => "people/:id/photo_first/:style/:filename"
   has_attached_file :photo_second, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_second/:style/:filename"
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :path => "people/:id/photo_second/:style/:filename"
   has_attached_file :photo_custom, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml", :path => "people/:id/photo_custom/:style/:filename"
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :path => "people/:id/photo_custom/:style/:filename"
 
   validates_attachment_content_type :photo_first, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_first.file?"
   validates_attachment_content_type :photo_second, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_second.file?"
@@ -196,12 +205,15 @@ class User < ActiveRecord::Base
     return phones
   end
 
+  # The regular expression matches on twiki usernames. Ie AliceSmithJones re
+  # This does not work with numbers or characters in the firstname field
+  # http://rubular.com/
+  def self.camelcase_twiki_regex
+    /([A-Z][a-z]*)([A-Z][\w]*)/
+  end
 
   def self.parse_twiki(username)
-    # The regular expression matches on twiki usernames. Ie AliceSmithJones returns the array ["Alice", "SmithJones"]
-    # This does not work with numbers or characters in the firstname field
-    # http://rubular.com/
-    match = username.match /([A-Z][a-z]*)([A-Z][\w]*)/
+    match = username.match camelcase_twiki_regex
     if match.nil?
       return nil
     else

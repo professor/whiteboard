@@ -273,95 +273,9 @@ class PeerEvaluationController < ApplicationController
 
 
   def email_reports
-
   end
-
-
-  def create_please_do_evaluation_email
-
-    teams = Team.all
-    emails_sent = 0
-
-    #teams = Team.find(:all, :conditions => ["id = ? ", "215"])
-    teams.each do |team|
-      #puts "Team: " + team.name + " (" + team.id.to_s + ") "
-      unless team.course.peer_evaluation_first_email.nil? && team.course.peer_evaluation_second_email.nil?
-        first_date_p = Date.today == team.course.peer_evaluation_first_email.to_date
-        second_date_p = Date.today == team.course.peer_evaluation_second_email.to_date
-
-        if ((first_date_p) ||
-            (second_date_p))
-
-          log_peer_evaluation(team, first_date_p, second_date_p)
-
-          if first_date_p
-            send_first_peer_evaluation_email(team)
-            emails_sent += 1
-          elsif second_date_p
-            send_second_peer_evaluation_email(team)
-            emails_sent += 2
-          end
-
-        end
-      end
-    end
-
-    return emails_sent
-  end
-
 
   private
-
-  def log_peer_evaluation(team, today_is_first_date, today_is_second_date)
-    puts "Team: " + team.name + " (" + team.id.to_s + ") "
-    puts "First email date: " + team.course.peer_evaluation_first_email.to_s
-    puts "Second email date: " + team.course.peer_evaluation_second_email.to_s
-    puts "Today: " + Date.today.to_s
-    puts "1st comparison is true " if today_is_first_date
-    puts "2nd comparison is true " if today_is_second_date
-    puts ""
-
-  end
-
-
-  def send_first_peer_evaluation_email(team)
-    #from_address = "scotty.dog@sv.cmu.edu"
-    faculty = team.faculty_email_addresses()
-
-    to_address = []
-    team.members.each do |user|
-      to_address << user.email
-    end
-    send_email(team, faculty, to_address, team.peer_evaluation_message_one)
-  end
-
-
-  def send_second_peer_evaluation_email(team)
-    #from_address = "scotty.dog@sv.cmu.edu"
-    faculty = team.faculty_email_addresses()
-
-    to_address_done = []
-    to_address_incomplete = []
-    team.members.each do |user|
-      if PeerEvaluationReview.is_completed_for?(user.id, team.id)
-        to_address_done << user.email
-      else
-        to_address_incomplete << user.email
-      end
-    end
-    send_email(team, faculty, to_address_done, team.peer_evaluation_message_two_done)
-    send_email(team, faculty, to_address_incomplete, team.peer_evaluation_message_two_incomplete)
-  end
-
-
-  def send_email(team, faculty, to_address, message)
-    options = {:to => to_address, :cc => faculty, :bcc => "rails.app@sv.cmu.edu",
-               :subject => "peer evaluation for team #{team.name}",
-               :message => message, :url => "http://whiteboard.sv.cmu.edu/peer_evaluation/edit_evaluation/#{team.id}", # + edit_peer_evaluation_path(team))
-               :url_label => "Complete the survey now"}
-    GenericMailer.email(options).deliver
-  end
-
 
   def generate_report_for_student(user_id, team_id)
     report = PeerEvaluationReport.where(:recipient_id => user_id, :team_id => team_id).first
