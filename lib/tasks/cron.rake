@@ -13,7 +13,7 @@ task :cron do
 
  puts "---Running task :cron"
 
- if Date.today.wday == 5 # run on Fridays
+ if Date.today.wday == 5 ||  Date.today.wday == 0 # run on Fridays and Sundays
    puts "----Updating cmu:effort_log_midweek_warning_email"
    Rake::Task['cmu:effort_log_midweek_warning_email'].invoke
    puts "----done."

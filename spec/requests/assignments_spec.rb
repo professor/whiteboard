@@ -9,6 +9,7 @@ describe "Assignments" do
     #@course = FactoryGirl.create(:fse)
     @assignment=FactoryGirl.create(:assignment_fse)
     @course = @assignment.course
+    @course.faculty << @faculty_fagan
 
   end
   describe "GET /assignments" do
