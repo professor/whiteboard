@@ -1,4 +1,24 @@
 <div id="contentToGrade_<%=@deliverable.id%>">
+  <% if current_user.is_student %>
+      <% if @deliverable.course %>
+          <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
+      <% else %>
+          <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
+      <% end %>
+      <% content_for :title, title %>
+      <h1><%= title %></h1>
+
+      <p>
+        <% if @deliverable.is_team_deliverable? %>
+            Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name%>
+        <% else %>
+            Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name%>
+        <% end %>
+
+        (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
+      </p>
+  <% end %>
+
   <th><h2><%= nomenclature_assignment_or_deliverable %> details:</h2></th>
 
   <%= link_to_function "Show All Versions", "if($(this).text().toString()==='Show Latest Version Only'){ $('#allDeliverablesDetails_#{@deliverable.id} tbody tr').hide(); $('#title_#{@deliverable.id}').show(); $('#version_0_#{@deliverable.id}').show(); $(this).text('Show All Versions'); if( $('#stud_upl_new_v') ) { $('#stud_upl_new_v').show(); } }else{ $('#allDeliverablesDetails_#{@deliverable.id} tbody tr').hide(); $('#allDeliverablesDetails_#{@deliverable.id} tbody tr').show(); $(this).text('Show Latest Version Only'); }" %>
