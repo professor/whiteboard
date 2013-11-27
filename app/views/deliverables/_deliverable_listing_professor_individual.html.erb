@@ -45,11 +45,11 @@
           <div id="<%=grade_status%>" style="float: left;">&nbsp;</div>&nbsp;<%=grade_status.titlecase%>
         </td>
 
-        <td id="nw">
+        <td id="nw" class="gradeTab">
           <% if  grade_status=='graded' %>
-              <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'], {:class => 'grading_action', :disabled => 'disabled'} %>
+              <%= link_to 'Review Grade', '/deliverables/' + deliverable['deliverable_id'], {:class => 'grading_action', :id => 'grLink'} %>
           <% else %>
-              <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'], {:class => 'grading_action', :disabled => 'disabled'} %>
+              <%= link_to 'Give Grade', '/deliverables/' + deliverable['deliverable_id'], {:class => 'grading_action', :id => 'grLink'} %>
           <% end %>
         </td>
       </tr>

@@ -253,6 +253,11 @@
 
     //to comment
     function prepareSinglePageFunctions(){
+        // Make the Give grade/Review grade link not do anything on click.
+        $('tr a#grLink').click( function(event) {
+            event.preventDefault();
+        })
+
         console.log($(".grade_row").attr('class'));
         $(".grade_row").click(showGradingDetail);   
         // Enabling tooltips
@@ -263,7 +268,6 @@
             $(this).val(score);
           });
         });
-
     }
 
     //to comment
