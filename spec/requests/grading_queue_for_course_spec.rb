@@ -179,9 +179,10 @@ describe 'When I visit the grading queue page,' do
       end
     end
 
-    describe 'should hava a tab, which ', :js => true do
+# :js => true should only be used locally, Selenium uses Firefox to test JavaScript requests, while it is not supported in Travis CI
+#    describe 'should hava a tab, which ', :js => true do
+    describe 'should hava a tab, which ' do
       before :each do
-        pending("Travis does not support testing javascript with browser, while RSpec does")
         visit("/courses/#{@course.id}/deliverables?teams=all_teams")
         @area = page.find_by_id('teamDelDiv').find('tr.twikiTableOdd.ungraded')
         @area.find('div#ungraded').click
