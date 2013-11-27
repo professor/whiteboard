@@ -68,7 +68,7 @@ class Deliverable < ActiveRecord::Base
 
     where_clause_individual_deliverable = " AND d.team_id IS NULL AND d.creator_id IN (SELECT inner_ta.user_id FROM teams inner_t, team_assignments inner_ta WHERE inner_t.id = inner_ta.team_id AND inner_t.primary_faculty_id = ?)"
 
-    where_clause_search = " AND (u1.first_name ILIKE ? OR u1.last_name ILIKE ? OR u1.human_name ILIKE ? OR u1.email ILIKE ? OR u2.first_name ILIKE ? OR u2.last_name ILIKE ? OR u2.human_name ILIKE ? OR u2.email ILIKE ? OR t.name ILIKE ?)"
+    where_clause_search = " AND (u1.first_name ILIKE ? OR u1.last_name ILIKE ? OR u1.human_name ILIKE ? OR u1.email ILIKE ? OR u1.webiso_account ILIKE ? OR u2.first_name ILIKE ? OR u2.last_name ILIKE ? OR u2.human_name ILIKE ? OR u2.email ILIKE ? OR u2.webiso_account ILIKE ? OR t.name ILIKE ?)"
 
     queue = []
 
@@ -93,7 +93,7 @@ class Deliverable < ActiveRecord::Base
 
       if has_search_string
         sql = sql_template + where_clause_course + where_clause_search
-        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
       else
         sql = sql_template + where_clause_course
         deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
@@ -103,10 +103,10 @@ class Deliverable < ActiveRecord::Base
 
       if has_search_string
         sql = sql_template + where_clause_course + where_clause_team_deliverable + where_clause_search
-        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
 
         sql = sql_template + where_clause_course + where_clause_individual_deliverable + where_clause_search
-        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
       else
         sql = sql_template + where_clause_course + where_clause_team_deliverable
         team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id]).uniq
@@ -129,7 +129,7 @@ class Deliverable < ActiveRecord::Base
 
       if has_search_string
         sql = sql_template + where_clause_course + where_clause_search
-        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
       else
         sql = sql_template + where_clause_course
         deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
