@@ -29,12 +29,12 @@ class DeliverablesController < ApplicationController
     @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      # By Default fetch data for all teams
-      team_selection = 2 # ALL_TEAMS
+      # By Default fetch data for my teams
+      team_selection = 1 # MY_TEAMS
 
       # If data is requested for MY_TEAMS, filter so.
-      if params[:teams] == "my_teams"
-        team_selection = 1 # MY_TEAMS
+      if params[:teams] == "all_teams"
+        team_selection = 2 # ALL_TEAMS
       end
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
