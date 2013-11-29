@@ -199,9 +199,9 @@ class Course < ActiveRecord::Base
 #    self.course_start + self.course_length - 1
 #  end
 
-#  def sortable_value
-#    self.year.to_i * 100 + self.course_end
-#  end
+  def sortable_value
+    self.year.to_i * 100 + CourseService.course_end(self)
+  end
 
 
   def self.remind_about_effort_course_list

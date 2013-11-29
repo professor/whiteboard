@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   def index
     @all_courses = true
     @courses = Course.order("year DESC, semester DESC, number ASC").all
-    @courses = @courses.sort_by { |c| -CourseService.sortable_value(@course) } # note the '-' is for desc sorting
+    @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     #@courses_services = CourseServices.order("year DESC, semester DESC, number ASC").all
     #@courses_services = @courses_services.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
 
