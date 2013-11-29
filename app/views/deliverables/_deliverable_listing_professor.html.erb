@@ -63,6 +63,44 @@
         </li>
     <% end %>
 </ul>
+<!-- List of Teams associated to the Primary Faculty ends here -->
+<ul id="all_deliverables">
+    <% all_deliverables.each do |deliverable| %>
+        <li class="deliverable" id="deliverable-<%= deliverable.id %>">
+            <div class="summary">
+                <div class="name">
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                </div><div class="assignment">
+                    <% if deliverable.assignment.task_number %>
+                        <%= deliverable.assignment.task_number %>:
+                    <% end %>
+
+                    <%= deliverable.assignment_name %>
+
+                    <% if deliverable.get_grade_status==:graded %>
+                        <% if deliverable.get_grading_date < deliverable.attachment_versions.first.submission_date %>
+                            <span style='color:red'>  New!</span>
+                        <% end %>
+                    <% end %>
+                </div><div class="status <%= deliverable.get_grade_status.to_s %>">
+                    <% if deliverable.get_grade_status == :ungraded %>
+                        Ungraded
+                    <% elsif deliverable.get_grade_status == :drafted %>
+                        Drafted
+                    <% else %>
+                        Graded
+                    <% end %>
+                </div>
+            </div>
+            <div class="dropdown-loader" style="display: none;">
+                <img src="/images/ajax-loader2.gif" alt="">
+            </div>
+            <div class="dropdown">
+            </div>
+        </li>
+    <% end %>
+</ul>
 <div id="nothing-to-show">
     Nothing to show. Choose a filter :)
 </div>
@@ -306,4 +344,15 @@
             }, 3000);
         });
 
+$(document).ready(function(){
+
+
+$("#myonoffswitch").click(function(){
+
+$("#deliverables").toggle();
+$("#all_deliverables").toggle();
+
+});
+
+});
 </script>

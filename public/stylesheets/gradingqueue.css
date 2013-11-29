@@ -57,7 +57,7 @@
 
     .onoffswitch {
     position: relative; width: 120px;
-    float: right; bottom: 95px;
+    float: right; bottom: 33px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
     }
     .onoffswitch-checkbox {
@@ -80,12 +80,12 @@
     .onoffswitch-inner:before {
     content: "My Teams";
     padding-left: 10px;
-    background-color: #2FCCFF; color: #FFFFFF;
+    background-color: #990000; color: #FFFFFF;
     }
     .onoffswitch-inner:after {
     content: "All Teams";
     padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
+    background-color: #990000; color: #FFFFFF;
     text-align: right;
     }
     .onoffswitch-switch {

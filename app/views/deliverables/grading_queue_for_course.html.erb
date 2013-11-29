@@ -3,6 +3,17 @@
 
 <h2 style="font-size: 17pt; text-align: left;">Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
 
-<%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+
+<!-- Toggle Button CSS Begins-->    
+    <div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+    <label class="onoffswitch-label" for="myonoffswitch">
+    <div class="onoffswitch-inner"></div>
+    <div class="onoffswitch-switch"></div>
+    </label>
+    </div> 
+
+
+<%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables,:all_deliverables => @all_team_deliverables, :skip_course_column => true} %>
 <br/>
 

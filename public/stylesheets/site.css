@@ -934,6 +934,19 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border-bottom: none;
     position: relative;
 }
+#all_deliverables {
+
+   width: 668px;
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    position: relative;
+    display: none;
+
+
+}
 
 .deliverable {
     list-style: none;
