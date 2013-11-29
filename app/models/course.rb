@@ -254,7 +254,7 @@ class Course < ActiveRecord::Base
   def self.last_offering(course_number)
     #TODO: move this sorting into the database
     offerings = Course.where(:number => course_number).all
-    offerings = offerings.sort_by { |c| -CourseService.sortable_value(c) } # note the '-' is for desc sorting
+    offerings = offerings.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
     return offerings.first
   end
 
