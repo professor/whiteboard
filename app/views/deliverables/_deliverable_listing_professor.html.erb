@@ -64,6 +64,9 @@
     <% end %>
 </ul>
 <!-- List of Teams associated to the Primary Faculty ends here -->
+<div id="deliverable-header-all">
+    <div class="name">Name</div><div class="assignment">Assignment</div><div class="status">Status</div>
+</div>
 <ul id="all_deliverables">
     <% all_deliverables.each do |deliverable| %>
         <li class="deliverable" id="deliverable-<%= deliverable.id %>">
@@ -167,6 +170,65 @@
         return 0;
     }
 
+
+     /////////////////////////////
+    // Accordion for all teams  //
+    /////////////////////////////
+    $('#all_deliverables').on('click', '.deliverable .summary', function () {
+        var $deliverable = $(this).parent();
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        var $dropdownLoader = $deliverable.find('.dropdown-loader');
+        var deliverableId = $deliverable.attr('id').split('-')[1];
+
+        if ($deliverable.data('expanded')) {
+            $deliverable.data('expanded', false);
+            $deliverableDropdown.animate({
+                height: 0,
+                opacity: 0
+            });
+        } else {
+            $dropdownLoader.show();
+            $.ajax({
+                url: '/deliverables/' + deliverableId + '/dropdown',
+                type: 'GET',
+                success: function (data) {
+                    $deliverableDropdown.html(data);
+                    var $dropdownMain = $deliverableDropdown.find('.dropdown-main');
+                    $deliverableDropdown.animate({
+                        height: $dropdownMain.height() + 50,
+                        opacity: 1
+                    });
+                    $deliverable.data('expanded', true);
+                    $dropdownLoader.hide();
+                }
+            });
+        }
+    }).on('click', '.collapse-button', function () {
+        var $deliverable = $(this).closest('.deliverable');
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        $deliverable.data('expanded', false);
+        $deliverableDropdown.animate({
+            height: 0,
+            opacity: 0
+        });
+        console.log($deliverable.position().top)
+        $('html, body').animate({
+            scrollTop: $deliverable.offset().top
+        });
+    });
+
+
+    function strcmp(a, b) {
+        if (a > b) {
+            return 1;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 0;
+    }
+
+
     /////////////
     // Sorters //
     /////////////
@@ -216,8 +278,60 @@
     function checkNothingToShow() {
         $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
     }
+    
 
-        
+     ///////////////////////////
+    // Sorters for all teams //
+   ///////////////////////////
+    $('#deliverable-header-all').on('click', 'div', function () {
+        var $header = $(this);
+        var orderBy = $header.attr('class');
+        var order;
+
+        $('#deliverable-header-all>div').each(function () {
+            var $this = $(this);
+            var text = $this.text();
+            var endChar = text.substr(-1);
+            if (endChar === '▲' || endChar === '▼') {
+                $this.text(text.slice(0, -2));
+            }
+        });
+
+        var text = $header.text();
+        // 1 for ascending, -1 for descending
+        switch ($header.data('order')) {
+            case 1:
+                order = -1;
+                $header.text(text + ' ▲');
+                break;
+            case -1:
+                order = 1;
+                $header.text(text + ' ▼');
+                break;
+            default:
+                order = 1;
+                $header.text(text + ' ▼');
+        }
+        $header.data('order', order);
+
+        $deliverables.sort(function (a, b) {
+            var $a = $(a);
+            var $b = $(b);
+            var textA = $a.find('.' + orderBy).text();
+            var textB = $b.find('.' + orderBy).text();
+            return strcmp(textA, textB) * order;
+        });
+        $('#all_deliverables').empty().html($deliverables);
+
+        return false;
+    });
+
+    function checkNothingToShow() {
+        $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
+    }
+    
+
+
     /////////////
     // Filters //
     /////////////
@@ -344,12 +458,32 @@
             }, 3000);
         });
 
+     ///////////////////////////////////
+    // Form Submission for all teams //
+    //////////////////////////////////
+    $('#all_deliverables')
+        .on('ajax:send', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.fadeIn().text('Processing ...');
+        })
+        .on('ajax:success', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.text('Processed.');
+            setTimeout(function () {
+                $indicator.fadeOut();
+            }, 3000);
+        });   
+
 $(document).ready(function(){
 
 
 $("#myonoffswitch").click(function(){
 
 $("#deliverables").toggle();
+$("#deliverable-header").toggle();
+$("#deliverable-header-all").toggle();
 $("#all_deliverables").toggle();
 
 });
