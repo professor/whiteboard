@@ -97,16 +97,16 @@
 
 
     <div class="student_scores">
-        <div class="team-grade">
-          <span>Team Grade</span>
-          <input type="text" class="team-grade-box">
-          / 
-          <span class="maximum-score">
-            <%= display_maximum_score %>
-          </span>
-        </div>
-
         <% if deliverable.is_team_deliverable? %>
+            <div class="team-grade">
+              <span>Team Grade</span>
+              <input type="text" class="team-grade-box">
+              / 
+              <span class="maximum-score">
+                <%= display_maximum_score %>
+              </span>
+            </div>
+
             <% for member in deliverable.team.members %>
                 <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id) %>
                 <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
