@@ -90,19 +90,25 @@ class Grade < ActiveRecord::Base
       grade = Grade.get_grade(course_id, assignment_id, student_id)
       if grade.nil?
         grade = Grade.new({:course_id => course_id, :assignment_id => assignment_id, :student_id => student_id,
-                           :score => score, :is_student_visible => is_student_visible})
+                           :score => score, :is_student_visible => is_student_visible}).save
+        
+        raise Exception.new(grade.id)
       end
 
       if course.grading_rule.validate_score(score)
+
         grade.score = score.upcase
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
         end
+
         grading_result = grade.save
+
       else
         grading_result = false
       end
     end
+
     grading_result
   end
 

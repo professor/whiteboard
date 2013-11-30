@@ -2,11 +2,11 @@
 
 <div id="filters">
     <div id="individual-team-filters">
-        <div id="show-individual" class="filter active">
-            Show Individual
+        <div id="show-individuals" class="filter active">
+            Show Individuals
         </div>
-        <div id="show-team" class="filter active">
-            Show Team
+        <div id="show-teams" class="filter active">
+            Show Teams
         </div>
     </div>
 
@@ -17,8 +17,8 @@
         <div id="show-graded" class="filter">
             Show Graded
         </div>
-        <div id="show-draft" class="filter active">
-            Show Draft
+        <div id="show-drafted" class="filter active">
+            Show Drafted
         </div>
     </div>
 </div>
@@ -108,7 +108,6 @@
     Nothing to show. Choose a filter :)
 </div>
 
-
 <script type="text/javascript">
     var $deliverables = $('.deliverable');
 
@@ -170,10 +169,9 @@
         return 0;
     }
 
-
-     /////////////////////////////
-    // Accordion for all teams  //
-    /////////////////////////////
+    //////////////////////////////
+    // Accordion for all teams //
+    ////////////////////////////
     $('#all_deliverables').on('click', '.deliverable .summary', function () {
         var $deliverable = $(this).parent();
         var $deliverableDropdown = $deliverable.find('.dropdown');
@@ -229,6 +227,7 @@
     }
 
 
+
     /////////////
     // Sorters //
     /////////////
@@ -278,11 +277,10 @@
     function checkNothingToShow() {
         $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
     }
-    
 
-     ///////////////////////////
-    // Sorters for all teams //
-   ///////////////////////////
+     //////////////////////////
+    // Sorters for all teams//
+    /////////////////////////
     $('#deliverable-header-all').on('click', 'div', function () {
         var $header = $(this);
         var orderBy = $header.attr('class');
@@ -329,19 +327,18 @@
     function checkNothingToShow() {
         $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
     }
-    
 
-
+        
     /////////////
     // Filters //
     /////////////
     function filter() {
 
-        var showIndividual = $('#show-individual').hasClass('active');
-        var showTeam = $('#show-team').hasClass('active');
+        var showIndividual = $('#show-individuals').hasClass('active');
+        var showTeam = $('#show-teams').hasClass('active');
         var showUngraded = $('#show-ungraded').hasClass('active');
         var showGraded = $('#show-graded').hasClass('active');
-        var showDraft = $('#show-draft').hasClass('active');
+        var showDraft = $('#show-drafted').hasClass('active');
 
         var selectedStatuses = [];
         if (showUngraded) selectedStatuses.push('Ungraded');
@@ -440,6 +437,40 @@
         validateGrade($(this));
     });
 
+    ///////////////////////////////
+    // Team Grade for all teams //
+    /////////////////////////////
+    function validateGradeHelper($input) {
+        var val = $input.val();
+        if (!val) {
+            return true;
+        }
+        var score = parseFloat(val);
+        if (isNaN(score)) {
+            return false;
+        }
+        var maximumScore = parseFloat($input.next().text());
+        return score <= maximumScore;
+    }
+
+    function validateGrade($input) {
+        $input.toggleClass('invalid', !validateGradeHelper($input));
+    }
+
+
+    $deliverables.on('keyup', '.team-grade-box', function () {
+        var $this = $(this);
+        var $grades = $this.closest('.student_scores').find('.team_member_photo input');
+        $grades.val($this.val()).each(function () {
+            validateGrade($(this));
+        });
+    });
+
+    $deliverables.on('keyup', '.student_scores input[type=text]', function () {
+        validateGrade($(this));
+    });
+
+
     /////////////////////
     // Form Submission //
     /////////////////////
@@ -458,9 +489,9 @@
             }, 3000);
         });
 
-     ///////////////////////////////////
-    // Form Submission for all teams //
-    //////////////////////////////////
+     /////////////////////
+    // Form Submission //
+    /////////////////////
     $('#all_deliverables')
         .on('ajax:send', '.edit_deliverable', function () {
             var $form = $(this);
@@ -474,15 +505,15 @@
             setTimeout(function () {
                 $indicator.fadeOut();
             }, 3000);
-        });   
+        });
 
 $(document).ready(function(){
 
 
 $("#myonoffswitch").click(function(){
 
-$("#deliverables").toggle();
 $("#deliverable-header").toggle();
+$("#deliverables").toggle();
 $("#deliverable-header-all").toggle();
 $("#all_deliverables").toggle();
 

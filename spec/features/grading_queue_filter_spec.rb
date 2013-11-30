@@ -33,26 +33,40 @@ describe 'Grading queue', :skip_on_build_machine => true, :js => true do
     login_with_oauth @faculty_fagan
     visit course_deliverables_path(@course)
   end
+
+  it 'Shows both teams and individuals by default' do
+   find('div#show-individuals')[:class].should == 'filter active'
+   find('div#show-individuals')[:class].should == 'filter active'
+  end
+
+  it 'Shows ungraded and drafted, but not graded, deliverables by default' do
+    find('div#show-ungraded')[:class].should == 'filter active'
+    find('div#show-drafted')[:class].should == 'filter active'
+    find('div#show-graded')[:class].should == 'filter'
+  end
   
   it 'Can filter by individual' do
-    #pending uncheck 'show_individual'
-    #find('.individual-deliverable').should_not be_visible
-    #check 'show_individual'
-    #find('.individual-deliverable').should be_visible
+    page.should have_css('div.name', :text => 'Student Sam', :visible => true)
+    find('div#show-individuals').click
+    page.should_not have_css('div.name', :text => 'Student Sam', :visible => true)
   end
 
   it 'Can filter by team' do
-    #pending uncheck 'show_team'
-    #find('.team-deliverable').should_not be_visible
-    #check 'show_team'
-    #find('.team-deliverable').should be_visible
+    page.should have_css('div.name', :text => 'Team Bean Counters', :visible => true)
+    find('div#show-teams').click
+    page.should_not have_css('div.name', :text => 'Team Bean Counters', :visible => true)
   end
 
-  it 'Can filter by un/graded' do
-    #pending("Spec incomplete/not working")
-    #find(:xpath, '//*[@id="show_graded"]').set(false)
-    #save_and_open_page
-    #find(:xpath, '//*[@id="show_graded"]').set(true)
-    #save_and_open_page
+  it 'Can filter by ungraded' do
+    pending
+    find('div#show-ungraded').click
   end
+  
+  it 'Can filter by graded' do
+    pending
+    save_and_open_page
+    find('div#show-graded').click
+    save_and_open_page
+  end
+
 end
