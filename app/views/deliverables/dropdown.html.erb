@@ -32,7 +32,7 @@
               <% end %>
             </td>
       <% else %>
-          <tr id="allAssignments" style="display:none" class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+          <tr style="display:none" class=<%= "allAssignments " + cycle('twikiTableOdd', 'twikiTableEven') %>>
             <td>
               <%= display_timestamp(version.submission_date) -%>
 
@@ -57,7 +57,7 @@
   <% end %>
 </table>
 <% if deliverable.attachment_versions.length>1 %>
-    <a id="show_all_assignments"><label >Show all assignment</label></a>
+    <a class="show_all_assignments"><label >Show all assignment</label></a>
 <% end %>
 <%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable }, :remote => true do |f| %>
     <div>
