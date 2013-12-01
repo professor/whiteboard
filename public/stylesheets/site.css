@@ -934,6 +934,19 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border-bottom: none;
     position: relative;
 }
+#all_deliverables {
+
+   width: 668px;
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    position: relative;
+    display: none;
+
+
+}
 
 .deliverable {
     list-style: none;
@@ -1027,6 +1040,38 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
 }
 
 #deliverable-header .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+#deliverable-header-all {
+    background-color: #CDE8F5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    margin-top: 67px;
+    line-height: 30px;
+    height: 30px;
+    width: 668px;
+    cursor: pointer;
+    display:none;
+}
+
+#deliverable-header-all .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header-all .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header-all .status {
     width: 100px;
     display: inline-block;
     padding-left: 5px;
