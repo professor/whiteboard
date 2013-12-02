@@ -192,6 +192,7 @@ describe Deliverable do
     end
   end
 
+  # Beg Team Turing
   context "for a professor" do
     before (:each) do
       @faculty_frank = FactoryGirl.build(:faculty_frank_user)
@@ -199,6 +200,7 @@ describe Deliverable do
       @course_ise = FactoryGirl.create(:ise, faculty: [@faculty_frank])
       @student_sam = FactoryGirl.create(:student_sam)
       @student_sally = FactoryGirl.create(:student_sally)
+      @team_member = FactoryGirl.create(:team_member)
     end
 
     it "Displays the professor's teams deliverables if the professor has at least one team" do
@@ -217,7 +219,9 @@ describe Deliverable do
       @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
       @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
 
-      @deliverables = Deliverable.grading_queue_display(@course_fse.id, @faculty_frank.id)
+      @options = {:is_my_team => 1}
+
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
       @deliverables.should have(2).items
 
       @deliverables[0].should == @deliverable2
@@ -244,7 +248,9 @@ describe Deliverable do
       @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sally)
       #@dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
 
-      @deliverables = Deliverable.grading_queue_display(@course_fse.id, @faculty_frank.id)
+      @options = {:is_my_team => 1}
+
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
       @deliverables.should have(1).items
 
       @deliverables[0].should == @deliverable1
@@ -275,29 +281,70 @@ describe Deliverable do
       @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
       @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sally)
 
-      @deliverables = Deliverable.grading_queue_display(@course_fse.id, @faculty_frank.id)
+      @options = {:is_my_team => 1}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
       @deliverables.should have(2).items
 
       @deliverables[0].should == @deliverable1
       @deliverables[1].should == @deliverable2
-
-
 
     end
 
     it "Displays all deliverables if the course does not have teams" do
 
       @deliverable1 = FactoryGirl.create(:turing_individual_deliverable, :course=>@course_fse)
-#      @deliverable2 = FactoryGirl.create(:individual_deliverable, :course=>@course_ise)
+      #@deliverable2 = FactoryGirl.create(:individual_deliverable, :course=>@course_ise)
       @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
 
-      @deliverables = Deliverable.grading_queue_display(@course_fse.id, @faculty_frank.id)
+      @options = {:is_my_team => 1}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
       @deliverables.should have(1).items
       @deliverables[0].should == @deliverable1
 
     end
 
+    it "If a course has teams and user enter search terms, display team deliverables as well as individual deliverables
+        for students in the faculty's team" do
+
+      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course_fse)
+      @team_test =  FactoryGirl.create(:team_test, :course=>@course_fse)
+      @team_ruby_racer =  FactoryGirl.create(:team_ruby_racer, :course=>@course_fse)
+
+      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+      @team_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+      @team_assignment = FactoryGirl.create(:team_ruby_racer_assignment, :team => @team_ruby_racer, :user => @team_member)
+
+      @assignment1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+
+      # Team deliverable
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 1
+      @deliverable2 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 2
+      @deliverable3 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @student_sally)
+      # Team deliverable of team Ruby Racer
+      @deliverable4 = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course_fse, :team => @team_ruby_racer,:assignment => @assignment1, :creator => @team_member)
+      # Individual deliverable 3
+      @deliverable5 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @team_member)
+
+      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sally)
+      @dav4 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable4, :submitter => @team_member)
+      @dav5 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable5, :submitter => @team_member)
+
+      @options = {:is_my_team => 1, :search_string => "Member"}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @deliverables.should have(2).items
+
+      @deliverables[0].should == @deliverable4
+      @deliverables[1].should == @deliverable5
+
+    end
+
   end
+  # End Team Turing
 
   #Beg add Turing Ira
   context " for a individual deliverable last graded by"   do

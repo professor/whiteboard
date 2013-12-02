@@ -36,8 +36,8 @@ class DeliverablesController < ApplicationController
 
     elsif @course.faculty.include?(current_user)
 
-      # Get all deliverables for this team/student or all students
-      @deliverables = Deliverable.grading_queue_display(params[:course_id], current_user.id)
+      # Get all deliverables for this team/student
+      @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
 
       # Select all that are ungraded or drafted
       @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded || deliverable.get_grade_status == :drafted }
@@ -51,13 +51,14 @@ class DeliverablesController < ApplicationController
 
   end
 
+  # Beg Team Turing
   def get_deliverables
     @deliverables = filter_deliverables(params[:course_id], params[:filter_options])
     respond_to do |format|
       format.js
     end
-
   end
+  # End Team Turing
 
   #temporary for mel
   def team_index_for_course
@@ -357,10 +358,13 @@ class DeliverablesController < ApplicationController
     end
   end
 
+
+  # Beg Team Turing
   private
   def filter_deliverables (course_id, filter_options)
     @course = Course.find_by_id(course_id)
 
+    # Prepare filter options accorging to what users select on the page
     options = {}
     if filter_options[:search_box] != ""
       options[:search_string] = filter_options[:search_box]
@@ -373,7 +377,7 @@ class DeliverablesController < ApplicationController
     end
 
 
-    #Filter in the model by course, professor, my teams and search input
+    # Filter in the model by course, professor, my teams and search input
     @deliverables = []
     @faculty_deliverables = Deliverable.get_deliverables(course_id, current_user.id, options)
 
@@ -398,5 +402,7 @@ class DeliverablesController < ApplicationController
     # Sort by task number, ascending
     @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
   end
+  # End Team Turing
+
 end
 
