@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
 
   def get_course
     @course=Course.find(params[:course_id])
-    @wording = CourseService.nomenclature_assignment_or_deliverable(@course)
+    @wording = @course.nomenclature_assignment_or_deliverable
   end
 
   def render_grade_book_menu

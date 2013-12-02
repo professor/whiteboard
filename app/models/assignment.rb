@@ -38,7 +38,7 @@ class Assignment < ActiveRecord::Base
 
   def name_with_type
     unless self.course.grading_rule.nil?
-      nomenclature = CourseService.nomenclature_assignment_or_deliverable(course).capitalize
+      nomenclature = self.course.nomenclature_assignment_or_deliverable.capitalize
     else
       nomenclature = "deliverable"
     end

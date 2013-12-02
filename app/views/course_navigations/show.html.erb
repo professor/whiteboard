@@ -37,7 +37,7 @@
 
 
 
-<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <h2>Curriculum Navigation</h2>
 
 <p>To reorder pages, drag them around. Changes are automatically saved.</p>

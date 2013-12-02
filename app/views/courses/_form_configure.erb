@@ -3,8 +3,8 @@
         $(document).ready(function () {
             $('#course_configure_peer_evaluation').change(function () {
                 if ($(this).is(':checked')) {
-                    $('#course_peer_evaluation_first_email').val("<%= CourseService.auto_generated_peer_evaluation_date_start(@course).to_s %>").datepicker( "option", "disabled", false);
-                    $('#course_peer_evaluation_second_email').val("<%= CourseService.auto_generated_peer_evaluation_date_end(@course).to_s %>").datepicker( "option", "disabled", false);
+                    $('#course_peer_evaluation_first_email').val("<%= @course.auto_generated_peer_evaluation_date_start.to_s %>").datepicker( "option", "disabled", false);
+                    $('#course_peer_evaluation_second_email').val("<%= @course.auto_generated_peer_evaluation_date_end.to_s %>").datepicker( "option", "disabled", false);
                 }
                 else {
                     $('#course_peer_evaluation_first_email').val("").datepicker( "option", "disabled", true);
@@ -106,7 +106,7 @@ background-color: #FFBABA;
         <div class="checkboxed_form"><p id="course_curriculum_url_notice" style="color: green"></p></div>
       </p>
       <p class="checkboxed_form">
-        If you want a twiki web created for your course, then email help@sv.cmu.edu <%= CourseService.auto_generated_twiki_url(@course) %> is the suggested url.
+        If you want a twiki web created for your course, then email help@sv.cmu.edu <%= @course.auto_generated_twiki_url %> is the suggested url.
       </p>
       <br/>
       <p>

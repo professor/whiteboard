@@ -4,8 +4,8 @@ development:
     adapter: postgresql
     encoding: utf8
     database: cmu_education
-    username: postgres
-    password: postgres
+    username: you_can_choose
+    password: whatever_you_like
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

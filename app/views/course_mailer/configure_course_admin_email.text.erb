@@ -4,7 +4,7 @@ The course <%= @course.name %> for the <%= @course.semester %> <%= @course.year 
 User says: <%= @course.configure_course_twiki ? "Yes" : "No" %>
 <% if @course.configure_course_twiki %>
     System says: we'd expect the url to be
-    <%=CourseService.auto_generated_twiki_url(@course) %>
+    <%= @course.auto_generated_twiki_url %>
 <% end %>
 
 ---------------------------------------------------------------------------------------------------

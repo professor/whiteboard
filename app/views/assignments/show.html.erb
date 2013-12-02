@@ -38,7 +38,7 @@
 
 
 
-<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <h2>Reordering</h2>
 <%= link_to "Back", course_assignments_path %>
 <p>To reorder assignments/tasks, drag them around. Changes are automatically saved.</p>

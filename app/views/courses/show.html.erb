@@ -1,6 +1,6 @@
 <% content_for :title, @course.name %>
 
-<h1><%= link_to CourseService.display_for_course_page(@course), course_path(@course), :class => "course" %></h1>
+<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <div align="right" valign="top" style="position:absolute;top:280px;left:890px;font-size:11px;">
   <%= link_to 'Edit', edit_course_path(@course) %> |
   <%= link_to 'Back', :back %>
@@ -13,7 +13,7 @@
 <table border="1" cellspacing="0" cellpadding="0" style="border-width: 1px;" class="cmu_table ">
   <tr class="cmu_table_odd">
     <td>Semester:</td>
-    <td><%= CourseService.display_semester(@course) %></td>
+    <td><%= @course.display_semester %></td>
   </tr>
   <tr class="cmu_table_even">
     <td>Instructors:</td>
@@ -97,7 +97,7 @@
         <div class="item-link"><%= link_to 'Configure course', configure_course_path(@course) %></div>
       </div>
       <div class="item-wrapper">
-        <div class="item-icon"><%= link_to image_tag("/images/assignment_icon.jpeg", :size => "108x75", :alt => "Curriculum website", :title => "Manage #{CourseService.nomenclature_assignment_or_deliverable(@course).capitalize}s"), course_assignments_path(@course) %></div>
+        <div class="item-icon"><%= link_to image_tag("/images/assignment_icon.jpeg", :size => "108x75", :alt => "Curriculum website", :title => "Manage #{@course.nomenclature_assignment_or_deliverable.capitalize}s"), course_assignments_path(@course) %></div>
         <div class="item-link"><%= link_to "Manage #{nomenclature_assignment_or_deliverable}s", course_assignments_path(@course) %></div>
       </div>
       <div class="item-wrapper">

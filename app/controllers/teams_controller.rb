@@ -99,9 +99,9 @@ class TeamsController < ApplicationController
   def export_to_csv
     if has_permissions_or_redirect(:staff, root_path)
 
-      @course = CourseServices.find(params[:course_id])
+      @course = Course.find(params[:course_id])
       @teams = Team.where(:course_id => params[:course_id]).order("id").all unless params[:course_id].empty?
-      #@course_services = CourseServices.new
+
       report = CSV.generate do |title|
         title << ['Team Name', 'Team Member', 'Past Teams', "Part Time", "Local/Near/Remote", "State", "Company Name"]
         @teams.each do |team|
