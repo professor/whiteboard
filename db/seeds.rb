@@ -130,4 +130,3 @@ FactoryGirl.create(:presentation_feedback_questions, :label => "Organization", :
 FactoryGirl.create(:presentation_feedback_questions, :label => "Visuals", :text => "Were they well-designed? Were all of them readable? Were they helpful? Were they manipulated well?")
 FactoryGirl.create(:presentation_feedback_questions, :label => "Delivery", :text => "Bodily delivery: (eye-contact, gestures, energy)    Vocal delivery: (loudness, rate, articulation) Question handling (poise, tact, team support; did the team answer the question asked?)")
 
-

@@ -47,5 +47,4 @@ describe EffortLogLineItem do
         end
       end
     end
-
   end
