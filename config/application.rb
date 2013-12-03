@@ -53,6 +53,8 @@ module CMUEducation
     OpenID.fetcher.ca_file = "#{Rails.root}/config/ca-bundle.crt"
     config.assets.enabled = true
     config.assets.version = '1.0'
+    #config.assets.precompile = [/^[^_]/]
+    #config.assets.precompile += %w( mobile.css )
 # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
   # Your secret key for verifying cookie session data integrity.

@@ -5,7 +5,7 @@ if defined?(AssetSync)
     config.fog_provider = 'AWS'
     config.aws_access_key_id = ENV['WHITEBOARD_S3_KEY']
     config.aws_secret_access_key =  ENV['WHITEBOARD_S3_SECRET']
-    config.fog_directory = ENV['WHITEBOARD_S3_BUCKET']
+    config.fog_directory = ENV['WHITEBOARD_S3_ASSET_BUCKET']
 
     # Fail silently.  Useful for environments such as Heroku
     config.fail_silently = false

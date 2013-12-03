@@ -1,10 +1,10 @@
 Date.weekdays = $w("Ma Ti Ke To Pe La Su");
-Date.months = $w("Tammikuu Helmikuu Maaliskuu Huhtikuu Toukokuu Kesäkuu Heinäkuu Elokuu Syyskuu Lokakuu Marraskuu Joulukuu" );
+//Date.months = $w("Tammikuu Helmikuu Maaliskuu Huhtikuu Toukokuu Kesï¿½kuu Heinï¿½kuu Elokuu Syyskuu Lokakuu Marraskuu Joulukuu" );
 
 Date.first_day_of_week = 1
 
 _translations = {
   "OK": "OK",
-  "Now": "Nyt",
-  "Today": "Tänään"
+  "Now": "Nyt"//,
+  //"Today": "Tï¿½nï¿½ï¿½n"
 }

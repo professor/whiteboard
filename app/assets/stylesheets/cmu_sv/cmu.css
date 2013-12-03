@@ -893,8 +893,8 @@ table.sortable thead td, table.sortable thead tr th {background-color: #dbdede;}
         height: 55px;
 	opacity: 0.85;
 	filter:alpha(opacity=85);
-	-moz-opacity=0.85;
-	-khtml-opacity=0.85;
+	-moz-opacity: 0.85;
+	-khtml-opacity: 0.85;
 	margin:0px;
 	padding-top: 1px !important;
 	padding-left: 30px;
@@ -938,7 +938,7 @@ img.headerStorySelector {
 	padding: 0px 0px 0px 0px;
 	margin: 0px 2px 0px 2px;
 	width: 10px;
-	height; 10px;
+	height: 10px;
 	border: none;
 	vertical-align: top;
 }

@@ -175,7 +175,7 @@ td.today {
    }
    table.tablesorter thead tr .header {
 
-    background-image: url(<%= image_path '/tablesorter/bg.gif' %>);
+    background-image: url('/assets/tablesorter/bg.gif');
     background-repeat: no-repeat;
     background-position: center right;
     cursor: pointer;
@@ -537,16 +537,16 @@ div.modified {
 #filterBoxOne_filter {
 /* After removing morning glory and upgrading to rails 3.2, then go back to abolute paths
 background:url(/images/people_filtering_sprite.png)  0px 0; */
-background:url(<%= image_path 'people_filtering_sprite.png' %>) 0px 0;
+background:url('/assets/people_filtering_sprite.png') 0px 0;
 
 }
 #filterBoxOne_photobook{
-    background:url(<%= image_path 'people_photobook_sprite.png' %>) 0px 0;
+    background:url('/assets/people_photobook_sprite.png') 0px 0;
 
 }
 
 #filterBoxOne_export_contacts {
-    background:url(<%= image_path 'people_export_contacts.png' %>) 0px 0;
+    background:url('/assets/people_export_contacts.png') 0px 0;
 
 }
 

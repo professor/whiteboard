@@ -1009,8 +1009,8 @@ hr.photoGallery {
         height: 55px;
 	opacity: 0.85;
 	filter:alpha(opacity=85);
-	-moz-opacity=0.85;
-	-khtml-opacity=0.85;
+	-moz-opacity:0.85;
+	-khtml-opacity:0.85;
 	margin:0px;
 	padding-top: 1px !important;
 	padding-left: 30px;
