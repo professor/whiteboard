@@ -3,6 +3,7 @@
 //= require_self
 //= require jquery-ui-custom-for-cmusv
 //= require jquery-corners-0.3/jquery.corners.js
+//= require ckeditor/init
 
 
 
