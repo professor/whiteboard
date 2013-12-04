@@ -111,7 +111,7 @@
 
   <!-- Begin Team Turing -->
   <script type='text/javascript'>
-
+    var sendQueryToServer_timer = null;
       // Update drop down menu with the selected text, assign the deliverable assignment_id
       $(document).ready(function() {
           $(".dropdown-menu li a").click(function(){
@@ -124,7 +124,13 @@
           });
 
           $('#search_box').keyup(function(){
-              $('#filter_options_new').submit();
+              if(sendQueryToServer_timer != null) {
+                  clearTimeout(sendQueryToServer_timer);
+                  console.log("Clear timer");
+              }
+
+              sendQueryToServer_timer = setTimeout(search_deliverable, 500);
+              console.log("Set timer");
           });
       });
 
@@ -145,7 +151,12 @@
           $('#filter_options_new').submit();
       };
 
+      var search_deliverable = function() {
+          $('#filter_options_new').submit()
+      }
+
       $('#search_box').keyup(function(){
+          console.log('Search');
           $('#filter_options_new').submit();
       });
 
