@@ -1,18 +1,8 @@
 <h1><%= @course.display_for_course_page %></h1>
 <%= render :partial=>"layouts/grade_book_sub_menu" %>
-<!--
-<h2>Submitted <%= nomenclature_assignment_or_deliverable%>s</h2>
--->
 
-<!--
-<div class="rounded staff">
-  <%= image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "Only faculty can see this information", :title => "Faculty Role") %>
-  <span class="instructions">Note: we will be improving this screen during the Spring 2013 semester by integrating in new student code. </span>
-</div>
--->
+<div class="tw-bs"> <!-- Twitter Bootstrap Start -->
 
-
-<div>
   <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
   <%= javascript_include_tag 'jquery.quicksearch.js' %>
   <%= javascript_include_tag 'jquery.session' %>
@@ -145,7 +135,6 @@
           $('#filter_options_new').submit();
       };
 
-      // TODO David will implement the search box keyup listener
       $('#search_box').keyup(function(){
           $('#filter_options_new').submit();
       });
@@ -153,30 +142,9 @@
   </script>
   <!-- End Team Turing -->
 
-      <!-- <div style='border-right: solid 3px #7f7f7f;'> -->
-
-<!--
-        <h2>Search</h2>
--->
-
-<!--
-        <div id='filterBox'>
-          <input id='filterInputBox' value='Page is still loading' disabled maxlength='30' size='30' type='text' placeholder="Enter search keywords"/>
-          <%= image_tag("/images/tablesorter/cross.png", :width => "16", :height => "16", :id => "filterClearOne", :title => 'Click to clear filter.', :alt => 'Clear Filter Image') %> <br/>
-          Search by:
-          <input type="checkbox" id="filter_student"  checked="true"/> <label for="filter_student"> Student/Team Name</label>
-          <input type="checkbox" id="filter_assignment"  checked="true"><label for="filter_assignment"> <%= nomenclature_assignment_or_deliverable %></label>
-        </div></br>
-        Filter by <%= nomenclature_assignment_or_deliverable %> status:
-  <input id="filter_graded" class="filter_status" type="checkbox" checked="true" /><label for="filter_graded">Graded</label>&nbsp; &nbsp;
-        <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox"/><label for="filter_ungraded">Ungraded</label> &nbsp; &nbsp;
-        <input id="filter_drafted" class="filter_status" checked="true" type="checkbox"/><label for="filter_drafted">Drafted</label> </br>
-      </div>
--->
-
+<!-- Begin Team Turing -->
   <div id="container" class="container">
 
-    <!-- Begin Team Turing -->
     <div id="loading_ajax_request" style="display: none;">
       <%= image_tag("/images/ajax-loader2.gif", :class => "ajax-loader", :size => "32x32") %>
     </div>
@@ -190,7 +158,7 @@
         </div>
         <!-- /Search -->
 
-        <hr>
+        <div class="row" style="padding-top: 7px; padding-bottom: 7px;"></div>
 
         <div class="row">
 
@@ -214,7 +182,7 @@
                   All Deliverables
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" style="list-style: none; margin:0; padding-left:0; padding-right:0; z-index: 200; ">
+                <ul class="dropdown-menu" style="font-size:12px;">
                   <li><a id="-1" href="">All Deliverables</a></li>
                   <% @assignments.each do |assignment| %>
                       <li>
@@ -252,4 +220,5 @@
     <div id="deliverables">
       <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
     </div>
-</div>
+
+</div> <!-- Twitter Bootstrap End -->
