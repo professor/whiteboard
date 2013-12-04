@@ -57,8 +57,8 @@ class Deliverable < ActiveRecord::Base
 
   after_save :inaccurate_course_and_assignment_check
 
-
-  def self.get_deliverables(course_id, faculty_id, options = nil)
+  # Begin Team Turing
+  def self.get_deliverables(course_id, faculty_id, options)
 
     sql_template = "SELECT d.id FROM deliverables d LEFT JOIN teams t ON d.team_id = t.id LEFT JOIN team_assignments ta ON t.id = ta.team_id LEFT JOIN users u1 ON d.creator_id = u1.id LEFT JOIN users u2 ON ta.user_id = u2.id"
 
@@ -71,9 +71,6 @@ class Deliverable < ActiveRecord::Base
     where_clause_search = " AND (u1.first_name ILIKE ? OR u1.last_name ILIKE ? OR u1.human_name ILIKE ? OR u1.email ILIKE ? OR u1.webiso_account ILIKE ? OR u2.first_name ILIKE ? OR u2.last_name ILIKE ? OR u2.human_name ILIKE ? OR u2.email ILIKE ? OR u2.webiso_account ILIKE ? OR t.name ILIKE ?)"
 
     queue = []
-
-    # Test setup
-    #options = {:is_my_team => 1, :search_string => "David"}
 
     # 1. Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
     # 2. If there are no teams in the course, and if this deliverable is an individual deliverable,
@@ -146,55 +143,7 @@ class Deliverable < ActiveRecord::Base
     return deliverables
 
   end
-
-
-  def self.grading_queue_display(course_id, faculty_id, options = nil)
-
-    # Default grading queue filters
-    options = { "is_my_teams" => 1 } if options.nil?
-
-    queue = []
-
-    # 1. Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
-    # 2. If there are no teams in the course, and if this deliverable is an individual deliverable,
-    # show deliverables for individuals who are in the faculty's teams only.
-    # 3. Otherwise, show every deliverable
-
-    course_has_teams = Team.where(:course_id => course_id).first
-
-    if course_has_teams.nil?
-
-      queue = Deliverable.where(:course_id => course_id).all
-
-    else # The course has teams
-         # By default, the faculty see their teams or individuals in their teams with ungraded deliverables
-      if options['is_my_teams'] == 1
-
-        queue = Deliverable.joins(:team).where(:course_id => course_id, "teams.primary_faculty_id" => faculty_id).all
-
-        # This course may have teams, but this deliverable may not be a team deliverable. In that case:
-        sql = "SELECT * FROM deliverables d WHERE course_id = ? AND creator_id IN (
-        SELECT ta.user_id FROM teams t
-        INNER JOIN team_assignments ta ON t.id = ta.team_id
-        WHERE t.primary_faculty_id = ? AND d.team_id IS NULL)" # team_id in deliverable is null when it's an individual deliverable
-
-        results = Deliverable.find_by_sql([sql, course_id, faculty_id])
-
-        results.each do |result|
-          queue << result
-        end
-
-      else # Do not filter by my teams, show every deliverable
-
-        queue = Deliverable.where(:course_id => course_id).all
-
-      end # end 'Filter by my teams'
-
-    end # end 'Course has teams '
-
-    return queue
-
-  end
+  # End Team Turing
 
   # To get the owner of the deliverable
   def unique_course_task_owner?
@@ -328,17 +277,8 @@ class Deliverable < ActiveRecord::Base
       feedback += self.assignment.formatted_maximum_score
       feedback += "\n"
     end
-
-    # Begin Add Team Turing
-    if other_email == nil
-      recipient_list = member_email
-    else
-      recipient_list = [member_email, other_email]
-    end
-    # End Add Team Turing
-
-    #options = {:to => member_email,      # Delete Team Turing
-    options = {:to => recipient_list,     # Add Team Turing
+    options = {:to => member_email,
+               :cc => other_email,  # Added Team Turing
                :subject => "Feedback for " + self.course.name,
                :message => feedback,
                :url_label => "View this deliverable",

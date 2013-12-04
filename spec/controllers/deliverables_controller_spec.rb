@@ -154,6 +154,43 @@ describe DeliverablesController do
 
       end
 
+
+      context "search function is enabled" do
+
+        before do
+
+          @team_member = FactoryGirl.create(:team_member)
+
+          @team_ruby_racer = FactoryGirl.create(:team_ruby_racer, :course=>@course)
+
+          @team_ruby_racer.members = [@team_member]
+
+          @ruby_racer_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@team_member, :assignment => @assignment_graded)
+          @ruby_racer_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course, :student => @team_member, :assignment =>  @assignment_drafted)
+          @ruby_racer_grade_ungraded = nil
+
+          @deliverable_ruby_racer_ungraded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_ungraded, :creator => @team_member)
+          @deliverable_ruby_racer_drafted = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_drafted, :creator => @team_member)
+          @deliverable_ruby_racer_graded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_graded, :creator => @team_member)
+
+          @da_ruby_racer_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_ungraded, :submitter => @team_member)
+          @da_ruby_racer_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_drafted, :submitter => @team_member)
+          @da_ruby_racer_graded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_graded, :submitter => @team_member)
+
+        end
+
+
+        it 'shows all deliverables of only my teams and search box is entered' do
+          get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes', :search_box => "Member"}, :course_id =>  @course.id
+
+          @expected_deliverable = assigns(:deliverables)
+          @expected_deliverable.should have(3).items
+          @expected_deliverable[0].should == @deliverable_ruby_racer_ungraded
+          @expected_deliverable[1].should == @deliverable_ruby_racer_graded
+          @expected_deliverable[2].should == @deliverable_ruby_racer_drafted
+
+        end
+      end
       ## end add Team turing
 
     end

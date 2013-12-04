@@ -48,6 +48,14 @@ FactoryGirl.define do
     association :creator, :factory => :student_sally_user
     association :course, :factory => :fse
   end
+
+  factory :team_ruby_racer_deliverable_1, :parent => :deliverable do
+    association :assignment, :factory => :assignment
+    association :team, :factory => :team_ruby_racer
+    association :course, :factory => :fse
+    private_note "Ruby Racer's first deliverable"
+  end
+
   ## end add turing
 
 end
