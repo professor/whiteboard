@@ -430,7 +430,6 @@ jquery-corners-0.3/jquery.corners.js: jquery-corners-0.3/jquery.corners-995f7dcc
 jquery-corners-0.3/jquery.corners.min.js: jquery-corners-0.3/jquery.corners.min-cdd8c63f7c411c49f94dc781557a1ca5.js
 jquery-ui-custom-for-cmusv.js: jquery-ui-custom-for-cmusv-fea4e7607d9dbd8d57a9e6d4b8bb5398.js
 jquery-ui.min.js: jquery-ui.min-fd821eeeddc69c0ebfe48c20e65d7406.js
-jquery_cookie.js: jquery.cookie-1c20f346145c2e068b98b0203783207d.js
 jquery.corners.js: jquery.corners-995f7dcc1f4b7e2320e02c6483281105.js
 jquery.js: jquery-7218bca99c8b47db9266fe44c908a3df.js
 jquery.min.js: jquery.min-65e9d9382c5b7ace41ec6a2dd49f6d04.js
@@ -446,6 +445,7 @@ jquery.ui.resizable.js: jquery.ui.resizable-ab790fbe80e165cc91371ad31d305221.js
 jquery.ui.sortable.js: jquery.ui.sortable-2813ba2b1011e9e0f9c41efe3d961b2d.js
 jquery.validate.js: jquery.validate-e03bb08ca203e08f5551c02081c1dd8d.js
 jquery.validate.min.js: jquery.validate.min-dec3cbcd0d6f53a52a6b7889c42c1128.js
+jquery_cookie.js: jquery_cookie-1c20f346145c2e068b98b0203783207d.js
 jquery_ujs.js: jquery_ujs-4656f4ff91758d86893807ba150846a3.js
 password_reset.js: password_reset-6df18feb1945a22462910f1226f5d806.js
 people_search.js: people_search-1d3448164e87fa20e4bfdddb9d7c0c37.js
