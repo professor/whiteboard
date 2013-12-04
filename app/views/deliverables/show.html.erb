@@ -9,10 +9,14 @@
       font-family: Helvetica, Arial, sans-serif;
       font-weight: 500;
       line-height: 1.1;
+      margin-top: 13px;
   }
   .columnless table td {
       border-right: none;
       border-left: none;
+  }
+  .columnless table td a:visited {
+      color:white;
   }
 </style>
 <!-- End Team Turing -->
@@ -43,7 +47,7 @@
 <!-- Begin Team Turing -->
 <div class="container">
 
-  <hr>
+  <hr style="margin-top: 10px; margin-bottom: 10px;">
   <!-- Attachment version history -->
   <div class="row deliverable_detail_header">
     <div class="col-md-12">
@@ -75,14 +79,14 @@
                   <%= display_timestamp(version.submission_date) -%>
               <% end %>
               <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
-                  <span class="label label-danger"><%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> late!</span>
+                  <span class="label label-danger" style="font-weight: normal;"><%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> late!</span>
               <%end%>
               <br/>
               <%= h version.comment -%>
             </td>
-            <td>
+            <td style="text-align: right; padding-right: 15px;">
               <% unless version.attachment_file_name.nil? %>
-                  <%= link_to 'Download', version.attachment.url %>
+                <%= link_to('Download', version.attachment.url, :class => 'btn btn-xs btn-primary') %>
               <% end %>
             </td>
           </tr>
