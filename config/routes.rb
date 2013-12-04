@@ -11,7 +11,7 @@ CMUEducation::Application.routes.draw do
   end
 
   constraints(:host => /rails.sv.cmu.edu/) do
-    match "/*path" => redirect {|params, req| "http://whiteboard.sv.cmu.edu/#{params[:path]}"}
+    match "/(*path)" => redirect {|params, req| "http://whiteboard.sv.cmu.edu/#{params[:path]}"}
   end
 
   resources :search, :only => [:index]
