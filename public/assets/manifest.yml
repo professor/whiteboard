@@ -430,7 +430,7 @@ jquery-corners-0.3/jquery.corners.js: jquery-corners-0.3/jquery.corners-995f7dcc
 jquery-corners-0.3/jquery.corners.min.js: jquery-corners-0.3/jquery.corners.min-cdd8c63f7c411c49f94dc781557a1ca5.js
 jquery-ui-custom-for-cmusv.js: jquery-ui-custom-for-cmusv-fea4e7607d9dbd8d57a9e6d4b8bb5398.js
 jquery-ui.min.js: jquery-ui.min-fd821eeeddc69c0ebfe48c20e65d7406.js
-jquery.cookie.js: jquery.cookie-1c20f346145c2e068b98b0203783207d.js
+jquery_cookie.js: jquery.cookie-1c20f346145c2e068b98b0203783207d.js
 jquery.corners.js: jquery.corners-995f7dcc1f4b7e2320e02c6483281105.js
 jquery.js: jquery-7218bca99c8b47db9266fe44c908a3df.js
 jquery.min.js: jquery.min-65e9d9382c5b7ace41ec6a2dd49f6d04.js
