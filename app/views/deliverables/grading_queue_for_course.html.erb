@@ -3,152 +3,165 @@
 
 <div class="tw-bs"> <!-- Twitter Bootstrap Start -->
 
-  <!-- Begin Team Turing -->
-  <script>
+<!-- Begin Team Turing -->
+<script>
 
-      $(document).ajaxStart(function(){
-          $(this).find("#loading_ajax_request").show();
-      });
-      $(document).ajaxStop(function(){
-          $(this).find("#loading_ajax_request").hide();
-      });
+    $(document).ajaxStart(function(){
+        $(this).find("#loading_ajax_request").show();
+    });
+    $(document).ajaxStop(function(){
+        $(this).find("#loading_ajax_request").hide();
+    });
 
-      $(document).on('click', '.ajax', function() {
-          var deliverable = $(this);
-          $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
+    $(document).on('click', '.ajax', function() {
+        var deliverable = $(this);
+        $.get('/deliverables/' + $(this).find('#deliverable_id').text(),
                 function(response){
                     deliverable.siblings().html(response);
                 }
-          )
-          $(this).removeClass('ajax');
-      });
+        )
+        $(this).removeClass('ajax');
+    });
 
-      $(document).on('click', '.deliverable', function() {
-          $(this).siblings().slideToggle();
+    $(document).on('click', '.deliverable', function() {
+        $(this).siblings().slideToggle();
 
-          // Figure out the toggle state to show + or - sign
-          var toggle_state = $(this).parent().find('#toggle_img').attr('src');
-          toggle_state = toggle_state.substr(0, 12) == '/images/show' ? '/images/hide_deliverable_detail.png' : '/images/show_deliverable_detail.png';
-          $(this).parent().find('#toggle_img').attr('src', toggle_state);
-      });
+        // Figure out the toggle state to show + or - sign
+        var toggle_state = $(this).parent().find('#toggle_img').attr('src');
+        toggle_state = toggle_state.substr(0, 12) == '/images/show' ? '/images/hide_deliverable_detail.png' : '/images/show_deliverable_detail.png';
+        $(this).parent().find('#toggle_img').attr('src', toggle_state);
+    });
 
-      // Update drop down menu with the selected text, assign the deliverable assignment_id
-      $(document).ready(function() {
-          $(".dropdown-menu li a").click(function(){
-              var selText = $(this).text();
-              var length_limit = 40;
-              selText = (selText.length >= length_limit ? selText.substr(0, length_limit-3) + "..." : selText);
-              $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-              $("#filter_options_assignment_id").val($(this).attr("id"));
-              $('#filter_options_new').submit();
-          });
+    var sendQueryToServer_timer = null;
 
-          $('#search_box').keyup(function(){
-              $('#filter_options_new').submit();
-          });
-      });
+    // Update drop down menu with the selected text, assign the deliverable assignment_id
+    $(document).ready(function() {
+        $(".dropdown-menu li a").click(function(){
+            var selText = $(this).text();
+            var length_limit = 40;
+            selText = (selText.length >= length_limit ? selText.substr(0, length_limit-3) + "..." : selText);
+            $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+            $("#filter_options_assignment_id").val($(this).attr("id"));
+            $('#filter_options_new').submit();
+        });
 
-      var filter_graded = function() {
-          $('#filter_options_graded').prop('checked', !$('#filter_options_graded').is(':checked')); // if checked, uncheck it and vice versa
-          $('#filter_options_new').submit();
-      };
-      var filter_ungraded = function() {
-          $('#filter_options_ungraded').prop('checked', !$('#filter_options_ungraded').is(':checked')); // if checked, uncheck it and vice versa
-          $('#filter_options_new').submit();
-      };
-      var filter_drafted = function() {
-          $('#filter_options_drafted').prop('checked', !$('#filter_options_drafted').is(':checked')); // if checked, uncheck it and vice versa
-          $('#filter_options_new').submit();
-      };
-      var filter_by_my_teams = function() {
-          $('#filter_options_is_my_teams_yes').prop('checked', !$('#filter_options_is_my_teams_yes').is(':checked'));
-          $('#filter_options_new').submit();
-      };
+        $('#search_box').keyup(function(){
+            if(sendQueryToServer_timer != null) {
+                clearTimeout(sendQueryToServer_timer);
+                console.log("Clear timer");
+            }
 
-      $('#search_box').keyup(function(){
-          $('#filter_options_new').submit();
-      });
+            sendQueryToServer_timer = setTimeout(search_deliverable, 500);
+            console.log("Set timer");
+        });
+    });
 
-  </script>
-  <!-- End Team Turing -->
+    var filter_graded = function() {
+        $('#filter_options_graded').prop('checked', !$('#filter_options_graded').is(':checked')); // if checked, uncheck it and vice versa
+        $('#filter_options_new').submit();
+    };
+    var filter_ungraded = function() {
+        $('#filter_options_ungraded').prop('checked', !$('#filter_options_ungraded').is(':checked')); // if checked, uncheck it and vice versa
+        $('#filter_options_new').submit();
+    };
+    var filter_drafted = function() {
+        $('#filter_options_drafted').prop('checked', !$('#filter_options_drafted').is(':checked')); // if checked, uncheck it and vice versa
+        $('#filter_options_new').submit();
+    };
+    var filter_by_my_teams = function() {
+        $('#filter_options_is_my_teams_yes').prop('checked', !$('#filter_options_is_my_teams_yes').is(':checked'));
+        $('#filter_options_new').submit();
+    };
 
-  <!-- Begin Team Turing -->
-  <div id="container" class="container">
+    var search_deliverable = function() {
+        $('#filter_options_new').submit()
+    }
 
-    <div id="loading_ajax_request" style="display: none;">
-      <%= image_tag("/images/ajax-loader2.gif", :class => "ajax-loader", :size => "32x32") %>
-    </div>
+    $('#search_box').keyup(function(){
+        console.log('Search');
+        $('#filter_options_new').submit();
+    });
 
-    <!-- Filters -->
-    <%= form_for @filter_options, :as => :filter_options, :url => {:action => "get_deliverables", :id => params[:id]}, :remote => true do |f| %>
+</script>
+<!-- End Team Turing -->
 
-        <!-- Search -->
-        <div class="row">
-          <%= f.text_field :search_box, { :id => "search_box", :class => "form-control", :placeholder => "Search for student, team, Andrew ID..." } %>
-        </div>
-        <!-- /Search -->
+<!-- Begin Team Turing -->
+<div id="container" class="container">
 
-        <div class="row" style="padding-top: 7px; padding-bottom: 7px;"></div>
+  <div id="loading_ajax_request" style="display: none;">
+    <%= image_tag("/images/ajax-loader2.gif", :class => "ajax-loader", :size => "32x32") %>
+  </div>
 
-        <div class="row">
+  <!-- Filters -->
+  <%= form_for @filter_options, :as => :filter_options, :url => {:action => "get_deliverables", :id => params[:id]}, :remote => true do |f| %>
 
-          <div class="pull-left">
+      <!-- Search -->
+      <div class="row">
+        <%= f.text_field :search_box, { :id => "search_box", :class => "form-control", :placeholder => "Search for student, team, Andrew ID..." } %>
+      </div>
+      <!-- /Search -->
 
-            <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter_buttons">
-              <label class="btn btn-default active" onclick="filter_ungraded();">
-                <%= f.check_box :ungraded, { checked: true } %> Ungraded
-              </label>
-              <label class="btn btn-default active" onclick="filter_drafted();">
-                <%= f.check_box :drafted, { checked: true } %> Drafted
-              </label>
-              <label class="btn btn-default" id="filter_options_graded_label" onclick="filter_graded();">
-                <%= f.check_box :graded %> Graded
-              </label>
+      <div class="row" style="padding-top: 7px; padding-bottom: 7px;"></div>
 
-              <%= f.hidden_field :assignment_id, { value: '-1' } %>
+      <div class="row">
 
-              <div class="btn-group btn-group-sm">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  All Deliverables
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" style="font-size:12px;">
-                  <li><a id="-1" href="">All Deliverables</a></li>
-                  <% @assignments.each do |assignment| %>
-                      <li>
-                        <a id="<%= assignment.id %>" href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a>
-                      </li>
-                  <% end %>
-                </ul>
-              </div>
+        <div class="pull-left">
+
+          <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter_buttons">
+            <label class="btn btn-default active" onclick="filter_ungraded();">
+              <%= f.check_box :ungraded, { checked: true } %> Ungraded
+            </label>
+            <label class="btn btn-default active" onclick="filter_drafted();">
+              <%= f.check_box :drafted, { checked: true } %> Drafted
+            </label>
+            <label class="btn btn-default" id="filter_options_graded_label" onclick="filter_graded();">
+              <%= f.check_box :graded %> Graded
+            </label>
+
+            <%= f.hidden_field :assignment_id, { value: '-1' } %>
+
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                All Deliverables
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" style="font-size:12px;">
+                <li><a id="-1" href="">All Deliverables</a></li>
+                <% @assignments.each do |assignment| %>
+                    <li>
+                      <a id="<%= assignment.id %>" href="#"><%= "Task #{assignment.task_number}: #{assignment.name}" %></a>
+                    </li>
+                <% end %>
+              </ul>
             </div>
+          </div>
 
-          </div> <!-- /pull-left -->
+        </div> <!-- /pull-left -->
 
-          <div class="pull-right">
+        <div class="pull-right">
 
-            <div class="btn-group btn-group-sm" data-toggle="buttons">
-              <label class="btn btn-default active" onclick="filter_by_my_teams();">
-                <%= f.radio_button :is_my_teams, "yes", { checked: true }  %> My teams
-              </label>
-              <label class="btn btn-default" onclick="filter_by_my_teams();">
-                <%= f.radio_button :is_my_teams, "no", { checked: false }  %> Everyone
-              </label>
-            </div>
+          <div class="btn-group btn-group-sm" data-toggle="buttons">
+            <label class="btn btn-default active" onclick="filter_by_my_teams();">
+              <%= f.radio_button :is_my_teams, "yes", { checked: true }  %> My teams
+            </label>
+            <label class="btn btn-default" onclick="filter_by_my_teams();">
+              <%= f.radio_button :is_my_teams, "no", { checked: false }  %> Everyone
+            </label>
+          </div>
 
-          </div> <!-- /pull-right -->
+        </div> <!-- /pull-right -->
 
-        </div> <!-- /row -->
-    <% end %>
-    <!-- /Filters -->
+      </div> <!-- /row -->
+  <% end %>
+  <!-- /Filters -->
 
-    </div> <!-- /container -->
+</div> <!-- /container -->
 
-    <hr>
-    <!-- End Team Turing -->
+<hr>
+<!-- End Team Turing -->
 
-    <div id="deliverables">
-      <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
-    </div>
+<div id="deliverables">
+  <%= render :partial => "deliverable_listing_professor", :locals => {:deliverables => @deliverables, :skip_course_column => true} %>
+</div>
 
 </div> <!-- Twitter Bootstrap End -->
