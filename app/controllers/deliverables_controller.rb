@@ -321,13 +321,12 @@ class DeliverablesController < ApplicationController
     end
     # End Add Team Turing
     if @deliverable.update_feedback_and_notes(params[:deliverable])
-      if is_student_visible==true
+      if is_student_visible == true
         @deliverable.send_deliverable_feedback_email(url_for(@deliverable), other_email)
       end
     else
       flash[:error] << 'Unable to save feedback'
     end
-
 
     #Obtain current selected filters to update the queue accordingly
     @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
@@ -364,13 +363,13 @@ class DeliverablesController < ApplicationController
   def filter_deliverables (course_id, filter_options)
     @course = Course.find_by_id(course_id)
 
-    # Prepare filter options accorging to what users select on the page
+    # Prepare filter options according to what users select on the page
     options = {}
     if filter_options[:search_box] != ""
       options[:search_string] = filter_options[:search_box]
     end
 
-    if filter_options[:is_my_teams] == 'yes'
+    if filter_options['is_my_teams'] == 'yes'
       options[:is_my_team] = 1
     else
       options[:is_my_team] = 0

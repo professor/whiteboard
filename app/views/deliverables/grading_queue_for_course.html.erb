@@ -3,10 +3,6 @@
 
 <div class="tw-bs"> <!-- Twitter Bootstrap Start -->
 
-  <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
-  <%= javascript_include_tag 'jquery.quicksearch.js' %>
-  <%= javascript_include_tag 'jquery.session' %>
-
   <!-- Begin Team Turing -->
   <script>
 
@@ -35,72 +31,6 @@
           toggle_state = toggle_state.substr(0, 12) == '/images/show' ? '/images/hide_deliverable_detail.png' : '/images/show_deliverable_detail.png';
           $(this).parent().find('#toggle_img').attr('src', toggle_state);
       });
-
-  </script>
-  <!-- End Team Turing -->
-
-  <script>
-    var assignment = "<%= nomenclature_assignment_or_deliverable %>";
-    var name_column_index = 0;
-    if (assignment=="Deliverable"){
-       name_column_index = 1;
-    }
-
-      $(document).ready(function(){
-          var $search = $("#filterBoxOne");
-          if ($search.prop("disabled") == true) {
-            $search.val('');
-            $search.removeAttr("disabled");
-          }
-          $(".sortable").tablesorter();
-          $search.quicksearch('.sortable tbody tr');
-          // $(".sortable").tablesorter().tablesorterFilter({
-          //     filterContainer: '#filterInputBox',
-          //     filterClearContainer: '#filterClearOne',
-          //     filterColumns:[name_column_index,name_column_index+1]
-          // }) ;
-
-          $("#filter_student").change(update_filter);
-          $("#filter_assignment").change(update_filter);
-          $("#filter_graded").removeAttr("checked", false);
-
-          var statuses = ["graded", "ungraded", "drafted"];
-          $.each(["graded", "ungraded", "drafted"], function(index, value){
-            if($.session.get(value) == "false"){
-              $("#filter_" + value).removeAttr("checked");
-              filter(value);
-            }
-            else
-            {
-              $("#filter_" + value ).prop("checked", "true");
-            }
-          });
-
-          $(".filter_status").change(function(){
-            var status = $(this).attr("id").replace("filter_", "");
-            filter(status);
-            $.session.set(status, $("#filter_" + status).is(":checked"));
-          });
-
-        });
-        function update_filter(){
-          var filters = [];
-          if($("#filter_student").is(':checked')){
-            filters.push(name_column_index);
-          }
-          if($("#filter_assignment").is(':checked')){
-            filters.push(name_column_index+1);
-          }
-          $(".sortable")[0].config.filter[0].filterColumns=filters;
-          $(".sortable").trigger("doFilter");
-        }
-        function filter(status){
-          $("tr."+ status).toggle();
-        }
-      </script>
-
-  <!-- Begin Team Turing -->
-  <script type='text/javascript'>
 
       // Update drop down menu with the selected text, assign the deliverable assignment_id
       $(document).ready(function() {
@@ -142,7 +72,7 @@
   </script>
   <!-- End Team Turing -->
 
-<!-- Begin Team Turing -->
+  <!-- Begin Team Turing -->
   <div id="container" class="container">
 
     <div id="loading_ajax_request" style="display: none;">
@@ -151,7 +81,7 @@
 
     <!-- Filters -->
     <%= form_for @filter_options, :as => :filter_options, :url => {:action => "get_deliverables", :id => params[:id]}, :remote => true do |f| %>
-    <%#= form_for @filter_options, :as => :filter_options, :url => {:action => "filter_deliverables", :id => params[:id]}, :remote => true do |f| %>
+
         <!-- Search -->
         <div class="row">
           <%= f.text_field :search_box, { :id => "search_box", :class => "form-control", :placeholder => "Search for student, team, Andrew ID..." } %>
