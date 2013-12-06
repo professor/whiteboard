@@ -40,7 +40,8 @@ class DeliverablesController < ApplicationController
       @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
 
       # Select all that are ungraded or drafted
-      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded || deliverable.get_grade_status == :drafted }
+      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded ||
+          deliverable.get_grade_status == :drafted }
 
       # Sort by task number
       @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
@@ -380,7 +381,8 @@ class DeliverablesController < ApplicationController
     @deliverables = []
     @faculty_deliverables = Deliverable.get_deliverables(course_id, current_user.id, options)
 
-    # Filter once again according to the selected grading options. If no filter options are selected, display every deliverables
+    # Filter once again according to the selected grading options. If no filter options are selected,
+    # display every deliverable
     @selected_options = []
     filter_options.collect do |filter_option|
       @selected_options << filter_option[0].to_sym if filter_option[1] == "1"
@@ -395,7 +397,8 @@ class DeliverablesController < ApplicationController
 
     # Filter by assignment names in drop down menu
     unless filter_options["assignment_id"] == '-1'
-      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == filter_options["assignment_id"].to_i }
+      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == filter_options[
+          "assignment_id"].to_i }
     end
 
     # Sort by task number, ascending

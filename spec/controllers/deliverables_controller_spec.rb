@@ -15,69 +15,50 @@ describe DeliverablesController do
 
   describe "GET index for course" do
 
-    ## beg del turing
-=begin
-      before(:each) do
-
-
-        @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
-        @deliverable = stub_model(Deliverable, :course_id => @course.id)
-
-        Deliverable.stub_chain(:where, :all).and_return([@deliverable, @deliverable])
-
-        @course.stub(:grading_rule).and_return(true)
-        @course.stub_chain(:grading_rule, :default_values?).and_return(true)
-        Course.stub(:find).and_return(@course)
-      end
-
-      context "as the faculty owner of the course" do
-
-        before do
-          login(@faculty_frank)
-        end
-
-        it 'assigns @deliverables' do
-          get :grading_queue_for_course, :course_id => @course.id
-          assigns(:deliverables).should == [@deliverable, @deliverable]
-        end
-=end
-    ## end del turing
-
     ## beg add Team turing
     before(:each) do
       @course = FactoryGirl.create(:fse, faculty: [@faculty_frank])
 
-      @assignment_ungraded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Ungraded", :task_number => 1)
-      @assignment_drafted = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Drafted", :task_number => 3)
-      @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Graded", :task_number => 2)
+      @assignment_ungraded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Ungraded",
+                                                :task_number => 1)
+      @assignment_drafted = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Drafted",
+                                               :task_number => 3)
+      @assignment_graded = FactoryGirl.create(:assignment_1,:course => @course, :name => "Assignment Graded",
+                                              :task_number => 2)
 
-      @turing_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam, :assignment => @assignment_graded)
-      @turing_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course, :student => @student_sam, :assignment =>  @assignment_drafted)
+      @turing_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@student_sam,
+                                                :assignment => @assignment_graded)
+      @turing_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course, :student => @student_sam,
+                                                 :assignment =>  @assignment_drafted)
       @turing_grade_ungraded = nil
 
 
-     @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course, :student => @student_sally, :assignment =>  @assignment_graded)
+     @test_grade_ungraded =  FactoryGirl.create(:grade_invisible_turing, :course => @course,
+                                                :student => @student_sally, :assignment =>  @assignment_graded)
 
       @team_turing =  FactoryGirl.create(:team_turing, :course=>@course)
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
 
-      #Needs refactoring, Should work through teams assignments but for some reason it is not.
       @team_turing.members = [@student_sam]
       @team_test.members = [@student_sally]
 
+      @deliverable_turing_ungraded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course,
+                              :team => @team_turing,:assignment => @assignment_ungraded, :creator => @student_sam)
+      @deliverable_turing_drafted = FactoryGirl.create(:team_turing_deliverable_1,:course => @course,
+                              :team => @team_turing,:assignment => @assignment_drafted, :creator => @student_sam)
+      @deliverable_turing_graded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course,
+                              :team => @team_turing,:assignment => @assignment_graded, :creator => @student_sam)
+      @deliverable_test_ungraded = FactoryGirl.create(:team_test_deliverable_1,:course => @course,
+                              :team => @team_test,:assignment => @assignment_ungraded)
 
-      #@team_turing_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
-      #@team_test_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
-
-      @deliverable_turing_ungraded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_ungraded, :creator => @student_sam)
-      @deliverable_turing_drafted = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_drafted, :creator => @student_sam)
-      @deliverable_turing_graded = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing,:assignment => @assignment_graded, :creator => @student_sam)
-      @deliverable_test_ungraded = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment_ungraded)
-
-      @da_turing_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_ungraded, :submitter => @student_sam)
-      @da_turing_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_drafted, :submitter => @student_sam)
-      @da_turing_graded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_graded, :submitter => @student_sam)
-      @da_test_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_test_ungraded, :submitter => @student_sam)
+      @da_turing_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_ungraded,
+                              :submitter => @student_sam)
+      @da_turing_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_drafted,
+                              :submitter => @student_sam)
+      @da_turing_graded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_turing_graded,
+                              :submitter => @student_sam)
+      @da_test_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_test_ungraded,
+                              :submitter => @student_sam)
 
       @course.stub(:grading_rule).and_return(true)
       @course.stub_chain(:grading_rule, :default_values?).and_return(true)
@@ -115,8 +96,9 @@ describe DeliverablesController do
 
       #default behavior
       it 'shows the deliverables that matches the selected deliverable name' do
-        get :get_deliverables, :filter_options => {:graded => "1", :ungraded => "1", :drafted => "1", :assignment_id => @assignment_ungraded.id.to_s,
-                                                   :is_my_teams => 'yes', :search_box => ""}, :course_id =>  @course.id
+        get :get_deliverables, :filter_options => {:graded => "1", :ungraded => "1", :drafted => "1",
+            :assignment_id => @assignment_ungraded.id.to_s, :is_my_teams => 'yes', :search_box => ""},
+            :course_id =>  @course.id
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(1).items
@@ -144,7 +126,8 @@ describe DeliverablesController do
       end
 
       it 'shows all deliverables of only my teams is clicked' do
-        get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes', :search_box => ""}, :course_id =>  @course.id
+        get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes', :search_box => ""},
+            :course_id =>  @course.id
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(3).items
@@ -165,23 +148,32 @@ describe DeliverablesController do
 
           @team_ruby_racer.members = [@team_member]
 
-          @ruby_racer_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@team_member, :assignment => @assignment_graded)
-          @ruby_racer_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course, :student => @team_member, :assignment =>  @assignment_drafted)
+          @ruby_racer_grade_graded = FactoryGirl.create(:grade_visible, :course => @course, :student =>@team_member,
+                                                        :assignment => @assignment_graded)
+          @ruby_racer_grade_drafted = FactoryGirl.create(:grade_invisible, :course => @course,
+                                                         :student => @team_member, :assignment =>  @assignment_drafted)
           @ruby_racer_grade_ungraded = nil
 
-          @deliverable_ruby_racer_ungraded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_ungraded, :creator => @team_member)
-          @deliverable_ruby_racer_drafted = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_drafted, :creator => @team_member)
-          @deliverable_ruby_racer_graded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course, :team => @team_ruby_racer,:assignment => @assignment_graded, :creator => @team_member)
+          @deliverable_ruby_racer_ungraded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course,
+                            :team => @team_ruby_racer,:assignment => @assignment_ungraded, :creator => @team_member)
+          @deliverable_ruby_racer_drafted = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course,
+                            :team => @team_ruby_racer,:assignment => @assignment_drafted, :creator => @team_member)
+          @deliverable_ruby_racer_graded = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course,
+                            :team => @team_ruby_racer,:assignment => @assignment_graded, :creator => @team_member)
 
-          @da_ruby_racer_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_ungraded, :submitter => @team_member)
-          @da_ruby_racer_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_drafted, :submitter => @team_member)
-          @da_ruby_racer_graded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_graded, :submitter => @team_member)
+          @da_ruby_racer_ungraded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_ungraded,
+                                    :submitter => @team_member)
+          @da_ruby_racer_drafted =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_drafted,
+                                    :submitter => @team_member)
+          @da_ruby_racer_graded =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable_ruby_racer_graded,
+                                    :submitter => @team_member)
 
         end
 
 
         it 'shows all deliverables of only my teams and search box is entered' do
-          get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes', :search_box => "Member"}, :course_id =>  @course.id
+          get :get_deliverables, :filter_options => {:assignment_id => "-1", :is_my_teams => 'yes',
+                                                     :search_box => "Member"}, :course_id =>  @course.id
 
           @expected_deliverable = assigns(:deliverables)
           @expected_deliverable.should have(3).items
@@ -207,8 +199,6 @@ describe DeliverablesController do
         @expected_deliverable.should == [@deliverable_test_ungraded, @deliverable_turing_graded,
                                          @deliverable_turing_drafted, @deliverable_turing_ungraded]
 
-        ## end chg turing
-        pending
       end
     end
 

@@ -120,18 +120,6 @@ describe "deliverables" do
 
   context "As a professor" do
     before do
-      ## beg del Team Turing
-      #@faculty = FactoryGirl.create(:faculty_fagan)
-      #login_with_oauth @faculty
-      #@team_deliverable.course.faculty = [@faculty]
-      #
-      #@course = FactoryGirl.create(:fse)
-      #@faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
-      #                                         :user_id => @faculty.id)
-      #@team_deliverable.course = @course
-      ## end del Team Turing
-
-
       ## beg add Team Turing
       @faculty = FactoryGirl.create(:faculty_frank_user)
       login_with_oauth @faculty
@@ -148,34 +136,42 @@ describe "deliverables" do
       @team_test =  FactoryGirl.create(:team_test, :course=>@course)
       @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
 
-      @assignment1 = FactoryGirl.create(:assignment_1,:course => @course)
-      @assignment2 = FactoryGirl.create(:assignment_2,:course => @course)
+      @assignment_team_turing_1 = FactoryGirl.create(:assignment_1,:course => @course)
+      @assignment_team_turing_2 = FactoryGirl.create(:assignment_2,:course => @course)
+      @assignment_team_test_1 = FactoryGirl.create(:assignment_1,:course => @course)
 
-      @grade1 = FactoryGirl.create(:grade_invisible, :course => @course,:assignment => @assignment1, :last_graded_by => @faculty.id, :student =>@student_sam)
+      @grade_assignment_team_turing_1 = FactoryGirl.create(:grade_invisible, :course => @course,:assignment =>
+          @assignment_team_turing_1, :last_graded_by => @faculty.id, :student =>@student_sam)
 
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team => @team_turing, :assignment => @assignment1, :attachment_versions => [], :creator => @student_sam)
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team => @team_turing,:assignment => @assignment2, :attachment_versions => [],  :creator => @student_sam)
-      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team => @team_test,:assignment => @assignment1, :attachment_versions => [])
+      @team_turing_deliverable_1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course, :team =>
+          @team_turing, :assignment => @assignment_team_turing_1, :attachment_versions => [], :creator => @student_sam)
+      @team_turing_deliverable_2 = FactoryGirl.create(:team_turing_deliverable_2,:course => @course, :team =>
+          @team_turing,:assignment => @assignment_team_turing_2, :attachment_versions => [],  :creator => @student_sam)
+      @team_test_deliverable_1 = FactoryGirl.create(:team_test_deliverable_1,:course => @course, :team =>
+          @team_test,:assignment => @assignment_team_test_1, :attachment_versions => [])
 
 
-      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
-      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
-      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
+      @attachment_team_turing_deliverable_1 =  FactoryGirl.create(:attachment_1, :deliverable =>
+          @team_turing_deliverable_1, :submitter => @student_sam)
+      @attachment_team_turing_deliverable_2 =  FactoryGirl.create(:attachment_1, :deliverable =>
+          @team_turing_deliverable_2, :submitter => @student_sam)
+      @attachment_team_test_deliverable_1 =  FactoryGirl.create(:attachment_1, :deliverable =>
+          @team_test_deliverable_1, :submitter => @student_sam)
 
-      @dav1.attachment_file_name = "Attachment 1"
-      @dav2.attachment_file_name = "Attachment 2"
-      @dav3.attachment_file_name = "Attachment 3"
+      @attachment_team_turing_deliverable_1.attachment_file_name = "Attachment 1"
+      @attachment_team_turing_deliverable_2.attachment_file_name = "Attachment 2"
+      @attachment_team_test_deliverable_1.attachment_file_name = "Attachment 3"
 
-      @deliverable1.attachment_versions << @dav1
-      @deliverable2.attachment_versions << @dav2
-      @deliverable3.attachment_versions << @dav3
+      @team_turing_deliverable_1.attachment_versions << @attachment_team_turing_deliverable_1
+      @team_turing_deliverable_2.attachment_versions << @attachment_team_turing_deliverable_2
+      @team_test_deliverable_1.attachment_versions << @attachment_team_test_deliverable_1
 
       ## end add Team Turing
 
     end
 
     after do
-#      @faculty.delete
+      @faculty.delete
     end
 
 
@@ -206,8 +202,7 @@ describe "deliverables" do
 
     it "I should be able to click deliverable to open accordion and check content of grading page", :js => true do
       visit course_deliverables_path(@course)
-      find("#deliverable_" + @deliverable1.id.to_s).click
-    #  page.should have_content("Attachment Version History")
+      find("#deliverable_" + @team_turing_deliverable_1.id.to_s).click
       page.should have_content("History")
       page.should have_content("Professor's Notes")
       page.should have_content("My first deliverable")
@@ -220,80 +215,18 @@ describe "deliverables" do
 
     it "I should be able to see who last graded in the grading page", :js => true do
       visit course_deliverables_path(@course)
-      find("#deliverable_" + @deliverable1.id.to_s).click
+      find("#deliverable_" + @team_turing_deliverable_1.id.to_s).click
       page.should have_content("Graded by")
       page.should have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
     end
 
     it "I should be able to see default message for last graded by in the grading page if not graded", :js => true do
       visit course_deliverables_path(@course)
-      find("#deliverable_" + @deliverable2.id.to_s).click
+      find("#deliverable_" + @team_turing_deliverable_2.id.to_s).click
       page.should have_content("Graded by")
       page.should_not have_link(@faculty.human_name.to_s, href: person_path(@faculty.twiki_name))
     end
-
-    it "I should be able to see my last filter options after providing grade/feedback ", :js => true do
-      pending
-      visit course_deliverables_path(@course)
-
-      find("#deliverable_" + @deliverable1.id.to_s).click
-      click_button "Finalize and Email"
-      #page.should have_content("Task 1")
-
-    end
-
-
-    it "I should be able to check tooltip for andrew ID", :js => true do
-      visit course_deliverables_path(@course)
-
-      pending
-
-      # hover over picture (or name) and show tooltip
-      # tooltip should show student's webiso_account
-      # page.find('#element').trigger(:mouseover)
-
-      # For debugging:
-      #save_and_open_page
-
-    end
-
-    ## end add Team Turing
-
-    ## beg del Team Turing
-
-    #it "I should be able to view deliverable page" do
-    #  visit deliverable_path(@team_deliverable)
-    #
-    #  page.should have_content("Attachment Version History")
-    #  page.should have_content("Professor's Notes")
-    #  page.should have_content("My private notes")
-    #
-    #  ## beg add Team Turing
-    #  # Check new features
-    #  page.should have_content("Last graded by")
-    #  page.should have_content("Send a copy to myself")
-    #  # TODO: Check new checkboxes passing the label text
-    #  #check "Send a copy to myself"
-    #  #uncheck "Send a copy to myself"
-    #  # TODO: Click buttons
-    #  page.should have_button("Save as Draft")
-    #  #click_button "Save as Draft"
-    #  page.should have_button("Finalize and Email")
-    #  #click_button "Finalize and Email"
-    #
-    #  # For debugging
-    #  #save_and_open_page
-    #
-    #  # end add Team Turing
-    #
-    #end
-    ## end del Team Turing
-
   end
-
-
-
-
 
   it "test user" do
     @student1 = FactoryGirl.create(:student_sam_user)

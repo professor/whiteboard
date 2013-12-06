@@ -208,24 +208,32 @@ describe Deliverable do
       @team_test =  FactoryGirl.create(:team_test, :course=>@course_fse)
       @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
 
-      @assignment1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
-      @assignment2 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+      @assignment_team_turing_1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+      @assignment_team_turing_2 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+      @assignment_team_test_1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
 
-      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
-      @deliverable2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment2, :creator => @student_sam)
-      @deliverable3 = FactoryGirl.create(:team_test_deliverable_1,:course => @course_fse, :team => @team_test,:assignment => @assignment1)
 
-      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
-      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
-      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
+      @team_turing_deliverable_1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse,
+                            :team => @team_turing,:assignment => @assignment_team_turing_1, :creator => @student_sam)
+      @team_turing_deliverable_2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse,
+                            :team => @team_turing,:assignment => @assignment_team_turing_2, :creator => @student_sam)
+      @team_test_deliverable_1 = FactoryGirl.create(:team_test_deliverable_1,:course => @course_fse,
+                             :team => @team_test,:assignment => @assignment_team_test_1)
+
+      @attachment_deliverable_1_turing =  FactoryGirl.create(:attachment_1, :deliverable => @team_turing_deliverable_1,
+                                                             :submitter => @student_sam)
+      @attachment_deliverable_2_turing =  FactoryGirl.create(:attachment_1, :deliverable => @team_turing_deliverable_2,
+                                                             :submitter => @student_sam)
+      @attachment_deliverable_1_test =  FactoryGirl.create(:attachment_1, :deliverable => @team_test_deliverable_1,
+                                                           :submitter => @student_sam)
 
       @options = {:is_my_team => 1}
 
-      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
-      @deliverables.should have(2).items
+      @expected_deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @expected_deliverables.should have(2).items
 
-      @deliverables[0].should == @deliverable2
-      @deliverables[1].should == @deliverable1
+      @expected_deliverables[0].should == @team_turing_deliverable_2
+      @expected_deliverables[1].should == @team_turing_deliverable_1
 
     end
 
@@ -234,28 +242,29 @@ describe Deliverable do
       @team_test =  FactoryGirl.create(:team_test, :course=>@course_fse)
 
       #Assigning the student to the team
-      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
-      @team_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+      @team_turing_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing,
+                                                   :user => @student_sam)
+      @team_test_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
 
-      @assignment1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
-      @assignment2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment_team_turing_1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment_team_turing_2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
 
-      @deliverable1 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
-      @deliverable2 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @student_sally)
-      #@deliverable3 = FactoryGirl.create(:individual_deliverable, :course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
+      @turing_individual_deliverable_1 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse,
+                              :assignment => @assignment_team_turing_1, :creator => @student_sam)
+      @turing_individual_deliverable_2 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse,
+                              :assignment => @assignment_team_turing_2, :creator => @student_sally)
 
-      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
-      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sally)
-      #@dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sam)
+      @attachment_deliverable_1_turing =  FactoryGirl.create(:attachment_1, :deliverable =>
+                              @turing_individual_deliverable_1, :submitter => @student_sam)
+      @attachment_deliverable_2_turing =  FactoryGirl.create(:attachment_1, :deliverable =>
+                              @turing_individual_deliverable_2, :submitter => @student_sally)
 
       @options = {:is_my_team => 1}
 
-      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
-      @deliverables.should have(1).items
+      @expected_deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @expected_deliverables.should have(1).items
 
-      @deliverables[0].should == @deliverable1
-      #@deliverables[1].should == @deliverable1
-
+      @expected_deliverables[0].should == @turing_individual_deliverable_1
     end
 
     it "If a course has teams, display team deliverables as well as individual deliverables for students in the
