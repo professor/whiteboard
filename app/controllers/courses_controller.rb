@@ -9,7 +9,6 @@ class CoursesController < ApplicationController
     @all_courses = true
     @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
-
     @registered_for_these_courses_during_current_semester = current_person.registered_for_these_courses_during_current_semester
     @teaching_these_courses_during_current_semester = current_person.teaching_these_courses_during_current_semester
   end
@@ -126,7 +125,7 @@ class CoursesController < ApplicationController
     authorize! :create, Course
     @last_offering = Course.last_offering(params[:course][:number])
     if @last_offering.nil?
-      @course = Course.new(:name => "New Course", :mini => "Both", :number => params[:course][:number])
+      @course = Course.new(course_params)
     else
       @course = @last_offering.copy_as_new_course
     end
@@ -137,7 +136,6 @@ class CoursesController < ApplicationController
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       if @course.save
-
         flash[:notice] = 'Course was successfully created.'
         format.html { redirect_to edit_course_path(@course) }
         format.xml { render :xml => @course, :status => :created, :location => @course }
@@ -161,10 +159,11 @@ class CoursesController < ApplicationController
       @course.configured_by_user_id = current_user.id
     end
 
+    params.permit(:teachers => [])
     params[:course][:faculty_assignments_override] = params[:teachers]
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
-      @course.attributes = params[:course]
+      @course.attributes = course_params
       if @course.save
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_back_or_default(course_path(@course)) }
@@ -247,4 +246,9 @@ class CoursesController < ApplicationController
       format.xml { render :xml => @courses }
     end
   end
+
+  def course_params
+      params.require(:course).permit(:number,:name,:short_name,:semester,:mini, :year)
+  end
+
 end

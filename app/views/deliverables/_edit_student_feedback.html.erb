@@ -8,84 +8,100 @@
             $(this).val(score);
         });
     }
-</script>
 
-<script>
-  $(function() {
-    $('#apply_team_grade').bind('click', function() {
-        var score = $("#team_grade").val();
-        $(".student_scores input[type='text']").each(function(){
-              $(this).val(score);
-          });
+    $(function () {
+        $('#apply_team_grade').bind('click', function () {
+            var score = $("#team_grade").val();
+            $(".student_scores input[type='text']").each(function () {
+                $(this).val(score);
+            });
+        });
     });
-  });
+
+    function isScoreValid(status) {
+        isSaved = true;
+        closeEditorWarning();
+        if(status == 'Draft') {
+            alertify.log("Saving grade as draft. Please wait...");
+        } else {
+            alertify.log("Saving grade and sending email notification(s). Please wait...");
+        }
+
+    }
+
+    var isSaved = false;
+
+    function edited() {
+        if (isEdited()) return;
+
+        var new_name = "(Editing) " + $("title").text();
+        document.title = new_name;
+    }
+
+    function isEdited() {
+        if ($("title").text().search("(Editing)") == -1) return true;
+        else return false;
+    }
+
+    function closeEditorWarning() {
+        if (isEdited() && !isSaved) return 'It seems like you have been editing something..';
+        if (isEdited()) {
+            document.title = $("title").text().substr(10);
+        }
+    }
+
+    window.onbeforeunload = closeEditorWarning
 </script>
 
 <% content_for :title, "Provide Feedback" %>
-
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
-<%=  render :partial=>"layouts/grade_book_sub_menu" %>
-
-<% if @deliverable.is_team_deliverable?  %>
-<h2>Grade Team <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% else %>
-<h2>Grade Individual <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% end %>
-
 
 <%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
     <%# render 'shared/error_messages', object: f.object %>
     <div>
       <% if grade_type_points_or_weights == "Percentage" %>
-        <p>
-          <%= "Weight: #{@deliverable.assignment.weight}%" %>
-        </p>
+          <p>
+            <%= "Weight: #{@deliverable.assignment.weight}%" %>
+          </p>
       <% end %>
       <p>
-        <% if @deliverable.current_attachment.blank? %>
-          Deliverable: None
-        <% else %>
-          Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-        <% end %>
-      </p>
-      <p>
-        <%= f.label :feedback, "Feedback file to upload" %>
+        <%= f.label :feedback, "Feedback file to upload:" %> &nbsp;
         <%= f.file_field :feedback %>
       </p>
+
       <p>
         <%= f.label :feedback_comment, "Feedback Comments" %>
         (<%= link_to 'View History and Feedback', @deliverable %>)
         <br>
-        <%= f.text_area :feedback_comment, :size => "70x10" %>
+        <%= f.text_area :feedback_comment, :size => "70x10", :onchange => "edited()" %>
       </p>
     </div>
 
     <% if @deliverable.get_grade_status == :drafted %>
         <div class="rounded staff" style="background-color:#dedede;">
-           This is draft feedback
-         </div>
+          This is draft feedback
+        </div>
     <% end %>
 
     <% if @deliverable.is_team_deliverable? %>
-        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
+        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals(); edited();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade" %> / <%= display_maximum_score %>
         <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
 
     <% end %>
 
     <div class="student_scores">
       <% if @deliverable.is_team_deliverable? %>
-            <% for member in @deliverable.team.members %>
-              <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
-            <% end %>
+          <% for member in @deliverable.team.members %>
+              <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id) %>
+              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"}, :onchange => "edited()" %>
+          <% end %>
       <% else %>
-        <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
-        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+          <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id) %>
+          <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"}, :onchange => "edited()" %>
       <% end %>
     </div>
 
 
-    <br />
+    <br/>
 
     <div class="rounded staff">
       <%= professor_image %>
@@ -96,24 +112,22 @@
       </h1>
 
       <p>
-      <%= f.text_area :private_note, :size => "90x10" %>
+        <%= f.text_area :private_note, :size => "90x10", :onchange => "edited()" %>
       </p>
     </div>
 
-    <br /><br /><br />
-
-
-
-
-      <p>
+    <br/>
+    <!--TODO: How to stop a submission? -->
+    <p>
+    <div width="100%">
       <div style="float: left; width: auto;">
-        <%= f.submit "Save and Email" , :name=>"submit"%>
-        <%= f.submit "Save as Draft" , :name=>"draft" %>
-        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
-      </div><div style='clear:both;'></div>
-      </p>
-    <% end %>
-
-    <!-- <%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
-    <br/>
-    <br/>
+        <%= f.submit "Save as Draft", :name => "draft", :onclick => "isScoreValid('Draft')", :remote => true, :id => 'draftBtn' %>
+        <a id="cancelLink" onclick="closeRow(<%= @deliverable.id %>)">Cancel</a>
+      </div>
+      <div style="float: right;">
+        <%= f.submit "Save and Email", :name => "submit", :onclick => "isScoreValid('Submit')", :remote => true, :id => 'submitBtn' %>
+      </div>
+    </div>
+    </p>
+<% end %>
+<br/> <br/>

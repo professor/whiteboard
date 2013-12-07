@@ -498,7 +498,7 @@ ol.letterList{
 	font-family: Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: normal;
-	color: #990000;
+	color: #000;
 	margin: 10px 0px 8px 0px;
 	padding: 0px;
 }
@@ -1110,6 +1110,18 @@ h2.newsHeadline {
 
 .collapsible .hidden {
         display: none;
+}
+
+a.back-to-top, a.back-to-top:visited{
+    text-decoration:none;
+    color:#FFFFFF;
+    position: fixed;
+    bottom: 5%; 
+    right: 5%;
+    background-color: #C0C0C0;
+    font-size: 11pt;
+    padding:3px 8px;
+    border-radius:5px;
 }
 
 

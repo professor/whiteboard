@@ -34,6 +34,7 @@
 
 
 class Deliverable < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   belongs_to :team
   belongs_to :course
 
@@ -333,5 +334,24 @@ class Deliverable < ActiveRecord::Base
         GenericMailer.email(options).deliver
       end
     end
+  end
+
+  # This method fetches team deliverables for the specified course and filter selections
+  def self.team_deliverables_for_grading_queue(course, current_user, team_selection)
+    sql_query = DeliverableQueryHelper.generate_query_for_team_deliverables(course, current_user, team_selection)
+    return execute_custom_sql(sql_query)
+  end
+
+  # This method fetches individual deliverables for the specified course and filter selections
+  def self.individual_deliverables_for_grading_queue(course, current_user, team_selection)
+    sql_query = DeliverableQueryHelper.generate_query_for_individual_deliverables(course, current_user, team_selection)
+    return execute_custom_sql(sql_query)
+  end
+
+  # This is a utility method to execute a fully formed custom SQL query
+  def self.execute_custom_sql(sql_query_str)
+    sql = self.sanitize_sql([sql_query_str])
+
+    return self.connection.execute(sql)
   end
 end

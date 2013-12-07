@@ -181,8 +181,9 @@ class TeamsController < ApplicationController
   # POST /courses/1/teams.xml
   def create
     if has_permissions_or_redirect(:staff, root_path)
+      params.permit(:persons => [])
       params[:team][:members_override] = params[:persons]
-      @team = Team.new(params[:team])
+      @team = Team.new(team_params)
 
       @team.course_id = params[:course_id]
       @course = Course.find(params[:course_id])
@@ -214,7 +215,7 @@ class TeamsController < ApplicationController
       update_course_faculty_label
 
       respond_to do |format|
-        @team.attributes = params[:team]
+        @team.attributes = team_params
         if @team.save(params[:team])
           flash[:notice] = 'Team was successfully updated.'
           format.html { redirect_to(course_teams_path(@team.course)) }
@@ -291,11 +292,18 @@ class TeamsController < ApplicationController
 
 
   def update_course_faculty_label
+    params.permit(:primary_faculty_lable,:secondary_faculty_label)
     @course = Course.find(params[:course_id])
     if @course.primary_faculty_label != params[:primary_faculty_label] || @course.secondary_faculty_label != params[:seconday_faculty_label] then
       @course.primary_faculty_label = params[:primary_faculty_label]
       @course.secondary_faculty_label = params[:secondary_faculty_label]
       @course.save
     end
+  end
+
+  private
+
+  def team_params
+      params.require(:team).permit(:name,:section,:primary_faculty_id,:secondary_faculty_id,:email)
   end
 end
