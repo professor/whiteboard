@@ -261,9 +261,17 @@ class Deliverable < ActiveRecord::Base
   # To update the grade received by the student
   def update_grade (params, is_student_visible)
     error_msg = []
+
     if self.assignment.is_team_deliverable?
-      self.team.members.each do |user|
+      self.team.members.each_with_index do |user, i|
         score = params[:"#{user.id}"]
+        
+        # begin
+        #   Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible)
+        # rescue Exception => e
+        #   raise Exception.new([e,self.course_id, self.assignment.id, user.id, score, is_student_visible].join(', '))
+        # end
+
         if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible)==false
           error_msg << "Grade given to " + user.human_name + " is invalid!"
         end

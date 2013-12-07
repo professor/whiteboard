@@ -48,6 +48,7 @@ class DeliverablesController < ApplicationController
       if (current_user.is_admin? ||
           ((@course.faculty.include?(current_user) && team_array.empty?)))
         @deliverables = Deliverable.where(:course_id => @course.id).all
+         @all_team_deliverables = Deliverable.where(:course_id=>@course.id).all
       elsif (@course.faculty.include?(current_user) && !team_array.empty?)
         # Get Team deliverables
         @team_deliverables = Deliverable.where(:course_id => @course.id,
@@ -56,6 +57,7 @@ class DeliverablesController < ApplicationController
         @ind_del_attachments = DeliverableAttachment.where(:submitter_id => individuals_array)
         @ind_del_attachments.each do |ind_attach|
           individual_attachments << ind_attach[:deliverable_id]
+          @all_team_deliverables = Deliverable.where(:course_id=>@course.id).all
         end
         # Get individual deliverables
         @ind_deliverables = Deliverable.where(:course_id => @course.id,
@@ -357,4 +359,4 @@ class DeliverablesController < ApplicationController
     render 'dropdown', :layout => false
   end
 
-end
+  end

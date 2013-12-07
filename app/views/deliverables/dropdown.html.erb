@@ -32,7 +32,7 @@
               <% end %>
             </td>
       <% else %>
-          <tr id="allAssignments" style="display:none" class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
+          <tr style="display:none" class=<%= "allAssignments " + cycle('twikiTableOdd', 'twikiTableEven') %>>
             <td>
               <%= display_timestamp(version.submission_date) -%>
 
@@ -57,7 +57,7 @@
   <% end %>
 </table>
 <% if deliverable.attachment_versions.length>1 %>
-    <a id="show_all_assignments"><label >Show all assignment</label></a>
+    <a class="show_all_assignments"><label >Show all assignment</label></a>
 <% end %>
 <%= form_for deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => deliverable }, :remote => true do |f| %>
     <div>
@@ -97,16 +97,16 @@
 
 
     <div class="student_scores">
-        <div class="team-grade">
-          <span>Team Grade</span>
-          <input type="text" class="team-grade-box">
-          / 
-          <span class="maximum-score">
-            <%= display_maximum_score %>
-          </span>
-        </div>
-
         <% if deliverable.is_team_deliverable? %>
+            <div class="team-grade">
+              <span>Team Grade</span>
+              <input type="text" class="team-grade-box">
+              / 
+              <span class="maximum-score">
+                <%= display_maximum_score %>
+              </span>
+            </div>
+
             <% for member in deliverable.team.members %>
                 <% grade_obj = Grade.get_grade(deliverable.course.id, deliverable.assignment_id, member.id) %>
                 <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
