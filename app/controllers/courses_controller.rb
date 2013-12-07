@@ -9,7 +9,6 @@ class CoursesController < ApplicationController
     @all_courses = true
     @courses = Course.order("year DESC, semester DESC, number ASC").all
     @courses = @courses.sort_by { |c| -c.sortable_value } # note the '-' is for desc sorting
-
     @registered_for_these_courses_during_current_semester = current_person.registered_for_these_courses_during_current_semester
     @teaching_these_courses_during_current_semester = current_person.teaching_these_courses_during_current_semester
   end
@@ -252,7 +251,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-      params.require(:course).permit(:number,:short_name,:name,:semester,:mini, :year)
+      params.require(:course).permit(:number,:name,:short_name,:semester,:mini, :year)
   end
 
 end

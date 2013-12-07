@@ -29,13 +29,26 @@ class DeliverablesController < ApplicationController
     @assignments = Assignment.fetch_submittable_assignments_by_course_id @course.id
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      # By Default fetch data for all teams
-      team_selection = 2 # ALL_TEAMS
+      # By Default fetch data for my teams
+      team_selection = 1 # MY_TEAMS
 
-      # If data is requested for MY_TEAMS, filter so.
-      if params[:teams] == "my_teams"
+      # Check what the session value is ::
+      if( session[:team_selection] != nil )
+        team_selection = session[:team_selection]
+        #puts ">>> Team selection used from session preference: #{team_selection}"
+      end
+
+      # Remember that user selection overrides the session preference
+      if params[:teams] == "all_teams"
+        team_selection = 2 # ALL_TEAMS
+      end
+      if params[:teams] == 'my_teams'
         team_selection = 1 # MY_TEAMS
       end
+
+      # For future requests save this preference back in the session variable
+      session[:team_selection] = team_selection
+      #puts "<<< Team selection: #{team_selection} set to session as preference"
 
       @team_deliverables = Deliverable.team_deliverables_for_grading_queue(@course, current_user, team_selection)
       @individual_deliverables = Deliverable.individual_deliverables_for_grading_queue(@course, current_user, team_selection)
@@ -121,6 +134,7 @@ class DeliverablesController < ApplicationController
     # If we aren't on this deliverable's team, you can't see it.
     @deliverable = Deliverable.new(:creator => current_user)
     @courses = current_user.registered_for_these_courses_during_current_semester
+
     # permitting parameters to protect against mass assignment
     params.permit(:course_id)
     if params[:course_id]
@@ -332,11 +346,11 @@ class DeliverablesController < ApplicationController
   private
   # Permitted params
   def deliverable_params
-      params.require(:deliverable).permit(:assignment_id,:course_id)
+    params.require(:deliverable).permit(:assignment_id,:course_id)
   end
 
   def deliverable_attachment_params
-      params.require(:deliverable_attachment).permit(:comment,:attachment)
+    params.require(:deliverable_attachment).permit(:comment,:attachment)
   end
 
 end

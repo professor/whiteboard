@@ -1,30 +1,32 @@
+<!-- Following 3 are included to support status notifications. -->
+<%= stylesheet_link_tag "alertify.core.css", media: "all" %>
+<%= stylesheet_link_tag "alertify.default.css", media: "all" %>
+<%= javascript_include_tag "alertify.min.js" %>
+
 <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
 <%= javascript_include_tag 'jquery.quicksearch.js' %>
 <%= javascript_include_tag 'jquery.session' %>
-<%= javascript_include_tag 'jquery-ui.min.js' %>
 <%= stylesheet_link_tag 'jquery-ui.css' %>
-
 
 <% content_for :title, "Grading Queue - #{@course.name}" %>
 
 
 <h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
 <%= render :partial => "layouts/grade_book_sub_menu" %>
-<h2>Submitted <%= nomenclature_assignment_or_deliverable %>s</h2>
 
 
 <div>
   <div id='filters'>
     <div id='filterBoxSearch'>
-      <input id='filterBoxOne' placeholder='Filter Grading Queue data by Owner / Advisor / Deliverable' maxlength='30' size='30' type='text'/>
+      <input id='filterBoxOne' placeholder='Filter Grading Queue data by Owner / Advisor / <%= nomenclature_assignment_or_deliverable %>' maxlength='30' size='30' type='text'/>
     </div>
 
     <div id='advanced_search_filters_div'>
-      <table style="width: 100%; border-color: transparent;">
+      <table style="width: 100%;" class="twikiTable cmu_table">
         <tr>
           <td>
             Teams: <br/>
-            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" checked onchange="update_teams($(this))" /><label for="filter_my_teams">My
+            <input type="radio" id="filter_my_teams" name="teams" value="my_teams" onchange="update_teams($(this))" /><label for="filter_my_teams">My
             Teams</label> <br/>
             <input type="radio" id="filter_all_teams" name="teams" value="all_teams" onchange="update_teams($(this))"/><label for="filter_all_teams">All
             Teams</label>
@@ -43,26 +45,19 @@
           <td>
             Filter by <%= nomenclature_assignment_or_deliverable %> status: <br/>
             <input id="filter_ungraded" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_ungraded">Ungraded</label>
+                <label for="filter_ungraded">Ungraded</label><div id="ungraded" style="float: left;">&nbsp;</div>
             <br/>
             <input id="filter_drafted" class="filter_status" checked="true" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_drafted">Drafted</label>
+                <label for="filter_drafted">Drafted</label> <div id="drafted" style="float: left;">&nbsp;</div>
             <br/>
             <input id="filter_graded" class="filter_status" type="checkbox" onchange="updateResultTablesToMatchFilter();"/>
-                <label for="filter_graded">Graded</label>
+                <label for="filter_graded">Graded</label> <div id="graded" style="float: left;">&nbsp;</div>
           </td>
         </tr>
       </table>
     </div>
   </div>
 </div>
-
-<!--<div>-->
-  <!--Legend for Grade Indicator:-->
-  <!--<div id="graded">&nbsp;&nbsp;&nbsp;&nbsp;Graded</div>-->
-  <!--<div id="drafted">&nbsp;&nbsp;&nbsp;&nbsp;Drafted</div>-->
-  <!--<div id="ungraded">&nbsp;&nbsp;&nbsp;&nbsp;Ungraded</div>-->
-<!--</div>-->
 
 <div id="grading_queue_table">
   <div id="tabs">
@@ -81,18 +76,59 @@
 <br/>
 
 <script>
+    // Function that applies the selection preferences from session to the screen
+    function applySelectionPreferences() {
+        // Read user selection from session and select appropriate
+        // team selection option.
+        var team_selection = <%=session[:team_selection]%>;
+        if(team_selection == 1) {
+            $('#filter_my_teams').attr('checked', true);
+        } else {
+            $('#filter_all_teams').attr('checked', true);
+        }
+
+        // Select the Assignment Option selected by User
+        var assignmentSelected = window.localStorage.getItem("assignmentSelected");
+        console.log("Selected Assignment:: " + assignmentSelected);
+        if(assignmentSelected) {
+            $("#selected_assignment").val(assignmentSelected);
+        }
+
+        // Select the grading status options selected by User
+        var gradingStatus = window.localStorage.getItem("gradingStatus");
+        console.log("Grading status :: " + gradingStatus);
+        if(gradingStatus != null) {
+            // Uncheck all the check boxes in grading status section
+            $(".filter_status").removeAttr('checked');
+
+            // Now, check only the selections that were made previously
+            console.log("Grading status is Array? : " + (gradingStatus instanceof Array) );
+            var gradingStatusArr = gradingStatus.split(",");
+            gradingStatusArr.forEach(function(status) {
+              console.log("Status >> " + status);
+              $("#filter_" + status).prop('checked', true);
+            })
+            //for(var i = 0 ; i < gradingStatusArr.length; i++ )
+        }
+    }
+
     // Function that is called when selection changes between my_teams and all_teams
     // This makes an AJAX call to the server to get updated content and update
     // team deliverables and individual deliverables divs.
     function update_teams(elem) {
         if (elem.attr('value') === 'my_teams') {
+            $("#filter_my_teams").attr("checked", "checked");
+            $("#filter_all_teams").removeAttr("checked");
             fetch_my_team_deliverables();
         } else if (elem.attr('value') === 'all_teams') {
+            $("#filter_all_teams").attr("checked", "checked");
+            $("#filter_my_teams").removeAttr("checked");
             fetch_all_team_deliverables();
         }
     }
     // Method which invokes the AJAX call when All teams radio is selected.
     function fetch_all_team_deliverables() {
+        alertify.log("Please wait while we fetch <%= nomenclature_assignment_or_deliverable %> submitted by all teams...")
         // call ajax
         $.get("deliverables", {
             teams: "all_teams"
@@ -104,6 +140,7 @@
     }
     // Method which invokes the AJAX call when My teams radio is selected.
     function fetch_my_team_deliverables() {
+        alertify.log("Please wait while we fetch <%= nomenclature_assignment_or_deliverable %> submitted by your teams...")
         // call ajax
         $.get("deliverables", {
             teams: "my_teams"
@@ -137,18 +174,25 @@
     function preparePageToMatchFilter() {
         // 1. Make the newly formed table's headers to be sortable.
         makeTableHeadersSortable();
+        // 2. Update the table rows to suite Assignment and Grade Status selections.
+        updateResultTablesToMatchFilter();
 
-        // 2. Link search box with the table data
-        var $search = $("#filterBoxOne");
+        // 3. Link search box with the table data
+        prepareSearch();
+
+        // Hook listener functions for all grading in the same page features
+        prepareSinglePageFunctions();
+    }
+
+    function prepareSearch(){
         // Enable the search box if it is disabled by anychance
         if ($search.prop("disabled") == true) {
             $search.val('');
             $search.removeAttr("disabled");
         }
-        $search.quicksearch('.sortable tbody tr');
-
-        // 3. Update the table rows to suite Assignment and Grade Status selections.
-        updateResultTablesToMatchFilter();
+        //$search.quicksearch(".sortable tbody tr[style='display: table-row;']");
+        $search.quicksearch('.sortable tbody tr:visible', {
+        });
     }
 
     // This function looks at the Assignment and Grading Status selections
@@ -164,6 +208,7 @@
 
         // Get the selected assignment
         var selected_item_val = $("#selected_assignment option:selected").attr('value');
+        window.localStorage.setItem("assignmentSelected", selected_item_val);
 
         // Filter by grading status
         var selected_grading_status = new Array();
@@ -171,6 +216,8 @@
         if ($("#filter_ungraded").is(':checked')) { selected_grading_status.push('ungraded'); }
         if ($("#filter_drafted").is(':checked')) { selected_grading_status.push('drafted'); }
         if ($("#filter_graded").is(':checked')) { selected_grading_status.push('graded'); }
+
+        window.localStorage.setItem("gradingStatus", selected_grading_status);
 
         // For all elements that are selected, show them in the result tables
         for(var i = 0; i < selected_grading_status.length; i++) {
@@ -188,6 +235,8 @@
         }
 
         showNoRowsMessageIfNeeded();
+
+        prepareSearch();
     }
 
     // This function shows human readable no data to show messages if
@@ -208,8 +257,112 @@
         }
     }
 
+    //to comment
+    function prepareSinglePageFunctions(){
+        // Make the Give grade/Review grade link not do anything on click.
+        $('tr a#grLink').click( function(event) {
+            event.preventDefault();
+        })
+
+        console.log($(".grade_row").attr('class'));
+        $(".grade_row").click(showGradingDetail);   
+        // Enabling tooltips
+
+        $('#apply_team_grade').bind('click', function() {
+          var score = $("#team_grade").val();
+          $(".student_scores input[type='text']").each(function(){
+            $(this).val(score);
+          });
+        });
+    }
+
+    //to comment
+    function apply_team_grade_to_individuals() {
+      var score = $("#team_grade").val();
+      $(".student_scores input[type='text']").each(function () {
+        $(this).val(score);
+      });
+    }
+    //to comment
+    function showGradingDetail(){
+        var event = jQuery.Event('click');
+        event.preventDefault();
+//        event.stopPropagation();
+        var url = $(this).find("td a").attr("href");
+        var deliverable_id = url.match(/\/([0-9]+)/)[1];
+        var that = $(this);
+        if ($('tr#' + deliverable_id).is(':visible')){
+            closeRow(deliverable_id);
+        }
+        else {
+          alertify.log("Loading <%= nomenclature_assignment_or_deliverable %> details. Please wait ... ");
+          var callback = showPopupWindow(that, deliverable_id);
+          $.get(url).done(callback).fail(function(jqXHR, textStatus, error) {});
+        }
+    }
+
+    // This method can be called to close the assignment details row for a
+    // given deliverable ID.
+    function closeRow(deliverable_id) {
+        var message = closeEditorWarning();
+        if(!message || confirm(message + "\n\nDo you want to close anyway?")) {
+            var title_text = $("title").text();
+            if(title_text.indexOf('Editing') != -1) {
+                document.title = $("title").text().substr(10);
+            }
+
+            alertify.log("Closing <%= nomenclature_assignment_or_deliverable %> details");
+            var closestRow = $('tr#' + deliverable_id);
+            closestRow.fadeOut(1000);
+        }
+    }
+
+    //to comment
+    function showPopupWindow(that, deliverable_id){
+        return function(data){
+            console.log($(that).attr('class'));
+            var content = '<tr/><tr id="' + deliverable_id+'"><td colspan="5" style="border: 2px solid lightblue;">' + $(data).find("#contentToGrade_" + deliverable_id).html() + '</td></tr>';
+            $(that).after(content); 
+
+            var form_id = $("#"+deliverable_id + " form").attr("id");
+            $("#"+form_id + " #deliverable_submit").click(function(e){
+              e.preventDefault();
+              var form = $(this).closest('form');
+              var formData = $(this).closest('form').serializeArray();
+              formData.push({
+                 name: this.name, value: this.value 
+              });
+              $.post($(form).attr("action"), formData).done(function(){
+                if ($("#filter_all_teams").attr("checked")){
+                  fetch_all_team_deliverables();
+                }
+                if ($("#filter_my_teams").attr("checked")){
+                  fetch_my_team_deliverables();
+                }
+              });
+            });
+        }
+    }
+
     $(document).ready(function () {
+
+        $search = $("#filterBoxOne");
+
+        $(document).tooltip();
+
+        // Set the filter values with previous values from session
+        applySelectionPreferences();
+
         // Invoke the below function on page load.
         preparePageToMatchFilter();
+
+        // Set the default notification messages for 5 seconds
+        alertify.set({ delay: 3000 });
     });
+
+    // Check if the grades or comments are edited
+    function isEdited(){
+      if ($("title").text().search("(Editing)") != -1) return true;
+      else return false;
+    }
 </script>

@@ -132,13 +132,11 @@ describe CoursesController do
         before(:each) do
           @course = FactoryGirl.build(:course)
         end
-
-        # TODO
+        
         it "saves a newly created item" do
-          pending
-          #lambda {
-          #  post :create, :course => {"number"=>"96-NEW", "semester"=>"Summer", "year"=>"2011"}
-          #}.should change(Course, :count).by(1)
+          lambda {
+            post :create, :course => {"number"=>"97-NEW", "semester"=>"Summer", "year"=>"2011",:mini => "A" ,:name => "New course"}
+          }.should change(Course, :count).by(1)
         end
 
         it "redirects to edit course" do
@@ -170,22 +168,12 @@ describe CoursesController do
       end
 
       describe "with invalid params" do
-        # TODO
-        it "assigns a newly created but unsaved item as item" do
-          pending
-          #lambda {
-          #  post :create, :course => {}
-          #}.should_not change(Course, :count)
-          #assigns(:course).should_not be_nil
-          #assigns(:course).should be_kind_of(Course)
-        end
+          it "should not create a new course" do
+              lambda {
+                  post :create, :course => {}
+              }.should_not change(Course, :count)
+          end
 
-        # TODO
-        it "re-renders the 'new' template" do
-          pending
-          #post :create, :course => {}
-          #response.should render_template("new")
-        end
       end
     end
 

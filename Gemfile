@@ -94,7 +94,6 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
-
   # gem for strong parameters
   gem 'strong_parameters', '0.2.1'
 end

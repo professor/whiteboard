@@ -50,7 +50,8 @@ describe "deliverables" do
       click_link "Resubmit"
    #   visit deliverable_path(@team_deliverable)
 
-      page.should have_content("Attachment Version History")
+      # The below is not valid with the latest over haul of grading queue page
+      #page.should have_content("Attachment Version History")
       page.should_not have_content("Professor's Notes")
       page.should_not have_content("My private notes")
     end
@@ -113,7 +114,8 @@ describe "deliverables" do
       visit deliverable_path(@team_deliverable)
       #save_and_open_page
 
-      page.should have_content("Attachment Version History")
+      # The below is not valid with the latest over haul of grading queue page
+      #page.should have_content("Attachment Version History")
       page.should have_content("Professor's Notes")
       page.should have_content("My private notes")
     end
