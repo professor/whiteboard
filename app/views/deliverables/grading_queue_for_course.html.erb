@@ -174,21 +174,25 @@
     function preparePageToMatchFilter() {
         // 1. Make the newly formed table's headers to be sortable.
         makeTableHeadersSortable();
+        // 2. Update the table rows to suite Assignment and Grade Status selections.
+        updateResultTablesToMatchFilter();
 
-        // 2. Link search box with the table data
-        var $search = $("#filterBoxOne");
+        // 3. Link search box with the table data
+        prepareSearch();
+
+        // Hook listener functions for all grading in the same page features
+        prepareSinglePageFunctions();
+    }
+
+    function prepareSearch(){
         // Enable the search box if it is disabled by anychance
         if ($search.prop("disabled") == true) {
             $search.val('');
             $search.removeAttr("disabled");
         }
-        $search.quicksearch('.sortable tbody tr');
-
-        // 3. Update the table rows to suite Assignment and Grade Status selections.
-        updateResultTablesToMatchFilter();
-
-        // Hook listener functions for all grading in the same page features
-        prepareSinglePageFunctions();
+        //$search.quicksearch(".sortable tbody tr[style='display: table-row;']");
+        $search.quicksearch('.sortable tbody tr:visible', {
+        });
     }
 
     // This function looks at the Assignment and Grading Status selections
@@ -231,6 +235,8 @@
         }
 
         showNoRowsMessageIfNeeded();
+
+        prepareSearch();
     }
 
     // This function shows human readable no data to show messages if
@@ -339,6 +345,8 @@
     }
 
     $(document).ready(function () {
+
+        $search = $("#filterBoxOne");
 
         $(document).tooltip();
 
