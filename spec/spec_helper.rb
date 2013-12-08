@@ -12,7 +12,7 @@ require 'rspec/rails'
 require 'shoulda'
 require 'paperclip/matchers'
 require 'helpers'
-
+require 'capybara/rspec'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -57,7 +57,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   if ENV['CI'] == "true"
     config.filter_run_excluding :skip_on_build_machine => true
@@ -77,11 +77,17 @@ RSpec.configure do |config|
 end
 
 Capybara.default_host = 'http://whiteboard.sv.cmu.edu'
+Capybara.javascript_driver = :selenium
 
 FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
 
 include ControllerMacros
 
+# don't run on the local machine (since we don't have xvfb running locally)
+if Rails.env.production?
+    headless = Headless.new
+    headless.start
+end
 ## Forces all threads to share the same connection. This works on
 ## Capybara because it starts the web server in a thread.
 #ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection

@@ -1,68 +1,528 @@
-<% reset_cycle %>
-<% customised_name= nomenclature_assignment_or_deliverable %>
-<table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
-  <thead>
-  <tr>
-    <% unless skip_course_column %>
-        <th>Course</th>
+<input id="deliverables-search" type="text" placeholder="Search by Team / Individual / Assignment Name">
+
+<div id="filters">
+    <div id="individual-team-filters">
+        <div id="show-individuals" class="filter active">
+            Show Individuals
+        </div>
+        <div id="show-teams" class="filter active">
+            Show Teams
+        </div>
+    </div>
+
+    <div id="assignment-status-filters">
+        <div id="show-ungraded" class="filter active">
+            Show Ungraded
+        </div>
+        <div id="show-graded" class="filter">
+            Show Graded
+        </div>
+        <div id="show-drafted" class="filter active">
+            Show Drafted
+        </div>
+    </div>
+</div>
+
+<div id="deliverable-header">
+    <div class="name">Name</div><div class="assignment">Assignment</div><div class="status">Status</div>
+</div>
+<ul id="deliverables">
+    <% deliverables.each do |deliverable| %>
+        <li class="deliverable" id="deliverable-<%= deliverable.id %>">
+            <div class="summary">
+                <div class="name">
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                </div><div class="assignment">
+                    <% if deliverable.assignment.task_number %>
+                        <%= deliverable.assignment.task_number %>:
+                    <% end %>
+
+                    <%= deliverable.assignment_name %>
+
+                    <% if deliverable.get_grade_status==:graded %>
+                        <% if deliverable.get_grading_date < deliverable.attachment_versions.first.submission_date %>
+                            <span style='color:red'>  New!</span>
+                        <% end %>
+                    <% end %>
+                </div><div class="status <%= deliverable.get_grade_status.to_s %>">
+                    <% if deliverable.get_grade_status == :ungraded %>
+                        Ungraded
+                    <% elsif deliverable.get_grade_status == :drafted %>
+                        Drafted
+                    <% else %>
+                        Graded
+                    <% end %>
+                </div>
+            </div>
+            <div class="dropdown-loader" style="display: none;">
+                <img src="/images/ajax-loader2.gif" alt="">
+            </div>
+            <div class="dropdown">
+            </div>
+        </li>
     <% end %>
-    <% if customised_name=="Deliverable" %>
-        <th>Task Number</th>
+</ul>
+<!-- List of Teams associated to the Primary Faculty ends here -->
+<div id="deliverable-header-all">
+    <div class="name">Name</div><div class="assignment">Assignment</div><div class="status">Status</div>
+</div>
+<ul id="all_deliverables">
+    <% all_deliverables.each do |deliverable| %>
+        <li class="deliverable" id="deliverable-<%= deliverable.id %>">
+            <div class="summary">
+                <div class="name">
+                    <%= 'Team' if deliverable.is_team_deliverable? %>
+                    <%= deliverable.owner_name %>
+                </div><div class="assignment">
+                    <% if deliverable.assignment.task_number %>
+                        <%= deliverable.assignment.task_number %>:
+                    <% end %>
+
+                    <%= deliverable.assignment_name %>
+
+                    <% if deliverable.get_grade_status==:graded %>
+                        <% if deliverable.get_grading_date < deliverable.attachment_versions.first.submission_date %>
+                            <span style='color:red'>  New!</span>
+                        <% end %>
+                    <% end %>
+                </div><div class="status <%= deliverable.get_grade_status.to_s %>">
+                    <% if deliverable.get_grade_status == :ungraded %>
+                        Ungraded
+                    <% elsif deliverable.get_grade_status == :drafted %>
+                        Drafted
+                    <% else %>
+                        Graded
+                    <% end %>
+                </div>
+            </div>
+            <div class="dropdown-loader" style="display: none;">
+                <img src="/images/ajax-loader2.gif" alt="">
+            </div>
+            <div class="dropdown">
+            </div>
+        </li>
     <% end %>
+</ul>
+<div id="nothing-to-show">
+    Nothing to show. Choose a filter :)
+</div>
 
-    <th><%=nomenclature_assignment_or_deliverable%></th>
-    <th>Owner</th>
-<!--
-    <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
--->
-    <th>Graded</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-
-  <% deliverables.each do |deliverable| %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
-        <% unless skip_course_column %>
-            <% if deliverable.course %>
-                <td><%= deliverable.course.name %></td>
-            <% else %>
-                <td>&nbsp;</td>
-            <% end %>
-        <% end %>
+<script type="text/javascript">
+    var $deliverables = $('.deliverable');
 
 
-        <% if customised_name=="Deliverable" %>
-            <td><%= deliverable.assignment.task_number %></td>
-        <% end %>
-        <td><%= deliverable.assignment.name %></td>
+    ////////////////
+    // Accordion  //
+    ////////////////
+    $('#deliverables').on('click', '.deliverable .summary', function () {
+        var $deliverable = $(this).parent();
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        var $dropdownLoader = $deliverable.find('.dropdown-loader');
+        var deliverableId = $deliverable.attr('id').split('-')[1];
 
-        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
+        if ($deliverable.data('expanded')) {
+            $deliverable.data('expanded', false);
+            $deliverableDropdown.animate({
+                height: 0,
+                opacity: 0
+            });
+        } else {
+            $dropdownLoader.show();
+            $.ajax({
+                url: '/deliverables/' + deliverableId + '/dropdown',
+                type: 'GET',
+                success: function (data) {
+                    $deliverableDropdown.html(data);
+                    var $dropdownMain = $deliverableDropdown.find('.dropdown-main');
+                    $deliverableDropdown.animate({
+                        height: $dropdownMain.height() + 50,
+                        opacity: 1
+                    });
+                    $deliverable.data('expanded', true);
+                    $dropdownLoader.hide();
+                }
+            });
+        }
+    }).on('click', '.collapse-button', function () {
+        var $deliverable = $(this).closest('.deliverable');
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        $deliverable.data('expanded', false);
+        $deliverableDropdown.animate({
+            height: 0,
+            opacity: 0
+        });
+        console.log($deliverable.position().top)
+        $('html, body').animate({
+            scrollTop: $deliverable.offset().top
+        });
+    });
 
-        <!-- commented this out on 9/27/2013 to increase performance
-        <%# latest_attachment = deliverable.attachment_versions.first %>
-        <%# unless latest_attachment.attachment_file_name.nil? %>
-            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%# deliverable.assignment_name %></td>
-        <%# end %>
-        -->
-        <td>
-          <% if deliverable.get_grade_status==:graded %>
-             Yes
-          <% elsif deliverable.get_grade_status==:drafted %>
-             No (Draft)
-          <% elsif deliverable.get_grade_status==:ungraded %>
-             No
-          <% end %>
-        </td>
+
+    function strcmp(a, b) {
+        if (a > b) {
+            return 1;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 0;
+    }
+
+    //////////////////////////////
+    // Accordion for all teams //
+    ////////////////////////////
+    $('#all_deliverables').on('click', '.deliverable .summary', function () {
+        var $deliverable = $(this).parent();
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        var $dropdownLoader = $deliverable.find('.dropdown-loader');
+        var deliverableId = $deliverable.attr('id').split('-')[1];
+
+        if ($deliverable.data('expanded')) {
+            $deliverable.data('expanded', false);
+            $deliverableDropdown.animate({
+                height: 0,
+                opacity: 0
+            });
+        } else {
+            $dropdownLoader.show();
+            $.ajax({
+                url: '/deliverables/' + deliverableId + '/dropdown',
+                type: 'GET',
+                success: function (data) {
+                    $deliverableDropdown.html(data);
+                    var $dropdownMain = $deliverableDropdown.find('.dropdown-main');
+                    $deliverableDropdown.animate({
+                        height: $dropdownMain.height() + 50,
+                        opacity: 1
+                    });
+                    $deliverable.data('expanded', true);
+                    $dropdownLoader.hide();
+                }
+            });
+        }
+    }).on('click', '.collapse-button', function () {
+        var $deliverable = $(this).closest('.deliverable');
+        var $deliverableDropdown = $deliverable.find('.dropdown');
+        $deliverable.data('expanded', false);
+        $deliverableDropdown.animate({
+            height: 0,
+            opacity: 0
+        });
+        console.log($deliverable.position().top)
+        $('html, body').animate({
+            scrollTop: $deliverable.offset().top
+        });
+    });
 
 
-              <% if  deliverable.get_grade_status==:graded %>
-                  <td><%= link_to 'Review Grade', deliverable %></td>
-              <%else%>
-                <td><%= link_to 'Give Grade', deliverable %></td>
-            <%end%>
+    function strcmp(a, b) {
+        if (a > b) {
+            return 1;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 0;
+    }
 
-      </tr>
-  <% end %>
-</table>
+
+
+    /////////////
+    // Sorters //
+    /////////////
+    $('#deliverable-header').on('click', 'div', function () {
+        var $header = $(this);
+        var orderBy = $header.attr('class');
+        var order;
+
+        $('#deliverable-header>div').each(function () {
+            var $this = $(this);
+            var text = $this.text();
+            var endChar = text.substr(-1);
+            if (endChar === '▲' || endChar === '▼') {
+                $this.text(text.slice(0, -2));
+            }
+        });
+
+        var text = $header.text();
+        // 1 for ascending, -1 for descending
+        switch ($header.data('order')) {
+            case 1:
+                order = -1;
+                $header.text(text + ' ▲');
+                break;
+            case -1:
+                order = 1;
+                $header.text(text + ' ▼');
+                break;
+            default:
+                order = 1;
+                $header.text(text + ' ▼');
+        }
+        $header.data('order', order);
+
+        $deliverables.sort(function (a, b) {
+            var $a = $(a);
+            var $b = $(b);
+            var textA = $a.find('.' + orderBy).text();
+            var textB = $b.find('.' + orderBy).text();
+            return strcmp(textA, textB) * order;
+        });
+        $('#deliverables').empty().html($deliverables);
+
+        return false;
+    });
+
+    function checkNothingToShow() {
+        $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
+    }
+
+     //////////////////////////
+    // Sorters for all teams//
+    /////////////////////////
+    $('#deliverable-header-all').on('click', 'div', function () {
+        var $header = $(this);
+        var orderBy = $header.attr('class');
+        var order;
+
+        $('#deliverable-header-all>div').each(function () {
+            var $this = $(this);
+            var text = $this.text();
+            var endChar = text.substr(-1);
+            if (endChar === '▲' || endChar === '▼') {
+                $this.text(text.slice(0, -2));
+            }
+        });
+
+        var text = $header.text();
+        // 1 for ascending, -1 for descending
+        switch ($header.data('order')) {
+            case 1:
+                order = -1;
+                $header.text(text + ' ▲');
+                break;
+            case -1:
+                order = 1;
+                $header.text(text + ' ▼');
+                break;
+            default:
+                order = 1;
+                $header.text(text + ' ▼');
+        }
+        $header.data('order', order);
+
+        $deliverables.sort(function (a, b) {
+            var $a = $(a);
+            var $b = $(b);
+            var textA = $a.find('.' + orderBy).text();
+            var textB = $b.find('.' + orderBy).text();
+            return strcmp(textA, textB) * order;
+        });
+        $('#all_deliverables').empty().html($deliverables);
+
+        return false;
+    });
+
+    function checkNothingToShow() {
+        $('#nothing-to-show').toggle($deliverables.filter(':visible').length === 0);
+    }
+
+        
+    /////////////
+    // Filters //
+    /////////////
+    function filter() {
+
+        var showIndividual = $('#show-individuals').hasClass('active');
+        var showTeam = $('#show-teams').hasClass('active');
+        var showUngraded = $('#show-ungraded').hasClass('active');
+        var showGraded = $('#show-graded').hasClass('active');
+        var showDraft = $('#show-drafted').hasClass('active');
+
+        var selectedStatuses = [];
+        if (showUngraded) selectedStatuses.push('Ungraded');
+        if (showGraded) selectedStatuses.push('Graded');
+        if (showDraft) selectedStatuses.push('Drafted');
+
+        $deliverables.hide().each(function () {
+            var $this = $(this);
+            var show = false;
+
+            var name = $.trim($this.find('.name').text());
+            var status = $.trim($this.find('.status').text());
+
+            if (showIndividual && name.substr(0, 4) !== 'Team') {
+                show = true;
+            }
+            if (showTeam && name.substr(0, 4) === 'Team') {
+                show = true;
+            }
+
+            show = show && (selectedStatuses.indexOf(status) >= 0);
+
+            if (show) {
+                $this.show();
+            }
+        });
+
+        checkNothingToShow();
+    }
+
+    filter();
+
+    $('.filter').click(function () {
+        var $this = $(this);
+        $this.toggleClass('active');
+        filter();
+    });
+
+
+    ///////////////
+    // SearchBox //
+    ///////////////
+    $('#deliverables-search').on('keyup', function () {
+        var $this = $(this);
+        var keyword = $this.val();
+        var matcher = new RegExp(keyword, 'i');
+
+        filter();
+
+        if (keyword.length === 0) {
+            return;
+        }
+
+        $deliverables.filter(':visible').each(function () {
+            var $this = $(this);
+            var name = $.trim($this.find('.name').text());
+            var assignment = $.trim($this.find('.assignment').text());
+            if (!matcher.test(name) && !matcher.test(assignment)) {
+                $this.hide();
+            }
+        });
+
+        checkNothingToShow();
+    });
+
+    ////////////////
+    // Team Grade //
+    ////////////////
+    function validateGradeHelper($input) {
+        var val = $input.val();
+        if (!val) {
+            return true;
+        }
+        var score = parseFloat(val);
+        if (isNaN(score)) {
+            return false;
+        }
+        var maximumScore = parseFloat($input.next().text());
+        return score <= maximumScore;
+    }
+
+    function validateGrade($input) {
+        $input.toggleClass('invalid', !validateGradeHelper($input));
+    }
+
+
+    $deliverables.on('keyup', '.team-grade-box', function () {
+        var $this = $(this);
+        var $grades = $this.closest('.student_scores').find('.team_member_photo input');
+        $grades.val($this.val()).each(function () {
+            validateGrade($(this));
+        });
+    });
+
+    $deliverables.on('keyup', '.student_scores input[type=text]', function () {
+        validateGrade($(this));
+    });
+
+    ///////////////////////////////
+    // Team Grade for all teams //
+    /////////////////////////////
+    function validateGradeHelper($input) {
+        var val = $input.val();
+        if (!val) {
+            return true;
+        }
+        var score = parseFloat(val);
+        if (isNaN(score)) {
+            return false;
+        }
+        var maximumScore = parseFloat($input.next().text());
+        return score <= maximumScore;
+    }
+
+    function validateGrade($input) {
+        $input.toggleClass('invalid', !validateGradeHelper($input));
+    }
+
+
+    $deliverables.on('keyup', '.team-grade-box', function () {
+        var $this = $(this);
+        var $grades = $this.closest('.student_scores').find('.team_member_photo input');
+        $grades.val($this.val()).each(function () {
+            validateGrade($(this));
+        });
+    });
+
+    $deliverables.on('keyup', '.student_scores input[type=text]', function () {
+        validateGrade($(this));
+    });
+
+
+    /////////////////////
+    // Form Submission //
+    /////////////////////
+    $('#deliverables')
+        .on('ajax:send', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.fadeIn().text('Processing ...');
+        })
+        .on('ajax:success', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.text('Processed.');
+            setTimeout(function () {
+                $indicator.fadeOut();
+            }, 3000);
+        });
+
+     /////////////////////
+    // Form Submission //
+    /////////////////////
+    $('#all_deliverables')
+        .on('ajax:send', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.fadeIn().text('Processing ...');
+        })
+        .on('ajax:success', '.edit_deliverable', function () {
+            var $form = $(this);
+            var $indicator = $form.find('.submit-loading-indicator');
+            $indicator.text('Processed.');
+            setTimeout(function () {
+                $indicator.fadeOut();
+            }, 3000);
+        });
+
+$(document).ready(function(){
+
+
+$("#myonoffswitch").click(function(){
+
+$("#deliverable-header").toggle();
+$("#deliverables").toggle();
+$("#deliverable-header-all").toggle();
+$("#all_deliverables").toggle();
+
+});
+
+});
+function updateAllAssignments() {
+    $('.allAssignments').show();
+    $('.show_all_assignments').hide();
+}
+$(document).on('click', '.show_all_assignments', updateAllAssignments);
+</script>

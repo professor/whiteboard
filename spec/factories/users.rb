@@ -54,7 +54,7 @@ FactoryGirl.define do
   factory :faculty_frank_user, :parent => :user do
     id 46
     email "faculty.frank@sv.cmu.edu"
-    webiso_account "frank@andrew.cmu.edu"
+    webiso_account "fac_frank@andrew.cmu.edu"
     is_staff true
     first_name "Faculty"
     last_name "Frank"
@@ -66,7 +66,7 @@ FactoryGirl.define do
   factory :faculty_fagan_user, :parent => :user do
     id 47
     email "faculty.fagan@sv.cmu.edu"
-    webiso_account "fagan@andrew.cmu.edu"
+    webiso_account "fac_fagan@andrew.cmu.edu"
     is_staff true
     first_name "Faculty"
     last_name "Fagan"
@@ -122,4 +122,29 @@ FactoryGirl.define do
     track_group "Tech"
   end
 
+  factory :student_jack_user, :parent => :user do
+    id 51
+    email "student.jack@sv.cmu.edu"
+    webiso_account "jack@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Sparrow"
+    human_name "Student Jack"
+    twiki_name "StudentJack"
+    initialize_with { User.find_or_initialize_by_id(id) }
+  end
+
+  factory :student_jill_user, :parent => :user do
+    id 52
+    email "student.jill@sv.cmu.edu"
+    webiso_account "jill@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Student"
+    last_name "Mill"
+    human_name "Student Jill"
+    twiki_name "StudentJill"
+    initialize_with { User.find_or_initialize_by_id(id) }
+  end
 end

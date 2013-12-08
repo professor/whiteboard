@@ -11,6 +11,5 @@ describe PeerEvaluationReview do
     PeerEvaluationReview.is_completed_for?(nil, nil).should be_false
   end
 
-
 end
 

@@ -310,7 +310,7 @@ class EffortLogsController < ApplicationController
   # POST /effort_logs
   # POST /effort_logs.xml
   def create
-    @effort_log = EffortLog.new(params[:effort_log])
+    @effort_log = EffortLog.new(effort_log_params)
 
     setup_required_datastructures(@effort_log.year, @effort_log.week_number)
 
@@ -349,7 +349,7 @@ class EffortLogsController < ApplicationController
     setup_required_datastructures(@effort_log.year, @effort_log.week_number)
 
     respond_to do |format|
-      if @effort_log.update_attributes(params[:effort_log])
+      if @effort_log.update_attributes(effort_log_params)
         #check to see if user is logging effort for unregistered courses
         course_error_msg = @effort_log.validate_effort_against_registered_courses()
         flash[:notice] = 'EffortLog was successfully updated.'
@@ -424,5 +424,9 @@ class EffortLogsController < ApplicationController
     Course.order("id DESC").first
   end
 
+  private
+  def effort_log_params
+    params.require(:effort_log).permit(:user_id, :week_number, :year)
+  end
 
 end

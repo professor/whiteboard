@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :fse, :parent => :course do
     name 'Foundations of Software Engineering'
-    short_name 'FSE'
+    short_name 'FSE' 
   end
 
   factory :ise, :parent => :course do

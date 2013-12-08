@@ -54,7 +54,6 @@ gem 'vpim'  # user for exporting contacts to vCard and iCalendar support
 gem 'seedbank'
 gem 'spreadsheet'
 
-
 group :production do
   gem 'thin'
   gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
@@ -85,6 +84,7 @@ group :development, :test do
   gem 'jasmine'
   gem 'launchy'
   gem 'ladle', '~> 0.2.0'
+  gem 'selenium-webdriver'
 
 #  gem 'morning_glory'
 
@@ -93,8 +93,18 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
+
+
+  gem 'database_cleaner'
 end
 
 
 
 #gem 'gchartrb'
+
+
+
+gem 'strong_parameters'
+
+gem 'cocaine', '0.3.2'
+

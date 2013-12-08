@@ -8,9 +8,9 @@ FactoryGirl.define do
     updating_email false
     association :course, :factory => :course
 #    after(:create) { |team| FactoryGirl.create(:student_sam_user, :teams => [team]) }
-#    after(:create) { |team| FactoryGirl.create(:student_sally_user, :teams => [team]) }
-    after(:create) { |team| FactoryGirl.create(:student_john_user , :teams => [team])}
-    after(:create) { |team| FactoryGirl.create(:student_john_user, :teams => [team]) }
+#    after(:create) { |team| FactoryGirl.create(:student_sally_user, :teams => [team])}
+     after(:create) { |team| FactoryGirl.create(:student_john_user , :teams => [team])}
+#    after(:create) { |team| FactoryGirl.create(:student_john_user, :teams => [team]) }
   end
 
   factory :team_bean_counters, class: Team do

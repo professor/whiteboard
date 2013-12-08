@@ -17,6 +17,9 @@ class DeliverablesController < ApplicationController
 
   def grading_queue_for_course
     @course = Course.find(params[:course_id])
+    team_array  = Array.new
+    individuals_array = Array.new
+    individual_attachments = Array.new
 
     if @course.grading_rule.nil?
       flash[:error] = I18n.t(:no_grading_rule_for_course)
@@ -27,7 +30,41 @@ class DeliverablesController < ApplicationController
     end
 
     if (current_user.is_admin? || @course.faculty.include?(current_user))
-      @deliverables = Deliverable.where(:course_id => @course.id).all
+
+      # Get teams where current user is assigned as the Primary faculty
+      #
+      @my_teams = Team.where(:primary_faculty_id => current_user.id)
+      @my_teams.each do |team|
+        team_array << team[:id]
+      end
+
+      # Get the individual members of these teams
+      #
+      @my_individuals = TeamAssignment.where(:team_id => team_array)
+      @my_individuals.each do |ind|
+        individuals_array << ind[:user_id]
+      end
+      # Current user Admin or Faculty with no teams assigned
+      if (current_user.is_admin? ||
+          ((@course.faculty.include?(current_user) && team_array.empty?)))
+        @deliverables = Deliverable.where(:course_id => @course.id).all
+         @all_team_deliverables = Deliverable.where(:course_id=>@course.id).all
+      elsif (@course.faculty.include?(current_user) && !team_array.empty?)
+        # Get Team deliverables
+        @team_deliverables = Deliverable.where(:course_id => @course.id,
+                  :team_id => team_array)
+        # Get deliverables where attachments are submitted by individual members of the team
+        @ind_del_attachments = DeliverableAttachment.where(:submitter_id => individuals_array)
+        @ind_del_attachments.each do |ind_attach|
+          individual_attachments << ind_attach[:deliverable_id]
+          @all_team_deliverables = Deliverable.where(:course_id=>@course.id).all
+        end
+        # Get individual deliverables
+        @ind_deliverables = Deliverable.where(:course_id => @course.id,
+                            :id => individual_attachments, :team_id => nil)
+        # All
+        @deliverables = @team_deliverables + @ind_deliverables
+      end
     else
       has_permissions_or_redirect(:admin, root_path)
     end
@@ -293,9 +330,11 @@ class DeliverablesController < ApplicationController
          flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
          format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         format.js { render :nothing => true, :status => 200 }
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
+         format.js { render :json => flash[:error] }
        end
     end
   end
@@ -313,4 +352,11 @@ class DeliverablesController < ApplicationController
     end
   end
 
-end
+  def dropdown
+    @deliverable = Deliverable.find(params[:id])
+    @course = @deliverable.course
+    @hostname_with_port = request.host_with_port
+    render 'dropdown', :layout => false
+  end
+
+  end

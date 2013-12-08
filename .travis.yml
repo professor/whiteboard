@@ -2,6 +2,12 @@ language: ruby
 
 rvm: 1.9.2
 
+branches:
+  only:
+    - master
+    - staged
+
+
 before_script:
   - "psql -c 'create database cmu_education_test;' -U postgres >/dev/null"
   - cp config/amazon_s3.default.yml config/amazon_s3.yml
@@ -24,8 +30,11 @@ env:
 notifications:
   email:
     recipients:
-      - todd.sedano@sv.cmu.edu
-      - rofaida.abdelaal@sv.cmu.edu
+      - shishir.kinkar@sv.cmu.edu
+      - anirudh.bhargava@sv.cmu.edu
+      - nelson.pollard@sv.cmu.edu
+      - gonghan.wang@sv.cmu.edu
+      - xueqiao.xu@sv.cmu.edu
     # on_success: [always|never|change] # default: change
     # on_failure: [always|never|change] # default: always
     on_success: change

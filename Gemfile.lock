@@ -73,9 +73,10 @@ GEM
     ckeditor (3.6.3)
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
-    cocaine (0.2.0)
+    cocaine (0.3.2)
     columnize (0.3.6)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
@@ -242,6 +243,10 @@ GEM
       rack (>= 1.0)
     spreadsheet (0.8.3)
       ruby-ole (>= 1.0)
+    strong_parameters (0.2.1)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+      railties (~> 3.0)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -280,7 +285,9 @@ DEPENDENCIES
   cancan
   capybara (= 1.1.1)
   ckeditor (= 3.6.3)
+  cocaine (= 0.3.2)
   daemons (~> 1.1.4)
+  database_cleaner
   delayed_job (= 2.1.4)
   devise
   exception_notification
@@ -307,8 +314,10 @@ DEPENDENCIES
   ruby-debug-base19x
   ruby-debug-ide
   seedbank
+  selenium-webdriver
   shoulda
   spreadsheet
+  strong_parameters
   taps
   thin
   vestal_versions!

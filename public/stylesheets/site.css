@@ -1,4 +1,11 @@
 
+*:focus {
+  outline: none;
+}
+
+input[type=text], textarea {
+  border: 1px solid #ccc;
+}
 
 /* We disable reset.css, but then apply this to make the original CMU layout css work */
 body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
@@ -337,10 +344,8 @@ a.photobook_item img{
     }
 
     div.staff {
-        padding: 5px;
-        margin: 5px;
+        padding: 10px;
         background-color: rgb(224, 235, 235);
-        border-radius: 10px;
     }
 
     div.admin {
@@ -851,7 +856,7 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
  * Grade book
  *************************/
 
-.team_member_photo{width:156px}
+.team_member_photo{width:117px}
 .team_member_photo img {height:150px}
 
 .student_scores{ overflow:auto; margin-top: 15px; }
@@ -919,6 +924,256 @@ background:url(../images/people_filtering_sprite.png)  0px 0;
     border-right: 2pt solid #0066cc;
 }
 .final{ border-right-width: 1px;}
+
+#deliverables {
+    width: 668px;
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    position: relative;
+}
+#all_deliverables {
+
+   width: 668px;
+    padding: 0;
+    margin-top: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    position: relative;
+    display: none;
+
+
+}
+
+.deliverable {
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    background-color: white;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.deliverable .summary {
+    line-height: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.deliverable .summary:hover {
+    background-color: #fffdd6;
+}
+
+.deliverable .summary .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+.deliverable .summary .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+.deliverable .summary .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.deliverable .summary .status.graded {
+    background-color: #dfd;
+}
+
+.deliverable .summary .status.drafted {
+    background-color: #ffd;
+}
+
+.deliverable .summary .status.ungraded {
+    background-color: #fdd;
+}
+
+.deliverable .dropdown {
+    height: 0;
+    overflow: hidden;
+}
+
+.deliverable .dropdown .dropdown-main {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.deliverable .dropdown-loader {
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+#deliverable-header {
+    background-color: #CDE8F5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    margin-top: 67px;
+    line-height: 30px;
+    height: 30px;
+    width: 668px;
+    cursor: pointer;
+}
+
+#deliverable-header .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+#deliverable-header-all {
+    background-color: #CDE8F5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    margin-top: 67px;
+    line-height: 30px;
+    height: 30px;
+    width: 668px;
+    cursor: pointer;
+    display: none;
+}
+
+#deliverable-header-all .name {
+    width: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header-all .assignment {
+    width: 351px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-left: 5px;
+}
+
+#deliverable-header-all .status {
+    width: 100px;
+    display: inline-block;
+    padding-left: 5px;
+}
+#filters {
+    margin-top: 17px;
+}
+
+.filter {
+    background-color: #ccc;
+    padding: 5px 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.filter.active {
+    background-color: #900;
+    color: white;
+}
+
+#individual-team-filters {
+    float: left;
+}
+
+#assignment-status-filters {
+    float: right;
+    margin-right: 3px;
+}
+
+#deliverables-search {
+    line-height: 25px;
+    padding-left: 10px;
+    width: 658px;
+    margin-top: 8px;
+}
+
+.team-grade {
+    margin: 5px 0 15px 10px;
+}
+.team-grade-box {
+    width: 40px;
+}
+input.invalid {
+   outline: 1px solid #f00;
+   border: 1px solid #f00;
+}
+
+.deliverable-submits {
+  margin-top: 10px;
+}
+
+#deliverable_submit {
+  border: none;
+  background: #900;
+  color: white;
+  padding: 7px 12px;
+  cursor: pointer;
+  margin-left: 0 !important;
+}
+#deliverable_submit:hover {
+  background: #b00;
+}
+
+.deliverable-photo {
+  padding: 2px 2px 0 !important;
+  background-color: #900 !important;
+}
+
+.team_member_photo {
+  text-align: center;
+}
+
+.team-member-name {
+  display: inline-block;
+  background: #900;
+  color: white;
+  width: 117px;
+  line-height: 28px;
+}
+
+.collapse-button {
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+  line-height: 30px;
+  position: relative;
+  top: -11px;
+}
+.collapse-button:hover {
+  background-color: #ffd;
+}
+
+#nothing-to-show {
+  display: block;
+  background: #FFF;
+  text-align: center;
+  line-height: 30px;
+  border: 1px solid #CCC;
+  width: 668px;
+  margin-top: 20px;
+}
+
 
 /*.hover:hover input {background-color: #8db1ff; } */
 /* .draft:hover input {background-color: #ffffbe; }  */
@@ -1055,3 +1310,4 @@ h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
     text-decoration: none;
     color: #990000;
 }
+
