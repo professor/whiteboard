@@ -1,5 +1,5 @@
 <%= javascript_include_tag "grade.js" %>
-<%= javascript_include_tag "jquery.tablesorter.js" %>
+<%= javascript_include_tag "jquery_tablesorter.js" %>
 <script>
   var changed_grades = {}
   var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
