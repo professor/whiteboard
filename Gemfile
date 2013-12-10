@@ -27,7 +27,7 @@ gem 'omniauth-google-apps', :git => 'git://github.com/sishen/omniauth-google-app
 gem 'devise'
 
 
-gem "ckeditor", "3.6.3"
+gem "ckeditor"
 
 
 gem 'bundler'
