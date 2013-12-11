@@ -225,6 +225,7 @@ ckeditor/_samples/tableresize.html: ckeditor/_samples/tableresize-5d5bb63e285ca7
 ckeditor/_samples/ui_color.html: ckeditor/_samples/ui_color-c297c9f00c2e06fcb8ed8a7c7409fcb5.html
 ckeditor/_samples/ui_languages.html: ckeditor/_samples/ui_languages-0089a3d12ee57acb09b1e5f579e78ba0.html
 ckeditor/adapters/jquery.js: ckeditor/adapters/jquery-4bf1dfe5d0342745067ffc39749abd91.js
+ckeditor/basepath.js: ckeditor/basepath-ca9db1cb44bbc1b2f46c28d044e2452d.js
 ckeditor/ckeditor.js: ckeditor/ckeditor-6b9a346f8a90f4b76089ba5e287acbbe.js
 ckeditor/ckeditor.pack: ckeditor/ckeditor-27b7cd4b98e641d50cb2ed2c79069271.pack
 ckeditor/ckeditor_basic.js: ckeditor/ckeditor_basic-028d49db14f3f9b1ce60643ff3e98905.js
