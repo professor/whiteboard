@@ -9,20 +9,14 @@
 
   <%= stylesheet_link_tag 'cmu_sv_layout_all' %>
 
-  <%= csrf_meta_tag %>
-  <%  if Rails.env == 'production'
-     base_path = ''
-     base_path << Rails.application.config.action_controller.asset_host
-     base_path << Rails.application.config.assets.prefix
-     base_path << '/ckeditor/'
-        end
 
-  %>
   <script type="text/javascript">
-      var CKEDITOR_BASEPATH  = 'http://d1z5n3u3tyi6h3.cloudfront.net/assets/ckeditor/';
-  </script>
+      <%  if Rails.env == 'production'%>
+    var CKEDITOR_BASEPATH  = 'http://d1z5n3u3tyi6h3.cloudfront.net/assets/ckeditor/';
+    <%end%>
+</script>
 
-  <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',  "application" %>
+<%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',  "application" %>
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" type="text/css" media="all"/>
 
