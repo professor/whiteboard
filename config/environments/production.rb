@@ -60,7 +60,7 @@ CMUEducation::Application.configure do
   config.active_support.deprecation = :notify
 
   config.assets.precompile << Proc.new { |path|
-    if path =~ /\.(css|js)\z/
+    if path =~ /\.(css|js|js.erb)\z/
       full_path = Rails.application.assets.resolve(path).to_path
       app_assets_path = Rails.root.join('app', 'assets').to_path
       if full_path.starts_with? app_assets_path

@@ -2,7 +2,7 @@ require 'csv'
 require 'vpim/vcard'
 
 class PeopleController < ApplicationController
-  include ActionView::Helpers::AssetTagHelper
+  #include ActionView::Helpers::AssetTagHelper
 
   def controller;
     self;
