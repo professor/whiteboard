@@ -3,7 +3,7 @@
 
 <%= javascript_include_tag "ajax-error.js" %>
 <%= javascript_include_tag "alertify_min.js" %>
-<%= javascript_include_tag "ckeditor/ckeditor.js" %>
+
 <%= javascript_include_tag 'jquery_cookie' %>
 
 <script type="text/javascript">
@@ -219,11 +219,11 @@
         <%= f.text_area :tab_two_contents, :toolbar => 'CMUSV', :height => 600, :class => 'ckeditor'  %>
       </div>
       <div id="tabs-3">
-        <%= f.text_area :tab_three_contents, :toolbar => 'CMUSV', :height => 600, :class => 'ckeditor'  %>
+        <%= f.text_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400, :class => 'ckeditor'  %>
       </div>
       <% if current_user.is_staff || current_user.is_admin %>
           <div id="tabs-4">
-            <%= f.text_area :faculty_notes, :toolbar => 'CMUSV', :height => 600, :class => 'ckeditor'  %>
+            <%= f.text_area :faculty_notes, :toolbar => 'CMUSV', :height => 400, :class => 'ckeditor'  %>
           </div>
       <% end %>
     </div>

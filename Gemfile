@@ -14,8 +14,7 @@ group :assets do
   gem 'uglifier',     ">= 1.0.3"
   gem 'asset_sync'
 end
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '>= 1.0.3'
 gem 'aws-sdk'
 gem 'mechanize'
 

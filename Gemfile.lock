@@ -148,8 +148,6 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-ui-rails (4.1.0)
-      railties (>= 3.1.0)
     json (1.7.7)
     ladle (0.2.0)
       open4 (~> 1.0.0)
@@ -350,8 +348,7 @@ DEPENDENCIES
   factory_girl_rails (= 3.4.0)
   indextank
   jasmine
-  jquery-rails
-  jquery-ui-rails
+  jquery-rails (>= 1.0.3)
   ladle (~> 0.2.0)
   launchy
   mechanize
