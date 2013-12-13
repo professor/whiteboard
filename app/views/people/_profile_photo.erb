@@ -1,6 +1,6 @@
 <div class='team_member_photo'>
-  <a href='http://whiteboard.sv.cmu.edu/people/<%= person.twiki_name %>' target='_top'>
-    <%= image_tag(person.image_uri, :border => 0, :class => "user_profile_photo", :alt => person.human_name+" image") %></a>
+  <%= link_to "/people/#{person.twiki_name}", :target=>"_top" do  %>
+    <%= image_tag(person.image_uri, :border => 0, :class => "user_profile_photo", :alt => person.human_name+" image") %><% end %>
   <br>
   <div class='label'><%= person.human_name %></div>
 </div>
