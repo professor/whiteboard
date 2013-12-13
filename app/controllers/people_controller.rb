@@ -42,9 +42,10 @@ class PeopleController < ApplicationController
     # 2. default/key contacts for that user
     @people = get_default_key_contacts
     # pick only the fields required to be shown in the view and return as a Hash
-    include ActionView::Helpers::AssetTagHelper
+
     @key_contact_results = @people.collect { |default_person| Hash[
-        :image_uri => image_path(default_person.user.image_uri),
+        #
+        # :image_uri => image_path(default_person.user.image_uri),
         :title => default_person.user.title,
         :human_name => default_person.user.human_name,
         :contact_dtls => default_person.user.telephones_hash,
