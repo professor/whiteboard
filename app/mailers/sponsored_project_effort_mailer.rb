@@ -1,6 +1,6 @@
 class SponsoredProjectEffortMailer < ActionMailer::Base
-  default :from => "hector.rastrullo@sv.cmu.edu",
-          :cc => ["hector.rastrullo@sv.cmu.edu", "ngoc.ho@sv.cmu.edu"],
+  default :from => "ngoc.ho@sv.cmu.edu",
+          :cc => ["ngoc.ho@sv.cmu.edu"],
           :bcc => "rails.app@sv.cmu.edu"
 
   def monthly_staff_email(user, month, year, options = {})
