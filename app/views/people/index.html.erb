@@ -44,7 +44,7 @@
         <% unless @key_contact_results.blank? %>
           <% @key_contact_results.each do |person| %>
             <tr>
-              <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
+             <!-- <td class="photobook-img"></td>
               <td>
                 <%= link_to(person[:human_name], person[:path]) %><br />
                 <%= person[:title] %>
