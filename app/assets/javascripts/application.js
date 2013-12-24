@@ -1,10 +1,8 @@
 //= require jquery
 //= require jquery_ujs
-
-//= require_self
+//= require ckeditor-jquery
 //= require jquery-ui-custom-for-cmusv
 //= require jquery-corners-0.3/jquery_corners.js
-//= require ckeditor-jquery
 
 
 
@@ -12,6 +10,9 @@
 
 
 
+$('.ckeditor').ckeditor({
+    // optional config
+});
 
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
