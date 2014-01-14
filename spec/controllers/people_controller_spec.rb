@@ -3,14 +3,17 @@ require "spec_helper"
 describe PeopleController do
   context "admin user can" do
     before do
+
       @admin_andy = FactoryGirl.create(:admin_andy)
       login(@admin_andy)
+      controller.stub(:image_path)
     end
 
     describe "POST people#upload_photo" do
       before(:each) do
         @faculty_frank = FactoryGirl.create(:faculty_frank_user)
         @photo = fixture_file_upload('/sample_photo.png', 'image/png')
+        controller.stub(:image_path)
       end
 
       it "can upload first photo", :skip_on_build_machine => true do
@@ -72,6 +75,7 @@ describe PeopleController do
     before do
       @student_sam = FactoryGirl.create(:student_sam_user, :is_part_time=>'f', :masters_program=>'SE', :is_active=>'t')
       login(@student_sam)
+      controller.stub(:image_path)
     end
 
     # describe "GET index" do
@@ -147,7 +151,7 @@ describe PeopleController do
         before(:each) do
             @faculty_frank = FactoryGirl.create(:faculty_frank_user)
             @student_sally = FactoryGirl.create(:student_sally_user, :is_part_time=>'t', :graduation_year=>'2012', :is_active=>'t')
-
+            controller.stub(:image_path)
         end
 
         # it "should find student_sam_user in the search results" do
