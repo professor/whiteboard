@@ -16,6 +16,7 @@ class DeliverablesController < ApplicationController
   end
 
   def grading_queue_for_course
+
     @course = Course.find(params[:course_id])
 
     if @course.grading_rule.nil?
@@ -26,10 +27,40 @@ class DeliverablesController < ApplicationController
       flash.now[:error] = I18n.t(:default_grading_rule_for_course)
     end
 
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    # Retrieving assignments names for the course to be able to filter by deliverable name later on.
+    @assignments = Assignment.where(:course_id => @course.id).all
+    # Team Turing: this fails when the task is nil.
+    # @assignments = Assignment.where(:course_id => @course.id).all.sort_by(&:task_number)
+
+    if current_user.is_admin?
+
       @deliverables = Deliverable.where(:course_id => @course.id).all
+
+    elsif @course.faculty.include?(current_user)
+
+      # Get all deliverables for this team/student
+      @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
+
+      # Select all that are ungraded or drafted
+#      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded ||
+#          deliverable.get_grade_status == :drafted }
+      @deliverables = @deliverables.select { |deliverable| deliverable.grade_status == "ungraded" ||
+          deliverable.grade_status == "drafted" }
+
+
+      # Sort by task number
+      @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
+
     else
       has_permissions_or_redirect(:admin, root_path)
+    end
+
+  end
+
+  def get_deliverables
+    @deliverables = filter_deliverables(params[:course_id], params[:filter_options])
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -96,8 +127,13 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @deliverable }
+      if (current_user.is_admin? || @course.faculty.include?(current_user))
+        format.html { render layout: false }
+      else
+        format.html # show.html.erb
+        format.xml { render :xml => @deliverable }
+      end
+
     end
   end
 
@@ -275,24 +311,35 @@ class DeliverablesController < ApplicationController
     is_student_visible=true
     if params[:submit]
       is_student_visible=true
+      @deliverable.update_attributes(:grade_status => "graded")
     elsif params[:draft]
       is_student_visible=false
+      @deliverable.update_attributes(:grade_status => "drafted")
     end
 
-    flash[:error] = @deliverable.update_grade(params, is_student_visible)
+
+    flash[:error] = @deliverable.update_grade(params, is_student_visible, current_user.id)
+    other_email = nil
+    if params[:send_copy_to_myself] == "1"
+      other_email = current_user.email
+    end
     if @deliverable.update_feedback_and_notes(params[:deliverable])
-      if is_student_visible==true
-        @deliverable.send_deliverable_feedback_email(url_for(@deliverable))
+      if is_student_visible == true
+        @deliverable.send_deliverable_feedback_email(url_for(@deliverable), other_email)
       end
     else
       flash[:error] << 'Unable to save feedback'
     end
 
+    #Obtain current selected filters to update the queue accordingly
+    @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+    @deliverables = filter_deliverables(@deliverable.course_id, @selected_filter_options)
+
     respond_to do |format|
        if flash[:error].blank?
          flash[:error] = nil
          flash[:notice] = 'Feedback successfully saved.'
-         format.html {redirect_to(course_deliverables_path(@deliverable.course))}
+         format.js
        else
          flash[:error] = flash[:error].join("<br>")
          format.html { redirect_to(@deliverable) }
@@ -313,4 +360,51 @@ class DeliverablesController < ApplicationController
     end
   end
 
+  private
+  def filter_deliverables (course_id, filter_options)
+    @course = Course.find_by_id(course_id)
+
+    # Prepare filter options according to what users select on the page
+    options = {}
+    if filter_options[:search_box] != ""
+      options[:search_string] = filter_options[:search_box]
+    end
+
+    if filter_options['is_my_teams'] == 'yes'
+      options[:is_my_team] = 1
+    else
+      options[:is_my_team] = 0
+    end
+
+
+    # Filter in the model by course, professor, my teams and search input
+    @deliverables = []
+    @faculty_deliverables = Deliverable.get_deliverables(course_id, current_user.id, options)
+
+    # Filter once again according to the selected grading options. If no filter options are selected,
+    # display every deliverable
+    @selected_options = []
+    filter_options.collect do |filter_option|
+      @selected_options << filter_option[0].to_sym if filter_option[1] == "1"
+    end
+    if @selected_options.size == 0
+      @deliverables = @faculty_deliverables
+    else
+      @selected_options.each do  |option|
+#        @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
+        @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.grade_status == option.to_s })
+      end
+    end
+
+    # Filter by assignment names in drop down menu
+    unless filter_options["assignment_id"] == '-1'
+      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == filter_options[
+          "assignment_id"].to_i }
+    end
+
+    # Sort by task number, ascending
+    @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
+  end
+
 end
+

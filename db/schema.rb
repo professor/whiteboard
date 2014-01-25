@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131119222114) do
+ActiveRecord::Schema.define(:version => 20140124184429) do
 
   create_table "assignments", :force => true do |t|
     t.string   "name"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20131119222114) do
     t.datetime "feedback_updated_at"
     t.integer  "assignment_id"
     t.text     "private_note"
+    t.string   "grade_status"
   end
 
   add_index "deliverables", ["assignment_id"], :name => "index_deliverables_on_assignment_id"
@@ -197,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20131119222114) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_student_visible"
+    t.integer  "last_graded_by"
   end
 
   add_index "grades", ["assignment_id"], :name => "index_grades_on_assignment_id"

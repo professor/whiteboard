@@ -1,7 +1,5 @@
 FactoryGirl.define do
 
-  ## beg add turing
-
   factory :attachment_1, :parent => :deliverable_attachment do
     submitter_id 1
     deliverable_id 1
@@ -10,5 +8,4 @@ FactoryGirl.define do
     association :submitter, :factory => :student_john_user
   end
 
-  ## end add turing
 end

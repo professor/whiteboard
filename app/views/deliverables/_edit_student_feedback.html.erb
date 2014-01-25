@@ -19,101 +19,142 @@
           });
     });
   });
+
+  var update_filter_options = function() {
+      var current_filter_options = {
+        "ungraded": ($('#filter_options_ungraded').is(':checked') ? '1' : ''),
+         "graded" : ($('#filter_options_graded').is(':checked') ? '1' : ''),
+         "drafted": ($('#filter_options_drafted').is(':checked') ? '1' : ''),
+         "is_my_teams" : ($('#filter_options_is_my_teams_yes').is(':checked') ? 'yes' : ''),
+         "assignment_id" : $("#filter_options_assignment_id").val()
+      }
+      $("#deliverable_current_filter_options").val('');
+      $("#deliverable_current_filter_options").val(JSON.stringify(current_filter_options));
+  };
+
+  var toggle_slide = function() {
+      $('.deliverable_detail').slideUp();
+  };
 </script>
 
-<% content_for :title, "Provide Feedback" %>
-
-<h1><%= link_to @course.display_for_course_page, course_path(@course), :class => "course" %></h1>
-<%=  render :partial=>"layouts/grade_book_sub_menu" %>
-
-<% if @deliverable.is_team_deliverable?  %>
-<h2>Grade Team <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% else %>
-<h2>Grade Individual <%= nomenclature_assignment_or_deliverable %>: <%= @deliverable.assignment.name %></h2>
-<% end %>
-
-
-<%= form_for @deliverable, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
-    <%# render 'shared/error_messages', object: f.object %>
-    <div>
-      <% if grade_type_points_or_weights == "Percentage" %>
-        <p>
-          <%= "Weight: #{@deliverable.assignment.weight}%" %>
-        </p>
-      <% end %>
-      <p>
-        <% if @deliverable.current_attachment.blank? %>
-          Deliverable: None
-        <% else %>
-          Deliverable: <%= link_to @deliverable.current_attachment.attachment_file_name, @deliverable.current_attachment.attachment.url %>
-        <% end %>
-      </p>
-      <p>
-        <%= f.label :feedback, "Feedback file to upload" %>
-        <%= f.file_field :feedback %>
-      </p>
-      <p>
-        <%= f.label :feedback_comment, "Feedback Comments" %>
-        (<%= link_to 'View History and Feedback', @deliverable %>)
-        <br>
-        <%= f.text_area :feedback_comment, :size => "70x10" %>
-      </p>
+<div class="container">
+  <div class="row" style="padding-top: 20px;"></div>
+  <div class="row deliverable_detail_header">
+    <div class="col-md-12">
+      <h2><strong>Grades</strong></h2>
     </div>
+  </div>
 
-    <% if @deliverable.get_grade_status == :drafted %>
-        <div class="rounded staff" style="background-color:#dedede;">
-           This is draft feedback
-         </div>
-    <% end %>
+  <!-- Grades -->
+  <%= form_for @deliverable, :remote => true, :html => {:multipart => true}, :url => {:action => :update_feedback, :id => @deliverable} do |f| %>
 
-    <% if @deliverable.is_team_deliverable? %>
-        Team Score: <%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <%= display_maximum_score %>
-        <%# submit_tag 'Apply grade to everyone', :type => 'button', :id => "apply_team_grade" %>
+     <div class="row" style="padding-top: 10px;"></div>
 
-    <% end %>
+      <div class="row">
+        <div class="col-md-12">
+          <% if grade_type_points_or_weights == "Percentage" %>
+              <p>
+                <%= "Weight: #{@deliverable.assignment.weight}%" %>
+              </p>
+          <% end %>
+        </div>
+      </div>
 
-    <div class="student_scores">
-      <% if @deliverable.is_team_deliverable? %>
-            <% for member in @deliverable.team.members %>
-              <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
-              <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            <% if @deliverable.is_team_deliverable? %>
+                <strong>Team Score: </strong><%= text_field_tag "team_grade", '', :size => 4, :onchange => "apply_team_grade_to_individuals();", :title => "The 'team score' is not saved in the database. This is a convenience so that you can enter the team grade once, and it is immediately applied to each member of the team. You can then set each individual's grade"  %> / <strong><%= display_maximum_score %></strong>
             <% end %>
-      <% else %>
-        <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
-        <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <% graded_by = @deliverable.get_graded_by %>
+          <p class="pull-right"><strong>Graded by: </strong>
+            <% unless graded_by.nil? %>
+                <%= link_to graded_by.human_name, person_path(graded_by.twiki_name), :target=> '_blank'%>
+            <% end %>
+          </p>
+        </div>
+      </div>
+
+      <div class="row student_scores">
+
+        <% if @deliverable.is_team_deliverable? %>
+            <% for member in @deliverable.team.members %>
+                <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, member.id)%>
+                <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => member, :deliverable_type => "team"} %>
+            <% end %>
+        <% else %>
+            <% grade_obj = Grade.get_grade(@deliverable.course.id, @deliverable.assignment_id, @deliverable.creator_id)%>
+            <%= render :partial => "fetch_picture_and_grade", :locals => {:grade_obj => grade_obj, :member => @deliverable.creator, :deliverable_type => "individual"} %>
+        <% end %>
+
+      </div>
+      <!-- /Grades -->
+
+      <!-- Feedback -->
+      <div class="row" style="padding-top: 10px;"></div>
+
+      <div class="row deliverable_detail_header">
+        <div class="col-md-12">
+          <h2><strong>Feedback</strong></h2>
+        </div>
+      </div>
+
+      <% if @deliverable.get_grade_status == :drafted %>
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12">
+          <div class="alert alert-warning">
+            This is a draft feedback
+          </div>
+        </div>
+      </div>
       <% end %>
-    </div>
 
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12">
+            <p>
+              <%= f.label :feedback, "Upload feedback file" %>
+              <%= f.file_field :feedback %>
+            </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.label :feedback_comment, "Feedback Comments" %>
+          <%= link_to 'View History and Feedback', @deliverable %>
+          <br/>
+          <%= f.text_area :feedback_comment, :size => "85x10" %>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-success">
+            <h4 style="color: #900;"><%= professor_image %> Professor&#39;s Notes
+              <span class="label label-success" style="font-weight: normal;">Only faculty can see this information</span></h4>
+            <p>
+              <%= f.text_area :private_note, :size => "80x10" %>
+            </p>
+          </div>
+        </div>
+      </div>
 
-    <br />
-
-    <div class="rounded staff">
-      <%= professor_image %>
-      <span class="instructions">Only faculty can see this information</span>
-
-      <h1>
-        Professor's Notes
-      </h1>
-
-      <p>
-      <%= f.text_area :private_note, :size => "90x10" %>
-      </p>
-    </div>
-
-    <br /><br /><br />
-
-
-
-
-      <p>
-      <div style="float: left; width: auto;">
-        <%= f.submit "Save and Email" , :name=>"submit"%>
-        <%= f.submit "Save as Draft" , :name=>"draft" %>
-        <%= link_to "Back to Pending List", course_deliverables_path(@deliverable.course) %>
-      </div><div style='clear:both;'></div>
-      </p>
-    <% end %>
-
-    <!-- <%= link_to 'Cancel', deliverable_path(@deliverable) %> -->
-    <br/>
-    <br/>
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12" id="deliverable_submit_draft">
+            <%= f.submit "Save as Draft", :name => "draft", :class => "btn btn-default", :onclick => "update_filter_options();" %>
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
+        <div class="col-md-12">
+          <%= f.submit "Finalize and Email", :name => "submit", :class => "btn btn-primary btn-lg", :style => "color: white; font-size: 14px;", :onclick => "toggle_slide(); update_filter_options();" %>
+          <%= check_box_tag(:send_copy_to_myself, value ="1", checked=false) %>
+          <%= label_tag(:send_copy_to_myself, "Send a copy to myself") %>
+        </div>
+      </div>
+      <%= f.hidden_field :current_filter_options, { value: '' } %>
+  <% end %>
+</div> <!-- /.container -->

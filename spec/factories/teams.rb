@@ -22,4 +22,38 @@ FactoryGirl.define do
     association :course, :factory => :course
   end
 
+  factory :team_turing, class: Team do
+    name "Turing"
+    email "turing@sv.cmu.edu"
+    primary_faculty_id 46
+    updating_email false
+    tigris_space "http://team.turing.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+
+    association :course, :factory => :fse
+
+  end
+
+  factory :team_test, class: Team do
+    name "Test"
+    email "test@sv.cmu.edu"
+    primary_faculty_id 47
+    updating_email false
+    tigris_space "http://team.test.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+
+    association :course, :factory => :fse
+  end
+
+  factory :team_ruby_racer, class: Team do
+    name "Ruby Racer"
+    email "ruby_racer@sv.cmu.edu"
+    primary_faculty_id 46
+    updating_email false
+    tigris_space "http://team.turing.org/servlets/ProjectDocumentList"
+    twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
+
+    association :course, :factory => :fse
+
+  end
 end

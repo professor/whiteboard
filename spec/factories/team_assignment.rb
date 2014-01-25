@@ -1,4 +1,3 @@
-#Beg Team Turing
 FactoryGirl.define do
 
   factory :team_turing_assignment, class: TeamAssignment do
@@ -17,4 +16,3 @@ FactoryGirl.define do
   end
 
 end
-#End Team Turing
