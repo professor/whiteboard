@@ -57,6 +57,92 @@ class Deliverable < ActiveRecord::Base
 
   after_save :inaccurate_course_and_assignment_check
 
+  def self.get_deliverables(course_id, faculty_id, options)
+
+#    sql_template = "SELECT d.id FROM deliverables d INNER JOIN teams t ON d.team_id = t.id INNER JOIN team_assignments ta ON t.id = ta.team_id INNER JOIN users u1 ON d.creator_id = u1.id INNER JOIN users u2 ON ta.user_id = u2.id"
+    sql_template = "SELECT d.id FROM deliverables d LEFT JOIN teams t ON d.team_id = t.id LEFT JOIN team_assignments ta ON t.id = ta.team_id LEFT JOIN users u1 ON d.creator_id = u1.id LEFT JOIN users u2 ON ta.user_id = u2.id"
+
+    where_clause_course = " WHERE d.course_id = ?"
+
+    where_clause_team_deliverable = " AND d.team_id IS NOT NULL AND t.primary_faculty_id = ?"
+
+    where_clause_individual_deliverable = " AND d.team_id IS NULL AND d.creator_id IN (SELECT inner_ta.user_id FROM teams inner_t, team_assignments inner_ta WHERE inner_t.id = inner_ta.team_id AND inner_t.primary_faculty_id = ?)"
+
+    where_clause_search = " AND (u1.first_name ILIKE ? OR u1.last_name ILIKE ? OR u1.human_name ILIKE ? OR u1.email ILIKE ? OR u1.webiso_account ILIKE ? OR u2.first_name ILIKE ? OR u2.last_name ILIKE ? OR u2.human_name ILIKE ? OR u2.email ILIKE ? OR u2.webiso_account ILIKE ? OR t.name ILIKE ?)"
+
+    queue = []
+
+    # 1. Are there teams in this course? If there are, and the "filter by teams is on", filter by teams
+    # 2. If there are no teams in the course, and if this deliverable is an individual deliverable,
+    # show deliverables for individuals who are in the faculty's teams only.
+    # 3. Otherwise, show every deliverable
+
+    course_has_teams = Team.where(:course_id => course_id).any?
+
+    has_search_string = !options[:search_string].nil?
+    selected_my_team = (options[:is_my_team] == 1)
+
+    if has_search_string
+      search_string = options[:search_string]
+    end
+
+    if !course_has_teams
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_search
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
+      end
+
+    elsif selected_my_team
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_team_deliverable + where_clause_search
+        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+
+        sql = sql_template + where_clause_course + where_clause_individual_deliverable + where_clause_search
+        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course + where_clause_team_deliverable
+        team_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id]).uniq
+
+        sql = sql_template + where_clause_course + where_clause_individual_deliverable
+        individual_deliverable_ids = Deliverable.find_by_sql([sql, course_id, faculty_id]).uniq
+      end
+
+      deliverable_ids = []
+
+      team_deliverable_ids.each do |team_deliverable_id|
+        deliverable_ids << team_deliverable_id
+      end
+
+      individual_deliverable_ids.each do |individual_deliverable_id|
+        deliverable_ids << individual_deliverable_id
+      end
+
+    else
+
+      if has_search_string
+        sql = sql_template + where_clause_course + where_clause_search
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string, search_string]).uniq
+      else
+        sql = sql_template + where_clause_course
+        deliverable_ids = Deliverable.find_by_sql([sql, course_id]).uniq
+      end
+
+    end
+
+    deliverables = []
+
+    deliverable_ids.each do |deliverable_id|
+      deliverables << Deliverable.find(deliverable_id)
+    end
+
+    return deliverables
+
+  end
 
   # To get the owner of the deliverable
   def unique_course_task_owner?
@@ -167,7 +253,7 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To send the feedback to the each student along with the score received respectively.
-  def send_feedback_to_student(member_id, member_email, url)
+  def send_feedback_to_student(member_id, member_email, url, faculty_email=nil)
     feedback = "Feedback has been submitted for "
     if !self.assignment.task_number.nil? and self.assignment.task_number != "" and !self.assignment.name.nil? and self.assignment.name !=""
       feedback += "#{self.assignment.name} (#{self.assignment.task_number}) of "
@@ -189,8 +275,8 @@ class Deliverable < ActiveRecord::Base
       feedback += self.assignment.formatted_maximum_score
       feedback += "\n"
     end
-
     options = {:to => member_email,
+               :cc => faculty_email,
                :subject => "Feedback for " + self.course.name,
                :message => feedback,
                :url_label => "View this deliverable",
@@ -200,13 +286,13 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To send the feedback in the email back to the students.
-  def send_deliverable_feedback_email(url)
+  def send_deliverable_feedback_email(url, faculty_email=nil)
     if self.is_team_deliverable?
       self.team.members.each do |member|
-        send_feedback_to_student(member.id, member.email, url)
+        send_feedback_to_student(member.id, member.email, url, faculty_email)
       end
     else
-      send_feedback_to_student(self.creator_id, self.creator.email, url)
+      send_feedback_to_student(self.creator_id, self.creator.email, url, faculty_email)
     end
   end
 
@@ -243,10 +329,11 @@ class Deliverable < ActiveRecord::Base
   def is_visible_to_student?
     grade = Grade.get_grade(self.course.id, self.assignment.id, creator_id)
     grade.try(:is_student_visible) || false
+#    grade_status == "graded"
   end
 
   # To update the feedback and the private notes by faculty
-  def update_feedback_and_notes (params)
+  def update_feedback_and_notes(params)
     self.feedback_comment = params[:feedback_comment]
     self.private_note = params[:private_note]
     unless params[:feedback].blank?
@@ -259,18 +346,19 @@ class Deliverable < ActiveRecord::Base
   end
 
   # To update the grade received by the student
-  def update_grade (params, is_student_visible)
+  def update_grade(params, is_student_visible, current_user_id)
     error_msg = []
     if self.assignment.is_team_deliverable?
       self.team.members.each do |user|
         score = params[:"#{user.id}"]
-        if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible)==false
+        if Grade.give_grade(self.course_id, self.assignment.id, user.id, score, is_student_visible, current_user_id)==false
           error_msg << "Grade given to " + user.human_name + " is invalid!"
         end
       end
     else
       score = params[:"#{self.creator_id}"]
-      unless Grade.give_grade(self.course_id, self.assignment.id, self.creator_id, score, is_student_visible)
+      unless Grade.give_grade(self.course_id, self.assignment.id, self.creator_id, score, is_student_visible, current_user_id)
+
         error_msg << "Grade given to " + self.creator.human_name + " is invalid!"
       end
     end
@@ -299,7 +387,7 @@ class Deliverable < ActiveRecord::Base
     if self.is_team_deliverable?
       return :ungraded if self.team.nil?
       self.team.members.each do |member|
-        status = self.get_status_for_every_individual (member.id)
+        status = self.get_status_for_every_individual(member.id)
         if status != :graded
           return status
         end
@@ -312,7 +400,7 @@ class Deliverable < ActiveRecord::Base
 
   #Todo: rename get_status_for_every_individual to status_for_every_individual
   # To get the status of deliverable by student for is it graded or not.
-  def get_status_for_every_individual  (student_id)
+  def get_status_for_every_individual(student_id)
     return :unknonwn if self.assignment.nil? #(guard for old deliverables)
     grade = Grade.get_grade(self.course.id, self.assignment.id, student_id)
     if grade.nil?
@@ -334,4 +422,23 @@ class Deliverable < ActiveRecord::Base
       end
     end
   end
+
+  def get_graded_by
+    if self.is_team_deliverable?
+      return self.last_graded_by_for_every_individual(self.team.members[0].id)
+    else
+      return self.last_graded_by_for_every_individual(self.creator_id)
+    end
+  end
+
+  def last_graded_by_for_every_individual(student_id)
+    return :unknonwn if self.assignment.nil? #(guard for old deliverables)
+    grade = Grade.get_grade(self.course.id, self.assignment.id, student_id)
+    if grade.nil?
+      return nil
+    else
+      return User.find_by_id(grade.last_graded_by) unless grade.last_graded_by.nil?
+    end
+  end
+
 end

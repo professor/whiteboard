@@ -109,12 +109,19 @@
   }
 
   function post_drafted_and_send() {
-    post_grades('<%=post_drafted_and_send_path(@course)%>');
+    if (!confirm("Do you want to finalize draft grades and send to students?")) return;
+    if (document.getElementById("send_copy_to_myself").checked == true)
+        post_grades('<%=post_drafted_and_send_path(@course, :send_copy_to_myself => 1)%>');
+    else
+        post_grades('<%=post_drafted_and_send_path(@course, :send_copy_to_myself => 0)%>');
   }
 
   function send_final_grade() {
     if (!confirm("Do you want to send all final letter grades (including draft grades) to students?")) return;
-    post_grades('<%=send_final_grade_path(@course)%>');
+    if (document.getElementById("send_copy_to_myself").checked == true)
+        post_grades('<%=send_final_grade_path(@course, :send_copy_to_myself => 1)%>');
+    else
+        post_grades('<%=send_final_grade_path(@course, :send_copy_to_myself => 0)%>');
   }
 
   function save() {
@@ -166,7 +173,7 @@
     </table>
   </div>
 
-  <div>
+<div>
   <div class="score">
     <input type="hidden" id="course_id" value=<%=@course.id%> />
 
@@ -202,32 +209,59 @@
       <tbody>
         <%= render :partial => "grade_spreadsheet", :locals => {:hide_draft_grades => false, :assignments => @assignments, :course => @course, :grades => @grades, :team_assignment => @team_assignment} %>
       </tbody>
-      <tfoot>
-        <tr style="background-color:white;">
-          <td style="border-bottom-width:0px;border-width: 0;" colspan="<%=@assignments.size + 6 %>">
-            <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading" ,:hidden=>"true", :id=>"loading") %>
-            <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled">Save changes</button>
-            <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send()">Mark draft grade as graded and email to students</button>
-            <button type="button" id="gradebook_post_final" onclick="send_final_grade()">Notify Final Grades</button>
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </div>
-  </div>
+</div>
 
-  <div class="indicator" id="gradebook_indicator">Please save changes</div>
+<div class="tw-bs">
 
-  <div>
-    <h2>Import Grade Book</h2>
-    <%= form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
-      <%= f.file_field :spreadsheet -%>
-      <%= submit_tag 'Import' %>
-    <% end %>
-  </div>
-  <div>
-    <h2>Export Grade Book</h2>
-    <%= form_for :export, :url=>{:controller=>"grades", :action=>"export"} do |f| %>
-      <%= submit_tag 'Export' %>
-    <% end %>
-  </div>
+    <div class="alert alert-danger" id="gradebook_indicator" style="margin-top:15px;">Please save changes</div>
+    <!-- Save changes -->
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-12">
+        <button type="button" id="gradebook_submit" onclick="save()" disabled="disabled" class="btn btn-default">Save changes</button>
+        <%= link_to image_tag("/images/ajax-loader.gif", :class => "loading", :alt => "Loading", :hidden => true, :id => "loading") %>
+      </div>
+    </div>
+
+    <hr>
+    <!-- Finalize and Email + Notify Final Grades -->
+    <div class="row">
+      <div class="col-md-12" style="padding-bottom:10px;">
+        <input type="checkbox" id="send_copy_to_myself" value="0"> Send a copy to myself
+      </div>
+      <div class="col-md-4">
+        <button type="button" id="gradebook_post_draft" onclick="post_drafted_and_send();" class="btn btn-primary">Finalize and Email Students</button>
+      </div>
+      <div class="col-md-3 col-md-offset-5">
+        <button type="button" id="gradebook_post_final" onclick="send_final_grade();" class="btn btn-danger">Notify Final Grades</button>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
+          <h3 style="margin-top:0;">Import Grade Book</h3>
+          <%= form_for :import, :url=>{:controller=>"grades", :action=>"import"}, :html => { :multipart => true } do |f| %>
+              <%= f.file_field :spreadsheet -%> <br/>
+              <%= submit_tag 'Import', class: "btn btn-default" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
+          <h3 style="margin-top:0;">Export Grade Book</h3>
+          <%= form_for :export, :url=>{:controller=>"grades", :action=>"export"} do |f| %>
+              <%= submit_tag 'Export', class: "btn btn-default" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+</div>

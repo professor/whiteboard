@@ -169,4 +169,49 @@ describe Grade do
     end
 
   end
+
+  # Beg Add Turing Ira
+
+  context " It should save last graded by while giving grades" do
+
+    it "should be able to give a updated grade to a registered student" do
+      faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      faculty = faculty_frank.id
+      score = "10"
+
+      Grade.give_grade(@course_fse.id, @assignment_1.id, @student_sam.id, score,nil,faculty).should be_true
+      Grade.find_by_assignment_id_and_student_id(@assignment_1.id, @student_sam.id).last_graded_by.should eq(faculty)
+    end
+
+    it "should not update faculty in last graded by when last graded by is not empty" do
+      faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      faculty_fagan = FactoryGirl.build(:faculty_fagan_user)
+      faculty = faculty_frank.id
+      score = "10"
+      score1 = "7"
+
+      Grade.give_grade(@course_fse.id, @assignment_1.id, @student_sam.id, score,nil,faculty).should be_true
+      Grade.give_grade(@course_fse.id, @assignment_1.id, @student_sam.id, score1,nil,faculty_fagan.id).should be_true
+
+      Grade.find_by_assignment_id_and_student_id(@assignment_1.id, @student_sam.id).last_graded_by.should eq(faculty)
+    end
+
+    it "should be able to update multiple grades with last graded by in grade book" do
+      faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      faculty = faculty_frank.id
+      grades = []
+
+      [@assignment_1, @assignment_2].each do |assignment|
+        grades << {:course_id=>@course_fse.id, :assignment_id => assignment.id, :student_id=>@student_sam.id, :score => "10" }
+      end
+
+      Grade.give_grades(grades,faculty)
+      grades.each do |grade_entry|
+        Grade.find_by_assignment_id_and_student_id(grade_entry[:assignment_id], grade_entry[:student_id]).last_graded_by.should eq(faculty)
+      end
+    end
+
+  end
+
+# End Add Turing Ira
 end

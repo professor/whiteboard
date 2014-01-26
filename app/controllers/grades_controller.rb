@@ -74,19 +74,27 @@ class GradesController < ApplicationController
 
   def post_drafted_and_send #and send email
     grades = params["grades"]
-    Grade.mail_drafted_grade(@course.id, request.host_with_port )
+    faculty_email = nil
+    if params[:send_copy_to_myself] == "1"
+      faculty_email = current_user.email
+    end
+    Grade.mail_drafted_grade(@course.id, request.host_with_port, faculty_email)
     render :json => ({"message"=>"true"})
   end
 
   def save
     grades = params["grades"]
-    Grade.give_grades(grades)
+    Grade.give_grades(grades,current_user.id)
     render :json => ({"message"=>"true"})
   end
 
   def send_final_grade
     grades = params["grades"]
-    Grade.mail_final_grade(@course.id, request.host_with_port)
+    faculty_email = nil
+    if params[:send_copy_to_myself] == "1"
+      faculty_email = current_user.email
+    end
+    Grade.mail_final_grade(@course.id, request.host_with_port, faculty_email)
     render :json => ({"message"=>"true"})
   end
 
