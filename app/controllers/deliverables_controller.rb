@@ -32,11 +32,8 @@ class DeliverablesController < ApplicationController
     # Team Turing: this fails when the task is nil.
     # @assignments = Assignment.where(:course_id => @course.id).all.sort_by(&:task_number)
 
-    if current_user.is_admin?
 
-      @deliverables = Deliverable.where(:course_id => @course.id).all
-
-    elsif @course.faculty.include?(current_user)
+    if @course.faculty.include?(current_user)
 
       # Get all deliverables for this team/student
       @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
