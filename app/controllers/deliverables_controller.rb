@@ -55,7 +55,8 @@ class DeliverablesController < ApplicationController
   end
 
   def get_deliverables
-    @deliverables = filter_deliverables(params[:course_id], params[:filter_options])
+    filter_options =  params[:filter_options] || Hash.new
+    @deliverables = filter_deliverables(params[:course_id], filter_options)
     respond_to do |format|
       format.js
     end

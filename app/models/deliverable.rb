@@ -171,7 +171,7 @@ class Deliverable < ActiveRecord::Base
   # To get the name of the person/team who has submitted the deliverable
   def owner_name
     if self.is_team_deliverable?
-      team.name
+      team.name unless team.blank? # 1/25/2014, why is it possible for team to be blank?
     else
       creator.human_name
     end
