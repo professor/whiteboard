@@ -26,4 +26,25 @@ FactoryGirl.define do
     sequence(:maximum_score) {|i| i*3}
     sequence(:assignment_order) {|i| i}
   end
+
+  factory :assignment_1, :parent=>:assignment do
+    is_team_deliverable true
+    association :course, :factory => :fse
+    name "Assignment 1"
+    task_number 1
+  end
+
+  factory :assignment_2, :parent=>:assignment do
+    is_team_deliverable true
+    association :course, :factory => :fse
+    name "Assignment 2"
+    task_number 2
+  end
+
+  factory :assignment_3, :parent=>:assignment do
+    is_team_deliverable false
+    association :course, :factory => :fse
+    name "Assignment 3"
+    task_number 3
+  end
 end

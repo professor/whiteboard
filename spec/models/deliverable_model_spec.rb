@@ -143,54 +143,257 @@ describe Deliverable do
       Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
       @deliverable.is_visible_to_student?.should be_false
     end
-    
-    it "is graded if grade is given and published" do
-      grade = FactoryGirl.build(:grade_visible)
-      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
-      @deliverable.get_grade_status.should eq(:graded)
-    end
-    
-    it "is ungraded if grade is not given" do
-      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
-      @deliverable.get_grade_status.should eq(:ungraded)
-    end
-    
-    it "is drafted if grade is given but not published" do
-      grade = FactoryGirl.build(:grade_invisible)
-      Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
-      @deliverable.get_grade_status.should eq(:drafted)
-    end
+
+    #it "is graded if grade is given and published" do
+    #  grade = FactoryGirl.build(:grade_visible)
+    #  Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+    #  @deliverable.get_grade_status.should eq(:graded)
+    #end
+
+    #it "is ungraded if grade is not given" do
+    #  Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(nil)
+    #  @deliverable.get_grade_status.should eq(:ungraded)
+    #end
+    #
+    #it "is drafted if grade is given but not published" do
+    #  grade = FactoryGirl.build(:grade_invisible)
+    #  Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(grade)
+    #  @deliverable.get_grade_status.should eq(:drafted)
+    #end
   end
 
-  context "for a team deliverable's grading status" do
-    before(:each) do
-      @deliverable = FactoryGirl.build(:team_deliverable)
+  #context "for a team deliverable's grading status" do
+  #  before(:each) do
+  #    @deliverable = FactoryGirl.build(:team_deliverable)
+  #  end
+  #
+    #it "is graded if all of members' grades are given and published" do
+    #  @deliverable.team.members.each do | member |
+    #    grade = FactoryGirl.build(:grade_visible, :student_id => member.id)
+    #    Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
+    #  end
+    #  @deliverable.get_grade_status.should eq(:graded)
+    #end
+    #
+    #it "is drafted if any of the member's grade is given but not published" do
+    #  grade = FactoryGirl.build(:grade_invisible)
+    #  @deliverable.team.members.each do | member |
+    #    grade = FactoryGirl.build(:grade_invisible, :student_id => member.id)
+    #    Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
+    #  end
+    #  @deliverable.get_grade_status.should eq(:drafted)
+    #end
+    #
+    #it "is ungraded if any of the member's grade is not given" do
+    #  @deliverable.team.members.each do | member |
+    #    Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(nil)
+    #  end
+    #  @deliverable.get_grade_status.should eq(:ungraded)
+    #end
+  #end
+
+  context "for a professor" do
+    before (:each) do
+      @faculty_frank = FactoryGirl.build(:faculty_frank_user)
+      @course_fse = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+      @course_ise = FactoryGirl.create(:ise, faculty: [@faculty_frank])
+      @student_sam = FactoryGirl.create(:student_sam)
+      @student_sally = FactoryGirl.create(:student_sally)
+      @team_member = FactoryGirl.create(:team_member)
     end
 
-    it "is graded if all of members' grades are given and published" do
-      @deliverable.team.members.each do | member |
-        grade = FactoryGirl.build(:grade_visible, :student_id => member.id)
-        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
-      end
-      @deliverable.get_grade_status.should eq(:graded)
+    it "Displays the professor's teams deliverables if the professor has at least one team" do
+      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course_fse)
+      @team_test =  FactoryGirl.create(:team_test, :course=>@course_fse)
+      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+
+      @assignment_team_turing_1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+      @assignment_team_turing_2 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+      @assignment_team_test_1 = FactoryGirl.create(:assignment_1,:course => @course_fse)
+
+
+      @team_turing_deliverable_1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse,
+                            :team => @team_turing,:assignment => @assignment_team_turing_1, :creator => @student_sam)
+      @team_turing_deliverable_2 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse,
+                            :team => @team_turing,:assignment => @assignment_team_turing_2, :creator => @student_sam)
+      @team_test_deliverable_1 = FactoryGirl.create(:team_test_deliverable_1,:course => @course_fse,
+                             :team => @team_test,:assignment => @assignment_team_test_1)
+
+      @attachment_deliverable_1_turing =  FactoryGirl.create(:attachment_1, :deliverable => @team_turing_deliverable_1,
+                                                             :submitter => @student_sam)
+      @attachment_deliverable_2_turing =  FactoryGirl.create(:attachment_1, :deliverable => @team_turing_deliverable_2,
+                                                             :submitter => @student_sam)
+      @attachment_deliverable_1_test =  FactoryGirl.create(:attachment_1, :deliverable => @team_test_deliverable_1,
+                                                           :submitter => @student_sam)
+
+      @options = {:is_my_team => 1}
+
+      @expected_deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @expected_deliverables.should have(2).items
+
+      @expected_deliverables[1].should == @team_turing_deliverable_2
+      @expected_deliverables[0].should == @team_turing_deliverable_1
+
     end
-    
-    it "is drafted if any of the member's grade is given but not published" do
-      grade = FactoryGirl.build(:grade_invisible)
-      @deliverable.team.members.each do | member |
-        grade = FactoryGirl.build(:grade_invisible, :student_id => member.id)
-        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(grade)
-      end
-      @deliverable.get_grade_status.should eq(:drafted)
+
+    it "Displays the professor's students individual deliverables if the professor has at least one team" do
+      @team_turing =  FactoryGirl.create(:team_turing, :course=>@course_fse)
+      @team_test =  FactoryGirl.create(:team_test, :course=>@course_fse)
+
+      #Assigning the student to the team
+      @team_turing_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing,
+                                                   :user => @student_sam)
+      @team_test_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+
+      @assignment_team_turing_1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment_team_turing_2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+
+      @turing_individual_deliverable_1 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse,
+                              :assignment => @assignment_team_turing_1, :creator => @student_sam)
+      @turing_individual_deliverable_2 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse,
+                              :assignment => @assignment_team_turing_2, :creator => @student_sally)
+
+      @attachment_deliverable_1_turing =  FactoryGirl.create(:attachment_1, :deliverable =>
+                              @turing_individual_deliverable_1, :submitter => @student_sam)
+      @attachment_deliverable_2_turing =  FactoryGirl.create(:attachment_1, :deliverable =>
+                              @turing_individual_deliverable_2, :submitter => @student_sally)
+
+      @options = {:is_my_team => 1}
+
+      @expected_deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @expected_deliverables.should have(1).items
+
+      @expected_deliverables[0].should == @turing_individual_deliverable_1
     end
-    
-    it "is ungraded if any of the member's grade is not given" do
-      @deliverable.team.members.each do | member |
-        Grade.stub(:get_grade).with(@deliverable.course.id, @deliverable.assignment.id, member.id).and_return(nil)
-      end
-      @deliverable.get_grade_status.should eq(:ungraded)
+
+    it "If a course has teams, display team deliverables as well as individual deliverables for students in the
+        faculty's team" do
+
+      @team_turing =  FactoryGirl.create(:team_turing, :course => @course_fse)
+      @team_test =  FactoryGirl.create(:team_test, :course => @course_fse)
+
+      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+      @team_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+
+      @assignment1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+
+      # Team deliverable
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 1
+      @deliverable2 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 2
+      @deliverable3 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @student_sally)
+
+      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sally)
+
+      @options = {:is_my_team => 1}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @deliverables.should have(2).items
+
+      @deliverables[0].should == @deliverable1
+      @deliverables[1].should == @deliverable2
+
     end
+
+    it "Displays all deliverables if the course does not have teams" do
+
+      @deliverable1 = FactoryGirl.create(:turing_individual_deliverable, :course=>@course_fse)
+      #@deliverable2 = FactoryGirl.create(:individual_deliverable, :course=>@course_ise)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+
+      @options = {:is_my_team => 1}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @deliverables.should have(1).items
+      @deliverables[0].should == @deliverable1
+
+    end
+
+    it "If a course has teams and user enter search terms, display team deliverables as well as individual deliverables
+        for students in the faculty's team" do
+
+      @team_turing =  FactoryGirl.create(:team_turing, :course => @course_fse)
+      @team_test =  FactoryGirl.create(:team_test, :course => @course_fse)
+      @team_ruby_racer =  FactoryGirl.create(:team_ruby_racer, :course => @course_fse)
+
+      @team_assignment = FactoryGirl.create(:team_turing_assignment, :team => @team_turing, :user => @student_sam)
+      @team_assignment = FactoryGirl.create(:team_test_assignment, :team => @team_test, :user => @student_sally)
+      @team_assignment = FactoryGirl.create(:team_ruby_racer_assignment, :team => @team_ruby_racer, :user => @team_member)
+
+      @assignment1 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @assignment2 = FactoryGirl.create(:assignment_3,:course => @course_fse)
+
+      # Team deliverable
+      @deliverable1 = FactoryGirl.create(:team_turing_deliverable_1,:course => @course_fse, :team => @team_turing,:assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 1
+      @deliverable2 = FactoryGirl.create(:turing_individual_deliverable,:course => @course_fse, :assignment => @assignment1, :creator => @student_sam)
+      # Individual deliverable 2
+      @deliverable3 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @student_sally)
+      # Team deliverable of team Ruby Racer
+      @deliverable4 = FactoryGirl.create(:team_ruby_racer_deliverable_1,:course => @course_fse, :team => @team_ruby_racer,:assignment => @assignment1, :creator => @team_member)
+      # Individual deliverable 3
+      @deliverable5 = FactoryGirl.create(:test_individual_deliverable,:course => @course_fse, :assignment => @assignment2, :creator => @team_member)
+
+      @dav1 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable1, :submitter => @student_sam)
+      @dav2 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable2, :submitter => @student_sam)
+      @dav3 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable3, :submitter => @student_sally)
+      @dav4 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable4, :submitter => @team_member)
+      @dav5 =  FactoryGirl.create(:attachment_1, :deliverable => @deliverable5, :submitter => @team_member)
+
+      @options = {:is_my_team => 1, :search_string => "Member"}
+      @deliverables = Deliverable.get_deliverables(@course_fse.id, @faculty_frank.id, @options)
+      @deliverables.should have(2).items
+
+      @deliverables[0].should == @deliverable4
+      @deliverables[1].should == @deliverable5
+
+    end
+
   end
+
+  context " for a individual deliverable last graded by"   do
+    before (:each) do
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @course_fse = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+      @student_sam = FactoryGirl.create(:student_sam)
+      @assignment = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      @deliverable = FactoryGirl.create(:turing_individual_deliverable, :course => @course_fse, :assignment => @assignment, :creator => @student_sam)
+
+      @grade = FactoryGirl.create(:last_graded_visible,:course_id => @course_fse.id,:assignment_id => @assignment.id,:student_id => @student_sam.id)
+    end
+
+
+    it " should get last graded by"  do
+      # Get last graded by
+      Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.creator.id).and_return(@grade)
+      @deliverable.get_graded_by.should eq(@faculty_frank)
+    end
+
+
+  end
+  context " for a team deliverable last graded by"   do
+    before (:each) do
+      @faculty_frank = FactoryGirl.create(:faculty_frank_user)
+      @course_fse = FactoryGirl.create(:fse, faculty: [@faculty_frank])
+
+      @assignment = FactoryGirl.create(:assignment_3,:course => @course_fse)
+      #@deliverable = FactoryGirl.create(:turing_individual_deliverable, :course=>@course_fse, :assignment => @assignment, :creator => @student_sam)
+      @deliverable = FactoryGirl.build(:team_deliverable,:course_id => @course_fse.id)
+    end
+
+
+    it " should get last graded by"  do
+      # Get last graded by
+      @grade = FactoryGirl.create(:grade_invisible, :course_id => @deliverable.course.id, :assignment_id => @deliverable.assignment.id, :last_graded_by => @faculty_frank.id, :student_id =>@deliverable.team.members[0].id)
+      Grade.stub(:get_graded_by).with(@deliverable.course.id, @deliverable.assignment.id, @deliverable.team.members[0].id).and_return(@grade)
+      @deliverable.get_graded_by.should eq(@faculty_frank)
+    end
+
+
+  end
+
 end
 
 

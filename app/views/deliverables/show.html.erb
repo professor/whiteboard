@@ -1,73 +1,96 @@
-<% if @deliverable.course %>
-  <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
-<% else %>
-    <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
-<% end %>
-<% content_for :title, title %>
-<h1><%= title %></h1>
+<style>
+  .deliverable_detail_header {
+      background: #d9edf7; /* Red: #f2dede, Blue: #d9edf7, Green: #dff0d8 */
+  }
+  .deliverable_detail_header h2 {
+      color: #3a87ad; /* Red: #b94a48, Blue: #3a87ad, Green: #628847 */
+      font-size: 16px;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      line-height: 1.1;
+      margin-top: 13px;
+  }
+  .columnless table td {
+      border-right: none;
+      border-left: none;
+  }
+  .columnless table td a:visited {
+      color:white;
+  }
+</style>
 
-
-
-<p>
-  <% if @deliverable.is_team_deliverable? %>
-    Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name -%>
-  <% else %>
-    Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name -%>
-  <% end %>
 <% if current_user.is_student %>
+    <% if @deliverable.course %>
+     <% title = "#{ nomenclature_assignment_or_deliverable } for " + @deliverable.course.name + " (" + @deliverable.assignment_name + ")" %>
+    <% else %>
+      <% title = "Deliverable for " + "(missing) course" + " (" + @deliverable.assignment_name + ")" %>
+    <% end %>
+    <% content_for :title, title %>
+    <h1><%= title %></h1>
+    <p>
+     <% if @deliverable.is_team_deliverable? %>
+      Team <%= nomenclature_assignment_or_deliverable%> for Team <%= @deliverable.team.name -%>
+     <% else %>
+      Individual <%= nomenclature_assignment_or_deliverable %> for <%= @deliverable.creator.human_name -%>
+     <% end %>
+    </p>
     (<%= link_to 'Edit', edit_deliverable_path(@deliverable) %>)
 <% end %>
-</p>
 
+<div class="container">
 
-<h1>Attachment Version History</h1>
-<table class="twikiTable" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-    <th>Submission Date</th>
-    <th><%= nomenclature_assignment_or_deliverable %> File</th>
-    <th>Comments</th>
-  </tr>
+  <hr style="margin-top: 10px; margin-bottom: 10px;">
+  <!-- Attachment version history -->
+  <div class="row deliverable_detail_header">
+    <div class="col-md-12">
+      <h2><strong>History</strong></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive columnless">
+    <table class="table table-striped table-hover">
+      <tbody>
 
-      <% if current_user.is_student %>
-  <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-    <td>
-      <% if current_user.is_student %>
-      (<%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>)
+       <% if current_user.is_student %>
+         <tr>
+           <td>
+             <% if current_user.is_student %>
+                 <%= link_to 'Upload New Version', edit_deliverable_path(@deliverable) %>
+             <% end %>
+           </td>
+           <td>&nbsp;</td>
+         </tr>
+       <% end %>
+
+       <% @deliverable.attachment_versions.each_with_index do |version, index| %>
+          <tr>
+            <td>
+              <% if index == 0 %>
+                  <%= display_timestamp(version.submission_date, :class => "latest") -%>
+              <% else %>
+                  <%= display_timestamp(version.submission_date) -%>
+              <% end %>
+              <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
+                  <span class="label label-danger" style="font-weight: normal;"><%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> late!</span>
+              <%end%>
+              <br/>
+              <%= h version.comment -%>
+            </td>
+            <td style="text-align: right; padding-right: 15px;">
+              <% unless version.attachment_file_name.nil? %>
+                <%= link_to('Download', version.attachment.url, :class => 'btn btn-xs btn-primary') %>
+              <% end %>
+            </td>
+          </tr>
       <% end %>
-    </td>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-    <% end %>
 
-  <% @deliverable.attachment_versions.each_with_index do |version, index| %>
-      <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven') %>>
-        <td>
-          <% if index == 0 %>
-              <%= display_timestamp(version.submission_date, :class => "latest") -%>
-          <% else %>
-              <%= display_timestamp(version.submission_date) -%>
-            <% end %>
-            <%if !@deliverable.assignment_due_date.nil? && version.submission_date > @deliverable.assignment_due_date %>
-              <span style='color:red;'>(<%= distance_of_time_in_words(version.submission_date, @deliverable.assignment_due_date)%> Late!)</span>
-            <%end%>
-        </td>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <!-- /Attachment version history -->
 
-
-        <td>
-          <% unless version.attachment_file_name.nil? %>
-              <%= link_to version.attachment_file_name, version.attachment.url %>
-          <% end %>
-        </td>
-        <td>
-          <%= version.comment -%>
-        </td>
-      </tr>
-  <% end %>
-</table>
-
-<br/>
-<br/>
-<br/>
+</div> <!-- /.container -->
 
 <% if current_user.is_admin? || @course.faculty.include?(current_user) %>
      <%= render :partial => "edit_student_feedback", :locals => {:button_name => "Submit"} %>
@@ -75,6 +98,13 @@
 <% elsif current_user.is_student? %>
     <%= render :partial => "view_feedback_by_professor" %>
  <% end %>
+
+
+
+
+
+
+
 
 
 

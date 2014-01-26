@@ -76,7 +76,7 @@ class Grade < ActiveRecord::Base
 
   # To returns a specific grade for one assignment of given course_id, student_id and assignment_id. This function is
   #   useful for controller to test whether the score is exists or not.
-  def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible=nil)
+  def self.give_grade(course_id, assignment_id, student_id, score, is_student_visible = nil, last_graded_by = nil)
     if assignment_id > 0
       if Assignment.find(assignment_id).nil?
         return false
@@ -90,13 +90,18 @@ class Grade < ActiveRecord::Base
       grade = Grade.get_grade(course_id, assignment_id, student_id)
       if grade.nil?
         grade = Grade.new({:course_id => course_id, :assignment_id => assignment_id, :student_id => student_id,
-                           :score => score, :is_student_visible => is_student_visible})
+                           :score => score, :is_student_visible => is_student_visible, :last_graded_by => last_graded_by})
       end
 
       if course.grading_rule.validate_score(score)
         grade.score = score.upcase
         unless is_student_visible.nil?
           grade.is_student_visible = is_student_visible
+        end
+        unless last_graded_by.nil?
+          if grade.last_graded_by.nil?
+            grade.last_graded_by = last_graded_by
+          end
         end
         grading_result = grade.save
       else
@@ -107,33 +112,33 @@ class Grade < ActiveRecord::Base
   end
 
   # To assign grades for to multiple students.
-  def self.give_grades(grades)
+  def self.give_grades(grades, last_graded_by = nil)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
-      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible])
+      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible],last_graded_by)
     end
   end
 
   # To notify students about the grade that were drafted by professor till now.
-  def self.mail_drafted_grade(course_id, hostname)
+  def self.mail_drafted_grade(course_id, hostname, faculty_email=nil)
     draft_grades = Grade.find_all_by_is_student_visible_and_course_id(false, course_id)
     draft_grades.each do |grade|
       grade.is_student_visible = true
       grade.save
       unless (grade.score.blank?)
-        grade.send_feedback_to_student(hostname)
+        grade.send_feedback_to_student(hostname, faculty_email)
       end
     end
   end
 
   # To send the final grade mail to students
-  def self.mail_final_grade(course_id, hostname)
+  def self.mail_final_grade(course_id, hostname, faculty_email=nil)
     final_grades = Grade.find_all_by_course_id_and_assignment_id(course_id, -1)
     final_grades.each do |grade|
       unless (grade.score.blank?)
         grade.is_student_visible = true
         grade.save
-        grade.send_feedback_to_student(hostname)
+        grade.send_feedback_to_student(hostname, faculty_email)
       end
     end
   end
@@ -228,7 +233,7 @@ class Grade < ActiveRecord::Base
   end
 
   # To send the feedback to the student.
-  def send_feedback_to_student(hostname)
+  def send_feedback_to_student(hostname, faculty_email=nil)
     if assignment_id > 0
       feedback = make_feedback_for_one_assignment
     else
@@ -236,6 +241,7 @@ class Grade < ActiveRecord::Base
     end
     url = hostname + "/courses/#{self.course.id}/student_grades"
     options = {:to => self.student.email,
+               :cc => faculty_email,
                :subject => "Grade for " + self.course.name,
                :message => feedback,
                :url_label => "Click here to view grade",

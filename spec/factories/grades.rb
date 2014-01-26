@@ -16,6 +16,11 @@ FactoryGirl.define do
     is_student_visible false
   end
 
+  factory :grade_invisible_turing, :parent=>:grade do
+    is_student_visible false
+    score nil
+  end
+
   factory :grade_points, :parent=>:grade do
     course_id 1
     student_id 999
@@ -30,4 +35,11 @@ FactoryGirl.define do
     assignment
   end
 
+  factory :last_graded_visible, :parent=>:grade do
+    course_id 1
+    student_id 999
+    assignment_id 1
+    is_student_visible true
+    last_graded_by 46
+  end
 end

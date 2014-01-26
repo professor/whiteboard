@@ -109,6 +109,8 @@ class AcademicCalendar
 
   def self.spring_break(year)
     case year
+      when 2014
+        return 10..11
       when 2013
         return 10..11
       when 2012
@@ -120,7 +122,7 @@ class AcademicCalendar
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
                    :subject => "Academic Calendar needs updating: spring_break",
-                   :message => "Please modify app/models/AcademicCalendar.rb spring_break(#{year})",
+                   :message => "Please modify app/services/AcademicCalendar.rb spring_break(#{year})",
                    :url_label => "",
                    :url => ""
         }
