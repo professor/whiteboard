@@ -191,20 +191,6 @@ describe DeliverablesController do
     end
 
 
-    context "as an admin" do
-      before do
-        login(@admin_andy)
-      end
-
-      it 'assigns @deliverables' do
-        get :grading_queue_for_course, :course_id => @course.id
-        @expected_deliverable = assigns(:deliverables)
-        @expected_deliverable.should == [@deliverable_test_ungraded, @deliverable_turing_graded,
-                                         @deliverable_turing_drafted, @deliverable_turing_ungraded]
-
-      end
-    end
-
     context "as any other user" do
       before do
         login(@faculty_fagan)
