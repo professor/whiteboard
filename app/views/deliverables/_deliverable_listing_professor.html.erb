@@ -35,7 +35,7 @@
 <div id="grading_queue">
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
-<% if deliverables.empty? %>
+<% if deliverables.blank? %>
   <p style="text-align: center;">Hurray, nothing to do here!</p> <br/><br/><br/><br/><br/><br/>
 <% end %>
 <% deliverables.each do |deliverable| %>
