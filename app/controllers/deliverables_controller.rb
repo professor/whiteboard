@@ -400,8 +400,7 @@ class DeliverablesController < ApplicationController
           "assignment_id"].to_i }
     end
 
-    # Sort by task number, ascending
-    @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
+    @deliverables = @deliverables.sort { |a, b| a.updated_at <=> b.updated_at }
   end
 
 end
