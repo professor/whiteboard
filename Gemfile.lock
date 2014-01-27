@@ -81,8 +81,6 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
-    ckeditor_rails (4.2.2)
-      railties (>= 3.0)
     cocaine (0.2.0)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
@@ -339,7 +337,6 @@ DEPENDENCIES
   bundler
   cancan
   capybara (= 1.1.1)
-  ckeditor_rails
   coffee-rails (~> 3.1.1)
   daemons (~> 1.1.4)
   delayed_job (= 2.1.4)

@@ -3,8 +3,9 @@
 
 <%= javascript_include_tag "ajax-error.js" %>
 <%= javascript_include_tag "alertify_min.js" %>
-
+<%= javascript_include_tag "alertify_min.js" %>
 <%= javascript_include_tag 'jquery_cookie' %>
+<%= javascript_include_tag 'ckeditor/ckeditor.js' %>
 
 <script type="text/javascript">
 
@@ -215,18 +216,30 @@
           <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject, :class =>'auto-save-on-keydown' %></div>
         </div>
         <div id="email_details">
-          <%= f.text_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600, :class => 'ckeditor' %>
+          <%= f.text_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600, :name => 'editor1' %>
+          <script>
+              CKEDITOR.replace( 'editor1' );
+          </script>
         </div>
       </div>
       <div id="tabs-2">
-        <%= f.text_area :tab_two_contents, :toolbar => 'CMUSV', :height => 600, :class => 'ckeditor'  %>
+        <%= f.text_area :tab_two_contents, :toolbar => 'CMUSV', :height => 600, :name => 'editor2'  %>
+        <script>
+            CKEDITOR.replace( 'editor2' );
+        </script>
       </div>
       <div id="tabs-3">
-        <%= f.text_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400, :class => 'ckeditor'  %>
+        <%= f.text_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400, :name => 'editor3'  %>
+        <script>
+            CKEDITOR.replace( 'editor3' );
+        </script>
       </div>
       <% if current_user.is_staff || current_user.is_admin %>
           <div id="tabs-4">
-            <%= f.text_area :faculty_notes, :toolbar => 'CMUSV', :height => 400, :class => 'ckeditor'  %>
+            <%= f.text_area :faculty_notes, :toolbar => 'CMUSV', :height => 400, :name => 'editor4'  %>
+            <script>
+                CKEDITOR.replace( 'editor4' );
+            </script>
           </div>
       <% end %>
     </div>
