@@ -7,7 +7,10 @@ class EffortLogMailer < ActionMailer::Base
     @user = user
     email_with_name = @user.human_name + ' <' + @user.email + '>'
 
-    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/public/images/ScottyDogLandscape.jpg")
+
+#    <YourAppName>::Application.assets.find_asset('ScottyDogLandscape.jpg').pathname
+#    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/assets/images/ScottyDogLandscape.jpg")
+    attachments["ScottyDogLandscape.jpg"] = Rails.application.assets.find_asset('ScottyDogLandscape.jpg')
     mail(:to => @user.email, :subject => "Scotty Dog says: #{saying}", :date => Time.now)
 
   end

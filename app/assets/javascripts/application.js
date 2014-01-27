@@ -11,7 +11,8 @@
 
 
 $('.ckeditor').ckeditor({
-    // optional config
+
+
 });
 
 // Place your application-specific JavaScript functions and classes here
