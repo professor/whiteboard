@@ -31,3 +31,6 @@ CKEDITOR.editorConfig = (config) ->
 
   config.toolbar = 'CMUSV'
   true
+
+
+
