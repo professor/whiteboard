@@ -1,3 +1,17 @@
+<% content_for :javascript do %>
+    <script type="text/javascript">
+
+        CKEDITOR.replace( 'description',
+                {
+                    skin : 'kama',
+                    toolbar: 'CMUSV_SIMPLE',
+                    width: "120%",
+                    height: "300px"
+                });
+
+    </script>
+<%end%>
+
 
 <div id="job-container">
 
@@ -28,17 +42,7 @@
 
       <%= f.label :description %>
       <%= f.text_area :description, :toolbar => 'CMUSV_SIMPLE', :class => 'ckeditor', :placeholder => 'Enter a detailed description for the project here', :rows => "8", :cols => "80" %>
-      <script type="text/javascript">
 
-          CKEDITOR.replace( 'description',
-                  {
-                      skin : 'kama',
-                      toolbar: 'CMUSV_SIMPLE',
-                      width: "120%",
-                      height: "300px"
-                  });
-
-      </script>
       <%= f.label :duration %>
       <%= f.text_field :duration, :class => 'input-field', :placeholder => 'Enter the duration of the project', :title => 'Be specific about which semesters you need help.' %>
 
