@@ -15,6 +15,17 @@
       <% end %>
 
 
+    <script type="text/javascript">
+
+      CKEDITOR.replace( 'description',
+      {
+      skin : 'kama',
+      toolbar: 'CMUSV_SIMPLE',
+      width: "120%",
+      height: "300px"
+      });
+
+      </script>
 
       <label for="job_title">Title *</label>
       <%= f.text_field :title, :class => 'input-field', :placeholder => "Enter a one line description for this project" %>
