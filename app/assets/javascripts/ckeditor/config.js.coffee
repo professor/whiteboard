@@ -3,13 +3,11 @@ CKEDITOR.editorConfig = (config) ->
 
 
   config.toolbar_CMUSV_SIMPLE = [ { name: 'document',    items: [ 'Source' , 'Maximize'] },
-  { name: 'clipboard',   items: [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-  { name: 'links',       items: [ 'Link','Unlink','Anchor' ] },
-  { name: 'justify',     items: ['Outdent','Indent','-','Blockquote', '-', 'Format']}  ,
+  { name: 'clipboard',   items: [ 'Cut','Copy','Paste','PasteText','PasteFromWord', 'RemoveFormat' ] },
+  { name: 'links',       items: [ 'Link','Unlink','Anchor','-', 'Outdent','Indent','Blockquote', '-', 'Format' ] },
     '/',
-  { name: 'basicstyles', items: [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+  { name: 'basicstyles', items: [ 'Bold','Italic','Underline','Strike','Subscript','Superscript' ] },
   { name: 'paragraph',   items: [ 'NumberedList','BulletedList', 'Table'] },
-
     '/',
   ]
 
