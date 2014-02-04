@@ -1,10 +1,11 @@
 CKEDITOR.editorConfig = (config) ->
-
+  config.width = '600'
+  config.skin = 'kama'
 
 
   config.toolbar_CMUSV_SIMPLE = [ { name: 'document',    items: [ 'Source' , 'Maximize'] },
   { name: 'clipboard',   items: [ 'Cut','Copy','Paste','PasteText','PasteFromWord', 'RemoveFormat' ] },
-  { name: 'links',       items: [ 'Link','Unlink','Anchor','-', 'Outdent','Indent','Blockquote', '-', 'Format' ] },
+  { name: 'links',       items: [ 'Link','Unlink','Anchor','-', 'Outdent','Indent','Blockquote', 'Format' ] },
     '/',
   { name: 'basicstyles', items: [ 'Bold','Italic','Underline','Strike','Subscript','Superscript' ] },
   { name: 'paragraph',   items: [ 'NumberedList','BulletedList', 'Table'] },
@@ -22,7 +23,10 @@ CKEDITOR.editorConfig = (config) ->
 
     ]
 
-  config.toolbar = 'CMUSV'
+  if window.location.href.indexOf("pages") != -1
+      config.toolbar = 'CMUSV'
+  else
+      config.toolbar = 'CMUSV_SIMPLE'
   true
 
 
