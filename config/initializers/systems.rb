@@ -1,6 +1,5 @@
-SYSTEMS_CONFIG = YAML.load_file("#{Rails.root}/config/systems.yml")[Rails.env]
 
-TWIKI_USERNAME = SYSTEMS_CONFIG['twiki']['username']
-TWIKI_PASSWORD = SYSTEMS_CONFIG['twiki']['password']
-TWIKI_URL = SYSTEMS_CONFIG['twiki']['url']
+TWIKI_USERNAME = ENV['WHITEBOARD_TWIKI_USERNAME'] || "AndrewCarengie"
+TWIKI_PASSWORD = ENV['WHITEBOARD_TWIKI_PASSWORD'] || "password"
+TWIKI_URL = ENV['WHITEBOARD_TWIKI_URL'] || 'http://info.sv.cmu.edu'
 
