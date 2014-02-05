@@ -44,10 +44,8 @@ class DeliverablesController < ApplicationController
       @deliverables = @deliverables.select { |deliverable| deliverable.grade_status == "ungraded" ||
           deliverable.grade_status == "drafted" }
 
-      # Sort by task number  # 1/24/2014 TS: This is problematic as task_nubmer is an optional field
-      # @deliverables = @deliverables.sort { |a, b| a.assignment.task_number <=> b.assignment.task_number }
+      @deliverables = @deliverables.sort { |a, b| b.assignment.assignment_order <=> a.assignment.assignment_order }
 
-      @deliverables = @deliverables.sort { |a, b| a.updated_at <=> b.updated_at }
     else
       has_permissions_or_redirect(:admin, root_path)
     end
@@ -330,7 +328,11 @@ class DeliverablesController < ApplicationController
     end
 
     #Obtain current selected filters to update the queue accordingly
-    @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+    if params[:deliverable][:current_filter_options].present?
+      @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+    else
+      @selected_filter_options = Hash.new
+    end
     @deliverables = filter_deliverables(@deliverable.course_id, @selected_filter_options)
 
     respond_to do |format|
@@ -400,7 +402,7 @@ class DeliverablesController < ApplicationController
           "assignment_id"].to_i }
     end
 
-    @deliverables = @deliverables.sort { |a, b| a.updated_at <=> b.updated_at }
+    @deliverables = @deliverables.sort { |a, b| b.assignment.assignment_order <=> a.assignment.assignment_order }
   end
 
 end
