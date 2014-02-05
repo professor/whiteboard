@@ -14,12 +14,11 @@ CKEDITOR.editorConfig = (config) ->
 
   config.toolbar_CMUSV = [ { name: 'document',    items: [ 'Source' , 'Maximize'] },
   { name: 'clipboard',   items: [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo', '-','SelectAll','RemoveFormat'] },
+  { name: 'links',       items: [ 'Link','Unlink','Anchor' ] },
       '/',
   { name: 'paragraph',   items: [ 'Format', 'NumberedList','BulletedList','-','Outdent','Indent','Blockquote', 'Table', 'HorizontalRule'] },
   { name: 'basicstyles', items: [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-  { name: 'links',       items: [ 'Link','Unlink','Anchor' ] },
       '/',
-
     ]
 
   if window.location.href.indexOf("pages") != -1
