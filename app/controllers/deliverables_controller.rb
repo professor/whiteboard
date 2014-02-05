@@ -328,7 +328,11 @@ class DeliverablesController < ApplicationController
     end
 
     #Obtain current selected filters to update the queue accordingly
-    @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+    if params[:deliverable][:current_filter_options].present?
+      @selected_filter_options = JSON.parse(params[:deliverable][:current_filter_options])
+    else
+      @selected_filter_options = Hash.new
+    end
     @deliverables = filter_deliverables(@deliverable.course_id, @selected_filter_options)
 
     respond_to do |format|
