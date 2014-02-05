@@ -1,6 +1,5 @@
 CKEDITOR.editorConfig = (config) ->
   config.width = '600'
-  config.skin = 'kama'
 
 
   config.toolbar_CMUSV_SIMPLE = [ { name: 'document',    items: [ 'Source' , 'Maximize'] },
