@@ -5,9 +5,9 @@ CKEDITOR.editorConfig = (config) ->
 
   config.toolbar_CMUSV_SIMPLE = [ { name: 'document',    items: [ 'Source' , 'Maximize'] },
   { name: 'clipboard',   items: [ 'Cut','Copy','Paste','PasteText','PasteFromWord', 'RemoveFormat' ] },
-  { name: 'links',       items: [ 'Link','Unlink','Anchor','-', 'Outdent','Indent','Blockquote', 'Format' ] },
+  { name: 'links',       items: [ 'Link','Unlink','Anchor','-', 'Outdent','Indent','Blockquote' ] },
     '/',
-  { name: 'basicstyles', items: [ 'Bold','Italic','Underline','Strike','Subscript','Superscript' ] },
+  { name: 'basicstyles', items: [ 'Format', 'Bold','Italic','Underline','Strike','Subscript','Superscript' ] },
   { name: 'paragraph',   items: [ 'NumberedList','BulletedList', 'Table'] },
     '/',
   ]
