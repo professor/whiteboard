@@ -1,9 +1,9 @@
 <% reset_cycle %>
 <%= javascript_include_tag "grade.js" %>
 
-<% if show_course_grade %>
+<% if show_course_grade && @course.grading_rule.present? %>
 <script>
-    var grades = new Grade(<%=@course.grading_rule.get_grade_params_for_javascript.html_safe %>);
+    var grades = new Grade(<%= @course.grading_rule.get_grade_params_for_javascript.html_safe %>);
     $(document).ready(function(){
         $("tr[id^='s_']").each(function(){
           var student_id = $(this).attr("id").replace("s_","");
