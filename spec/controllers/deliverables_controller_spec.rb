@@ -93,8 +93,8 @@ describe DeliverablesController do
         @expected_deliverable = assigns(:deliverables)
 
         @expected_deliverable.should have(2).items
-        @expected_deliverable[0].should == @deliverable_turing_ungraded
-        @expected_deliverable[1].should == @deliverable_turing_drafted
+        @expected_deliverable.include?(@deliverable_turing_ungraded).should be_true
+        @expected_deliverable.include?(@deliverable_turing_drafted).should be_true
       end
 
       #default behavior
@@ -123,8 +123,8 @@ describe DeliverablesController do
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(2).items
-        @expected_deliverable[1].should == @deliverable_turing_graded
-        @expected_deliverable[0].should == @deliverable_turing_ungraded
+        @expected_deliverable.include?(@deliverable_turing_graded).should be_true
+        @expected_deliverable.include?(@deliverable_turing_ungraded).should be_true
 
       end
 
@@ -134,9 +134,9 @@ describe DeliverablesController do
 
         @expected_deliverable = assigns(:deliverables)
         @expected_deliverable.should have(3).items
-        @expected_deliverable[1].should == @deliverable_turing_graded
-        @expected_deliverable[0].should == @deliverable_turing_ungraded
-        @expected_deliverable[2].should == @deliverable_turing_drafted
+        @expected_deliverable.include?(@deliverable_turing_graded).should be_true
+        @expected_deliverable.include?(@deliverable_turing_ungraded).should be_true
+        @expected_deliverable.include?(@deliverable_turing_drafted).should be_true
 
       end
 
@@ -180,9 +180,9 @@ describe DeliverablesController do
 
           @expected_deliverable = assigns(:deliverables)
           @expected_deliverable.should have(3).items
-          @expected_deliverable[0].should == @deliverable_ruby_racer_ungraded
-          @expected_deliverable[1].should == @deliverable_ruby_racer_graded
-          @expected_deliverable[2].should == @deliverable_ruby_racer_drafted
+          @expected_deliverable.include?(@deliverable_ruby_racer_ungraded).should be_true
+          @expected_deliverable.include?(@deliverable_ruby_racer_graded).should be_true
+          @expected_deliverable.include?(@deliverable_ruby_racer_drafted).should be_true
 
         end
       end
