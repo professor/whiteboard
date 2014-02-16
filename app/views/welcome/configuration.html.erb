@@ -16,7 +16,7 @@
 <br/>
 
 
-
+<h2>Http Headers</h2>
 <table border="1">
 <% for header in request.env.select {|k,v| k.match("^HTTP.*")} %>
   <tr>
@@ -33,6 +33,8 @@
   </tr>
 <% end %>
 </table>
+
+
 
 
 </body>

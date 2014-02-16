@@ -132,9 +132,11 @@ h1#titleHead {
 	text-transform:uppercase;
 	color:#ffffff;
 	padding:8px 0px 5px 9px;
-        position:relative;
+    position:relative;
 	margin-left:244px;
 	width:739px;
+    box-sizing: content-box; /* Team Turing: Overriding Bootstraps box-sizing: border-box set via universal selector */
+    -moz-box-sizing: content-box;
 }
 #topnav ul {
 	display:inline-block;
@@ -227,6 +229,8 @@ h1#titleHead {
 	overflow:hidden;
 	padding:10px 10px 1px 11px;
 	margin: 0px 8px -10px 0px;
+    box-sizing: content-box; /* Team Turing: Overriding Bootstraps box-sizing: border-box set via universal selector */
+    -moz-box-sizing: content-box;
 }
 #logo img {
 	padding-bottom:10px;

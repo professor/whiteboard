@@ -4,8 +4,6 @@ class AssignmentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_course
   before_filter :render_grade_book_menu
-  load_and_authorize_resource
-
 
   layout 'cmu_sv'
 
@@ -20,6 +18,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @assignments = Assignment.all(:conditions => ["course_id = ?", @course.id])
+    authorize! :read, Assignment
 
     respond_to do |format|
       format.html # index.html.erb
@@ -31,6 +30,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/new.xml
   def new
     @assignment = Assignment.new
+    authorize! :update, @course
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,12 +41,14 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1/edit
   def edit
     @assignment = Assignment.find(params[:id])
+    authorize! :update, @course
   end
 
   # POST /assignments
   # POST /assignments.xml
   def create
     @assignment = @course.assignments.new(params[:assignment])
+    authorize! :update, @course
     @assignment.set_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
     respond_to do |format|
       if @assignment.save
@@ -63,6 +65,8 @@ class AssignmentsController < ApplicationController
   # PUT /assignments/1.xml
   def update
     @assignment = Assignment.find(params[:id])
+    authorize! :update, @course
+
     @assignment.set_due_date(params[:due_date][:date], params[:due_date][:hour], params[:due_date][:minute]) if params.has_key?(:due_date)
     deliverable_submitted=Deliverable.find_all_by_assignment_id(@assignment.id).first
     deliverable_status=0;
@@ -98,6 +102,8 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1.xml
   def destroy
     @assignment = Assignment.find(params[:id])
+    authorize! :destroy, @assignment
+
     @assignment.destroy
     respond_to do |format|
       format.js
@@ -109,6 +115,7 @@ class AssignmentsController < ApplicationController
   def show
     @no_pad = true
     @assignments = @course.assignments
+    authorize! :read, @course
 
     respond_to do |format|
       format.html # showml.erb
@@ -120,6 +127,8 @@ class AssignmentsController < ApplicationController
   # B: http://henrik.nyh.se/2008/11/rails-jquery-sortables#comment-17220662 (model update code)
 
   def reposition
+    authorize! :reorder_assignments, @course
+
     order = params[:assignment]
     Rails.logger.debug(order)
     Assignment.reposition(order)

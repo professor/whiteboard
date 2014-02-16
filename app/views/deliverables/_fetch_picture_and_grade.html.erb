@@ -1,20 +1,15 @@
-
-<div class='team_member_photo'>
-
-  <div class="label">
-    <%= fields_for :grade do |grade| %>
-      Grade <%= grade.text_field :_for_student ,:name=>member.id,:value => ((grade_obj.nil?)?"":grade_obj.score),:size=> "3", :tabindex=>member.id%>
-      <%# if deliverable_type == "individual" %>
-
-        /<%= display_maximum_score %>
-
-      <%# end %>
-    <% end %>
+<div class="col-md-4">
+  <div class="thumbnail" style="text-align: center;">
+    <a href='http://<%= @hostname_with_port %>/people/<%= member.twiki_name %>' target='_blank'>
+      <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image", :style => "width: 175px") %>
+    </a>
+    <div class="caption">
+      <p><strong><%= member.human_name %></strong></p>
+      <p>
+        <%= fields_for :grade do |grade| %>
+            <%= grade.text_field :_for_student ,:name => member.id,:value => ((grade_obj.nil?)? "" : grade_obj.score), :size=> "3", :tabindex => member.id %> / <%= display_maximum_score %>
+        <% end %>
+      </p>
+    </div>
   </div>
-  <div style="text-align: center;">
-  <a href='http://<%=@hostname_with_port%>/people/<%= member.twiki_name %>' target='_top'>
-    <%= image_tag(member.image_uri, :border => 0, :alt => member.human_name+" image") %></a>
-  </div>
-  <div class='label'> <%= member.human_name %></div>
-
-  </div>
+</div>

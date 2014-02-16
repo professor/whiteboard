@@ -326,7 +326,7 @@
             <% updated_by = Person.find(:first, :conditions => ["id = ?", version.updated_by_user_id]) %>
             <% if !updated_by.nil? %>by <%= h updated_by.human_name %>
             <% end %>
-            on <%= l version.updated_at, :format => :detailed %>
+            <!-- on # l version.updated_at, :format => :detailed  -->
             <br/>
         <% end %>
         <br/><br/>

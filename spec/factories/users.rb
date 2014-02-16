@@ -122,4 +122,15 @@ FactoryGirl.define do
     track_group "Tech"
   end
 
+  factory :student_Test_user, :parent => :user do
+    sequence(:email) {|i| "student_Test#{i}@sv.cmu.edu"}
+    sequence(:webiso_account) {|i| "student_Test#{i}@andrew.cmu.edu"}
+    sequence(:human_name) {|i| "student_Test#{i}"}
+    sequence(:first_name) {|i| "student_Test#{i}"}
+    sequence(:last_name) {|i| "student_Test#{i}"}
+    sequence(:twiki_name) {|i| "student_Test#{i}"}
+    is_student true
+    is_alumnus false
+  end
+
 end

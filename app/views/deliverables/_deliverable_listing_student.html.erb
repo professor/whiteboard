@@ -47,7 +47,7 @@
         <%=(assignment.due_date.blank?)?"":"#{assignment.due_date.to_date} at #{assignment.due_date.strftime("%I:%M%p")}"  %>
       </td>
       <td>
-        <% if deliverable && deliverable.get_grade_status == :graded %>
+        <% if deliverable && deliverable.grade_status == "graded" %>
             <%= link_to 'Feedback', deliverable %>
         <% end %>
       </td>

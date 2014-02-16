@@ -1,0 +1,2 @@
+$("#grading_queue").detach();
+$("#deliverables").append($("<%= escape_javascript(render partial: 'deliverables/deliverable_listing_professor', :locals => {:deliverables => @deliverables, :skip_course_column => true}) %>"))

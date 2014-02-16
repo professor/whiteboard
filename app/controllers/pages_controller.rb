@@ -37,6 +37,11 @@ class PagesController < ApplicationController
       redirect_to(:controller => :pages, :action => :new, :url => params[:id]) and return
     end
 
+    if @page.visible == false
+      flash[:error] = "This page no longer exists."
+      redirect_to(root_url) and return
+    end
+
     unless @page.viewable?(current_user)
       flash[:error] = "You don't have permission to do this action."
       redirect_to(root_url) and return

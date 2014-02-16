@@ -62,8 +62,7 @@ gem 'cancan'
 gem 'vpim'  # user for exporting contacts to vCard and iCalendar support
 gem 'seedbank'
 gem 'spreadsheet'
-
-
+gem 'cocaine' , "0.3.2"
 group :production do
   gem 'thin'
   gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
@@ -90,6 +89,7 @@ group :development, :test do
 
 
   gem 'shoulda'
+  gem 'rspec'
 #  gem 'hanna'
   gem 'rdoc' #,    '2.4.3' #rdoc_rails required RDoc of 2.4.3 - http://stackoverflow.com/questions/2993435/rake-uninitialized-constant-rdocrdoc
   gem 'rspec-rails'
@@ -107,6 +107,8 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
+  gem 'selenium-webdriver'
+  gem 'rails_best_practices'
 end
 #readme
 

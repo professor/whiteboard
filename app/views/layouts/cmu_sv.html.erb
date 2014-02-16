@@ -23,6 +23,11 @@
   <title><%= (title = yield :title) ? title : 'Silicon Valley Campus - Carnegie Mellon University' %></title>
   <%= yield :javascript %>
   <%= yield :head %>
+
+  <%#= stylesheet_link_tag "/stylesheets/bootstrap.min.css", :media => "screen", :rel => "stylesheet" %>
+  <%= stylesheet_link_tag "/stylesheets/tw-bs.css", :media => "screen", :rel => "stylesheet" %>
+  <%= javascript_include_tag 'bootstrap.min.js' %>
+
 </head>
 
 <body>

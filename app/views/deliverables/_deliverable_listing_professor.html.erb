@@ -1,68 +1,83 @@
+<style>
+.panel-default .panel-body {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+.panel-default .panel-body:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+.loading_indicator {
+    margin-top: 18px;
+    margin-left: 4px;
+}
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -16px; /* -1 * image width/2 */
+    margin-top: -16px;  /* -1 * image height/2 */
+    display: block;
+}
+#loading_ajax_request {
+    position:fixed;
+    top:40%;  /* 50% - height/2 */
+    left:42%; /* 50% - width/2 */
+    width:15%;
+    height:20%;
+    z-index:1000;
+    background-color: white;
+    opacity: .7;
+}
+</style>
+
+<div id="grading_queue">
 <% reset_cycle %>
 <% customised_name= nomenclature_assignment_or_deliverable %>
-<table class="twikiTable sortable cmu_table" cellpadding="0" cellspacing="0" width="685">
-  <thead>
-  <tr>
-    <% unless skip_course_column %>
-        <th>Course</th>
-    <% end %>
-    <% if customised_name=="Deliverable" %>
-        <th>Task Number</th>
-    <% end %>
+<% if deliverables.blank? %>
+  <p style="text-align: center;">Hurray, nothing to do here!</p> <br/><br/><br/><br/><br/><br/>
+<% else %>
+<% deliverables.each do |deliverable| %>
+    <div>
+     <div class="panel panel-default" style="margin-bottom: 10px;">
+       <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>" style="padding-top: 6px; padding-bottom: 6px;">
 
-    <th><%=nomenclature_assignment_or_deliverable%></th>
-    <th>Owner</th>
-<!--
-    <th>Latest <%=nomenclature_assignment_or_deliverable%></th>
--->
-    <th>Graded</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
+         <div class="col-sm-1" style="padding-top: 16px; margin-left: 0;">
+           <%= image_tag("/images/show_deliverable_detail.png", :size => '28x28', :style => 'margin-left: -6px', :alt => 'View details', :id => 'toggle_img') %>
+         </div>
 
-  <% deliverables.each do |deliverable| %>
-      <tr class="<%= cycle('twikiTableOdd', 'twikiTableEven') %> <%= deliverable.get_grade_status %>">
-        <% unless skip_course_column %>
-            <% if deliverable.course %>
-                <td><%= deliverable.course.name %></td>
-            <% else %>
-                <td>&nbsp;</td>
-            <% end %>
-        <% end %>
+         <div class="col-md-9" style="padding-top: 7px; border-right:thin solid #eee; border-left:thin solid #eee;">
+           <% latest_version = deliverable.attachment_versions.first %>
+           <p style="margin-bottom: 0; font-size:17px;">
+            <span>Task <%= deliverable.assignment.task_number %>: </span>
+            <span style="color:#666">
+              <%= (deliverable.is_team_deliverable ? 'Team ' : '') %><%= deliverable.owner_name %>
+            </span>
+           </p>
+           <p style="font-size:15px; margin-bottom:0; color:#d17702;">
+               <%= deliverable.assignment.name %>
+               <% unless latest_version.attachment_file_name.nil? %>
+                   <%= link_to image_tag("/images/download_deliverable.png", :size => '16x16', :alt => 'Download'), latest_version.attachment.url %>
+               <% end %>
+           </p>
+           <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
+         </div>
 
-
-        <% if customised_name=="Deliverable" %>
-            <td><%= deliverable.assignment.task_number %></td>
-        <% end %>
-        <td><%= deliverable.assignment.name %></td>
-
-        <td><%= "Team " if deliverable.is_team_deliverable? %><%= deliverable.owner_name %></td>
-
-        <!-- commented this out on 9/27/2013 to increase performance
-        <%# latest_attachment = deliverable.attachment_versions.first %>
-        <%# unless latest_attachment.attachment_file_name.nil? %>
-            <td><%# deliverable.assignment_name%> (<%# link_to "download", latest_attachment.attachment.url %>)</td>
-        <%# else %>
-            <td><%# deliverable.assignment_name %></td>
-        <%# end %>
-        -->
-        <td>
-          <% if deliverable.get_grade_status==:graded %>
-             Yes
-          <% elsif deliverable.get_grade_status==:drafted %>
-             No (Draft)
-          <% elsif deliverable.get_grade_status==:ungraded %>
-             No
-          <% end %>
-        </td>
-
-
-              <% if  deliverable.get_grade_status==:graded %>
-                  <td><%= link_to 'Review Grade', deliverable %></td>
-              <%else%>
-                <td><%= link_to 'Give Grade', deliverable %></td>
-            <%end%>
-
-      </tr>
-  <% end %>
-</table>
+         <div class="col-md-2" style="padding-top: 2px;">
+           <% if deliverable.grade_status == "graded" %>
+             <%= image_tag("/images/deliverables_graded.png", :alt => 'Graded', :size => '54x54', :class => 'pull-right') %>
+           <% elsif deliverable.grade_status == "drafted" %>
+             <%= image_tag("/images/deliverables_drafted.png", :alt => 'Drafted', :size => '54x54', :class => 'pull-right') %>
+           <% elsif deliverable.grade_status == "ungraded" %>
+               <%= image_tag("/images/deliverables_ungraded.png", :alt => 'Ungraded', :size => '54x54', :class => 'pull-right') %>
+           <% end %>
+         </div>
+       </div>
+       <div class="deliverable_detail" id="deliverable_detail_<%= deliverable.id %>" style="display: none">
+       </div>
+     </div>
+    </div>
+<% end %>
+<% end %>
+</div>

@@ -42,3 +42,6 @@ push*.dat
 
 # Vagrant files
 .vagrant
+
+#postgres
+logfile
