@@ -3,6 +3,7 @@
 //= require ckeditor-jquery
 //= require jquery-ui-custom-for-cmusv
 //= require jquery-corners-0.3/jquery_corners.js
+//= require bootstrap.min.js
 
 
 
