@@ -15,6 +15,20 @@ CMUEducation::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+  # ActionMailer::Base.perform_deliveries = true
+
+  # Specify host url for password reset links in email
+  # config.action_mailer.default_url_options = { :host => "localhost:3000" }
+
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :authentication => :plain,
+    :domain => ENV['GMAIL_SMTP_USER'],
+    :user_name => ENV['GMAIL_SMTP_USER'],
+    :password => ENV['GMAIL_SMTP_PASSWORD'],
+    :enable_starttls_auto => true
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

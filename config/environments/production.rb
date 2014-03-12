@@ -59,6 +59,14 @@ CMUEducation::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  config.middleware.use ExceptionNotifier,
+    :email_prefix => "[ERROR] ",
+    :sender_address => %{"Exception" <support@example.com>},
+    :exception_recipients => %w(todd.sedano@sv.cmu.edu, rofaida.abdelaal@sv.cmu.edu),
+    :sections => %w{cmusv} + ExceptionNotifier::Notifier.default_sections
+
+  config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-8300440-2")
+
   config.assets.precompile << Proc.new { |path|
     if path =~ /\.(css|js|basepath.js)\z/
       full_path = Rails.application.assets.resolve(path).to_path
