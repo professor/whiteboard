@@ -27,7 +27,7 @@
 
         // Figure out the toggle state to show + or - sign
         var toggle_state = $(this).parent().find('#toggle_img').attr('src');
-        toggle_state = toggle_state.substr(0, 12) == '/assets/show' ? '/assets/hide_deliverable_detail.png' : '/assets/show_deliverable_detail.png';
+        toggle_state = toggle_state.indexOf("/assets/show")!= -1 ? <%=image_path("hide_deliverable_detail.png") %> : <%= image_path("show_deliverable_detail.png") %>;
         $(this).parent().find('#toggle_img').attr('src', toggle_state);
     });
 
