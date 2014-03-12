@@ -8,10 +8,10 @@ before_install:
 
 before_script:
   - "psql -c 'create database cmu_education_test;' -U postgres >/dev/null"
-  - cp config/amazon_s3.default.yml config/amazon_s3.yml
+#  - cp config/amazon_s3.default.yml config/amazon_s3.yml
   - cp config/database.default.yml config/database.yml
   - cp config/morning_glory.default.yml config/morning_glory.yml
-  - cp config/systems.default.yml config/systems.yml
+#  - cp config/systems.default.yml config/systems.yml
   - bundle exec rake db:schema:load RAILS_ENV='test' --trace
   - echo "hello"
   - mkdir tmpdir
