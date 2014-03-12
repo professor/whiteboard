@@ -30,7 +30,7 @@ gem 'devise'
 gem 'ckeditor_rails'
 
 
-gem 'bundler'
+gem "bundler", "~> 1.3.5"
 gem 'delayed_job', '2.1.4'
 #gem 'delayed_job_active_record'
 
