@@ -5,7 +5,8 @@ CMUEducation::Application.routes.draw do
   match 'courses/:course_id/team_deliverables' => 'deliverables#team_index_for_course', :as => :individual_deliverables
   match 'courses/:course_id/individual_deliverables' => 'deliverables#individual_index_for_course', :as => :team_deliverables
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_scope :user do
     get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
     get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end

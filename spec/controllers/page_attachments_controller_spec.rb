@@ -62,24 +62,28 @@ describe PageAttachmentsController do
     describe "DELETE destroy" do
       def do_delete
         delete :destroy, :id => @attachment.id
+
       end
 
       it "should delete the attachment", :skip_on_build_machine => true  do
         @attachment.page.should_receive(:editable?).and_return(true)
         @attachment.should_receive(:destroy)
 
-        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+        PageAttachment.stub(:find).with(@attachment.id.to_s).and_return(@attachment)
         do_delete
       end
 
       it "should flash a notice", :skip_on_build_machine => true do
         @attachment.page.should_receive(:editable?).and_return(true)
         @attachment.stub(:destroy)
-        PageAttachment.stub(:find).with(@attachment.id).and_return(@attachment)
+        PageAttachment.stub(:find).with(@attachment.id.to_s).and_return(@attachment)
 
         do_delete
         flash[:notice].should_not be_nil
       end
+
+
+
     end
   end
 

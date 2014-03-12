@@ -7,16 +7,15 @@
 
   <meta content="index,follow" name="robots">
   <meta content="31 days" name="revisit-after">
-  <%= stylesheet_link_tag 'site' %>
-  <%= stylesheet_link_tag 'twiki' %>
-  <%= stylesheet_link_tag 'scaffold' %>
-  <%= stylesheet_link_tag 'simple/simple_print.css', :media => "print" %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js",
-                             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js",
-                             "jquery_ujs.js",
-                             "application" %>
+
+
+  <%= stylesheet_link_tag "application","http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" %>
+  <%= javascript_include_tag "application", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js" %>
+
+
+
   <%= csrf_meta_tag %>
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/themes/base/jquery-ui.css" type="text/css" media="all"/>
+
 
   <%= yield :tablesorter %>
 

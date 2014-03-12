@@ -9,9 +9,9 @@ describe 'pages/_editable_form.html.erb' do
       stub_model(Course),
       stub_model(Course)
     ])
-    view.should_receive(:button_name).any_number_of_times.and_return("Update")
-    view.should_receive(:enable_auto_save).any_number_of_times.and_return(false)
-    view.should_receive(:enable_timeout).any_number_of_times.and_return(false)
+    view.should_receive(:button_name).at_least(1).times.and_return("Update")
+    view.should_receive(:enable_auto_save).at_least(1).times.and_return(false)
+    view.should_receive(:enable_timeout).at_least(1).times.and_return(false)
     render
   end
 

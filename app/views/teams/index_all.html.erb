@@ -31,14 +31,14 @@
         <% end %>
         <% unless (team.email.blank? || team.updating_email) %>
             <td>
-              <a href='mailto:<%= h team.email %>'><%= image_tag("/images/email.gif", :width => "12", :height => "9", :border => 0) %></a>
+              <a href='mailto:<%= h team.email %>'><%= image_tag("email.gif", :width => "12", :height => "9", :border => 0) %></a>
             </td>
         <% else %>
             <td> &nbsp; </td>
         <% end %>
         <% unless team.tigris_space.blank? %>
             <td>
-              <a href='<%= h team.tigris_space %>'><%= image_tag("/images/tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
+              <a href='<%= h team.tigris_space %>'><%= image_tag("tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
             </td>
         <% else %>
             <td> &nbsp; </td>
@@ -62,7 +62,7 @@
         <td>
           <% team.members.each do |user| %>
               <%= link_to user.human_name, person_path(user.twiki_name) %>
-              <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
+              <% if user.is_adobe_connect_host %><%= image_tag("connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
               <% end %>
           <% end %> </td>
         <td><%= link_to 'Show', course_team_path(team.course_id, team) %></td>

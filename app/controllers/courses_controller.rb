@@ -133,7 +133,6 @@ class CoursesController < ApplicationController
 
     @course.year = params[:course][:year]
     @course.semester = params[:course][:semester]
-
     respond_to do |format|
       @course.updated_by_user_id = current_user.id if current_user
       if @course.save

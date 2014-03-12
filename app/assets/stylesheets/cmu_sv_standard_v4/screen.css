@@ -1,0 +1,1136 @@
+html {
+}
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #ffffff;
+	margin: 0px;
+	padding: 0px;
+	width:992px;
+}
+img {
+	border:0px;
+	padding:0px;
+	margin:0px;
+}
+b,strong{
+        font-weight: bold;
+}
+
+i,em{
+        font-style: italic;
+}
+sup {
+	font-size: 0.8em;
+	vertical-align: top;
+        margin-right: 0.125em;
+}
+sub {
+        font-size: 0.8em;
+        vertical-align: bottom;
+        margin-right: 0.125em;
+}
+
+blockquote {
+        margin:10px 0 10px 20px;
+}
+
+
+form {margin: 0px;}
+p {
+	padding: 0px;
+	margin: 0px;
+}
+hr,div.hr{
+	height: 14px;
+	background-image:url(http://www.cmu.edu/common/standard-v4/images/horizontal_rule.gif);
+	background-repeat:repeat-x;
+	border: none;
+}
+
+.noDisplay {display:none;}
+
+div.hr hr {
+	display:none;
+}
+
+.right {
+        text-align: right;
+}
+
+h1#titleHead {
+	display:none;
+}
+
+#wrapper {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:992px;
+}
+
+#wordmark {
+	width:244px;
+	background-color:#990000;
+	height: 35px;
+}
+
+#wordmark h2 {
+	margin:0px;
+	padding:0px;
+}
+
+#wordmark h2 a {
+	display:block;
+	width:244px;
+	height:35px;
+	background-image:url(http://www.cmu.edu/common/standard-v4/images/wordmark.gif);
+	background-repeat:no-repeat;
+	background-position:left top;
+	text-indent: -9999px;
+}
+#wordmark h2 a span {
+	height: 1px;
+	width: 1px;
+	position:absolute;
+	overflow:hidden;
+	top:-10px;
+}
+#pageHeader {
+	width:992px;
+	height:35px;
+	background-color: #990000;
+/*	position:absolute;
+	top:0px;
+	left:0px; */
+}
+#pageFooter {
+	background-color: #464646;
+	height: 20px;
+	clear:both;
+}
+#main {
+	background-image:url(http://www.cmu.edu/common/standard-v4/images/main_bg.gif);
+	background-repeat:repeat-y;
+	margin:0px 0px 0px 0px;
+	padding:0px;
+}
+
+.topnavFixed {
+	position: absolute;
+	top:35px;
+	left:0px;
+}
+
+#topnav {
+	height:16px;
+	background-color:#464646;
+	font-size:11px;
+	text-transform:uppercase;
+	color:#ffffff;
+	padding:8px 0px 5px 9px;
+    position:relative;
+	margin-left:244px;
+	width:739px;
+    box-sizing: content-box; /* Team Turing: Overriding Bootstraps box-sizing: border-box set via universal selector */
+    -moz-box-sizing: content-box;
+}
+#topnav ul {
+	display:inline-block;
+	overflow:hidden;
+}
+#topnav li {
+	padding: 0px 6px 0px 11px;
+	border-left: 1px solid #dddddd;
+	list-style:none;
+	display:inline;
+}
+#topnav li.first {
+	padding: 0px 10px 0px 11px;
+	border-left: none;
+/*	background-image:none !important; */
+
+}
+#topnav a, #topnav a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+#topnav a:hover, #topnav a:visited:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+#socialLinks {
+	margin:-14px 35px 0 0;
+	position:absolute;
+	right:0;
+}
+
+#socialLinks a {
+	display:inline-block;
+	height:19px;
+	margin-right:3px;
+	padding:0;
+	width:19px;
+}
+
+#socialLinks #facebook {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) 0 0 no-repeat scroll;}
+#socialLinks #facebook:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) 0 -19px no-repeat scroll;}
+
+#socialLinks #twitter {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -19px 0 no-repeat scroll;}
+#socialLinks #twitter:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -19px -19px no-repeat scroll;}
+
+#socialLinks #youtube {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -38px 0 no-repeat scroll;}
+#socialLinks #youtube:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -38px -19px no-repeat scroll;}
+
+#socialLinks #friendfeed {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -57px 0 no-repeat scroll;}
+#socialLinks #friendfeed:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -57px -19px no-repeat scroll;}
+
+#socialLinks #linkedin {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -76px 0 no-repeat scroll;}
+#socialLinks #linkedin:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -76px -19px no-repeat scroll;}
+
+#socialLinks #itunesu {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -95px 0 no-repeat scroll;}
+#socialLinks #itunesu:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -95px -19px no-repeat scroll;}
+
+#socialLinks #flickr {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -120px 0 no-repeat scroll;}
+#socialLinks #flickr:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -120px -19px no-repeat scroll;}
+
+#socialLinks #yammer {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -139px 0 no-repeat scroll}
+#socialLinks #yammer:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -139px -19px no-repeat scroll}
+
+#socialLinks #orkut {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -158px 0 no-repeat scroll}
+#socialLinks #orkut:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -158px -19px no-repeat scroll}
+
+#socialLinks #vimeo {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -177px 0 no-repeat scroll}
+#socialLinks #vimeo:hover {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -177px -19px no-repeat scroll}
+
+
+#socialLinks #more {background:transparent url(http://www.cmu.edu/common/standard-v4/images/social-media-icons-slice.jpg) -114px 0 no-repeat scroll; margin-right:0; width:6px;}
+
+#headerImage {
+	margin:0px;
+	padding:0px;
+	width:748px;
+	overflow: hidden;
+}
+#navWrapper {
+	width:243px;
+	float:left;
+	margin:0px 1px 0px 0px;
+	padding:0px;
+}
+
+#logo{
+	width: 235px;
+	wid\th:214px;
+	overflow:hidden;
+	padding:10px 10px 1px 11px;
+	margin: 0px 8px -10px 0px;
+    box-sizing: content-box; /* Team Turing: Overriding Bootstraps box-sizing: border-box set via universal selector */
+    -moz-box-sizing: content-box;
+}
+#logo img {
+	padding-bottom:10px;
+}
+#search{
+	font-size:11px;
+	color:#ffffff;
+	height: 25px;
+	margin:7px 35px 3px 5px;
+	vertical-align:middle;
+	position:absolute;
+	top:0px;
+	right:0px;
+}
+#searchSiteLabel{
+	display:inline;
+	margin-right:10px;
+	vertical-align: middle;
+	line-height: 1;
+}
+#searchSite{
+	display:inline;
+/*	padding-bottom:2px; */
+	vertical-align:middle;
+}
+#searchQuery
+{
+	display:inline;
+	vertical-align: middle;
+	width: 112px;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 11px;
+	height: 15px;
+/*	padding: 4px 0px 0px 0px; */
+	color: #000000;
+}
+#searchSubmit
+{
+/*	display:inline; */
+	overflow:visible;
+	vertical-align: middle;
+	background: transparent url(http://www.cmu.edu/common/standard-v4/images/search_go.gif) no-repeat center left;
+	text-indent: -9999px;
+	cursor: pointer;
+	width: 21px;
+	height: 13px;
+	border: none;
+/*	padding: 1px 0px 0px 0px; */
+
+}
+
+/* Navigation */
+
+#nav {font-family: Helvetica, sans-serif;width: 229px;padding: 0px;margin: 10px 5px 20px 10px;}
+#nav a:link,#nav a:visited,#nav a:active {text-decoration: none;}
+#nav div.hr{
+	margin:0px 13px 0px 1px;
+}
+
+.secondaryNavTop {color: #4b4b4b !important; font-size: 14px; line-height: 16px;}
+.secondaryNavTop a {color:#4b4b4b !important;}
+.secondaryNavTop a:hover {text-decoration: underline;}
+
+
+
+/* level 1 */
+#nav ul {font-size: 16px;color: #990000;margin: 5px 0px 5px 0px;padding: 0px;}
+#nav ul li {color: #990000; list-style: none;line-height: 18px;padding: 3px 0px 3px 0px;}
+
+#nav ul li.ancestor,#nav ul li.parent, #nav ul li.active {font-weight: bold;}
+#nav ul li a {color:#990000;}
+#nav ul li a:hover {text-decoration: underline;}
+
+
+
+/* level 2 */
+#nav ul ul {font-size: 13px;font-weight: normal;color: #464646;padding: 2px 0px 0px 10px;margin: 0px;}
+#nav ul ul li, #nav ul ul li.standard {font-size: 13px; font-weight: normal; color: #464646; padding: 4px 0px 4px 0px; line-height: 15px;}
+#nav ul ul li.ancestor,#nav ul ul li.parent  {font-size: 13px; font-weight: bold;padding: 4px 0px 0px 0px;}
+#nav ul ul li.active {font-size: 13px; color: #990000;}
+#nav ul ul li.active a {color: #990000;}
+#nav ul ul li a {color:#464646;}
+#nav ul ul li a:hover {text-decoration: none; color: #d17702}
+
+/* level 3 */
+#nav ul ul ul {font-size: 13px;font-weight: normal;color: #464646;}
+#nav ul ul ul li.ancestor,#nav ul ul ul li.parent {padding: 2px 0px 0px 20px; margin: 2px 0px 2px -20px; background-color: #cfcfcf; font-weight: normal;}
+#nav ul ul ul li.parent {
+        background-image: url(http://www.cmu.edu/common/standard-v4/images/nav_downarrow.gif);
+        background-repeat: no-repeat;
+        background-position: 210px 8px;
+}
+#nav ul ul ul li.active {
+        color: #990000;
+        margin-left: -10px;
+        padding-left: 10px;
+        background-image: url(http://www.cmu.edu/common/standard-v4/images/nav_bullet.gif);
+        background-repeat: no-repeat;
+        background-position: 0px 8px;
+}
+#nav ul ul ul li a {color:#464646;}
+#nav ul ul ul li a:hover {text-decoration: none; color: #d17702;}
+
+/* level 4 */
+#nav ul ul ul ul {font-size: 13px;font-weight: normal;color: #464646;margin: 4px 0px 0px -20px;padding: 1px 0px 1px 20px;background-color: #e5e5e5;}
+#nav ul ul ul ul li.ancestor, #nav ul ul ul ul li.parent,  #nav ul ul ul ul li.active {
+        color: #990000;
+        font-weight: normal;
+        list-style-type: none;
+        margin-left: -10px;
+        padding-left: 10px;
+        background-color: #e5e5e5;
+}
+#nav ul ul ul ul li.parent {
+        background-image: url(http://www.cmu.edu/common/standard-v4/images/nav_bullet.gif);
+        background-repeat: no-repeat;
+        background-position: 0px 7px;
+}
+
+#nav ul ul ul ul li.parent a {color: #990000;}
+#nav ul ul ul ul li.active {color: #990000;}
+#nav ul ul ul ul li a {color:#464646;}
+#nav ul ul ul ul li a:hover {text-decoration: none; color: #d17702;}
+
+/* level 5 */
+#nav ul ul ul ul ul {font-size: 11px;font-weight: normal;color: #464646;margin: 0px;padding: 2px 0px 0px 10px;background-color: #e5e5e5;}
+#nav ul ul ul ul ul li {list-style-image: none; padding:  3px 0px 3px 0px; margin: 0px;line-height: 14px;}
+#nav ul ul ul ul ul li.standard {color: #464646; padding: 3px 0px 3px 0px;line-height: 14px;}
+#nav ul ul ul ul ul li.standard a {color:#464646;}
+#nav ul ul ul ul ul li.ancestor {font-weight: normal; margin-top: 0px;line-height: 14px;}
+#nav ul ul ul ul ul li.active,#nav ul ul ul ul ul li.parent  {
+        color: #990000;
+        padding: 3px 0px 3px 0px;
+        margin-left: -10px;
+        margin-top: 0px;
+        padding-left: 10px;
+        background-image: url(http://www.cmu.edu/common/standard-v4/images/nav_bullet.gif);
+        background-repeat: no-repeat;
+        background-position: 0px 7px;
+        line-height: 14px;
+}
+#nav ul ul ul ul ul li a {color:#464646;}
+#nav ul ul ul ul ul li a:hover {text-decoration: none; color: #d17702;}
+
+#contentWrapper {
+	margin:0px 0px 0px 244px;
+	padding:0px;
+	width:748px;
+	font-size: 10px;
+	line-height: 1.2;
+}
+
+#breadcrumbs {
+	font-size: 10px;
+	color: #990000;
+	margin:0px;
+	padding:10px 10px 11px 29px;
+	line-height: 22px;
+	overflow: hidden;
+}
+#breadcrumbs a, #breadcrumbs a:visited{text-decoration:underline; color:#424545;}
+#breadcrumbs a:hover, #breadcrumbs a:visited:hover{text-decoration:underline; color:#424545;}
+#breadcrumbs a.home {text-transform:uppercase;}
+
+#mainContent {
+	padding: 0px;
+	margin-bottom:19px;
+}
+
+.content2Column {
+	margin-left: 8px;
+	width:717px;
+	padding: 0px;
+	overflow:hidden;
+}
+
+.content3Column {
+	margin-left:8px;
+	width:476px;
+	float:left;
+	overflow:hidden;
+	padding: 0px;
+
+}
+
+.content2Column .content {
+	width: 696px;
+	wid\th: 673px;
+}
+
+.content3Column .content {
+	width:453px;
+	wid\th:430px;
+}
+
+.content {
+	padding: 7px 1px 10px 22px;
+	margin:0px 29px 0px 0px;
+	font-size: 12px;
+	color: #424545;
+	line-height: 1.4;
+	overflow:hidden;
+}
+
+.content a {
+	color: #d17702;
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+.content a:hover, .content a:visited {
+	color: #936241;
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+.content ol
+{
+	list-style-type:decimal;
+	list-style-position:outside;
+	margin: 4px 0px 9px 0px;
+	padding-left: 25px;
+}
+
+ol.letterList{
+	list-style-type:lower-alpha
+}
+
+.content ul
+{
+	list-style-type: disc;
+	list-style-image: none;
+	list-style-position: outside;
+	margin: 4px 0px 9px 0px;
+	padding-left: 25px;
+}
+
+.content li
+{
+	padding: 0px 0px 1px 0px;
+	margin-top: 1px;
+}
+
+.content p
+{
+	padding-bottom: 8px;
+}
+
+.content h1 {
+	font-family: Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	color: #990000;
+	margin: 9px 0px 8px 0px;
+	padding: 0px;
+        line-height: 1.2;
+}
+
+.content h2 {
+	font-family: Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	color: #990000;
+	margin: 10px 0px 8px 0px;
+	padding: 0px;
+}
+
+.content h3 {
+	font-family: Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: #990000;
+	margin: 10px 0px 8px 0px;
+	padding: 0px;
+}
+
+.content h4 {
+	font-family: Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #424545;
+	margin: 10px 0px 8px 0px;
+	padding: 0px;
+}
+
+.content img {
+	padding: 2px;
+}
+.content hr,.content div.hr {
+        margin: 10px 0px 10px 0px;
+}
+
+.content input {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#424545;
+}
+.content input.radio {width:auto;}
+.content input.checkbox {width:auto;}
+.content textarea {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#424545;
+}
+.content select {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#424545;
+}
+.content select.option {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#424545;
+}
+
+/*
+.content2Column table {
+	width: 673px;
+}
+
+.content3Column table {
+	width: 430px;
+}
+*/
+
+.content table {
+	border-collapse:collapse;
+	border-style: none;
+	margin: 3px 5px 3px 1px;
+	background-color: transparent;
+}
+
+
+.content  tr {}
+
+.content tbody td {
+	font-size:12px;
+	text-decoration:none;
+	font-weight:normal;
+	border: 1px solid #d4d4d4;
+	padding: 5px 3px 11px 5px;
+	margin: 0px;
+	vertical-align: top;
+}
+.content thead td, .content thead th {
+	font-size:11px;
+	text-decoration:none;
+	font-weight:bold;
+	border-style: none;
+	padding:6px 4px 9px 5px;
+	margin-top: 3px;
+	text-transform:uppercase;
+	vertical-align: bottom;
+	text-align: left;
+}
+.content table p {padding:0px 0px 5px 0px !important;margin:0px !important;}
+
+
+table.sortable thead tr .header, table.sortableAlternatingRows thead tr .header {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/tablehead-bg.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
+	cursor: pointer;
+        padding-left: 20px;
+}
+
+table.sortable  thead tr .headerSortUp, table.sortableAlternatingRows thead tr .headerSortUp {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/tablehead-asc.gif);
+}
+table.sortable thead tr .headerSortDown, table.sortableAlternatingRows thead tr .headerSortDown {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/tablehead-desc.gif);
+}
+
+
+#supplementaryContent {
+	float:left;
+	margin-bottom: 19px;
+}
+
+
+#callouts {
+	margin: 1px 24px 20px 505px;
+}
+
+
+.simpleCallout {
+        margin-bottom: 10px;
+}
+
+.simpleCallout .content {
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.simpleCallout .small {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+.simpleCallout a {
+	color: #990000;
+}
+
+.simpleCallout h1,.simpleCallout .content h2
+{
+	font-family: Helvetica,sans-serif;
+	font-size: 22px;
+	padding: 10px 0px 0px 0px;
+	margin:0px;
+	font-weight: normal;
+	text-transform: lowercase;
+	text-align: right;
+	color:#990000;
+}
+
+.simpleCallout h2.top,.simpleCallout h1.top
+{
+	text-align: left;
+	margin: 0px;
+	padding: 0px 0px 9px 0px;
+}
+
+.simpleCallout h2 a:hover,.simpleCallout h2 a:active{
+	text-decoration:underline !important;
+}
+
+
+.simpleCallout h3 {
+	color: #990000;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 0px;
+	margin: 10px 0px 8px 0px;
+}
+
+.simpleCallout h4 {
+	color: #990000;
+	font-size: 17px;
+	font-weight: normal;
+	padding: 0px;
+	margin: 10px 0px 8px 0px;
+}
+
+.simpleCallout h5 {
+	color: #990000;
+	font-size: 15px;
+	margin: 10px 0px 8px 0px;
+	font-family: Helvetica, sans-serif;
+}
+
+.simpleCallout img {
+	padding: 0px;
+}
+
+.simpleCallout ul {
+	list-style-position: outside;
+	list-style-type: disc;
+	margin-left: 0px;
+	padding-left: 35px;
+}
+
+.simpleCallout ol {
+	list-style-position: outside;
+	margin-left: 0pt;
+	padding-left: 35px;
+}
+
+.simpleCallout li {
+	padding: 0px 0px 2px 0px;
+	margin-top: 4px;
+	margin-left: -12px;
+}
+
+.simpleCallout table {
+	width: 216px;
+        border: none;
+}
+
+.simpleCallout thead th, .simpleCallout thead td {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0px;
+	text-transform: none;
+}
+
+.simpleCallout tbody td {
+	border: none;
+	padding: 2px;
+	font-size: 14px;
+}
+
+.simpleCallout .small thead th, .simpleCallout .small thead td {
+	font-size: 11px;
+}
+
+.simpleCallout .small tbody td {
+	font-size: 11px;
+}
+
+
+.callout {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/callout_BG.gif);
+    background-repeat: repeat-y;
+	color:#424545;
+}
+
+.callout .content h1,.callout .content h2
+{
+	font-family: Helvetica,sans-serif;
+	font-size: 22px;
+	padding: 10px 0px 0px 0px;
+	margin:0px;
+	font-weight: normal;
+	text-transform: lowercase;
+	text-align: right;
+	color:#ffffff;
+        line-height: 24px;
+}
+
+.callout .content h2 a:hover,.callout .content h2 a:active{
+	text-decoration:underline !important;
+}
+
+
+.callout .content h2.top,.callout .content h1.top
+{
+	text-align: left;
+	margin: 0px;
+	padding: 0px 0px 9px 0px;
+}
+
+.callout .content h3 {
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 0px;
+	margin: 10px 0px 8px 0px;
+}
+
+.callout .content h4 {
+	color: #ffffff;
+	font-size: 17px;
+	font-weight: normal;
+	padding: 0px;
+	margin: 10px 0px 8px 0px;
+}
+
+.callout .content h5 {
+	color: #ffffff;
+	font-size: 15px;
+	margin: 10px 0px 8px 0px;
+	font-family: Helvetica, sans-serif;
+}
+
+.callout .content img {
+	padding: 0px;
+}
+
+.callout .boxTop {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/callout_top.gif);
+    background-repeat: no-repeat;
+	background-position: top left;
+	height: 9px;
+}
+.callout .boxBottom {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/callout_bottom.gif);
+    background-repeat: no-repeat;
+	background-position: top left;
+	height: 9px;
+}
+
+.callout .content {
+	font-family: Helvetica, sans-serif;
+	color:#ffffff;
+	margin: 0px 9px 0px 9px;
+	padding: 11px;
+	font-size: 14px;
+	overflow: hidden;
+}
+
+.callout .content a:link,
+.callout .content a:active,
+.callout .content a:visited,
+.callout .content a:hover,
+.callout .content a:visited:hover {
+	font-weight: normal;
+	text-decoration: underline;
+	color: #ffffff;
+}
+
+.callout .content ul {
+	list-style-position: outside;
+	list-style-type: disc;
+	margin-left: 0px;
+	padding-left: 35px;
+}
+
+.callout .content ol {
+	list-style-position: outside;
+	margin-left: 0pt;
+	padding-left: 35px;
+}
+
+.callout .content li {
+	padding: 0px 0px 2px 0px;
+	margin-top: 4px;
+	margin-left: -17px;
+}
+
+.callout .content hr, .callout .content div.hr {
+	background-image: url(http://www.cmu.edu/common/standard-v4/images/horizontal_rule_white.gif);
+}
+
+.callout table {
+	width: 174px;
+        margin: 3px 0px 3px 0px;
+        border: none;
+}
+
+/* fix for IE6 render problem */
+html > body .callout table {
+        width: 180px;
+}
+
+
+.callout thead th, .callout thead td {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0px;
+	text-transform: none;
+}
+
+.callout tbody td {
+	border: none;
+	padding: 2px;
+	font-size: 14px;
+}
+
+.callout .small thead th, .callout .small thead td {
+	font-size: 11px;
+}
+
+.callout .small tbody td {
+	font-size: 11px;
+}
+
+.callout .green {background-color: #999933;}
+.callout .blue {background-color: #7493a2;}
+.callout .red {background-color: #990000;}
+.callout .darkgrey {background-color: #464646;}
+.callout .content.lightgrey {background-color: #d4d4d4;color:#990000;}
+.callout .content.lightgrey h1 {color:#990000;}
+.callout .content.lightgrey h2 {color:#990000;}
+.callout .content.lightgrey h3 {color:#990000;}
+.callout .content.lightgrey h4 {color:#990000;}
+
+.callout .mustard {background-color: #c1a562;}
+.callout .violet {background-color: #674c56;}
+.callout .orange {background-color: #d17702;}
+.callout .brown {background-color: #936241;}
+.callout .tan {background-color: #ac9d74;}
+
+.callout .small {
+	font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+#footer{
+	color: #626262;
+	margin: 0px 0px 0px 244px;
+	padding: 0px 22px 5px 29px;
+	vertical-align: bottom;
+	clear:both;
+	font-size: 10px;
+}
+#footer a, #footer a:visited{color:#626262; text-decoration:underline; font-weight:normal;}
+#footer a:hover, #footer a:visited:hover{color:#990000; text-decoration:underline; font-weight:normal;}
+
+
+#footer ul.contact{
+	padding-bottom: 10px;
+}
+
+#footer ul {
+	padding: 0px 0px 11px 0px;
+}
+
+
+#footer li {
+	display:inline;
+	list-style: none;
+	border-left: 1px solid #777777;
+	padding: 0px 6px 0px 6px;
+}
+
+#footer li.first {
+	border-left: none;
+	padding-left: 0px;
+}
+
+
+
+
+.floatleft {float: left; margin: 0px 10px 10px 0; padding: 4px !important; background-color:#FFFFFF;}
+.floatright {float: right; margin: 0px 0 10px 10px; padding: 4px !important; background-color:#FFFFFF;}
+.clearleft {clear: left;}
+.clearright {clear: right;}
+.clearboth {clear: both;}
+
+
+table.photoGallery {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border-top: 3px solid #ffffff !important;
+}
+
+td.galleryPhoto3Col,td.galleryPhoto3ColEndRow {
+  width: 226px;
+  height: 245px;
+  border-bottom: 3px solid #ffffff !important;
+  padding-top: 5px;
+  text-align: center;
+  vertical-align: top;
+}
+
+td.galleryPhoto3Col {
+  border-right: 3px solid #ffffff !important;
+}
+
+hr.photoGallery {
+  color: #ffffff !important;
+  background-color: #ffffff !important;
+  height: 3px !important;
+  margin-top: 25px;
+}
+
+
+
+#headerPhotoStory {
+	height: 300px;
+	width: 748px;
+	margin:0px;
+	padding:0px;
+	position: relative;
+	background-color: #000000;
+}
+
+#fullHeaderRotator {
+	height: 250px;
+	width: 992px;
+	margin:0px;
+	padding:0px;
+	position: relative;
+	background-color: #ffffff;
+}
+
+#fullHeaderRotator a img {
+        border:0px;
+}
+
+
+#headerStoryImage1, #headerStoryImage2, #headerImage1, #headerImage2 {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#headerStory {
+	position:absolute;
+	left: 0px;
+	right: 0px;
+	background-color: #424545;
+	bottom: 0px;
+        width: 593px;
+        height: 55px;
+	opacity: 0.85;
+	filter:alpha(opacity=85);
+	-moz-opacity:0.85;
+	-khtml-opacity:0.85;
+	margin:0px;
+	padding-top: 1px !important;
+	padding-left: 30px;
+	padding-right: 125px;
+	color: #ffffff;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#headerStory a:visited, #headerStory a:link, #headerStory a:active {
+	color: #ffffff;
+	white-space: nowrap;
+}
+
+#headerStory h1 {
+	font-family: Helvetica, sans-serif !important;
+	font-size: 18px;
+	line-height: 23px;
+	padding: 0px;
+	margin: 0px;
+	font-weight: normal !important;
+}
+
+#headerStory p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 13px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#headerStorySelectors {
+    position: absolute;
+	bottom: 9px;
+    top: 281px;
+	right: 10px;
+	padding: 0px;
+	margin: 0px;
+}
+
+img.headerStorySelector {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 2px 0px 2px;
+	width: 10px;
+	height: 10px;
+	border: none;
+	vertical-align: top;
+}
+
+.newsFeaturedStory p {
+  line-height: 15px;
+}
+
+.newsFeaturedStory h2 {
+  margin: 5px 0px 5px 0px !important;
+}
+
+.newsFeaturedStory h3 {
+  color: #990000 !important;
+}
+
+h2.newsHeadline {
+  margin: 2px 0px 2px 0px !important;
+  font-size: 14px !important;
+}
+
+.newsSnippet {
+  margin-bottom: 20px;
+}
+
+.overline {
+  text-decoration: overline;
+}
+
+.eventCalendarListView{}
+
+.eventCalendarListView .summary {font-size: 12px; font-weight: bold; margin-top: 20px; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .location {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView .time {font-weight: bold; padding: 0px 0px 1px 0px;}
+.eventCalendarListView p {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView h2 {margin: 0px !important; padding: 0px !important;}
+.eventCalendarListView .dayEnd {height: 10px;}
+
+.bioContactInfo {padding: 2px 0px 2px 0px;}
+
+.bioIndex .row {margin-bottom: 24px;}
+.bioIndex .names {width: 225px; float: left;}
+.bioIndex .name {margin-left: 18px; margin-bottom: 4px; text-indent: -18px;}
+.bioIndex .photo {width: 100px; height: 100px; margin-left: 12px; background-color: #a0a0a0; float: left; overflow: hidden;}
+.bioIndex .photo img {padding: 0px;}
+.bioIndex .rowEnd {clear: both;}
+.bioIndex .photos {float: right; width: 448px;}
+.bioIndex div.hr {margin-top: 35px !important;}
+
+.collapsible .collapsed {
+	margin-left: 16px;
+}
+
+.collapsible .hidden {
+        display: none;
+}
+
+
+.collapsible h2 {
+	padding-left: 16px;
+	cursor:pointer;
+	background-repeat:no-repeat;
+	background-image:url(http://www.cmu.edu/common/standard-v4/images/triangle_down.png);
+	background-position: 0 5px;
+}
+
+.collapsible h2.closed{
+	background-image:url(http://www.cmu.edu/common/standard-v4/images/triangle_right.png);
+}
+
+form .instructions {
+        font-size: 10px;
+        margin-bottom: 5px;
+        font-style: italic;
+}

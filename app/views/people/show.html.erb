@@ -35,23 +35,23 @@
                 <div class="user_profile_social clearboth">
 
                     <% if !@person.linked_in.blank? %>
-                        <%= link_to image_tag("/images/icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account"), linked_in_path(@person) %>
+                        <%= link_to image_tag("icon_LinkedIn_gray.png", :id => "icon", :width => "24", :alt => "Linked in`", :title => "Linked In account"), linked_in_path(@person) %>
                     <% end %>
 
                     <% if !@person.facebook.blank? %>
-                        <%= link_to image_tag("/images/icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account"), facebook_path(@person) %>
+                        <%= link_to image_tag("icon_Facebook_gray.png", :id => "icon", :width => "24", :alt => "Facebook", :title => "Facebook account"), facebook_path(@person) %>
                     <% end %>
 
                     <% if !@person.twitter.blank? %>
-                        <%= link_to image_tag("/images/icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account"), twitter_path(@person) %>
+                        <%= link_to image_tag("icon_Twitter_gray.png", :id => "icon", :width => "24", :alt => "Twitter", :title => "Twitter account"), twitter_path(@person) %>
                     <% end %>
 
                     <% if !@person.google_plus.blank? %>
-                        <%= link_to image_tag("/images/icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account"), google_plus_path(@person) %>
+                        <%= link_to image_tag("icon_Google_gray.png", :id => "icon", :width => "24", :alt => "Google +", :title => "google+ account"), google_plus_path(@person) %>
                     <% end %>
 
                     <% if !@person.github.blank? %>
-                        <%= link_to image_tag("/images/icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account"), github_path(@person) %>
+                        <%= link_to image_tag("icon_github.png", :id => "icon", :width => "24", :alt => "github", :title => "github account"), github_path(@person) %>
                     <% end %>
 
                 </div>

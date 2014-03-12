@@ -5,7 +5,8 @@ class EffortLogMailer < ActionMailer::Base
 
   def midweek_warning(saying, user)
     @user = user
-    attachments["ScottyDogLandscape.jpg"] = File.read("#{Rails.root}/public/images/ScottyDogLandscape.jpg")
+    email_with_name = @user.human_name + ' <' + @user.email + '>'
+    attachments["ScottyDogLandscape.jpg"] = Rails.application.assets.find_asset('ScottyDogLandscape.jpg')
     mail(:to => @user.email, :subject => "Scotty Dog says: #{saying}", :date => Time.now)
 
   end

@@ -9,13 +9,13 @@ describe GenericAjaxController do
         @user = FactoryGirl.create(:student_sam_user)
         login(@user)
         @instance = @user
-        User.stub!(:find_by_id).and_return(@instance)
+        User.stub(:find_by_id).and_return(@instance)
       end
 
       it 'should call can? for authorization check' do
         ability = Object.new
         ability.extend(CanCan::Ability)
-        controller.stub!(:current_ability).and_return(ability)
+        controller.stub(:current_ability).and_return(ability)
         ability.should_receive(:can?)
 
         post :update_model_with_value, :model => 'User', :id => @user.id, :attribute => 'course_tools_view', :value => 'links'

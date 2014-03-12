@@ -7,11 +7,11 @@ module ApplicationHelper
 
 
   def scotty_dog_landscape
-    image_tag("http://whiteboard.sv.cmu.edu/images/ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69")
+    image_tag("ScottyDogLandscape.jpg", :class => "bevel", :size => "236x69")
   end
 
   def scotty_dog_portrait
-    image_tag("/images/ScottyDog.jpg", :class => "bevel", :size => "214x234")
+    image_tag("ScottyDog.jpg", :class => "bevel", :size => "214x234")
   end
 
   def image_spacer(width)
@@ -23,11 +23,11 @@ module ApplicationHelper
   # end
 
   def professor_image
-    image_tag("/images/professor.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by a faculty role", :title => "Faculty role")
+    image_tag("professor.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by a faculty role", :title => "Faculty role")
   end
 
   def admin_image
-    image_tag("/images/admin.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by an admin role", :title => "Admin role")
+    image_tag("admin.jpg", :size => "50x50", :border => "0", :alt => "These fields can be edited by an admin role", :title => "Admin role")
   end
 
   #Do we need this, used on welcome page

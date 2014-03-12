@@ -1,11 +1,9 @@
 CMUEducation::Application.configure do
-
-
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the webserver when you make code changes.
+  # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
@@ -24,22 +22,14 @@ CMUEducation::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  ActionMailer::Base.perform_deliveries = false
-  # ActionMailer::Base.perform_deliveries = true
+  # Do not compress assets
+  config.assets.compress = false
 
-  # Specify host url for password reset links in email
-  # config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  # Expands the lines which load the assets
+  config.assets.debug = true
 
-  ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => 587,
-    :authentication => :plain,
-    :domain => ENV['GMAIL_SMTP_USER'],
-    :user_name => ENV['GMAIL_SMTP_USER'],
-    :password => ENV['GMAIL_SMTP_PASSWORD'],
-    :enable_starttls_auto => true
-  }
+ # config.assets.digest = true
+
+
+  config.assets.prefix = "/assets"
 end
-
-
-

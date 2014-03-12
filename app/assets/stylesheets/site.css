@@ -1,0 +1,1061 @@
+
+
+/* We disable reset.css, but then apply this to make the original CMU layout css work */
+body div.sv_main_contents, div.sv_main_contents p,  div.sv_main_contents ol, div.sv_main_contents ul,  div.sv_main_contents td {
+ font-family: verdana, arial, helvetica, sans-serif;
+ font-size:   13px;
+ line-height: 18px;
+}
+
+div.sv_main_contents p {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+body div.content, div.content p,  div.content ol, div.content ul,  div.content td {
+ font-family: verdana, arial, helvetica, sans-serif;
+ font-size:   13px;
+ line-height: 18px;
+}
+
+/* We disable reset.css, but then apply this to make the original CMU layout css work */
+div#topnav ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.content table.cmu_table tbody tr td {
+    border-color: #EAE5E5;
+    border-width: 1px;
+    border-style: solid;
+    padding: 0.25em 1em;
+    font-size: 13px;
+}
+
+.content table.layout_table tbody td {
+    border: 0px;
+}
+
+
+
+td.log_sum {
+ padding-left: 10px;
+ text-align: right;
+}
+
+td.log_remove {
+ padding-left: 10px;
+}
+
+td.log_weeknumber {
+    text-align: right;
+
+}
+
+td.log_action  {
+    padding-left: 7px;
+
+}
+
+#description {
+  color: green;
+}
+
+td.even {
+    background-color: #eae5da;
+    color: green;
+}
+
+td.today {
+    background-color: #eae5da;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+/***************************
+  *Advanced search filter
+  **************************/
+
+  #filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook {
+    float: right;
+}
+#filterBoxOne_loader{
+    width: 30px;
+    margin-top: 2px;
+    margin-left: -36px;
+}
+
+#advanced_search_filters{
+    background-color: #E1EAEA;
+    border: 1px solid white;
+    margin: 10px 0px 15px 0;
+    padding: 10px;
+    height: 50px;
+}
+#advanced_search_filters .filter_col table{ margin:0 }
+#advanced_search_filters .filter_col table tbody td { border-style: none; padding: 0 5px 0 0; text-align: right }
+#advanced_search_filters .filter_col table tbody td:first-child {padding: 2px 20px 0 0;}
+
+
+
+.filter_option, .filter_label{
+    float:left;
+}
+.filter_col{
+    float:left;
+    width:50%;
+}
+#filter_program{width:60%}
+#filter_year{width:35%}
+#filter_course{width:97%}
+
+
+/* ----- making whole row clickable --------*/
+
+#key_contacts_table tbody tr:hover td,
+#people_table tbody tr:hover td,
+#courses_table tbody tr:hover td {
+    background-color: #E1EAEA;
+    cursor: pointer;
+}
+
+/**************************************************
+  * tables - https://github.com/Mottie/tablesorter
+  ***************************************************/
+
+  .tablesorter-default .header,
+  .tablesorter-default .tablesorter-header {
+    /*background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);*/
+    background-position: center right;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    /*white-space: normal;
+    padding: 4px 20px 4px 4px;*/
+}
+.tablesorter-default thead .headerSortUp,
+.tablesorter-default thead .tablesorter-headerSortUp,
+.tablesorter-default thead .tablesorter-headerAsc {
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+    border-bottom: #000 2px solid;
+}
+.tablesorter-default thead .headerSortDown,
+.tablesorter-default thead .tablesorter-headerSortDown,
+.tablesorter-default thead .tablesorter-headerDesc {
+    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+    border-bottom: #000 2px solid;
+}
+.sorter-false.tablesorter-header {background-image: none;}
+
+/*table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+	table-layout: fixed;
+    }*/
+    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+       background-color: #e6EEEE;
+       border: 1px solid #FFF;
+       font-size: 8pt;
+       padding: 4px;
+       text-transform: none;
+   }
+   table.tablesorter thead tr .header {
+
+    background-image: url('/assets/tablesorter/bg.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    text-transform: none;
+}
+table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: middle;
+}
+table.tablesorter tbody td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+    height: 82px;
+}
+
+/* ------- people search tables */
+
+table.tablesorter tbody td.photobook-img img {padding:0;}
+table.tablesorter tbody tr.odd td {background-color:#F0F0F6;}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp { background-color: #8dbdd8;}
+table.tablesorter tbody tr.hover td { background-color: #FFFFCC; }
+
+#key_contacts_table th:first-child, #key_contacts_table td{
+    overflow: auto;
+}
+#key_contacts_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#key_contacts_table td:nth-child(2) a{
+    font-weight: bold;
+    text-decoration: none;
+}
+#key_contacts_table td:nth-child(3){
+    width: 200px;
+}
+
+#people_table th:first-child, #people_table td {
+    /* this is required for making sure cells with too much data don't throw the layout for a toss */
+    white-space:nowrap;
+    overflow: auto;
+}
+#people_table th:first-child {
+    /* this is the the header for the picture*/
+    padding: 0;
+    width: 60px;
+}
+#people_table th:nth-child(2),#people_table th:nth-child(3){
+    /* first name and last name columns */
+    width: 100px;
+}
+#people_table th:nth-child(4) {
+    /* program(track)/staff column */
+    width: 290px;
+}
+#people_table td.photobook-img {
+    padding: 0px;
+    margin: 0px;
+    width: 60px;
+}
+#people_table td.photobook-img img {
+    padding:0;
+}
+#photobook_results, #key_contacts_photobook{
+    overflow: hidden;
+}
+.photobook_item{
+    float:left;
+    display: block;
+    background-color: white;
+    margin: 5px;
+    text-align: center;
+}
+.photobook_item .photobook_item_name{
+    overflow: auto;
+    padding-bottom:2px;
+    border:1px solid lightgray;
+    border-top: none;
+    white-space: nowrap;
+    width: 155px;
+}
+#photobook_results a.photobook_item, #key_contacts_photobook a.photobook_item{
+    text-decoration: none;
+}
+a.photobook_item img{
+    width:155px;
+    height:208px;
+    border:1px solid lightgray;
+    border-bottom:none;
+    padding:0;
+}
+
+/* ------- Courses table */
+#courses_table th:nth-child(2) {width: 335px;}
+
+
+
+.comment_text {
+    font-size: 12px;
+}
+
+.comment_new {
+    font-size: 12px;
+}
+
+.comment_author {
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}
+
+.comment_edit {
+    font-size: 12px;
+}
+
+/* this group is from the same set of colors
+    background-color:#F7E1AB;
+    backbround-color:#DBE89A;
+    background-color:#E0EBEB;
+    background-color:#FFF499;
+    */
+/* this group is from a different set of colors
+    background-color:#DDDDCC;
+    background-color:#acc;
+
+    */
+    .comment {
+        padding: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+
+    .comment_type_none {
+        background-color: #DDDDCC;
+    }
+
+    .help_text {
+        margin-left: 10px;
+        font-size: 10px;
+    }
+
+    .checkboxed_form {
+        margin-left: 24px;
+    }
+
+    .user_photo {
+        float: right;
+    }
+
+
+    div.student {
+        padding: 5px;
+        margin: 5px;
+        /*    background-color: rgb(247, 225, 171); */
+        border-radius: 10px;
+    }
+
+    div.staff {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(224, 235, 235);
+        border-radius: 10px;
+    }
+
+    div.admin {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(221, 221, 204);
+        border-radius: 10px;
+    }
+
+    div.system {
+        padding: 5px;
+        margin: 5px;
+        background-color: rgb(219, 232, 154);
+        border-radius: 10px;
+    }
+
+    tr.staff {
+        background-color: rgb(224, 235, 235);
+    }
+
+
+
+    .student .instructions {
+        vertical-align: top;
+    }
+    .staff .instructions {
+        vertical-align: top;
+    }
+    .admin .instructions {
+        vertical-align: top;
+    }
+
+
+    .formItem {
+/*
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    */
+    padding: 6px 12px 8px;
+    /*    display: block;  */
+}
+
+.formItem .help_text {
+    margin-left: 195px;
+    font-size: 10px;
+}
+
+.formItem label {
+   display: inline-block;
+   width: 180px;
+   font-size: 13px;
+}
+.formItem .label {
+   display: inline-block;
+   width: 180px;
+   background-repeat: no-repeat;
+}
+.formItem input {
+    border: 1px solid #999999;
+    padding: 3px;
+/*
+    display: block;
+    margin: 0 0 2px 190px;
+    */
+}
+
+.formItem .indented { margin-left: 10px; }
+
+.layout_table .course_tools td {
+    width: 130px;
+}
+
+#semester_length_courses_table {
+    width: 100%;
+}
+
+#mini_b_courses {
+    float: right;
+}
+
+#image_box {
+    position: absolute;
+    top: 0; right: 0;
+    z-index: 10;
+    background:#ffc;
+    padding:5px;
+    border:1px solid #CCCCCC;
+    text-align:center;
+    font-weight:bold;
+    width:200px;
+}
+
+div.right_link {
+    text-align: right;
+    margin-top: -27px;
+}
+
+.cmu_table {
+    border-collapse:collapse;
+    border-style:solid;
+    border-width:1px;
+    border-color: #EAE5E5;
+}
+
+
+
+.cmu_table td.field_label {
+    border-color: #EAE5E5;
+    border-width: 1px;
+    padding: 0.25em 1em;
+    vertical-align: top;
+}
+
+.cmu_table_odd, .cmu_table tr:nth-child(odd) {
+    /*    background-color:#EBEBEB;*/
+    /*    background-color:#F2F3F6;*/
+    background-color:#FbFbFb;
+}
+
+.cmu_table .icon {
+    padding: 0px;
+}
+
+.header_subtext {
+    margin-top: -10px;
+    padding-left: 3px;
+    padding-bottom: 10px;
+}
+
+.sv_main_contents {
+    padding-left: 15px;
+}
+
+#email_from_header {
+    width: 70px;
+    float: left;
+}
+#email_subject_header {
+    width: 70px;
+    float: left;
+}
+
+/* Used in pages */
+div.modified {
+    text-align: right;
+}
+
+.sv_main_contents table {
+    border-collapse:collapse;
+}
+
+.sv_main_contents table, .sv_main_contents th, .sv_main_contents td  {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.ui-datepicker-trigger {
+	padding: 5px 0 0 5px;
+}
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+.ui-timepicker-div dl{ text-align: left; }
+.ui-timepicker-div dl dt{ height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+
+
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+#sortable li span.ui-icon-arrowthick-2-n-s { position: absolute; margin-left: -1.3em; }
+
+/* for the export search result button */
+.ui-button-text {width:30px;}
+
+
+/************************
+ * Search Box styling
+ *************************/
+ #filterBoxUserSearch {
+    width:100%;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#filterBoxUserSearch #filterBoxOne{
+    width: 82%;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+}
+
+#filterBoxOne_filter {
+/* After removing morning glory and upgrading to rails 3.2, then go back to abolute paths
+background:url(/images/people_filtering_sprite.png)  0px 0; */
+background:url('/assets/people_filtering_sprite.png') 0px 0;
+
+}
+#filterBoxOne_photobook{
+    background:url('/assets/people_photobook_sprite.png') 0px 0;
+
+}
+
+#filterBoxOne_export_contacts {
+    background:url('/assets/people_export_contacts.png') 0px 0;
+
+}
+
+#filterBoxOne_search, #filterBoxOne_filter, #filterBoxOne_photobook, #filterBoxOne_export_contacts {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin: 2px 1px 0px 1px;
+}
+#filterBoxOne_filter.toggled, #filterBoxOne_photobook.toggled {
+    background-position: 32px 0px;
+}
+/************************
+ * User Profile Page
+ *************************/
+
+ .user_profile_content{
+    overflow: hidden;
+    margin-top: 10px;
+}
+.user_profile_content table.cmu_table{ background-color: #FBFBFB; }
+.user_profile_content table.cmu_table.user_profile_content_admin_editable,
+.user_profile_content table.cmu_table.user_profile_content_admin_editable tr:nth-child(odd) { background: #D5D6C1; }
+.user_profile_content table.cmu_table.user_profile_content_faculty_editable,
+.user_profile_content table.cmu_table.user_profile_content_faculty_editable tr:nth-child(odd){ background: #D9E7E6; }
+
+.user_profile_content h2{
+    padding-top: 5px;
+}
+.user_profile_social{ text-align: center; }
+.user_profile_photo_social{
+    float:left;
+    /*margin-left: 5px;*/
+}
+.user_profile_content tbody td.user_profile_social_edit{
+    border: none;
+    padding: 2px 0;
+    vertical-align: middle;
+}
+
+.user_profile_photo{
+    max-height: 200px;
+    max-width:  150px;
+}
+
+.user_profile_photo_upload{
+    background:white;
+    padding:10px;
+    border:1px solid gray;
+    width:90%;
+    text-align: center;
+}
+.user_profile_photo_edit {
+    display: block;
+    position: relative;
+    min-height: 100px;
+}
+.user_profile_photo_imgHover .user_profile_photo_hover {
+    display: none;
+    position: absolute;
+    top: 48%;
+    left: 20%;
+    z-index: 2;
+}
+
+.user_profile_title, .user_profile_contact_details_content{
+    float: left;
+    width: 70%;
+    margin: 0 0 5px 15px;
+    padding: 0px 0 0 20px;
+}
+#user_profile_name{
+    float:left;
+    margin:0;
+    font-weight: bold;
+}
+.edit_user_profile #user_profile_name{
+    width: 458px;
+    margin-top: 10px;
+}
+
+.edit_user_profile #user_pronunciation{ width: 99% }
+.edit_user_profile #user_first_name, .edit_user_profile #user_last_name {
+    float:left;
+    width: 48%;
+    line-height: 1.2;
+    font: bold 18px Helvetica, sans-serif;
+    color: #900;
+}
+
+.edit_user_profile #user_last_name{float:right}
+
+.user_profile_action{
+    float:right;
+}
+#user_profile_dtls{
+    float:left;
+    clear:left;
+}
+.user_profile_pron{
+    line-height: 18px;
+    font: normal 13px verdana, arial, helvetica, sans-serif;
+    color: #424545;
+}
+.user_profile_contact_details_content{
+    width: 68%;
+    margin: 3px 0 15px 15px;
+}
+.user_profile_contact_details_content .cmu_table{
+    width: 100%;
+}
+.user_profile_contact_details_content table:nth-child(2){
+    margin-top: 20px;
+}
+
+.user_profile_contact_details{
+    float:left;
+    margin: 15px 0 0 15px;
+    padding: 0px 20px;
+}
+.user_profile_about_header,
+.user_profile_content .clearboth h2 {
+    text-align: right;
+    float: left;
+    width: 24%;
+    margin-top: 5px;
+
+}
+.user_profile_about_me_text {
+    width: 450px;
+    float: right;
+    margin: 20px 0 0 0;
+}
+
+.user_profile_org_edit{
+    width: 65%;
+    float: right;
+    margin: 0;
+    width: 474px;
+}
+.user_profile_bio_edit_content, .user_profile_about_edit_content,
+.user_profile_content_body,
+.user_profile_content .clearboth table.cmu_table {
+    float: right;
+    margin:0 15px 10px 0;
+    padding:0;
+    width: 458px;
+}
+.user_profile_content .clearboth table.cmu_table {text-align: left;}
+.user_profile_content .cmu_table .help_text{margin:0}
+
+.user_profile_content .clearboth table.user_profile_content_admin_editable{margin-bottom:10px;}
+
+.user_profile_bio_edit_content, .user_profile_about_edit_content{
+    width: 77%;
+    margin:0 -30px 0 0;
+
+}
+.user_profile_org table,{
+    width: 450px;
+}
+.user_profile_content_body table{
+    width:100%;
+}
+
+.user_profile_content_body table td:first-child{
+    width:114px;
+}
+.edit_user_profile .user_profile_campus_proximity table td:nth-child(2) {text-align: left;}
+.user_profile_content_body table td input[type="text"],
+.user_profile_content .clearboth table.cmu_table td input[type="text"] {
+    width:99%;
+}
+
+
+.user_profile_org table tr td:first-child,
+.user_profile_content_body table tr td:first-child,
+.user_profile_contact_details_content table tr td:first-child,
+.user_profile_content .clearboth table.cmu_table tr td:first-child {
+    width: 30%;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.user_profile_debugging{
+    background-color: white;
+    border: 1px solid gray;
+
+    margin-top: 50px;
+    padding-top: 20px;
+
+    text-align: center;
+    font-size: 10px;
+    color: gray;
+}
+
+
+#photobook_results a.photobook_item:hover, #key_contacts_photobook a.photobook_item:hover{
+    opacity:0.7;
+    filter:alpha(opacity=70); /* For IE8 and earlier */
+}
+
+/*people search loader*/
+#ajax_loading_notice{
+    text-align: center;
+}
+#ajax_loading_notice img{
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/*ckeditor customizations*/
+#cke_bottom_user_user_text, #cke_bottom_user_biography{
+    display: none;
+}
+
+/************************
+ * Jobs page
+ *************************/
+
+#edit_job .cmu_table,
+#job-list-match-container-student,
+#job-quick-list-container .cmu_table,
+#job-detail-list-container .cmu_table,
+#job-notice-container { background-color: #FbFbFb }
+
+#edit_job .cmu_table td,
+#job-quick-list-container .cmu_table td,
+#job-detail-list-container .cmu_table td { vertical-align: middle }
+
+#edit_job .cmu_table.faculty-visible input.input-field { width: 165px }
+
+#edit_job .cmu_table.faculty-visible tr,
+#job-detail-list-container tr.faculty-visible,
+#job-notice-container .faculty-visible { background-color: #D9E7E6; }
+
+/* ------- Edit Job Page */
+
+#edit_job .cmu_table table td { border-color: transparent; }
+#edit_job { width: 458px; }
+#edit_job .input-field {
+    width: 397px;
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+
+/* TODO: we're testing ngb - integrate to main style if this is chosen */
+#edit_job.ngb .input-field {
+    border: none;
+    border: 1px solid #999999;
+}
+
+/* TODO: testing with label names, remove comment if this is chosen */
+#edit_job label {
+    display: block;
+    margin-top: 15px;
+}
+
+#edit_job .cmu_table { width: 403px; }
+#project_state_first_col { width: 81% }
+#edit_job input { padding: 4px 2px; }
+#edit_job label[for="employees_in_a_collection"],
+#edit_job label[for="project_state"] { margin-top: 2em }
+#project_state tr:nth-child(2) td { text-align: center; }
+
+#job-detail-list-container .header-row, #job-detail-list-container .top  {
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* ------- Job list page */
+#job-quick-list-container { margin-top: 40px; }
+/*#job-quick-list-container .cmu_table td:nth-child(1) { width: 60px }*/
+#job-quick-list-container .cmu_table td:nth-child(2) { width: 100px }
+#job-quick-list-container .cmu_table tr:hover td { border-left: 1px solid #85000a; }
+#job-quick-list-container .cmu_table td, td[inline-page-link] { cursor: pointer; }
+
+
+#job-detail-list-container { margin-top: 40px }
+#job-detail-list-container .cmu_table { margin: 30px 0; width: 100% }
+#job-detail-list-container .cmu_table tr:nth-child(2) td { padding: 20px; }
+#job-detail-list-container .cmu_table td:nth-child(1) { width: 115px }
+#job-detail-list-container .cmu_table tr:nth-last-child(2) td { text-align: center; }
+#job-detail-list-container .input-field {
+    margin: 10px 0;
+    border: 2px solid #999999;
+}
+#job-detail-list-container .top:hover { border-left: 1px solid #85000a; }
+#job-detail-list-container .cmu_table:nth-child(1) { margin-top: 0}
+
+/* ------- Job List match Page */
+#job-list-match-student td:nth-child(1) { width: 23% }
+#job-list-match-student td:nth-child(2) { width: 1% }
+#job-list-match-student td:nth-child(3) { width: 50% }
+#job-list-match-student td:nth-child(4) { width: 25% }
+
+#job-list-project-match td:nth-child(1) { width: 40% }
+#job-list-project-match td:nth-child(2) { width: 30% }
+#job-list-project-match td:nth-child(3) { width: 30% }
+
+
+/************************
+ * Grade book
+ *************************/
+
+.team_member_photo{width:156px}
+.team_member_photo img {height:150px}
+
+.student_scores{ overflow:auto; margin-top: 15px; }
+
+#grade_table { border-width: 0; }
+
+#grade_table th.assignment_grade { min-width:59px; padding-left:15px; }
+#grade_table th:nth-child(10){ min-width: 100px; }   /* Earned Grade */
+
+#grade_table td { background-color: #FFF; text-align:center; padding: 10px;}
+#grade_table td:nth-child(1),   /* First Name */
+#grade_table td:nth-child(2)   /* Last Name */
+{ text-align:left; max-width:78px; word-wrap:break-word;}
+#grade_table td:nth-child(3)    /* Team Name */
+{ text-align:left; }
+#grade_table td:nth-child(10){ text-align: left;}   /* Earned Grade */
+
+#grade_table td input { text-align:center; font-size: 13px; }
+#grade_table td.performance { background-color:white; text-align: center; }
+
+#grade_table .tablesorter-header, #grade_table td#notify-all {
+    background-color: #696969;
+    color: white;
+    font-weight: normal;
+}
+#grade_table .tablesorter-header{
+    padding: 10px 20px 10px 10px;
+    border-color: black;
+}
+#grade_table td#notify-all{
+    margin: 0;
+    max-height: 10px;
+    border-top-width: 0;
+}
+#grade_table td.grade.changedScore, #grade_table td.changedScore, #grade_table input.changedScore,
+#legend td.grade.changedScore, #legend td.changedScore, #legend input.changedScore{
+    border: 2px solid red;
+}
+#grade_table .draft,
+#legend .draft {
+  background-color: #E7E7E7;
+}
+#grade_table td.grade input{
+  width: 99%;
+  height: 100%;
+  /*text-align: right;*/
+  border-width: 0;
+  margin: 0px;
+  padding: 0px;
+  padding-right: 1px;
+}
+#grade_table td.grade{
+  border-width: 1px;
+  padding: 0;
+  border-color: #696969;
+}
+#grade_table tr.hover:hover td {
+   border-bottom: 2pt solid #0066cc;
+   border-top: 2pt solid #0066cc;
+}
+#grade_table tr.hover:hover td:first-child {
+    border-left: 2pt solid #0066cc;
+}
+#grade_table tr.hover:hover td:nth-last-child(2) {
+    border-right: 2pt solid #0066cc;
+}
+.final{ border-right-width: 1px;}
+
+/*.hover:hover input {background-color: #8db1ff; } */
+/* .draft:hover input {background-color: #ffffbe; }  */
+
+#legend { border: 0; border-collapse: collapse; }
+#legend td { border: 0;  padding:0 10px; }
+#legend td:nth-child(1) { width:100px;}
+#legend td:nth-child(2) { width:150px; padding:0 10px; }
+#legend td:nth-child(3) { width:250px; padding:0 10px; }
+
+#gradebook_indicator {
+  border: 1px solid;
+  padding: 5px 5px 5px 5px;
+  background-position: 10px center;
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+.image-candidates {
+  width: 180px;
+  margin-left: 4px;
+  margin-right: 4px;
+  float: left;
+  height: 335px;
+  border-left: 1px solid #D3D3D3;;
+}
+
+#photo-custom {
+ border-left: none;
+}
+
+.image-candidate {
+  height: 220px;
+  width: 100%;
+  display: table;
+}
+
+.image-candidate img {
+  margin-left: auto;
+  margin-right: auto;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+#dialog {
+  width: 760px;
+  border: 1px solid #D3D3D3;
+  z-index: -500;
+  position: absolute;
+  background-color: #fff;
+  display: none;
+  height: 360px;
+  padding: 20px 10px 5px 10px
+}
+
+.title-in-upload {
+  height: 20px;
+}
+
+.title-in-upload .close-dialog {
+  display: block;
+  float: right;
+  margin: 1px 0;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.photo-upload-button {
+  display: block;
+  margin: 0 auto;
+}
+
+.photo-profile {
+  height: 335px;
+  margin-bottom: 5px;
+}
+
+.title-in-upload a {
+  display: block;
+}
+
+.image-action div {
+    margin: 8px auto;
+}
+
+.image-action .use-this-photo {
+    width: 120px;
+}
+
+.image-action label {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.image-candidates > p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.photo-upload-actions {
+    border-top: 1px solid #D3D3D3;
+}
+
+.photo-upload-actions input {
+    float: right;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.user_profile_photo_imgHover {
+    position: relative;
+}
+
+/************************
+ * Course Tools page
+ *************************/
+ #course_tools .item-wrapper {float:left; margin: 10px; width: 100px}
+ #course_tools .item-wrapper .item-link,
+ #course_tools .item-wrapper .item-icon { text-align: center;}
+ #course_tools .item-wrapper.links {clear:both; margin: 2px 10px;}
+ #course_tools .item-wrapper.links .item-link {text-align: left; width: 300px}
+ #course_tools .item-wrapper.links .item-icon {display: none;}
+
+ /* css for page history */
+ #history_table, #history_table td { border: 0; }
+
+h1 a.course:link, h1 a.course:visited, h1 a.course:active  {
+    text-decoration: none;
+    color: #990000;
+}

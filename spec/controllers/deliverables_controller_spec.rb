@@ -263,13 +263,15 @@ describe DeliverablesController do
       @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
       @current_assignment = mock_model(Assignment, :course_id => @course.id, :is_team_deliverable => true)
       @deliverable = stub_model(Deliverable, :course_id => @course.id, :owner_id => @student_sam.id, :assignment=>@current_assignment)
+      @deliverable.course = @course
       @team = stub_model(Team)
       Deliverable.stub(:find).and_return(@deliverable)
       @deliverable.stub(:team).and_return(@team)
 
       @course.stub(:grading_rule).and_return(true)
       @course.stub_chain(:grading_rule, :default_values?).and_return(true)
-      Course.stub(:find).and_return(@course)
+      @course = Course.stub(:find).and_return(@course)
+
     end
 
     context "for a team deliverable" do

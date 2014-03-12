@@ -27,8 +27,10 @@ coverage/*
 
 README_personal
 
-public/images/staff/*
-public/images/students/*
+public/*
+
+assets/images/staff/*
+assets/images/students/*
 
 cmusv*gz
 

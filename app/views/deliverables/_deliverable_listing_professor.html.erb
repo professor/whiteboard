@@ -44,7 +44,7 @@
        <div class="panel-body deliverable ajax" id="deliverable_<%= deliverable.id %>" style="padding-top: 6px; padding-bottom: 6px;">
 
          <div class="col-sm-1" style="padding-top: 16px; margin-left: 0;">
-           <%= image_tag("/images/show_deliverable_detail.png", :size => '28x28', :style => 'margin-left: -6px', :alt => 'View details', :id => 'toggle_img') %>
+           <%= image_tag("show_deliverable_detail.png", :size => '28x28', :style => 'margin-left: -6px', :alt => 'View details', :id => 'toggle_img') %>
          </div>
 
          <div class="col-md-9" style="padding-top: 7px; border-right:thin solid #eee; border-left:thin solid #eee;">
@@ -58,7 +58,7 @@
            <p style="font-size:15px; margin-bottom:0; color:#d17702;">
                <%= deliverable.assignment.name %>
                <% unless latest_version.attachment_file_name.nil? %>
-                   <%= link_to image_tag("/images/download_deliverable.png", :size => '16x16', :alt => 'Download'), latest_version.attachment.url %>
+                   <%= link_to image_tag("download_deliverable.png", :size => '16x16', :alt => 'Download'), latest_version.attachment.url %>
                <% end %>
            </p>
            <p id="deliverable_id" style="display: none"><%= deliverable.id %></p>
@@ -66,11 +66,11 @@
 
          <div class="col-md-2" style="padding-top: 2px;">
            <% if deliverable.grade_status == "graded" %>
-             <%= image_tag("/images/deliverables_graded.png", :alt => 'Graded', :size => '54x54', :class => 'pull-right') %>
+             <%= image_tag("deliverables_graded.png", :alt => 'Graded', :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.grade_status == "drafted" %>
-             <%= image_tag("/images/deliverables_drafted.png", :alt => 'Drafted', :size => '54x54', :class => 'pull-right') %>
+             <%= image_tag("deliverables_drafted.png", :alt => 'Drafted', :size => '54x54', :class => 'pull-right') %>
            <% elsif deliverable.grade_status == "ungraded" %>
-               <%= image_tag("/images/deliverables_ungraded.png", :alt => 'Ungraded', :size => '54x54', :class => 'pull-right') %>
+               <%= image_tag("deliverables_ungraded.png", :alt => 'Ungraded', :size => '54x54', :class => 'pull-right') %>
            <% end %>
          </div>
        </div>

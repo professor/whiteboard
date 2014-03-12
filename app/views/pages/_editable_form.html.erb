@@ -2,11 +2,16 @@
 <%= stylesheet_link_tag "alertify.default.css", media: "all" %>
 
 <%= javascript_include_tag "ajax-error.js" %>
-<%= javascript_include_tag "alertify.min.js" %>
-<%= javascript_include_tag "/javascripts/ckeditor/ckeditor.js" %>
-<%= javascript_include_tag 'jquery.cookie' %>
+<%= javascript_include_tag "alertify_min.js" %>
+<%= javascript_include_tag "alertify_min.js" %>
+<%= javascript_include_tag 'jquery_cookie' %>
+
+
 
 <script type="text/javascript">
+
+    //var CKEDITOR_BASEPATH = 'http://d1z5n3u3tyi6h3.cloudfront.net/assets/ckeditor/';
+
     var confirmation_needed = true;
     var needs_to_be_saved = false;
     var time_since_last_key_down = current_time();
@@ -212,21 +217,27 @@
           <div id="email_subject_contents"><%= f.text_field :tab_one_email_subject, :class =>'auto-save-on-keydown' %></div>
         </div>
         <div id="email_details">
-          <%= f.cktext_area :tab_one_contents, :toolbar => 'CMUSV', :height => 600 %>
+          <%= f.text_area :tab_one_contents, :height => 600, :class => 'ckeditor' %>
+
         </div>
       </div>
       <div id="tabs-2">
-        <%= f.cktext_area :tab_two_contents, :toolbar => 'CMUSV', :height => 400 %>
+        <%= f.text_area :tab_two_contents, :height => 600, :class => 'ckeditor'  %>
+
       </div>
       <div id="tabs-3">
-        <%= f.cktext_area :tab_three_contents, :toolbar => 'CMUSV', :height => 400 %>
+        <%= f.text_area :tab_three_contents, :height => 400, :class => 'ckeditor'  %>
+
       </div>
       <% if current_user.is_staff || current_user.is_admin %>
           <div id="tabs-4">
-            <%= f.cktext_area :faculty_notes, :toolbar => 'CMUSV', :height => 400 %>
+            <%= f.text_area :faculty_notes, :height => 400, :class => 'ckeditor'  %>
+
           </div>
       <% end %>
     </div>
+
+
 
     <p>
       <%= f.label :task_duration %><br/>
