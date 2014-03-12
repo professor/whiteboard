@@ -1,10 +1,6 @@
-
-#AMAZON_S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/amazon_s3.yml")[RAILS_ENV]
-#SYSTEMS_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/systems.yml")
-
-GOOGLE_USERNAME = ENV['GOOGLE_USERNAME'] || "team.deming@sandbox.sv.cmu.edu"
-GOOGLE_PASSWORD = ENV['GOOGLE_PASSWORD'] || "MfSE@sv"
-GOOGLE_DOMAIN = ENV['GOOGLE_DOMAIN'] || "sandbox.sv.cmu.edu"
+GOOGLE_USERNAME = ENV['WHITEBOARD_GOOGLE_USERNAME'] || "account@sandbox.sv.cmu.edu"
+GOOGLE_PASSWORD = ENV['WHITEBOARD_GOOGLE_PASSWORD'] || "password"
+GOOGLE_DOMAIN = ENV['WHITEBOARD_GOOGLE_DOMAIN'] || "sandbox.sv.cmu.edu"
 
 require 'gappsprovisioning/provisioningapi'
 include GAppsProvisioning

@@ -2,12 +2,12 @@
 <% content_for :title, 'People - Phone book' %>
 <% content_for :tablesorter do %>
 
-    <%= javascript_include_tag 'jquery.tablesorter.min.js' %>
-    <%= javascript_include_tag 'jquery.quicksearch.js' %>
+    <%= javascript_include_tag 'jquery_tablesorter_min.js' %>
+    <%= javascript_include_tag 'jquery_quicksearch.js' %>
 
     <%= javascript_include_tag 'people_search' %>
     <%= javascript_include_tag 'people_search_export' %>
-    <%= javascript_include_tag 'jquery.session' %>
+    <%= javascript_include_tag 'jquery_session' %>
 
 <% end %>
 
@@ -44,7 +44,7 @@
         <% unless @key_contact_results.blank? %>
           <% @key_contact_results.each do |person| %>
             <tr>
-              <td class="photobook-img"><%= image_tag(person[:image_uri], :style => "width: 60px") %></td>
+              <td class="photobook-img"><%= image_tag(image_path(person[:image_uri]), :style => "width: 60px") %></td>
               <td>
                 <%= link_to(person[:human_name], person[:path]) %><br />
                 <%= person[:title] %>
@@ -95,7 +95,7 @@
         <div>
         <% @key_contact_results.each do |person| %>
           <a class="photobook_item" href="<%= person[:path] %>">
-            <%= image_tag(person[:image_uri]) %>
+            <%= image_tag(image_path(person[:image_uri])) %>
             <p class="photobook_item_name"><%= person[:human_name] %> </p>
           </a>
         <% end %>
@@ -111,7 +111,7 @@
       <div id="photobook_results_main" class="clearboth" ></div>
     </div>
 
-    <div id="ajax_loading_notice" hidden="true" class="clearboth"><img src="images/ajax-loader.gif" />Loading Results</div>
+    <div id="ajax_loading_notice" hidden="true" class="clearboth"><%=image_tag "ajax-loader.gif" %>Loading Results</div>
     <div id="empty_results" hidden="true" class="clearboth">No results found.</div>
 
 </div>

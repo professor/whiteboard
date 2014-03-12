@@ -56,14 +56,14 @@
             <% end %>
             <% unless (team.email.blank? || team.updating_email) %>
                 <td>
-                  <a href='mailto:<%= h team.email %>' target='_top'><%= image_tag("/images/email.gif", :width => "12", :height => "9", :border => 0) %></a>
+                  <a href='mailto:<%= h team.email %>' target='_top'><%= image_tag("email.gif", :width => "12", :height => "9", :border => 0) %></a>
                 </td>
             <% else %>
                 <td> &nbsp; </td>
             <% end %>
             <% unless team.tigris_space.blank? %>
                 <td>
-                  <a href='<%= h team.tigris_space %>' target='_top'><%= image_tag("/images/tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
+                  <a href='<%= h team.tigris_space %>' target='_top'><%= image_tag("tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
                 </td>
             <% else %>
                 <td> &nbsp; </td>
@@ -90,7 +90,7 @@
                   <% else %>
                       <%= link_to user.human_name, person_path(user.twiki_name) %>
                   <% end %>
-                  <% if @show_teams_for_many_courses && user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
+                  <% if @show_teams_for_many_courses && user.is_adobe_connect_host %><%= image_tag("connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
                   <% end %>
               <% end %>
             </td>

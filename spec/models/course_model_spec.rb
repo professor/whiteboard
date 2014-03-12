@@ -216,7 +216,7 @@ describe Course do
       course = FactoryGirl.create(:course)
       new_course = course.copy_as_new_course
       new_course.save
-      new_course.faculty.should =~ course.faculty
+      new_course.faculty.should == course.faculty
     end
 
   end

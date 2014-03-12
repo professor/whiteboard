@@ -30,14 +30,14 @@
         <% end %>
         <% unless (team.email.blank? || team.updating_email) %>
             <td>
-              <a href='mailto:<%= h team.email %>' target='_top'><%= image_tag("/images/email.gif", :width => "12", :height => "9", :border => 0) %></a>
+              <a href='mailto:<%= h team.email %>' target='_top'><%= image_tag("email.gif", :width => "12", :height => "9", :border => 0) %></a>
             </td>
         <% else %>
             <td> &nbsp; </td>
         <% end %>
         <% unless team.tigris_space.blank? %>
             <td>
-              <a href='<%= h team.tigris_space %>' target='_top'><%= image_tag("/images/tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
+              <a href='<%= h team.tigris_space %>' target='_top'><%= image_tag("tigris.gif", :width => "16", :height => "16", :border => 0) %></a>
             </td>
         <% else %>
             <td> &nbsp; </td>

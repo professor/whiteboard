@@ -6,7 +6,9 @@ class DeliverableAttachment < ActiveRecord::Base
 
   has_attached_file :attachment,
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon_s3.yml",
+                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
+                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
 #                    :path => "deliverables/:deliverable_course_year/:deliverable_course_name/:deliverable_random_hash/submissions/:id/:filename"
                     :path => "deliverables/:deliverable_course_year/:deliverable_course_semester/:deliverable_course_name/:deliverable_assignment_name/:deliverable_owner_name/:deliverable_random_hash/:id/:deliverable_owner_name_:filename"
 

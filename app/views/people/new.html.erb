@@ -65,7 +65,7 @@
         function add_loader(node, text) {
           node.empty();
           node.append($('<div/>')
-              .append($('<div/>').css('float', 'left').append($('<%= image_tag("/images/loader.gif") %>')))
+              .append($('<div/>').css('float', 'left').append($('<%= image_tag("loader.gif") %>')))
               .append($('<div/>').css('float', 'left').text(text))
               .append($('<br/>')));
         }

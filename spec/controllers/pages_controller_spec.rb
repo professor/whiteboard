@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PagesController do
-
+  shared_examples_for "finding page" do
   before(:each) do
     Page.any_instance.stub(:update_search_index)
     Page.any_instance.stub(:delete_from_search)
@@ -14,11 +14,11 @@ describe PagesController do
       @page = FactoryGirl.create(:page)
     end
 
-    shared_examples_for "finding page" do
+
       it "assigns page" do
         assigns(:page).should == @page
       end
-    end
+
 
     describe "GET index" do
       it "assigns all pages as @pages" do
@@ -284,6 +284,6 @@ describe PagesController do
 #
 #  end
 
-
+  end
 end
 

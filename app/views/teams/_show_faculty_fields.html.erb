@@ -25,7 +25,7 @@
       <tr id="person<%= user.id %>">
         <td>
           <%= h user.human_name %>
-          <% if user.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
+          <% if user.is_adobe_connect_host %><%= image_tag("connect.gif", :width => "16", :height => "16", :alt => "Adobe Connect Host") %>
           <% end %>
         </td>
         <td>&nbsp;

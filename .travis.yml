@@ -22,7 +22,8 @@ script:
 #  - bundle exec rake jasmine:ci
 
 env:
-  - LDAP_HOST="127.0.0.1" LDAP_PORT=3897 LDAP_USERNAME=anyone LDAP_PASSWORD=anysecret LDAP_ENCRYPTED=false SEARCHIFY_API_URL=foo SEARCHIFY_INDEX=cmux_test SEARCHIFY_STAFF_INDEX=cmu_staffx_test WHITEBOARD_SALT=I_am_salt_with_no_iodine TMPDIR=tmpdir
+  - LDAP_HOST="127.0.0.1" LDAP_PORT=3897 LDAP_USERNAME=anyone LDAP_PASSWORD=anysecret LDAP_ENCRYPTED=false SEARCHIFY_API_URL=foo SEARCHIFY_INDEX=cmux_test SEARCHIFY_STAFF_INDEX=cmu_staffx_test WHITEBOARD_SALT=I_am_salt_with_no_iodine TMPDIR=tmpdir WHITEBOARD_GOOGLE_USERNAME=fall.2010.mfse@sandbox.sv.cmu.edu WHITEBOARD_GOOGLE_PASSWORD=replaceKCzqxP WHITEBOARD_GOOGLE_DOMAIN=sandbox.sv.cmu.edu WHITEBOARD_S3_BUCKET=some_random_placeholder WHITEBOARD_S3_KEY=so_that_travis_will_work WHITEBOARD_S3_SECRET=cmusv-travis WHITEBOARD_TWIKI_USERNAME=none WHITEBOARD_TWIKI_PASSWORD=whatever WHITEBOARD_TWIKI_URL=http://info.sv.cmu.edu
+
 
 
 notifications:
