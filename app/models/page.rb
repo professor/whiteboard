@@ -71,14 +71,14 @@ class Page < ActiveRecord::Base
 
   def update_search_index
     if self.viewable_by == "staff"
-      update_search_index_for_index(ENV['SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
+      update_search_index_for_index(ENV['WHITEBOARD_SEARCHIFY_STAFF_INDEX'] || 'cmu_staffx')
     else
-      update_search_index_for_index(ENV['SEARCHIFY_INDEX'] || 'cmux')
+      update_search_index_for_index(ENV['WHITEBOARD_SEARCHIFY_INDEX'] || 'cmux')
     end
   end
 
   def update_search_index_for_index(index_name)
-    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
+    api = IndexTank::Client.new(ENV['WHITEBOARD_SEARCHIFY_API_URL'] || '<API_URL>')
     index = api.indexes(index_name)
     options_hash = {:title => self.title, :type => "page"}
     if self.course
@@ -97,8 +97,8 @@ class Page < ActiveRecord::Base
   end
 
   def delete_from_search
-    api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || '<API_URL>')
-    index = api.indexes(ENV['SEARCHIFY_INDEX'] || 'cmux')
+    api = IndexTank::Client.new(ENV['WHITEBOARD_SEARCHIFY_API_URL'] || '<API_URL>')
+    index = api.indexes(ENV['WHITEBOARD_SEARCHIFY_INDEX'] || 'cmux')
     index.document(self.id.to_s).delete
   end
 

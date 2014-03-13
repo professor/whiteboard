@@ -21,9 +21,9 @@ CMU-SV Students
       1. LDAP_USERNAME
       1. LDAP_PASSWORD
       1. LDAP_ENCRYPTED 
-      1. SEARCHIFY_API_URL 
-      1. SEARCHIFY_INDEX 
-      1. SEARCHIFY_STAFF_INDEX 
+      1. WHITEBOARD_SEARCHIFY_API_URL
+      1. WHITEBOARD_SEARCHIFY_INDEX
+      1. WHITEBOARD_SEARCHIFY_STAFF_INDEX
       1. WHITEBOARD_SALT
       1. WHITEBOARD_GOOGLE_USERNAME
       1. WHITEBOARD_GOOGLE_PASSWORD
@@ -47,6 +47,7 @@ CMU-SV Students
 1. bundle exec rake db:schema:load
 1. bundle exec rake db:setup (to load the seeds.rb data)
 1. bundle exec rake RAILS_ENV="test" db:schema:load
+1. (Is this necessary for foreman?) echo "RACK_ENV=development" >>.env
 1. verify your configuration
    1. foreman start
    1. bundle exec rake spec  (Verify that all the tests pass)

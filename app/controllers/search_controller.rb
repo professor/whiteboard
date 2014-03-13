@@ -5,8 +5,8 @@ class SearchController < ApplicationController
   before_filter :authenticate_user!
 
   def self.index_tank
-    @api = IndexTank::Client.new(ENV['SEARCHIFY_API_URL'] || 'http://your_api_url')
-    @index ||= @api.indexes(ENV['SEARCHIFY_INDEX'] || 'cmux')
+    @api = IndexTank::Client.new(ENV['WHITEBOARD_SEARCHIFY_API_URL'] || 'http://your_api_url')
+    @index ||= @api.indexes(ENV['WHITEBOARD_SEARCHIFY_INDEX'] || 'cmux')
     @index
   end
 
