@@ -279,7 +279,7 @@ describe User do
         @student_sam = FactoryGirl.create(:student_sam)
       end
 
-      it " is successful" do
+      it " is successful", :skip_on_build_machine => true  do
         ProvisioningApi.any_instance.stub(:create_user).and_return(:some_value)
         password = "just4now"
         @student_sam.email = "student.sam@sandbox.sv.cmu.edu"
