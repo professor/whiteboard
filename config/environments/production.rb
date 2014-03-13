@@ -59,7 +59,7 @@ CMUEducation::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.middleware.use ExceptionNotifier,
+  config.middleware.use ExceptionNotification::Rack,
     :email_prefix => "[ERROR] ",
     :sender_address => %{"Exception" <support@example.com>},
     :exception_recipients => %w(todd.sedano@sv.cmu.edu, rofaida.abdelaal@sv.cmu.edu),
