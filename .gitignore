@@ -3,6 +3,7 @@ db/*.sqlite3
 log/*.log
 tmp/
 
+.env
 .gems
 20090827190915_mfse_add_people.rb
 

@@ -48,7 +48,7 @@ CMU-SV Students
 1. bundle exec rake db:setup (to load the seeds.rb data)
 1. bundle exec rake RAILS_ENV="test" db:schema:load
 1. verify your configuration
-   1. rails server thin  (Note: On 9/18/2011 WebBrick was not working with OmniAuth)
+   1. foreman start
    1. bundle exec rake spec  (Verify that all the tests pass)
    1. run the server in debug mode in an IDE.
 1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
