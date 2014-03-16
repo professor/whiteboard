@@ -11,8 +11,8 @@ test:
   bucket: cmusv-rails-test
 
 production:
-  access_key_id: AKIAI2XCP5WS42BW4F6A
-  secret_access_key: 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
+  access_key_id: AKIAIHVGWVFDZAB2KSSA
+  secret_access_key: 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
   bucket: cmusv-rails-production
 
 
