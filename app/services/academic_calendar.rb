@@ -251,6 +251,15 @@ class AcademicCalendar
 
   def self.semester_start(semester, year)
     case year
+      when 2015
+        case semester
+          when "Spring" #Not official yet (4/1/2014)
+            return 3
+          when "Summer" #Not official yet (4/1/2014)
+            return 21
+          when "Fall" #Not official yet (4/1/2014)
+            return 35
+        end
       when 2014
         case semester
           when "Spring"
