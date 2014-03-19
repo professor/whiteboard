@@ -436,9 +436,9 @@ class User < ActiveRecord::Base
 
     # update the image_uri if a photo was uploaded
 
-    self.image_uri_first = self.photo_first.url(:profile).split('?')[0] unless (self.photo_first.blank? || self.photo_first.url == ActionController::Base.helpers.asset_path("missing.png"))
-    self.image_uri_second = self.photo_second.url(:profile).split('?')[0] unless (self.photo_second.blank? || self.photo_second.url == ActionController::Base.helpers.asset_path("missing.png"))
-    self.image_uri_custom = self.photo_custom.url(:profile).split('?')[0] unless (self.photo_custom.blank? || self.photo_custom.url == ActionController::Base.helpers.asset_path("missing.png"))
+    self.image_uri_first = self.photo_first.url(:profile).split('?')[0] unless (self.photo_first.blank? || self.photo_first.url == ActionController::Base.helpers.asset_path("mascot.jpg"))
+    self.image_uri_second = self.photo_second.url(:profile).split('?')[0] unless (self.photo_second.blank? || self.photo_second.url == ActionController::Base.helpers.asset_path("mascot.jpg"))
+    self.image_uri_custom = self.photo_custom.url(:profile).split('?')[0] unless (self.photo_custom.blank? || self.photo_custom.url == ActionController::Base.helpers.asset_path("mascot.jpg"))
 
     case self.photo_selection
       when "first"
