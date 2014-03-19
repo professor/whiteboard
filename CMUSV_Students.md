@@ -148,3 +148,10 @@ The following links might also be useful in your quest to understanding this iss
 1. [Stackoverflow - error failed to build gem native extension](http://stackoverflow.com/questions/13108299/error-installing-debugger-linecache-error-failed-to-build-gem-native-extension)
 2. [github issue - debugger](https://github.com/cldwalker/debugger/issues/14)
 3. [Keeping build directory after installation with rbenv](https://github.com/sstephenson/ruby-build#keeping-the-build-directory-after-installation).
+
+### Compiling and deploying assets to Heroku:
+
+(The following commands and rakes assume that you are already using asset_sync gem and that it is configured correctly):
+
+1. Delete any assets found under the public folder: bundle exec rake assets:clean
+2. Compile new assets to generate/update the manifest.yml: bundle exec rake assets:precompile:all RAILS_ENV=production , heroku needs the production environment. You can change this to development if you want to make a quick test. But be ware that you can not predict the full assets behaviour until you test it on the production. This command might take some time, so be patient. 
