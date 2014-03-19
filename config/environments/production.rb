@@ -64,7 +64,7 @@ CMUEducation::Application.configure do
       :email_prefix => "[ERROR] ",
       :sender_address => %{"Exception" <support@example.com>},
       :exception_recipients => %w(todd.sedano@sv.cmu.edu, rofaida.abdelaal@sv.cmu.edu),
-      :sections => %w{cmusv}
+      :sections => %w{cmusv request session environment backtrace}
     }
     
   config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-8300440-2")
@@ -77,7 +77,7 @@ CMUEducation::Application.configure do
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
-  } 
+  }
 
   config.assets.precompile << Proc.new { |path|
     if path =~ /\.(css|js|basepath.js)\z/
