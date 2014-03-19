@@ -69,6 +69,16 @@ CMUEducation::Application.configure do
     
   config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-8300440-2")
 
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  } 
+
   config.assets.precompile << Proc.new { |path|
     if path =~ /\.(css|js|basepath.js)\z/
       full_path = Rails.application.assets.resolve(path).to_path
