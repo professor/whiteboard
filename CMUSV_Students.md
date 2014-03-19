@@ -3,8 +3,8 @@ CMU-SV Students
 
 ## Getting Started for Students
 1. install rails using railsinstaller.org
-1. rvm install ruby-1.9.2-p180
-1. rvm --default use ruby-1.9.2-p180  ()
+1. rvm install ruby-1.9.3-p448
+1. rvm --default use ruby-1.9.3-p448 ()
 1. fork the project on github,
 1. $ git clone http://github.com/URL/cmusv # to get the code
 1. read {file:doc/Git_Directions.rdoc Git Directions}
