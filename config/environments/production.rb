@@ -59,13 +59,25 @@ CMUEducation::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "[ERROR] ",
-    :sender_address => %{"Exception" <support@example.com>},
-    :exception_recipients => %w(todd.sedano@sv.cmu.edu, rofaida.abdelaal@sv.cmu.edu),
-    :sections => %w{cmusv} + ExceptionNotifier::Notifier.default_sections
-
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[ERROR] ",
+      :sender_address => %{"Exception" <support@example.com>},
+      :exception_recipients => %w(todd.sedano@sv.cmu.edu, rofaida.abdelaal@sv.cmu.edu),
+      :sections => %w{cmusv request session environment backtrace}
+    }
+    
   config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-8300440-2")
+
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
 
   config.assets.precompile << Proc.new { |path|
     if path =~ /\.(css|js|basepath.js)\z/

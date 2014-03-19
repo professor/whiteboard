@@ -3,7 +3,7 @@ ruby '1.9.3'
 #test
 
 gem "rake", "0.8.7"  #As of 7/28/2011, this is needed for "heroku rake db:migrate"
-gem 'thin'
+gem 'unicorn'
 gem "daemons", "~> 1.1.4" #this is used by heroku on 7/18/2011
 
 #gem 'rails', '3.0.20'
@@ -77,6 +77,8 @@ group :development, :test do
   gem 'launchy'
   gem 'taps'
 #  gem 'rake'
+  gem 'travis'
+  gem 'foreman'
 
   # see this link for details on which gem to install for debugger
   # http://stackoverflow.com/questions/10323119/cannot-load-such-file-script-rails-getting-this-error-while-remote-debuggin/10325110#10325110

@@ -8,10 +8,9 @@ CMU-SV Students
 1. fork the project on github,
 1. $ git clone http://github.com/URL/cmusv # to get the code
 1. read {file:doc/Git_Directions.rdoc Git Directions}
-1. $ cp config/database.default.yml config/database.yml -- see instructor for username and password
-1. $ cp config/morning_glory.mfse.yml config/morning_glory.yml -- no need to configure
-    1. create a config/amazon_s3.yml from (http://whiteboard.sv.cmu.edu/pages/amazon_s3.yml)
+1. $ cp config/database.default.yml config/database.yml -- (The default has fake username and password, replace database.yml this information with the real username and password) 
 1. set your environment variables (optional step, only needed if you plan to work on these features)
+   1. (Nitrous.io) modify .bashrc
    1. (Mac OS X) read http://david-martinez.tumblr.com/post/28083831730/environment-variables-and-mountain-lion (if you set them in bash, then RubyMine doesn't pick them up.)
    1. Note: This requires a restart. 
    1. Set these environment variables
@@ -21,9 +20,9 @@ CMU-SV Students
       1. LDAP_USERNAME
       1. LDAP_PASSWORD
       1. LDAP_ENCRYPTED 
-      1. SEARCHIFY_API_URL 
-      1. SEARCHIFY_INDEX 
-      1. SEARCHIFY_STAFF_INDEX 
+      1. WHITEBOARD_SEARCHIFY_API_URL
+      1. WHITEBOARD_SEARCHIFY_INDEX
+      1. WHITEBOARD_SEARCHIFY_STAFF_INDEX
       1. WHITEBOARD_SALT
       1. WHITEBOARD_GOOGLE_USERNAME
       1. WHITEBOARD_GOOGLE_PASSWORD
@@ -36,24 +35,29 @@ CMU-SV Students
       1. WHITEBOARD_TWIKI_URL
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
     * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
-1. install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails
-1. install a postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
-1. install imagemagick
+1. install postgres
+   1. (Nitrous.io) parts install postgresql
+   1. (Nitrous.io) parts start postgresql
+   1. (Nitrous.io) ??? createdb ???
+   1. (Local machine) install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails
+1. (skip on nitrous.io) install postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
+1. (skip on nitrous.io) install imagemagick
    1. (Directions for a mac)
    1. install brew see http://mxcl.github.com/homebrew/
    1. brew install imagemagick
 1. bundle install
    1. If this doesn't work see note below
 1. bundle exec rake db:schema:load
-1. bundle exec rake db:setup (to load the seeds.rb data)
+1. bundle exec rake db:seed (to load the seeds.rb data)
 1. bundle exec rake RAILS_ENV="test" db:schema:load
+1. (Is this necessary for foreman?) echo "RACK_ENV=development" >>.env
 1. verify your configuration
-   1. rails server thin  (Note: On 9/18/2011 WebBrick was not working with OmniAuth)
+   1. foreman start
    1. bundle exec rake spec  (Verify that all the tests pass)
    1. run the server in debug mode in an IDE.
 1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
 1. bundle exec rake doc:app (Generates API documentation for your models, controllers, helpers, and libraries.)
-1. modify RubyMine to use thin instead of webbrick. On the tool bar, Run -> Edit Configurations. Instead of default server, pick thin.
+1. modify RubyMine to use unicorn instead of webbrick. On the tool bar, Run -> Edit Configurations. Instead of default server, pick unicorn.
 
 ### Installing Git
 If you installed rails using railsinstaller.org, you should have git installed.

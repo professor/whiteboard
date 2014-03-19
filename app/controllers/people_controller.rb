@@ -100,7 +100,7 @@ class PeopleController < ApplicationController
       Hash[:id => person.twiki_name,
            :first_name => person.first_name,
            :last_name => person.last_name,
-           :image_uri => image_path(person.image_uri),
+           :image_uri => ActionController::Base.helpers.asset_path(person.image_uri),
            :program => program,
            :contact_dtls => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
            :email => person.email,
@@ -224,10 +224,10 @@ class PeopleController < ApplicationController
 
     @person = User.new(params[:user])
     @person.updated_by_user_id = current_user.id
-    @person.image_uri = "/images/mascot.jpg"
-    @person.image_uri_first = "/images/mascot.jpg"
-    @person.image_uri_second = "/images/mascot.jpg"
-    @person.image_uri_custom = "/images/mascot.jpg"
+    @person.image_uri = ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_first =  ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_second = ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_custom = ActionController::Base.helpers.asset_path("mascot.jpg")
     @person.photo_selection = "first"
 
     respond_to do |format|

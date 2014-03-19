@@ -520,7 +520,7 @@ function loadImage(image_uri){
     $(img).bind({
         error: function() {
             // if there's some error in loading the image, load scotty dog instead
-            img.src = "/images/mascot.jpg";
+            img.src =  "http://d1z5n3u3tyi6h3.cloudfront.net/assets/mascot.jpg";
         }
     });
     $(img).attr('src',image_uri);
