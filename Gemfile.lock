@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/sishen/omniauth-google-apps.git
-  revision: 5825f9afe711cb7fb693acd3d6b06b1de3a182e6
+  revision: 20b65acbfd190b1b9605cf11836717e48541e8e0
   specs:
     omniauth-google-apps (0.0.2)
       omniauth (~> 1.0)
@@ -264,7 +264,7 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     raindrops (0.13.0)
-    rake (0.8.7)
+    rake (10.1.1)
     rdoc (3.12.2)
       json (~> 1.4)
     recaptcha (0.3.6)
@@ -421,7 +421,7 @@ DEPENDENCIES
   rack-google_analytics
   rails (= 3.1.12)
   rails_best_practices
-  rake (= 0.8.7)
+  rake
   rdoc
   recaptcha
   rmagick
