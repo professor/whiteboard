@@ -224,10 +224,10 @@ class PeopleController < ApplicationController
 
     @person = User.new(params[:user])
     @person.updated_by_user_id = current_user.id
-    @person.image_uri = "/images/mascot.jpg"
-    @person.image_uri_first = "/images/mascot.jpg"
-    @person.image_uri_second = "/images/mascot.jpg"
-    @person.image_uri_custom = "/images/mascot.jpg"
+    @person.image_uri = ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_first =  ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_second = ActionController::Base.helpers.asset_path("mascot.jpg")
+    @person.image_uri_custom = ActionController::Base.helpers.asset_path("mascot.jpg")
     @person.photo_selection = "first"
 
     respond_to do |format|
