@@ -100,7 +100,7 @@ class PeopleController < ApplicationController
       Hash[:id => person.twiki_name,
            :first_name => person.first_name,
            :last_name => person.last_name,
-           :image_uri => image_path(person.image_uri),
+           :image_uri => ActionController::Base.helpers.asset_path(person.image_uri),
            :program => program,
            :contact_dtls => person.telephones_hash.map { |k,v| "#{k}: #{v}" }.to_a,
            :email => person.email,
