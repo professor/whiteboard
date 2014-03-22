@@ -64,13 +64,13 @@ class ApplicationController < ActionController::Base
   end
 
   def user_profile_status_check
-     if !current_user.profile_updated?
-       if current_user.should_be_redirected?
-         redirect_to root_path
-       else
-         #popup a box
-       end
-     end
+    if !current_user.profile_updated?
+      if current_user.should_be_redirected?
+        redirect_to root_path
+      else
+        #popup a box
+      end
+    end
   end
 
   #Return to the page the user was trying to access after a login
