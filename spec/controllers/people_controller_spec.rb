@@ -64,7 +64,7 @@ describe PeopleController do
       it "can select anonymous photo" do
         @faculty_frank.photo_selection = "anonymous"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
-        User.find(@faculty_frank.id).image_uri.should include "/images/mascot.jpg"
+        User.find(@faculty_frank.id).image_uri.should include "mascot.jpg"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
     end
@@ -143,7 +143,7 @@ describe PeopleController do
       it "can select anonymous photo" do
         @faculty_frank.photo_selection = "anonymous"
         post :upload_photo, {:id => @faculty_frank.id, :user => @faculty_frank.attributes }
-        User.find(@faculty_frank.id).image_uri.should include "/images/mascot.jpg"
+        User.find(@faculty_frank.id).image_uri.should include "mascot.jpg"
         response.should redirect_to(edit_person_path(@faculty_frank))
       end
     end
