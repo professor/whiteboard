@@ -45,7 +45,7 @@ class GradesController < ApplicationController
     @assignments = @course.assignments
     @grades = {}
     @students.each do |student|
-      @grades[student] =  Grade.get_grades_for_student_per_course(@course, student)
+      @grades[student] = Grade.get_grades_for_student_per_course(@course, student)
     end
     render
   end
@@ -65,7 +65,7 @@ class GradesController < ApplicationController
     end
     @assignments = @course.assignments
     @grades = {}
-    @grades[@user] =  Grade.get_grades_for_student_per_course(@course, @user)
+    @grades[@user] = Grade.get_grades_for_student_per_course(@course, @user)
     respond_to do |format|
       format.html { render :action => "student_deliverables" }
       format.xml { render :xml => @assignments }
@@ -79,13 +79,13 @@ class GradesController < ApplicationController
       faculty_email = current_user.email
     end
     Grade.mail_drafted_grade(@course.id, request.host_with_port, faculty_email)
-    render :json => ({"message"=>"true"})
+    render :json => ({"message" => "true"})
   end
 
   def save
     grades = params["grades"]
-    Grade.give_grades(grades,current_user.id)
-    render :json => ({"message"=>"true"})
+    Grade.give_grades(grades, current_user.id)
+    render :json => ({"message" => "true"})
   end
 
   def send_final_grade
@@ -95,7 +95,7 @@ class GradesController < ApplicationController
       faculty_email = current_user.email
     end
     Grade.mail_final_grade(@course.id, request.host_with_port, faculty_email)
-    render :json => ({"message"=>"true"})
+    render :json => ({"message" => "true"})
   end
 
   def import
@@ -105,7 +105,7 @@ class GradesController < ApplicationController
     end
 
     temp_file_path = params[:import][:spreadsheet].path
-    if Grade.import_grade_book_from_spreadsheet(temp_file_path,@course.id)
+    if Grade.import_grade_book_from_spreadsheet(temp_file_path, @course.id)
       flash[:notice] = "grade book was imported"
     else
       flash[:error] = "spreadsheet format is incorrect"
@@ -117,7 +117,7 @@ class GradesController < ApplicationController
     temp_file_path = File.expand_path("#{Rails.root}/tmp/#{Process.pid}_") + "export.xls"
     Grade.export_grade_book_to_spreadsheet(@course, temp_file_path)
     flash[:notice] = "grade book was exported to " + temp_file_path
-    send_file(temp_file_path, :filename=>"GradeBook_#{@course.name}.xls")
+    send_file(temp_file_path, :filename => "GradeBook_#{@course.name}.xls")
   end
 
 end

@@ -168,7 +168,7 @@ class PeerEvaluationController < ApplicationController
       end
       allocation.save!
     rescue => e
-       ex = e
+      ex = e
     ensure
       respond_to do |format|
         # html request

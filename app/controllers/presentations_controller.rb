@@ -154,7 +154,7 @@ class PresentationsController < ApplicationController
 
       if is_successful && @feedback.save
         @presentation.feedback_email_sent = true
-        
+
         if @presentation.feedback_email_sent?
           @presentation.send_presentation_feedback_email(show_feedback_for_presentation_url(:id => params[:id]))
         end
@@ -170,12 +170,12 @@ class PresentationsController < ApplicationController
     feedback = PresentationFeedback.find_by_evaluator_id_and_presentation_id(current_user, params[:id])
 
     params[:evaluation].each do |key, value|
-        answer = PresentationFeedbackAnswer.find_by_feedback_id_and_question_id(feedback.id, key)
-        if answer
-          answer.rating   = value["rating"]
-          answer.comment  = value["comment"]
-          answer.save
-        end
+      answer = PresentationFeedbackAnswer.find_by_feedback_id_and_question_id(feedback.id, key)
+      if answer
+        answer.rating = value["rating"]
+        answer.comment = value["comment"]
+        answer.save
+      end
     end
 
     respond_to do |format|

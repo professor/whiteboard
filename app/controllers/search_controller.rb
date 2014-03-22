@@ -12,7 +12,7 @@ class SearchController < ApplicationController
 
   # retrieve docs from IndexTank
   def self.search(query)
-    query = query.gsub(/\W+/,' ').strip
+    query = query.gsub(/\W+/, ' ').strip
 
     if query.present?
       query << "*"

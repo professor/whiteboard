@@ -3,7 +3,7 @@ class DeliverablesController < ApplicationController
   layout 'cmu_sv'
 
   before_filter :authenticate_user!
-  before_filter :render_grade_book_menu, :only=>[:grading_queue_for_course, :show]
+  before_filter :render_grade_book_menu, :only => [:grading_queue_for_course, :show]
 
   def render_grade_book_menu
     @is_in_grade_book = true if (current_user.is_staff?)||(current_user.is_admin?)
@@ -34,18 +34,13 @@ class DeliverablesController < ApplicationController
 
 
     if @course.faculty.include?(current_user)
-
       # Get all deliverables for this team/student
       @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
 
-      # Select all that are ungraded or drafted
-#      @deliverables = @deliverables.select { |deliverable| deliverable.get_grade_status == :ungraded ||
-#          deliverable.get_grade_status == :drafted }
       @deliverables = @deliverables.select { |deliverable| deliverable.grade_status == "ungraded" ||
           deliverable.grade_status == "drafted" }
 
       @deliverables = @deliverables.sort { |a, b| b.assignment.assignment_order <=> a.assignment.assignment_order }
-
     else
       has_permissions_or_redirect(:admin, root_path)
     end
@@ -53,7 +48,7 @@ class DeliverablesController < ApplicationController
   end
 
   def get_deliverables
-    filter_options =  params[:filter_options] || Hash.new
+    filter_options = params[:filter_options] || Hash.new
     @deliverables = filter_deliverables(params[:course_id], filter_options)
     respond_to do |format|
       format.js
@@ -91,9 +86,9 @@ class DeliverablesController < ApplicationController
     end
     @current_deliverables = Deliverable.find_current_by_user(user)
     @past_deliverables = Deliverable.find_past_by_user(user)
-    @current_assignments = Assignment.list_assignments_for_student(user.id , :current)
+    @current_assignments = Assignment.list_assignments_for_student(user.id, :current)
     @current_courses = user.registered_for_these_courses_during_current_semester()
-    @past_assignments = Assignment.list_assignments_for_student(user.id ,:past)
+    @past_assignments = Assignment.list_assignments_for_student(user.id, :past)
     @past_courses = user.registered_for_these_courses_during_past_semesters()
     respond_to do |format|
       format.html { render :action => "index" }
@@ -294,7 +289,6 @@ class DeliverablesController < ApplicationController
   end
 
 
-
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
 
@@ -336,14 +330,14 @@ class DeliverablesController < ApplicationController
     @deliverables = filter_deliverables(@deliverable.course_id, @selected_filter_options)
 
     respond_to do |format|
-       if flash[:error].blank?
-         flash[:error] = nil
-         flash[:notice] = 'Feedback successfully saved.'
-         format.js
-       else
-         flash[:error] = flash[:error].join("<br>")
-         format.html { redirect_to(@deliverable) }
-       end
+      if flash[:error].blank?
+        flash[:error] = nil
+        flash[:notice] = 'Feedback successfully saved.'
+        format.js
+      else
+        flash[:error] = flash[:error].join("<br>")
+        format.html { redirect_to(@deliverable) }
+      end
     end
   end
 
@@ -353,9 +347,9 @@ class DeliverablesController < ApplicationController
   def get_assignments_for_student
     unless params[:course_id].nil?
       @assignments = Course.find(params[:course_id]).assignments.all(:conditions => ["is_submittable = ?", true])
-      @assignments_array =  @assignments.collect{ |assignment| {:assignment => assignment.attributes.merge({:name_with_type => assignment.name_with_type}) }}
+      @assignments_array = @assignments.collect { |assignment| {:assignment => assignment.attributes.merge({:name_with_type => assignment.name_with_type})} }
       respond_to do |format|
-        format.json { render json:  @assignments_array }
+        format.json { render json: @assignments_array }
       end
     end
   end
@@ -390,7 +384,7 @@ class DeliverablesController < ApplicationController
     if @selected_options.size == 0
       @deliverables = @faculty_deliverables
     else
-      @selected_options.each do  |option|
+      @selected_options.each do |option|
 #        @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.get_grade_status == option })
         @deliverables.concat(@faculty_deliverables.select { |deliverable| deliverable.grade_status == option.to_s })
       end
@@ -398,7 +392,7 @@ class DeliverablesController < ApplicationController
 
     # Filter by assignment names in drop down menu
     unless filter_options["assignment_id"] == '-1'
-      @deliverables = @deliverables.select{ |deliverable| deliverable.assignment_id == filter_options[
+      @deliverables = @deliverables.select { |deliverable| deliverable.assignment_id == filter_options[
           "assignment_id"].to_i }
     end
 

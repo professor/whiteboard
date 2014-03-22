@@ -170,9 +170,9 @@ class PagesController < ApplicationController
         # Do not bump up the version number for auto save
         @page.skip_version do
           if @page.update_attributes(params[:page])
-            render :json => {:code => "success", :message => "", :new_post_path => page_path(@page) }
+            render :json => {:code => "success", :message => "", :new_post_path => page_path(@page)}
           else
-            render :json => {:code => "failed", :message => "Automatic save failed" }
+            render :json => {:code => "failed", :message => "Automatic save failed"}
           end
         end
       end

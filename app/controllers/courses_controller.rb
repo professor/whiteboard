@@ -68,9 +68,9 @@ class CoursesController < ApplicationController
     first_version_of_course = Course.first_offering_for_course_name(@course.name)
     @whiteboard_curriculum_page = first_version_of_course.pages[0] if first_version_of_course.pages.present?
 
-     if (can? :teach, @course) || current_user.is_admin?
+    if (can? :teach, @course) || current_user.is_admin?
       @students = @course.registered_students_and_students_on_teams_hash
-     end
+    end
 
     respond_to do |format|
       format.html # show.html.erb
