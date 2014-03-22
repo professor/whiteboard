@@ -72,6 +72,7 @@ class Course < ActiveRecord::Base
                   :faculty_assignments_override
 
   include PeopleInACollection
+
   def validate_faculty_assignments
     validate_members :faculty_assignments_override
   end

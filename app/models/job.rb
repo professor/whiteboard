@@ -66,9 +66,9 @@ class Job < ActiveRecord::Base
 
   def self.all_employees
     active_ga_ids = User.where(:is_active => true).
-                      where( :is_ga_promised => true).
-                      select(:id).
-                      collect(&:id)
+        where(:is_ga_promised => true).
+        select(:id).
+        collect(&:id)
     current_employee_ids = JobEmployee.select(:user_id).collect(&:user_id)
     all_employee_ids = active_ga_ids.push(*current_employee_ids).uniq.sort
     User.find(all_employee_ids, :order => :is_ga_promised)

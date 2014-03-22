@@ -6,10 +6,10 @@ class JobSupervisor < ActiveRecord::Base
 
   protected
   def self.get_supervisors(jobs)
-      supervisor_ids = JobSupervisor.
-                            where(:job_id => jobs.collect(&:id)).
-                            collect(&:user_id)
-      User.find(supervisor_ids)
+    supervisor_ids = JobSupervisor.
+        where(:job_id => jobs.collect(&:id)).
+        collect(&:user_id)
+    User.find(supervisor_ids)
   end
 
 end

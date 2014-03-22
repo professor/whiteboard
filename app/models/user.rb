@@ -51,19 +51,19 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
 
   has_attached_file :photo_first, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
-                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
-                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :bucket => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => {:access_key_id => ENV['WHITEBOARD_S3_KEY'],
+                                        :secret_access_key => ENV['WHITEBOARD_S3_SECRET']},
                     :path => "people/:id/photo_first/:style/:filename"
   has_attached_file :photo_second, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
-                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
-                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :bucket => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => {:access_key_id => ENV['WHITEBOARD_S3_KEY'],
+                                        :secret_access_key => ENV['WHITEBOARD_S3_SECRET']},
                     :path => "people/:id/photo_second/:style/:filename"
   has_attached_file :photo_custom, :storage => :s3, :styles => {:original => "", :profile => "150x200>"},
-                    :bucket         => ENV['WHITEBOARD_S3_BUCKET'],
-                    :s3_credentials => { :access_key_id     => ENV['WHITEBOARD_S3_KEY'],
-                                         :secret_access_key => ENV['WHITEBOARD_S3_SECRET'] },
+                    :bucket => ENV['WHITEBOARD_S3_BUCKET'],
+                    :s3_credentials => {:access_key_id => ENV['WHITEBOARD_S3_KEY'],
+                                        :secret_access_key => ENV['WHITEBOARD_S3_SECRET']},
                     :path => "people/:id/photo_custom/:style/:filename"
 
   validates_attachment_content_type :photo_first, :content_type => ["image/jpeg", "image/png", "image/gif"], :unless => "!photo_first.file?"
@@ -80,10 +80,11 @@ class User < ActiveRecord::Base
   }
 
   def self.get_all_programs
-    User.select(:masters_program).map(&:masters_program).uniq.reject{|e|e.blank?}.sort
+    User.select(:masters_program).map(&:masters_program).uniq.reject { |e| e.blank? }.sort
   end
+
   def self.get_all_years
-    User.select(:graduation_year).map(&:graduation_year).uniq.reject{|e|e.blank?}.sort.reverse
+    User.select(:graduation_year).map(&:graduation_year).uniq.reject { |e| e.blank? }.sort.reverse
   end
 
 
@@ -283,7 +284,6 @@ class User < ActiveRecord::Base
   end
 
 
-
   #
   # Creates a twiki account for the user
   #
@@ -357,26 +357,26 @@ class User < ActiveRecord::Base
   #end
 
 
-#   def create_adobe_connect
-#     require 'mechanize'
-#     agent = Mechanize.new
-#     agent.get(ADOBE_CONNECT_NEW_USER_URL) do |login_page|
-#       login_page.login = ADOBE_CONNECT_USERNAME
-#       login_page.password = ADOBE_CONNECT_PASSWORD
-#       reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
-#           reset_page.LoginName = self.twiki_name
-#       end.submit
-#
-#       return false if reset_result_page.parser.css('.patternTopic h3').text == " Password reset failed "
-#       return true if reset_result_page.link_with(:text => 'change password')
-#
-#       return true
-#     end
-#   end
+  #   def create_adobe_connect
+  #     require 'mechanize'
+  #     agent = Mechanize.new
+  #     agent.get(ADOBE_CONNECT_NEW_USER_URL) do |login_page|
+  #       login_page.login = ADOBE_CONNECT_USERNAME
+  #       login_page.password = ADOBE_CONNECT_PASSWORD
+  #       reset_result_page = page.form_with(:action => '/do/resetpasswd/Main/WebHome') do |reset_page|
+  #           reset_page.LoginName = self.twiki_name
+  #       end.submit
+  #
+  #       return false if reset_result_page.parser.css('.patternTopic h3').text == " Password reset failed "
+  #       return true if reset_result_page.link_with(:text => 'change password')
+  #
+  #       return true
+  #     end
+  #   end
 
 
-# attribute :github
-# If the user has not set this attribute, then ask the user to do so
+  # attribute :github
+  # If the user has not set this attribute, then ask the user to do so
   def notify_about_missing_field(attribute, message)
     if self.send(attribute).blank?
       options = {:to => self.email,
@@ -396,7 +396,7 @@ class User < ActiveRecord::Base
     end
     #self.first_access = nil
     #self.save!
-    ((Time.now - self.people_search_first_accessed_at)>4.weeks)? true: false
+    ((Time.now - self.people_search_first_accessed_at)>4.weeks) ? true : false
     #true
     #false
   end
@@ -411,9 +411,9 @@ class User < ActiveRecord::Base
       email_list += "-" + Rails.application.routes.url_helpers.user_url(user, :host => "whiteboard.sv.cmu.edu") + "\n"
     end
     if email_list.length > 0
-      options = { :to => 'help@sv.cmu.edu',
-                  :subject => "Expired accounts between #{(Date.today - 1.month).to_s} and #{(Date.today - 1.day).to_s}",
-                  :message => "\n#{email_list} \n\n Please executed the processes defined for expired accounts."
+      options = {:to => 'help@sv.cmu.edu',
+                 :subject => "Expired accounts between #{(Date.today - 1.month).to_s} and #{(Date.today - 1.day).to_s}",
+                 :message => "\n#{email_list} \n\n Please executed the processes defined for expired accounts."
       }
       GenericMailer.email(options).deliver
     end
@@ -462,7 +462,6 @@ class User < ActiveRecord::Base
     end
     return true
   end
-
 
 
 end

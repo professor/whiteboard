@@ -18,7 +18,6 @@ class SponsoredProjectAllocation < ActiveRecord::Base
 
   default_scope :order => "user_id ASC"
 
-
   def self.monthly_copy_to_sponsored_project_effort
     allocations = SponsoredProjectAllocation.current
     allocations.each do |allocation|

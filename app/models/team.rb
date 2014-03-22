@@ -26,6 +26,7 @@ class Team < ActiveRecord::Base
   attr_accessor :members_override
 
   include PeopleInACollection
+
   def validate_team_members
     validate_members :members_override
   end

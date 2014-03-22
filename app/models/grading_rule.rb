@@ -86,7 +86,7 @@ class GradingRule < ActiveRecord::Base
       return raw_score.split("%")[0]
     else
       return raw_score
-   end
+    end
   end
 
   # To get the grade type of the course, i.e. it is points or weights
@@ -117,7 +117,7 @@ class GradingRule < ActiveRecord::Base
     @letter_grades ||= mapping_rule.keys
   end
 
-private
+  private
   # To generate the mapping rule for converting grades into points
   def mapping_rule
     @mapping_rule = {}
@@ -128,9 +128,9 @@ private
       attr = self.read_attribute(attr_name)
       unless attr.nil?
         @mapping_rule[key] = prev
-        prev = attr - 0.1  unless attr.nil?
+        prev = attr - 0.1 unless attr.nil?
       end
-      ["R","W","I"].each do |attr|
+      ["R", "W", "I"].each do |attr|
         @mapping_rule[attr] = 0
       end
     end

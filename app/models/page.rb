@@ -108,10 +108,9 @@ class Page < ActiveRecord::Base
     unless self.course.blank? || self.course.number.blank?
       Course.in_current_semester_with_course_number(self.course.number).first
     else
-     nil
+      nil
     end
   end
-
 
 
   def is_someone_else_currently_editing_page(current_user)

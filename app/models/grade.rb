@@ -115,7 +115,7 @@ class Grade < ActiveRecord::Base
   def self.give_grades(grades, last_graded_by = nil)
     grades.each do |grade_entry|
       # FIXME: error handling for update failure
-      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible],last_graded_by)
+      self.give_grade(grade_entry[:course_id], grade_entry[:assignment_id], grade_entry[:student_id], grade_entry[:score], grade_entry[:is_student_visible], last_graded_by)
     end
   end
 
@@ -164,7 +164,7 @@ class Grade < ActiveRecord::Base
     grade_sheet.name = "#{course.short_name}"
 
     # print course id and assignment id
-    grade_sheet[0,0] = course.id
+    grade_sheet[0, 0] = course.id
     course.assignments.each_with_index do |assignment, i|
       grade_sheet[0, FIRST_GRADE_COL+i] = assignment.id
     end
@@ -173,9 +173,9 @@ class Grade < ActiveRecord::Base
     grade_sheet.row(0).hidden = true
 
     # print details
-    grade_sheet[1,1] = "First Name"
-    grade_sheet[1,2] = "Last Name"
-    grade_sheet[1,3] = "Team Name"
+    grade_sheet[1, 1] = "First Name"
+    grade_sheet[1, 2] = "Last Name"
+    grade_sheet[1, 3] = "Team Name"
 
     grade_sheet.column(0).hidden=true
     course.assignments.each_with_index do |assignment, j|
@@ -185,7 +185,7 @@ class Grade < ActiveRecord::Base
 
     # print students' names and grades
     students = course.registered_students_or_on_teams.sort do |x, y|
-      r = (self.find_student_team(course.id, x.id).try(:name) || "" )<=> (self.find_student_team(course.id, y.id).try(:name) || "")
+      r = (self.find_student_team(course.id, x.id).try(:name) || "")<=> (self.find_student_team(course.id, y.id).try(:name) || "")
       r = x.first_name <=> y.first_name if r == 0
       r = x.last_name <=> y.last_name if r == 0
       r
@@ -199,7 +199,7 @@ class Grade < ActiveRecord::Base
         score=Grade.get_grade(course.id, assignment.id, student.id).try(:score) || ""
         if !course.grading_rule.validate_letter_grade(score)
           unless score.blank?
-             score=score.to_f
+            score=score.to_f
           end
 
         end
@@ -251,7 +251,7 @@ class Grade < ActiveRecord::Base
     GenericMailer.email(options).deliver
   end
 
-private
+  private
   # To validate the course and assignment when importing a file
   def self.validate_first_row(row, current_course_id)
     num_cols = row.length
@@ -328,14 +328,14 @@ private
 
   # To import the scores from the gradebook
   def self.import_scores (grade_sheet)
-    course_id = grade_sheet[0,0].to_i
+    course_id = grade_sheet[0, 0].to_i
     num_rows = grade_sheet.row_count()
     num_cols = grade_sheet.column_count()
     for i in (FIRST_GRADE_ROW..(num_rows-1))
       for j in (FIRST_GRADE_COL..(num_cols-1))
-        student_id = grade_sheet[i,0].to_i
-        assignment_id = grade_sheet[0,j].to_i
-        score = grade_sheet[i,j].to_s
+        student_id = grade_sheet[i, 0].to_i
+        assignment_id = grade_sheet[0, j].to_i
+        score = grade_sheet[i, j].to_s
         Grade.give_grade(course_id, assignment_id, student_id, score, true)
       end
     end
