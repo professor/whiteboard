@@ -8,6 +8,7 @@
 *= require 'cmu_sv_standard_v4/khaki-content'
 *= require 'scaffold'
 *= require 'tw-bs'
+*= require 'jquery.qtip.min'
 
 */
 
