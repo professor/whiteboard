@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.qtip.min
 //= require ckeditor-jquery
 //= require jquery-ui-custom-for-cmusv
 //= require jquery-corners-0.3/jquery_corners.js
