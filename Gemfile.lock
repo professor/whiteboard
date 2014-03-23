@@ -390,6 +390,7 @@ DEPENDENCIES
   acts_as_versioned!
   asset_sync
   aws-sdk
+  bcrypt-ruby (= 3.0.1)
   bundler (~> 1.5.3)
   cancan
   capybara (= 1.1.1)
