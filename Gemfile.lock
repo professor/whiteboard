@@ -58,7 +58,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     backports (3.6.0)
-    bcrypt-ruby (3.1.2)
+    bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cancan (1.6.10)
     capybara (1.1.1)

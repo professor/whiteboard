@@ -24,7 +24,7 @@ gem 'omniauth', '1.1.4'
 gem "omniauth-google-apps", "~> 0.1.0"
 
 gem 'devise'
-
+gem 'bcrypt-ruby', '3.0.1' #https://stackoverflow.com/questions/12879892/rails-on-heroku-activerecordstatementinvalid-pgerror-ssl-error-cert-already
 
 gem 'ckeditor_rails'
 
