@@ -115,7 +115,7 @@ describe User do
       it "should update image_uri after photo_first is uploaded if the selection is the custom one", :skip_on_build_machine => true do
         @student_sam.photo_selection = "anonymous"
         @student_sam.save!
-        @student_sam.image_uri.should eql("/images/mascot.jpg")
+        @student_sam.image_uri.should eql("/assets/mascot.jpg")
       end
   end
 
