@@ -18,6 +18,7 @@ class MfseSplitCodeBase < Thor
 
     empty_directory project_directory + "db"
     empty_directory project_directory + "app/models"
+    empty_directory project_directory + "app/services"
 
     copy_file "Gemfile", project_directory + "Gemfile"
     copy_file "db/schema.rb", project_directory + "db/schema.rb"
@@ -25,7 +26,7 @@ class MfseSplitCodeBase < Thor
     copy_file "app/helpers/application_helper.rb", project_directory + "app/helpers/application_helper.rb"
     copy_file "app/mailers/generic_mailer.rb", project_directory + "app/mailers/generic_mailer.rb"
     directory "app/views/generic_mailer/", project_directory + "app/views/generic_mailer/"
-    copy_file "app/models/academic_calendar.rb", project_directory + "app/models/academic_calendar.rb"
+    copy_file "app/services/academic_calendar.rb", project_directory + "app/services/academic_calendar.rb"
 
   end
 

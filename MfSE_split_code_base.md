@@ -4,7 +4,7 @@ Here are the directions on how to create the metrics for software engineering (M
 
 2. checkout the code
 git clone git@github.com:professor/whiteboard.git
-cd cmusv
+cd whiteboard
 
 3. create a filelist
 (Note: there are better ways of doing this)
@@ -29,7 +29,7 @@ app/models/academic_calendar.rb
 
 thor mfse_split_code_base:copy_common_files Pages
 
-
+Spring 2013
 GradebookFrontEnd
 GradebookBackEnd and Assignments
 Pages (and multi editors warning)
@@ -37,6 +37,15 @@ People Search
 User
 CourseConfiguration
 
+Spring 2014
+Assingments **
+Courses * 
+DeliverablesAndGradingQueue **
+Gradebook **
+Jobs **
+LDAP **
+Pages 
+PeopleSearch *
 
 
 To create the defected product, take all the teams zips and move over the files carefully
