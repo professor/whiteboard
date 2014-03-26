@@ -27,7 +27,7 @@ class Ability
       cannot :create, User
     end
 
-    if (user.is_admin? || user.human_name == "Rofaida Abdelaal")
+    if (user.is_admin? || user.human_name == "Rofaida Abdelaal" || user.human_name == "Sarah Stanek")
       can :upload_official_photo, User
       can :update, User
     else
