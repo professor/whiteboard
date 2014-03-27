@@ -18,10 +18,10 @@ CMUEducation::Application.configure do
   # ActionMailer::Base.perform_deliveries = true
 
   # Specify host url for password reset links in email
-  # config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  # config.action_mailer.default_url_options = { :host => "localhost:3000" }n
 
   ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => 'smtp.gmail.com',
     :port => 587,
     :authentication => :plain,
     :domain => ENV['GMAIL_SMTP_USER'],
@@ -45,5 +45,5 @@ CMUEducation::Application.configure do
  # config.assets.digest = true
 
 
-  config.assets.prefix = "/assets"
+  config.assets.prefix = '/assets'
 end
