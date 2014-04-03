@@ -122,7 +122,7 @@ Factory(:task_type, :name => "Other")
 
 todd = Factory.create(:todd)
 ed = Factory.create(:ed)
-Factory.create(:rofaida_abdelaal)
+Factory.create(:your_name_here)
 Factory.create(:team_terrific) #This will create awe_smith, betty_ross, and charlie_moss
 
 FactoryGirl.create(:presentation_feedback_questions, :label => "Content", :text => "Did the talk cover all the content suggested on the checklist? (ie goals, progress, and the process for achieving the goals, outcomes)")
