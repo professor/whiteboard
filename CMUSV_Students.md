@@ -32,19 +32,22 @@ CMU-SV Students
       1. WHITEBOARD_S3_SECRET
       1. WHITEBOARD_TWIKI_USERNAME
       1. WHITEBOARD_TWIKI_PASSWORD
-      1. WHITEBOARD_TWIKI_URL
+      1. WHITEBOARD_TWIKI_URL  
 1. modify the db/seeds.rb and modify the example :your_name_here with yourself
     * Note: When you're prompted to login from the rails site with your email and password, you'll be redirected to google for authentication. After google approves of your credentials and sends you back to the rails site, the email used at time of login will be checked against the local db. This file populates the local db with your email/login data (see :your_name_here).
 1. install postgres
    1. (Nitrous.io) parts install postgresql
    1. (Nitrous.io) parts start postgresql
-   1. (Nitrous.io) ??? createdb ???
+   1. (Nitrous.io) createdb action-test
+   1. (Nitrous.io) defaults to action and action-test
    1. (Local machine) install postgres see http://whiteboard.sv.cmu.edu/pages/postgres_rails
+1. modify config/database.yml	
 1. (skip on nitrous.io) install postgres database viewer (ie Navicat Lite http://www.navicat.com/en/download/download.html)
 1. (skip on nitrous.io) install imagemagick
    1. (Directions for a mac)
    1. install brew see http://mxcl.github.com/homebrew/
    1. brew install imagemagick
+1. (onlyon nitrous.io) parts install nodejs (To resolve error: Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtime)
 1. bundle install
    1. If this doesn't work see note below
 1. bundle exec rake db:schema:load
@@ -52,7 +55,7 @@ CMU-SV Students
 1. bundle exec rake RAILS_ENV="test" db:schema:load
 1. (Is this necessary for foreman?) echo "RACK_ENV=development" >>.env
 1. verify your configuration
-   1. foreman start
+   1. foreman start     or     rails s thin
    1. bundle exec rake spec  (Verify that all the tests pass)
    1. run the server in debug mode in an IDE.
 1. Tip: you can pretend to be any user in your development environment by modifying the current_user method of the application_controller
