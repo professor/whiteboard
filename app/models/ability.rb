@@ -47,6 +47,9 @@ class Ability
       can :view_assignments, Job
     end
 
+    if (user.human_name == "Wendy Fong" || user.human_name == "Sylvia Arifin")
+      can :manage, Job
+    end
 
     if (user.is_admin?)
       can :manage, Course
