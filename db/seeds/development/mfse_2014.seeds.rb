@@ -2,16 +2,6 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  factory :student_se_full_time, :parent => :person do
-    is_student 1
-    is_part_time 0
-    graduation_year "2012"
-    masters_program "SE"
-    masters_track "Tech"
-    sequence(:email) {|n| "sestudent#{n}@sv.cmu.edu"}
-    sequence(:webiso_account) {|n| "sestudent#{n}@andrew.cmu.edu"}
-  end
-
   factory :student_sm_full_time, :parent => :person do
     is_student 1
     is_part_time 0
