@@ -74,12 +74,13 @@ module HUBClassRosterHandler
       course.save
     end
     Rails.logger.debug roster_changes
-    self.send_emails roster_changes
+#    Disable emailing professors about roster changes
+#    self.send_emails roster_changes
     return changes
   end
 
   def self.email_help_about_missing_student webiso_account, course
-    options = {:to => "todd.sedano@sv.cmu.edu", :subject => "Need to add this user #{webiso_account}@andrew.cmu.edu",
+    options = {:to => "help@sv.cmu.edu", :subject => "Need to add this user #{webiso_account}@andrew.cmu.edu",
                :message => "We were adding registered HUB users to the course #{course.name}, but they are not in the system.",
                :url => "http://whiteboard.sv.cmu.edu/people/new?webiso_account=#{webiso_account}@andrew.cmu.edu&is_student=true",
                :url_label => "Add person"}
