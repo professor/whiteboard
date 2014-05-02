@@ -11,6 +11,11 @@ class AcademicCalendar
 # Fall starts 1 week before and goes to roughly around Christmas
 #
 # In reality, this should be based upon when grades are due.
+
+  TERM_LENGTH = { "Fall"   => { "A" => 7, "B" => 7, "Both" => 15 },
+                  "Spring" => { "A" => 7, "B" => 7, "Both" => 16 },
+                  "Summer" => { "A" => 6, "B" => 6, "Both" => 12 } }
+
   def self.current_semester_old
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
@@ -131,37 +136,8 @@ class AcademicCalendar
     end
   end
 
-
   def self.term_length(semester, mini)
-    case semester
-      when "Fall"
-        case mini
-          when "A"
-            7
-          when "B"
-            7
-          when "Both"
-            15
-        end
-      when "Spring"
-        case mini
-          when "A"
-            7
-          when "B"
-            7
-          when "Both"
-            16
-        end
-      when "Summer"
-        case mini
-          when "A"
-            6
-          when "B"
-            6
-          when "Both"
-            12
-        end
-    end
+    TERM_LENGTH[semester][mini]
   end
 
   def self.break_length_between_minis(semester)
