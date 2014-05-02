@@ -27,6 +27,21 @@ class AcademicCalendar
                      2009 => { "Spring" => 3, "Summer" => 21, "Fall" => 34 },
                      2008 => { "Spring" => 2, "Summer" => 16, "Fall" => 35 } }
 
+  GRADES_DUE_FOR = { 2014 => { "Spring" => Date.new(2014, 5, 21),
+                               "Summer" => Date.new(2014, 8, 12),
+                               "Fall"   => Date.new(2014, 12, 18) },
+                     2013 => { "Spring" => Date.new(2013, 5, 22),
+                               "Summer" => Date.new(2013, 8, 13),
+                               "Fall"   => Date.new(2013, 12, 18) },
+                     2012 => { "Spring" => Date.new(2012, 5, 22),
+                               "Summer" => Date.new(2012, 8, 14),
+                               "Fall"   => Date.new(2012, 12, 20) },
+                     2011 => { "Spring" => Date.new(2011, 5, 17),
+                               "Summer" => Date.new(2011, 8, 9),
+                               "Fall"   => Date.new(2011, 12, 22) },
+                     2010 => { "Spring" => Date.new(2010, 5, 18),
+                               "Summer" => Date.new(2010, 8, 10),
+                               "Fall"   => Date.new(2010, 12, 16) } }
 
 
   def self.current_semester_old
@@ -156,63 +171,17 @@ class AcademicCalendar
   end
 
   def self.grades_due_for(semester, year)
-    case year
-      when 2014
-      case semester
-        when "Spring"
-          return Date.new(2014, 5, 21) #Academic calendar doesn't exaclty say?
-        when "Summer"
-          return  Date.new(2014, 8, 12)
-        when "Fall"
-          return  Date.new(2014, 12, 18)
-      end      
-      when 2013
-        case semester
-          when "Spring"
-            return Date.new(2013, 5, 22)
-          when "Summer"
-            return  Date.new(2013, 8, 13)
-          when "Fall"
-            return  Date.new(2013, 12, 18)
-        end
-      when 2012
-        case semester
-          when "Spring"
-            return Date.new(2012, 5, 22)
-          when "Summer"
-            return  Date.new(2012, 8, 14)
-          when "Fall"
-            return  Date.new(2012, 12, 20)
-        end
-      when 2011
-        case semester
-          when "Spring"
-            return Date.new(2011, 5, 17)
-          when "Summer"
-            return  Date.new(2011, 8, 9)
-          when "Fall"
-            return  Date.new(2011, 12, 22)
-        end
-      when 2010
-        case semester
-          when "Spring"
-            return Date.new(2010, 5, 18)
-          when "Summer"
-            return  Date.new(2010, 8, 10)
-          when "Fall"
-            return  Date.new(2010, 12, 16)
-        end
-      else
-        options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: grades_due_for",
-                   :message => "Please modify app/services/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
-                   :url_label => "",
-                   :url => ""
-        }
-        GenericMailer.email(options).deliver
+    if GRADES_DUE_FOR[year].nil?
+      options = {:to => "todd.sedano@sv.cmu.edu",
+                 :subject => "Academic Calendar needs updating: grades_due_for",
+                 :message => "Please modify app/services/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
+                 :url_label => "",
+                 :url => ""
+      }
+      GenericMailer.email(options).deliver
+    else
+      GRADES_DUE_FOR[year][semester]
     end
-
-
   end
 
   #Historically we have used semester start to determine what is the current semester, moving forward, lets do this
