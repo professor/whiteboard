@@ -16,6 +16,8 @@ class AcademicCalendar
                   "Spring" => { "A" => 7, "B" => 7, "Both" => 16 },
                   "Summer" => { "A" => 6, "B" => 6, "Both" => 12 } }
 
+  SPRING_BREAK = { 2014 => 10..11, 2013 => 10..11, 2012 => 10..11, 2011 => 9..10, 2010 => 9..10 }
+
   def self.current_semester_old
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
@@ -113,26 +115,17 @@ class AcademicCalendar
   end
 
   def self.spring_break(year)
-    case year
-      when 2014
-        return 10..11
-      when 2013
-        return 10..11
-      when 2012
-        return 10..11
-      when 2011
-        return 9..10
-      when 2010
-        return 9..10
-      else
-        options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: spring_break",
-                   :message => "Please modify app/services/AcademicCalendar.rb spring_break(#{year})",
-                   :url_label => "",
-                   :url => ""
-        }
-        GenericMailer.email(options).deliver
-        return nil
+    if SPRING_BREAK[year].nil?
+      options = {:to => "todd.sedano@sv.cmu.edu",
+                 :subject => "Academic Calendar needs updating: spring_break",
+                 :message => "Please modify app/services/AcademicCalendar.rb spring_break(#{year})",
+                 :url_label => "",
+                 :url => ""
+      }
+      GenericMailer.email(options).deliver
+      return nil
+    else
+      return SPRING_BREAK[year]
     end
   end
 
