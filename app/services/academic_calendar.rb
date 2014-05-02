@@ -18,6 +18,17 @@ class AcademicCalendar
 
   SPRING_BREAK = { 2014 => 10..11, 2013 => 10..11, 2012 => 10..11, 2011 => 9..10, 2010 => 9..10 }
 
+  SEMESTER_START = { 2015 => { "Spring" => 3, "Summer" => 21, "Fall" => 35 },
+                     2014 => { "Spring" => 3, "Summer" => 21, "Fall" => 35 },
+                     2013 => { "Spring" => 3, "Summer" => 21, "Fall" => 35 },
+                     2012 => { "Spring" => 3, "Summer" => 21, "Fall" => 35 },
+                     2011 => { "Spring" => 2, "Summer" => 20, "Fall" => 35 },
+                     2010 => { "Spring" => 2, "Summer" => 20, "Fall" => 34 },
+                     2009 => { "Spring" => 3, "Summer" => 21, "Fall" => 34 },
+                     2008 => { "Spring" => 2, "Summer" => 16, "Fall" => 35 } }
+
+
+
   def self.current_semester_old
     cweek = Date.today.cweek()
     return "Spring" if cweek < AcademicCalendar.semester_start("Summer", Date.today.cwyear) - 1 || cweek > 51
@@ -207,7 +218,6 @@ class AcademicCalendar
   #Historically we have used semester start to determine what is the current semester, moving forward, lets do this
   #around the grades due deadline
 
-
   # First day of class
   # August 26, 2013
   # January 13, 2014
@@ -219,89 +229,17 @@ class AcademicCalendar
   # August 7, 2014
 
   def self.semester_start(semester, year)
-    case year
-      when 2015
-        case semester
-          when "Spring" #Not official yet (4/1/2014)
-            return 3
-          when "Summer" #Not official yet (4/1/2014)
-            return 21
-          when "Fall" #Not official yet (4/1/2014)
-            return 35
-        end
-      when 2014
-        case semester
-          when "Spring"
-            return 3
-          when "Summer"
-            return 21
-          when "Fall" #Not official yet (1/2/2012)
-            return 35
-        end
-      when 2013
-        case semester
-          when "Spring"
-            return 3
-          when "Summer"
-            return 21
-          when "Fall"
-            return 35
-        end
-      when 2012
-        case semester
-          when "Spring"
-            return 3
-          when "Summer"
-            return 21
-          when "Fall"
-            return 35
-        end
-      when 2011
-        case semester
-          when "Spring"
-            return 2
-          when "Summer"
-            return 20
-          when "Fall"
-            return 35
-        end
-      when 2010
-        case semester
-          when "Spring"
-            return 2
-          when "Summer"
-            return 20
-          when "Fall"
-            return 34
-        end
-      when 2009
-        case semester
-          when "Spring"
-            return 3
-          when "Summer"
-            return 21
-          when "Fall"
-            return 34
-        end
-      when 2008 #This calendar is not aligned to the CMU Pittsburgh calendar
-        case semester
-          when "Spring"
-            return 2
-          when "Summer"
-            return 16
-          when "Fall"
-            return 35
-        end
-      else
-        options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: semester_start",
-                   :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
-                   :url_label => "",
-                   :url => ""
-        }
-        GenericMailer.email(options).deliver
+    if SEMESTER_START[year][semester].nil?
+      options = {:to => "todd.sedano@sv.cmu.edu",
+                 :subject => "Academic Calendar needs updating: semester_start",
+                 :message => "Please modify app/models/AcademicCalendar.rb semester_start(#{semester}, #{year})",
+                 :url_label => "",
+                 :url => ""
+      }
+      GenericMailer.email(options).deliver
+    else
+      SEMESTER_START[year][semester]
     end
-
   end
 
   def self.date_for_semester_start(semester, year)
