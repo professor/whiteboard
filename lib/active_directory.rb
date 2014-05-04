@@ -13,14 +13,14 @@ class ActiveDirectory
     return "Empty email address" if user.email.blank?
 
     # log what is happening
-    logger.debug("Attempting to create active directory account for " + user.email)
+    Rails.logger.debug("Attempting to create active directory account for " + user.email)
 
     # extract domain from email
     domain = user.email.split('@')[1]
 
     # Confirm domain name accuracy
     if domain != GOOGLE_DOMAIN
-      logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+      Rails.logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
       return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
     end
 
