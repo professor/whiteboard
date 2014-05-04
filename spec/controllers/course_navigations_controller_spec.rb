@@ -21,6 +21,22 @@ describe CourseNavigationsController do
 
   end
 
+  context "any teaching assistang can" do
+    before do
+      login(FactoryGirl.create(:teaching_assistant_kyle))
+    end
+
+    describe "GET show" do
+      before do
+        get :show, :id => course.to_param
+      end
+
+      it "can't access page" do
+        response.should redirect_to(root_path)
+      end
+    end
+  end
+
   context "any faculty can" do
     before do
       login(FactoryGirl.create(:faculty_frank))

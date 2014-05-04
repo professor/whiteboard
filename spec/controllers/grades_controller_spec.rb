@@ -9,6 +9,8 @@ describe GradesController do
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     @student_sam = FactoryGirl.create(:student_sam)
     @student_sally = FactoryGirl.create(:student_sally)
+    @teaching_assistant_kyle = FactoryGirl.create(:teaching_assistant_kyle)
+    @teaching_assistant_plato = FactoryGirl.create(:teaching_assistant_plato)
     @assign_1 = mock_model(Assignment, :id => 1)
     @course = mock_model(Course, :faculty => [@faculty_frank], :id => 1, :registered_students => [@student_sam, @student_sally], :assignments => [@assign_1, @assignment_2])
     Grade.delete_all
@@ -32,6 +34,7 @@ describe GradesController do
       @course.stub(:teams).and_return([Team.new, Team.new])
       @grading_rule = FactoryGirl.build(:grading_rule)
       @course.stub(:grading_rule).and_return(@grading_rule)
+      @course.stub(:faculty_and_teaching_assistants).and_return([@faculty_frank, @faculty_fagan, @teaching_assistant_kyle, @teaching_assistant_plato])
       Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sam).and_return({@assign_1.id => @grade_sam_assign1})
       Grade.stub(:get_grades_for_student_per_course).with(@course, @student_sally).and_return({@assign_1.id => @grade_sally_assign1})
       @expected_grades = {@student_sam => {@assign_1.id => @grade_sam_assign1},

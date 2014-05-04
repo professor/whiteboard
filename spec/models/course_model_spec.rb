@@ -30,6 +30,32 @@ describe Course do
     end
   end
 
+  context "associations" do
+    before do
+      @course = FactoryGirl.build(:course)
+      @faculty_frank = FactoryGirl.create(:faculty_frank)
+      @course.faculty_assignments_override = [@faculty_frank.human_name]
+      @teaching_assistant_kyle = FactoryGirl.create(:teaching_assistant_kyle)
+      @teaching_assistant_plato = FactoryGirl.create(:teaching_assistant_plato)
+      @course.teaching_assistant_assignments_override = [@teaching_assistant_kyle.human_name, @teaching_assistant_plato.human_name]
+      @course.save
+    end
+
+    it 'properly reports faculty' do
+      @course.faculty.size.should == 1
+      @course.faculty.collect{ |x| x.id }.should == [@faculty_frank.id]
+    end
+
+    it 'properly reports teaching assistants' do
+      @course.teaching_assistants.size.should == 2
+      @course.teaching_assistants.collect{ |x| x.id }.should == [@teaching_assistant_kyle.id, @teaching_assistant_plato.id]
+    end
+
+    it 'properly reports faculty and teaching assistants' do
+      @course.faculty_and_teaching_assistants.size.should == 3
+      @course.faculty_and_teaching_assistants.collect{ |x| x.id }.should == [@faculty_frank.id, @teaching_assistant_kyle.id, @teaching_assistant_plato.id]
+    end
+  end
 
   #it "display name should return the name" do
   #    @course = FactoryGirl.create(:mfse)
@@ -262,6 +288,20 @@ describe Course do
       before do
         @faculty_frank = FactoryGirl.create(:faculty_frank)
         @course.faculty_assignments_override = [@faculty_frank.human_name]
+        @course.save
+      end
+      it 'adds an asynchronous request' do
+        Delayed::Job.count.should > @count
+      end
+      it 'marks the state transition' do
+        @course.updating_email.should == true
+      end
+    end
+
+    context 'when the teaching assistants change' do
+      before do
+        @teaching_assistant_kyle = FactoryGirl.create(:teaching_assistant_kyle)
+        @course.teaching_assistant_assignments_override = [@teaching_assistant_kyle.human_name]
         @course.save
       end
       it 'adds an asynchronous request' do

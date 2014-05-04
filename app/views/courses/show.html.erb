@@ -23,6 +23,13 @@
       <% end %>
     </td>
   </tr>
+  <tr class="cmu_table_even">
+    <td>Teaching Assistants:</td>
+    <td>
+      <% @course.teaching_assistants.each do |teaching_assitant| %>
+          <p><%= link_to teaching_assistant.human_name, user_path(teaching_assistant) %></p>
+      <% end %>
+    </td>
   <tr class="cmu_table_odd">
     <td>Email:</td>
     <td>

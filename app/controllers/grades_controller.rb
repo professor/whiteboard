@@ -18,7 +18,7 @@ class GradesController < ApplicationController
   end
 
   def validate_permission
-    unless (current_user.is_admin? || @course.faculty.include?(current_user))
+    unless (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       has_permissions_or_redirect(:admin, root_path)
     end
   end
@@ -58,7 +58,7 @@ class GradesController < ApplicationController
       @user = current_user
     end
     if (current_user.id != @user.id)
-      unless (@course.faculty.include?(current_user))||(current_user.is_admin?)
+      unless (@course.faculty_and_teaching_assistants.include?(current_user))||(current_user.is_admin?)
         flash[:error] = I18n.t(:not_your_deliverable)
         redirect_to root_path and return
       end

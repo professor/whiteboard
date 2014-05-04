@@ -442,6 +442,7 @@ describe PresentationsController do
       @course = mock_model(Course, :faculty => [@faculty_frank], :course_id => 42)
       @presentation = stub_model(Presentation, :course_id => @course.id)
       Course.stub(:find).and_return(@course)
+      @course.stub(:faculty_and_teaching_assistants).and_return([@faculty_frank, @faculty_fagan, @teaching_assistant_kyle, @teaching_assistant_plato])
      end
 
      describe "GET index_for_course" do

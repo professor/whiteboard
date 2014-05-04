@@ -48,6 +48,19 @@
 
     <div class="formItem indented"><p><%= link_to "Add a teacher", "#", :id => "add_person" %></p></div>
 
+    <div id="students_in_a_collection">
+      <p>Teaching Assistants for this course<br/>
+        <span class="help_text">They will be notified of the assignment</span>
+      </p>
+      <% if @course.teaching_assistant_assignments_override.nil? %>
+          <%= render :partial => '/people/person_in_a_collection', :collection => @course.teaching_assistants.map(&:human_name), :as => :person, :locals => {:collection_form => f, :member_label => "Teaching Assistant"} %>
+      <% else %>
+          <%= render :partial => '/people/person_in_a_collection', :collection => @course.teaching_assistant_assignments_override, :as => :person, :locals => {:collection_form => f, :member_label => "Teaching Assistant"} %>
+      <% end %>
+    </div>
+
+    <div class="formItem indented"><p><%= link_to "Add a teaching assistant", "#", :id => "add_teaching assistant" %></p></div>
+
 <%# content_for :javascript do %>
     <%# javascript_tag do %>
     <script type="text/javascript">
@@ -55,7 +68,9 @@
             $("#add_person").click(function () {
                 $("#people_in_a_collection").append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Teacher"} )) %>");
             });
-
+            $("#add_teaching_assistant").click(function () {
+                $("#students_in_a_collection").append("<%= escape_javascript(render(:partial => '/people/person_in_a_collection', :object => Person.new, :locals => { :member_label => "Teaching Assistant"} )) %>");
+            });
         });
     </script>
     <%# end %>

@@ -33,7 +33,7 @@ class DeliverablesController < ApplicationController
     # @assignments = Assignment.where(:course_id => @course.id).all.sort_by(&:task_number)
 
 
-    if @course.faculty.include?(current_user)
+    if @course.faculty_and_teaching_assistants.include?(current_user)
       # Get all deliverables for this team/student
       @deliverables = Deliverable.get_deliverables(params[:course_id], current_user.id, {:is_my_team => 1})
 
@@ -58,7 +58,7 @@ class DeliverablesController < ApplicationController
   #temporary for mel
   def team_index_for_course
     @course = Course.find(params[:course_id])
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       @deliverables = Deliverable.where("team_id is not null").find_all_by_course_id(@course.id)
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -68,7 +68,7 @@ class DeliverablesController < ApplicationController
   #temporary for mel
   def individual_index_for_course
     @course = Course.find(params[:course_id])
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       @deliverables = Deliverable.where("team_id is null").find_all_by_course_id(@course.id)
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -107,7 +107,7 @@ class DeliverablesController < ApplicationController
       redirect_to root_path and return
     end
 
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       if @course.grading_rule.nil?
         flash[:error] = I18n.t(:no_grading_rule_for_course)
         redirect_to course_path(@course) and return
@@ -118,7 +118,7 @@ class DeliverablesController < ApplicationController
     end
 
     respond_to do |format|
-      if (current_user.is_admin? || @course.faculty.include?(current_user))
+      if (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
         format.html { render layout: false }
       else
         format.html # show.html.erb
@@ -281,7 +281,7 @@ class DeliverablesController < ApplicationController
 
     @deliverable = Deliverable.find(params[:id])
 
-#    if !@deliverable.assignment.course.faculty.include?(current_user)
+#    if !@deliverable.assignment.course.faculty_and_teaching_assistants.include?(current_user)
 #      flash[:error] = "Only faculty teaching this course can provide feedback on deliverables. #{current_user.human_name}"
 #      redirect_to :controller => "welcome", :action => "index"
 #      return
@@ -292,7 +292,7 @@ class DeliverablesController < ApplicationController
   def update_feedback
     @deliverable = Deliverable.find(params[:id])
 
-    unless (current_user.is_admin? || @deliverable.course.faculty.include?(current_user))
+    unless (current_user.is_admin? || @deliverable.course.faculty_and_teaching_assistants.include?(current_user))
       flash[:error] = I18n.t(:not_your_deliverable)
       redirect_to root_path and return
     end

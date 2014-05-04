@@ -9,7 +9,8 @@ describe DeliverablesController do
     @faculty_fagan = FactoryGirl.create(:faculty_fagan)
     @student_sam = FactoryGirl.create(:student_sam)
     @student_sally = FactoryGirl.create(:student_sally)
-
+    @teaching_assistant_kyle = FactoryGirl.create(:teaching_assistant_kyle)
+    @teaching_assistant_plato = FactoryGirl.create(:teaching_assistant_plato)
 
   end
 
@@ -269,6 +270,7 @@ describe DeliverablesController do
       @deliverable.stub(:team).and_return(@team)
 
       @course.stub(:grading_rule).and_return(true)
+      @course.stub(:faculty_and_teaching_assistants).and_return([@faculty_frank, @faculty_fagan, @teaching_assistant_kyle, @teaching_assistant_plato])
       @course.stub_chain(:grading_rule, :default_values?).and_return(true)
       @course = Course.stub(:find).and_return(@course)
 
