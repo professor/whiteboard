@@ -34,7 +34,7 @@ class ActiveDirectory
 
 
   # Initialize connection to active directory
-  def self.initialize
+  def initialize
     @connection = Net::LDAP.new(:host => LDAPConfig.host, :port => LDAPConfig.port)
     @connection.encryption(:method => :simple_tls) unless !LDAPConfig.is_encrypted?
     @connection.auth LDAPConfig.username, LDAPConfig.password unless LDAPConfig.username.nil? || LDAPConfig.password.nil?
