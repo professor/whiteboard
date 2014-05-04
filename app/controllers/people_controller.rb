@@ -133,7 +133,7 @@ class PeopleController < ApplicationController
   # GET /people/AndrewCarnegie
   # GET /people/AndrewCarnegie.xml
   def show
-    @person = Person.find_by_param(params[:id])
+    @person = Person.find_by_param(params[:id].to_s)
     @person.revert_to params[:version_id] if params[:version_id]
 
     respond_to do |format|
@@ -164,7 +164,7 @@ class PeopleController < ApplicationController
     @machine_name = "http://whiteboard.sv.cmu.edu"
 
     twiki_name = params[:twiki_name]
-    @person = User.find_by_twiki_name(twiki_name)
+    @person = User.find_by_twiki_name(twiki_name.to_s)
 
     respond_to do |format|
       if @person.nil?
@@ -211,7 +211,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
 
     unless can? :update, @person #@person.id == current_user.id or current_user.is_admin?
       flash[:error] = "You're not allowed to edit this user's profile."
@@ -252,7 +252,7 @@ class PeopleController < ApplicationController
   end
 
   def upload_photo
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     if (can? :upload_official_photo, User) && !params[:user][:photo_first].blank?
       @person.photo_first = params[:user][:photo_first]
     end
@@ -279,7 +279,7 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     authorize! :update, @person
 
     Rails.logger.info("People#update #{request.env["REQUEST_PATH"]} #{current_user.human_name} #{params}")
@@ -311,7 +311,7 @@ class PeopleController < ApplicationController
   # Requires user to be able to authenticate same-as-if creating.
   # GET /people/check_webiso_account
   def ajax_check_if_webiso_account_exists
-    respond_with_existence User.find_by_webiso_account(params[:q])
+    respond_with_existence User.find_by_webiso_account(params[:q].to_s)
   end
 
   # Checks whether the specified email account already exists.
@@ -321,7 +321,7 @@ class PeopleController < ApplicationController
   # Requires user to be able to authenticate same-as-if creating.
   # GET /people/check_email
   def ajax_check_if_email_exists
-    respond_with_existence User.find_by_email(params[:q])
+    respond_with_existence User.find_by_email(params[:q].to_s)
   end
 
   # Creates a response from the specified object.
@@ -338,7 +338,7 @@ class PeopleController < ApplicationController
   end
 
   def revert_to_version
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     @person.revert_to! params[:version_id]
     redirect_to :action => 'show', :id => @person
   end
@@ -356,7 +356,7 @@ class PeopleController < ApplicationController
       redirect_to(people_url) and return
     end
 
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     @person.destroy
 
     respond_to do |format|
@@ -367,7 +367,7 @@ class PeopleController < ApplicationController
 
 
   def my_teams
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -394,7 +394,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     if @person.nil?
       flash[:error] = "Person with an id of #{params[:id]} is not in this system."
       redirect_to(people_url) and return
@@ -412,7 +412,7 @@ class PeopleController < ApplicationController
   end
 
   def my_courses_verbose
-    @person = User.find_by_param(params[:id])
+    @person = User.find(params[:id])
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
@@ -479,7 +479,7 @@ class PeopleController < ApplicationController
     else
       # this is for a single contact
       @people = []
-      @people << User.find_by_id(params[:search_id])
+      @people << User.find_by_id(params[:search_id].to_s)
     end
     respond_to do |format|
       format.csv do
@@ -514,7 +514,7 @@ class PeopleController < ApplicationController
     else
       # this is for a single contact
       @people = []
-      @people << User.find_by_id(params[:search_id])
+      @people << User.find_by_id(params[:search_id].to_s)
     end
     vcard_str=""
     @people.each do |user|
@@ -630,7 +630,7 @@ class PeopleController < ApplicationController
     if (current_user.is_admin? || current_user.is_staff?)
       if !params[:id].blank?
         @user_override = true
-        @user = User.find_by_param(params[:id])
+        @user = User.find(params[:id])
       end
     end
     results = PeopleSearchDefault.default_search_results(@user)
