@@ -146,5 +146,17 @@ describe AssignmentsController do
     end
   end
 
+  describe "GET show" do
+    before do
+      get :show, :course_id => @course
+    end
+    it "renders the 'show' template" do
+      response.should render_template("show")
+    end
+    it "assigns all assignments as @assignments" do
+      assignments = @course.assignments
+      assigns(:assignments).should eq(assignments)
+    end
+  end
 
 end
