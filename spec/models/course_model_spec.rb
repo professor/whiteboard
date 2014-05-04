@@ -55,6 +55,16 @@ describe Course do
       @course.faculty_and_teaching_assistants.size.should == 3
       @course.faculty_and_teaching_assistants.collect{ |x| x.id }.should == [@faculty_frank.id, @teaching_assistant_kyle.id, @teaching_assistant_plato.id]
     end
+
+    it "are copied when a new course is copied" do
+      new_course = @course.copy_as_new_course
+      new_course.save
+      new_course.faculty.should == @course.faculty
+      new_course.faculty.size.should == 1
+      new_course.teaching_assistants.should == @course.teaching_assistants
+      new_course.teaching_assistants.size.should == 2
+      new_course.faculty_and_teaching_assistants.should == @course.faculty_and_teaching_assistants
+    end
   end
 
   #it "display name should return the name" do
@@ -243,6 +253,8 @@ describe Course do
       new_course = course.copy_as_new_course
       new_course.save
       new_course.faculty.should == course.faculty
+      new_course.teaching_assistants.should == course.teaching_assistants
+      new_course.faculty_and_teaching_assistants.should == course.faculty_and_teaching_assistants
     end
 
   end
