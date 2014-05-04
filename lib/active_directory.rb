@@ -27,7 +27,7 @@ class ActiveDirectory
     # Attempt to create active directory account
     active_directory_service = ActiveDirectory.new
     if active_directory_service.create_account(user) == "Success"
-      user.active_directory_account_created = Time.now()
+      user.active_directory_account_created_at = Time.now()
       user.save
     end
   end
