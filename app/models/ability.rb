@@ -61,7 +61,7 @@ class Ability
     end
 
     if  (user.is_staff?)
-      can [:teach, :create, :update, :peer_evaluation, :team_formation], Course
+      can [:teach, :read, :create, :update, :peer_evaluation, :team_formation], Course
       can :manage, Assignment
       can [:create, :see_job_details], Job
     end
