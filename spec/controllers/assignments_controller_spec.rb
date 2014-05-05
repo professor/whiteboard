@@ -146,5 +146,12 @@ describe AssignmentsController do
     end
   end
 
+  describe "GET reposition" do
+    it "renders the reposition page" do
+      get :show, :course_id => @course.id
+      response.should render_template("show")
+    end
+  end
+
 
 end
