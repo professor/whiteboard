@@ -1,5 +1,7 @@
 #Admin
 
+
+
 ## To view log files
     heroku logs --tail --app cmusv-ceddar
 
@@ -23,3 +25,13 @@
 ## Email faculty to configure (next semester)
     heroku run rake whiteboard:email_faculty_to_configure_next_semester_courses --app cmusv
 
+## To flush all delayed system jobs
+    heroku run script/rails console --app cmusv-cedar
+    DelayedSystemJob.delete_all
+	
+	## To create an admin
+    heroku run script/rails console --app cmusv-cedar
+	user = User.find(1)
+	user.is_admin = true
+	user.save
+	
