@@ -77,7 +77,7 @@
               <a href=<%= "/courses/semester/#{AcademicCalendar.current_semester()}#{AcademicCalendar.current_semester_year()}" %>><%= AcademicCalendar.current_semester() %> <%= AcademicCalendar.current_semester_year() %>
                 Courses</a></li>
 
-            <% if AcademicCalendar.next_semester_is_soon %>
+            <% if true || AcademicCalendar.next_semester_is_soon %>
                 <li class="standard">
                   <a href=<%= "/courses/semester/#{AcademicCalendar.next_semester()}#{AcademicCalendar.next_semester_year}" %>><%= AcademicCalendar.next_semester() %> <%= AcademicCalendar.next_semester_year %>
                     Courses</a></li>
