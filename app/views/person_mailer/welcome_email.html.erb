@@ -11,7 +11,7 @@ What You Need To Know About Your CMU-SV Email Address
 </b>
 <ul>
   <li>
-    Whenever you have to enter both your CMU-SV email address and password on a page with a URL ending in “google.com” (or, for server settings in an email app),
+    Whenever you have to enter both your CMU-SV email address and password on a page with a URL ending in "google.com" (or, for server settings in an email app),
     <br/>you MUST use: <%= switch_sv_to_west(@person.email) %>
   </li>
   <li>
@@ -37,34 +37,34 @@ Set Up Your Gmail Messages To Be From:  <%= @person.email %>
       </li>
     </ul>
   <li>
-    Choose “Settings” (in the Gmail browser interface) from the Gear Wheel pull-down.
+    Choose "Settings" (in the Gmail browser interface) from the Gear Wheel pull-down.
   </li>
   <li>
-    Select the “Accounts” tab.
+    Select the "Accounts" tab.
   </li><li>
     In the "Send mail as" section, click "Add another email address you own".
   </li><li>
-    For “Email address”, use:  <%= @person.email %>
+    For "Email address", use:  <%= @person.email %>
   </li><li>
-    Uncheck the “Treat as an alias” checkbox.
+    Uncheck the "Treat as an alias" checkbox.
   </li><li>
     Click "Next Step".
   </li><li>
-    Keep the selected radio button to “Send through Carnegie Mellon Silicon Valley Mail”.
+    Keep the selected radio button to "Send through Carnegie Mellon Silicon Valley Mail".
   </li><li>
-    Click “Next Step”.
+    Click "Next Step".
   </li><li>
-    Make sure the information is correct; then, click “Send Verification”.
+    Make sure the information is correct; then, click "Send Verification".
   </li><li>
     Verify the address by going to your "Inbox" from the left navigation panel, reading the verification email, and clicking the confirmation link.
   </li><li>
-    Go back to the “Accounts” tab in “Settings” (available via the Gear Wheel).
+    Go back to the "Accounts" tab in "Settings" (available via the Gear Wheel).
   </li><li>
-    Click "make default" to the right of “<%= @person.email %>”.
+    Click "make default" to the right of "<%= @person.email %>".
   </li>
 </ol>
 <p/>
-In email apps, specify “@<b>west</b>.cmu.edu” for server logons (possibly under advanced settings), but use “@<b>sv</b>.cmu.edu” for user information address and “Reply-To” settings.
+In email apps, specify "@<b>west</b>.cmu.edu" for server logons (possibly under advanced settings), but use "@<b>sv</b>.cmu.edu" for user information address and "Reply-To" settings.
 <p/>
 <b>
 Forward Your Andrew Email To CMU-SV
@@ -77,12 +77,13 @@ While at the Silicon Valley campus, we recommend that you forward your Andrew em
     Go to:  <a href="http://emailtools.cmu.edu/">http://emailtools.cmu.edu/</a>
   </li><li>
     Log in using your Andrew credentials.
+(See:  <a href="http://www.cmu.edu/computing/accounts/passwords/">http://www.cmu.edu/computing/accounts/passwords/</a>)
   </li><li>
-    Click “Mail Forwarding” in the left navigation panel.
+    Click "Mail Forwarding" in the left navigation panel.
   </li><li>
-    In the “Mail Forwarding” center pane, enter in the “Forwarded To” textbox your address:  <%= @person.email %>
+    In the "Mail Forwarding" center pane, enter in the "Forwarded To" textbox your address:  <%= @person.email %>
   </li><li>
-    Click “Modify”.
+    Click "Modify".
   </li>
 </ol>
 <p/>
@@ -97,9 +98,12 @@ Contacts And Other Information
   </li><li>
     Regarding services provided by the main campus, e.g., Andrew:  advisor@andrew.cmu.edu
   </li><li>
-    <a href="http://sv.cmu.edu/campus-life/student-affairs/orientation/">Student Orientation:  http://sv.cmu.edu/campus-life/student-affairs/orientation/</a>
+Student Orientation:  
+    <a href="http://sv.cmu.edu/campus-life/student-affairs/orientation/">http://sv.cmu.edu/campus-life/student-affairs/orientation/</a>
   </li><li>
-    <a href="http://sv.cmu.edu/information/resources/">Emergency Alert and Other Resources:  http://sv.cmu.edu/information/resources/</a>
+Emergency Alert and Other Resources:  
+    <a href="http://sv.cmu.edu/information/resources/">
+http://sv.cmu.edu/information/resources/</a>
   </li><li>
     General non-technical questions not specific to SV:  Your home department.
   </li>
