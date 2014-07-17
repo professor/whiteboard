@@ -1,30 +1,27 @@
 <%= @person.first_name %>,
-<br/><br/>
+<p/>
 This message contains important information regarding your CMU Silicon Valley email account.
-<br/>
-<br/>
+<p/>
 Please read, complete your email set-up, and save this message for future reference.
-<br/>
-<br/>
+<p/>
 We ask all community members to check their CMU-SV email every business day because Silicon Valley academic and administrative communications are sent there.
-<br/>
-<br/>
+<p/>
 <b>
 What You Need To Know About Your CMU-SV Email Address
-</b><br/>
+</b>
 <ul>
   <li>
-    Whenever you have to enter both your CMU-SV email address and password on a page with a URL ending in “google.com” (or, for server settings in an email app), you MUST use: <%= switch_sv_to_west(@person.email) %>
+    Whenever you have to enter both your CMU-SV email address and password on a page with a URL ending in "google.com" (or, for server settings in an email app),
+    <br/>you MUST use: <%= switch_sv_to_west(@person.email) %>
   </li>
   <li>
     BUT, we identify ourselves as "@sv.cmu.edu", and use that form everywhere else.
   </li>
 </ul>
-<br/>
-<br/>
+<p/>
 <b>
 Set Up Your Gmail Messages To Be From:  <%= @person.email %>
-</b><br/>
+</b>
 <ol>
   <li>
     Log into your CMU-SV Gmail account at <a href="http://gmail.sv.cmu.edu/">http://gmail.sv.cmu.edu/</a>.
@@ -40,61 +37,59 @@ Set Up Your Gmail Messages To Be From:  <%= @person.email %>
       </li>
     </ul>
   <li>
-    Choose “Settings” (in the Gmail browser interface) from the Gear Wheel pull-down.
+    Choose "Settings" (in the Gmail browser interface) from the Gear Wheel pull-down.
   </li>
   <li>
-    Select the “Accounts” tab.
+    Select the "Accounts" tab.
   </li><li>
     In the "Send mail as" section, click "Add another email address you own".
   </li><li>
-    For “Email address”, use:  <%= @person.email %>
+    For "Email address", use:  <%= @person.email %>
   </li><li>
-    Uncheck the “Treat as an alias” checkbox.
+    Uncheck the "Treat as an alias" checkbox.
   </li><li>
     Click "Next Step".
   </li><li>
-    Keep the selected radio button to “Send through Carnegie Mellon Silicon Valley Mail”.
+    Keep the selected radio button to "Send through Carnegie Mellon Silicon Valley Mail".
   </li><li>
-    Click “Next Step”.
+    Click "Next Step".
   </li><li>
-    Make sure the information is correct; then, click “Send Verification”.
+    Make sure the information is correct; then, click "Send Verification".
   </li><li>
     Verify the address by going to your "Inbox" from the left navigation panel, reading the verification email, and clicking the confirmation link.
   </li><li>
-    Go back to the “Accounts” tab in “Settings” (available via the Gear Wheel).
+    Go back to the "Accounts" tab in "Settings" (available via the Gear Wheel).
   </li><li>
-    Click "make default" to the right of “<%= @person.email %>”.
+    Click "make default" to the right of "<%= @person.email %>".
   </li>
 </ol>
-<br/>
-In email apps, specify “@<b>west</b>.cmu.edu” for server logons (possibly under advanced settings), but use “@<b>sv</b>.cmu.edu” for user information address and “Reply-To” settings.
-<br/>
-<br/>
+<p/>
+In email apps, specify "@<b>west</b>.cmu.edu" for server logons (possibly under advanced settings), but use "@<b>sv</b>.cmu.edu" for user information address and "Reply-To" settings.
+<p/>
 <b>
 Forward Your Andrew Email To CMU-SV
-</b><br/>
+</b></p>
 Carnegie Mellon University affiliated members are given an Andrew ID and email account. Main campus communications (including course registration, HUB/Enrollment Services messages, and graduation information) are addressed to your Andrew email account.
-<br/>
-<br/>
+<p/>
 While at the Silicon Valley campus, we recommend that you forward your Andrew email to CMU-SV to avoid missing important communications from the main campus.
 <ol>
   <li>
     Go to:  <a href="http://emailtools.cmu.edu/">http://emailtools.cmu.edu/</a>
   </li><li>
     Log in using your Andrew credentials.
+(See:  <a href="http://www.cmu.edu/computing/accounts/passwords/">http://www.cmu.edu/computing/accounts/passwords/</a>)
   </li><li>
-    Click “Mail Forwarding” in the left navigation panel.
+    Click "Mail Forwarding" in the left navigation panel.
   </li><li>
-    In the “Mail Forwarding” center pane, enter in the “Forwarded To” textbox your address:  <%= @person.email %>
+    In the "Mail Forwarding" center pane, enter in the "Forwarded To" textbox your address:  <%= @person.email %>
   </li><li>
-    Click “Modify”.
+    Click "Modify".
   </li>
 </ol>
-<br/>
-<br/>
+<p/>
 <b>
 Contacts And Other Information
-</b><br/>
+</b>
 <ul>
   <li>
     For help with SV technical resources, e.g., email, IT, AV:  help@sv.cmu.edu
@@ -103,14 +98,17 @@ Contacts And Other Information
   </li><li>
     Regarding services provided by the main campus, e.g., Andrew:  advisor@andrew.cmu.edu
   </li><li>
-    <a href="http://sv.cmu.edu/campus-life/student-affairs/orientation/">Student Orientation:  http://sv.cmu.edu/campus-life/student-affairs/orientation/</a>
+Student Orientation:  
+    <a href="http://sv.cmu.edu/campus-life/student-affairs/orientation/">http://sv.cmu.edu/campus-life/student-affairs/orientation/</a>
   </li><li>
-    <a href="http://sv.cmu.edu/information/resources/">Emergency Alert and Other Resources:  http://sv.cmu.edu/information/resources/</a>
+Emergency Alert and Other Resources:  
+    <a href="http://sv.cmu.edu/information/resources/">
+http://sv.cmu.edu/information/resources/</a>
   </li><li>
     General non-technical questions not specific to SV:  Your home department.
   </li>
 </ul>
-<br/>
+<p/>
 Regards,
 <br/>
 Technical Operations
