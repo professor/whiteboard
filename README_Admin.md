@@ -35,3 +35,20 @@
 	user.is_admin = true
 	user.save
 	
+	
+## Deploying to production
+	The master code base is located at http://github.com/professor/whiteboard
+	To get code into the code base, fork the repository, make local modifications, verify that all the tests pass with rake, and do a pull reqeust to professor/whiteboard. The project owner responds to pull request quickly
+	
+	If you have the ability to push code directly to heroku, first setup a git remote to the heroku repo with heroku git:remote -a git@heroku.com:cmusv-cedar.git 
+
+	To then deploy code
+	git pull heroku master
+	rake
+	git push heroku master
+	heroku pgbackups:capture --expire --app cmusv
+	heroku run rake db:migrate --app cmusv   #this is only necessary if there are db schema changes
+
+	For additional information see https://devcenter.heroku.com/articles/git
+	
+	
