@@ -1,7 +1,7 @@
 class PersonMailer < ActionMailer::Base
   default :from => 'CMU-SV Official Communication <help@sv.cmu.edu>',
           :cc => 'help@sv.cmu.edu',
-          :bcc => "rails.app@sv.cmu.edu",
+          :bcc => 'rails.app@sv.cmu.edu',
           :subject => 'Welcome to Carnegie Mellon University Silicon Valley'
 
   def welcome_email(person, password, options = {})
@@ -12,5 +12,4 @@ class PersonMailer < ActionMailer::Base
          :subject => options[:subject] || "Welcome to Carnegie Mellon University Silicon Valley (" + @person.email + ")",
          :date => Time.now)
   end
-
 end
