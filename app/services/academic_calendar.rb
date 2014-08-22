@@ -326,7 +326,7 @@ class AcademicCalendar
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
                    :subject => "Academic Calendar needs updating: semester_start",
-                   :message => "Please modify app/services/AcademicCalendar.rb semester_start(#{semester}, #{year})",
+                   :message => "Please modify app/services/AcademicCalendar.rb semester_start(#{semester}, #{year})  #{year.class}",
                    :url_label => "",
                    :url => ""
         }
