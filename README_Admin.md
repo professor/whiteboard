@@ -3,7 +3,7 @@
 
 
 ## To view log files
-    heroku logs --tail --app cmusv-ceddar
+    heroku logs --tail --app cmusv-cedar
 
 
 ## To copy courses from one year to the next
@@ -20,10 +20,10 @@
     c.delete
 
 ## Email faculty to configure (current semester)
-    heroku run rake whiteboard:email_faculty_to_configure_current_semester_courses --app cmusv
+    heroku run rake whiteboard:email_faculty_to_configure_current_semester_courses --app cmusv-cedar
 
 ## Email faculty to configure (next semester)
-    heroku run rake whiteboard:email_faculty_to_configure_next_semester_courses --app cmusv
+    heroku run rake whiteboard:email_faculty_to_configure_next_semester_courses --app cmusv-cedar
 
 ## To flush all delayed system jobs
     heroku run script/rails console --app cmusv-cedar
@@ -46,8 +46,8 @@
 	git pull heroku master
 	rake
 	git push heroku master
-	heroku pgbackups:capture --expire --app cmusv
-	heroku run rake db:migrate --app cmusv   #this is only necessary if there are db schema changes
+	heroku pgbackups:capture --expire --app cmusv-cedar
+	heroku run rake db:migrate --app cmusv-cedar   #this is only necessary if there are db schema changes
 
 	For additional information see https://devcenter.heroku.com/articles/git
 	

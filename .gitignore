@@ -46,3 +46,7 @@ push*.dat
 
 #postgres
 logfile
+
+# ignore swap and lock files
+*.swp
+*.lock
