@@ -109,6 +109,8 @@ class AcademicCalendar
 
   def self.spring_break(year)
     case year
+      when 2015
+        return 11
       when 2014
         return 10..11
       when 2013
@@ -121,13 +123,13 @@ class AcademicCalendar
         return 9..10
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: spring_break",
+                   :subject => "(Real) Academic Calendar needs updating: spring_break",
                    :message => "Please modify app/services/AcademicCalendar.rb spring_break(#{year})",
                    :url_label => "",
                    :url => ""
         }
         GenericMailer.email(options).deliver
-        return nil
+        return 11
     end
   end
 
@@ -177,10 +179,19 @@ class AcademicCalendar
 
   def self.grades_due_for(semester, year)
     case year
-      when 2014
+    when 2015
+      case semester
+      when "Spring"
+        return Date.new(2015, 5, 19)
+      when "Summer"
+        return  Date.new(2015, 8, 11)
+      when "Fall"
+        return  Date.new(2015, 12, 23)
+      end
+    when 2014
       case semester
         when "Spring"
-          return Date.new(2014, 5, 21) #Academic calendar doesn't exaclty say?
+          return Date.new(2014, 5, 21)
         when "Summer"
           return  Date.new(2014, 8, 12)
         when "Fall"
@@ -224,12 +235,21 @@ class AcademicCalendar
         end
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: grades_due_for",
+                   :subject => "(Real) Academic Calendar needs updating: grades_due_for",
                    :message => "Please modify app/services/AcademicCalendar.rb grades_due_for(#{semester}, #{year})",
                    :url_label => "",
                    :url => ""
         }
         GenericMailer.email(options).deliver
+
+        case semester
+        when 'Spring'
+          return Date.new(year, 5, 19)
+        when 'Summer'
+          return  Date.new(year, 8, 11)
+        when 'Fall'
+          return  Date.new(year, 12, 23)
+        end
     end
 
 
@@ -325,12 +345,21 @@ class AcademicCalendar
         end
       else
         options = {:to => "todd.sedano@sv.cmu.edu",
-                   :subject => "Academic Calendar needs updating: semester_start",
+                   :subject => "(Real) Academic Calendar needs updating: semester_start",
                    :message => "Please modify app/services/AcademicCalendar.rb semester_start(#{semester}, #{year})  #{year.class}",
                    :url_label => "",
                    :url => ""
         }
         GenericMailer.email(options).deliver
+
+        case semester
+        when 'Spring'
+          return 3
+        when 'Summer'
+          return 21
+        when 'Fall'
+          return 35
+        end
     end
 
   end
