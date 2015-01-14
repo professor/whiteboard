@@ -50,5 +50,7 @@
 	heroku run rake db:migrate --app cmusv-cedar   #this is only necessary if there are db schema changes
 
 	For additional information see https://devcenter.heroku.com/articles/git
-	
+
+## To download the database locally
+  heroku pg:pull HEROKU_POSTGRESQL_COLOR_URL cmu_education_heroku --app cmusv-cedar
 	
