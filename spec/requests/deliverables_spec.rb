@@ -121,11 +121,13 @@ describe "deliverables" do
   context "As a professor" do
     before do
       @faculty = FactoryGirl.create(:faculty_frank_user)
+      @teaching_assistant = FactoryGirl.create(:teaching_assistant_kyle)
       login_with_oauth @faculty
       @team_deliverable.course.faculty = [@faculty]
       @course = FactoryGirl.create(:fse)
       @faculty_assignment = FactoryGirl.create(:faculty_assignment, :course_id => @course.id,
                                                :user_id => @faculty.id)
+      @teaching_assistant_assignment = FactoryGirl.create(:teaching_assistant_assignment, :course_id => @course.id, :user_id => @teaching_assistant.id)
       @team_deliverable.course = @course
       @student_sam = FactoryGirl.create(:student_sam)
 
@@ -240,7 +242,9 @@ describe "deliverables" do
         attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
         click_button "Create"
         @professor = FactoryGirl.create(:faculty_frank_user)
+        @teaching_assitant = FactoryGirl.create(:teaching_assistant_kyle)
         @assignment.course.faculty_assignments_override = [@professor.human_name]
+        @assignment.course.teaching_assistant_assignments_override = [@teaching_assistant.human_name]
         @assignment.course.update_faculty
 #        Course.any_instance.stub(:faculty).and_return([@professor])
         visit "/logout"
@@ -275,7 +279,9 @@ describe "deliverables" do
     #    attach_file 'deliverable_attachment_attachment', Rails.root + 'spec/fixtures/sample_assignment.txt'
     #    click_button "Create"
     #    @professor = FactoryGirl.create(:faculty_frank_user)
+    #    @teaching_assistant = FactoryGirl.create(:teaching_assistant_kyle)
     #    @assignment.course.faculty_assignments_override = [@professor.human_name]
+    #    @assignment.course.teaching_assitant_assignments_override = [@teaching_assistant.human_name]
     #    @assignment.course.update_faculty
     #    login_with_oauth @professor
     #  }

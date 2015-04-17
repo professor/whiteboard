@@ -12,6 +12,13 @@ describe User do
 
   end
 
+  it { should respond_to(:faculty_assignments) }
+  it { should respond_to(:teaching_these_courses) }
+  it { should respond_to(:teaching_assistant_assignments) }
+  it { should respond_to(:teacher_assisting_these_courses) }
+  it { should respond_to(:teaching_these_courses_during_current_semester) }
+  it { should respond_to(:teacher_assisting_these_courses_during_current_semester) }
+
   describe "abilities" do
     subject { ability }
     let(:ability){ Ability.new(user) }

@@ -41,7 +41,7 @@ class PresentationsController < ApplicationController
   # GET /courses/:course_id/presentations
   def index_for_course
     @course = Course.find(params[:course_id])
-    if (current_user.is_admin? || @course.faculty.include?(current_user))
+    if (current_user.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       @presentations = Presentation.find_all_by_course_id(@course.id)
     else
       has_permissions_or_redirect(:admin, root_path)
@@ -51,7 +51,7 @@ class PresentationsController < ApplicationController
   # GET /course/:person_id/presentations/new
   def new
     @course = Course.find(params[:course_id])
-    if (current_person.is_admin? || @course.faculty.include?(current_user))
+    if (current_person.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
       @presentation = Presentation.new(:presentation_date => Date.today)
       @course =Course.find_by_id(params[:course_id])
     else
@@ -62,7 +62,7 @@ class PresentationsController < ApplicationController
   # GET /course/:person_id/presentations/:id/edit
   #def edit
   #  @presentation = Presentation.find(:course_id)
-  #  if (current_person.is_admin? || @course.faculty.include?(current_user))
+  #  if (current_person.is_admin? || @course.faculty_and_teaching_assistants.include?(current_user))
   #    @presentation = Presentation.new(:presentation_date => Date.today)
   #    @course =Course.find_by_id(params[:course_id])
   #  else

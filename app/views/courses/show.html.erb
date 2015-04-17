@@ -35,6 +35,16 @@
       <% end %>
     </td>
   </tr>
+  <% if not @course.teaching_assistants.empty? %>
+    <tr class="cmu_table_even">
+      <td>Teaching Assistants:</td>
+      <td>
+        <% @course.teaching_assistants.each do |teaching_assitant| %>
+            <p><%= link_to teaching_assistant.human_name, user_path(teaching_assistant) %></p>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
 </table>
 <br/>
 

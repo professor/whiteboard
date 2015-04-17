@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
   has_many :faculty_assignments
   has_many :teaching_these_courses, :through => :faculty_assignments, :source => :course
 
+  has_many :teaching_assistant_assignments
+  has_many :teacher_assisting_these_courses, :through => :teaching_assistant_assignments, :source => :course
+
   has_many :team_assignments
   has_many :teams, :through => :team_assignments, :source => :team
 
@@ -104,6 +107,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  def teacher_assisting_these_courses_during_current_semester
+    teacher_assisting_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)
+  end
 
   def teaching_these_courses_during_current_semester
     teaching_these_courses.where(:semester => AcademicCalendar.current_semester, :year => Date.today.year)

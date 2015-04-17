@@ -42,6 +42,9 @@ class Course < ActiveRecord::Base
   has_many :faculty_assignments
   has_many :faculty, :through => :faculty_assignments, :source => :user
 
+  has_many :teaching_assistant_assignments
+  has_many :teaching_assistants, :through => :teaching_assistant_assignments, :source => :user
+
   has_many :registrations
   has_many :registered_students, :through => :registrations, :source => :user
 
@@ -55,6 +58,7 @@ class Course < ActiveRecord::Base
 
   validates_presence_of :semester, :year, :mini, :name
   validate :validate_faculty_assignments
+  validate :validate_teaching_assistant_assignments
 
   versioned
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_user_id'
@@ -65,16 +69,26 @@ class Course < ActiveRecord::Base
   # that they are people in the system) and then to save the people in the faculty association.
   attr_accessor :faculty_assignments_override
 
+  #When assigning teaching_assistant to a page, the user types in a series of strings that then need to be processed
+  # :teaching_assistant_assignments_override is a temporary variable that is used to do validation of the strings (to verify
+  # that they are people in the system) and then to save the people in the teaching_assistant association.
+  attr_accessor :teaching_assistant_assignments_override
+
   attr_accessible :course_number_id, :name, :number, :semester, :mini, :primary_faculty_label,
                   :secondary_faculty_label, :twiki_url, :remind_about_effort, :short_name, :year,
                   :peer_evaluation_first_email, :peer_evaluation_second_email,
                   :curriculum_url, :configure_course_twiki,
+                  :teaching_assistant_assignments_override,
                   :faculty_assignments_override
 
   include PeopleInACollection
 
   def validate_faculty_assignments
     validate_members :faculty_assignments_override
+  end
+
+  def validate_teaching_assistant_assignments
+    validate_members :teaching_assistant_assignments_override
   end
 
 #  def to_param
@@ -120,7 +134,7 @@ class Course < ActiveRecord::Base
   end
 
   #before_validation :set_updated_by_user -- this needs to be done by the controller
-  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_faculty
+  before_save :strip_whitespaces, :update_email_address, :need_to_update_google_list?, :update_teaching_assistants, :update_faculty
   after_save :update_distribution_list
 
   scope :unique_course_numbers_and_names_by_number, :select => "DISTINCT number, name", :order => 'number ASC'
@@ -235,6 +249,20 @@ class Course < ActiveRecord::Base
     self.updating_email = true
   end
 
+  #When modifying validate_teaching_assistant or update_teaching_assistant, modify the same code in team.rb
+  #Todo - move to a higher class or try as a mixin
+  def update_teaching_assistants
+    return "" if teaching_assistant_assignments_override.nil?
+    self.teaching_assistants = []
+
+    self.teaching_assistant_assignments_override = teaching_assistant_assignments_override.select { |name| name != nil && name.strip != "" }
+    list = map_member_strings_to_users(self.teaching_assistant_assignments_override)
+    raise "Error converting teaching_assistant_assignments_override to IDs!" if list.include?(nil)
+    self.teaching_assistants = list
+    teaching_assistant_assignments_override = nil
+    self.updating_email = true
+  end
+
   def copy_as_new_course
     new_course = self.dup
     new_course.is_configured = false
@@ -244,6 +272,7 @@ class Course < ActiveRecord::Base
     new_course.updated_at = Time.now
     new_course.curriculum_url = nil if self.curriculum_url.nil? || self.curriculum_url.include?("twiki")
     new_course.faculty = self.faculty
+    new_course.teaching_assistants = self.teaching_assistants
     new_course.grading_rule = self.grading_rule.dup if self.grading_rule.present?
     self.assignments.each { |assignment| new_course.assignments << assignment.dup } if self.assignments.present?
     return new_course
@@ -363,6 +392,11 @@ class Course < ActiveRecord::Base
   end
 
   public
+
+  def faculty_and_teaching_assistants
+    faculty + teaching_assistants
+  end
+
   def registered_students_and_students_on_teams_hash
     students = Hash.new
     self.registered_students.each do |student|

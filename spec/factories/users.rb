@@ -116,6 +116,32 @@ FactoryGirl.define do
     initialize_with { User.find_or_initialize_by_id(id) }
   end
 
+  factory :teaching_assistant_kyle_user, :parent => :user do
+    id 51
+    email "student.kyle@sv.cmu.edu"
+    webiso_account "kyle@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Teaching Assistant"
+    last_name "Kyle"
+    human_name "Teaching Assistant Kyle"
+    twiki_name "TeachingAssistantKyle"
+    initialize_with { User.find_or_initialize_by_id(id) }
+  end
+
+  factory :teaching_assistant_plato_user, :parent => :user do
+    id 52
+    email "student.plato@sv.cmu.edu"
+    webiso_account "plato@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Teaching Assistant"
+    last_name "Plato"
+    human_name "Teaching Assistant Plato"
+    twiki_name "TeachingAssistantPlato"
+    initialize_with { User.find_or_initialize_by_id(id) }
+  end
+
   factory :person_visible_to_setech, :parent => :people_search_default do
     student_staff_group "All"
     program_group "SE"

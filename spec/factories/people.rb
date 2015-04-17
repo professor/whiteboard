@@ -35,6 +35,28 @@ FactoryGirl.define do
     twiki_name "StudentSally"
   end
 
+  factory :teaching_assistant_kyle, :parent => :person do
+    email "student.kyle@sv.cmu.edu"
+    webiso_account "kyle@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Teaching Assistant"
+    last_name "Kyle"
+    human_name "Teaching Assistant Kyle"
+    twiki_name "TeachingAssistantKyle"
+  end
+
+  factory :teaching_assistant_plato, :parent => :person do
+    email "student.plato@sv.cmu.edu"
+    webiso_account "plato@andrew.cmu.edu"
+    is_student true
+    is_alumnus false
+    first_name "Teaching Assistant"
+    last_name "Plato"
+    human_name "Teaching Assistant Plato"
+    twiki_name "TeachingAssistantPlato"
+  end
+
   factory :faculty_frank, :parent => :person do
     email "faculty.frank@sv.cmu.edu"
     webiso_account "frank@andrew.cmu.edu"

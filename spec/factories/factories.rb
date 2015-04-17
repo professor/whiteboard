@@ -54,6 +54,11 @@ FactoryGirl.define do
     user_id 999
   end
 
+  factory :teaching_assistant_assignment, class: TeachingAssistantAssignment do
+    course_id 1
+    user_id 51
+  end
+
   factory :feedback_from_sam, class: PresentationFeedback do
     association :evaluator, :factory => :student_sam
     association :presentation, :factory => :presentation
