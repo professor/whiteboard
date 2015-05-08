@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :omniauthable, :rememberable, :trackable, :timeoutable
+  devise :omniauthable, :rememberable, :trackable, :timeoutable, :omniauth_providers => [:google_oauth2]
   #, :database_authenticatable, :registerable,
 
   # Setup accessible (or protected) attributes for your model
@@ -128,6 +128,12 @@ class User < ActiveRecord::Base
   def self.find_for_google_apps_oauth(access_token, signed_in_resource=nil)
     data = access_token['info']
     email = switch_west_to_sv(data["email"]).downcase
+    User.find_by_email(email)
+  end
+
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    email = switch_west_to_sv(data['email']).downcase
     User.find_by_email(email)
   end
 

@@ -19,9 +19,8 @@ gem 'mechanize'
 #gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As of 7/1/2011, 0.0.10 was broken -- this is used by mechanize, when it works, remove this line
 gem "webrobots", "~> 0.1.1"
 
-gem 'omniauth', '1.1.4'
-#gem 'omniauth-google-apps', :git => 'git://github.com/sishen/omniauth-google-apps.git'
-gem "omniauth-google-apps", "~> 0.1.0"
+# gem 'omniauth', '1.1.4'
+gem 'omniauth-google-oauth2'
 
 gem 'devise'
 gem 'bcrypt-ruby', '3.0.1' #https://stackoverflow.com/questions/12879892/rails-on-heroku-activerecordstatementinvalid-pgerror-ssl-error-cert-already
@@ -29,7 +28,7 @@ gem 'bcrypt-ruby', '3.0.1' #https://stackoverflow.com/questions/12879892/rails-o
 gem 'ckeditor_rails'
 
 
-gem "bundler", "~> 1.5.3"
+gem 'bundler', '1.9.6'
 gem 'delayed_job', '2.1.4'
 
 gem 'indextank'
@@ -76,9 +75,10 @@ group :development, :test do
   #gem 'ruby-debug-base19x'
   #gem 'ruby-debug-ide'
   #gem 'linecache19', '>= 0.5.13', :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
-  gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
-  gem 'ruby-debug-ide', '>= 0.4.17.beta14'
-  gem 'ruby-debug19', :require => 'ruby-debug'
+
+  # gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
+  # gem 'ruby-debug-ide', '>= 0.4.17.beta14'
+  # gem 'ruby-debug19', :require => 'ruby-debug'
 
 
   gem 'shoulda'

@@ -28,9 +28,9 @@ module ControllerMacros
 end
 
 module IntegrationSpecHelper
-  def login_with_oauth(user, service = :google_apps)
+  def login_with_oauth(user, service = :google_oauth2)
       OmniAuth.config.test_mode = true
-      OmniAuth.config.add_mock(:google_apps, {
+      OmniAuth.config.add_mock(:google_oauth2, {
        :info => {:email => user.email,
           :name => user.human_name,
           :first_name => user.first_name,
@@ -39,7 +39,7 @@ module IntegrationSpecHelper
     visit "/users/auth/#{service}"
   end
 
-  def login_with_warden(user, service = :google_apps)
+  def login_with_warden(user, service = :google_oauth2)
     Warden.test_mode!
     @current_user = User.find(user.id)
     login_as(@current_user, :scope => :user, :run_callbacks => false)
