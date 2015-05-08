@@ -50,7 +50,6 @@ module CMUEducation
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    # OpenID.fetcher.ca_file = "#{Rails.root}/config/ca-bundle.crt"
     config.assets.enabled = true
     config.assets.version = '1.0'
     #config.assets.precompile = [/^[^_]/]
