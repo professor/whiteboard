@@ -7,7 +7,7 @@
 # {User}[link:classes/User.html]
 #
 class Person < User
-  set_table_name "users"
+  self.table_name = 'users'
 
 
 #  def to_param

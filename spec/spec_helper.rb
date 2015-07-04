@@ -3,8 +3,8 @@ if ENV['COVERAGE']
   SimpleCov.start 'rails'
 end
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 
 #include Capybara::DSL
@@ -59,13 +59,13 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  if ENV['CI'] == "true"
+  if ENV['CI'] == 'true'
     config.filter_run_excluding :skip_on_build_machine => true
   else
     config.filter_run_excluding :skip_on_local_machine => true
   end
 
-  config.include IntegrationSpecHelper, :type => :request
+  config.include IntegrationSpecHelper, :type => :feature
 
   config.include Devise::TestHelpers, :type => :controller
   config.include Devise::TestHelpers, :type => :view

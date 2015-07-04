@@ -39,6 +39,9 @@ CMUEducation::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.time_zone = "UTC"
+
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
  
 # This next line was left over from rails2 code, do we still need it?
 #  config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
