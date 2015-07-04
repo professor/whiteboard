@@ -7,14 +7,14 @@
 
 
 ## To copy courses from one year to the next
-    heroku pgbackups:capture --expire --app cmusv-cedar
+    heroku pg:backups capture --app cmusv-cedar
     heroku run script/rails console --app cmusv-cedar
     Course.copy_courses_from_a_semester_to_next_year("Fall", 2013)
     Course.copy_courses_from_a_semester_to_next_year("Spring", 2014)
     Course.copy_courses_from_a_semester_to_next_year("Summer", 2014)
 
 ## To delete a course
-    (optional) heroku pgbackups:capture --expire --app cmusv-cedar
+    (optional) heroku pg:backups capture --app cmusv-cedar
     heroku run script/rails console --app cmusv-cedar
     c = Course.find(**ID**)
     c.delete
@@ -46,7 +46,7 @@
 	git pull heroku master
 	rake
 	git push heroku master
-	heroku pgbackups:capture --expire --app cmusv-cedar
+	heroku pg:backups capture --app cmusv-cedar
 	heroku run rake db:migrate --app cmusv-cedar   #this is only necessary if there are db schema changes
 
 	For additional information see https://devcenter.heroku.com/articles/git
