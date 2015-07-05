@@ -1,16 +1,16 @@
+require 'google_wrapper'
+
 class MailingListsController < ApplicationController
   before_filter :authenticate_user!
 
   layout 'cmu_sv'
 
-
   # GET /mailing_lists
   # GET /mailing_lists.xml
   def index
     @mailing_lists = []
-    google_apps_connection.retrieve_all_groups.each do |list|
-      # group_name = list.group_id.split('@')[0] #ie all-students
-      @mailing_lists << list.group_id #ie all-students@sv.cmu.edu
+    GoogleWrapper.retrieve_all_groups.each do |list|
+      @mailing_lists << list.email #ie all-students@sv.cmu.edu
     end
 
     respond_to do |format|
@@ -25,17 +25,11 @@ class MailingListsController < ApplicationController
   def show
     @mailing_list = params[:id]
 
-
-#     (group, domain) = @mailing_list.split('@')
-#     if(domain == "sv.cmu.edu")
-#        @mailing_list = group + "@west.cmu.edu"
-#     end
     @mailing_list = switch_sv_to_west(@mailing_list)
 
     @members = []
-    google_apps_connection.retrieve_all_members(@mailing_list).each do |member|
-      tmp = member.member_id
-      @members << member.member_id
+    GoogleWrapper.retrieve_all_members(@mailing_list).each do |member|
+      @members << member.email
     end
 
     respond_to do |format|
@@ -43,8 +37,8 @@ class MailingListsController < ApplicationController
       format.xml { render :xml => @members }
     end
 
-  rescue GDataError => e
-    flash[:error] = "Mailing list does not exist"
+  rescue Google::Apis::ClientError => e
+    flash[:error] = 'There was an error'
   end
 
 

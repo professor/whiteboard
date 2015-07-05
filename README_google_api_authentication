@@ -1,0 +1,70 @@
+
+
+https://developers.google.com/admin-sdk/directory/v1/guides/delegation
+
+1) Create a "service account" and give it access to the Admin SDK scope
+
+2) Authorize this "service account" to access all user information
+
+
+Perform Google Apps Domain-Wide Delegation of Authority
+
+Contents
+Create the service account and its credentials
+Delegate domain-wide authority to your service account
+Instantiate an Admin SDK Directory service object
+Next steps
+In enterprise applications you may want to programmatically access a user's data without any manual authorization on their part. In Google Apps domains, the domain administrator can grant third-party applications with domain-wide access to its users' data — this is referred as domain-wide delegation of authority. To delegate authority this way, domain administrators can use service accounts with OAuth 2.0.
+
+Create the service account and its credentials
+
+You need to create a service account and its credentials. During this procedure you need to gather information that will be used later for the Google Apps domain-wide delegation of authority and in your code to authorize with your service account. The three items you need are your service account’s:
+
+Client ID.
+Private key file.
+Email address.
+To get started using Admin SDK, you need to first create or select a project in the Google Developers Console and enable the API. Using this link guides you through the process and activates the Admin SDK automatically.
+
+Alternatively, you can activate the Admin SDK yourself in the Developers Console by doing the following:
+
+Go to the Google Developers Console.
+Select a project, or create a new one.
+In the sidebar on the left, expand APIs & auth. Next, click APIs. Select the Enabled APIs link in the API section to see a list of all your enabled APIs. Make sure that the Admin SDK is on the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the Enable API button for the API.
+In the sidebar on the left, select Credentials.
+In either case, you end up on the Credentials page and can create your project's credentials from here.
+
+To set up a new service account, do the following:
+
+Under the OAuth heading, select Create new Client ID.
+When prompted, select Service Account and click Create Client ID.
+A dialog box appears. To proceed, click Okay, got it.
+Your new Public/Private key pair is generated and downloaded to your machine; it serves as the only copy of this key. You are responsible for storing it securely. The Console shows your private key's password only at this initial moment of service account creation--the password will not be shown again. You now have Generate New JSON Key and Generate New P12 Key options, and the ability to delete.
+
+From the Credentials page, click Create new Client ID under the OAuth heading to create your OAuth 2.0 credentials.
+
+Next, select your Client ID type.
+
+Web application: Allows redirection to your hosted site or to localhost.
+Service account: Uses JSON Web Tokens (JWT) to sign auth requests.
+Installed application: Allows redirection to localhost or displays an auth code to copy and paste.
+Your application's Client ID and relevant auth settings are now listed. For Web application client IDs, this includes email address, client secret, redirect URIs, and JavaScript origins in the Client ID for web application section. This section also has several buttons:
+
+An Edit Settings button, which lets you edit redirect URIs and edit JavaScript origins settings.
+A Reset Secret button.
+A Download JSON button, for adding JSON resources.
+A Delete button.
+After downloading the file and closing the dialog, you will be able to get the service account's email address and client ID.
+
+You should now have gathered your service account's Private Key file, Client ID and email address. You are ready to delegate domain-wide authority to your service account.
+
+Delegate domain-wide authority to your service account
+
+The service account that you created needs to be granted access to the Google Apps domain’s user data that you want to access. The following tasks have to be performed by an administrator of the Google Apps domain:
+
+Go to your Google Apps domain’s Admin console.
+Select Security from the list of controls. If you don't see Security listed, select More controls from the gray bar at the bottom of the page, then select Security from the list of controls.
+Select Advanced settings from the list of options.
+Select Manage third party OAuth Client access in the Authentication section.
+In the Client name field enter the service account's Client ID.
+In the One or More API Scopes field enter the list of scopes that your application should be granted access to (see image below). For example if you need domain-wide access to Users and Groups enter: https://www.googleapis.com/auth/admin.directory.user, https://www.googleapis.com/auth/admin.directory.group
+Click the Authorize button.

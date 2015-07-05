@@ -52,6 +52,8 @@ gem 'recaptcha', :require => 'recaptcha/rails'
 
 gem 'cancan'
 
+gem 'google-api-client', '0.8.1'
+
 gem 'vpim'  # user for exporting contacts to vCard and iCalendar support
 gem 'seedbank'
 gem 'spreadsheet'
