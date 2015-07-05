@@ -19,7 +19,7 @@ def read_key
 end
 
 key = read_key()
-auth_client = Signet::OAuth2::Client.new(
+authorization = Signet::OAuth2::Client.new(
   :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
   :audience => 'https://accounts.google.com/o/oauth2/token',
   :scope => SCOPE,
@@ -27,7 +27,7 @@ auth_client = Signet::OAuth2::Client.new(
   :sub => 'rails.app@west.cmu.edu',
   :signing_key => key)
 
-auth_client.fetch_access_token!
+authorization.fetch_access_token!
 
 api_client = Google::APIClient.new(
   :application_name => 'OAuth 2.0 with Ruby example',
@@ -38,7 +38,7 @@ directory_api = api_client.discovered_api('admin', 'directory_v1')
 
 results = api_client.execute(
   :api_method => directory_api.users.get,
-  :authorization => auth_client,
+  :authorization => authorization,
   :parameters => {
     :userKey => 'todd.sedano@west.cmu.edu',
     # :viewType => 'DOMAIN_PUBLIC'
@@ -49,9 +49,31 @@ puts results.data.primary_email
 puts results.data.org_unit_path
 puts results.data.name.full_name
 
+
+new_user = directory_api.users.insert.request_schema.new( {
+  :primaryEmail => 'test.user20150705a@west.cmu.edu',
+  :name => {
+    :givenName => 'Test',
+    :familyName => 'User20150705a'
+  },
+  :suspended => false,
+  :password => '584289123dast',
+  :changePasswordAtNextLogin => true,
+  :orgUnitPath => '/Student/PhD-ECE/PhD-ECE admit 13'
+})
+
+created_user = api_client.execute(
+  :api_method => directory_api.users.insert,
+  :authorization => authorization,
+  :body_object => new_user
+)
+created_user.data.error['errors']
+
+
+
 groups = api_client.execute(
   :api_method => directory_api.groups.list,
-  :authorization => auth_client,
+  :authorization => authorization,
   :parameters => {
     :domain => 'west.cmu.edu'
   }
@@ -61,7 +83,7 @@ groups.data.groups[0].email
 
 group0 = api_client.execute(
   :api_method => directory_api.members.list,
-  :authorization => auth_client,
+  :authorization => authorization,
   :parameters => {
     :groupKey => 'phd-students@west.cmu.edu'
   }

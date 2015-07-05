@@ -9,7 +9,7 @@ class PersonMailer < ActionMailer::Base
     @password = password
 
     mail(:to => [@person.email, @person.webiso_account, @person.personal_email],
-         :subject => options[:subject] || "Welcome to Carnegie Mellon University Silicon Valley (" + @person.email + ")",
+         :subject => options[:subject] || 'Welcome to Carnegie Mellon University Silicon Valley (' + @person.email + ')',
          :date => Time.now)
   end
 end

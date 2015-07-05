@@ -142,7 +142,7 @@
 <%= form_for(@person) do |f| %>
     <% if @person.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+          <h2><%= pluralize(@person.errors.count, 'error') %> prohibited this person from being saved:</h2>
 
           <ul>
             <% @person.errors.full_messages.each do |msg| %>
@@ -153,8 +153,8 @@
     <% end %>
 
     <p>
-      <%= f.label :first_name, "Preferred first name" %><br/>
-      <%= f.text_field :first_name, :onblur => "update_twiki_and_email()" %>
+      <%= f.label :first_name, 'Preferred first name' %><br/>
+      <%= f.text_field :first_name, :onblur => 'update_twiki_and_email()' %>
     </p>
     <p>
       <%= f.label :legal_first_name %><br/>
@@ -163,7 +163,7 @@
     </p>
     <p>
       <%= f.label :last_name %><br/>
-      <%= f.text_field :last_name, :onblur => "update_twiki_and_email()" %>
+      <%= f.text_field :last_name, :onblur => 'update_twiki_and_email()' %>
     </p>
 
     <!--
@@ -179,18 +179,18 @@
     <p>
       <%= f.label :twiki_name %><br/>
       <%= f.text_field :twiki_name %>
-      <%= check_box_tag("create_twiki_account", 1, true) %> Create twiki account?
+      <%= check_box_tag('create_twiki_account', 1, true) %> Create twiki account?
     </p>
     <p>
       <%= f.label :email %><br/>
-      <%= f.text_field :email, :onblur => "check_email()" %>
-      <%= check_box_tag("create_google_email", 1, true) %> Create google email account?
+      <%= f.text_field :email, :onblur => 'check_email()' %>
+      <%= check_box_tag(:create_google_email, 1, true) %> Create google email account?
       <%= check_box_tag("create_active_directory_account", 1, false) %> Create active directory account?
       <div id="email_warning"></div>
     </p>
     <p>
-      <%= f.label :webiso_account, "Andrew account" %><br/>
-      <%= f.text_field :webiso_account, :onblur => "check_webiso_account()", :placeholder => "@andrew.cmu.edu" %>
+      <%= f.label :webiso_account, 'Andrew account' %><br/>
+      <%= f.text_field :webiso_account, :onblur => 'check_webiso_account()', :placeholder => '@andrew.cmu.edu' %>
       <div id="webiso_account_warning"></div>
     </p>
     <p>
@@ -198,23 +198,30 @@
       <%= f.text_field :personal_email %><br/>
       <span class="help_text">(Necessary for google email account creation)</span>
     </p>
+    <p>
+      Google Org Unit Path<br/>
+      <%= f.text_field :org_unit_path %><br/>
+      <span class="help_text">/Student/MS-ECE/MS-ECE Admit 2015</span>
+      <span class="help_text">/Student/PhD-ECE/PhD-ECE Admit 2015</span>
+      <span class="help_text">/Faculty</span>
+    </p>
     <h2>System Roles</h2>
     <p>
-      <%= f.label :is_staff, "Is staff or faculty?" %><br/>
+      <%= f.label :is_staff, 'Is staff or faculty?' %><br/>
       <%= f.check_box :is_staff %>
     </p>
     <p>
-      <%= f.label :is_student, "Is a student?" %><br/>
-      <%= f.check_box :is_student, :onchange => "update_graduation_year()" %>
+      <%= f.label :is_student, 'Is a student?' %><br/>
+      <%= f.check_box :is_student, :onchange => 'update_graduation_year()' %>
     </p>
     <p>
-      <%= f.label :is_active, "Is active? - a current user?" %><br/>
+      <%= f.label :is_active, 'Is active? - a current user?' %><br/>
       <%= f.check_box :is_active %>
     </p>
     <h2>Just for students</h2>
     <p>
-      <%= f.label :is_part_time, "Is part time student?" %>
-      <%= f.check_box :is_part_time, :onchange => "update_graduation_year()" %>
+      <%= f.label :is_part_time, 'Is part time student?' %>
+      <%= f.check_box :is_part_time, :onchange => 'update_graduation_year()' %>
     </p>
     <p>
       <%= f.label :graduation_year %><br/>
@@ -232,14 +239,14 @@
     </p>
     <h2>Account Termination</h2>
     <p>
-      <%= f.label "Expires at" %>
+      <%= f.label 'Expires at' %>
       <%= f.text_field :expires_at, :size => 10 %><br/>
-      <% help_text = AcademicCalendar.next_semester + " semester starts on " + AcademicCalendar.date_for_semester_start(AcademicCalendar.next_semester, AcademicCalendar.next_semester_year).to_s %>
+      <% help_text = AcademicCalendar.next_semester + ' semester starts on ' + AcademicCalendar.date_for_semester_start(AcademicCalendar.next_semester, AcademicCalendar.next_semester_year).to_s %>
       <span class="help_text">(<%= help_text %>)</span>
     </p>
 
 
-    <%= f.submit "Create" %>
+    <%= f.submit 'Create' %>
     </p>
 <% end %>
 

@@ -149,6 +149,26 @@ class PeopleController < ApplicationController
     end
   end
 
+  def perform
+    if has_permissions_or_redirect(:admin, root_path)
+      @person = Person.find_by_param(params[:id])
+      create_google_email = params[:create_google_email] || false
+      create_twiki_account = params[:create_twiki_account] || false
+      create_active_directory_account = params[:create_active_directory_account] || false
+
+      respond_to do |format|
+        if @person.nil?
+          flash[:error] = "Person with an id of #{params[:id]} is not in this system."
+          format.html { redirect_to(people_url) }
+        else
+          error_message = User.perform_create_accounts(@person.id, create_google_email, create_twiki_account, create_active_directory_account)
+          flash[:error] = error_message if error_message
+          format.html { redirect_to(@person) }
+        end
+      end
+    end
+  end
+
   # GET /people/twiki/AndrewCarnegie
   # GET /people/twiki/AndrewCarnegie.xml
   def show_by_twiki
@@ -195,13 +215,13 @@ class PeopleController < ApplicationController
     @person.last_name = params[:last_name]
     @person.masters_program = params[:program]
     @person.expires_at = params[:expires_at]
+    @person.org_unit_path = params[:org_unit_path] || '/Student'
 
     if Rails.env.development?
       @domain = GOOGLE_DOMAIN
     else
-      @domain = "sv.cmu.edu"
+      @domain = 'sv.cmu.edu'
     end
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -224,13 +244,15 @@ class PeopleController < ApplicationController
   def create
     authorize! :create, User
 
-    @person = User.new(params[:user])
+    @person = User.new(user_params)
+    @person.org_unit_path = params[:user][:org_unit_path]
+    @person.expires_at = params[:user][:expires_at]
     @person.updated_by_user_id = current_user.id
-    @person.image_uri = ActionController::Base.helpers.asset_path("mascot.jpg")
-    @person.image_uri_first = ActionController::Base.helpers.asset_path("mascot.jpg")
-    @person.image_uri_second = ActionController::Base.helpers.asset_path("mascot.jpg")
-    @person.image_uri_custom = ActionController::Base.helpers.asset_path("mascot.jpg")
-    @person.photo_selection = "first"
+    @person.image_uri = ActionController::Base.helpers.asset_path('mascot.jpg')
+    @person.image_uri_first = ActionController::Base.helpers.asset_path('mascot.jpg')
+    @person.image_uri_second = ActionController::Base.helpers.asset_path('mascot.jpg')
+    @person.image_uri_custom = ActionController::Base.helpers.asset_path('mascot.jpg')
+    @person.photo_selection = 'first'
 
     respond_to do |format|
 
@@ -245,7 +267,7 @@ class PeopleController < ApplicationController
         format.html { redirect_to(@person) }
         format.xml { render :xml => @person, :status => :created, :location => @person }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
@@ -344,7 +366,7 @@ class PeopleController < ApplicationController
   end
 
   def robots
-    logger.info("curriculum comment: robot detected")
+    logger.info('curriculum comment: robot detected')
     format.html # index.html.erb
   end
 
@@ -669,6 +691,24 @@ class PeopleController < ApplicationController
       else
         return ""
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name,
+      :legal_first_name,
+      :last_name,
+      :twiki_name,
+      :email,
+      :webiso_account,
+      :personal_email,
+      :is_staff,
+      :is_student,
+      :is_active,
+      :is_part_time,
+      :graduation_year,
+      :masters_program,
+      :masters_track
+    )
   end
 
 end

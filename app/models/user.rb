@@ -73,10 +73,10 @@ class User < ActiveRecord::Base
   scope :staff, :conditions => {:is_staff => true, :is_active => true}, :order => 'human_name ASC'
 
   scope :part_time_class_of, lambda { |program, year|
-    where("is_part_time is TRUE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
+    where('is_part_time is TRUE and masters_program = ? and graduation_year = ?', program, year.to_s).order('human_name ASC')
   }
   scope :full_time_class_of, lambda { |program, year|
-    where("is_part_time is FALSE and masters_program = ? and graduation_year = ?", program, year.to_s).order("human_name ASC")
+    where('is_part_time is FALSE and masters_program = ? and graduation_year = ?', program, year.to_s).order('human_name ASC')
   }
 
   def self.get_all_programs
@@ -266,23 +266,26 @@ class User < ActiveRecord::Base
   # If this fails, it returns an error message as a string
   #
   def create_google_email(password)
-    return "Empty email address" if self.email.blank?
-    logger.debug("Attempting to create google email account for " + self.email)
-    (username, domain) = switch_sv_to_west(self.email).split('@')
+    return 'Empty email address' if self.email.blank?
+    logger.debug('Attempting to create google email account for ' + self.email)
+    (west_email, domain) = switch_sv_to_west(self.email)
 
     if domain != GOOGLE_DOMAIN
-      logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
-      return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
+      logger.debug('Domain (' + domain + ') is not the same as the google domain (' + GOOGLE_DOMAIN)
+      return 'Domain (' + domain + ') is not the same as the google domain (' + GOOGLE_DOMAIN + ')'
     end
 
     begin
-      user = google_apps_connection.create_user(username,
-                                                self.first_name,
-                                                self.last_name,
-                                                password)
-    rescue GDataError => e
-      #error code : 1300, invalid input : Andrew.Carngie, reason : EntityExists
-      return pretty_print_google_error(e)
+      user = GoogleWrapper.create_user(west_email,
+        self.first_name,
+        self.last_name,
+        password,
+        self.org_unit_path
+        )
+      return user.data['error']['message'] if user.data['error']
+    rescue Error => e
+      logger.error e
+      return 'Determine error message'
     end
     self.google_created = Time.now()
     self.save
@@ -444,7 +447,7 @@ class User < ActiveRecord::Base
       else
         # If we immediately send the email, google may say the account doesn't exist
         # Then send grid puts the user account on a black likst
-        sleep 5
+        sleep 10
         PersonMailer.welcome_email(person, password).deliver
       end
     end
@@ -464,7 +467,7 @@ class User < ActiveRecord::Base
       puts error_message
       message = error_message
       GenericMailer.email(
-          :to => ["help@sv.cmu.edu", "todd.sedano@sv.cmu.edu"],
+          :to => ['help@sv.cmu.edu', 'todd.sedano@sv.cmu.edu'],
           :from => 'help@sv.cmu.edu',
           :subject => "PersonJob had an error on person id = #{person.id}",
           :message => message,
@@ -472,6 +475,7 @@ class User < ActiveRecord::Base
           :url => "http://whiteboard.sv.cmu.edu/people/#{person.id}" #+ person_path(person)
       ).deliver
     end
+    return error_message
   end
 
 
