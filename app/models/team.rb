@@ -101,7 +101,7 @@ class Team < ActiveRecord::Base
   def show_addresses_for_mailing_list
     begin
       @members = []
-      google_apps_connection.retrieve_all_members(self.google_group).each do |member|
+      GoogleWrapper.retrieve_all_members(self.google_group).each do |member|
         @members << member.member_id.sub('@west.cmu.edu', '@sv.cmu.edu')
       end
       return @members
@@ -157,7 +157,7 @@ class Team < ActiveRecord::Base
 
   def remove_google_group
     logger.debug "trying before_destroy"
-    google_apps_connection.delete_group(self.email)
+    GoogleWrapper.delete_group(self.email)
   rescue GDataError => e
     logger.error "Attempting to destroy group.  errorcode = #{e.code}, input : #{e.input}, reason : #{e.reason}"
   end

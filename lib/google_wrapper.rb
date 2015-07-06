@@ -34,6 +34,12 @@ class GoogleWrapper
     group.data.members
   end
 
+  def self.delete_group(email)
+
+  end
+
+
+
   def self.create_user(email, first_name, last_name, password, org_unit_path)
     authorization, api_client = setup_client()
     directory_api = api_client.discovered_api('admin', 'directory_v1')
@@ -86,23 +92,4 @@ class GoogleWrapper
     )
     return authorization, api_client
   end
-end
-
-#This code works for a person's email address or a team's distribution list
-def switch_sv_to_west(email_address)
-  return nil if email_address.nil?
-  (name, domain) = email_address.split('@')
-  if(domain == 'sv.cmu.edu')
-    email_address = name + '@west.cmu.edu'
-  end
-  return email_address
-end
-
-def switch_west_to_sv(email_address)
-  return nil if email_address.nil?
-  (name, domain) = email_address.split('@')
-  if(domain == 'west.cmu.edu')
-    email_address = name + '@sv.cmu.edu'
-  end
-  return email_address
 end

@@ -2,6 +2,35 @@ GOOGLE_USERNAME = ENV['WHITEBOARD_GOOGLE_USERNAME'] || "account@sandbox.sv.cmu.e
 GOOGLE_PASSWORD = ENV['WHITEBOARD_GOOGLE_PASSWORD'] || "password"
 GOOGLE_DOMAIN = ENV['WHITEBOARD_GOOGLE_DOMAIN'] || "sandbox.sv.cmu.edu"
 
+#This code works for a person's email address or a team's distribution list
+def switch_sv_to_west(email_address)
+  return nil if email_address.nil?
+  (name, domain) = email_address.split('@')
+  if(domain == 'sv.cmu.edu')
+    email_address = name + '@west.cmu.edu'
+  end
+  return email_address
+end
+
+def switch_west_to_sv(email_address)
+  return nil if email_address.nil?
+  (name, domain) = email_address.split('@')
+  if(domain == 'west.cmu.edu')
+    email_address = name + '@sv.cmu.edu'
+  end
+  return email_address
+end
+
+
+
+
+
+
+
+
+
+
+
 require 'gappsprovisioning/provisioningapi'
 include GAppsProvisioning
 def google_apps_connection
