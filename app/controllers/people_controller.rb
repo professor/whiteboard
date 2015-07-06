@@ -162,7 +162,7 @@ class PeopleController < ApplicationController
           format.html { redirect_to(people_url) }
         else
           error_message = User.perform_create_accounts(@person.id, create_google_email, create_twiki_account, create_active_directory_account)
-          flash[:error] = error_message if error_message
+          flash[:error] = error_message unless error_message.blank?
           format.html { redirect_to(@person) }
         end
       end

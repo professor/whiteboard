@@ -268,7 +268,8 @@ class User < ActiveRecord::Base
   def create_google_email(password)
     return 'Empty email address' if self.email.blank?
     logger.debug('Attempting to create google email account for ' + self.email)
-    (west_email, domain) = switch_sv_to_west(self.email)
+    west_email = switch_sv_to_west(self.email)
+    (username, domain) = west_email.split('@')
 
     if domain != GOOGLE_DOMAIN
       logger.debug('Domain (' + domain + ') is not the same as the google domain (' + GOOGLE_DOMAIN)
