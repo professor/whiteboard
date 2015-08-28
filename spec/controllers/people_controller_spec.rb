@@ -351,4 +351,33 @@ describe PeopleController do
       end
     end
   end
+
+  context "using hash input instead of string will automatically convert argument to String" do
+    before do
+      @student_sam = FactoryGirl.create(:student_sam_user, :is_part_time=>'f', :masters_program=>'SE', :is_active=>'t')
+      login(@student_sam)
+      controller.stub(:image_path)
+    end
+
+    it "when getting twiki" do
+      User.should_receive(:find_by_twiki_name).with(an_instance_of(String))
+      get :show_by_twiki, :twiki_name => {:id => @student_sam.twiki_name}
+      flash[:error].should_not eql nil
+    end
+
+    it "when check webiso accont" do
+      User.should_receive(:find_by_webiso_account).with(an_instance_of(String))
+      get :ajax_check_if_webiso_account_exists, :q => {:id => @student_sam.webiso_account}
+    end
+
+    it "when check email" do
+      User.should_receive(:find_by_email).with(an_instance_of(String))
+      get :ajax_check_if_email_exists, :q => {:id => @student_sam.email}
+    end
+
+    it "when download csv" do
+      User.should_receive(:find_by_id).with(an_instance_of(String))
+      get :download_csv, :search_id => {:id => 1000}
+    end
+  end
 end
