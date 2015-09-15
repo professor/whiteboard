@@ -115,7 +115,7 @@ class AssignmentsController < ApplicationController
   def show
     @no_pad = true
     @assignments = @course.assignments
-    authorize! :read, @course
+    authorize! :reorder_assignments, @course
 
     respond_to do |format|
       format.html # showml.erb
