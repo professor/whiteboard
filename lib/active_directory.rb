@@ -13,28 +13,28 @@ class ActiveDirectory
     return "Empty email address" if user.email.blank?
 
     # log what is happening
-    logger.debug("Attempting to create active directory account for " + user.email)
+    Rails.logger.debug("Attempting to create active directory account for " + user.email)
 
     # extract domain from email
     domain = user.email.split('@')[1]
 
     # Confirm domain name accuracy
     if domain != GOOGLE_DOMAIN
-      logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
+      Rails.logger.debug("Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN)
       return "Domain (" + domain + ") is not the same as the google domain (" + GOOGLE_DOMAIN + ")"
     end
 
     # Attempt to create active directory account
     active_directory_service = ActiveDirectory.new
     if active_directory_service.create_account(user) == "Success"
-      user.active_directory_account_created = Time.now()
+      user.active_directory_account_created_at = Time.now()
       user.save
     end
   end
 
 
   # Initialize connection to active directory
-  def self.initialize
+  def initialize
     @connection = Net::LDAP.new(:host => LDAPConfig.host, :port => LDAPConfig.port)
     @connection.encryption(:method => :simple_tls) unless !LDAPConfig.is_encrypted?
     @connection.auth LDAPConfig.username, LDAPConfig.password unless LDAPConfig.username.nil? || LDAPConfig.password.nil?
@@ -108,7 +108,7 @@ class ActiveDirectory
   # Send active directory password reset token
   def send_password_reset_token(user)
     user.set_password_reset_token
-    self.password_reset_sent_at = Time.zone.now
+    user.password_reset_sent_at = Time.zone.now
     user.save!
     PasswordMailer.password_reset(user).deliver
   end
